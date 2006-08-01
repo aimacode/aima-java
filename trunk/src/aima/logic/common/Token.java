@@ -1,0 +1,48 @@
+/*
+ * Created on Aug 30, 2003 by Ravi Mohan
+ *  
+ */
+package aima.logic.common;
+
+public class Token {
+	private String text;
+
+	private int type;
+
+	public Token(int type, String text) {
+		this.type = type;
+		this.text = text;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public boolean equals(Object o) {
+
+		if (this == o) {
+			return true;
+		}
+		if ((o == null) || (this.getClass() != o.getClass())) {
+			return false;
+		}
+		Token other = (Token) o;
+		return ((other.type == type) && (other.text.equals(text)));
+	}
+
+	public int hashCode() {
+		int result = 17;
+	    result = 37 * result + type;
+		result = 37 * result + text.hashCode();
+		return 17;
+	}
+
+	public String toString() {
+		return "[ " + type + " " + text + " ]";
+	}
+
+}
