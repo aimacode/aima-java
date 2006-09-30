@@ -34,7 +34,7 @@ public class UnifierTest extends TestCase {
 		Variable var  = new Variable("x");
 		Sentence sentence = parser.parse("Knows(x)");
 		theta = null;
-		Hashtable result = unifier.unify(var,sentence,null);
+		Hashtable result = unifier.unify(var,sentence,theta);
 		assertNull(result);
 	}
 	
@@ -42,7 +42,7 @@ public class UnifierTest extends TestCase {
 		Variable var  = new Variable("x");
 		Sentence sentence = parser.parse("Knows(y)");
 		theta = null;
-		Hashtable result = unifier.unify(var,sentence,null);
+		Hashtable result = unifier.unify(var,sentence,theta);
 		assertNull(result);
 	}
 	
