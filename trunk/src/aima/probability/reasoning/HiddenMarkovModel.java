@@ -40,6 +40,7 @@ public class HiddenMarkovModel {
 	}
 	
 	private void createSensorModel(List<String> states, List<String> perceptions) {
+	
 		sensorModel = new Table<String, String, Double>( states,perceptions);//TODO check this ordering;
 		
 	}
