@@ -1,0 +1,4 @@
+insert validity check for state in RandomVariable.set Value() and get VAlue();
+add equals()  & hashcode methods for RandomVariable
+propogate RandomVariable thru pre existing probability code remove double[2] approach
+Refactor HMM code
