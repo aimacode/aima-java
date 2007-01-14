@@ -4,29 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import aima.probability.RandomVariable;
 import aima.util.Table;
 
 public class HiddenMarkovModel {
 
-	Table<String, String, Double> priorDistribution, transitionModel, sensorModel, postDistribution;
+	Table<String, String, Double>  transitionModel, sensorModel; 
+	RandomVariable  priorDistribution, belief;
 
 	public HiddenMarkovModel(List<String> states, List<String>perceptions,List<String> actions ) {
-		createPriorDistribution(states);
+		priorDistribution = new RandomVariable("HiddenState", states);	
+		belief = new RandomVariable("HiddenState", states);	
 		createEmptyTransitionTable(states,actions);
-		createSensorModel(states,perceptions);
+		sensorModel = new Table<String, String, Double>( states,perceptions);
 	}
 
 
-	private void createPriorDistribution(List<String> states) {
-		String columnHeader = "probability";
-		priorDistribution = new Table<String, String, Double>(states,Arrays.asList(new String[]{columnHeader}));
-		int numberOfStates =  states.size();
-		double initialProbability = 1.0/numberOfStates;
-		for (String s:states){
-			priorDistribution.set(s,columnHeader,initialProbability);
-		}
-		
-	}
+
 	
 	private void createEmptyTransitionTable(List<String> states, List<String> actions) {
 		List<String> state_actions = new ArrayList<String>();
@@ -39,15 +33,13 @@ public class HiddenMarkovModel {
 		
 	}
 	
-	private void createSensorModel(List<String> states, List<String> perceptions) {
-	
-		sensorModel = new Table<String, String, Double>( states,perceptions);//TODO check this ordering;
-		
-	}
 
-
-	public Table<String, String, Double> prior() {
+	public RandomVariable prior() {
 		return priorDistribution;
+	}
+	
+	public RandomVariable belief(){
+		return belief;
 	}
 
 

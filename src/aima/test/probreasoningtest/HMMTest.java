@@ -13,7 +13,13 @@ public class HMMTest extends TestCase {
 	}
 	
 	public void testInitialization(){
-		assertEquals(0.5, hmm.prior().get("open","probability"));
-		assertEquals(0.5, hmm.prior().get("closed","probability"));
+		assertEquals(0.5, hmm.prior().getProbabilityOf("open"));
+		assertEquals(0.5, hmm.prior().getProbabilityOf("closed"));
+		assertEquals(0.5, hmm.belief().getProbabilityOf("open"));
+		assertEquals(0.5, hmm.belief().getProbabilityOf("closed"));
+	}
+	
+	public void xtestPredictionAndMeasurementUpdateStepsModifyBeliefCorrectly(){
+		
 	}
 }
