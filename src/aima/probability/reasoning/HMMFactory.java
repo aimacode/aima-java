@@ -13,8 +13,9 @@ public class HMMFactory {
 	private static final String SEE_OPEN = "see_open";
 
 	public static HiddenMarkovModel createRobotHMM(){
+		
 		//Example adopted from Sebastian Thrun's "Probabilistic Robotics" Chapter 2
-		//A robot faces a door. The state of the door (open or closed) constitutes the "hidden state" X in aima terminology
+		//A robot faces a door. The state of the door (open or closed) constitutes the "hidden state" 
 		//The robot's sensor detects a "closed" or "open" state. 
 		//(Perception may be out of synch with reality because sensors are probabilistic). 
 		//The robot can either "do nothing" or "push" the door. These are the possible actions. 
@@ -36,7 +37,7 @@ public class HMMFactory {
 		hmm.setTransitionModelValue(CLOSED, PUSH, CLOSED, 0.2);
 		hmm.setTransitionModelValue(CLOSED, PUSH, OPEN, 0.8);
 		
-		//hmm.setSensorModelValue(state,perception,0.4);
+		//hmm.setSensorModelValue(state,perception,0.4); given a state what is the probability of perception
 		hmm.setSensorModelValue(OPEN,SEE_CLOSED,0.4);
 		hmm.setSensorModelValue(OPEN,SEE_OPEN, 0.6);
 		hmm.setSensorModelValue(CLOSED,SEE_OPEN, 0.2);
