@@ -16,7 +16,7 @@ public class HiddenMarkovModel {
 	public HiddenMarkovModel(List<String> states, List<String> perceptions,
 			List<String> actions) {
 		priorDistribution = new RandomVariable("HiddenState", states);
-		belief = new RandomVariable("HiddenState", states);
+		belief = priorDistribution.duplicate();
 		createEmptyTransitionTable(states, actions);
 		sensorModel = new Table<String, String, Double>(states, perceptions);
 	}
