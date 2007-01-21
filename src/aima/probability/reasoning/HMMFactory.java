@@ -23,9 +23,11 @@ public class HMMFactory {
 		List<String> states = Arrays.asList(new String[] {OPEN, CLOSED });
 		List<String> actions = Arrays.asList(new String[] {DO_NOTHING, PUSH });
 		List<String> perceptions = Arrays.asList(new String[] {SEE_OPEN, SEE_CLOSED });
+		
 		HiddenMarkovModel hmm = new HiddenMarkovModel(states,perceptions,actions);
 		
 		//hmm.setTransitionModelValue(start_state, action, end_state, probability);
+		//given a start state and an action the probability of the end state is probability
 		hmm.setTransitionModelValue(OPEN, DO_NOTHING, OPEN, 1.0);
 		hmm.setTransitionModelValue(OPEN, DO_NOTHING, CLOSED, 0.0);
 		hmm.setTransitionModelValue(CLOSED, DO_NOTHING, CLOSED, 1.0);
@@ -37,7 +39,7 @@ public class HMMFactory {
 		hmm.setTransitionModelValue(CLOSED, PUSH, CLOSED, 0.2);
 		hmm.setTransitionModelValue(CLOSED, PUSH, OPEN, 0.8);
 		
-		//hmm.setSensorModelValue(state,perception,0.4); given a state what is the probability of perception
+		//hmm.setSensorModelValue(state,perception,p); given a state  the probability of  a perception is p
 		hmm.setSensorModelValue(OPEN,SEE_CLOSED,0.4);
 		hmm.setSensorModelValue(OPEN,SEE_OPEN, 0.6);
 		hmm.setSensorModelValue(CLOSED,SEE_OPEN, 0.2);

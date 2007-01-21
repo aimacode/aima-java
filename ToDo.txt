@@ -1,4 +1,4 @@
-insert validity check for state in RandomVariable.set Value() and get VAlue();
 add equals()  & hashcode methods for RandomVariable
 propogate RandomVariable thru pre existing probability code remove double[2] approach
 Refactor HMM code
+Convert states, perceptions and actions into types (vs strings) and add simpletype etc for "string types, with its own equals and hashcode methods
