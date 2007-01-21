@@ -21,6 +21,10 @@ public class HiddenMarkovModel {
 		sensorModel = new Table<String, String, Double>(states, perceptions);
 	}
 
+	public HiddenMarkovModel(List<String> states, List<String> perceptions) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void createEmptyTransitionTable(List<String> states,
 			List<String> actions) {
 		List<String> state_actions = new ArrayList<String>();
