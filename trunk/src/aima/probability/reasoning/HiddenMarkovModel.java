@@ -22,7 +22,9 @@ public class HiddenMarkovModel {
 	}
 
 	public HiddenMarkovModel(List<String> states, List<String> perceptions) {
-		// TODO Auto-generated constructor stub
+		// no actions possible thus the only "action" is to "wait" till the next perception is observed		
+		this(states,perceptions,Arrays.asList(new String[] {HmmConstants.DO_NOTHING}));
+
 	}
 
 	private void createEmptyTransitionTable(List<String> states,
@@ -51,6 +53,12 @@ public class HiddenMarkovModel {
 		String start_state_plus_action = startState.concat(action);
 		transitionModel.set(start_state_plus_action, endState, probability);
 	}
+	
+	public void setTransitionModelValue(String startState,
+			String endState, Double probability) {
+		String start_state_plus_action = startState.concat(HmmConstants.DO_NOTHING);
+		transitionModel.set(start_state_plus_action, endState, probability);
+	}
 
 	public void setSensorModelValue(String state, String perception,
 			double probability) {
@@ -68,6 +76,10 @@ public class HiddenMarkovModel {
 			newBelief.setProbabilityOf(newState, total);
 		}
 		belief = newBelief;
+	}
+	
+	public void waitForPerception() {
+		act(HmmConstants.DO_NOTHING);
 	}
 	
 	public void perceptionUpDate(String perception) {

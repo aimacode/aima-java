@@ -7,42 +7,75 @@ import aima.probability.reasoning.HmmConstants;
 
 public class HMMTest extends TestCase {
 	private static final double TOLERANCE = 0.001;
-	private HiddenMarkovModel robot;
+	private HiddenMarkovModel robot,rainman;
 
 	public void setUp(){
 
 		robot = HMMFactory.createRobotHMM();
+		rainman = HMMFactory.createRainmanHMM();
 	}
 	
-	public void testInitialization(){
-		assertEquals(0.5, robot.prior().getProbabilityOf(HmmConstants.OPEN));
-		assertEquals(0.5, robot.prior().getProbabilityOf(HmmConstants.CLOSED));
+	public void testRobotHMMInitialization(){
+		assertEquals(0.5, robot.prior().getProbabilityOf(HmmConstants.DOOR_OPEN));
+		assertEquals(0.5, robot.prior().getProbabilityOf(HmmConstants.DOOR_CLOSED));
 		
 		
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.OPEN));
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.CLOSED));
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN));
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED));
 	}
 	
-	public void testPredictionAndMeasurementUpdateStepsModifyBeliefCorrectly(){
+	public void testRobotHMMPredictionAndMeasurementUpdateStepsModifyBeliefCorrectly(){
 		
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.OPEN));
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.CLOSED));
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN));
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED));
 		
-		robot.act("do_nothing");
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.OPEN));
-		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.CLOSED));
+		robot.act(HmmConstants.DO_NOTHING);
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN));
+		assertEquals(0.5, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED));
 		
-		robot.perceptionUpDate("see_open");
-		assertEquals(0.75, robot.belief().getProbabilityOf(HmmConstants.OPEN),TOLERANCE);
-		assertEquals(0.25, robot.belief().getProbabilityOf(HmmConstants.CLOSED),TOLERANCE);
+		robot.perceptionUpDate(HmmConstants.SEE_DOOR_OPEN);
+		assertEquals(0.75, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN),TOLERANCE);
+		assertEquals(0.25, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED),TOLERANCE);
 		
-		robot.act("push");
-		assertEquals(0.95, robot.belief().getProbabilityOf(HmmConstants.OPEN));
-		assertEquals(0.05, robot.belief().getProbabilityOf(HmmConstants.CLOSED));
+		robot.act(HmmConstants.PUSH_DOOR);
+		assertEquals(0.95, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN));
+		assertEquals(0.05, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED));
 		
-		robot.perceptionUpDate("see_open");
-		assertEquals(0.983, robot.belief().getProbabilityOf(HmmConstants.OPEN),TOLERANCE);
-		assertEquals(0.017, robot.belief().getProbabilityOf(HmmConstants.CLOSED),TOLERANCE);
+		robot.perceptionUpDate(HmmConstants.SEE_DOOR_OPEN);
+		assertEquals(0.983, robot.belief().getProbabilityOf(HmmConstants.DOOR_OPEN),TOLERANCE);
+		assertEquals(0.017, robot.belief().getProbabilityOf(HmmConstants.DOOR_CLOSED),TOLERANCE);
+		
+		
+	}
+	
+	public void testRainmanHMMInitialization(){
+		assertEquals(0.5, rainman.prior().getProbabilityOf(HmmConstants.RAINING));
+		assertEquals(0.5, rainman.prior().getProbabilityOf(HmmConstants.NOT_RAINING));
+		
+		
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.RAINING));
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING));
+	}
+	
+	public void testRainmanHMMPredictionAndMeasurementUpdateStepsModifyBeliefCorrectly(){
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.RAINING));
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING));
+		
+		rainman.waitForPerception();
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.RAINING));
+		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING));
+		
+		rainman.perceptionUpDate(HmmConstants.SEE_UMBRELLA);
+		assertEquals(0.818, rainman.belief().getProbabilityOf(HmmConstants.RAINING),TOLERANCE);
+		assertEquals(0.182, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING),TOLERANCE);
+
+		rainman.waitForPerception();
+		assertEquals(0.627, rainman.belief().getProbabilityOf(HmmConstants.RAINING),TOLERANCE);
+		assertEquals(0.373, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING),TOLERANCE);
+		
+		rainman.perceptionUpDate(HmmConstants.SEE_UMBRELLA);
+		assertEquals(0.883, rainman.belief().getProbabilityOf(HmmConstants.RAINING),TOLERANCE);
+		assertEquals(0.117, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING),TOLERANCE);
 		
 		
 	}

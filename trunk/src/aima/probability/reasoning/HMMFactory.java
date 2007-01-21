@@ -15,40 +15,55 @@ public class HMMFactory {
 		//(Perception may be out of synch with reality because sensors are probabilistic). 
 		//The robot can either "do nothing" or "push" the door. These are the possible actions. 
 		
-		List<String> states = Arrays.asList(new String[] {HmmConstants.OPEN, HmmConstants.CLOSED });
-		List<String> actions = Arrays.asList(new String[] {HmmConstants.DO_NOTHING, HmmConstants.PUSH });
-		List<String> perceptions = Arrays.asList(new String[] {HmmConstants.SEE_OPEN, HmmConstants.SEE_CLOSED });
+		List<String> states = Arrays.asList(new String[] {HmmConstants.DOOR_OPEN, HmmConstants.DOOR_CLOSED });
+		List<String> actions = Arrays.asList(new String[] {HmmConstants.DO_NOTHING, HmmConstants.PUSH_DOOR });
+		List<String> perceptions = Arrays.asList(new String[] {HmmConstants.SEE_DOOR_OPEN, HmmConstants.SEE_DOOR_CLOSED });
 		
 		HiddenMarkovModel hmm = new HiddenMarkovModel(states,perceptions,actions);
 		
 		//hmm.setTransitionModelValue(start_state, action, end_state, probability);
 		//given a start state and an action the probability of the end state is probability
-		hmm.setTransitionModelValue(HmmConstants.OPEN, HmmConstants.DO_NOTHING, HmmConstants.OPEN, 1.0);
-		hmm.setTransitionModelValue(HmmConstants.OPEN, HmmConstants.DO_NOTHING, HmmConstants.CLOSED, 0.0);
-		hmm.setTransitionModelValue(HmmConstants.CLOSED, HmmConstants.DO_NOTHING, HmmConstants.CLOSED, 1.0);
-		hmm.setTransitionModelValue(HmmConstants.CLOSED, HmmConstants.DO_NOTHING, HmmConstants.OPEN, 0.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_OPEN, HmmConstants.DO_NOTHING, HmmConstants.DOOR_OPEN, 1.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_OPEN, HmmConstants.DO_NOTHING, HmmConstants.DOOR_CLOSED, 0.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_CLOSED, HmmConstants.DO_NOTHING, HmmConstants.DOOR_CLOSED, 1.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_CLOSED, HmmConstants.DO_NOTHING, HmmConstants.DOOR_OPEN, 0.0);
 		
 		
-		hmm.setTransitionModelValue(HmmConstants.OPEN, HmmConstants.PUSH, HmmConstants.OPEN, 1.0);
-		hmm.setTransitionModelValue(HmmConstants.OPEN, HmmConstants.PUSH, HmmConstants.CLOSED, 0.0);
-		hmm.setTransitionModelValue(HmmConstants.CLOSED, HmmConstants.PUSH, HmmConstants.CLOSED, 0.2);
-		hmm.setTransitionModelValue(HmmConstants.CLOSED, HmmConstants.PUSH, HmmConstants.OPEN, 0.8);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_OPEN, HmmConstants.PUSH_DOOR, HmmConstants.DOOR_OPEN, 1.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_OPEN, HmmConstants.PUSH_DOOR, HmmConstants.DOOR_CLOSED, 0.0);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_CLOSED, HmmConstants.PUSH_DOOR, HmmConstants.DOOR_CLOSED, 0.2);
+		hmm.setTransitionModelValue(HmmConstants.DOOR_CLOSED, HmmConstants.PUSH_DOOR, HmmConstants.DOOR_OPEN, 0.8);
 		
 		//hmm.setSensorModelValue(state,perception,p); given a state  the probability of  a perception is p
-		hmm.setSensorModelValue(HmmConstants.OPEN,HmmConstants.SEE_CLOSED,0.4);
-		hmm.setSensorModelValue(HmmConstants.OPEN,HmmConstants.SEE_OPEN, 0.6);
-		hmm.setSensorModelValue(HmmConstants.CLOSED,HmmConstants.SEE_OPEN, 0.2);
-		hmm.setSensorModelValue(HmmConstants.CLOSED,HmmConstants.SEE_CLOSED, 0.8);
+		hmm.setSensorModelValue(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_CLOSED,0.4);
+		hmm.setSensorModelValue(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_OPEN, 0.6);
+		hmm.setSensorModelValue(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_OPEN, 0.2);
+		hmm.setSensorModelValue(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_CLOSED, 0.8);
 		return hmm;
 	}
 	
-	public static HiddenMarkovModel createUmbrellaHMM(){
+	public static HiddenMarkovModel createRainmanHMM(){
 		List<String> states = Arrays.asList(new String[] {HmmConstants.RAINING, HmmConstants.NOT_RAINING });
 		//no actions  because the observer has no way of changing the hidden state and i spassive
-		List<String> perceptions = Arrays.asList(new String[] {HmmConstants.UMBRELLA, HmmConstants.NO_UMBRELLA});
+		List<String> perceptions = Arrays.asList(new String[] {HmmConstants.SEE_UMBRELLA, HmmConstants.SEE_NO_UMBRELLA});
 		
 		HiddenMarkovModel hmm = new HiddenMarkovModel(states,perceptions);
+		
+		//hmm.setTransitionModelValue(start_state, action, end_state, probability);
+		//given a start state and an action the probability of the end state is probability
+		hmm.setTransitionModelValue(HmmConstants.RAINING,  HmmConstants.RAINING, 0.7);
+		hmm.setTransitionModelValue(HmmConstants.RAINING,  HmmConstants.NOT_RAINING, 0.3);
+		hmm.setTransitionModelValue(HmmConstants.NOT_RAINING,  HmmConstants.RAINING, 0.3);
+		hmm.setTransitionModelValue(HmmConstants.NOT_RAINING,  HmmConstants.NOT_RAINING, 0.7);
+		
+		//hmm.setSensorModelValue(state,perception,p); given a state  the probability of  a perception is p
+		hmm.setSensorModelValue(HmmConstants.RAINING,HmmConstants.SEE_UMBRELLA,0.9);
+		hmm.setSensorModelValue(HmmConstants.RAINING,HmmConstants.SEE_NO_UMBRELLA,0.1);
+		hmm.setSensorModelValue(HmmConstants.NOT_RAINING,HmmConstants.SEE_UMBRELLA,0.2);
+		hmm.setSensorModelValue(HmmConstants.NOT_RAINING,HmmConstants.SEE_NO_UMBRELLA,0.8);
+
 		return hmm;
+		
 	}
 
 }
