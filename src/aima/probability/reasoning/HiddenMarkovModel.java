@@ -67,15 +67,20 @@ public class HiddenMarkovModel {
 	}
 
 	public void act(String action) {
-		RandomVariable newBelief = belief.duplicate();
-		for (String newState : belief.states()) {
+
+		belief = predict(belief,action);
+	}
+	
+	public RandomVariable predict(RandomVariable aBelief,String action){
+		RandomVariable newBelief = aBelief.duplicate();
+		for (String newState : aBelief.states()) {
 			double total = 0;
-			for (String oldState : belief.states()) {
+			for (String oldState : aBelief.states()) {
 				total += partialProbabilityOfTransition(oldState, action,newState);
 			}
 			newBelief.setProbabilityOf(newState, total);
 		}
-		belief = newBelief;
+		return newBelief;
 	}
 	
 	public void waitForPerception() {
