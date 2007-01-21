@@ -13,7 +13,7 @@ public class RandomVariableTest extends TestCase {
 	private RandomVariable aDistribution;
 
 	public void setUp() {
-		List<String> states = Arrays.asList(new String[] { HmmConstants.OPEN, HmmConstants.CLOSED });
+		List<String> states = Arrays.asList(new String[] { HmmConstants.DOOR_OPEN, HmmConstants.DOOR_CLOSED });
 		aDistribution = new RandomVariable("HiddenState", states);
 	}
 
