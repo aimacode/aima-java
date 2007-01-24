@@ -8,6 +8,7 @@ import aima.test.gametest.TicTacToeTest;
 import aima.test.learningtest.LearningTests;
 import aima.test.logictest.LogicTests;
 import aima.test.probabilitytest.ProbabilityTests;
+import aima.test.probreasoningtest.ProbabilisticReasoningTests;
 import aima.test.search.SearchTests;
 import aima.test.tvenvironmenttest.ModelBasedTVEVaccumAgentTest;
 import aima.test.tvenvironmenttest.TrivialVaccumEnvironmentTest;
@@ -33,6 +34,7 @@ public class AllTests {
 		suite.addTest(LogicTests.suite());
 		suite.addTest(SearchTests.suite());
 		suite.addTest(ProbabilityTests.suite());
+		suite.addTest(ProbabilisticReasoningTests.suite());
 
 		return suite;
 	}
