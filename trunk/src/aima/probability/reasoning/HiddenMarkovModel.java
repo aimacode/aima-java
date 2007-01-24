@@ -11,12 +11,11 @@ public class HiddenMarkovModel {
 
 	Table<String, String, Double> transitionModel, sensorModel;
 
-	RandomVariable priorDistribution, belief;
+	RandomVariable priorDistribution;
 
 	public HiddenMarkovModel(List<String> states, List<String> perceptions,
 			List<String> actions) {
 		priorDistribution = new RandomVariable("HiddenState", states);
-		belief = priorDistribution.duplicate();
 		createEmptyTransitionTable(states, actions);
 		sensorModel = new Table<String, String, Double>(states, perceptions);
 	}
@@ -44,9 +43,6 @@ public class HiddenMarkovModel {
 		return priorDistribution;
 	}
 
-	public RandomVariable belief() {
-		return belief;
-	}
 
 	public void setTransitionModelValue(String startState, String action,
 			String endState, Double probability) {
@@ -66,45 +62,40 @@ public class HiddenMarkovModel {
 
 	}
 
-	public void act(String action) {
 
-		belief = predict(belief,action);
-	}
 	
 	public RandomVariable predict(RandomVariable aBelief,String action){
 		RandomVariable newBelief = aBelief.duplicate();
 		for (String newState : aBelief.states()) {
 			double total = 0;
 			for (String oldState : aBelief.states()) {
-				total += partialProbabilityOfTransition(oldState, action,newState);
+				total += partialProbabilityOfTransition(aBelief, oldState, action,newState);
 			}
 			newBelief.setProbabilityOf(newState, total);
 		}
 		return newBelief;
 	}
 	
-	public void waitForPerception() {
-		act(HmmConstants.DO_NOTHING);
-	}
-	
-	public void perceptionUpDate(String perception) {
-		RandomVariable newBelief = belief.duplicate();
-		for (String state : belief.states()){
+	public RandomVariable perceptionUpdate(RandomVariable aBelief,String perception) {
+		RandomVariable newBelief = aBelief.duplicate();
+		for (String state : aBelief.states()){
 			double probabilityOfPerception= sensorModel.get(state,perception);
-			newBelief.setProbabilityOf(state,probabilityOfPerception * belief.getProbabilityOf(state));
+			newBelief.setProbabilityOf(state,probabilityOfPerception * aBelief.getProbabilityOf(state));
 		}
 		newBelief.normalize();
-		belief = newBelief;
-		
+		return newBelief;
 	}
 
-	private double partialProbabilityOfTransition(String oldState, String action,
+	
+
+	private double partialProbabilityOfTransition(RandomVariable aBelief, String oldState, String action,
 			String newState) {
 		String old_state_action = oldState.concat(action);
 		double transitionProbabilityFromOldStateToNewState = transitionModel
 				.get(old_state_action, newState);
 		return transitionProbabilityFromOldStateToNewState
-				* belief.getProbabilityOf(oldState);
+				* aBelief.getProbabilityOf(oldState);
 	}
+	
 
 }
