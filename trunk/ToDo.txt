@@ -4,3 +4,4 @@ propogate RandomVariable thru pre existing probability code remove double[2] app
 Refactor HMM code
 Convert states, perceptions and actions into types (vs strings) and add simpletype etc for "string types, with its own equals and hashcode methods
 unify HMMAgent with the basic.Agent framework. 
+add validity checking to get and set of Table get/set methods ?

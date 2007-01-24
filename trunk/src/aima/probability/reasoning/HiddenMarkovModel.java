@@ -96,6 +96,11 @@ public class HiddenMarkovModel {
 		return transitionProbabilityFromOldStateToNewState
 				* aBelief.getProbabilityOf(oldState);
 	}
+
+	public RandomVariable forward(RandomVariable aBelief, String action, String perception) {
+		
+		return perceptionUpdate(predict(aBelief,action),perception);
+	}
 	
 
 }
