@@ -51,7 +51,7 @@ public class HMMAgentTest extends TestCase {
 		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.RAINING));
 		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING));
 		
-		rainman.waitForPerception();
+		rainman.waitWithoutActing();
 		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.RAINING));
 		assertEquals(0.5, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING));
 		
@@ -59,7 +59,7 @@ public class HMMAgentTest extends TestCase {
 		assertEquals(0.818, rainman.belief().getProbabilityOf(HmmConstants.RAINING),TOLERANCE);
 		assertEquals(0.182, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING),TOLERANCE);
 
-		rainman.waitForPerception();
+		rainman.waitWithoutActing();
 		assertEquals(0.627, rainman.belief().getProbabilityOf(HmmConstants.RAINING),TOLERANCE);
 		assertEquals(0.373, rainman.belief().getProbabilityOf(HmmConstants.NOT_RAINING),TOLERANCE);
 		

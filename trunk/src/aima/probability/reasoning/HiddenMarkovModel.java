@@ -11,7 +11,7 @@ public class HiddenMarkovModel {
 
 	Table<String, String, Double> transitionModel, sensorModel;
 
-	RandomVariable priorDistribution;
+	private RandomVariable priorDistribution;
 
 	public HiddenMarkovModel(List<String> states, List<String> perceptions,
 			List<String> actions) {

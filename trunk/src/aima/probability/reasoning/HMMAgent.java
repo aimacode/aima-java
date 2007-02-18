@@ -8,7 +8,7 @@ public class HMMAgent {
 
 	public HMMAgent(HiddenMarkovModel hmm ){
 		this.hmm = hmm;
-		this.belief = hmm.priorDistribution.duplicate();
+		this.belief = hmm.prior().duplicate();
 	}
 	
 	public RandomVariable belief() {
@@ -21,7 +21,7 @@ public class HMMAgent {
 		belief = hmm.predict(belief,action);
 	}
 
-	public void waitForPerception() {
+	public void waitWithoutActing() {
 		act(HmmConstants.DO_NOTHING);
 	}
 	
