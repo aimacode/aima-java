@@ -16,7 +16,7 @@ import aima.logic.propositional.algorithms.Model;
  *  
  */
 public class ProbabilityDistribution {
-	private List<Row> rows;
+	private List<Row>  rows;
 
 	String[] variableNames;
 

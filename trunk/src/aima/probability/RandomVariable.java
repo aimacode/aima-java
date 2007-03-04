@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import aima.util.Matrix;
 import aima.util.Util;
 
 public class RandomVariable {
@@ -69,6 +70,22 @@ public class RandomVariable {
 		for (int i = 0; i < states.size(); i++) {
 			distribution.put(states.get(i), newProbs.get(i));
 		}
+	}
+
+	public Matrix asMatrix() {
+		Matrix m = new Matrix(states.size(),1);
+		for (int i= 0;i < states.size();i++){
+			m.set(i, 0, distribution.get(states.get(i)));
+		}
+		return m;
+		
+	}
+
+	public void updateFrom(Matrix predicted) {
+		for (int i= 0;i < states.size();i++){
+			distribution.put(states.get(i), predicted.get(i, 0));
+		}
+		
 	}
 
 }
