@@ -14,7 +14,7 @@ public class SensorModel {
 	table = new Table<String, String, Double>(states, perceptions);
     }
 
-    public void set(String state, String perception, double probability) {
+    public void setSensingProbability(String state, String perception, double probability) {
 	table.set(state, perception, probability);
 
     }

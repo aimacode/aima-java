@@ -46,7 +46,7 @@ public class TransitionModel {
 	return table.get(old_state_action, newState);
     }
 
-    public Matrix transitionModelToMatrix(RandomVariable aBelief, String action) {
+    public Matrix asMatrix(RandomVariable aBelief, String action) {
 	Matrix transitionMatrix = new Matrix(aBelief.states().size(), aBelief
 		.states().size());
 	for (int i = 0; i < aBelief.states().size(); i++) {

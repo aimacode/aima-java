@@ -26,7 +26,7 @@ public class HiddenMarkovModel {
 	RandomVariable newBelief = aBelief.duplicate();
 
 	Matrix beliefMatrix = aBelief.asMatrix();
-	Matrix transitionMatrix = transitionModel.transitionModelToMatrix(
+	Matrix transitionMatrix = transitionModel.asMatrix(
 		aBelief, action);
 	Matrix predicted = transitionMatrix.transpose().times(beliefMatrix);
 	newBelief.updateFrom(predicted);
@@ -39,8 +39,8 @@ public class HiddenMarkovModel {
 
 	//one way - use matrices
 	Matrix beliefMatrix = aBelief.asMatrix();
-	Matrix O = sensorModel.asMatrix(aBelief, perception);
-	Matrix updated = O.times(beliefMatrix);
+	Matrix o_matrix = sensorModel.asMatrix(aBelief, perception);
+	Matrix updated = o_matrix.times(beliefMatrix);
 	newBelief.updateFrom(updated);
 	newBelief.normalize();
 	return newBelief;
