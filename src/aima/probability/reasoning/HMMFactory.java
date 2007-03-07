@@ -39,10 +39,10 @@ public class HMMFactory {
 		
 		SensorModel sm = new SensorModel(states,perceptions);
 		//sm.setSensingProbaility(state,perception,p); given a state  the probability of  a perception is p
-		sm.set(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_CLOSED,0.4);
-		sm.set(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_OPEN, 0.6);
-		sm.set(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_OPEN, 0.2);
-		sm.set(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_CLOSED, 0.8);
+		sm.setSensingProbability(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_CLOSED,0.4);
+		sm.setSensingProbability(HmmConstants.DOOR_OPEN,HmmConstants.SEE_DOOR_OPEN, 0.6);
+		sm.setSensingProbability(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_OPEN, 0.2);
+		sm.setSensingProbability(HmmConstants.DOOR_CLOSED,HmmConstants.SEE_DOOR_CLOSED, 0.8);
 		
 		HiddenMarkovModel hmm = new HiddenMarkovModel(prior,tm,sm);
 		return hmm;
@@ -65,10 +65,10 @@ public class HMMFactory {
 		
 		SensorModel sm = new SensorModel(states,perceptions);
 		//sm.setSensingProbaility(state,perception,p); given a state  the probability of  a perception is p
-		sm.set(HmmConstants.RAINING,HmmConstants.SEE_UMBRELLA,0.9);
-		sm.set(HmmConstants.RAINING,HmmConstants.SEE_NO_UMBRELLA,0.1);
-		sm.set(HmmConstants.NOT_RAINING,HmmConstants.SEE_UMBRELLA,0.2);
-		sm.set(HmmConstants.NOT_RAINING,HmmConstants.SEE_NO_UMBRELLA,0.8);
+		sm.setSensingProbability(HmmConstants.RAINING,HmmConstants.SEE_UMBRELLA,0.9);
+		sm.setSensingProbability(HmmConstants.RAINING,HmmConstants.SEE_NO_UMBRELLA,0.1);
+		sm.setSensingProbability(HmmConstants.NOT_RAINING,HmmConstants.SEE_UMBRELLA,0.2);
+		sm.setSensingProbability(HmmConstants.NOT_RAINING,HmmConstants.SEE_NO_UMBRELLA,0.8);
 
 		
 		HiddenMarkovModel hmm = new HiddenMarkovModel(prior,tm,sm);
