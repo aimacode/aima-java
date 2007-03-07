@@ -6,4 +6,4 @@ Convert states, perceptions and actions into types (vs strings) and add simplety
 unify HMMAgent with the basic.Agent framework. 
 add validity checking to get and set of Table get/set methods ?
 
-refactor HMM class to prevent leakage of states() (as List) abstraction perhaps create SensorModel and Transition Model classes and move teh matrix manipulations to these classes ?
+throw away unused methods in class Matrix. adjust documentation to point to the web page

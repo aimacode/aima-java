@@ -1,143 +1,62 @@
 package aima.probability.reasoning;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import aima.probability.RandomVariable;
 import aima.util.Matrix;
-import aima.util.Table;
 
 public class HiddenMarkovModel {
 
-	Table<String, String, Double> transitionModel, sensorModel;
+    SensorModel sensorModel;
 
-	private RandomVariable priorDistribution;
+    TransitionModel transitionModel;
 
-	public HiddenMarkovModel(List<String> states, List<String> perceptions,
-			List<String> actions) {
-		priorDistribution = new RandomVariable("HiddenState", states);
-		createEmptyTransitionTable(states, actions);
-		sensorModel = new Table<String, String, Double>(states, perceptions);
-	}
+    private RandomVariable priorDistribution;
 
-	public HiddenMarkovModel(List<String> states, List<String> perceptions) {
-		// no actions possible thus the only "action" is to "wait" till the next perception is observed		
-		this(states,perceptions,Arrays.asList(new String[] {HmmConstants.DO_NOTHING}));
+    public HiddenMarkovModel(RandomVariable priorDistribution,
+	    TransitionModel tm, SensorModel sm) {
+	this.priorDistribution = priorDistribution;
+	this.transitionModel = tm;
+	this.sensorModel = sm;
+    }
 
-	}
+    public RandomVariable prior() {
+	return priorDistribution;
+    }
 
-	private void createEmptyTransitionTable(List<String> states,
-			List<String> actions) {
-		List<String> state_actions = new ArrayList<String>();
-		for (String state : states) {
-			for (String action : actions) {
-				state_actions.add(state.concat(action));
-			}
-		}
-		transitionModel = new Table<String, String, Double>(state_actions,
-				states);
+    public RandomVariable predict(RandomVariable aBelief, String action) {
+	RandomVariable newBelief = aBelief.duplicate();
 
-	}
+	Matrix beliefMatrix = aBelief.asMatrix();
+	Matrix transitionMatrix = transitionModel.transitionModelToMatrix(
+		aBelief, action);
+	Matrix predicted = transitionMatrix.transpose().times(beliefMatrix);
+	newBelief.updateFrom(predicted);
+	return newBelief;
+    }
 
-	public RandomVariable prior() {
-		return priorDistribution;
-	}
+    public RandomVariable perceptionUpdate(RandomVariable aBelief,
+	    String perception) {
+	RandomVariable newBelief = aBelief.duplicate();
 
+	//one way - use matrices
+	Matrix beliefMatrix = aBelief.asMatrix();
+	Matrix O = sensorModel.asMatrix(aBelief, perception);
+	Matrix updated = O.times(beliefMatrix);
+	newBelief.updateFrom(updated);
+	newBelief.normalize();
+	return newBelief;
 
-	public void setTransitionModelValue(String startState, String action,
-			String endState, Double probability) {
-		String start_state_plus_action = startState.concat(action);
-		transitionModel.set(start_state_plus_action, endState, probability);
-	}
-	
-	public void setTransitionModelValue(String startState,
-			String endState, Double probability) {
-		String start_state_plus_action = startState.concat(HmmConstants.DO_NOTHING);
-		transitionModel.set(start_state_plus_action, endState, probability);
-	}
+	// alternate way of doing this. clearer in intent.
+	// for (String state : aBelief.states()){
+	// double probabilityOfPerception= sensorModel.get(state,perception);
+	// newBelief.setProbabilityOf(state,probabilityOfPerception *
+	// aBelief.getProbabilityOf(state));
+	// }
+    }
 
-	public void setSensorModelValue(String state, String perception,
-			double probability) {
-		sensorModel.set(state, perception, probability);
+    public RandomVariable forward(RandomVariable aBelief, String action,
+	    String perception) {
 
-	}
-
-
-	
-	public RandomVariable predict(RandomVariable aBelief,String action){
-		RandomVariable newBelief = aBelief.duplicate();
-
-//		for (String newState : aBelief.states()) {
-//			double total = 0;
-//			for (String oldState : aBelief.states()) {
-//				total += partialProbabilityOfTransition(aBelief, oldState, action,newState);
-//			}
-//			newBelief.setProbabilityOf(newState, total);
-//		}
-		
-		
-		
-		Matrix beliefMatrix = aBelief.asMatrix();
-		Matrix transitionMatrix =  transitionModelToMatrix(aBelief,action);
-		Matrix predicted = transitionMatrix.transpose().times(beliefMatrix);
-		newBelief.updateFrom(predicted);
-		return newBelief;
-	}
-	
-	private Matrix transitionModelToMatrix(RandomVariable aBelief,String action) {
-		Matrix transitionMatrix = new Matrix(aBelief.states().size(),aBelief.states().size()); 
-		for (int i=0;i<aBelief.states().size();i++) {
-			String oldState = aBelief.states().get(i);
-			String old_state_action = oldState.concat(action);
-			for (int j=0;j<aBelief.states().size();j++) {
-				String newState = aBelief.states().get(j);
-				double transitionProbability = transitionModel
-				.get(old_state_action, newState);
-				transitionMatrix.set(i,j,transitionProbability);
-			}
-		}
-		return transitionMatrix;
-	}
-
-	public RandomVariable perceptionUpdate(RandomVariable aBelief,String perception) {
-		RandomVariable newBelief = aBelief.duplicate();
-//		for (String state : aBelief.states()){
-//			double probabilityOfPerception= sensorModel.get(state,perception);
-//			newBelief.setProbabilityOf(state,probabilityOfPerception * aBelief.getProbabilityOf(state));
-//		}
-		Matrix beliefMatrix = aBelief.asMatrix();
-		Matrix O = sensorModelToMatrix(aBelief,perception);
-		Matrix updated = O.times(beliefMatrix);
-		newBelief.updateFrom(updated);
-		newBelief.normalize();
-		return newBelief;
-	}
-
-	
-
-	private Matrix sensorModelToMatrix(RandomVariable aBelief,String perception) {
-		List<Double> values = new ArrayList<Double>();
-		for (String state :aBelief.states()){
-			values.add(sensorModel.get(state, perception));
-		}
-		Matrix OMatrix = Matrix.createDiagonalMatrix(values); 
-		return OMatrix;
-	}
-
-	private double partialProbabilityOfTransition(RandomVariable aBelief, String oldState, String action,
-			String newState) {
-		String old_state_action = oldState.concat(action);
-		double transitionProbabilityFromOldStateToNewState = transitionModel
-				.get(old_state_action, newState);
-		return transitionProbabilityFromOldStateToNewState
-				* aBelief.getProbabilityOf(oldState);
-	}
-
-	public RandomVariable forward(RandomVariable aBelief, String action, String perception) {
-		
-		return perceptionUpdate(predict(aBelief,action),perception);
-	}
-	
+	return perceptionUpdate(predict(aBelief, action), perception);
+    }
 
 }
