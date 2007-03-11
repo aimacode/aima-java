@@ -85,9 +85,9 @@ public class RandomVariable {
 
     }
 
-    public void updateFrom(Matrix predicted) {
+    public void updateFrom(Matrix aMatrix) {
 	for (int i = 0; i < states.size(); i++) {
-	    distribution.put(states.get(i), predicted.get(i, 0));
+	    distribution.put(states.get(i), aMatrix.get(i, 0));
 	}
 
     }
