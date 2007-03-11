@@ -60,5 +60,9 @@ public class TransitionModel {
 	}
 	return transitionMatrix;
     }
+    
+    public Matrix asMatrix(RandomVariable aBelief) {
+	return asMatrix(aBelief,HmmConstants.DO_NOTHING);
+    }
 
 }

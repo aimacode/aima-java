@@ -58,5 +58,16 @@ public class HiddenMarkovModel {
 
 	return perceptionUpdate(predict(aBelief, action), perception);
     }
+    
+    public RandomVariable step_backward(RandomVariable forwardBelief,RandomVariable postBelief,String perception){
+	RandomVariable result =  postBelief.duplicate();
+	Matrix oMatrix = sensorModel.asMatrix(postBelief,perception);
+	Matrix transitionMatrix = transitionModel.asMatrix(postBelief);//action should be passed in here? 
+	Matrix backwardMatrix = transitionMatrix.times(oMatrix.times(postBelief.asMatrix()));
+	Matrix resultMatrix = backwardMatrix.arrayTimes(forwardBelief.asMatrix());
+	result.updateFrom(resultMatrix);
+	result.normalize();
+	return result;
+    }
 
 }
