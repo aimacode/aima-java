@@ -92,4 +92,14 @@ public class RandomVariable {
 
     }
 
+    public RandomVariable createUnitBelief() {
+	RandomVariable result = duplicate();
+	for (String s : states()){
+	    result.setProbabilityOf(s,1.0);
+	}
+	return result;
+    }
+    
+    
+
 }

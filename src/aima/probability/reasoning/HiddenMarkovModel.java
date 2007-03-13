@@ -1,5 +1,8 @@
 package aima.probability.reasoning;
 
+import java.util.Arrays;
+import java.util.List;
+
 import aima.probability.RandomVariable;
 import aima.util.Matrix;
 
@@ -26,8 +29,7 @@ public class HiddenMarkovModel {
 	RandomVariable newBelief = aBelief.duplicate();
 
 	Matrix beliefMatrix = aBelief.asMatrix();
-	Matrix transitionMatrix = transitionModel.asMatrix(
-		aBelief, action);
+	Matrix transitionMatrix = transitionModel.asMatrix(aBelief, action);
 	Matrix predicted = transitionMatrix.transpose().times(beliefMatrix);
 	newBelief.updateFrom(predicted);
 	return newBelief;
@@ -37,7 +39,7 @@ public class HiddenMarkovModel {
 	    String perception) {
 	RandomVariable newBelief = aBelief.duplicate();
 
-	//one way - use matrices
+	// one way - use matrices
 	Matrix beliefMatrix = aBelief.asMatrix();
 	Matrix o_matrix = sensorModel.asMatrix(aBelief, perception);
 	Matrix updated = o_matrix.times(beliefMatrix);
@@ -58,16 +60,49 @@ public class HiddenMarkovModel {
 
 	return perceptionUpdate(predict(aBelief, action), perception);
     }
-    
-    public RandomVariable step_backward(RandomVariable forwardBelief,RandomVariable postBelief,String perception){
-	RandomVariable result =  postBelief.duplicate();
-	Matrix oMatrix = sensorModel.asMatrix(postBelief,perception);
-	Matrix transitionMatrix = transitionModel.asMatrix(postBelief);//action should be passed in here? 
-	Matrix backwardMatrix = transitionMatrix.times(oMatrix.times(postBelief.asMatrix()));
-	Matrix resultMatrix = backwardMatrix.arrayTimes(forwardBelief.asMatrix());
+
+    public RandomVariable calculate_next_backward_message(RandomVariable forwardBelief,
+	    RandomVariable present_backward_message, String perception) {
+	RandomVariable result = present_backward_message.duplicate();
+	Matrix oMatrix = sensorModel.asMatrix(present_backward_message, perception);
+	Matrix transitionMatrix = transitionModel.asMatrix(present_backward_message);// action
+	// should
+	// be
+	// passed
+	// in
+	// here?
+	Matrix backwardMatrix = transitionMatrix.times(oMatrix.times(present_backward_message
+		.asMatrix()));
+	Matrix resultMatrix = backwardMatrix.arrayTimes(forwardBelief
+		.asMatrix());
 	result.updateFrom(resultMatrix);
 	result.normalize();
 	return result;
+    }
+
+    public List<RandomVariable> forward_backward(List<String> perceptions) {
+	RandomVariable forwardMessages[] = new RandomVariable[perceptions
+		.size()+1];
+	RandomVariable backwardMessage = priorDistribution.createUnitBelief();
+	RandomVariable smoothedBeliefs[] = new RandomVariable[perceptions
+		.size()];
+
+	forwardMessages[0] = priorDistribution;
+	for (int i = 1; i <= perceptions.size(); i++) { // N.B i starts at 1 ,
+	    // not zero
+	    forwardMessages[i] = forward(forwardMessages[i - 1],
+		    HmmConstants.DO_NOTHING, perceptions.get(i - 1));
+
+	}
+	for (int j = perceptions.size(); j > 0; j--) {
+	    RandomVariable smoothed =  priorDistribution.duplicate();
+	    smoothed.updateFrom(forwardMessages[j].asMatrix().arrayTimes(backwardMessage.asMatrix()));
+	    smoothed.normalize();
+	    smoothedBeliefs[j-1] = smoothed;
+	    backwardMessage = calculate_next_backward_message(forwardMessages[j],backwardMessage,perceptions.get(j-1));
+	}
+	
+	return Arrays.asList(smoothedBeliefs);
     }
 
 }
