@@ -11,8 +11,10 @@ import aima.util.Table;
 public class TransitionModel {
 
     private Table<String, String, Double> table;
+    private List<String> states;
 
     public TransitionModel(List<String> states, List<String> actions) {
+	this.states = states;
 	List<String> state_actions = new ArrayList<String>();
 	for (String state : states) {
 	    for (String action : actions) {
@@ -46,14 +48,14 @@ public class TransitionModel {
 	return table.get(old_state_action, newState);
     }
 
-    public Matrix asMatrix(RandomVariable aBelief, String action) {
-	Matrix transitionMatrix = new Matrix(aBelief.states().size(), aBelief
-		.states().size());
-	for (int i = 0; i < aBelief.states().size(); i++) {
-	    String oldState = aBelief.states().get(i);
+    public Matrix asMatrix(String action) {
+	Matrix transitionMatrix = new Matrix(states.size(), 
+		states.size());
+	for (int i = 0; i < states.size(); i++) {
+	    String oldState = states.get(i);
 	    String old_state_action = oldState.concat(action);
-	    for (int j = 0; j < aBelief.states().size(); j++) {
-		String newState = aBelief.states().get(j);
+	    for (int j = 0; j < states.size(); j++) {
+		String newState = states.get(j);
 		double transitionProbability = get(old_state_action, newState);
 		transitionMatrix.set(i, j, transitionProbability);
 	    }
@@ -61,8 +63,13 @@ public class TransitionModel {
 	return transitionMatrix;
     }
     
-    public Matrix asMatrix(RandomVariable aBelief) {
-	return asMatrix(aBelief,HmmConstants.DO_NOTHING);
+    public Matrix asMatrix() {
+	return asMatrix(HmmConstants.DO_NOTHING);
+    }
+    
+    public Matrix unitMatrix() {
+	Matrix m =  asMatrix();
+	return Matrix.identity(m.getRowDimension(), m.getColumnDimension());
     }
 
 }

@@ -9,8 +9,10 @@ import aima.util.Table;
 
 public class SensorModel {
     private Table<String, String, Double> table;
+    private List<String> states;
 
     public SensorModel(List<String> states, List<String> perceptions) {
+	this.states = states;
 	table = new Table<String, String, Double>(states, perceptions);
     }
 
@@ -24,9 +26,10 @@ public class SensorModel {
 	return table.get(state, perception);
     }
 
-    public Matrix asMatrix(RandomVariable aBelief, String perception) {
+    public Matrix asMatrix(String perception) {
 	List<Double> values = new ArrayList<Double>();
-	for (String state : aBelief.states()) {
+	//for (String state : aBelief.states()) {
+	for (String state : states) {
 	    values.add(get(state, perception));
 	}
 	Matrix OMatrix = Matrix.createDiagonalMatrix(values);

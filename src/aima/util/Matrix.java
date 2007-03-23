@@ -1040,6 +1040,20 @@ public class Matrix implements Cloneable, java.io.Serializable {
       v.copyInto(A);  // copy the rows out of the vector
       return new Matrix(A);
    }
+   
+   public String toString(){
+       StringBuffer buf = new StringBuffer();
+       for (int i=0;i<getRowDimension();i++){
+
+	   for (int j=0;j<getColumnDimension();j++){
+	       buf.append(get(i,j));
+	       buf.append(" ");
+	   }
+	   buf.append("\n");
+       }
+       
+       return buf.toString();
+   }
 
 
 /* ------------------------
