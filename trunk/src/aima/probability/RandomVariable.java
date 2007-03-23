@@ -100,6 +100,10 @@ public class RandomVariable {
 	return result;
     }
     
+    public String toString(){
+	return asMatrix().toString();
+    }
+    
     
 
 }
