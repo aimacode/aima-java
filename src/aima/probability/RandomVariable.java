@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import aima.probability.reasoning.HiddenMarkovModel;
+import aima.probability.reasoning.Particle;
+import aima.probability.reasoning.ParticleSet;
 import aima.util.Matrix;
 import aima.util.Util;
 
@@ -28,6 +31,7 @@ public class RandomVariable {
 	    distribution.put(s, initialProbability);
 	}
     }
+    
 
     private RandomVariable(String name, List<String> states,
 	    Hashtable<String, Double> distribution) {
@@ -102,6 +106,27 @@ public class RandomVariable {
     
     public String toString(){
 	return asMatrix().toString();
+    }
+
+    public ParticleSet toParticleSet(HiddenMarkovModel hmm, Randomizer randomizer,int numberOfParticles) {
+	ParticleSet result = new ParticleSet(hmm);
+	for (int i=0;i<numberOfParticles;i++){
+	    double rvalue= randomizer.nextDouble();
+	    String state = getStateForRandomNumber(rvalue);
+	    result.add(new Particle(state,0));
+	}
+	return result;
+    }
+
+    private String getStateForRandomNumber(double rvalue) {
+	double total = 0.0;
+	for (String s: states){
+	    total = total + distribution.get(s);
+	    if (total >= rvalue){
+		return s;
+	    }
+	}
+	throw new RuntimeException("cannot handle " +rvalue);
     }
     
     

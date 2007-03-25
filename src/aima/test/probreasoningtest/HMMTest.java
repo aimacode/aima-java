@@ -201,34 +201,34 @@ public class HMMTest extends TestCase {
 		.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
     }
 
-    public void xtestTwoStepFixedLagSmoothingOnRainManHmm() {
+    public void testTwoStepFixedLagSmoothingOnRainManHmm() {
 	FixedLagSmoothing fls = new FixedLagSmoothing(rainmanHmm, 2);
 
-	RandomVariable smoothedDayZero = fls.smooth(HmmConstants.SEE_UMBRELLA); // see
+	RandomVariable smoothedOne = fls.smooth(HmmConstants.SEE_UMBRELLA); // see
                                                                                 // umbrella
                                                                                 // on
                                                                                 // day
                                                                                 // one
-	assertNull(smoothedDayZero);
+	assertNull(smoothedOne);
 
-	smoothedDayZero = fls.smooth(HmmConstants.SEE_UMBRELLA); // see
+	smoothedOne = fls.smooth(HmmConstants.SEE_UMBRELLA); // see
                                                                         // umbrella
                                                                         // on
                                                                         // day
                                                                         // two
-	assertEquals(0.653, smoothedDayZero
+	assertEquals(0.653, smoothedOne
 		.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-	assertEquals(0.346, smoothedDayZero
+	assertEquals(0.346, smoothedOne
 		.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 
-	RandomVariable smoothedDayOne = fls.smooth(HmmConstants.SEE_UMBRELLA);// see
+	RandomVariable smoothedTwo = fls.smooth(HmmConstants.SEE_UMBRELLA);// see
                                                                                 // umbrella
                                                                                 // on
                                                                                 // day
                                                                                 // 3
-	assertEquals(0.894, smoothedDayOne
+	assertEquals(0.894, smoothedTwo
 		.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-	assertEquals(0.105, smoothedDayOne
+	assertEquals(0.105, smoothedTwo
 		.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 
     }

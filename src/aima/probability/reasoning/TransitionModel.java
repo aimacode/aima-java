@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.corba.se.impl.ior.OldObjectKeyTemplateBase;
+
 import aima.probability.RandomVariable;
 import aima.util.Matrix;
 import aima.util.Table;
@@ -71,5 +73,29 @@ public class TransitionModel {
 	Matrix m =  asMatrix();
 	return Matrix.identity(m.getRowDimension(), m.getColumnDimension());
     }
+
+    public String getStateForProbability(String oldState, double probability) {
+	
+	return getStateForGivenActionAndProbability(oldState,HmmConstants.DO_NOTHING,probability);
+    }
+    
+    public String getStateForProbability(String oldState, String action,double probability) {
+	
+	return getStateForGivenActionAndProbability(oldState,action,probability);
+    }
+    
+    public String getStateForGivenActionAndProbability(String oldState,String action, double probability) {
+	String state_action = oldState+action;
+	
+	double total = 0.0;
+	for (String state : states){
+	    total += table.get(state_action,state);
+	    if (total >= probability){
+		return state;
+	    }
+	}
+	return null;
+    }
+
 
 }

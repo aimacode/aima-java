@@ -3,6 +3,7 @@
  *
  */
 package aima.util;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class Table<RowHeaderType,ColumnHeaderType,ValueType> {
 		}
 		return buf.toString();
 	}
+	
+	
+
 	class Row<R>{
 		private Hashtable<ColumnHeaderType,ValueType> cells;
 		public Row(){
