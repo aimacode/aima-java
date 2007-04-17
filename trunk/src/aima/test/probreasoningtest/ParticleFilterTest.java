@@ -33,7 +33,7 @@ public class ParticleFilterTest extends TestCase {
     
     
     
-    public void testFilteringWithParticleSetsForRainmanHmm(){
+    public void testFilteringWithParticleSetsWorksForRainmanHmm(){
 	Randomizer r = new MockRandomizer(new double[]{0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9});
 	ParticleSet starting =  rainman.prior().toParticleSet(rainman,r,100);
 	assertEquals(56,starting.numberOfParticlesWithState(HmmConstants.RAINING));
@@ -62,7 +62,7 @@ public class ParticleFilterTest extends TestCase {
 	assertEquals(34,afterStepOne.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
 	
 	//step two =  robot pushes the door  and then senses open door
-	ParticleSet afterStepTwo = starting.filter(HmmConstants.PUSH_DOOR,HmmConstants.SEE_DOOR_OPEN,r); //robot takes no action but senses open door
+	ParticleSet afterStepTwo = starting.filter(HmmConstants.PUSH_DOOR,HmmConstants.SEE_DOOR_OPEN,r); 
 	assertEquals(100,afterStepTwo.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
 	assertEquals(0,afterStepTwo.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
     }
