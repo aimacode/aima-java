@@ -1,4 +1,4 @@
-package aima.probability.decision;
+package aima.probability.decision.cellworld;
 
 public class Cell {
 	private int x_co_ord,y_co_ord;
