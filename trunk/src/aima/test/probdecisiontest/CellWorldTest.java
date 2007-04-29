@@ -2,7 +2,7 @@ package aima.test.probdecisiontest;
 
 import junit.framework.TestCase;
 import aima.probability.Randomizer;
-import aima.probability.decision.CellWorld;
+import aima.probability.decision.cellworld.CellWorld;
 import aima.test.probabilitytest.MockRandomizer;
 import aima.util.Pair;
 
@@ -14,6 +14,7 @@ public class CellWorldTest extends TestCase {
 	public void setUp(){
 		cw = new CellWorld(3,4,0.01,-0.4);
 		cw.markBlocked(2, 2);
+		cw.setReward(2,4,-1);
 		
 		alwaysLessThanEightyPercent = new MockRandomizer(new double[]{0.7});
 		betweenEightyAndNinetyPercent = new MockRandomizer(new double[]{0.85});

@@ -1,4 +1,4 @@
-package aima.probability.decision;
+package aima.probability.decision.cellworld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,5 +134,11 @@ public class CellWorld {
 			return new Pair<Integer, Integer>(i, j);
 		}
 		return new Pair<Integer, Integer>(i-1, j);
+	}
+
+	public void setReward(int i, int j, double reward) {
+		Cell c = getCellAt(i, j);
+		c.setReward(reward);
+		
 	}
 }
