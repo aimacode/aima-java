@@ -18,12 +18,18 @@ public class Pair<X, Y> {
 	return b;
     }
 
-    public boolean equals(Pair<X, Y> p) {
+    public boolean equals(Object o) {
+    	
+    Pair<X, Y> p =  (Pair<X, Y>)o;
 	return a.equals(p.a) && b.equals(p.b);
     }
 
     public int hashCode() {
 	return a.hashCode() + 31 * b.hashCode();
+    }
+    
+    public String toString(){
+    	return "< "+getFirst().toString()+ " , " + getSecond().toString()+" > ";
     }
 
 }

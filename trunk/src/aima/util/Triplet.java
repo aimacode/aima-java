@@ -22,7 +22,8 @@ public class Triplet<X, Y,Z> {
 	return z;
     }
     
-    public boolean equals(Triplet<X,Y,Z> other){
+    public boolean equals(Object o){
+    Triplet<X,Y,Z> other = (Triplet<X,Y,Z> )o;
 	return (x.equals(other.x)) && (y.equals(other.y)) && (z.equals(other.z));
     }
     

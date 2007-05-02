@@ -1,9 +1,14 @@
 package aima.probability.decision.cellworld;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 import aima.probability.Randomizer;
+import aima.probability.decision.MDPTransitionModel;
+import aima.probability.decision.RewardFunction;
+import aima.probability.decision.UtilityFunction;
 import aima.util.Pair;
 
 public class CellWorld {
@@ -62,14 +67,14 @@ public class CellWorld {
 		throw new RuntimeException("No Cell found at " + i + " , " + j);
 	}
 
-	public Pair<Integer, Integer> moveProbabilisticallyFrom(int i, int j, String direction,
-			Randomizer r) {
+	public Pair<Integer, Integer> moveProbabilisticallyFrom(int i, int j,
+			String direction, Randomizer r) {
 
-		return moveFrom(i,j,determineDirectionOfMovement(direction, r));
+		return moveFrom(i, j, determineDirectionOfActualMovement(direction, r));
 
 	}
-	
-	private Pair<Integer, Integer> moveFrom(int i, int j, String direction){
+
+	private Pair<Integer, Integer> moveFrom(int i, int j, String direction) {
 		if (direction.equals(LEFT)) {
 			return moveLeftFrom(i, j);
 		}
@@ -86,26 +91,44 @@ public class CellWorld {
 				+ " , " + j);
 	}
 	
-	private String determineDirectionOfMovement(String commandedDirection, Randomizer r){
-		double prob = r.nextDouble();
-		if (prob < 0.8){
+	private Pair<Integer, Integer> moveFrom(Pair<Integer,Integer> startingPosition, String direction){
+		return moveFrom(startingPosition.getFirst(),startingPosition.getSecond() , direction);
+	}
+
+	private String determineDirectionOfActualMovement(
+			String commandedDirection, double prob) {
+		if (prob < 0.8) {
 			return commandedDirection;
-		}else if ((prob > 0.8) && (prob < 0.9)){
-			if ((commandedDirection.equals(LEFT)) || (commandedDirection.equals(RIGHT))){
+		} else if ((prob > 0.8) && (prob < 0.9)) {
+			if ((commandedDirection.equals(LEFT))
+					|| (commandedDirection.equals(RIGHT))) {
 				return UP;
 			}
-			if ((commandedDirection.equals(UP)) || (commandedDirection.equals(DOWN))){
+			if ((commandedDirection.equals(UP))
+					|| (commandedDirection.equals(DOWN))) {
 				return LEFT;
 			}
-		}else{ //0.9 < prob  < 1.0
-			if ((commandedDirection.equals(LEFT)) || (commandedDirection.equals(RIGHT))){
+		} else { // 0.9 < prob < 1.0
+			if ((commandedDirection.equals(LEFT))
+					|| (commandedDirection.equals(RIGHT))) {
 				return DOWN;
 			}
-			if ((commandedDirection.equals(UP)) || (commandedDirection.equals(DOWN))){
+			if ((commandedDirection.equals(UP))
+					|| (commandedDirection.equals(DOWN))) {
 				return RIGHT;
 			}
 		}
-		throw new RuntimeException("Unable to determine direction when command =  " + commandedDirection + " and probability = " +prob);
+		throw new RuntimeException(
+				"Unable to determine direction when command =  "
+						+ commandedDirection + " and probability = " + prob);
+
+	}
+
+	private String determineDirectionOfActualMovement(
+			String commandedDirection, Randomizer r) {
+		return determineDirectionOfActualMovement(commandedDirection, r
+				.nextDouble());
+
 	}
 
 	private Pair<Integer, Integer> moveLeftFrom(int i, int j) {
@@ -121,24 +144,129 @@ public class CellWorld {
 		}
 		return new Pair<Integer, Integer>(i, j + 1);
 	}
-	
+
 	private Pair<Integer, Integer> moveUpFrom(int i, int j) {
-		if (isBlocked(i+1, j)) {
+		if (isBlocked(i + 1, j)) {
 			return new Pair<Integer, Integer>(i, j);
 		}
-		return new Pair<Integer, Integer>(i+1, j);
+		return new Pair<Integer, Integer>(i + 1, j);
 	}
-	
+
 	private Pair<Integer, Integer> moveDownFrom(int i, int j) {
-		if (isBlocked(i-1, j)) {
+		if (isBlocked(i - 1, j)) {
 			return new Pair<Integer, Integer>(i, j);
 		}
-		return new Pair<Integer, Integer>(i-1, j);
+		return new Pair<Integer, Integer>(i - 1, j);
 	}
 
 	public void setReward(int i, int j, double reward) {
 		Cell c = getCellAt(i, j);
 		c.setReward(reward);
-		
+
 	}
+
+	public List<Cell> unblockedCells() {
+		List<Cell> res = new ArrayList<Cell>();
+		for (Cell c : allCells) {
+			if (!(blockedCells.contains(c))) {
+				res.add(c);
+			}
+		}
+		return res;
+	}
+
+	public boolean isBlocked(Pair<Integer, Integer> p) {
+		return isBlocked(p.getFirst(), p.getSecond());
+	}
+
+	// what is the probability of starting from position p1 taking action a and
+	// reaaching position p2
+	// method is public ONLY for testing do not use in client code.
+	public double getTransitionProbability(
+			Pair<Integer, Integer> startingPosition, String actionDesired,
+			Pair<Integer, Integer> endingPosition) {
+		
+
+		String firstRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.85);
+		String secondRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.95);
+		
+		
+		Hashtable<String,Pair<Integer,Integer>> actionsToPositions= new Hashtable<String,Pair<Integer,Integer>>();
+		actionsToPositions.put(actionDesired, moveFrom(startingPosition, actionDesired));
+		actionsToPositions.put(firstRightAngledAction, moveFrom(startingPosition, firstRightAngledAction));
+		actionsToPositions.put(secondRightAngledAction, moveFrom(startingPosition, secondRightAngledAction));
+		
+		Hashtable<Pair<Integer,Integer>, Double> positionsToProbability = new Hashtable<Pair<Integer,Integer>, Double> ();
+		for (Pair<Integer,Integer> p : actionsToPositions.values()){
+			positionsToProbability.put(p, 0.0);
+		}
+		
+		for (String action: actionsToPositions.keySet()){
+			Pair<Integer,Integer> position= actionsToPositions.get(action);
+			double value = positionsToProbability.get(position);
+			if (action.equals(actionDesired)){
+				positionsToProbability.put(position, value+0.8);
+			}else{ //right angled steps
+				positionsToProbability.put(position, value+0.1);
+			}
+			
+		}
+		
+		if (positionsToProbability.keySet().contains(endingPosition)){
+			return positionsToProbability.get(endingPosition);
+		}
+		else{
+			return 0.0;
+		}
+		
+
+	}
+
+	private UtilityFunction getUtilityFunction() {
+		UtilityFunction<Pair<Integer, Integer>> uf = new UtilityFunction<Pair<Integer, Integer>>();
+		for (Cell c : unblockedCells()) {
+			uf.setUtility(c.position(), c.getUtility());
+		}
+		return uf;
+	}
+
+	public MDPTransitionModel<Pair<Integer, Integer>,String> getTransitionModel() {
+		MDPTransitionModel<Pair<Integer, Integer>, String> mtm = new MDPTransitionModel<Pair<Integer, Integer>, String>();
+	
+		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
+		for (Cell c : unblockedCells()) {
+			Pair<Integer,Integer> startingPosition = c.position();
+			for (String actionDesired: actions){
+				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells
+					Pair<Integer,Integer> endingPosition = target.position();
+					double transitionProbability = getTransitionProbability(startingPosition, actionDesired, endingPosition);
+					if (!(transitionProbability == 0.0)){
+						
+						mtm.setTransitionProbability(startingPosition, actionDesired, endingPosition, transitionProbability);
+					}
+				}
+			}
+		}
+		return mtm;
+	}
+
+	public class CellWorldRewardFunction implements
+			RewardFunction<Pair<Integer, Integer>> {
+		private Hashtable<Pair<Integer, Integer>, Double> hash;
+
+		CellWorldRewardFunction() {
+			for (Cell c : unblockedCells()) {
+				Pair<Integer, Integer> pair = c.position();
+				double reward = c.getReward();
+				hash.put(pair, reward);
+			}
+		}
+
+		public double getRewardFor(Pair<Integer, Integer> state) {
+
+			return hash.get(state);
+		}
+
+	}
+
 }

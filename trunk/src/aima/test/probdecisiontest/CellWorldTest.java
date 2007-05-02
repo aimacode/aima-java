@@ -1,7 +1,11 @@
 package aima.test.probdecisiontest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 import aima.probability.Randomizer;
+import aima.probability.decision.MDPTransitionModel;
 import aima.probability.decision.cellworld.CellWorld;
 import aima.test.probabilitytest.MockRandomizer;
 import aima.util.Pair;
@@ -138,6 +142,53 @@ public class CellWorldTest extends TestCase {
 		Pair<Integer,Integer> pos = cw.moveProbabilisticallyFrom(2,3,cw.UP,greaterThanNinetyPercent);
 		assertEquals(new Integer(2), pos.getFirst());
 		assertEquals(new Integer(4), pos.getSecond());
+	}
+	
+	public void testNumberOfUnBlockedCells(){
+		assertEquals(11,cw.unblockedCells().size());
+	}
+	
+	public void testTransitionProbabilityCalculationWhenEndingPositionIsNextToStartingPositionButIsBlocked(){
+		Pair<Integer,Integer> startingPosition = new Pair<Integer,Integer>(2,1); //to the left of blocked cell
+		Pair<Integer,Integer> endingPosition = new Pair<Integer,Integer>(2,2); //blocked cell
+		double transitionProb = cw.getTransitionProbability(startingPosition, cw.RIGHT, endingPosition);
+		assertEquals(0.0, transitionProb);
+	}
+	
+	public void testTransitionProbabilityCalculationWhenEndingPositionCannotBeReachedUsingDesiredActionOrRightAngledSteps(){
+		Pair<Integer,Integer> startingPosition = new Pair<Integer,Integer>(1,3); 
+		Pair<Integer,Integer> endingPosition = new Pair<Integer,Integer>(3,3);
+		double transitionProb = cw.getTransitionProbability(startingPosition, cw.UP, endingPosition);
+		assertEquals(0.0, transitionProb);
+	}
+	
+	public void testTransitionProbabilityCalculationWhenEndingPositionReachebleByExecutingSuggestedAction(){
+		Pair<Integer,Integer> startingPosition = new Pair<Integer,Integer>(1,1); 
+		Pair<Integer,Integer> endingPosition = new Pair<Integer,Integer>(2,1);
+		double transitionProb = cw.getTransitionProbability(startingPosition, cw.UP, endingPosition);
+		assertEquals(0.8, transitionProb);
+
+	}
+	
+	public void testTransitionProbabilityCalculationWhenBothRightAngledActiosnLeadToStartingPosition(){
+		Pair<Integer,Integer> startingPosition = new Pair<Integer,Integer>(2,1); 
+		Pair<Integer,Integer> endingPosition = new Pair<Integer,Integer>(2,1);
+		double transitionProb = cw.getTransitionProbability(startingPosition, cw.UP, endingPosition);
+		assertEquals(0.2, transitionProb);
+		
+	}
+	
+	public void testTransitionModelCreation(){
+		MDPTransitionModel<Pair<Integer,Integer>, String> mtm = cw.getTransitionModel();
+		Pair<Integer,Integer> startingPosition = new Pair<Integer,Integer>(1,1); 
+		Pair<Integer,Integer> endingPosition = new Pair<Integer,Integer>(2,1);
+		assertEquals(0.8, mtm.getTransitionProbability(startingPosition, cw.UP, endingPosition));
+		
+		Pair<Integer,Integer> endingPosition2 = new Pair<Integer,Integer>(1,1);
+		assertEquals(0.1, mtm.getTransitionProbability(startingPosition, cw.UP, endingPosition2));
+		Pair<Integer,Integer> endingPosition3 = new Pair<Integer,Integer>(1,2);
+		assertEquals(0.1, mtm.getTransitionProbability(startingPosition, cw.UP, endingPosition3));
+
 	}
 
 }
