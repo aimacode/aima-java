@@ -1,6 +1,5 @@
 package aima.probability.decision.cellworld;
 
-import aima.util.Pair;
 
 public class Cell {
 	private int x_co_ord,y_co_ord;
@@ -37,8 +36,8 @@ public class Cell {
 		this.utility = utility;
 	}
 	
-	public Pair<Integer,Integer> position(){
-		return new Pair<Integer,Integer>(getX(),getY());
+	public CellWorldPosition  position(){
+		return new  CellWorldPosition(getX(),getY());
 	}
 
 	

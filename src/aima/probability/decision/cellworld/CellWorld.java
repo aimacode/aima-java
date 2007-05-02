@@ -67,14 +67,14 @@ public class CellWorld {
 		throw new RuntimeException("No Cell found at " + i + " , " + j);
 	}
 
-	public Pair<Integer, Integer> moveProbabilisticallyFrom(int i, int j,
+	public CellWorldPosition moveProbabilisticallyFrom(int i, int j,
 			String direction, Randomizer r) {
 
 		return moveFrom(i, j, determineDirectionOfActualMovement(direction, r));
 
 	}
 
-	private Pair<Integer, Integer> moveFrom(int i, int j, String direction) {
+	private CellWorldPosition moveFrom(int i, int j, String direction) {
 		if (direction.equals(LEFT)) {
 			return moveLeftFrom(i, j);
 		}
@@ -91,8 +91,8 @@ public class CellWorld {
 				+ " , " + j);
 	}
 	
-	private Pair<Integer, Integer> moveFrom(Pair<Integer,Integer> startingPosition, String direction){
-		return moveFrom(startingPosition.getFirst(),startingPosition.getSecond() , direction);
+	private CellWorldPosition moveFrom(CellWorldPosition startingPosition, String direction){
+		return moveFrom(startingPosition.getX(),startingPosition.getY() , direction);
 	}
 
 	private String determineDirectionOfActualMovement(
@@ -131,32 +131,32 @@ public class CellWorld {
 
 	}
 
-	private Pair<Integer, Integer> moveLeftFrom(int i, int j) {
+	private CellWorldPosition moveLeftFrom(int i, int j) {
 		if (isBlocked(i, j - 1)) {
-			return new Pair<Integer, Integer>(i, j);
+			return new CellWorldPosition(i, j);
 		}
-		return new Pair<Integer, Integer>(i, j - 1);
+		return new CellWorldPosition(i, j - 1);
 	}
 
-	private Pair<Integer, Integer> moveRightFrom(int i, int j) {
+	private CellWorldPosition moveRightFrom(int i, int j) {
 		if (isBlocked(i, j + 1)) {
-			return new Pair<Integer, Integer>(i, j);
+			return new CellWorldPosition(i, j);
 		}
-		return new Pair<Integer, Integer>(i, j + 1);
+		return new CellWorldPosition(i, j + 1);
 	}
 
-	private Pair<Integer, Integer> moveUpFrom(int i, int j) {
+	private CellWorldPosition moveUpFrom(int i, int j) {
 		if (isBlocked(i + 1, j)) {
-			return new Pair<Integer, Integer>(i, j);
+			return new CellWorldPosition(i, j);
 		}
-		return new Pair<Integer, Integer>(i + 1, j);
+		return new CellWorldPosition(i + 1, j);
 	}
 
-	private Pair<Integer, Integer> moveDownFrom(int i, int j) {
+	private CellWorldPosition moveDownFrom(int i, int j) {
 		if (isBlocked(i - 1, j)) {
-			return new Pair<Integer, Integer>(i, j);
+			return new CellWorldPosition(i, j);
 		}
-		return new Pair<Integer, Integer>(i - 1, j);
+		return new CellWorldPosition(i - 1, j);
 	}
 
 	public void setReward(int i, int j, double reward) {
@@ -183,26 +183,26 @@ public class CellWorld {
 	// reaaching position p2
 	// method is public ONLY for testing do not use in client code.
 	public double getTransitionProbability(
-			Pair<Integer, Integer> startingPosition, String actionDesired,
-			Pair<Integer, Integer> endingPosition) {
+			CellWorldPosition startingPosition, String actionDesired,
+			CellWorldPosition endingPosition) {
 		
 
 		String firstRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.85);
 		String secondRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.95);
 		
 		
-		Hashtable<String,Pair<Integer,Integer>> actionsToPositions= new Hashtable<String,Pair<Integer,Integer>>();
+		Hashtable<String,CellWorldPosition> actionsToPositions= new Hashtable<String,CellWorldPosition>();
 		actionsToPositions.put(actionDesired, moveFrom(startingPosition, actionDesired));
 		actionsToPositions.put(firstRightAngledAction, moveFrom(startingPosition, firstRightAngledAction));
 		actionsToPositions.put(secondRightAngledAction, moveFrom(startingPosition, secondRightAngledAction));
 		
-		Hashtable<Pair<Integer,Integer>, Double> positionsToProbability = new Hashtable<Pair<Integer,Integer>, Double> ();
-		for (Pair<Integer,Integer> p : actionsToPositions.values()){
+		Hashtable<CellWorldPosition, Double> positionsToProbability = new Hashtable<CellWorldPosition, Double> ();
+		for (CellWorldPosition p : actionsToPositions.values()){
 			positionsToProbability.put(p, 0.0);
 		}
 		
 		for (String action: actionsToPositions.keySet()){
-			Pair<Integer,Integer> position= actionsToPositions.get(action);
+			CellWorldPosition position= actionsToPositions.get(action);
 			double value = positionsToProbability.get(position);
 			if (action.equals(actionDesired)){
 				positionsToProbability.put(position, value+0.8);
@@ -223,22 +223,22 @@ public class CellWorld {
 	}
 
 	private UtilityFunction getUtilityFunction() {
-		UtilityFunction<Pair<Integer, Integer>> uf = new UtilityFunction<Pair<Integer, Integer>>();
+		UtilityFunction<CellWorldPosition> uf = new UtilityFunction<CellWorldPosition>();
 		for (Cell c : unblockedCells()) {
 			uf.setUtility(c.position(), c.getUtility());
 		}
 		return uf;
 	}
 
-	public MDPTransitionModel<Pair<Integer, Integer>,String> getTransitionModel() {
-		MDPTransitionModel<Pair<Integer, Integer>, String> mtm = new MDPTransitionModel<Pair<Integer, Integer>, String>();
+	public MDPTransitionModel<CellWorldPosition,String> getTransitionModel() {
+		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>();
 	
 		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
 		for (Cell c : unblockedCells()) {
-			Pair<Integer,Integer> startingPosition = c.position();
+			CellWorldPosition  startingPosition = c.position();
 			for (String actionDesired: actions){
 				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells
-					Pair<Integer,Integer> endingPosition = target.position();
+					CellWorldPosition endingPosition = target.position();
 					double transitionProbability = getTransitionProbability(startingPosition, actionDesired, endingPosition);
 					if (!(transitionProbability == 0.0)){
 						
@@ -251,20 +251,20 @@ public class CellWorld {
 	}
 
 	public class CellWorldRewardFunction implements
-			RewardFunction<Pair<Integer, Integer>> {
-		private Hashtable<Pair<Integer, Integer>, Double> hash;
+			RewardFunction<CellWorldPosition> {
+		private Hashtable<CellWorldPosition, Double> positionToReward;
 
 		CellWorldRewardFunction() {
 			for (Cell c : unblockedCells()) {
-				Pair<Integer, Integer> pair = c.position();
+				CellWorldPosition pos = c.position();
 				double reward = c.getReward();
-				hash.put(pair, reward);
+				positionToReward.put(pos, reward);
 			}
 		}
 
-		public double getRewardFor(Pair<Integer, Integer> state) {
+		public double getRewardFor(CellWorldPosition state) {
 
-			return hash.get(state);
+			return positionToReward.get(state);
 		}
 
 	}
