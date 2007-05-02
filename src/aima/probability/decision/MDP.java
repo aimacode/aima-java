@@ -1,6 +1,5 @@
 package aima.probability.decision;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MDP<STATE_TYPE, ACTION_TYPE> {
@@ -14,11 +13,11 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
     public MDP(STATE_TYPE initialState,
 	    MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel,
-	    RewardFunction<STATE_TYPE> rewardFunction) {
+	    RewardFunction<STATE_TYPE> rewardFunction, List<STATE_TYPE> states) {
 	this.initialState = initialState;
 	this.transitionModel = transitionModel;
 	this.rewardFunction = rewardFunction;
-	this.states = new ArrayList<STATE_TYPE>(); //initialize states
+	this.states = states;
     }
     
     public UtilityFunction<STATE_TYPE> valueIteration(double gamma,double error, double delta){
@@ -26,7 +25,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
     	UtilityFunction<STATE_TYPE> U_dash = new UtilityFunction<STATE_TYPE>();
     	double  delta_max = (error * gamma)/(1-gamma);
     	while (!(delta < delta_max )){
-    		U = U_dash.copy(); //implement copy
+    		U = U_dash.copy(); 
     		delta = 0.0;
     		for (STATE_TYPE s:states){
     			double utility =  rewardFunction.getRewardFor(s) + (gamma * maxTransition(s)) ; //implement max transition

@@ -16,7 +16,10 @@ public class UtilityFunction<STATE_TYPE> {
 		hash.put(state,utility);
 	}
 	public UtilityFunction<STATE_TYPE> copy() {
-		// TODO Auto-generated method stub
-		return null;
+		UtilityFunction other = new UtilityFunction<STATE_TYPE>();
+		for (STATE_TYPE state: hash.keySet()){
+			other.setUtility(state, hash.get(state));
+		}
+		return other;
 	}
 }
