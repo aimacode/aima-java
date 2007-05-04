@@ -6,12 +6,14 @@ import java.util.Hashtable;
 import java.util.List;
 
 import aima.probability.Randomizer;
+import aima.probability.decision.MDP;
+import aima.probability.decision.MDPSource;
 import aima.probability.decision.MDPTransitionModel;
-import aima.probability.decision.RewardFunction;
-import aima.probability.decision.UtilityFunction;
+import aima.probability.decision.MDPRewardFunction;
+import aima.probability.decision.MDPUtilityFunction;
 import aima.util.Pair;
 
-public class CellWorld {
+public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	public static final String LEFT = "left";
 
 	public static final String RIGHT = "right";
@@ -19,6 +21,8 @@ public class CellWorld {
 	public static final String UP = "up";
 
 	public static final String DOWN = "down";
+	
+	public static final String NO_OP = "no_op";
 
 	List<Cell> blockedCells, allCells;
 
@@ -26,19 +30,28 @@ public class CellWorld {
 
 	private int numberOfColumns;
 
+	private List<Cell> terminalStates;
+
+	private Cell initialState;
+
 	public CellWorld(int numberOfRows, int numberOfColumns,
-			double initialUtility, double initialReward) {
+			 double initialReward) {
 		allCells = new ArrayList<Cell>();
 		blockedCells = new ArrayList<Cell>();
+		
+		terminalStates = new ArrayList<Cell>();
+		
 
 		this.numberOfRows = numberOfRows;
 		this.numberOfColumns = numberOfColumns;
 
 		for (int row = 1; row <= numberOfRows; row++) {
 			for (int col = 1; col <= numberOfColumns; col++) {
-				allCells.add(new Cell(row, col, initialUtility, initialReward));
+				allCells.add(new Cell(row, col, initialReward));
 			}
 		}
+		
+		initialState = getCellAt(1, 1);
 	}
 
 	public void markBlocked(int i, int j) {
@@ -69,7 +82,10 @@ public class CellWorld {
 
 	public CellWorldPosition moveProbabilisticallyFrom(int i, int j,
 			String direction, Randomizer r) {
-
+		Cell c =  getCellAt(i,j);
+		if (terminalStates.contains(c)){
+			return c.position();
+		}
 		return moveFrom(i, j, determineDirectionOfActualMovement(direction, r));
 
 	}
@@ -222,22 +238,20 @@ public class CellWorld {
 
 	}
 
-	private UtilityFunction getUtilityFunction() {
-		UtilityFunction<CellWorldPosition> uf = new UtilityFunction<CellWorldPosition>();
-		for (Cell c : unblockedCells()) {
-			uf.setUtility(c.position(), c.getUtility());
-		}
-		return uf;
-	}
+
 
 	public MDPTransitionModel<CellWorldPosition,String> getTransitionModel() {
-		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>();
+		List<CellWorldPosition> terminalPositions = new ArrayList<CellWorldPosition>();
+		for (Cell tc :terminalStates){
+			terminalPositions.add(tc.position());
+		}
+		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>(terminalPositions);
 	
 		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
 		for (Cell c : unblockedCells()) {
 			CellWorldPosition  startingPosition = c.position();
 			for (String actionDesired: actions){
-				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells
+				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells instead of all cells.
 					CellWorldPosition endingPosition = target.position();
 					double transitionProbability = getTransitionProbability(startingPosition, actionDesired, endingPosition);
 					if (!(transitionProbability == 0.0)){
@@ -249,24 +263,44 @@ public class CellWorld {
 		}
 		return mtm;
 	}
+	
 
-	public class CellWorldRewardFunction implements
-			RewardFunction<CellWorldPosition> {
-		private Hashtable<CellWorldPosition, Double> positionToReward;
 
-		CellWorldRewardFunction() {
+	public MDPRewardFunction<CellWorldPosition> getRewardFunction() {
+		 
+		MDPRewardFunction<CellWorldPosition> result = new MDPRewardFunction<CellWorldPosition>();
 			for (Cell c : unblockedCells()) {
 				CellWorldPosition pos = c.position();
 				double reward = c.getReward();
-				positionToReward.put(pos, reward);
+				result.setReward(pos, reward);
 			}
+
+			return result;
+	}
+	
+	public List<CellWorldPosition> unblockedPositions(){
+		List<CellWorldPosition> result =  new ArrayList<CellWorldPosition>();
+		for (Cell c:unblockedCells()){
+			result.add(c.position());
 		}
+		return  result;
+	}
 
-		public double getRewardFor(CellWorldPosition state) {
+	public MDP<CellWorldPosition, String> asMdp() {
+		List<CellWorldPosition> nonFinalPositions = unblockedPositions();
+		unblockedPositions().remove(getCellAt(2, 4).position());
+		unblockedPositions().remove(getCellAt(3, 4).position());
+		return new MDP<CellWorldPosition, String>(initialState.position(),getTransitionModel(),getRewardFunction(),nonFinalPositions);
+	}
 
-			return positionToReward.get(state);
-		}
+	public void setTerminalState(int i, int j) {
+		setTerminalState(new CellWorldPosition(i,j));
+		
+	}
 
+	public void setTerminalState(CellWorldPosition position) {
+		terminalStates.add(getCellAt(position.getX(), position.getY()));
+		
 	}
 
 }

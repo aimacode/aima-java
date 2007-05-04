@@ -7,3 +7,6 @@ unify HMMAgent with the basic.Agent framework.
 add validity checking to get and set of Table get/set methods ?
 
 throw away unused methods in class Matrix. adjust documentation to point to the web page
+
+MDPTransitionFucntion returns <null,0.0> instead of <NO_OP, 0.0> . This invloves figuring out how to pass a "NO_Op" string thru the type system
+Refactoring needed for cellworld etc the "terminal states" is far too dispersed in an adhoc fashion

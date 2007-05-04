@@ -3,12 +3,11 @@ package aima.probability.decision.cellworld;
 
 public class Cell {
 	private int x_co_ord,y_co_ord;
-	private double utility,reward;
+	private double reward;
 	
-	public Cell(int i, int j, double reward, double utility) {
+	public Cell(int i, int j, double reward) {
 		this.x_co_ord =i;
 		this.y_co_ord =j;
-		this.utility= utility;
 		this.reward = reward;
 	}
 
@@ -28,13 +27,7 @@ public class Cell {
 		this.reward = reward;
 	}
 
-	public double getUtility() {
-		return utility;
-	}
 
-	public void setUtility(double utility) {
-		this.utility = utility;
-	}
 	
 	public CellWorldPosition  position(){
 		return new  CellWorldPosition(getX(),getY());
