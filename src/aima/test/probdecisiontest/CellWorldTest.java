@@ -249,37 +249,10 @@ public class CellWorldTest extends TestCase {
 	}
 	
 	
-	public void testValueIteration(){
-		MDP <CellWorldPosition, String> mdp = cw.asMdp();     
-		
-		//MDPUtilityFunction<CellWorldPosition> uf =  mdp.valueIterationForFixedIterations(10, 1);
-		
-		
-		MDPUtilityFunction<CellWorldPosition> uf =  mdp.valueIterationTillMAximumUtilityGrowthFallsBelowErrorMargin(1, 0.00001);
-		
-		
-		//check against Fig 17.3
-		assertEquals(0.705, uf.getUtility(new CellWorldPosition(1,1)),0.0011);
-		assertEquals(0.655, uf.getUtility(new CellWorldPosition(1,2)),0.001);
-		assertEquals(0.611, uf.getUtility(new CellWorldPosition(1,3)),0.001);
-		assertEquals(0.388, uf.getUtility(new CellWorldPosition(1,4)),0.001);
-		
-		assertEquals(0.762, uf.getUtility(new CellWorldPosition(2,1)),0.0011);
-		assertEquals(0.660, uf.getUtility(new CellWorldPosition(2,3)),0.001);
-		assertEquals(-1.0, uf.getUtility(new CellWorldPosition(2,4)),0.001);
-		
-		assertEquals(0.812, uf.getUtility(new CellWorldPosition(3,1)),0.0011);
-		assertEquals(0.868, uf.getUtility(new CellWorldPosition(3,2)),0.001);
-		assertEquals(0.918, uf.getUtility(new CellWorldPosition(3,3)),0.001);
-		assertEquals(1.0, uf.getUtility(new CellWorldPosition(3,4)),0.001);
-		
-		
-		assertEquals(0.868, uf.getUtility(new CellWorldPosition(3,2)),0.001);
-		
-	}
+	
 	
 	private void assertPolicyReccomends(CellWorld cw , MDPUtilityFunction<CellWorldPosition> uf, int x, int y,  String actionExpected ){
-		Pair<String, Double> p = cw.getTransitionModel().maxTransition(new CellWorldPosition(x,y), uf);
+		Pair<String, Double> p = cw.getTransitionModel().getTransitionWithMaximumExpectedUtility(new CellWorldPosition(x,y), uf);
 		//System.out.println(p);
 		assertEquals(actionExpected,p.getFirst());
 	}
