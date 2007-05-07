@@ -2,6 +2,7 @@ package aima.probability.decision;
 
 import java.util.List;
 
+import aima.probability.Randomizer;
 import aima.util.Pair;
 
 public class MDP<STATE_TYPE, ACTION_TYPE> {
@@ -34,7 +35,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			delta = 0.0;
 			for (STATE_TYPE s : states) {
 				Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
-						.maxTransition(s, U);
+						.getTransitionWithMaximumExpectedUtility(s, U);
 				double utility = rewardFunction.getRewardFor(s)
 						+ (gamma * highestUtilityTransition.getSecond());
 				U_dash.setUtility(s, utility);
@@ -55,12 +56,13 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		for (int i = 0; i < numberOfIterations; i++) {
 			MDPUtilityFunction<STATE_TYPE> cachedUtilityFunction = utilityFunction
 					.copy();
-			
-			Pair<MDPUtilityFunction<STATE_TYPE>, Double> result =  valueIterateOnce(gamma, utilityFunction);
+
+			Pair<MDPUtilityFunction<STATE_TYPE>, Double> result = valueIterateOnce(
+					gamma, utilityFunction);
 			utilityFunction = result.getFirst();
 			double maxUtilityGrowth = result.getSecond();
-			//System.out.println("maxUtilityGrowth " + maxUtilityGrowth);
-					
+			// System.out.println("maxUtilityGrowth " + maxUtilityGrowth);
+
 		}
 
 		return utilityFunction;
@@ -77,10 +79,11 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			utilityFunction = result.getFirst();
 			maxUtilityGrowth = result.getSecond();
 			iterationCounter++;
-			//System.out.println("Itration Number" +iterationCounter + " max utility growth " + maxUtilityGrowth);
+			// System.out.println("Itration Number" +iterationCounter + " max
+			// utility growth " + maxUtilityGrowth);
 
-		}while (maxUtilityGrowth > errorMargin);
-		
+		} while (maxUtilityGrowth > errorMargin);
+
 		return utilityFunction;
 	}
 
@@ -91,11 +94,17 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 		for (STATE_TYPE s : states) {
 			Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
-					.maxTransition(s, presentUtilityFunction);
-			double utility = rewardFunction.getRewardFor(s)
-					+ (gamma * highestUtilityTransition.getSecond());
-			double differenceInUtility = Math.abs(utility - presentUtilityFunction.getUtility(s));
-			if (differenceInUtility > maxUtilityGrowth){
+					.getTransitionWithMaximumExpectedUtility(s,
+							presentUtilityFunction);
+			// double utility = rewardFunction.getRewardFor(s)
+			// + (gamma * highestUtilityTransition.getSecond());
+
+			double utility = valueIterateOnceForGivenState(gamma,
+					presentUtilityFunction, s);
+
+			double differenceInUtility = Math.abs(utility
+					- presentUtilityFunction.getUtility(s));
+			if (differenceInUtility > maxUtilityGrowth) {
 				maxUtilityGrowth = differenceInUtility;
 			}
 			newUtilityFunction.setUtility(s, utility);
@@ -105,6 +114,74 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		return new Pair<MDPUtilityFunction<STATE_TYPE>, Double>(
 				newUtilityFunction, maxUtilityGrowth);
 
+	}
+
+	private double valueIterateOnceForGivenState(double gamma,
+			MDPUtilityFunction<STATE_TYPE> presentUtilityFunction,
+			STATE_TYPE state) {
+		Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
+				.getTransitionWithMaximumExpectedUtility(state,
+						presentUtilityFunction);
+		double utility = rewardFunction.getRewardFor(state)
+				+ (gamma * highestUtilityTransition.getSecond());
+
+		return utility;
+	}
+
+	public MDPPolicy<STATE_TYPE, ACTION_TYPE> policyIteration(double gamma,
+			Randomizer r) {
+		MDPUtilityFunction<STATE_TYPE> U = initialUtilityFunction();
+		MDPPolicy<STATE_TYPE, ACTION_TYPE> pi = randomPolicy(r);
+		boolean unchanged = false;
+		do {
+			unchanged = true;
+
+			U = policyEvaluation(pi, U, gamma, 3);
+			for (STATE_TYPE s : states) {
+				Pair<ACTION_TYPE, Double> maxTransit = transitionModel
+						.getTransitionWithMaximumExpectedUtility(s, U);
+				Pair<ACTION_TYPE, Double> maxPolicyTransit = transitionModel
+						.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi,
+								s, U);
+
+				if (maxTransit.getSecond() > maxPolicyTransit.getSecond()) {
+					pi.setAction(s, maxTransit.getFirst());
+					unchanged = false;
+				}
+			}
+		} while (unchanged == false);
+		return pi;
+	}
+
+	private MDPUtilityFunction<STATE_TYPE> policyEvaluation(
+			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
+			MDPUtilityFunction<STATE_TYPE> U, double gamma, int iterations) {
+		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
+		for (int i = 0; i < iterations; i++) {
+
+			U_dash = valueIterateOnceWith(gamma, pi, U_dash);
+		}
+		return U_dash;
+	}
+
+	private MDPUtilityFunction<STATE_TYPE> valueIterateOnceWith(double gamma,
+			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
+			MDPUtilityFunction<STATE_TYPE> U) {
+		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
+		for (STATE_TYPE s : states) {
+			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
+					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
+							U);
+			double utility = rewardFunction.getRewardFor(s)
+					+ (gamma * highestPolicyTransition.getSecond());
+			U_dash.setUtility(s, utility);
+		}
+		return U_dash;
+	}
+
+	private MDPPolicy<STATE_TYPE, ACTION_TYPE> randomPolicy(Randomizer r) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private MDPUtilityFunction<STATE_TYPE> initialUtilityFunction() {

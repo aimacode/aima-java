@@ -48,17 +48,53 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 		return buf.toString();
 	}
 
-	public Pair<ACTION_TYPE, Double> maxTransition(STATE_TYPE s,
-			MDPUtilityFunction<STATE_TYPE> uf) {
-		
-		if ((terminalStates.contains(s))) {
-			return new Pair<ACTION_TYPE, Double> (null,0.0);
-		}
-		
-		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> tranistionsStartingWithS = getTransitionsStartingWith(s);
-		Hashtable<ACTION_TYPE, Double> actionsToUtilities = new Hashtable<ACTION_TYPE, Double>();
+	public Pair<ACTION_TYPE, Double> getTransitionWithMaximumExpectedUtility(
+			STATE_TYPE s, MDPUtilityFunction<STATE_TYPE> uf) {
 
-		for (MDPTransition<STATE_TYPE, ACTION_TYPE> triplet : tranistionsStartingWithS) {
+		if ((terminalStates.contains(s))) {
+			return new Pair<ACTION_TYPE, Double>(null, 0.0);
+		}
+
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitionsStartingWithS = getTransitionsStartingWith(s);
+		Hashtable<ACTION_TYPE, Double> actionsToUtilities = getExpectedUtilityForSelectedTransitions(
+				transitionsStartingWithS,uf);
+
+		return getActionWithMaximumUtility(actionsToUtilities);
+		
+	}
+	
+	public Pair<ACTION_TYPE, Double> getTransitionWithMaximumExpectedUtilityUsingPolicy(
+		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy, STATE_TYPE s, MDPUtilityFunction<STATE_TYPE> uf) {
+		if ((terminalStates.contains(s))) {
+			return new Pair<ACTION_TYPE, Double>(null, 0.0);
+		}
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitionsWithStartingStateSAndActionFromPolicy = getTransitionsWithStartingStateAndAction(s, policy.getAction(s));
+		Hashtable<ACTION_TYPE, Double> actionsToUtilities = getExpectedUtilityForSelectedTransitions(
+				transitionsWithStartingStateSAndActionFromPolicy,uf);
+
+		return getActionWithMaximumUtility(actionsToUtilities);
+		
+		
+	}
+
+	private Pair<ACTION_TYPE, Double> getActionWithMaximumUtility(Hashtable<ACTION_TYPE, Double> actionsToUtilities) {
+		Pair<ACTION_TYPE, Double> highest = new Pair<ACTION_TYPE, Double>(null,
+				Double.MIN_VALUE);
+		for (ACTION_TYPE key : actionsToUtilities.keySet()) {
+			Double value = actionsToUtilities.get(key);
+			if (value > highest.getSecond()) {
+				highest = new Pair<ACTION_TYPE, Double>(key, value);
+			}
+		}
+		return highest;
+	}
+
+	private Hashtable<ACTION_TYPE, Double> getExpectedUtilityForSelectedTransitions(
+			
+			List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions,MDPUtilityFunction<STATE_TYPE> uf) {
+		Hashtable<ACTION_TYPE, Double> actionsToUtilities = new Hashtable<ACTION_TYPE, Double>();
+		for (MDPTransition<STATE_TYPE, ACTION_TYPE> triplet : transitions) {
+			STATE_TYPE s = triplet.getInitialState();
 			ACTION_TYPE action = triplet.getAction();
 			STATE_TYPE destinationState = triplet.getDestinationState();
 			double probabilityOfTransition = getTransitionProbability(s,
@@ -73,16 +109,7 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 				actionsToUtilities.put(action, presentValue + expectedUtility);
 			}
 		}
-		// System.out.println(actionsToUtilities);
-		Pair<ACTION_TYPE, Double> highest = new Pair<ACTION_TYPE, Double>(null,
-				-100.0);
-		for (ACTION_TYPE key : actionsToUtilities.keySet()) {
-			Double value = actionsToUtilities.get(key);
-			if (value > highest.getSecond()) {
-				highest = new Pair<ACTION_TYPE, Double>(key, value);
-			}
-		}
-		return highest;
+		return actionsToUtilities;
 	}
 
 	private List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsStartingWith(
@@ -97,4 +124,16 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 		return result;
 	}
 
+	private List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWithStartingStateAndAction(
+			STATE_TYPE s, ACTION_TYPE a) {
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> result = new ArrayList<MDPTransition<STATE_TYPE, ACTION_TYPE>>();
+		for (MDPTransition<STATE_TYPE, ACTION_TYPE> transition : transitionToProbability
+				.keySet()) {
+			if ((transition.getInitialState().equals(s))
+					&& (transition.getAction().equals(a))) {
+				result.add(transition);
+			}
+		}
+		return result;
+	}
 }
