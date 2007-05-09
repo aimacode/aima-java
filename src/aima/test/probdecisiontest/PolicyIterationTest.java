@@ -36,7 +36,7 @@ public class PolicyIterationTest extends TestCase {
 	
 		MDPPolicy<CellWorldPosition, String> policy = fourByThreeMDP.policyIteration(1);		
 		//check With Figure 17.2 (a)
-		System.out.println("policy after = " + policy);
+		//System.out.println("policy after = " + policy);
 		assertEquals("up", policy.getAction(new CellWorldPosition(1,1)));
 		assertEquals("up", policy.getAction(new CellWorldPosition(2,1)));
 		assertEquals("right", policy.getAction(new CellWorldPosition(3,1)));
