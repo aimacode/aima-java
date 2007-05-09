@@ -2,8 +2,6 @@ package aima.probability.decision;
 
 import java.util.List;
 
-import aima.probability.Randomizer;
-import aima.probability.decision.cellworld.CellWorldPosition;
 import aima.util.Pair;
 
 public class MDP<STATE_TYPE, ACTION_TYPE> {
@@ -13,16 +11,17 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	private MDPRewardFunction<STATE_TYPE> rewardFunction;
 
-	private List<STATE_TYPE> nonFinalstates;
+	private List<STATE_TYPE> nonFinalstates, terminalStates;
 
 	public MDP(STATE_TYPE initialState,
 			MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel,
 			MDPRewardFunction<STATE_TYPE> rewardFunction,
-			List<STATE_TYPE> nonFinalstates) {
+			List<STATE_TYPE> nonFinalstates,List<STATE_TYPE> terminalStates) {
 		this.initialState = initialState;
 		this.transitionModel = transitionModel;
 		this.rewardFunction = rewardFunction;
 		this.nonFinalstates = nonFinalstates;
+		this.terminalStates = terminalStates;
 	}
 
 	public MDPUtilityFunction<STATE_TYPE> valueIteration(double gamma,
@@ -109,8 +108,13 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 				maxUtilityGrowth = differenceInUtility;
 			}
 			newUtilityFunction.setUtility(s, utility);
+			
+			for (STATE_TYPE state : terminalStates){
+				newUtilityFunction.setUtility(state, presentUtilityFunction.getUtility(state));
+			}
 
 		}
+		
 
 		return new Pair<MDPUtilityFunction<STATE_TYPE>, Double>(
 				newUtilityFunction, maxUtilityGrowth);
