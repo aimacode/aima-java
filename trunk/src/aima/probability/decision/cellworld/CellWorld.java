@@ -288,7 +288,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 
 	public MDP<CellWorldPosition, String> asMdp() {
 		List<CellWorldPosition> nonFinalPositions = getNonFinalPositions();
-		return new MDP<CellWorldPosition, String>(initialState.position(),getTransitionModel(),getRewardFunction(),nonFinalPositions);
+		return new MDP<CellWorldPosition, String>(initialState.position(),getTransitionModel(),getRewardFunction(),nonFinalPositions,getFinalPositions());
 	}
 
 	private List<CellWorldPosition> getNonFinalPositions() {
@@ -296,6 +296,13 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 		nonFinalPositions.remove(getCellAt(2, 4).position());
 		nonFinalPositions.remove(getCellAt(3, 4).position());
 		return nonFinalPositions;
+	}
+	
+	private List<CellWorldPosition> getFinalPositions() {
+		List<CellWorldPosition> finalPositions = new ArrayList<CellWorldPosition>();
+		finalPositions.add(getCellAt(2, 4).position());
+		finalPositions.add(getCellAt(3, 4).position());
+		return finalPositions;
 	}
 
 	public void setTerminalState(int i, int j) {

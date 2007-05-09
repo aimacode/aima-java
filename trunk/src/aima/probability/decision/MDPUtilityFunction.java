@@ -10,7 +10,11 @@ public class MDPUtilityFunction<STATE_TYPE> {
 		hash =  new Hashtable<STATE_TYPE,Double>();
 	}
 	public double  getUtility(STATE_TYPE state){
-		return hash.get(state);
+		Double d =  hash.get(state);
+		if (d == null){
+			System.out.println("no value for " + state );
+		}
+		return d;
 	}
 	public void setUtility(STATE_TYPE state, double utility){
 		hash.put(state,utility);
