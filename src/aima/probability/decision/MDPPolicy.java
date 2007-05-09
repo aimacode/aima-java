@@ -16,5 +16,9 @@ public class MDPPolicy<STATE_TYPE,ACTION_TYPE> {
 	public void setAction(STATE_TYPE state, ACTION_TYPE action){
 		stateToAction.put(state, action);
 	}
+	
+	public String toString(){
+		return stateToAction.toString();
+	}
 
 }

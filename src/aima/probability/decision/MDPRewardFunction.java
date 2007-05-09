@@ -20,7 +20,7 @@ public class MDPRewardFunction<STATE_TYPE> {
     	return stateToReward.toString();
     }
 
-	public MDPUtilityFunction asUtilityFunction() {
+	public MDPUtilityFunction<STATE_TYPE> asUtilityFunction() {
 		MDPUtilityFunction<STATE_TYPE> uf = new MDPUtilityFunction<STATE_TYPE>();
 		for (STATE_TYPE state :stateToReward.keySet()){
 			uf.setUtility(state, getRewardFor(state));

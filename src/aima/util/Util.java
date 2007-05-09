@@ -9,6 +9,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
+import aima.probability.Randomizer;
+
 public class Util {
 	public static final String NO = "No";
 
@@ -93,6 +95,8 @@ public class Util {
 		int index = r.nextInt(l.size());
 		return l.get(index);
 	}
+	
+
 
 	public static <T> T mode(List<T> l) {
 		Hashtable<T, Integer> hash = new Hashtable<T, Integer>();
