@@ -3,6 +3,7 @@ package aima.probability.decision;
 import java.util.List;
 
 import aima.probability.Randomizer;
+import aima.probability.decision.cellworld.CellWorldPosition;
 import aima.util.Pair;
 
 public class MDP<STATE_TYPE, ACTION_TYPE> {
@@ -12,16 +13,16 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	private MDPRewardFunction<STATE_TYPE> rewardFunction;
 
-	private List<STATE_TYPE> states;
+	private List<STATE_TYPE> nonFinalstates;
 
 	public MDP(STATE_TYPE initialState,
 			MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel,
 			MDPRewardFunction<STATE_TYPE> rewardFunction,
-			List<STATE_TYPE> states) {
+			List<STATE_TYPE> nonFinalstates) {
 		this.initialState = initialState;
 		this.transitionModel = transitionModel;
 		this.rewardFunction = rewardFunction;
-		this.states = states;
+		this.nonFinalstates = nonFinalstates;
 	}
 
 	public MDPUtilityFunction<STATE_TYPE> valueIteration(double gamma,
@@ -33,7 +34,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			U = U_dash.copy();
 			// System.out.println(U);
 			delta = 0.0;
-			for (STATE_TYPE s : states) {
+			for (STATE_TYPE s : nonFinalstates) {
 				Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
 						.getTransitionWithMaximumExpectedUtility(s, U);
 				double utility = rewardFunction.getRewardFor(s)
@@ -92,7 +93,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		double maxUtilityGrowth = 0.0;
 		MDPUtilityFunction<STATE_TYPE> newUtilityFunction = new MDPUtilityFunction<STATE_TYPE>();
 
-		for (STATE_TYPE s : states) {
+		for (STATE_TYPE s : nonFinalstates) {
 			Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
 					.getTransitionWithMaximumExpectedUtility(s,
 							presentUtilityFunction);
@@ -128,16 +129,15 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		return utility;
 	}
 
-	public MDPPolicy<STATE_TYPE, ACTION_TYPE> policyIteration(double gamma,
-			Randomizer r) {
+	public MDPPolicy<STATE_TYPE, ACTION_TYPE> policyIteration(double gamma) {
 		MDPUtilityFunction<STATE_TYPE> U = initialUtilityFunction();
-		MDPPolicy<STATE_TYPE, ACTION_TYPE> pi = randomPolicy(r);
+		MDPPolicy<STATE_TYPE, ACTION_TYPE> pi = randomPolicy();
 		boolean unchanged = false;
 		do {
 			unchanged = true;
 
 			U = policyEvaluation(pi, U, gamma, 3);
-			for (STATE_TYPE s : states) {
+			for (STATE_TYPE s : nonFinalstates) {
 				Pair<ACTION_TYPE, Double> maxTransit = transitionModel
 						.getTransitionWithMaximumExpectedUtility(s, U);
 				Pair<ACTION_TYPE, Double> maxPolicyTransit = transitionModel
@@ -153,7 +153,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		return pi;
 	}
 
-	private MDPUtilityFunction<STATE_TYPE> policyEvaluation(
+	public MDPUtilityFunction<STATE_TYPE> policyEvaluation(
 			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
 			MDPUtilityFunction<STATE_TYPE> U, double gamma, int iterations) {
 		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
@@ -168,7 +168,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
 			MDPUtilityFunction<STATE_TYPE> U) {
 		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
-		for (STATE_TYPE s : states) {
+		for (STATE_TYPE s : nonFinalstates) {
 			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
 					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
 							U);
@@ -176,15 +176,20 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 					+ (gamma * highestPolicyTransition.getSecond());
 			U_dash.setUtility(s, utility);
 		}
+		//System.out.println("ValueIterationOnce  before " + U);
+		//System.out.println("ValueIterationOnce  after " + U_dash);
 		return U_dash;
 	}
 
-	private MDPPolicy<STATE_TYPE, ACTION_TYPE> randomPolicy(Randomizer r) {
-		// TODO Auto-generated method stub
-		return null;
+	public  MDPPolicy<STATE_TYPE, ACTION_TYPE> randomPolicy() {
+		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy = new MDPPolicy<STATE_TYPE, ACTION_TYPE>();
+		for (STATE_TYPE s :nonFinalstates){
+			policy.setAction(s, transitionModel.randomActionFor(s));
+		}
+		return policy;
 	}
 
-	private MDPUtilityFunction<STATE_TYPE> initialUtilityFunction() {
+	public MDPUtilityFunction<STATE_TYPE> initialUtilityFunction() {
 
 		return rewardFunction.asUtilityFunction();
 	}
@@ -193,7 +198,8 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		return "initial State = " + initialState.toString()
 				+ "\n rewardFunction = " + rewardFunction.toString()
 				+ "\n transitionModel = " + transitionModel.toString()
-				+ "\n states = " + states.toString();
+				+ "\n states = " + nonFinalstates.toString();
 	}
+
 
 }

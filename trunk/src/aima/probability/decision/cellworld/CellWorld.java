@@ -248,8 +248,8 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>(terminalPositions);
 	
 		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
-		for (Cell c : unblockedCells()) {
-			CellWorldPosition  startingPosition = c.position();
+
+		for (CellWorldPosition startingPosition : getNonFinalPositions()){
 			for (String actionDesired: actions){
 				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells instead of all cells.
 					CellWorldPosition endingPosition = target.position();
@@ -287,10 +287,15 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	}
 
 	public MDP<CellWorldPosition, String> asMdp() {
-		List<CellWorldPosition> nonFinalPositions = unblockedPositions();
-		unblockedPositions().remove(getCellAt(2, 4).position());
-		unblockedPositions().remove(getCellAt(3, 4).position());
+		List<CellWorldPosition> nonFinalPositions = getNonFinalPositions();
 		return new MDP<CellWorldPosition, String>(initialState.position(),getTransitionModel(),getRewardFunction(),nonFinalPositions);
+	}
+
+	private List<CellWorldPosition> getNonFinalPositions() {
+		List<CellWorldPosition> nonFinalPositions = unblockedPositions();
+		nonFinalPositions.remove(getCellAt(2, 4).position());
+		nonFinalPositions.remove(getCellAt(3, 4).position());
+		return nonFinalPositions;
 	}
 
 	public void setTerminalState(int i, int j) {

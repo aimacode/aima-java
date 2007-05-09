@@ -210,6 +210,15 @@ public class CellWorldTest extends TestCase {
 
 	}
 	
+	public void testCannotTransitionFromFinalState(){
+		MDPTransitionModel <CellWorldPosition, String> mtm = cw.getTransitionModel();
+		CellWorldPosition terminalOne = new CellWorldPosition(2,4); 
+		CellWorldPosition terminalTwo = new CellWorldPosition(3,4);
+		assertEquals(0.0,  mtm.getTransitionProbability(terminalOne, cw.UP, terminalTwo));
+		assertEquals(0.0,  mtm.getTransitionProbability(terminalTwo, cw.DOWN, terminalOne));
+		
+	}
+	
 	public void testMaximumTransitionDetection(){ //aka policy extraction given a utility function
 		MDPTransitionModel <CellWorldPosition, String> mtm = cw.getTransitionModel();
 		
