@@ -2,9 +2,10 @@ package aima.probability.decision;
 
 import java.util.List;
 
+import aima.probability.Randomizer;
 import aima.util.Pair;
 
-public class MDP<STATE_TYPE, ACTION_TYPE> {
+public  class MDP<STATE_TYPE, ACTION_TYPE> {
 	private STATE_TYPE initialState;
 
 	private MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel;
@@ -13,16 +14,20 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	private List<STATE_TYPE> nonFinalstates, terminalStates;
 
-	public MDP(STATE_TYPE initialState,
-			MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel,
-			MDPRewardFunction<STATE_TYPE> rewardFunction,
-			List<STATE_TYPE> nonFinalstates,List<STATE_TYPE> terminalStates) {
-		this.initialState = initialState;
-		this.transitionModel = transitionModel;
-		this.rewardFunction = rewardFunction;
-		this.nonFinalstates = nonFinalstates;
-		this.terminalStates = terminalStates;
+	private MDPSource<STATE_TYPE, ACTION_TYPE> source;
+
+
+	
+	public MDP(MDPSource<STATE_TYPE, ACTION_TYPE> source){
+		this.initialState = source.getInitialState();
+		this.transitionModel = source.getTransitionModel();
+		this.rewardFunction = source.getRewardFunction();
+		this.nonFinalstates = source.getNonFinalStates();
+		this.terminalStates = source.getFinalStates();
+		this.source =source;
 	}
+	
+
 
 	public MDPUtilityFunction<STATE_TYPE> valueIteration(double gamma,
 			double error, double delta) {
@@ -197,6 +202,19 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 		return rewardFunction.asUtilityFunction();
 	}
+	
+	public STATE_TYPE getInitialState(){
+		return  initialState;
+	}
+	
+	public double getRewardFor(STATE_TYPE state){
+		return rewardFunction.getRewardFor(state);
+	}
+	
+	public MDPPerception<STATE_TYPE> execute(STATE_TYPE state, ACTION_TYPE action,Randomizer r){
+		return source.execute(state, action,  r);
+	}
+	
 
 	public String toString() {
 		return "initial State = " + initialState.toString()

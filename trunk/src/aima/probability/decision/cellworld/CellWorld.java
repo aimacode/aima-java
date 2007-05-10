@@ -7,6 +7,7 @@ import java.util.List;
 
 import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
+import aima.probability.decision.MDPPerception;
 import aima.probability.decision.MDPSource;
 import aima.probability.decision.MDPTransitionModel;
 import aima.probability.decision.MDPRewardFunction;
@@ -249,7 +250,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	
 		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
 
-		for (CellWorldPosition startingPosition : getNonFinalPositions()){
+		for (CellWorldPosition startingPosition : getNonFinalStates()){
 			for (String actionDesired: actions){
 				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells instead of all cells.
 					CellWorldPosition endingPosition = target.position();
@@ -287,18 +288,18 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	}
 
 	public MDP<CellWorldPosition, String> asMdp() {
-		List<CellWorldPosition> nonFinalPositions = getNonFinalPositions();
-		return new MDP<CellWorldPosition, String>(initialState.position(),getTransitionModel(),getRewardFunction(),nonFinalPositions,getFinalPositions());
+		
+		return new MDP<CellWorldPosition, String>(this);
 	}
 
-	private List<CellWorldPosition> getNonFinalPositions() {
+	public List<CellWorldPosition> getNonFinalStates() {
 		List<CellWorldPosition> nonFinalPositions = unblockedPositions();
 		nonFinalPositions.remove(getCellAt(2, 4).position());
 		nonFinalPositions.remove(getCellAt(3, 4).position());
 		return nonFinalPositions;
 	}
 	
-	private List<CellWorldPosition> getFinalPositions() {
+	public List<CellWorldPosition> getFinalStates() {
 		List<CellWorldPosition> finalPositions = new ArrayList<CellWorldPosition>();
 		finalPositions.add(getCellAt(2, 4).position());
 		finalPositions.add(getCellAt(3, 4).position());
@@ -313,6 +314,16 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	public void setTerminalState(CellWorldPosition position) {
 		terminalStates.add(getCellAt(position.getX(), position.getY()));
 		
+	}
+	
+	public CellWorldPosition getInitialState(){
+		return initialState.position();
+	}
+
+	public MDPPerception<CellWorldPosition> execute(CellWorldPosition position,String action,Randomizer r) {
+		CellWorldPosition pos =  moveProbabilisticallyFrom(position.getX(), position.getY(), action, r);
+		double reward =  getCellAt(pos.getX(), pos.getY()).getReward();
+		return new MDPPerception<CellWorldPosition>(pos,reward);
 	}
 
 }
