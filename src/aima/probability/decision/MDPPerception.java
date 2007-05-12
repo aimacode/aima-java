@@ -18,5 +18,8 @@ public class MDPPerception<STATE_TYPE> {
 	public STATE_TYPE getState() {
 		return state;
 	}
+	public String toString(){
+		return "[ "+ state.toString() + " , " + reward + " ] ";
+	}
 
 }

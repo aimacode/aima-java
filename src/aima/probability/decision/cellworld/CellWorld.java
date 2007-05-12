@@ -52,7 +52,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 			}
 		}
 		
-		initialState = getCellAt(1, 1);
+		initialState = getCellAt(1, 4);
 	}
 
 	public void markBlocked(int i, int j) {

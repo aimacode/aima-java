@@ -7,7 +7,7 @@ public class MDPFactory {
 
 	public static MDP<CellWorldPosition,String> createFourByThreeMDP() {
 		
-		CellWorld cw = new CellWorld(4, 3, 0.4);
+		CellWorld cw = new CellWorld(3, 4, 0.4);
 		cw = new CellWorld(3, 4, -0.04);
 
 		cw.markBlocked(2, 2);

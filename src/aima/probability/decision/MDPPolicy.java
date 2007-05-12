@@ -1,6 +1,7 @@
 package aima.probability.decision;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 public class MDPPolicy<STATE_TYPE,ACTION_TYPE> {
 	Hashtable<STATE_TYPE,ACTION_TYPE> stateToAction;
@@ -19,6 +20,11 @@ public class MDPPolicy<STATE_TYPE,ACTION_TYPE> {
 	
 	public String toString(){
 		return stateToAction.toString();
+	}
+
+	public Set<STATE_TYPE> states() {
+		
+		return stateToAction.keySet();
 	}
 
 }

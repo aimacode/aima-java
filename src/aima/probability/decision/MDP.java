@@ -5,7 +5,7 @@ import java.util.List;
 import aima.probability.Randomizer;
 import aima.util.Pair;
 
-public  class MDP<STATE_TYPE, ACTION_TYPE> {
+public class MDP<STATE_TYPE, ACTION_TYPE> {
 	private STATE_TYPE initialState;
 
 	private MDPTransitionModel<STATE_TYPE, ACTION_TYPE> transitionModel;
@@ -16,18 +16,25 @@ public  class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	private MDPSource<STATE_TYPE, ACTION_TYPE> source;
 
-
-	
-	public MDP(MDPSource<STATE_TYPE, ACTION_TYPE> source){
+	public MDP(MDPSource<STATE_TYPE, ACTION_TYPE> source) {
 		this.initialState = source.getInitialState();
 		this.transitionModel = source.getTransitionModel();
 		this.rewardFunction = source.getRewardFunction();
 		this.nonFinalstates = source.getNonFinalStates();
 		this.terminalStates = source.getFinalStates();
-		this.source =source;
+		this.source = source;
 	}
-	
 
+	public MDP<STATE_TYPE, ACTION_TYPE> emptyMdp() {
+		MDP<STATE_TYPE, ACTION_TYPE> mdp = new MDP<STATE_TYPE, ACTION_TYPE>(
+				source);
+		mdp.rewardFunction = new MDPRewardFunction<STATE_TYPE>();
+		mdp.rewardFunction.setReward(initialState, rewardFunction
+				.getRewardFor(initialState));
+		mdp.transitionModel = new MDPTransitionModel<STATE_TYPE, ACTION_TYPE>(
+				terminalStates);
+		return mdp;
+	}
 
 	public MDPUtilityFunction<STATE_TYPE> valueIteration(double gamma,
 			double error, double delta) {
@@ -113,13 +120,13 @@ public  class MDP<STATE_TYPE, ACTION_TYPE> {
 				maxUtilityGrowth = differenceInUtility;
 			}
 			newUtilityFunction.setUtility(s, utility);
-			
-			for (STATE_TYPE state : terminalStates){
-				newUtilityFunction.setUtility(state, presentUtilityFunction.getUtility(state));
+
+			for (STATE_TYPE state : terminalStates) {
+				newUtilityFunction.setUtility(state, presentUtilityFunction
+						.getUtility(state));
 			}
 
 		}
-		
 
 		return new Pair<MDPUtilityFunction<STATE_TYPE>, Double>(
 				newUtilityFunction, maxUtilityGrowth);
@@ -178,21 +185,24 @@ public  class MDP<STATE_TYPE, ACTION_TYPE> {
 			MDPUtilityFunction<STATE_TYPE> U) {
 		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
 		for (STATE_TYPE s : nonFinalstates) {
-			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
-					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
-							U);
-			double utility = rewardFunction.getRewardFor(s)
-					+ (gamma * highestPolicyTransition.getSecond());
-			U_dash.setUtility(s, utility);
+		
+
+				Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
+						.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi,
+								s, U);
+				double utility = rewardFunction.getRewardFor(s)
+						+ (gamma * highestPolicyTransition.getSecond());
+				U_dash.setUtility(s, utility);
+			
 		}
-		//System.out.println("ValueIterationOnce  before " + U);
-		//System.out.println("ValueIterationOnce  after " + U_dash);
+		// System.out.println("ValueIterationOnce before " + U);
+		// System.out.println("ValueIterationOnce after " + U_dash);
 		return U_dash;
 	}
 
-	public  MDPPolicy<STATE_TYPE, ACTION_TYPE> randomPolicy() {
+	public MDPPolicy<STATE_TYPE, ACTION_TYPE> randomPolicy() {
 		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy = new MDPPolicy<STATE_TYPE, ACTION_TYPE>();
-		for (STATE_TYPE s :nonFinalstates){
+		for (STATE_TYPE s : nonFinalstates) {
 			policy.setAction(s, transitionModel.randomActionFor(s));
 		}
 		return policy;
@@ -202,19 +212,43 @@ public  class MDP<STATE_TYPE, ACTION_TYPE> {
 
 		return rewardFunction.asUtilityFunction();
 	}
-	
-	public STATE_TYPE getInitialState(){
-		return  initialState;
+
+	public STATE_TYPE getInitialState() {
+		return initialState;
 	}
-	
-	public double getRewardFor(STATE_TYPE state){
+
+	public double getRewardFor(STATE_TYPE state) {
 		return rewardFunction.getRewardFor(state);
 	}
-	
-	public MDPPerception<STATE_TYPE> execute(STATE_TYPE state, ACTION_TYPE action,Randomizer r){
-		return source.execute(state, action,  r);
+
+	public void setReward(STATE_TYPE state, double reward) {
+		rewardFunction.setReward(state, reward);
+	}
+
+	public void setTransitionProbability(
+			MDPTransition<STATE_TYPE, ACTION_TYPE> transition,
+			double probability) {
+		transitionModel.setTransitionProbability(transition.getInitialState(),
+				transition.getAction(), transition.getDestinationState(),
+				probability);
 	}
 	
+	public double getTransitionProbability(MDPTransition<STATE_TYPE, ACTION_TYPE> transition){
+		return transitionModel.getTransitionProbability(transition.getInitialState(), transition.getAction(), transition.getDestinationState());
+	}
+
+	public MDPPerception<STATE_TYPE> execute(STATE_TYPE state,
+			ACTION_TYPE action, Randomizer r) {
+		return source.execute(state, action, r);
+	}
+
+	public boolean isTerminalState(STATE_TYPE state) {
+		return terminalStates.contains(state);
+	}
+	
+	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWith(STATE_TYPE initialState,ACTION_TYPE action){
+		return transitionModel.getTransitionsWithStartingStateAndAction(initialState,action);
+	}
 
 	public String toString() {
 		return "initial State = " + initialState.toString()
@@ -222,6 +256,5 @@ public  class MDP<STATE_TYPE, ACTION_TYPE> {
 				+ "\n transitionModel = " + transitionModel.toString()
 				+ "\n states = " + nonFinalstates.toString();
 	}
-
 
 }
