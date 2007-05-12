@@ -128,7 +128,7 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 		return result;
 	}
 
-	private List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWithStartingStateAndAction(
+	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWithStartingStateAndAction(
 			STATE_TYPE s, ACTION_TYPE a) {
 		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> result = new ArrayList<MDPTransition<STATE_TYPE, ACTION_TYPE>>();
 		for (MDPTransition<STATE_TYPE, ACTION_TYPE> transition : transitionToProbability

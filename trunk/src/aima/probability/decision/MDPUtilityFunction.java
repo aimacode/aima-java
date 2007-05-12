@@ -1,6 +1,7 @@
 package aima.probability.decision;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 
 public class MDPUtilityFunction<STATE_TYPE> {
@@ -9,7 +10,7 @@ public class MDPUtilityFunction<STATE_TYPE> {
 	public MDPUtilityFunction(){
 		hash =  new Hashtable<STATE_TYPE,Double>();
 	}
-	public double  getUtility(STATE_TYPE state){
+	public Double  getUtility(STATE_TYPE state){
 		Double d =  hash.get(state);
 		if (d == null){
 			System.out.println("no value for " + state );
@@ -29,5 +30,9 @@ public class MDPUtilityFunction<STATE_TYPE> {
 	
 	public String toString(){
 		return hash.toString();
+	}
+	public boolean hasUtilityFor(STATE_TYPE state) {
+		
+		return hash.keySet().contains(state);
 	}
 }
