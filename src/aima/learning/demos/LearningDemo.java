@@ -26,6 +26,8 @@ import aima.util.Util;
 
 public class LearningDemo {
 	public static void main(String[] args) {
+		
+		// For  Reinforcement Learning Demos see Probability Demo 
 		decisionTreeDemo();
 		decisionListDemo();
 		ensembleLearningDemo();
