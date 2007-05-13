@@ -1,7 +1,11 @@
 package aima.test.learningtest;
 
+import java.util.Hashtable;
+
 import junit.framework.TestCase;
 import aima.learning.reinforcement.PassiveADPAgent;
+import aima.learning.reinforcement.PassiveTDAgent;
+import aima.learning.reinforcement.QLearningAgent;
 import aima.probability.JavaRandomizer;
 import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
@@ -11,6 +15,7 @@ import aima.probability.decision.MDPUtilityFunction;
 import aima.probability.decision.cellworld.CellWorld;
 import aima.probability.decision.cellworld.CellWorldPosition;
 import aima.test.probabilitytest.MockRandomizer;
+import aima.util.Pair;
 
 public class ReinforcementLearningTest extends TestCase {
 	MDP<CellWorldPosition, String> fourByThree;
@@ -65,6 +70,45 @@ public class ReinforcementLearningTest extends TestCase {
 		assertEquals(0.796, uf.getUtility(new CellWorldPosition(3,1)),0.001);
 		assertEquals(0.906, uf.getUtility(new CellWorldPosition(3,3)),0.001);
 		assertEquals(1.0, uf.getUtility(new CellWorldPosition(3,4)),0.001);
+	}
+	
+	
+	public void testPassiveTDAgent(){
+		PassiveTDAgent <CellWorldPosition, String> agent = new PassiveTDAgent<CellWorldPosition, String>(fourByThree,policy);
+		//Randomizer r =  new JavaRandomizer();
+		Randomizer r =  new MockRandomizer(new double[]{0.1,0.9,0.2,0.8,0.3,0.7,0.4,0.6,0.5});
+		MDPUtilityFunction<CellWorldPosition> uf = null;
+		for (int i = 0; i < 100; i++) {
+			agent.executeTrial(r);
+			uf = agent.getUtilityFunction();
+			//System.out.println(uf);
+			
+			
+		}
+		
+		assertEquals(0.544, uf.getUtility(new CellWorldPosition(1,1)),0.001);
+		assertEquals(0.479, uf.getUtility(new CellWorldPosition(1,2)),0.001);
+		assertEquals(0.391, uf.getUtility(new CellWorldPosition(1,3)),0.001);
+		assertEquals(0.290, uf.getUtility(new CellWorldPosition(1,4)),0.001);
+		
+		assertEquals(0.646, uf.getUtility(new CellWorldPosition(2,1)),0.001);
+		assertEquals(0.716, uf.getUtility(new CellWorldPosition(2,3)),0.001);
+		//assertEquals(-1.0, uf.getUtility(new CellWorldPosition(2,4)),0.001);//the pseudo random genrator never gets to this square
+
+		assertEquals(0.708, uf.getUtility(new CellWorldPosition(3,1)),0.001);
+		assertEquals(0.867, uf.getUtility(new CellWorldPosition(3,3)),0.001);
+		assertEquals(1.0, uf.getUtility(new CellWorldPosition(3,4)),0.001);
+	}
+	
+	public void xtestQLearningAgent(){
+		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent(fourByThree);
+		Randomizer r =  new JavaRandomizer();
+		Hashtable<Pair<CellWorldPosition, String>,Double> q =null;
+		for (int i = 0; i < 100; i++) {
+			qla.executeTrial(r);
+			q = qla.getQ();
+			System.out.println(q);
+		}
 	}
 
 }

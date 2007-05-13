@@ -12,5 +12,6 @@ public interface MDPSource<STATE_TYPE, ACTION_TYPE>  {
 	List<STATE_TYPE> getNonFinalStates();
 	List<STATE_TYPE> getFinalStates();
 	MDPPerception<STATE_TYPE> execute(STATE_TYPE state, ACTION_TYPE action,Randomizer r);
+	List<ACTION_TYPE> getAllActions();
 
 }

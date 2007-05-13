@@ -249,6 +249,10 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWith(STATE_TYPE initialState,ACTION_TYPE action){
 		return transitionModel.getTransitionsWithStartingStateAndAction(initialState,action);
 	}
+	
+	public List<ACTION_TYPE> getAllActions(){
+		return source.getAllActions();
+	}
 
 	public String toString() {
 		return "initial State = " + initialState.toString()

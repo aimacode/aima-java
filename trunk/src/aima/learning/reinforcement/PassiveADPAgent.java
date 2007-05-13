@@ -3,7 +3,6 @@ package aima.learning.reinforcement;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
 import aima.probability.decision.MDPPerception;
 import aima.probability.decision.MDPPolicy;
@@ -21,10 +20,6 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 
 	private Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double> nsasdash;
 
-	private STATE_TYPE previousState;
-
-	private ACTION_TYPE previousAction;
-
 	public PassiveADPAgent(MDP<STATE_TYPE, ACTION_TYPE> mdp,
 			MDPPolicy<STATE_TYPE, ACTION_TYPE> policy) {
 		super(mdp.emptyMdp());
@@ -33,19 +28,6 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 		this.nsa = new Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double>();
 		this.nsasdash = new Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double>();
 
-	}
-
-	public void executeTrial(Randomizer r) {
-		currentState = mdp.getInitialState();
-		currentReward =mdp.getRewardFor(mdp.getInitialState());
-		previousState =null;
-		previousAction=null;
-		MDPPerception<STATE_TYPE> perception = new MDPPerception<STATE_TYPE>(currentState, currentReward);
-		ACTION_TYPE action = null;
-		do {
-			 action = decideAction(perception);
-			perception = execute(action, r);
-		} while(action != null);
 	}
 
 	public ACTION_TYPE decideAction(MDPPerception<STATE_TYPE> perception) {
