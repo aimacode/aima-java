@@ -4,11 +4,11 @@
 	<property name="build" value="build" />
 	<property name="src" value="src" />
 	<property name="doc" value="doc" />
-	<property name="lib" value="c:/javalibs" />
+	<property name="lib" value="/home/ravi/projects/java/javalibs" />
 
 
 	<path id="build.classpath">
-		<pathelement path="${lib}/junit/junit.jar" />
+		<pathelement path="${lib}/junit3.8.2/junit.jar" />
 		<pathelement path="${build}" />
 	</path>
 
