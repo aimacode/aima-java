@@ -5,6 +5,7 @@ import java.util.List;
 
 import aima.probability.decision.MDP;
 import aima.probability.decision.MDPPerception;
+import aima.util.FrequencyCounter;
 import aima.util.Pair;
 import aima.util.Util;
 
@@ -13,45 +14,37 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 
 	private Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> Q;
 
-	private Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Integer> stateActionCount;
+	private FrequencyCounter<Pair<STATE_TYPE, ACTION_TYPE>> stateActionCount;
 
 	private Double previousReward;
 
-	private ACTION_TYPE chosenAction;
+	
+	private QTable<STATE_TYPE,ACTION_TYPE> qTable;
+	private int actionCounter;
 
 	public QLearningAgent(MDP<STATE_TYPE, ACTION_TYPE> mdp) {
 		super(mdp);
 		Q = new Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double>();
-		stateActionCount = new Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Integer>();
+		qTable = new QTable<STATE_TYPE, ACTION_TYPE>(mdp.getAllActions());
+		stateActionCount = new FrequencyCounter<Pair<STATE_TYPE, ACTION_TYPE>>();
+		actionCounter = 0;
 	}
 
 	@Override
 	public ACTION_TYPE decideAction(MDPPerception<STATE_TYPE> perception) {
 		currentState = perception.getState();
 		currentReward = perception.getReward();
-		// if(previousState != null){
-		// incrementStateActionCount(previousState, previousAction);
-		// chosenAction = updateQ(0.8);
-		// }
-		// if (mdp.isTerminalState(currentState)){
-		// previousAction =null;
-		// previousState =null;
-		// previousReward =null;
-		// }else{
-		// previousAction = chosenAction;
-		// previousState = currentState;
-		// previousReward = currentReward;
-		// }
+
 
 		if (startingTrial()) {
-			chosenAction = selectRandomAction();			
-			updateLearnerState();
+			ACTION_TYPE chosenAction = selectRandomAction();			
+			updateLearnerState(chosenAction);
 			return previousAction;
 		}
 
 		if (mdp.isTerminalState(currentState)) {
 			incrementStateActionCount(previousState, previousAction);
-			chosenAction = updateQ(0.8);
+			updateQ(0.8);
 			previousAction = null;
 			previousState = null;
 			previousReward = null;
@@ -60,54 +53,78 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 
 		else {
 			incrementStateActionCount(previousState, previousAction);
-			chosenAction = updateQ(0.8);
-			updateLearnerState();
+			ACTION_TYPE chosenAction = updateQ(0.8);
+			updateLearnerState(chosenAction);
 			return previousAction;
 		}
 		
-		
 	}
 
-	private void updateLearnerState() {
+	private void updateLearnerState(ACTION_TYPE chosenAction) {
+		//previousAction = actionMaximizingLearningFunction();
+		previousAction = chosenAction;
 		previousAction = chosenAction;
 		previousState = currentState;
 		previousReward = currentReward;
 	}
 
 	private ACTION_TYPE updateQ(double gamma) {
-		Double oldQValue = getQ(previousState, previousAction);
-		Pair<ACTION_TYPE, Double> actionAndQDiff = actionMaximizingDifferenceinQ();
-		Double addedQValue = previousReward
-				+ (gamma * actionAndQDiff.getSecond());
-		setQ(previousState, previousAction, oldQValue + addedQValue);
-		return actionAndQDiff.getFirst();
+
+		actionCounter ++;
+		//qtable update
+	
+		double alpha =  calculateProbabilityOf(previousState,previousAction);
+		ACTION_TYPE ac = qTable.upDateQ(previousState, previousAction, currentState, alpha,currentReward, 0.8);
+		
+		return ac;
+		
 
 	}
+	
+	private double calculateProbabilityOf(STATE_TYPE state, ACTION_TYPE action) {
+		Double den = 0.0;
+		Double num = 0.0;
+		for(Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : stateActionCount.getStates()){
 
-	private Pair<ACTION_TYPE, Double> actionMaximizingDifferenceinQ() {
-		ACTION_TYPE resultAction = null;
-		Double differenceInQ = 0.0;
-
-		List<ACTION_TYPE> allActions = mdp.getAllActions();
-		for (ACTION_TYPE action : allActions) {
-			Double q1 = getQ(currentState, action);
-			Double q2 = getQ(previousState, previousAction);
-			Double q3 = q1 - q2;
-			if (q3 > differenceInQ) {
-				resultAction = action;
-				differenceInQ = q3;
-			}
-			if (resultAction == null) {
-				resultAction = Util.selectRandomlyFromList(allActions);
+			if (stateActionPair.getFirst().equals(state)){
+				den +=1;
+				if (stateActionPair.getSecond().equals(action)){
+					num+=1;
+				}
 			}
 		}
-
-		return new Pair<ACTION_TYPE, Double>(resultAction, differenceInQ);
+		return num/den;
 	}
+
+	private ACTION_TYPE actionMaximizingLearningFunction(){
+		ACTION_TYPE maxAct = null;
+		Double maxValue =  Double.NEGATIVE_INFINITY;
+		for(ACTION_TYPE action :mdp.getAllActions()){
+			Double qValue = qTable.getQValue(currentState, action);
+			Double lfv = learningFunction(qValue);
+			if (lfv > maxValue){
+				maxValue =lfv;
+				maxAct = action;
+			}
+		}
+		return maxAct;
+	}
+	
+	private Double learningFunction(Double utility){
+		if (actionCounter > 3){
+			actionCounter =0;
+			return 1.0;
+		}else{
+			return utility;
+		}
+	}
+
+	
 
 	private ACTION_TYPE selectRandomAction() {
 		List<ACTION_TYPE> allActions = mdp.getAllActions();
-		return Util.selectRandomlyFromList(allActions);
+		return allActions.get(0);
+		//return Util.selectRandomlyFromList(allActions);
 	}
 
 	private boolean startingTrial() {
@@ -116,44 +133,22 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 				&& (currentState.equals(mdp.getInitialState()));
 	}
 
-	private Double getQ(STATE_TYPE state, ACTION_TYPE action) {
-		Pair<STATE_TYPE, ACTION_TYPE> stateActionPair = new Pair<STATE_TYPE, ACTION_TYPE>(
-				state, action);
-		if (Q.contains(stateActionPair)) {
-			return Q.get(stateActionPair);
-		} else {
-			return 0.0; // default utility Value
-		}
-	}
 
-	private void setQ(STATE_TYPE state, ACTION_TYPE action, Double d) {
-		Q.put(new Pair<STATE_TYPE, ACTION_TYPE>(state, action), d);
-	}
 
-	private int getStateActionCount(
-			Pair<STATE_TYPE, ACTION_TYPE> stateActionPair) {
-//		if (stateActionPair.getFirst() == null) {
-//			System.out.println("current state " + currentState);
-//			System.out.println("chosen Action  " + chosenAction);
-//			System.out.println("prev state " + previousState);
-//			System.out.println("prev Action " + previousAction);
-//		}
-		if (stateActionCount.keySet().contains(stateActionPair)) {
-			return stateActionCount.get(stateActionPair);
-		} else {
-			return 0;
-		}
-	}
+
 
 	private void incrementStateActionCount(STATE_TYPE state, ACTION_TYPE action) {
 		Pair<STATE_TYPE, ACTION_TYPE> stateActionPair = new Pair<STATE_TYPE, ACTION_TYPE>(
 				state, action);
-		stateActionCount.put(stateActionPair,
-				getStateActionCount(stateActionPair) + 1);
+		stateActionCount.incrementFor(stateActionPair);
 	}
 
 	public Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> getQ() {
 		return Q;
+	}
+	
+	public QTable<STATE_TYPE, ACTION_TYPE> getQTable() {
+		return qTable;
 	}
 
 }
