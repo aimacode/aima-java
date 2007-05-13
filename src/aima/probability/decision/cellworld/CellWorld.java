@@ -8,10 +8,9 @@ import java.util.List;
 import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
 import aima.probability.decision.MDPPerception;
+import aima.probability.decision.MDPRewardFunction;
 import aima.probability.decision.MDPSource;
 import aima.probability.decision.MDPTransitionModel;
-import aima.probability.decision.MDPRewardFunction;
-import aima.probability.decision.MDPUtilityFunction;
 import aima.util.Pair;
 
 public class CellWorld implements MDPSource<CellWorldPosition, String>{
@@ -324,6 +323,11 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 		CellWorldPosition pos =  moveProbabilisticallyFrom(position.getX(), position.getY(), action, r);
 		double reward =  getCellAt(pos.getX(), pos.getY()).getReward();
 		return new MDPPerception<CellWorldPosition>(pos,reward);
+	}
+
+	public List<String> getAllActions() {
+		
+		return Arrays.asList(new String[]{LEFT,RIGHT,UP,DOWN});
 	}
 
 }
