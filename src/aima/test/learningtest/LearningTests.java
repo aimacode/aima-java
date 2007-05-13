@@ -18,6 +18,7 @@ public class LearningTests {
 		suite.addTest(new TestSuite(InformationAndGainTest.class));
 		suite.addTest(new TestSuite(LearnerTests.class));
 		suite.addTest(new TestSuite(NeuralNetworkTest.class));
+		suite.addTest(new TestSuite(QTableTest.class));
 		suite.addTest(new TestSuite(ReinforcementLearningTest.class));
 		return suite;
 	}

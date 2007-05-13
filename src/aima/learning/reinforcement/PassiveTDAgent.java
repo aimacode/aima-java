@@ -38,7 +38,7 @@ MDPAgent<STATE_TYPE, ACTION_TYPE>{
 		}
 		if (!(previousState == null)) {
 			stateCount.incrementFor(previousState);
-			utilityFunction = updateUtilityFunction(1.0, 0.1);
+			utilityFunction = updateUtilityFunction(1.0);
 		}
 		
 		
@@ -54,11 +54,10 @@ MDPAgent<STATE_TYPE, ACTION_TYPE>{
 		return previousAction;
 	}
 
-	private MDPUtilityFunction<STATE_TYPE> updateUtilityFunction(double gamma,double alpha) {
+	private MDPUtilityFunction<STATE_TYPE> updateUtilityFunction(double gamma) {
 		MDPUtilityFunction<STATE_TYPE> uf = utilityFunction.copy();
 		double u_s =  utilityFunction.getUtility(previousState);
 		double gammaUtilDIff =  ((gamma * utilityFunction.getUtility(currentState)) - utilityFunction.getUtility(previousState));
-		//double alphaTerm =  alpha * stateCount.getCount(previousState)*(previousReward + gammaUtilDIff);
 		double alphaTerm = stateCount.probabilityOf(previousState)*(previousReward + gammaUtilDIff);
 		uf.setUtility(previousState, u_s+alphaTerm);
 		return uf;

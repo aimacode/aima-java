@@ -53,4 +53,32 @@ public abstract class MDPAgent<STATE_TYPE, ACTION_TYPE> {
 	public abstract ACTION_TYPE decideAction(
 			MDPPerception<STATE_TYPE> perception);
 
+	public Double getCurrentReward() {
+		return currentReward;
+	}
+
+	public void setCurrentReward(Double currentReward) {
+		this.currentReward = currentReward;
+	}
+
+	public ACTION_TYPE getPreviousAction() {
+		return previousAction;
+	}
+
+	public void setPreviousAction(ACTION_TYPE previousAction) {
+		this.previousAction = previousAction;
+	}
+
+	public STATE_TYPE getPreviousState() {
+		return previousState;
+	}
+
+	public void setPreviousState(STATE_TYPE previousState) {
+		this.previousState = previousState;
+	}
+
+	public STATE_TYPE getCurrentState() {
+		return currentState;
+	}
+
 }

@@ -1,6 +1,7 @@
 package aima.util;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 public class FrequencyCounter<T> {
 	private Hashtable<T, Integer> counter;
@@ -41,6 +42,10 @@ public class FrequencyCounter<T> {
 	
 	public String toString(){
 		return counter.toString();
+	}
+
+	public Set<T> getStates() {
+		return counter.keySet();
 	}
 
 }
