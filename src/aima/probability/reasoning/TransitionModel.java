@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.corba.se.impl.ior.OldObjectKeyTemplateBase;
-
-import aima.probability.RandomVariable;
 import aima.util.Matrix;
 import aima.util.Table;
 

@@ -6,8 +6,6 @@ package aima.test.gametest;
 
 import java.util.ArrayList;
 
-import sun.rmi.runtime.NewThreadAction;
-
 import junit.framework.TestCase;
 import aima.games.AlphaBeta;
 import aima.games.GameState;
