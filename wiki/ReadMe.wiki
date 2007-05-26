@@ -8,13 +8,12 @@ It  includes  the probability algorithms from chapters 15,16,17 and 21 (besides 
 
 One minor change is that I've dropped the make file.Please use [http://ant.apache.org/ant  ant]
 
-The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to see if it persists.
+The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
 
 
 ==bug reports - acknowledgement ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!
-
   * Don Cochrane from (?) University
 
   * Mike Angelotti  from Miami University
@@ -38,30 +37,23 @@ The following people sent in excellent comments and bug reports. Thank you!!!!
 
 
 
-version 0.9
-***********
+==Build Instructions==
 
-Build Instructions
-******************
-you can use 
-    a)ANT(http://ant.apache.org/) 
+you need [http://ant.apache.org/ ant] to build from source. Many IDE's have built in ant versions. So you may want to try that first. 
 
-
-.
-
-The ANT file  runs all the tests as part of the standard build.
-
-To run the tests , you will need to put junit(www.junit.org) on the CLASSPATH.
-so to build
-
-With ant -- type ant at the command line
+from the commandline,
+ # downlaod the archive archive
+ # unzip
+ # go to the aima-java directory
+ # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit] on the classpath
+ # type 'ant' 
 
 
-I have included the eclipse.classpath and .projectfiles for those who use eclipse (www.eclipse.org).If you don't use eclipse presently consider getting it. It is free .And its awesome.
+I have included the eclipse.classpath and .projectfiles for those who use [www.eclipse.org eclipse] .
 
-Code Navigation
-***************
-1 : To understand how a particular feature works , FIRST look at the demo files if they exist. As far as i am aware the only code that does NOT have demos is the "games" code .I will add this in the next release .
+==Code Navigation==
+
+ To understand how a particular feature works , FIRST look at the demo files 
 There are four main demo files  SearchDemo , LogicDemo ,ProbabilityDemo and LearningDemo.
 
 2.If the Demo Files don't exist yet , look at the unit tests . they often cover much of how a particular feature works . 
