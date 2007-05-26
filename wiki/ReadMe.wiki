@@ -108,12 +108,12 @@ This inheritance hierarchy looks like this
 
 The second tree deals with the search instances  you can use to solve a problem.These implement the aima.search.framework.Search interface.
 
-||Search||---||---||---||---||
-||---||BreadthFirstSearch||---||---||---||
-||---||DepthFirstSearch|---||---||---||
-||---||HillClimbingSearch||---||---||---||
-||---||PrioritySearch||---||---||---||
-||---||---||AStarSearch||---||---||
+||Search||---||---||---||
+||---||BreadthFirstSearch||---||---||
+||---||DepthFirstSearch|---||---||
+||---||HillClimbingSearch||---||---||
+||---||PrioritySearch||---||---||
+||---||---||AStarSearch||---||
 
 etc
 
