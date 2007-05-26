@@ -101,18 +101,28 @@ there are two inheritance trees in Search. one deals with "mechanism" of search.
 
 This inheritance hierarchy looks like this
 
- ||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)|| || ||
- ||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/QueueSearch.java QueueSearch]|| ||
+ ||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)||---||---||
+ ||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/QueueSearch.java QueueSearch]||---||
  ||---||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
  ||---||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 
-The second tree deals with the search instances  you can use to solve a problem.
+The second tree deals with the search instances  you can use to solve a problem.These implement the aima.search.framework.Search interface.
 
-These implement the aima.search.framework.Search interface.
+||Search||---||---||---||---||
+||---||BreadthFirstSearch||---||---||---||
+||---||DepthFirstSearch|---||---||---||
+||---||HillClimbingSearch||---||---||---||
+||---||PrioritySearch||---||---||---||
+||---||---||AStarSearch||---||---||
+
+etc
+
+
 
 So if you see a declaration like 
 "SimulatedAnnealingSearch extends NodeExpander implements Search" , do not be confused.
-the  superclass ([http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander]) provides the mechanism of the search and the interface (Search) makes it suitable for use in solving actual problems like in the BreadthSearch above.
+	
+the  superclass ([http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander]) provides the mechanism of the search and the interface (Search) makes it suitable for use in solving actual problems .
 
 Searches like DepthFirstSearch which need to be used as a search (so implementing the Search interface) and can be configured with either Graphseach or TreeSearch (the mechanism) have a  constructor like
 	 public DepthFirstSearch(QueueSearch search) .
