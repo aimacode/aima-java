@@ -27,9 +27,9 @@ public class DomainsTest extends TestCase {
 		List<Object> dom = new ArrayList<Object>();
 		dom.add("Ravi");
 		assertEquals(new ArrayList(),domains.getDomainOf("x")); 
-		domains.addToDomain("x","Ravi");
+		domains.add("x","Ravi");
 		assertEquals(dom,domains.getDomainOf("x")); 
-		domains.removeFromDomain("x","Ravi");
+		domains.remove("x","Ravi");
 		assertEquals(new ArrayList(),domains.getDomainOf("x")); 
 		
 	}

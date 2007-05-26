@@ -50,7 +50,7 @@ public class Clause {
 			while (iter.hasNext()) {
 				Variable key = (Variable) iter.next();
 				String name = key.getValue();
-				domain.addToDomain(name, result.get(key));
+				domain.add(name, result.get(key));
 			}
 		}
 

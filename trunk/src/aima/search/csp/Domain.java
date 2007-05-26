@@ -14,24 +14,23 @@ import java.util.List;
  *  
  */
 public class Domain {
-	//TODO remove <Object> if possible
-	private Hashtable<String,List<Object>> hash;
+	private Hashtable<String,List<Object>> variablesToValues;
 
 	//a hash Of Lists { variable: ListOfDomainValues}
 	public Domain(List<String> variables) {
-		this.hash = new Hashtable<String,List<Object>>();
+		this.variablesToValues = new Hashtable<String,List<Object>>();
 		Iterator<String> varIter = variables.iterator();
 		while (varIter.hasNext()) {
-			hash.put(varIter.next(), new ArrayList<Object>());
+			variablesToValues.put(varIter.next(), new ArrayList<Object>());
 		}
 	}
 
 	public List<Object> getDomainOf(String variable) {
-		return  hash.get(variable);
+		return  variablesToValues.get(variable);
 	}
 
-	public void addToDomain(String variable, Object value) {
-		List<Object> varDomains =  hash.get(variable);
+	public void add(String variable, Object value) {
+		List<Object> varDomains =  variablesToValues.get(variable);
 
 		if (!(varDomains.contains(value))) {
 			varDomains.add(value);
@@ -39,20 +38,19 @@ public class Domain {
 	}
 
 	public void addToDomain(String variable, List values) {
-		List varDomains = (List) hash.get(variable);
 		for (int i = 0; i < values.size(); i++) {
-			addToDomain(variable, values.get(i));
+			add(variable, values.get(i));
 		}
 
 	}
 
-	public void removeFromDomain(String variable, Object value) {
-		List varDomains = (List) hash.get(variable);
+	public void remove(String variable, Object value) {
+		List varDomains = (List) variablesToValues.get(variable);
 		varDomains.remove(value);
 	}
 
 	public String toString() {
-		return hash.toString();
+		return variablesToValues.toString();
 	}
 
 }
