@@ -103,8 +103,8 @@ This inheritance hierarchy looks like this
 
  ||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)|| || ||
  ||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/QueueSearch.java QueueSearch]|| ||
- ||---||---||GraphSearch||
- ||---||---||TreeSearch||
+ ||---||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
+ ||---||---||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 
 The second tree deals with the search instances  you can use to solve a problem.
 
