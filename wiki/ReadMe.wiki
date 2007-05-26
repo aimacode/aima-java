@@ -133,9 +133,9 @@ Again, if you get confused, look at the demos.
 ==Logic Notes==
 
 
-The ONE thing you need to watch out for is that the Parsers are VERY finicky . If you get  a lexing or parsing error, there is an error in your logic string ,with 99% probability.
+The ONE thing you need to watch out for is that the Parsers are VERY finicky . If you get  a lexing or parsing error, there is a high probability there is an error in your logic string.
 
-To use FirstOrder Logic, first you need to create a subclass of aima.logic.fol.FOLDomain which collects the constants, predicates, functions etc that you use to solve a particular problem.
+To use First Order Logic, first you need to create a subclass of aima.logic.fol.FOLDomain which collects the constants, predicates, functions etc that you use to solve a particular problem.
   A parser (that understands the Grammar in figure 8.3 (page 247 in my copy) ) needs to be instantiated with this domain (eg: 
 FOLDomain weaponsDomain = DomainFactory.weaponsDomain();
 FOLParser parser = new FOLParser(weaponsDomain);  ).
@@ -143,13 +143,13 @@ FOLParser parser = new FOLParser(weaponsDomain);  ).
 the basic design of all the logic code is that the parser creates a Composite (Design Patterns by Gamma, et al) parse tree over which various Visitors(Design Patterns by Gamma, et al) traverse . the key difference between the Visitor elucidated in the GOF book and the code is that in the former the visit() methods have a void visit(ConcreteNode) signature while the visitors used in the logic code have a Object visit(ConcreteNode,Object arg) signature. This makes testing easier and allows some recursive code that is hard with the former .
 
 miscellany 
- - a DLKnowledgeBAse represents an instance of a datalog knowledge base which contains
+ - a DLKnowledgeBase represents an instance of a datalog knowledge base which contains
  only data log rules or facts 
  -Standardise apart is NOT implemented  which means that for now , every variable ina databse needs to be different. On the other hand, a variable can be any string that starts with small letter so it shouldn't eb too hard to work around this limitation.
 
 ==Probability Notes==
 
-Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have been implemented.I have tried to make the code stick very closely to Dr.Norvig's' pseudocode . Looking at the demo and tests will reveal how to use the code . This code is relatively new and so i am most interested in any bug reports .If you notice something funny do NOT hesitate to write .
+Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have been implemented. I have tried to make the code stick very closely to Dr.Norvig's' pseudocode . Looking at the demo and tests will reveal how to use the code . 
 
 ==LearningNotes==
 
@@ -164,25 +164,27 @@ DataSetSpecification and AttributeSpecification do some error checking on the at
 
 A Numerizer specifies how a particular DataSet's examples may be converted to Lists of DOubles so they can be used in Neural Networks . There is presently one numerizer in the codebase (IrisDataSetNumerizer)  but it is trivial to write more by implementing the Numerizer interface.
 
-here is how to apply learners .
-The DecisionTreeLearner and DecisionList Learner work only on datasets with ordianl attributes (no numbers).Numbers are treated as separate strings .
-The Perceptron and DecisionTreeLearners work on *numerized datasets* .If you intend to work with these ,you need to write a DataSetSpecific Numerizer by implementing the Numerizer interface.
+===how to apply learners===
+
+The DecisionTreeLearner and DecisionList Learner work only on datasets with ordinal attributes (no numbers).Numbers are treated as distinct strings.
+
+The Perceptron and DecisionTreeLearners work on *numerized datasets* .If you intend to work with these, you need to write a DataSetSpecific Numerizer by implementing the Numerizer interface.
 
 1.To import a dataset into a system so that learners can be applied to it , first add a public static DataSet getXDataSet(where "x" is the name of the DataSet you want to import) to the DataSetFactory
 
-2.Learners all implement the Learner interface with 3 method, train, predict and test .If you want to add a new type of Learner (a partitioning Decion Tree learner perhaps? )  you need to implement this interface .
+2.Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps? )  you need to implement this interface .
 
- LearningDemo.java contain examples of how to use all the learners . LearnerTests may be of help too.besides there are specific test files for DEcison Trees, List and Neural networks.
+ LearningDemo.java contains examples of how to use all the learners . LearnerTests may be of help too. There are specific test files for Decison Trees, Decision Lists and Neural networks.
 
 
 #Probabilistic Decision Making and  reinforcement learning
-
-#TODO
+TBD
  
 ==Final Thoughts==
 
-If you need any help with the java code , do write to me at magesmail@yahoo.com.
-i am happy to receive any mails/bug reports and generally respond within a day ,unless I am travelling .The only mails i do NOT respond to are those asking me to do your homework! Don't even try ! :-)These  mails are rejected without even reading them! 
+If you need any help with the java code, do write to me at magesmail@yahoo.com.
+
+I am happy to receive any mails/bug reports and generally respond within a day, unless I am travelling .The only mails I do NOT respond to are those asking me to do your homework! Don't even try ! :-) These  mails are rejected without even reading them! 
 
 
 Bug Reports are greatly appreciated! 
@@ -193,4 +195,4 @@ when you send in a bug report please include
      # what you actually saw.
 
  
-A bug report that says "there is some bug in Search " (i actually got a mail like this ) is next to useless .
+A bug report that says "there is some bug in Search" (I actually got a mail like this) is next to useless .
