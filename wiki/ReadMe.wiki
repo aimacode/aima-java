@@ -101,10 +101,10 @@ there are two inheritance trees in Search. one deals with "mechanism" of search.
 
 This inheritance hierarchy looks like this
 
- ||NodeExpander (encapsulates the Node expansionmechanism)|| || ||
- || ||QueueSearch|| ||
- || || ||GraphSearch||
- || || ||TreeSearch||
+ ||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)|| || ||
+ ||---||QueueSearch|| ||
+ ||---||---||GraphSearch||
+ ||---||---||TreeSearch||
 
 The second tree deals with the search instances  you can use to solve a problem.
 
