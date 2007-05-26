@@ -91,9 +91,9 @@ A good example (from the NQueens Demo ) is
                printActions(agent.getActions());
                printInstrumentation(agent.getInstrumentation());
        } catch (Exception e) {
-						e.printStackTrace();
-							}
-							}
+			       e.printStackTrace();
+			      }
+	}
 }}}
 ==Search Inheritance Trees ==
 
@@ -101,9 +101,9 @@ there are two inheritance trees in Search. one deals with "mechanism" of search.
 This inheritance hirarchy look like 
      [http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)
 		  DepthLimitedSearch
-			QueueSearch
-					GraphSearch
-							TreeSearch
+			[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/QueueSearch.java QueueSearch]
+					[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]
+							[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]
 
 The second tree deals with the search instances  you can use to solve a problem.
 These implement the aima.search.framework.Search interface.
