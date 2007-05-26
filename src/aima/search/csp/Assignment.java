@@ -14,8 +14,7 @@ import java.util.List;
  *  
  */
 public class Assignment {
-	//TODO check if object necessary or can constrict to boolean
-	Hashtable<String,Object> hash;
+	Hashtable<String,Object> variablesToValues;
 
 	List<String> variables;
 
@@ -24,16 +23,16 @@ public class Assignment {
 	}
 
 	public Assignment(List<String> variables) {
-		hash = new Hashtable<String,Object> ();
+		variablesToValues = new Hashtable<String,Object> ();
 		this.variables = variables;
 	}
 
 	public void setAssignment(String variable, Object value) {
-		hash.put(variable, value);
+		variablesToValues.put(variable, value);
 	}
 
 	public Object getAssignment(String variable) {
-		return hash.get(variable);
+		return variablesToValues.get(variable);
 	}
 
 	public boolean isComplete() {
@@ -46,10 +45,10 @@ public class Assignment {
 		Iterator iter = variables.iterator();
 		while (iter.hasNext()) {
 			String variable = (String) iter.next();
-			if (!hash.keySet().contains(variable)) {
+			if (!variablesToValues.keySet().contains(variable)) {
 				return false;
 			} else {
-				if (hash.get(variable) == null) {
+				if (variablesToValues.get(variable) == null) {
 					return false;
 				}
 			}
@@ -58,8 +57,8 @@ public class Assignment {
 	}
 
 	public void remove(String variable) {
-		if (hash.keySet().contains(variable)) {
-			hash.remove(variable);
+		if (variablesToValues.keySet().contains(variable)) {
+			variablesToValues.remove(variable);
 		}
 	}
 
@@ -67,7 +66,7 @@ public class Assignment {
 		Iterator iter = variables.iterator();
 		while (iter.hasNext()) {
 			String variable = (String) iter.next();
-			if (!(hash.keySet().contains(variable))) {
+			if (!(variablesToValues.keySet().contains(variable))) {
 				return variable;
 			}
 		}
@@ -76,12 +75,12 @@ public class Assignment {
 	}
 
 	public boolean hasAssignmentFor(String variable) {
-		return hash.keySet().contains(variable);
+		return variablesToValues.keySet().contains(variable);
 	}
 
 	public String toString() {
 
-		return hash.toString();
+		return variablesToValues.toString();
 	}
 
 	public Assignment copy() {
@@ -89,10 +88,10 @@ public class Assignment {
 		for (int i = 0; i < variables.size(); i++) {
 			copy.variables.add(variables.get(i));
 		}
-		Iterator<String> iter = hash.keySet().iterator();
+		Iterator<String> iter = variablesToValues.keySet().iterator();
 		while (iter.hasNext()) {
 			String key = iter.next();
-			copy.hash.put(key, hash.get(key));
+			copy.variablesToValues.put(key, variablesToValues.get(key));
 		}
 		return copy;
 	}
@@ -104,7 +103,7 @@ public class Assignment {
 		return duplicate.getConflictedVariables(constraint).size();
 	}
 
-	public List getConflictedVariables(Constraint constraint) {
+	public List<String> getConflictedVariables(Constraint constraint) {
 		List<String> conflictedVariables = new ArrayList<String>();
 		List<String> variables =getVariables();
 		for (String variable : variables) {
