@@ -15,21 +15,21 @@ The latest  (and ever evolving) code can be found at http://code.google.com/p/ai
 
 The following people sent in excellent comments and bug reports. Thank you!!!!
 
-  *Don Cochrane from (?) University
+  * Don Cochrane from (?) University
 
-  *Mike Angelotti  from Miami University
+  * Mike Angelotti  from Miami University
 
-  *Chad Carff ,University of Western Florida .  EXCELLENT test cases . thank you .
+  * Chad Carff ,University of Western Florida .  EXCELLENT test cases . thank you .
 
-  *Dr .Eman El-Sheikh, Ph.D.,University of Western Florida
+  * Dr .Eman El-Sheikh, Ph.D.,University of Western Florida
 
-  *Ravindra Guravannavar, Aztec Software,Bangalore
+  * Ravindra Guravannavar, Aztec Software,Bangalore
 
-  *Cameron Jenkins,University Of New Orleans
+  * Cameron Jenkins,University Of New Orleans
 
-  *Nils Knoblauch (Project Manager, Camline) - winner of the No Prize for the best bug report ! Thanks!
+  * Nils Knoblauch (Project Manager, Camline) - winner of the No Prize for the best bug report ! Thanks!
 
-  *Phil Snowberger,Artificial Intelligence and Robotics Laboratory,University of Notre Dame
+  * Phil Snowberger,Artificial Intelligence and Robotics Laboratory,University of Notre Dame
 
 
 
