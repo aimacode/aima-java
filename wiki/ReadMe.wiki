@@ -62,21 +62,18 @@ I have included the eclipse.classpath and .projectfiles for those who use [www.e
 To solve a problem with (non CSP )Search .
    # you need to write four classes .
 	 # a class that represents the Problem state .This class is independent of the framework and does NOT need to subclass anything . Let us, for the rest of these instruction, assume you are going to solve the NQueens problem . So in this step you need to write something like aima.search.nqueens.NQueensBoard . 
-	 # a subclass of aima.search.framework.GoalTest.This implements only a single function ---boolean isGoalState(Object state);
-The parameter state is an instance of the class you created in  step 1-a above
-For the NQueensProblem you would need to write something like aima.search.nqueens.NqueensBoardTest
+	 # a subclass of aima.search.framework.GoalTest.This implements only a single function ---boolean isGoalState(Object state); The parameter state is an instance of the class you created in  step 1-a above. For the NQueensProblem you would need to write something like aima.search.nqueens.NqueensBoardTest
 	 # a subclass of aima.search.framework.SuccessorFunction .This generates a stream of Successors where a Successor is an object that represents an (action, resultantState) pair. In this release of the code the action is  a String (something like "placeQueenAt4,4" and the resultant State is an instance of the class you create in step 1.a . An example is aima.search.nqueens.NQueensSuccessorFunction.
-	 # If you need to do an informed search, you should create a fourth class which subclasses aima.search.framework.HeuristicFunction. This implements a single function  int getHeuristicValue(Object state); keep in mind that the heuristic should DECREASE as the goal state comes nearer . 
-For the NQueens problem, you need to write something like aima.search.nqueens.QueensToBePlacedHeuristic.
+	 # If you need to do an informed search, you should create a fourth class which subclasses aima.search.framework.HeuristicFunction. This implements a single function  int getHeuristicValue(Object state); keep in mind that the heuristic should DECREASE as the goal state comes nearer .  For the NQueens problem, you need to write something like aima.search.nqueens.QueensToBePlacedHeuristic.
 
 
 that is all you need to do (unless you plan to write a different search than is available in the code base ).
 
 To actually search you need to
-   a) configure a problem instance
-   b)select a search .Configure thsiwith Tree Search or GraphSearch if applicaple.
-   c)instantiate a SerachAgent and 
-   d)print any actions and metrics 
+   # configure a problem instance
+   # select a search .Configure thsiwith Tree Search or GraphSearch if applicaple.
+   # instantiate a SerachAgent and 
+   # print any actions and metrics 
 
 A good example (from the NQueens Demo ) is 
   private static void nQueensWithDepthFirstSearch() {
@@ -177,7 +174,9 @@ i am happy to receive any mails/bug reports and generally respond within a day ,
 Bug Reports are greatly appreciated! 
 
 when you send in a bug report please include
-     a)what you did to see the bug
-     b)what you expected to see
-    and c) what you actually saw . 
+     # what you did to see the bug
+     # what you expected to see
+     # what you actually saw.
+
+ 
 A bug report that says "there is some bug in Search " (i actually got a mail like this ) is next to useless .
