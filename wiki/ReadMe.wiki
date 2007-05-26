@@ -99,7 +99,7 @@ A good example (from the NQueens Demo ) is
 
 there are two inheritance trees in Search. one deals with "mechanism" of search.
 This inheritance hirarchy look like 
-     NodeExpander (encapsulates the Node expansionmechanism)
+     [http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansionmechanism)
 		  DepthLimitedSearch
 			QueueSearch
 					GraphSearch
