@@ -11,7 +11,7 @@ One minor change is that I've dropped the make file.Please use [http://ant.apach
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
 
 
-==bug reports - acknowledgement ==
+==bug reports - acknowledgment ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!
   * Don Cochrane from (?) University
@@ -41,8 +41,8 @@ The following people sent in excellent comments and bug reports. Thank you!!!!
 
 you need [http://ant.apache.org/ ant] to build from source. Many IDE's have built in ant versions. So you may want to try that first. 
 
-from the commandline,
- # downlaod the archive archive
+from the command line,
+ # download the archive archive
  # unzip
  # go to the aima-java directory
  # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit] on the classpath
@@ -52,27 +52,26 @@ from the commandline,
 I have included the eclipse.classpath and .projectfiles for those who use [www.eclipse.org eclipse] .
 
 ==Code Navigation==
-
- To understand how a particular feature works , FIRST look at the demo files 
+ # To understand how a particular feature works , FIRST look at the demo files 
 There are four main demo files  SearchDemo , LogicDemo ,ProbabilityDemo and LearningDemo.
 
-2.If the Demo Files don't exist yet , look at the unit tests . they often cover much of how a particular feature works . 
+ # If the Demo Files don't exist yet , look at the unit tests . they often cover much of how a particular feature works . 
 
-3.If all else fails , write to me . Comprehensive documentation, both java doc and otherwise are in the pipeline , but will probably have to wait till I finish the code .
+ # If all else fails , write to me . Comprehensive documentation, both java doc and otherwise are in the pipeline , but will probably have to wait till I finish the code .
 
 
-Notes on Search
-***************
+==Notes on Search==
+
 
 To solve a problem with (non CSP )Search .
-   1.you need to write four classes .
-	 a)a class that represents the Problem state .This class is independent of the framework and does NOT need to subclass anything . 
+   # you need to write four classes .
+	 # a class that represents the Problem state .This class is independent of the framework and does NOT need to subclass anything . 
 Let us, for the rest of these instruction, assume you are going to solve the NQueens problem . so in this step you need to write something like aima.search.nqueens.NQueensBoard . 
-	b)a subclass of aima.search.framework.GoalTest.This implements only a single function ---boolean isGoalState(Object state);
+	 # a subclass of aima.search.framework.GoalTest.This implements only a single function ---boolean isGoalState(Object state);
 The parameter state is an instance of the class you created in  step 1-a above
 For the NQueensProblem you would need to wrte something like aima.search.nqueens.NqueensBoardTest
-	c)a subclass of aima.search.framework.SuccessorFunction .This generates a stream of Successors where a Successor is an object that represents an (action, resultantState) pair. In this release of the code the action is  a String (something like "placeQueenAt4,4" and the resultantState is an instance of the class you create in step 1.a . An example is aima.search.nqueens.NQueensSuccessorFunction.
-	    d)If you need to do an informed search, you should create a fourth class which subclasses aima.search.framework.HeuristicFunction. This implements a single function  int getHeuristicValue(Object state); keep in mind that the heuristic should DECREASE as the goal state comes nearer . 
+	 # a subclass of aima.search.framework.SuccessorFunction .This generates a stream of Successors where a Successor is an object that represents an (action, resultantState) pair. In this release of the code the action is  a String (something like "placeQueenAt4,4" and the resultantState is an instance of the class you create in step 1.a . An example is aima.search.nqueens.NQueensSuccessorFunction.
+	 # If you need to do an informed search, you should create a fourth class which subclasses aima.search.framework.HeuristicFunction. This implements a single function  int getHeuristicValue(Object state); keep in mind that the heuristic should DECREASE as the goal state comes nearer . 
 For the NQueens problem, you need to write something like aima.search.nqueens.QueensToBePlacedHeuristic.
 
 
