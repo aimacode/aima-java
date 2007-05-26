@@ -110,7 +110,7 @@ The second tree deals with the search instances  you can use to solve a problem.
 
 ||Search||---||---||---||
 ||---||BreadthFirstSearch||---||---||
-||---||DepthFirstSearch|---||---||
+||---||DepthFirstSearch||---||---||
 ||---||HillClimbingSearch||---||---||
 ||---||PrioritySearch||---||---||
 ||---||---||AStarSearch||---||
