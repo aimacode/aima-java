@@ -4,7 +4,7 @@
 = Introduction =
 This release marks the pre final version.
 
-It  includes  the probability algorithms from chapters 15,16,17 and 21 (and many bug fixes).
+New in this release :- the probability algorithms from chapters 15,16,17 and 21 (and many bug fixes).
 
 One minor change is that I've dropped the make file. Please use [http://ant.apache.org/ant  ant]
 
@@ -48,7 +48,7 @@ from the command line,
  # type 'ant' 
 
 
-I have included the eclipse.classpath and .projectfiles for those who use [www.eclipse.org eclipse] .
+I have included the eclipse.classpath and .projectfiles for those who use [http://www.eclipse.org eclipse] .
 
 ==Code Navigation==
  # To understand how a particular feature works , FIRST look at the demo files.There are four main demo files  SearchDemo , LogicDemo ,ProbabilityDemo and LearningDemo.
