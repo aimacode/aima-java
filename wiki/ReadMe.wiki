@@ -2,7 +2,7 @@
 #labels Featured
 
 = Introduction =
-This release marks the pre final version.
+This release is the prefinal version (0.9).
 
 New in this release :- the probability algorithms from chapters 15,16,17 and 21 (and many bug fixes).
 
