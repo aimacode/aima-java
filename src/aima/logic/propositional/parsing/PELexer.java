@@ -52,7 +52,7 @@ public class PELexer extends Lexer {
 			return new Token(LogicTokenTypes.EOI, "EOI");
 		} else {
 			throw new RuntimeException("Lexing error on character "
-					+ lookAhead(0));
+					+ lookAhead(1));
 		}
 
 	}

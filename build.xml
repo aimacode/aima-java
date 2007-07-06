@@ -39,7 +39,7 @@
 	<target name="test-all" depends="compile-all">
 		<junit haltonfailure="true">
 			<formatter type="plain" usefile="no" />
-			<test name="aima.test.AllTests" />
+			<test name="aima.test.AllAimaTests" />
 			<classpath refid="build.classpath" />
 		</junit>
 	</target>

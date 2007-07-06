@@ -15,7 +15,7 @@ import aima.test.tvenvironmenttest.ModelBasedTVEVaccumAgentTest;
 import aima.test.tvenvironmenttest.TrivialVaccumEnvironmentTest;
 import aima.test.utiltest.TableTest;
 
-public class AllTests {
+public class AllAimaTests {
 
 
 	public static Test suite() {
