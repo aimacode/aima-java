@@ -16,6 +16,7 @@ public abstract class Agent extends ObjectWithDynamicAttributes {
 
 	public Agent(AgentProgram aProgram) {
 		this();
+		//comment
 		program = aProgram;
 	}
 
