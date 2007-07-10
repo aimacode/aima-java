@@ -32,14 +32,14 @@ public class Unifier {
 			return null;
 		} else if (x.equals(y)) {
 			return theta;
-		} else if (Variable.class.isInstance(x)) {
+		} else if (isVariable(x)) {
 			return unifyVar((Variable) x, y, theta);
-		} else if (Variable.class.isInstance(y)) {
+		} else if (isVariable(y)) {
 			return unifyVar((Variable) y, x, theta);
 		} else if ((isCompound(x)) && (isCompound(y))) {
-			return unify(args(x), args(y), unify(op(x), op(y), theta));
-		} else if (List.class.isInstance(x) && List.class.isInstance(y)) {
-			return unify((List) x, (List) y, theta);
+			return unifyLists(args(x), args(y), unifyOps(op(x), op(y), theta));
+		} else if (isList(x) && isList(y)) {
+			return unifyLists((List) x, (List) y, theta);
 		}
 
 		else {
@@ -47,18 +47,18 @@ public class Unifier {
 		}
 	}
 
-	public Hashtable unify(List x, List y, Hashtable theta) {
+
+	public Hashtable unifyLists(List x, List y, Hashtable theta) {
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
 			return theta;
 		} else {
-			List restX = rest(x);
-			return unify(restX, rest(y), unify(first(x), first(y), theta));
+			return unifyLists(rest(x), rest(y), unify(first(x), first(y), theta));
 		}
 	}
 
-	public Hashtable unify(String x, String y, Hashtable theta) {
+	public Hashtable unifyOps(String x, String y, Hashtable theta) {
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
@@ -69,6 +69,67 @@ public class Unifier {
 		}
 	}
 
+	
+
+	private Hashtable unifyVar(Variable var, FOLNode x, Hashtable theta) {
+		if (theta.keySet().contains(var)) {
+
+			return unify((FOLNode) theta.get(var), x, theta);
+		} else if (theta.keySet().contains(x)) {
+
+			return unify(var, (FOLNode) theta.get(var), theta);
+		} else if (occurCheck(var, x)) {
+			return null;//failure
+		} else {
+			theta.put(var, x);
+			return theta;
+		}
+	}
+
+	private boolean occurCheck(Variable var, FOLNode x) {
+		return false;
+	}
+
+	private List args(FOLNode x) {
+		if (isFunction(x)) {
+			return ((Function) x).getTerms();
+		} else if (isPredicate(x)) {
+			return ((Predicate) x).getTerms();
+		} else {
+			return null;
+		}
+
+	}
+
+
+
+	private String op(FOLNode x) {
+		if (isFunction(x)) {
+			return ((Function) x).getFunctionName();
+		} else if (isPredicate(x)) {
+			return ((Predicate) x).getPredicateName();
+		} else {
+			return null;
+		}
+
+	}
+	
+	private boolean isList(FOLNode x) {
+		return List.class.isInstance(x);
+	}
+
+	private boolean isVariable(FOLNode x) {
+		return Variable.class.isInstance(x);
+	}
+	
+	private boolean isPredicate(FOLNode x) {
+		return Predicate.class.isInstance(x);
+	}
+
+	private boolean isFunction(FOLNode x) {
+		return Function.class.isInstance(x);
+	}
+	
 	private FOLNode first(List x) {
 		List other = duplicate(x);
 		FOLNode first = (FOLNode) other.get(0);
@@ -96,52 +157,12 @@ public class Unifier {
 	}
 
 	private boolean isCompound(FOLNode x) {
-		if (Predicate.class.isInstance(x) || Function.class.isInstance(x)) {
+		if (isPredicate(x) || isFunction(x)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private Hashtable unifyVar(Variable var, FOLNode x, Hashtable theta) {
-		if (theta.keySet().contains(var)) {
-
-			return unify((FOLNode) theta.get(var), x, theta);
-		} else if (theta.keySet().contains(x)) {
-
-			return unify(var, (FOLNode) theta.get(var), theta);
-		} else if (occurCheck(var, x)) {
-			return null;//failure
-		} else {
-			theta.put(var, x);
-			return theta;
-		}
-	}
-
-	private boolean occurCheck(Variable var, FOLNode x) {
-		return false;
-	}
-
-	private List args(FOLNode x) {
-		if (Function.class.isInstance(x)) {
-			return ((Function) x).getTerms();
-		} else if (Predicate.class.isInstance(x)) {
-			return ((Predicate) x).getTerms();
-		} else {
-			return null;
-		}
-
-	}
-
-	private String op(FOLNode x) {
-		if (Function.class.isInstance(x)) {
-			return ((Function) x).getFunctionName();
-		} else if (Predicate.class.isInstance(x)) {
-			return ((Predicate) x).getPredicateName();
-		} else {
-			return null;
-		}
-
-	}
 
 }
