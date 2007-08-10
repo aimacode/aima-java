@@ -30,7 +30,8 @@ public class Table<RowHeaderType,ColumnHeaderType,ValueType> {
 	
 	public ValueType get(RowHeaderType r,ColumnHeaderType c ){
 		Hashtable<ColumnHeaderType,ValueType> rowValues = rows.get(r);
-		return rowValues.get(c);
+		 return rowValues == null ? null : rowValues.get(c);
+
 	}
 	
 	public  String toString(){

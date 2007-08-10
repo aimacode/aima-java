@@ -108,9 +108,9 @@ public class XYEnvironment extends Environment {
 		boolean retval = false;
 		ArrayList objs = this.getObjectsAt(loc);
 
-		for (int i = 0; i < objs.size(); i++) {
-			EnvironmentObject eo = (EnvironmentObject) objs.get(i);
-			if (eo instanceof Wall) {
+
+		for (Object o : objs) {
+			if (o instanceof Wall) {
 				retval = true;
 			}
 		}
