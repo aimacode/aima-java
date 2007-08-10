@@ -1,6 +1,8 @@
 package aima.basic;
 
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 public class ObjectWithDynamicAttributes {
 	private Hashtable<Object,Object> attributes = new Hashtable<Object,Object> ();
@@ -12,4 +14,12 @@ public class ObjectWithDynamicAttributes {
 	public Object getAttribute(Object key) {
 		return attributes.get(key);
 	}
+	
+	public Iterator<Object> getSortedAttributeKeys() {
+		// Want to guarantee the keys are returned back ordered
+		// Note: This is an inefficient implementation as it creates a new TreeSet each time it is called
+		// Ideally you be an instance variable that is only updated on the setAttribute() call.
+		return (new TreeSet<Object>(attributes.keySet())).iterator();
+	}
 }
+
