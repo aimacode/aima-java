@@ -17,9 +17,11 @@ public class TableTest extends TestCase {
 		List<String> rowHeaders = new ArrayList<String>();
 		List<String> columnHeaders = new ArrayList<String>();
 
+		rowHeaders.add("row1");
 		rowHeaders.add("ravi");
 		rowHeaders.add("peter");
 
+		columnHeaders.add("col1");
 		columnHeaders.add("iq");
 		columnHeaders.add("age");
 		table = new Table<String, String, Integer>(rowHeaders, columnHeaders);
@@ -31,6 +33,17 @@ public class TableTest extends TestCase {
 		table.set("ravi","iq",50);
 		int i = table.get("ravi","iq");
 		assertEquals(50,i);
+	}
+	
+	public void testNullAccess() {
+		// No value yet assigned
+		assertNull(table.get("row1", "col2"));
+		table.set("row1","col1", 1);
+		assertEquals(1, (int) table.get("row1", "col1"));
+		// Check null returned if column does not exist
+		assertNull(table.get("row1", "col2"));
+		// Check null returned if row does not exist
+		assertNull(table.get("row2", "col1"));
 	}
 
 }

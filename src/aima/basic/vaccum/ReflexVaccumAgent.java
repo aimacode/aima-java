@@ -2,7 +2,6 @@ package aima.basic.vaccum;
 
 import aima.basic.Agent;
 import aima.basic.AgentProgram;
-import aima.basic.BasicEnvironmentView;
 import aima.basic.Percept;
 
 /**
@@ -23,19 +22,6 @@ import aima.basic.Percept;
  *
  */
 public class ReflexVaccumAgent extends Agent {
-	
-
-	// public static void main(String[] args) {
-	// TrivialVaccumEnvironment tve = new TrivialVaccumEnvironment();
-	// ReflexVaccumAgent a = new ReflexVaccumAgent();
-	// tve.addAgent(a, "A");
-	// BasicEnvironmentView view = new BasicEnvironmentView();
-	// tve.registerView(view);
-	//		
-	// System.out.println("Initial Environment=[A,
-	// "+tve.getLocation1Status()+"], [B, "+tve.getLocation2Status()+"]");
-	// tve.step(8);
-	//	}
 
 	public ReflexVaccumAgent() {
 		super(new AgentProgram() {

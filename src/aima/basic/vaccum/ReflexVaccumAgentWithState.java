@@ -10,7 +10,6 @@ import aima.basic.simplerule.ANDCondition;
 import aima.basic.simplerule.EQUALCondition;
 import aima.basic.simplerule.Rule;
 
-
 /**
  * An example of using the aima.basic.ReflexAgentWithStateProgram.
  */
@@ -20,18 +19,6 @@ import aima.basic.simplerule.Rule;
  *
  */
 public class ReflexVaccumAgentWithState extends Agent {
-	
-	//This should move to a testclass that verifies whatever happens insidethe main method
-//	public static void main(String[] args) {
-//		TrivialVaccumEnvironment tve = new TrivialVaccumEnvironment();
-//		ReflexVaccumAgentWithState a = new ReflexVaccumAgentWithState();
-//		tve.addAgent(a, "A");
-//		BasicEnvironmentView view = new BasicEnvironmentView();		
-//		tve.registerView(view);
-//		
-//		System.out.println("Initial Environment=[A, "+tve.getLocation1Status()+"], [B, "+tve.getLocation2Status()+"]");
-//		tve.stepUntilNoOp();
-//	}
 
 	public ReflexVaccumAgentWithState() {
 		super(new ReflexAgentWithStateProgram() {

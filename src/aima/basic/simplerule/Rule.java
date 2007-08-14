@@ -2,6 +2,15 @@ package aima.basic.simplerule;
 
 import aima.basic.ObjectWithDynamicAttributes;
 
+/**
+ *  A simple implementation of a "condition-action rule".
+ *
+ */
+
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class Rule {
 	private Condition con;
 
