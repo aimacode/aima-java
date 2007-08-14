@@ -17,18 +17,6 @@ import aima.basic.simplerule.Rule;
  */
 
 public class SimpleReflexVaccumAgent extends Agent {
-	
-//should be moved to a test method that tests what is now happening in the main method - RM ;	
-//	public static void main(String[] args) {
-//		TrivialVaccumEnvironment tve = new TrivialVaccumEnvironment();
-//		SimpleReflexVaccumAgent a = new SimpleReflexVaccumAgent();
-//		tve.addAgent(a, "A");
-//		BasicEnvironmentView view = new BasicEnvironmentView();		
-//		tve.registerView(view);
-//		
-//		System.out.println("Initial Environment=[A, "+tve.getLocation1Status()+"], [B, "+tve.getLocation2Status()+"]");
-//		tve.step(8);
-//	}
 
 	public SimpleReflexVaccumAgent() {
 		super(new SimpleReflexAgentProgram(getRuleSet())); 

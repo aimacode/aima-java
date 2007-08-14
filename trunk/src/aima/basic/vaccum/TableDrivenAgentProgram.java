@@ -64,8 +64,6 @@ public class TableDrivenAgentProgram extends AgentProgram {
 		// append percept to end of percepts
 		percepts.append(percept);
 
-		//System.out.println("Percept Sequence=" + percepts);
-
 		// action <- LOOKUP(percepts, table)
 		// return action
 		return lookupCurrentAction();

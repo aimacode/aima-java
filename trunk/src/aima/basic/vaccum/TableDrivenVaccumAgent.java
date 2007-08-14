@@ -20,20 +20,6 @@ import aima.basic.PerceptSequence;
  */
 public class TableDrivenVaccumAgent extends Agent {
 
-	// This shold move to a test method what happens inside this method should
-	// be verified in a TestCase method - RM
-	// public static void main(String[] args) {
-	// TrivialVaccumEnvironment tve = new TrivialVaccumEnvironment();
-	// TableDrivenVaccumAgent a = new TableDrivenVaccumAgent();
-	// tve.addAgent(a, "A");
-	// BasicEnvironmentView view = new BasicEnvironmentView();
-	// tve.registerView(view);
-	//		
-	// System.out.println("Initial Environment=[A,
-	// "+tve.getLocation1Status()+"], [B, "+tve.getLocation2Status()+"]");
-	// tve.stepUntilNoOp();
-	// }
-
 	public TableDrivenVaccumAgent() {
 		super(new TableDrivenAgentProgram(getPerceptSequenceActions()));
 	}
