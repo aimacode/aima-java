@@ -8,6 +8,11 @@ import aima.test.search.csp.MapCSPTest;
 import aima.test.search.eightpuzzle.EightPuzzleBoardMoveTest;
 import aima.test.search.eightpuzzle.EightPuzzleBoardTest;
 import aima.test.search.eightpuzzle.EightPuzzleSuccessorFunctionTest;
+import aima.test.search.map.MapAgentTest;
+import aima.test.search.map.MapEnvironmentTest;
+import aima.test.search.map.MapStepCostFunctionTest;
+import aima.test.search.map.MapSuccessorFunctionTest;
+import aima.test.search.map.MapTest;
 import aima.test.search.nqueens.NQueensBoardTest;
 import aima.test.search.nqueens.NQueensGoalTestTest;
 import aima.test.search.nqueens.NQueensSuccessorFunctionTest;
@@ -17,6 +22,7 @@ import aima.test.search.searches.DepthFirstSearchTest;
 import aima.test.search.searches.DepthLimitedSearchTest;
 import aima.test.search.searches.GreedyBestFirstSearchTest;
 import aima.test.search.searches.IterativeDeepeningSearchTest;
+import aima.test.search.searches.UniformCostSearchTest;
 
 
 public class SearchTests {
@@ -36,16 +42,19 @@ public class SearchTests {
 		suite.addTest(new TestSuite(GreedyBestFirstSearchTest.class));
 		suite.addTest(new TestSuite(IterativeDeepeningSearchTest.class));
 		suite.addTest(new TestSuite(LIFOQueueTest.class));
+		suite.addTest(new TestSuite(MapAgentTest.class));
 		suite.addTest(new TestSuite(MapCSPTest.class));
+		suite.addTest(new TestSuite(MapEnvironmentTest.class));
+		suite.addTest(new TestSuite(MapStepCostFunctionTest.class));
+		suite.addTest(new TestSuite(MapSuccessorFunctionTest.class));
+		suite.addTest(new TestSuite(MapTest.class));
 		suite.addTest(new TestSuite(MisplacedTileHeuristicFunctionTest.class));
 		suite.addTest(new TestSuite(NQueensBoardTest.class));
 		suite.addTest(new TestSuite(NQueensGoalTestTest.class));
 		suite.addTest(new TestSuite(NQueensSuccessorFunctionTest.class));
 		suite.addTest(new TestSuite(NodeTest.class));
 		suite.addTest(new TestSuite(QueueTest.class));
-			
-		
-		
+		suite.addTest(new TestSuite(UniformCostSearchTest.class));
 		
 		return suite;
     }
