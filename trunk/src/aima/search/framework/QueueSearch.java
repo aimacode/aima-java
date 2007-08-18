@@ -13,8 +13,8 @@ import java.util.List;
  */
 public abstract class QueueSearch extends NodeExpander {
 	private static String QUEUE_SIZE = "queueSize";
-
 	private static String MAX_QUEUE_SIZE = "maxQueueSize";
+	private static String PATH_COST = "pathCost";
 
 	public List<String> search(Problem problem, NodeStore fringe) {
 		clearInstrumentation();
@@ -24,6 +24,7 @@ public abstract class QueueSearch extends NodeExpander {
 			Node node = (Node) fringe.remove();
 			setQueueSize(fringe.size());
 			if (problem.isGoalState(node.getState())) {
+				setPathCost(node.getPathCost());
 				return SearchUtils.actionsFromNodes(node.getPathFromRoot());
 			}
 			addExpandedNodesToFringe(fringe, node, problem);
@@ -36,6 +37,7 @@ public abstract class QueueSearch extends NodeExpander {
 		super.clearInstrumentation();
 		metrics.set(QUEUE_SIZE, 0);
 		metrics.set(MAX_QUEUE_SIZE, 0);
+		metrics.set(PATH_COST, 0);
 	}
 
 	public int getQueueSize() {
@@ -52,7 +54,15 @@ public abstract class QueueSearch extends NodeExpander {
 	}
 
 	public int getMaxQueueSize() {
-		return metrics.getInt("maxQueueSize");
+		return metrics.getInt(MAX_QUEUE_SIZE);
+	}
+	
+	public double getPathCost() {
+		return metrics.getDouble(PATH_COST);
+	}
+	
+	public void setPathCost(Double pathCost) {
+		metrics.set(PATH_COST, pathCost);
 	}
 
 	protected abstract void addExpandedNodesToFringe(NodeStore fringe,

@@ -5,24 +5,38 @@ import java.util.List;
 
 import aima.util.AbstractQueue;
 
+/**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 69.
+ * 
+ * There are many ways to represent nodes, but we will assume that a node is a data
+ * structure with five components:
+ * 
+ * STATE: the state in the state space to which the node corresponds;
+ * PARENT-NODE: the node in the search tree that generated this node;
+ * ACTION: the action that was applied to the parent to generate the node;
+ * PATH-COST: the cost, traditionally denoted by g(n), of the path from the initial state to
+ * the node, as indicated by the parent pointers; and
+ * DEPTH: the number of steps along the path from the initial state.
+ */
+
 public class Node {
 
+	// STATE: the state in the state space to which the node corresponds;
 	private Object state;
-
+    // PARENT-NODE: the node in the search tree that generated this node;
 	private Node parent;
-
-	private Hashtable actionStateMap;
-
+    // ACTION: the action that was applied to the parent to generate the node;
 	private String action;
-
+    // PATH-COST: the cost, traditionally denoted by g(n), of the path from the initial state to
+	// the node, as indicated by the parent pointers; 
+	Double pathCost;
+	// DEPTH: the number of steps along the path from the initial state.
 	private int depth;
 
-	private Double stepCost, pathCost;
+	private Double stepCost;
 
 	public Node(Object state) {
-
 		this.state = state;
-		this.actionStateMap = new Hashtable();
 		this.depth = 0;
 		this.stepCost = new Double(0);
 		this.pathCost = new Double(0);
@@ -35,7 +49,6 @@ public class Node {
 	}
 
 	public int getDepth() {
-
 		return depth;
 	}
 
@@ -64,7 +77,6 @@ public class Node {
 
 	public void setAction(String action) {
 		this.action = action;
-		//actionStateMap.put("action", action);
 	}
 
 	public String getAction() {
@@ -72,22 +84,18 @@ public class Node {
 	}
 
 	public void setStepCost(Double stepCost) {
-
 		this.stepCost = stepCost;
-
 	}
 
 	public void addToPathCost(Double stepCost) {
 		this.pathCost = new Double(parent.pathCost.doubleValue()
 				+ stepCost.doubleValue());
-
 	}
 
 	/**
 	 * @return Returns the pathCost.
 	 */
 	public double getPathCost() {
-
 		return pathCost.doubleValue();
 	}
 
@@ -95,7 +103,6 @@ public class Node {
 	 * @return Returns the stepCost.
 	 */
 	public double getStepCost() {
-
 		return stepCost.doubleValue();
 	}
 	

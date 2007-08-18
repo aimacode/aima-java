@@ -17,12 +17,18 @@ public class Metrics {
 	public void set(String name, int i) {
 		hash.put(name, Integer.toString(i));
 	}
+	
+	public void set(String name, double d) {
+		hash.put(name, Double.toString(d));
+	}
 
 	public int getInt(String name) {
 		return new Integer((String) hash.get(name)).intValue();
 	}
-
-
+	
+	public double getDouble(String name) {
+		return new Double((String) hash.get(name)).doubleValue();
+	}
 
 	public String get(String name) {
 		return hash.get(name);
@@ -31,7 +37,4 @@ public class Metrics {
 	public Set keySet() {
 		return hash.keySet();
 	}
-
-
-
 }

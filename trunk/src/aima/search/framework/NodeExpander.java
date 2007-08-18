@@ -44,7 +44,7 @@ public class NodeExpander {
 	}
 
 	public int getNodesExpanded() {
-		return metrics.getInt("nodesExpanded");
+		return metrics.getInt(NODES_EXPANDED);
 	}
 
 	public void setNodesExpanded(int nodesExpanded) {
