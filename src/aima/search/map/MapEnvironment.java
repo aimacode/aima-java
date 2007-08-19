@@ -27,10 +27,10 @@ public class MapEnvironment extends Environment {
 	}
 	
 	public void executeAction(Agent a, String act) {
-		if (!MapAgent.NO_OP.equals(act) && !MapAgent.ALREADY_IN_GOAL_STATE.equals(act)) { 
+		if (!MapAgent.NO_OP.equals(act) && !MapAgent.DIE.equals(act)) { 
 			a.setAttribute(LOCATION, act);
 		}
-		if (MapAgent.NO_OP.equals(act)) {
+		if (MapAgent.DIE.equals(act)) {
 			a.die();
 		}
 	}

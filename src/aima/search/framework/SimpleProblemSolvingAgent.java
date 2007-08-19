@@ -41,9 +41,9 @@ import aima.util.Util;
 public abstract class SimpleProblemSolvingAgent extends Agent {
 	// Used to define No Operations/Action is to be performed.
 	public static final String NO_OP = "NoOP";
-	// If start off in Goal State will return this as opposed to NoOP so it is
-	// possible to keep searching
-	public static final String ALREADY_IN_GOAL_STATE = "AlreadyInGoalState";
+	// Used to indicate the Agent is unwilling to generate anymore goals
+	// and should therefore DIE
+	public static final String DIE = "DIE";
 	
 	// seq, an action sequence, initially empty
 	private List<String> seq = new ArrayList<String>();
@@ -81,16 +81,11 @@ public abstract class SimpleProblemSolvingAgent extends Agent {
 				// seq <- SEARCH(problem)
 				seq.addAll(search(problem));
 				if (0 == seq.size()) {
-					if (problem.isGoalState(state)) {
-						// Already in the Goal State
-						seq.add(ALREADY_IN_GOAL_STATE);
-					} else {
-						// Unable to identify a path
-						seq.add(NO_OP);
-					}
+					// Unable to identify a path
+					seq.add(NO_OP);
 				}
 			} else {
-				seq.add(NO_OP);
+				seq.add(DIE);
 				notifyViewOfMetrics();
 			}
 		}
