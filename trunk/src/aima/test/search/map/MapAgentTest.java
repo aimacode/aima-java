@@ -29,7 +29,7 @@ public class MapAgentTest extends TestCase {
 		envChanges = new StringBuffer();
 	}
 
-	public void testNoSearchToBePerformed() {
+	public void testNoAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, new UniformCostSearch(new GraphSearch()), new String[] {"A"});
 		me.addAgent(ma, "A");
@@ -40,7 +40,7 @@ public class MapAgentTest extends TestCase {
 		});
 		me.stepUntilNoOp();
 		
-		assertEquals("CurrentLocation=In(A), Goal=In(A):AlreadyInGoalState:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:NoOP:", envChanges.toString());
+		assertEquals("CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:DIE:", envChanges.toString());
 	}
 	
 	public void testNormalSearch() {
@@ -54,7 +54,7 @@ public class MapAgentTest extends TestCase {
 		});
 		me.stepUntilNoOp();
 
-		assertEquals("CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:NoOP:", envChanges.toString());
+		assertEquals("CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:DIE:", envChanges.toString());
 	}
 	
 	public void testNoPath() {
@@ -68,7 +68,6 @@ public class MapAgentTest extends TestCase {
 		});
 		me.stepUntilNoOp();
 		
-		System.out.println(envChanges.toString());
-		assertEquals("CurrentLocation=In(E), Goal=In(A):NoOP:", envChanges.toString());
+		assertEquals("CurrentLocation=In(E), Goal=In(A):NoOP:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:DIE:", envChanges.toString());
 	}
 }
