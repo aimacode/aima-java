@@ -1,5 +1,3 @@
-
-
 Names in italics indicate algorithms that have been completed but have not made their way into a formal release. These will probably be subject to rapid change. If you need these, please checkout the latest code from svn (vs downloading the zip file)
 
 || *Fig* || *Page* || *Name (in book)* || *Code* ||
@@ -10,9 +8,9 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||2.8||46||_Reflex-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexVaccumAgentProgram.java ReflexVaccumAgent]||
 ||2.10||47||_Simple-Reflex-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
 ||2.12||49||_Reflex-Agent-With-State_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexAgentWithStateProgram.java ReflexAgentWithStateProgram]||
-||3.1||61||Simple-Problem-Solving-Agent||---||
+||3.1||61||_Simple-Problem-Solving-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
 ||3||62||Problem||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Problem.java Problem]||
-||3.2||63||Romania||---||
+||3.2||63||_Romania_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
 ||3||69||Node||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Node.java Node]||
 ||3.7||70||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 ||3||71||Queue||[http://aima-java.googlecode.com/svn/trunk/src/aima/util/AbstractQueue.java AbstractQueue]||
