@@ -5,7 +5,7 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||2.1||33||Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/Agent.java Agent]||
 ||2.3||34||_Table-Driven-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenVaccumAgent.java TableDrivenVacuumAgent]||
 ||2.7||45||_Table-Driven-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenAgentProgram.java TableDrivenAgent]||
-||2.8||46||_Reflex-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexVaccumAgentProgram.java ReflexVaccumAgent]||
+||2.8||46||_Reflex-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexVaccumAgent.java ReflexVaccumAgent]||
 ||2.10||47||_Simple-Reflex-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
 ||2.12||49||_Reflex-Agent-With-State_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexAgentWithStateProgram.java ReflexAgentWithStateProgram]||
 ||3.1||61||_Simple-Problem-Solving-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
