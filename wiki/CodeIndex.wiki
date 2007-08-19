@@ -1,5 +1,4 @@
-#summary Index of implemented algorithms
-=Code Index=
+
 
 Names in italics indicate algorithms that have been completed but have not made their way into a formal release. These will probably be subject to rapid change. If you need these, please checkout the latest code from svn (vs downloading the zip file)
 
