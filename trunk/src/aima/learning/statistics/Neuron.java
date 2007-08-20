@@ -57,8 +57,8 @@ public class Neuron {
 			sum += link.source().activation() * link.weight();
 			
 		}
-		Util.isNanOrInfinity(sum);
-		Util.isNanOrInfinity(bias);
+		Util.checkForNanOrInfinity(sum);
+		Util.checkForNanOrInfinity(bias);
 		sum += bias;
 		
 		return sum;
@@ -110,7 +110,7 @@ public class Neuron {
 	}
 
 	public void setBias(double bias) {
-		Util.isNanOrInfinity(bias);
+		Util.checkForNanOrInfinity(bias);
 		this.bias = bias;
 		
 	}

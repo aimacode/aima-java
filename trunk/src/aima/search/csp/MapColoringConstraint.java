@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class MapColoringConstraint implements Constraint {
 	private Hashtable neighbors;
 

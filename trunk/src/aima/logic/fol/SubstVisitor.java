@@ -20,8 +20,9 @@ import aima.util.SetOps;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class SubstVisitor extends AbstractFOLVisitor {
 	Sentence substitutedSentence = null;
 
@@ -46,31 +47,37 @@ public class SubstVisitor extends AbstractFOLVisitor {
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
-		//TODO  - change properties for hashtable
-		Hashtable<String,String> props = (Hashtable<String,String>) arg;
+		// TODO - change properties for hashtable
+		Hashtable<String, String> props = (Hashtable<String, String>) arg;
 		Sentence quantified = sentence.getQuantified();
 		Sentence quantifiedAfterSubs = (Sentence) quantified.accept(this, arg);
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
-//		Set<String> sentenceVariables = new Converter<String>().listToSet(sentence
-//				.getVariablesAsString());
-//		Set unmatchedVariables = Util.difference(sentenceVariables, props
-//				.keySet());
-//**********************************		
-		Set<String> sentenceVariablesStr = new Converter<String>().listToSet(sentence.getVariablesAsString());
-		Set<Variable> sentenceVariables = LogicUtils.stringsToVariables(sentenceVariablesStr);
-		Set<Variable> propKeysVariables = LogicUtils.stringsToVariables(props.keySet());
-        Set<Variable> unmatchedVariables = new SetOps<Variable>().difference(sentenceVariables, propKeysVariables);	
-//		
-	//*******************************************************	
-		//		System.out.println("senArs = "+sentenceVariables);
-		//		System.out.println("props = "+props.keySet());
-		//		System.out.println("umatched = "+unmatchedVariables+"\n");
+		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Set<String> sentenceVariables = new
+		// Converter<String>().listToSet(sentence
+		// .getVariablesAsString());
+		// Set unmatchedVariables = Util.difference(sentenceVariables, props
+		// .keySet());
+		// **********************************
+		Set<String> sentenceVariablesStr = new Converter<String>()
+				.listToSet(sentence.getVariablesAsString());
+		Set<Variable> sentenceVariables = LogicUtils
+				.stringsToVariables(sentenceVariablesStr);
+		Set<Variable> propKeysVariables = LogicUtils.stringsToVariables(props
+				.keySet());
+		Set<Variable> unmatchedVariables = new SetOps<Variable>().difference(
+				sentenceVariables, propKeysVariables);
+		//		
+		// *******************************************************
+		// System.out.println("senArs = "+sentenceVariables);
+		// System.out.println("props = "+props.keySet());
+		// System.out.println("umatched = "+unmatchedVariables+"\n");
 
 		if (!(unmatchedVariables.isEmpty())) {
-			List<Variable> variables = new Converter<Variable>().setToList(unmatchedVariables);
+			List<Variable> variables = new Converter<Variable>()
+					.setToList(unmatchedVariables);
 			QuantifiedSentence sen = new QuantifiedSentence(sentence
 					.getQuantifier(), variables, quantifiedAfterSubs);
-			//System.out.println(sen);
+			// System.out.println(sen);
 			return sen;
 		} else {
 			return recreate(quantifiedAfterSubs);
@@ -80,14 +87,14 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	}
 
 	public Sentence getSubstitutedSentence(Sentence beforeSubst, Properties p) {
-		//System.out.println(beforeSubst.toString());
-		Sentence sen = (Sentence)beforeSubst.accept(this, p);
-		//System.out.println(sen.toString());
-		Sentence afterSubst = (Sentence)recreate(sen);
-		//System.out.println(afterSubst.toString());
-		//System.out.println("***");
+		// System.out.println(beforeSubst.toString());
+		Sentence sen = (Sentence) beforeSubst.accept(this, p);
+		// System.out.println(sen.toString());
+		Sentence afterSubst = (Sentence) recreate(sen);
+		// System.out.println(afterSubst.toString());
+		// System.out.println("***");
 		return afterSubst;
-		
+
 	}
 
 }

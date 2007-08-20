@@ -7,17 +7,22 @@ package aima.search.framework;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Metrics {
-	private Hashtable<String ,String> hash;
+	private Hashtable<String, String> hash;
 
 	public Metrics() {
-		this.hash = new Hashtable<String ,String>();
+		this.hash = new Hashtable<String, String>();
 	}
 
 	public void set(String name, int i) {
 		hash.put(name, Integer.toString(i));
 	}
-	
+
 	public void set(String name, double d) {
 		hash.put(name, Double.toString(d));
 	}
@@ -25,7 +30,7 @@ public class Metrics {
 	public int getInt(String name) {
 		return new Integer((String) hash.get(name)).intValue();
 	}
-	
+
 	public double getDouble(String name) {
 		return new Double((String) hash.get(name)).doubleValue();
 	}

@@ -19,8 +19,9 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class DLKnowledgeBaseTest extends TestCase {
 	private DLKnowledgeBase wkb, kkb;
 
@@ -65,7 +66,7 @@ public class DLKnowledgeBaseTest extends TestCase {
 		kkb.add("Greedy(John)");
 		Rule rule = kkb.rule(0);
 		Clause one = rule.clause(0);
-		//System.out.println(kkb.fact(0));
+		// System.out.println(kkb.fact(0));
 		one.populateDomainsFrom(kkb.fact(0));
 	}
 
@@ -133,9 +134,9 @@ public class DLKnowledgeBaseTest extends TestCase {
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
 		Properties h = kkb.forwardChain(query);
-		//		assertEquals(1,h.size());
+		// assertEquals(1,h.size());
 		//		
-		//		assertEquals("John",h.getProperty("x"));
+		// assertEquals("John",h.getProperty("x"));
 	}
 
 	public void testFactNotAddedWhenAlreadyPresent() {

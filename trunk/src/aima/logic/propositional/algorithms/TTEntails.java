@@ -17,16 +17,18 @@ import aima.util.Util;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class TTEntails {
 	public boolean ttEntails(KnowledgeBase kb, String alpha) {
 		Sentence kbSentence = kb.asSentence();
 		Sentence querySentence = (Sentence) new PEParser().parse(alpha);
 		SymbolCollector collector = new SymbolCollector();
-		Set<Symbol> kbSymbols= collector.getSymbolsIn(kbSentence);
-		Set<Symbol> querySymbols= collector.getSymbolsIn(querySentence);
-		Set<Symbol> symbols = new SetOps<Symbol>().union(kbSymbols,querySymbols);
+		Set<Symbol> kbSymbols = collector.getSymbolsIn(kbSentence);
+		Set<Symbol> querySymbols = collector.getSymbolsIn(querySentence);
+		Set<Symbol> symbols = new SetOps<Symbol>().union(kbSymbols,
+				querySymbols);
 		List<Symbol> symbolList = new Converter<Symbol>().setToList(symbols);
 		return ttCheckAll(kbSentence, querySentence, symbolList, new Model());
 	}
@@ -35,14 +37,14 @@ public class TTEntails {
 			List symbols, Model model) {
 		if (symbols.isEmpty()) {
 			if (model.isTrue(kbSentence)) {
-				//System.out.println("#");
+				// System.out.println("#");
 				return model.isTrue(querySentence);
 			} else {
-				//System.out.println("0");
+				// System.out.println("0");
 				return true;
 			}
 		} else {
-			Symbol symbol = (Symbol)Util.first(symbols);
+			Symbol symbol = (Symbol) Util.first(symbols);
 			List rest = Util.rest(symbols);
 
 			Model trueModel = model.extend(new Symbol(symbol.getValue()), true);

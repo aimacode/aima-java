@@ -11,14 +11,15 @@ import aima.probability.Query;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class EnumerationJointAskTest extends TestCase {
 
 	public void testBasicUsage() {
-		//>>> P[T, T, T] = 0.108; P[T, T, F] = 0.012; P[F, T, T] = 0.072; P[F,
+		// >>> P[T, T, T] = 0.108; P[T, T, F] = 0.012; P[F, T, T] = 0.072; P[F,
 		// T, F] = 0.008
-		//>>> P[T, F, T] = 0.016; P[T, F, F] = 0.064; P[F, F, T] = 0.144; P[F,
+		// >>> P[T, F, T] = 0.016; P[T, F, F] = 0.064; P[F, F, T] = 0.144; P[F,
 		// F, F] = 0.576
 
 		ProbabilityDistribution jp = new ProbabilityDistribution("ToothAche",

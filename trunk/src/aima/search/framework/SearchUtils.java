@@ -3,6 +3,11 @@ package aima.search.framework;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class SearchUtils {
 
 	public static List<String> actionsFromNodes(List<Node> nodeList) {

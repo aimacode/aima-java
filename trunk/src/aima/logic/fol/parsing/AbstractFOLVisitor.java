@@ -17,7 +17,7 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class AbstractFOLVisitor implements FOLVisitor {
 
@@ -32,13 +32,13 @@ public class AbstractFOLVisitor implements FOLVisitor {
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
-		
+
 		return null;
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
-		
+
 		return null;
 	}
 
@@ -66,7 +66,7 @@ public class AbstractFOLVisitor implements FOLVisitor {
 
 	public Object visitFunction(Function function, Object arg) {
 		List<Term> terms = function.getTerms();
-		List<Term> newTerms = new ArrayList<Term> ();
+		List<Term> newTerms = new ArrayList<Term>();
 		for (int i = 0; i < terms.size(); i++) {
 			Term t = (Term) terms.get(i);
 			Term subsTerm = (Term) t.accept(this, arg);
@@ -97,5 +97,4 @@ public class AbstractFOLVisitor implements FOLVisitor {
 
 	}
 
-	
 }

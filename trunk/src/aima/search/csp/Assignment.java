@@ -11,10 +11,11 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class Assignment {
-	Hashtable<String,Object> variablesToValues;
+	Hashtable<String, Object> variablesToValues;
 
 	List<String> variables;
 
@@ -23,7 +24,7 @@ public class Assignment {
 	}
 
 	public Assignment(List<String> variables) {
-		variablesToValues = new Hashtable<String,Object> ();
+		variablesToValues = new Hashtable<String, Object>();
 		this.variables = variables;
 	}
 
@@ -105,7 +106,7 @@ public class Assignment {
 
 	public List<String> getConflictedVariables(Constraint constraint) {
 		List<String> conflictedVariables = new ArrayList<String>();
-		List<String> variables =getVariables();
+		List<String> variables = getVariables();
 		for (String variable : variables) {
 			Object value = getAssignment(variable);
 			if (!(constraint.isSatisfiedWith(this, variable, value))) {

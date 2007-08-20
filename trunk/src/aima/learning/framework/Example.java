@@ -4,6 +4,10 @@
  */
 package aima.learning.framework;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 import java.util.Hashtable;
 
 public class Example {
@@ -20,14 +24,16 @@ public class Example {
 	public String getAttributeValueAsString(String attributeName) {
 		return attributes.get(attributeName).valueAsString();
 	}
-	
+
 	public double getAttributeValueAsDouble(String attributeName) {
-		Attribute attribute =  attributes.get(attributeName);
-		if(attribute == null || !(attribute instanceof NumericAttribute) ){
-			throw new RuntimeException("cannot return numerical value for non numeric attribute");
+		Attribute attribute = attributes.get(attributeName);
+		if (attribute == null || !(attribute instanceof NumericAttribute)) {
+			throw new RuntimeException(
+					"cannot return numerical value for non numeric attribute");
 		}
-		return ((NumericAttribute)attribute).valueAsDouble();
+		return ((NumericAttribute) attribute).valueAsDouble();
 	}
+
 	public String toString() {
 		return attributes.toString();
 	}
@@ -51,19 +57,23 @@ public class Example {
 		return attributes.hashCode();
 	}
 
-	public Example numerize(Hashtable<String, Hashtable<String, Integer>> attrValueToNumber) {
-		Hashtable<String,Attribute> numerizedExampleData = new Hashtable<String,Attribute>();
-		for (String key : attributes.keySet()){
+	public Example numerize(
+			Hashtable<String, Hashtable<String, Integer>> attrValueToNumber) {
+		Hashtable<String, Attribute> numerizedExampleData = new Hashtable<String, Attribute>();
+		for (String key : attributes.keySet()) {
 			Attribute attribute = attributes.get(key);
-			if ( attribute instanceof StringAttribute){
-				int correspondingNumber = attrValueToNumber.get(key).get(attribute.valueAsString());
-				NumericAttributeSpecification spec = new NumericAttributeSpecification(key);
-				numerizedExampleData.put(key,new NumericAttribute((double)correspondingNumber,spec));
-			}
-			else {//Numeric Attribute
-				numerizedExampleData.put(key,attribute);
+			if (attribute instanceof StringAttribute) {
+				int correspondingNumber = attrValueToNumber.get(key).get(
+						attribute.valueAsString());
+				NumericAttributeSpecification spec = new NumericAttributeSpecification(
+						key);
+				numerizedExampleData.put(key, new NumericAttribute(
+						(double) correspondingNumber, spec));
+			} else {// Numeric Attribute
+				numerizedExampleData.put(key, attribute);
 			}
 		}
-		return new Example(numerizedExampleData,numerizedExampleData.get(targetAttribute.name()));
+		return new Example(numerizedExampleData, numerizedExampleData
+				.get(targetAttribute.name()));
 	}
 }

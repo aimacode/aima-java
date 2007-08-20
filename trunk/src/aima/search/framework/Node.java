@@ -6,30 +6,40 @@ import java.util.List;
 import aima.util.AbstractQueue;
 
 /**
+ * @author Ravi Mohan
+ * 
+ */
+
+/**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 69.
  * 
- * There are many ways to represent nodes, but we will assume that a node is a data
- * structure with five components:
+ * There are many ways to represent nodes, but we will assume that a node is a
+ * data structure with five components:
  * 
  * STATE: the state in the state space to which the node corresponds;
- * PARENT-NODE: the node in the search tree that generated this node;
- * ACTION: the action that was applied to the parent to generate the node;
- * PATH-COST: the cost, traditionally denoted by g(n), of the path from the initial state to
- * the node, as indicated by the parent pointers; and
- * DEPTH: the number of steps along the path from the initial state.
+ * PARENT-NODE: the node in the search tree that generated this node; ACTION:
+ * the action that was applied to the parent to generate the node; PATH-COST:
+ * the cost, traditionally denoted by g(n), of the path from the initial state
+ * to the node, as indicated by the parent pointers; and DEPTH: the number of
+ * steps along the path from the initial state.
  */
 
 public class Node {
 
 	// STATE: the state in the state space to which the node corresponds;
 	private Object state;
-    // PARENT-NODE: the node in the search tree that generated this node;
+
+	// PARENT-NODE: the node in the search tree that generated this node;
 	private Node parent;
-    // ACTION: the action that was applied to the parent to generate the node;
+
+	// ACTION: the action that was applied to the parent to generate the node;
 	private String action;
-    // PATH-COST: the cost, traditionally denoted by g(n), of the path from the initial state to
-	// the node, as indicated by the parent pointers; 
+
+	// PATH-COST: the cost, traditionally denoted by g(n), of the path from the
+	// initial state to
+	// the node, as indicated by the parent pointers;
 	Double pathCost;
+
 	// DEPTH: the number of steps along the path from the initial state.
 	private int depth;
 
@@ -105,8 +115,8 @@ public class Node {
 	public double getStepCost() {
 		return stepCost.doubleValue();
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return getState().toString();
 	}
 }

@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.19, page 83.
- * <code>
+ * @author Ravi Mohan
+ * 
+ */
+
+/**
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.19, page
+ * 83. <code>
  * function GRAPH-SEARCH(problem, fringe) returns a solution, or failure
  * 
  *   closed <- an empty set
@@ -19,16 +24,17 @@ import java.util.Set;
  *       add STATE[node] to closed
  *       fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
  * </code>
- * Figure 3.19 The general graph-search algorithm, The set closed can be implemented with
- * a hash table to allow efficient checking for repeated states. This algorithm assumes that the
- * first path to a state s is the cheapest (see text). 
+ * Figure 3.19 The general graph-search algorithm, The set closed can be
+ * implemented with a hash table to allow efficient checking for repeated
+ * states. This algorithm assumes that the first path to a state s is the
+ * cheapest (see text).
  */
 
 public class GraphSearch extends QueueSearch {
 
 	Set<Object> closed = new HashSet<Object>();
-	
-	// Need to override search() method so that I can re-initialize 
+
+	// Need to override search() method so that I can re-initialize
 	// the closed list should multiple calls to search be made.
 	public List<String> search(Problem problem, NodeStore fringe) {
 		closed.clear();
@@ -43,7 +49,7 @@ public class GraphSearch extends QueueSearch {
 			// add STATE[node] to closed
 			closed.add(node.getState());
 			// fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
-			fringe.add(expandNode(node,problem));
+			fringe.add(expandNode(node, problem));
 
 		}
 	}

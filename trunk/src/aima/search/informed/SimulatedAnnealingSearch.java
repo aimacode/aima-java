@@ -17,8 +17,9 @@ import aima.search.framework.SearchUtils;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
 	private int steps;
@@ -42,19 +43,19 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 				if (p.isGoalState(current.getState())) {
 					status = "success";
 				}
-				//System.out.println(current.getState());
+				// System.out.println(current.getState());
 				ret = SearchUtils.actionsFromNodes(current.getPathFromRoot());
 				ret.add(status + "\nFinal state = \n" + current.getState());
 				break;
 			}
 			List children = expandNode(current, p);
-			//expansions++;
-			//System.out.println("step = "+step+" expansions = "+expansions);
+			// expansions++;
+			// System.out.println("step = "+step+" expansions = "+expansions);
 			if (children.size() > 0) {
-				//TODO take care of no possible expansion situation?
+				// TODO take care of no possible expansion situation?
 				next = (Node) Util.selectRandomlyFromList(children);
 				int deltaE = getValue(next, p) - getValue(current, p);
-				//System.out.print("deltaE = "+deltaE+"\n");
+				// System.out.print("deltaE = "+deltaE+"\n");
 				if ((deltaE > 0.0)
 						|| (new Random().nextDouble() > Math.exp(deltaE / temp))) {
 					current = next;
@@ -62,8 +63,8 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 			}
 
 		}
-		//System.out.println("Number of expansions = "+expansions);
-		return ret;//Total Failure
+		// System.out.println("Number of expansions = "+expansions);
+		return ret;// Total Failure
 	}
 
 	private int getHeuristic(Node aNode, Problem p) {
@@ -71,9 +72,9 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 	}
 
 	private int getValue(Node n, Problem p) {
-		return -1 * getHeuristic(n, p); //assumption greater heuristic value =>
+		return -1 * getHeuristic(n, p); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
-		//SA deals with gardient DESCENT
+		// SA deals with gardient DESCENT
 	}
 
 }

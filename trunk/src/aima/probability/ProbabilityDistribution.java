@@ -13,10 +13,11 @@ import aima.logic.propositional.algorithms.Model;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class ProbabilityDistribution {
-	private List<Row>  rows;
+	private List<Row> rows;
 
 	String[] variableNames;
 
@@ -76,7 +77,7 @@ public class ProbabilityDistribution {
 
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		for (Row row :rows) {
+		for (Row row : rows) {
 			buf.append(row.toString() + "\n");
 		}
 		return buf.toString();
@@ -85,7 +86,7 @@ public class ProbabilityDistribution {
 
 	public double probabilityOf(Hashtable conditions) {
 		double prob = 0.0;
-		for (Row row :rows) {
+		for (Row row : rows) {
 			Iterator iter = conditions.keySet().iterator();
 			boolean rowMeetsAllConditions = true;
 			while (iter.hasNext()) {
@@ -95,7 +96,7 @@ public class ProbabilityDistribution {
 				if (!(row.model.matches(variable, value))) {
 					rowMeetsAllConditions = false;
 					break;
-					//return false;
+					// return false;
 				}
 			}
 			if (rowMeetsAllConditions) {
@@ -122,8 +123,8 @@ public class ProbabilityDistribution {
 	}
 
 	public double probabilityOf(String variableName, boolean b) {
-		Hashtable<String,Boolean> h = new Hashtable<String,Boolean>();
-		h.put(variableName,new Boolean(b));
+		Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
+		h.put(variableName, new Boolean(b));
 		return probabilityOf(h);
 	}
 

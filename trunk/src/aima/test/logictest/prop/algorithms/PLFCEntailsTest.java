@@ -7,8 +7,9 @@ import aima.logic.propositional.parsing.PEParser;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PLFCEntailsTest extends TestCase {
 	PEParser parser;
 
@@ -19,7 +20,7 @@ public class PLFCEntailsTest extends TestCase {
 	}
 
 	public void testAIMAExample() {
-		KnowledgeBase kb =  new KnowledgeBase();
+		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell(" (P => Q)");
 		kb.tell("((L AND M) => P)");
 		kb.tell("((B AND L) => M)");
@@ -27,10 +28,9 @@ public class PLFCEntailsTest extends TestCase {
 		kb.tell("((A AND B) => L)");
 		kb.tell("(A)");
 		kb.tell("(B)");
-		
+
 		assertEquals(true, plfce.plfcEntails(kb, "Q"));
 
 	}
 
-	
 }

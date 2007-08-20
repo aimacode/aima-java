@@ -13,7 +13,12 @@ import aima.probability.decision.MDPSource;
 import aima.probability.decision.MDPTransitionModel;
 import aima.util.Pair;
 
-public class CellWorld implements MDPSource<CellWorldPosition, String>{
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
+public class CellWorld implements MDPSource<CellWorldPosition, String> {
 	public static final String LEFT = "left";
 
 	public static final String RIGHT = "right";
@@ -21,7 +26,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	public static final String UP = "up";
 
 	public static final String DOWN = "down";
-	
+
 	public static final String NO_OP = "no_op";
 
 	List<Cell> blockedCells, allCells;
@@ -34,13 +39,11 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 
 	private Cell initialState;
 
-	public CellWorld(int numberOfRows, int numberOfColumns,
-			 double initialReward) {
+	public CellWorld(int numberOfRows, int numberOfColumns, double initialReward) {
 		allCells = new ArrayList<Cell>();
 		blockedCells = new ArrayList<Cell>();
-		
+
 		terminalStates = new ArrayList<Cell>();
-		
 
 		this.numberOfRows = numberOfRows;
 		this.numberOfColumns = numberOfColumns;
@@ -50,7 +53,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 				allCells.add(new Cell(row, col, initialReward));
 			}
 		}
-		
+
 		initialState = getCellAt(1, 4);
 	}
 
@@ -82,8 +85,8 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 
 	public CellWorldPosition moveProbabilisticallyFrom(int i, int j,
 			String direction, Randomizer r) {
-		Cell c =  getCellAt(i,j);
-		if (terminalStates.contains(c)){
+		Cell c = getCellAt(i, j);
+		if (terminalStates.contains(c)) {
 			return c.position();
 		}
 		return moveFrom(i, j, determineDirectionOfActualMovement(direction, r));
@@ -106,9 +109,11 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 		throw new RuntimeException("Unable to move " + direction + " from " + i
 				+ " , " + j);
 	}
-	
-	private CellWorldPosition moveFrom(CellWorldPosition startingPosition, String direction){
-		return moveFrom(startingPosition.getX(),startingPosition.getY() , direction);
+
+	private CellWorldPosition moveFrom(CellWorldPosition startingPosition,
+			String direction) {
+		return moveFrom(startingPosition.getX(), startingPosition.getY(),
+				direction);
 	}
 
 	private String determineDirectionOfActualMovement(
@@ -198,96 +203,100 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	// what is the probability of starting from position p1 taking action a and
 	// reaaching position p2
 	// method is public ONLY for testing do not use in client code.
-	public double getTransitionProbability(
-			CellWorldPosition startingPosition, String actionDesired,
-			CellWorldPosition endingPosition) {
-		
+	public double getTransitionProbability(CellWorldPosition startingPosition,
+			String actionDesired, CellWorldPosition endingPosition) {
 
-		String firstRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.85);
-		String secondRightAngledAction =  determineDirectionOfActualMovement(actionDesired, 0.95);
-		
-		
-		Hashtable<String,CellWorldPosition> actionsToPositions= new Hashtable<String,CellWorldPosition>();
-		actionsToPositions.put(actionDesired, moveFrom(startingPosition, actionDesired));
-		actionsToPositions.put(firstRightAngledAction, moveFrom(startingPosition, firstRightAngledAction));
-		actionsToPositions.put(secondRightAngledAction, moveFrom(startingPosition, secondRightAngledAction));
-		
-		Hashtable<CellWorldPosition, Double> positionsToProbability = new Hashtable<CellWorldPosition, Double> ();
-		for (CellWorldPosition p : actionsToPositions.values()){
+		String firstRightAngledAction = determineDirectionOfActualMovement(
+				actionDesired, 0.85);
+		String secondRightAngledAction = determineDirectionOfActualMovement(
+				actionDesired, 0.95);
+
+		Hashtable<String, CellWorldPosition> actionsToPositions = new Hashtable<String, CellWorldPosition>();
+		actionsToPositions.put(actionDesired, moveFrom(startingPosition,
+				actionDesired));
+		actionsToPositions.put(firstRightAngledAction, moveFrom(
+				startingPosition, firstRightAngledAction));
+		actionsToPositions.put(secondRightAngledAction, moveFrom(
+				startingPosition, secondRightAngledAction));
+
+		Hashtable<CellWorldPosition, Double> positionsToProbability = new Hashtable<CellWorldPosition, Double>();
+		for (CellWorldPosition p : actionsToPositions.values()) {
 			positionsToProbability.put(p, 0.0);
 		}
-		
-		for (String action: actionsToPositions.keySet()){
-			CellWorldPosition position= actionsToPositions.get(action);
+
+		for (String action : actionsToPositions.keySet()) {
+			CellWorldPosition position = actionsToPositions.get(action);
 			double value = positionsToProbability.get(position);
-			if (action.equals(actionDesired)){
-				positionsToProbability.put(position, value+0.8);
-			}else{ //right angled steps
-				positionsToProbability.put(position, value+0.1);
+			if (action.equals(actionDesired)) {
+				positionsToProbability.put(position, value + 0.8);
+			} else { // right angled steps
+				positionsToProbability.put(position, value + 0.1);
 			}
-			
+
 		}
-		
-		if (positionsToProbability.keySet().contains(endingPosition)){
+
+		if (positionsToProbability.keySet().contains(endingPosition)) {
 			return positionsToProbability.get(endingPosition);
-		}
-		else{
+		} else {
 			return 0.0;
 		}
-		
 
 	}
 
-
-
-	public MDPTransitionModel<CellWorldPosition,String> getTransitionModel() {
+	public MDPTransitionModel<CellWorldPosition, String> getTransitionModel() {
 		List<CellWorldPosition> terminalPositions = new ArrayList<CellWorldPosition>();
-		for (Cell tc :terminalStates){
+		for (Cell tc : terminalStates) {
 			terminalPositions.add(tc.position());
 		}
-		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>(terminalPositions);
-	
-		List<String> actions =  Arrays.asList(new String[]{UP,DOWN,LEFT,RIGHT});
+		MDPTransitionModel<CellWorldPosition, String> mtm = new MDPTransitionModel<CellWorldPosition, String>(
+				terminalPositions);
 
-		for (CellWorldPosition startingPosition : getNonFinalStates()){
-			for (String actionDesired: actions){
-				for (Cell target:unblockedCells()){ //too much work?  should just cycle through neighbouring cells instead of all cells.
+		List<String> actions = Arrays.asList(new String[] { UP, DOWN, LEFT,
+				RIGHT });
+
+		for (CellWorldPosition startingPosition : getNonFinalStates()) {
+			for (String actionDesired : actions) {
+				for (Cell target : unblockedCells()) { // too much work? should
+														// just cycle through
+														// neighbouring cells
+														// instead of all cells.
 					CellWorldPosition endingPosition = target.position();
-					double transitionProbability = getTransitionProbability(startingPosition, actionDesired, endingPosition);
-					if (!(transitionProbability == 0.0)){
-						
-						mtm.setTransitionProbability(startingPosition, actionDesired, endingPosition, transitionProbability);
+					double transitionProbability = getTransitionProbability(
+							startingPosition, actionDesired, endingPosition);
+					if (!(transitionProbability == 0.0)) {
+
+						mtm.setTransitionProbability(startingPosition,
+								actionDesired, endingPosition,
+								transitionProbability);
 					}
 				}
 			}
 		}
 		return mtm;
 	}
-	
-
 
 	public MDPRewardFunction<CellWorldPosition> getRewardFunction() {
-		 
-		MDPRewardFunction<CellWorldPosition> result = new MDPRewardFunction<CellWorldPosition>();
-			for (Cell c : unblockedCells()) {
-				CellWorldPosition pos = c.position();
-				double reward = c.getReward();
-				result.setReward(pos, reward);
-			}
 
-			return result;
+		MDPRewardFunction<CellWorldPosition> result = new MDPRewardFunction<CellWorldPosition>();
+		for (Cell c : unblockedCells()) {
+			CellWorldPosition pos = c.position();
+			double reward = c.getReward();
+			result.setReward(pos, reward);
+		}
+
+		return result;
 	}
-	
-	public List<CellWorldPosition> unblockedPositions(){
-		List<CellWorldPosition> result =  new ArrayList<CellWorldPosition>();
-		for (Cell c:unblockedCells()){
+
+	public List<CellWorldPosition> unblockedPositions() {
+		List<CellWorldPosition> result = new ArrayList<CellWorldPosition>();
+		for (Cell c : unblockedCells()) {
 			result.add(c.position());
 		}
-		return  result;
+		return result;
 	}
 
 	public MDP<CellWorldPosition, String> asMdp() {
-		
+
 		return new MDP<CellWorldPosition, String>(this);
 	}
 
@@ -297,7 +306,7 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 		nonFinalPositions.remove(getCellAt(3, 4).position());
 		return nonFinalPositions;
 	}
-	
+
 	public List<CellWorldPosition> getFinalStates() {
 		List<CellWorldPosition> finalPositions = new ArrayList<CellWorldPosition>();
 		finalPositions.add(getCellAt(2, 4).position());
@@ -306,28 +315,30 @@ public class CellWorld implements MDPSource<CellWorldPosition, String>{
 	}
 
 	public void setTerminalState(int i, int j) {
-		setTerminalState(new CellWorldPosition(i,j));
-		
+		setTerminalState(new CellWorldPosition(i, j));
+
 	}
 
 	public void setTerminalState(CellWorldPosition position) {
 		terminalStates.add(getCellAt(position.getX(), position.getY()));
-		
+
 	}
-	
-	public CellWorldPosition getInitialState(){
+
+	public CellWorldPosition getInitialState() {
 		return initialState.position();
 	}
 
-	public MDPPerception<CellWorldPosition> execute(CellWorldPosition position,String action,Randomizer r) {
-		CellWorldPosition pos =  moveProbabilisticallyFrom(position.getX(), position.getY(), action, r);
-		double reward =  getCellAt(pos.getX(), pos.getY()).getReward();
-		return new MDPPerception<CellWorldPosition>(pos,reward);
+	public MDPPerception<CellWorldPosition> execute(CellWorldPosition position,
+			String action, Randomizer r) {
+		CellWorldPosition pos = moveProbabilisticallyFrom(position.getX(),
+				position.getY(), action, r);
+		double reward = getCellAt(pos.getX(), pos.getY()).getReward();
+		return new MDPPerception<CellWorldPosition>(pos, reward);
 	}
 
 	public List<String> getAllActions() {
-		
-		return Arrays.asList(new String[]{LEFT,RIGHT,UP,DOWN});
+
+		return Arrays.asList(new String[] { LEFT, RIGHT, UP, DOWN });
 	}
 
 }

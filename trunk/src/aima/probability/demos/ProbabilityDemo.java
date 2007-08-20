@@ -38,6 +38,7 @@ import aima.util.Pair;
  * @author Ravi Mohan
  * 
  */
+
 public class ProbabilityDemo {
 
 	public static void main(String[] args) {
@@ -154,25 +155,30 @@ public class ProbabilityDemo {
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 4; j++) {
 				if (!((i == 2) && (j == 2))) {
-					printPolicy(i,j,policy);
+					printPolicy(i, j, policy);
 				}
 			}
 
 		}
 	}
 
-	private static void printPolicy(int i, int j, MDPPolicy<CellWorldPosition, String> policy) {
-		System.out.println("Reccomended Action for (" + i + " , " + j + " )  =  "+policy.getAction(new CellWorldPosition(i,j)));
-		
+	private static void printPolicy(int i, int j,
+			MDPPolicy<CellWorldPosition, String> policy) {
+		System.out.println("Reccomended Action for (" + i + " , " + j
+				+ " )  =  " + policy.getAction(new CellWorldPosition(i, j)));
+
 	}
 
 	private static void passiveADPgentDemo() {
 		System.out.println("\nPassive ADP Agent Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree= MDPFactory.createFourByThreeMDP();;
+		MDP<CellWorldPosition, String> fourByThree = MDPFactory
+				.createFourByThreeMDP();
+		;
 
 		MDPPolicy<CellWorldPosition, String> policy = new MDPPolicy<CellWorldPosition, String>();
-		System.out.println("Creating a policy to reflect the policy in Fig 17.3");
+		System.out
+				.println("Creating a policy to reflect the policy in Fig 17.3");
 		policy.setAction(new CellWorldPosition(1, 1), CellWorld.UP);
 		policy.setAction(new CellWorldPosition(1, 2), CellWorld.LEFT);
 		policy.setAction(new CellWorldPosition(1, 3), CellWorld.LEFT);
@@ -184,19 +190,20 @@ public class ProbabilityDemo {
 		policy.setAction(new CellWorldPosition(3, 1), CellWorld.RIGHT);
 		policy.setAction(new CellWorldPosition(3, 2), CellWorld.RIGHT);
 		policy.setAction(new CellWorldPosition(3, 3), CellWorld.RIGHT);
-		
+
 		PassiveADPAgent<CellWorldPosition, String> agent = new PassiveADPAgent<CellWorldPosition, String>(
 				fourByThree, policy);
-		
+
 		Randomizer r = new JavaRandomizer();
-		System.out.println("Deriving Utility Function using the Passive ADP Agent  From 100 trials in the 4 by 3 world");
+		System.out
+				.println("Deriving Utility Function using the Passive ADP Agent  From 100 trials in the 4 by 3 world");
 		MDPUtilityFunction<CellWorldPosition> uf = null;
 		for (int i = 0; i < 100; i++) {
 			agent.executeTrial(r);
 			uf = agent.getUtilityFunction();
 
 		}
-		
+
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 4; j++) {
 				if (!((i == 2) && (j == 2))) {
@@ -211,10 +218,13 @@ public class ProbabilityDemo {
 	private static void passiveTDAgentDemo() {
 		System.out.println("\nPassive TD Agent Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree= MDPFactory.createFourByThreeMDP();;
+		MDP<CellWorldPosition, String> fourByThree = MDPFactory
+				.createFourByThreeMDP();
+		;
 
 		MDPPolicy<CellWorldPosition, String> policy = new MDPPolicy<CellWorldPosition, String>();
-		System.out.println("Creating a policy to reflect the policy in Fig 17.3");
+		System.out
+				.println("Creating a policy to reflect the policy in Fig 17.3");
 		policy.setAction(new CellWorldPosition(1, 1), CellWorld.UP);
 		policy.setAction(new CellWorldPosition(1, 2), CellWorld.LEFT);
 		policy.setAction(new CellWorldPosition(1, 3), CellWorld.LEFT);
@@ -229,7 +239,8 @@ public class ProbabilityDemo {
 		PassiveTDAgent<CellWorldPosition, String> agent = new PassiveTDAgent<CellWorldPosition, String>(
 				fourByThree, policy);
 		Randomizer r = new JavaRandomizer();
-		System.out.println("Deriving Utility Function in the Passive ADP Agent  From 200 trials in the 4 by 3 world");
+		System.out
+				.println("Deriving Utility Function in the Passive ADP Agent  From 200 trials in the 4 by 3 world");
 		MDPUtilityFunction<CellWorldPosition> uf = null;
 		for (int i = 0; i < 200; i++) {
 			agent.executeTrial(r);
@@ -251,12 +262,14 @@ public class ProbabilityDemo {
 	private static void qLearningAgentDemo() {
 		System.out.println("\nQ Learning Agent Demo Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree= MDPFactory.createFourByThreeMDP();;
-		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent<CellWorldPosition, String> (
+		MDP<CellWorldPosition, String> fourByThree = MDPFactory
+				.createFourByThreeMDP();
+		;
+		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent<CellWorldPosition, String>(
 				fourByThree);
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.9, 0.2, 0.8,
 				0.3, 0.7, 0.4, 0.6, 0.5 });
-		
+
 		// Randomizer r = new JavaRandomizer();
 		Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
 		QTable<CellWorldPosition, String> qTable = null;

@@ -9,12 +9,18 @@ import java.util.List;
 
 import aima.learning.framework.DataSetSpecification;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class MockDataSetSpecification extends DataSetSpecification {
 	private String targetAttribute;
 
-	public MockDataSetSpecification(String targetAttributeName){
+	public MockDataSetSpecification(String targetAttributeName) {
 		this.targetAttribute = targetAttributeName;
 	}
+
 	public List<String> getAttributeNames() {
 		return new ArrayList<String>();
 	}

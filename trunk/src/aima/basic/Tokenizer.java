@@ -278,4 +278,3 @@ public class Tokenizer implements Enumeration {
 	 */
 	private int max = 0;
 }
-

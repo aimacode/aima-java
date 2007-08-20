@@ -4,6 +4,11 @@ import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
 import aima.probability.decision.MDPPerception;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public abstract class MDPAgent<STATE_TYPE, ACTION_TYPE> {
 
 	protected MDP<STATE_TYPE, ACTION_TYPE> mdp;
@@ -37,17 +42,18 @@ public abstract class MDPAgent<STATE_TYPE, ACTION_TYPE> {
 
 	public void executeTrial(Randomizer r) {
 		currentState = mdp.getInitialState();
-		currentReward =mdp.getRewardFor(mdp.getInitialState());
-		previousState =null;
-		previousAction=null;
-		MDPPerception<STATE_TYPE> perception = new MDPPerception<STATE_TYPE>(currentState, currentReward);
+		currentReward = mdp.getRewardFor(mdp.getInitialState());
+		previousState = null;
+		previousAction = null;
+		MDPPerception<STATE_TYPE> perception = new MDPPerception<STATE_TYPE>(
+				currentState, currentReward);
 		ACTION_TYPE action = null;
 		do {
-			 action = decideAction(perception);
-			 if (action !=null){
-			perception = execute(action, r);
-			 }
-		} while(action != null);
+			action = decideAction(perception);
+			if (action != null) {
+				perception = execute(action, r);
+			}
+		} while (action != null);
 	}
 
 	public abstract ACTION_TYPE decideAction(

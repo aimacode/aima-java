@@ -4,10 +4,14 @@
  */
 package aima.learning.framework;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 import java.util.Arrays;
 import java.util.List;
 
-public class StringAttributeSpecification implements AttributeSpecification{
+public class StringAttributeSpecification implements AttributeSpecification {
 	String attributeName;
 
 	List<String> attributePossibleValues;
@@ -39,8 +43,6 @@ public class StringAttributeSpecification implements AttributeSpecification{
 	}
 
 	public Attribute createAttribute(String rawValue) {
-		return new StringAttribute(rawValue,this);
+		return new StringAttribute(rawValue, this);
 	}
 }
-
-

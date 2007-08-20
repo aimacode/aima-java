@@ -2,6 +2,10 @@ package aima.basic.vaccum;
 
 import aima.basic.BasicEnvironmentView;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class TrivialVaccumDemo {
 	public static void main(String[] args) {
 		TrivialVaccumEnvironment tve = new TrivialVaccumEnvironment("Dirty",

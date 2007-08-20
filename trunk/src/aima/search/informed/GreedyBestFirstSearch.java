@@ -13,8 +13,9 @@ import aima.search.framework.QueueSearch;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class GreedyBestFirstSearch extends PrioritySearch {
 
 	public GreedyBestFirstSearch(QueueSearch search) {

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 import aima.util.Util;
 
-
-
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public abstract class Game {
 	protected GameState initialState = new GameState();
@@ -100,7 +98,7 @@ public abstract class Game {
 					state.put("next", successor);
 				}
 				if (v >= ab.beta()) {
-					//System.out.println("pruning from max");
+					// System.out.println("pruning from max");
 					return v;
 				}
 				ab.setAlpha(Util.max(ab.alpha(), v));
@@ -126,7 +124,7 @@ public abstract class Game {
 					state.put("next", successor);
 				}
 				if (v <= ab.alpha()) {
-					//System.out.println("pruning from min");
+					// System.out.println("pruning from min");
 					return v;
 				}
 				ab.setBeta(Util.min(ab.beta(), v));
@@ -150,7 +148,7 @@ public abstract class Game {
 
 	public void makeAlphaBetaMove() {
 		getAlphaBetaValue(presentState);
-		
+
 		GameState nextState = (GameState) presentState.get("next");
 		if (nextState == null) {
 			throw new RuntimeException("Alpha Beta Move failed");

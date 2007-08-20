@@ -10,11 +10,19 @@ import java.util.List;
 
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class PerceptronLearning implements NeuralNetworkTrainingScheme {
-	
+
 	private Hashtable<Neuron, Double> neuronDeltaMap;
+
 	private Hashtable<Neuron, Double> neuronBiasMap;
+
 	private Hashtable<Link, Double> linkWeightMap;
+
 	private double learningRate;
 
 	public PerceptronLearning() {
@@ -26,39 +34,42 @@ public class PerceptronLearning implements NeuralNetworkTrainingScheme {
 
 	public void backPropogate(FeedForwardNetwork network, List<Double> input,
 			List<Double> correctOutput) {
-		if (network.layerCount()!=2){
-			throw new RuntimeException("Perceptron larning can be used only with 2 layer networks. This one has "+network.layerCount());
+		if (network.layerCount() != 2) {
+			throw new RuntimeException(
+					"Perceptron larning can be used only with 2 layer networks. This one has "
+							+ network.layerCount());
 		}
 		network.propogateInput(input);
-		calculateDelta(network,correctOutput);
+		calculateDelta(network, correctOutput);
 	}
-
-	
 
 	public void updateWeightsAndBiases(FeedForwardNetwork network) {
 		Layer last = network.getOutputLayer();
-		for (Neuron n :last.getNeurons()){
-			double delta =  neuronDeltaMap.get(n);
-			neuronBiasMap.put(n,n.bias());
-			n.setBias(n.bias() - learningRate* delta) ;
-			for (Link link : n.inLinks()){
-				linkWeightMap.put(link,link.weight());
-				 double weightChange = (learningRate * delta * link.source().activation());
+		for (Neuron n : last.getNeurons()) {
+			double delta = neuronDeltaMap.get(n);
+			neuronBiasMap.put(n, n.bias());
+			n.setBias(n.bias() - learningRate * delta);
+			for (Link link : n.inLinks()) {
+				linkWeightMap.put(link, link.weight());
+				double weightChange = (learningRate * delta * link.source()
+						.activation());
 				link.setWeight(link.weight() - weightChange);
 			}
 		}
-		
+
 	}
-	
-	private void calculateDelta(FeedForwardNetwork network, List<Double> correctOutput) {
+
+	private void calculateDelta(FeedForwardNetwork network,
+			List<Double> correctOutput) {
 		Layer outputLayer = network.getOutputLayer();
 		Iterator<Neuron> neuronIter = outputLayer.iterator();
 		Iterator<Double> errorIter = outputLayer.getError(correctOutput)
 				.iterator();
 
 		while (neuronIter.hasNext() && errorIter.hasNext()) {
-			// multiplied by -1 because the error calculationis inverted from the book
-			neuronDeltaMap.put(neuronIter.next(), -1 *  errorIter.next());
+			// multiplied by -1 because the error calculationis inverted from
+			// the book
+			neuronDeltaMap.put(neuronIter.next(), -1 * errorIter.next());
 		}
 	}
 

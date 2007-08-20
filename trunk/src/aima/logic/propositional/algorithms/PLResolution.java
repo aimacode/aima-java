@@ -28,6 +28,7 @@ import aima.util.SetOps;
  * @author Ravi Mohan
  * 
  */
+
 public class PLResolution {
 
 	public boolean plResolution(KnowledgeBase kb, String alpha) {
@@ -42,7 +43,8 @@ public class PLResolution {
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
 		Set<Sentence> newClauses = new HashSet<Sentence>();
 		while (true) {
-			List<List<Sentence>> pairs = getCombinationPairs(new Converter<Sentence>().setToList(clauses));
+			List<List<Sentence>> pairs = getCombinationPairs(new Converter<Sentence>()
+					.setToList(clauses));
 
 			for (int i = 0; i < pairs.size(); i++) {
 				List<Sentence> pair = pairs.get(i);
@@ -52,7 +54,8 @@ public class PLResolution {
 				if (resolvents.contains(new Symbol("EMPTY_CLAUSE"))) {
 					return true;
 				}
-				newClauses = new SetOps<Sentence>().union(newClauses, resolvents);
+				newClauses = new SetOps<Sentence>().union(newClauses,
+						resolvents);
 				// System.out.println("clauseslist size = " +clauses.size());
 
 			}
@@ -73,9 +76,12 @@ public class PLResolution {
 		Iterator iter = clauses.iterator();
 		while (iter.hasNext()) {
 			Sentence clause = (Sentence) iter.next();
-			Set<Symbol> positiveSymbols = classifier.getPositiveSymbolsIn(clause);
-			Set<Symbol> negativeSymbols = classifier.getNegativeSymbolsIn(clause);
-			if ((new SetOps<Symbol>().intersection(positiveSymbols, negativeSymbols).size() == 0)) {
+			Set<Symbol> positiveSymbols = classifier
+					.getPositiveSymbolsIn(clause);
+			Set<Symbol> negativeSymbols = classifier
+					.getNegativeSymbolsIn(clause);
+			if ((new SetOps<Symbol>().intersection(positiveSymbols,
+					negativeSymbols).size() == 0)) {
 				filtered.add(clause);
 			}
 		}
@@ -95,10 +101,12 @@ public class PLResolution {
 	}
 
 	private Sentence createResolventClause(ClauseSymbols cs, Symbol toRemove) {
-		List<Symbol> positiveSymbols =  new Converter<Symbol>().setToList(new SetOps<Symbol>().union(
-				cs.clause1PositiveSymbols, cs.clause2PositiveSymbols));
-		List<Symbol> negativeSymbols = new Converter<Symbol>().setToList(new SetOps<Symbol>().union(
-				cs.clause1NegativeSymbols, cs.clause2NegativeSymbols));
+		List<Symbol> positiveSymbols = new Converter<Symbol>()
+				.setToList(new SetOps<Symbol>().union(
+						cs.clause1PositiveSymbols, cs.clause2PositiveSymbols));
+		List<Symbol> negativeSymbols = new Converter<Symbol>()
+				.setToList(new SetOps<Symbol>().union(
+						cs.clause1NegativeSymbols, cs.clause2NegativeSymbols));
 		if (positiveSymbols.contains(toRemove)) {
 			positiveSymbols.remove(toRemove);
 		}
@@ -151,9 +159,11 @@ public class PLResolution {
 	}
 
 	class ClauseSymbols {
-		Set<Symbol> clause1Symbols, clause1PositiveSymbols, clause1NegativeSymbols;
+		Set<Symbol> clause1Symbols, clause1PositiveSymbols,
+				clause1NegativeSymbols;
 
-		Set<Symbol> clause2Symbols, clause2PositiveSymbols, clause2NegativeSymbols;
+		Set<Symbol> clause2Symbols, clause2PositiveSymbols,
+				clause2NegativeSymbols;
 
 		Set<Symbol> positiveInClause1NegativeInClause2,
 				negativeInClause1PositiveInClause2;
@@ -170,21 +180,21 @@ public class PLResolution {
 			clause2PositiveSymbols = classifier.getPositiveSymbolsIn(clause2);
 			clause2NegativeSymbols = classifier.getNegativeSymbolsIn(clause2);
 
-			positiveInClause1NegativeInClause2 = new SetOps<Symbol>().intersection(
-					clause1PositiveSymbols, clause2NegativeSymbols);
-			negativeInClause1PositiveInClause2 = new SetOps<Symbol>().intersection(
-					clause1NegativeSymbols, clause2PositiveSymbols);
+			positiveInClause1NegativeInClause2 = new SetOps<Symbol>()
+					.intersection(clause1PositiveSymbols,
+							clause2NegativeSymbols);
+			negativeInClause1PositiveInClause2 = new SetOps<Symbol>()
+					.intersection(clause1NegativeSymbols,
+							clause2PositiveSymbols);
 
 		}
 
 		public Set getComplementedSymbols() {
-			return new SetOps<Symbol>().union(positiveInClause1NegativeInClause2,
+			return new SetOps<Symbol>().union(
+					positiveInClause1NegativeInClause2,
 					negativeInClause1PositiveInClause2);
 		}
 
-
-
-	
 	}
 
 	public boolean plResolution(String kbs, String alphaString) {

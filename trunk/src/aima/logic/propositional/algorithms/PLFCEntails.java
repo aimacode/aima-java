@@ -15,24 +15,27 @@ import aima.util.Converter;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PLFCEntails {
 
-	private Hashtable<HornClause,Integer> count;
-	private Hashtable<Symbol,Boolean> inferred;
+	private Hashtable<HornClause, Integer> count;
+
+	private Hashtable<Symbol, Boolean> inferred;
 
 	private Stack<Symbol> agenda;
 
 	public PLFCEntails() {
-		count = new Hashtable<HornClause,Integer>();
-		inferred = new Hashtable<Symbol,Boolean>();
+		count = new Hashtable<HornClause, Integer>();
+		inferred = new Hashtable<Symbol, Boolean>();
 		agenda = new Stack<Symbol>();
 	}
 
 	public boolean plfcEntails(KnowledgeBase kb, String s) {
-		return plfcEntails(kb,new Symbol(s));
+		return plfcEntails(kb, new Symbol(s));
 	}
+
 	public boolean plfcEntails(KnowledgeBase kb, Symbol q) {
 		List<HornClause> hornClauses = asHornClauses(kb.getSentences());
 		while (agenda.size() != 0) {
@@ -104,13 +107,14 @@ public class PLFCEntails {
 				BinarySentence bs = (BinarySentence) sentence;
 				head = (Symbol) bs.getSecond();
 				inferred.put(head, Boolean.FALSE);
-				Set<Symbol> symbolsInPremise = new SymbolCollector().getSymbolsIn(bs
-						.getFirst());
+				Set<Symbol> symbolsInPremise = new SymbolCollector()
+						.getSymbolsIn(bs.getFirst());
 				Iterator<Symbol> iter = symbolsInPremise.iterator();
 				while (iter.hasNext()) {
 					inferred.put(iter.next(), Boolean.FALSE);
 				}
-				premiseSymbols = new Converter<Symbol>().setToList(symbolsInPremise);
+				premiseSymbols = new Converter<Symbol>()
+						.setToList(symbolsInPremise);
 				count.put(this, new Integer(premiseSymbols.size()));
 			}
 
@@ -136,35 +140,33 @@ public class PLFCEntails {
 
 		public boolean equals(Object o) {
 
-
-			if( this == o ) {
+			if (this == o) {
 				return true;
 			}
-			if((o == null) || (this.getClass() != o.getClass())){
+			if ((o == null) || (this.getClass() != o.getClass())) {
 				return false;
 			}
 			HornClause ohc = (HornClause) o;
-			if (premiseSymbols.size() != ohc.premiseSymbols.size()){
+			if (premiseSymbols.size() != ohc.premiseSymbols.size()) {
 				return false;
 			}
 			boolean result = true;
-			for (Symbol s: premiseSymbols){
-				if (!ohc.premiseSymbols.contains(s)){
+			for (Symbol s : premiseSymbols) {
+				if (!ohc.premiseSymbols.contains(s)) {
 					return false;
 				}
 			}
-			
+
 			return true;
 
 		}
-		
-		
+
 		public int hashCode() {
 			int result = 17;
-			for (Symbol s : premiseSymbols){
+			for (Symbol s : premiseSymbols) {
 				result = 37 * result + s.hashCode();
 			}
-			return result;  
+			return result;
 		}
 
 		public String toString() {

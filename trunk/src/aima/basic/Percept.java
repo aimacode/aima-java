@@ -1,5 +1,9 @@
 package aima.basic;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Percept extends ObjectWithDynamicAttributes {
 public Percept() {
 		

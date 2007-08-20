@@ -37,7 +37,8 @@ public class ParanthizedSentence implements Sentence {
 		return (ps.paranthized.equals(paranthized));
 
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + paranthized.hashCode();
 		return result;

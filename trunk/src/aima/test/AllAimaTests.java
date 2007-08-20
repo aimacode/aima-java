@@ -22,8 +22,12 @@ import aima.test.tvenvironmenttest.TableDrivenVaccumAgentTest;
 import aima.test.tvenvironmenttest.TrivialVaccumEnvironmentTest;
 import aima.test.utiltest.TableTest;
 
-public class AllAimaTests {
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
+public class AllAimaTests {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
@@ -42,9 +46,6 @@ public class AllAimaTests {
 		suite.addTest(new TestSuite(XYEnvironmentTest.class));
 		suite.addTest(new TestSuite(XYLocationTest.class));
 
-		
-		
-		
 		suite.addTest(LearningTests.suite());
 		suite.addTest(LogicTests.suite());
 		suite.addTest(SearchTests.suite());

@@ -8,9 +8,10 @@ import aima.probability.Randomizer;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
-public class MockRandomizer implements Randomizer{
+
+public class MockRandomizer implements Randomizer {
 
 	private double[] values;
 
@@ -26,7 +27,7 @@ public class MockRandomizer implements Randomizer{
 			index = 0;
 		}
 
-		double value= values[index];
+		double value = values[index];
 		index++;
 		return value;
 	}

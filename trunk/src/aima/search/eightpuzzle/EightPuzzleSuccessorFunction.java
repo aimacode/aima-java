@@ -12,8 +12,10 @@ import aima.search.framework.SuccessorFunction;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
+
 public class EightPuzzleSuccessorFunction implements SuccessorFunction {
 
 	public List getSuccessors(Object state) {

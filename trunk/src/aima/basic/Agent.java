@@ -2,6 +2,11 @@ package aima.basic;
 
 import java.util.Hashtable;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public abstract class Agent extends ObjectWithDynamicAttributes {
 	protected AgentProgram program;
 

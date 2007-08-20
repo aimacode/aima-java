@@ -11,7 +11,7 @@ import aima.logic.propositional.parsing.ast.UnarySentence;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class CNFTransformer extends AbstractPLVisitor {
 	public Object visitBinarySentence(BinarySentence bs, Object arg) {
@@ -36,7 +36,6 @@ public class CNFTransformer extends AbstractPLVisitor {
 		while (!(toTransform.equals(step(toTransform)))) {
 			toTransform = step(toTransform);
 		}
-		
 
 		return toTransform;
 	}
@@ -92,9 +91,9 @@ public class CNFTransformer extends AbstractPLVisitor {
 		BinarySentence andTerm = bs.firstTermIsAndSentence() ? (BinarySentence) bs
 				.getFirst()
 				: (BinarySentence) bs.getSecond();
-		Sentence otherterm = bs.firstTermIsAndSentence() ?  bs
-				.getSecond() :  bs.getFirst();
-		//(alpha or (beta and gamma) = ((alpha or beta) and (alpha or gamma))
+		Sentence otherterm = bs.firstTermIsAndSentence() ? bs.getSecond() : bs
+				.getFirst();
+		// (alpha or (beta and gamma) = ((alpha or beta) and (alpha or gamma))
 		Sentence alpha = (Sentence) otherterm.accept(this, null);
 		Sentence beta = (Sentence) andTerm.getFirst().accept(this, null);
 		Sentence gamma = (Sentence) andTerm.getSecond().accept(this, null);

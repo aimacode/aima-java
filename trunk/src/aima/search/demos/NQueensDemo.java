@@ -20,6 +20,11 @@ import aima.search.uninformed.DepthFirstSearch;
 import aima.search.uninformed.DepthLimitedSearch;
 import aima.search.uninformed.IterativeDeepeningSearch;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class NQueensDemo {
 
 	public static void main(String[] args) {
@@ -41,7 +46,8 @@ public class NQueensDemo {
 	private static void nQueensWithRecursiveDLS() {
 		System.out.println("\nNQueensDemo recursive DLS -->");
 		try {
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest());
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest());
 			Search search = new DepthLimitedSearch(8);
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
@@ -55,7 +61,8 @@ public class NQueensDemo {
 	private static void nQueensWithBreadthFirstSearch() {
 		try {
 			System.out.println("\nNQueensDemo BFS -->");
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest());
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest());
 			Search search = new BreadthFirstSearch(new TreeSearch());
 			SearchAgent agent2 = new SearchAgent(problem, search);
 			printActions(agent2.getActions());
@@ -69,7 +76,8 @@ public class NQueensDemo {
 	private static void nQueensWithDepthFirstSearch() {
 		System.out.println("\nNQueensDemo DFS -->");
 		try {
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest());
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest());
 			Search search = new DepthFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
@@ -82,9 +90,10 @@ public class NQueensDemo {
 	private static void nQueensWithIterativeDeepeningSearch() {
 		System.out.println("\nNQueensDemo Iterative DS  -->");
 		try {
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest());
-			Search search =  new IterativeDeepeningSearch();
-			SearchAgent agent = new SearchAgent(problem,search);
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest());
+			Search search = new IterativeDeepeningSearch();
+			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
@@ -93,13 +102,15 @@ public class NQueensDemo {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void nQueensSimulatedAnnealingSearch() {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest(),new QueensToBePlacedHeuristic());
-			Search search =  new SimulatedAnnealingSearch();
-			SearchAgent agent = new SearchAgent(problem,search);
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest(),
+					new QueensToBePlacedHeuristic());
+			Search search = new SimulatedAnnealingSearch();
+			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
@@ -108,13 +119,15 @@ public class NQueensDemo {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void nQueensHillClimbingSearch() {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
-			Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest(),new QueensToBePlacedHeuristic());
-			Search search =  new HillClimbingSearch();
-			SearchAgent agent = new SearchAgent(problem,search);
+			Problem problem = new Problem(new NQueensBoard(8),
+					new NQueensSuccessorFunction(), new NQueensGoalTest(),
+					new QueensToBePlacedHeuristic());
+			Search search = new HillClimbingSearch();
+			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());

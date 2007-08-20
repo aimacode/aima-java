@@ -7,6 +7,10 @@ import aima.basic.XYLocation;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class NQueensSuccessorFunction implements SuccessorFunction {
 
 	public List getSuccessors(Object state) {
@@ -31,7 +35,8 @@ public class NQueensSuccessorFunction implements SuccessorFunction {
 			NQueensBoard parentBoard) {
 
 		NQueensBoard newBoard = new NQueensBoard(parentBoard.getSize());
-		List<XYLocation> queenPositionsOnParentBoard = parentBoard.getQueenPositions();
+		List<XYLocation> queenPositionsOnParentBoard = parentBoard
+				.getQueenPositions();
 		queenPositionsOnParentBoard.add(new XYLocation(row, column));
 		newBoard.setBoard(queenPositionsOnParentBoard);
 		return newBoard;

@@ -10,7 +10,7 @@ import aima.basic.XYLocation;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class TicTacToe extends Game {
 	public TicTacToe() {
@@ -99,7 +99,7 @@ public class TicTacToe extends Game {
 			retVal.put("utility", new Integer(computeUtility(newBoard,
 					getPlayerToMove(getState()))));
 			retVal.put("level", new Integer(getLevel(state) + 1));
-			//presentState = retVal;
+			// presentState = retVal;
 		}
 		return retVal;
 	}
@@ -146,10 +146,10 @@ public class TicTacToe extends Game {
 	}
 
 	public int getMiniMaxValue(GameState state) {
-		//statesSeen = new ArrayList();
-		//  System.out.println("In get Minimax Value");
+		// statesSeen = new ArrayList();
+		// System.out.println("In get Minimax Value");
 		// System.out.println("Received state ");
-		//((TicTacToeBoard)state.get("board")).print();
+		// ((TicTacToeBoard)state.get("board")).print();
 		if (getPlayerToMove(state).equalsIgnoreCase("X")) {
 			return maxValue(state);
 
@@ -159,15 +159,17 @@ public class TicTacToe extends Game {
 	}
 
 	public int getAlphaBetaValue(GameState state) {
-		
+
 		if (getPlayerToMove(state).equalsIgnoreCase("X")) {
-			AlphaBeta initial = new AlphaBeta(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			AlphaBeta initial = new AlphaBeta(Integer.MIN_VALUE,
+					Integer.MAX_VALUE);
 			int max = maxValue(state, initial);
 			return max;
 
 		} else {
-			//invert?
-			AlphaBeta initial = new AlphaBeta(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			// invert?
+			AlphaBeta initial = new AlphaBeta(Integer.MIN_VALUE,
+					Integer.MAX_VALUE);
 			return minValue(state, initial);
 		}
 	}

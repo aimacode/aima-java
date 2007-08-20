@@ -20,6 +20,11 @@ import aima.logic.propositional.parsing.ast.Symbol;
 import aima.logic.propositional.parsing.ast.TrueSentence;
 import aima.logic.propositional.parsing.ast.UnarySentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class PEParser extends Parser {
 
 	public PEParser() {
@@ -78,7 +83,7 @@ public class PEParser extends Parser {
 		List<Sentence> sentences = new ArrayList<Sentence>();
 		while (lookAhead(1).getType() != LogicTokenTypes.RPAREN) {
 			Sentence sen = parseSentence();
-			//consume();
+			// consume();
 			sentences.add(sen);
 		}
 		match(")");
@@ -116,7 +121,7 @@ public class PEParser extends Parser {
 			} else if ((lookAhead(1).getType() == LogicTokenTypes.CONNECTOR)
 					&& (!(lookAhead(1).getText().equals("Not")))) {
 				String connector = lookAhead(1).getText();
-				consume(); //connector
+				consume(); // connector
 				Sentence two = parseSentence();
 				match(")");
 				return new BinarySentence(connector, one, two);

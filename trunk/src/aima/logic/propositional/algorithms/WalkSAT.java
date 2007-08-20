@@ -22,6 +22,7 @@ import aima.util.Util;
  * @author Ravi Mohan
  * 
  */
+
 public class WalkSAT {
 	private Model myModel;
 
@@ -41,26 +42,28 @@ public class WalkSAT {
 			Symbol sym = (Symbol) symbols.get(i);
 			myModel = myModel.extend(sym, Util.randomBoolean());
 		}
-		List<Sentence> clauses = new Converter<Sentence>().setToList(clauseGatherer.getClausesFrom(transformer
-				.transform(s)));
+		List<Sentence> clauses = new Converter<Sentence>()
+				.setToList(clauseGatherer.getClausesFrom(transformer
+						.transform(s)));
 
 		for (int i = 0; i < numberOfFlips; i++) {
-			if (getNumberOfClausesSatisfiedIn(new Converter<Sentence>().listToSet(clauses),
-					myModel) == clauses.size()) {
+			if (getNumberOfClausesSatisfiedIn(new Converter<Sentence>()
+					.listToSet(clauses), myModel) == clauses.size()) {
 				return myModel;
 			}
 			Sentence clause = (Sentence) clauses.get(random.nextInt(clauses
 					.size()));
 
-			List<Symbol> symbolsInClause = new Converter<Symbol>()
-					.setToList(sc.getSymbolsIn(clause));
+			List<Symbol> symbolsInClause = new Converter<Symbol>().setToList(sc
+					.getSymbolsIn(clause));
 			if (random.nextDouble() >= probabilityOfRandomWalk) {
 				Symbol randomSymbol = (Symbol) symbolsInClause.get(random
 						.nextInt(symbolsInClause.size()));
 				myModel = myModel.flip(randomSymbol);
 			} else {
 				Symbol symbolToFlip = getSymbolWhoseFlipMaximisesSatisfiedClauses(
-						new Converter<Sentence>().listToSet(clauses), symbolsInClause, myModel);
+						new Converter<Sentence>().listToSet(clauses),
+						symbolsInClause, myModel);
 				myModel = myModel.flip(symbolToFlip);
 			}
 
@@ -68,8 +71,8 @@ public class WalkSAT {
 		return null;
 	}
 
-	private Symbol getSymbolWhoseFlipMaximisesSatisfiedClauses(Set<Sentence> clauses,
-			List<Symbol> symbols, Model model) {
+	private Symbol getSymbolWhoseFlipMaximisesSatisfiedClauses(
+			Set<Sentence> clauses, List<Symbol> symbols, Model model) {
 		if (symbols.size() > 0) {
 			Symbol retVal = (Symbol) symbols.get(0);
 			int maxClausesSatisfied = 0;
@@ -88,10 +91,7 @@ public class WalkSAT {
 
 	}
 
-	private List<Symbol> extractSymbols(Sentence sentence) {
-		SymbolCollector sc = new SymbolCollector();
-		return new Converter<Symbol>().setToList(sc.getSymbolsIn(sentence));
-	}
+
 
 	private int getNumberOfClausesSatisfiedIn(Set clauses, Model model) {
 		int retVal = 0;

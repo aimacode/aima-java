@@ -3,10 +3,13 @@
  *
  */
 package aima.util;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Table<RowHeaderType,ColumnHeaderType,ValueType> {
 	private List<RowHeaderType> rowHeaders;
 	private List<ColumnHeaderType> columnHeaders;

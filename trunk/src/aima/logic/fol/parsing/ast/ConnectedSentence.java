@@ -61,9 +61,9 @@ public class ConnectedSentence extends ParanthizedSentence {
 
 	public int hashCode() {
 		int result = 17;
-		result =  37 *result + getConnector().hashCode();
-		result =  37 *result + getFirst().hashCode();
-		result =  37 *result + getSecond().hashCode();
+		result = 37 * result + getConnector().hashCode();
+		result = 37 * result + getFirst().hashCode();
+		result = 37 * result + getSecond().hashCode();
 		return result;
 	}
 

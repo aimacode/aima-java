@@ -6,6 +6,11 @@ package aima.logic.propositional.parsing.ast;
 
 import aima.logic.propositional.parsing.ast.Sentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public abstract class ComplexSentence extends Sentence {
 
 }

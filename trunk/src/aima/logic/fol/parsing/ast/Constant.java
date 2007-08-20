@@ -6,6 +6,11 @@ package aima.logic.fol.parsing.ast;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Constant extends Term {
 	private String value;
 
@@ -32,8 +37,8 @@ public class Constant extends Term {
 
 	public int hashCode() {
 		int result = 17;
-	    result = 37 * result + value.hashCode();
-		
+		result = 37 * result + value.hashCode();
+
 		return result;
 	}
 

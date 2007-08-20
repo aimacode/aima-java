@@ -10,8 +10,9 @@ import aima.search.framework.HeuristicFunction;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class ManhattanHeuristicFunction implements HeuristicFunction {
 
 	public int getHeuristicValue(Object state) {

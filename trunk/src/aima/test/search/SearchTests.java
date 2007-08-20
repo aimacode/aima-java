@@ -24,17 +24,21 @@ import aima.test.search.searches.GreedyBestFirstSearchTest;
 import aima.test.search.searches.IterativeDeepeningSearchTest;
 import aima.test.search.searches.UniformCostSearchTest;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
 public class SearchTests {
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(new TestSuite(AssignmentTest.class)); 
-		suite.addTest(new TestSuite(AStarSearchTest.class));    
+	public static Test suite() {
+		TestSuite suite = new TestSuite();
+		suite.addTest(new TestSuite(AssignmentTest.class));
+		suite.addTest(new TestSuite(AStarSearchTest.class));
 		suite.addTest(new TestSuite(BreadthFirstSearchTest.class));
 		suite.addTest(new TestSuite(DomainsTest.class));
 		suite.addTest(new TestSuite(DepthFirstSearchTest.class));
-		suite.addTest(new TestSuite(DepthLimitedSearchTest.class));	
+		suite.addTest(new TestSuite(DepthLimitedSearchTest.class));
 		suite.addTest(new TestSuite(EightPuzzleBoardTest.class));
 		suite.addTest(new TestSuite(EightPuzzleBoardMoveTest.class));
 		suite.addTest(new TestSuite(EightPuzzleSuccessorFunctionTest.class));
@@ -55,7 +59,7 @@ public class SearchTests {
 		suite.addTest(new TestSuite(NodeTest.class));
 		suite.addTest(new TestSuite(QueueTest.class));
 		suite.addTest(new TestSuite(UniformCostSearchTest.class));
-		
+
 		return suite;
-    }
+	}
 }

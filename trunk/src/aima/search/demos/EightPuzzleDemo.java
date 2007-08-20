@@ -26,18 +26,19 @@ import aima.search.uninformed.IterativeDeepeningSearch;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class EightPuzzleDemo {
 	static EightPuzzleBoard boardWithThreeMoveSolution = new EightPuzzleBoard(
 			new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });;
 
 	static EightPuzzleBoard random1 = new EightPuzzleBoard(new int[] { 1, 4, 2,
 			7, 5, 8, 3, 0, 6 });
-	
-	static EightPuzzleBoard extreme = new EightPuzzleBoard(new int[] { 0,8, 7, 6,
-			5, 4, 3, 2, 1 });
-	
+
+	static EightPuzzleBoard extreme = new EightPuzzleBoard(new int[] { 0, 8, 7,
+			6, 5, 4, 3, 2, 1 });
+
 	public static void main(String[] args) {
 		eightPuzzleDLSDemo();
 		eightPuzzleIDLSDemo();

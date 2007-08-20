@@ -11,6 +11,11 @@ import aima.logic.common.Lexer;
 import aima.logic.common.LogicTokenTypes;
 import aima.logic.common.Token;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class PELexer extends Lexer {
 
 	Set<String> connectors;
@@ -47,7 +52,7 @@ public class PELexer extends Lexer {
 		} else if (Character.isWhitespace(lookAhead(1))) {
 			consume();
 			return nextToken();
-			//return whiteSpace();
+			// return whiteSpace();
 		} else if (lookAhead(1) == (char) -1) {
 			return new Token(LogicTokenTypes.EOI, "EOI");
 		} else {

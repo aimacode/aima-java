@@ -5,6 +5,11 @@ import java.util.List;
 import aima.basic.XYLocation;
 import aima.search.framework.GoalTest;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class NQueensGoalTest implements GoalTest {
 	NQueensBoard board;
 
@@ -20,7 +25,7 @@ public class NQueensGoalTest implements GoalTest {
 	}
 
 	private boolean allQueenPositionsHaveZeroAttacks(List positions) {
-		
+
 		for (int i = 0; i < positions.size(); i++) {
 			XYLocation location = (XYLocation) positions.get(i);
 			if (board.getNumberOfAttacksOn(location) != 0) {

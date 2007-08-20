@@ -1,9 +1,14 @@
 package aima.probability.decision;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
 public class MDPPerception<STATE_TYPE> {
 
 	private STATE_TYPE state;
+
 	private double reward;
 
 	public MDPPerception(STATE_TYPE state, double reward) {
@@ -18,8 +23,9 @@ public class MDPPerception<STATE_TYPE> {
 	public STATE_TYPE getState() {
 		return state;
 	}
-	public String toString(){
-		return "[ "+ state.toString() + " , " + reward + " ] ";
+
+	public String toString() {
+		return "[ " + state.toString() + " , " + reward + " ] ";
 	}
 
 }

@@ -5,15 +5,14 @@ import java.util.List;
 
 import aima.util.Util;
 
-
-
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class CSP {
 
-	//private Assignment assignment;
+	// private Assignment assignment;
 
 	private Domain domains;
 
@@ -23,14 +22,14 @@ public class CSP {
 
 	public CSP(List<String> variables, Constraint constraints) {
 		this.variables = variables;
-		//this.assignment = new Assignment(variables);
+		// this.assignment = new Assignment(variables);
 		this.domains = new Domain(variables);
 		this.constraints = constraints;
 	}
 
 	public CSP(List<String> variables, Constraint constraints, Domain domains) {
 		this.variables = variables;
-		//this.assignment = new Assignment(variables);
+		// this.assignment = new Assignment(variables);
 		this.domains = domains;
 		this.constraints = constraints;
 	}
@@ -61,7 +60,7 @@ public class CSP {
 				anAssignment.remove(variable);
 			}
 		}
-		return null;//failure
+		return null;// failure
 	}
 
 	public Assignment mcSearch(int maxSteps) {
@@ -97,7 +96,7 @@ public class CSP {
 			String variable = (String) variables.get(i);
 			Object randomValue = Util.selectRandomlyFromList(domains
 					.getDomainOf(variable));
-			//System.out.println("in generate Assignment setting");
+			// System.out.println("in generate Assignment setting");
 			assignment.setAssignment(variable, randomValue);
 		}
 		return assignment;

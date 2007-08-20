@@ -19,6 +19,10 @@ import aima.probability.decision.cellworld.CellWorldPosition;
 import aima.test.probabilitytest.MockRandomizer;
 import aima.util.Pair;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class ReinforcementLearningTest extends TestCase {
 	MDP<CellWorldPosition, String> fourByThree;
 
@@ -108,7 +112,7 @@ public class ReinforcementLearningTest extends TestCase {
 				fourByThree);
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.9, 0.2, 0.8,
 				0.3, 0.7, 0.4, 0.6, 0.5 });
-		
+
 		// Randomizer r = new JavaRandomizer();
 		Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
 		QTable<CellWorldPosition, String> qTable = null;

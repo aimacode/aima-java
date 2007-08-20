@@ -1,10 +1,13 @@
-/*
- * Created on Sep 14, 2003 by Ravi Mohan
- *  
- */
+
 package aima.logic.fol.parsing.ast;
 
 import aima.logic.fol.parsing.FOLVisitor;
+
+
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
 public class Variable extends Term {
 	private String value;

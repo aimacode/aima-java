@@ -4,6 +4,10 @@
  */
 package aima.learning.framework;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -155,7 +159,8 @@ public class DataSet {
 	public DataSet matchingDataSet(String attributeName, String attributeValue) {
 		DataSet ds = new DataSet(specification);
 		for (Example e : examples) {
-			if (e.getAttributeValueAsString(attributeName).equals(attributeValue)) {
+			if (e.getAttributeValueAsString(attributeName).equals(
+					attributeValue)) {
 				ds.add(e);
 			}
 		}
@@ -166,5 +171,4 @@ public class DataSet {
 		return Util.removeFrom(getAttributeNames(), getTargetAttributeName());
 	}
 
-	
 }

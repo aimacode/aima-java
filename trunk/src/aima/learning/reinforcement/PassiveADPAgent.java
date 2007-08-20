@@ -10,6 +10,11 @@ import aima.probability.decision.MDPTransition;
 import aima.probability.decision.MDPUtilityFunction;
 import aima.util.Pair;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 		MDPAgent<STATE_TYPE, ACTION_TYPE> {
 	private MDPPolicy<STATE_TYPE, ACTION_TYPE> policy;
@@ -31,9 +36,11 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 	}
 
 	public ACTION_TYPE decideAction(MDPPerception<STATE_TYPE> perception) {
-		
-	
-		if (!(utilityFunction.hasUtilityFor(perception.getState()))) { //if perceptionState is new
+
+		if (!(utilityFunction.hasUtilityFor(perception.getState()))) { // if
+																		// perceptionState
+																		// is
+																		// new
 			utilityFunction.setUtility(perception.getState(), perception
 					.getReward());
 			mdp.setReward(perception.getState(), perception.getReward());

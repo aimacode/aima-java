@@ -11,14 +11,15 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
-public class Domain {
-	private Hashtable<String,List<Object>> variablesToValues;
 
-	//a hash Of Lists { variable: ListOfDomainValues}
+public class Domain {
+	private Hashtable<String, List<Object>> variablesToValues;
+
+	// a hash Of Lists { variable: ListOfDomainValues}
 	public Domain(List<String> variables) {
-		this.variablesToValues = new Hashtable<String,List<Object>>();
+		this.variablesToValues = new Hashtable<String, List<Object>>();
 		Iterator<String> varIter = variables.iterator();
 		while (varIter.hasNext()) {
 			variablesToValues.put(varIter.next(), new ArrayList<Object>());
@@ -26,11 +27,11 @@ public class Domain {
 	}
 
 	public List<Object> getDomainOf(String variable) {
-		return  variablesToValues.get(variable);
+		return variablesToValues.get(variable);
 	}
 
 	public void add(String variable, Object value) {
-		List<Object> varDomains =  variablesToValues.get(variable);
+		List<Object> varDomains = variablesToValues.get(variable);
 
 		if (!(varDomains.contains(value))) {
 			varDomains.add(value);

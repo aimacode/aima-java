@@ -13,8 +13,9 @@ import aima.logic.propositional.parsing.ast.Symbol;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class TTEntailsTest extends TestCase {
 	TTEntails tte;
 
@@ -49,7 +50,7 @@ public class TTEntailsTest extends TestCase {
 		kb.tell("A");
 		assertEquals(false, kb.askWithTTEntails("NOT A"));
 	}
-	
+
 	public void testSUnkownSymbol() {
 		kb.tell("((A => B) AND B)");
 		assertEquals(false, kb.askWithTTEntails("X"));
@@ -81,23 +82,17 @@ public class TTEntailsTest extends TestCase {
 		kb.tell("(NOT B12)");
 		kb.tell("(B10)");
 		kb.tell("(B01)");
-		
 
-		
 		assertTrue(kb.askWithTTEntails("(P00)"));
 		assertFalse(kb.askWithTTEntails("(NOT P00)"));
 
 	}
-	
-	
 
-
-
-//	public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
-//		KnowledgeBase kb = new KnowledgeBase();
-//
-//		assertTrue(kb.askWithTTEntails("((A OR (NOT A)) AND (A OR B))"));
-//	}
+	// public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
+	// KnowledgeBase kb = new KnowledgeBase();
+	//
+	// assertTrue(kb.askWithTTEntails("((A OR (NOT A)) AND (A OR B))"));
+	// }
 
 	public void testModelEvaluation() {
 		kb.tell("(NOT P11)");

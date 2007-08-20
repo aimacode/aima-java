@@ -4,6 +4,11 @@
  */
 package aima.logic.common;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public abstract class Parser {
 
 	protected Lexer lexer;

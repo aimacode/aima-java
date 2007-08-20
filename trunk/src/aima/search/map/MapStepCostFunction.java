@@ -10,25 +10,30 @@ import aima.search.framework.StepCostFunction;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
+
 public class MapStepCostFunction implements StepCostFunction {
-	private Map aMap = null;
+	private Map map = null;
+
 	//
-	// Used by Uniform-cost search to ensure every step is greater than or equal to some small positive constant
-	private static double _constantCost = 1.0;
-	
+	// Used by Uniform-cost search to ensure every step is greater than or equal
+	// to some small positive constant
+	private static double constantCost = 1.0;
+
 	public MapStepCostFunction(Map aMap) {
-		this.aMap = aMap;
+		this.map = aMap;
 	}
-	
-	public Double calculateStepCost(Object fromState, Object toState, String action) {
-		Integer distance = aMap.getDistance((String) fromState, (String)toState);
-		
+
+	public Double calculateStepCost(Object fromState, Object toState,
+			String action) {
+		Integer distance = map.getDistance((String) fromState,
+				(String) toState);
+
 		if (null == distance || distance < 0) {
-			return _constantCost;
+			return constantCost;
 		}
-		
-		return _constantCost + new Double(distance);
+
+		return constantCost + new Double(distance);
 	}
 }

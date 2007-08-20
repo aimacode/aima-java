@@ -1,15 +1,15 @@
-
 package aima.games;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class AlphaBeta {
 	private int alpha;
+
 	private int beta;
 
-	public AlphaBeta(int alpha,int beta){
+	public AlphaBeta(int alpha, int beta) {
 		this.alpha = alpha;
 		this.beta = beta;
 	}
@@ -31,6 +31,6 @@ public class AlphaBeta {
 	}
 
 	public AlphaBeta copy() {
-		return new AlphaBeta(alpha,beta);
+		return new AlphaBeta(alpha, beta);
 	}
 }

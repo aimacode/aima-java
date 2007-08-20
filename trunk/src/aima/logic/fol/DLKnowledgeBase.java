@@ -13,13 +13,15 @@ import aima.logic.fol.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class DLKnowledgeBase {
 	private FOLParser parser;
 
-	private List<Rule>rules;
-	List <Fact>facts;
+	private List<Rule> rules;
+
+	List<Fact> facts;
 
 	private Unifier unifier;
 
@@ -89,7 +91,7 @@ public class DLKnowledgeBase {
 		int numberOfNewFactsDiscoveredThisIteration = 0;
 		do {
 			Hashtable h = matchesFacts(query);
-			//System.out.println("MatchedFacts " + h);
+			// System.out.println("MatchedFacts " + h);
 			if (h != null) {
 				p = new Properties();
 				Iterator iter = h.keySet().iterator();
@@ -126,14 +128,14 @@ public class DLKnowledgeBase {
 		Predicate substFact = null;
 		List variables = new VariableCollector(parser)
 				.getAllVariableNames(fact);
-		if (variables.size() == 0) {//conclusion with no variables
+		if (variables.size() == 0) {// conclusion with no variables
 			return fact;
 		}
 		for (int i = 0; i < variables.size(); i++) {
 			String variable = (String) variables.get(0);
 			List commonValues = triggered
 					.commonValuesInContainingClauses(variable);
-			//for now assume only one common value
+			// for now assume only one common value
 			Properties substValues = new Properties();
 			substValues.setProperty(variable, commonValues.get(0).toString());
 			substFact = (Predicate) new SubstVisitor(parser)

@@ -1,35 +1,41 @@
 package aima.probability.reasoning;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Particle {
 
-    private String state;
-    private double weight;
+	private String state;
 
-    public Particle(String state, double weight) {
-	this.state = state;
-	this.weight =weight;
-    }
-    
-    public Particle(String state) {
-	this(state,0);
-    }
+	private double weight;
 
-    public boolean hasState(String aState) {
-	
-	return state.equals(aState);
-    }
+	public Particle(String state, double weight) {
+		this.state = state;
+		this.weight = weight;
+	}
 
-    public String getState() {
-	return state;
-    }
+	public Particle(String state) {
+		this(state, 0);
+	}
 
-    public double getWeight() {
-	return weight;
-    }
+	public boolean hasState(String aState) {
 
-    public void setWeight(double particleWeight) {
-	weight = particleWeight;
-	
-    }
+		return state.equals(aState);
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double particleWeight) {
+		weight = particleWeight;
+
+	}
 
 }

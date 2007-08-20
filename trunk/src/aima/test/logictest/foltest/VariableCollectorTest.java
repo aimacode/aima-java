@@ -15,9 +15,10 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
-public class VariableCollectorTest extends TestCase{
+
+public class VariableCollectorTest extends TestCase {
 	private Sentence sentence;
 
 	FOLParser parser;
@@ -28,14 +29,17 @@ public class VariableCollectorTest extends TestCase{
 		parser = new FOLParser(DomainFactory.crusadesDomain());
 		vc = new VariableCollector(parser);
 	}
-	public void  testSimplepredicate(){
+
+	public void testSimplepredicate() {
 		Set variables = vc.collectAllVariables(parser.parse("King(x)"));
-		assertEquals(1,variables.size());
+		assertEquals(1, variables.size());
 		assertTrue(variables.contains(new Variable("x")));
 	}
-	public void  testMultipleVariables(){
-		Set variables = vc.collectAllVariables(parser.parse("BrotherOf(x) = EnemyOf(y)"));
-		assertEquals(2,variables.size());
+
+	public void testMultipleVariables() {
+		Set variables = vc.collectAllVariables(parser
+				.parse("BrotherOf(x) = EnemyOf(y)"));
+		assertEquals(2, variables.size());
 		assertTrue(variables.contains(new Variable("x")));
 		assertTrue(variables.contains(new Variable("y")));
 	}

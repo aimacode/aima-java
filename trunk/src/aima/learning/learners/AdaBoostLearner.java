@@ -13,6 +13,10 @@ import aima.learning.framework.Learner;
 import aima.util.Table;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class AdaBoostLearner implements Learner {
 
 	private List<Learner> learners;
@@ -34,10 +38,10 @@ public class AdaBoostLearner implements Learner {
 	public void train(DataSet ds) {
 		initializeExampleWeights(ds.examples.size());
 
-		for (Learner learner:learners){
+		for (Learner learner : learners) {
 			learner.train(ds);
-			
-			double error = calculateError(ds, learner);			
+
+			double error = calculateError(ds, learner);
 			if (error < 0.0001) {
 				break;
 			}
@@ -51,7 +55,6 @@ public class AdaBoostLearner implements Learner {
 
 	}
 
-	
 	public String predict(Example e) {
 		return weightedMajority(e);
 	}
@@ -59,19 +62,21 @@ public class AdaBoostLearner implements Learner {
 	private String weightedMajority(Example e) {
 		List<String> targetValues = dataSet.getPossibleAttributeValues(dataSet
 				.getTargetAttributeName());
-	
-		Table<String, Learner, Double> table = createTargetValueLearnerTable(targetValues,e);
+
+		Table<String, Learner, Double> table = createTargetValueLearnerTable(
+				targetValues, e);
 		return getTargetValueWithTheMaximumVotes(targetValues, table);
 	}
 
-	private Table<String, Learner, Double> createTargetValueLearnerTable(List<String> targetValues,Example e) {
+	private Table<String, Learner, Double> createTargetValueLearnerTable(
+			List<String> targetValues, Example e) {
 		// create a table with target-attribute values as rows and learners as
-		// columns and cells containing the weighted votes  of each Learner for a target value 
-		// 		Learner1 Learner2 Laerner3 .......
-		//Yes     0.83     0.5     0
-		//No       0        0     0.6 		
-		
-		
+		// columns and cells containing the weighted votes of each Learner for a
+		// target value
+		// Learner1 Learner2 Laerner3 .......
+		// Yes 0.83 0.5 0
+		// No 0 0 0.6
+
 		Table<String, Learner, Double> table = new Table<String, Learner, Double>(
 				targetValues, learners);
 		// initialize table
@@ -92,7 +97,8 @@ public class AdaBoostLearner implements Learner {
 		return table;
 	}
 
-	private String getTargetValueWithTheMaximumVotes(List<String> targetValues, Table<String, Learner, Double> table) {
+	private String getTargetValueWithTheMaximumVotes(List<String> targetValues,
+			Table<String, Learner, Double> table) {
 		String targetValueWithMaxScore = targetValues.get(0);
 		double score = scoreOfValue(targetValueWithMaxScore, table, learners);
 		for (String value : targetValues) {
@@ -104,8 +110,6 @@ public class AdaBoostLearner implements Learner {
 		}
 		return targetValueWithMaxScore;
 	}
-
-	
 
 	public int[] test(DataSet ds) {
 		int[] results = new int[] { 0, 0 };
@@ -119,7 +123,7 @@ public class AdaBoostLearner implements Learner {
 		}
 		return results;
 	}
-	
+
 	private void initializeExampleWeights(int size) {
 		if (size == 0) {
 			throw new RuntimeException(
@@ -132,6 +136,7 @@ public class AdaBoostLearner implements Learner {
 		}
 
 	}
+
 	private void initializeHypothesisWeights(int size) {
 		if (size == 0) {
 			throw new RuntimeException(
@@ -143,7 +148,7 @@ public class AdaBoostLearner implements Learner {
 			learnerWeights.put(le, 1.0);
 		}
 	}
-	
+
 	private double calculateError(DataSet ds, Learner l) {
 		double error = 0.0;
 		for (int i = 0; i < ds.examples.size(); i++) {
@@ -166,7 +171,7 @@ public class AdaBoostLearner implements Learner {
 		exampleWeights = Util.normalize(exampleWeights);
 
 	}
-	
+
 	private double scoreOfValue(String targetValue,
 			Table<String, Learner, Double> table, List<Learner> learners) {
 		double score = 0.0;
@@ -175,6 +180,5 @@ public class AdaBoostLearner implements Learner {
 		}
 		return score;
 	}
-
 
 }

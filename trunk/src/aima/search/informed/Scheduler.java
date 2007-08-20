@@ -6,8 +6,9 @@ package aima.search.informed;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class Scheduler {
 
 	private int k, limit;
@@ -35,4 +36,3 @@ public class Scheduler {
 		}
 	}
 }
-

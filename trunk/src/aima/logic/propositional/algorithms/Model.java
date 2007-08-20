@@ -18,9 +18,14 @@ import aima.logic.propositional.parsing.ast.Symbol;
 import aima.logic.propositional.parsing.ast.TrueSentence;
 import aima.logic.propositional.parsing.ast.UnarySentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Model implements PLVisitor {
 
-	Hashtable<String,Boolean> h = new Hashtable<String,Boolean>();
+	Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
 
 	public Boolean getStatus(Symbol symbol) {
 		Object status = h.get(symbol.getValue());
@@ -29,6 +34,7 @@ public class Model implements PLVisitor {
 		}
 		return null;
 	}
+
 	public boolean isTrue(Symbol symbol) {
 		Object status = h.get(symbol.getValue());
 		if (status != null) {
@@ -36,6 +42,7 @@ public class Model implements PLVisitor {
 		}
 		return false;
 	}
+
 	public boolean isFalse(Symbol symbol) {
 		Object status = h.get(symbol.getValue());
 		if (status != null) {
@@ -52,8 +59,9 @@ public class Model implements PLVisitor {
 
 	public Model extend(Symbol symbol, boolean b) {
 		Model m = new Model();
-		return extend(symbol.getValue(),b);
+		return extend(symbol.getValue(), b);
 	}
+
 	public Model extend(String s, boolean b) {
 		Model m = new Model();
 		Iterator<String> i = this.h.keySet().iterator();
@@ -70,31 +78,31 @@ public class Model implements PLVisitor {
 		return m;
 	}
 
-
 	public void print() {
 		Iterator i = h.keySet().iterator();
 		while (i.hasNext()) {
 			Object key = i.next();
 			Object value = h.get(key);
 			System.out.print(key + " = " + value + " ");
-			//System.out.print (key +" = " +((Boolean)value).booleanValue());
+			// System.out.print (key +" = " +((Boolean)value).booleanValue());
 		}
 		System.out.println();
 	}
 
-	public boolean isTrue(Sentence clause) {		
-		Object result = clause.accept(this,null);
-		return (result == null) ? false : ((Boolean) result).booleanValue()==true;
+	public boolean isTrue(Sentence clause) {
+		Object result = clause.accept(this, null);
+		return (result == null) ? false
+				: ((Boolean) result).booleanValue() == true;
 	}
-	
-	public boolean isFalse(Sentence clause) {		
-		Object o = clause.accept(this,null);
-		return (o != null) ? ((Boolean) o).booleanValue()==false : false;
+
+	public boolean isFalse(Sentence clause) {
+		Object o = clause.accept(this, null);
+		return (o != null) ? ((Boolean) o).booleanValue() == false : false;
 	}
-	
-	public boolean isUnknown(Sentence clause) {		//TODO TEST WELL
-		Object o = clause.accept(this,null);
-		return (o == null) ;
+
+	public boolean isUnknown(Sentence clause) { // TODO TEST WELL
+		Object o = clause.accept(this, null);
+		return (o == null);
 	}
 
 	public Model flip(Symbol s) {
@@ -111,8 +119,6 @@ public class Model implements PLVisitor {
 		return h.toString();
 	}
 
-
-
 	// VISITOR METHODS
 	public Object visitSymbol(Symbol s, Object arg) {
 		return getStatus(s);
@@ -127,7 +133,7 @@ public class Model implements PLVisitor {
 	}
 
 	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		Object negatedValue = fs.getNegated().accept(this,null);
+		Object negatedValue = fs.getNegated().accept(this, null);
 		if (negatedValue != null) {
 			return new Boolean(!((Boolean) negatedValue).booleanValue());
 		} else {
@@ -136,11 +142,11 @@ public class Model implements PLVisitor {
 	}
 
 	public Object visitBinarySentence(BinarySentence bs, Object arg) {
-		Object firstValue = bs.getFirst().accept(this,null);
-		Object secondValue = bs.getSecond().accept(this,null);
-		if ((firstValue == null) || (secondValue == null)) { //strictly not
-															 // true for or/and
-															 // -FIX later
+		Object firstValue = bs.getFirst().accept(this, null);
+		Object secondValue = bs.getSecond().accept(this, null);
+		if ((firstValue == null) || (secondValue == null)) { // strictly not
+			// true for or/and
+			// -FIX later
 			return null;
 		} else {
 			String operator = bs.getOperator();
@@ -163,11 +169,10 @@ public class Model implements PLVisitor {
 	}
 
 	public Object visitMultiSentence(MultiSentence fs, Object argd) {
-		// TODO remove this? 
+		// TODO remove this?
 		return null;
 	}
-	
-	
+
 	private Boolean evaluateAnd(Boolean firstValue, Boolean secondValue) {
 		if ((firstValue.equals(Boolean.TRUE))
 				&& (secondValue.equals(Boolean.TRUE))) {
@@ -195,29 +200,31 @@ public class Model implements PLVisitor {
 		}
 	}
 
-	private Boolean evaluateBiConditional(Boolean firstValue, Boolean secondValue) {
+	private Boolean evaluateBiConditional(Boolean firstValue,
+			Boolean secondValue) {
 		if (firstValue.equals(secondValue)) {
 			return Boolean.TRUE;
 		} else {
 			return Boolean.FALSE;
 		}
 	}
+
 	public Set<Symbol> getAssignedSymbols() {
-		Set<Symbol> set= new HashSet<Symbol>();
+		Set<Symbol> set = new HashSet<Symbol>();
 		Iterator i = this.h.keySet().iterator();
 		while (i.hasNext()) {
-			Symbol key = new Symbol((String)i.next());
-			if (!(isUnknown(key))){
+			Symbol key = new Symbol((String) i.next());
+			if (!(isUnknown(key))) {
 				set.add(key);
 			}
 		}
 		return set;
 	}
+
 	public boolean matches(String variable, boolean value) {
-		if (value){
+		if (value) {
 			return isTrue(new Symbol(variable));
-		}
-		else if (!(value)){
+		} else if (!(value)) {
 			return isFalse(new Symbol(variable));
 		}
 		return false;

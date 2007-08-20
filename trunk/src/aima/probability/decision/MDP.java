@@ -5,6 +5,11 @@ import java.util.List;
 import aima.probability.Randomizer;
 import aima.util.Pair;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class MDP<STATE_TYPE, ACTION_TYPE> {
 	private STATE_TYPE initialState;
 
@@ -185,15 +190,14 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			MDPUtilityFunction<STATE_TYPE> U) {
 		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
 		for (STATE_TYPE s : nonFinalstates) {
-		
 
-				Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
-						.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi,
-								s, U);
-				double utility = rewardFunction.getRewardFor(s)
-						+ (gamma * highestPolicyTransition.getSecond());
-				U_dash.setUtility(s, utility);
-			
+			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
+					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
+							U);
+			double utility = rewardFunction.getRewardFor(s)
+					+ (gamma * highestPolicyTransition.getSecond());
+			U_dash.setUtility(s, utility);
+
 		}
 		// System.out.println("ValueIterationOnce before " + U);
 		// System.out.println("ValueIterationOnce after " + U_dash);
@@ -232,9 +236,12 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 				transition.getAction(), transition.getDestinationState(),
 				probability);
 	}
-	
-	public double getTransitionProbability(MDPTransition<STATE_TYPE, ACTION_TYPE> transition){
-		return transitionModel.getTransitionProbability(transition.getInitialState(), transition.getAction(), transition.getDestinationState());
+
+	public double getTransitionProbability(
+			MDPTransition<STATE_TYPE, ACTION_TYPE> transition) {
+		return transitionModel.getTransitionProbability(transition
+				.getInitialState(), transition.getAction(), transition
+				.getDestinationState());
 	}
 
 	public MDPPerception<STATE_TYPE> execute(STATE_TYPE state,
@@ -245,12 +252,14 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 	public boolean isTerminalState(STATE_TYPE state) {
 		return terminalStates.contains(state);
 	}
-	
-	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWith(STATE_TYPE initialState,ACTION_TYPE action){
-		return transitionModel.getTransitionsWithStartingStateAndAction(initialState,action);
+
+	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWith(
+			STATE_TYPE initialState, ACTION_TYPE action) {
+		return transitionModel.getTransitionsWithStartingStateAndAction(
+				initialState, action);
 	}
-	
-	public List<ACTION_TYPE> getAllActions(){
+
+	public List<ACTION_TYPE> getAllActions() {
 		return source.getAllActions();
 	}
 

@@ -190,26 +190,26 @@ public class NQueensBoard {
 
 		int i;
 		int j;
-		//forward up diagonal
+		// forward up diagonal
 		for (i = (x + 1), j = (y - 1); (i < size && (j > -1)); i++, j--) {
 			if (queenExistsAt(i, j)) {
 				retVal++;
 			}
 		}
-		//forward down diagonal
+		// forward down diagonal
 		for (i = (x + 1), j = (y + 1); ((i < size) && (j < size)); i++, j++) {
 			if (queenExistsAt(i, j)) {
 				retVal++;
 			}
 		}
-		//backward up diagonal
+		// backward up diagonal
 		for (i = (x - 1), j = (y - 1); ((i > -1) && (j > -1)); i--, j--) {
 			if (queenExistsAt(i, j)) {
 				retVal++;
 			}
 		}
 
-		//backward down diagonal
+		// backward down diagonal
 		for (i = (x - 1), j = (y + 1); ((i > -1) && (j < size)); i--, j++) {
 			if (queenExistsAt(i, j)) {
 				retVal++;
@@ -223,7 +223,7 @@ public class NQueensBoard {
 		List<XYLocation> locs = getQueenPositions();
 
 		int result = 17;
-		for (XYLocation loc:locs) {
+		for (XYLocation loc : locs) {
 			result = 37 * loc.hashCode();
 		}
 		return result;
@@ -231,17 +231,17 @@ public class NQueensBoard {
 
 	public boolean equals(Object o) {
 
-		if( this == o ) {
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
 		NQueensBoard aBoard = (NQueensBoard) o;
 		boolean retVal = true;
 		List<XYLocation> locs = getQueenPositions();
 
-		for (XYLocation loc:locs) {
+		for (XYLocation loc : locs) {
 			if (!(aBoard.queenExistsAt(loc))) {
 				retVal = false;
 			}
@@ -251,8 +251,8 @@ public class NQueensBoard {
 
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < size; i++) { //rows
-			for (int j = 0; j < size; j++) { //columns
+		for (int i = 0; i < size; i++) { // rows
+			for (int j = 0; j < size; j++) { // columns
 				if (queenExistsAt(i, j)) {
 					buf.append('Q');
 				} else {

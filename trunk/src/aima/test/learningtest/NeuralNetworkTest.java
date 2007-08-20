@@ -18,12 +18,17 @@ import aima.learning.statistics.SquareActivationFunction;
 import aima.learning.statistics.StandardBackPropogation;
 import aima.test.probabilitytest.MockRandomizer;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class NeuralNetworkTest extends TestCase {
-	
-	public double testFunction(double x){
-		return 1.0 + (Math.sin(Math.PI/4) * x);
+
+	public double testFunction(double x) {
+		return 1.0 + (Math.sin(Math.PI / 4) * x);
 	}
-	
+
 	public void testDefaultValuesOfUnConnectedNeuron() {
 		Neuron n = new Neuron();
 		assertEquals(1.0, n.bias());
@@ -115,71 +120,65 @@ public class NeuralNetworkTest extends TestCase {
 
 	public void testFeedForwardNeuralNetwork() {
 		Layer inputLayer = new Layer(1);
-		Layer hiddenLayer =  new Layer(1,0.0,new SquareActivationFunction());
-		Layer outputLayer =  new Layer(1,1.0,new IdentityActivationFunction());
-		
+		Layer hiddenLayer = new Layer(1, 0.0, new SquareActivationFunction());
+		Layer outputLayer = new Layer(1, 1.0, new IdentityActivationFunction());
+
 		FeedForwardNetwork network = new FeedForwardNetwork();
-		network.addLayer(inputLayer,null);
-		network.addLayer(hiddenLayer,new MockRandomizer(
-				new double[] { 1.0 }));
-		network.addLayer(outputLayer, new MockRandomizer(
-				new double[] { 2.0 }));
-		
+		network.addLayer(inputLayer, null);
+		network.addLayer(hiddenLayer, new MockRandomizer(new double[] { 1.0 }));
+		network.addLayer(outputLayer, new MockRandomizer(new double[] { 2.0 }));
+
 		network.propogateInput(Arrays.asList(1.0));
 		assertEquals(Arrays.asList(3.0), network.output());
-		
+
 		network.propogateInput(Arrays.asList(2.0));
 		assertEquals(Arrays.asList(9.0), network.output());
 	}
-	
-	public void testBackPropogation(){
-		
-		// Neural Network test data from "neural Network Design" by Hagan,Demuth,Beale
-		//section 11-15
-		
-		//create neural network
-		Layer inputLayer = new Layer(1);
-		Layer hiddenLayer =  new Layer(2,Arrays.asList(-0.48,-0.13),new LogSigActivationFunction());
-		Layer outputLayer =  new Layer(1,0.48,new IdentityActivationFunction());
-		
-		FeedForwardNetwork network = new FeedForwardNetwork();
-		network.addLayer(inputLayer,null);
-		network.addLayer(hiddenLayer,new MockRandomizer(
-				new double[] { -0.27,-0.41 }));
-		network.addLayer(outputLayer, new MockRandomizer(
-				new double[] { 0.09,-0.17 }));
-		
-		
-		StandardBackPropogation scheme = new StandardBackPropogation();
-		scheme.backPropogate(network,Arrays.asList(1.0),Arrays.asList(testFunction(1.0)));
 
-		assertEquals(0.321, hiddenLayer.activation().get(0),0.001);
-		assertEquals(0.368, hiddenLayer.activation().get(1),0.001);
-		assertEquals(0.446, outputLayer.activation().get(0),0.001);
-		
-		assertEquals(-2.522, scheme.delta(outputLayer).get(0),0.001);
-		assertEquals(0.2979, scheme.delta(hiddenLayer).get(0),0.001);
-		assertEquals(-0.3564, scheme.delta(hiddenLayer).get(1),0.001);
-		
-		
+	public void testBackPropogation() {
+
+		// Neural Network test data from "neural Network Design" by
+		// Hagan,Demuth,Beale
+		// section 11-15
+
+		// create neural network
+		Layer inputLayer = new Layer(1);
+		Layer hiddenLayer = new Layer(2, Arrays.asList(-0.48, -0.13),
+				new LogSigActivationFunction());
+		Layer outputLayer = new Layer(1, 0.48, new IdentityActivationFunction());
+
+		FeedForwardNetwork network = new FeedForwardNetwork();
+		network.addLayer(inputLayer, null);
+		network.addLayer(hiddenLayer, new MockRandomizer(new double[] { -0.27,
+				-0.41 }));
+		network.addLayer(outputLayer, new MockRandomizer(new double[] { 0.09,
+				-0.17 }));
+
+		StandardBackPropogation scheme = new StandardBackPropogation();
+		scheme.backPropogate(network, Arrays.asList(1.0), Arrays
+				.asList(testFunction(1.0)));
+
+		assertEquals(0.321, hiddenLayer.activation().get(0), 0.001);
+		assertEquals(0.368, hiddenLayer.activation().get(1), 0.001);
+		assertEquals(0.446, outputLayer.activation().get(0), 0.001);
+
+		assertEquals(-2.522, scheme.delta(outputLayer).get(0), 0.001);
+		assertEquals(0.2979, scheme.delta(hiddenLayer).get(0), 0.001);
+		assertEquals(-0.3564, scheme.delta(hiddenLayer).get(1), 0.001);
+
 		scheme.updateWeightsAndBiases(network);
-		assertEquals(0.1709,outputLayer.weights().get(0),0.001);
-		assertEquals(-0.0771,outputLayer.weights().get(1),0.001);
-		assertEquals(0.732,outputLayer.getNeurons().get(0).bias(),0.001);
-		
-		assertEquals(-0.2997,hiddenLayer.weights().get(0),0.001);
-		assertEquals(-0.3743,hiddenLayer.weights().get(1),0.001);
-		
-		
-		assertEquals(-0.509,hiddenLayer.getNeuron(0).bias(),0.001);
-		assertEquals(-0.0943,hiddenLayer.getNeuron(1).bias(),0.001);
-		
-		
-		//System.out.println(hiddenLayer.getNeuron(1).bias());
-		
+		assertEquals(0.1709, outputLayer.weights().get(0), 0.001);
+		assertEquals(-0.0771, outputLayer.weights().get(1), 0.001);
+		assertEquals(0.732, outputLayer.getNeurons().get(0).bias(), 0.001);
+
+		assertEquals(-0.2997, hiddenLayer.weights().get(0), 0.001);
+		assertEquals(-0.3743, hiddenLayer.weights().get(1), 0.001);
+
+		assertEquals(-0.509, hiddenLayer.getNeuron(0).bias(), 0.001);
+		assertEquals(-0.0943, hiddenLayer.getNeuron(1).bias(), 0.001);
+
+		// System.out.println(hiddenLayer.getNeuron(1).bias());
 
 	}
-	
-
 
 }

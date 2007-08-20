@@ -15,6 +15,7 @@ import aima.util.Util;
  * @author Ravi Mohan
  * 
  */
+
 public class BayesNet {
 	private List<BayesNetNode> roots = new ArrayList<BayesNetNode>();
 
@@ -177,8 +178,9 @@ public class BayesNet {
 					w *= node.probabilityOf(x);
 					x.put(node.getVariable(), evidence.get(node.getVariable()));
 				} else {
-					x.put(node.getVariable(), node.isTrueFor(
-							r.nextDouble(), x));
+					x
+							.put(node.getVariable(), node.isTrueFor(r
+									.nextDouble(), x));
 				}
 			}
 			boolean queryValue = ((Boolean) x.get(X)).booleanValue();

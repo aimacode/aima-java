@@ -4,9 +4,14 @@
  */
 package aima.learning.statistics;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class SquareActivationFunction implements ActivationFunction {
 
-	public double activation(double parameter) {	
+	public double activation(double parameter) {
 		return parameter * parameter;
 	}
 

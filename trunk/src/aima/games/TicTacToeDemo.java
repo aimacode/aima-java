@@ -6,7 +6,7 @@ package aima.games;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class TicTacToeDemo {
 	public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class TicTacToeDemo {
 		System.out.println("");
 		TicTacToe t4 = new TicTacToe();
 		while (!(t4.hasEnded())) {
-			System.out.println("\n"+t4.getPlayerToMove(t4.getState())
+			System.out.println("\n" + t4.getPlayerToMove(t4.getState())
 					+ "  playing ... ");
 
 			t4.makeAlphaBetaMove();
@@ -39,14 +39,15 @@ public class TicTacToeDemo {
 		System.out.println("");
 		TicTacToe t3 = new TicTacToe();
 		while (!(t3.hasEnded())) {
-			System.out.println("\n"+t3.getPlayerToMove(t3.getState()) + " playing");
+			System.out.println("\n" + t3.getPlayerToMove(t3.getState())
+					+ " playing");
 			System.out.println("");
 			t3.makeMiniMaxMove();
 			GameState presentState = t3.getState();
 			TicTacToeBoard board = t3.getBoard(presentState);
 			System.out.println("");
 			board.print();
-			
+
 		}
 		System.out.println("Mini MAX DEMO done");
 	}

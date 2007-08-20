@@ -10,8 +10,14 @@ import aima.logic.propositional.parsing.PEParser;
 import aima.logic.propositional.parsing.ast.Sentence;
 import aima.logic.propositional.parsing.ast.Symbol;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class ModelTest extends TestCase {
 	private Model m;
+
 	private PEParser parser;
 
 	Sentence trueSentence, falseSentence, andSentence, orSentence,
@@ -89,17 +95,16 @@ public class ModelTest extends TestCase {
 		assertEquals(true, m.isTrue(impliedSentence));
 		assertEquals(true, m.isFalse(biConditionalSentence));
 	}
-	
+
 	public void testComplexSentence() {
 		String p = "P";
 		String q = "Q";
 		m = m.extend(new Symbol(p), true);
 		m = m.extend(new Symbol(q), false);
-		Sentence sent =  (Sentence)parser.parse("((P OR Q) AND  (P => Q))");
-		Sentence sent2 =  (Sentence)parser.parse("((P OR Q) AND  (Q))");
+		Sentence sent = (Sentence) parser.parse("((P OR Q) AND  (P => Q))");
+		Sentence sent2 = (Sentence) parser.parse("((P OR Q) AND  (Q))");
 		assertFalse(m.isTrue(sent));
 		assertTrue(m.isFalse(sent));
 	}
-	
 
 }

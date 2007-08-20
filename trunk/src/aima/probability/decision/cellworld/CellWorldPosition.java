@@ -1,5 +1,10 @@
 package aima.probability.decision.cellworld;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class CellWorldPosition {
 	private int x, y;
 
@@ -30,9 +35,9 @@ public class CellWorldPosition {
 	public int hashCode() {
 		return x + 31 * y;
 	}
-	
-    public String toString(){
-    	return "< "+x+ " , " + y+" > ";
-    }
+
+	public String toString() {
+		return "< " + x + " , " + y + " > ";
+	}
 
 }

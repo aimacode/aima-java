@@ -9,44 +9,49 @@ import aima.logic.propositional.algorithms.KnowledgeBase;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
+
 public class KnowledgeBaseTest extends TestCase {
 	private KnowledgeBase kb;
-	
-	public void setUp(){
-		kb= new KnowledgeBase();
+
+	public void setUp() {
+		kb = new KnowledgeBase();
 	}
-	public void testTellInsertsSentence(){
+
+	public void testTellInsertsSentence() {
 		kb.tell("(A AND B)");
-		assertEquals(1,kb.size());
+		assertEquals(1, kb.size());
 	}
-	
-	public void testTellDoesNotInsertSameSentenceTwice(){
+
+	public void testTellDoesNotInsertSameSentenceTwice() {
 		kb.tell("(A AND B)");
-		assertEquals(1,kb.size());
+		assertEquals(1, kb.size());
 		kb.tell("(A AND B)");
-		assertEquals(1,kb.size());
+		assertEquals(1, kb.size());
 	}
-	
-	public void testEmptyKnowledgeBaseIsAnEmptyString(){
-		assertEquals("",kb.toString());
+
+	public void testEmptyKnowledgeBaseIsAnEmptyString() {
+		assertEquals("", kb.toString());
 	}
-	
-	public void testKnowledgeBaseWithOneSentenceToString(){
+
+	public void testKnowledgeBaseWithOneSentenceToString() {
 		kb.tell("(A AND B)");
-		assertEquals(" ( A AND B )",kb.toString());
+		assertEquals(" ( A AND B )", kb.toString());
 	}
-	
-	public void testKnowledgeBaseWithTwoSentencesToString(){
+
+	public void testKnowledgeBaseWithTwoSentencesToString() {
 		kb.tell("(A AND B)");
 		kb.tell("(C AND D)");
-		assertEquals(" (  ( A AND B ) AND  ( C AND D ) )",kb.toString());
+		assertEquals(" (  ( A AND B ) AND  ( C AND D ) )", kb.toString());
 	}
-	public void testKnowledgeBaseWithThreeSentencesToString(){
+
+	public void testKnowledgeBaseWithThreeSentencesToString() {
 		kb.tell("(A AND B)");
 		kb.tell("(C AND D)");
 		kb.tell("(E AND F)");
-		assertEquals(" (  (  ( A AND B ) AND  ( C AND D ) ) AND  ( E AND F ) )",kb.toString());
+		assertEquals(
+				" (  (  ( A AND B ) AND  ( C AND D ) ) AND  ( E AND F ) )", kb
+						.toString());
 	}
 }

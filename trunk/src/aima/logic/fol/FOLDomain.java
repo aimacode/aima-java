@@ -9,32 +9,34 @@ import java.util.Set;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class FOLDomain {
 	private Set<String> constants, functions, predicates;
 
-	public FOLDomain(Set<String> constants, Set<String>  functions, Set<String>  predicates) {
+	public FOLDomain(Set<String> constants, Set<String> functions,
+			Set<String> predicates) {
 		this.constants = constants;
 		this.functions = functions;
 		this.predicates = predicates;
 	}
 
 	public FOLDomain() {
-		this.constants = new HashSet<String> ();
-		this.functions = new HashSet<String> ();
-		this.predicates = new HashSet<String> ();
+		this.constants = new HashSet<String>();
+		this.functions = new HashSet<String>();
+		this.predicates = new HashSet<String>();
 	}
 
-	public Set<String>  getConstants() {
+	public Set<String> getConstants() {
 		return constants;
 	}
 
-	public Set<String>  getFunctions() {
+	public Set<String> getFunctions() {
 		return functions;
 	}
 
-	public Set<String>  getPredicates() {
+	public Set<String> getPredicates() {
 		return predicates;
 	}
 

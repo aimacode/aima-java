@@ -9,11 +9,14 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public abstract class QueueSearch extends NodeExpander {
 	private static String QUEUE_SIZE = "queueSize";
+
 	private static String MAX_QUEUE_SIZE = "maxQueueSize";
+
 	private static String PATH_COST = "pathCost";
 
 	public List<String> search(Problem problem, NodeStore fringe) {
@@ -30,7 +33,7 @@ public abstract class QueueSearch extends NodeExpander {
 			addExpandedNodesToFringe(fringe, node, problem);
 			setQueueSize(fringe.size());
 		}
-		return new ArrayList<String>();//Empty List indicates Failure
+		return new ArrayList<String>();// Empty List indicates Failure
 	}
 
 	public void clearInstrumentation() {
@@ -56,11 +59,11 @@ public abstract class QueueSearch extends NodeExpander {
 	public int getMaxQueueSize() {
 		return metrics.getInt(MAX_QUEUE_SIZE);
 	}
-	
+
 	public double getPathCost() {
 		return metrics.getDouble(PATH_COST);
 	}
-	
+
 	public void setPathCost(Double pathCost) {
 		metrics.set(PATH_COST, pathCost);
 	}

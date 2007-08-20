@@ -2,6 +2,12 @@ package aima.probability.decision;
 
 import aima.util.Triplet;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
+
 public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 	private Triplet<STATE_TYPE, ACTION_TYPE, STATE_TYPE> triplet;
 
@@ -31,19 +37,19 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 			return false;
 		}
 		MDPTransition<STATE_TYPE, ACTION_TYPE> other = (MDPTransition<STATE_TYPE, ACTION_TYPE>) (o);// weird
-																									// typing
-																									// issue
-																									// work
-																									// out
-																									// later
+		// typing
+		// issue
+		// work
+		// out
+		// later
 		return triplet.equals(other.triplet);
 	}
 
 	public int hashCode() {
 		return triplet.hashCode();
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return triplet.toString();
 	}
 

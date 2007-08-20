@@ -9,10 +9,11 @@ import junit.framework.TestSuite;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
+
 public class ProbabilityTests {
-	public static Test suite(){
+	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new TestSuite(BayesNetTest.class));
 		suite.addTest(new TestSuite(BayesNetNodeTest.class));

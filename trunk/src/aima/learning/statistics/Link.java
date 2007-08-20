@@ -6,15 +6,22 @@ package aima.learning.statistics;
 
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Link {
 	private Neuron source;
+
 	private Neuron target;
+
 	private double weight;
 
-	public Link(Neuron source, Neuron target, double weight){
+	public Link(Neuron source, Neuron target, double weight) {
 		this.source = source;
-		this.target =target;
-		Util.isNanOrInfinity(weight);
+		this.target = target;
+		Util.checkForNanOrInfinity(weight);
 		this.weight = weight;
 	}
 
@@ -24,7 +31,6 @@ public class Link {
 	public Neuron source() {
 		return source;
 	}
-	
 
 	/**
 	 * @return Returns the target.
@@ -32,7 +38,6 @@ public class Link {
 	public Neuron target() {
 		return target;
 	}
-	
 
 	/**
 	 * @return Returns the weight.
@@ -42,10 +47,9 @@ public class Link {
 	}
 
 	public void setWeight(double d) {
-		Util.isNanOrInfinity(d);
+		Util.checkForNanOrInfinity(d);
 		weight = d;
-		
+
 	}
-	
 
 }

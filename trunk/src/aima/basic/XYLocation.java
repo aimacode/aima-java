@@ -1,5 +1,9 @@
 package aima.basic;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class XYLocation {
 	int xCoOrdinate, yCoOrdinate;
 

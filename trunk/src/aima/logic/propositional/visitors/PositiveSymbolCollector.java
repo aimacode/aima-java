@@ -14,22 +14,24 @@ import aima.util.SetOps;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PositiveSymbolCollector extends BasicTraverser {
 	public Object visitSymbol(Symbol symbol, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
-		s.add(symbol);//add ALL symbols not discarded by the visitNotSentence
-					  // mathod
+		s.add(symbol);// add ALL symbols not discarded by the visitNotSentence
+		// mathod
 		return arg;
 	}
 
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
 		if (ns.getNegated() instanceof Symbol) {
-			//do nothing .do NOT add a negated Symbol
+			// do nothing .do NOT add a negated Symbol
 		} else {
-			s = new SetOps<Symbol>().union(s, (Set<Symbol>) ns.getNegated().accept(this, arg));
+			s = new SetOps<Symbol>().union(s, (Set<Symbol>) ns.getNegated()
+					.accept(this, arg));
 		}
 		return s;
 	}

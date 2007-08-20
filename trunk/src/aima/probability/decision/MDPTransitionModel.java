@@ -7,6 +7,11 @@ import java.util.List;
 import aima.util.Pair;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 
 	private Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double> transitionToProbability = new Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double>();
@@ -57,31 +62,33 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 
 		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitionsStartingWithS = getTransitionsStartingWith(s);
 		Hashtable<ACTION_TYPE, Double> actionsToUtilities = getExpectedUtilityForSelectedTransitions(
-				transitionsStartingWithS,uf);
+				transitionsStartingWithS, uf);
 
 		return getActionWithMaximumUtility(actionsToUtilities);
-		
+
 	}
-	
+
 	public Pair<ACTION_TYPE, Double> getTransitionWithMaximumExpectedUtilityUsingPolicy(
-		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy, STATE_TYPE s, MDPUtilityFunction<STATE_TYPE> uf) {
+			MDPPolicy<STATE_TYPE, ACTION_TYPE> policy, STATE_TYPE s,
+			MDPUtilityFunction<STATE_TYPE> uf) {
 		if ((isTerminal(s))) {
 			return new Pair<ACTION_TYPE, Double>(null, 0.0);
 		}
-		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitionsWithStartingStateSAndActionFromPolicy = getTransitionsWithStartingStateAndAction(s, policy.getAction(s));
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitionsWithStartingStateSAndActionFromPolicy = getTransitionsWithStartingStateAndAction(
+				s, policy.getAction(s));
 		Hashtable<ACTION_TYPE, Double> actionsToUtilities = getExpectedUtilityForSelectedTransitions(
-				transitionsWithStartingStateSAndActionFromPolicy,uf);
+				transitionsWithStartingStateSAndActionFromPolicy, uf);
 
 		return getActionWithMaximumUtility(actionsToUtilities);
-		
-		
+
 	}
 
 	private boolean isTerminal(STATE_TYPE s) {
 		return terminalStates.contains(s);
 	}
 
-	private Pair<ACTION_TYPE, Double> getActionWithMaximumUtility(Hashtable<ACTION_TYPE, Double> actionsToUtilities) {
+	private Pair<ACTION_TYPE, Double> getActionWithMaximumUtility(
+			Hashtable<ACTION_TYPE, Double> actionsToUtilities) {
 		Pair<ACTION_TYPE, Double> highest = new Pair<ACTION_TYPE, Double>(null,
 				Double.MIN_VALUE);
 		for (ACTION_TYPE key : actionsToUtilities.keySet()) {
@@ -94,8 +101,9 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 	}
 
 	private Hashtable<ACTION_TYPE, Double> getExpectedUtilityForSelectedTransitions(
-			
-			List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions,MDPUtilityFunction<STATE_TYPE> uf) {
+
+	List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions,
+			MDPUtilityFunction<STATE_TYPE> uf) {
 		Hashtable<ACTION_TYPE, Double> actionsToUtilities = new Hashtable<ACTION_TYPE, Double>();
 		for (MDPTransition<STATE_TYPE, ACTION_TYPE> triplet : transitions) {
 			STATE_TYPE s = triplet.getInitialState();
@@ -140,11 +148,12 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 		}
 		return result;
 	}
-	
-	public ACTION_TYPE randomActionFor(STATE_TYPE s){
+
+	public ACTION_TYPE randomActionFor(STATE_TYPE s) {
 		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions = getTransitionsStartingWith(s);
-		MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util.selectRandomlyFromList(transitions);
+		MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util
+				.selectRandomlyFromList(transitions);
 		return transitions.get(0).getAction();
-		//return randomTransition.getAction();
+		// return randomTransition.getAction();
 	}
 }

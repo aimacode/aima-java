@@ -26,6 +26,7 @@ import aima.basic.simplerule.Rule;
  * @author Ciaran O'Reilly
  * 
  */
+
 public class SimpleReflexAgentProgram extends AgentProgram {
 	// Used to define No Operations/Action is to be performed.
 	public static final String NO_OP = "NoOP";

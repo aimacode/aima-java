@@ -21,6 +21,11 @@ import aima.learning.statistics.PerceptronLearning;
 import aima.learning.statistics.StandardBackPropogation;
 import aima.test.probabilitytest.MockRandomizer;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class LearnerTests extends TestCase {
 	public void testMajorityLearner() throws Exception {
 		MajorityLearner learner = new MajorityLearner();
@@ -129,29 +134,31 @@ public class LearnerTests extends TestCase {
 
 	public void testBackPropogationLearnerOnIrisDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getIrisDataSet();
-		FeedForwardNetwork network = new FeedForwardNetwork(4, 4,3,new MockRandomizer(new double[]{0.5}));
-		//FeedForwardNetwork network = new FeedForwardNetwork(4, 4,3,new JavaRandomizer());
-		NeuralNetLearner learner= new NeuralNetLearner(network,new IrisDataSetNumerizer(),new StandardBackPropogation(),1);
-		
+		FeedForwardNetwork network = new FeedForwardNetwork(4, 4, 3,
+				new MockRandomizer(new double[] { 0.5 }));
+		// FeedForwardNetwork network = new FeedForwardNetwork(4, 4,3,new
+		// JavaRandomizer());
+		NeuralNetLearner learner = new NeuralNetLearner(network,
+				new IrisDataSetNumerizer(), new StandardBackPropogation(), 1);
+
 		learner.train(ds);
 		int[] result = learner.test(ds);
-		assertEquals(50,result[0]);
-		assertEquals(100,result[1]);
-		
-		
+		assertEquals(50, result[0]);
+		assertEquals(100, result[1]);
+
 	}
-	
+
 	public void testPerceptronLearnerOnIrisDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getIrisDataSet();
-		FeedForwardNetwork network = new FeedForwardNetwork(4,3,new MockRandomizer(new double[]{0.5}));
-		NeuralNetLearner learner= new NeuralNetLearner(network,new IrisDataSetNumerizer(),new PerceptronLearning(),1);
+		FeedForwardNetwork network = new FeedForwardNetwork(4, 3,
+				new MockRandomizer(new double[] { 0.5 }));
+		NeuralNetLearner learner = new NeuralNetLearner(network,
+				new IrisDataSetNumerizer(), new PerceptronLearning(), 1);
 		learner.train(ds);
 		int[] result = learner.test(ds);
-		assertEquals(0,result[0]);
-		assertEquals(150,result[1]);		
-		
-	}
-	
+		assertEquals(0, result[0]);
+		assertEquals(150, result[1]);
 
+	}
 
 }

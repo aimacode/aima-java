@@ -24,9 +24,11 @@ import aima.util.SetOps;
  * @author Ravi Mohan
  * 
  */
+
 public class DPLL {
 
 	private static final Converter<Symbol> SYMBOL_CONVERTER = new Converter<Symbol>();
+
 	public boolean dpllSatisfiable(Sentence s) {
 
 		return dpllSatisfiable(s, new Model());
@@ -104,7 +106,7 @@ public class DPLL {
 	}
 
 	private boolean areAllClausesTrue(Model model, List clauseList) {
-		
+
 		for (int i = 0; i < clauseList.size(); i++) {
 			Sentence clause = (Sentence) clauseList.get(i);
 			// System.out.println("evaluating " + clause.toString());
@@ -142,9 +144,6 @@ public class DPLL {
 		return null;
 	}
 
-
-
-
 	public List<Sentence> clausesWithNonTrueValues(List<Sentence> clauseList,
 			Model model) {
 		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();
@@ -181,15 +180,16 @@ public class DPLL {
 		// }
 
 		// debug
-		List<Symbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(new SetOps<Symbol>()
-				.difference(new SymbolClassifier()
-						.getPurePositiveSymbolsIn(nonTrueClauses),
+		List<Symbol> purePositiveSymbols = SYMBOL_CONVERTER
+				.setToList(new SetOps<Symbol>().difference(
+						new SymbolClassifier()
+								.getPurePositiveSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
-		
-		
-		List<Symbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(new SetOps<Symbol>()
-				.difference(new SymbolClassifier()
-						.getPureNegativeSymbolsIn(nonTrueClauses),
+
+		List<Symbol> pureNegativeSymbols = SYMBOL_CONVERTER
+				.setToList(new SetOps<Symbol>().difference(
+						new SymbolClassifier()
+								.getPureNegativeSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
 		// if none found return "not found
 		if ((purePositiveSymbols.size() == 0)

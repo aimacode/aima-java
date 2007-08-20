@@ -14,8 +14,9 @@ import aima.search.framework.QueueSearch;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class AStarSearch extends PrioritySearch {
 
 	public AStarSearch(QueueSearch search) {

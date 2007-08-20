@@ -2,6 +2,10 @@ package aima.basic.vaccum;
 
 import java.util.Hashtable;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class VaccumEnvironmentModel {
 	private Hashtable<String,String> model;
 

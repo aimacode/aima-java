@@ -4,20 +4,24 @@
  */
 package aima.learning.framework;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class NumericAttributeSpecification implements AttributeSpecification {
 
 	// a simple attribute representing a number reprsented as a double .
 	private String name;
 
-	public NumericAttributeSpecification (String name){
+	public NumericAttributeSpecification(String name) {
 		this.name = name;
 	}
+
 	public boolean isValid(String string) {
-		try{
+		try {
 			Double.parseDouble(string);
 			return true;
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -27,7 +31,7 @@ public class NumericAttributeSpecification implements AttributeSpecification {
 	}
 
 	public Attribute createAttribute(String rawValue) {
-		return new NumericAttribute(Double.parseDouble(rawValue),this);
+		return new NumericAttribute(Double.parseDouble(rawValue), this);
 	}
 
 }

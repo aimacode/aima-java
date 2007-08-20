@@ -5,6 +5,11 @@ import java.util.List;
 
 import aima.basic.XYLocation;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class EightPuzzleBoard {
 
 	public static String LEFT = "Left";
@@ -70,7 +75,7 @@ public class EightPuzzleBoard {
 	}
 
 	private int getValueAt(int x, int y) {
-		//refactor this use either case or a div/mod soln
+		// refactor this use either case or a div/mod soln
 		return board[absoluteCoordinatesFromXYCoordinates(x, y)];
 	}
 
@@ -156,10 +161,10 @@ public class EightPuzzleBoard {
 
 	public boolean equals(Object o) {
 
-		if( this == o ) {
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
 		EightPuzzleBoard aBoard = (EightPuzzleBoard) o;
@@ -176,9 +181,9 @@ public class EightPuzzleBoard {
 		int result = 17;
 		for (int i = 0; i < 8; i++) {
 			int position = this.getPositionOf(i);
-			result = 37 * result+ position;
+			result = 37 * result + position;
 		}
-		return result;  
+		return result;
 	}
 
 	public List<XYLocation> getPositions() {

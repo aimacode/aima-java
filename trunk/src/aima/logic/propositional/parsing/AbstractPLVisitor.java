@@ -3,7 +3,6 @@ package aima.logic.propositional.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import aima.logic.propositional.parsing.ast.BinarySentence;
 import aima.logic.propositional.parsing.ast.FalseSentence;
 import aima.logic.propositional.parsing.ast.MultiSentence;
@@ -14,10 +13,12 @@ import aima.logic.propositional.parsing.ast.UnarySentence;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class AbstractPLVisitor implements PLVisitor {
 	private PEParser parser = new PEParser();
+
 	public Object visitSymbol(Symbol s, Object arg) {
 		return new Symbol(s.getValue());
 	}
@@ -49,8 +50,9 @@ public class AbstractPLVisitor implements PLVisitor {
 		}
 		return new MultiSentence(fs.getOperator(), newTerms);
 	}
+
 	protected Sentence recreate(Object ast) {
-		return (Sentence)parser.parse(((Sentence) ast).toString());
+		return (Sentence) parser.parse(((Sentence) ast).toString());
 	}
 
 }

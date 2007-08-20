@@ -5,6 +5,10 @@ import java.util.List;
 
 import aima.util.AbstractQueue;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class FIFOQueue extends AbstractQueue {
 	public void add(Object anItem) {
 		super.addToFront(anItem);

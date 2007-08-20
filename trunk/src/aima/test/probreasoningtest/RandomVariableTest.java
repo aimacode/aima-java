@@ -7,13 +7,17 @@ import junit.framework.TestCase;
 import aima.probability.RandomVariable;
 import aima.probability.reasoning.HmmConstants;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class RandomVariableTest extends TestCase {
-
 
 	private RandomVariable aDistribution;
 
 	public void setUp() {
-		List<String> states = Arrays.asList(new String[] { HmmConstants.DOOR_OPEN, HmmConstants.DOOR_CLOSED });
+		List<String> states = Arrays.asList(new String[] {
+				HmmConstants.DOOR_OPEN, HmmConstants.DOOR_CLOSED });
 		aDistribution = new RandomVariable("HiddenState", states);
 	}
 
@@ -25,7 +29,7 @@ public class RandomVariableTest extends TestCase {
 
 		}
 	}
-	
+
 	public void testGettingValuesOnInvalidStateThrowsException() {
 		try {
 			double d = aDistribution.getProbabilityOf("invalid");

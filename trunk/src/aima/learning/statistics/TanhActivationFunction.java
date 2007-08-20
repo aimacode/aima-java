@@ -4,6 +4,11 @@
  */
 package aima.learning.statistics;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class TanhActivationFunction implements ActivationFunction {
 
 	public double activation(double paramter) {

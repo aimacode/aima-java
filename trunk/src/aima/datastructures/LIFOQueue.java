@@ -5,6 +5,10 @@ import java.util.List;
 
 import aima.util.AbstractQueue;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class LIFOQueue extends AbstractQueue {
 
 	public void add(Object anItem) {

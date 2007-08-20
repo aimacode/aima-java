@@ -7,6 +7,11 @@ package aima.logic.common;
 import java.io.Reader;
 import java.io.StringReader;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public abstract class Lexer {
 	protected abstract Token nextToken();
 

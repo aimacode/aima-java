@@ -4,8 +4,7 @@
  */
 package aima.logic.fol.parsing.ast;
 
-
 public abstract class Term implements FOLNode {
-	
+
 	public abstract Term copy();
 }

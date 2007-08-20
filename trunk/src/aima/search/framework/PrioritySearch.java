@@ -7,8 +7,9 @@ import aima.search.nodestore.PriorityNodeStore;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public abstract class PrioritySearch implements Search {
 	protected QueueSearch search;
 

@@ -1,4 +1,3 @@
-
 package aima.logic.demos;
 
 import aima.logic.propositional.algorithms.KnowledgeBase;
@@ -7,7 +6,7 @@ import aima.logic.propositional.parsing.PEParser;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class PLFCEntailsDemo {
 	private static PEParser parser = new PEParser();
@@ -15,9 +14,9 @@ public class PLFCEntailsDemo {
 	private static PLFCEntails plfce = new PLFCEntails();
 
 	public static void main(String[] args) {
-		
+
 		System.out.println("\nPLFCEntailsDemo\n");
-		KnowledgeBase kb =  new KnowledgeBase();
+		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell(" (P => Q)");
 		kb.tell("((L AND M) => P)");
 		kb.tell("((B AND L) => M)");
@@ -36,16 +35,11 @@ public class PLFCEntailsDemo {
 		System.out.println("(A)");
 		System.out.println("(B)");
 
-
-		
-
 		displayPLFCEntailment(kb, "Q");
 	}
 
-	
-
 	private static void displayPLFCEntailment(KnowledgeBase kb, String q) {
-		System.out.println("Running PLFCEntailment on knowledge base  " 
-				+ " with query " + q + " gives " + plfce.plfcEntails(kb,q));
+		System.out.println("Running PLFCEntailment on knowledge base  "
+				+ " with query " + q + " gives " + plfce.plfcEntails(kb, q));
 	}
 }
