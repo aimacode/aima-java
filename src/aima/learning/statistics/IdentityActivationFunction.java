@@ -4,6 +4,11 @@
  */
 package aima.learning.statistics;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class IdentityActivationFunction implements ActivationFunction {
 
 	public double activation(double parameter) {

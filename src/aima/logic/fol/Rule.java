@@ -17,8 +17,9 @@ import aima.util.SetOps;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class Rule {
 
 	private ConnectedSentence original;
@@ -113,7 +114,8 @@ public class Rule {
 		for (int i = 0; i < containingClauses.size(); i++) {
 			Clause clause = (Clause) containingClauses.get(i);
 			if (!(clause.valuesFor(variable).isEmpty())) {
-				Set<Object> set = new Converter<Object>().listToSet(clause.valuesFor(variable));
+				Set<Object> set = new Converter<Object>().listToSet(clause
+						.valuesFor(variable));
 				if (valueSet == null) {
 					valueSet = set;
 				} else {

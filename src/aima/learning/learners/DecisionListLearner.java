@@ -13,6 +13,11 @@ import aima.learning.inductive.DLTest;
 import aima.learning.inductive.DLTestFactory;
 import aima.learning.inductive.DecisionList;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class DecisionListLearner implements Learner {
 	public static final String FAILURE = "Failure";
 
@@ -67,20 +72,20 @@ public class DecisionListLearner implements Learner {
 		// at this point there is a test that classifies some subset of examples
 		// with the same target value
 		DataSet matched = test.matchedExamples(ds);
-	    DecisionList list = new DecisionList(positive,negative);
-		list.add(test,matched.getExample(0).targetValue());
+		DecisionList list = new DecisionList(positive, negative);
+		list.add(test, matched.getExample(0).targetValue());
 		return list.mergeWith(decisionListLearning(test.unmatchedExamples(ds)));
 	}
 
 	private DLTest getValidTest(List<DLTest> possibleTests, DataSet ds) {
 		for (DLTest test : possibleTests) {
 			DataSet matched = test.matchedExamples(ds);
-			if (!(matched.size() == 0 )){
+			if (!(matched.size() == 0)) {
 				if (allExamplesHaveSameTargetValue(matched)) {
 					return test;
 				}
 			}
-			
+
 		}
 		return null;
 	}

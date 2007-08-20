@@ -4,6 +4,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class ObjectWithDynamicAttributes {
 	private Hashtable<Object,Object> attributes = new Hashtable<Object,Object> ();
 

@@ -11,6 +11,7 @@ import aima.util.LogicUtils;
 /**
  * @author Ravi Mohan
  */
+
 public class KnowledgeBase {
 	private List<Sentence> sentences;
 
@@ -46,7 +47,7 @@ public class KnowledgeBase {
 	public boolean askWithDpll(String queryString) {
 		Sentence query = null, cnfForm = null;
 		try {
-			//just a check to see that the query is well formed
+			// just a check to see that the query is well formed
 			query = (Sentence) parser.parse(queryString);
 		} catch (Exception e) {
 			System.out.println("error parsing query" + e.getMessage());
@@ -62,7 +63,7 @@ public class KnowledgeBase {
 		}
 		try {
 			cnfForm = new CNFTransformer().transform(kbPlusQuery);
-			//System.out.println(cnfForm.toString());
+			// System.out.println(cnfForm.toString());
 		} catch (Exception e) {
 			System.out.println("error converting kb +  query to CNF"
 					+ e.getMessage());

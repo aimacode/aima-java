@@ -14,6 +14,11 @@ import aima.learning.inductive.ConstantDecisonTree;
 import aima.learning.inductive.DecisionTree;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class DecisionTreeLearner implements Learner {
 	private DecisionTree tree;
 
@@ -114,8 +119,8 @@ public class DecisionTreeLearner implements Learner {
 		}
 		return true;
 	}
-	
-	public DecisionTree getDecisionTree(){
+
+	public DecisionTree getDecisionTree() {
 		return tree;
 	}
 

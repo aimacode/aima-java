@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class SetOps<T> {
 	public  Set<T> union(Set<T> one, Set<T> two) {
 		Set<T> union = new HashSet<T>(one);

@@ -10,6 +10,11 @@ import java.util.List;
 import junit.framework.TestCase;
 import aima.util.Table;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class TableTest extends TestCase {
 	private Table<String, String, Integer> table;
 
@@ -29,16 +34,16 @@ public class TableTest extends TestCase {
 	}
 
 	public void testTableInitialization() {
-		assertNull(table.get("ravi","iq"));
-		table.set("ravi","iq",50);
-		int i = table.get("ravi","iq");
-		assertEquals(50,i);
+		assertNull(table.get("ravi", "iq"));
+		table.set("ravi", "iq", 50);
+		int i = table.get("ravi", "iq");
+		assertEquals(50, i);
 	}
-	
+
 	public void testNullAccess() {
 		// No value yet assigned
 		assertNull(table.get("row1", "col2"));
-		table.set("row1","col1", 1);
+		table.set("row1", "col1", 1);
 		assertEquals(1, (int) table.get("row1", "col1"));
 		// Check null returned if column does not exist
 		assertNull(table.get("row1", "col2"));

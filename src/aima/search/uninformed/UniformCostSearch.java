@@ -17,7 +17,7 @@ import aima.search.nodestore.PriorityNodeStore;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
 public class UniformCostSearch implements Search {
 
@@ -29,8 +29,9 @@ public class UniformCostSearch implements Search {
 
 	public List search(Problem p) {
 		return search.search(p, new PriorityNodeStore(new Comparator<Node>() {
-			public int compare(Node o1, Node o2)  {
-				return (new Double(o1.getPathCost()).compareTo(new Double(o2.getPathCost())));
+			public int compare(Node o1, Node o2) {
+				return (new Double(o1.getPathCost()).compareTo(new Double(o2
+						.getPathCost())));
 			}
 		}));
 	}

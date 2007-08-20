@@ -15,8 +15,9 @@ import aima.logic.propositional.parsing.ast.UnarySentence;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class AndDetector implements PLVisitor {
 
 	public Object visitSymbol(Symbol s, Object arg) {
@@ -48,12 +49,12 @@ public class AndDetector implements PLVisitor {
 		}
 	}
 
-
 	public Object visitMultiSentence(MultiSentence fs, Object arg) {
 		throw new RuntimeException("can't handle multisentences");
 	}
-	public boolean containsEmbeddedAnd(Sentence s){
-		return ((Boolean)s.accept(this,null)).booleanValue();
+
+	public boolean containsEmbeddedAnd(Sentence s) {
+		return ((Boolean) s.accept(this, null)).booleanValue();
 	}
 
 }

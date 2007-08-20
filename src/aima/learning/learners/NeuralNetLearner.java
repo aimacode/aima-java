@@ -13,7 +13,11 @@ import aima.learning.statistics.FeedForwardNetwork;
 import aima.learning.statistics.IrisDataSetNumerizer;
 import aima.learning.statistics.NeuralNetworkTrainingScheme;
 import aima.util.Pair;
-import aima.util.Util;
+
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
 public class NeuralNetLearner implements Learner {
 
@@ -26,7 +30,8 @@ public class NeuralNetLearner implements Learner {
 	private NeuralNetworkTrainingScheme trainingScheme;
 
 	public NeuralNetLearner(FeedForwardNetwork network,
-			IrisDataSetNumerizer numerizer,NeuralNetworkTrainingScheme scheme, int numberOfIterations) {
+			IrisDataSetNumerizer numerizer, NeuralNetworkTrainingScheme scheme,
+			int numberOfIterations) {
 		this.network = network;
 		this.numerizer = numerizer;
 		this.numberOfIterations = numberOfIterations;
@@ -41,12 +46,11 @@ public class NeuralNetLearner implements Learner {
 				List<Double> input = io.getFirst();
 				List<Double> expectedOutput = io.getSecond();
 
-				
 				trainingScheme.backPropogate(network, input, expectedOutput);
 				trainingScheme.updateWeightsAndBiases(network);
 				iterationError += trainingScheme.error(expectedOutput, network);
 			}
-		
+
 		}
 
 	}
@@ -55,7 +59,7 @@ public class NeuralNetLearner implements Learner {
 		Pair<List<Double>, List<Double>> io = numerizer.numerize(e);
 		List<Double> input = io.getFirst();
 		List<Double> expectedOutput = io.getSecond();
-		
+
 		network.propogateInput(input);
 		List<Double> actualOutput = network.output();
 		String output = numerizer.denumerize(actualOutput);

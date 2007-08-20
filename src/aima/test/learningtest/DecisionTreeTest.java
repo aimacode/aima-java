@@ -14,8 +14,13 @@ import aima.learning.inductive.DecisionTree;
 import aima.learning.learners.DecisionTreeLearner;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DecisionTreeTest extends TestCase {
 	private static final String YES = "Yes";
+
 	private static final String NO = "No";
 
 	public void testActualDecisionTreeClassifiesRestaurantDataSetCorrectly()
@@ -41,44 +46,49 @@ public class DecisionTreeTest extends TestCase {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		List<String> unmatchedValues = new ArrayList<String>();
 		unmatchedValues.add(NO);
-		DecisionTree dt = DecisionTree.getStumpFor(ds,"alternate", YES, YES,unmatchedValues,NO);
+		DecisionTree dt = DecisionTree.getStumpFor(ds, "alternate", YES, YES,
+				unmatchedValues, NO);
 		assertNotNull(dt);
 	}
 
 	public void testStumpCreationForDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
-		List<DecisionTree> dt = DecisionTree.getStumpsFor(ds,YES,
+		List<DecisionTree> dt = DecisionTree.getStumpsFor(ds, YES,
 				"Unable to classify");
 		assertEquals(26, dt.size());
 	}
-	
+
 	public void testStumpPredictionForDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
-		List<DecisionTree> trees = DecisionTree.getStumpsFor(ds,YES,
+		List<DecisionTree> trees = DecisionTree.getStumpsFor(ds, YES,
 				"Unable to classify");
-//		for (DecisionTree tree : trees){
-//			DecisionTreeLearner learner = new DecisionTreeLearner(tree,"Unable to Classify");
-//			int[] result = learner.test(ds);
-//			System.out.println("On stump " +tree.getAttributeName()+ " " + result[0]+ " successes "+ result[1]+ " failures");
-//		}
+		// for (DecisionTree tree : trees){
+		// DecisionTreeLearner learner = new DecisionTreeLearner(tree,"Unable to
+		// Classify");
+		// int[] result = learner.test(ds);
+		// System.out.println("On stump " +tree.getAttributeName()+ " " +
+		// result[0]+ " successes "+ result[1]+ " failures");
+		// }
 		List<String> unmatchedValues = new ArrayList<String>();
 		unmatchedValues.add(NO);
-		DecisionTree tree = DecisionTree.getStumpFor(ds,"hungry", YES, YES,unmatchedValues,"Unable to Classify");
-		DecisionTreeLearner learner = new DecisionTreeLearner(tree,"Unable to Classify");
+		DecisionTree tree = DecisionTree.getStumpFor(ds, "hungry", YES, YES,
+				unmatchedValues, "Unable to Classify");
+		DecisionTreeLearner learner = new DecisionTreeLearner(tree,
+				"Unable to Classify");
 		int[] result = learner.test(ds);
-		assertEquals(5,result[0]);
-		assertEquals(7,result[1]);
-		//System.out.println("On stump " +tree.getAttributeName()+ " " + result[0]+ " successes "+ result[1]+ " failures");
-		
-		
+		assertEquals(5, result[0]);
+		assertEquals(7, result[1]);
+		// System.out.println("On stump " +tree.getAttributeName()+ " " +
+		// result[0]+ " successes "+ result[1]+ " failures");
+
 	}
 
 	private static DecisionTree createInducedRestaurantDecisionTree() {// from
-																		// AIMA
-																		// 2nd
-																		// ED
-																		// Fig
-																		// 18.6
+		// AIMA
+		// 2nd
+		// ED
+		// Fig
+		// 18.6
 		// friday saturday node
 		DecisionTree frisat = new DecisionTree("fri/sat");
 		frisat.addLeaf(Util.YES, Util.YES);
@@ -107,11 +117,11 @@ public class DecisionTreeTest extends TestCase {
 	}
 
 	private static DecisionTree createActualRestaurantDecisionTree() {// from
-																		// AIMA
-																		// 2nd
-																		// ED
-																		// Fig
-																		// 18.2
+		// AIMA
+		// 2nd
+		// ED
+		// Fig
+		// 18.2
 
 		// raining node
 		DecisionTree raining = new DecisionTree("raining");

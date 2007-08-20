@@ -13,24 +13,25 @@ import aima.search.framework.SuccessorFunction;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
+
 public class MapSuccessorFunction implements SuccessorFunction {
-	
-	private Map aMap = null;
-	
+
+	private Map map = null;
+
 	public MapSuccessorFunction(Map aMap) {
-		this.aMap = aMap;
+		this.map = aMap;
 	}
-	
+
 	public List getSuccessors(Object state) {
 		List<Successor> successors = new ArrayList<Successor>();
-		
-		List<String> linkedLocations = aMap.getLocationsLinkedTo((String)state);
+
+		List<String> linkedLocations = map.getLocationsLinkedTo((String) state);
 		for (String location : linkedLocations) {
 			successors.add(new Successor(location, location));
 		}
-		
+
 		return successors;
 	}
 }

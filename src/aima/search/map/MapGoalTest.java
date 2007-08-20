@@ -8,11 +8,12 @@ import aima.search.framework.GoalTest;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
+
 public class MapGoalTest implements GoalTest {
 	private String goalState = null;
-	
+
 	public MapGoalTest(String goalState) {
 		this.goalState = goalState;
 	}

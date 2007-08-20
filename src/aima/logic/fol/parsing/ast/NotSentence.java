@@ -6,6 +6,11 @@ package aima.logic.fol.parsing.ast;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class NotSentence implements Sentence {
 	private Sentence negated;
 
@@ -33,8 +38,8 @@ public class NotSentence implements Sentence {
 		return (ns.negated.equals(negated));
 
 	}
-	
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + negated.hashCode();
 		return result;

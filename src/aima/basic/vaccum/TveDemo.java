@@ -6,6 +6,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class TveDemo extends javax.swing.JFrame {
 	private javax.swing.JMenuItem aboutMenuItem;
 

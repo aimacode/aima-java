@@ -8,6 +8,11 @@ import java.util.List;
 
 import aima.logic.propositional.parsing.PLVisitor;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class MultiSentence extends ComplexSentence {
 	private String operator;
 
@@ -28,11 +33,10 @@ public class MultiSentence extends ComplexSentence {
 
 	public boolean equals(Object o) {
 
-
-		if( this == o ) {
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
 		MultiSentence sen = (MultiSentence) o;
@@ -40,12 +44,13 @@ public class MultiSentence extends ComplexSentence {
 				.getSentences().equals(getSentences())));
 
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
-		for (Sentence s : sentences){
+		for (Sentence s : sentences) {
 			result = 37 * result + s.hashCode();
 		}
-		return result;  
+		return result;
 	}
 
 	public String toString() {

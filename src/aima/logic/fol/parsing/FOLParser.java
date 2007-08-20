@@ -16,11 +16,10 @@ import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
-;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class FOLParser {
 	private FOLLexer lexer;
@@ -33,6 +32,7 @@ public class FOLParser {
 		this.lexer = lexer;
 		lookAheadBuffer = new Token[lookAhead];
 	}
+
 	public FOLParser(FOLDomain domain) {
 		this(new FOLLexer(domain));
 	}
@@ -109,10 +109,11 @@ public class FOLParser {
 		match(")");
 		return terms;
 	}
+
 	public Sentence parseTermEquality() {
 		Term term1 = parseTerm();
 		match("=");
-		//System.out.println("=");
+		// System.out.println("=");
 		Term term2 = parseTerm();
 		return new TermEquality(term1, term2);
 	}
@@ -126,67 +127,62 @@ public class FOLParser {
 		Token t = lookAhead(1);
 		if (lParen(t)) {
 			return parseParanthizedSentence();
-		}
-		else if ((lookAhead(1).getType() == LogicTokenTypes.QUANTIFIER)){
-			
-			return parseQuantifiedSentence();			
-		}
-		else if (notToken(t)) {
+		} else if ((lookAhead(1).getType() == LogicTokenTypes.QUANTIFIER)) {
+
+			return parseQuantifiedSentence();
+		} else if (notToken(t)) {
 			return parseNotSentence();
 		} else if (predicate(t)) {
 			return parsePredicate();
-		}
-		else if (term(t)) {
+		} else if (term(t)) {
 			return parseTermEquality();
 		}
 
-		throw  new RuntimeException("parse failed with Token "+ t.getText());
+		throw new RuntimeException("parse failed with Token " + t.getText());
 	}
 
 	private Sentence parseQuantifiedSentence() {
 		String quantifier = lookAhead(1).getText();
 		consume();
 		List<Variable> variables = new ArrayList<Variable>();
-		Variable  var = (Variable)parseVariable();
+		Variable var = (Variable) parseVariable();
 		variables.add(var);
-		while (lookAhead(1).getType() == LogicTokenTypes.COMMA){
+		while (lookAhead(1).getType() == LogicTokenTypes.COMMA) {
 			consume();
-			var = (Variable)parseVariable();
+			var = (Variable) parseVariable();
 			variables.add(var);
 		}
 		Sentence sentence = parseSentence();
-		return new QuantifiedSentence(quantifier,variables,sentence);
+		return new QuantifiedSentence(quantifier, variables, sentence);
 	}
 
 	private Sentence parseParanthizedSentence() {
 		match("(");
 		Sentence sen = parseSentence();
-		while (binaryConnector(lookAhead(1))){
-			String connector= lookAhead(1).getText();
+		while (binaryConnector(lookAhead(1))) {
+			String connector = lookAhead(1).getText();
 			consume();
 			Sentence other = parseSentence();
-			sen = new ConnectedSentence(connector,sen,other );
+			sen = new ConnectedSentence(connector, sen, other);
 		}
 		match(")");
-		return sen; /*new ParanthizedSentence*/
-		
-		
+		return sen; /* new ParanthizedSentence */
+
 	}
+
 	private boolean binaryConnector(Token t) {
-		if ( (t.getType()==LogicTokenTypes.CONNECTOR) && (!(t.getText().equals("NOT"))) ){
+		if ((t.getType() == LogicTokenTypes.CONNECTOR)
+				&& (!(t.getText().equals("NOT")))) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-	
 
 	private boolean lParen(Token t) {
-		if (t.getType() == LogicTokenTypes.LPAREN){
+		if (t.getType() == LogicTokenTypes.LPAREN) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -199,7 +195,7 @@ public class FOLParser {
 		} else {
 			return false;
 		}
-		
+
 	}
 
 	private boolean predicate(Token t) {
@@ -224,9 +220,9 @@ public class FOLParser {
 	}
 
 	protected void consume() {
-		//System.out.println("consuming" +lookAheadBuffer[0].getText());
+		// System.out.println("consuming" +lookAheadBuffer[0].getText());
 		loadNextTokenFromInput();
-		//System.out.println("next token " +lookAheadBuffer[0].getText());
+		// System.out.println("next token " +lookAheadBuffer[0].getText());
 	}
 
 	protected void loadNextTokenFromInput() {

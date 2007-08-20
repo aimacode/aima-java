@@ -9,6 +9,10 @@ import aima.util.FrequencyCounter;
 import aima.util.Pair;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 		MDPAgent<STATE_TYPE, ACTION_TYPE> {
 
@@ -18,8 +22,8 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 
 	private Double previousReward;
 
-	
-	private QTable<STATE_TYPE,ACTION_TYPE> qTable;
+	private QTable<STATE_TYPE, ACTION_TYPE> qTable;
+
 	private int actionCounter;
 
 	public QLearningAgent(MDP<STATE_TYPE, ACTION_TYPE> mdp) {
@@ -35,9 +39,8 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 		currentState = perception.getState();
 		currentReward = perception.getReward();
 
-
 		if (startingTrial()) {
-			ACTION_TYPE chosenAction = selectRandomAction();			
+			ACTION_TYPE chosenAction = selectRandomAction();
 			updateLearnerState(chosenAction);
 			return previousAction;
 		}
@@ -57,11 +60,11 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 			updateLearnerState(chosenAction);
 			return previousAction;
 		}
-		
+
 	}
 
 	private void updateLearnerState(ACTION_TYPE chosenAction) {
-		//previousAction = actionMaximizingLearningFunction();
+		// previousAction = actionMaximizingLearningFunction();
 		previousAction = chosenAction;
 		previousAction = chosenAction;
 		previousState = currentState;
@@ -70,61 +73,60 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 
 	private ACTION_TYPE updateQ(double gamma) {
 
-		actionCounter ++;
-		//qtable update
-	
-		double alpha =  calculateProbabilityOf(previousState,previousAction);
-		ACTION_TYPE ac = qTable.upDateQ(previousState, previousAction, currentState, alpha,currentReward, 0.8);
-		
+		actionCounter++;
+		// qtable update
+
+		double alpha = calculateProbabilityOf(previousState, previousAction);
+		ACTION_TYPE ac = qTable.upDateQ(previousState, previousAction,
+				currentState, alpha, currentReward, 0.8);
+
 		return ac;
-		
 
 	}
-	
+
 	private double calculateProbabilityOf(STATE_TYPE state, ACTION_TYPE action) {
 		Double den = 0.0;
 		Double num = 0.0;
-		for(Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : stateActionCount.getStates()){
+		for (Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : stateActionCount
+				.getStates()) {
 
-			if (stateActionPair.getFirst().equals(state)){
-				den +=1;
-				if (stateActionPair.getSecond().equals(action)){
-					num+=1;
+			if (stateActionPair.getFirst().equals(state)) {
+				den += 1;
+				if (stateActionPair.getSecond().equals(action)) {
+					num += 1;
 				}
 			}
 		}
-		return num/den;
+		return num / den;
 	}
 
-	private ACTION_TYPE actionMaximizingLearningFunction(){
+	private ACTION_TYPE actionMaximizingLearningFunction() {
 		ACTION_TYPE maxAct = null;
-		Double maxValue =  Double.NEGATIVE_INFINITY;
-		for(ACTION_TYPE action :mdp.getAllActions()){
+		Double maxValue = Double.NEGATIVE_INFINITY;
+		for (ACTION_TYPE action : mdp.getAllActions()) {
 			Double qValue = qTable.getQValue(currentState, action);
 			Double lfv = learningFunction(qValue);
-			if (lfv > maxValue){
-				maxValue =lfv;
+			if (lfv > maxValue) {
+				maxValue = lfv;
 				maxAct = action;
 			}
 		}
 		return maxAct;
 	}
-	
-	private Double learningFunction(Double utility){
-		if (actionCounter > 3){
-			actionCounter =0;
+
+	private Double learningFunction(Double utility) {
+		if (actionCounter > 3) {
+			actionCounter = 0;
 			return 1.0;
-		}else{
+		} else {
 			return utility;
 		}
 	}
 
-	
-
 	private ACTION_TYPE selectRandomAction() {
 		List<ACTION_TYPE> allActions = mdp.getAllActions();
 		return allActions.get(0);
-		//return Util.selectRandomlyFromList(allActions);
+		// return Util.selectRandomlyFromList(allActions);
 	}
 
 	private boolean startingTrial() {
@@ -132,10 +134,6 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 				&& (previousReward == null)
 				&& (currentState.equals(mdp.getInitialState()));
 	}
-
-
-
-
 
 	private void incrementStateActionCount(STATE_TYPE state, ACTION_TYPE action) {
 		Pair<STATE_TYPE, ACTION_TYPE> stateActionPair = new Pair<STATE_TYPE, ACTION_TYPE>(
@@ -146,7 +144,7 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 	public Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> getQ() {
 		return Q;
 	}
-	
+
 	public QTable<STATE_TYPE, ACTION_TYPE> getQTable() {
 		return qTable;
 	}

@@ -46,11 +46,11 @@ public class TermEquality implements Sentence {
 		return eq;
 
 	}
-	
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
-		result =  37 *result + getTerm1().hashCode();
-		result =  37 *result + getTerm2().hashCode();
+		result = 37 * result + getTerm1().hashCode();
+		result = 37 * result + getTerm2().hashCode();
 		return result;
 	}
 

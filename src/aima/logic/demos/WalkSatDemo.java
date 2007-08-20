@@ -10,12 +10,12 @@ import aima.logic.propositional.algorithms.WalkSAT;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class WalkSatDemo {
 	public static void main(String[] args) {
 		System.out.println("\nWalkSatDemo\n");
-		KnowledgeBase kb =  new KnowledgeBase();
+		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell(" (P => Q)");
 		kb.tell("((L AND M) => P)");
 		kb.tell("((B AND L) => M)");
@@ -34,16 +34,13 @@ public class WalkSatDemo {
 		System.out.println("(A)");
 		System.out.println("(B)");
 
-		
-		
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor(kb.asSentence().toString(),1000,0.5);
-		if (m==null){
+		Model m = walkSAT.findModelFor(kb.asSentence().toString(), 1000, 0.5);
+		if (m == null) {
 			System.out.println("failure");
-		}
-		else{
+		} else {
 			m.print();
 		}
 	}
-	
+
 }

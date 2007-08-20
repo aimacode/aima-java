@@ -1,4 +1,3 @@
-
 package aima.test.logictest.foltest;
 
 import java.util.List;
@@ -11,20 +10,23 @@ import aima.logic.fol.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
+
 public class PredicateCollectorTest extends TestCase {
 	PredicateCollector collector;
+
 	FOLParser parser;
-	public void setUp(){
+
+	public void setUp() {
 		collector = new PredicateCollector();
 		parser = new FOLParser(DomainFactory.weaponsDomain());
 	}
-	
-	public  void testSimpleSentence(){
+
+	public void testSimpleSentence() {
 		Sentence s = parser.parse("(Missile(x) => Weapon(x))");
 		List predicates = collector.getPredicates(s);
 		assertNotNull(predicates);
 	}
-		
+
 }

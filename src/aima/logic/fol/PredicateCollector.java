@@ -21,8 +21,9 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PredicateCollector implements FOLVisitor {
 
 	public PredicateCollector() {
@@ -30,7 +31,7 @@ public class PredicateCollector implements FOLVisitor {
 	}
 
 	public Object visitPredicate(Predicate p, Object arg) {
-		
+
 		List<Predicate> predicates = (List<Predicate>) arg;
 		predicates.add(p);
 		return predicates;
@@ -41,7 +42,7 @@ public class PredicateCollector implements FOLVisitor {
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
-		
+
 		return arg;
 	}
 

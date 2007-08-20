@@ -7,22 +7,23 @@ import aima.search.map.MapStepCostFunction;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
+
 public class MapStepCostFunctionTest extends TestCase {
 	MapStepCostFunction mscf;
-	
+
 	public void setUp() {
-		Map aMap = new Map(new String[] {"A", "B", "C", "D", "E"});
+		Map aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "C", 4);
 		aMap.addBidirectionalLink("C", "D", 7);
 		aMap.addUnidirectionalLink("B", "E", 14);
-		
+
 		mscf = new MapStepCostFunction(aMap);
 	}
-	
+
 	public void testCosts() {
 		assertEquals(new Double(6), mscf.calculateStepCost("A", "B", "Go"));
 		assertEquals(new Double(7), mscf.calculateStepCost("A", "C", "Go"));

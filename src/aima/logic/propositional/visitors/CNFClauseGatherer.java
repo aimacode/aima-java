@@ -12,6 +12,11 @@ import aima.logic.propositional.parsing.ast.Sentence;
 import aima.logic.propositional.parsing.ast.Symbol;
 import aima.logic.propositional.parsing.ast.UnarySentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class CNFClauseGatherer extends BasicTraverser {
 	AndDetector detector;
 
@@ -44,11 +49,9 @@ public class CNFClauseGatherer extends BasicTraverser {
 		Set<Sentence> set = new HashSet<Sentence>();
 		if (sentence instanceof Symbol) {
 			set.add(sentence);
-		} 
-		else if (sentence instanceof UnarySentence){
+		} else if (sentence instanceof UnarySentence) {
 			set.add(sentence);
-		}
-		else {
+		} else {
 			set = (Set<Sentence>) sentence.accept(this, set);
 		}
 		return set;

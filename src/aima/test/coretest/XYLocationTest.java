@@ -11,20 +11,24 @@ package aima.test.coretest;
 import junit.framework.TestCase;
 import aima.basic.XYLocation;
 
-public class XYLocationTest extends TestCase{
-    public XYLocationTest(String name){
-        super(name);
-    }
+/**
+ * @author Ravi Mohan
+ * 
+ */
+public class XYLocationTest extends TestCase {
+	public XYLocationTest(String name) {
+		super(name);
+	}
 
-    public void testXYLocationAtributeSettingOnConstruction(){
-        XYLocation loc =  new XYLocation(3,4);
-        assertEquals(3,loc.getXCoOrdinate());
-        assertEquals(4,loc.getYCoOrdinate());
-    }
+	public void testXYLocationAtributeSettingOnConstruction() {
+		XYLocation loc = new XYLocation(3, 4);
+		assertEquals(3, loc.getXCoOrdinate());
+		assertEquals(4, loc.getYCoOrdinate());
+	}
 
-    public void testEquality(){
-         XYLocation loc1 =  new XYLocation(3,4);
-         XYLocation loc2 =  new XYLocation(3,4);
-        assertEquals(loc1,loc2);
-    }
+	public void testEquality() {
+		XYLocation loc1 = new XYLocation(3, 4);
+		XYLocation loc2 = new XYLocation(3, 4);
+		assertEquals(loc1, loc2);
+	}
 }

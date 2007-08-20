@@ -19,27 +19,29 @@ import aima.basic.Percept;
 
 /**
  * @author Ciaran O'Reilly
- *
+ * 
  */
 public class ReflexVaccumAgent extends Agent {
 
 	public ReflexVaccumAgent() {
 		super(new AgentProgram() {
-			//function REFLEX-VACUUM-AGENT([location, status]) returns an action
+			// function REFLEX-VACUUM-AGENT([location, status]) returns an
+			// action
 			public String execute(Percept percept) {
-				
+
 				// if status = Dirty then return Suck
 				if ("Dirty".equals(percept.getAttribute("status"))) {
 					return "Suck";
-				// else if location = A then return Right
+					// else if location = A then return Right
 				} else if ("A".equals(percept.getAttribute("location"))) {
 					return "Right";
-				// else if location = B then return Left
+					// else if location = B then return Left
 				} else if ("B".equals(percept.getAttribute("location"))) {
 					return "Left";
 				}
-				
-				return "NoOP"; // Note: This should not be returned if the environment is correct
+
+				return "NoOP"; // Note: This should not be returned if the
+				// environment is correct
 			}
 		});
 	}

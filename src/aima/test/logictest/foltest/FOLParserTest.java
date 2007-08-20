@@ -25,8 +25,9 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class FOLParserTest extends TestCase {
 	FOLLexer lexer;
 
@@ -62,17 +63,14 @@ public class FOLParserTest extends TestCase {
 		parser.setUpToParse("LegsOf(John,Saladin,Richard)");
 		Term f = parser.parseFunction();
 		assertEquals(f, getLegsOfFunction());
-		assertEquals(3, ((Function)f).getTerms().size());
+		assertEquals(3, ((Function) f).getTerms().size());
 	}
 
 	public void testPredicate() {
-		//parser.setUpToParse("King(John)");
+		// parser.setUpToParse("King(John)");
 		Predicate p = (Predicate) parser.parse("King(John)");
 		assertEquals(p, getKingPredicate("John"));
 	}
-	
-
-
 
 	public void testTermEquality() {
 		try {
@@ -85,6 +83,7 @@ public class FOLParserTest extends TestCase {
 		}
 
 	}
+
 	public void testTermEquality2() {
 		try {
 			TermEquality te = (TermEquality) parser
@@ -99,18 +98,18 @@ public class FOLParserTest extends TestCase {
 
 	public void testNotSentence() {
 
-		//parser.setUpToParse("NOT BrotherOf(John) = EnemyOf(Saladin)");
+		// parser.setUpToParse("NOT BrotherOf(John) = EnemyOf(Saladin)");
 		NotSentence ns = (NotSentence) parser
 				.parse("NOT BrotherOf(John) = EnemyOf(Saladin)");
-		assertEquals(ns.getNegated(), new TermEquality(getBrotherOfFunction("John"),
-				getEnemyOfFunction()));
+		assertEquals(ns.getNegated(), new TermEquality(
+				getBrotherOfFunction("John"), getEnemyOfFunction()));
 	}
 
 	public void testSimpleParanthizedSentence() {
 		Sentence ps = parser.parse("(NOT King(John))");
 		assertEquals(ps, new NotSentence(getKingPredicate("John")));
 	}
-	
+
 	public void testExtraParanthizedSentence() {
 		Sentence ps = parser.parse("(((NOT King(John))))");
 		assertEquals(ps, new NotSentence(getKingPredicate("John")));
@@ -134,38 +133,49 @@ public class FOLParserTest extends TestCase {
 	}
 
 	public void testComplexConnectedSentence1() {
-		Sentence ps = parser.parse("((King(John) AND NOT King(Richard)) OR King(Saladin))");
-		//Sentence ps = parser.parse("(King(John) AND King(Saladin))");
-		assertEquals(ps, new ConnectedSentence("OR",new ConnectedSentence("AND", getKingPredicate("John"),
-				new NotSentence(getKingPredicate("Richard"))),
+		Sentence ps = parser
+				.parse("((King(John) AND NOT King(Richard)) OR King(Saladin))");
+		// Sentence ps = parser.parse("(King(John) AND King(Saladin))");
+		assertEquals(ps, new ConnectedSentence("OR", new ConnectedSentence(
+				"AND", getKingPredicate("John"), new NotSentence(
+						getKingPredicate("Richard"))),
 				getKingPredicate("Saladin")));
-		//assertEquals()
+		// assertEquals()
 	}
 
 	public void testQuantifiedSentenceWithSingleVariable() {
 		Sentence qs = parser.parse("FORALL x  King(x)");
 		List<Variable> vars = new ArrayList<Variable>();
 		vars.add(new Variable("x"));
-		assertEquals(qs, new QuantifiedSentence("FORALL",vars,getKingPredicate("x")));
+		assertEquals(qs, new QuantifiedSentence("FORALL", vars,
+				getKingPredicate("x")));
 	}
+
 	public void testQuantifiedSentenceWithTwoVariables() {
-		Sentence qs = parser.parse("EXISTS x,y  (King(x) AND BrotherOf(x) = y)");
+		Sentence qs = parser
+				.parse("EXISTS x,y  (King(x) AND BrotherOf(x) = y)");
 		List<Variable> vars = new ArrayList<Variable>();
 		vars.add(new Variable("x"));
 		vars.add(new Variable("y"));
-		ConnectedSentence  cse =  new ConnectedSentence("AND",getKingPredicate("x"),new TermEquality(getBrotherOfFunction("x"),new Variable("y")));
-		assertEquals(qs, new QuantifiedSentence("EXISTS",vars,cse));
+		ConnectedSentence cse = new ConnectedSentence("AND",
+				getKingPredicate("x"), new TermEquality(
+						getBrotherOfFunction("x"), new Variable("y")));
+		assertEquals(qs, new QuantifiedSentence("EXISTS", vars, cse));
 	}
+
 	public void testQuantifiedSentenceWithPathologicalParanthising() {
-		Sentence qs = parser.parse("(( (EXISTS x,y  (King(x) AND (BrotherOf(x) = y)) ) ))");
+		Sentence qs = parser
+				.parse("(( (EXISTS x,y  (King(x) AND (BrotherOf(x) = y)) ) ))");
 		List<Variable> vars = new ArrayList<Variable>();
 		vars.add(new Variable("x"));
 		vars.add(new Variable("y"));
-		ConnectedSentence  cse =  new ConnectedSentence("AND",getKingPredicate("x"),new TermEquality(getBrotherOfFunction("x"),new Variable("y")));
-		assertEquals(qs, new QuantifiedSentence("EXISTS",vars,cse));
-		
+		ConnectedSentence cse = new ConnectedSentence("AND",
+				getKingPredicate("x"), new TermEquality(
+						getBrotherOfFunction("x"), new Variable("y")));
+		assertEquals(qs, new QuantifiedSentence("EXISTS", vars, cse));
+
 	}
-	
+
 	public Function getBrotherOfFunction(String who) {
 		List<Term> l = new ArrayList<Term>();
 		l.add(new Constant(who));
@@ -191,21 +201,21 @@ public class FOLParserTest extends TestCase {
 		l.add(new Constant(who));
 		return new Predicate("King", l);
 	}
-	
+
 	public void testParseMultiArityFunctionEquality() {
 		parser.setUpToParse("LegsOf(John,Saladin,Richard)");
 		Term f = parser.parseFunction();
-		
+
 		parser.setUpToParse("LegsOf(John,Saladin,Richard)");
 		Term f2 = parser.parseFunction();
 		assertEquals(f, f2);
-		assertEquals(3, ((Function)f).getTerms().size());
-	}
-	
-	public void testConnectedImplication(){
-		parser = new FOLParser(DomainFactory.weaponsDomain());
-		Sentence s = parser.parse("((Missile(m) AND Owns(NoNo,m)) => Sells(West , m ,NoNo))");
+		assertEquals(3, ((Function) f).getTerms().size());
 	}
 
+	public void testConnectedImplication() {
+		parser = new FOLParser(DomainFactory.weaponsDomain());
+		Sentence s = parser
+				.parse("((Missile(m) AND Owns(NoNo,m)) => Sells(West , m ,NoNo))");
+	}
 
 }

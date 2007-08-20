@@ -9,11 +9,13 @@ import aima.logic.fol.parsing.FOLVisitor;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
-public interface FOLNode extends ParseTreeNode{
-	public  Object accept(FOLVisitor v,Object arg);	
-	public  String toString();
+public interface FOLNode extends ParseTreeNode {
+	public Object accept(FOLVisitor v, Object arg);
+
+	public String toString();
+
 	public FOLNode copy();
-	
+
 }

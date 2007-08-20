@@ -7,6 +7,11 @@ import java.util.Properties;
 import aima.basic.Agent;
 import aima.basic.Percept;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class SearchAgent extends Agent {
 	List actionList;
 

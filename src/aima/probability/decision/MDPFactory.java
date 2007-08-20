@@ -3,10 +3,15 @@ package aima.probability.decision;
 import aima.probability.decision.cellworld.CellWorld;
 import aima.probability.decision.cellworld.CellWorldPosition;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class MDPFactory {
 
-	public static MDP<CellWorldPosition,String> createFourByThreeMDP() {
-		
+	public static MDP<CellWorldPosition, String> createFourByThreeMDP() {
+
 		CellWorld cw = new CellWorld(3, 4, 0.4);
 		cw = new CellWorld(3, 4, -0.04);
 
@@ -19,8 +24,5 @@ public class MDPFactory {
 		cw.setReward(3, 4, 1);
 		return cw.asMdp();
 	}
-	
-	
-	
 
 }

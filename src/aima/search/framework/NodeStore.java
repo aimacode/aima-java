@@ -8,8 +8,9 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public interface NodeStore {
 	public void add(Node anItem);
 

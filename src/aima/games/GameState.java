@@ -12,20 +12,21 @@ import java.util.Set;
  * @author Ravi Mohan
  * 
  */
-public class GameState {
-	private Hashtable<String,Object> state;
 
-	
+public class GameState {
+	private Hashtable<String, Object> state;
+
 	public GameState() {
-		state = new Hashtable<String,Object>();
+		state = new Hashtable<String, Object>();
 	}
 
 	public boolean equals(Object anotherState) {
 
-		if( this == anotherState ) {
+		if (this == anotherState) {
 			return true;
 		}
-		if((anotherState == null) || (this.getClass() != anotherState.getClass())){
+		if ((anotherState == null)
+				|| (this.getClass() != anotherState.getClass())) {
 			return false;
 		}
 		GameState another = (GameState) anotherState;
@@ -52,13 +53,14 @@ public class GameState {
 		}
 		return true;
 	}
-	public int hashCode(){
-		int result =17;
-		for (String s : state.keySet()){
+
+	public int hashCode() {
+		int result = 17;
+		for (String s : state.keySet()) {
 			result = 37 * result + s.hashCode();
 			result = 37 * result + state.get(s).hashCode();
 		}
-		
+
 		return result;
 	}
 
@@ -66,8 +68,8 @@ public class GameState {
 		return state.get(key);
 	}
 
-	public void put(String key,Object value) {
-		state.put(key,value);
-		
+	public void put(String key, Object value) {
+		state.put(key, value);
+
 	}
 }

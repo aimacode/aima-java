@@ -3,6 +3,11 @@ package aima.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public abstract class Environment {
 
 	protected ArrayList<EnvironmentObject> objects;

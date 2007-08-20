@@ -1,21 +1,26 @@
 package aima.probability.decision.cellworld;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 
 public class Cell {
-	private int x_co_ord,y_co_ord;
+	private int x_co_ord, y_co_ord;
+
 	private double reward;
-	
+
 	public Cell(int i, int j, double reward) {
-		this.x_co_ord =i;
-		this.y_co_ord =j;
+		this.x_co_ord = i;
+		this.y_co_ord = j;
 		this.reward = reward;
 	}
 
-	public int getY() {	
+	public int getY() {
 		return y_co_ord;
 	}
-	
-	public int getX() {	
+
+	public int getX() {
 		return x_co_ord;
 	}
 
@@ -27,12 +32,8 @@ public class Cell {
 		this.reward = reward;
 	}
 
-
-	
-	public CellWorldPosition  position(){
-		return new  CellWorldPosition(getX(),getY());
+	public CellWorldPosition position() {
+		return new CellWorldPosition(getX(), getY());
 	}
-
-	
 
 }

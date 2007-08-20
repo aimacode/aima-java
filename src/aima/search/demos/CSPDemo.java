@@ -5,8 +5,9 @@ import aima.search.csp.MapCSP;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class CSPDemo {
 	public static void main(String[] args) {
 		CSP csp = MapCSP.getMap();

@@ -16,14 +16,18 @@ import aima.test.logictest.foltest.VariableCollectorTest;
 import aima.test.logictest.prop.PropTests;
 import aima.test.utiltest.SetTest;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class LogicTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 
-		//propositional tests
+		// propositional tests
 		suite.addTest(PropTests.suite());
 
-		//first order tests
+		// first order tests
 		suite.addTest(new TestSuite(DLKnowledgeBaseTest.class));
 		suite.addTest(new TestSuite(DomainTest.class));
 		suite.addTest(new TestSuite(FOLLexerTest.class));
@@ -32,7 +36,7 @@ public class LogicTests {
 		suite.addTest(new TestSuite(VariableCollectorTest.class));
 		suite.addTest(new TestSuite(UnifierTest.class));
 
-		//utils
+		// utils
 		suite.addTest(new TestSuite(SetTest.class));
 		return suite;
 	}

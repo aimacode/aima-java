@@ -9,7 +9,7 @@ import aima.logic.fol.parsing.DomainFactory;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class FolDemo {
 	public static void main(String[] args) {
@@ -19,7 +19,7 @@ public class FolDemo {
 	}
 
 	private static void unifierDemo() {
-		//TODO write this
+		// TODO write this
 
 	}
 
@@ -31,7 +31,7 @@ public class FolDemo {
 	}
 
 	private static void kingsDemo() {
-		
+
 		DLKnowledgeBase kb = new DLKnowledgeBase(DomainFactory.kingsDomain());
 		String rule1 = "((King(x) AND Greedy(x)) => Evil(x))";
 		String fact1 = "King(John)";
@@ -68,7 +68,7 @@ public class FolDemo {
 		String rule3 = "(Missile(missile) => Weapon(missile))";
 		String rule4 = "(Enemy(enemy,America) => Hostile(America))";
 
-		//facts
+		// facts
 
 		String fact1 = " Owns(NoNo, Mone)";
 		String fact2 = "American(West)";
@@ -105,7 +105,6 @@ public class FolDemo {
 
 	private static void substDemo() {
 		// TODO write this ?
-		
 
 	}
 

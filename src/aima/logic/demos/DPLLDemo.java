@@ -1,11 +1,10 @@
-
 package aima.logic.demos;
 
 import aima.logic.propositional.algorithms.DPLL;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class DPLLDemo {
 	private static DPLL dpll = new DPLL();
@@ -13,7 +12,7 @@ public class DPLLDemo {
 	public static void main(String[] args) {
 		displayDPLLSatisfiableStatus("( A AND B )");
 		displayDPLLSatisfiableStatus("( A AND (NOT A) )");
-		//displayDPLLSatisfiableStatus("((A OR (NOT A)) AND (A OR B))");
+		// displayDPLLSatisfiableStatus("((A OR (NOT A)) AND (A OR B))");
 	}
 
 	public static void displayDPLLSatisfiableStatus(String query) {

@@ -11,7 +11,7 @@ import aima.basic.XYLocation;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class TicTacToeBoard {
 	private static final String O = "O";
@@ -85,7 +85,7 @@ public class TicTacToeBoard {
 
 	public boolean isAnyDiagonalComplete() {
 		boolean retVal = false;
-		//check diagonal 1
+		// check diagonal 1
 		if ((topRow[0] != " ") && (topRow[0] == midRow[1])
 				&& (midRow[1] == bottomRow[2])) {
 			retVal = true;

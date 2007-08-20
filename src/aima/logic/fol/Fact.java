@@ -11,6 +11,7 @@ import aima.logic.fol.parsing.ast.Sentence;
  * @author Ravi Mohan
  * 
  */
+
 public class Fact {
 
 	private Sentence original;
@@ -29,17 +30,18 @@ public class Fact {
 
 	public boolean equals(Object o) {
 
-		if( this == o ) {
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
 		Fact f = (Fact) o;
 		return f.predicate().equals(predicate());
 
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		return 0;
 	}
 

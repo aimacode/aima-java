@@ -12,8 +12,9 @@ import aima.search.framework.NodeStore;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class FIFONodeStore implements NodeStore {
 
 	FIFOQueue queue;

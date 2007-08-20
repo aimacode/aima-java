@@ -17,6 +17,11 @@ import aima.logic.propositional.parsing.ast.Symbol;
 import aima.logic.propositional.parsing.ast.SymbolComparator;
 import aima.logic.propositional.parsing.ast.UnarySentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class LogicUtils {
 
 	public static Sentence chainWith(String connector, List sentences) {
@@ -36,8 +41,10 @@ public class LogicUtils {
 
 	public static Sentence reorderCNFTransform(Set<Symbol> positiveSymbols,
 			Set<Symbol> negativeSymbols) {
-		List<Symbol> plusList = new Converter<Symbol>().setToList(positiveSymbols);
-		List<Symbol> minusList = new Converter<Symbol>().setToList(negativeSymbols);
+		List<Symbol> plusList = new Converter<Symbol>()
+				.setToList(positiveSymbols);
+		List<Symbol> minusList = new Converter<Symbol>()
+				.setToList(negativeSymbols);
 		Collections.sort(plusList, new SymbolComparator());
 		Collections.sort(minusList, new SymbolComparator());
 
@@ -54,10 +61,10 @@ public class LogicUtils {
 			return LogicUtils.chainWith("OR", sentences);
 		}
 	}
-	
-	public static Set<Variable> stringsToVariables(Set<String> strings){
-		Set<Variable> vars =  new HashSet<Variable>();
-		for(String str :strings){
+
+	public static Set<Variable> stringsToVariables(Set<String> strings) {
+		Set<Variable> vars = new HashSet<Variable>();
+		for (String str : strings) {
 			vars.add(new Variable(str));
 		}
 		return vars;

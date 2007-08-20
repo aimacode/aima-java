@@ -10,8 +10,9 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class MapCSP extends CSP {
 	public static String WA = "WA";
 
@@ -59,7 +60,7 @@ public class MapCSP extends CSP {
 			domains.addToDomain(variable, colors);
 		}
 
-		Hashtable<String,List<String>> neighbors = new Hashtable<String,List<String>>();
+		Hashtable<String, List<String>> neighbors = new Hashtable<String, List<String>>();
 		addToNeighbors(neighbors, T);
 		addToNeighbors(neighbors, WA, NT, SA);
 		addToNeighbors(neighbors, NT, WA, SA, Q);
@@ -72,19 +73,21 @@ public class MapCSP extends CSP {
 		return new CSP(variables, mapConstraints, domains);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose) {
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose) {
 		List<String> l = new ArrayList<String>();
 		neighbors.put(whose, l);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose,
-			String one) {
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose, String one) {
 		List<String> l = new ArrayList<String>();
 		l.add(one);
 		neighbors.put(whose, l);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose,
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose,
 			String one, String two) {
 		List<String> l = new ArrayList<String>();
 		l.add(one);
@@ -92,7 +95,8 @@ public class MapCSP extends CSP {
 		neighbors.put(whose, l);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose,
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose,
 			String one, String two, String three) {
 		List<String> l = new ArrayList<String>();
 		l.add(one);
@@ -101,7 +105,8 @@ public class MapCSP extends CSP {
 		neighbors.put(whose, l);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose,
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose,
 			String one, String two, String three, String four) {
 		List<String> l = new ArrayList<String>();
 		l.add(one);
@@ -111,7 +116,8 @@ public class MapCSP extends CSP {
 		neighbors.put(whose, l);
 	}
 
-	public static void addToNeighbors(Hashtable<String,List<String>> neighbors, String whose,
+	public static void addToNeighbors(
+			Hashtable<String, List<String>> neighbors, String whose,
 			String one, String two, String three, String four, String five) {
 		List<String> l = new ArrayList<String>();
 		l.add(one);

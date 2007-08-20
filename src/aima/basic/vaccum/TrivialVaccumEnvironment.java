@@ -7,6 +7,10 @@ import aima.basic.Agent;
 import aima.basic.Environment;
 import aima.basic.Percept;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class TrivialVaccumEnvironment extends Environment {
 
 	String location1, location2;

@@ -159,7 +159,7 @@ public class Util {
 		return buf.toString();
 	}
 
-	public static void isNanOrInfinity(double d) {
+	public static void checkForNanOrInfinity(double d) {
 		if (Double.isNaN(d)) {
 			throw new RuntimeException("Not a Number");
 		}

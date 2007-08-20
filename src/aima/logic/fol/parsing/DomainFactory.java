@@ -8,17 +8,17 @@ import aima.logic.fol.FOLDomain;
 
 /**
  * @author Ravi Mohan
- *
+ * 
  */
 public class DomainFactory {
-	public static FOLDomain crusadesDomain(){
+	public static FOLDomain crusadesDomain() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("John");
 		domain.addConstant("Richard");
 		domain.addConstant("England");
 		domain.addConstant("Saladin");
 		domain.addConstant("Crown");
-		
+
 		domain.addFunction("LeftLegOf");
 		domain.addFunction("BrotherOf");
 		domain.addFunction("EnemyOf");
@@ -27,8 +27,8 @@ public class DomainFactory {
 		domain.addPredicate("King");
 		return domain;
 	}
-	
-	public static FOLDomain knowsDomain(){
+
+	public static FOLDomain knowsDomain() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("John");
 		domain.addConstant("Jane");
@@ -40,7 +40,7 @@ public class DomainFactory {
 	}
 
 	public static FOLDomain weaponsDomain() {
-		
+
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("West");
 		domain.addConstant("America");
@@ -54,12 +54,11 @@ public class DomainFactory {
 		domain.addPredicate("Missile");
 		domain.addPredicate("Owns");
 		domain.addPredicate("Enemy");
-		
-		
+
 		return domain;
 	}
-	
-	public static FOLDomain kingsDomain(){
+
+	public static FOLDomain kingsDomain() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("John");
 		domain.addConstant("Richard");

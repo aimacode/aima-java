@@ -10,6 +10,11 @@ import java.util.List;
 
 import aima.probability.Randomizer;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Layer {
 	private List<Neuron> neurons;
 
@@ -23,14 +28,14 @@ public class Layer {
 	public Layer(int n, double bias, ActivationFunction function) {
 		neurons = new ArrayList<Neuron>(n);
 		for (int i = 0; i < n; i++) {
-			neurons.add(new Neuron(bias,function));
+			neurons.add(new Neuron(bias, function));
 		}
 	}
 
 	public Layer(int n, List<Double> biases, ActivationFunction function) {
 		neurons = new ArrayList<Neuron>(n);
 		for (int i = 0; i < n; i++) {
-			neurons.add(new Neuron(biases.get(i),function));
+			neurons.add(new Neuron(biases.get(i), function));
 		}
 	}
 
@@ -55,7 +60,7 @@ public class Layer {
 
 	public void connectTo(Layer layer, Randomizer weights) {
 		for (Neuron source : neurons) {
-			
+
 			for (Neuron target : layer.neurons) {
 				source.connectTo(target, weights.nextDouble());
 			}
@@ -70,13 +75,13 @@ public class Layer {
 
 	public List<Double> activation() {
 		List<Double> result = new ArrayList<Double>();
-		for (Neuron n: neurons){
+		for (Neuron n : neurons) {
 			result.add(n.activation());
 		}
 		return result;
 	}
 
-	public Iterator<Neuron> iterator() {	
+	public Iterator<Neuron> iterator() {
 		return neurons.iterator();
 	}
 
@@ -86,16 +91,15 @@ public class Layer {
 	public List<Neuron> getNeurons() {
 		return neurons;
 	}
-	
-	public List<Double> weights(){
+
+	public List<Double> weights() {
 		List<Double> weights = new ArrayList<Double>();
-		for(Neuron n:neurons){
-			for (Double weight :n.weights()){
+		for (Neuron n : neurons) {
+			for (Double weight : n.weights()) {
 				weights.add(weight);
 			}
 		}
 		return weights;
 	}
-	
 
 }

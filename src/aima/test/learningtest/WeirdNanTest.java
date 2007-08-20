@@ -10,6 +10,10 @@ import aima.probability.JavaRandomizer;
 import aima.util.Util;
 import junit.framework.TestCase;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class WeirdNanTest extends TestCase {
 	public void testNan() {
 		System.out.println(Util.ntimes("*", 100));

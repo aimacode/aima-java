@@ -43,13 +43,13 @@ public class StandardBackPropogation implements NeuralNetworkTrainingScheme {
 		while (neuronIter.hasNext() && errorIter.hasNext()) {
 			Neuron n = neuronIter.next();
 			Double error = errorIter.next();
-			Util.isNanOrInfinity(n.netInput());
-			Util.isNanOrInfinity(n.getActivationFuncton().deriv(n.netInput()));
+			Util.checkForNanOrInfinity(n.netInput());
+			Util.checkForNanOrInfinity(n.getActivationFuncton().deriv(n.netInput()));
 		
-			Util.isNanOrInfinity(error);
+			Util.checkForNanOrInfinity(error);
 			
 			double delta =  -2.0 * n.getActivationFuncton().deriv(n.netInput())*error;
-			Util.isNanOrInfinity(delta);
+			Util.checkForNanOrInfinity(delta);
 			neuronDeltaMap.put(n, delta );
 		}
 
@@ -66,10 +66,10 @@ public class StandardBackPropogation implements NeuralNetworkTrainingScheme {
 				for (Link l :neuron.outLinks()){
 					weightsum += (l.weight()*neuronDeltaMap.get(l.target()));
 				}
-				Util.isNanOrInfinity(weightsum);
-				Util.isNanOrInfinity(neuron.netInput());
+				Util.checkForNanOrInfinity(weightsum);
+				Util.checkForNanOrInfinity(neuron.netInput());
 				double delta = weightsum * neuron.getActivationFuncton().deriv(neuron.netInput());
-				Util.isNanOrInfinity(delta);
+				Util.checkForNanOrInfinity(delta);
 				
 				neuronDeltaMap.put(neuron,delta);
 			}

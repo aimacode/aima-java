@@ -6,7 +6,7 @@ package aima.search.framework;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public interface Measurable {
 	void setSearchMetric(String name, Object value);

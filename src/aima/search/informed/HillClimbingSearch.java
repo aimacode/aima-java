@@ -10,8 +10,9 @@ import aima.search.framework.SearchUtils;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class HillClimbingSearch extends NodeExpander implements Search {
 
 	public List search(Problem p) throws Exception {
@@ -52,7 +53,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 
 	private int getValue(Node n, Problem p) {
 
-		return -1 * getHeuristic(n, p); //assumption greater heuristic value =>
+		return -1 * getHeuristic(n, p); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 	}
 

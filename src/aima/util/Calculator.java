@@ -7,6 +7,10 @@ package aima.util;
 
 import aima.basic.XYLocation;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Calculator {
 
 	public static int calculateSquareOfDistanceBetweenLocations(

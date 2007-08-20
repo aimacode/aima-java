@@ -19,18 +19,16 @@ import aima.test.logictest.prop.visitors.CNFTransformerTest;
 import aima.test.logictest.prop.visitors.SymbolClassifierTest;
 import aima.test.logictest.prop.visitors.SymbolCollectorTest;
 
-
-
-
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PropTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new TestSuite(CNFClauseGathererTest.class));
-		suite.addTest(new TestSuite(CNFTransformerTest.class));	
+		suite.addTest(new TestSuite(CNFTransformerTest.class));
 		suite.addTest(new TestSuite(DPLLTest.class));
 		suite.addTest(new TestSuite(KnowledgeBaseTest.class));
 		suite.addTest(new TestSuite(ModelTest.class));
@@ -41,9 +39,7 @@ public class PropTests {
 		suite.addTest(new TestSuite(SymbolClassifierTest.class));
 		suite.addTest(new TestSuite(SymbolCollectorTest.class));
 		suite.addTest(new TestSuite(TTEntailsTest.class));
-		
-		
-		
+
 		return suite;
 	}
 }

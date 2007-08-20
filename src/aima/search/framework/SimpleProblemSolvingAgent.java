@@ -41,21 +41,25 @@ import aima.util.Util;
 public abstract class SimpleProblemSolvingAgent extends Agent {
 	// Used to define No Operations/Action is to be performed.
 	public static final String NO_OP = "NoOP";
+
 	// Used to indicate the Agent is unwilling to generate anymore goals
 	// and should therefore DIE
 	public static final String DIE = "DIE";
-	
+
 	// seq, an action sequence, initially empty
 	private List<String> seq = new ArrayList<String>();
+
 	//
 	private boolean formulateGoalsIndefinitely = true;
+
 	private int maxGoalsToFormulate = 1;
-	private int goalsFormulated     = 0;
+
+	private int goalsFormulated = 0;
 
 	public SimpleProblemSolvingAgent() {
 		formulateGoalsIndefinitely = true;
 	}
-	
+
 	public SimpleProblemSolvingAgent(int maxGoalsToFormulate) {
 		formulateGoalsIndefinitely = false;
 		this.maxGoalsToFormulate = maxGoalsToFormulate;
@@ -64,12 +68,13 @@ public abstract class SimpleProblemSolvingAgent extends Agent {
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	public String execute(Percept p) {
 		String action = NO_OP;
-		
+
 		// state <- UPDATE-STATE(state, percept)
 		Object state = updateState(p);
 		// if seq is empty then do
 		if (0 == seq.size()) {
-			if (formulateGoalsIndefinitely || goalsFormulated < maxGoalsToFormulate) {
+			if (formulateGoalsIndefinitely
+					|| goalsFormulated < maxGoalsToFormulate) {
 				if (goalsFormulated > 0) {
 					notifyViewOfMetrics();
 				}
@@ -89,27 +94,27 @@ public abstract class SimpleProblemSolvingAgent extends Agent {
 				notifyViewOfMetrics();
 			}
 		}
-		
+
 		if (seq.size() > 0) {
 			// action <- FIRST(seq)
 			action = Util.first(seq);
 			// seq <- REST(seq)
 			seq = Util.rest(seq);
 		}
-		
+
 		return action;
 	}
-	
+
 	//
 	// PROTECTED METHODS
 	//
 	protected abstract Object updateState(Percept p);
-	
+
 	protected abstract Object formulateGoal();
-	
+
 	protected abstract Problem formulateProblem(Object goal);
-	
+
 	protected abstract List<String> search(Problem problem);
-	
+
 	protected abstract void notifyViewOfMetrics();
 }

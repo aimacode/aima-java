@@ -13,8 +13,9 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class Unifier {
 
 	private FOLParser parser;
@@ -24,9 +25,8 @@ public class Unifier {
 		this.parser = parser;
 	}
 
-	//returns a Hashtable of results if succesful , null if fail
+	// returns a Hashtable of results if succesful , null if fail
 	public Hashtable unify(FOLNode x, FOLNode y, Hashtable theta) {
-
 
 		if (theta == null) {
 			return null;
@@ -47,14 +47,14 @@ public class Unifier {
 		}
 	}
 
-
 	public Hashtable unifyLists(List x, List y, Hashtable theta) {
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
 			return theta;
 		} else {
-			return unifyLists(rest(x), rest(y), unify(first(x), first(y), theta));
+			return unifyLists(rest(x), rest(y),
+					unify(first(x), first(y), theta));
 		}
 	}
 
@@ -69,8 +69,6 @@ public class Unifier {
 		}
 	}
 
-	
-
 	private Hashtable unifyVar(Variable var, FOLNode x, Hashtable theta) {
 		if (theta.keySet().contains(var)) {
 
@@ -79,7 +77,7 @@ public class Unifier {
 
 			return unify(var, (FOLNode) theta.get(var), theta);
 		} else if (occurCheck(var, x)) {
-			return null;//failure
+			return null;// failure
 		} else {
 			theta.put(var, x);
 			return theta;
@@ -101,8 +99,6 @@ public class Unifier {
 
 	}
 
-
-
 	private String op(FOLNode x) {
 		if (isFunction(x)) {
 			return ((Function) x).getFunctionName();
@@ -113,7 +109,7 @@ public class Unifier {
 		}
 
 	}
-	
+
 	private boolean isList(FOLNode x) {
 		return List.class.isInstance(x);
 	}
@@ -121,7 +117,7 @@ public class Unifier {
 	private boolean isVariable(FOLNode x) {
 		return Variable.class.isInstance(x);
 	}
-	
+
 	private boolean isPredicate(FOLNode x) {
 		return Predicate.class.isInstance(x);
 	}
@@ -129,7 +125,7 @@ public class Unifier {
 	private boolean isFunction(FOLNode x) {
 		return Function.class.isInstance(x);
 	}
-	
+
 	private FOLNode first(List x) {
 		List other = duplicate(x);
 		FOLNode first = (FOLNode) other.get(0);
@@ -163,6 +159,5 @@ public class Unifier {
 			return false;
 		}
 	}
-
 
 }

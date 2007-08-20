@@ -45,6 +45,11 @@ package aima.search.framework;
  * root.
  */
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class TreeSearch extends QueueSearch {
 
 	protected void addExpandedNodesToFringe(NodeStore fringe, Node node,

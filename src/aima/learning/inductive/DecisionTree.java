@@ -8,6 +8,10 @@ import aima.learning.framework.DataSet;
 import aima.learning.framework.Example;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DecisionTree {
 	private String attributeName;
 
@@ -85,25 +89,21 @@ public class DecisionTree {
 	}
 
 	public String toString(int depth, StringBuffer buf) {
-		
 
 		if (attributeName != null) {
-			buf.append(Util.ntimes("\t",depth));
-			buf.append(Util.ntimes("***",1));
-			buf.append( attributeName + " \n");
+			buf.append(Util.ntimes("\t", depth));
+			buf.append(Util.ntimes("***", 1));
+			buf.append(attributeName + " \n");
 			for (String attributeValue : nodes.keySet()) {
-				buf.append(Util.ntimes("\t",depth+1));
-				buf.append("+"+attributeValue );
+				buf.append(Util.ntimes("\t", depth + 1));
+				buf.append("+" + attributeValue);
 				buf.append("\n");
 				DecisionTree child = nodes.get(attributeValue);
 				buf.append(child.toString(depth + 1, new StringBuffer()));
 			}
 		}
 
-
 		return buf.toString();
 	}
-	
-
 
 }

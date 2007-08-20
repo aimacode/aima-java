@@ -11,6 +11,11 @@ import java.util.Arrays;
 import aima.learning.framework.Example;
 import aima.util.Pair;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class IrisDataSetNumerizer implements Numerizer {
 
 	public Pair<List<Double>, List<Double>> numerize(Example e) {
@@ -26,13 +31,11 @@ public class IrisDataSetNumerizer implements Numerizer {
 		input.add(sepal_width);
 		input.add(petal_length);
 		input.add(petal_width);
-		
+
 		String plant_category_string = e
 				.getAttributeValueAsString("plant_category");
 
 		desiredOutput = convertCategoryToListOfDoubles(plant_category_string);
-		
-		
 
 		Pair<List<Double>, List<Double>> io = new Pair<List<Double>, List<Double>>(
 				input, desiredOutput);
@@ -57,14 +60,13 @@ public class IrisDataSetNumerizer implements Numerizer {
 	}
 
 	private double round(Double d) {
-		if (d<0){
+		if (d < 0) {
 			return 0.0;
 		}
-		if (d > 1){
+		if (d > 1) {
 			return 1.0;
-		}
-		else{
-			return (double)Math.round(d);
+		} else {
+			return (double) Math.round(d);
 		}
 	}
 

@@ -9,6 +9,10 @@ import java.util.List;
 
 import aima.util.Calculator;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class XYEnvironment extends Environment {
 	public static String LOCATION = "location";
 

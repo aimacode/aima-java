@@ -7,6 +7,11 @@ package aima.logic.propositional.parsing.ast;
 import aima.logic.propositional.parsing.PLVisitor;
 import aima.logic.propositional.parsing.ast.Sentence;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class BinarySentence extends ComplexSentence {
 	private String operator;
 
@@ -35,11 +40,10 @@ public class BinarySentence extends ComplexSentence {
 
 	public boolean equals(Object o) {
 
-
-		if( this == o ) {
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
 		BinarySentence bs = (BinarySentence) o;
@@ -48,11 +52,12 @@ public class BinarySentence extends ComplexSentence {
 				.equals(second)));
 
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + first.hashCode();
 		result = 37 * result + second.hashCode();
-		return result; 
+		return result;
 	}
 
 	public String toString() {

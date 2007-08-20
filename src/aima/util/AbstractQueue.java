@@ -4,25 +4,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * @author Ravi Mohan
+ * 
+ */
+
+/**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 71.
  * 
- * The operations on a queue are as follows:
- * MAKE-QUEUE(element,...) creates a queue with the given element(s).
- * EMPTY?(queue) returns true only if there are no more elements in the queue.
- * FIRST(queue) returns the first element of the queue.
- * REMOVE-FIRST(queue) returns FIRST(queue) and removes it from the queue.
- * INSERT(element, queue) inserts an element into the queue and returns the resulting 
- * queue. (We will see that different types of queues insert elements in different orders.)
- * INSERT-ALL(elements, queue) inserts a set of elements into the queue and returns the
- * resulting queue.
+ * The operations on a queue are as follows: MAKE-QUEUE(element,...) creates a
+ * queue with the given element(s). EMPTY?(queue) returns true only if there are
+ * no more elements in the queue. FIRST(queue) returns the first element of the
+ * queue. REMOVE-FIRST(queue) returns FIRST(queue) and removes it from the
+ * queue. INSERT(element, queue) inserts an element into the queue and returns
+ * the resulting queue. (We will see that different types of queues insert
+ * elements in different orders.) INSERT-ALL(elements, queue) inserts a set of
+ * elements into the queue and returns the resulting queue.
  */
 
 public class AbstractQueue implements Queue {
 	protected LinkedList<Object> linkedList;
 
-	public AbstractQueue () {
+	public AbstractQueue() {
 		linkedList = new LinkedList<Object>();
-	} 
+	}
 
 	public void addToFront(Object n) {
 		linkedList.addFirst(n);

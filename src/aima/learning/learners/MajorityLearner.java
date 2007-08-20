@@ -12,6 +12,10 @@ import aima.learning.framework.Example;
 import aima.learning.framework.Learner;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class MajorityLearner implements Learner {
 
 	private DataSet dataset;
@@ -42,7 +46,5 @@ public class MajorityLearner implements Learner {
 		}
 		return results;
 	}
-
-
 
 }

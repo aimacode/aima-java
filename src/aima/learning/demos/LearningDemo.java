@@ -26,8 +26,8 @@ import aima.util.Util;
 
 public class LearningDemo {
 	public static void main(String[] args) {
-		
-		// For  Reinforcement Learning Demos see Probability Demo 
+
+		// For Reinforcement Learning Demos see Probability Demo
 		decisionTreeDemo();
 		decisionListDemo();
 		ensembleLearningDemo();
@@ -36,10 +36,10 @@ public class LearningDemo {
 	}
 
 	private static void decisionTreeDemo() {
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		System.out
 				.println("\nDecisionTree Demo - Inducing a DecisionList from the Restaurant DataSet\n ");
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		try {
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
 			DecisionTreeLearner learner = new DecisionTreeLearner();
@@ -65,10 +65,10 @@ public class LearningDemo {
 
 	private static void decisionListDemo() {
 		try {
-			System.out.println(Util.ntimes("*",100));
+			System.out.println(Util.ntimes("*", 100));
 			System.out
 					.println("DecisionList Demo - Inducing a DecisionList from the Restaurant DataSet\n ");
-			System.out.println(Util.ntimes("*",100));
+			System.out.println(Util.ntimes("*", 100));
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
 			DecisionListLearner learner = new DecisionListLearner("Yes", "No",
 					new DLTestFactory());
@@ -92,32 +92,32 @@ public class LearningDemo {
 	}
 
 	private static void ensembleLearningDemo() {
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		System.out
 				.println("\n Ensemble Decision Demo - Weak Learners co operating to give Superior decisions ");
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		try {
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
-			List stumps = DecisionTree.getStumpsFor(ds,"Yes",
-					"No");
+			List stumps = DecisionTree.getStumpsFor(ds, "Yes", "No");
 			List<Learner> learners = new ArrayList<Learner>();
-			
-			System.out.println("\nStump Learners vote to decide in this algorithm");
-			for (Object stump: stumps){
-				DecisionTree sl = (DecisionTree)stump;
-				StumpLearner stumpLearner =  new StumpLearner(sl,"No");
+
+			System.out
+					.println("\nStump Learners vote to decide in this algorithm");
+			for (Object stump : stumps) {
+				DecisionTree sl = (DecisionTree) stump;
+				StumpLearner stumpLearner = new StumpLearner(sl, "No");
 				learners.add(stumpLearner);
 			}
-			AdaBoostLearner learner = new AdaBoostLearner(learners,ds);
+			AdaBoostLearner learner = new AdaBoostLearner(learners, ds);
 			learner.train(ds);
 			int[] result = learner.test(ds);
 			System.out
-			.println("\nThis Ensemble Learner  classifies the data set with "
-					+ result[0]
-					+ " successes"
-					+ " and "
-					+ result[1]
-					+ " failures");
+					.println("\nThis Ensemble Learner  classifies the data set with "
+							+ result[0]
+							+ " successes"
+							+ " and "
+							+ result[1]
+							+ " failures");
 			System.out.println("\n");
 
 		} catch (Exception e) {
@@ -127,60 +127,63 @@ public class LearningDemo {
 	}
 
 	private static void perceptronDemo() {
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		System.out.println("Perceptron Demo (Neural Net)");
-		System.out.println(Util.ntimes("*",100));
-		System.out.println("Trying to run Perception Learning on the Iris DataSet");
-		System.out.println("The Network weights and biases are set up at random .So you may get a different result n some runs");
-		try{
+		System.out.println(Util.ntimes("*", 100));
+		System.out
+				.println("Trying to run Perception Learning on the Iris DataSet");
+		System.out
+				.println("The Network weights and biases are set up at random .So you may get a different result n some runs");
+		try {
 			DataSet ds = DataSetFactory.getIrisDataSet();
-			FeedForwardNetwork network = new FeedForwardNetwork(4,3,new JavaRandomizer());
-			NeuralNetLearner learner= new NeuralNetLearner(network,new IrisDataSetNumerizer(),new PerceptronLearning(),10);
+			FeedForwardNetwork network = new FeedForwardNetwork(4, 3,
+					new JavaRandomizer());
+			NeuralNetLearner learner = new NeuralNetLearner(network,
+					new IrisDataSetNumerizer(), new PerceptronLearning(), 10);
 			learner.train(ds);
 			int[] result = learner.test(ds);
-			
+
 			System.out
-			.println("\nThis Perceptron  classifies the data set with "
-					+ result[0]
-					+ " successes"
-					+ " and "
-					+ result[1]
-					+ " failures");
+					.println("\nThis Perceptron  classifies the data set with "
+							+ result[0] + " successes" + " and " + result[1]
+							+ " failures");
 			System.out.println("\n");
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
-		
-		
 
 	}
 
 	private static void backPropogationDemo() {
-		System.out.println(Util.ntimes("*",100));
+		System.out.println(Util.ntimes("*", 100));
 		System.out.println("BackPropogation  (Neural Net)");
-		System.out.println(Util.ntimes("*",100));
-		System.out.println("Trying to run BackPropogation  Learning on the Iris DataSet");
-		System.out.println("The Network weights and biases are set up at random .So you may get a different result on some runs");
-		try{
+		System.out.println(Util.ntimes("*", 100));
+		System.out
+				.println("Trying to run BackPropogation  Learning on the Iris DataSet");
+		System.out
+				.println("The Network weights and biases are set up at random .So you may get a different result on some runs");
+		try {
 			DataSet ds = DataSetFactory.getIrisDataSet();
-			FeedForwardNetwork network = new FeedForwardNetwork(4,4,3,new JavaRandomizer());
-			NeuralNetLearner learner= new NeuralNetLearner(network,new IrisDataSetNumerizer(),new StandardBackPropogation(),1000);
+			FeedForwardNetwork network = new FeedForwardNetwork(4, 4, 3,
+					new JavaRandomizer());
+			NeuralNetLearner learner = new NeuralNetLearner(network,
+					new IrisDataSetNumerizer(), new StandardBackPropogation(),
+					1000);
 			learner.train(ds);
 			int[] result = learner.test(ds);
-			
+
 			System.out
-			.println("\nThis BackPropogation Network  classifies the data set with "
-					+ result[0]
-					+ " successes"
-					+ " and "
-					+ result[1]
-					+ " failures");
+					.println("\nThis BackPropogation Network  classifies the data set with "
+							+ result[0]
+							+ " successes"
+							+ " and "
+							+ result[1]
+							+ " failures");
 			System.out.println("\n");
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println("exception");
 			e.printStackTrace();
 		}
-		
 
 	}
 

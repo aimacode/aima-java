@@ -9,6 +9,11 @@ import java.util.List;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Function extends Term {
 	private String functionName;
 
@@ -44,11 +49,11 @@ public class Function extends Term {
 		return eq;
 
 	}
-	
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + functionName.hashCode();
-		for (Term t : terms){
+		for (Term t : terms) {
 			result = 37 * result + t.hashCode();
 		}
 		return result;

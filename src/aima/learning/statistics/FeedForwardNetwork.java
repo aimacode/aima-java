@@ -9,6 +9,11 @@ import java.util.List;
 
 import aima.probability.Randomizer;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class FeedForwardNetwork {
 	private List<Layer> layers;
 
@@ -37,7 +42,7 @@ public class FeedForwardNetwork {
 				new SigmoidActivationFunction());
 		Layer outputLayer = new Layer(neuronsInOutoutLayer, 1.0,
 				new IdentityActivationFunction());
-		
+
 		addLayer(inputLayer, random);
 		addLayer(hiddenLayer, random);
 		addLayer(outputLayer, random);

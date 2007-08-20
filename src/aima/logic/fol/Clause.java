@@ -15,8 +15,9 @@ import aima.search.csp.Domain;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class Clause {
 
 	private Predicate predicate;
@@ -45,7 +46,7 @@ public class Clause {
 		Unifier unifier = new Unifier(parser);
 		Hashtable result = unifier.unify(predicate, fact.predicate(),
 				new Hashtable());
-		if (result != null) { //unification succesfull
+		if (result != null) { // unification succesfull
 			Iterator iter = result.keySet().iterator();
 			while (iter.hasNext()) {
 				Variable key = (Variable) iter.next();
@@ -64,9 +65,12 @@ public class Clause {
 	public boolean contains(String variable) {
 		return variableNames.contains(variable);
 	}
+
 	public boolean hasValueFor(String variable) {
-		return (contains(variable)) && (domain.getDomainOf(variable).size()>0);
+		return (contains(variable))
+				&& (domain.getDomainOf(variable).size() > 0);
 	}
+
 	public List<Object> valuesFor(String variable) {
 		return domain.getDomainOf(variable);
 	}

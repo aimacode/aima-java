@@ -9,6 +9,11 @@ import java.util.List;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Predicate implements Sentence {
 	private String predicateName;
 
@@ -41,10 +46,11 @@ public class Predicate implements Sentence {
 		return ((nameEquality)) && (termEquality);
 
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + predicateName.hashCode();
-		for (Term t : terms){
+		for (Term t : terms) {
 			result = 37 * result + t.hashCode();
 		}
 		return result;

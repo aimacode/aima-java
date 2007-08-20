@@ -9,16 +9,17 @@ import aima.search.framework.NodeStore;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class PriorityNodeStore implements NodeStore {
 
 	PriorityQueue<Node> queue;
-	//PriorityQueue queue;
+
 	public PriorityNodeStore(Comparator<Node> comparator) {
 
-		queue = new PriorityQueue<Node>(5,comparator);
-		//queue = new PriorityQueue(comparator);
+		queue = new PriorityQueue<Node>(5, comparator);
+		// queue = new PriorityQueue(comparator);
 	}
 
 	public void add(Node anItem) {
@@ -32,11 +33,10 @@ public class PriorityNodeStore implements NodeStore {
 	}
 
 	public void add(List<Node> nodes) {
-		for (Object n : nodes)
-		{
-			queue.add((Node)n);
+		for (Object n : nodes) {
+			queue.add((Node) n);
 		}
-		
+
 	}
 
 	public boolean isEmpty() {
@@ -47,8 +47,8 @@ public class PriorityNodeStore implements NodeStore {
 	public int size() {
 		return queue.size();
 	}
-	
-	public String  toString(){
+
+	public String toString() {
 		return queue.toString();
 	}
 

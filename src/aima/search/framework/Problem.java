@@ -1,13 +1,15 @@
 package aima.search.framework;
 
 /**
+ * @author Ravi Mohan
+ * 
+ */
+
+/**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 62.
  * 
- * A problem can be defined formally by four components:
- * 1) Initial State.
- * 2) Successor Function.
- * 3) Goal Test.
- * 4) Path Cost.
+ * A problem can be defined formally by four components: 1) Initial State. 2)
+ * Successor Function. 3) Goal Test. 4) Path Cost.
  */
 
 public class Problem {

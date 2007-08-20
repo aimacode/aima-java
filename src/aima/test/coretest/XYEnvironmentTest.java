@@ -9,11 +9,17 @@ import aima.basic.Wall;
 import aima.basic.XYEnvironment;
 import aima.basic.XYLocation;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class XYEnvironmentTest extends TestCase {
 	XYEnvironment env;
+
 	Agent a;
-	
-	private static String LOCATION =  XYEnvironment.LOCATION;
+
+	private static String LOCATION = XYEnvironment.LOCATION;
+
 	public XYEnvironmentTest(String name) {
 		super(name);
 	}
@@ -23,7 +29,6 @@ public class XYEnvironmentTest extends TestCase {
 		a = new MockAgent();
 		env.addAgent(a, new XYLocation(3, 4));
 	}
-
 
 	public void testAddObject() {
 
@@ -45,9 +50,10 @@ public class XYEnvironmentTest extends TestCase {
 		Agent b = new MockAgent();
 		env.addAgent(b, loc);
 		assertEquals(2, env.getAgents().size());
-		
+
 		assertEquals(loc, b.getAttribute(LOCATION));
 	}
+
 	public void testAbsoluteMoveObject() {
 		XYLocation loc = new XYLocation(5, 5);
 		env.moveObjectToAbsoluteLocation(a, loc);
@@ -85,16 +91,16 @@ public class XYEnvironmentTest extends TestCase {
 		XYLocation southLoc = new XYLocation(5, 4);
 		XYLocation westLoc = new XYLocation(4, 5);
 
-		env.addObject(new Wall(), northLoc); //wall to the north of object
+		env.addObject(new Wall(), northLoc); // wall to the north of object
 		assertTrue(env.isBlocked(northLoc));
-		env.addObject(new Wall(), southLoc); //wall to the south of object
-		env.addObject(new Wall(), westLoc); //wall to the west of object
+		env.addObject(new Wall(), southLoc); // wall to the south of object
+		env.addObject(new Wall(), westLoc); // wall to the west of object
 		assertEquals(3, env.getObjects().size());
 
-		env.moveObject(a, "North"); //should not move
-		env.moveObject(a, "South"); //should not move
-		env.moveObject(a, "West"); //should not move
-		env.moveObject(a, "East"); //SHOULD move
+		env.moveObject(a, "North"); // should not move
+		env.moveObject(a, "South"); // should not move
+		env.moveObject(a, "West"); // should not move
+		env.moveObject(a, "East"); // SHOULD move
 		assertEquals(new XYLocation(6, 5), a.getAttribute(LOCATION));
 
 	}
@@ -119,24 +125,24 @@ public class XYEnvironmentTest extends TestCase {
 		env.addAgent(c, new XYLocation(5, 7));
 		env.addObject(w1, new XYLocation(3, 10));
 
-		//at this point agent A shouldbe able to see B and C but not the wall
+		// at this point agent A shouldbe able to see B and C but not the wall
 		// with a "vision radius" of 3
 		ArrayList visibleToA = env.getObjectsNear(a, 3);
 		assertEquals(2, visibleToA.size());
-		//agent B shouldbe able to see A only
+		// agent B shouldbe able to see A only
 		ArrayList visibleToB = env.getObjectsNear(b, 3);
 		assertEquals(1, visibleToB.size());
 
-		//move B north and west
+		// move B north and west
 		env.moveObject(b, "North");
 		env.moveObject(b, "West");
-		//at this point both a and c should be visible to b 
-		//TODO fix this
+		// at this point both a and c should be visible to b
+		// TODO fix this
 		visibleToB = env.getObjectsNear(b, 3);
 		assertEquals(1, visibleToB.size());
-		//move c near the wall
+		// move c near the wall
 		env.moveObjectToAbsoluteLocation(c, new XYLocation(3, 11));
-		//only the wall should be visible
+		// only the wall should be visible
 		ArrayList visibleToC = env.getObjectsNear(b, 3);
 		assertEquals(1, visibleToC.size());
 

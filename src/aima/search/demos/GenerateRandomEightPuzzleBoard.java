@@ -10,8 +10,9 @@ import aima.search.eightpuzzle.EightPuzzleBoard;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class GenerateRandomEightPuzzleBoard {
 	public static void main(String[] args) {
 		Random r = new Random();

@@ -13,8 +13,9 @@ import aima.logic.propositional.visitors.SymbolClassifier;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class SymbolClassifierTest extends TestCase {
 	private SymbolClassifier classifier;
 
@@ -78,7 +79,7 @@ public class SymbolClassifierTest extends TestCase {
 
 		assertEquals(0, pureNeg.size());
 		assertEquals(1, pure.size());
-		
+
 		assertTrue(pure.contains(b));
 
 		assertEquals(0, impure.size());
@@ -94,7 +95,7 @@ public class SymbolClassifierTest extends TestCase {
 
 		Set pure = classifier.getPureSymbolsIn(sentence);
 		Set impure = classifier.getImpureSymbolsIn(sentence);
-		
+
 		Sentence b = (Sentence) parser.parse("B");
 
 		assertEquals(1, neg.size());
@@ -102,17 +103,18 @@ public class SymbolClassifierTest extends TestCase {
 
 		assertEquals(1, pos.size());
 		assertTrue(pos.contains(b));
-		
+
 		assertEquals(0, pureNeg.size());
 		assertEquals(0, purePos.size());
 		assertEquals(0, pure.size());
 		assertEquals(1, impure.size());
 	}
-	
-	public void testAIMAExample(){
-		//2nd Edition Pg 221
-		Sentence sentence = (Sentence) parser.parse("(((A OR (NOT B)) AND ((NOT B) OR (NOT C))) AND (C OR A))");
-		
+
+	public void testAIMAExample() {
+		// 2nd Edition Pg 221
+		Sentence sentence = (Sentence) parser
+				.parse("(((A OR (NOT B)) AND ((NOT B) OR (NOT C))) AND (C OR A))");
+
 		Set neg = classifier.getNegativeSymbolsIn(sentence);
 		Set pos = classifier.getPositiveSymbolsIn(sentence);
 
@@ -121,30 +123,30 @@ public class SymbolClassifierTest extends TestCase {
 
 		Set pure = classifier.getPureSymbolsIn(sentence);
 		Set impure = classifier.getImpureSymbolsIn(sentence);
-		
+
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");
 		Sentence c = (Sentence) parser.parse("C");
-		
-		assertEquals(2,neg.size());
+
+		assertEquals(2, neg.size());
 		assertTrue(neg.contains(b));
 		assertTrue(neg.contains(c));
-		
-		assertEquals(2,pos.size());
+
+		assertEquals(2, pos.size());
 		assertTrue(pos.contains(a));
 		assertTrue(pos.contains(c));
-		
-		assertEquals(1,pureNeg.size());
+
+		assertEquals(1, pureNeg.size());
 		assertTrue(pureNeg.contains(b));
-		
-		assertEquals(1,purePos.size());
+
+		assertEquals(1, purePos.size());
 		assertTrue(purePos.contains(a));
-		
-		assertEquals(2,pure.size());
+
+		assertEquals(2, pure.size());
 		assertTrue(pure.contains(a));
 		assertTrue(pure.contains(b));
-		
-		assertEquals(1,impure.size());
+
+		assertEquals(1, impure.size());
 		assertTrue(impure.contains(c));
 	}
 

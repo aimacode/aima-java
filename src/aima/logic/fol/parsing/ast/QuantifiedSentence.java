@@ -13,6 +13,7 @@ import aima.logic.fol.parsing.FOLVisitor;
  * @author Ravi Mohan
  * 
  */
+
 public class QuantifiedSentence implements Sentence {
 	private String quantifier;
 
@@ -41,11 +42,11 @@ public class QuantifiedSentence implements Sentence {
 				.equals(quantified)));
 
 	}
-	
-	public int hashCode(){
+
+	public int hashCode() {
 		int result = 17;
 		result = 37 * result + quantifier.hashCode();
-		for (Variable v : variables){
+		for (Variable v : variables) {
 			result = 37 * result + v.hashCode();
 		}
 		result = result * 37 + quantified.hashCode();

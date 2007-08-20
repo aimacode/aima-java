@@ -8,7 +8,7 @@ import aima.basic.Agent;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class GameAgent extends Agent {
 	private Game game;

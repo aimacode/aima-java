@@ -3,6 +3,11 @@ package aima.search.framework;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class NodeExpander {
 	protected Metrics metrics;
 
@@ -19,7 +24,7 @@ public class NodeExpander {
 	public List<Node> expandNode(Node node, Problem problem) {
 		int heuristic = problem.getHeuristicFunction().getHeuristicValue(
 				node.getState());
-		//System.out.println("Expanding\n"+node.getState()+"\n"+"heuristic =
+		// System.out.println("Expanding\n"+node.getState()+"\n"+"heuristic =
 		// "+heuristic+"\n");
 
 		List<Node> nodes = new ArrayList<Node>();
@@ -38,7 +43,7 @@ public class NodeExpander {
 
 		}
 		metrics.set(NODES_EXPANDED, metrics.getInt(NODES_EXPANDED) + 1);
-		//System.out.println("Nodes expanded = " +
+		// System.out.println("Nodes expanded = " +
 		// metrics.getInt(NODES_EXPANDED));
 		return nodes;
 	}
@@ -50,8 +55,6 @@ public class NodeExpander {
 	public void setNodesExpanded(int nodesExpanded) {
 		metrics.set(NODES_EXPANDED, nodesExpanded);
 	}
-
-
 
 	public Object getSearchMetric(String name) {
 		return metrics.get(name);

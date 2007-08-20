@@ -9,8 +9,9 @@ import aima.search.framework.HeuristicFunction;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
 
 	public int getHeuristicValue(Object state) {

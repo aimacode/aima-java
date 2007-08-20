@@ -4,6 +4,11 @@
  */
 package aima.logic.common;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
 public class Token {
 	private String text;
 
@@ -36,7 +41,7 @@ public class Token {
 
 	public int hashCode() {
 		int result = 17;
-	    result = 37 * result + type;
+		result = 37 * result + type;
 		result = 37 * result + text.hashCode();
 		return 17;
 	}

@@ -4,6 +4,10 @@
  */
 package aima.learning.framework;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -87,9 +91,9 @@ public class DataSetSpecification {
 	}
 
 	public List<String> getNamesOfStringAttributes() {
-		List <String> names = new ArrayList<String>();
-		for (AttributeSpecification spec :attributeSpecifications){
-			if (spec instanceof StringAttributeSpecification){
+		List<String> names = new ArrayList<String>();
+		for (AttributeSpecification spec : attributeSpecifications) {
+			if (spec instanceof StringAttributeSpecification) {
 				names.add(spec.getAttributeName());
 			}
 		}

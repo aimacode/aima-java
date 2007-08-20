@@ -10,8 +10,9 @@ import java.util.List;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class BayesNetNode {
 	private String variable;
 
@@ -76,7 +77,7 @@ public class BayesNetNode {
 		return children;
 	}
 
-	public List<BayesNetNode>  getParents() {
+	public List<BayesNetNode> getParents() {
 		return parents;
 	}
 
@@ -88,36 +89,36 @@ public class BayesNetNode {
 		return distribution.probabilityOf(conditions);
 	}
 
-	public Boolean isTrueFor(double probability,Hashtable<String,Boolean> modelBuiltUpSoFar) {
-		Hashtable<String, Boolean> conditions =  new Hashtable<String,Boolean>();
+	public Boolean isTrueFor(double probability,
+			Hashtable<String, Boolean> modelBuiltUpSoFar) {
+		Hashtable<String, Boolean> conditions = new Hashtable<String, Boolean>();
 		if (isRoot()) {
-			conditions.put(getVariable(),Boolean.TRUE);
-		}else{
-			for (int i=0;i<parents.size();i++){
-				BayesNetNode parent =  (BayesNetNode)parents.get(i);
-				conditions.put(parent.getVariable(),modelBuiltUpSoFar.get(parent.getVariable()));
-			}		
+			conditions.put(getVariable(), Boolean.TRUE);
+		} else {
+			for (int i = 0; i < parents.size(); i++) {
+				BayesNetNode parent = (BayesNetNode) parents.get(i);
+				conditions.put(parent.getVariable(), modelBuiltUpSoFar
+						.get(parent.getVariable()));
+			}
 		}
 		double trueProbability = probabilityOf(conditions);
 		if (probability <= trueProbability) {
 			return Boolean.TRUE;
-		}
-		else{
+		} else {
 			return Boolean.FALSE;
 		}
 	}
-	
-	public boolean equals(Object o ){
 
-		if( this == o ) {
+	public boolean equals(Object o) {
+
+		if (this == o) {
 			return true;
 		}
-		if((o == null) || (this.getClass() != o.getClass())){
+		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
-		BayesNetNode another = (BayesNetNode)o;
+		BayesNetNode another = (BayesNetNode) o;
 		return variable.equals(another.variable);
 	}
-
 
 }

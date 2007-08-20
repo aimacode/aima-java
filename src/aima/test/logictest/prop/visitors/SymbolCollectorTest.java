@@ -13,8 +13,9 @@ import aima.logic.propositional.visitors.SymbolCollector;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class SymbolCollectorTest extends TestCase {
 	private PEParser parser;
 
@@ -29,10 +30,10 @@ public class SymbolCollectorTest extends TestCase {
 		Sentence sentence = (Sentence) parser
 				.parse(" (  (  ( NOT B11 )  OR  ( P12 OR P21 ) ) AND  (  ( B11 OR  ( NOT P12 )  ) AND  ( B11 OR  ( NOT P21 )  ) ) )");
 		Set s = collector.getSymbolsIn(sentence);
-		assertEquals(3,s.size());
-		Sentence b11 = (Sentence)parser.parse("B11");
-		Sentence p21 = (Sentence)parser.parse("P21");
-		Sentence p12 = (Sentence)parser.parse("P12");
+		assertEquals(3, s.size());
+		Sentence b11 = (Sentence) parser.parse("B11");
+		Sentence p21 = (Sentence) parser.parse("P21");
+		Sentence p12 = (Sentence) parser.parse("P12");
 		assertTrue(s.contains(b11));
 		assertTrue(s.contains(p21));
 		assertTrue(s.contains(p12));

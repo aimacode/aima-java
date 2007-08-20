@@ -17,8 +17,9 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
+
 public class VariableCollector extends AbstractFOLVisitor {
 
 	private FOLParser parser;
@@ -37,7 +38,7 @@ public class VariableCollector extends AbstractFOLVisitor {
 	public Set collectAllVariables(Sentence sentence) {
 		Set variables = new HashSet();
 		Object sen = sentence.accept(this, variables);
-		//recreate(sen);
+		// recreate(sen);
 		return variables;
 	}
 

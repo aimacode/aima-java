@@ -9,6 +9,12 @@ import aima.probability.decision.MDPPolicy;
 import aima.util.Pair;
 import aima.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
+
+
 public class QTable<STATE_TYPE, ACTION_TYPE> {
 
 	Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> table;
@@ -61,7 +67,8 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 	public ACTION_TYPE upDateQ(STATE_TYPE startState, ACTION_TYPE action,
 			STATE_TYPE endState, double alpha, double reward, double phi) {
 		double oldQValue = getQValue(startState, action);
-		Pair<ACTION_TYPE,Double> actionAndMaxDiffValue = maxDiff(startState, action, endState);
+		Pair<ACTION_TYPE, Double> actionAndMaxDiffValue = maxDiff(startState,
+				action, endState);
 		double addedValue = alpha
 				* (reward + (phi * actionAndMaxDiffValue.getSecond()));
 		setQValue(startState, action, oldQValue + addedValue);
@@ -82,24 +89,24 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 		Set<Pair<STATE_TYPE, ACTION_TYPE>> keys = table.keySet();
 		if (keys.size() > 0) {
 			Double maxValue = table.get(keys.toArray()[0]);
-			for (Pair<STATE_TYPE, ACTION_TYPE> key : keys){
+			for (Pair<STATE_TYPE, ACTION_TYPE> key : keys) {
 				Double v = table.get(key);
-				if (v > maxValue){
-					maxValue =v;
+				if (v > maxValue) {
+					maxValue = v;
 				}
 			}
 			return maxValue;
-			
+
 		} else {
 			return 0.0;
 		}
 	}
-	
-	public MDPPolicy<STATE_TYPE, ACTION_TYPE> getPolicy(){
+
+	public MDPPolicy<STATE_TYPE, ACTION_TYPE> getPolicy() {
 		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy = new MDPPolicy<STATE_TYPE, ACTION_TYPE>();
 		List<STATE_TYPE> startingStatesRecorded = getAllStartingStates();
-		
-		for (STATE_TYPE state : startingStatesRecorded){
+
+		for (STATE_TYPE state : startingStatesRecorded) {
 			ACTION_TYPE action = getRecordedActionWithMaximumQValue(state);
 			policy.setAction(state, action);
 		}
@@ -109,11 +116,11 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 	private ACTION_TYPE getRecordedActionWithMaximumQValue(STATE_TYPE state) {
 		Double maxValue = Double.NEGATIVE_INFINITY;
 		ACTION_TYPE action = null;
-		for (Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : table.keySet()){
-			if (stateActionPair.getFirst().equals(state)){
-				ACTION_TYPE ac =  stateActionPair.getSecond();
+		for (Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : table.keySet()) {
+			if (stateActionPair.getFirst().equals(state)) {
+				ACTION_TYPE ac = stateActionPair.getSecond();
 				Double value = table.get(stateActionPair);
-				if (value > maxValue){
+				if (value > maxValue) {
 					maxValue = value;
 					action = ac;
 				}
@@ -124,9 +131,9 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 
 	private List<STATE_TYPE> getAllStartingStates() {
 		List<STATE_TYPE> states = new ArrayList<STATE_TYPE>();
-		for (Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : table.keySet()){
+		for (Pair<STATE_TYPE, ACTION_TYPE> stateActionPair : table.keySet()) {
 			STATE_TYPE state = stateActionPair.getFirst();
-			if (!(states).contains(state)){
+			if (!(states).contains(state)) {
 				states.add(state);
 			}
 		}
