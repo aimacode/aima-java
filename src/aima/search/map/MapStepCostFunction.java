@@ -27,8 +27,8 @@ public class MapStepCostFunction implements StepCostFunction {
 
 	public Double calculateStepCost(Object fromState, Object toState,
 			String action) {
-		Integer distance = map.getDistance((String) fromState,
-				(String) toState);
+		Integer distance = map
+				.getDistance((String) fromState, (String) toState);
 
 		if (null == distance || distance < 0) {
 			return constantCost;

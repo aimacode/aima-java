@@ -6,6 +6,7 @@ import aima.search.framework.TreeSearch;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.search.uninformed.BidirectionalSearch;
 import aima.search.uninformed.BreadthFirstSearch;
 import aima.search.uninformed.UniformCostSearch;
 import aima.search.uninformed.DepthFirstSearch;
@@ -16,7 +17,6 @@ import aima.search.uninformed.IterativeDeepeningSearch;
  * @author Ciaran O'Reilly
  * 
  */
-
 public class MapDemo {
 
 	public static void main(String[] args) {
@@ -29,6 +29,7 @@ public class MapDemo {
 		mapWithDepthFirstSearch();
 		mapWithRecursiveDLS();
 		mapWithIterativeDeepeningSearch();
+		mapWithBidrectionalSearch();
 	}
 
 	private static void mapWithBreadthFirstSearch() {
@@ -98,6 +99,18 @@ public class MapDemo {
 				.getMapOfRomania());
 		MapAgent ma = new MapAgent(me, new IterativeDeepeningSearch(), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.registerView(new BasicEnvironmentView());
+		me.stepUntilNoOp();
+	}
+
+	private static void mapWithBidrectionalSearch() {
+		System.out.println("\nMapDemo Bidirectional Search  -->");
+
+		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
+				.getMapOfRomania());
+		MapAgent ma = new MapAgent(me, new BidirectionalSearch(),
+				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
+		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ORADEA);
 		me.registerView(new BasicEnvironmentView());
 		me.stepUntilNoOp();
 	}

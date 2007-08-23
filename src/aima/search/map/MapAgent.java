@@ -74,9 +74,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	}
 
 	protected Problem formulateProblem(Object goal) {
-		return new Problem(currentLocation, new MapSuccessorFunction(
-				mapEnvironment.getMap()), new MapGoalTest((String) goal),
-				new MapStepCostFunction(mapEnvironment.getMap()));
+		return new BidirectionalMapProblem(mapEnvironment.getMap(),
+				currentLocation, (String) goal);
 	}
 
 	protected List<String> search(Problem problem) {

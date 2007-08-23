@@ -17,6 +17,7 @@ import aima.test.search.nqueens.NQueensBoardTest;
 import aima.test.search.nqueens.NQueensGoalTestTest;
 import aima.test.search.nqueens.NQueensSuccessorFunctionTest;
 import aima.test.search.searches.AStarSearchTest;
+import aima.test.search.searches.BidirectionalSearchTest;
 import aima.test.search.searches.BreadthFirstSearchTest;
 import aima.test.search.searches.DepthFirstSearchTest;
 import aima.test.search.searches.DepthLimitedSearchTest;
@@ -35,6 +36,7 @@ public class SearchTests {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new TestSuite(AssignmentTest.class));
 		suite.addTest(new TestSuite(AStarSearchTest.class));
+		suite.addTest(new TestSuite(BidirectionalSearchTest.class));
 		suite.addTest(new TestSuite(BreadthFirstSearchTest.class));
 		suite.addTest(new TestSuite(DomainsTest.class));
 		suite.addTest(new TestSuite(DepthFirstSearchTest.class));
