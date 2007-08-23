@@ -41,7 +41,7 @@ public class GraphSearch extends QueueSearch {
 		return super.search(problem, fringe);
 	}
 
-	protected void addExpandedNodesToFringe(NodeStore fringe, Node node,
+	public void addExpandedNodesToFringe(NodeStore fringe, Node node,
 			Problem problem) {
 
 		// if STATE[node] is not in closed then

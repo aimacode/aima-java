@@ -31,7 +31,7 @@ public class MapAgentTest extends TestCase {
 		envChanges = new StringBuffer();
 	}
 
-	public void testNoAlreadyAtGoal() {
+	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me,
 				new UniformCostSearch(new GraphSearch()), new String[] { "A" });

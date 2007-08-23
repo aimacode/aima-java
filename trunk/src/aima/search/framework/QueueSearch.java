@@ -68,6 +68,6 @@ public abstract class QueueSearch extends NodeExpander {
 		metrics.set(PATH_COST, pathCost);
 	}
 
-	protected abstract void addExpandedNodesToFringe(NodeStore fringe,
-			Node node, Problem p);
+	public abstract void addExpandedNodesToFringe(NodeStore fringe, Node node,
+			Problem p);
 }

@@ -16,7 +16,6 @@ import aima.basic.Percept;
 public class MapEnvironment extends Environment {
 	private Map aMap = null;
 
-	
 	private static final String LOCATION = "location";
 
 	public MapEnvironment(Map aMap) {
