@@ -148,7 +148,7 @@ public class DPLL {
 			Model model) {
 		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();
 		for (int i = 0; i < clauseList.size(); i++) {
-			Sentence clause = (Sentence) clauseList.get(i);
+			Sentence clause = clauseList.get(i);
 			if (!(isClauseTrueInModel(clause, model))) {
 				if (!(clausesWithNonTrueValues.contains(clause))) {// defensive
 					// programming not really necessary
@@ -197,16 +197,16 @@ public class DPLL {
 			return new SymbolValuePair();// automatically set to null values
 		} else {
 			if (purePositiveSymbols.size() > 0) {
-				Symbol symbol = new Symbol(
-						((Symbol) purePositiveSymbols.get(0)).getValue());
+				Symbol symbol = new Symbol((purePositiveSymbols.get(0))
+						.getValue());
 				if (pureNegativeSymbols.contains(symbol)) {
 					throw new RuntimeException("Symbol " + symbol.getValue()
 							+ "misclassified");
 				}
 				return new SymbolValuePair(symbol, true);
 			} else {
-				Symbol symbol = new Symbol(
-						((Symbol) pureNegativeSymbols.get(0)).getValue());
+				Symbol symbol = new Symbol((pureNegativeSymbols.get(0))
+						.getValue());
 				if (purePositiveSymbols.contains(symbol)) {
 					throw new RuntimeException("Symbol " + symbol.getValue()
 							+ "misclassified");
@@ -221,7 +221,7 @@ public class DPLL {
 		for (int i = 0; i < clauseList.size(); i++) {
 			Sentence clause = (Sentence) clauseList.get(i);
 			if ((clause instanceof Symbol)
-					&& (!(model.getAssignedSymbols().contains((Symbol) clause)))) {
+					&& (!(model.getAssignedSymbols().contains(clause)))) {
 				// System.out.println("found unit clause - assigning");
 				return new SymbolValuePair(new Symbol(((Symbol) clause)
 						.getValue()), true);
@@ -231,8 +231,7 @@ public class DPLL {
 				UnarySentence sentence = (UnarySentence) clause;
 				Sentence negated = sentence.getNegated();
 				if ((negated instanceof Symbol)
-						&& (!(model.getAssignedSymbols()
-								.contains((Symbol) negated)))) {
+						&& (!(model.getAssignedSymbols().contains(negated)))) {
 					// System.out.println("found unit clause type 2 -
 					// assigning");
 					return new SymbolValuePair(new Symbol(((Symbol) negated)
@@ -271,6 +270,7 @@ public class DPLL {
 			return (symbol != null) && (value != null);
 		}
 
+		@Override
 		public String toString() {
 			String symbolString, valueString;
 			if (symbol == null) {

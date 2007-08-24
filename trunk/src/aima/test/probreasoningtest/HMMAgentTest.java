@@ -14,6 +14,7 @@ public class HMMAgentTest extends TestCase {
 
 	private HMMAgent robot, rainman;
 
+	@Override
 	public void setUp() {
 
 		robot = new HMMAgent(HMMFactory.createRobotHMM());

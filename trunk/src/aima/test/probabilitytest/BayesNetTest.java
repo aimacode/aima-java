@@ -14,6 +14,7 @@ import aima.probability.BayesNetNode;
 public class BayesNetTest extends TestCase {
 	BayesNet net;
 
+	@Override
 	public void setUp() {
 		net = createBurglaryNetwork();
 	}

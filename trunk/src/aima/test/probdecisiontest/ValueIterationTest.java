@@ -13,6 +13,7 @@ import aima.probability.decision.cellworld.CellWorldPosition;
 public class ValueIterationTest extends TestCase {
 	private MDP<CellWorldPosition, String> fourByThreeMDP;
 
+	@Override
 	public void setUp() {
 		fourByThreeMDP = MDPFactory.createFourByThreeMDP();
 	}

@@ -25,6 +25,7 @@ public class VariableCollectorTest extends TestCase {
 
 	VariableCollector vc;
 
+	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.crusadesDomain());
 		vc = new VariableCollector(parser);

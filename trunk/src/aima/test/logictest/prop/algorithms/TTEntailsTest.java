@@ -21,6 +21,7 @@ public class TTEntailsTest extends TestCase {
 
 	KnowledgeBase kb;
 
+	@Override
 	public void setUp() {
 		tte = new TTEntails();
 		kb = new KnowledgeBase();

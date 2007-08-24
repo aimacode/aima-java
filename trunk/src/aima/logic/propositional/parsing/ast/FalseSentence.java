@@ -12,10 +12,12 @@ import aima.logic.propositional.parsing.PLVisitor;
  */
 
 public class FalseSentence extends AtomicSentence {
+	@Override
 	public String toString() {
 		return "FALSE";
 	}
 
+	@Override
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitFalseSentence(this, arg);
 	}

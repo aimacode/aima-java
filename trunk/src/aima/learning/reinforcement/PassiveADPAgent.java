@@ -35,12 +35,13 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 
 	}
 
+	@Override
 	public ACTION_TYPE decideAction(MDPPerception<STATE_TYPE> perception) {
 
 		if (!(utilityFunction.hasUtilityFor(perception.getState()))) { // if
-																		// perceptionState
-																		// is
-																		// new
+			// perceptionState
+			// is
+			// new
 			utilityFunction.setUtility(perception.getState(), perception
 					.getReward());
 			mdp.setReward(perception.getState(), perception.getReward());

@@ -53,10 +53,12 @@ public class AStarSearch extends PrioritySearch {
 		}
 	}
 
+	@Override
 	public Metrics getMetrics() {
 		return search.getMetrics();
 	}
 
+	@Override
 	protected Comparator getComparator(Problem p) {
 
 		return new NodeComparator(p);

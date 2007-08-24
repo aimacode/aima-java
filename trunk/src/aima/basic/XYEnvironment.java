@@ -100,10 +100,12 @@ public class XYEnvironment extends Environment {
 		return withinRadius;
 	}
 
+	@Override
 	public void executeAction(Agent a, String Action) {
 
 	}
 
+	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		return new Percept();
 	}
@@ -111,7 +113,6 @@ public class XYEnvironment extends Environment {
 	public boolean isBlocked(XYLocation loc) {
 		boolean retval = false;
 		ArrayList objs = this.getObjectsAt(loc);
-
 
 		for (Object o : objs) {
 			if (o instanceof Wall) {

@@ -15,6 +15,7 @@ public class RandomVariableTest extends TestCase {
 
 	private RandomVariable aDistribution;
 
+	@Override
 	public void setUp() {
 		List<String> states = Arrays.asList(new String[] {
 				HmmConstants.DOOR_OPEN, HmmConstants.DOOR_CLOSED });

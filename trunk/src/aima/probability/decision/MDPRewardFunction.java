@@ -1,7 +1,6 @@
 package aima.probability.decision;
 
 import java.util.Hashtable;
-import java.util.Set;
 
 /**
  * @author Ravi Mohan
@@ -23,6 +22,7 @@ public class MDPRewardFunction<STATE_TYPE> {
 		stateToReward.put(state, reward);
 	}
 
+	@Override
 	public String toString() {
 		return stateToReward.toString();
 	}

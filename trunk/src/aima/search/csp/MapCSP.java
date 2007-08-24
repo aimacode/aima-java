@@ -56,7 +56,7 @@ public class MapCSP extends CSP {
 
 		Domain domains = new Domain(variables);
 		for (int i = 0; i < variables.size(); i++) {
-			String variable = (String) variables.get(i);
+			String variable = variables.get(i);
 			domains.addToDomain(variable, colors);
 		}
 

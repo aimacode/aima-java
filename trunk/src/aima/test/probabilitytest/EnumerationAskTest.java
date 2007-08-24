@@ -44,7 +44,7 @@ public class EnumerationAskTest extends TestCase {
 		maryCalls.influencedBy(alarm);
 
 		burglary.setProbability(true, 0.001);// TODO behaviour changes if
-												// root node
+		// root node
 		earthquake.setProbability(true, 0.002);
 
 		alarm.setProbability(true, true, 0.95);

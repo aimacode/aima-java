@@ -15,6 +15,7 @@ public class QTableTest extends TestCase {
 
 	private QTable<String, String> qt;
 
+	@Override
 	public void setUp() {
 		// simple qlearning example from
 		// http://people.revoledu.com/kardi/tutorial/ReinforcementLearning/index.html

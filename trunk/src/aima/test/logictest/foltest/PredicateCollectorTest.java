@@ -18,6 +18,7 @@ public class PredicateCollectorTest extends TestCase {
 
 	FOLParser parser;
 
+	@Override
 	public void setUp() {
 		collector = new PredicateCollector();
 		parser = new FOLParser(DomainFactory.weaponsDomain());

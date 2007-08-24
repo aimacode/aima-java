@@ -127,6 +127,7 @@ public class TicTacToeBoard {
 		}
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0; i < 3; i++) {
@@ -149,6 +150,7 @@ public class TicTacToeBoard {
 		return (TicTacToeBoard) clone();
 	}
 
+	@Override
 	public Object clone() {
 		TicTacToeBoard newBoard = new TicTacToeBoard();
 		for (int i = 0; i < 3; i++) {
@@ -186,6 +188,7 @@ public class TicTacToeBoard {
 		return retVal;
 	}
 
+	@Override
 	public boolean equals(Object anObj) {
 		boolean retVal = true;
 		TicTacToeBoard anotherBoard = (TicTacToeBoard) anObj;

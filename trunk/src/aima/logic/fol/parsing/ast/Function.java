@@ -32,6 +32,7 @@ public class Function extends Term {
 		this.terms = terms;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -50,6 +51,7 @@ public class Function extends Term {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + functionName.hashCode();
@@ -65,21 +67,23 @@ public class Function extends Term {
 
 	}
 
+	@Override
 	public String toString() {
 		String pre = " " + functionName + "( ";
 		String mid = "";
 		for (int i = 0; i < terms.size(); i++) {
-			mid += "," + ((Term) terms.get(i)).toString();
+			mid += "," + (terms.get(i)).toString();
 		}
 		mid = mid.substring(1);
 		String post = " )";
 		return pre + mid + post;
 	}
 
+	@Override
 	public Function copy() {
 		List<Term> copyTerms = new ArrayList<Term>();
 		for (int i = 0; i < terms.size(); i++) {
-			Term t = (Term) terms.get(i);
+			Term t = terms.get(i);
 			copyTerms.add(t.copy());
 		}
 		return new Function(functionName, copyTerms);

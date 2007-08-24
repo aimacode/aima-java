@@ -104,6 +104,7 @@ public class DataSet {
 		return getInformationFor() - remainder;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -115,6 +116,7 @@ public class DataSet {
 		return examples.equals(other.examples);
 	}
 
+	@Override
 	public int hashCode() {
 		return 0;
 	}

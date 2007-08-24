@@ -34,6 +34,7 @@ public class PELexer extends Lexer {
 		setInput(inputString);
 	}
 
+	@Override
 	public Token nextToken() {
 		Token result = null;
 		int tokenType;

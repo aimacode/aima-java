@@ -13,6 +13,7 @@ import aima.search.map.MapStepCostFunction;
 public class MapStepCostFunctionTest extends TestCase {
 	MapStepCostFunction mscf;
 
+	@Override
 	public void setUp() {
 		Map aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);

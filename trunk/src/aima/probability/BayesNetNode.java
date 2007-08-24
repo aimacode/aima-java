@@ -81,6 +81,7 @@ public class BayesNetNode {
 		return parents;
 	}
 
+	@Override
 	public String toString() {
 		return variable;
 	}
@@ -96,7 +97,7 @@ public class BayesNetNode {
 			conditions.put(getVariable(), Boolean.TRUE);
 		} else {
 			for (int i = 0; i < parents.size(); i++) {
-				BayesNetNode parent = (BayesNetNode) parents.get(i);
+				BayesNetNode parent = parents.get(i);
 				conditions.put(parent.getVariable(), modelBuiltUpSoFar
 						.get(parent.getVariable()));
 			}
@@ -109,6 +110,7 @@ public class BayesNetNode {
 		}
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {

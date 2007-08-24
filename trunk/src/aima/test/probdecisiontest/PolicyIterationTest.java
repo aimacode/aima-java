@@ -6,7 +6,6 @@ import aima.probability.decision.MDPFactory;
 import aima.probability.decision.MDPPolicy;
 import aima.probability.decision.MDPUtilityFunction;
 import aima.probability.decision.cellworld.CellWorldPosition;
-import aima.test.probabilitytest.MockRandomizer;
 import junit.framework.TestCase;
 
 /**
@@ -18,6 +17,7 @@ public class PolicyIterationTest extends TestCase {
 
 	private Randomizer alwaysLessThanEightyPercent;
 
+	@Override
 	public void setUp() {
 		fourByThreeMDP = MDPFactory.createFourByThreeMDP();
 

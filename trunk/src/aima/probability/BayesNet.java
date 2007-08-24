@@ -183,7 +183,7 @@ public class BayesNet {
 									.nextDouble(), x));
 				}
 			}
-			boolean queryValue = ((Boolean) x.get(X)).booleanValue();
+			boolean queryValue = (x.get(X)).booleanValue();
 			if (queryValue) {
 				retval[0] += w;
 			} else {
@@ -211,7 +211,7 @@ public class BayesNet {
 				// r.getProbability(), mb));
 				event.put(node.getVariable(), truthValue(rejectionSample(node
 						.getVariable(), mb, 100, r), r));
-				boolean queryValue = ((Boolean) event.get(X)).booleanValue();
+				boolean queryValue = (event.get(X)).booleanValue();
 				if (queryValue) {
 					retval[0] += 1;
 				} else {

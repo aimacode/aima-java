@@ -19,6 +19,7 @@ public class HMMTest extends TestCase {
 
 	private static final double TOLERANCE = 0.001;
 
+	@Override
 	public void setUp() {
 		robotHmm = HMMFactory.createRobotHMM();
 		rainmanHmm = HMMFactory.createRainmanHMM();

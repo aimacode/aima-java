@@ -49,8 +49,7 @@ public class PLResolution {
 			for (int i = 0; i < pairs.size(); i++) {
 				List<Sentence> pair = pairs.get(i);
 				// System.out.println("pair number" + i+" of "+pairs.size());
-				Set<Sentence> resolvents = plResolve((Sentence) pair.get(0),
-						(Sentence) pair.get(1));
+				Set<Sentence> resolvents = plResolve(pair.get(0), pair.get(1));
 				if (resolvents.contains(new Symbol("EMPTY_CLAUSE"))) {
 					return true;
 				}
@@ -122,7 +121,7 @@ public class PLResolution {
 			sentences.add(positiveSymbols.get(i));
 		}
 		for (int i = 0; i < negativeSymbols.size(); i++) {
-			sentences.add(new UnarySentence((Symbol) negativeSymbols.get(i)));
+			sentences.add(new UnarySentence(negativeSymbols.get(i)));
 		}
 		if (sentences.size() == 0) {
 			return new Symbol("EMPTY_CLAUSE"); // == empty clause

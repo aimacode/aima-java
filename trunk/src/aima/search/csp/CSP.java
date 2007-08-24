@@ -71,7 +71,7 @@ public class CSP {
 			if (randomAssignment.satisfies(constraints)) {
 				return randomAssignment;
 			} else {
-				String conflictedVariable = (String) Util
+				String conflictedVariable = Util
 						.selectRandomlyFromList(randomAssignment
 								.getConflictedVariables(constraints));
 				Object minConflictValue = randomAssignment
@@ -93,7 +93,7 @@ public class CSP {
 		}
 		Assignment assignment = new Assignment(vars);
 		for (int i = 0; i < variables.size(); i++) {
-			String variable = (String) variables.get(i);
+			String variable = variables.get(i);
 			Object randomValue = Util.selectRandomlyFromList(domains
 					.getDomainOf(variable));
 			// System.out.println("in generate Assignment setting");

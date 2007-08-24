@@ -24,7 +24,7 @@ public abstract class QueueSearch extends NodeExpander {
 		fringe.add(new Node(problem.getInitialState()));
 		setQueueSize(fringe.size());
 		while (!(fringe.isEmpty())) {
-			Node node = (Node) fringe.remove();
+			Node node = fringe.remove();
 			setQueueSize(fringe.size());
 			if (problem.isGoalState(node.getState())) {
 				setPathCost(node.getPathCost());
@@ -36,6 +36,7 @@ public abstract class QueueSearch extends NodeExpander {
 		return new ArrayList<String>();// Empty List indicates Failure
 	}
 
+	@Override
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
 		metrics.set(QUEUE_SIZE, 0);

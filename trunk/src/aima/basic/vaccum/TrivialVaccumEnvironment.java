@@ -17,14 +17,14 @@ public class TrivialVaccumEnvironment extends Environment {
 
 	String defaultLocation;
 
-	Hashtable<String,String> status;
+	Hashtable<String, String> status;
 
 	public TrivialVaccumEnvironment() {
 		super();
 		location1 = "A";
 		location2 = "B";
 		defaultLocation = location1;
-		status = new Hashtable<String,String>();
+		status = new Hashtable<String, String>();
 		Random r = new Random();
 		int i = r.nextInt(2);
 		int j = r.nextInt(2);
@@ -54,6 +54,7 @@ public class TrivialVaccumEnvironment extends Environment {
 
 	}
 
+	@Override
 	public void executeAction(Agent a, String agentAction) {
 
 		if (agentAction.equals("Right")) {
@@ -74,6 +75,7 @@ public class TrivialVaccumEnvironment extends Environment {
 		}
 	}
 
+	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		Percept retval = new Percept();
 		retval.setAttribute("location", anAgent.getAttribute("location"));
@@ -83,6 +85,7 @@ public class TrivialVaccumEnvironment extends Environment {
 
 	}
 
+	@Override
 	public void addAgent(Agent a) {
 		addAgent(a, defaultLocation);
 
@@ -96,15 +99,15 @@ public class TrivialVaccumEnvironment extends Environment {
 	}
 
 	public String getLocation1Status() {
-		return (String) status.get(location1);
+		return status.get(location1);
 	}
 
 	public String getLocation2Status() {
-		return (String) status.get(location2);
+		return status.get(location2);
 	}
 
 	public String getLocationStatus(String location) {
-		return (String) status.get(location);
+		return status.get(location);
 	}
 
 	public Hashtable getStatus() {

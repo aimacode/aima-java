@@ -110,7 +110,7 @@ public class HiddenMarkovModel {
 
 		// populate forward messages
 		for (int i = 0; i < perceptions.size(); i++) { // N.B i starts at 1,
-														// not zero
+			// not zero
 			forwardMessages[i + 1] = forward(forwardMessages[i], perceptions
 					.get(i));
 		}

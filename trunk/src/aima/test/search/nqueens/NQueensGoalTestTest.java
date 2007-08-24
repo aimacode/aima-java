@@ -14,6 +14,7 @@ public class NQueensGoalTestTest extends TestCase {
 
 	NQueensBoard board;
 
+	@Override
 	public void setUp() {
 		goalTest = new NQueensGoalTest();
 		board = new NQueensBoard(8);

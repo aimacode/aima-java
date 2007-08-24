@@ -17,6 +17,7 @@ import aima.logic.fol.parsing.FOLLexer;
 public class FOLLexerTest extends TestCase {
 	FOLLexer lexer;
 
+	@Override
 	public void setUp() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("P");

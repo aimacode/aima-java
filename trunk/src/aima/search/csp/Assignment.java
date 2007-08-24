@@ -79,6 +79,7 @@ public class Assignment {
 		return variablesToValues.keySet().contains(variable);
 	}
 
+	@Override
 	public String toString() {
 
 		return variablesToValues.toString();
@@ -135,7 +136,7 @@ public class Assignment {
 	public boolean satisfies(Constraint constraint) {
 		if (isComplete()) {
 			for (int j = 0; j < getVariables().size(); j++) {
-				String variable = (String) getVariables().get(j);
+				String variable = getVariables().get(j);
 				Object value = getAssignment(variable);
 				if (!(constraint.isSatisfiedWith(this, variable, value))) {
 					return false;

@@ -14,18 +14,19 @@ import java.util.Set;
  */
 
 public class SetOps<T> {
-	public  Set<T> union(Set<T> one, Set<T> two) {
+	public Set<T> union(Set<T> one, Set<T> two) {
 		Set<T> union = new HashSet<T>(one);
 		union.addAll(two);
 		return union;
 	}
+
 	public Set<T> intersection(Set<T> one, Set<T> two) {
 		Set<T> intersection = new HashSet<T>(one);
 		intersection.retainAll(two);
 		return intersection;
 	}
-	
-	public  Set<T> difference(Set<T> one, Set<T> two) {
+
+	public Set<T> difference(Set<T> one, Set<T> two) {
 		Set<T> three = new HashSet<T>();
 		Iterator<T> iteratorOne = one.iterator();
 		while (iteratorOne.hasNext()) {
@@ -36,9 +37,9 @@ public class SetOps<T> {
 		}
 		return three;
 	}
-	
+
 	public boolean in(Set<T> s, T o) {
-		
+
 		Iterator<T> i = s.iterator();
 		while (i.hasNext()) {
 			Object obj = i.next();

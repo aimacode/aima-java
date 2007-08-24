@@ -11,6 +11,7 @@ import aima.search.eightpuzzle.EightPuzzleBoard;
 public class EightPuzzleBoardMoveTest extends TestCase {
 	EightPuzzleBoard board;
 
+	@Override
 	public void setUp() {
 		board = new EightPuzzleBoard(new int[] { 0, 5, 4, 6, 1, 8, 7, 3, 2 });
 	}

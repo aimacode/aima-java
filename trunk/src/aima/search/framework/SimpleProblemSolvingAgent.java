@@ -1,10 +1,7 @@
 package aima.search.framework;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-
 import aima.basic.Agent;
 import aima.basic.Percept;
 import aima.util.Util;
@@ -66,6 +63,7 @@ public abstract class SimpleProblemSolvingAgent extends Agent {
 	}
 
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
+	@Override
 	public String execute(Percept p) {
 		String action = NO_OP;
 

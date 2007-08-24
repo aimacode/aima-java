@@ -53,7 +53,7 @@ public class LogicUtils {
 			sentences.add(plusList.get(i));
 		}
 		for (int i = 0; i < negativeSymbols.size(); i++) {
-			sentences.add(new UnarySentence((Symbol) minusList.get(i)));
+			sentences.add(new UnarySentence(minusList.get(i)));
 		}
 		if (sentences.size() == 0) {
 			return new Symbol("EMPTY_CLAUSE"); // == empty clause

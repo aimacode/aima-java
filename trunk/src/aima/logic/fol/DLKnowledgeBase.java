@@ -72,11 +72,11 @@ public class DLKnowledgeBase {
 	}
 
 	public Rule rule(int i) {
-		return (Rule) rules.get(i);
+		return rules.get(i);
 	}
 
 	public Fact fact(int i) {
-		return (Fact) facts.get(i);
+		return facts.get(i);
 	}
 
 	public Properties forwardChain(String query) {
@@ -104,7 +104,7 @@ public class DLKnowledgeBase {
 			} else {
 				numberOfNewFactsDiscoveredThisIteration = 0;
 				for (int i = 0; i < rules.size(); i++) {
-					Rule rule = (Rule) rules.get(i);
+					Rule rule = rules.get(i);
 
 					rule.initializeAllClauseDomainsFrom(facts());
 					if (rule.triggerable()) {
@@ -149,7 +149,7 @@ public class DLKnowledgeBase {
 	private Hashtable matchesFacts(Predicate query) {
 		Hashtable unificationResult = null;
 		for (int i = 0; i < facts.size(); i++) {
-			Fact fact = (Fact) facts.get(i);
+			Fact fact = facts.get(i);
 			unificationResult = unifier.unify(query, fact.predicate(),
 					new Hashtable());
 			if (unificationResult != null) {

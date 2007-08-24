@@ -7,10 +7,10 @@ import java.util.Hashtable;
  * 
  */
 public class VaccumEnvironmentModel {
-	private Hashtable<String,String> model;
+	private Hashtable<String, String> model;
 
 	public VaccumEnvironmentModel() {
-		model = new Hashtable<String,String>();
+		model = new Hashtable<String, String>();
 	}
 
 	public void setLocationStatus(String location, String locationStatus) {
@@ -18,7 +18,7 @@ public class VaccumEnvironmentModel {
 	}
 
 	public String getStatusOf(String location) {
-		return (String) model.get(location);
+		return model.get(location);
 	}
 
 	public boolean bothLocationsClean() {

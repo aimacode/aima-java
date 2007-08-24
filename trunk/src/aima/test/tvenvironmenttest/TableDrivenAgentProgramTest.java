@@ -19,6 +19,7 @@ public class TableDrivenAgentProgramTest extends TestCase {
 
 	private Agent agent;
 
+	@Override
 	public void setUp() {
 		Map<PerceptSequence, String> perceptSequenceActions = new Hashtable<PerceptSequence, String>();
 		perceptSequenceActions.put(new PerceptSequence(new Percept("key1",

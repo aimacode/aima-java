@@ -16,6 +16,7 @@ public class MapTest extends TestCase {
 
 	Map aMap;
 
+	@Override
 	public void setUp() {
 		aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);

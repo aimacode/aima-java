@@ -51,13 +51,12 @@ public class WalkSAT {
 					.listToSet(clauses), myModel) == clauses.size()) {
 				return myModel;
 			}
-			Sentence clause = (Sentence) clauses.get(random.nextInt(clauses
-					.size()));
+			Sentence clause = clauses.get(random.nextInt(clauses.size()));
 
 			List<Symbol> symbolsInClause = new Converter<Symbol>().setToList(sc
 					.getSymbolsIn(clause));
 			if (random.nextDouble() >= probabilityOfRandomWalk) {
-				Symbol randomSymbol = (Symbol) symbolsInClause.get(random
+				Symbol randomSymbol = symbolsInClause.get(random
 						.nextInt(symbolsInClause.size()));
 				myModel = myModel.flip(randomSymbol);
 			} else {
@@ -74,10 +73,10 @@ public class WalkSAT {
 	private Symbol getSymbolWhoseFlipMaximisesSatisfiedClauses(
 			Set<Sentence> clauses, List<Symbol> symbols, Model model) {
 		if (symbols.size() > 0) {
-			Symbol retVal = (Symbol) symbols.get(0);
+			Symbol retVal = symbols.get(0);
 			int maxClausesSatisfied = 0;
 			for (int i = 0; i < symbols.size(); i++) {
-				Symbol sym = (Symbol) symbols.get(i);
+				Symbol sym = symbols.get(i);
 				if (getNumberOfClausesSatisfiedIn(clauses, model.flip(sym)) > maxClausesSatisfied) {
 					retVal = sym;
 					maxClausesSatisfied = getNumberOfClausesSatisfiedIn(
@@ -90,8 +89,6 @@ public class WalkSAT {
 		}
 
 	}
-
-
 
 	private int getNumberOfClausesSatisfiedIn(Set clauses, Model model) {
 		int retVal = 0;

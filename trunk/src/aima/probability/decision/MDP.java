@@ -263,6 +263,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		return source.getAllActions();
 	}
 
+	@Override
 	public String toString() {
 		return "initial State = " + initialState.toString()
 				+ "\n rewardFunction = " + rewardFunction.toString()

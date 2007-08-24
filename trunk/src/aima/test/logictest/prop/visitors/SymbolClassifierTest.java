@@ -21,6 +21,7 @@ public class SymbolClassifierTest extends TestCase {
 
 	private PEParser parser;
 
+	@Override
 	public void setUp() {
 		classifier = new SymbolClassifier();
 		parser = new PEParser();

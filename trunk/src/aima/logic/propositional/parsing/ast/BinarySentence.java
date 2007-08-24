@@ -38,6 +38,7 @@ public class BinarySentence extends ComplexSentence {
 		return second;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -53,6 +54,7 @@ public class BinarySentence extends ComplexSentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + first.hashCode();
@@ -60,11 +62,13 @@ public class BinarySentence extends ComplexSentence {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return " ( " + first.toString() + " " + operator + " "
 				+ second.toString() + " )";
 	}
 
+	@Override
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitBinarySentence(this, arg);
 	}

@@ -23,16 +23,19 @@ public class Pair<X, Y> {
 		return b;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		Pair<X, Y> p = (Pair<X, Y>) o;
 		return a.equals(p.a) && b.equals(p.b);
 	}
 
+	@Override
 	public int hashCode() {
 		return a.hashCode() + 31 * b.hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return "< " + getFirst().toString() + " , " + getSecond().toString()
 				+ " > ";

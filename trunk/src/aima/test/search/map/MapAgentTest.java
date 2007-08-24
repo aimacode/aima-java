@@ -20,6 +20,7 @@ public class MapAgentTest extends TestCase {
 
 	StringBuffer envChanges;
 
+	@Override
 	public void setUp() {
 		aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);
@@ -37,6 +38,7 @@ public class MapAgentTest extends TestCase {
 				new UniformCostSearch(new GraphSearch()), new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -54,6 +56,7 @@ public class MapAgentTest extends TestCase {
 				new UniformCostSearch(new GraphSearch()), new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -71,6 +74,7 @@ public class MapAgentTest extends TestCase {
 				new UniformCostSearch(new GraphSearch()), new String[] { "A" });
 		me.addAgent(ma, "E");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}

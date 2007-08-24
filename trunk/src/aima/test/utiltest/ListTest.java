@@ -34,12 +34,12 @@ public class ListTest extends TestCase {
 		l.add(2);
 		l.add(2);
 		l.add(3);
-		int i = ((Integer) Util.mode(l)).intValue();
+		int i = (Util.mode(l)).intValue();
 		assertEquals(2, i);
 
 		List<Integer> l2 = new ArrayList<Integer>();
 		l2.add(1);
-		i = ((Integer) Util.mode(l2)).intValue();
+		i = (Util.mode(l2)).intValue();
 		assertEquals(1, i);
 	}
 

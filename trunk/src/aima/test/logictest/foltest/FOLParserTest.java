@@ -33,6 +33,7 @@ public class FOLParserTest extends TestCase {
 
 	FOLParser parser;
 
+	@Override
 	public void setUp() {
 		FOLDomain domain = DomainFactory.crusadesDomain();
 

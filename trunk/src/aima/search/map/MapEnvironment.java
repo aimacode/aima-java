@@ -3,6 +3,7 @@ package aima.search.map;
 import aima.basic.Agent;
 import aima.basic.Environment;
 import aima.basic.Percept;
+import aima.search.framework.SimpleProblemSolvingAgent;
 
 /**
  * Represents the environment a MapAgent can navigate.
@@ -27,15 +28,18 @@ public class MapEnvironment extends Environment {
 		a.setAttribute(LOCATION, startLocation);
 	}
 
+	@Override
 	public void executeAction(Agent a, String act) {
-		if (!MapAgent.NO_OP.equals(act) && !MapAgent.DIE.equals(act)) {
+		if (!SimpleProblemSolvingAgent.NO_OP.equals(act)
+				&& !SimpleProblemSolvingAgent.DIE.equals(act)) {
 			a.setAttribute(LOCATION, act);
 		}
-		if (MapAgent.DIE.equals(act)) {
+		if (SimpleProblemSolvingAgent.DIE.equals(act)) {
 			a.die();
 		}
 	}
 
+	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		return new Percept("In", anAgent.getAttribute(LOCATION));
 	}

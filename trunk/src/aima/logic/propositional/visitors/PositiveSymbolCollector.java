@@ -18,6 +18,7 @@ import aima.util.SetOps;
  */
 
 public class PositiveSymbolCollector extends BasicTraverser {
+	@Override
 	public Object visitSymbol(Symbol symbol, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
 		s.add(symbol);// add ALL symbols not discarded by the visitNotSentence
@@ -25,6 +26,7 @@ public class PositiveSymbolCollector extends BasicTraverser {
 		return arg;
 	}
 
+	@Override
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
 		if (ns.getNegated() instanceof Symbol) {

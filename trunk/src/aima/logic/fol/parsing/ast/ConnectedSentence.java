@@ -44,6 +44,7 @@ public class ConnectedSentence extends ParanthizedSentence {
 		this.second = second;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -59,6 +60,7 @@ public class ConnectedSentence extends ParanthizedSentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + getConnector().hashCode();
@@ -67,16 +69,19 @@ public class ConnectedSentence extends ParanthizedSentence {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return " (" + first.toString() + " " + connector + " "
 				+ second.toString() + " )";
 	}
 
+	@Override
 	public Object accept(FOLVisitor v, Object arg) {
 
 		return v.visitConnectedSentence(this, arg);
 	}
 
+	@Override
 	public FOLNode copy() {
 		return new ConnectedSentence(connector, (Sentence) first.copy(),
 				(Sentence) second.copy());

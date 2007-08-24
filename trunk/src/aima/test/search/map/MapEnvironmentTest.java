@@ -19,6 +19,7 @@ public class MapEnvironmentTest extends TestCase {
 
 	MapAgent ma;
 
+	@Override
 	public void setUp() {
 		Map aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);

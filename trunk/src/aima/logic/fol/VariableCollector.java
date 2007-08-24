@@ -29,6 +29,7 @@ public class VariableCollector extends AbstractFOLVisitor {
 		super(parser);
 	}
 
+	@Override
 	public Object visitVariable(Variable var, Object arg) {
 		Set<Variable> variables = (Set<Variable>) arg;
 		variables.add(var);

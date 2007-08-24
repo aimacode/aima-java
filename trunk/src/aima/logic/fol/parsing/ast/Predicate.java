@@ -32,6 +32,7 @@ public class Predicate implements Sentence {
 		return terms;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -47,6 +48,7 @@ public class Predicate implements Sentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + predicateName.hashCode();
@@ -78,6 +80,7 @@ public class Predicate implements Sentence {
 
 	}
 
+	@Override
 	public String toString() {
 		String pre = " " + predicateName + "( ";
 		String mid = "";
@@ -93,7 +96,7 @@ public class Predicate implements Sentence {
 	public Predicate copy() {
 		List<Term> copyTerms = new ArrayList<Term>();
 		for (int i = 0; i < terms.size(); i++) {
-			Term t = (Term) terms.get(i);
+			Term t = terms.get(i);
 			copyTerms.add(t.copy());
 		}
 		return new Predicate(predicateName, copyTerms);

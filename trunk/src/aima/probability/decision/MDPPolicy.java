@@ -8,7 +8,6 @@ import java.util.Set;
  * 
  */
 
-
 public class MDPPolicy<STATE_TYPE, ACTION_TYPE> {
 	Hashtable<STATE_TYPE, ACTION_TYPE> stateToAction;
 
@@ -24,6 +23,7 @@ public class MDPPolicy<STATE_TYPE, ACTION_TYPE> {
 		stateToAction.put(state, action);
 	}
 
+	@Override
 	public String toString() {
 		return stateToAction.toString();
 	}

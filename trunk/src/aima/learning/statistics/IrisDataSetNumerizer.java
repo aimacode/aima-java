@@ -66,7 +66,7 @@ public class IrisDataSetNumerizer implements Numerizer {
 		if (d > 1) {
 			return 1.0;
 		} else {
-			return (double) Math.round(d);
+			return Math.round(d);
 		}
 	}
 

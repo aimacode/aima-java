@@ -36,11 +36,13 @@ public class GraphSearch extends QueueSearch {
 
 	// Need to override search() method so that I can re-initialize
 	// the closed list should multiple calls to search be made.
+	@Override
 	public List<String> search(Problem problem, NodeStore fringe) {
 		closed.clear();
 		return super.search(problem, fringe);
 	}
 
+	@Override
 	public void addExpandedNodesToFringe(NodeStore fringe, Node node,
 			Problem problem) {
 

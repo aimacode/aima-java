@@ -34,6 +34,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		super(parser);
 	}
 
+	@Override
 	public Object visitVariable(Variable variable, Object arg) {
 		String value = variable.getValue();
 		Properties substs = (Properties) arg;
@@ -45,6 +46,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 
 	}
 
+	@Override
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
 		// TODO - change properties for hashtable
@@ -90,7 +92,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		// System.out.println(beforeSubst.toString());
 		Sentence sen = (Sentence) beforeSubst.accept(this, p);
 		// System.out.println(sen.toString());
-		Sentence afterSubst = (Sentence) recreate(sen);
+		Sentence afterSubst = recreate(sen);
 		// System.out.println(afterSubst.toString());
 		// System.out.println("***");
 		return afterSubst;

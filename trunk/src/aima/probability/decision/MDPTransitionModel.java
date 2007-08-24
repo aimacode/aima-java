@@ -43,6 +43,7 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (MDPTransition<STATE_TYPE, ACTION_TYPE> transition : transitionToProbability

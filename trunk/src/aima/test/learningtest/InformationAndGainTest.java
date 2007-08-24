@@ -29,20 +29,20 @@ public class InformationAndGainTest extends TestCase {
 	public void testBasicDataSetInformationCalculation() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		double infoForTargetAttribute = ds.getInformationFor();// this should
-																// be the
-																// generic
-																// distribution
+		// be the
+		// generic
+		// distribution
 		assertEquals(1.0, infoForTargetAttribute);
 	}
 
 	public void testDataSetSplit() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		Hashtable<String, DataSet> hash = ds.splitByAttribute("patrons");// this
-																			// should
-																			// be
-																			// the
-																			// generic
-																			// distribution
+		// should
+		// be
+		// the
+		// generic
+		// distribution
 		assertEquals(3, hash.keySet().size());
 		assertEquals(6, hash.get("Full").size());
 		assertEquals(2, hash.get("None").size());

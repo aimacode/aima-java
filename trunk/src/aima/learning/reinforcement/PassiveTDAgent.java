@@ -31,12 +31,13 @@ public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 		this.stateCount = new FrequencyCounter<STATE_TYPE>();
 	}
 
+	@Override
 	public ACTION_TYPE decideAction(MDPPerception<STATE_TYPE> perception) {
 
 		if (!(utilityFunction.hasUtilityFor(perception.getState()))) { // if
-																		// perceptionState
-																		// is
-																		// new
+			// perceptionState
+			// is
+			// new
 			utilityFunction.setUtility(perception.getState(), perception
 					.getReward());
 			mdp.setReward(perception.getState(), perception.getReward());

@@ -108,6 +108,7 @@ public class RandomVariable {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return asMatrix().toString();
 	}

@@ -27,6 +27,7 @@ public class UnifierTest extends TestCase {
 
 	Hashtable theta;
 
+	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.knowsDomain());
 		unifier = new Unifier(parser);
@@ -102,9 +103,9 @@ public class UnifierTest extends TestCase {
 		assertEquals(2, result.size());
 
 		assertEquals(new Constant("Bill"), theta.get(new Variable("x"))); // x =
-																			// Bill
+		// Bill
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
-																			// John
+		// John
 
 	}
 
@@ -120,7 +121,7 @@ public class UnifierTest extends TestCase {
 		Function mother = new Function("Mother", terms);
 		assertEquals(mother, theta.get(new Variable("x")));
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
-																			// John
+		// John
 
 	}
 
@@ -133,7 +134,7 @@ public class UnifierTest extends TestCase {
 
 		assertEquals(new Variable("z"), theta.get(new Variable("x"))); // x = z
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
-																			// John
+		// John
 
 	}
 

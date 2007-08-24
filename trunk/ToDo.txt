@@ -10,3 +10,5 @@ throw away unused methods in class Matrix. adjust documentation to point to the 
 
 MDPTransitionFucntion returns <null,0.0> instead of <NO_OP, 0.0> . This invloves figuring out how to pass a "NO_Op" string thru the type system
 Refactoring needed for cellworld etc the "terminal states" is far too dispersed in an adhoc fashion
+
+attribute MAtrix and LD classes to JAMA.

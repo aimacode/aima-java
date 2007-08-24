@@ -17,6 +17,7 @@ public class TrivialVaccumEnvironmentTest extends TestCase {
 		super(name);
 	}
 
+	@Override
 	public void setUp() {
 		tve = new TrivialVaccumEnvironment("Dirty", "Dirty");
 		tve2 = new TrivialVaccumEnvironment("Clean", "Clean");

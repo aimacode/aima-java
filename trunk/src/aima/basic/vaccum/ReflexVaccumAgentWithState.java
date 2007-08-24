@@ -22,11 +22,13 @@ public class ReflexVaccumAgentWithState extends Agent {
 
 	public ReflexVaccumAgentWithState() {
 		super(new ReflexAgentWithStateProgram() {
+			@Override
 			protected void init() {
 				setState(new ObjectWithDynamicAttributes());
 				setRules(getRuleSet());
 			}
 
+			@Override
 			protected ObjectWithDynamicAttributes updateState(
 					ObjectWithDynamicAttributes envState, String anAction,
 					Percept percept) {

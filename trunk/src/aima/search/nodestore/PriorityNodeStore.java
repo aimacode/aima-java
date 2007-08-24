@@ -29,7 +29,7 @@ public class PriorityNodeStore implements NodeStore {
 
 	public Node remove() {
 
-		return (Node) queue.remove();
+		return queue.remove();
 	}
 
 	public void add(List<Node> nodes) {
@@ -48,6 +48,7 @@ public class PriorityNodeStore implements NodeStore {
 		return queue.size();
 	}
 
+	@Override
 	public String toString() {
 		return queue.toString();
 	}

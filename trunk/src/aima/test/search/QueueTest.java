@@ -14,6 +14,7 @@ public class QueueTest extends TestCase {
 
 	private AbstractQueue queue;
 
+	@Override
 	public void setUp() {
 		queue = new AbstractQueue();
 	}

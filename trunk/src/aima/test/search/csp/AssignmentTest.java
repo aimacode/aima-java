@@ -17,6 +17,7 @@ import aima.search.csp.Assignment;
 public class AssignmentTest extends TestCase {
 	private Assignment assignment;
 
+	@Override
 	public void setUp() {
 		List<String> l = new ArrayList<String>();
 		l.add("x");

@@ -6,7 +6,7 @@ import aima.probability.demos.ProbabilityDemo;
 import aima.search.demos.SearchDemo;
 
 /**
- * @author Ravi Mohan
+ * @author RaviMohan
  * 
  */
 

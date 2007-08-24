@@ -31,6 +31,7 @@ public class MultiSentence extends ComplexSentence {
 		return sentences;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -45,6 +46,7 @@ public class MultiSentence extends ComplexSentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		for (Sentence s : sentences) {
@@ -53,6 +55,7 @@ public class MultiSentence extends ComplexSentence {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		String part1 = "( " + getOperator() + " ";
 		for (int i = 0; i < getSentences().size(); i++) {
@@ -61,6 +64,7 @@ public class MultiSentence extends ComplexSentence {
 		return part1 + " ) ";
 	}
 
+	@Override
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitMultiSentence(this, arg);
 	}

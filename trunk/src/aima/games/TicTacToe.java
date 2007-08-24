@@ -34,6 +34,7 @@ public class TicTacToe extends Game {
 		return (TicTacToeBoard) state.get("board");
 	}
 
+	@Override
 	public ArrayList getSuccessorStates(GameState state) {
 		GameState temp = presentState;
 		ArrayList<Object> retVal = new ArrayList<Object>();
@@ -51,6 +52,7 @@ public class TicTacToe extends Game {
 		return retVal;
 	}
 
+	@Override
 	public GameState makeMove(GameState state, Object o) {
 		XYLocation loc = (XYLocation) o;
 		return makeMove(state, loc.getXCoOrdinate(), loc.getYCoOrdinate());
@@ -104,6 +106,7 @@ public class TicTacToe extends Game {
 		return retVal;
 	}
 
+	@Override
 	public int computeUtility(GameState state) {
 		int utility = computeUtility((TicTacToeBoard) state.get("board"),
 				(getPlayerToMove(state)));
@@ -123,6 +126,7 @@ public class TicTacToe extends Game {
 		return retVal;
 	}
 
+	@Override
 	public boolean terminalTest(GameState state) {
 		TicTacToeBoard board = (TicTacToeBoard) state.get("board");
 		boolean line = board.lineThroughBoard();
@@ -145,6 +149,7 @@ public class TicTacToe extends Game {
 
 	}
 
+	@Override
 	public int getMiniMaxValue(GameState state) {
 		// statesSeen = new ArrayList();
 		// System.out.println("In get Minimax Value");
@@ -158,6 +163,7 @@ public class TicTacToe extends Game {
 		}
 	}
 
+	@Override
 	public int getAlphaBetaValue(GameState state) {
 
 		if (getPlayerToMove(state).equalsIgnoreCase("X")) {

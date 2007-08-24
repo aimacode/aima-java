@@ -68,7 +68,7 @@ public class AbstractFOLVisitor implements FOLVisitor {
 		List<Term> terms = function.getTerms();
 		List<Term> newTerms = new ArrayList<Term>();
 		for (int i = 0; i < terms.size(); i++) {
-			Term t = (Term) terms.get(i);
+			Term t = terms.get(i);
 			Term subsTerm = (Term) t.accept(this, arg);
 			newTerms.add(subsTerm);
 		}

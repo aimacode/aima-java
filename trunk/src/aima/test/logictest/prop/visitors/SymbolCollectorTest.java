@@ -21,6 +21,7 @@ public class SymbolCollectorTest extends TestCase {
 
 	private SymbolCollector collector;
 
+	@Override
 	public void setUp() {
 		parser = new PEParser();
 		collector = new SymbolCollector();

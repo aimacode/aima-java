@@ -15,6 +15,7 @@ import aima.logic.propositional.algorithms.KnowledgeBase;
 public class KnowledgeBaseTest extends TestCase {
 	private KnowledgeBase kb;
 
+	@Override
 	public void setUp() {
 		kb = new KnowledgeBase();
 	}

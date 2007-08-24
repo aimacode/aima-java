@@ -25,11 +25,11 @@ public class TveDemo extends javax.swing.JFrame {
 
 	private javax.swing.JMenu helpMenu;
 
-	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_exitMenuItemActionPerformed
 		System.exit(0);
 	}
 
-	private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
+	private void exitForm(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_exitForm
 		System.exit(0);
 	}
 
@@ -42,6 +42,7 @@ public class TveDemo extends javax.swing.JFrame {
 		aboutMenuItem = new javax.swing.JMenuItem();
 
 		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
 			public void windowClosing(java.awt.event.WindowEvent evt) {
 				exitForm(evt);
 			}

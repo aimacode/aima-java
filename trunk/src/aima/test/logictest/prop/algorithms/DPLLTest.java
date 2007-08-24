@@ -31,6 +31,7 @@ public class DPLLTest extends TestCase {
 
 	private PEParser parser;
 
+	@Override
 	public void setUp() {
 		parser = new PEParser();
 		dpll = new DPLL();
