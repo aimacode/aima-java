@@ -30,16 +30,19 @@ public class Triplet<X, Y, Z> {
 		return z;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		Triplet<X, Y, Z> other = (Triplet<X, Y, Z>) o;
 		return (x.equals(other.x)) && (y.equals(other.y))
 				&& (z.equals(other.z));
 	}
 
+	@Override
 	public int hashCode() {
 		return x.hashCode() + 31 * y.hashCode() + 31 * z.hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return "< " + x.toString() + " , " + y.toString() + " , "
 				+ z.toString() + " >";

@@ -16,6 +16,7 @@ public class XYLocation {
 		return xCoOrdinate;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		XYLocation anotherLoc = (XYLocation) o;
 		return ((anotherLoc.getXCoOrdinate() == xCoOrdinate) && (anotherLoc
@@ -75,14 +76,16 @@ public class XYLocation {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return " ( " + xCoOrdinate + " , " + yCoOrdinate + " ) ";
 	}
-	
-	public int hashCode(){
+
+	@Override
+	public int hashCode() {
 		int result = 17;
-		result = 37 * result +  xCoOrdinate;
-		result = result +  yCoOrdinate;
+		result = 37 * result + xCoOrdinate;
+		result = result + yCoOrdinate;
 		return result;
 	}
 

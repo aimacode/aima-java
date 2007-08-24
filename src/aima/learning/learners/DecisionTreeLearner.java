@@ -111,7 +111,7 @@ public class DecisionTreeLearner implements Learner {
 		String classification = ds.getExample(0).targetValue();
 		Iterator<Example> iter = ds.iterator();
 		while (iter.hasNext()) {
-			Example element = (Example) iter.next();
+			Example element = iter.next();
 			if (!(element.targetValue().equals(classification))) {
 				return false;
 			}

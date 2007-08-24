@@ -34,7 +34,7 @@ public class AndDetector implements PLVisitor {
 	}
 
 	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		return (Boolean) fs.getNegated().accept(this, null);
+		return fs.getNegated().accept(this, null);
 	}
 
 	public Object visitBinarySentence(BinarySentence fs, Object arg) {

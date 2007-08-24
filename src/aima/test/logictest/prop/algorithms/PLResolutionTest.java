@@ -22,6 +22,7 @@ public class PLResolutionTest extends TestCase {
 
 	private PEParser parser;
 
+	@Override
 	public void setUp() {
 		resolution = new PLResolution();
 		parser = new PEParser();

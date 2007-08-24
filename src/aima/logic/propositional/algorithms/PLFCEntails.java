@@ -39,12 +39,12 @@ public class PLFCEntails {
 	public boolean plfcEntails(KnowledgeBase kb, Symbol q) {
 		List<HornClause> hornClauses = asHornClauses(kb.getSentences());
 		while (agenda.size() != 0) {
-			Symbol p = (Symbol) agenda.pop();
+			Symbol p = agenda.pop();
 			while (!inferred(p)) {
 				inferred.put(p, Boolean.TRUE);
 
 				for (int i = 0; i < hornClauses.size(); i++) {
-					HornClause hornClause = (HornClause) hornClauses.get(i);
+					HornClause hornClause = hornClauses.get(i);
 					if (hornClause.premisesContainsSymbol(p)) {
 						decrementCount(hornClause);
 						if (countisZero(hornClause)) {
@@ -73,11 +73,11 @@ public class PLFCEntails {
 
 	private boolean countisZero(HornClause hornClause) {
 
-		return ((Integer) count.get(hornClause)).intValue() == 0;
+		return (count.get(hornClause)).intValue() == 0;
 	}
 
 	private void decrementCount(HornClause hornClause) {
-		int value = ((Integer) count.get(hornClause)).intValue();
+		int value = (count.get(hornClause)).intValue();
 		count.put(hornClause, new Integer(value - 1));
 
 	}
@@ -138,6 +138,7 @@ public class PLFCEntails {
 			return premiseSymbols;
 		}
 
+		@Override
 		public boolean equals(Object o) {
 
 			if (this == o) {
@@ -161,6 +162,7 @@ public class PLFCEntails {
 
 		}
 
+		@Override
 		public int hashCode() {
 			int result = 17;
 			for (Symbol s : premiseSymbols) {
@@ -169,6 +171,7 @@ public class PLFCEntails {
 			return result;
 		}
 
+		@Override
 		public String toString() {
 			return premiseSymbols.toString() + " => " + head;
 		}

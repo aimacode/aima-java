@@ -21,6 +21,7 @@ public class CellWorldPosition {
 		return y;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
 			return true;
@@ -32,10 +33,12 @@ public class CellWorldPosition {
 		return ((this.x == cwp.x) && (this.y == cwp.y));
 	}
 
+	@Override
 	public int hashCode() {
 		return x + 31 * y;
 	}
 
+	@Override
 	public String toString() {
 		return "< " + x + " , " + y + " > ";
 	}

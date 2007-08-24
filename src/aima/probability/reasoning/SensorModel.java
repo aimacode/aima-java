@@ -3,7 +3,6 @@ package aima.probability.reasoning;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.probability.RandomVariable;
 import aima.util.Matrix;
 import aima.util.Table;
 

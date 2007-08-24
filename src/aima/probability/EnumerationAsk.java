@@ -1,6 +1,5 @@
 package aima.probability;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -43,11 +42,10 @@ public class EnumerationAsk {
 			if (evidenceVariables.keySet().contains(Y)) {
 
 				double probYGivenParents = net.probabilityOf(Y,
-						(Boolean) evidenceVariables.get(Y), evidenceVariables);
+						evidenceVariables.get(Y), evidenceVariables);
 
 				double secondTerm = enumerateAll(net, Util
-						.rest((ArrayList) unprocessedVariables),
-						evidenceVariables);
+						.rest(unprocessedVariables), evidenceVariables);
 
 				return probYGivenParents * secondTerm;
 			} else {
@@ -58,7 +56,7 @@ public class EnumerationAsk {
 						Boolean.TRUE, clone1);
 
 				double secondTerm = enumerateAll(net, Util
-						.rest((ArrayList) unprocessedVariables), clone1);
+						.rest(unprocessedVariables), clone1);
 
 				double trueProbabilityY = probYTrueGivenParents * secondTerm;
 
@@ -67,8 +65,8 @@ public class EnumerationAsk {
 				double probYFalseGivenParents = net.probabilityOf(Y,
 						Boolean.FALSE, clone2);
 
-				secondTerm = enumerateAll(net, Util
-						.rest((ArrayList) unprocessedVariables), clone2);
+				secondTerm = enumerateAll(net, Util.rest(unprocessedVariables),
+						clone2);
 				double falseProbabilityY = probYFalseGivenParents * secondTerm;
 				// System.out.print(secondTerm + " ) )");
 				sigma = trueProbabilityY + falseProbabilityY;
@@ -84,11 +82,11 @@ public class EnumerationAsk {
 		Hashtable<String, Boolean> cloned = new Hashtable<String, Boolean>();
 		Iterator<String> iter = evidence.keySet().iterator();
 		while (iter.hasNext()) {
-			String key = (String) iter.next();
-			Boolean bool = (Boolean) evidence.get(key);
+			String key = iter.next();
+			Boolean bool = evidence.get(key);
 			if (bool.equals(Boolean.TRUE)) {
 				cloned.put(key, Boolean.TRUE);
-			} else if (((Boolean) evidence.get(key)).equals(Boolean.FALSE)) {
+			} else if ((evidence.get(key)).equals(Boolean.FALSE)) {
 				cloned.put(key, Boolean.FALSE);
 			}
 		}

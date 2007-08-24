@@ -46,10 +46,11 @@ public class Domain {
 	}
 
 	public void remove(String variable, Object value) {
-		List varDomains = (List) variablesToValues.get(variable);
+		List varDomains = variablesToValues.get(variable);
 		varDomains.remove(value);
 	}
 
+	@Override
 	public String toString() {
 		return variablesToValues.toString();
 	}

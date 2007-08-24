@@ -15,6 +15,7 @@ public class PLFCEntailsTest extends TestCase {
 
 	PLFCEntails plfce;
 
+	@Override
 	public void setUp() {
 		plfce = new PLFCEntails();
 	}

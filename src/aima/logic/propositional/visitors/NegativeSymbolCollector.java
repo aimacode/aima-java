@@ -18,6 +18,7 @@ import aima.util.SetOps;
  */
 
 public class NegativeSymbolCollector extends BasicTraverser {
+	@Override
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
 		if (ns.getNegated() instanceof Symbol) {

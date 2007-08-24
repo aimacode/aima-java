@@ -26,6 +26,7 @@ public class NotSentence implements Sentence {
 		return new NotSentence((Sentence) negated.copy());
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -39,6 +40,7 @@ public class NotSentence implements Sentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + negated.hashCode();
@@ -49,6 +51,7 @@ public class NotSentence implements Sentence {
 		return v.visitNotSentence(this, arg);
 	}
 
+	@Override
 	public String toString() {
 		return " NOT " + negated.toString();
 	}

@@ -22,6 +22,7 @@ import aima.logic.propositional.parsing.ast.UnarySentence;
 public class PEParserTest extends TestCase {
 	private PEParser parser;
 
+	@Override
 	public void setUp() {
 		parser = new PEParser();
 	}

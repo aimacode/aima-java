@@ -16,6 +16,7 @@ import aima.search.csp.MapCSP;
 public class MapCSPTest extends TestCase {
 	private CSP csp;
 
+	@Override
 	public void setUp() {
 		csp = MapCSP.getMap();
 	}

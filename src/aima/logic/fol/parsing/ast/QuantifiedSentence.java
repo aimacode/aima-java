@@ -28,6 +28,7 @@ public class QuantifiedSentence implements Sentence {
 		this.quantified = quantified;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -43,6 +44,7 @@ public class QuantifiedSentence implements Sentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + quantifier.hashCode();
@@ -53,6 +55,7 @@ public class QuantifiedSentence implements Sentence {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		String pre = quantifier + " ";
 		for (int i = 0; i < variables.size(); i++) {
@@ -72,7 +75,7 @@ public class QuantifiedSentence implements Sentence {
 	public QuantifiedSentence copy() {
 		List<Variable> copyVars = new ArrayList<Variable>();
 		for (int i = 0; i < variables.size(); i++) {
-			Variable v = (Variable) variables.get(i);
+			Variable v = variables.get(i);
 			copyVars.add(v.copy());
 		}
 		return new QuantifiedSentence(quantifier, copyVars,
@@ -98,7 +101,7 @@ public class QuantifiedSentence implements Sentence {
 	public List<String> getVariablesAsString() {
 		List<String> ret = new ArrayList<String>();
 		for (int i = 0; i < variables.size(); i++) {
-			Variable var = (Variable) variables.get(i);
+			Variable var = variables.get(i);
 			ret.add(var.getValue());
 		}
 		return ret;

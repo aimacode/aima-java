@@ -14,7 +14,6 @@ import aima.util.Util;
  * 
  */
 
-
 public class QTable<STATE_TYPE, ACTION_TYPE> {
 
 	Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> table;
@@ -140,6 +139,7 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 		return states;
 	}
 
+	@Override
 	public String toString() {
 		return table.toString();
 	}

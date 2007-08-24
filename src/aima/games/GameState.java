@@ -20,6 +20,7 @@ public class GameState {
 		state = new Hashtable<String, Object>();
 	}
 
+	@Override
 	public boolean equals(Object anotherState) {
 
 		if (this == anotherState) {
@@ -54,6 +55,7 @@ public class GameState {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		for (String s : state.keySet()) {

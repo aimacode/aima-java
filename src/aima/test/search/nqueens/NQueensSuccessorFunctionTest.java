@@ -19,6 +19,7 @@ public class NQueensSuccessorFunctionTest extends TestCase {
 
 	NQueensBoard eightBoard;
 
+	@Override
 	public void setUp() {
 		successorFunction = new NQueensSuccessorFunction();
 		oneBoard = new NQueensBoard(1);

@@ -7,7 +7,6 @@ import aima.probability.decision.MDP;
 import aima.probability.decision.MDPPerception;
 import aima.util.FrequencyCounter;
 import aima.util.Pair;
-import aima.util.Util;
 
 /**
  * @author Ravi Mohan

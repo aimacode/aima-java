@@ -34,6 +34,7 @@ public class Example {
 		return ((NumericAttribute) attribute).valueAsDouble();
 	}
 
+	@Override
 	public String toString() {
 		return attributes.toString();
 	}
@@ -42,6 +43,7 @@ public class Example {
 		return getAttributeValueAsString(targetAttribute.name());
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -53,6 +55,7 @@ public class Example {
 		return attributes.equals(other.attributes);
 	}
 
+	@Override
 	public int hashCode() {
 		return attributes.hashCode();
 	}
@@ -68,7 +71,7 @@ public class Example {
 				NumericAttributeSpecification spec = new NumericAttributeSpecification(
 						key);
 				numerizedExampleData.put(key, new NumericAttribute(
-						(double) correspondingNumber, spec));
+						correspondingNumber, spec));
 			} else {// Numeric Attribute
 				numerizedExampleData.put(key, attribute);
 			}

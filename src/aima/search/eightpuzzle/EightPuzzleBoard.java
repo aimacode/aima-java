@@ -159,6 +159,7 @@ public class EightPuzzleBoard {
 
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -177,6 +178,7 @@ public class EightPuzzleBoard {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		for (int i = 0; i < 8; i++) {
@@ -202,7 +204,7 @@ public class EightPuzzleBoard {
 		int count = 0;
 
 		for (int i = 0; i < locs.size(); i++) {
-			XYLocation loc = (XYLocation) locs.get(i);
+			XYLocation loc = locs.get(i);
 			this.setValue(loc.getXCoOrdinate(), loc.getYCoOrdinate(), count);
 			count = count + 1;
 		}
@@ -235,6 +237,7 @@ public class EightPuzzleBoard {
 		return retVal;
 	}
 
+	@Override
 	public String toString() {
 		String retVal = board[0] + " " + board[1] + " " + board[2] + "\n"
 				+ board[3] + " " + board[4] + " " + board[5] + " " + "\n"

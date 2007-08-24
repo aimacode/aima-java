@@ -17,6 +17,7 @@ import aima.logic.propositional.parsing.ast.Symbol;
 
 public class SymbolCollector extends BasicTraverser {
 
+	@Override
 	public Object visitSymbol(Symbol s, Object arg) {
 		Set<Symbol> symbolsCollectedSoFar = (Set) arg;
 		symbolsCollectedSoFar.add(new Symbol(s.getValue()));

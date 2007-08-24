@@ -77,6 +77,7 @@ public class KnowledgeBase {
 		return new TTEntails().ttEntails(this, queryString);
 	}
 
+	@Override
 	public String toString() {
 		if (sentences.size() == 0) {
 			return "";

@@ -20,6 +20,7 @@ public class Fact {
 		this.original = sentence;
 	}
 
+	@Override
 	public String toString() {
 		return original.toString();
 	}
@@ -28,6 +29,7 @@ public class Fact {
 		return original;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -41,6 +43,7 @@ public class Fact {
 
 	}
 
+	@Override
 	public int hashCode() {
 		return 0;
 	}

@@ -24,6 +24,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 		detector = new AndDetector();
 	}
 
+	@Override
 	public Object visitBinarySentence(BinarySentence bs, Object args) {
 
 		Set<Sentence> soFar = (Set<Sentence>) args;

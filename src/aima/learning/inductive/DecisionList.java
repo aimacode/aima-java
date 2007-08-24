@@ -56,6 +56,7 @@ public class DecisionList {
 		return merged;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (DLTest test : tests) {

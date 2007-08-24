@@ -24,6 +24,7 @@ public class FOLSubstTest extends TestCase {
 
 	SubstVisitor sv;
 
+	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.crusadesDomain());
 		sv = new SubstVisitor(parser);

@@ -21,6 +21,7 @@ public class EightPuzzleSuccessorFunctionTest extends TestCase {
 
 	EightPuzzleSuccessorFunction func = new EightPuzzleSuccessorFunction();
 
+	@Override
 	public void setUp() {
 		board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
 	}

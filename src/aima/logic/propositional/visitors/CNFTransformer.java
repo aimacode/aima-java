@@ -14,6 +14,7 @@ import aima.logic.propositional.parsing.ast.UnarySentence;
  * 
  */
 public class CNFTransformer extends AbstractPLVisitor {
+	@Override
 	public Object visitBinarySentence(BinarySentence bs, Object arg) {
 		if (bs.isBiconditional()) {
 			return transformBiConditionalSentence(bs);
@@ -27,6 +28,7 @@ public class CNFTransformer extends AbstractPLVisitor {
 		}
 	}
 
+	@Override
 	public Object visitNotSentence(UnarySentence us, Object arg) {
 		return transformNotSentence(us);
 	}

@@ -84,6 +84,7 @@ public class DecisionTree {
 		return attributeName;
 	}
 
+	@Override
 	public String toString() {
 		return toString(1, new StringBuffer());
 	}

@@ -14,6 +14,7 @@ import aima.search.csp.Domain;
 public class DomainsTest extends TestCase {
 	private Domain domains;
 
+	@Override
 	public void setUp() {
 		List<String> vars = new ArrayList<String>();
 		vars.add("x");

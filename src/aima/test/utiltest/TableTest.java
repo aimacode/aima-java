@@ -18,6 +18,7 @@ import aima.util.Table;
 public class TableTest extends TestCase {
 	private Table<String, String, Integer> table;
 
+	@Override
 	public void setUp() {
 		List<String> rowHeaders = new ArrayList<String>();
 		List<String> columnHeaders = new ArrayList<String>();

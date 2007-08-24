@@ -28,11 +28,11 @@ public class Metrics {
 	}
 
 	public int getInt(String name) {
-		return new Integer((String) hash.get(name)).intValue();
+		return new Integer(hash.get(name)).intValue();
 	}
 
 	public double getDouble(String name) {
-		return new Double((String) hash.get(name)).doubleValue();
+		return new Double(hash.get(name)).doubleValue();
 	}
 
 	public String get(String name) {

@@ -22,6 +22,7 @@ public class GreedyBestFirstSearch extends PrioritySearch {
 		this.search = search;
 	}
 
+	@Override
 	protected Comparator getComparator(Problem p) {
 		return new NodeComparator(p);
 	}

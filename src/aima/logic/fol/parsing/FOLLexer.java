@@ -14,10 +14,11 @@ import aima.logic.fol.FOLDomain;
 
 /**
  * @author Ravi Mohan
- *  
+ * 
  */
 public class FOLLexer extends Lexer {
-	private Set<String> constants, functions, predicates, connectors, quantifiers;
+	private Set<String> constants, functions, predicates, connectors,
+			quantifiers;
 
 	public FOLLexer(FOLDomain domain) {
 		this.constants = domain.getConstants();
@@ -31,11 +32,12 @@ public class FOLLexer extends Lexer {
 		connectors.add("=>");
 		connectors.add("<=>");
 
-		quantifiers = new HashSet<String> ();
+		quantifiers = new HashSet<String>();
 		quantifiers.add("FORALL");
 		quantifiers.add("EXISTS");
 	}
 
+	@Override
 	public Token nextToken() {
 		Token result = null;
 		int tokenType;
@@ -54,7 +56,7 @@ public class FOLLexer extends Lexer {
 			return new Token(LogicTokenTypes.COMMA, ",");
 
 		} else if (identifierDetected()) {
-			//System.out.println("identifier detected");
+			// System.out.println("identifier detected");
 			return identifier();
 		} else if (Character.isWhitespace(lookAhead(1))) {
 			consume();
@@ -74,28 +76,26 @@ public class FOLLexer extends Lexer {
 			consume();
 		}
 		String readString = new String(sbuf);
-		//System.out.println(readString);
+		// System.out.println(readString);
 		if (connectors.contains(readString)) {
 			return new Token(LogicTokenTypes.CONNECTOR, readString);
 		} else if (quantifiers.contains(readString)) {
 			return new Token(LogicTokenTypes.QUANTIFIER, readString);
-		}  else if (predicates.contains(readString)) {
+		} else if (predicates.contains(readString)) {
 			return new Token(LogicTokenTypes.PREDICATE, readString);
 		} else if (functions.contains(readString)) {
 			return new Token(LogicTokenTypes.FUNCTION, readString);
 		} else if (constants.contains(readString)) {
 			return new Token(LogicTokenTypes.CONSTANT, readString);
-		}else if (isVariable(readString)) {
+		} else if (isVariable(readString)) {
 			return new Token(LogicTokenTypes.VARIABLE, readString);
-		}
-		else if (readString.equals("=")) {
+		} else if (readString.equals("=")) {
 			return new Token(LogicTokenTypes.EQUALS, readString);
-		}
-		else {
-			throw new RuntimeException("Lexing error on character " + lookAhead(1));
+		} else {
+			throw new RuntimeException("Lexing error on character "
+					+ lookAhead(1));
 		}
 
-		
 	}
 
 	private boolean isVariable(String s) {
@@ -112,5 +112,4 @@ public class FOLLexer extends Lexer {
 				|| (lookAhead(1) == '>');
 	}
 
-	
 }

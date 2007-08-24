@@ -2,7 +2,6 @@ package aima.test.probdecisiontest;
 
 import junit.framework.TestCase;
 import aima.probability.Randomizer;
-import aima.probability.decision.MDP;
 import aima.probability.decision.MDPTransitionModel;
 import aima.probability.decision.MDPUtilityFunction;
 import aima.probability.decision.cellworld.CellWorld;
@@ -22,6 +21,7 @@ public class CellWorldTest extends TestCase {
 	private Randomizer alwaysLessThanEightyPercent,
 			betweenEightyAndNinetyPercent, greaterThanNinetyPercent;
 
+	@Override
 	public void setUp() {
 		cw = new CellWorld(3, 4, -0.04);
 
@@ -40,141 +40,141 @@ public class CellWorldTest extends TestCase {
 	}
 
 	public void testMoveLeftIntoWallLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1, cw.LEFT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1,
+				CellWorld.LEFT, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveLeftIntoUnblockedCellChangesPositionCorrectly() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2, cw.LEFT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2,
+				CellWorld.LEFT, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveLeftIntoUnblockedCellActuallyMovesUpWhenProbabilityBetween80And90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4, cw.LEFT,
-				betweenEightyAndNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4,
+				CellWorld.LEFT, betweenEightyAndNinetyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(4, pos.getY());
 	}
 
 	public void testMoveLeftIntoUnblockedCellActuallyMovesDownWhenProbabilityGreaterThan90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3, cw.LEFT,
-				greaterThanNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3,
+				CellWorld.LEFT, greaterThanNinetyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(3, pos.getY());
 	}
 
 	public void testMoveLeftIntoBlockedCellLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 3, cw.LEFT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 3,
+				CellWorld.LEFT, alwaysLessThanEightyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(3, pos.getY());
 	}
 
 	public void testMoveRightIntoWallLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4, cw.RIGHT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4,
+				CellWorld.RIGHT, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(4, pos.getY());
 	}
 
 	public void testMoveRightIntoUnblockedCellChangesPositionCorrectly() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2, cw.RIGHT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2,
+				CellWorld.RIGHT, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(3, pos.getY());
 	}
 
 	public void testMoveRightIntoBlockedCellLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 1, cw.RIGHT,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 1,
+				CellWorld.RIGHT, alwaysLessThanEightyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveRightIntoUnblockedCellActuallyMovesUpWhenProbabilityBetween80And90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1, cw.RIGHT,
-				betweenEightyAndNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1,
+				CellWorld.RIGHT, betweenEightyAndNinetyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveRightIntoUnblockedCellActuallyMovesDownWhenProbabilityGreaterThan90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3, cw.RIGHT,
-				greaterThanNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3,
+				CellWorld.RIGHT, greaterThanNinetyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(3, pos.getY());
 	}
 
 	public void testMoveUpIntoWallLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 1, cw.UP,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 1,
+				CellWorld.UP, alwaysLessThanEightyPercent);
 		assertEquals(3, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveUpIntoUnblockedCellChangesPositionCorrectly() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1, cw.UP,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1,
+				CellWorld.UP, alwaysLessThanEightyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveUpIntoBlockedCellLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2, cw.UP,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 2,
+				CellWorld.UP, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(2, pos.getY());
 	}
 
 	public void testMoveUpActuallyMovesLeftWhenProbabilityBetween80And90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4, cw.UP,
-				betweenEightyAndNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 4,
+				CellWorld.UP, betweenEightyAndNinetyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(3, pos.getY());
 	}
 
 	public void testMoveUpActuallyMovesRightWhenProbabilityGreaterThan90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 3, cw.UP,
-				greaterThanNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 3,
+				CellWorld.UP, greaterThanNinetyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(4, pos.getY());
 	}
 
 	public void testMoveDownIntoWallLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1, cw.DOWN,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(1, 1,
+				CellWorld.DOWN, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveDownIntoUnblockedCellChangesPositionCorrectly() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 1, cw.DOWN,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 1,
+				CellWorld.DOWN, alwaysLessThanEightyPercent);
 		assertEquals(1, pos.getX());
 		assertEquals(1, pos.getY());
 	}
 
 	public void testMoveDownIntoBlockedCellLeavesPositionUnchanged() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 2, cw.UP,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 2,
+				CellWorld.UP, alwaysLessThanEightyPercent);
 		assertEquals(3, pos.getX());
 		assertEquals(2, pos.getY());
 	}
 
 	public void testMoveDownActuallyMovesLeftWhenProbabilityBetween80And90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3, cw.DOWN,
-				betweenEightyAndNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(3, 3,
+				CellWorld.DOWN, betweenEightyAndNinetyPercent);
 		assertEquals(3, pos.getX());
 		assertEquals(2, pos.getY());
 	}
 
 	public void testMoveDownActuallyMovesRightWhenProbabilityGreaterThan90Percent() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 3, cw.UP,
-				greaterThanNinetyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 3,
+				CellWorld.UP, greaterThanNinetyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(4, pos.getY());
 	}
@@ -184,23 +184,23 @@ public class CellWorldTest extends TestCase {
 	}
 
 	public void testMoveFromATerminalStateFailsForAllProbabilityValues() {
-		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 4, cw.UP,
-				alwaysLessThanEightyPercent);
+		CellWorldPosition pos = cw.moveProbabilisticallyFrom(2, 4,
+				CellWorld.UP, alwaysLessThanEightyPercent);
 		assertEquals(2, pos.getX());
 		assertEquals(4, pos.getY());
 	}
 
 	public void testTransitionProbabilityCalculationWhenEndingPositionIsNextToStartingPositionButIsBlocked() {
 		CellWorldPosition startingPosition = new CellWorldPosition(2, 1); // to
-																			// the
-																			// left
-																			// of
-																			// blocked
-																			// cell
+		// the
+		// left
+		// of
+		// blocked
+		// cell
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 2); // blocked
-																		// cell
+		// cell
 		double transitionProb = cw.getTransitionProbability(startingPosition,
-				cw.RIGHT, endingPosition);
+				CellWorld.RIGHT, endingPosition);
 		assertEquals(0.0, transitionProb);
 	}
 
@@ -208,7 +208,7 @@ public class CellWorldTest extends TestCase {
 		CellWorldPosition startingPosition = new CellWorldPosition(1, 3);
 		CellWorldPosition endingPosition = new CellWorldPosition(3, 3);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
-				cw.UP, endingPosition);
+				CellWorld.UP, endingPosition);
 		assertEquals(0.0, transitionProb);
 	}
 
@@ -216,7 +216,7 @@ public class CellWorldTest extends TestCase {
 		CellWorldPosition startingPosition = new CellWorldPosition(1, 1);
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
-				cw.UP, endingPosition);
+				CellWorld.UP, endingPosition);
 		assertEquals(0.8, transitionProb);
 
 	}
@@ -225,7 +225,7 @@ public class CellWorldTest extends TestCase {
 		CellWorldPosition startingPosition = new CellWorldPosition(2, 1);
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
-				cw.UP, endingPosition);
+				CellWorld.UP, endingPosition);
 		assertEquals(0.2, transitionProb);
 
 	}
@@ -235,15 +235,15 @@ public class CellWorldTest extends TestCase {
 				.getTransitionModel();
 		CellWorldPosition startingPosition = new CellWorldPosition(1, 1);
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
-		assertEquals(0.8, mtm.getTransitionProbability(startingPosition, cw.UP,
-				endingPosition));
+		assertEquals(0.8, mtm.getTransitionProbability(startingPosition,
+				CellWorld.UP, endingPosition));
 
 		CellWorldPosition endingPosition2 = new CellWorldPosition(1, 1);
-		assertEquals(0.1, mtm.getTransitionProbability(startingPosition, cw.UP,
-				endingPosition2));
+		assertEquals(0.1, mtm.getTransitionProbability(startingPosition,
+				CellWorld.UP, endingPosition2));
 		CellWorldPosition endingPosition3 = new CellWorldPosition(1, 2);
-		assertEquals(0.1, mtm.getTransitionProbability(startingPosition, cw.UP,
-				endingPosition3));
+		assertEquals(0.1, mtm.getTransitionProbability(startingPosition,
+				CellWorld.UP, endingPosition3));
 
 		// Reward
 		// for (CellWorldPosition cp : cw.unblockedPositions()){
@@ -260,15 +260,15 @@ public class CellWorldTest extends TestCase {
 				.getTransitionModel();
 		CellWorldPosition terminalOne = new CellWorldPosition(2, 4);
 		CellWorldPosition terminalTwo = new CellWorldPosition(3, 4);
-		assertEquals(0.0, mtm.getTransitionProbability(terminalOne, cw.UP,
-				terminalTwo));
-		assertEquals(0.0, mtm.getTransitionProbability(terminalTwo, cw.DOWN,
-				terminalOne));
+		assertEquals(0.0, mtm.getTransitionProbability(terminalOne,
+				CellWorld.UP, terminalTwo));
+		assertEquals(0.0, mtm.getTransitionProbability(terminalTwo,
+				CellWorld.DOWN, terminalOne));
 
 	}
 
 	public void testMaximumTransitionDetection() { // aka policy extraction
-													// given a utility function
+		// given a utility function
 		MDPTransitionModel<CellWorldPosition, String> mtm = cw
 				.getTransitionModel();
 
@@ -288,18 +288,18 @@ public class CellWorldTest extends TestCase {
 		uf.setUtility(new CellWorldPosition(3, 3), 0.918);
 		uf.setUtility(new CellWorldPosition(3, 4), 1.0);
 
-		assertPolicyReccomends(cw, uf, 1, 1, cw.UP);
-		assertPolicyReccomends(cw, uf, 1, 2, cw.LEFT);
-		assertPolicyReccomends(cw, uf, 1, 3, cw.LEFT);
-		assertPolicyReccomends(cw, uf, 1, 4, cw.LEFT);
+		assertPolicyReccomends(cw, uf, 1, 1, CellWorld.UP);
+		assertPolicyReccomends(cw, uf, 1, 2, CellWorld.LEFT);
+		assertPolicyReccomends(cw, uf, 1, 3, CellWorld.LEFT);
+		assertPolicyReccomends(cw, uf, 1, 4, CellWorld.LEFT);
 
-		assertPolicyReccomends(cw, uf, 2, 1, cw.UP);
-		assertPolicyReccomends(cw, uf, 2, 3, cw.UP);
+		assertPolicyReccomends(cw, uf, 2, 1, CellWorld.UP);
+		assertPolicyReccomends(cw, uf, 2, 3, CellWorld.UP);
 		assertPolicyReccomends(cw, uf, 2, 4, null);
 
-		assertPolicyReccomends(cw, uf, 3, 1, cw.RIGHT);
-		assertPolicyReccomends(cw, uf, 3, 2, cw.RIGHT);
-		assertPolicyReccomends(cw, uf, 3, 3, cw.RIGHT);
+		assertPolicyReccomends(cw, uf, 3, 1, CellWorld.RIGHT);
+		assertPolicyReccomends(cw, uf, 3, 2, CellWorld.RIGHT);
+		assertPolicyReccomends(cw, uf, 3, 3, CellWorld.RIGHT);
 		assertPolicyReccomends(cw, uf, 3, 4, null);
 
 	}

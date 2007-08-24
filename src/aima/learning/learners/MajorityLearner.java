@@ -27,7 +27,7 @@ public class MajorityLearner implements Learner {
 		for (Example e : ds.examples) {
 			targets.add(e.targetValue());
 		}
-		result = (String) Util.mode(targets);
+		result = Util.mode(targets);
 	}
 
 	public String predict(Example e) {

@@ -31,6 +31,7 @@ public class PEParser extends Parser {
 		lookAheadBuffer = new Token[lookAhead];
 	}
 
+	@Override
 	public ParseTreeNode parse(String inputString) {
 		lexer = new PELexer(inputString);
 		fillLookAheadBuffer();

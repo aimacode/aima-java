@@ -14,7 +14,8 @@ import aima.search.uninformed.DepthLimitedSearch;
 public class DepthLimitedSearchTest extends TestCase {
 
 	public void testSuccesfulDepthLimitedSearch() throws Exception {
-		Problem problem =  new Problem(new NQueensBoard(8),new NQueensSuccessorFunction(), new NQueensGoalTest());
+		Problem problem = new Problem(new NQueensBoard(8),
+				new NQueensSuccessorFunction(), new NQueensGoalTest());
 		Search search = new DepthLimitedSearch(8);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List actions = agent.getActions();

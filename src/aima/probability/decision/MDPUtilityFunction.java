@@ -1,7 +1,6 @@
 package aima.probability.decision;
 
 import java.util.Hashtable;
-import java.util.Set;
 
 /**
  * @author Ravi Mohan
@@ -35,6 +34,7 @@ public class MDPUtilityFunction<STATE_TYPE> {
 		return other;
 	}
 
+	@Override
 	public String toString() {
 		return hash.toString();
 	}

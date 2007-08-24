@@ -24,10 +24,12 @@ public class EQUALCondition extends Condition {
 		value = aValue;
 	}
 
+	@Override
 	public boolean evaluate(ObjectWithDynamicAttributes p) {
 		return value.equals(p.getAttribute(key));
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 

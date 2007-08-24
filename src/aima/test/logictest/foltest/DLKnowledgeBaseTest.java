@@ -25,6 +25,7 @@ import aima.logic.fol.parsing.ast.Variable;
 public class DLKnowledgeBaseTest extends TestCase {
 	private DLKnowledgeBase wkb, kkb;
 
+	@Override
 	public void setUp() {
 		FOLDomain weaponsDomain = DomainFactory.weaponsDomain();
 		wkb = new DLKnowledgeBase(weaponsDomain);

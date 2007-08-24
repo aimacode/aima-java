@@ -7,7 +7,6 @@ import aima.util.Triplet;
  * 
  */
 
-
 public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 	private Triplet<STATE_TYPE, ACTION_TYPE, STATE_TYPE> triplet;
 
@@ -29,6 +28,7 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 		return triplet.getThird();
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
 			return true;
@@ -45,10 +45,12 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 		return triplet.equals(other.triplet);
 	}
 
+	@Override
 	public int hashCode() {
 		return triplet.hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return triplet.toString();
 	}

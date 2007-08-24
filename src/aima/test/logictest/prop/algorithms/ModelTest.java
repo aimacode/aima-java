@@ -23,6 +23,7 @@ public class ModelTest extends TestCase {
 	Sentence trueSentence, falseSentence, andSentence, orSentence,
 			impliedSentence, biConditionalSentence;
 
+	@Override
 	public void setUp() {
 		parser = new PEParser();
 		trueSentence = (Sentence) parser.parse("true");

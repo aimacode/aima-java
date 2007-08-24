@@ -7,7 +7,6 @@ import aima.learning.reinforcement.PassiveADPAgent;
 import aima.learning.reinforcement.PassiveTDAgent;
 import aima.learning.reinforcement.QLearningAgent;
 import aima.learning.reinforcement.QTable;
-import aima.probability.JavaRandomizer;
 import aima.probability.Randomizer;
 import aima.probability.decision.MDP;
 import aima.probability.decision.MDPFactory;
@@ -28,6 +27,7 @@ public class ReinforcementLearningTest extends TestCase {
 
 	MDPPolicy<CellWorldPosition, String> policy;
 
+	@Override
 	public void setUp() {
 		fourByThree = MDPFactory.createFourByThreeMDP();
 

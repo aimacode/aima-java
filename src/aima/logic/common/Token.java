@@ -27,6 +27,7 @@ public class Token {
 		return type;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -39,6 +40,7 @@ public class Token {
 		return ((other.type == type) && (other.text.equals(text)));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + type;
@@ -46,6 +48,7 @@ public class Token {
 		return 17;
 	}
 
+	@Override
 	public String toString() {
 		return "[ " + type + " " + text + " ]";
 	}

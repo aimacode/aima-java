@@ -53,12 +53,14 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	//
 	// PROTECTED METHODS
 	//
+	@Override
 	protected Object updateState(Percept p) {
 		currentLocation = (String) p.getAttribute("In");
 
 		return currentLocation;
 	}
 
+	@Override
 	protected Object formulateGoal() {
 		Object goal = null;
 		if (null == goalTests) {
@@ -73,11 +75,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 		return goal;
 	}
 
+	@Override
 	protected Problem formulateProblem(Object goal) {
 		return new BidirectionalMapProblem(mapEnvironment.getMap(),
 				currentLocation, (String) goal);
 	}
 
+	@Override
 	protected List<String> search(Problem problem) {
 		List<String> actions = new ArrayList<String>();
 		try {
@@ -91,6 +95,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 		return actions;
 	}
 
+	@Override
 	protected void notifyViewOfMetrics() {
 		Set keys = search.getMetrics().keySet();
 		for (Object key : keys) {

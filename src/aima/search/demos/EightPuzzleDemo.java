@@ -17,7 +17,6 @@ import aima.search.framework.GraphSearch;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
-import aima.search.framework.TreeSearch;
 import aima.search.informed.AStarSearch;
 import aima.search.informed.GreedyBestFirstSearch;
 import aima.search.informed.SimulatedAnnealingSearch;

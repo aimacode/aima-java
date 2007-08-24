@@ -24,6 +24,7 @@ public class TicTacToeTest extends TestCase {
 		super(name);
 	}
 
+	@Override
 	public void setUp() {
 		tb = new TicTacToeBoard();
 	}

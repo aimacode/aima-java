@@ -15,7 +15,7 @@ public class SearchUtils {
 		for (int i = 1; i < nodeList.size(); i++) { // ignore root node this has
 			// no action hence index starts from 1 not
 			// zero
-			Node node = (Node) nodeList.get(i);
+			Node node = nodeList.get(i);
 			stateList.add(node.getAction());
 		}
 		return stateList;

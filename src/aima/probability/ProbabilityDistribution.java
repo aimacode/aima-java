@@ -75,6 +75,7 @@ public class ProbabilityDistribution {
 		set(new boolean[] { value1, value2, value3, value4 }, probability);
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (Row row : rows) {
@@ -117,6 +118,7 @@ public class ProbabilityDistribution {
 			this.probability = probability;
 		}
 
+		@Override
 		public String toString() {
 			return model.toString() + " => " + probability;
 		}

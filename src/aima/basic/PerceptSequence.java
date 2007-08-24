@@ -40,6 +40,7 @@ public class PerceptSequence {
 		percepts.add(percept);
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof PerceptSequence)) {
 			return super.equals(o);
@@ -47,10 +48,12 @@ public class PerceptSequence {
 		return (toString().equals(((PerceptSequence) o).toString()));
 	}
 
+	@Override
 	public int hashCode() {
 		return toString().hashCode();
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 

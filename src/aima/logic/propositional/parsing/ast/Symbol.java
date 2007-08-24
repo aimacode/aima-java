@@ -18,6 +18,7 @@ public class Symbol extends AtomicSentence {
 		this.value = value;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -31,6 +32,7 @@ public class Symbol extends AtomicSentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + value.hashCode();
@@ -41,10 +43,12 @@ public class Symbol extends AtomicSentence {
 		return value;
 	}
 
+	@Override
 	public String toString() {
 		return getValue();
 	}
 
+	@Override
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitSymbol(this, arg);
 	}

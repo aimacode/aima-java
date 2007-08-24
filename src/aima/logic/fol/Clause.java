@@ -38,6 +38,7 @@ public class Clause {
 		domain = new Domain(variableNames);
 	}
 
+	@Override
 	public String toString() {
 		return predicate.toString();
 	}

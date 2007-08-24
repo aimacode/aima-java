@@ -15,6 +15,7 @@ import aima.search.eightpuzzle.EightPuzzleBoard;
 public class EightPuzzleBoardTest extends TestCase {
 	EightPuzzleBoard board;
 
+	@Override
 	public void setUp() {
 		board = new EightPuzzleBoard();
 	}

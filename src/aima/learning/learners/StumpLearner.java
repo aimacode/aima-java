@@ -18,6 +18,7 @@ public class StumpLearner extends DecisionTreeLearner {
 		super(sl, unable_to_classify);
 	}
 
+	@Override
 	public void train(DataSet ds) {
 		// System.out.println("Stump learner training");
 		// do nothing the stump is not inferred from the dataset

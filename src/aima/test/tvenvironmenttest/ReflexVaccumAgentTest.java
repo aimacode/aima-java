@@ -16,6 +16,7 @@ public class ReflexVaccumAgentTest extends TestCase {
 
 	private StringBuffer envChanges;
 
+	@Override
 	public void setUp() {
 		agent = new ReflexVaccumAgent();
 		envChanges = new StringBuffer();
@@ -27,6 +28,7 @@ public class ReflexVaccumAgentTest extends TestCase {
 		tve.addAgent(agent, "A");
 
 		tve.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command);
 			}
@@ -44,6 +46,7 @@ public class ReflexVaccumAgentTest extends TestCase {
 		tve.addAgent(agent, "A");
 
 		tve.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command);
 			}
@@ -61,6 +64,7 @@ public class ReflexVaccumAgentTest extends TestCase {
 		tve.addAgent(agent, "A");
 
 		tve.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command);
 			}
@@ -78,6 +82,7 @@ public class ReflexVaccumAgentTest extends TestCase {
 		tve.addAgent(agent, "A");
 
 		tve.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command);
 			}

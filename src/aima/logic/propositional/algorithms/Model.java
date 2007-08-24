@@ -68,7 +68,7 @@ public class Model implements PLVisitor {
 		while (i.hasNext()) {
 			String key = i.next();
 			Boolean value = h.get(key);
-			String newKey = new String(((String) key).toCharArray());
+			String newKey = new String((key).toCharArray());
 			if (value == null) {
 				throw new RuntimeException();
 			}
@@ -115,6 +115,7 @@ public class Model implements PLVisitor {
 		return this;
 	}
 
+	@Override
 	public String toString() {
 		return h.toString();
 	}

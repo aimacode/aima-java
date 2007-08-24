@@ -137,7 +137,7 @@ public class NeuralNetworkTest extends TestCase {
 
 	public void testBackPropogation() {
 
-		// Neural Network test data from "neural Network Design" by
+		// Neural Network test data from "Neural Network Design" by
 		// Hagan,Demuth,Beale
 		// section 11-15
 

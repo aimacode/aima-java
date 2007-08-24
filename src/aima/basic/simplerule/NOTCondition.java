@@ -20,10 +20,12 @@ public class NOTCondition extends Condition {
 		con = aCon;
 	}
 
+	@Override
 	public boolean evaluate(ObjectWithDynamicAttributes p) {
 		return (!con.evaluate(p));
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 

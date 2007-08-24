@@ -22,6 +22,7 @@ public class ParticleFilterTest extends TestCase {
 
 	Randomizer randomizer;
 
+	@Override
 	public void setUp() {
 		rainman = HMMFactory.createRainmanHMM();
 		robot = HMMFactory.createRobotHMM();

@@ -25,6 +25,7 @@ public class ParanthizedSentence implements Sentence {
 		paranthized = sen;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -38,12 +39,14 @@ public class ParanthizedSentence implements Sentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + paranthized.hashCode();
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		String pre = " ( ";
 		String mid = paranthized.toString();

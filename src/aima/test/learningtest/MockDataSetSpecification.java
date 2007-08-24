@@ -21,6 +21,7 @@ public class MockDataSetSpecification extends DataSetSpecification {
 		this.targetAttribute = targetAttributeName;
 	}
 
+	@Override
 	public List<String> getAttributeNames() {
 		return new ArrayList<String>();
 	}

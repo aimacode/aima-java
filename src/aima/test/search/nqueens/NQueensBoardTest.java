@@ -13,6 +13,7 @@ public class NQueensBoardTest extends TestCase {
 
 	NQueensBoard board;
 
+	@Override
 	public void setUp() {
 
 		board = new NQueensBoard(8);
@@ -40,10 +41,10 @@ public class NQueensBoardTest extends TestCase {
 
 		board.addQueenAt(new XYLocation(0, 0));
 		assertEquals(false, board.isSquareUnderAttack(new XYLocation(0, 0))); // queen
-																				// on
-																				// square
-																				// not
-																				// included
+		// on
+		// square
+		// not
+		// included
 		assertEquals(true, board.isSquareUnderAttack(new XYLocation(1, 0)));
 		assertEquals(true, board.isSquareUnderAttack(new XYLocation(7, 0)));
 		assertEquals(true, board.isSquareUnderAttack(new XYLocation(0, 7)));

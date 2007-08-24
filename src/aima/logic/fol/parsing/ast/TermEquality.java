@@ -30,6 +30,7 @@ public class TermEquality implements Sentence {
 		this.term2 = term2;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -47,6 +48,7 @@ public class TermEquality implements Sentence {
 
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + getTerm1().hashCode();
@@ -58,6 +60,7 @@ public class TermEquality implements Sentence {
 		return v.visitTermEquality(this, arg);
 	}
 
+	@Override
 	public String toString() {
 		String pre = term1.toString();
 		String mid = " = ";
@@ -66,6 +69,6 @@ public class TermEquality implements Sentence {
 	}
 
 	public FOLNode copy() {
-		return new TermEquality((Term) term1.copy(), (Term) term2.copy());
+		return new TermEquality(term1.copy(), term2.copy());
 	}
 }

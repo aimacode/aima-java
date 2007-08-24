@@ -1,6 +1,5 @@
 package aima.search.framework;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import aima.util.AbstractQueue;
@@ -116,6 +115,7 @@ public class Node {
 		return stepCost.doubleValue();
 	}
 
+	@Override
 	public String toString() {
 		return getState().toString();
 	}

@@ -52,6 +52,7 @@ package aima.search.framework;
 
 public class TreeSearch extends QueueSearch {
 
+	@Override
 	public void addExpandedNodesToFringe(NodeStore fringe, Node node,
 			Problem problem) {
 		fringe.add(expandNode(node, problem));

@@ -257,9 +257,9 @@ public class CellWorld implements MDPSource<CellWorldPosition, String> {
 		for (CellWorldPosition startingPosition : getNonFinalStates()) {
 			for (String actionDesired : actions) {
 				for (Cell target : unblockedCells()) { // too much work? should
-														// just cycle through
-														// neighbouring cells
-														// instead of all cells.
+					// just cycle through
+					// neighbouring cells
+					// instead of all cells.
 					CellWorldPosition endingPosition = target.position();
 					double transitionProbability = getTransitionProbability(
 							startingPosition, actionDesired, endingPosition);

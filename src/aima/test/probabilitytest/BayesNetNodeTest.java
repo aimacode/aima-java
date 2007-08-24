@@ -11,6 +11,7 @@ import junit.framework.TestCase;
 public class BayesNetNodeTest extends TestCase {
 	private BayesNetNode a, b, c, d, e;
 
+	@Override
 	public void setUp() {
 		a = new BayesNetNode("A");
 		b = new BayesNetNode("B");

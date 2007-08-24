@@ -21,6 +21,7 @@ public class CNFClauseGathererTest extends TestCase {
 
 	private PEParser parser;
 
+	@Override
 	public void setUp() {
 		parser = new PEParser();
 		gatherer = new CNFClauseGatherer();

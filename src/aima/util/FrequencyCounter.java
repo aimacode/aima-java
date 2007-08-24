@@ -45,6 +45,7 @@ public class FrequencyCounter<T> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return counter.toString();
 	}

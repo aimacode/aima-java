@@ -32,6 +32,7 @@ public class Rule {
 		return action;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof Rule)) {
 			return super.equals(o);
@@ -39,10 +40,12 @@ public class Rule {
 		return (toString().equals(((Rule) o).toString()));
 	}
 
+	@Override
 	public int hashCode() {
 		return toString().hashCode();
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 

@@ -24,6 +24,7 @@ public class XYEnvironmentTest extends TestCase {
 		super(name);
 	}
 
+	@Override
 	public void setUp() {
 		env = new XYEnvironment(10, 12);
 		a = new MockAgent();

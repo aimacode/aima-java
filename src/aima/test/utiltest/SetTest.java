@@ -20,6 +20,7 @@ import aima.util.SetOps;
 public class SetTest extends TestCase {
 	Set<Integer> s1, s2;
 
+	@Override
 	public void setUp() {
 		s1 = new HashSet<Integer>();
 		s1.add(new Integer(1));

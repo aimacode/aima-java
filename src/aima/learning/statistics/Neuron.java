@@ -1,6 +1,5 @@
 package aima.learning.statistics;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class Neuron {
 
 	private boolean inputAccepted;
 
-	private double activation= 0;
+	private double activation = 0;
 
 	public Neuron() {
 		this.activationFuncton = new SigmoidActivationFunction();
@@ -41,11 +40,11 @@ public class Neuron {
 	}
 
 	public double error(double value) {
-		if (Double.isNaN(value)){
-			//System.out.println("input value is NAN");
+		if (Double.isNaN(value)) {
+			// System.out.println("input value is NAN");
 		}
-		if (Double.isNaN(activation)){
-			//System.out.println("activation is NAN");
+		if (Double.isNaN(activation)) {
+			// System.out.println("activation is NAN");
 		}
 		return value - activation;
 	}
@@ -55,12 +54,12 @@ public class Neuron {
 		for (Link link : inLinks) {
 
 			sum += link.source().activation() * link.weight();
-			
+
 		}
 		Util.checkForNanOrInfinity(sum);
 		Util.checkForNanOrInfinity(bias);
 		sum += bias;
-		
+
 		return sum;
 	}
 
@@ -112,8 +111,7 @@ public class Neuron {
 	public void setBias(double bias) {
 		Util.checkForNanOrInfinity(bias);
 		this.bias = bias;
-		
+
 	}
-	
 
 }

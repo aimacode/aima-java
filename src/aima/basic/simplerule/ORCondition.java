@@ -24,10 +24,12 @@ public class ORCondition extends Condition {
 		right = aRightCon;
 	}
 
+	@Override
 	public boolean evaluate(ObjectWithDynamicAttributes p) {
 		return (left.evaluate(p) || right.evaluate(p));
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 

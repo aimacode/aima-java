@@ -71,7 +71,7 @@ public class NQueensBoard {
 		clear();
 
 		for (int i = 0; i < al.size(); i++) {
-			addQueenAt((XYLocation) al.get(i));
+			addQueenAt(al.get(i));
 		}
 	}
 
@@ -219,6 +219,7 @@ public class NQueensBoard {
 		return retVal;
 	}
 
+	@Override
 	public int hashCode() {
 		List<XYLocation> locs = getQueenPositions();
 
@@ -229,6 +230,7 @@ public class NQueensBoard {
 		return result;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 
 		if (this == o) {
@@ -249,6 +251,7 @@ public class NQueensBoard {
 		return retVal;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0; i < size; i++) { // rows

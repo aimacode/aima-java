@@ -18,6 +18,7 @@ public class CNFTransformerTest extends TestCase {
 
 	private CNFTransformer transformer;
 
+	@Override
 	public void setUp() {
 		transformer = new CNFTransformer();
 	}

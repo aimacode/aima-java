@@ -61,7 +61,7 @@ public class Rule {
 	}
 
 	public Clause clause(int i) {
-		return (Clause) clauses.get(i);
+		return clauses.get(i);
 	}
 
 	public Predicate conclusion() {
@@ -70,7 +70,7 @@ public class Rule {
 
 	public void initializeAllClauseDomainsFrom(List facts) {
 		for (int i = 0; i < clauses.size(); i++) {
-			Clause c = (Clause) clauses.get(i);
+			Clause c = clauses.get(i);
 			for (int j = 0; j < facts.size(); j++) {
 				Fact fact = (Fact) facts.get(j);
 				c.populateDomainsFrom(fact);

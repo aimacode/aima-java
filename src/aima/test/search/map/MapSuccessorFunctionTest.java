@@ -16,6 +16,7 @@ import aima.search.map.MapSuccessorFunction;
 public class MapSuccessorFunctionTest extends TestCase {
 	MapSuccessorFunction msf;
 
+	@Override
 	public void setUp() {
 		Map aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
 		aMap.addBidirectionalLink("A", "B", 5);
