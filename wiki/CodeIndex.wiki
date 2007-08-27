@@ -15,10 +15,14 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||3.7||70||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 ||3||71||Queue||[http://aima-java.googlecode.com/svn/trunk/src/aima/util/AbstractQueue.java AbstractQueue]||
 ||3.9||72||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
+||3||73||Breadth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BreadthFirstSearch.java TreeSearch]||
+||3||75||Uniform-cost search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/UniformCostSearch.java TreeSearch]||
+||3||75||Depth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthFirstSearch.java TreeSearch]||
 ||3.13||77||Depth-Limited-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthLimitedSearch.java DepthLimitedSearch]||
-||3.14||79||Iterative-Deepening-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/IterativeDeepeningSearch.java Iterative Deepening Search]||
+||3.14||78||Iterative-Deepening-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/IterativeDeepeningSearch.java Iterative Deepening Search]||
+||3||79||Bidirectional search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BidirectionalSearch.java TreeSearch]||
 ||3.19||83||Graph-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
-||4||95||Best-First-Search||---||
+||4||95||Best-First-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/BestFirstSearch.java GraphSearch]||
 ||4||97||A`*`-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/AStarSearch.java AStarSearch]||
 ||4.5||102||Recursive-Best-First-Search||---||
 ||4.11||112||Hill-Climbing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/HillClimbingSearch.java HillClimbingSearch]||
