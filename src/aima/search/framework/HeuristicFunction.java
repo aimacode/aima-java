@@ -6,6 +6,6 @@ package aima.search.framework;
  */
 public interface HeuristicFunction {
 
-	int getHeuristicValue(Object state);
+	int getHeuristicValue(Node n);
 
 }

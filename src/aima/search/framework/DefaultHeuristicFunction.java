@@ -11,7 +11,7 @@ package aima.search.framework;
 
 public class DefaultHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Object state) {
+	public int getHeuristicValue(Node n) {
 		return 1;
 	}
 

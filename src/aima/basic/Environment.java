@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 32.
+ * 
+ * Environment.
+ */
+
+/**
  * @author Ravi Mohan
  * 
  */

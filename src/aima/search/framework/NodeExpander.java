@@ -22,10 +22,6 @@ public class NodeExpander {
 	}
 
 	public List<Node> expandNode(Node node, Problem problem) {
-		int heuristic = problem.getHeuristicFunction().getHeuristicValue(
-				node.getState());
-		// System.out.println("Expanding\n"+node.getState()+"\n"+"heuristic =
-		// "+heuristic+"\n");
 
 		List<Node> nodes = new ArrayList<Node>();
 		List successors = problem.getSuccessorFunction().getSuccessors(

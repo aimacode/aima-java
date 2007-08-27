@@ -9,18 +9,19 @@ import aima.search.nodestore.PriorityNodeStore;
  * @author Ravi Mohan
  * 
  */
-
 public abstract class PrioritySearch implements Search {
 	protected QueueSearch search;
 
 	public List search(Problem p) throws Exception {
-		return search.search(p, new PriorityNodeStore(getComparator(p)));
+		return search.search(p, new PriorityNodeStore(getComparator()));
 	}
-
-	protected abstract Comparator getComparator(Problem p);
 
 	public Metrics getMetrics() {
 		return search.getMetrics();
 	}
 
+	//
+	// PROTECTED METHODS
+	//
+	protected abstract Comparator<Node> getComparator();
 }

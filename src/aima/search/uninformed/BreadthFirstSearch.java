@@ -8,9 +8,14 @@ import aima.search.framework.QueueSearch;
 import aima.search.framework.Search;
 import aima.search.nodestore.FIFONodeStore;
 
+/**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 73.
+ * 
+ * Breadth-first search.
+ */
 public class BreadthFirstSearch implements Search {
 
-	private QueueSearch search;
+	private final QueueSearch search;
 
 	public BreadthFirstSearch(QueueSearch search) {
 		this.search = search;

@@ -14,7 +14,9 @@ import aima.search.framework.Search;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.14, page
- * 78. <code>
+ * 78.
+ * 
+ * <code>
  * function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
  *   inputs: problem, a problem
  *   
@@ -35,9 +37,9 @@ import aima.search.framework.Search;
 public class IterativeDeepeningSearch extends NodeExpander implements Search {
 	private static String PATH_COST = "pathCost";
 
-	private int limit;
+	private final int limit;
 
-	private Metrics iterationMetrics;
+	private final Metrics iterationMetrics;
 
 	public IterativeDeepeningSearch() {
 		this.limit = Integer.MAX_VALUE;

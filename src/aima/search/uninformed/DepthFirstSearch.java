@@ -8,6 +8,11 @@ import aima.search.framework.QueueSearch;
 import aima.search.framework.Search;
 import aima.search.nodestore.LIFONodeStore;
 
+/**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 75.
+ * 
+ * Depth-first search.
+ */
 public class DepthFirstSearch implements Search {
 
 	QueueSearch search;

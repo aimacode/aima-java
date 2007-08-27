@@ -29,8 +29,9 @@ public class AStarSearchTest extends TestCase {
 
 			Problem problem = new Problem(board,
 					new EightPuzzleSuccessorFunction(),
-					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			Search search = new AStarSearch(new GraphSearch());
+					new EightPuzzleGoalTest());
+			Search search = new AStarSearch(new GraphSearch(),
+					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			assertEquals(23, agent.getActions().size());
 			assertEquals("906", agent.getInstrumentation().getProperty(

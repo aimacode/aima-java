@@ -22,8 +22,6 @@ public class Problem {
 
 	StepCostFunction stepCostFunction;
 
-	HeuristicFunction heuristicFunction;
-
 	public Problem(Object initialState, SuccessorFunction successorFunction,
 			GoalTest goalTest) {
 
@@ -31,27 +29,12 @@ public class Problem {
 		this.successorFunction = successorFunction;
 		this.goalTest = goalTest;
 		this.stepCostFunction = new DefaultStepCostFunction();
-		this.heuristicFunction = new DefaultHeuristicFunction();
-
 	}
 
 	public Problem(Object initialState, SuccessorFunction successorFunction,
 			GoalTest goalTest, StepCostFunction stepCostFunction) {
 		this(initialState, successorFunction, goalTest);
 		this.stepCostFunction = stepCostFunction;
-	}
-
-	public Problem(Object initialState, SuccessorFunction successorFunction,
-			GoalTest goalTest, HeuristicFunction heuristicFunction) {
-		this(initialState, successorFunction, goalTest);
-		this.heuristicFunction = heuristicFunction;
-	}
-
-	public Problem(Object initialState, SuccessorFunction successorFunction,
-			GoalTest goalTest, StepCostFunction stepCostFunction,
-			HeuristicFunction heuristicFunction) {
-		this(initialState, successorFunction, goalTest, stepCostFunction);
-		this.heuristicFunction = heuristicFunction;
 	}
 
 	public Object getInitialState() {
@@ -71,9 +54,4 @@ public class Problem {
 	public SuccessorFunction getSuccessorFunction() {
 		return successorFunction;
 	}
-
-	public HeuristicFunction getHeuristicFunction() {
-		return heuristicFunction;
-	}
-
 }

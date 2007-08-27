@@ -4,9 +4,11 @@
  */
 package aima.test.search;
 
+import junit.framework.TestCase;
+
 import aima.search.eightpuzzle.EightPuzzleBoard;
 import aima.search.eightpuzzle.MisplacedTilleHeuristicFunction;
-import junit.framework.TestCase;
+import aima.search.framework.Node;
 
 /**
  * @author Ravi Mohan
@@ -18,12 +20,15 @@ public class MisplacedTileHeuristicFunctionTest extends TestCase {
 		MisplacedTilleHeuristicFunction fn = new MisplacedTilleHeuristicFunction();
 		EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 2, 0, 5, 6,
 				4, 8, 3, 7, 1 });
-		assertEquals(7, fn.getHeuristicValue(board));
+		Node n = new Node(board);
+		assertEquals(7, fn.getHeuristicValue(n));
 
 		board = new EightPuzzleBoard(new int[] { 6, 2, 5, 3, 4, 8, 0, 7, 1 });
-		assertEquals(6, fn.getHeuristicValue(board));
+		n = new Node(board);
+		assertEquals(6, fn.getHeuristicValue(n));
 
 		board = new EightPuzzleBoard(new int[] { 6, 2, 5, 3, 4, 8, 7, 0, 1 });
-		assertEquals(7, fn.getHeuristicValue(board));
+		n = new Node(board);
+		assertEquals(7, fn.getHeuristicValue(n));
 	}
 }
