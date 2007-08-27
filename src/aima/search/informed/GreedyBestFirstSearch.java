@@ -20,7 +20,7 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 	public GreedyBestFirstSearch(QueueSearch search, final HeuristicFunction hf) {
 		super(search, new EvaluationFunction() {
 			public Double getValue(Node n) {
-				return new Double(hf.getHeuristicValue(n));
+				return new Double(hf.getHeuristicValue(n.getState()));
 			}
 		});
 	}

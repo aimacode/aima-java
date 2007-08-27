@@ -6,7 +6,6 @@ package aima.search.eightpuzzle;
 
 import aima.basic.XYLocation;
 import aima.search.framework.HeuristicFunction;
-import aima.search.framework.Node;
 
 /**
  * @author Ravi Mohan
@@ -15,8 +14,8 @@ import aima.search.framework.Node;
 
 public class ManhattanHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Node n) {
-		EightPuzzleBoard board = (EightPuzzleBoard) n.getState();
+	public int getHeuristicValue(Object state) {
+		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		int retVal = 0;
 		for (int i = 1; i < 9; i++) {
 			XYLocation loc = board.getLocationOf(i);

@@ -26,7 +26,8 @@ public class AStarSearch extends BestFirstSearch {
 		super(search, new EvaluationFunction() {
 			public Double getValue(Node n) {
 				// f(n) = g(n) + h(n)
-				return new Double(n.getPathCost() + hf.getHeuristicValue(n));
+				return new Double(n.getPathCost()
+						+ hf.getHeuristicValue(n.getState()));
 			}
 		});
 	}
