@@ -58,7 +58,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	}
 
 	private int getHeuristic(Node aNode) {
-		return heuristicFunction.getHeuristicValue(aNode);
+		return heuristicFunction.getHeuristicValue(aNode.getState());
 	}
 
 }
