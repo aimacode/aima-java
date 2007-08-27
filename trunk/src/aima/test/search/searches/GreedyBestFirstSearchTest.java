@@ -27,8 +27,9 @@ public class GreedyBestFirstSearchTest extends TestCase {
 
 			Problem problem = new Problem(board,
 					new EightPuzzleSuccessorFunction(),
-					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			Search search = new GreedyBestFirstSearch(new GraphSearch());
+					new EightPuzzleGoalTest());
+			Search search = new GreedyBestFirstSearch(new GraphSearch(),
+					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			assertEquals(81, agent.getActions().size());
 			assertEquals("304", agent.getInstrumentation().getProperty(

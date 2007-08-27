@@ -6,6 +6,7 @@ package aima.search.eightpuzzle;
 
 import aima.basic.XYLocation;
 import aima.search.framework.HeuristicFunction;
+import aima.search.framework.Node;
 
 /**
  * @author Ravi Mohan
@@ -14,8 +15,8 @@ import aima.search.framework.HeuristicFunction;
 
 public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Object state) {
-		EightPuzzleBoard board = (EightPuzzleBoard) state;
+	public int getHeuristicValue(Node n) {
+		EightPuzzleBoard board = (EightPuzzleBoard) n.getState();
 		return getNumberOfMisplacedTiles(board);
 
 	}

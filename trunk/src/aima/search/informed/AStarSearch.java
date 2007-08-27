@@ -4,64 +4,30 @@
  */
 package aima.search.informed;
 
-import java.util.Comparator;
-
-import aima.search.framework.Metrics;
+import aima.search.framework.BestFirstSearch;
+import aima.search.framework.EvaluationFunction;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Node;
-import aima.search.framework.PrioritySearch;
-import aima.search.framework.Problem;
 import aima.search.framework.QueueSearch;
+
+/**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 97.
+ * 
+ * A* search: Minimizing the total estimated solution cost.
+ */
 
 /**
  * @author Ravi Mohan
  * 
  */
+public class AStarSearch extends BestFirstSearch {
 
-public class AStarSearch extends PrioritySearch {
-
-	public AStarSearch(QueueSearch search) {
-		this.search = search;
-	}
-
-	class NodeComparator implements Comparator {
-		private Problem problem;
-
-		NodeComparator(Problem problem) {
-			this.problem = problem;
-		}
-
-		public int compare(Object aNode, Object anotherNode) {
-			Node one = (Node) aNode;
-			Node two = (Node) anotherNode;
-
-			int h1 = problem.getHeuristicFunction().getHeuristicValue(
-					one.getState());
-			double g1 = one.getPathCost();
-			int h2 = problem.getHeuristicFunction().getHeuristicValue(
-					two.getState());
-			double g2 = two.getPathCost();
-
-			double s1 = g1 + h1;
-			double s2 = g2 + h2;
-			if (s1 == s2) {
-				return 0;
-			} else if (s1 < s2) {
-				return -1;
-			} else {
-				return 1;//
+	public AStarSearch(QueueSearch search, final HeuristicFunction hf) {
+		super(search, new EvaluationFunction() {
+			public Double getValue(Node n) {
+				// f(n) = g(n) + h(n)
+				return new Double(n.getPathCost() + hf.getHeuristicValue(n));
 			}
-		}
+		});
 	}
-
-	@Override
-	public Metrics getMetrics() {
-		return search.getMetrics();
-	}
-
-	@Override
-	protected Comparator getComparator(Problem p) {
-
-		return new NodeComparator(p);
-	}
-
 }

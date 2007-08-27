@@ -15,7 +15,9 @@ import aima.search.framework.SearchUtils;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.13, page
- * 77. <code>
+ * 77.
+ * 
+ * <code>
  * function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
  *   return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem, limit)
  *   
@@ -39,7 +41,7 @@ import aima.search.framework.SearchUtils;
 public class DepthLimitedSearch extends NodeExpander implements Search {
 	private static String PATH_COST = "pathCost";
 
-	private int limit;
+	private final int limit;
 
 	public DepthLimitedSearch(int limit) {
 		this.limit = limit;

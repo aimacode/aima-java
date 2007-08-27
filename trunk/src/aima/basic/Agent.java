@@ -3,10 +3,15 @@ package aima.basic;
 import java.util.Hashtable;
 
 /**
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.1, page 33.
+ * 
+ * Figure 2.1 Agents interact with environments through sensors and actuators.
+ */
+
+/**
  * @author Ravi Mohan
  * 
  */
-
 public abstract class Agent extends ObjectWithDynamicAttributes {
 	protected AgentProgram program;
 

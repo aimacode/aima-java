@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import aima.util.Util;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Node;
 import aima.search.framework.NodeExpander;
 import aima.search.framework.Problem;
@@ -22,11 +23,14 @@ import aima.search.framework.SearchUtils;
 
 public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
-	private int steps;
+	private final HeuristicFunction heuristicFunction;
 
-	private Scheduler scheduler;
+	private final int steps;
 
-	public SimulatedAnnealingSearch() {
+	private final Scheduler scheduler;
+
+	public SimulatedAnnealingSearch(HeuristicFunction hf) {
+		this.heuristicFunction = hf;
 		this.steps = 10000;
 		this.scheduler = new Scheduler();
 	}
@@ -54,7 +58,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 			if (children.size() > 0) {
 				// TODO take care of no possible expansion situation?
 				next = (Node) Util.selectRandomlyFromList(children);
-				int deltaE = getValue(next, p) - getValue(current, p);
+				int deltaE = getValue(next) - getValue(current);
 				// System.out.print("deltaE = "+deltaE+"\n");
 				if ((deltaE > 0.0)
 						|| (new Random().nextDouble() > Math.exp(deltaE / temp))) {
@@ -67,14 +71,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return ret;// Total Failure
 	}
 
-	private int getHeuristic(Node aNode, Problem p) {
-		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
-	}
-
-	private int getValue(Node n, Problem p) {
-		return -1 * getHeuristic(n, p); // assumption greater heuristic value =>
+	private int getValue(Node n) {
+		return -1 * getHeuristic(n); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
 	}
 
+	private int getHeuristic(Node aNode) {
+		return heuristicFunction.getHeuristicValue(aNode);
+	}
 }

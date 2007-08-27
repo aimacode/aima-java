@@ -1,17 +1,14 @@
 package aima.search.uninformed;
 
 import java.util.Comparator;
-import java.util.List;
 
-import aima.search.framework.Metrics;
 import aima.search.framework.Node;
-import aima.search.framework.Problem;
+import aima.search.framework.PrioritySearch;
 import aima.search.framework.QueueSearch;
-import aima.search.framework.Search;
-import aima.search.nodestore.PriorityNodeStore;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 75.
+ * 
  * Uniform-cost search.
  */
 
@@ -19,24 +16,22 @@ import aima.search.nodestore.PriorityNodeStore;
  * @author Ciaran O'Reilly
  * 
  */
-public class UniformCostSearch implements Search {
-
-	private QueueSearch search;
+public class UniformCostSearch extends PrioritySearch {
 
 	public UniformCostSearch(QueueSearch search) {
 		this.search = search;
 	}
 
-	public List search(Problem p) {
-		return search.search(p, new PriorityNodeStore(new Comparator<Node>() {
+	//
+	// PROTECTED METHODS
+	//
+	@Override
+	protected Comparator<Node> getComparator() {
+		return new Comparator<Node>() {
 			public int compare(Node node1, Node node2) {
 				return (new Double(node1.getPathCost()).compareTo(new Double(
 						node2.getPathCost())));
 			}
-		}));
-	}
-
-	public Metrics getMetrics() {
-		return search.getMetrics();
+		};
 	}
 }

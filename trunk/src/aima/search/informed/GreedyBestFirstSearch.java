@@ -4,11 +4,10 @@
  */
 package aima.search.informed;
 
-import java.util.Comparator;
-
+import aima.search.framework.BestFirstSearch;
+import aima.search.framework.EvaluationFunction;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Node;
-import aima.search.framework.PrioritySearch;
-import aima.search.framework.Problem;
 import aima.search.framework.QueueSearch;
 
 /**
@@ -16,40 +15,13 @@ import aima.search.framework.QueueSearch;
  * 
  */
 
-public class GreedyBestFirstSearch extends PrioritySearch {
+public class GreedyBestFirstSearch extends BestFirstSearch {
 
-	public GreedyBestFirstSearch(QueueSearch search) {
-		this.search = search;
-	}
-
-	@Override
-	protected Comparator getComparator(Problem p) {
-		return new NodeComparator(p);
-	}
-
-	class NodeComparator implements Comparator {
-		private Problem problem;
-
-		NodeComparator(Problem problem) {
-			this.problem = problem;
-		}
-
-		public int compare(Object aNode, Object anotherNode) {
-			Node one = (Node) aNode;
-			Node two = (Node) anotherNode;
-
-			int h1 = problem.getHeuristicFunction().getHeuristicValue(
-					one.getState());
-			int h2 = problem.getHeuristicFunction().getHeuristicValue(
-					two.getState());
-			if (h1 == h2) {
-				return 0;
-			} else if (h1 < h2) {
-				return -1;
-			} else {
-				return +1;
+	public GreedyBestFirstSearch(QueueSearch search, final HeuristicFunction hf) {
+		super(search, new EvaluationFunction() {
+			public Double getValue(Node n) {
+				return new Double(hf.getHeuristicValue(n));
 			}
-		}
-
+		});
 	}
 }
