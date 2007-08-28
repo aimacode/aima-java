@@ -24,7 +24,7 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||3.19||83||Graph-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
 ||4||95||_Best-First-Search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/BestFirstSearch.java BestFirstSearch]||
 ||4||97||A`*`-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/AStarSearch.java AStarSearch]||
-||4.5||102||Recursive-Best-First-Search||---||
+||4.5||102||_Recursive-Best-First-Search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
 ||4.11||112||Hill-Climbing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/HillClimbingSearch.java HillClimbingSearch]||
 ||4.14||116||Simulated-Annealing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
 ||4.17||119||Genetic-Algorithm||---||
