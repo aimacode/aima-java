@@ -2,7 +2,10 @@ package aima.search.demos;
 
 import aima.basic.BasicEnvironmentView;
 import aima.search.framework.GraphSearch;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.TreeSearch;
+import aima.search.informed.AStarEvaluationFunction;
+import aima.search.informed.RecursiveBestFirstSearch;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
@@ -30,6 +33,7 @@ public class MapDemo {
 		mapWithRecursiveDLS();
 		mapWithIterativeDeepeningSearch();
 		mapWithBidrectionalSearch();
+		mapWithRecursiveBestFirstSearch();
 	}
 
 	private static void mapWithBreadthFirstSearch() {
@@ -111,6 +115,28 @@ public class MapDemo {
 		MapAgent ma = new MapAgent(me, new BidirectionalSearch(),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ORADEA);
+		me.registerView(new BasicEnvironmentView());
+		me.stepUntilNoOp();
+	}
+
+	private static void mapWithRecursiveBestFirstSearch() {
+		System.out.println("\nMapDemo RecursiveBestFirstSearch Search  -->");
+
+		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
+				.getMapOfRomania());
+		MapAgent ma = new MapAgent(me, new RecursiveBestFirstSearch(
+				new AStarEvaluationFunction()),
+				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
+		ma.setHeuristicFunction(new HeuristicFunction() {
+			public int getHeuristicValue(Object state) {
+				return SimplifiedRoadMapOfPartOfRomania
+						.getStraightLineDistancesToBucharest().getDistance(
+								(String) state,
+								SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+			}
+		});
+
+		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
 		me.stepUntilNoOp();
 	}

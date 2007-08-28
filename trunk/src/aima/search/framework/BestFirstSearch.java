@@ -25,11 +25,11 @@ public class BestFirstSearch extends PrioritySearch {
 	// PROTECTED METHODS
 	//
 	@Override
-	protected Comparator<Node> getComparator() {
+	protected Comparator<Node> getComparator(final Problem p) {
 		return new Comparator<Node>() {
 			public int compare(Node one, Node two) {
-				Double f1 = evaluationFunction.getValue(one);
-				Double f2 = evaluationFunction.getValue(two);
+				Double f1 = evaluationFunction.getValue(p, one);
+				Double f2 = evaluationFunction.getValue(p, two);
 
 				return f1.compareTo(f2);
 			}

@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import aima.util.Util;
-import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Node;
 import aima.search.framework.NodeExpander;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchUtils;
+import aima.util.Util;
 
 /**
  * @author Ravi Mohan
@@ -23,14 +22,11 @@ import aima.search.framework.SearchUtils;
 
 public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
-	private final HeuristicFunction heuristicFunction;
-
 	private final int steps;
 
 	private final Scheduler scheduler;
 
-	public SimulatedAnnealingSearch(HeuristicFunction hf) {
-		this.heuristicFunction = hf;
+	public SimulatedAnnealingSearch() {
 		this.steps = 10000;
 		this.scheduler = new Scheduler();
 	}
@@ -58,7 +54,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 			if (children.size() > 0) {
 				// TODO take care of no possible expansion situation?
 				next = (Node) Util.selectRandomlyFromList(children);
-				int deltaE = getValue(next) - getValue(current);
+				int deltaE = getValue(p, next) - getValue(p, current);
 				// System.out.print("deltaE = "+deltaE+"\n");
 				if ((deltaE > 0.0)
 						|| (new Random().nextDouble() > Math.exp(deltaE / temp))) {
@@ -71,13 +67,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return ret;// Total Failure
 	}
 
-	private int getValue(Node n) {
-		return -1 * getHeuristic(n); // assumption greater heuristic value =>
+	private int getValue(Problem p, Node n) {
+		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
 	}
 
-	private int getHeuristic(Node aNode) {
-		return heuristicFunction.getHeuristicValue(aNode.getState());
+	private int getHeuristic(Problem p, Node aNode) {
+		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
 	}
 }
