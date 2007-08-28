@@ -32,13 +32,13 @@ public class BidirectionalSearch implements Search {
 
 	private SearchOutcome searchOutcome = SearchOutcome.PATH_NOT_FOUND;
 
-	private static String NODES_EXPANDED = "nodesExpanded";
+	private static final String NODES_EXPANDED = "nodesExpanded";
 
-	private static String QUEUE_SIZE = "queueSize";
+	private static final String QUEUE_SIZE = "queueSize";
 
-	private static String MAX_QUEUE_SIZE = "maxQueueSize";
+	private static final String MAX_QUEUE_SIZE = "maxQueueSize";
 
-	private static String PATH_COST = "pathCost";
+	private static final String PATH_COST = "pathCost";
 
 	public BidirectionalSearch() {
 		metrics = new Metrics();
@@ -151,14 +151,17 @@ public class BidirectionalSearch implements Search {
 			}
 		}
 
-		return new ArrayList<String>();// Empty List can indicate already at
-		// Goal
-		// or unable to find valid set of
-		// actions
+		// Empty List can indicate already at Goal
+		// or unable to find valid set of actions
+		return new ArrayList<String>();
 	}
 
 	public SearchOutcome getSearchOutcome() {
 		return searchOutcome;
+	}
+
+	public Metrics getMetrics() {
+		return metrics;
 	}
 
 	public void clearInstrumentation() {
@@ -166,10 +169,6 @@ public class BidirectionalSearch implements Search {
 		metrics.set(QUEUE_SIZE, 0);
 		metrics.set(MAX_QUEUE_SIZE, 0);
 		metrics.set(PATH_COST, 0.0);
-	}
-
-	public Metrics getMetrics() {
-		return metrics;
 	}
 
 	public int getNodesExpanded() {
@@ -181,7 +180,7 @@ public class BidirectionalSearch implements Search {
 	}
 
 	public int getQueueSize() {
-		return metrics.getInt("queueSize");
+		return metrics.getInt(QUEUE_SIZE);
 	}
 
 	public void setQueueSize(int queueSize) {

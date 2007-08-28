@@ -15,9 +15,9 @@ import aima.util.Util;
  * 
  */
 public class Map {
-	private ArrayList<String> locations = new ArrayList<String>();
+	private final ArrayList<String> locations = new ArrayList<String>();
 
-	private static Table<String, String, Integer> map = null;
+	private Table<String, String, Integer> map = null;
 
 	public Map(String[] locs) {
 		for (int i = 0; i < locs.length; i++) {

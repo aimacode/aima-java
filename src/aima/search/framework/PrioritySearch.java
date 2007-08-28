@@ -13,7 +13,7 @@ public abstract class PrioritySearch implements Search {
 	protected QueueSearch search;
 
 	public List search(Problem p) throws Exception {
-		return search.search(p, new PriorityNodeStore(getComparator()));
+		return search.search(p, new PriorityNodeStore(getComparator(p)));
 	}
 
 	public Metrics getMetrics() {
@@ -23,5 +23,5 @@ public abstract class PrioritySearch implements Search {
 	//
 	// PROTECTED METHODS
 	//
-	protected abstract Comparator<Node> getComparator();
+	protected abstract Comparator<Node> getComparator(Problem p);
 }

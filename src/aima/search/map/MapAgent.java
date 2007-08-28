@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.basic.Percept;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SimpleProblemSolvingAgent;
@@ -29,6 +30,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	private int goalTestPos = 0;
 
+	private HeuristicFunction heuristicFunction = null;
+
 	public MapAgent(MapEnvironment mapEnvironment, Search search) {
 		this.mapEnvironment = mapEnvironment;
 		this.search = search;
@@ -48,6 +51,14 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 		this.search = search;
 		this.goalTests = new String[goalTests.length];
 		System.arraycopy(goalTests, 0, this.goalTests, 0, goalTests.length);
+	}
+
+	public HeuristicFunction getHeuristicFunction() {
+		return heuristicFunction;
+	}
+
+	public void setHeuristicFunction(HeuristicFunction heuristicFunction) {
+		this.heuristicFunction = heuristicFunction;
 	}
 
 	//
@@ -77,8 +88,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected Problem formulateProblem(Object goal) {
-		return new BidirectionalMapProblem(mapEnvironment.getMap(),
-				currentLocation, (String) goal);
+		if (null == getHeuristicFunction()) {
+			return new BidirectionalMapProblem(mapEnvironment.getMap(),
+					currentLocation, (String) goal);
+		} else {
+			return new BidirectionalMapProblem(mapEnvironment.getMap(),
+					currentLocation, (String) goal, getHeuristicFunction());
+		}
 	}
 
 	@Override

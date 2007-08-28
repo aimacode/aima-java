@@ -1,6 +1,7 @@
 package aima.search.map;
 
 import aima.search.framework.BidirectionalProblem;
+import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Problem;
 
 /**
@@ -23,6 +24,18 @@ public class BidirectionalMapProblem extends Problem implements
 
 		reverseProblem = new Problem(goalState, new MapSuccessorFunction(aMap),
 				new MapGoalTest(initialState), new MapStepCostFunction(aMap));
+	}
+
+	public BidirectionalMapProblem(Map aMap, String initialState,
+			String goalState, HeuristicFunction hf) {
+		super(initialState, new MapSuccessorFunction(aMap), new MapGoalTest(
+				goalState), new MapStepCostFunction(aMap), hf);
+
+		map = aMap;
+
+		reverseProblem = new Problem(goalState, new MapSuccessorFunction(aMap),
+				new MapGoalTest(initialState), new MapStepCostFunction(aMap),
+				hf);
 	}
 
 	//

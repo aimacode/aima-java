@@ -2,7 +2,6 @@ package aima.search.informed;
 
 import java.util.List;
 
-import aima.search.framework.HeuristicFunction;
 import aima.search.framework.Node;
 import aima.search.framework.NodeExpander;
 import aima.search.framework.Problem;
@@ -16,10 +15,7 @@ import aima.search.framework.SearchUtils;
 
 public class HillClimbingSearch extends NodeExpander implements Search {
 
-	private final HeuristicFunction heuristicFunction;
-
-	public HillClimbingSearch(HeuristicFunction hf) {
-		heuristicFunction = hf;
+	public HillClimbingSearch() {
 	}
 
 	public List search(Problem p) throws Exception {
@@ -30,7 +26,8 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 			List children = expandNode(current, p);
 			neighbor = getHighestValuedNodeFrom(children, p);
 
-			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
+			if ((neighbor == null)
+					|| (getValue(p, neighbor) <= getValue(p, current))) {
 				return SearchUtils.actionsFromNodes(current.getPathFromRoot());
 			}
 			current = neighbor;
@@ -43,7 +40,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		Node nodeWithHighestValue = null;
 		for (int i = 0; i < children.size(); i++) {
 			Node child = (Node) children.get(i);
-			int value = getValue(child);
+			int value = getValue(p, child);
 			if (value > highestValue) {
 				highestValue = value;
 				nodeWithHighestValue = child;
@@ -52,13 +49,13 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return nodeWithHighestValue;
 	}
 
-	private int getValue(Node n) {
-		return -1 * getHeuristic(n); // assumption greater heuristic value =>
+	private int getValue(Problem p, Node n) {
+		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 	}
 
-	private int getHeuristic(Node aNode) {
-		return heuristicFunction.getHeuristicValue(aNode.getState());
+	private int getHeuristic(Problem p, Node aNode) {
+		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
 	}
 
 }

@@ -107,9 +107,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
-			Search search = new SimulatedAnnealingSearch(
+					new NQueensSuccessorFunction(), new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
+			Search search = new SimulatedAnnealingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
@@ -124,9 +124,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
-			Search search = new HillClimbingSearch(
+					new NQueensSuccessorFunction(), new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
+			Search search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();

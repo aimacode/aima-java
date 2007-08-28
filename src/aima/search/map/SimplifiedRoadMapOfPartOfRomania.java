@@ -2,7 +2,12 @@ package aima.search.map;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.2, page 63.
+ * 
  * Figure 3.7 An informal description of the general tree-search algorithm.
+ * 
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.1, page 95.
+ * 
+ * Figure 4.1 Values of hSLD - straight-line distances to Bucharest.
  */
 
 /**
@@ -61,6 +66,8 @@ public class SimplifiedRoadMapOfPartOfRomania {
 	//
 	//
 	private static Map mapOfRomania = null;
+
+	private static Map mapOfStraightLineDistancesToBucharest = null;
 	//
 	static {
 		init();
@@ -70,10 +77,16 @@ public class SimplifiedRoadMapOfPartOfRomania {
 		return mapOfRomania;
 	}
 
+	public static Map getStraightLineDistancesToBucharest() {
+		return mapOfStraightLineDistancesToBucharest;
+	}
+
 	//
 	// PRIVATE METHODS
 	//
 	private static void init() {
+		//
+		// mapOfRomania
 		mapOfRomania = new Map(LOCATIONS_IN_ROMANIA);
 
 		mapOfRomania.addBidirectionalLink(ORADEA, ZERIND, 71);
@@ -120,5 +133,51 @@ public class SimplifiedRoadMapOfPartOfRomania {
 		mapOfRomania.addBidirectionalLink(HIRSOVA, EFORIE, 86);
 
 		// mapOfRomania.addBidirectionalLink(EFORIE - already all linked
+
+		//
+		// mapOfStraightLineDistancesToBucharest
+		mapOfStraightLineDistancesToBucharest = new Map(LOCATIONS_IN_ROMANIA);
+		//
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(ARAD,
+				BUCHAREST, 366);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(BUCHAREST,
+				BUCHAREST, 0);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(CRAIOVA,
+				BUCHAREST, 160);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(DROBETA,
+				BUCHAREST, 242);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(EFORIE,
+				BUCHAREST, 161);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(FAGARAS,
+				BUCHAREST, 176);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(GIURGIU,
+				BUCHAREST, 77);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(HIRSOVA,
+				BUCHAREST, 151);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(IASI,
+				BUCHAREST, 226);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(LUGOJ,
+				BUCHAREST, 244);
+		//
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(MEHADIA,
+				BUCHAREST, 241);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(NEAMT,
+				BUCHAREST, 234);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(ORADEA,
+				BUCHAREST, 380);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(PITESTI,
+				BUCHAREST, 100);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(
+				RIMNICU_VILCEA, BUCHAREST, 193);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(SIBIU,
+				BUCHAREST, 253);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(TIMISOARA,
+				BUCHAREST, 329);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(URZICENI,
+				BUCHAREST, 80);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(VASLUI,
+				BUCHAREST, 199);
+		mapOfStraightLineDistancesToBucharest.addBidirectionalLink(ZERIND,
+				BUCHAREST, 374);
 	}
 }
