@@ -24,6 +24,7 @@ import aima.test.search.searches.DepthLimitedSearchTest;
 import aima.test.search.searches.GreedyBestFirstSearchTest;
 import aima.test.search.searches.IterativeDeepeningSearchTest;
 import aima.test.search.searches.RecursiveBestFirstSearchTest;
+import aima.test.search.searches.SimulatedAnnealingSearchTest;
 import aima.test.search.searches.UniformCostSearchTest;
 
 /**
@@ -62,6 +63,7 @@ public class SearchTests {
 		suite.addTest(new TestSuite(NodeTest.class));
 		suite.addTest(new TestSuite(QueueTest.class));
 		suite.addTest(new TestSuite(RecursiveBestFirstSearchTest.class));
+		suite.addTest(new TestSuite(SimulatedAnnealingSearchTest.class));
 		suite.addTest(new TestSuite(UniformCostSearchTest.class));
 
 		return suite;

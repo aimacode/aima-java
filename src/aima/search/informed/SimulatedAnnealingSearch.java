@@ -78,13 +78,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		Node next = null;
 		List<String> ret = new ArrayList<String>();
 		// for t <- 1 to INFINITY do
-		int t = 0;
+		int timeStep = 0;
 		while (true) {
-			// T <- schedule[t]
-			double T = scheduler.getTemp(t);
-			t++;
-			// if T = 0 then return current
-			if (T == 0.0) {
+			// temperature <- schedule[t]
+			double temperature = scheduler.getTemp(timeStep);
+			timeStep++;
+			// if temperature = 0 then return current
+			if (temperature == 0.0) {
 				if (p.isGoalState(current.getState())) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
@@ -100,22 +100,25 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 				// /\E <- VALUE[next] - VALUE[current]
 				int deltaE = getValue(p, next) - getValue(p, current);
 
-				// TODO - remove
-				// if (deltaE <= 0) {
-				// System.out.println("deltaE=" + deltaE + ", T=" + T
-				// + ", Math.exp(deltaE/T)=" + Math.exp(deltaE / T));
-				// }
-
-				// if /\E > 0 then current <- next
-				// else current <- next only with probablity e^(/\E/T)
-				if ((deltaE > 0.0)
-						|| (new Random().nextDouble() <= Math.exp(deltaE / T))) {
+				if (shouldAccept(temperature, deltaE)) {
 					current = next;
 				}
 			}
 		}
 
 		return ret;
+	}
+
+	// if /\E > 0 then current <- next
+	// else current <- next only with probablity e^(/\E/T)
+	private boolean shouldAccept(double temperature, int deltaE) {
+		return (deltaE > 0.0)
+				|| (new Random().nextDouble() <= probabilityOfAcceptance(
+						temperature, deltaE));
+	}
+
+	public double probabilityOfAcceptance(double temperature, int deltaE) {
+		return Math.exp(deltaE / temperature);
 	}
 
 	public SearchOutcome getOutcome() {
