@@ -11,9 +11,9 @@ package aima.search.informed;
 
 public class Scheduler {
 
-	private int k, limit;
+	private final int k, limit;
 
-	private double lam;
+	private final double lam;
 
 	public Scheduler(int k, double lam, int limit) {
 		this.k = k;
@@ -23,7 +23,7 @@ public class Scheduler {
 
 	public Scheduler() {
 		this.k = 20;
-		this.lam = 0.005;
+		this.lam = 0.045;
 		this.limit = 100;
 	}
 

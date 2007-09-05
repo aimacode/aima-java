@@ -139,9 +139,11 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(random1,
 					new EightPuzzleSuccessorFunction(),
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			Search search = new SimulatedAnnealingSearch();
+			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
+			System.out.println("Search Outcome=" + search.getOutcome());
+			System.out.println("Final State=\n" + search.getLastSearchState());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();

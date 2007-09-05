@@ -109,11 +109,13 @@ public class NQueensDemo {
 			Problem problem = new Problem(new NQueensBoard(8),
 					new NQueensSuccessorFunction(), new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
-			Search search = new SimulatedAnnealingSearch();
+			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
+			System.out.println("Search Outcome=" + search.getOutcome());
+			System.out.println("Final State=\n" + search.getLastSearchState());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,11 +128,13 @@ public class NQueensDemo {
 			Problem problem = new Problem(new NQueensBoard(8),
 					new NQueensSuccessorFunction(), new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
-			Search search = new HillClimbingSearch();
+			HillClimbingSearch search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
+			System.out.println("Search Outcome=" + search.getOutcome());
+			System.out.println("Final State=\n" + search.getLastSearchState());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
