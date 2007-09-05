@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.search.framework.EvaluationFunction;
-import aima.search.framework.Metrics;
 import aima.search.framework.Node;
+import aima.search.framework.NodeExpander;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchUtils;
-import aima.search.framework.Successor;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.5, page 102.
@@ -38,13 +37,9 @@ import aima.search.framework.Successor;
  * @author Ciaran O'Reilly
  * 
  */
-public class RecursiveBestFirstSearch implements Search {
-
-	protected Metrics metrics;
+public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 
 	private final EvaluationFunction evaluationFunction;
-
-	private static final String NODES_EXPANDED = "nodesExpanded";
 
 	private static final String MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
 
@@ -54,7 +49,6 @@ public class RecursiveBestFirstSearch implements Search {
 
 	public RecursiveBestFirstSearch(EvaluationFunction ef) {
 		evaluationFunction = ef;
-		metrics = new Metrics();
 	}
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
@@ -79,22 +73,11 @@ public class RecursiveBestFirstSearch implements Search {
 		return actions;
 	}
 
-	public Metrics getMetrics() {
-		return metrics;
-	}
-
+	@Override
 	public void clearInstrumentation() {
-		metrics.set(NODES_EXPANDED, 0);
+		super.clearInstrumentation();
 		metrics.set(MAX_RECURSIVE_DEPTH, 0);
 		metrics.set(PATH_COST, 0.0);
-	}
-
-	public int getNodesExpanded() {
-		return metrics.getInt(NODES_EXPANDED);
-	}
-
-	public void setNodesExpanded(int nodesExpanded) {
-		metrics.set(NODES_EXPANDED, nodesExpanded);
 	}
 
 	public void setMaxRecursiveDepth(int recursiveDepth) {
@@ -132,7 +115,7 @@ public class RecursiveBestFirstSearch implements Search {
 		}
 
 		// successors <- EXPAND(node, problem)
-		List<Node> successors = expand(n, p);
+		List<Node> successors = expandNode(n, p);
 		// if successors is empty then return failure, infinity
 		if (0 == successors.size()) {
 			return new SearchResult(null, INFINITY);
@@ -165,27 +148,6 @@ public class RecursiveBestFirstSearch implements Search {
 				return sr;
 			}
 		}
-	}
-
-	private List<Node> expand(Node n, Problem p) {
-		List<Node> nodes = new ArrayList<Node>();
-
-		List<Successor> successors = p.getSuccessorFunction().getSuccessors(
-				n.getState());
-		for (int i = 0; i < successors.size(); i++) {
-			Successor successor = successors.get(i);
-			Node aNode = new Node(n, successor.getState());
-			aNode.setAction(successor.getAction());
-			Double stepCost = p.getStepCostFunction().calculateStepCost(
-					n.getState(), successor.getState(), successor.getAction());
-			aNode.setStepCost(stepCost);
-			aNode.addToPathCost(stepCost);
-			nodes.add(aNode);
-		}
-
-		setNodesExpanded(getNodesExpanded() + 1);
-
-		return nodes;
 	}
 
 	// the lowest f-value node

@@ -16,55 +16,114 @@ import aima.search.framework.SearchUtils;
 import aima.util.Util;
 
 /**
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.14, page
+ * 116.
+ * 
+ * <code>
+ * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
+ *   inputs: problem, a problem
+ *           schedule, a mapping from time to "temperature"
+ *   local variables: current, a node
+ *                    next, a node
+ *                    T, a "temperature" controlling the probability of downward steps
+ *                    
+ *   current <- MAKE-NODE(INITIAL-STATE[problem])
+ *   for t <- 1 to INFINITY do
+ *     T <- schedule[t]
+ *     if T = 0 then return current
+ *     next <- a randomly selected successor of current
+ *     /\E <- VALUE[next] - VALUE[current]
+ *     if /\E > 0 then current <- next
+ *     else current <- next only with probablity e^(/\E/T)
+ * </code>
+ * Figure 4.14 The simulated annealing search algorithm, a version of the
+ * stochastic hill climbing where some downhill moves are allowed. Downhill
+ * moves are accepted readily early in the annealing schedule and then less
+ * often as time goes on. The schedule input determines the value of T as a
+ * function of time.
+ */
+
+/**
  * @author Ravi Mohan
  * 
  */
-
 public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
-	private final int steps;
+	public enum SearchOutcome {
+		FAILURE, SOLUTION_FOUND
+	};
 
 	private final Scheduler scheduler;
 
+	private SearchOutcome outcome = SearchOutcome.FAILURE;
+
+	private Object lastState = null;
+
 	public SimulatedAnnealingSearch() {
-		this.steps = 10000;
 		this.scheduler = new Scheduler();
 	}
 
-	public List search(Problem p) throws Exception {
+	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
+	// inputs: problem, a problem
+	// schedule, a mapping from time to "temperature"
+	public List<String> search(Problem p) throws Exception {
+		// local variables: current, a node
+		// next, a node
+		// T, a "temperature" controlling the probability of downward steps
 		clearInstrumentation();
+		outcome = SearchOutcome.FAILURE;
+		lastState = null;
+		// current <- MAKE-NODE(INITIAL-STATE[problem])
 		Node current = new Node(p.getInitialState());
 		Node next = null;
-		List ret = new ArrayList();
-		for (int step = 0; step < 1000; step = step + 1) {
-			double temp = scheduler.getTemp(step);
-			if (temp == 0.0) {
-				String status = "not completed";
+		List<String> ret = new ArrayList<String>();
+		// for t <- 1 to INFINITY do
+		int t = 0;
+		while (true) {
+			// T <- schedule[t]
+			double T = scheduler.getTemp(t);
+			t++;
+			// if T = 0 then return current
+			if (T == 0.0) {
 				if (p.isGoalState(current.getState())) {
-					status = "success";
+					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
-				// System.out.println(current.getState());
 				ret = SearchUtils.actionsFromNodes(current.getPathFromRoot());
-				ret.add(status + "\nFinal state = \n" + current.getState());
+				lastState = current.getState();
 				break;
 			}
-			List children = expandNode(current, p);
-			// expansions++;
-			// System.out.println("step = "+step+" expansions = "+expansions);
+
+			List<Node> children = expandNode(current, p);
 			if (children.size() > 0) {
-				// TODO take care of no possible expansion situation?
-				next = (Node) Util.selectRandomlyFromList(children);
+				// next <- a randomly selected successor of current
+				next = Util.selectRandomlyFromList(children);
+				// /\E <- VALUE[next] - VALUE[current]
 				int deltaE = getValue(p, next) - getValue(p, current);
-				// System.out.print("deltaE = "+deltaE+"\n");
+
+				// TODO - remove
+				// if (deltaE <= 0) {
+				// System.out.println("deltaE=" + deltaE + ", T=" + T
+				// + ", Math.exp(deltaE/T)=" + Math.exp(deltaE / T));
+				// }
+
+				// if /\E > 0 then current <- next
+				// else current <- next only with probablity e^(/\E/T)
 				if ((deltaE > 0.0)
-						|| (new Random().nextDouble() > Math.exp(deltaE / temp))) {
+						|| (new Random().nextDouble() <= Math.exp(deltaE / T))) {
 					current = next;
 				}
 			}
-
 		}
-		// System.out.println("Number of expansions = "+expansions);
-		return ret;// Total Failure
+
+		return ret;
+	}
+
+	public SearchOutcome getOutcome() {
+		return outcome;
+	}
+
+	public Object getLastSearchState() {
+		return lastState;
 	}
 
 	private int getValue(Problem p, Node n) {
