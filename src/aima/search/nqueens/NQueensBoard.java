@@ -138,9 +138,9 @@ public class NQueensBoard {
 	public String getBoardPic() {
 
 		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; (i < size); i++) {
-			for (int j = 0; (j < size); j++) {
-				if (queenExistsAt(i, j)) {
+		for (int row = 0; (row < size); row++) { // row
+			for (int col = 0; (col < size); col++) { // col
+				if (queenExistsAt(col, row)) {
 					buffer.append(" Q ");
 				} else {
 					buffer.append(" - ");
@@ -254,9 +254,9 @@ public class NQueensBoard {
 	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < size; i++) { // rows
-			for (int j = 0; j < size; j++) { // columns
-				if (queenExistsAt(i, j)) {
+		for (int row = 0; row < size; row++) { // rows
+			for (int col = 0; col < size; col++) { // columns
+				if (queenExistsAt(col, row)) {
 					buf.append('Q');
 				} else {
 					buf.append('-');

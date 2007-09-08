@@ -14,6 +14,7 @@ import aima.test.search.map.MapStepCostFunctionTest;
 import aima.test.search.map.MapSuccessorFunctionTest;
 import aima.test.search.map.MapTest;
 import aima.test.search.nqueens.NQueensBoardTest;
+import aima.test.search.nqueens.NQueensFitnessFunctionTest;
 import aima.test.search.nqueens.NQueensGoalTestTest;
 import aima.test.search.nqueens.NQueensSuccessorFunctionTest;
 import aima.test.search.searches.AStarSearchTest;
@@ -58,6 +59,7 @@ public class SearchTests {
 		suite.addTest(new TestSuite(MapTest.class));
 		suite.addTest(new TestSuite(MisplacedTileHeuristicFunctionTest.class));
 		suite.addTest(new TestSuite(NQueensBoardTest.class));
+		suite.addTest(new TestSuite(NQueensFitnessFunctionTest.class));
 		suite.addTest(new TestSuite(NQueensGoalTestTest.class));
 		suite.addTest(new TestSuite(NQueensSuccessorFunctionTest.class));
 		suite.addTest(new TestSuite(NodeTest.class));
