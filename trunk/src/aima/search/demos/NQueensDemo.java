@@ -1,8 +1,10 @@
 package aima.search.demos;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import aima.search.framework.GraphSearch;
 import aima.search.framework.Problem;
@@ -11,7 +13,9 @@ import aima.search.framework.SearchAgent;
 import aima.search.framework.TreeSearch;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
+import aima.search.informed.ga.GeneticAlgorithm;
 import aima.search.nqueens.NQueensBoard;
+import aima.search.nqueens.NQueensFitnessFunction;
 import aima.search.nqueens.NQueensGoalTest;
 import aima.search.nqueens.NQueensSuccessorFunction;
 import aima.search.nqueens.QueensToBePlacedHeuristic;
@@ -40,7 +44,7 @@ public class NQueensDemo {
 		nQueensWithIterativeDeepeningSearch();
 		nQueensSimulatedAnnealingSearch();
 		nQueensHillClimbingSearch();
-
+		nQueensGeneticAlgorithmSearch();
 	}
 
 	private static void nQueensWithRecursiveDLS() {
@@ -136,6 +140,51 @@ public class NQueensDemo {
 			System.out.println("Search Outcome=" + search.getOutcome());
 			System.out.println("Final State=\n" + search.getLastSearchState());
 			printInstrumentation(agent.getInstrumentation());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void nQueensGeneticAlgorithmSearch() {
+		System.out.println("\nNQueensDemo GeneticAlgorithm  -->");
+		try {
+			int boardSize = 8;
+			NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction();
+			// Generate an initial population
+			Set<String> population = new HashSet<String>();
+			for (int i = 0; i < 20; i++) {
+				population.add(fitnessFunction
+						.generateRandomIndividual(boardSize));
+			}
+
+			GeneticAlgorithm ga = new GeneticAlgorithm(boardSize,
+					fitnessFunction.getFiniteAlphabetForBoardOfSize(boardSize),
+					0.15);
+
+			// Run for a set number of iterations
+			String bestIndividual = ga.geneticAlgorithm(population,
+					fitnessFunction, 100);
+
+			System.out.println("Iterations Best Individual=\n"
+					+ fitnessFunction.getBoardForIndividual(bestIndividual));
+			System.out.println("Fitness="
+					+ fitnessFunction.getValue(bestIndividual));
+			System.out.println("Is Goal="
+					+ fitnessFunction.isGoalState(bestIndividual));
+			System.out.println("Itertions=" + ga.getIterations());
+
+			// Run till goal is achieved
+			bestIndividual = ga.geneticAlgorithm(population, fitnessFunction,
+					fitnessFunction);
+
+			System.out.println("Goal Test Best Individual=\n"
+					+ fitnessFunction.getBoardForIndividual(bestIndividual));
+			System.out.println("Fitness="
+					+ fitnessFunction.getValue(bestIndividual));
+			System.out.println("Is Goal="
+					+ fitnessFunction.isGoalState(bestIndividual));
+			System.out.println("Itertions=" + ga.getIterations());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

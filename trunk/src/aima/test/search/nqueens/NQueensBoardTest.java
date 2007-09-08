@@ -245,4 +245,24 @@ public class NQueensBoardTest extends TestCase {
 
 	}
 
+	public void testBoardDisplay() {
+		board.addQueenAt(new XYLocation(0, 5));
+		board.addQueenAt(new XYLocation(1, 6));
+		board.addQueenAt(new XYLocation(2, 1));
+		board.addQueenAt(new XYLocation(3, 3));
+		board.addQueenAt(new XYLocation(4, 6));
+		board.addQueenAt(new XYLocation(5, 4));
+		board.addQueenAt(new XYLocation(6, 7));
+		board.addQueenAt(new XYLocation(7, 7));
+		assertEquals(" -  -  -  -  -  -  -  - \n"
+				+ " -  -  Q  -  -  -  -  - \n" + " -  -  -  -  -  -  -  - \n"
+				+ " -  -  -  Q  -  -  -  - \n" + " -  -  -  -  -  Q  -  - \n"
+				+ " Q  -  -  -  -  -  -  - \n" + " -  Q  -  -  Q  -  -  - \n"
+				+ " -  -  -  -  -  -  Q  Q \n", board.getBoardPic());
+
+		assertEquals("--------\n" + "--Q-----\n" + "--------\n" + "---Q----\n"
+				+ "-----Q--\n" + "Q-------\n" + "-Q--Q---\n" + "------QQ\n",
+				board.toString());
+	}
+
 }
