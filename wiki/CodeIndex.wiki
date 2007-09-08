@@ -27,7 +27,7 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||4.5||102||_Recursive-Best-First-Search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
 ||4.11||112||Hill-Climbing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/HillClimbingSearch.java HillClimbingSearch]||
 ||4.14||116||Simulated-Annealing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
-||4.17||119||_Genetic-Algorithm_||---|[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]|
+||4.17||119||_Genetic-Algorithm_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]||
 ||4.20||126||Online-DFS-Agent||---||
 ||4.23||128||LRTA`*`-Agent||---||
 ||5||137||CSP||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java CSP]||
@@ -94,3 +94,4 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||22.7||801||Chart-Parse||---||
 ||23.1||837||Viterbi-Segmentation||---||
 ||24.21||892||Align||---||
+
