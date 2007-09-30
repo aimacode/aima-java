@@ -3,31 +3,31 @@ Names in italics indicate algorithms that have been completed but have not made 
 || *Fig* || *Page* || *Name (in book)* || *Code* ||
 ||2||32||Environment||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/Environment.java Environment]||
 ||2.1||33||Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/Agent.java Agent]||
-||2.3||34||_Table-Driven-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenVaccumAgent.java TableDrivenVacuumAgent]||
-||2.7||45||_Table-Driven-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenAgentProgram.java TableDrivenAgent]||
-||2.8||46||_Reflex-Vacuum-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexVaccumAgent.java ReflexVaccumAgent]||
-||2.10||47||_Simple-Reflex-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
-||2.12||49||_Reflex-Agent-With-State_||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexAgentWithStateProgram.java ReflexAgentWithStateProgram]||
-||3.1||61||_Simple-Problem-Solving-Agent_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
+||2.3||34||Table-Driven-Vacuum-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenVaccumAgent.java TableDrivenVacuumAgent]||
+||2.7||45||Table-Driven-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/TableDrivenAgentProgram.java TableDrivenAgent]||
+||2.8||46||Reflex-Vacuum-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexVaccumAgent.java ReflexVaccumAgent]||
+||2.10||47||Simple-Reflex-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
+||2.12||49||Reflex-Agent-With-State||[http://aima-java.googlecode.com/svn/trunk/src/aima/basic/vaccum/ReflexAgentWithStateProgram.java ReflexAgentWithStateProgram]||
+||3.1||61||Simple-Problem-Solving-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
 ||3||62||Problem||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Problem.java Problem]||
-||3.2||63||_Romania_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
+||3.2||63||Romania||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
 ||3||69||Node||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Node.java Node]||
 ||3.7||70||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 ||3||71||Queue||[http://aima-java.googlecode.com/svn/trunk/src/aima/util/AbstractQueue.java AbstractQueue]||
 ||3.9||72||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
 ||3||73||Breadth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BreadthFirstSearch.java BreadthFirstSearch]||
-||3||75||_Uniform-cost search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/UniformCostSearch.java UniformCostSearch]||
+||3||75||Uniform-cost-search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/UniformCostSearch.java UniformCostSearch]||
 ||3||75||Depth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthFirstSearch.java DepthFirstSearch]||
 ||3.13||77||Depth-Limited-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthLimitedSearch.java DepthLimitedSearch]||
 ||3.14||78||Iterative-Deepening-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/IterativeDeepeningSearch.java Iterative Deepening Search]||
-||3||79||_Bidirectional search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BidirectionalSearch.java BidirectionalSearch]||
+||3||79||Bidirectional-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BidirectionalSearch.java BidirectionalSearch]||
 ||3.19||83||Graph-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
-||4||95||_Best-First-Search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/BestFirstSearch.java BestFirstSearch]||
+||4||95||Best-First-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/BestFirstSearch.java BestFirstSearch]||
 ||4||97||A`*`-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/AStarSearch.java AStarSearch]||
-||4.5||102||_Recursive-Best-First-Search_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
+||4.5||102||Recursive-Best-First-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
 ||4.11||112||Hill-Climbing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/HillClimbingSearch.java HillClimbingSearch]||
 ||4.14||116||Simulated-Annealing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
-||4.17||119||_Genetic-Algorithm_||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]||
+||4.17||119||Genetic-Algorithm||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]||
 ||4.20||126||Online-DFS-Agent||---||
 ||4.23||128||LRTA`*`-Agent||---||
 ||5||137||CSP||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java CSP]||
@@ -94,4 +94,3 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||22.7||801||Chart-Parse||---||
 ||23.1||837||Viterbi-Segmentation||---||
 ||24.21||892||Align||---||
-
