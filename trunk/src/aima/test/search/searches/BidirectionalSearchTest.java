@@ -17,6 +17,7 @@ public class BidirectionalSearchTest extends TestCase {
 
 	BidirectionalSearch bidirectionalSearch;
 
+	@Override
 	public void setUp() {
 
 		envChanges = new StringBuffer();
@@ -34,6 +35,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -41,7 +43,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:DIE:",
+				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -61,6 +63,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -68,7 +71,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:DIE:",
+				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -87,6 +90,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -94,7 +98,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=6.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:DIE:",
+				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=6.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -114,6 +118,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -121,7 +126,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:DIE:",
+				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -142,6 +147,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -149,7 +155,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):B:C:D:METRIC[pathCost]=18.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:DIE:",
+				"CurrentLocation=In(A), Goal=In(D):B:C:D:METRIC[pathCost]=18.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -168,6 +174,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -175,7 +182,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=6.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=2:DIE:",
+				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=6.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=2:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -195,6 +202,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -202,7 +210,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:DIE:",
+				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -224,6 +232,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "E" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -231,7 +240,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(E):B:C:D:E:METRIC[pathCost]=24.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:DIE:",
+				"CurrentLocation=In(A), Goal=In(E):B:C:D:E:METRIC[pathCost]=24.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -250,6 +259,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -257,7 +267,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=3:DIE:",
+				"CurrentLocation=In(A), Goal=In(B):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=3:NoOP:",
 				envChanges.toString());
 
 		assertEquals(BidirectionalSearch.SearchOutcome.PATH_NOT_FOUND,
@@ -276,6 +286,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -283,7 +294,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:DIE:",
+				"CurrentLocation=In(A), Goal=In(C):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:NoOP:",
 				envChanges.toString());
 
 		assertEquals(BidirectionalSearch.SearchOutcome.PATH_NOT_FOUND,
@@ -303,6 +314,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "E" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -310,7 +322,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(E):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=0:METRIC[nodesExpanded]=8:DIE:",
+				"CurrentLocation=In(A), Goal=In(E):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=0:METRIC[nodesExpanded]=8:NoOP:",
 				envChanges.toString());
 
 		assertEquals(BidirectionalSearch.SearchOutcome.PATH_NOT_FOUND,
@@ -334,6 +346,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "F" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -341,7 +354,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):B:F:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=5:METRIC[queueSize]=5:METRIC[nodesExpanded]=6:DIE:",
+				"CurrentLocation=In(A), Goal=In(F):B:F:METRIC[pathCost]=12.0:METRIC[maxQueueSize]=5:METRIC[queueSize]=5:METRIC[nodesExpanded]=6:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -366,6 +379,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "F" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -373,7 +387,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):B:C:D:E:F:METRIC[pathCost]=30.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=6:METRIC[nodesExpanded]=7:DIE:",
+				"CurrentLocation=In(A), Goal=In(F):B:C:D:E:F:METRIC[pathCost]=30.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=6:METRIC[nodesExpanded]=7:NoOP:",
 				envChanges.toString());
 
 		assertEquals(
@@ -401,6 +415,7 @@ public class BidirectionalSearchTest extends TestCase {
 				new String[] { "F" });
 		me.addAgent(ma, "A");
 		me.registerView(new BasicEnvironmentView() {
+			@Override
 			public void envChanged(String command) {
 				envChanges.append(command).append(":");
 			}
@@ -408,7 +423,7 @@ public class BidirectionalSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):B:C:D:F:METRIC[pathCost]=24.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=7:DIE:",
+				"CurrentLocation=In(A), Goal=In(F):B:C:D:F:METRIC[pathCost]=24.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=7:NoOP:",
 				envChanges.toString());
 
 		assertEquals(

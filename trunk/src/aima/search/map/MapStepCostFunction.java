@@ -1,5 +1,6 @@
 package aima.search.map;
 
+import aima.basic.Percept;
 import aima.search.framework.StepCostFunction;
 
 /**
@@ -25,10 +26,19 @@ public class MapStepCostFunction implements StepCostFunction {
 		this.map = aMap;
 	}
 
-	public Double calculateStepCost(Object fromState, Object toState,
-			String action) {
-		Integer distance = map
-				.getDistance((String) fromState, (String) toState);
+	public Double calculateStepCost(Object fromCurrentState,
+			Object toNextState, String action) {
+
+		String fromLoc = fromCurrentState.toString();
+		String toLoc = toNextState.toString();
+		if (fromCurrentState instanceof Percept) {
+			fromLoc = (String) ((Percept) fromCurrentState)
+					.getAttribute(MapEnvironment.STATE_IN);
+			toLoc = (String) ((Percept) toNextState)
+					.getAttribute(MapEnvironment.STATE_IN);
+		}
+
+		Integer distance = map.getDistance(fromLoc, toLoc);
 
 		if (null == distance || distance < 0) {
 			return constantCost;

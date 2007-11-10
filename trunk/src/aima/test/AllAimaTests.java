@@ -3,6 +3,7 @@ package aima.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import aima.test.coretest.PerceptSequenceTest;
+import aima.test.coretest.PerceptTest;
 import aima.test.coretest.RuleTest;
 import aima.test.coretest.XYEnvironmentTest;
 import aima.test.coretest.XYLocationTest;
@@ -33,6 +34,7 @@ public class AllAimaTests {
 		TestSuite suite = new TestSuite();
 
 		suite.addTest(new TestSuite(ModelBasedTVEVaccumAgentTest.class));
+		suite.addTest(new TestSuite(PerceptTest.class));
 		suite.addTest(new TestSuite(PerceptSequenceTest.class));
 		suite.addTest(new TestSuite(ReflexVaccumAgentTest.class));
 		suite.addTest(new TestSuite(ReflexVaccumAgentWithStateTest.class));

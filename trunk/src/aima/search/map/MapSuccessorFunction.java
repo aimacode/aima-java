@@ -3,6 +3,7 @@ package aima.search.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.basic.Percept;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 
@@ -15,7 +16,6 @@ import aima.search.framework.SuccessorFunction;
  * @author Ciaran O'Reilly
  * 
  */
-
 public class MapSuccessorFunction implements SuccessorFunction {
 
 	private Map map = null;
@@ -24,12 +24,18 @@ public class MapSuccessorFunction implements SuccessorFunction {
 		this.map = aMap;
 	}
 
-	public List getSuccessors(Object state) {
+	public List getSuccessors(Object currentState) {
 		List<Successor> successors = new ArrayList<Successor>();
 
-		List<String> linkedLocations = map.getLocationsLinkedTo((String) state);
-		for (String location : linkedLocations) {
-			successors.add(new Successor(location, location));
+		String location = currentState.toString();
+		if (currentState instanceof Percept) {
+			location = (String) ((Percept) currentState)
+					.getAttribute(MapEnvironment.STATE_IN);
+		}
+
+		List<String> linkedLocations = map.getLocationsLinkedTo(location);
+		for (String linkLoc : linkedLocations) {
+			successors.add(new Successor(linkLoc, linkLoc));
 		}
 
 		return successors;

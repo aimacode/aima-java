@@ -1,5 +1,6 @@
 package aima.search.map;
 
+import aima.basic.Percept;
 import aima.search.framework.GoalTest;
 
 /**
@@ -18,7 +19,14 @@ public class MapGoalTest implements GoalTest {
 		this.goalState = goalState;
 	}
 
-	public boolean isGoalState(Object state) {
-		return goalState.equals(state);
+	public boolean isGoalState(Object currentState) {
+
+		String location = currentState.toString();
+		if (currentState instanceof Percept) {
+			location = (String) ((Percept) currentState)
+					.getAttribute(MapEnvironment.STATE_IN);
+		}
+
+		return goalState.equals(location);
 	}
 }
