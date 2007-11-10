@@ -106,6 +106,7 @@ public class OnlineDFSAgent extends Agent {
 						if (as.state.equals(sComma)
 								&& result.get(as).equals(popped)) {
 							a = as.action;
+							break;
 						}
 					}
 				}
