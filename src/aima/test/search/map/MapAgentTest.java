@@ -46,7 +46,7 @@ public class MapAgentTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:DIE:",
+				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:NoOP:",
 				envChanges.toString());
 	}
 
@@ -64,7 +64,7 @@ public class MapAgentTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:DIE:",
+				"CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:NoOP:",
 				envChanges.toString());
 	}
 
@@ -82,7 +82,7 @@ public class MapAgentTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(E), Goal=In(A):NoOP:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:DIE:",
+				"CurrentLocation=In(E), Goal=In(A):NoOP:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:NoOP:",
 				envChanges.toString());
 	}
 }

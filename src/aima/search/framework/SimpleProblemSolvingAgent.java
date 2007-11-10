@@ -36,12 +36,6 @@ import aima.util.Util;
  * 
  */
 public abstract class SimpleProblemSolvingAgent extends Agent {
-	// Used to define No Operations/Action is to be performed.
-	public static final String NO_OP = "NoOP";
-
-	// Used to indicate the Agent is unwilling to generate anymore goals
-	// and should therefore DIE
-	public static final String DIE = "DIE";
 
 	// seq, an action sequence, initially empty
 	private List<String> seq = new ArrayList<String>();
@@ -88,7 +82,9 @@ public abstract class SimpleProblemSolvingAgent extends Agent {
 					seq.add(NO_OP);
 				}
 			} else {
-				seq.add(DIE);
+				// Agent no longer wishes to
+				// achieve any more goals
+				die();
 				notifyViewOfMetrics();
 			}
 		}

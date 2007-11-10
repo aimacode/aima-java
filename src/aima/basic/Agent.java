@@ -13,6 +13,10 @@ import java.util.Hashtable;
  * 
  */
 public abstract class Agent extends ObjectWithDynamicAttributes {
+
+	// Used to define No Operations/Action is to be performed.
+	public static final String NO_OP = "NoOP";
+
 	protected AgentProgram program;
 
 	protected boolean isAlive;
@@ -21,7 +25,6 @@ public abstract class Agent extends ObjectWithDynamicAttributes {
 
 	protected Agent() {
 		live();
-
 	}
 
 	public Agent(AgentProgram aProgram) {
@@ -45,5 +48,4 @@ public abstract class Agent extends ObjectWithDynamicAttributes {
 	public boolean isAlive() {
 		return isAlive;
 	}
-
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * 
  */
 public class PerceptSequence {
-	private List<Percept> percepts = new ArrayList<Percept>();
+	private final List<Percept> percepts = new ArrayList<Percept>();
 
 	public PerceptSequence() {
 	}
@@ -61,21 +61,8 @@ public class PerceptSequence {
 		while (pers.hasNext()) {
 			Percept p = pers.next();
 
-			sb.append("[");
-			Iterator<Object> keys = p.getSortedAttributeKeys();
-			while (keys.hasNext()) {
-				Object key = keys.next();
+			sb.append(p);
 
-				sb.append(key);
-				sb.append("==");
-				sb.append(p.getAttribute(key));
-				if (keys.hasNext()) {
-					sb.append(", ");
-				} else {
-					sb.append("]");
-				}
-
-			}
 			if (pers.hasNext()) {
 				sb.append(", ");
 			}
