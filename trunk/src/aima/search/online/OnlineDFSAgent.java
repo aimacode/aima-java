@@ -33,7 +33,10 @@ import aima.search.framework.Successor;
  *   return a
  * </code>
  * Figure 4.20 An online search agent that uses depth-first exploration. The agent is
- * applicable only in bidirectional search spaces.
+ * applicable only in bidirectional search spaces.<br>
+ * <br>
+ * Note: This algorithm fails to exit if the goal does not exist (e.g. A<->B Goal=X),
+ * this could be an issue with the implementation. Comments welcome.
  */
 
 /**
