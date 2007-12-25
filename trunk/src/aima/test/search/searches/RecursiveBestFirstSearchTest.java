@@ -34,7 +34,7 @@ public class RecursiveBestFirstSearchTest extends TestCase {
 				new AStarEvaluationFunction());
 
 		heuristicFunction = new HeuristicFunction() {
-			public int getHeuristicValue(Object state) {
+			public double getHeuristicValue(Object state) {
 				return SimplifiedRoadMapOfPartOfRomania
 						.getStraightLineDistancesToBucharest().getDistance(
 								(String) state,
