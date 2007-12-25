@@ -14,12 +14,6 @@ import aima.learning.inductive.DLTestFactory;
 import aima.learning.learners.DecisionListLearner;
 import aima.learning.learners.DecisionTreeLearner;
 import aima.learning.learners.MajorityLearner;
-import aima.learning.learners.NeuralNetLearner;
-import aima.learning.statistics.FeedForwardNetwork;
-import aima.learning.statistics.IrisDataSetNumerizer;
-import aima.learning.statistics.PerceptronLearning;
-import aima.learning.statistics.StandardBackPropogation;
-import aima.test.probabilitytest.MockRandomizer;
 
 /**
  * @author Ravi Mohan
@@ -130,35 +124,6 @@ public class LearnerTests extends TestCase {
 		int[] result = learner.test(ds);
 		assertEquals(12, result[0]);
 		assertEquals(0, result[1]);
-	}
-
-	public void testBackPropogationLearnerOnIrisDataSet() throws Exception {
-		DataSet ds = DataSetFactory.getIrisDataSet();
-		FeedForwardNetwork network = new FeedForwardNetwork(4, 4, 3,
-				new MockRandomizer(new double[] { 0.5 }));
-		// FeedForwardNetwork network = new FeedForwardNetwork(4, 4,3,new
-		// JavaRandomizer());
-		NeuralNetLearner learner = new NeuralNetLearner(network,
-				new IrisDataSetNumerizer(), new StandardBackPropogation(), 1);
-
-		learner.train(ds);
-		int[] result = learner.test(ds);
-		assertEquals(50, result[0]);
-		assertEquals(100, result[1]);
-
-	}
-
-	public void testPerceptronLearnerOnIrisDataSet() throws Exception {
-		DataSet ds = DataSetFactory.getIrisDataSet();
-		FeedForwardNetwork network = new FeedForwardNetwork(4, 3,
-				new MockRandomizer(new double[] { 0.5 }));
-		NeuralNetLearner learner = new NeuralNetLearner(network,
-				new IrisDataSetNumerizer(), new PerceptronLearning(), 1);
-		learner.train(ds);
-		int[] result = learner.test(ds);
-		assertEquals(0, result[0]);
-		assertEquals(150, result[1]);
-
 	}
 
 }

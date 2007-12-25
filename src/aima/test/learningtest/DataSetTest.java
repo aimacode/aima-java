@@ -13,8 +13,8 @@ import aima.learning.framework.DataSet;
 import aima.learning.framework.DataSetFactory;
 import aima.learning.framework.DataSetSpecification;
 import aima.learning.framework.Example;
+import aima.learning.neural.IrisDataSetNumerizer;
 import aima.learning.neural.Numerizer;
-import aima.learning.statistics.IrisDataSetNumerizer;
 import aima.util.Pair;
 
 /**
