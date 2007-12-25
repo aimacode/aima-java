@@ -8,7 +8,6 @@ public class AllNeuralTests {
 		TestSuite suite = new TestSuite("All tests for NN Implementation");
 
 		suite.addTest(new TestSuite(LayerTests.class));
-		// suite.addTest(new TestSuite(UtilTests.class));
 		suite.addTest(new TestSuite(DataSetTests.class));
 		suite.addTest(new TestSuite(FeedForwardNeuralNetworkTests.class));
 		return suite;

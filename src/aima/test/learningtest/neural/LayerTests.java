@@ -1,7 +1,9 @@
 package aima.test.learningtest.neural;
 
 import junit.framework.TestCase;
+import aima.learning.neural.BackPropLearning;
 import aima.learning.neural.Layer;
+import aima.learning.neural.LayerSensitivity;
 import aima.learning.neural.LogSigActivationFunction;
 import aima.learning.neural.PureLinearActivationFunction;
 import aima.learning.neural.Vector;
@@ -79,9 +81,12 @@ public class LayerTests extends TestCase {
 
 		Vector errorVector = new Vector(1);
 		errorVector.setValue(0, 1.261);
-		Matrix sensistivityMatrix = layer2
-				.sensitivityMatrixFromErrorMatrix(errorVector);
-		assertEquals(-2.522, sensistivityMatrix.get(0, 0));
+		LayerSensitivity layer2Sensitivity = new LayerSensitivity(layer2);
+		layer2.setSensitivityMatrix(layer2Sensitivity
+				.sensitivityMatrixFromErrorMatrix(errorVector));
+
+		Matrix sensitivityMatrix = layer2.getSensitivityMatrix();
+		assertEquals(-2.522, sensitivityMatrix.get(0, 0));
 		// System.out.println(sensistivityMatrix);
 
 	}
@@ -97,6 +102,7 @@ public class LayerTests extends TestCase {
 
 		Layer layer1 = new Layer(weightMatrix1, biasVector1,
 				new LogSigActivationFunction());
+		LayerSensitivity layer1Sensitivity = new LayerSensitivity(layer1);
 
 		Vector inputVector1 = new Vector(1);
 		inputVector1.setValue(0, 1);
@@ -117,9 +123,16 @@ public class LayerTests extends TestCase {
 
 		Vector errorVector = new Vector(1);
 		errorVector.setValue(0, 1.261);
-		layer2.sensitivityMatrixFromErrorMatrix(errorVector);
-		Matrix sensitivityMatrix = layer1
-				.sensitivityMatrixFromSucceedingLayer(layer2);
+		LayerSensitivity layer2Sensitivity = new LayerSensitivity(layer2);
+		layer2.setSensitivityMatrix(layer2Sensitivity
+				.sensitivityMatrixFromErrorMatrix(errorVector));
+
+		// Matrix sensitivityMatrix = layer1
+		// .sensitivityMatrixFromSucceedingLayer(layer2);
+		layer1.setSensitivityMatrix(layer1Sensitivity
+				.sensitivityMatrixFromSucceedingLayer(layer2));
+		Matrix sensitivityMatrix = layer1.getSensitivityMatrix();
+
 		assertEquals(2, sensitivityMatrix.getRowDimension());
 		assertEquals(1, sensitivityMatrix.getColumnDimension());
 		assertEquals(-0.0495, sensitivityMatrix.get(0, 0), 0.001);
@@ -138,6 +151,7 @@ public class LayerTests extends TestCase {
 
 		Layer layer1 = new Layer(weightMatrix1, biasVector1,
 				new LogSigActivationFunction());
+		LayerSensitivity layer1Sensitivity = new LayerSensitivity(layer1);
 
 		Vector inputVector1 = new Vector(1);
 		inputVector1.setValue(0, 1);
@@ -158,11 +172,18 @@ public class LayerTests extends TestCase {
 
 		Vector errorVector = new Vector(1);
 		errorVector.setValue(0, 1.261);
-		layer2.sensitivityMatrixFromErrorMatrix(errorVector);
-		layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		LayerSensitivity layer2Sensitivity = new LayerSensitivity(layer2);
+		layer2.setSensitivityMatrix(layer2Sensitivity
+				.sensitivityMatrixFromErrorMatrix(errorVector));
 
-		Matrix weightUpdateMatrix2 = layer2.calculateWeightUpdates(layer1
-				.getLastActivationValues(), 0.1);
+		// layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		layer1.setSensitivityMatrix(layer1Sensitivity
+				.sensitivityMatrixFromSucceedingLayer(layer2));
+
+		// Matrix weightUpdateMatrix2 = layer2.calculateWeightUpdates(layer1
+		// .getLastActivationValues(), 0.1);
+		Matrix weightUpdateMatrix2 = BackPropLearning.calculateWeightUpdates(
+				layer2Sensitivity, layer1.getLastActivationValues(), 0.1);
 		assertEquals(0.0809, weightUpdateMatrix2.get(0, 0), 0.001);
 		assertEquals(0.0928, weightUpdateMatrix2.get(0, 1), 0.001);
 
@@ -175,8 +196,10 @@ public class LayerTests extends TestCase {
 		assertEquals(0.0, penultimateWeightUpdatematrix2.get(0, 0), 0.001);
 		assertEquals(0.0, penultimateWeightUpdatematrix2.get(0, 1), 0.001);
 
-		Matrix weightUpdateMatrix1 = layer1.calculateWeightUpdates(
-				inputVector1, 0.1);
+		// Matrix weightUpdateMatrix1 = layer1.calculateWeightUpdates(
+		// inputVector1, 0.1);
+		Matrix weightUpdateMatrix1 = BackPropLearning.calculateWeightUpdates(
+				layer1Sensitivity, inputVector1, 0.1);
 		assertEquals(0.0049, weightUpdateMatrix1.get(0, 0), 0.001);
 		assertEquals(-0.00997, weightUpdateMatrix1.get(1, 0), 0.001);
 
@@ -202,6 +225,7 @@ public class LayerTests extends TestCase {
 
 		Layer layer1 = new Layer(weightMatrix1, biasVector1,
 				new LogSigActivationFunction());
+		LayerSensitivity layer1Sensitivity = new LayerSensitivity(layer1);
 
 		Vector inputVector1 = new Vector(1);
 		inputVector1.setValue(0, 1);
@@ -217,15 +241,21 @@ public class LayerTests extends TestCase {
 
 		Layer layer2 = new Layer(weightMatrix2, biasVector2,
 				new PureLinearActivationFunction());
+		LayerSensitivity layer2Sensitivity = new LayerSensitivity(layer2);
 		Vector inputVector2 = layer1.getLastActivationValues();
 		layer2.feedForward(inputVector2);
 
 		Vector errorVector = new Vector(1);
 		errorVector.setValue(0, 1.261);
-		layer2.sensitivityMatrixFromErrorMatrix(errorVector);
-		layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		layer2.setSensitivityMatrix(layer2Sensitivity
+				.sensitivityMatrixFromErrorMatrix(errorVector));
+		// layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		layer1.setSensitivityMatrix(layer1Sensitivity
+				.sensitivityMatrixFromSucceedingLayer(layer2));
 
-		Vector biasUpdateVector2 = layer2.calculateBiasUpdates(0.1);
+		// Vector biasUpdateVector2 = layer2.calculateBiasUpdates(0.1);
+		Vector biasUpdateVector2 = BackPropLearning.calculateBiasUpdates(
+				layer2Sensitivity, 0.1);
 		assertEquals(0.2522, biasUpdateVector2.getValue(0), 0.001);
 
 		Vector lastBiasUpdateVector2 = layer2.getLastBiasUpdateVector();
@@ -235,7 +265,9 @@ public class LayerTests extends TestCase {
 				.getPenultimateBiasUpdateVector();
 		assertEquals(0.0, penultimateBiasUpdateVector2.getValue(0), 0.001);
 
-		Vector biasUpdateVector1 = layer1.calculateBiasUpdates(0.1);
+		// Vector biasUpdateVector1 = layer1.calculateBiasUpdates(0.1);
+		Vector biasUpdateVector1 = BackPropLearning.calculateBiasUpdates(
+				layer1Sensitivity, 0.1);
 		assertEquals(0.00495, biasUpdateVector1.getValue(0), 0.001);
 		assertEquals(-0.00997, biasUpdateVector1.getValue(1), 0.001);
 
@@ -262,6 +294,7 @@ public class LayerTests extends TestCase {
 
 		Layer layer1 = new Layer(weightMatrix1, biasVector1,
 				new LogSigActivationFunction());
+		LayerSensitivity layer1Sensitivity = new LayerSensitivity(layer1);
 
 		Vector inputVector1 = new Vector(1);
 		inputVector1.setValue(0, 1);
@@ -282,17 +315,28 @@ public class LayerTests extends TestCase {
 
 		Vector errorVector = new Vector(1);
 		errorVector.setValue(0, 1.261);
-		layer2.sensitivityMatrixFromErrorMatrix(errorVector);
-		layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		LayerSensitivity layer2Sensitivity = new LayerSensitivity(layer2);
+		layer2.setSensitivityMatrix(layer2Sensitivity
+				.sensitivityMatrixFromErrorMatrix(errorVector));
+		// layer1.sensitivityMatrixFromSucceedingLayer(layer2);
+		layer1.setSensitivityMatrix(layer1Sensitivity
+				.sensitivityMatrixFromSucceedingLayer(layer2));
 
-		// /////////
-		layer2.calculateWeightUpdates(layer1.getLastActivationValues(), 0.1);
+		// layer2.calculateWeightUpdates(layer1.getLastActivationValues(), 0.1);
 
-		layer2.calculateBiasUpdates(0.1);
+		BackPropLearning.calculateWeightUpdates(layer2Sensitivity, layer1
+				.getLastActivationValues(), 0.1);
 
-		layer1.calculateWeightUpdates(inputVector1, 0.1);
+		// layer2.calculateBiasUpdates(0.1);
+		BackPropLearning.calculateBiasUpdates(layer2Sensitivity, 0.1);
 
-		layer1.calculateBiasUpdates(0.1);
+		// layer1.calculateWeightUpdates(inputVector1, 0.1);
+
+		BackPropLearning.calculateWeightUpdates(layer1Sensitivity,
+				inputVector1, 0.1);
+
+		// layer1.calculateBiasUpdates(0.1);
+		BackPropLearning.calculateBiasUpdates(layer1Sensitivity, 0.1);
 
 		layer2.updateWeights();
 		Matrix newWeightMatrix2 = layer2.getWeightMatrix();
