@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import aima.learning.framework.DataSet;
+import aima.learning.framework.Example;
+import aima.learning.statistics.Numerizer;
+import aima.util.Pair;
 import aima.util.Util;
 
 public abstract class NNDataSet {
@@ -21,7 +25,7 @@ public abstract class NNDataSet {
 	/*
 	 * a copy from which examples are drawn.
 	 */
-	private List<NNExample> presentlyProcessed;
+	private List<NNExample> presentlyProcessed = new ArrayList<NNExample>();;
 
 	/*
 	 * list of mean Values for all components of raw data set
@@ -35,7 +39,7 @@ public abstract class NNDataSet {
 	/*
 	 * the normalized data set
 	 */
-	private List<List<Double>> nds;
+	protected List<List<Double>> nds;
 
 	/*
 	 * the column numbers of the "target"
@@ -91,6 +95,21 @@ public abstract class NNDataSet {
 		nds = normalize(rds);
 	}
 
+	/*
+	 * create a normalized data "table" from the DataSet using numerizer. At
+	 * this stage, the data is *not* split into input pattern and targets TODO
+	 * remove redundancy of recreating the target columns. the numerizer has
+	 * already isolated the targets
+	 */
+
+	public void createNormalizedDataFromDataSet(DataSet ds, Numerizer numerizer)
+			throws Exception {
+
+		List<List<Double>> rds = rawExamplesFromDataSet(ds, numerizer);
+		// normalize raw dataset
+		nds = normalize(rds);
+	}
+
 	private List<List<Double>> normalize(List<List<Double>> rds) {
 		int rawDataLength = rds.get(0).size();
 		List<List<Double>> nds = new ArrayList<List<Double>>();
@@ -140,6 +159,27 @@ public abstract class NNDataSet {
 		return rexample;
 	}
 
+	private List<List<Double>> rawExamplesFromDataSet(DataSet ds,
+			Numerizer numerizer) {
+		// assumes all values for inout and target are doubles
+		List<List<Double>> rds = new ArrayList<List<Double>>();
+		for (int i = 0; i < ds.size(); i++) {
+			List<Double> rexample = new ArrayList<Double>();
+			Example e = ds.getExample(i);
+			Pair<List<Double>, List<Double>> p = numerizer.numerize(e);
+			List<Double> attributes = p.getFirst();
+			for (Double d : attributes) {
+				rexample.add(d);
+			}
+			List<Double> targets = p.getSecond();
+			for (Double d : targets) {
+				rexample.add(d);
+			}
+			rds.add(rexample);
+		}
+		return rds;
+	}
+
 	/*
 	 * Gets (and removes) a random example from the 'presentlyProcessed'
 	 */
@@ -147,6 +187,14 @@ public abstract class NNDataSet {
 
 		int i = Util.randomNumberBetween(0, (presentlyProcessed.size() - 1));
 		return presentlyProcessed.remove(i);
+	}
+
+	/*
+	 * Gets (and removes) a random example from the 'presentlyProcessed'
+	 */
+	public NNExample getExample(int index) {
+
+		return presentlyProcessed.remove(index);
 	}
 
 	/*
@@ -180,6 +228,18 @@ public abstract class NNDataSet {
 	 */
 	public void createExamplesFromFile(String filename) throws Exception {
 		createNormalizedDataFromFile(filename);
+		setTargetColumns();
+		createExamples();
+
+	}
+
+	/*
+	 * method called by clients to set up data set and make it ready for
+	 * processing
+	 */
+	public void createExamplesFromDataSet(DataSet ds, Numerizer numerizer)
+			throws Exception {
+		createNormalizedDataFromDataSet(ds, numerizer);
 		setTargetColumns();
 		createExamples();
 

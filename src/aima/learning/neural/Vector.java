@@ -1,5 +1,7 @@
 package aima.learning.neural;
 
+import java.util.List;
+
 import aima.util.Matrix;
 
 public class Vector extends Matrix {
@@ -7,6 +9,13 @@ public class Vector extends Matrix {
 	// Vector is modelled as a matrix with a single column;
 	public Vector(int size) {
 		super(size, 1);
+	}
+
+	public Vector(List<Double> lst) {
+		super(lst.size(), 1);
+		for (int i = 0; i < lst.size(); i++) {
+			setValue(i, lst.get(i));
+		}
 	}
 
 	public double getValue(int i) {
@@ -27,6 +36,27 @@ public class Vector extends Matrix {
 
 	public int size() {
 		return getRowDimension();
+	}
+
+	public Vector minus(Vector v) {
+		Vector result = new Vector(size());
+		for (int i = 0; i < size(); i++) {
+			result.setValue(i, getValue(i) - v.getValue(i));
+		}
+		return result;
+	}
+
+	public int indexHavingMaxValue() {
+		if (size() <= 0) {
+			throw new RuntimeException("can't perform this op on empty vector");
+		}
+		int res = 0;
+		for (int i = 0; i < size(); i++) {
+			if (getValue(i) > getValue(res)) {
+				res = i;
+			}
+		}
+		return res;
 	}
 
 }
