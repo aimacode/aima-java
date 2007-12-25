@@ -1,16 +1,23 @@
 AIMA JAVA Notes By Ravi(magesmail@yahoo.com)
 
 
-version 0.9
+version 0.92
 ***********
-This release marks the pre final .
-It  includes  the probability algorithms from chapters 15,16,17 and 21 (besides many bug fixes).
+This release includes a rewrite of the neural network algorithms (in the earlier version teh nn s were getting saturated because the data was not pre processed)
+ +  more algorithms  from chapter 4.
+ 
+Heuristics are now doubles (vs ints in the old version).
+
+
 
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try this version to see if it persists.
 The official release can be found at http://aima.cs.berkeley.edu/java-overview.html.
 
 The following people sent in excellent comments and bug reports.
  Thank you all
+ 
+ 
+ Carl Anderson Senior Scientist, ArchimedesModel.com (suggested making heuristic values double instead of int. Excellent suggestion! Than You!)
 
 Don Cochrane from (?) University
 
@@ -32,11 +39,10 @@ Phil Snowberger,Artificial Intelligence and Robotics Laboratory,University of No
 
 Build Instructions
 ******************
-you can use 
-    a)ANT(http://ant.apache.org/) 
-    b)make 
+you can use  ANT(http://ant.apache.org/) 
+    
+The make file is now deprecated. use ANT!
 
-The make file is *very*  elementary. All it does is compile the NON-Test Code into class files.I have tested the makefile on cygwin+Windows. i have NOT tested it on linux/unix.
 
 The ANT file is more comprehensive and runs all the tests as part of the standard build.
 
