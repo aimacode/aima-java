@@ -5,7 +5,7 @@ import aima.util.Matrix;
 import aima.util.Util;
 
 public class Layer {
-	// vectors are represented by n* 1 matrices;
+	// vectors are represented by n * 1 matrices;
 	private final Matrix weightMatrix;
 
 	Vector biasVector, lastBiasUpdateVector;

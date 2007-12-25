@@ -8,19 +8,12 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 	private final Layer hiddenLayer;
 	private final Layer outputLayer;
 
-	private final double learningRate, momentum;
-
-	private final NNTrainingScheme trainingScheme;
+	private NNTrainingScheme trainingScheme;
 
 	/*
-	 * constructor to be used for non testing code for now assume that config
-	 * contains learning rate, momentum parameter, and number of epochs. change
-	 * this later to accomodate varied learning schemes like early stopping
+	 * constructor to be used for non testing code.
 	 */
 	public FeedForwardNeuralNetwork(NNConfig config) {
-
-		learningRate = config.getParameterAsDouble("learning_rate");
-		momentum = config.getParameterAsDouble("momentum");
 
 		int numberOfInputNeurons = config
 				.getParameterAsInteger("number_of_inputs");
@@ -41,7 +34,6 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 		outputLayer = new Layer(numberOfOutputNeurons, numberOfHiddenNeurons,
 				lowerLimitForWeights, upperLimitForWeights,
 				new PureLinearActivationFunction());
-		trainingScheme = new BackPropLearning(this, learningRate, momentum);
 
 	}
 
@@ -52,14 +44,13 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 	 */
 	public FeedForwardNeuralNetwork(Matrix hiddenLayerWeights,
 			Vector hiddenLayerBias, Matrix outputLayerWeights,
-			Vector outputLayerBias, double learningRate, double momentum) {
-		this.learningRate = learningRate;
-		this.momentum = momentum;
+			Vector outputLayerBias) {
+
 		hiddenLayer = new Layer(hiddenLayerWeights, hiddenLayerBias,
 				new LogSigActivationFunction());
 		outputLayer = new Layer(outputLayerWeights, outputLayerBias,
 				new PureLinearActivationFunction());
-		trainingScheme = new BackPropLearning(this, learningRate, momentum);
+
 	}
 
 	public void processError(Vector error) {
@@ -102,6 +93,11 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 
 	public Layer getOutputLayer() {
 		return outputLayer;
+	}
+
+	public void setTrainingScheme(NNTrainingScheme trainingScheme) {
+		this.trainingScheme = trainingScheme;
+		trainingScheme.setNeuralNetwork(this);
 	}
 
 }

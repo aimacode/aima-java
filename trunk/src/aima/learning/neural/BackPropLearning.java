@@ -6,21 +6,24 @@ public class BackPropLearning implements NNTrainingScheme {
 	private final double learningRate;
 	private final double momentum;
 
-	private final Layer hiddenLayer;
-	private final Layer outputLayer;
-	private final LayerSensitivity hiddenSensitivity;
-	private final LayerSensitivity outputSensitivity;
+	private Layer hiddenLayer;
+	private Layer outputLayer;
+	private LayerSensitivity hiddenSensitivity;
+	private LayerSensitivity outputSensitivity;
 
-	public BackPropLearning(FeedForwardNeuralNetwork network,
-			double learningRate, double momentum) {
+	public BackPropLearning(double learningRate, double momentum) {
 
-		this.hiddenLayer = network.getHiddenLayer();
-		this.outputLayer = network.getOutputLayer();
-		hiddenSensitivity = new LayerSensitivity(hiddenLayer);
-		outputSensitivity = new LayerSensitivity(outputLayer);
 		this.learningRate = learningRate;
 		this.momentum = momentum;
 
+	}
+
+	public void setNeuralNetwork(FeedForwardNeuralNetwork ffnn) {
+
+		this.hiddenLayer = ffnn.getHiddenLayer();
+		this.outputLayer = ffnn.getOutputLayer();
+		this.hiddenSensitivity = new LayerSensitivity(hiddenLayer);
+		this.outputSensitivity = new LayerSensitivity(outputLayer);
 	}
 
 	public Vector processInput(FeedForwardNeuralNetwork network, Vector input) {
