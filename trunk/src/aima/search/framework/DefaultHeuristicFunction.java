@@ -11,7 +11,7 @@ package aima.search.framework;
 
 public class DefaultHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Object state) {
+	public double getHeuristicValue(Object state) {
 		throw new IllegalStateException(
 				"Should not be depending on the DefaultHeuristicFunction.");
 		// return 1;

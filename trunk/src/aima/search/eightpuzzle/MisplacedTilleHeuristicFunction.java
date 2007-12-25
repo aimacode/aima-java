@@ -14,7 +14,7 @@ import aima.search.framework.HeuristicFunction;
 
 public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Object state) {
+	public double getHeuristicValue(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		return getNumberOfMisplacedTiles(board);
 
