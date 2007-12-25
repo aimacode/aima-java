@@ -21,6 +21,7 @@ import aima.test.tvenvironmenttest.SimpleReflexVaccumAgentTest;
 import aima.test.tvenvironmenttest.TableDrivenAgentProgramTest;
 import aima.test.tvenvironmenttest.TableDrivenVaccumAgentTest;
 import aima.test.tvenvironmenttest.TrivialVaccumEnvironmentTest;
+import aima.test.utiltest.MeanStDevTests;
 import aima.test.utiltest.TableTest;
 
 /**
@@ -32,7 +33,7 @@ public class AllAimaTests {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
-
+		suite.addTest(new TestSuite(MeanStDevTests.class));
 		suite.addTest(new TestSuite(ModelBasedTVEVaccumAgentTest.class));
 		suite.addTest(new TestSuite(PerceptTest.class));
 		suite.addTest(new TestSuite(PerceptSequenceTest.class));
