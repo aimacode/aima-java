@@ -33,11 +33,10 @@ public class BackPropLearning implements NNTrainingScheme {
 	public void processError(FeedForwardNeuralNetwork network, Vector error) {
 		// TODO calculate total error somewhere
 		// create Sensitivity Matrices
-		outputLayer.setSensitivityMatrix(outputSensitivity
-				.sensitivityMatrixFromErrorMatrix(error));
+		outputSensitivity.sensitivityMatrixFromErrorMatrix(error);
 
-		hiddenLayer.setSensitivityMatrix(hiddenSensitivity
-				.sensitivityMatrixFromSucceedingLayer(outputLayer));
+		hiddenSensitivity
+				.sensitivityMatrixFromSucceedingLayer(outputSensitivity);
 
 		// calculate weight Updates
 		calculateWeightUpdates(outputSensitivity, hiddenLayer
@@ -62,18 +61,11 @@ public class BackPropLearning implements NNTrainingScheme {
 			Vector previousLayerActivationOrInput, double alpha, double momentum) {
 		Layer layer = layerSensitivity.getLayer();
 		Matrix activationTranspose = previousLayerActivationOrInput.transpose();
-		Matrix momentumLessUpdate = layer.getSensitivityMatrix().times(
-				activationTranspose).times(alpha).times(-1.0);
+		Matrix momentumLessUpdate = layerSensitivity.getSensitivityMatrix()
+				.times(activationTranspose).times(alpha).times(-1.0);
 		Matrix updateWithMomentum = layer.getLastWeightUpdateMatrix().times(
 				momentum).plus(momentumLessUpdate.times(1.0 - momentum));
-		layer.setPenultimateWeightUpdateMatrix(layer
-				.getLastWeightUpdateMatrix().copy()); // done
-		// only
-		// to
-		// implement
-		// VLBP
-		// later
-		layer.setLastWeightUpdateMatrix(updateWithMomentum.copy());
+		layer.acceptNewWeightUpdate(updateWithMomentum.copy());
 		return updateWithMomentum;
 	}
 
@@ -84,17 +76,15 @@ public class BackPropLearning implements NNTrainingScheme {
 		Matrix activationTranspose = previousLayerActivationOrInput.transpose();
 		Matrix weightUpdateMatrix = layerSensitivity.getSensitivityMatrix()
 				.times(activationTranspose).times(alpha).times(-1.0);
-		layer.setPenultimateWeightUpdateMatrix(layer
-				.getLastWeightUpdateMatrix().copy());
-		layer.setLastWeightUpdateMatrix(weightUpdateMatrix.copy());
+		layer.acceptNewWeightUpdate(weightUpdateMatrix.copy());
 		return weightUpdateMatrix;
 	}
 
 	public Vector calculateBiasUpdates(LayerSensitivity layerSensitivity,
 			double alpha, double momentum) {
 		Layer layer = layerSensitivity.getLayer();
-		Matrix biasUpdateMatrixWithoutMomentum = layer.getSensitivityMatrix()
-				.times(alpha).times(-1.0);
+		Matrix biasUpdateMatrixWithoutMomentum = layerSensitivity
+				.getSensitivityMatrix().times(alpha).times(-1.0);
 
 		Matrix biasUpdateMatrixWithMomentum = layer.getLastBiasUpdateVector()
 				.times(momentum).plus(
@@ -104,25 +94,21 @@ public class BackPropLearning implements NNTrainingScheme {
 		for (int i = 0; i < biasUpdateMatrixWithMomentum.getRowDimension(); i++) {
 			result.setValue(i, biasUpdateMatrixWithMomentum.get(i, 0));
 		}
-		layer.setPenultimateBiasUpdateVector(layer.getLastBiasUpdateVector()
-				.copyVector());
-		layer.setLastBiasUpdateVector(result.copyVector());
+		layer.acceptNewBiasUpdate(result.copyVector());
 		return result;
 	}
 
 	public static Vector calculateBiasUpdates(
 			LayerSensitivity layerSensitivity, double alpha) {
 		Layer layer = layerSensitivity.getLayer();
-		Matrix biasUpdateMatrix = layer.getSensitivityMatrix().times(alpha)
-				.times(-1.0);
+		Matrix biasUpdateMatrix = layerSensitivity.getSensitivityMatrix()
+				.times(alpha).times(-1.0);
 
 		Vector result = new Vector(biasUpdateMatrix.getRowDimension());
 		for (int i = 0; i < biasUpdateMatrix.getRowDimension(); i++) {
 			result.setValue(i, biasUpdateMatrix.get(i, 0));
 		}
-		layer.setPenultimateBiasUpdateVector(layer.getLastBiasUpdateVector()
-				.copyVector());
-		layer.setLastBiasUpdateVector(result.copyVector());
+		layer.acceptNewBiasUpdate(result.copyVector());
 		return result;
 	}
 }

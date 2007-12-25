@@ -35,12 +35,15 @@ public class LayerSensitivity {
 		return calculatedSensitivityMatrix;
 	}
 
-	public Matrix sensitivityMatrixFromSucceedingLayer(Layer nextLayer) {
+	public Matrix sensitivityMatrixFromSucceedingLayer(
+			LayerSensitivity nextLayerSensitivity) {
+		Layer nextLayer = nextLayerSensitivity.getLayer();
 		Matrix derivativeMatrix = createDerivativeMatrix(layer
 				.getLastInducedField());
 		Matrix weightTranspose = nextLayer.getWeightMatrix().transpose();
 		Matrix calculatedSensitivityMatrix = derivativeMatrix.times(
-				weightTranspose).times(nextLayer.getSensitivityMatrix());
+				weightTranspose).times(
+				nextLayerSensitivity.getSensitivityMatrix());
 		sensitivityMatrix = calculatedSensitivityMatrix.copy();
 		return sensitivityMatrix;
 	}
