@@ -14,8 +14,6 @@ public class Layer {
 
 	private Vector lastActivationValues, lastInducedField;
 
-	private Matrix mySensitivityMatrix;
-
 	private Matrix lastWeightUpdateMatrix;
 
 	private Matrix penultimateWeightUpdateMatrix;
@@ -32,8 +30,7 @@ public class Layer {
 				weightMatrix.getColumnDimension());
 		penultimateWeightUpdateMatrix = new Matrix(weightMatrix
 				.getRowDimension(), weightMatrix.getColumnDimension());
-		mySensitivityMatrix = new Matrix(weightMatrix.getRowDimension(),
-				weightMatrix.getColumnDimension());
+
 		this.biasVector = biasVector;
 		lastBiasUpdateVector = new Vector(biasVector.getRowDimension());
 		penultimateBiasUpdateVector = new Vector(biasVector.getRowDimension());
@@ -42,7 +39,7 @@ public class Layer {
 	public Layer(int numberOfNeurons, int numberOfInputs,
 			double lowerLimitForWeights, double upperLimitForWeights,
 			ActivationFunction af) {
-		// sensitivityMatrix = new Matrix(numberOfNeurons, numberOfInputs);
+
 		activationFunction = af;
 		this.weightMatrix = new Matrix(numberOfNeurons, numberOfInputs());
 		lastWeightUpdateMatrix = new Matrix(weightMatrix.getRowDimension(),
@@ -86,11 +83,6 @@ public class Layer {
 
 	public Vector getBiasVector() {
 		return biasVector;
-	}
-
-	public Matrix getSensitivityMatrix() {
-
-		return mySensitivityMatrix;
 	}
 
 	public int numberOfNeurons() {
@@ -187,7 +179,17 @@ public class Layer {
 		return activationFunction;
 	}
 
-	public void setSensitivityMatrix(Matrix sensitivityMatrix) {
-		this.mySensitivityMatrix = sensitivityMatrix;
+	public void acceptNewWeightUpdate(Matrix weightUpdate) {
+		/*
+		 * penultimate weightupdates maintained only to implement VLBP later
+		 */
+		setPenultimateWeightUpdateMatrix(getLastWeightUpdateMatrix());
+		setLastWeightUpdateMatrix(weightUpdate);
 	}
+
+	public void acceptNewBiasUpdate(Vector biasUpdate) {
+		setPenultimateBiasUpdateVector(getLastBiasUpdateVector());
+		setLastBiasUpdateVector(biasUpdate);
+	}
+
 }
