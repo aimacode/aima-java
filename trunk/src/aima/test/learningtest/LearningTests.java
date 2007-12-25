@@ -4,9 +4,9 @@
  */
 package aima.test.learningtest;
 
-import aima.test.learningtest.neural.AllNeuralTests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import aima.test.learningtest.neural.AllNeuralTests;
 
 /**
  * @author Ravi Mohan
@@ -24,7 +24,6 @@ public class LearningTests {
 		suite.addTest(new TestSuite(EnsembleLearningTest.class));
 		suite.addTest(new TestSuite(InformationAndGainTest.class));
 		suite.addTest(new TestSuite(LearnerTests.class));
-		suite.addTest(new TestSuite(NeuralNetworkTest.class));
 		suite.addTest(new TestSuite(QTableTest.class));
 		suite.addTest(new TestSuite(ReinforcementLearningTest.class));
 		return suite;
