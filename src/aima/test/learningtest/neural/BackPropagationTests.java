@@ -1,11 +1,12 @@
 package aima.test.learningtest.neural;
 
 import junit.framework.TestCase;
+import aima.learning.neural.BackPropLearning;
 import aima.learning.neural.FeedForwardNeuralNetwork;
 import aima.learning.neural.Vector;
 import aima.util.Matrix;
 
-public class FeedForwardNeuralNetworkTests extends TestCase {
+public class BackPropagationTests extends TestCase {
 
 	public void testFeedForwardAndBAckLoopWorks() {
 		// example 11.14 of Neural Network Design by Hagan, Demuth and Beale
@@ -34,8 +35,9 @@ public class FeedForwardNeuralNetworkTests extends TestCase {
 		double momentumFactor = 0.0;
 		FeedForwardNeuralNetwork ffnn = new FeedForwardNeuralNetwork(
 				hiddenLayerWeightMatrix, hiddenLayerBiasVector,
-				outputLayerWeightMatrix, outputLayerBiasVector, learningRate,
-				momentumFactor);
+				outputLayerWeightMatrix, outputLayerBiasVector);
+		ffnn.setTrainingScheme(new BackPropLearning(learningRate,
+				momentumFactor));
 		ffnn.processInput(input);
 		ffnn.processError(error);
 
@@ -83,8 +85,10 @@ public class FeedForwardNeuralNetworkTests extends TestCase {
 		double momentumFactor = 0.5;
 		FeedForwardNeuralNetwork ffnn = new FeedForwardNeuralNetwork(
 				hiddenLayerWeightMatrix, hiddenLayerBiasVector,
-				outputLayerWeightMatrix, outputLayerBiasVector, learningRate,
-				momentumFactor);
+				outputLayerWeightMatrix, outputLayerBiasVector);
+
+		ffnn.setTrainingScheme(new BackPropLearning(learningRate,
+				momentumFactor));
 		ffnn.processInput(input);
 		ffnn.processError(error);
 
@@ -104,5 +108,4 @@ public class FeedForwardNeuralNetworkTests extends TestCase {
 		assertEquals(0.6061, outputLayerBias.getValue(0), 0.001);
 
 	}
-
 }
