@@ -46,6 +46,14 @@ public class Vector extends Matrix {
 		return result;
 	}
 
+	public Vector plus(Vector v) {
+		Vector result = new Vector(size());
+		for (int i = 0; i < size(); i++) {
+			result.setValue(i, getValue(i) + v.getValue(i));
+		}
+		return result;
+	}
+
 	public int indexHavingMaxValue() {
 		if (size() <= 0) {
 			throw new RuntimeException("can't perform this op on empty vector");

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Arrays;
 
 import aima.learning.framework.Example;
+import aima.learning.neural.Numerizer;
 import aima.util.Pair;
 
 /**

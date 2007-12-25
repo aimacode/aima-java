@@ -5,5 +5,5 @@ public interface NNTrainingScheme {
 
 	void processError(FeedForwardNeuralNetwork network, Vector error);
 
-	void setNeuralNetwork(FeedForwardNeuralNetwork ffnn);
+	void setNeuralNetwork(FunctionApproximator ffnn);
 }

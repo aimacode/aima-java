@@ -1,6 +1,5 @@
 package aima.learning.neural;
 
-import aima.learning.statistics.ActivationFunction;
 import aima.util.Matrix;
 import aima.util.Util;
 

@@ -18,8 +18,8 @@ public class BackPropLearning implements NNTrainingScheme {
 
 	}
 
-	public void setNeuralNetwork(FeedForwardNeuralNetwork ffnn) {
-
+	public void setNeuralNetwork(FunctionApproximator fapp) {
+		FeedForwardNeuralNetwork ffnn = (FeedForwardNeuralNetwork) fapp;
 		this.hiddenLayer = ffnn.getHiddenLayer();
 		this.outputLayer = ffnn.getOutputLayer();
 		this.hiddenSensitivity = new LayerSensitivity(hiddenLayer);
