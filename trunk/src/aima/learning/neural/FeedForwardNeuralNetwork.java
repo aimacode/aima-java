@@ -5,6 +5,11 @@ import aima.util.Matrix;
 
 public class FeedForwardNeuralNetwork implements FunctionApproximator {
 
+	public static final String UPPER_LIMIT_WEIGHTS = "upper_limit_weights";
+	public static final String LOWER_LIMIT_WEIGHTS = "lower_limit_weights";
+	public static final String NUMBER_OF_OUTPUTS = "number_of_outputs";
+	public static final String NUMBER_OF_HIDDEN_NEURONS = "number_of_hidden_neurons";
+	public static final String NUMBER_OF_INPUTS = "number_of_inputs";
 	private final Layer hiddenLayer;
 	private final Layer outputLayer;
 
@@ -16,16 +21,16 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 	public FeedForwardNeuralNetwork(NNConfig config) {
 
 		int numberOfInputNeurons = config
-				.getParameterAsInteger("number_of_inputs");
+				.getParameterAsInteger(NUMBER_OF_INPUTS);
 		int numberOfHiddenNeurons = config
-				.getParameterAsInteger("number_of_hidden_neurons");
+				.getParameterAsInteger(NUMBER_OF_HIDDEN_NEURONS);
 		int numberOfOutputNeurons = config
-				.getParameterAsInteger("number_of_outputs");
+				.getParameterAsInteger(NUMBER_OF_OUTPUTS);
 
 		double lowerLimitForWeights = config
-				.getParameterAsDouble("lower_limit_weights");
+				.getParameterAsDouble(LOWER_LIMIT_WEIGHTS);
 		double upperLimitForWeights = config
-				.getParameterAsDouble("upper_limit_weights");
+				.getParameterAsDouble(UPPER_LIMIT_WEIGHTS);
 
 		hiddenLayer = new Layer(numberOfHiddenNeurons, numberOfInputNeurons,
 				lowerLimitForWeights, upperLimitForWeights,
@@ -61,6 +66,39 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 
 	public Vector processInput(Vector input) {
 		return trainingScheme.processInput(this, input);
+	}
+
+	public void trainOn(NNDataSet innds, int numberofEpochs) {
+		for (int i = 0; i < numberofEpochs; i++) {
+			innds.refreshDataset();
+			while (innds.hasMoreExamples()) {
+				NNExample nne = innds.getExampleAtRandom();
+				processInput(nne.getInput());
+				Vector error = getOutputLayer()
+						.errorVectorFrom(nne.getTarget());
+				processError(error);
+			}
+		}
+
+	}
+
+	public Vector predict(NNExample nne) {
+		return processInput(nne.getInput());
+	}
+
+	public int[] testOnDataSet(NNDataSet nnds) {
+		int[] result = new int[] { 0, 0 };
+		nnds.refreshDataset();
+		while (nnds.hasMoreExamples()) {
+			NNExample nne = nnds.getExampleAtRandom();
+			Vector prediction = predict(nne);
+			if (nne.isCorrect(prediction)) {
+				result[0] = result[0] + 1;
+			} else {
+				result[1] = result[1] + 1;
+			}
+		}
+		return result;
 	}
 
 	public void testOn(DataSet ds) {

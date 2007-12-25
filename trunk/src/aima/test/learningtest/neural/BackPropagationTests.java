@@ -1,9 +1,15 @@
 package aima.test.learningtest.neural;
 
 import junit.framework.TestCase;
+import aima.learning.framework.DataSet;
+import aima.learning.framework.DataSetFactory;
 import aima.learning.neural.BackPropLearning;
 import aima.learning.neural.FeedForwardNeuralNetwork;
+import aima.learning.neural.NNConfig;
+import aima.learning.neural.NNDataSet;
 import aima.learning.neural.Vector;
+import aima.learning.statistics.IrisDataSetNumerizer;
+import aima.learning.statistics.Numerizer;
 import aima.util.Matrix;
 
 public class BackPropagationTests extends TestCase {
@@ -106,6 +112,31 @@ public class BackPropagationTests extends TestCase {
 
 		Vector outputLayerBias = ffnn.getOutputLayerBias();
 		assertEquals(0.6061, outputLayerBias.getValue(0), 0.001);
+
+	}
+
+	public void testDataSetPopulation() throws Exception {
+		DataSet irisDataSet = DataSetFactory.getIrisDataSet();
+		Numerizer numerizer = new IrisDataSetNumerizer();
+		NNDataSet innds = new IrisNNDataSet();
+
+		innds.createExamplesFromDataSet(irisDataSet, numerizer);
+
+		NNConfig config = new NNConfig();
+		config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_INPUTS, 4);
+		config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_OUTPUTS, 3);
+		config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_HIDDEN_NEURONS, 6);
+		config.setConfig(FeedForwardNeuralNetwork.LOWER_LIMIT_WEIGHTS, -2.0);
+		config.setConfig(FeedForwardNeuralNetwork.UPPER_LIMIT_WEIGHTS, 2.0);
+
+		FeedForwardNeuralNetwork ffnn = new FeedForwardNeuralNetwork(config);
+		ffnn.setTrainingScheme(new BackPropLearning(0.1, 0.9));
+
+		ffnn.trainOn(innds, 10);
+
+		innds.refreshDataset();
+		int[] result = ffnn.testOnDataSet(innds);
+		System.out.println(result[0] + " right, " + result[1] + " wrong");
 
 	}
 }

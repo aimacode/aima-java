@@ -13,6 +13,10 @@ public class NNConfig {
 		this.hash = hash;
 	}
 
+	public NNConfig() {
+		this.hash = new Hashtable<String, Object>();
+	}
+
 	public double getParameterAsDouble(String key) {
 
 		return (Double) hash.get(key);
@@ -23,4 +27,11 @@ public class NNConfig {
 		return (Integer) hash.get(key);
 	}
 
+	public void setConfig(String key, Double value) {
+		hash.put(key, value);
+	}
+
+	public void setConfig(String key, int value) {
+		hash.put(key, value);
+	}
 }

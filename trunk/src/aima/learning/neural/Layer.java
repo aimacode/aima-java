@@ -41,7 +41,7 @@ public class Layer {
 			ActivationFunction af) {
 
 		activationFunction = af;
-		this.weightMatrix = new Matrix(numberOfNeurons, numberOfInputs());
+		this.weightMatrix = new Matrix(numberOfNeurons, numberOfInputs);
 		lastWeightUpdateMatrix = new Matrix(weightMatrix.getRowDimension(),
 				weightMatrix.getColumnDimension());
 		penultimateWeightUpdateMatrix = new Matrix(weightMatrix
@@ -104,7 +104,7 @@ public class Layer {
 	private static void initializeMatrix(Matrix aMatrix, double lowerLimit,
 			double upperLimit) {
 		for (int i = 0; i < aMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < aMatrix.getColumnDimension(); i++) {
+			for (int j = 0; j < aMatrix.getColumnDimension(); j++) {
 				double random = Util.generateRandomDoubleBetween(lowerLimit,
 						upperLimit);
 				aMatrix.set(i, j, random);
@@ -190,6 +190,11 @@ public class Layer {
 	public void acceptNewBiasUpdate(Vector biasUpdate) {
 		setPenultimateBiasUpdateVector(getLastBiasUpdateVector());
 		setLastBiasUpdateVector(biasUpdate);
+	}
+
+	public Vector errorVectorFrom(Vector target) {
+		return target.minus(getLastActivationValues());
+
 	}
 
 }
