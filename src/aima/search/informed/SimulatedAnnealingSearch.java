@@ -98,7 +98,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 				// next <- a randomly selected successor of current
 				next = Util.selectRandomlyFromList(children);
 				// /\E <- VALUE[next] - VALUE[current]
-				int deltaE = getValue(p, next) - getValue(p, current);
+				double deltaE = getValue(p, next) - getValue(p, current);
 
 				if (shouldAccept(temperature, deltaE)) {
 					current = next;
@@ -111,13 +111,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
 	// if /\E > 0 then current <- next
 	// else current <- next only with probablity e^(/\E/T)
-	private boolean shouldAccept(double temperature, int deltaE) {
+	private boolean shouldAccept(double temperature, double deltaE) {
 		return (deltaE > 0.0)
 				|| (new Random().nextDouble() <= probabilityOfAcceptance(
 						temperature, deltaE));
 	}
 
-	public double probabilityOfAcceptance(double temperature, int deltaE) {
+	public double probabilityOfAcceptance(double temperature, double deltaE) {
 		return Math.exp(deltaE / temperature);
 	}
 
@@ -129,13 +129,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return lastState;
 	}
 
-	private int getValue(Problem p, Node n) {
+	private double getValue(Problem p, Node n) {
 		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
 	}
 
-	private int getHeuristic(Problem p, Node aNode) {
+	private double getHeuristic(Problem p, Node aNode) {
 		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
 	}
 }

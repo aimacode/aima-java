@@ -86,11 +86,11 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	}
 
 	private Node getHighestValuedNodeFrom(List children, Problem p) {
-		int highestValue = Integer.MIN_VALUE;
+		double highestValue = Double.MIN_VALUE;
 		Node nodeWithHighestValue = null;
 		for (int i = 0; i < children.size(); i++) {
 			Node child = (Node) children.get(i);
-			int value = getValue(p, child);
+			double value = getValue(p, child);
 			if (value > highestValue) {
 				highestValue = value;
 				nodeWithHighestValue = child;
@@ -99,12 +99,12 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return nodeWithHighestValue;
 	}
 
-	private int getValue(Problem p, Node n) {
+	private double getValue(Problem p, Node n) {
 		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 	}
 
-	private int getHeuristic(Problem p, Node aNode) {
+	private double getHeuristic(Problem p, Node aNode) {
 		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
 	}
 }

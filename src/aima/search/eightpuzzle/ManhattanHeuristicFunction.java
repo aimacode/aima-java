@@ -14,7 +14,7 @@ import aima.search.framework.HeuristicFunction;
 
 public class ManhattanHeuristicFunction implements HeuristicFunction {
 
-	public int getHeuristicValue(Object state) {
+	public double getHeuristicValue(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		int retVal = 0;
 		for (int i = 1; i < 9; i++) {

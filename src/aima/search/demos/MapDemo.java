@@ -128,7 +128,7 @@ public class MapDemo {
 				new AStarEvaluationFunction()),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		ma.setHeuristicFunction(new HeuristicFunction() {
-			public int getHeuristicValue(Object state) {
+			public double getHeuristicValue(Object state) {
 				return SimplifiedRoadMapOfPartOfRomania
 						.getStraightLineDistancesToBucharest().getDistance(
 								(String) state,
