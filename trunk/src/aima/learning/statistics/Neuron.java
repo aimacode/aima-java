@@ -3,6 +3,7 @@ package aima.learning.statistics;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.learning.neural.ActivationFunction;
 import aima.util.Util;
 
 public class Neuron {

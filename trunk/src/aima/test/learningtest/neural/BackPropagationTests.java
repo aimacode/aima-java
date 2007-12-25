@@ -7,9 +7,10 @@ import aima.learning.neural.BackPropLearning;
 import aima.learning.neural.FeedForwardNeuralNetwork;
 import aima.learning.neural.NNConfig;
 import aima.learning.neural.NNDataSet;
+import aima.learning.neural.Numerizer;
+import aima.learning.neural.Perceptron;
 import aima.learning.neural.Vector;
 import aima.learning.statistics.IrisDataSetNumerizer;
-import aima.learning.statistics.Numerizer;
 import aima.util.Matrix;
 
 public class BackPropagationTests extends TestCase {
@@ -136,6 +137,23 @@ public class BackPropagationTests extends TestCase {
 
 		innds.refreshDataset();
 		int[] result = ffnn.testOnDataSet(innds);
+		System.out.println(result[0] + " right, " + result[1] + " wrong");
+
+	}
+
+	public void testPerceptron() throws Exception {
+		DataSet irisDataSet = DataSetFactory.getIrisDataSet();
+		Numerizer numerizer = new IrisDataSetNumerizer();
+		NNDataSet innds = new IrisNNDataSet();
+
+		innds.createExamplesFromDataSet(irisDataSet, numerizer);
+
+		Perceptron perc = new Perceptron(3, 4);
+
+		perc.trainOn(innds, 10);
+
+		innds.refreshDataset();
+		int[] result = perc.testOnDataSet(innds);
 		System.out.println(result[0] + " right, " + result[1] + " wrong");
 
 	}

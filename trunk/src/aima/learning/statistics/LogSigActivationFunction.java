@@ -4,6 +4,8 @@
  */
 package aima.learning.statistics;
 
+import aima.learning.neural.ActivationFunction;
+
 /**
  * @author Ravi Mohan
  * 

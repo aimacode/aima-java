@@ -2,7 +2,7 @@
  * Created on Aug 6, 2005
  *
  */
-package aima.learning.statistics;
+package aima.learning.neural;
 
 import java.util.List;
 

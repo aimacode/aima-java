@@ -2,7 +2,7 @@
  * Created on Aug 3, 2005
  *
  */
-package aima.learning.statistics;
+package aima.learning.neural;
 
 /**
  * @author Ravi Mohan

@@ -1,6 +1,5 @@
 package aima.learning.neural;
 
-import aima.learning.statistics.ActivationFunction;
 
 public class PureLinearActivationFunction implements ActivationFunction {
 

@@ -8,7 +8,6 @@ import java.util.List;
 
 import aima.learning.framework.DataSet;
 import aima.learning.framework.Example;
-import aima.learning.statistics.Numerizer;
 import aima.util.Pair;
 import aima.util.Util;
 
