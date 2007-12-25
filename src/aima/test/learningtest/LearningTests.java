@@ -4,6 +4,7 @@
  */
 package aima.test.learningtest;
 
+import aima.test.learningtest.neural.AllNeuralTests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -15,6 +16,7 @@ import junit.framework.TestSuite;
 public class LearningTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
+		suite.addTest(AllNeuralTests.suite());
 		suite.addTest(new TestSuite(DataSetTest.class));
 		suite.addTest(new TestSuite(DLTestTestCase.class));
 		suite.addTest(new TestSuite(DecisionListTest.class));

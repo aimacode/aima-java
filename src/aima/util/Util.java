@@ -164,4 +164,64 @@ public class Util {
 		}
 	}
 
+	public static int randomNumberBetween(int i, int j) {
+		/* i,j both **inclusive** */
+		return r.nextInt(j - i + 1) + i;
+	}
+
+	public static double calculateMean(List<Double> lst) {
+		Double sum = 0.0;
+		for (Double d : lst) {
+			sum = sum + d.doubleValue();
+		}
+		return sum / lst.size();
+	}
+
+	public static double calculateStDev(List<Double> values, double mean) {
+
+		int listSize = values.size();
+
+		Double sumOfDiffSquared = 0.0;
+		for (Double value : values) {
+			double diffFromMean = value - mean;
+			sumOfDiffSquared += ((diffFromMean * diffFromMean) / (listSize - 1));// division
+			// moved
+			// here
+			// to
+			// avoid
+			// sum
+			// becoming
+			// too
+			// big
+			// if
+			// this
+			// doesn't
+			// work
+			// use
+			// incremental
+			// formulation
+
+		}
+		double variance = sumOfDiffSquared; // (listSize - 1); // assumes at
+		// least 2
+		// members in
+		// list
+		return Math.sqrt(variance);
+	}
+
+	public static List<Double> normalizeFromMeanAndStdev(List<Double> values,
+			double mean, double stdev) {
+		List<Double> normalized = new ArrayList<Double>();
+		for (Double d : values) {
+			normalized.add((d - mean) / stdev);
+		}
+		return normalized;
+	}
+
+	public static double generateRandomDoubleBetween(double lowerLimit,
+			double upperLimit) {
+
+		return lowerLimit + ((upperLimit - lowerLimit) * r.nextDouble());
+	}
+
 }
