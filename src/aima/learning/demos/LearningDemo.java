@@ -15,13 +15,15 @@ import aima.learning.inductive.DecisionTree;
 import aima.learning.learners.AdaBoostLearner;
 import aima.learning.learners.DecisionListLearner;
 import aima.learning.learners.DecisionTreeLearner;
-import aima.learning.learners.NeuralNetLearner;
 import aima.learning.learners.StumpLearner;
-import aima.learning.statistics.FeedForwardNetwork;
-import aima.learning.statistics.IrisDataSetNumerizer;
-import aima.learning.statistics.PerceptronLearning;
-import aima.learning.statistics.StandardBackPropogation;
-import aima.probability.JavaRandomizer;
+import aima.learning.neural.BackPropLearning;
+import aima.learning.neural.FeedForwardNeuralNetwork;
+import aima.learning.neural.IrisDataSetNumerizer;
+import aima.learning.neural.NNConfig;
+import aima.learning.neural.NNDataSet;
+import aima.learning.neural.Numerizer;
+import aima.learning.neural.Perceptron;
+import aima.test.learningtest.neural.IrisNNDataSet;
 import aima.util.Util;
 
 public class LearningDemo {
@@ -127,64 +129,66 @@ public class LearningDemo {
 	}
 
 	private static void perceptronDemo() {
-		System.out.println(Util.ntimes("*", 100));
-		System.out.println("Perceptron Demo (Neural Net)");
-		System.out.println(Util.ntimes("*", 100));
-		System.out
-				.println("Trying to run Perception Learning on the Iris DataSet");
-		System.out
-				.println("The Network weights and biases are set up at random .So you may get a different result n some runs");
 		try {
-			DataSet ds = DataSetFactory.getIrisDataSet();
-			FeedForwardNetwork network = new FeedForwardNetwork(4, 3,
-					new JavaRandomizer());
-			NeuralNetLearner learner = new NeuralNetLearner(network,
-					new IrisDataSetNumerizer(), new PerceptronLearning(), 10);
-			learner.train(ds);
-			int[] result = learner.test(ds);
-
+			System.out.println(Util.ntimes("*", 100));
 			System.out
-					.println("\nThis Perceptron  classifies the data set with "
-							+ result[0] + " successes" + " and " + result[1]
-							+ " failures");
-			System.out.println("\n");
-		} catch (Exception e) {
+					.println("\n Perceptron Demo - Running Perceptron on Iris data Set with 10 epochs of learning ");
+			System.out.println(Util.ntimes("*", 100));
+			DataSet irisDataSet = DataSetFactory.getIrisDataSet();
+			Numerizer numerizer = new IrisDataSetNumerizer();
+			NNDataSet innds = new IrisNNDataSet();
 
+			innds.createExamplesFromDataSet(irisDataSet, numerizer);
+
+			Perceptron perc = new Perceptron(3, 4);
+
+			perc.trainOn(innds, 10);
+
+			innds.refreshDataset();
+			int[] result = perc.testOnDataSet(innds);
+			System.out.println(result[0] + " right, " + result[1] + " wrong");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
 	private static void backPropogationDemo() {
-		System.out.println(Util.ntimes("*", 100));
-		System.out.println("BackPropogation  (Neural Net)");
-		System.out.println(Util.ntimes("*", 100));
-		System.out
-				.println("Trying to run BackPropogation  Learning on the Iris DataSet");
-		System.out
-				.println("The Network weights and biases are set up at random .So you may get a different result on some runs");
 		try {
-			DataSet ds = DataSetFactory.getIrisDataSet();
-			FeedForwardNetwork network = new FeedForwardNetwork(4, 4, 3,
-					new JavaRandomizer());
-			NeuralNetLearner learner = new NeuralNetLearner(network,
-					new IrisDataSetNumerizer(), new StandardBackPropogation(),
-					1000);
-			learner.train(ds);
-			int[] result = learner.test(ds);
-
+			System.out.println(Util.ntimes("*", 100));
 			System.out
-					.println("\nThis BackPropogation Network  classifies the data set with "
-							+ result[0]
-							+ " successes"
-							+ " and "
-							+ result[1]
-							+ " failures");
-			System.out.println("\n");
+					.println("\n BackpropagationDemo  - Running BackProp on Iris data Set with 10 epochs of learning ");
+			System.out.println(Util.ntimes("*", 100));
+
+			DataSet irisDataSet = DataSetFactory.getIrisDataSet();
+			Numerizer numerizer = new IrisDataSetNumerizer();
+			NNDataSet innds = new IrisNNDataSet();
+
+			innds.createExamplesFromDataSet(irisDataSet, numerizer);
+
+			NNConfig config = new NNConfig();
+			config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_INPUTS, 4);
+			config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_OUTPUTS, 3);
+			config.setConfig(FeedForwardNeuralNetwork.NUMBER_OF_HIDDEN_NEURONS,
+					6);
+			config
+					.setConfig(FeedForwardNeuralNetwork.LOWER_LIMIT_WEIGHTS,
+							-2.0);
+			config.setConfig(FeedForwardNeuralNetwork.UPPER_LIMIT_WEIGHTS, 2.0);
+
+			FeedForwardNeuralNetwork ffnn = new FeedForwardNeuralNetwork(config);
+			ffnn.setTrainingScheme(new BackPropLearning(0.1, 0.9));
+
+			ffnn.trainOn(innds, 10);
+
+			innds.refreshDataset();
+			int[] result = ffnn.testOnDataSet(innds);
+			System.out.println(result[0] + " right, " + result[1] + " wrong");
 		} catch (Exception e) {
-			System.out.println("exception");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 }
