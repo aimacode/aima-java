@@ -2,10 +2,13 @@
 #labels Featured
 
 = Introduction =
-This release is the prefinal version (0.9).
 
-New in this release :- the probability algorithms from chapters 15,16,17 and 21 (and many bug fixes).
+This is the 0.92 release
 
+It includes a rewrite of the neural network algorithms (in the earlier version the nn s were getting saturated because the data was not pre processed)
+ +  more algorithms  from chapter 4.
+ 
+Heuristics are now doubles (vs ints in the old version).
 One minor change is that I've dropped the make file. Please use [http://ant.apache.org/ant  ant]
 
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
@@ -13,6 +16,9 @@ The latest  (and ever evolving) code can be found at http://code.google.com/p/ai
 ==bug reports - acknowledgment ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!
+
+  * Carl Anderson, Senior Scientist, ArchimedesModel.com
+ 
   * Don Cochrane from (?) University
 
   * Mike Angelotti  from Miami University
@@ -27,7 +33,7 @@ The following people sent in excellent comments and bug reports. Thank you!!!!
 
   * Nils Knoblauch (Project Manager, Camline) - winner of the No Prize for the best bug report ! Thanks!
 
-  * Phil Snowberger,Artificial Intelligence and Robotics Laboratory,University of Notre Dame
+  * Phil Snowberger, Artificial Intelligence and Robotics Laboratory,University of Notre Dame
 
 
 
