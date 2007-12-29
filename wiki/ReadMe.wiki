@@ -44,9 +44,16 @@ The following people sent in excellent comments and bug reports. Thank you!!!!
 
 ==Build Instructions==
 
-you need [http://ant.apache.org/ ant] to build from source. Many IDE's have built in ant versions. So you may want to try that first. 
+f you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
 
-from the command line,
+if you want  to rebuild from source, run the unit tests etc follow the instructions below.
+
+you need [http://ant.apache.org/ ant] to build from source.
+
+ Many IDE's have built in ant versions. So you may want to try that first. 
+
+To build from the command line,
+
  # download the archive archive
  # unzip
  # confirm that the aima-java/build directory is on your CLASSPATH
