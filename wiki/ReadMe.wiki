@@ -54,11 +54,11 @@ you need [http://ant.apache.org/ ant] to build from source.
 
 To build from the command line,
 
- # download the archive archive
+ # download the archive.
  # unzip
  # confirm that the aima-java/build directory is on your CLASSPATH
  # go to the aima-java directory
- # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit] on the classpath
+ # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit (note teh version number)] on the classpath
  # type 'ant' 
 
 
