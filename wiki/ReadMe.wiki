@@ -58,7 +58,7 @@ To build from the command line,
  # unzip
  # confirm that the aima-java/build directory is on your CLASSPATH
  # go to the aima-java directory
- # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit (note teh version number)] on the classpath
+ # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit (note the version number)] on the classpath
  # type 'ant' 
 
 
