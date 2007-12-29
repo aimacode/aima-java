@@ -37,20 +37,24 @@ Phil Snowberger,Artificial Intelligence and Robotics Laboratory,University of No
 
 
 
-Build Instructions
-******************
-you can use  ANT(http://ant.apache.org/) 
-    
-The make file is now deprecated. use ANT!
+==Build Instructions==
 
+If you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
 
-The ANT file is more comprehensive and runs all the tests as part of the standard build.
+If you want  to rebuild from source, run the unit tests etc follow the instructions below.
+  
+you need [http://ant.apache.org/ ant] to build from source. 
 
-To run the tests , you will need to put junit(www.junit.org) on the CLASSPATH.
-so to build
+Many IDE's have built in ant versions. So if you are using an IDE you may want to try that first. 
 
-With ant -- type ant at the command line
-With make -- type make
+To build from the command line,
+
+ # download the archive
+ # unzip
+ # confirm that the aima-java/build directory is on your CLASSPATH
+ # go to the aima-java directory
+ # confirm that [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit3.8.1 (note version number) ] is on the CLASSPATH
+ # type 'ant' 
 
 I have included the eclipse.classpath and .projectfiles for those who use eclipse (www.eclipse.org).If you don't use eclipse presently consider getting it. It is free .And its awesome.
 
