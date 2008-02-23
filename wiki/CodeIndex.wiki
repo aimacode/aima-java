@@ -29,7 +29,7 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||4.14||116||Simulated-Annealing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
 ||4.17||119||Genetic-Algorithm||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]||
 ||4.20||126||Online-DFS-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/online/OnlineDFSAgent.java OnlineDFSAgent]||
-||4.23||128||LRTA`*`-Agent||---||
+||4.23||128||LRTA`*`-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/online/LRTAStarAgent.java LRTAStarAgent]||
 ||5||137||CSP||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java CSP]||
 ||5.3||142||Backtracking-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java (method)-backtrackingSearch()]||
 ||5.7||146||AC-3||---||
