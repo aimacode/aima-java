@@ -19,7 +19,7 @@ import aima.search.framework.Successor;
  *           unexplored, a table that lists, for each visited state, the actions not yet tried
  *           unbacktracked, a table that lists, for each visited state, the backtracks not yet tried
  *           s, a, the previous state and action, initially null
- *   
+ *    
  *   if GOAL-TEST(s') then return stop
  *   if s' is a new state then unexplored[s'] <- ACTIONS(s')
  *   if s is not null then do
@@ -106,9 +106,9 @@ public class OnlineDFSAgent extends Agent {
 					Percept popped = unbacktracked.get(sComma).remove(
 							unbacktracked.get(sComma).size() - 1);
 					for (ActionState as : result.keySet()) {
-						if (as.state.equals(sComma)
+						if (as.getState().equals(sComma)
 								&& result.get(as).equals(popped)) {
-							a = as.action;
+							a = as.getAction();
 							break;
 						}
 					}
@@ -139,6 +139,7 @@ public class OnlineDFSAgent extends Agent {
 	//
 
 	private void init() {
+		live();
 		result.clear();
 		unexplored.clear();
 		unbacktracked.clear();
@@ -161,34 +162,5 @@ public class OnlineDFSAgent extends Agent {
 		}
 
 		return actions;
-	}
-
-	private class ActionState {
-		private final Object action;
-		private final Percept state;
-
-		public ActionState(Object action, Percept state) {
-			this.action = action;
-			this.state = state;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (o == null || !(o instanceof ActionState)) {
-				return super.equals(o);
-			}
-			return (action.equals(((ActionState) o).action) && state
-					.equals(((ActionState) o).state));
-		}
-
-		@Override
-		public int hashCode() {
-			return action.hashCode() + state.hashCode();
-		}
-
-		@Override
-		public String toString() {
-			return "(" + action + ", " + state + ")";
-		}
 	}
 }
