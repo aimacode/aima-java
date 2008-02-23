@@ -137,7 +137,7 @@ public class BackPropagationTests extends TestCase {
 
 		innds.refreshDataset();
 		int[] result = ffnn.testOnDataSet(innds);
-		System.out.println(result[0] + " right, " + result[1] + " wrong");
+		// System.out.println(result[0] + " right, " + result[1] + " wrong");
 
 	}
 
@@ -154,7 +154,7 @@ public class BackPropagationTests extends TestCase {
 
 		innds.refreshDataset();
 		int[] result = perc.testOnDataSet(innds);
-		System.out.println(result[0] + " right, " + result[1] + " wrong");
+		// System.out.println(result[0] + " right, " + result[1] + " wrong");
 
 	}
 }
