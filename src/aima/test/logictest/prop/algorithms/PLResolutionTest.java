@@ -7,6 +7,7 @@ package aima.test.logictest.prop.algorithms;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import aima.logic.propositional.algorithms.KnowledgeBase;
 import aima.logic.propositional.algorithms.PLResolution;
 import aima.logic.propositional.parsing.PEParser;
 import aima.logic.propositional.parsing.ast.Sentence;
@@ -95,8 +96,18 @@ public class PLResolutionTest extends TestCase {
 		assertEquals(false, b);
 	}
 
-	// public void testPLResolutionWithChadCarfBugReportData(){
-	// //commented out coz too slow..
+	public void testMultipleClauseResolution() {
+		// test (and fix) suggested by Huy Dinh. Thanks Huy!
+		PLResolution plr = new PLResolution();
+		KnowledgeBase kb = new KnowledgeBase();
+		String fact = "((B11 <=> (P12 OR P21)) AND (NOT B11))";
+		kb.tell(fact);
+		plr.plResolution(kb, "(B)");
+
+	}
+
+	// public void testPLResolutionWithChadCarfBugReportData() {
+	// commented out coz this needs a major fix wait for a rewrite
 	// KnowledgeBase kb = new KnowledgeBase();
 	// kb.tell("(B12 <=> (P11 OR (P13 OR (P22 OR P02))))");
 	// kb.tell("(B21 <=> (P20 OR (P22 OR (P31 OR P11))))");
@@ -106,7 +117,7 @@ public class PLResolutionTest extends TestCase {
 	// kb.tell("(NOT B12)");
 	// kb.tell("(B10)");
 	// kb.tell("(B01)");
-	// assertTrue(resolution.plResolution(kb.asSentence().toString(),"(P00)"));
+	// assertTrue(resolution.plResolution(kb.asSentence().toString(), "(P00)"));
 	// //assertFalse(kb.askWithDpll("(NOT P00)"));
 	//		
 	//		

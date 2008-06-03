@@ -16,8 +16,9 @@ The official release can be found at http://aima.cs.berkeley.edu/java-overview.h
 The following people sent in excellent comments and bug reports.
  Thank you all
  
+Huy Dinh, for reporting a prticularly insidious bog in the Logic code
  
- Carl Anderson Senior Scientist, ArchimedesModel.com (suggested making heuristic values double instead of int. Excellent suggestion! Than You!)
+Carl Anderson Senior Scientist, ArchimedesModel.com (suggested making heuristic values double instead of int. Excellent suggestion! Thank You!)
 
 Don Cochrane from (?) University
 
@@ -25,7 +26,7 @@ Mike Angelotti  from Miami University
 
 Chad Carff ,University of Western Florida .  EXCELLENT test cases . thank you .
 
-Dr .Eman El-Sheikh, Ph.D.,University of Western Florida
+Dr. Eman El-Sheikh, Ph.D.,University of Western Florida
 
 Ravindra Guravannavar, Aztec Software,Bangalore
 
