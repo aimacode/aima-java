@@ -50,6 +50,8 @@ public class PLResolution {
 				List<Sentence> pair = pairs.get(i);
 				// System.out.println("pair number" + i+" of "+pairs.size());
 				Set<Sentence> resolvents = plResolve(pair.get(0), pair.get(1));
+				resolvents = filterOutClausesWithTwoComplementaryLiterals(resolvents);
+
 				if (resolvents.contains(new Symbol("EMPTY_CLAUSE"))) {
 					return true;
 				}
