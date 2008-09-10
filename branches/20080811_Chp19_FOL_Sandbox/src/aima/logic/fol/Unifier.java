@@ -69,15 +69,16 @@ public class Unifier {
 	 *           theta, the substitution built up so far (optional, defaults to empty)
 	 * </code>
 	 * 
-	 * @return a Map<FOLNode, FOLNode> representing the substitution or null
-	 *         which indicates the failure to unify.
+	 * @return a Map<Variable, Term> representing the substitution (i.e. a set
+	 *         of variable/term pairs, see pg. 254 for a description) or null
+	 *         which is used to indicate a failure to unify.
 	 */
-	public Map<FOLNode, FOLNode> unify(FOLNode x, FOLNode y) {
-		return unify(x, y, new HashMap<FOLNode, FOLNode>());
+	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
+		return unify(x, y, new HashMap<Variable, Term>());
 	}
 
-	public Map<FOLNode, FOLNode> unify(FOLNode x, FOLNode y,
-			Map<FOLNode, FOLNode> theta) {
+	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
+			Map<Variable, Term> theta) {
 
 		// if theta = failure then return failure
 		if (theta == null) {
@@ -103,8 +104,8 @@ public class Unifier {
 	
 	// else if LIST?(x) and LIST?(y) then
 	// return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
-	public Map<FOLNode, FOLNode> unify(List<Term> x, List<Term> y,
-			Map<FOLNode, FOLNode> theta) {
+	public Map<Variable, Term> unify(List<Term> x, List<Term> y,
+			Map<Variable, Term> theta) {
 		if (theta == null) {
 			return null;
 		} else if (x.size() == 0 && y.size() == 0) {
@@ -136,11 +137,13 @@ public class Unifier {
 	 *       theta, the substitution built up so far
 	 * </code>
 	 */
-	private Map<FOLNode, FOLNode> unifyVar(Variable var, FOLNode x,
-			Map<FOLNode, FOLNode> theta) {
+	private Map<Variable, Term> unifyVar(Variable var, FOLNode x,
+			Map<Variable, Term> theta) {
 		
-		// if {var/val} E theta then return UNIFY(val, x, theta)
-		if (theta.keySet().contains(var)) {
+		if (!Term.class.isInstance(x)) {
+			return null;
+		} else if (theta.keySet().contains(var)) {
+			// if {var/val} E theta then return UNIFY(val, x, theta)
 			return unify(theta.get(var), x, theta);
 		} else if (theta.keySet().contains(x)) {
 			// else if {x/val} E theta then return UNIFY(var, val, theta)
@@ -150,13 +153,13 @@ public class Unifier {
 			return null;
 		} else {
 			// else return add {var/x} to theta
-			theta.put(var, x);
+			theta.put(var, (Term) x);
 			return theta;
 		}
 	}
 
-	private Map<FOLNode, FOLNode> unifyOps(String x, String y,
-			Map<FOLNode, FOLNode> theta) {
+	private Map<Variable, Term> unifyOps(String x, String y,
+			Map<Variable, Term> theta) {
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
@@ -174,7 +177,6 @@ public class Unifier {
 		} else {
 			return null;
 		}
-
 	}
 
 	private String op(FOLNode x) {
@@ -213,7 +215,6 @@ public class Unifier {
 			other.remove(0);
 			return other;
 		}
-
 	}
 
 	private List<Term> duplicate(List<Term> x) {

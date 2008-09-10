@@ -10,7 +10,6 @@ import aima.logic.fol.Unifier;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
-import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -26,20 +25,20 @@ public class UnifierTest extends TestCase {
 
 	private FOLParser parser;
 	private Unifier unifier;
-	private Map<FOLNode, FOLNode> theta;
+	private Map<Variable, Term> theta;
 
 	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.knowsDomain());
 		unifier = new Unifier();
-		theta = new Hashtable<FOLNode, FOLNode>();
+		theta = new Hashtable<Variable, Term>();
 	}
 
 	public void testFailureIfThetaisNull() {
 		Variable var = new Variable("x");
 		Sentence sentence = parser.parse("Knows(x)");
 		theta = null;
-		Map<FOLNode, FOLNode> result = unifier.unify(var, sentence, theta);
+		Map<Variable, Term> result = unifier.unify(var, sentence, theta);
 		assertNull(result);
 	}
 
@@ -47,7 +46,7 @@ public class UnifierTest extends TestCase {
 		Variable var = new Variable("x");
 		Sentence sentence = parser.parse("Knows(y)");
 		theta = null;
-		Map<FOLNode, FOLNode> result = unifier.unify(var, sentence, theta);
+		Map<Variable, Term> result = unifier.unify(var, sentence, theta);
 		assertNull(result);
 	}
 
@@ -56,7 +55,7 @@ public class UnifierTest extends TestCase {
 		Variable var2 = new Variable("x");
 
 		theta.put(new Variable("dummy"), new Variable("dummy"));
-		Map<FOLNode, FOLNode> result = unifier.unify(var1, var2, theta);
+		Map<Variable, Term> result = unifier.unify(var1, var2, theta);
 		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
 		assertTrue(theta.containsKey(new Variable("dummy")));
@@ -66,7 +65,7 @@ public class UnifierTest extends TestCase {
 		Variable var1 = new Variable("x");
 		Constant constant = new Constant("John");
 
-		Map<FOLNode, FOLNode> result = unifier.unify(var1, constant, theta);
+		Map<Variable, Term> result = unifier.unify(var1, constant, theta);
 		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
 		assertTrue(theta.keySet().contains(var1));
@@ -83,7 +82,7 @@ public class UnifierTest extends TestCase {
 		terms2.add(new Constant("John"));
 		Predicate p2 = new Predicate("King", terms2); // King(John)
 
-		Map<FOLNode, FOLNode> result = unifier.unify(p1, p2, theta);
+		Map<Variable, Term> result = unifier.unify(p1, p2, theta);
 		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
 		assertTrue(theta.keySet().contains(new Variable("x"))); // x =
@@ -93,7 +92,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows1() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(John,Jane)");
-		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
 				theta);
 		assertEquals(theta, result);
 		assertTrue(theta.keySet().contains(new Variable("x"))); // x =
@@ -104,7 +103,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows2() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Bill)");
-		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
 				theta);
 
 		assertEquals(2, result.size());
@@ -118,7 +117,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows3() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Mother(y))");
-		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
 				theta);
 
 		assertEquals(2, result.size());
@@ -134,7 +133,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows5() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,z)");
-		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
 				theta);
 
 		assertEquals(2, result.size());

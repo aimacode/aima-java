@@ -20,9 +20,8 @@ import aima.util.SetOps;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-
 public class SubstVisitor extends AbstractFOLVisitor {
 
 	public SubstVisitor(FOLParser parser) {
