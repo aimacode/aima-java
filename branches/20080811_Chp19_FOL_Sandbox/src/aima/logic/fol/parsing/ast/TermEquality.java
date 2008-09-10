@@ -6,7 +6,7 @@ package aima.logic.fol.parsing.ast;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
-public class TermEquality implements Sentence {
+public class TermEquality implements AtomicSentence {
 	private Term term1, term2;
 
 	public void setTerm1(Sentence term1) {

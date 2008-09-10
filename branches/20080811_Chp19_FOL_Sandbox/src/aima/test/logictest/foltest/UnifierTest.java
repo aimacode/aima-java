@@ -3,12 +3,14 @@ package aima.test.logictest.foltest;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
+import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -21,24 +23,23 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 
 public class UnifierTest extends TestCase {
-	FOLParser parser;
 
-	Unifier unifier;
-
-	Hashtable theta;
+	private FOLParser parser;
+	private Unifier unifier;
+	private Map<FOLNode, FOLNode> theta;
 
 	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.knowsDomain());
-		unifier = new Unifier(parser);
-		theta = new Hashtable();
+		unifier = new Unifier();
+		theta = new Hashtable<FOLNode, FOLNode>();
 	}
 
 	public void testFailureIfThetaisNull() {
 		Variable var = new Variable("x");
 		Sentence sentence = parser.parse("Knows(x)");
 		theta = null;
-		Hashtable result = unifier.unify(var, sentence, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(var, sentence, theta);
 		assertNull(result);
 	}
 
@@ -46,7 +47,7 @@ public class UnifierTest extends TestCase {
 		Variable var = new Variable("x");
 		Sentence sentence = parser.parse("Knows(y)");
 		theta = null;
-		Hashtable result = unifier.unify(var, sentence, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(var, sentence, theta);
 		assertNull(result);
 	}
 
@@ -54,17 +55,19 @@ public class UnifierTest extends TestCase {
 		Variable var1 = new Variable("x");
 		Variable var2 = new Variable("x");
 
-		theta.put("dummy", "dummy");
-		Hashtable result = unifier.unify(var1, var2, theta);
+		theta.put(new Variable("dummy"), new Variable("dummy"));
+		Map<FOLNode, FOLNode> result = unifier.unify(var1, var2, theta);
+		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
-		assertTrue(theta.contains("dummy"));
+		assertTrue(theta.containsKey(new Variable("dummy")));
 	}
 
 	public void testVariableEqualsConstant() {
 		Variable var1 = new Variable("x");
 		Constant constant = new Constant("John");
 
-		Hashtable result = unifier.unify(var1, constant, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(var1, constant, theta);
+		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
 		assertTrue(theta.keySet().contains(var1));
 		assertEquals(constant, theta.get(var1));
@@ -80,7 +83,8 @@ public class UnifierTest extends TestCase {
 		terms2.add(new Constant("John"));
 		Predicate p2 = new Predicate("King", terms2); // King(John)
 
-		Hashtable result = unifier.unify(p1, p2, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(p1, p2, theta);
+		assertEquals(theta, result);
 		assertEquals(1, theta.keySet().size());
 		assertTrue(theta.keySet().contains(new Variable("x"))); // x =
 		assertEquals(new Constant("John"), theta.get(var1)); // John
@@ -89,7 +93,9 @@ public class UnifierTest extends TestCase {
 	public void testKnows1() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(John,Jane)");
-		Hashtable result = unifier.unify(query, johnKnowsJane, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+				theta);
+		assertEquals(theta, result);
 		assertTrue(theta.keySet().contains(new Variable("x"))); // x =
 		assertEquals(new Constant("Jane"), theta.get(new Variable("x"))); // Jane
 
@@ -98,7 +104,8 @@ public class UnifierTest extends TestCase {
 	public void testKnows2() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Bill)");
-		Hashtable result = unifier.unify(query, johnKnowsJane, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+				theta);
 
 		assertEquals(2, result.size());
 
@@ -106,13 +113,13 @@ public class UnifierTest extends TestCase {
 		// Bill
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
 		// John
-
 	}
 
 	public void testKnows3() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Mother(y))");
-		Hashtable result = unifier.unify(query, johnKnowsJane, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+				theta);
 
 		assertEquals(2, result.size());
 
@@ -122,20 +129,19 @@ public class UnifierTest extends TestCase {
 		assertEquals(mother, theta.get(new Variable("x")));
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
 		// John
-
 	}
 
 	public void testKnows5() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,z)");
-		Hashtable result = unifier.unify(query, johnKnowsJane, theta);
+		Map<FOLNode, FOLNode> result = unifier.unify(query, johnKnowsJane,
+				theta);
 
 		assertEquals(2, result.size());
 
 		assertEquals(new Variable("z"), theta.get(new Variable("x"))); // x = z
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
 		// John
-
 	}
 
 }

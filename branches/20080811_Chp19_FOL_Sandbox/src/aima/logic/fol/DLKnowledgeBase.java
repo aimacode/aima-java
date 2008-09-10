@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
+import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 
@@ -29,7 +31,7 @@ public class DLKnowledgeBase {
 		parser = new FOLParser(domain);
 		rules = new ArrayList<Rule>();
 		facts = new ArrayList<Fact>();
-		unifier = new Unifier(parser);
+		unifier = new Unifier();
 	}
 
 	public List getRules() {
@@ -90,7 +92,7 @@ public class DLKnowledgeBase {
 		Properties p = new Properties();
 		int numberOfNewFactsDiscoveredThisIteration = 0;
 		do {
-			Hashtable h = matchesFacts(query);
+			Map<FOLNode, FOLNode> h = matchesFacts(query);
 			// System.out.println("MatchedFacts " + h);
 			if (h != null) {
 				p = new Properties();
@@ -146,12 +148,12 @@ public class DLKnowledgeBase {
 
 	}
 
-	private Hashtable matchesFacts(Predicate query) {
-		Hashtable unificationResult = null;
+	private Map<FOLNode, FOLNode> matchesFacts(Predicate query) {
+		Map<FOLNode, FOLNode> unificationResult = null;
 		for (int i = 0; i < facts.size(); i++) {
 			Fact fact = facts.get(i);
 			unificationResult = unifier.unify(query, fact.predicate(),
-					new Hashtable());
+					new Hashtable<FOLNode, FOLNode>());
 			if (unificationResult != null) {
 				return unificationResult;
 			}

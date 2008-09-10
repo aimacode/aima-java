@@ -24,14 +24,19 @@ import aima.util.SetOps;
  */
 
 public class SubstVisitor extends AbstractFOLVisitor {
-	Sentence substitutedSentence = null;
-
-	Sentence originalSentence = null;
-
-	private FOLParser parser;
 
 	public SubstVisitor(FOLParser parser) {
 		super(parser);
+	}
+	
+	public Sentence getSubstitutedSentence(Sentence beforeSubst, Properties p) {
+		// System.out.println(beforeSubst.toString());
+		Sentence sen = (Sentence) beforeSubst.accept(this, p);
+		// System.out.println(sen.toString());
+		Sentence afterSubst = recreate(sen);
+		// System.out.println(afterSubst.toString());
+		// System.out.println("***");
+		return afterSubst;
 	}
 
 	@Override
@@ -87,16 +92,4 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		}
 
 	}
-
-	public Sentence getSubstitutedSentence(Sentence beforeSubst, Properties p) {
-		// System.out.println(beforeSubst.toString());
-		Sentence sen = (Sentence) beforeSubst.accept(this, p);
-		// System.out.println(sen.toString());
-		Sentence afterSubst = recreate(sen);
-		// System.out.println(afterSubst.toString());
-		// System.out.println("***");
-		return afterSubst;
-
-	}
-
 }

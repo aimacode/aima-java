@@ -14,7 +14,7 @@ import aima.logic.fol.parsing.FOLVisitor;
  * 
  */
 
-public class Predicate implements Sentence {
+public class Predicate implements AtomicSentence {
 	private String predicateName;
 
 	private List<Term> terms;
@@ -28,7 +28,7 @@ public class Predicate implements Sentence {
 		return predicateName;
 	}
 
-	public List getTerms() {
+	public List<Term> getTerms() {
 		return terms;
 	}
 

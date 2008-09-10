@@ -1,94 +1,172 @@
 package aima.logic.fol;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.1, page 278.
  * 
+ * <code>
+ * function UNIFY(x, y, theta) returns a substitution to make x and y identical
+ *   inputs: x, a variable, constant, list, or compound
+ *           y, a variable, constant, list, or compound
+ *           theta, the substitution built up so far (optional, defaults to empty)
+ *           
+ *   if theta = failure then return failure
+ *   else if x = y the return theta
+ *   else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
+ *   else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
+ *   else if COMPOUND?(x) and COMPOUND?(y) then
+ *       return UNIFY(ARGS[x], ARGS[y], UNIFY(OP[x], OP[y], theta))
+ *   else if LIST?(x) and LIST?(y) then
+ *       return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
+ *   else return failure
+ *   
+ * -------------------------------------------------------------------------------------------------
+ * 
+ * function UNIFY-VAR(var, x, theta) returns a substitution
+ *   inputs: var, a variable
+ *           x, any expression
+ *           theta, the substitution built up so far
+ *           
+ *   if {var/val} E theta then return UNIFY(val, x, theta)
+ *   else if {x/val} E theta then return UNIFY(var, val, theta)
+ *   else if OCCUR-CHECK?(var, x) then return failure
+ *   else return add {var/x} to theta
+ * </code>
+ * 
+ * Figure 9.1 The unification algorithm. The algorithm works by comparing the structures
+ * of the inputs, elements by element. The substitution theta that is the argument to UNIFY is built
+ * up along the way and is used to make sure that later comparisons are consistent with bindings
+ * that were established earlier. In a compound expression, such as F(A, B), the function OP
+ * picks out the function symbol F and the function ARGS picks out the argument list (A, B).
  */
 
+/**
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class Unifier {
 
-	private FOLParser parser;
+	public Unifier() {
 
-	public Unifier(FOLParser parser) {
-
-		this.parser = parser;
 	}
 
-	// returns a Hashtable of results if succesful , null if fail
-	public Hashtable unify(FOLNode x, FOLNode y, Hashtable theta) {
+	/**
+	 * <code>
+	 * function UNIFY(x, y, theta) returns a substitution to make x and y identical
+	 *   inputs: x, a variable, constant, list, or compound
+	 *           y, a variable, constant, list, or compound
+	 *           theta, the substitution built up so far (optional, defaults to empty)
+	 * </code>
+	 * 
+	 * @return a Map<FOLNode, FOLNode> representing the substitution or null
+	 *         which indicates the failure to unify.
+	 */
+	public Map<FOLNode, FOLNode> unify(FOLNode x, FOLNode y) {
+		return unify(x, y, new HashMap<FOLNode, FOLNode>());
+	}
 
+	public Map<FOLNode, FOLNode> unify(FOLNode x, FOLNode y,
+			Map<FOLNode, FOLNode> theta) {
+
+		// if theta = failure then return failure
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
+			// else if x = y the return theta
 			return theta;
 		} else if (isVariable(x)) {
+			// else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
 			return unifyVar((Variable) x, y, theta);
 		} else if (isVariable(y)) {
+			// else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
 			return unifyVar((Variable) y, x, theta);
 		} else if ((isCompound(x)) && (isCompound(y))) {
-			return unifyLists(args(x), args(y), unifyOps(op(x), op(y), theta));
-		} else if (isList(x) && isList(y)) {
-			return unifyLists((List) x, (List) y, theta);
-		}
-
-		else {
+			// else if COMPOUND?(x) and COMPOUND?(y) then
+			// return UNIFY(ARGS[x], ARGS[y], UNIFY(OP[x], OP[y], theta))
+			return unify(args(x), args(y), unifyOps(op(x), op(y), theta));
+		} else {
+			// else return failure
 			return null;
 		}
 	}
-
-	public Hashtable unifyLists(List x, List y, Hashtable theta) {
+	
+	// else if LIST?(x) and LIST?(y) then
+	// return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
+	public Map<FOLNode, FOLNode> unify(List<Term> x, List<Term> y,
+			Map<FOLNode, FOLNode> theta) {
 		if (theta == null) {
 			return null;
-		} else if (x.equals(y)) {
+		} else if (x.size() == 0 && y.size() == 0) {
 			return theta;
 		} else {
-			return unifyLists(rest(x), rest(y),
-					unify(first(x), first(y), theta));
+			return unify(rest(x), rest(y), unify(first(x), first(y), theta));
 		}
 	}
 
-	public Hashtable unifyOps(String x, String y, Hashtable theta) {
-		if (theta == null) {
-			return null;
-		} else if (x.equals(y)) {
-			return theta;
-		} else {
+	//
+	// PROTECTED METHODS
+	//
 
-			return null;
-		}
+	// Note: You can subclass and override this method in order
+	// to implement the OCCUR-CHECK?() if needed.
+	protected boolean occurCheck(Variable var, FOLNode x) {
+		return false;
 	}
 
-	private Hashtable unifyVar(Variable var, FOLNode x, Hashtable theta) {
+	//
+	// PRIVATE METHODS
+	//
+
+	/**
+	 * <code>
+	 * function UNIFY-VAR(var, x, theta) returns a substitution
+	 *   inputs: var, a variable
+	 *       x, any expression
+	 *       theta, the substitution built up so far
+	 * </code>
+	 */
+	private Map<FOLNode, FOLNode> unifyVar(Variable var, FOLNode x,
+			Map<FOLNode, FOLNode> theta) {
+		
+		// if {var/val} E theta then return UNIFY(val, x, theta)
 		if (theta.keySet().contains(var)) {
-
-			return unify((FOLNode) theta.get(var), x, theta);
+			return unify(theta.get(var), x, theta);
 		} else if (theta.keySet().contains(x)) {
-
-			return unify(var, (FOLNode) theta.get(var), theta);
+			// else if {x/val} E theta then return UNIFY(var, val, theta)
+			return unify(var, theta.get(var), theta);
 		} else if (occurCheck(var, x)) {
-			return null;// failure
+			// else if OCCUR-CHECK?(var, x) then return failure
+			return null;
 		} else {
+			// else return add {var/x} to theta
 			theta.put(var, x);
 			return theta;
 		}
 	}
 
-	private boolean occurCheck(Variable var, FOLNode x) {
-		return false;
+	private Map<FOLNode, FOLNode> unifyOps(String x, String y,
+			Map<FOLNode, FOLNode> theta) {
+		if (theta == null) {
+			return null;
+		} else if (x.equals(y)) {
+			return theta;
+		} else {
+			return null;
+		}
 	}
 
-	private List args(FOLNode x) {
+	private List<Term> args(FOLNode x) {
 		if (isFunction(x)) {
 			return ((Function) x).getTerms();
 		} else if (isPredicate(x)) {
@@ -107,11 +185,6 @@ public class Unifier {
 		} else {
 			return null;
 		}
-
-	}
-
-	private boolean isList(FOLNode x) {
-		return List.class.isInstance(x);
 	}
 
 	private boolean isVariable(FOLNode x) {
@@ -126,30 +199,25 @@ public class Unifier {
 		return Function.class.isInstance(x);
 	}
 
-	private FOLNode first(List x) {
-		List other = duplicate(x);
+	private FOLNode first(List<Term> x) {
+		List<Term> other = duplicate(x);
 		FOLNode first = (FOLNode) other.get(0);
 		return first;
 	}
 
-	private List rest(List x) {
+	private List<Term> rest(List<Term> x) {
 		if (x.size() == 1) {
-			return new ArrayList();
+			return new ArrayList<Term>();
 		} else {
-			List other = duplicate(x);
+			List<Term> other = duplicate(x);
 			other.remove(0);
 			return other;
 		}
 
 	}
 
-	private List duplicate(List x) {
-		List<Object> other = new ArrayList<Object>();
-		Iterator iter = x.iterator();
-		while (iter.hasNext()) {
-			other.add(iter.next());
-		}
-		return other;
+	private List<Term> duplicate(List<Term> x) {
+		return new ArrayList<Term>(x);
 	}
 
 	private boolean isCompound(FOLNode x) {
@@ -159,5 +227,4 @@ public class Unifier {
 			return false;
 		}
 	}
-
 }

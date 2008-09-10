@@ -7,8 +7,10 @@ package aima.logic.fol;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Variable;
 import aima.search.csp.Domain;
@@ -44,9 +46,9 @@ public class Clause {
 	}
 
 	public void populateDomainsFrom(Fact fact) {
-		Unifier unifier = new Unifier(parser);
-		Hashtable result = unifier.unify(predicate, fact.predicate(),
-				new Hashtable());
+		Unifier unifier = new Unifier();
+		Map<FOLNode, FOLNode> result = unifier.unify(predicate, fact
+				.predicate(), new Hashtable<FOLNode, FOLNode>());
 		if (result != null) { // unification succesfull
 			Iterator iter = result.keySet().iterator();
 			while (iter.hasNext()) {
