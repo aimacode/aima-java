@@ -1,5 +1,13 @@
 package aima.logic.fol.algorithms;
 
+import java.util.List;
+import java.util.Map;
+
+import aima.logic.fol.kb.FOLKnowledgeBase;
+import aima.logic.fol.parsing.ast.Sentence;
+import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.Variable;
+
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.3, page 282.
  * 
@@ -42,7 +50,7 @@ public class FOLFowardChainAsk {
 	 *           alpha, the query, an atomic sentence
 	 * </code>
 	 */
-	private Object ask() {
+	public List<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence query) {
 		// local variables: new, the new sentences inferred on each iteration
 		return null; // TODO
 	}

@@ -2,6 +2,7 @@ package aima.logic.fol;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -133,14 +134,14 @@ public class DLKnowledgeBase {
 			List commonValues = triggered
 					.commonValuesInContainingClauses(variable);
 			// for now assume only one common value
-			Properties substValues = new Properties();
-			substValues.setProperty(variable, commonValues.get(0).toString());
+			Map<Variable, Term> substValues = new LinkedHashMap<Variable, Term>();
+			substValues.put(new Variable(variable), (Term) commonValues.get(0));
+			
 			substFact = (Predicate) new SubstVisitor(parser)
-					.getSubstitutedSentence(fact, substValues);
-
+					.subst(substValues,
+					fact);
 		}
 		return substFact;
-
 	}
 
 	private Map<Variable, Term> matchesFacts(Predicate query) {

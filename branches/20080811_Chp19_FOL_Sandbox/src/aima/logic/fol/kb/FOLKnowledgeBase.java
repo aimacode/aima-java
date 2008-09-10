@@ -1,9 +1,14 @@
 package aima.logic.fol.kb;
 
+import java.util.List;
+import java.util.Map;
+
 import aima.logic.fol.FOLDomain;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Sentence;
+import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * A First Order Logic (FOL) Knowledge Base.
@@ -32,16 +37,21 @@ public class FOLKnowledgeBase {
 	public void tell(Sentence aSentence) {
 
 	}
-	
-	public Object ask(String aSentence) {
-		return ask(parser.parse(aSentence));
+
+	/**
+	 * 
+	 * @param aQuerySentence
+	 * @return three possible return values exist. 1. 'null' indicates the query
+	 *         returned false. 2. an empty list the query returned true. 3. a
+	 *         list of substitutions, indicates true and the bindings for
+	 *         different possible answers to the query (Note: refer to page
+	 *         256).
+	 */
+	public List<Map<Variable, Term>> ask(String aQuerySentence) {
+		return ask(parser.parse(aQuerySentence));
 	}
 
-	// TODO - determine a good return
-	// true or false, or a substitution or binding list, more than 1 answer a
-	// list of substitutions returned.
-	// Note: pg. 254
-	public Object ask(Sentence aQuery) {
+	public List<Map<Variable, Term>> ask(Sentence aQuery) {
 		return null;
 	}
 	

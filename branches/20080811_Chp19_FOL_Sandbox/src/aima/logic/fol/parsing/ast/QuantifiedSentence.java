@@ -86,7 +86,7 @@ public class QuantifiedSentence implements Sentence {
 		return quantified;
 	}
 
-	public List getVariables() {
+	public List<Variable> getVariables() {
 		return variables;
 	}
 

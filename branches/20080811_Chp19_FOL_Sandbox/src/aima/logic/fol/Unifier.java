@@ -1,7 +1,7 @@
 package aima.logic.fol;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +74,7 @@ public class Unifier {
 	 *         which is used to indicate a failure to unify.
 	 */
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
-		return unify(x, y, new HashMap<Variable, Term>());
+		return unify(x, y, new LinkedHashMap<Variable, Term>());
 	}
 
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
