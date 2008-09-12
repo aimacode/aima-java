@@ -41,6 +41,10 @@ public class DefiniteClauseKnowledgeBase extends FOLKnowledgeBase {
 	}
 	
 	public void tell(Sentence aSentence) {
+		// TODO: Want to coordinate standardizing apart with calls to the
+		// underlying store(), i.e. I want to get the internal representation
+		// and then assign it to the definite clause.
+		
 		// Standardize apart by default
 		Sentence standardizedApart = this.standardizeApart(aSentence);
 
