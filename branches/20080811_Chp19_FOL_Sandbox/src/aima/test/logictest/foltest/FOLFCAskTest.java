@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
-import aima.logic.fol.inference.FOLFowardChainAsk;
+import aima.logic.fol.inference.FOLFCAsk;
 import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Constant;
@@ -17,7 +17,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-public class FOLForwardChainAskTest extends TestCase {
+public class FOLFCAskTest extends TestCase {
 
 	public void testBasicForwardChainingFails() {
 		DefiniteClauseKnowledgeBase kkb = createKingsKnowledgeBase();
@@ -56,7 +56,7 @@ public class FOLForwardChainAskTest extends TestCase {
 
 	public DefiniteClauseKnowledgeBase createKingsKnowledgeBase() {
 		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.kingsDomain(), new FOLFowardChainAsk());
+				DomainFactory.kingsDomain(), new FOLFCAsk());
 		kb.tell("((King(x) AND Greedy(x)) => Evil(x))");
 		kb.tell("King(John)");
 		kb.tell("King(Richard)");
@@ -67,7 +67,7 @@ public class FOLForwardChainAskTest extends TestCase {
 
 	private DefiniteClauseKnowledgeBase createWeaponsKnowledgeBase() {
 		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.weaponsDomain(), new FOLFowardChainAsk());
+				DomainFactory.weaponsDomain(), new FOLFCAsk());
 		kb
 				.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
 		kb.tell(" Owns(NoNo, Mone)");

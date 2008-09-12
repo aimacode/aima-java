@@ -2,6 +2,7 @@ package aima.logic.fol.kb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -125,6 +126,22 @@ public class FOLKnowledgeBase {
 		return allUnifiers;
 	}
 	
+	// TODO: Note: To support FOL-FC-Ask
+	public List<Map<Variable, Term>> fetch(List<Predicate> predicates) {
+		List<Map<Variable, Term>> possibleSubstitutions = new ArrayList<Map<Variable, Term>>();
+
+		if (predicates.size() > 0) {
+			Predicate first = predicates.get(0);
+			List<Predicate> rest = new ArrayList<Predicate>(predicates);
+			rest.remove(0);
+
+			recursiveFetch(new LinkedHashMap<Variable, Term>(), first, rest,
+					possibleSubstitutions);
+		}
+
+		return possibleSubstitutions;
+	}
+	
 	// Note: see page 277.
 	public Sentence standardizeApart(Sentence aSentence) {
 		Set<Variable> toRename = variableCollector
@@ -223,5 +240,38 @@ public class FOLKnowledgeBase {
 		}
 
 		indexFacts.get(fact.getPredicateName()).add(fact);
+	}
+	
+	private void recursiveFetch(Map<Variable, Term> theta, Predicate p,
+			List<Predicate> remainingPredicates,
+			List<Map<Variable, Term>> possibleSubstitutions) {
+
+		// Find all substitutions for current predicate based on the
+		// substitutions of prior predicates in the list.
+		List<Map<Variable, Term>> pSubsts = fetch((Predicate) subst(theta, p));
+
+		// No substitutions, therefore cannot continue
+		if (null == pSubsts) {
+			return;
+		}
+
+		for (Map<Variable, Term> psubst : pSubsts) {
+			// Ensure all prior substitution information is maintained
+			// along the chain of predicates (i.e. for shared variables
+			// across the predicates).
+			psubst.putAll(theta);
+			if (remainingPredicates.size() == 0) {
+				// This means I am at the end of the chain of predicates
+				// and have found a valid substitution.
+				possibleSubstitutions.add(psubst);
+			} else {
+				// Need to move to the next link in the chain of substitutions
+				Predicate first = remainingPredicates.get(0);
+				List<Predicate> rest = new ArrayList<Predicate>(
+						remainingPredicates);
+				rest.remove(0);
+				recursiveFetch(psubst, first, rest, possibleSubstitutions);
+			}
+		}
 	}
 }

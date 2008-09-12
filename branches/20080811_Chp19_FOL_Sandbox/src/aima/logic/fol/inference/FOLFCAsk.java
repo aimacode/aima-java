@@ -1,7 +1,6 @@
 package aima.logic.fol.inference;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,9 +45,9 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-public class FOLFowardChainAsk implements InferenceProcedure {
+public class FOLFCAsk implements InferenceProcedure {
 	
-	public FOLFowardChainAsk() {
+	public FOLFCAsk() {
 	}
 
 	//
@@ -97,8 +96,7 @@ public class FOLFowardChainAsk implements InferenceProcedure {
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
 				// SUBST(theta, p'1 ^ ... ^ p'n)
 				// --- for some p'1,...,p'n in KB
-				for (Map<Variable, Term> theta : retrievePossibleSubstitutions(
-						kb, impl)) {
+				for (Map<Variable, Term> theta : KB.fetch(impl.getPremises())) {
 					// q' <- SUBST(theta, q)
 					Predicate qDelta = (Predicate) KB.subst(theta, impl
 							.getConclusion());
@@ -128,56 +126,4 @@ public class FOLFowardChainAsk implements InferenceProcedure {
 	
 	// END-InferenceProcedure
 	//
-
-	// 
-	// PRIVATE METHODS
-	//
-
-	// TODO: Consider moving this logic somewhere else
-
-	private List<Map<Variable, Term>> retrievePossibleSubstitutions(
-			FOLKnowledgeBase kb,
-			DefiniteClause dc) {
-		List<Map<Variable, Term>> possibleSubstitutions = new ArrayList<Map<Variable, Term>>();
-
-		List<Predicate> premises = dc.getPremises();
-
-		if (premises.size() > 0) {
-			Predicate first = premises.get(0);
-			List<Predicate> rest = new ArrayList<Predicate>(premises);
-			rest.remove(0);
-
-			retrievePossibleSubstitutions(kb,
-					new LinkedHashMap<Variable, Term>(), first, rest,
-					possibleSubstitutions);
-		}
-
-		return possibleSubstitutions;
-	}
-	
-	private void retrievePossibleSubstitutions(FOLKnowledgeBase kb,
-			Map<Variable, Term> theta, Predicate p,
-			List<Predicate> remainingPredicates,
-			List<Map<Variable, Term>> possibleSubstitutions) {
-		
-		List<Map<Variable, Term>> pSubsts = kb.fetch((Predicate) kb.subst(
-				theta, p));
-		if (null == pSubsts) {
-			return;
-		}
-		
-		for (Map<Variable, Term> psubst : pSubsts) {
-			psubst.putAll(theta);
-			if (remainingPredicates.size() == 0) {
-				possibleSubstitutions.add(psubst);
-			} else {
-				Predicate first = remainingPredicates.get(0);
-				List<Predicate> rest = new ArrayList<Predicate>(
-						remainingPredicates);
-				rest.remove(0);
-				retrievePossibleSubstitutions(kb, psubst, first, rest,
-						possibleSubstitutions);
-			}
-		}
-	}
 }
