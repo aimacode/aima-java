@@ -9,9 +9,9 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import aima.logic.fol.FOLDomain;
+import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLLexer;
 import aima.logic.fol.parsing.FOLParser;
-import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
@@ -46,6 +46,22 @@ public class FOLParserTest extends TestCase {
 		parser.setUpToParse("x");
 		Term v = parser.parseVariable();
 		assertEquals(v, new Variable("x"));
+	}
+	
+	public void testParseIndexedVariable() {
+		parser.setUpToParse("x1");
+		Term v = parser.parseVariable();
+		assertEquals(v, new Variable("x1"));
+	}
+	
+	public void testNotAllowedParseLeadingIndexedVariable() {
+		try {			
+			parser.setUpToParse("1x");
+			parser.parseVariable();
+			fail("A Runtime Exception should have been thrown, indicating '1x' is not a valid variable name.");
+		} catch (RuntimeException rex) {
+			// Ok, expected
+		}
 	}
 
 	public void testParseSimpleConstant() {

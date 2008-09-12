@@ -71,7 +71,8 @@ public class FOLLexer extends Lexer {
 
 	private Token identifier() {
 		StringBuffer sbuf = new StringBuffer();
-		while ((Character.isLetter(lookAhead(1))) || partOfConnector()) {
+		while ((Character.isJavaIdentifierPart(lookAhead(1)))
+				|| partOfConnector()) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}

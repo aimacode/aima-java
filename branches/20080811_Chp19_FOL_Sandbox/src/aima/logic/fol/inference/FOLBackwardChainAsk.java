@@ -1,4 +1,4 @@
-package aima.logic.fol.algorithms;
+package aima.logic.fol.inference;
 
 /**
  * @author Ciaran O'Reilly
