@@ -3,6 +3,7 @@ package aima.logic.fol.kb;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -94,23 +95,26 @@ public class FOLKnowledgeBase {
 	/**
 	 * 
 	 * @param aQuerySentence
-	 * @return two possible return values exist. 1. an empty list the query
-	 *         returned false. 2. a list of substitutions, indicates true and
+	 * @return two possible return values exist. 1. an empty Set, the query
+	 *         returned false. 2. a Set of substitutions, indicates true and
 	 *         the bindings for different possible answers to the query (Note:
 	 *         refer to page 256).
 	 */
-	public List<Map<Variable, Term>> ask(String aQuerySentence) {
+	public Set<Map<Variable, Term>> ask(String aQuerySentence) {
 		return ask(parser.parse(aQuerySentence));
 	}
 
-	public List<Map<Variable, Term>> ask(Sentence aQuery) {
+	public Set<Map<Variable, Term>> ask(Sentence aQuery) {
+		// TODO: Standardize apart the query, to ensure
+		// do not clash with variables already standardized apart in DB
+		// but want to map back using subst, when get an answer.
 		return inferenceProcedure.ask(this, aQuery);
 	}
 	
 	// Note: pg 278, FETCH(q) concept.
-	public synchronized List<Map<Variable, Term>> fetch(Predicate p) {
+	public synchronized Set<Map<Variable, Term>> fetch(Predicate p) {
 		// Get all of the substitutions in the KB that p unifies with
-		List<Map<Variable, Term>> allUnifiers = new ArrayList<Map<Variable, Term>>();
+		Set<Map<Variable, Term>> allUnifiers = new LinkedHashSet<Map<Variable, Term>>();
 
 		List<Predicate> matchingPredicates = indexFacts.get(p
 				.getPredicateName());
@@ -127,13 +131,12 @@ public class FOLKnowledgeBase {
 	}
 	
 	// TODO: Note: To support FOL-FC-Ask
-	public List<Map<Variable, Term>> fetch(List<Predicate> predicates) {
-		List<Map<Variable, Term>> possibleSubstitutions = new ArrayList<Map<Variable, Term>>();
+	public Set<Map<Variable, Term>> fetch(List<Predicate> predicates) {
+		Set<Map<Variable, Term>> possibleSubstitutions = new LinkedHashSet<Map<Variable, Term>>();
 
 		if (predicates.size() > 0) {
 			Predicate first = predicates.get(0);
-			List<Predicate> rest = new ArrayList<Predicate>(predicates);
-			rest.remove(0);
+			List<Predicate> rest = new ArrayList<Predicate>(predicates.subList(1, predicates.size()));
 
 			recursiveFetch(new LinkedHashMap<Variable, Term>(), first, rest,
 					possibleSubstitutions);
@@ -244,11 +247,11 @@ public class FOLKnowledgeBase {
 	
 	private void recursiveFetch(Map<Variable, Term> theta, Predicate p,
 			List<Predicate> remainingPredicates,
-			List<Map<Variable, Term>> possibleSubstitutions) {
+			Set<Map<Variable, Term>> possibleSubstitutions) {
 
 		// Find all substitutions for current predicate based on the
-		// substitutions of prior predicates in the list.
-		List<Map<Variable, Term>> pSubsts = fetch((Predicate) subst(theta, p));
+		// substitutions of prior predicates in the list (i.e. SUBST with theta).
+		Set<Map<Variable, Term>> pSubsts = fetch((Predicate) subst(theta, p));
 
 		// No substitutions, therefore cannot continue
 		if (null == pSubsts) {
@@ -268,8 +271,8 @@ public class FOLKnowledgeBase {
 				// Need to move to the next link in the chain of substitutions
 				Predicate first = remainingPredicates.get(0);
 				List<Predicate> rest = new ArrayList<Predicate>(
-						remainingPredicates);
-				rest.remove(0);
+						remainingPredicates.subList(1, remainingPredicates.size()));
+				
 				recursiveFetch(psubst, first, rest, possibleSubstitutions);
 			}
 		}

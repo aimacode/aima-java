@@ -23,6 +23,7 @@ import aima.logic.fol.parsing.ast.Sentence;
  */
 public class DefiniteClauseKnowledgeBase extends FOLKnowledgeBase {
 
+	private List<DefiniteClause> allDefiniteClauses = new ArrayList<DefiniteClause>();
 	private List<DefiniteClause> implDefiniteClauses = new ArrayList<DefiniteClause>();
 	
 	private DefiniteClauseVisitor definiteClauseVisitor;
@@ -53,6 +54,7 @@ public class DefiniteClauseKnowledgeBase extends FOLKnowledgeBase {
 				.definiteClause(standardizedApart);
 		
 		if (null != dc) {
+			allDefiniteClauses.add(dc);
 			if (dc.isImplication()) {
 				implDefiniteClauses.add(dc);
 			}
@@ -62,6 +64,10 @@ public class DefiniteClauseKnowledgeBase extends FOLKnowledgeBase {
 					"Can only add definite clauses to this Knowledge Base:"
 							+ aSentence);
 		}
+	}
+	
+	public List<DefiniteClause> getStandardizedApartDefiniteClauses() {
+		return Collections.unmodifiableList(allDefiniteClauses);
 	}
 
 	public List<DefiniteClause> getStandardizedApartImplications() {

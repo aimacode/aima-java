@@ -1,8 +1,10 @@
 package aima.logic.fol.inference;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
 import aima.logic.fol.kb.FOLKnowledgeBase;
@@ -60,7 +62,7 @@ public class FOLFCAsk implements InferenceProcedure {
 	 *           alpha, the query, an atomic sentence
 	 * </code>
 	 */
-	public List<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence query) {
+	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence query) {
 		// Assertions on the type of KB and queries this Inference procedure
 		// supports
 		if (!DefiniteClauseKnowledgeBase.class.isInstance(kb)) {
@@ -80,7 +82,7 @@ public class FOLFCAsk implements InferenceProcedure {
 		
 		// Ensure query is not already a know fact before
 		// attempting forward chaining.
-		List<Map<Variable, Term>> answer = KB.fetch(alpha);
+		Set<Map<Variable, Term>> answer = KB.fetch(alpha);
 		if (answer.size() > 0) {
 			return answer;
 		}
@@ -121,7 +123,7 @@ public class FOLFCAsk implements InferenceProcedure {
 		} while (newSentences.size() > 0);
 		
 		// return false
-		return new ArrayList<Map<Variable, Term>>();
+		return new HashSet<Map<Variable, Term>>();
 	}
 	
 	// END-InferenceProcedure

@@ -8,6 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import aima.test.logictest.foltest.DLKnowledgeBaseTest;
 import aima.test.logictest.foltest.DomainTest;
+import aima.test.logictest.foltest.FOLBCAskTest;
 import aima.test.logictest.foltest.FOLFCAskTest;
 import aima.test.logictest.foltest.FOLLexerTest;
 import aima.test.logictest.foltest.FOLParserTest;
@@ -31,6 +32,7 @@ public class LogicTests {
 		// first order tests
 		suite.addTest(new TestSuite(DLKnowledgeBaseTest.class));
 		suite.addTest(new TestSuite(DomainTest.class));
+		suite.addTest(new TestSuite(FOLBCAskTest.class));
 		suite.addTest(new TestSuite(FOLFCAskTest.class));
 		suite.addTest(new TestSuite(FOLLexerTest.class));
 		suite.addTest(new TestSuite(FOLParserTest.class));
