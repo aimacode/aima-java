@@ -128,6 +128,9 @@ public class FOLBCAsk implements InferenceProcedure {
 		Map<Variable, Term> composed = new HashMap<Variable, Term>(thetaDelta);
 		composed.putAll(theta);
 		
+		// TODO: Problem here related to issue indicated
+		// in exercise 9.7?
+		
 		// Need to handle a situation like this:
 		// {x=John, v1=x}
 		// in this case want v1=x to be
