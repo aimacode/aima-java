@@ -124,16 +124,19 @@ public class FOLBCAsk implements InferenceProcedure {
 		return answers;
 	}
 	
-	private Map<Variable, Term> compose(Map<Variable, Term> thetaDelta, Map<Variable, Term> theta) {
-		Map<Variable, Term> composed = new HashMap<Variable, Term>(thetaDelta);
-		composed.putAll(theta);
+	// Artificial Intelligence A Modern Approach (2nd Edition): page 288.
+	// COMPOSE(theta1, theta2) is the substitution whose effect is identical to the effect
+	// of applying each subsitution in turn. That is,
+	// SUBST(COMPOSE(theta1, theta2), p) = SUBST(theta2, SUBST(theta1, p))
+	private Map<Variable, Term> compose(Map<Variable, Term> theta1, Map<Variable, Term> theta2) {
+		Map<Variable, Term> composed = new HashMap<Variable, Term>(theta1);
+		composed.putAll(theta2);
 		
-		// TODO: Problem here related to issue indicated
-		// in exercise 9.7?
-		
+		// So that it behaves like:
+		// SUBST(theta2, SUBST(theta1, p))
 		// Need to handle a situation like this:
 		// {x=John, v1=x}
-		// in this case want v1=x to be
+		// in this case want v1=x to be:
 		// v1=John.
 		for (Variable v : composed.keySet()) {
 			Term t = composed.get(v);
