@@ -1,9 +1,27 @@
 package aima.logic.fol.kb.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Conjunctive Normal Form (CNF) : a conjunction of clauses, where each 
+ * clause is a disjunction of literals.
+ */
+
 /**
  * @author Ciaran O'Reilly
  * 
  */
 public class CNF {
 
+	private List<Clause> conjunctionOfClauses = new ArrayList<Clause>();
+
+	public CNF(List<Clause> conjunctionOfClauses) {
+		conjunctionOfClauses.addAll(conjunctionOfClauses);
+	}
+
+	public List<Clause> getConjunctionOfClauses() {
+		return Collections.unmodifiableList(conjunctionOfClauses);
+	}
 }
