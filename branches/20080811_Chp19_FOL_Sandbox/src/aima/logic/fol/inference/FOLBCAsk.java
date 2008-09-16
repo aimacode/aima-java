@@ -94,15 +94,7 @@ public class FOLBCAsk implements InferenceProcedure {
 		}
 		 
 		// qDelta <- SUBST(theta, FIRST(goals))
-		Predicate qDelta = null;		
-		try {
-			qDelta = (Predicate) KB.subst(theta, goals.get(0));
-		} catch (RuntimeException rex) {
-			// This can happen if the goal is not in the Database,
-			// i.e. the query predicate is for a predicate that
-			// the underlying parser knows nothing about.
-		}
-		
+		Predicate qDelta = (Predicate) KB.subst(theta, goals.get(0));		
 		if (null == qDelta) {
 			return answers;
 		}

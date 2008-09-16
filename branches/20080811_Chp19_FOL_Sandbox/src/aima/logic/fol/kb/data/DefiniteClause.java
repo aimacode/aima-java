@@ -6,6 +6,10 @@ import java.util.List;
 
 import aima.logic.fol.parsing.ast.Predicate;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class DefiniteClause {
 	private List<Predicate> premises = new ArrayList<Predicate>();
 	private Predicate conclusion;

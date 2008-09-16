@@ -40,7 +40,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	 * 
 	 */
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
-		return recreate((Sentence) aSentence.accept(this, theta));
+		return (Sentence) ((Sentence) aSentence.accept(this, theta)).copy();
 	}
 
 	@SuppressWarnings("unchecked")
