@@ -36,6 +36,10 @@ public class FOLParser {
 	public FOLParser(FOLDomain domain) {
 		this(new FOLLexer(domain));
 	}
+	
+	public FOLDomain getFOLDomain() {
+		return lexer.getFOLDomain();
+	}
 
 	public Sentence parse(String s) {
 		setUpToParse(s);
