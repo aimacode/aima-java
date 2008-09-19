@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.FOLDomain;
+import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.StandardizeApartResult;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
@@ -35,6 +38,7 @@ public class FOLKnowledgeBase {
 	private Unifier unifier;
 	private SubstVisitor substVisitor;
 	private VariableCollector variableCollector;
+	private StandardizeApart standardizeApart;
 	//
 	// Persistent data structures
 	//
@@ -44,7 +48,10 @@ public class FOLKnowledgeBase {
 	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
 	private Map<String, List<Predicate>> indexFacts = new HashMap<String, List<Predicate>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
-	private Integer standardizedApartIndexical = 0;
+	private StandardizeApartIndexical variableIndexical = new StandardizeApartIndexical(
+			"v");
+	private StandardizeApartIndexical queryIndexical = new StandardizeApartIndexical(
+			"q");
 
 	//
 	// PUBLIC METHODS
@@ -63,6 +70,8 @@ public class FOLKnowledgeBase {
 		//
 		this.substVisitor = new SubstVisitor(parser);
 		this.variableCollector = new VariableCollector(parser);
+		this.standardizeApart = new StandardizeApart(variableCollector,
+				substVisitor);
 	}
 	
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
@@ -105,10 +114,27 @@ public class FOLKnowledgeBase {
 	}
 
 	public Set<Map<Variable, Term>> ask(Sentence aQuery) {
-		// TODO: Standardize apart the query, to ensure
-		// do not clash with variables already standardized apart in DB
-		// but want to map back using subst, when get an answer.
-		return inferenceProcedure.ask(this, aQuery);
+		// Want to standardize apart the query to ensure
+		// it does not clash with any of the sentences
+		// in the database
+		StandardizeApartResult saResult = standardizeApart.standardizeApart(aQuery,
+				queryIndexical);
+
+		// Need to map the result variables (as they are standardized apart)
+		// to the original queries variables so that the caller can easily
+		// understand and use the returned set of substitutions
+		Set<Map<Variable, Term>> internalResult = inferenceProcedure.ask(this, saResult.getStandardized());
+		Set<Map<Variable, Term>> externalResult = new LinkedHashSet<Map<Variable, Term>>();
+		for (Map<Variable, Term> im : internalResult) {
+			Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
+			for (Variable rev : saResult.getReverseSubstitution().keySet()) {
+				em.put((Variable) saResult.getReverseSubstitution().get(rev),
+						im.get(rev));
+			}
+			externalResult.add(em);
+		}
+		
+		return externalResult;
 	}
 	
 	// Note: pg 278, FETCH(q) concept.
@@ -147,19 +173,8 @@ public class FOLKnowledgeBase {
 	
 	// Note: see page 277.
 	public Sentence standardizeApart(Sentence aSentence) {
-		Set<Variable> toRename = variableCollector
-				.collectAllVariables(aSentence);
-		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
-		
-		synchronized (standardizedApartIndexical) {
-			for (Variable var : toRename) {
-				standardizedApartIndexical = standardizedApartIndexical + 1;
-				renameSubstitution.put(var, new Variable("v"
-						+ standardizedApartIndexical));
-			}
-		}
-	
-		return substVisitor.subst(renameSubstitution, aSentence); 
+		return standardizeApart.standardizeApart(aSentence, variableIndexical)
+				.getStandardized();
 	}
 	
 	// Note: see pg. 281
