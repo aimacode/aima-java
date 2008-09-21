@@ -4,6 +4,7 @@
  */
 package aima.logic.fol;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,26 +60,32 @@ public class SubstVisitor extends AbstractFOLVisitor {
 			Object arg) {
 
 		Map<Variable, Term> substitution = (Map<Variable, Term>) arg;
-		
+
 		Sentence quantified = sentence.getQuantified();
 		Sentence quantifiedAfterSubs = (Sentence) quantified.accept(this, arg);
 
-		Set<Variable> sentenceVariables = new Converter<Variable>()
-				.listToSet(sentence.getVariables());
-
-		Set<Variable> substitutionVariables = substitution.keySet();
-
-		Set<Variable> unmatchedVariables = new SetOps<Variable>().difference(
-				sentenceVariables, substitutionVariables);
-
-		if (!(unmatchedVariables.isEmpty())) {
-			List<Variable> variables = new Converter<Variable>()
-					.setToList(unmatchedVariables);
-			QuantifiedSentence sen = new QuantifiedSentence(sentence
-					.getQuantifier(), variables, quantifiedAfterSubs);
-			return sen;
-		} else {
-			return recreate(quantifiedAfterSubs);
+		List<Variable> variables = new ArrayList<Variable>();
+		for (Variable v : sentence.getVariables()) {
+			Term st = substitution.get(v);
+			if (null != st) {
+				if (st instanceof Variable) {
+					// Only if it is a variable to I replace it, otherwise
+					// I drop it.
+					variables.add((Variable) st);
+				}
+			} else {
+				// No substitution for the quantified variable, so
+				// keep it.
+				variables.add(v);
+			}
 		}
+
+		// If not variables remaining on the quantifier, then drop it
+		if (variables.size() == 0) {
+			return quantifiedAfterSubs;
+		}
+
+		return new QuantifiedSentence(sentence.getQuantifier(), variables,
+				quantifiedAfterSubs);
 	}
 }

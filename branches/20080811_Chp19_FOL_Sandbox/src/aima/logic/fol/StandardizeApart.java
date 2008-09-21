@@ -8,6 +8,10 @@ import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class StandardizeApart {
 	private VariableCollector variableCollector = null;
 	private SubstVisitor substVisitor = null;

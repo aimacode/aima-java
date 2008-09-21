@@ -1,5 +1,9 @@
 package aima.logic.fol;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class StandardizeApartIndexical {
 	private String prefix = null;
 	private int index = 0;

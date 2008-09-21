@@ -4,7 +4,6 @@ package aima.logic.fol;
  * @author Ravi Mohan
  * 
  */
-
 public class Connectors {
 	public static final String AND = "AND";
 

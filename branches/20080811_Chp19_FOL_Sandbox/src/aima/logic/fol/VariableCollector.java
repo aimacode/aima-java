@@ -11,12 +11,13 @@ import java.util.Set;
 
 import aima.logic.fol.parsing.AbstractFOLVisitor;
 import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
 public class VariableCollector extends AbstractFOLVisitor {
 
@@ -47,5 +48,18 @@ public class VariableCollector extends AbstractFOLVisitor {
 		Set<Variable> variables = (Set<Variable>) arg;
 		variables.add(var);
 		return var;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
+			Object arg) {
+		// Ensure I collect quantified variables too
+		Set<Variable> variables = (Set<Variable>) arg;
+		variables.addAll(sentence.getVariables());
+		
+		sentence.getQuantified().accept(this, arg);
+		
+		return sentence;
 	}
 }

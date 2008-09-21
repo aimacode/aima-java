@@ -18,10 +18,22 @@ public class CNF {
 	private List<Clause> conjunctionOfClauses = new ArrayList<Clause>();
 
 	public CNF(List<Clause> conjunctionOfClauses) {
-		conjunctionOfClauses.addAll(conjunctionOfClauses);
+		this.conjunctionOfClauses.addAll(conjunctionOfClauses);
 	}
 
 	public List<Clause> getConjunctionOfClauses() {
 		return Collections.unmodifiableList(conjunctionOfClauses);
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < conjunctionOfClauses.size(); i++) {
+			if (i > 0) {
+				sb.append(" AND ");
+			}
+			sb.append(conjunctionOfClauses.get(i).toString());
+		}
+
+		return sb.toString();
 	}
 }

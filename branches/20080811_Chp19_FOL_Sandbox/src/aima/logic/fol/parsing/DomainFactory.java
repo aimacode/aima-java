@@ -68,4 +68,11 @@ public class DomainFactory {
 		return domain;
 	}
 
+	
+	public static FOLDomain lovesAnimalDomain() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("Animal");
+		domain.addPredicate("Loves");
+		return domain;
+	}
 }

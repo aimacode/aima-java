@@ -1,5 +1,9 @@
 package aima.logic.fol;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class Quantifiers {
 	public static final String FORALL = "FORALL";
 	public static final String EXISTS = "EXISTS";
