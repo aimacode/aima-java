@@ -4,7 +4,7 @@
  */
 package aima.logic.fol.parsing;
 
-import aima.logic.fol.FOLDomain;
+import aima.logic.fol.domain.FOLDomain;
 
 /**
  * @author Ravi Mohan

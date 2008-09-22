@@ -598,7 +598,6 @@ class CNFConstructor implements FOLVisitor {
 
 	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
 		ArgData ad = (ArgData) arg;
-		List<Sentence> toProcess = new ArrayList<Sentence>();
 		Sentence first = sentence.getFirst();
 		Sentence second = sentence.getSecond();
 

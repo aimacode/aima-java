@@ -1,7 +1,7 @@
 package aima.test.logictest.foltest;
 
 import aima.logic.fol.CNFConverter;
-import aima.logic.fol.FOLDomain;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;

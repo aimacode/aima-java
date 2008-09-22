@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import aima.logic.fol.DefiniteClauseVisitor;
-import aima.logic.fol.FOLDomain;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.DefiniteClause;
 import aima.logic.fol.parsing.ast.Sentence;

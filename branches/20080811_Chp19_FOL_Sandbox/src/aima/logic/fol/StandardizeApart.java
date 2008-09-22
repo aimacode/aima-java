@@ -29,11 +29,16 @@ public class StandardizeApart {
 				.collectAllVariables(aSentence);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 		Map<Variable, Term> reverseSubstitution = new HashMap<Variable, Term>();
-		
+
 		for (Variable var : toRename) {
-			Variable v = new Variable(standardizeApartIndexical
-					.getPrefix()
-					+ standardizeApartIndexical.getNextIndex());
+			Variable v = null;
+			do {
+				v = new Variable(standardizeApartIndexical.getPrefix()
+						+ standardizeApartIndexical.getNextIndex());
+				// Ensure the new variable name is not already
+				// accidentally used in the sentence
+			} while (toRename.contains(v));
+
 			renameSubstitution.put(var, v);
 			reverseSubstitution.put(v, var);
 		}

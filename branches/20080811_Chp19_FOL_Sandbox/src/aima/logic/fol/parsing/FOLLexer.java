@@ -11,8 +11,8 @@ import aima.logic.common.Lexer;
 import aima.logic.common.LogicTokenTypes;
 import aima.logic.common.Token;
 import aima.logic.fol.Connectors;
-import aima.logic.fol.FOLDomain;
 import aima.logic.fol.Quantifiers;
+import aima.logic.fol.domain.FOLDomain;
 
 /**
  * @author Ravi Mohan

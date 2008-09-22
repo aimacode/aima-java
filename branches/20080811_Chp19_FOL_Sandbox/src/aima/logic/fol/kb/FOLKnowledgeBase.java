@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.logic.fol.FOLDomain;
 import aima.logic.fol.StandardizeApart;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartResult;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
@@ -64,7 +64,7 @@ public class FOLKnowledgeBase {
 
 	public FOLKnowledgeBase(FOLDomain domain,
 			InferenceProcedure inferenceProcedure, Unifier unifier) {
-		this.parser = new FOLParser(domain);
+		this.parser = new FOLParser(new FOLDomain(domain));
 		this.inferenceProcedure = inferenceProcedure;
 		this.unifier = unifier;
 		//
