@@ -20,6 +20,10 @@ public class CNF {
 	public CNF(List<Clause> conjunctionOfClauses) {
 		this.conjunctionOfClauses.addAll(conjunctionOfClauses);
 	}
+	
+	public int getNumberOfClauses() {
+		return conjunctionOfClauses.size();
+	}
 
 	public List<Clause> getConjunctionOfClauses() {
 		return Collections.unmodifiableList(conjunctionOfClauses);

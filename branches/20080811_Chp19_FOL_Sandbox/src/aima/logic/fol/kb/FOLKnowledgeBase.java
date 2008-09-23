@@ -17,6 +17,7 @@ import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
+import aima.logic.fol.inference.FOLFCAsk;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
@@ -68,6 +69,10 @@ public class FOLKnowledgeBase {
 	//
 	// PUBLIC METHODS
 	//
+	public FOLKnowledgeBase(FOLDomain domain) {
+		// TODO: Default to Full Resolution if not set.
+		this(domain, new FOLFCAsk());
+	}
 
 	public FOLKnowledgeBase(FOLDomain domain,
 			InferenceProcedure inferenceProcedure) {
@@ -87,17 +92,14 @@ public class FOLKnowledgeBase {
 		this.cnfConverter = new CNFConverter(parser);
 	}
 
-	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
-		return unifier.unify(x, y);
+	public InferenceProcedure getInferenceProcedure() {
+		return inferenceProcedure;
 	}
 
-	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
-			Map<Variable, Term> theta) {
-		return unifier.unify(x, y, theta);
-	}
-
-	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
-		return substVisitor.subst(theta, aSentence);
+	public void setInferenceProcedure(InferenceProcedure inferenceProcedure) {
+		if (null != inferenceProcedure) {
+			this.inferenceProcedure = inferenceProcedure;
+		}
 	}
 
 	public void tell(String aSentence) {
@@ -136,8 +138,8 @@ public class FOLKnowledgeBase {
 		// Need to map the result variables (as they are standardized apart)
 		// to the original queries variables so that the caller can easily
 		// understand and use the returned set of substitutions
-		Set<Map<Variable, Term>> internalResult = inferenceProcedure.ask(this,
-				saResult.getStandardized());
+		Set<Map<Variable, Term>> internalResult = getInferenceProcedure().ask(
+				this, saResult.getStandardized());
 		Set<Map<Variable, Term>> externalResult = new LinkedHashSet<Map<Variable, Term>>();
 		for (Map<Variable, Term> im : internalResult) {
 			Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
@@ -149,6 +151,30 @@ public class FOLKnowledgeBase {
 		}
 
 		return externalResult;
+	}
+
+	public int getNumberFacts() {
+		return allDefiniteClauses.size() - implicationDefiniteClauses.size();
+	}
+
+	public int getNumberRules() {
+		return cnfSentences.size() - getNumberFacts();
+	}
+
+	public List<Sentence> getOriginalSentences() {
+		return Collections.unmodifiableList(originalSentences);
+	}
+
+	public List<CNF> getCNFsOfOriginalSentences() {
+		return Collections.unmodifiableList(cnfSentences);
+	}
+
+	public List<DefiniteClause> getAllDefiniteClauses() {
+		return Collections.unmodifiableList(allDefiniteClauses);
+	}
+
+	public List<DefiniteClause> getAllDefiniteClauseImplications() {
+		return Collections.unmodifiableList(implicationDefiniteClauses);
 	}
 
 	// Note: pg 278, FETCH(q) concept.
@@ -186,6 +212,19 @@ public class FOLKnowledgeBase {
 		return possibleSubstitutions;
 	}
 
+	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
+		return unifier.unify(x, y);
+	}
+
+	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
+			Map<Variable, Term> theta) {
+		return unifier.unify(x, y, theta);
+	}
+
+	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
+		return substVisitor.subst(theta, aSentence);
+	}
+
 	// Note: see page 277.
 	public Sentence standardizeApart(Sentence aSentence) {
 		return standardizeApart.standardizeApart(aSentence, variableIndexical)
@@ -200,14 +239,6 @@ public class FOLKnowledgeBase {
 		}
 
 		return false;
-	}
-	
-	public List<DefiniteClause> getAllDefiniteClauses() {
-		return Collections.unmodifiableList(allDefiniteClauses);
-	}
-
-	public List<DefiniteClause> getAllDefiniteClauseImplications() {
-		return Collections.unmodifiableList(implicationDefiniteClauses);
 	}
 
 	// Note: see pg. 281
