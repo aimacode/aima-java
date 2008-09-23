@@ -1,6 +1,7 @@
 package aima.logic.fol.kb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.CNFConverter;
 import aima.logic.fol.StandardizeApart;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartResult;
@@ -16,6 +18,9 @@ import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
+import aima.logic.fol.kb.data.CNF;
+import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.DefiniteClause;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -39,12 +44,19 @@ public class FOLKnowledgeBase {
 	private SubstVisitor substVisitor;
 	private VariableCollector variableCollector;
 	private StandardizeApart standardizeApart;
+	private CNFConverter cnfConverter;
 	//
 	// Persistent data structures
 	//
 	// Keeps track of the Sentences in their original form as added to the
 	// Knowledge base.
 	private List<Sentence> originalSentences = new ArrayList<Sentence>();
+	// The CNF representation of the original sentence
+	private List<CNF> cnfSentences = new ArrayList<CNF>();
+	// Keep track of all of the definite clauses in the database
+	// along with those that represent implications.
+	private List<DefiniteClause> allDefiniteClauses = new ArrayList<DefiniteClause>();
+	private List<DefiniteClause> implicationDefiniteClauses = new ArrayList<DefiniteClause>();
 	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
 	private Map<String, List<Predicate>> indexFacts = new HashMap<String, List<Predicate>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
@@ -72,12 +84,13 @@ public class FOLKnowledgeBase {
 		this.variableCollector = new VariableCollector(parser);
 		this.standardizeApart = new StandardizeApart(variableCollector,
 				substVisitor);
+		this.cnfConverter = new CNFConverter(parser);
 	}
-	
+
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
 		return unifier.unify(x, y);
 	}
-	
+
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
 			Map<Variable, Term> theta) {
 		return unifier.unify(x, y, theta);
@@ -90,7 +103,7 @@ public class FOLKnowledgeBase {
 	public void tell(String aSentence) {
 		tell(parser.parse(aSentence));
 	}
-	
+
 	public void tell(List<? extends Sentence> sentences) {
 		for (Sentence s : sentences) {
 			tell(s);
@@ -105,9 +118,9 @@ public class FOLKnowledgeBase {
 	 * 
 	 * @param aQuerySentence
 	 * @return two possible return values exist. 1. an empty Set, the query
-	 *         returned false. 2. a Set of substitutions, indicates true and
-	 *         the bindings for different possible answers to the query (Note:
-	 *         refer to page 256).
+	 *         returned false. 2. a Set of substitutions, indicates true and the
+	 *         bindings for different possible answers to the query (Note: refer
+	 *         to page 256).
 	 */
 	public Set<Map<Variable, Term>> ask(String aQuerySentence) {
 		return ask(parser.parse(aQuerySentence));
@@ -117,13 +130,14 @@ public class FOLKnowledgeBase {
 		// Want to standardize apart the query to ensure
 		// it does not clash with any of the sentences
 		// in the database
-		StandardizeApartResult saResult = standardizeApart.standardizeApart(aQuery,
-				queryIndexical);
+		StandardizeApartResult saResult = standardizeApart.standardizeApart(
+				aQuery, queryIndexical);
 
 		// Need to map the result variables (as they are standardized apart)
 		// to the original queries variables so that the caller can easily
 		// understand and use the returned set of substitutions
-		Set<Map<Variable, Term>> internalResult = inferenceProcedure.ask(this, saResult.getStandardized());
+		Set<Map<Variable, Term>> internalResult = inferenceProcedure.ask(this,
+				saResult.getStandardized());
 		Set<Map<Variable, Term>> externalResult = new LinkedHashSet<Map<Variable, Term>>();
 		for (Map<Variable, Term> im : internalResult) {
 			Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
@@ -133,10 +147,10 @@ public class FOLKnowledgeBase {
 			}
 			externalResult.add(em);
 		}
-		
+
 		return externalResult;
 	}
-	
+
 	// Note: pg 278, FETCH(q) concept.
 	public synchronized Set<Map<Variable, Term>> fetch(Predicate p) {
 		// Get all of the substitutions in the KB that p unifies with
@@ -155,14 +169,15 @@ public class FOLKnowledgeBase {
 
 		return allUnifiers;
 	}
-	
+
 	// TODO: Note: To support FOL-FC-Ask
 	public Set<Map<Variable, Term>> fetch(List<Predicate> predicates) {
 		Set<Map<Variable, Term>> possibleSubstitutions = new LinkedHashSet<Map<Variable, Term>>();
 
 		if (predicates.size() > 0) {
 			Predicate first = predicates.get(0);
-			List<Predicate> rest = new ArrayList<Predicate>(predicates.subList(1, predicates.size()));
+			List<Predicate> rest = new ArrayList<Predicate>(predicates.subList(
+					1, predicates.size()));
 
 			recursiveFetch(new LinkedHashMap<Variable, Term>(), first, rest,
 					possibleSubstitutions);
@@ -170,13 +185,13 @@ public class FOLKnowledgeBase {
 
 		return possibleSubstitutions;
 	}
-	
+
 	// Note: see page 277.
 	public Sentence standardizeApart(Sentence aSentence) {
 		return standardizeApart.standardizeApart(aSentence, variableIndexical)
 				.getStandardized();
 	}
-	
+
 	// Note: see pg. 281
 	public boolean isRenaming(Predicate p) {
 		List<Predicate> possibleMatches = indexFacts.get(p.getPredicateName());
@@ -185,6 +200,14 @@ public class FOLKnowledgeBase {
 		}
 
 		return false;
+	}
+	
+	public List<DefiniteClause> getAllDefiniteClauses() {
+		return Collections.unmodifiableList(allDefiniteClauses);
+	}
+
+	public List<DefiniteClause> getAllDefiniteClauseImplications() {
+		return Collections.unmodifiableList(implicationDefiniteClauses);
 	}
 
 	// Note: see pg. 281
@@ -221,51 +244,72 @@ public class FOLKnowledgeBase {
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	// Note: pg 278, STORE(s) concept.
 	private synchronized void store(Sentence aSentence) {
 		// Keep a copy of the original sentences, so do
 		// not have to worry about them being manipulated
 		// externally.
-		originalSentences.add(parser.parse(aSentence.toString()));
-		
-		// TODO: Consider.
-		// 1. Internal representation of sentences to ease inference overheads
-		// (e.g. stripping overly parenthesized sentences, standardized apart,
-		// CNF, etc...).
-		// 2. Introduction of Skolem constants and tying back to original
-		// sentence, this implies internal to original mapping will not be one
-		// to one.
-		// 3. Consider previous Universal Instantiations, if applicable, when
-		// adding new ground terms.
-		// 4. Check for duplicate facts/sentences, i.e. renamings (see pg. 281).
+		Sentence orig = (Sentence) aSentence.copy();
+		originalSentences.add(orig);
 
-		indexFact(aSentence);
-	}
-	
-	// TODO: consider negated predicates?
-	private void indexFact(Sentence aSentence) {
-		// Only if it is a Predicate does it get indexed as a fact
-		// see pg. 279.
-		if (!Predicate.class.isInstance(aSentence)) {
-			return;
+		// Standardize apart the sentence first
+		// to ensure no clashes
+		Sentence sa = standardizeApart(orig);
+
+		// Convert the sentence to CNF
+		CNF cnfOfOrig = cnfConverter.convertToCNF(sa);
+
+		// Keep track of the CNF forms
+		cnfSentences.add(cnfOfOrig);
+
+		if (cnfOfOrig.isDefiniteClause()) {
+			Clause c = cnfOfOrig.getConjunctionOfClauses().get(0);
+
+			if (c.isDefiniteClause()) {
+				DefiniteClause dc = new DefiniteClause(c.getNegativeLiterals(),
+						c.getPositiveLiterals().get(0));
+
+				// Keep track of the definite clauses
+				allDefiniteClauses.add(dc);
+				if (dc.isImplication()) {
+					implicationDefiniteClauses.add(dc);
+				}
+
+				// If a fact, then index it
+				if (dc.isAtomic()) {
+					Predicate fact = dc.getConclusion();
+
+					if (isRenaming(fact)) {
+						// Is a duplicate fact so remove additions
+						allDefiniteClauses.remove(dc);
+						cnfSentences.remove(cnfOfOrig);
+						originalSentences.remove(orig);
+					} else {
+						indexFact(fact);
+					}
+				}
+			}
 		}
-		
-		Predicate fact = (Predicate) aSentence;
-		
+	}
+
+	// Only if it is a Predicate does it get indexed as a fact
+	// see pg. 279.
+	private void indexFact(Predicate fact) {
 		if (!indexFacts.containsKey(fact.getPredicateName())) {
 			indexFacts.put(fact.getPredicateName(), new ArrayList<Predicate>());
 		}
 
 		indexFacts.get(fact.getPredicateName()).add(fact);
 	}
-	
+
 	private void recursiveFetch(Map<Variable, Term> theta, Predicate p,
 			List<Predicate> remainingPredicates,
 			Set<Map<Variable, Term>> possibleSubstitutions) {
 
 		// Find all substitutions for current predicate based on the
-		// substitutions of prior predicates in the list (i.e. SUBST with theta).
+		// substitutions of prior predicates in the list (i.e. SUBST with
+		// theta).
 		Set<Map<Variable, Term>> pSubsts = fetch((Predicate) subst(theta, p));
 
 		// No substitutions, therefore cannot continue
@@ -286,8 +330,9 @@ public class FOLKnowledgeBase {
 				// Need to move to the next link in the chain of substitutions
 				Predicate first = remainingPredicates.get(0);
 				List<Predicate> rest = new ArrayList<Predicate>(
-						remainingPredicates.subList(1, remainingPredicates.size()));
-				
+						remainingPredicates.subList(1, remainingPredicates
+								.size()));
+
 				recursiveFetch(psubst, first, rest, possibleSubstitutions);
 			}
 		}

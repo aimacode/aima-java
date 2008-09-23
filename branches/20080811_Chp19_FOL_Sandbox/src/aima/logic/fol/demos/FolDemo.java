@@ -5,7 +5,7 @@
 package aima.logic.fol.demos;
 
 import aima.logic.fol.inference.FOLFCAsk;
-import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
+import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.DomainFactory;
 
 /**
@@ -23,7 +23,7 @@ public class FolDemo {
 	private static void substDemo() {
 		// TODO write this ?
 	}
-	
+
 	private static void unifierDemo() {
 		// TODO write this
 	}
@@ -34,8 +34,8 @@ public class FolDemo {
 	}
 
 	private static void kingsDemo() {
-		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.kingsDomain(), new FOLFCAsk());
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory.kingsDomain(),
+				new FOLFCAsk());
 		String rule1 = "((King(x) AND Greedy(x)) => Evil(x))";
 		String fact1 = "King(John)";
 		String fact2 = "King(Richard)";
@@ -56,8 +56,8 @@ public class FolDemo {
 	}
 
 	private static void weaponsDemo() {
-		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.weaponsDomain(), new FOLFCAsk());
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
+				.weaponsDomain(), new FOLFCAsk());
 
 		// rules
 		String rule1 = "((((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))";
@@ -70,7 +70,7 @@ public class FolDemo {
 		String fact2 = "Missile(Mone)";
 		String fact3 = "American(West)";
 		String fact4 = "Enemy(NoNo,America)";
-		
+
 		System.out.println("\n\nForward Chaining Demo 2 -Missiles\n\n");
 		System.out.println("Adding Rules to KB\n");
 

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.DefiniteClause;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -42,34 +41,30 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class FOLBCAsk implements InferenceProcedure {
-	
+
 	public FOLBCAsk() {
-		
+
 	}
-	
+
 	//
 	// START-InferenceProcedure
-	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence query) {
-		// Assertions on the type of KB and queries this Inference procedure
+	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence query) {
+		// Assertions on the type queries this Inference procedure
 		// supports
-		if (!DefiniteClauseKnowledgeBase.class.isInstance(kb)) {
-			throw new IllegalArgumentException(
-					"Can only perform FOL-BC-ASK inference on a Definite Clause KB.");
-		}
 		if (!Predicate.class.isInstance(query)) {
 			throw new IllegalArgumentException(
 					"Only Predicate Queries are supported.");
 		}
 
-		DefiniteClauseKnowledgeBase KB = (DefiniteClauseKnowledgeBase) kb;
 		List<Predicate> goals = new ArrayList<Predicate>();
 		goals.add((Predicate) query);
 
 		return folbcask(KB, goals, new HashMap<Variable, Term>());
 	}
+
 	// END-InferenceProcedure
 	//
-	
+
 	//
 	// PRIVATE METHODS
 	//
@@ -82,48 +77,54 @@ public class FOLBCAsk implements InferenceProcedure {
 	 *          theta, the current substitution, initially the empty substitution {}
 	 * </code>
 	 */
-	private Set<Map<Variable, Term>> folbcask(DefiniteClauseKnowledgeBase KB,
-			List<Predicate> goals, Map<Variable, Term> theta) {		
+	private Set<Map<Variable, Term>> folbcask(FOLKnowledgeBase KB,
+			List<Predicate> goals, Map<Variable, Term> theta) {
 		// local variables: answers, a set of substitutions, initially empty
 		Set<Map<Variable, Term>> answers = new LinkedHashSet<Map<Variable, Term>>();
-		
+
 		// if goals is empty then return {theta}
 		if (goals.isEmpty()) {
 			answers.add(theta);
 			return answers;
 		}
-		 
+
 		// qDelta <- SUBST(theta, FIRST(goals))
-		Predicate qDelta = (Predicate) KB.subst(theta, goals.get(0));		
+		Predicate qDelta = (Predicate) KB.subst(theta, goals.get(0));
 		if (null == qDelta) {
 			return answers;
 		}
-		
-		// for each sentence r in KB where STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
-		for (DefiniteClause r : KB.getStandardizedApartDefiniteClauses()) {
+
+		// for each sentence r in KB where
+		// STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
+		for (DefiniteClause r : KB.getAllDefiniteClauses()) {
 			// and thetaDelta <- UNIFY(q, qDelta) succeeds
-			Map<Variable, Term> thetaDelta = KB.unify(r.getConclusion(), qDelta);
+			Map<Variable, Term> thetaDelta = KB
+					.unify(r.getConclusion(), qDelta);
 			if (null != thetaDelta) {
 				// new_goals <- [p1,...,pn|REST(goals)]
-				List<Predicate> newGoals = new ArrayList<Predicate>(r.getPremises());
+				List<Predicate> newGoals = new ArrayList<Predicate>(r
+						.getPremises());
 				newGoals.addAll(goals.subList(1, goals.size()));
-				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
-				answers.addAll(folbcask(KB, newGoals, compose(thetaDelta, theta)));
+				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
+				// theta)) U answers
+				answers.addAll(folbcask(KB, newGoals,
+						compose(thetaDelta, theta)));
 			}
 		}
-		
+
 		// return answers
 		return answers;
 	}
-	
+
 	// Artificial Intelligence A Modern Approach (2nd Edition): page 288.
-	// COMPOSE(theta1, theta2) is the substitution whose effect is identical to the effect
-	// of applying each subsitution in turn. That is,
+	// COMPOSE(theta1, theta2) is the substitution whose effect is identical to
+	// the effect of applying each subsitution in turn. That is,
 	// SUBST(COMPOSE(theta1, theta2), p) = SUBST(theta2, SUBST(theta1, p))
-	private Map<Variable, Term> compose(Map<Variable, Term> theta1, Map<Variable, Term> theta2) {
+	private Map<Variable, Term> compose(Map<Variable, Term> theta1,
+			Map<Variable, Term> theta2) {
 		Map<Variable, Term> composed = new HashMap<Variable, Term>(theta1);
 		composed.putAll(theta2);
-		
+
 		// So that it behaves like:
 		// SUBST(theta2, SUBST(theta1, p))
 		// Need to handle a situation like this:
@@ -136,7 +137,7 @@ public class FOLBCAsk implements InferenceProcedure {
 				composed.put(v, composed.get(t));
 			}
 		}
-		
+
 		return composed;
 	}
 }

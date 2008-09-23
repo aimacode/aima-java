@@ -7,7 +7,7 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 import aima.logic.fol.inference.FOLBCAsk;
-import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
+import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -21,7 +21,7 @@ import aima.logic.fol.parsing.ast.Variable;
 public class FOLBCAskTest extends TestCase {
 
 	public void testBasicBackwardChainingFails() {
-		DefiniteClauseKnowledgeBase kkb = createKingsKnowledgeBase();
+		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
@@ -31,18 +31,19 @@ public class FOLBCAskTest extends TestCase {
 	}
 
 	public void testBasicBackwardChainingSucceeds() {
-		DefiniteClauseKnowledgeBase kkb = createKingsKnowledgeBase();
+		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Evil", terms);
 		Set<Map<Variable, Term>> answer = kkb.ask(query);
 		assertTrue(null != answer);
 		assertEquals(1, answer.size());
-		assertEquals(new Constant("John"), answer.iterator().next().get(new Variable("x")));
+		assertEquals(new Constant("John"), answer.iterator().next().get(
+				new Variable("x")));
 	}
 
 	public void testComplexBackwardChainingSucceeds() {
-		DefiniteClauseKnowledgeBase wkb = createWeaponsKnowledgeBase();
+		FOLKnowledgeBase wkb = createWeaponsKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
@@ -50,23 +51,24 @@ public class FOLBCAskTest extends TestCase {
 		Set<Map<Variable, Term>> answer = wkb.ask(query);
 		assertTrue(null != answer);
 		assertEquals(1, answer.size());
-		assertEquals(new Constant("West"), answer.iterator().next().get(new Variable("x")));
+		assertEquals(new Constant("West"), answer.iterator().next().get(
+				new Variable("x")));
 	}
 
-	public DefiniteClauseKnowledgeBase createKingsKnowledgeBase() {
-		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.kingsDomain(), new FOLBCAsk());
+	public FOLKnowledgeBase createKingsKnowledgeBase() {
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory.kingsDomain(),
+				new FOLBCAsk());
 		kb.tell("((King(x) AND Greedy(x)) => Evil(x))");
 		kb.tell("King(John)");
 		kb.tell("King(Richard)");
 		kb.tell("Greedy(John)");
-		
+
 		return kb;
 	}
 
-	private DefiniteClauseKnowledgeBase createWeaponsKnowledgeBase() {
-		DefiniteClauseKnowledgeBase kb = new DefiniteClauseKnowledgeBase(
-				DomainFactory.weaponsDomain(), new FOLBCAsk());
+	private FOLKnowledgeBase createWeaponsKnowledgeBase() {
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
+				.weaponsDomain(), new FOLBCAsk());
 		kb
 				.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
 		kb.tell(" Owns(NoNo, Mone)");

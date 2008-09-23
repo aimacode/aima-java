@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.logic.fol.kb.DefiniteClauseKnowledgeBase;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.DefiniteClause;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -48,13 +47,13 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class FOLFCAsk implements InferenceProcedure {
-	
+
 	public FOLFCAsk() {
 	}
 
 	//
 	// START-InferenceProcedure
-	
+
 	/**
 	 * <code>
 	 * function FOL-FC-ASK(KB, alpha) returns a substitution or false
@@ -62,39 +61,34 @@ public class FOLFCAsk implements InferenceProcedure {
 	 *           alpha, the query, an atomic sentence
 	 * </code>
 	 */
-	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence query) {
-		// Assertions on the type of KB and queries this Inference procedure
+	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence query) {
+		// Assertions on the type of queries this Inference procedure
 		// supports
-		if (!DefiniteClauseKnowledgeBase.class.isInstance(kb)) {
-			throw new IllegalArgumentException(
-					"Can only perform FOL-FC-ASK inference on a Definite Clause KB.");
-		}
 		if (!Predicate.class.isInstance(query)) {
 			throw new IllegalArgumentException(
 					"Only Predicate Queries are supported.");
 		}
 
-		DefiniteClauseKnowledgeBase KB = (DefiniteClauseKnowledgeBase) kb;
 		Predicate alpha = (Predicate) query;
-		
+
 		// local variables: new, the new sentences inferred on each iteration
 		List<Predicate> newSentences = new ArrayList<Predicate>();
-		
+
 		// Ensure query is not already a know fact before
 		// attempting forward chaining.
 		Set<Map<Variable, Term>> answer = KB.fetch(alpha);
 		if (answer.size() > 0) {
 			return answer;
 		}
-		
+
 		// repeat until new is empty
 		do {
-			
+
 			// new <- {}
 			newSentences.clear();
 			// for each sentence r in KB do
 			// (p1 ^ ... ^ pn => q) <-STANDARDIZE-APART(r)
-			for (DefiniteClause impl : KB.getStandardizedApartImplications()) {
+			for (DefiniteClause impl : KB.getAllDefiniteClauseImplications()) {
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
 				// SUBST(theta, p'1 ^ ... ^ p'n)
 				// --- for some p'1,...,p'n in KB
@@ -109,10 +103,10 @@ public class FOLFCAsk implements InferenceProcedure {
 						// add q' to new
 						newSentences.add(qDelta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta, alpha);						
+						theta = KB.unify(qDelta, alpha);
 						// if theta is not fail then return theta
 						if (null != theta) {
-							kb.tell(newSentences);
+							KB.tell(newSentences);
 							return KB.fetch(alpha);
 						}
 					}
@@ -121,11 +115,11 @@ public class FOLFCAsk implements InferenceProcedure {
 			// add new to KB
 			KB.tell(newSentences);
 		} while (newSentences.size() > 0);
-		
+
 		// return false
 		return new HashSet<Map<Variable, Term>>();
 	}
-	
+
 	// END-InferenceProcedure
 	//
 }
