@@ -7,6 +7,12 @@ import java.util.List;
 import aima.logic.fol.parsing.ast.Predicate;
 
 /**
+ * Artificial Intelligence A Modern Approach (2nd Edition): page 280.
+ * A First-order definite clause.
+ * 
+ */
+
+/**
  * @author Ciaran O'Reilly
  * 
  */

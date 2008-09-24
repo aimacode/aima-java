@@ -37,6 +37,9 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
+
+// TODO: Are Can Atomic sentences with variables be considered facts?
+// TODO: Handle Equality.
 public class FOLKnowledgeBase {
 
 	private FOLParser parser;
