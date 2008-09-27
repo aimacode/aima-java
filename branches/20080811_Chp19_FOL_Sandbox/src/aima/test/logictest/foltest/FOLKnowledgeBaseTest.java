@@ -6,7 +6,7 @@ import java.util.List;
 import junit.framework.TestCase;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.CNF;
-import aima.logic.fol.kb.data.DefiniteClause;
+import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
@@ -43,20 +43,14 @@ public class FOLKnowledgeBaseTest extends TestCase {
 		weaponsKB.tell("American(West)");
 		assertEquals(1, weaponsKB.getNumberRules());
 
-		CNF cnfDC = weaponsKB.getCNFsOfOriginalSentences().get(0);
-		assertNotNull(cnfDC);
-		assertEquals(1, cnfDC.getNumberOfClauses());
-		assertEquals(true, cnfDC.isDefiniteClause());
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("v0"));
-		assertEquals(new Predicate("Criminal", terms), cnfDC
-				.getConjunctionOfClauses().get(0).getPositiveLiterals().get(0));
 
-		DefiniteClause dcRule = weaponsKB.getAllDefiniteClauseImplications()
-				.get(0);
+		Clause dcRule = weaponsKB.getAllDefiniteClauseImplications().get(0);
 		assertNotNull(dcRule);
-		assertEquals(true, dcRule.isImplication());
-		assertEquals(new Predicate("Criminal", terms), dcRule.getConclusion());
+		assertEquals(true, dcRule.isImplicationDefiniteClause());
+		assertEquals(new Predicate("Criminal", terms), dcRule
+				.getPositiveLiterals().get(0));
 	}
 
 	public void testFactNotAddedWhenAlreadyPresent() {
@@ -80,6 +74,6 @@ public class FOLKnowledgeBaseTest extends TestCase {
 		kingsKB.tell("(((Greedy(John))))");
 
 		assertEquals(1, kingsKB.getNumberRules());
-		assertEquals(3, kingsKB.getNumberFacts());		
+		assertEquals(3, kingsKB.getNumberFacts());
 	}
 }

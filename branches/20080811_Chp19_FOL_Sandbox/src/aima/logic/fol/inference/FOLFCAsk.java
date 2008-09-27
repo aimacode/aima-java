@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.kb.FOLKnowledgeBase;
-import aima.logic.fol.kb.data.DefiniteClause;
+import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
@@ -88,14 +88,14 @@ public class FOLFCAsk implements InferenceProcedure {
 			newSentences.clear();
 			// for each sentence r in KB do
 			// (p1 ^ ... ^ pn => q) <-STANDARDIZE-APART(r)
-			for (DefiniteClause impl : KB.getAllDefiniteClauseImplications()) {
+			for (Clause impl : KB.getAllDefiniteClauseImplications()) {
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
 				// SUBST(theta, p'1 ^ ... ^ p'n)
 				// --- for some p'1,...,p'n in KB
-				for (Map<Variable, Term> theta : KB.fetch(impl.getPremises())) {
+				for (Map<Variable, Term> theta : KB.fetch(impl.getNegativeLiterals())) {
 					// q' <- SUBST(theta, q)
 					Predicate qDelta = (Predicate) KB.subst(theta, impl
-							.getConclusion());
+							.getPositiveLiterals().get(0));
 					// if q' is not a renaming of some sentence already in KB or
 					// new then do
 					if (!KB.isRenaming(qDelta)

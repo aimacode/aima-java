@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.kb.FOLKnowledgeBase;
-import aima.logic.fol.kb.data.DefiniteClause;
+import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
@@ -96,14 +96,14 @@ public class FOLBCAsk implements InferenceProcedure {
 
 		// for each sentence r in KB where
 		// STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
-		for (DefiniteClause r : KB.getAllDefiniteClauses()) {
+		for (Clause r : KB.getAllDefiniteClauses()) {
 			// and thetaDelta <- UNIFY(q, qDelta) succeeds
 			Map<Variable, Term> thetaDelta = KB
-					.unify(r.getConclusion(), qDelta);
+					.unify(r.getPositiveLiterals().get(0), qDelta);
 			if (null != thetaDelta) {
 				// new_goals <- [p1,...,pn|REST(goals)]
 				List<Predicate> newGoals = new ArrayList<Predicate>(r
-						.getPremises());
+						.getNegativeLiterals());
 				newGoals.addAll(goals.subList(1, goals.size()));
 				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
 				// theta)) U answers

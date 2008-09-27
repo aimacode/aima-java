@@ -21,7 +21,6 @@ import aima.logic.fol.inference.FOLFCAsk;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
-import aima.logic.fol.kb.data.DefiniteClause;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -55,12 +54,12 @@ public class FOLKnowledgeBase {
 	// Keeps track of the Sentences in their original form as added to the
 	// Knowledge base.
 	private List<Sentence> originalSentences = new ArrayList<Sentence>();
-	// The CNF representation of the original sentence
-	private List<CNF> cnfSentences = new ArrayList<CNF>();
+	// The KB in clause form
+	private Set<Clause> clauses = new LinkedHashSet<Clause>();
 	// Keep track of all of the definite clauses in the database
 	// along with those that represent implications.
-	private List<DefiniteClause> allDefiniteClauses = new ArrayList<DefiniteClause>();
-	private List<DefiniteClause> implicationDefiniteClauses = new ArrayList<DefiniteClause>();
+	private List<Clause> allDefiniteClauses = new ArrayList<Clause>();
+	private List<Clause> implicationDefiniteClauses = new ArrayList<Clause>();
 	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
 	private Map<String, List<Predicate>> indexFacts = new HashMap<String, List<Predicate>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
@@ -161,23 +160,23 @@ public class FOLKnowledgeBase {
 	}
 
 	public int getNumberRules() {
-		return cnfSentences.size() - getNumberFacts();
+		return clauses.size() - getNumberFacts();
 	}
 
 	public List<Sentence> getOriginalSentences() {
 		return Collections.unmodifiableList(originalSentences);
 	}
 
-	public List<CNF> getCNFsOfOriginalSentences() {
-		return Collections.unmodifiableList(cnfSentences);
-	}
-
-	public List<DefiniteClause> getAllDefiniteClauses() {
+	public List<Clause> getAllDefiniteClauses() {
 		return Collections.unmodifiableList(allDefiniteClauses);
 	}
 
-	public List<DefiniteClause> getAllDefiniteClauseImplications() {
+	public List<Clause> getAllDefiniteClauseImplications() {
 		return Collections.unmodifiableList(implicationDefiniteClauses);
+	}
+
+	public Set<Clause> getAllClauses() {
+		return Collections.unmodifiableSet(clauses);
 	}
 
 	// Note: pg 278, FETCH(q) concept.
@@ -234,6 +233,10 @@ public class FOLKnowledgeBase {
 				.getStandardized();
 	}
 
+	public CNF convertToCNF(Sentence aSentence) {
+		return cnfConverter.convertToCNF(aSentence);
+	}
+
 	// Note: see pg. 281
 	public boolean isRenaming(Predicate p) {
 		List<Predicate> possibleMatches = indexFacts.get(p.getPredicateName());
@@ -285,7 +288,6 @@ public class FOLKnowledgeBase {
 		// not have to worry about them being manipulated
 		// externally.
 		Sentence orig = (Sentence) aSentence.copy();
-		originalSentences.add(orig);
 
 		// Standardize apart the sentence first
 		// to ensure no clashes
@@ -293,35 +295,25 @@ public class FOLKnowledgeBase {
 
 		// Convert the sentence to CNF
 		CNF cnfOfOrig = cnfConverter.convertToCNF(sa);
-
-		// Keep track of the CNF forms
-		cnfSentences.add(cnfOfOrig);
-
-		if (cnfOfOrig.isDefiniteClause()) {
-			Clause c = cnfOfOrig.getConjunctionOfClauses().get(0);
-
-			if (c.isDefiniteClause()) {
-				DefiniteClause dc = new DefiniteClause(c.getNegativeLiterals(),
-						c.getPositiveLiterals().get(0));
-
-				// Keep track of the definite clauses
-				allDefiniteClauses.add(dc);
-				if (dc.isImplication()) {
-					implicationDefiniteClauses.add(dc);
+		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
+			if (c.isEmpty()) {
+				// This should not happen
+				continue;
+			}
+			// Will make all clauses immutable
+			// so that they cannot be modified externally.
+			c.setImmutable();			
+			if (clauses.add(c)) {
+				// If added keep track of special types of
+				// clauses, as useful for query purposes
+				if (c.isDefiniteClause()) {
+					allDefiniteClauses.add(c);
 				}
-
-				// If a fact, then index it
-				if (dc.isAtomic()) {
-					Predicate fact = dc.getConclusion();
-
-					if (isRenaming(fact)) {
-						// Is a duplicate fact so remove additions
-						allDefiniteClauses.remove(dc);
-						cnfSentences.remove(cnfOfOrig);
-						originalSentences.remove(orig);
-					} else {
-						indexFact(fact);
-					}
+				if (c.isImplicationDefiniteClause()) {
+					implicationDefiniteClauses.add(c);
+				}
+				if (c.isAtomicClause()) {
+					indexFact(c.getPositiveLiterals().get(0));
 				}
 			}
 		}

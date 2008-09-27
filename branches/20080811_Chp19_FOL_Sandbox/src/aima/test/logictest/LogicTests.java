@@ -7,6 +7,7 @@ package aima.test.logictest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import aima.test.logictest.foltest.CNFConverterTest;
+import aima.test.logictest.foltest.ClauseTest;
 import aima.test.logictest.foltest.FOLKnowledgeBaseTest;
 import aima.test.logictest.foltest.DomainTest;
 import aima.test.logictest.foltest.FOLBCAskTest;
@@ -32,6 +33,7 @@ public class LogicTests {
 
 		// first order tests
 		suite.addTest(new TestSuite(FOLKnowledgeBaseTest.class));
+		suite.addTest(new TestSuite(ClauseTest.class));
 		suite.addTest(new TestSuite(CNFConverterTest.class));
 		suite.addTest(new TestSuite(DomainTest.class));
 		suite.addTest(new TestSuite(FOLBCAskTest.class));

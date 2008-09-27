@@ -73,6 +73,11 @@ public class DomainFactory {
 		FOLDomain domain = new FOLDomain();
 		domain.addPredicate("Animal");
 		domain.addPredicate("Loves");
+		domain.addPredicate("Kills");
+		domain.addPredicate("Cat");
+		domain.addConstant("Jack");
+		domain.addConstant("Tuna");
+		domain.addConstant("Curiosity");
 		return domain;
 	}
 }
