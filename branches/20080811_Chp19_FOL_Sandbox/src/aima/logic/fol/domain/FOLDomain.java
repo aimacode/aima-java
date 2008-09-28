@@ -18,6 +18,7 @@ public class FOLDomain {
 	private Set<String> constants, functions, predicates;
 	private int skolemConstantIndexical = 0;
 	private int skolemFunctionIndexical = 0;
+	private int answerLiteralIndexical = 0;
 	private List<FOLDomainListener> listeners = new ArrayList<FOLDomainListener>();
 
 	public FOLDomain() {
@@ -87,6 +88,19 @@ public class FOLDomain {
 
 	public void addPredicate(String predicate) {
 		predicates.add(predicate);
+	}
+	
+	public String addAnswerLiteral() {
+		String al = null;
+		do {
+			al = "Answer" + (answerLiteralIndexical++);
+		} while (constants.contains(al) || functions.contains(al)
+				|| predicates.contains(al));
+		
+		addPredicate(al);
+		notifyFOLDomainListeners(new FOLDomainAnswerLiteralAddedEvent(this, al));
+		
+		return al;
 	}
 
 	public void addFOLDomainListener(FOLDomainListener listener) {

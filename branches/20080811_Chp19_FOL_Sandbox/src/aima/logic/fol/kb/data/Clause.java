@@ -3,10 +3,15 @@ package aima.logic.fol.kb.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import aima.logic.fol.Unifier;
 import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * A Clause: A disjunction of literals.
@@ -29,6 +34,8 @@ public class Clause {
 	// so that the occurs check happens?
 	private Unifier unifier = new Unifier();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
+	// Keep track of any resolution bindings, used in constructing this clause
+	private Map<Variable, Term> resolutionBindings = new LinkedHashMap<Variable, Term>();
 
 	public Clause() {
 		// i.e. the empty clause
@@ -36,11 +43,11 @@ public class Clause {
 
 	public Clause(List<Predicate> positiveLiterals,
 			List<Predicate> negativeLiterals) {
-		for (Predicate pl : positiveLiterals) {
-			addPositiveLiteral(pl);
+		for (Predicate literal : positiveLiterals) {
+			addPositiveLiteral(literal);
 		}
-		for (Predicate nl : negativeLiterals) {
-			addNegativeLiteral(nl);
+		for (Predicate literal : negativeLiterals) {
+			addNegativeLiteral(literal);
 		}
 	}
 
@@ -50,6 +57,10 @@ public class Clause {
 
 	public void setImmutable() {
 		immutable = true;
+	}
+	
+	public Map<Variable, Term> getResolutionBindings() {
+		return Collections.unmodifiableMap(resolutionBindings);
 	}
 
 	public boolean isEmpty() {
@@ -67,7 +78,7 @@ public class Clause {
 		// positive.
 		return !isEmpty() && positiveLiterals.size() == 1;
 	}
-	
+
 	public boolean isAtomicClause() {
 		return isDefiniteClause() && negativeLiterals.size() == 0;
 	}
@@ -84,10 +95,18 @@ public class Clause {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
+		// Ensure common literals are factored out
 		if (!unifiesWithAny(positiveLiterals, literal)) {
-			positiveLiterals.add(literal);
+			// Ensure does not resolve with self
+			if (!unifiesWithAnyThenRemove(negativeLiterals, literal)) {
+				positiveLiterals.add(literal);
+			}
 			recalculateIdentity();
 		}
+	}
+
+	public int getNumberPositiveLiterals() {
+		return positiveLiterals.size();
 	}
 
 	public List<Predicate> getPositiveLiterals() {
@@ -99,14 +118,83 @@ public class Clause {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
+		// Ensure common literals are factored out
 		if (!unifiesWithAny(negativeLiterals, literal)) {
-			negativeLiterals.add(literal);
+			// Ensure does not resolve with self
+			if (!unifiesWithAnyThenRemove(positiveLiterals, literal)) {
+				negativeLiterals.add(literal);
+			}
 			recalculateIdentity();
 		}
 	}
 
+	public int getNumberNegativeLiterals() {
+		return negativeLiterals.size();
+	}
+
 	public List<Predicate> getNegativeLiterals() {
 		return Collections.unmodifiableList(negativeLiterals);
+	}
+
+	// Note: Applies full resolution rule and factoring
+	// Note: Returns null if no resolvents, except if both
+	// are empty, in which case it returns a set with an
+	// empty clause.
+	public Clause resolvent(Clause othC) {		
+		// Resolving two empty clauses
+		// give you an empty clause
+		if (isEmpty() && othC.isEmpty()) {
+			return new Clause();
+		}
+
+		List<Predicate> trPosLits = new ArrayList<Predicate>();
+		List<Predicate> trNegLits = new ArrayList<Predicate>();
+		// To Resolve lists comprise the two lists
+		// from each clause
+		trPosLits.addAll(this.positiveLiterals);
+		trPosLits.addAll(othC.positiveLiterals);
+		trNegLits.addAll(this.negativeLiterals);
+		trNegLits.addAll(othC.negativeLiterals);
+		
+		// Ensure factoring and resolving are not
+		// confused with each other
+		boolean resolved = false;
+		// The resolved positive and negative literals
+		List<Predicate> rPosLits = new ArrayList<Predicate>();
+		List<Predicate> rNegLits = new ArrayList<Predicate>();
+		
+		for (Predicate pl : trPosLits) {
+			// Ensure common positive literals are factored out
+			if (!unifiesWithAny(rPosLits, pl)) {
+				rPosLits.add(pl);
+			}
+		}
+		
+		for (Predicate nl : trNegLits) {
+			// Ensure common negative literals are factored out
+			if (!unifiesWithAny(rNegLits, nl)) {
+				// Ensure does not resolve before adding
+				if (!unifiesWithAnyThenRemove(rPosLits, nl)) {
+					rNegLits.add(nl);
+				} else {
+					resolved = true;
+				}
+			}
+		}
+		
+		if (!resolved) {
+			return null;
+		}
+
+		// Create resolvent this way for efficiency
+		// reasons, as we already know the
+		// two lists are resolved and factored
+		Clause rc = new Clause();
+		rc.positiveLiterals.addAll(rPosLits);
+		rc.negativeLiterals.addAll(rNegLits);
+		rc.recalculateIdentity();
+		
+		return rc;
 	}
 
 	public String toString() {
@@ -195,6 +283,27 @@ public class Clause {
 			}
 		}
 		return false;
+	}
+	
+	private boolean unifiesWithAnyThenRemove(List<Predicate> existingLiterals,
+			Predicate newLiteral) {
+		List<Predicate> remainingAfterUnify = new ArrayList<Predicate>();
+		
+		boolean unifies = false;
+		for (Predicate el : existingLiterals) {
+			if (null != unifier.unify(el, newLiteral)) {
+				unifies = true;
+			} else {
+				remainingAfterUnify.add(el);
+			}
+		}
+		
+		if (unifies) {
+			existingLiterals.clear();
+			existingLiterals.addAll(remainingAfterUnify);
+		}
+		
+		return unifies;
 	}
 
 	private void recalculateIdentity() {

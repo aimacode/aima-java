@@ -63,6 +63,11 @@ public class ClauseTest extends TestCase {
 
 		c3.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c3.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		// Should be empty as they resolved with each other
+		assertTrue(c3.isEmpty());
+		
+		c3.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c3.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
 		assertFalse(c3.isEmpty());
 	}
 
@@ -166,50 +171,124 @@ public class ClauseTest extends TestCase {
 		Clause c1 = new Clause();
 
 		// Check negative literals
-		c1.addNegativeLiteral(new Predicate("Pred1", pts1));
+		c1.addNegativeLiteral(new Predicate("NPred1", pts1));
 		assertEquals(1, c1.getNegativeLiterals().size());
 		
-		c1.addNegativeLiteral(new Predicate("Pred1", pts2));
+		c1.addNegativeLiteral(new Predicate("NPred1", pts2));
 		assertEquals(2, c1.getNegativeLiterals().size());
 		
-		c1.addNegativeLiteral(new Predicate("Pred1", pts1));
+		c1.addNegativeLiteral(new Predicate("NPred1", pts1));
 		assertEquals(2, c1.getNegativeLiterals().size());
-		c1.addNegativeLiteral(new Predicate("Pred1", pts2));
+		c1.addNegativeLiteral(new Predicate("NPred1", pts2));
 		assertEquals(2, c1.getNegativeLiterals().size());
 		
-		c1.addNegativeLiteral(new Predicate("Pred2", pts1));
+		c1.addNegativeLiteral(new Predicate("NPred2", pts1));
 		assertEquals(3, c1.getNegativeLiterals().size());
 		
-		c1.addNegativeLiteral(new Predicate("Pred2", pts2));
+		c1.addNegativeLiteral(new Predicate("NPred2", pts2));
 		assertEquals(4, c1.getNegativeLiterals().size());
 		
-		c1.addNegativeLiteral(new Predicate("Pred2", pts1));
+		c1.addNegativeLiteral(new Predicate("NPred2", pts1));
 		assertEquals(4, c1.getNegativeLiterals().size());
-		c1.addNegativeLiteral(new Predicate("Pred2", pts2));
+		c1.addNegativeLiteral(new Predicate("NPred2", pts2));
 		assertEquals(4, c1.getNegativeLiterals().size());
 		
 		// Check positive literals
-		c1.addPositiveLiteral(new Predicate("Pred1", pts1));
+		c1.addPositiveLiteral(new Predicate("PPred1", pts1));
 		assertEquals(1, c1.getPositiveLiterals().size());
 		
-		c1.addPositiveLiteral(new Predicate("Pred1", pts2));
+		c1.addPositiveLiteral(new Predicate("PPred1", pts2));
 		assertEquals(2, c1.getPositiveLiterals().size());
 		
-		c1.addPositiveLiteral(new Predicate("Pred1", pts1));
+		c1.addPositiveLiteral(new Predicate("PPred1", pts1));
 		assertEquals(2, c1.getPositiveLiterals().size());
-		c1.addPositiveLiteral(new Predicate("Pred1", pts2));
+		c1.addPositiveLiteral(new Predicate("PPred1", pts2));
 		assertEquals(2, c1.getPositiveLiterals().size());
 		
-		c1.addPositiveLiteral(new Predicate("Pred2", pts1));
+		c1.addPositiveLiteral(new Predicate("PPred2", pts1));
 		assertEquals(3, c1.getPositiveLiterals().size());
 		
-		c1.addPositiveLiteral(new Predicate("Pred2", pts2));
+		c1.addPositiveLiteral(new Predicate("PPred2", pts2));
 		assertEquals(4, c1.getPositiveLiterals().size());
 		
-		c1.addPositiveLiteral(new Predicate("Pred2", pts1));
+		c1.addPositiveLiteral(new Predicate("PPred2", pts1));
 		assertEquals(4, c1.getPositiveLiterals().size());
-		c1.addPositiveLiteral(new Predicate("Pred2", pts2));
+		c1.addPositiveLiteral(new Predicate("PPred2", pts2));
 		assertEquals(4, c1.getPositiveLiterals().size());	
+	}
+	
+	public void testResolveWithSelf() {
+		// Check where a clause resolves with itself
+		Clause c1 = new Clause();
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		assertTrue(c1.isEmpty());
+	}
+	
+	public void testResolvent() {
+		Clause c1 = new Clause();
+		Clause c2 = new Clause();
+		
+		// Ensure that resolving to self when empty returns an empty clause
+		assertNotNull(c1.resolvent(c1));
+		assertTrue(c1.resolvent(c1).isEmpty());
+		
+		// Check if resolve with self to an empty clause
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		assertNotNull(c1.resolvent(c1));
+		assertTrue(c1.resolvent(c1).isEmpty());
+		
+		// Check if try to resolve with self and not empty
+		// then a null indicating no resolvent occurs.
+		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		assertNull(c1.resolvent(c1));
+		
+		c1 = new Clause();
+		c2 = new Clause();
+		// Ensure that two empty clauses resolve to an empty clause
+		assertNotNull(c1.resolvent(c2));
+		assertTrue(c1.resolvent(c2).isEmpty());
+		assertNotNull(c2.resolvent(c1));
+		assertTrue(c2.resolvent(c1).isEmpty());
+		
+		// Enusre the two complementary clauses resolve
+		// to the empty clause
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c2.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		c2.addNegativeLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		assertNotNull(c1.resolvent(c2));
+		assertTrue(c1.resolvent(c2).isEmpty());
+		assertNotNull(c2.resolvent(c1));
+		assertTrue(c2.resolvent(c1).isEmpty());		
+		
+		// Ensure two clauses that factor are not
+		// considered resolved
+		c1 = new Clause();
+		c2 = new Clause();
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred3", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred4", new ArrayList<Term>()));
+		c2.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		c2.addNegativeLiteral(new Predicate("Pred4", new ArrayList<Term>()));
+		assertNull(c1.resolvent(c2));
+		assertNull(c2.resolvent(c1));
+		
+		// Ensure the resolvent is a subset of the originals
+		c1 = new Clause();
+		c2 = new Clause();
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		c1.addNegativeLiteral(new Predicate("Pred3", new ArrayList<Term>()));
+		c2.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
+		assertNotNull(c1.resolvent(c2));
+		assertNotNull(c2.resolvent(c1));
+		assertEquals(1, c1.resolvent(c2).getNumberPositiveLiterals());
+		assertEquals(1, c1.resolvent(c2).getNumberNegativeLiterals());
+		assertEquals(1, c2.resolvent(c1).getNumberPositiveLiterals());
+		assertEquals(1, c2.resolvent(c1).getNumberNegativeLiterals());
 	}
 	
 	public void testHashCode() {

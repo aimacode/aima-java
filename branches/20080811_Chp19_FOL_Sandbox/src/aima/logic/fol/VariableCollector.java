@@ -25,6 +25,8 @@ public class VariableCollector extends AbstractFOLVisitor {
 		super(parser);
 	}
 	
+	// Note: The set guarantees the order in which they were
+	// found.
 	public Set<Variable> collectAllVariables(Sentence sentence) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 		

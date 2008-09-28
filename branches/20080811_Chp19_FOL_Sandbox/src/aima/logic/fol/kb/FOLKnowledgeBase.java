@@ -17,7 +17,7 @@ import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
-import aima.logic.fol.inference.FOLFCAsk;
+import aima.logic.fol.inference.FOLResolution;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
@@ -37,7 +37,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 
-// TODO: Are Can Atomic sentences with variables be considered facts?
+// TODO: Can Atomic sentences with variables be considered facts?
 // TODO: Handle Equality.
 public class FOLKnowledgeBase {
 
@@ -72,8 +72,8 @@ public class FOLKnowledgeBase {
 	// PUBLIC METHODS
 	//
 	public FOLKnowledgeBase(FOLDomain domain) {
-		// TODO: Default to Full Resolution if not set.
-		this(domain, new FOLFCAsk());
+		// Default to Full Resolution if not set.
+		this(domain, new FOLResolution());
 	}
 
 	public FOLKnowledgeBase(FOLDomain domain,
@@ -232,9 +232,31 @@ public class FOLKnowledgeBase {
 		return standardizeApart.standardizeApart(aSentence, variableIndexical)
 				.getStandardized();
 	}
+	
+	public Set<Variable> collectAllVariables(Sentence aSentence) {
+		return variableCollector.collectAllVariables(aSentence);
+	}
 
 	public CNF convertToCNF(Sentence aSentence) {
 		return cnfConverter.convertToCNF(aSentence);
+	}
+	
+	public Set<Clause> convertToClauses(Sentence aSentence) {
+		CNF cnf = cnfConverter.convertToCNF(aSentence);
+		
+		return new LinkedHashSet<Clause>(cnf.getConjunctionOfClauses());
+	}
+	
+	public Predicate createAnswerLiteral(Sentence forQuery) {
+		String alName = parser.getFOLDomain().addAnswerLiteral();
+		List<Term> terms = new ArrayList<Term>();
+		
+		Set<Variable> vars = variableCollector.collectAllVariables(forQuery);
+		for (Variable v : vars) {
+			terms.add(v);
+		}
+		
+		return new Predicate(alName, terms);
 	}
 
 	// Note: see pg. 281
@@ -297,12 +319,16 @@ public class FOLKnowledgeBase {
 		CNF cnfOfOrig = cnfConverter.convertToCNF(sa);
 		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
 			if (c.isEmpty()) {
-				// This should not happen
-				continue;
+				// This should not happen, if so the user
+				// is trying to add an unsatisfiable sentence
+				// to the KB.
+				throw new IllegalArgumentException(
+						"Attempted to add unsatisfiable sentence to KB, orig=["
+								+ orig + "] CNF=" + cnfOfOrig);
 			}
 			// Will make all clauses immutable
 			// so that they cannot be modified externally.
-			c.setImmutable();			
+			c.setImmutable();
 			if (clauses.add(c)) {
 				// If added keep track of special types of
 				// clauses, as useful for query purposes
