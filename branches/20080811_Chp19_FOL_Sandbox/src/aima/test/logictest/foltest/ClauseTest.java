@@ -3,12 +3,12 @@ package aima.test.logictest.foltest;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
-import junit.framework.TestCase;
 
 /**
  * @author Ciaran O'Reilly
@@ -64,7 +64,7 @@ public class ClauseTest extends TestCase {
 		c3.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c3.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		// Should be empty as they resolved with each other
-		assertTrue(c3.isEmpty());
+		assertFalse(c3.isEmpty());
 		
 		c3.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c3.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
@@ -217,51 +217,57 @@ public class ClauseTest extends TestCase {
 		assertEquals(4, c1.getPositiveLiterals().size());	
 	}
 	
-	public void testResolveWithSelf() {
-		// Check where a clause resolves with itself
+	public void testBinaryResolvents() {
 		Clause c1 = new Clause();
-		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		assertTrue(c1.isEmpty());
-	}
-	
-	public void testResolvent() {
-		Clause c1 = new Clause();
-		Clause c2 = new Clause();
 		
 		// Ensure that resolving to self when empty returns an empty clause
-		assertNotNull(c1.resolvent(c1));
-		assertTrue(c1.resolvent(c1).isEmpty());
+		assertNotNull(c1.binaryResolvents(c1));
+		assertEquals(1, c1.binaryResolvents(c1).size());
+		assertTrue(c1.binaryResolvents(c1).iterator().next().isEmpty());
 		
 		// Check if resolve with self to an empty clause
 		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		assertNotNull(c1.resolvent(c1));
-		assertTrue(c1.resolvent(c1).isEmpty());
+		assertNotNull(c1.binaryResolvents(c1));
+		assertEquals(1, c1.binaryResolvents(c1).size());
+		assertTrue(c1.binaryResolvents(c1).iterator().next().isEmpty());
 		
-		// Check if try to resolve with self and not empty
-		// then a null indicating no resolvent occurs.
-		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertNull(c1.resolvent(c1));
+		// Check if try to resolve with self and no resolvents
+		c1 = new Clause();
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		assertEquals(0, c1.binaryResolvents(c1).size());
 		
 		c1 = new Clause();
-		c2 = new Clause();
+		Clause c2 = new Clause();
 		// Ensure that two empty clauses resolve to an empty clause
-		assertNotNull(c1.resolvent(c2));
-		assertTrue(c1.resolvent(c2).isEmpty());
-		assertNotNull(c2.resolvent(c1));
-		assertTrue(c2.resolvent(c1).isEmpty());
+		assertNotNull(c1.binaryResolvents(c2));
+		assertEquals(1, c1.binaryResolvents(c2).size());
+		assertTrue(c1.binaryResolvents(c2).iterator().next().isEmpty());
+		assertNotNull(c2.binaryResolvents(c1));
+		assertEquals(1, c2.binaryResolvents(c1).size());
+		assertTrue(c2.binaryResolvents(c1).iterator().next().isEmpty());
 		
 		// Enusre the two complementary clauses resolve
 		// to the empty clause
 		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c2.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		assertNotNull(c1.binaryResolvents(c2));
+		assertEquals(1, c1.binaryResolvents(c2).size());
+		assertTrue(c1.binaryResolvents(c2).iterator().next().isEmpty());
+		assertNotNull(c2.binaryResolvents(c1));
+		assertEquals(1, c2.binaryResolvents(c1).size());
+		assertTrue(c2.binaryResolvents(c1).iterator().next().isEmpty());	
+		
+		// Ensure that two clauses that have two complementaries
+		// resolve with two resolvents
+		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
+		c2.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
 		c2.addNegativeLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertNotNull(c1.resolvent(c2));
-		assertTrue(c1.resolvent(c2).isEmpty());
-		assertNotNull(c2.resolvent(c1));
-		assertTrue(c2.resolvent(c1).isEmpty());		
+		assertNotNull(c1.binaryResolvents(c2));
+		assertEquals(2, c1.binaryResolvents(c2).size());
+		assertNotNull(c2.binaryResolvents(c1));
+		assertEquals(2, c2.binaryResolvents(c1).size());
 		
 		// Ensure two clauses that factor are not
 		// considered resolved
@@ -273,8 +279,10 @@ public class ClauseTest extends TestCase {
 		c1.addNegativeLiteral(new Predicate("Pred4", new ArrayList<Term>()));
 		c2.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
 		c2.addNegativeLiteral(new Predicate("Pred4", new ArrayList<Term>()));
-		assertNull(c1.resolvent(c2));
-		assertNull(c2.resolvent(c1));
+		assertNotNull(c1.binaryResolvents(c2));
+		assertEquals(0, c1.binaryResolvents(c2).size());
+		assertNotNull(c2.binaryResolvents(c1));
+		assertEquals(0, c2.binaryResolvents(c1).size());	
 		
 		// Ensure the resolvent is a subset of the originals
 		c1 = new Clause();
@@ -283,12 +291,16 @@ public class ClauseTest extends TestCase {
 		c1.addNegativeLiteral(new Predicate("Pred2", new ArrayList<Term>()));
 		c1.addNegativeLiteral(new Predicate("Pred3", new ArrayList<Term>()));
 		c2.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertNotNull(c1.resolvent(c2));
-		assertNotNull(c2.resolvent(c1));
-		assertEquals(1, c1.resolvent(c2).getNumberPositiveLiterals());
-		assertEquals(1, c1.resolvent(c2).getNumberNegativeLiterals());
-		assertEquals(1, c2.resolvent(c1).getNumberPositiveLiterals());
-		assertEquals(1, c2.resolvent(c1).getNumberNegativeLiterals());
+		assertNotNull(c1.binaryResolvents(c2));
+		assertNotNull(c2.binaryResolvents(c1));
+		assertEquals(1, c1.binaryResolvents(c2).iterator().next()
+				.getNumberPositiveLiterals());
+		assertEquals(1, c1.binaryResolvents(c2).iterator().next()
+				.getNumberNegativeLiterals());
+		assertEquals(1, c2.binaryResolvents(c1).iterator().next()
+				.getNumberPositiveLiterals());
+		assertEquals(1, c2.binaryResolvents(c1).iterator().next()
+				.getNumberNegativeLiterals());
 	}
 	
 	public void testHashCode() {

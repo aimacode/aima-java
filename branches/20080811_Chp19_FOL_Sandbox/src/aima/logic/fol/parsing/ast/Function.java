@@ -69,14 +69,23 @@ public class Function extends Term {
 
 	@Override
 	public String toString() {
-		String pre = " " + functionName + "( ";
-		String mid = "";
-		for (int i = 0; i < terms.size(); i++) {
-			mid += "," + (terms.get(i)).toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(" ");
+		sb.append(functionName);
+		sb.append("( ");
+
+		boolean first = true;
+		for (Term t : terms) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(",");
+			}
+			sb.append(t.toString());
 		}
-		mid = mid.substring(1);
-		String post = " )";
-		return pre + mid + post;
+		
+		sb.append(" )");
+		return sb.toString();
 	}
 
 	@Override

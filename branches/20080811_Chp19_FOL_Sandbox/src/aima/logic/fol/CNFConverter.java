@@ -46,7 +46,7 @@ public class CNFConverter {
 	public CNFConverter(FOLParser parser) {
 		this.parser = parser;
 
-		this.substVisitor = new SubstVisitor(parser);
+		this.substVisitor = new SubstVisitor();
 	}
 
 	public CNF convertToCNF(Sentence aSentence) {
@@ -362,7 +362,7 @@ class RemoveQuantifiers implements FOLVisitor {
 	public RemoveQuantifiers(FOLParser parser) {
 		this.parser = parser;
 
-		substVisitor = new SubstVisitor(parser);
+		substVisitor = new SubstVisitor();
 	}
 
 	public Object visitPredicate(Predicate p, Object arg) {

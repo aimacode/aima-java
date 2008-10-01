@@ -29,8 +29,29 @@ public class FOLResolutionTest extends TestCase {
 		assertTrue(null != answer);
 		assertTrue(0 == answer.size());
 	}
+	
+	public void testBasicDefiniteClauseFOLResolutionTruthResponseFails() {
+		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("Richard"));
+		Predicate query = new Predicate("Evil", terms);
+		Set<Map<Variable, Term>> answer = kkb.ask(query);
+		assertTrue(null != answer);
+		assertEquals(0, answer.size());
+	}
 
-	public void testBasicDefiniteClauseFOLResolutionSucceeds() {
+	public void testBasicDefiniteClauseFOLResolutionTruthResponseSucceeds() {
+		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("John"));
+		Predicate query = new Predicate("Evil", terms);
+		Set<Map<Variable, Term>> answer = kkb.ask(query);
+		assertTrue(null != answer);
+		assertEquals(1, answer.size());
+		assertEquals(0, answer.iterator().next().size());
+	}
+
+	public void testBasicDefiniteClauseFOLResolutionSingleQueryResponseSucceeds() {
 		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
@@ -42,8 +63,33 @@ public class FOLResolutionTest extends TestCase {
 		assertEquals(new Constant("John"), answer.iterator().next().get(
 				new Variable("x")));
 	}
+	
+	public void testBasicDefiniteClauseFOLResolutionDoubleQueryResponseSucceeds() {
+		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Variable("x"));
+		Predicate query = new Predicate("King", terms);
+		Set<Map<Variable, Term>> answer = kkb.ask(query);
+		assertTrue(null != answer);
+		assertEquals(2, answer.size());
+		boolean gotJohn, gotRichard;
+		gotJohn = gotRichard = false;
+		Constant cJohn = new Constant("John");
+		Constant cRichard = new Constant("Richard");
+		for (Map<Variable, Term> ans : answer) {
+			assertEquals(1, ans.size());
+			if (cJohn.equals(ans.get(new Variable("x")))) {
+				gotJohn = true;
+			}
+			if (cRichard.equals(ans.get(new Variable("x")))) {
+				gotRichard = true;
+			}
+		}
+		assertTrue(gotJohn);
+		assertTrue(gotRichard);
+	}
 
-	public void testComplexDefiniteClauseFOLResolutionSucceeds() {
+	public void testComplexDefiniteClauseFOLResolutionSingleQueryResponseSucceeds() {
 		FOLKnowledgeBase wkb = createWeaponsKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
@@ -57,11 +103,11 @@ public class FOLResolutionTest extends TestCase {
 				new Variable("x")));
 	}
 	
-	public void testComplexFOLResolutionSucceeds() {
+	public void testComplexFullFOLResolutionTruthResponseSucceeds() {
 		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase();
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("Curiosity"));
-		terms.add(new Constant("Tuna"));
+		terms.add(new Constant("Tuna")); 
 		Predicate query = new Predicate("Kills", terms);
 		
 		Set<Map<Variable, Term>> answer = akb.ask(query);

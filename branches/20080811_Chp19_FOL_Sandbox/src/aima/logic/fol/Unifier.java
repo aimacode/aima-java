@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
@@ -56,6 +57,9 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class Unifier {
+	
+	private SubstVisitor substVisitor = new SubstVisitor();
+	private VariableCollector variableCollector = new VariableCollector();
 
 	public Unifier() {
 
@@ -120,8 +124,17 @@ public class Unifier {
 	//
 
 	// Note: You can subclass and override this method in order
-	// to implement the OCCUR-CHECK?() if needed.
+	// to re-implement the OCCUR-CHECK?() to always
+	// return false if you want that to be the default
+	// behavior.
 	protected boolean occurCheck(Variable var, FOLNode x) {
+		if (isFunction(x)) {
+			Set<Variable> vars = variableCollector
+					.collectAllVariables((Function) x);
+			if (vars.contains(var)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -154,6 +167,7 @@ public class Unifier {
 		} else {
 			// else return add {var/x} to theta
 			theta.put(var, (Term) x);
+			substFunctionVars(theta);
 			return theta;
 		}
 	}
@@ -226,6 +240,23 @@ public class Unifier {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	// Note: Need to do this to handle the following kind of scenario:
+	// Knows(John,x)
+	// Knows(y,Mother(y))
+	// to give you the following bindings:
+	// {y=John, x= Mother( John )}
+	// and not:
+	// {y=John, x= Mother( y )}
+	// which is incorrect.
+	private void substFunctionVars(Map<Variable, Term> theta) {
+		for (Variable v : theta.keySet()) {
+			Term t = theta.get(v);
+			if (isFunction(t)) {
+				theta.put(v, substVisitor.subst(theta, (Function) t));
+			}
 		}
 	}
 }

@@ -123,11 +123,10 @@ public class UnifierTest extends TestCase {
 		assertEquals(2, result.size());
 
 		List<Term> terms = new ArrayList<Term>();
-		terms.add(new Variable("y"));
+		terms.add(new Constant("John"));
 		Function mother = new Function("Mother", terms);
 		assertEquals(mother, theta.get(new Variable("x")));
-		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
-		// John
+		assertEquals(new Constant("John"), theta.get(new Variable("y")));
 	}
 
 	public void testKnows5() {

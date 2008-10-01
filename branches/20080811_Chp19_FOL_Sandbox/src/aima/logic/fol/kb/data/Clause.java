@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
@@ -23,19 +27,19 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class Clause {
-
+	private static StandardizeApartIndexical clauseIndexical = new StandardizeApartIndexical(
+			"c");
+	//
 	private final List<Predicate> positiveLiterals = new ArrayList<Predicate>();
 	private final List<Predicate> negativeLiterals = new ArrayList<Predicate>();
 	private final List<Predicate> sortedPositiveLiterals = new ArrayList<Predicate>();
 	private final List<Predicate> sortedNegativeLiterals = new ArrayList<Predicate>();
 	private boolean immutable = false;
 	private String approxIdentity = "";
-	// TODO, may want to get another way
-	// so that the occurs check happens?
 	private Unifier unifier = new Unifier();
+	private SubstVisitor substVisitor = new SubstVisitor();
+	private StandardizeApart standardizeApart = new StandardizeApart();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
-	// Keep track of any resolution bindings, used in constructing this clause
-	private Map<Variable, Term> resolutionBindings = new LinkedHashMap<Variable, Term>();
 
 	public Clause() {
 		// i.e. the empty clause
@@ -57,10 +61,6 @@ public class Clause {
 
 	public void setImmutable() {
 		immutable = true;
-	}
-	
-	public Map<Variable, Term> getResolutionBindings() {
-		return Collections.unmodifiableMap(resolutionBindings);
 	}
 
 	public boolean isEmpty() {
@@ -96,11 +96,8 @@ public class Clause {
 					"Clause is immutable, cannot be updated.");
 		}
 		// Ensure common literals are factored out
-		if (!unifiesWithAny(positiveLiterals, literal)) {
-			// Ensure does not resolve with self
-			if (!unifiesWithAnyThenRemove(negativeLiterals, literal)) {
-				positiveLiterals.add(literal);
-			}
+		if (!factorsWithAny(positiveLiterals, literal, negativeLiterals)) {
+			positiveLiterals.add(literal);			
 			recalculateIdentity();
 		}
 	}
@@ -119,11 +116,8 @@ public class Clause {
 					"Clause is immutable, cannot be updated.");
 		}
 		// Ensure common literals are factored out
-		if (!unifiesWithAny(negativeLiterals, literal)) {
-			// Ensure does not resolve with self
-			if (!unifiesWithAnyThenRemove(positiveLiterals, literal)) {
-				negativeLiterals.add(literal);
-			}
+		if (!factorsWithAny(negativeLiterals, literal, positiveLiterals)) {
+			negativeLiterals.add(literal);		
 			recalculateIdentity();
 		}
 	}
@@ -136,15 +130,16 @@ public class Clause {
 		return Collections.unmodifiableList(negativeLiterals);
 	}
 
-	// Note: Applies full resolution rule and factoring
-	// Note: Returns null if no resolvents, except if both
-	// are empty, in which case it returns a set with an
-	// empty clause.
-	public Clause resolvent(Clause othC) {		
+	// Note: Applies binary resolution rule and factoring
+	// Note: returns a set with an empty clause if both clauses
+	// are empty, otherwise returns a set of binary resolvents.
+	public Set<Clause> binaryResolvents(Clause othC) {
+		Set<Clause> resolvents = new LinkedHashSet<Clause>();
 		// Resolving two empty clauses
 		// give you an empty clause
 		if (isEmpty() && othC.isEmpty()) {
-			return new Clause();
+			resolvents.add(new Clause());
+			return resolvents;
 		}
 
 		List<Predicate> trPosLits = new ArrayList<Predicate>();
@@ -155,46 +150,38 @@ public class Clause {
 		trPosLits.addAll(othC.positiveLiterals);
 		trNegLits.addAll(this.negativeLiterals);
 		trNegLits.addAll(othC.negativeLiterals);
-		
-		// Ensure factoring and resolving are not
-		// confused with each other
-		boolean resolved = false;
-		// The resolved positive and negative literals
-		List<Predicate> rPosLits = new ArrayList<Predicate>();
-		List<Predicate> rNegLits = new ArrayList<Predicate>();
-		
+
+		// Now check to see if they resolve
 		for (Predicate pl : trPosLits) {
-			// Ensure common positive literals are factored out
-			if (!unifiesWithAny(rPosLits, pl)) {
-				rPosLits.add(pl);
-			}
-		}
-		
-		for (Predicate nl : trNegLits) {
-			// Ensure common negative literals are factored out
-			if (!unifiesWithAny(rNegLits, nl)) {
-				// Ensure does not resolve before adding
-				if (!unifiesWithAnyThenRemove(rPosLits, nl)) {
-					rNegLits.add(nl);
-				} else {
-					resolved = true;
+			for (Predicate nl : trNegLits) {
+				Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
+				if (null != unifier.unify(pl, nl, copyRBindings)) {
+					List<Predicate> copyRPosLits = new ArrayList<Predicate>();
+					List<Predicate> copyRNegLits = new ArrayList<Predicate>();
+					for (Predicate l : trPosLits) {
+						if (!pl.equals(l)) {
+							copyRPosLits.add((Predicate) substVisitor.subst(
+									copyRBindings, l));
+						}
+					}
+					for (Predicate l : trNegLits) {
+						if (!nl.equals(l)) {
+							copyRNegLits.add((Predicate) substVisitor.subst(
+									copyRBindings, l));
+						}
+					}
+
+					// Create a binary resolvent this way for efficiency
+					// reasons, as we already know the two lists are
+					// resolved and factored
+					Clause rc = new Clause(copyRPosLits, copyRNegLits);
+					resolvents.add(standardizeApart.standardizeApart(rc,
+							clauseIndexical));
 				}
 			}
 		}
-		
-		if (!resolved) {
-			return null;
-		}
 
-		// Create resolvent this way for efficiency
-		// reasons, as we already know the
-		// two lists are resolved and factored
-		Clause rc = new Clause();
-		rc.positiveLiterals.addAll(rPosLits);
-		rc.negativeLiterals.addAll(rNegLits);
-		rc.recalculateIdentity();
-		
-		return rc;
+		return resolvents;
 	}
 
 	public String toString() {
@@ -246,23 +233,51 @@ public class Clause {
 
 		// Note: If the clauses approx identities
 		// match, then they contain the same #
-		// of positive and negative literals
-		// so no need to check.
+		// of identically named positive and negative
+		// literals.
 
 		// Check if the collections of literals unify
+		// Note: As the clauses may have multiple of the
+		// same named literals, it is possilbe they
+		// are ordered differently based on their
+		// terms but that still unify, so need
+		// check all of these.
+		List<Predicate> possibleMatches = new ArrayList<Predicate>(
+				othClause.sortedNegativeLiterals);
 		for (int i = 0; i < sortedNegativeLiterals.size(); i++) {
 			Predicate mnl = sortedNegativeLiterals.get(i);
-			Predicate onl = othClause.sortedNegativeLiterals.get(i);
+			
+			boolean unified = false;
+			for (int j = 0; j < possibleMatches.size(); j++) {
+				Predicate onl = possibleMatches.get(j);
+				if (null != unifier.unify(mnl, onl)) {
+					unified = true;
+					possibleMatches.remove(j);
+					break;
+				}
+			}
 
-			if (null == unifier.unify(mnl, onl)) {
+			if (!unified) {
 				return false;
 			}
 		}
+		
+		possibleMatches = new ArrayList<Predicate>(
+				othClause.sortedPositiveLiterals);
 		for (int i = 0; i < sortedPositiveLiterals.size(); i++) {
 			Predicate mpl = sortedPositiveLiterals.get(i);
-			Predicate opl = othClause.sortedPositiveLiterals.get(i);
+			
+			boolean unified = false;
+			for (int j = 0; j < possibleMatches.size(); j++) {
+				Predicate opl = possibleMatches.get(j);
+				if (null != unifier.unify(mpl, opl)) {
+					unified = true;
+					possibleMatches.remove(j);
+					break;
+				}
+			}
 
-			if (null == unifier.unify(mpl, opl)) {
+			if (!unified) {
 				return false;
 			}
 		}
@@ -275,35 +290,37 @@ public class Clause {
 	//
 	// PRIVATE METHODS
 	//
-	private boolean unifiesWithAny(List<Predicate> existingLiterals,
-			Predicate newLiteral) {
-		for (Predicate el : existingLiterals) {
-			if (null != unifier.unify(el, newLiteral)) {
+	private boolean factorsWithAny(List<Predicate> toAddToLiterals,
+			Predicate newLiteral, List<Predicate> oppositeLiterals) {
+		for (Predicate el : toAddToLiterals) {
+			Map<Variable, Term> bindings = new LinkedHashMap<Variable, Term>();
+			if (null != unifier.unify(el, newLiteral, bindings)) {
+				applySubstitution(bindings, toAddToLiterals, oppositeLiterals);
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	private boolean unifiesWithAnyThenRemove(List<Predicate> existingLiterals,
-			Predicate newLiteral) {
-		List<Predicate> remainingAfterUnify = new ArrayList<Predicate>();
-		
-		boolean unifies = false;
-		for (Predicate el : existingLiterals) {
-			if (null != unifier.unify(el, newLiteral)) {
-				unifies = true;
-			} else {
-				remainingAfterUnify.add(el);
-			}
+
+	private void applySubstitution(Map<Variable, Term> subst,
+			List<Predicate> list1Literals, List<Predicate> list2Literals) {
+
+		List<Predicate> substList1Literals = new ArrayList<Predicate>();
+		List<Predicate> substList2Literals = new ArrayList<Predicate>();
+
+		// Ensure the subst is applied to all
+		// of the clauses literals
+		for (Predicate l : list1Literals) {
+			substList1Literals.add((Predicate) substVisitor.subst(subst, l));
 		}
-		
-		if (unifies) {
-			existingLiterals.clear();
-			existingLiterals.addAll(remainingAfterUnify);
+		for (Predicate l : list2Literals) {
+			substList2Literals.add((Predicate) substVisitor.subst(subst, l));
 		}
-		
-		return unifies;
+
+		list1Literals.clear();
+		list1Literals.addAll(substList1Literals);
+		list2Literals.clear();
+		list2Literals.addAll(substList2Literals);
 	}
 
 	private void recalculateIdentity() {

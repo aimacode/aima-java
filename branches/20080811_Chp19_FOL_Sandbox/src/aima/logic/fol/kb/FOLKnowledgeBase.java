@@ -87,8 +87,8 @@ public class FOLKnowledgeBase {
 		this.inferenceProcedure = inferenceProcedure;
 		this.unifier = unifier;
 		//
-		this.substVisitor = new SubstVisitor(parser);
-		this.variableCollector = new VariableCollector(parser);
+		this.substVisitor = new SubstVisitor();
+		this.variableCollector = new VariableCollector();
 		this.standardizeApart = new StandardizeApart(variableCollector,
 				substVisitor);
 		this.cnfConverter = new CNFConverter(parser);

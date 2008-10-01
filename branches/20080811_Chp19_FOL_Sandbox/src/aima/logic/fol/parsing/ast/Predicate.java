@@ -82,15 +82,23 @@ public class Predicate implements AtomicSentence {
 
 	@Override
 	public String toString() {
-		String pre = " " + predicateName + "( ";
-		String mid = "";
-		for (int i = 0; i < terms.size(); i++) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" ");
+		sb.append(predicateName);
+		sb.append("( ");
 
-			mid += "," + ((FOLNode) terms.get(i)).toString();
+		boolean first = true;
+		for (Term t : terms) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(",");
+			}
+			sb.append(t.toString());
 		}
-		mid = mid.substring(1);
-		String post = " ) ";
-		return pre + mid + post;
+		
+		sb.append(" ) ");
+		return sb.toString();
 	}
 
 	public Predicate copy() {

@@ -7,16 +7,13 @@ package aima.logic.fol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import aima.logic.fol.parsing.AbstractFOLVisitor;
-import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
-import aima.util.Converter;
-import aima.util.SetOps;
 
 /**
  * @author Ravi Mohan
@@ -24,8 +21,7 @@ import aima.util.SetOps;
  */
 public class SubstVisitor extends AbstractFOLVisitor {
 
-	public SubstVisitor(FOLParser parser) {
-		super(parser);
+	public SubstVisitor() {
 	}
 
 	/**
@@ -42,6 +38,10 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	 */
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
 		return (Sentence) ((Sentence) aSentence.accept(this, theta)).copy();
+	}
+	
+	public Function subst(Map<Variable, Term> theta, Function aFunction) {
+		return (Function) ((Function) aFunction.accept(this, theta)).copy();
 	}
 
 	@SuppressWarnings("unchecked")

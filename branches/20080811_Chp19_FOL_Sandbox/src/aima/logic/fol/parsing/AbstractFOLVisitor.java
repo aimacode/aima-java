@@ -21,14 +21,11 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class AbstractFOLVisitor implements FOLVisitor {
 
-	private FOLParser parser;
-
-	public AbstractFOLVisitor(FOLParser parser) {
-		this.parser = parser;
+	public AbstractFOLVisitor() {
 	}
 
 	protected Sentence recreate(Object ast) {
-		return parser.parse(((Sentence) ast).toString());
+		return (Sentence) ((Sentence) ast).copy();
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {

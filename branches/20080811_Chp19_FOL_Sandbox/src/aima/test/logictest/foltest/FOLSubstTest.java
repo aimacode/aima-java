@@ -28,7 +28,7 @@ public class FOLSubstTest extends TestCase {
 	@Override
 	public void setUp() {
 		parser = new FOLParser(DomainFactory.crusadesDomain());
-		sv = new SubstVisitor(parser);
+		sv = new SubstVisitor();
 	}
 
 	public void testSubstSingleVariableSucceedsWithPredicate() {

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.logic.fol.parsing.AbstractFOLVisitor;
-import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Variable;
@@ -21,20 +21,27 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class VariableCollector extends AbstractFOLVisitor {
 
-	public VariableCollector(FOLParser parser) {
-		super(parser);
+	public VariableCollector() {
 	}
-	
+
 	// Note: The set guarantees the order in which they were
 	// found.
 	public Set<Variable> collectAllVariables(Sentence sentence) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
-		
+
 		sentence.accept(this, variables);
 
 		return variables;
 	}
-	
+
+	public Set<Variable> collectAllVariables(Function aFunction) {
+		Set<Variable> variables = new LinkedHashSet<Variable>();
+
+		aFunction.accept(this, variables);
+
+		return variables;
+	}
+
 	public List<String> getAllVariableNames(Sentence sentence) {
 		Set<Variable> variables = collectAllVariables(sentence);
 		List<String> names = new ArrayList<String>();
@@ -51,7 +58,7 @@ public class VariableCollector extends AbstractFOLVisitor {
 		variables.add(var);
 		return var;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
@@ -59,9 +66,9 @@ public class VariableCollector extends AbstractFOLVisitor {
 		// Ensure I collect quantified variables too
 		Set<Variable> variables = (Set<Variable>) arg;
 		variables.addAll(sentence.getVariables());
-		
+
 		sentence.getQuantified().accept(this, arg);
-		
+
 		return sentence;
 	}
 }
