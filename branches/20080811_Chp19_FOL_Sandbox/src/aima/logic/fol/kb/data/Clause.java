@@ -27,6 +27,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class Clause {
+	// TODO: A Better mechanism than this to ensure non colliding indexicals.
 	private static StandardizeApartIndexical clauseIndexical = new StandardizeApartIndexical(
 			"c");
 	//
@@ -171,10 +172,8 @@ public class Clause {
 						}
 					}
 
-					// Create a binary resolvent this way for efficiency
-					// reasons, as we already know the two lists are
-					// resolved and factored
 					Clause rc = new Clause(copyRPosLits, copyRNegLits);
+					// Ensure the resolvents are standardized apart
 					resolvents.add(standardizeApart.standardizeApart(rc,
 							clauseIndexical));
 				}
