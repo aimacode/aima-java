@@ -64,7 +64,7 @@ public class FOLResolution implements InferenceProcedure {
 			// clauses <- clauses <UNION> new
 			clauses.addAll(newClauses);
 			newClauses.clear();
-			
+
 			// for each Ci, Cj in clauses do
 			Clause[] clausesA = new Clause[clauses.size()];
 			clauses.toArray(clausesA);
@@ -119,7 +119,7 @@ public class FOLResolution implements InferenceProcedure {
 					result.add(answerBindings);
 				}
 			}
-			
+
 			// If the answer clause has no bindings
 			// then finish processing once the
 			// empty clause is detected.
@@ -127,7 +127,7 @@ public class FOLResolution implements InferenceProcedure {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

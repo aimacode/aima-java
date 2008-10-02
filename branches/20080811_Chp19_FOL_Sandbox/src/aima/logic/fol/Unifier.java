@@ -167,7 +167,6 @@ public class Unifier {
 		} else {
 			// else return add {var/x} to theta
 			theta.put(var, (Term) x);
-			substFunctionVars(theta);
 			return theta;
 		}
 	}
@@ -240,23 +239,6 @@ public class Unifier {
 			return true;
 		} else {
 			return false;
-		}
-	}
-	
-	// Note: Need to do this to handle the following kind of scenario:
-	// Knows(John,x)
-	// Knows(y,Mother(y))
-	// to give you the following bindings:
-	// {y=John, x= Mother( John )}
-	// and not:
-	// {y=John, x= Mother( y )}
-	// which is incorrect.
-	private void substFunctionVars(Map<Variable, Term> theta) {
-		for (Variable v : theta.keySet()) {
-			Term t = theta.get(v);
-			if (isFunction(t)) {
-				theta.put(v, substVisitor.subst(theta, (Function) t));
-			}
 		}
 	}
 }

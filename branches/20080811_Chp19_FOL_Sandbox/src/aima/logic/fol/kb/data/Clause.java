@@ -98,7 +98,7 @@ public class Clause {
 		}
 		// Ensure common literals are factored out
 		if (!factorsWithAny(positiveLiterals, literal, negativeLiterals)) {
-			positiveLiterals.add(literal);			
+			positiveLiterals.add(literal);
 			recalculateIdentity();
 		}
 	}
@@ -118,7 +118,7 @@ public class Clause {
 		}
 		// Ensure common literals are factored out
 		if (!factorsWithAny(negativeLiterals, literal, positiveLiterals)) {
-			negativeLiterals.add(literal);		
+			negativeLiterals.add(literal);
 			recalculateIdentity();
 		}
 	}
@@ -141,41 +141,56 @@ public class Clause {
 		if (isEmpty() && othC.isEmpty()) {
 			resolvents.add(new Clause());
 			return resolvents;
-		}
+		}		
+		
+		List<Predicate> allPosLits = new ArrayList<Predicate>();
+		List<Predicate> allNegLits = new ArrayList<Predicate>();
+		allPosLits.addAll(this.positiveLiterals);
+		allPosLits.addAll(othC.positiveLiterals);
+		allNegLits.addAll(this.negativeLiterals);
+		allNegLits.addAll(othC.negativeLiterals);
 
-		List<Predicate> trPosLits = new ArrayList<Predicate>();
-		List<Predicate> trNegLits = new ArrayList<Predicate>();
-		// To Resolve lists comprise the two lists
-		// from each clause
-		trPosLits.addAll(this.positiveLiterals);
-		trPosLits.addAll(othC.positiveLiterals);
-		trNegLits.addAll(this.negativeLiterals);
-		trNegLits.addAll(othC.negativeLiterals);
+		for (int i = 0; i < 2; i++) {
+			List<Predicate> trPosLits = new ArrayList<Predicate>();
+			List<Predicate> trNegLits = new ArrayList<Predicate>();
 
-		// Now check to see if they resolve
-		for (Predicate pl : trPosLits) {
-			for (Predicate nl : trNegLits) {
-				Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
-				if (null != unifier.unify(pl, nl, copyRBindings)) {
-					List<Predicate> copyRPosLits = new ArrayList<Predicate>();
-					List<Predicate> copyRNegLits = new ArrayList<Predicate>();
-					for (Predicate l : trPosLits) {
-						if (!pl.equals(l)) {
-							copyRPosLits.add((Predicate) substVisitor.subst(
-									copyRBindings, l));
+			if (i == 0) {
+				// See if this clauses positives
+				// unify with the other clauses
+				// negatives
+				trPosLits.addAll(this.positiveLiterals);
+				trNegLits.addAll(othC.negativeLiterals);
+			} else {
+				// Try the other way round now
+				trPosLits.addAll(othC.positiveLiterals);
+				trNegLits.addAll(this.negativeLiterals);
+			}
+
+			// Now check to see if they resolve
+			for (Predicate pl : trPosLits) {
+				for (Predicate nl : trNegLits) {
+					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
+					if (null != unifier.unify(pl, nl, copyRBindings)) {
+						List<Predicate> copyRPosLits = new ArrayList<Predicate>();
+						List<Predicate> copyRNegLits = new ArrayList<Predicate>();
+						for (Predicate l : allPosLits) {
+							if (!pl.equals(l)) {
+								copyRPosLits.add((Predicate) substVisitor
+										.subst(copyRBindings, l));
+							}
 						}
-					}
-					for (Predicate l : trNegLits) {
-						if (!nl.equals(l)) {
-							copyRNegLits.add((Predicate) substVisitor.subst(
-									copyRBindings, l));
+						for (Predicate l : allNegLits) {
+							if (!nl.equals(l)) {
+								copyRNegLits.add((Predicate) substVisitor
+										.subst(copyRBindings, l));
+							}
 						}
-					}
 
-					Clause rc = new Clause(copyRPosLits, copyRNegLits);
-					// Ensure the resolvents are standardized apart
-					resolvents.add(standardizeApart.standardizeApart(rc,
-							clauseIndexical));
+						Clause rc = new Clause(copyRPosLits, copyRNegLits);
+						// Ensure the resolvents are standardized apart
+						resolvents.add(standardizeApart.standardizeApart(rc,
+								clauseIndexical));
+					}
 				}
 			}
 		}
@@ -245,7 +260,7 @@ public class Clause {
 				othClause.sortedNegativeLiterals);
 		for (int i = 0; i < sortedNegativeLiterals.size(); i++) {
 			Predicate mnl = sortedNegativeLiterals.get(i);
-			
+
 			boolean unified = false;
 			for (int j = 0; j < possibleMatches.size(); j++) {
 				Predicate onl = possibleMatches.get(j);
@@ -260,12 +275,12 @@ public class Clause {
 				return false;
 			}
 		}
-		
+
 		possibleMatches = new ArrayList<Predicate>(
 				othClause.sortedPositiveLiterals);
 		for (int i = 0; i < sortedPositiveLiterals.size(); i++) {
 			Predicate mpl = sortedPositiveLiterals.get(i);
-			
+
 			boolean unified = false;
 			for (int j = 0; j < possibleMatches.size(); j++) {
 				Predicate opl = possibleMatches.get(j);
