@@ -5,7 +5,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import aima.logic.fol.kb.FOLKnowledgeBase;
-import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -44,7 +43,7 @@ public class FOLKnowledgeBaseTest extends TestCase {
 		assertEquals(1, weaponsKB.getNumberRules());
 
 		List<Term> terms = new ArrayList<Term>();
-		terms.add(new Variable("v0"));
+		terms.add(new Variable("v3"));
 
 		Clause dcRule = weaponsKB.getAllDefiniteClauseImplications().get(0);
 		assertNotNull(dcRule);

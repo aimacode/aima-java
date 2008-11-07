@@ -62,7 +62,7 @@ public class QuantifiedSentence implements Sentence {
 			pre = pre + variables.get(i).toString() + " ";
 		}
 		pre += " ";
-		String post = " " + quantified.toString() + "  ";
+		String post = " " + quantified.toString();
 		return pre + post;
 	}
 

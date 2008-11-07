@@ -59,6 +59,7 @@ public class FOLResolution implements InferenceProcedure {
 
 		// new <- {}
 		Set<Clause> newClauses = new LinkedHashSet<Clause>();
+		
 		// loop do
 		do {
 			// clauses <- clauses <UNION> new
@@ -68,24 +69,41 @@ public class FOLResolution implements InferenceProcedure {
 			// for each Ci, Cj in clauses do
 			Clause[] clausesA = new Clause[clauses.size()];
 			clauses.toArray(clausesA);
+			// Basically, using the simple T)wo F)inger M)ethod here.
 			for (int i = 0; i < clausesA.length; i++) {
-				for (int j = 0; j < clausesA.length; j++) {
+				for (int j = i; j < clausesA.length; j++) {
 					Clause cI = clausesA[i];
 					Clause cJ = clausesA[j];
-					// resolvent <- FOL-RESOLVE(Ci, Cj)
-					Set<Clause> resolvents = cI.binaryResolvents(cJ);
-					if (resolvents.size() > 0) {
-						// new <- new <UNION> resolvent
-						newClauses.addAll(resolvents);
-						if (checkAndHandleFinalAnswer(resolvents, result,
-								answerClause, answerLiteralVariables)) {
-							return result;
+					
+					// Get the Factors for each clause
+					Set<Clause> cIFactors = cI.getFactors(KB);
+
+					Set<Clause> cJFactors = cJ.getFactors(KB);
+					
+					for (Clause cIFac : cIFactors) {
+						for (Clause cJFac : cJFactors) {
+							// resolvent <- FOL-RESOLVE(Ci, Cj)
+							Set<Clause> resolvents = cIFac
+									.binaryResolvents(KB,
+									cJFac);
+
+							if (resolvents.size() > 0) {
+								// new <- new <UNION> resolvent
+								for (Clause rc : resolvents) {
+									newClauses.addAll(rc.getFactors(KB));								
+								}
+								
+								if (checkAndHandleFinalAnswer(resolvents,
+										result, answerClause,
+										answerLiteralVariables)) {
+									return result;
+								}
+							}
 						}
 					}
 				}
 			}
-
-			// if new <SUBSET> clauses then finished
+			// if new is a <SUBSET> of clauses then finished
 			// searching for an answer
 		} while (!clauses.containsAll(newClauses));
 

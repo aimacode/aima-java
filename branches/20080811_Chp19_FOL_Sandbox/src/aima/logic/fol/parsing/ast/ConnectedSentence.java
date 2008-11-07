@@ -71,8 +71,8 @@ public class ConnectedSentence extends ParanthizedSentence {
 
 	@Override
 	public String toString() {
-		return " (" + first.toString() + " " + connector + " "
-				+ second.toString() + " )";
+		return "(" + first.toString() + " " + connector + " "
+				+ second.toString() + ")";
 	}
 
 	@Override

@@ -99,7 +99,8 @@ public class FOLBCAsk implements InferenceProcedure {
 		for (Clause r : KB.getAllDefiniteClauses()) {
 			// and thetaDelta <- UNIFY(q, qDelta) succeeds
 			Map<Variable, Term> thetaDelta = KB
-					.unify(r.getPositiveLiterals().get(0), qDelta);
+					.unify(r.getPositiveLiterals()
+					.get(0), qDelta);
 			if (null != thetaDelta) {
 				// new_goals <- [p1,...,pn|REST(goals)]
 				List<Predicate> newGoals = new ArrayList<Predicate>(r

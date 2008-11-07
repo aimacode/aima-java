@@ -43,7 +43,7 @@ public class CNF {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < conjunctionOfClauses.size(); i++) {
 			if (i > 0) {
-				sb.append(" AND ");
+				sb.append(",");
 			}
 			sb.append(conjunctionOfClauses.get(i).toString());
 		}

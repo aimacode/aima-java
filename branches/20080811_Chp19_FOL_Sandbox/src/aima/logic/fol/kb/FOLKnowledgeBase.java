@@ -233,6 +233,10 @@ public class FOLKnowledgeBase {
 				.getStandardized();
 	}
 	
+	public Clause standardizeApart(Clause aClause) {
+		return standardizeApart.standardizeApart(aClause, variableIndexical);
+	}
+	
 	public Set<Variable> collectAllVariables(Sentence aSentence) {
 		return variableCollector.collectAllVariables(aSentence);
 	}
@@ -326,6 +330,10 @@ public class FOLKnowledgeBase {
 						"Attempted to add unsatisfiable sentence to KB, orig=["
 								+ orig + "] CNF=" + cnfOfOrig);
 			}
+			
+			// Ensure all clauses added to the KB are Standardized Apart.
+			c = standardizeApart.standardizeApart(c, variableIndexical);
+			
 			// Will make all clauses immutable
 			// so that they cannot be modified externally.
 			c.setImmutable();

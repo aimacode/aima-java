@@ -7,6 +7,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
@@ -123,7 +124,7 @@ public class UnifierTest extends TestCase {
 		assertEquals(2, result.size());
 
 		List<Term> terms = new ArrayList<Term>();
-		terms.add(new Variable("y"));
+		terms.add(new Constant("John"));
 		Function mother = new Function("Mother", terms);
 		assertEquals(mother, theta.get(new Variable("x")));
 		assertEquals(new Constant("John"), theta.get(new Variable("y")));
@@ -141,5 +142,35 @@ public class UnifierTest extends TestCase {
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
 		// John
 	}
+	
+	public void testAdditionalVariableMixtures() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addFunction("F");
+		domain.addFunction("G");
+		domain.addFunction("H");
+		domain.addPredicate("P");
 
+		FOLParser parser = new FOLParser(domain);
+
+		Sentence s1 = parser.parse("P(x, B, F(y))");
+		Sentence s2 = parser.parse("P(A, y, F(z))");
+		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertEquals("{x=A, y=B, z=B}", result.toString());
+
+		s1 = parser.parse("P(F(x,B), G(y),         F(z,A))");
+		s2 = parser.parse("P(y,      G(F(G(w),w)), F(w,z))");
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+		
+		s1 = parser.parse("P(F(G(A)), x,    F(H(z,z)), H(y,    G(w)))");
+		s2 = parser.parse("P(y,       G(z), F(v     ), H(F(w), x   ))");
+		result = unifier.unify(s1, s2);
+
+		assertEquals("{y=F(G(A)), x=G(G(A)), v=H(G(A),G(A)), w=G(A), z=G(A)}",
+				result.toString());
+	}
 }

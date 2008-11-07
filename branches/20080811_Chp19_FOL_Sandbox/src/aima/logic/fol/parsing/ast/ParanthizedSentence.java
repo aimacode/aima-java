@@ -48,9 +48,9 @@ public class ParanthizedSentence implements Sentence {
 
 	@Override
 	public String toString() {
-		String pre = " ( ";
+		String pre = "(";
 		String mid = paranthized.toString();
-		String post = " ) ";
+		String post = ")";
 		return pre + mid + post;
 	}
 

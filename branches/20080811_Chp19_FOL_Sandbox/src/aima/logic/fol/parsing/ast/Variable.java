@@ -24,7 +24,7 @@ public class Variable extends Term {
 		if (this == o) {
 			return true;
 		}
-		if ((o == null) || (this.getClass() != o.getClass())) {
+		if (!(o instanceof Variable)) {
 			return false;
 		}
 

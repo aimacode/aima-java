@@ -3,16 +3,16 @@ package aima.logic.fol.kb.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.logic.fol.StandardizeApart;
-import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -26,20 +26,25 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
+
+// Note: The factor, equals and binary resolution logic in this
+// class all work on the assumption that all clauses being
+// used are standardized apart - i.e. these methods use unification
+// and for performance reasons do not standardize apart in most cases.
+// Therefore be aware of this restriction when using this class.
+// Possibly will want to consider a better way of doing this.
 public class Clause {
-	// TODO: A Better mechanism than this to ensure non colliding indexicals.
-	private static StandardizeApartIndexical clauseIndexical = new StandardizeApartIndexical(
-			"c");
 	//
-	private final List<Predicate> positiveLiterals = new ArrayList<Predicate>();
-	private final List<Predicate> negativeLiterals = new ArrayList<Predicate>();
+	private final Set<Predicate> positiveLiterals = new LinkedHashSet<Predicate>();
+	private final Set<Predicate> negativeLiterals = new LinkedHashSet<Predicate>();
 	private final List<Predicate> sortedPositiveLiterals = new ArrayList<Predicate>();
 	private final List<Predicate> sortedNegativeLiterals = new ArrayList<Predicate>();
+	private final Map<String, List<Predicate>> cmpPosLiterals = new LinkedHashMap<String, List<Predicate>>();
+	private final Map<String, List<Predicate>> cmpNegLiterals = new LinkedHashMap<String, List<Predicate>>();
 	private boolean immutable = false;
 	private String approxIdentity = "";
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
-	private StandardizeApart standardizeApart = new StandardizeApart();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
 
 	public Clause() {
@@ -48,12 +53,10 @@ public class Clause {
 
 	public Clause(List<Predicate> positiveLiterals,
 			List<Predicate> negativeLiterals) {
-		for (Predicate literal : positiveLiterals) {
-			addPositiveLiteral(literal);
-		}
-		for (Predicate literal : negativeLiterals) {
-			addNegativeLiteral(literal);
-		}
+		
+		this.positiveLiterals.addAll(positiveLiterals);
+		this.negativeLiterals.addAll(negativeLiterals);
+		recalculateIdentity();
 	}
 
 	public boolean isImmutable() {
@@ -96,11 +99,12 @@ public class Clause {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
-		// Ensure common literals are factored out
-		if (!factorsWithAny(positiveLiterals, literal, negativeLiterals)) {
-			positiveLiterals.add(literal);
-			recalculateIdentity();
-		}
+		positiveLiterals.add(literal);
+		recalculateIdentity();
+	}
+	
+	public int getNumberLiterals() {
+		return getNumberPositiveLiterals() + getNumberNegativeLiterals();
 	}
 
 	public int getNumberPositiveLiterals() {
@@ -108,19 +112,16 @@ public class Clause {
 	}
 
 	public List<Predicate> getPositiveLiterals() {
-		return Collections.unmodifiableList(positiveLiterals);
+		return Collections.unmodifiableList(sortedPositiveLiterals);
 	}
-
+	
 	public void addNegativeLiteral(Predicate literal) {
 		if (isImmutable()) {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
-		// Ensure common literals are factored out
-		if (!factorsWithAny(negativeLiterals, literal, positiveLiterals)) {
-			negativeLiterals.add(literal);
-			recalculateIdentity();
-		}
+		negativeLiterals.add(literal);
+		recalculateIdentity();
 	}
 
 	public int getNumberNegativeLiterals() {
@@ -128,20 +129,95 @@ public class Clause {
 	}
 
 	public List<Predicate> getNegativeLiterals() {
-		return Collections.unmodifiableList(negativeLiterals);
+		return Collections.unmodifiableList(sortedNegativeLiterals);
+	}
+
+	public Set<Clause> getFactors(FOLKnowledgeBase KB) {
+		Set<Clause> factors = getNonTrivialFactors(KB);
+		if (0 == factors.size()) {
+			// No, non-trivial factors, therefore
+			// add myself as am trivial in this case.
+			factors.add(this);
+		}
+
+		return factors;
+	}
+	
+	public Set<Clause> getNonTrivialFactors(FOLKnowledgeBase KB) {
+		Set<Clause> ntFactors = new LinkedHashSet<Clause>();
+
+		Map<Variable, Term> theta = new HashMap<Variable, Term>();
+		for (int i = 0; i < 2; i++) {
+			List<Predicate> lits = new ArrayList<Predicate>();
+			if (i == 0) {
+				// Look at the positive literals
+				lits.addAll(positiveLiterals);
+			} else {
+				// Look at the negative literals
+				lits.addAll(negativeLiterals);
+			}
+			for (int x = 0; x < lits.size(); x++) {
+				for (int y = 0; y < lits.size(); y++) {
+					if (y == x) {
+						continue;
+					}
+					Predicate litX = lits.get(x);
+					Predicate litY = lits.get(y);
+
+					theta.clear();
+					Map<Variable, Term> substitution = unifier.unify(litX,
+							litY, theta);
+					if (null != substitution) {
+						List<Predicate> posLits = new ArrayList<Predicate>();
+						List<Predicate> negLits = new ArrayList<Predicate>();
+						for (Predicate pl : positiveLiterals) {
+							if (pl == litX || pl == litY) {
+								continue;
+							}
+							posLits.add((Predicate) substVisitor.subst(
+									substitution, pl));
+						}
+						for (Predicate nl : negativeLiterals) {
+							if (nl == litX || nl == litY) {
+								continue;
+							}
+							negLits.add((Predicate) substVisitor.subst(
+									substitution, nl));
+						}
+						if (i == 0) {
+							posLits.add((Predicate) substVisitor.subst(
+									substitution, litX));
+						} else {
+							negLits.add((Predicate) substVisitor.subst(
+									substitution, litX));
+						}
+						Clause c = new Clause(posLits, negLits);
+						Set<Clause> cntfs = c.getNonTrivialFactors(KB);
+						if (0 == cntfs.size()) {
+							ntFactors.add(KB.standardizeApart(c));
+						} else {
+							ntFactors.addAll(cntfs);
+						}
+					}
+				}
+			}
+		}
+
+		return ntFactors;
 	}
 
 	// Note: Applies binary resolution rule and factoring
+	// Note: Assumes all clauses are standardized apart when calling.
 	// Note: returns a set with an empty clause if both clauses
 	// are empty, otherwise returns a set of binary resolvents.
-	public Set<Clause> binaryResolvents(Clause othC) {
+	public Set<Clause> binaryResolvents(FOLKnowledgeBase KB, Clause othC) {
 		Set<Clause> resolvents = new LinkedHashSet<Clause>();
 		// Resolving two empty clauses
-		// give you an empty clause
+		// gives you an empty clause
 		if (isEmpty() && othC.isEmpty()) {
 			resolvents.add(new Clause());
 			return resolvents;
-		}		
+		}				
 		
 		List<Predicate> allPosLits = new ArrayList<Predicate>();
 		List<Predicate> allNegLits = new ArrayList<Predicate>();
@@ -150,9 +226,14 @@ public class Clause {
 		allNegLits.addAll(this.negativeLiterals);
 		allNegLits.addAll(othC.negativeLiterals);
 
+		List<Predicate> trPosLits = new ArrayList<Predicate>();
+		List<Predicate> trNegLits = new ArrayList<Predicate>();
+		List<Predicate> copyRPosLits = new ArrayList<Predicate>();
+		List<Predicate> copyRNegLits = new ArrayList<Predicate>();
+		
 		for (int i = 0; i < 2; i++) {
-			List<Predicate> trPosLits = new ArrayList<Predicate>();
-			List<Predicate> trNegLits = new ArrayList<Predicate>();
+			trPosLits.clear();
+			trNegLits.clear();
 
 			if (i == 0) {
 				// See if this clauses positives
@@ -171,8 +252,8 @@ public class Clause {
 				for (Predicate nl : trNegLits) {
 					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
 					if (null != unifier.unify(pl, nl, copyRBindings)) {
-						List<Predicate> copyRPosLits = new ArrayList<Predicate>();
-						List<Predicate> copyRNegLits = new ArrayList<Predicate>();
+						copyRPosLits.clear();
+						copyRNegLits.clear();
 						for (Predicate l : allPosLits) {
 							if (!pl.equals(l)) {
 								copyRPosLits.add((Predicate) substVisitor
@@ -185,11 +266,10 @@ public class Clause {
 										.subst(copyRBindings, l));
 							}
 						}
-
-						Clause rc = new Clause(copyRPosLits, copyRNegLits);
+						
 						// Ensure the resolvents are standardized apart
-						resolvents.add(standardizeApart.standardizeApart(rc,
-								clauseIndexical));
+						resolvents.add(KB.standardizeApart(new Clause(
+								copyRPosLits, copyRNegLits)));
 					}
 				}
 			}
@@ -200,7 +280,7 @@ public class Clause {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+		sb.append("{");
 
 		List<Predicate> literals = new ArrayList<Predicate>();
 		literals.addAll(negativeLiterals);
@@ -208,20 +288,16 @@ public class Clause {
 
 		for (int i = 0; i < literals.size(); i++) {
 			if (i > 0) {
-				sb.append(" OR ");
+				sb.append(",");
 			}
 			if (i < negativeLiterals.size()) {
-				sb.append("NOT(");
+				sb.append("~");
 			}
 
 			sb.append(literals.get(i).toString());
-
-			if (i < negativeLiterals.size()) {
-				sb.append(")");
-			}
 		}
 
-		sb.append("]");
+		sb.append("}");
 
 		return sb.toString();
 	}
@@ -237,7 +313,7 @@ public class Clause {
 		if (this == othObj) {
 			return true;
 		}
-		if (!Clause.class.isInstance(othObj)) {
+		if (!(othObj instanceof Clause)) {
 			return false;
 		}
 		Clause othClause = (Clause) othObj;
@@ -256,43 +332,46 @@ public class Clause {
 		// are ordered differently based on their
 		// terms but that still unify, so need
 		// check all of these.
-		List<Predicate> possibleMatches = new ArrayList<Predicate>(
-				othClause.sortedNegativeLiterals);
-		for (int i = 0; i < sortedNegativeLiterals.size(); i++) {
-			Predicate mnl = sortedNegativeLiterals.get(i);
+		Map<Variable, Term> theta = new HashMap<Variable, Term>();
+		for (int i = 0; i < 2; i++) {
+			Map<String, List<Predicate>> thisCmpLits = null;
+			Map<String, List<Predicate>> othCmpLits = null;
+			if (i == 0) {
+				thisCmpLits = this.cmpNegLiterals;
+				othCmpLits = othClause.cmpNegLiterals;
+			} else {
+				thisCmpLits = this.cmpPosLiterals;
+				othCmpLits = othClause.cmpPosLiterals;
+			}
 
-			boolean unified = false;
-			for (int j = 0; j < possibleMatches.size(); j++) {
-				Predicate onl = possibleMatches.get(j);
-				if (null != unifier.unify(mnl, onl)) {
-					unified = true;
-					possibleMatches.remove(j);
-					break;
+			for (String pName : thisCmpLits.keySet()) {
+				List<Predicate> thisLits = thisCmpLits.get(pName);
+				List<Predicate> othLits = othCmpLits.get(pName);
+				boolean[] matches = new boolean[thisLits.size()];
+
+				for (int x = 0; x < matches.length; x++) {
+					Predicate tl = thisLits.get(x);
+					boolean unified = false;
+					for (int z = 0; z < matches.length; z++) {
+						Predicate ol = othLits.get(z);
+						theta.clear();
+						// TODO-note possible problem with standardized apart
+						// issue
+						if (null != unifier.unify(tl, ol, theta)) {
+							unified = true;
+							matches[z] = true;
+						}
+					}
+					if (!unified) {
+						return false;
+					}
 				}
-			}
-
-			if (!unified) {
-				return false;
-			}
-		}
-
-		possibleMatches = new ArrayList<Predicate>(
-				othClause.sortedPositiveLiterals);
-		for (int i = 0; i < sortedPositiveLiterals.size(); i++) {
-			Predicate mpl = sortedPositiveLiterals.get(i);
-
-			boolean unified = false;
-			for (int j = 0; j < possibleMatches.size(); j++) {
-				Predicate opl = possibleMatches.get(j);
-				if (null != unifier.unify(mpl, opl)) {
-					unified = true;
-					possibleMatches.remove(j);
-					break;
+				// Check matches are all true
+				for (int x = 0; x < matches.length; x++) {
+					if (!matches[x]) {
+						return false;
+					}
 				}
-			}
-
-			if (!unified) {
-				return false;
 			}
 		}
 
@@ -304,39 +383,6 @@ public class Clause {
 	//
 	// PRIVATE METHODS
 	//
-	private boolean factorsWithAny(List<Predicate> toAddToLiterals,
-			Predicate newLiteral, List<Predicate> oppositeLiterals) {
-		for (Predicate el : toAddToLiterals) {
-			Map<Variable, Term> bindings = new LinkedHashMap<Variable, Term>();
-			if (null != unifier.unify(el, newLiteral, bindings)) {
-				applySubstitution(bindings, toAddToLiterals, oppositeLiterals);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private void applySubstitution(Map<Variable, Term> subst,
-			List<Predicate> list1Literals, List<Predicate> list2Literals) {
-
-		List<Predicate> substList1Literals = new ArrayList<Predicate>();
-		List<Predicate> substList2Literals = new ArrayList<Predicate>();
-
-		// Ensure the subst is applied to all
-		// of the clauses literals
-		for (Predicate l : list1Literals) {
-			substList1Literals.add((Predicate) substVisitor.subst(subst, l));
-		}
-		for (Predicate l : list2Literals) {
-			substList2Literals.add((Predicate) substVisitor.subst(subst, l));
-		}
-
-		list1Literals.clear();
-		list1Literals.addAll(substList1Literals);
-		list2Literals.clear();
-		list2Literals.addAll(substList2Literals);
-	}
-
 	private void recalculateIdentity() {
 		synchronized (approxIdentity) {
 			// Order the literals, so that clauses with the same literals
@@ -348,6 +394,9 @@ public class Clause {
 
 			Collections.sort(sortedNegativeLiterals, predicateNameSorter);
 			Collections.sort(sortedPositiveLiterals, predicateNameSorter);
+			
+			cmpNegLiterals.clear();
+			cmpPosLiterals.clear();
 
 			StringBuilder newIdentity = new StringBuilder("NOT(");
 			boolean first = true;
@@ -358,6 +407,11 @@ public class Clause {
 					newIdentity.append(",");
 				}
 				newIdentity.append(l.getPredicateName());
+				if (!cmpNegLiterals.containsKey(l.getPredicateName())) {
+					cmpNegLiterals.put(l.getPredicateName(),
+							new ArrayList<Predicate>());
+				}
+				cmpNegLiterals.get(l.getPredicateName()).add(l);
 			}
 			newIdentity.append(")");
 			first = true;
@@ -368,6 +422,11 @@ public class Clause {
 					newIdentity.append(",");
 				}
 				newIdentity.append(l.getPredicateName());
+				if (!cmpPosLiterals.containsKey(l.getPredicateName())) {
+					cmpPosLiterals.put(l.getPredicateName(),
+							new ArrayList<Predicate>());
+				}
+				cmpPosLiterals.get(l.getPredicateName()).add(l);
 			}
 
 			approxIdentity = newIdentity.toString();

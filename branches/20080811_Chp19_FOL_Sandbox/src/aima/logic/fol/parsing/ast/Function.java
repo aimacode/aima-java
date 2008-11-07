@@ -38,17 +38,14 @@ public class Function extends Term {
 		if (this == o) {
 			return true;
 		}
-		if ((o == null) || (this.getClass() != o.getClass())) {
+		if (!(o instanceof Function)) {
 			return false;
 		}
 
 		Function f = (Function) o;
-		boolean nameEquality = f.getFunctionName().equals(getFunctionName());
-		boolean termEquality = f.getTerms().equals(getTerms());
-		boolean eq = nameEquality && termEquality;
-
-		return eq;
-
+		
+		return f.getFunctionName().equals(getFunctionName())
+				&& f.getTerms().equals(getTerms());
 	}
 
 	@Override
@@ -70,9 +67,8 @@ public class Function extends Term {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" ");
 		sb.append(functionName);
-		sb.append("( ");
+		sb.append("(");
 
 		boolean first = true;
 		for (Term t : terms) {
@@ -84,7 +80,7 @@ public class Function extends Term {
 			sb.append(t.toString());
 		}
 		
-		sb.append(" )");
+		sb.append(")");
 		return sb.toString();
 	}
 

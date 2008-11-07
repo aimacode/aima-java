@@ -53,7 +53,7 @@ public class NotSentence implements Sentence {
 
 	@Override
 	public String toString() {
-		return " NOT " + negated.toString();
+		return "NOT(" + negated.toString() + ")";
 	}
 
 }

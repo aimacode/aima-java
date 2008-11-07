@@ -38,14 +38,12 @@ public class Predicate implements AtomicSentence {
 		if (this == o) {
 			return true;
 		}
-		if ((o == null) || (this.getClass() != o.getClass())) {
+		if (!(o instanceof Predicate)) {
 			return false;
 		}
 		Predicate p = (Predicate) o;
-		boolean nameEquality = p.getPredicateName().equals(getPredicateName());
-		boolean termEquality = p.getTerms().equals(getTerms());
-		return ((nameEquality)) && (termEquality);
-
+		return p.getPredicateName().equals(getPredicateName())
+				&& p.getTerms().equals(getTerms());
 	}
 
 	@Override
@@ -83,9 +81,8 @@ public class Predicate implements AtomicSentence {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" ");
 		sb.append(predicateName);
-		sb.append("( ");
+		sb.append("(");
 
 		boolean first = true;
 		for (Term t : terms) {
@@ -97,7 +94,7 @@ public class Predicate implements AtomicSentence {
 			sb.append(t.toString());
 		}
 		
-		sb.append(" ) ");
+		sb.append(")");
 		return sb.toString();
 	}
 

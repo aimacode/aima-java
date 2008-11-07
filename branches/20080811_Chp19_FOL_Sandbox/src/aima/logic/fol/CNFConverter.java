@@ -505,8 +505,10 @@ class DistributeOrOverAnd implements FOLVisitor {
 				beta = betaAndGamma.getFirst();
 				Sentence gamma = betaAndGamma.getSecond();
 				return new ConnectedSentence(Connectors.AND,
-						new ConnectedSentence(Connectors.OR, alpha, beta),
-						new ConnectedSentence(Connectors.OR, alpha, gamma));
+						(Sentence) (new ConnectedSentence(Connectors.OR, alpha,
+								beta)).accept(this, arg),
+						(Sentence) (new ConnectedSentence(Connectors.OR, alpha,
+								gamma)).accept(this, arg));
 			}
 		}
 
@@ -519,8 +521,10 @@ class DistributeOrOverAnd implements FOLVisitor {
 				alpha = alphaAndGamma.getFirst();
 				Sentence gamma = alphaAndGamma.getSecond();
 				return new ConnectedSentence(Connectors.AND,
-						new ConnectedSentence(Connectors.OR, alpha, beta),
-						new ConnectedSentence(Connectors.OR, gamma, beta));
+						(Sentence) (new ConnectedSentence(Connectors.OR, alpha,
+								beta)).accept(this, arg),
+						(Sentence) (new ConnectedSentence(Connectors.OR, gamma,
+								beta)).accept(this, arg));
 			}
 		}
 
@@ -544,7 +548,7 @@ class DistributeOrOverAnd implements FOLVisitor {
 	}
 }
 
-class CNFConstructor implements FOLVisitor {
+class CNFConstructor implements FOLVisitor {	
 	public CNFConstructor() {
 
 	}

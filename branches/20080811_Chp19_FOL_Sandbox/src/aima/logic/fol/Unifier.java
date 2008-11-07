@@ -1,6 +1,5 @@
 package aima.logic.fol;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class Unifier {
-	
+	//
 	private SubstVisitor substVisitor = new SubstVisitor();
 	private VariableCollector variableCollector = new VariableCollector();
 
@@ -90,13 +89,13 @@ public class Unifier {
 		} else if (x.equals(y)) {
 			// else if x = y the return theta
 			return theta;
-		} else if (isVariable(x)) {
+		} else if (x instanceof Variable) {
 			// else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
 			return unifyVar((Variable) x, y, theta);
-		} else if (isVariable(y)) {
+		} else if (y instanceof Variable) {
 			// else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
 			return unifyVar((Variable) y, x, theta);
-		} else if ((isCompound(x)) && (isCompound(y))) {
+		} else if (isCompound(x) && isCompound(y)) {
 			// else if COMPOUND?(x) and COMPOUND?(y) then
 			// return UNIFY(ARGS[x], ARGS[y], UNIFY(OP[x], OP[y], theta))
 			return unify(args(x), args(y), unifyOps(op(x), op(y), theta));
@@ -105,17 +104,22 @@ public class Unifier {
 			return null;
 		}
 	}
-	
+
 	// else if LIST?(x) and LIST?(y) then
 	// return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
 	public Map<Variable, Term> unify(List<Term> x, List<Term> y,
 			Map<Variable, Term> theta) {
 		if (theta == null) {
 			return null;
+		} else if (x.size() != y.size()) {
+			return null;
 		} else if (x.size() == 0 && y.size() == 0) {
 			return theta;
+		} else if (x.size() == 1 && y.size() == 1) {
+			return unify(x.get(0), y.get(0), theta);
 		} else {
-			return unify(rest(x), rest(y), unify(first(x), first(y), theta));
+			return unify(x.subList(1, x.size()), y.subList(1, y.size()), unify(
+					x.get(0), y.get(0), theta));
 		}
 	}
 
@@ -126,9 +130,9 @@ public class Unifier {
 	// Note: You can subclass and override this method in order
 	// to re-implement the OCCUR-CHECK?() to always
 	// return false if you want that to be the default
-	// behavior.
+	// behavior, as is the case with Prolog.
 	protected boolean occurCheck(Variable var, FOLNode x) {
-		if (isFunction(x)) {
+		if (x instanceof Function) {
 			Set<Variable> vars = variableCollector
 					.collectAllVariables((Function) x);
 			if (vars.contains(var)) {
@@ -152,7 +156,7 @@ public class Unifier {
 	 */
 	private Map<Variable, Term> unifyVar(Variable var, FOLNode x,
 			Map<Variable, Term> theta) {
-		
+
 		if (!Term.class.isInstance(x)) {
 			return null;
 		} else if (theta.keySet().contains(var)) {
@@ -160,13 +164,13 @@ public class Unifier {
 			return unify(theta.get(var), x, theta);
 		} else if (theta.keySet().contains(x)) {
 			// else if {x/val} E theta then return UNIFY(var, val, theta)
-			return unify(var, theta.get(var), theta);
+			return unify(var, theta.get(x), theta);
 		} else if (occurCheck(var, x)) {
 			// else if OCCUR-CHECK?(var, x) then return failure
 			return null;
 		} else {
 			// else return add {var/x} to theta
-			theta.put(var, (Term) x);
+			compose(theta, var, (Term) x);
 			return theta;
 		}
 	}
@@ -183,9 +187,9 @@ public class Unifier {
 	}
 
 	private List<Term> args(FOLNode x) {
-		if (isFunction(x)) {
+		if (x instanceof Function) {
 			return ((Function) x).getTerms();
-		} else if (isPredicate(x)) {
+		} else if (x instanceof Predicate) {
 			return ((Predicate) x).getTerms();
 		} else {
 			return null;
@@ -193,52 +197,26 @@ public class Unifier {
 	}
 
 	private String op(FOLNode x) {
-		if (isFunction(x)) {
+		if (x instanceof Function) {
 			return ((Function) x).getFunctionName();
-		} else if (isPredicate(x)) {
+		} else if (x instanceof Predicate) {
 			return ((Predicate) x).getPredicateName();
 		} else {
 			return null;
 		}
 	}
 
-	private boolean isVariable(FOLNode x) {
-		return Variable.class.isInstance(x);
-	}
-
-	private boolean isPredicate(FOLNode x) {
-		return Predicate.class.isInstance(x);
-	}
-
-	private boolean isFunction(FOLNode x) {
-		return Function.class.isInstance(x);
-	}
-
-	private FOLNode first(List<Term> x) {
-		List<Term> other = duplicate(x);
-		FOLNode first = (FOLNode) other.get(0);
-		return first;
-	}
-
-	private List<Term> rest(List<Term> x) {
-		if (x.size() == 1) {
-			return new ArrayList<Term>();
-		} else {
-			List<Term> other = duplicate(x);
-			other.remove(0);
-			return other;
-		}
-	}
-
-	private List<Term> duplicate(List<Term> x) {
-		return new ArrayList<Term>(x);
-	}
-
 	private boolean isCompound(FOLNode x) {
-		if (isPredicate(x) || isFunction(x)) {
-			return true;
-		} else {
-			return false;
+		return (x instanceof Predicate) || (x instanceof Function);
+	}
+
+	private void compose(Map<Variable, Term> theta, Variable var, Term x) {
+		theta.put(var, x);
+		for (Variable v : theta.keySet()) {
+			Term t = theta.get(v);
+			if (t instanceof Function) {
+				theta.put(v, this.substVisitor.subst(theta, (Function) t));
+			}
 		}
 	}
 }
