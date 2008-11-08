@@ -153,10 +153,23 @@ public class UnifierTest extends TestCase {
 		domain.addPredicate("P");
 
 		FOLParser parser = new FOLParser(domain);
-
-		Sentence s1 = parser.parse("P(x, B, F(y))");
-		Sentence s2 = parser.parse("P(A, y, F(z))");
+		
+		// Test Cascade Substitutions handled correctly
+		Sentence s1 = parser.parse("P(z, x)");
+		Sentence s2 = parser.parse("P(x, a)");
 		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertEquals("{z=a, x=a}", result.toString());
+		
+		s1 = parser.parse("P(x, z)");
+		s2 = parser.parse("P(a, x)");
+		result = unifier.unify(s1, s2);
+
+		assertEquals("{x=a, z=a}", result.toString());
+
+		s1 = parser.parse("P(x, B, F(y))");
+		s2 = parser.parse("P(A, y, F(z))");
+		result = unifier.unify(s1, s2);
 
 		assertEquals("{x=A, y=B, z=B}", result.toString());
 
