@@ -166,6 +166,18 @@ public class UnifierTest extends TestCase {
 		result = unifier.unify(s1, s2);
 
 		assertEquals("{x=a, z=a}", result.toString());
+		
+		s1 = parser.parse("P(w, w, w)");
+		s2 = parser.parse("P(x, y, z)");
+		result = unifier.unify(s1, s2);
+
+		assertEquals("{w=z, x=z, y=z}", result.toString());
+
+		s1 = parser.parse("P(x, y, z)");
+		s2 = parser.parse("P(w, w, w)");
+		result = unifier.unify(s1, s2);
+
+		assertEquals("{x=w, y=w, z=w}", result.toString());
 
 		s1 = parser.parse("P(x, B, F(y))");
 		s2 = parser.parse("P(A, y, F(z))");
