@@ -17,7 +17,7 @@ import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
-import aima.logic.fol.inference.FOLResolution;
+import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
@@ -37,7 +37,6 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 
-// TODO: Can Atomic sentences with variables be considered facts?
 // TODO: Handle Equality.
 public class FOLKnowledgeBase {
 
@@ -73,7 +72,7 @@ public class FOLKnowledgeBase {
 	//
 	public FOLKnowledgeBase(FOLDomain domain) {
 		// Default to Full Resolution if not set.
-		this(domain, new FOLResolution());
+		this(domain, new FOLTFMResolution());
 	}
 
 	public FOLKnowledgeBase(FOLDomain domain,
@@ -225,6 +224,10 @@ public class FOLKnowledgeBase {
 
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
 		return substVisitor.subst(theta, aSentence);
+	}
+	
+	public Term subst(Map<Variable, Term> theta, Term aTerm) {
+		return substVisitor.subst(theta, aTerm);
 	}
 
 	// Note: see page 277.

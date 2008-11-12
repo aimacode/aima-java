@@ -40,6 +40,10 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		return (Sentence) ((Sentence) aSentence.accept(this, theta)).copy();
 	}
 	
+	public Term subst(Map<Variable, Term> theta, Term aTerm) {
+		return (Term) ((Term) aTerm.accept(this, theta)).copy();
+	}
+	
 	public Function subst(Map<Variable, Term> theta, Function aFunction) {
 		return (Function) ((Function) aFunction.accept(this, theta)).copy();
 	}

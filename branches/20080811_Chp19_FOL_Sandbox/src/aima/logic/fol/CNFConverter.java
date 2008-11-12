@@ -38,6 +38,8 @@ import aima.logic.fol.parsing.ast.Variable;
 // TODO: Currently do not handle Term equality!
 // TODO: Ensure handling of Predicate and Function terms is implemented
 // correctly.
+// TODO: Consider rewriting steps to follow INSEADO method outlined in:
+// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture09.pdf
 public class CNFConverter {
 
 	private FOLParser parser = null;

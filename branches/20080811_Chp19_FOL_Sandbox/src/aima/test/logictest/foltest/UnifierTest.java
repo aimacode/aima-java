@@ -19,9 +19,8 @@ import aima.logic.fol.parsing.ast.Variable;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-
 public class UnifierTest extends TestCase {
 
 	private FOLParser parser;

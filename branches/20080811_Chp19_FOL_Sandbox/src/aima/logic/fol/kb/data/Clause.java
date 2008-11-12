@@ -29,7 +29,7 @@ import aima.logic.fol.parsing.ast.Variable;
 
 // Note: The factor, equals and binary resolution logic in this
 // class all work on the assumption that all clauses being
-// used are standardized apart - i.e. these methods use unification
+// used are already standardized apart - i.e. these methods use unification
 // and for performance reasons do not standardize apart in most cases.
 // Therefore be aware of this restriction when using this class.
 // Possibly will want to consider a better way of doing this.

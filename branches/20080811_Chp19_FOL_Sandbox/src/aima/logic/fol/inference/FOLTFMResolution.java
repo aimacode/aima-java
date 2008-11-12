@@ -19,9 +19,14 @@ import aima.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 297.
  * 
- * The algorithmic approach is identical to the propositional case, described
- * in Figure 7.12. However, this implementation will use an Answer predicate, 
- * so that queries with Variables may be answered.
+ * The algorithmic approach is very close to the propositional case, described
+ * in Figure 7.12. However, this implementation will use the T)wo F)inger M)ethod 
+ * for looking for resolvents between clauses. 
+ * Note: very inefficient, 
+ * see: http://logic.stanford.edu/classes/cs157/2008/lectures/lecture04.pdf,
+ * slide 21 for the propositional case.  
+ * In addition, an Answer literal will be used so that queries with Variables 
+ * may be answered (see pg. 300 of AIMA).
  * 
  */
 
@@ -29,7 +34,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-public class FOLResolution implements InferenceProcedure {
+public class FOLTFMResolution implements InferenceProcedure {
 
 	//
 	// START-InferenceProcedure

@@ -12,7 +12,6 @@ import aima.logic.fol.parsing.ast.Sentence;
  * @author Ciaran O'Reilly
  * 
  */
-// TODO : more tests!
 public class CNFConverterTest extends TestCase {
 
 	public void testExamplePg295() {

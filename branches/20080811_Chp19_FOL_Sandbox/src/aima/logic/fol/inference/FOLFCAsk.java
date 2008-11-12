@@ -89,6 +89,7 @@ public class FOLFCAsk implements InferenceProcedure {
 			// for each sentence r in KB do
 			// (p1 ^ ... ^ pn => q) <-STANDARDIZE-APART(r)
 			for (Clause impl : KB.getAllDefiniteClauseImplications()) {
+				impl = KB.standardizeApart(impl);
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
 				// SUBST(theta, p'1 ^ ... ^ p'n)
 				// --- for some p'1,...,p'n in KB

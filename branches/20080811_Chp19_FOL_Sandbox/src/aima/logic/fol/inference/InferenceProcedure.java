@@ -8,6 +8,10 @@ import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public interface InferenceProcedure {
 	/**
 	 * 

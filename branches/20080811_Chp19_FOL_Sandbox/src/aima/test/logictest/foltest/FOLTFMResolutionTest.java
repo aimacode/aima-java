@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import aima.logic.fol.inference.FOLResolution;
+import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Constant;
@@ -19,7 +19,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-public class FOLResolutionTest extends TestCase {
+public class FOLTFMResolutionTest extends TestCase {
 
 	public void testBasicFOLResolutionFails() {
 		FOLKnowledgeBase kkb = createKingsKnowledgeBase();
@@ -156,7 +156,7 @@ public class FOLResolutionTest extends TestCase {
 	
 	private FOLKnowledgeBase createKingsKnowledgeBase() {
 		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory.kingsDomain(),
-				new FOLResolution());
+				new FOLTFMResolution());
 		kb.tell("((King(x) AND Greedy(x)) => Evil(x))");
 		kb.tell("King(John)");
 		kb.tell("King(Richard)");
@@ -167,7 +167,7 @@ public class FOLResolutionTest extends TestCase {
 
 	private FOLKnowledgeBase createWeaponsKnowledgeBase() {
 		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.weaponsDomain(), new FOLResolution());
+				.weaponsDomain(), new FOLTFMResolution());
 		kb
 				.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
 		kb.tell(" Owns(NoNo, Mone)");
@@ -183,7 +183,7 @@ public class FOLResolutionTest extends TestCase {
 
 	private FOLKnowledgeBase createLovesAnimalKnowledgeBase() {
 		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.lovesAnimalDomain(), new FOLResolution());
+				.lovesAnimalDomain(), new FOLTFMResolution());
 
 		kb
 				.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
@@ -199,7 +199,7 @@ public class FOLResolutionTest extends TestCase {
 	
 	private FOLKnowledgeBase createRingOfThievesKnowledgeBase() {
 		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.ringOfThievesDomain(), new FOLResolution());
+				.ringOfThievesDomain(), new FOLTFMResolution());
 		
 		// s(x) => ~c(x) One who skis never gets caught
 		kb.tell("(Skis(x) => NOT(Caught(x)))");

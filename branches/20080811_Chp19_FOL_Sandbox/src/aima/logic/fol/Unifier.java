@@ -210,18 +210,15 @@ public class Unifier {
 		return (x instanceof Predicate) || (x instanceof Function);
 	}
 
+	// See:
+	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
+	// for need for this.
 	private void cascadeSubstitution(Map<Variable, Term> theta, Variable var,
 			Term x) {
 		theta.put(var, x);
 		for (Variable v : theta.keySet()) {
 			Term t = theta.get(v);
-			if (t instanceof Function) {
-				theta.put(v, this.substVisitor.subst(theta, (Function) t));
-			} else if (t instanceof Variable) {
-				if (var.equals(t)) {
-					theta.put(v, x);
-				}
-			}
+			theta.put(v, substVisitor.subst(theta, t));		
 		}
 	}
 }

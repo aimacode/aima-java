@@ -97,6 +97,7 @@ public class FOLBCAsk implements InferenceProcedure {
 		// for each sentence r in KB where
 		// STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
 		for (Clause r : KB.getAllDefiniteClauses()) {
+			r = KB.standardizeApart(r);
 			// and thetaDelta <- UNIFY(q, qDelta) succeeds
 			Map<Variable, Term> thetaDelta = KB
 					.unify(r.getPositiveLiterals()
@@ -109,7 +110,8 @@ public class FOLBCAsk implements InferenceProcedure {
 				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
 				// theta)) U answers
 				answers.addAll(folbcask(KB, newGoals,
-						compose(thetaDelta, theta)));
+						compose(KB, thetaDelta,
+						theta)));
 			}
 		}
 
@@ -118,27 +120,46 @@ public class FOLBCAsk implements InferenceProcedure {
 	}
 
 	// Artificial Intelligence A Modern Approach (2nd Edition): page 288.
-	// COMPOSE(theta1, theta2) is the substitution whose effect is identical to
-	// the effect of applying each subsitution in turn. That is,
+	// COMPOSE(delta, tau) is the substitution whose effect is identical to
+	// the effect of applying each substitution in turn. That is,
 	// SUBST(COMPOSE(theta1, theta2), p) = SUBST(theta2, SUBST(theta1, p))
-	private Map<Variable, Term> compose(Map<Variable, Term> theta1,
+	private Map<Variable, Term> compose(FOLKnowledgeBase KB,
+			Map<Variable, Term> theta1,
 			Map<Variable, Term> theta2) {
-		Map<Variable, Term> composed = new HashMap<Variable, Term>(theta1);
-		composed.putAll(theta2);
+		Map<Variable, Term> composed = new HashMap<Variable, Term>();
 
 		// So that it behaves like:
 		// SUBST(theta2, SUBST(theta1, p))
-		// Need to handle a situation like this:
-		// {x=John, v1=x}
-		// in this case want v1=x to be:
-		// v1=John.
-		for (Variable v : composed.keySet()) {
-			Term t = composed.get(v);
-			if (composed.keySet().contains(t)) {
-				composed.put(v, composed.get(t));
+		// There are two steps involved here.
+		// See: http://logic.stanford.edu/classes/cs157/2008/notes/chap09.pdf
+		// for a detailed discussion:
+
+		// 1. Apply theta2 to the range of theta1.
+		for (Variable v : theta1.keySet()) {
+			composed.put(v, KB.subst(theta2, theta1.get(v)));
+		}
+
+		// 2. Adjoin to delta all pairs from tau with different
+		// domain variables.
+		for (Variable v : theta2.keySet()) {
+			if (!theta1.containsKey(v)) {
+				composed.put(v, theta2.get(v));
 			}
 		}
 
-		return composed;
+		return cascadeSubstitutions(KB, composed);
+	}
+
+	// See:
+	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
+	// for need for this.
+	private Map<Variable, Term> cascadeSubstitutions(FOLKnowledgeBase KB,
+			Map<Variable, Term> theta) {
+		for (Variable v : theta.keySet()) {
+			Term t = theta.get(v);
+			theta.put(v, KB.subst(theta, t));
+		}
+
+		return theta;
 	}
 }
