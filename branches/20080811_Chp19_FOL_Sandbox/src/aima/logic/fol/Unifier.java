@@ -131,12 +131,32 @@ public class Unifier {
 	// to re-implement the OCCUR-CHECK?() to always
 	// return false if you want that to be the default
 	// behavior, as is the case with Prolog.
-	protected boolean occurCheck(Variable var, FOLNode x) {
+	protected boolean occurCheck(Map<Variable, Term> theta, Variable var,
+			FOLNode x) {
 		if (x instanceof Function) {
 			Set<Variable> vars = variableCollector
 					.collectAllVariables((Function) x);
 			if (vars.contains(var)) {
 				return true;
+			}
+			
+			// Now need to check if cascading will cause occurs to happen
+			// e.g. Loves(SF1(v2),v2) and Loves(v3,SF0(v3))
+			for (Variable v : theta.keySet()) {
+				Term t = theta.get(v);
+				if (t instanceof Function) {
+					// If a possible occurs problem
+					// i.e. the term x contains this variable
+					if (vars.contains(v)) {
+						// then need to ensure the function this variable
+						// is to be replaced by does not contain var.
+						Set<Variable> indirectvars = variableCollector
+								.collectAllVariables((Function) t);
+						if (indirectvars.contains(var)) {
+							return true;
+						}
+					}
+				}
 			}
 		}
 		return false;
@@ -165,7 +185,7 @@ public class Unifier {
 		} else if (theta.keySet().contains(x)) {
 			// else if {x/val} E theta then return UNIFY(var, val, theta)
 			return unify(var, theta.get(x), theta);
-		} else if (occurCheck(var, x)) {
+		} else if (occurCheck(theta, var, x)) {
 			// else if OCCUR-CHECK?(var, x) then return failure
 			return null;
 		} else {

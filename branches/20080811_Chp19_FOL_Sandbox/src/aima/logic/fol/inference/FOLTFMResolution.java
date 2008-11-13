@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.Connectors;
+import aima.logic.fol.inference.trace.FOLTFMResolutionTracer;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
@@ -35,6 +36,24 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class FOLTFMResolution implements InferenceProcedure {
+	
+	private FOLTFMResolutionTracer tracer = null;
+	
+	public FOLTFMResolution() {
+
+	}
+
+	public FOLTFMResolution(FOLTFMResolutionTracer tracer) {
+		setTracer(tracer);
+	}
+	
+	public FOLTFMResolutionTracer getTracer() {
+		return tracer;
+	}
+
+	public void setTracer(FOLTFMResolutionTracer tracer) {
+		this.tracer = tracer;
+	}
 
 	//
 	// START-InferenceProcedure
@@ -64,11 +83,15 @@ public class FOLTFMResolution implements InferenceProcedure {
 
 		// new <- {}
 		Set<Clause> newClauses = new LinkedHashSet<Clause>();
-		
+		Set<Clause> toAdd = new LinkedHashSet<Clause>();
 		// loop do
-		do {
-			// clauses <- clauses <UNION> new
-			clauses.addAll(newClauses);
+		int noOfPrevClauses = clauses.size();
+		do {					
+			if (null != tracer) {
+				tracer.stepStartWhile(clauses, clauses.size(), newClauses
+						.size());
+			}
+			
 			newClauses.clear();
 
 			// for each Ci, Cj in clauses do
@@ -76,9 +99,16 @@ public class FOLTFMResolution implements InferenceProcedure {
 			clauses.toArray(clausesA);
 			// Basically, using the simple T)wo F)inger M)ethod here.
 			for (int i = 0; i < clausesA.length; i++) {
+				Clause cI = clausesA[i];
+				if (null != tracer) {
+					tracer.stepOuterFor(cI);
+				}				
 				for (int j = i; j < clausesA.length; j++) {
-					Clause cI = clausesA[i];
 					Clause cJ = clausesA[j];
+					
+					if (null != tracer) {
+						tracer.stepInnerFor(cI, cJ);
+					}
 					
 					// Get the Factors for each clause
 					Set<Clause> cIFactors = cI.getFactors(KB);
@@ -93,14 +123,25 @@ public class FOLTFMResolution implements InferenceProcedure {
 									cJFac);
 
 							if (resolvents.size() > 0) {
+								toAdd.clear();
 								// new <- new <UNION> resolvent
 								for (Clause rc : resolvents) {
-									newClauses.addAll(rc.getFactors(KB));								
+									toAdd.addAll(rc.getFactors(KB));
 								}
+								
+								if (null != tracer) {
+									tracer.stepResolved(cIFac, cJFac,
+											toAdd);
+								}
+								
+								newClauses.addAll(toAdd);
 								
 								if (checkAndHandleFinalAnswer(resolvents,
 										result, answerClause,
 										answerLiteralVariables)) {
+									if (null != tracer) {
+										tracer.stepFinished(clauses, result);
+									}
 									return result;
 								}
 							}
@@ -108,10 +149,22 @@ public class FOLTFMResolution implements InferenceProcedure {
 					}
 				}
 			}
+			
+			noOfPrevClauses = clauses.size();
+
+			// clauses <- clauses <UNION> new
+			clauses.addAll(newClauses);
+			
 			// if new is a <SUBSET> of clauses then finished
 			// searching for an answer
-		} while (!clauses.containsAll(newClauses));
+			// (i.e. when they were added the # clauses
+			// did not increase).
+		} while (noOfPrevClauses < clauses.size());
 
+		if (null != tracer) {
+			tracer.stepFinished(clauses, result);
+		}
+		
 		return result;
 	}
 
