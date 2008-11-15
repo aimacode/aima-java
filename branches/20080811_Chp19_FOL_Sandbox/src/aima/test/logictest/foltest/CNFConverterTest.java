@@ -222,4 +222,21 @@ public class CNFConverterTest extends TestCase {
 
 		assertEquals("{~F(x,y),~A(x,y)},{F(x,y),A(x,y)}", cnfDef5.toString());
 	}
+	
+	public void testNegationsAndNestedImplications() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("P");
+		domain.addPredicate("Q");
+		domain.addPredicate("R");
+		domain.addConstant("A");
+		
+		FOLParser parser = new FOLParser(domain);
+		CNFConverter cnfConv = new CNFConverter(parser);
+		
+		// ~(((~p or ~q) => ~(p or q)) => r)
+		Sentence sent = parser.parse("NOT(((((NOT(P(A)) OR NOT(Q(A)))) => NOT((P(A) OR Q(A)))) => R(A)))");
+		CNF cnf = cnfConv.convertToCNF(sent);
+		
+		assertEquals("{~P(A),P(A)},{~P(A),Q(A)},{~Q(A),P(A)},{~Q(A),Q(A)},{~R(A)}", cnf.toString());
+	}
 }

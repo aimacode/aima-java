@@ -28,7 +28,10 @@ import aima.logic.fol.parsing.ast.Variable;
  * Every sentence of first-order logic can be converted into an inferentially
  * equivalent CNF sentence.
  * 
- * Note: Transformation rules extracted from pg 215, 296, and 297.
+ * Note: Transformation rules extracted from pg 215, 296, and 297 and:
+ * INSEADO method outlined in:
+ * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture09.pdf
+ * which is complete.
  */
 
 /**
@@ -38,8 +41,6 @@ import aima.logic.fol.parsing.ast.Variable;
 // TODO: Currently do not handle Term equality!
 // TODO: Ensure handling of Predicate and Function terms is implemented
 // correctly.
-// TODO: Consider rewriting steps to follow INSEADO method outlined in:
-// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture09.pdf
 public class CNFConverter {
 
 	private FOLParser parser = null;
@@ -56,32 +57,37 @@ public class CNFConverter {
 		// in order to simplify remaining logic.
 		Sentence noExtraParenthesis = (Sentence) aSentence.accept(
 				new StripExtraParenthesis(), null);
+		
+		// I)mplications Out:
+		Sentence implicationsOut = (Sentence) noExtraParenthesis.accept(
+				new ImplicationsOut(), null);
+		
+		// N)egations In:
+		Sentence negationsIn = (Sentence) implicationsOut.accept(
+				new NegationsIn(), null);
 
-		// Standardize variables: For sentences like:
+		// S)tandardize variables: 
+		// For sentences like:
 		// (FORALL x P(x)) V (EXISTS x Q(x)),
 		// which use the same variable name twice, change the name of one of the
 		// variables.
-		// This will simplify remaining logic, for e.g. handling
-		// negated quantifiers.
-		Sentence saQuantifiers = (Sentence) noExtraParenthesis.accept(
+		Sentence saQuantifiers = (Sentence) negationsIn.accept(
 				new StandardizeQuantiferVariables(substVisitor),
 				new LinkedHashSet<Variable>());
 
-		// Convert the sentence to just ands and ors,
-		// with negations moved inwards, along with
-		// removing bi-conditionals and implies
-		Sentence andsOrsAndQuantifiers = (Sentence) saQuantifiers.accept(
-				new MoveNegationInwardsAndRemoveBiCondAndImplies(), null);
-
-		// Remove explicit quantifiers, by dropping universals and
-		// skolemizing existentials.
-		Sentence andsAndOrs = (Sentence) andsOrsAndQuantifiers.accept(
+		// Remove explicit quantifiers, by skolemizing existentials 
+		// and dropping universals:
+		// E)xistentials Out
+		// A)lls Out:
+		Sentence andsAndOrs = (Sentence) saQuantifiers.accept(
 				new RemoveQuantifiers(parser), new LinkedHashSet<Variable>());
 
-		// Distribute V over ^:
+		// D)istribution
+		// V over ^:
 		Sentence orDistributedOverAnd = (Sentence) andsAndOrs.accept(
 				new DistributeOrOverAnd(), null);
 
+		// O)perators Out 
 		return (new CNFConstructor()).construct(orDistributedOverAnd);
 	}
 }
@@ -126,6 +132,183 @@ class StripExtraParenthesis implements FOLVisitor {
 			Object arg) {
 		// This causes nested parenthesis to be removed.
 		return sentence.getParanthized().accept(this, arg);
+	}
+
+	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
+			Object arg) {
+
+		return new QuantifiedSentence(sentence.getQuantifier(), sentence
+				.getVariables(), (Sentence) sentence.getQuantified().accept(
+				this, arg));
+	}
+}
+
+class ImplicationsOut implements FOLVisitor {
+	public ImplicationsOut() {
+
+	}
+
+	public Object visitPredicate(Predicate p, Object arg) {
+		return p;
+	}
+
+	public Object visitTermEquality(TermEquality equality, Object arg) {
+		throw new UnsupportedOperationException("Not Supported.");
+	}
+
+	public Object visitVariable(Variable variable, Object arg) {
+		return variable;
+	}
+
+	public Object visitConstant(Constant constant, Object arg) {
+		return constant;
+	}
+
+	public Object visitFunction(Function function, Object arg) {
+		return function;
+	}
+
+	public Object visitNotSentence(NotSentence notSentence, Object arg) {
+		Sentence negated = notSentence.getNegated();
+
+		return new NotSentence((Sentence) negated.accept(this, arg));
+	}
+
+	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
+		Sentence alpha = (Sentence) sentence.getFirst().accept(this, arg);
+		Sentence beta = (Sentence) sentence.getSecond().accept(this, arg);
+
+		// Eliminate <=>, bi-conditional elimination,
+		// replace (alpha <=> beta) with (~alpha V beta) ^ (alpha V ~beta).
+		if (Connectors.isBICOND(sentence.getConnector())) {			
+			Sentence first = new ConnectedSentence(
+					Connectors.OR, new NotSentence(alpha), beta);
+			Sentence second = new ConnectedSentence(
+					Connectors.OR, alpha, new NotSentence(beta));
+
+			return new ConnectedSentence(Connectors.AND, first, second);
+		}
+
+		// Eliminate =>, implication elimination,
+		// replacing (alpha => beta) with (~alpha V beta)
+		if (Connectors.isIMPLIES(sentence.getConnector())) {
+			return new ConnectedSentence(Connectors.OR, new NotSentence(alpha), beta);
+		}
+
+		return new ConnectedSentence(sentence.getConnector(), alpha, beta);
+	}
+
+	public Object visitParanthizedSentence(ParanthizedSentence sentence,
+			Object arg) {
+		// This should not be called as these should have already
+		// been stripped. Throw an exception to indicate this
+		throw new IllegalStateException(
+				"All paranthized sentences should have been stripped out.");
+	}
+
+	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
+			Object arg) {
+
+		return new QuantifiedSentence(sentence.getQuantifier(), sentence
+				.getVariables(), (Sentence) sentence.getQuantified().accept(
+				this, arg));
+	}
+}
+
+class NegationsIn implements FOLVisitor {
+	public NegationsIn() {
+
+	}
+
+	public Object visitPredicate(Predicate p, Object arg) {
+		return p;
+	}
+
+	public Object visitTermEquality(TermEquality equality, Object arg) {
+		throw new UnsupportedOperationException("Not Supported.");
+	}
+
+	public Object visitVariable(Variable variable, Object arg) {
+		return variable;
+	}
+
+	public Object visitConstant(Constant constant, Object arg) {
+		return constant;
+	}
+
+	public Object visitFunction(Function function, Object arg) {
+		return function;
+	}
+
+	public Object visitNotSentence(NotSentence notSentence, Object arg) {
+		// CNF requires NOT (~) to appear only in literals, so we 'move ~
+		// inwards' by repeated application of the following equivalences:
+		Sentence negated = notSentence.getNegated();
+
+		// ~(~alpha) equivalent to alpha (double negation elimination)
+		if (negated instanceof NotSentence) {
+			return ((NotSentence) negated).getNegated().accept(this, arg);
+		}
+
+		if (negated instanceof ConnectedSentence) {
+			ConnectedSentence negConnected = (ConnectedSentence) negated;
+			Sentence alpha = negConnected.getFirst();
+			Sentence beta = negConnected.getSecond();
+			// ~(alpha ^ beta) equivalent to (~alpha V ~beta) (De Morgan)
+			if (Connectors.isAND(negConnected.getConnector())) {
+				// I need to ensure the ~s are moved in deeper
+				Sentence notAlpha = (Sentence) (new NotSentence(
+						(Sentence) alpha)).accept(this, arg);
+				Sentence notBeta = (Sentence) (new NotSentence((Sentence) beta))
+						.accept(this, arg);
+				return new ConnectedSentence(Connectors.OR, notAlpha, notBeta);
+			}
+
+			// ~(alpha V beta) equivalent to (~alpha ^ ~beta) (De Morgan)
+			if (Connectors.isOR(negConnected.getConnector())) {
+				// I need to ensure the ~s are moved in deeper
+				Sentence notAlpha = (Sentence) (new NotSentence(
+						(Sentence) alpha)).accept(this, arg);
+				Sentence notBeta = (Sentence) (new NotSentence((Sentence) beta))
+						.accept(this, arg);
+				return new ConnectedSentence(Connectors.AND, notAlpha, notBeta);
+			}
+		}
+
+		// in addition, rules for negated quantifiers:
+		if (negated instanceof QuantifiedSentence) {
+			QuantifiedSentence negQuantified = (QuantifiedSentence) negated;
+			// I need to ensure the ~ is moved in deeper
+			Sentence notP = (Sentence) (new NotSentence(negQuantified
+					.getQuantified())).accept(this, arg);
+
+			// ~FORALL x p becomes EXISTS x ~p
+			if (Quantifiers.isFORALL(negQuantified.getQuantifier())) {
+				return new QuantifiedSentence(Quantifiers.EXISTS, negQuantified
+						.getVariables(), notP);
+			}
+
+			// ~EXISTS x p becomes FORALL x ~p
+			if (Quantifiers.isEXISTS(negQuantified.getQuantifier())) {
+				return new QuantifiedSentence(Quantifiers.FORALL, negQuantified
+						.getVariables(), notP);
+			}
+		}
+
+		return new NotSentence((Sentence) negated.accept(this, arg));
+	}
+
+	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
+		return new ConnectedSentence(sentence.getConnector(), (Sentence) sentence.getFirst()
+				.accept(this, arg), (Sentence) sentence.getSecond().accept(this, arg));
+	}
+
+	public Object visitParanthizedSentence(ParanthizedSentence sentence,
+			Object arg) {
+		// This should not be called as these should have already
+		// been stripped. Throw an exception to indicate this
+		throw new IllegalStateException(
+				"All paranthized sentences should have been stripped out.");
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
@@ -221,138 +404,6 @@ class StandardizeQuantiferVariables implements FOLVisitor {
 
 		return new QuantifiedSentence(sentence.getQuantifier(), replVariables,
 				sQuantified);
-	}
-}
-
-class MoveNegationInwardsAndRemoveBiCondAndImplies implements FOLVisitor {
-	public MoveNegationInwardsAndRemoveBiCondAndImplies() {
-
-	}
-
-	public Object visitPredicate(Predicate p, Object arg) {
-		return p;
-	}
-
-	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
-	}
-
-	public Object visitVariable(Variable variable, Object arg) {
-		return variable;
-	}
-
-	public Object visitConstant(Constant constant, Object arg) {
-		return constant;
-	}
-
-	public Object visitFunction(Function function, Object arg) {
-		return function;
-	}
-
-	public Object visitNotSentence(NotSentence notSentence, Object arg) {
-		// CNF requires NOT (~) to appear only in literals, so we 'move ~
-		// inwards' by repeated application of the following equivalences:
-		Sentence negated = notSentence.getNegated();
-
-		// ~(~alpha) equivalent to alpha (double negation elimination)
-		if (negated instanceof NotSentence) {
-			return ((NotSentence) negated).getNegated().accept(this, arg);
-		}
-
-		if (negated instanceof ConnectedSentence) {
-			ConnectedSentence negConnected = (ConnectedSentence) negated;
-			Sentence alpha = negConnected.getFirst();
-			Sentence beta = negConnected.getSecond();
-			// ~(alpha ^ beta) equivalent to (~alpha V ~beta) (De Morgan)
-			if (Connectors.isAND(negConnected.getConnector())) {
-				// I need to ensure the ~s are moved in deeper
-				Sentence notAlpha = (Sentence) (new NotSentence(
-						(Sentence) alpha)).accept(this, arg);
-				Sentence notBeta = (Sentence) (new NotSentence((Sentence) beta))
-						.accept(this, arg);
-				return new ConnectedSentence(Connectors.OR, notAlpha, notBeta);
-			}
-
-			// ~(alpha V beta) equivalent to (~alpha ^ ~beta) (De Morgan)
-			if (Connectors.isOR(negConnected.getConnector())) {
-				// I need to ensure the ~s are moved in deeper
-				Sentence notAlpha = (Sentence) (new NotSentence(
-						(Sentence) alpha)).accept(this, arg);
-				Sentence notBeta = (Sentence) (new NotSentence((Sentence) beta))
-						.accept(this, arg);
-				return new ConnectedSentence(Connectors.AND, notAlpha, notBeta);
-			}
-		}
-
-		// in addition, rules for negated quantifiers:
-		if (negated instanceof QuantifiedSentence) {
-			QuantifiedSentence negQuantified = (QuantifiedSentence) negated;
-			// I need to ensure the ~ is moved in deeper
-			Sentence notP = (Sentence) (new NotSentence(negQuantified
-					.getQuantified())).accept(this, arg);
-
-			// ~FORALL x p becomes EXISTS x ~p
-			if (Quantifiers.isFORALL(negQuantified.getQuantifier())) {
-				return new QuantifiedSentence(Quantifiers.EXISTS, negQuantified
-						.getVariables(), notP);
-			}
-
-			// ~EXISTS x p becomes FORALL x ~p
-			if (Quantifiers.isEXISTS(negQuantified.getQuantifier())) {
-				return new QuantifiedSentence(Quantifiers.FORALL, negQuantified
-						.getVariables(), notP);
-			}
-		}
-
-		return new NotSentence((Sentence) negated.accept(this, arg));
-	}
-
-	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
-		Sentence alpha = (Sentence) sentence.getFirst().accept(this, arg);
-		Sentence beta = (Sentence) sentence.getSecond().accept(this, arg);
-
-		// Eliminate <=>, bi-conditional elimination,
-		// replace (alpha <=> beta) with (alpha => beta) ^ (beta => alpha).
-		if (Connectors.isBICOND(sentence.getConnector())) {
-			// Note: Need to visit the implications created here in order
-			// to eliminate them correctly as well.
-			Sentence first = (Sentence) (new ConnectedSentence(
-					Connectors.IMPLIES, alpha, beta)).accept(this, arg);
-			Sentence second = (Sentence) (new ConnectedSentence(
-					Connectors.IMPLIES, beta, alpha)).accept(this, arg);
-
-			return new ConnectedSentence(Connectors.AND, first, second);
-		}
-
-		// Eliminate =>, implication elimination,
-		// replacing (alpha => beta) with (~alpha V beta)
-		if (Connectors.isIMPLIES(sentence.getConnector())) {
-			// Need to visit ~ to ensure is moved in correctly
-			Sentence first = (Sentence) (new NotSentence(alpha)).accept(this,
-					arg);
-			Sentence second = (Sentence) beta.accept(this, arg);
-
-			return new ConnectedSentence(Connectors.OR, first, second);
-		}
-
-		return new ConnectedSentence(sentence.getConnector(), (Sentence) alpha
-				.accept(this, arg), (Sentence) beta.accept(this, arg));
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
-	}
-
-	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
-			Object arg) {
-
-		return new QuantifiedSentence(sentence.getQuantifier(), sentence
-				.getVariables(), (Sentence) sentence.getQuantified().accept(
-				this, arg));
 	}
 }
 
