@@ -19,10 +19,12 @@ public interface InferenceProcedure {
 	 *            the knowledge base against which the query is to be made.
 	 * @param aQuery
 	 *            to be answered.
-	 * @return two possible return values exist. 1. an empty Set, the query
+	 * @return three possible return values exist. 1. an empty Set, the query
 	 *         returned false. 2. a Set of substitutions, indicates true and the
 	 *         bindings for different possible answers to the query (Note: refer
-	 *         to page 256).
+	 *         to page 256). 3. null, indicates unknown, the inference procedure
+	 *         ran for the length of time and was unable to determine one way or
+	 *         the other.
 	 */
 	Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence aQuery);
 }

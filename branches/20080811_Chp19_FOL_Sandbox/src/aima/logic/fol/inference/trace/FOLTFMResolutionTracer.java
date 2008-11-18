@@ -7,6 +7,10 @@ import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public interface FOLTFMResolutionTracer {
 	void stepStartWhile(Set<Clause> clauses, int totalNoClauses,
 			int totalNoNewCandidateClauses);

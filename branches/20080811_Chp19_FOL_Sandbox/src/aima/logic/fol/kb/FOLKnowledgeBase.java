@@ -20,6 +20,7 @@ import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
+import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
@@ -141,14 +142,18 @@ public class FOLKnowledgeBase {
 		// understand and use the returned set of substitutions
 		Set<Map<Variable, Term>> internalResult = getInferenceProcedure().ask(
 				this, saResult.getStandardized());
-		Set<Map<Variable, Term>> externalResult = new LinkedHashSet<Map<Variable, Term>>();
-		for (Map<Variable, Term> im : internalResult) {
-			Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
-			for (Variable rev : saResult.getReverseSubstitution().keySet()) {
-				em.put((Variable) saResult.getReverseSubstitution().get(rev),
-						im.get(rev));
+		Set<Map<Variable, Term>> externalResult = null;
+		// Ensure the inference procedure was able to come up with an answer
+		if (null != internalResult) {
+			externalResult = new LinkedHashSet<Map<Variable, Term>>();
+			for (Map<Variable, Term> im : internalResult) {
+				Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
+				for (Variable rev : saResult.getReverseSubstitution().keySet()) {
+					em.put((Variable) saResult.getReverseSubstitution()
+							.get(rev), im.get(rev));
+				}
+				externalResult.add(em);
 			}
-			externalResult.add(em);
 		}
 
 		return externalResult;
@@ -238,6 +243,10 @@ public class FOLKnowledgeBase {
 	
 	public Clause standardizeApart(Clause aClause) {
 		return standardizeApart.standardizeApart(aClause, variableIndexical);
+	}
+	
+	public Chain standardizeApart(Chain aChain) {
+		return standardizeApart.standardizeApart(aChain, variableIndexical);
 	}
 	
 	public Set<Variable> collectAllVariables(Sentence aSentence) {

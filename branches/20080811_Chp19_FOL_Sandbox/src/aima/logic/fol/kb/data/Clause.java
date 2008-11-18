@@ -27,12 +27,17 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 
+// TODO-Possibly will want to consider a better way of doing this.
 // Note: The factor, equals and binary resolution logic in this
 // class all work on the assumption that all clauses being
 // used are already standardized apart - i.e. these methods use unification
 // and for performance reasons do not standardize apart in most cases.
 // Therefore be aware of this restriction when using this class.
-// Possibly will want to consider a better way of doing this.
+//
+// TODO-are currently re-calculating factors on each call, would
+// probably be more efficient to calculate once when the identity is
+// recalculated. However, current factor logic requires KB to ensure
+// factors are standardized apart uniquely.
 public class Clause {
 	//
 	private final Set<Predicate> positiveLiterals = new LinkedHashSet<Predicate>();
@@ -134,11 +139,12 @@ public class Clause {
 
 	public Set<Clause> getFactors(FOLKnowledgeBase KB) {
 		Set<Clause> factors = getNonTrivialFactors(KB);
-		if (0 == factors.size()) {
-			// No, non-trivial factors, therefore
-			// add myself as am trivial in this case.
-			factors.add(this);
-		}
+		// Need to add self, even though a non-trivial
+		// factor. See: slide 30
+		// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture10.pdf
+		// for example of incompleteness when
+		// trivial factor not included.
+		factors.add(this);
 
 		return factors;
 	}

@@ -44,8 +44,8 @@ public class DomainFactory {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("West");
 		domain.addConstant("America");
-		domain.addConstant("Mone");
-		domain.addConstant("NoNo");
+		domain.addConstant("M1");
+		domain.addConstant("Nono");
 		domain.addPredicate("American");
 		domain.addPredicate("Weapon");
 		domain.addPredicate("Sells");

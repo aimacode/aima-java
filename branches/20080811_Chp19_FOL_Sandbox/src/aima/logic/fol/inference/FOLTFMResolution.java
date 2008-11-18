@@ -37,16 +37,29 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class FOLTFMResolution implements InferenceProcedure {
 	
+	private long maxQueryTime = 0; // <= 0 indicates infinity
 	private FOLTFMResolutionTracer tracer = null;
 	
 	public FOLTFMResolution() {
 
 	}
+	
+	public FOLTFMResolution(long maxQueryTime) {
+		setMaxQueryTime(maxQueryTime);
+	}
 
 	public FOLTFMResolution(FOLTFMResolutionTracer tracer) {
 		setTracer(tracer);
 	}
-	
+
+	public long getMaxQueryTime() {
+		return maxQueryTime;
+	}
+
+	public void setMaxQueryTime(long maxQueryTime) {
+		this.maxQueryTime = maxQueryTime;
+	}
+
 	public FOLTFMResolutionTracer getTracer() {
 		return tracer;
 	}
@@ -79,6 +92,12 @@ public class FOLTFMResolution implements InferenceProcedure {
 			answerClause.addPositiveLiteral(answerLiteral);
 		} else {
 			clauses.addAll(KB.convertToClauses(notAlpha));
+		}
+		
+		// Track maxQueryTime
+		long finishTime = -1;
+		if (maxQueryTime > 0) {
+			finishTime = System.currentTimeMillis() + maxQueryTime;
 		}
 
 		// new <- {}
@@ -147,6 +166,16 @@ public class FOLTFMResolution implements InferenceProcedure {
 							}
 						}
 					}
+					if (-1 != finishTime) {
+						if (System.currentTimeMillis() > finishTime) {
+							break;
+						}
+					}
+				}
+				if (-1 != finishTime) {
+					if (System.currentTimeMillis() > finishTime) {
+						break;
+					}
 				}
 			}
 			
@@ -154,6 +183,12 @@ public class FOLTFMResolution implements InferenceProcedure {
 
 			// clauses <- clauses <UNION> new
 			clauses.addAll(newClauses);
+			
+			if (-1 != finishTime) {
+				if (System.currentTimeMillis() > finishTime) {
+					break;
+				}
+			}
 			
 			// if new is a <SUBSET> of clauses then finished
 			// searching for an answer
@@ -163,6 +198,18 @@ public class FOLTFMResolution implements InferenceProcedure {
 
 		if (null != tracer) {
 			tracer.stepFinished(clauses, result);
+		}
+		
+		if (-1 != finishTime) {
+			if (System.currentTimeMillis() > finishTime) {
+				// If have run out of query time and no result
+				// found yet (i.e. partial results via answer literal
+				// bindings are allowed.)
+				// return null to indicate answer unknown.
+				if (0 == result.size()) {
+					result = null;
+				}
+			}
 		}
 		
 		return result;

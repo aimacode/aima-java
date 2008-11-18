@@ -232,7 +232,7 @@ public class FOLParserTest extends TestCase {
 	public void testConnectedImplication() {
 		parser = new FOLParser(DomainFactory.weaponsDomain());
 		Sentence s = parser
-				.parse("((Missile(m) AND Owns(NoNo,m)) => Sells(West , m ,NoNo))");
+				.parse("((Missile(m) AND Owns(Nono,m)) => Sells(West , m ,Nono))");
 	}
 
 }

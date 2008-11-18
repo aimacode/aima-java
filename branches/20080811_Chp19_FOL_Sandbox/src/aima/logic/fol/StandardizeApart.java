@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
@@ -96,5 +98,39 @@ public class StandardizeApart {
 		}
 
 		return new Clause(posLits, negLits);
+	}
+	
+	public Chain standardizeApart(Chain chain,
+			StandardizeApartIndexical standardizeApartIndexical) {
+		Set<Variable> toRename = new HashSet<Variable>();
+
+		for (Literal l : chain.getLiterals()) {
+			toRename.addAll(variableCollector.collectAllVariables(l
+					.getPredicate()));
+		}
+
+		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
+
+		for (Variable var : toRename) {
+			Variable v = null;
+			do {
+				v = new Variable(standardizeApartIndexical.getPrefix()
+						+ standardizeApartIndexical.getNextIndex());
+				// Ensure the new variable name is not already
+				// accidentally used in the sentence
+			} while (toRename.contains(v));
+
+			renameSubstitution.put(var, v);
+		}
+
+		List<Literal> lits = new ArrayList<Literal>();
+
+		for (Literal l : chain.getLiterals()) {
+			Predicate p = (Predicate) substVisitor.subst(renameSubstitution, l
+					.getPredicate());
+			lits.add(l.newInstance(p));
+		}
+
+		return new Chain(lits);
 	}
 }

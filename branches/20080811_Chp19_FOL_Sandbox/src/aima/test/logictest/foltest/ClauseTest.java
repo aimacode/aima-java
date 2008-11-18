@@ -1,12 +1,15 @@
 package aima.test.logictest.foltest;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -250,6 +253,67 @@ public class ClauseTest extends TestCase {
 				.getNumberPositiveLiterals());
 		assertEquals(1, c2.binaryResolvents(kb, c1).iterator().next()
 				.getNumberNegativeLiterals());
+	}
+	
+	public void testBinaryResolventsOrderDoesNotMatter() {
+		// This is a regression test, to ensure
+		// the ordering of resolvents does not matter.
+		// If the order ends up mattering, then likely
+		// a problem was introduced in the Clause class
+		// unifier, or related class.
+
+		// Set up the initial set of clauses based on the
+		// loves animal domain as it contains functions
+		// new clauses will always be created (i.e. is an
+		// infinite universe of discourse).
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
+				.lovesAnimalDomain());
+
+		kb
+				.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
+		kb
+				.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
+		kb.tell("FORALL x (Animal(x) => Loves(Jack, x))");
+		kb.tell("(Kills(Jack, Tuna) OR Kills(Curiosity, Tuna))");
+		kb.tell("Cat(Tuna)");
+		kb.tell("FORALL x (Cat(x) => Animal(x))");
+		
+		Set<Clause> clauses = new LinkedHashSet<Clause>();
+		clauses.addAll(kb.getAllClauses());
+
+		Set<Clause> newClauses = new LinkedHashSet<Clause>();
+		long maxRunTime = 30 * 1000; // 30 seconds
+		long finishTime = System.currentTimeMillis() + maxRunTime;
+		do {
+			clauses.addAll(newClauses);
+			newClauses.clear();
+			Clause[] clausesA = new Clause[clauses.size()];
+			clauses.toArray(clausesA);
+			for (int i = 0; i < clausesA.length; i++) {
+				Clause cI = clausesA[i];
+				for (int j = 0; j < clausesA.length; j++) {
+					Clause cJ = clausesA[j];
+
+					newClauses.addAll(cI.getFactors(kb));
+					newClauses.addAll(cJ.getFactors(kb));
+
+					Set<Clause> cIresolvents = cI.binaryResolvents(kb, cJ);
+					Set<Clause> cJresolvents = cJ.binaryResolvents(kb, cI);
+					if (!cIresolvents.equals(cJresolvents)) {
+						fail("Ordering of binary resolvents has become important, which should not be the case");
+					}
+					
+					newClauses.addAll(cIresolvents);
+					
+					if (System.currentTimeMillis() > finishTime) {
+						break;
+					}
+				}
+				if (System.currentTimeMillis() > finishTime) {
+					break;
+				}
+			}
+		} while (System.currentTimeMillis() < finishTime);
 	}
 	
 	public void testHashCode() {

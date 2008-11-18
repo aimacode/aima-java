@@ -61,15 +61,15 @@ public class FolDemo {
 
 		// rules
 		String rule1 = "((((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))";
-		String rule2 = "((Missile(x) AND Owns(NoNo,x)) => Sells(West,x,NoNo))";
+		String rule2 = "((Missile(x) AND Owns(Nono,x)) => Sells(West,x,Nono))";
 		String rule3 = "(Missile(x) => Weapon(x))";
 		String rule4 = "(Enemy(x,America) => Hostile(x))";
 
 		// facts
-		String fact1 = "Owns(NoNo, Mone)";
-		String fact2 = "Missile(Mone)";
+		String fact1 = "Owns(Nono, M1)";
+		String fact2 = "Missile(M1)";
 		String fact3 = "American(West)";
-		String fact4 = "Enemy(NoNo,America)";
+		String fact4 = "Enemy(Nono,America)";
 
 		System.out.println("\n\nForward Chaining Demo 2 -Missiles\n\n");
 		System.out.println("Adding Rules to KB\n");
