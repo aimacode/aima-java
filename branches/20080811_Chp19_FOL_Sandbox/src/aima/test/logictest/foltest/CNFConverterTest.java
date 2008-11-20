@@ -239,4 +239,55 @@ public class CNFConverterTest extends TestCase {
 		
 		assertEquals("{~P(A),P(A)},{~P(A),Q(A)},{~Q(A),P(A)},{~Q(A),Q(A)},{~R(A)}", cnf.toString());
 	}
+	
+	public void testInductionAxiomSchema() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("Equal");
+		domain.addFunction("Plus");
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("N");
+		domain.addConstant("ONE");
+		domain.addConstant("ZERO");
+
+		FOLParser parser = new FOLParser(domain);
+		CNFConverter cnfConv = new CNFConverter(parser);
+
+		// Base Case:
+		Sentence sent = parser
+				.parse("NOT(FORALL x (FORALL y (Equal(Plus(Plus(x,y),ZERO), Plus(x,Plus(y,ZERO))))))");
+		CNF cnf = cnfConv.convertToCNF(sent);
+		assertEquals(
+				"{~Equal(Plus(Plus(SC0,SC1),ZERO),Plus(SC0,Plus(SC1,ZERO)))}",
+				cnf.toString());
+		
+		// Instance of Induction Axion Scmema
+		sent = parser
+				.parse("(("
+						+ "Equal(Plus(Plus(A,B),ZERO), Plus(A,Plus(B,ZERO)))"
+						+ " AND "
+						+ "(FORALL x (FORALL y (FORALL z("
+						+ "Equal(Plus(Plus(x,y),z), Plus(x,Plus(y,z)))"
+						+ " => "
+						+ "Equal(Plus(Plus(x,y),Plus(z,ONE)), Plus(x,Plus(y,Plus(z,ONE))))"
+						+ "))))" + ")"
+				 + " => "
+						+ "FORALL x (FORALL y (FORALL z("
+						+ "Equal(Plus(Plus(x,y),z), Plus(x,Plus(y,z)))"
+						+ "))))"
+				);
+		cnf = cnfConv.convertToCNF(sent);
+		assertEquals(
+				"{~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))),Equal(Plus(Plus(SC2,SC3),SC4),Plus(SC2,Plus(SC3,SC4))),Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2)))},{~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))),~Equal(Plus(Plus(SC2,SC3),Plus(SC4,ONE)),Plus(SC2,Plus(SC3,Plus(SC4,ONE)))),Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2)))}",
+				cnf.toString());
+		
+		// Goal
+		sent = parser
+				.parse("NOT(FORALL x (FORALL y (FORALL z (Equal(Plus(Plus(x,y),z), Plus(x,Plus(y,z)))))))");
+		cnf = cnfConv.convertToCNF(sent);
+		assertEquals(
+				"{~Equal(Plus(Plus(SC5,SC6),SC7),Plus(SC5,Plus(SC6,SC7)))}",
+				cnf.toString());
+	}
+	
 }

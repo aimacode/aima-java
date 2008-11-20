@@ -8,12 +8,12 @@ import aima.logic.fol.inference.FOLModelElimination;
  */
 public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 
-	public void testDefiniteClauseKBKingsQueryCriminalXFails() {
-		testDefiniteClauseKBKingsQueryCriminalXFails(new FOLModelElimination());
+	public void testDefiniteClauseKBKingsQueryCriminalXFalse() {
+		testDefiniteClauseKBKingsQueryCriminalXFalse(new FOLModelElimination());
 	}
 	
-	public void testDefiniteClauseKBKingsQueryRichardEvilFails() {
-		testDefiniteClauseKBKingsQueryRichardEvilFails(new FOLModelElimination());
+	public void testDefiniteClauseKBKingsQueryRichardEvilFalse() {
+		testDefiniteClauseKBKingsQueryRichardEvilFalse(new FOLModelElimination());
 	}
 
 	public void testDefiniteClauseKBKingsQueryJohnEvilSucceeds() {
@@ -33,8 +33,11 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 	}
 	
 	public void testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew() {
+		// This KB ends up being infinite when resolving, however 2
+		// seconds is more than enough to extract the 4 answers
+		// that are expected
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(
-				new FOLModelElimination(), false);
+				new FOLModelElimination(2 * 1000), false);
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {
@@ -44,6 +47,11 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 
 	public void testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds() {
 		testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds(
+				new FOLModelElimination(), false);
+	}
+	
+	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse() {
+		testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
 				new FOLModelElimination(), false);
 	}
 }

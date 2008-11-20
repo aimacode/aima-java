@@ -58,21 +58,23 @@ public class FOLModelElimination implements InferenceProcedure {
 	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence aQuery) {
 		//
 		// Get the background knowledge - are assuming this is satisfiable
+		// as using Set of Support strategy.
 		List<Chain> background = createChainsFromClauses(kb.getAllClauses());
 		
 		// Collect the information necessary for constructing
-		// an answer.
+		// an answer (supports use of answer literals).
 		AnswerHandler ansHandler = new AnswerHandler(kb, aQuery, maxQueryTime);
 
 		IndexedFarParents ifps = new IndexedFarParents(kb, ansHandler
 				.getSetOfSupport(), background);
 		
 		// Iterative deepening to be used
-		for (int i = 1; i < Integer.MAX_VALUE; i++) {
+		for (int maxDepth = 1; maxDepth < Integer.MAX_VALUE; maxDepth++) {
+			// Track the depth actually reached
 			ansHandler.resetMaxDepthReached();
+			
 			for (Chain nearParent : ansHandler.getSetOfSupport()) {
-				ifps.resetToStartPoint();
-				recursiveDLS(kb, i, 0, nearParent, ifps, ansHandler);
+				recursiveDLS(kb, maxDepth, 0, nearParent, ifps, ansHandler);
 				if (ansHandler.isComplete()) {
 					return ansHandler.getResult();
 				}
@@ -80,7 +82,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			// This means the search tree
 			// has bottomed out (i.e. finite).
 			// Return what I know based on exploring everything.
-			if (ansHandler.getMaxDepthReached() < i) {
+			if (ansHandler.getMaxDepthReached() < maxDepth) {
 				return ansHandler.getResult();
 			}
 		}		
@@ -114,28 +116,31 @@ public class FOLModelElimination implements InferenceProcedure {
 	}
 
 	// Recursive Depth Limited Search
-	private void recursiveDLS(FOLKnowledgeBase kb, int maxDepth, int depth,
-			Chain nearParent, IndexedFarParents ifps, AnswerHandler ansHandler) {
+	private void recursiveDLS(FOLKnowledgeBase kb, int maxDepth,
+			int currentDepth,
+			Chain nearParent, IndexedFarParents indexedFarParents, AnswerHandler ansHandler) {
 		
 		// Keep track of the maximum depth reached.
-		ansHandler.updateMaxDepthReached(depth);
+		ansHandler.updateMaxDepthReached(currentDepth);
 		
-		if (depth == maxDepth) {
+		if (currentDepth == maxDepth) {
 			return;
 		}
 		
-		int noCandidateFarParents = ifps.getNoCandidateFarParents(nearParent);
+		int noCandidateFarParents = indexedFarParents.getNumberCandidateFarParents(nearParent);
 		for (int farParentIdx = 0; farParentIdx < noCandidateFarParents; farParentIdx++) {
+			// If have a complete answer, don't keep
+			// checking candidate far parents
 			if (ansHandler.isComplete()) {
 				break;
 			}
 			
 			// Reduction
-			Chain nextNearParent = ifps.nextNearestParent(kb, nearParent,
+			Chain nextNearParent = indexedFarParents.attemptReduction(kb, nearParent,
 					farParentIdx);
 			
 			if (null == nextNearParent) {
-				// Unable to remove the head
+				// Unable to remove the head via reduction
 				continue;
 			}
 			
@@ -162,14 +167,22 @@ public class FOLModelElimination implements InferenceProcedure {
 			// Check if have answer before
 			// going to the next level
 			if (!ansHandler.isAnswer(nextNearParent)) {
-				int noNextFarParents = ifps.getNoNextFarParents(nextNearParent);
+				// Keep track of the current # of
+				// far parents that are possible for the next near parent.
+				int noNextFarParents = indexedFarParents
+						.getNumberFarParents(nextNearParent);
 				// Add to indexed far parents
-				ifps.addToIndex(kb, nextNearParent);
+				indexedFarParents.addToIndex(kb, nextNearParent);
 				
-				recursiveDLS(kb, maxDepth, depth + 1, nextNearParent, ifps,
+				// Check the next level
+				recursiveDLS(kb, maxDepth, currentDepth + 1, nextNearParent,
+						indexedFarParents,
 						ansHandler);
-						
-				ifps.resetNextIndexTo(nextNearParent, noNextFarParents);
+				
+				// Reset the number of far parents possible
+				// when recursing back up.
+				indexedFarParents.resetNumberFarParentsTo(nextNearParent,
+						noNextFarParents);
 			}
 		}
 	}
@@ -331,7 +344,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			StringBuilder sb = new StringBuilder();
 			sb.append("isComplete=" + complete);
 			sb.append("\n");
-			sb.append("result" + result);
+			sb.append("result=" + result);
 			return sb.toString();
 		}
 	}
@@ -340,71 +353,46 @@ public class FOLModelElimination implements InferenceProcedure {
 class IndexedFarParents {
 	private Map<String, List<Chain>> posHeads = new LinkedHashMap<String, List<Chain>>();
 	private Map<String, List<Chain>> negHeads = new LinkedHashMap<String, List<Chain>>();
-	//
-	private Map<String, Integer> posStartIndexes = new HashMap<String, Integer>();
-	private Map<String, Integer> negStartIndexes = new HashMap<String, Integer>();
 
 	public IndexedFarParents(FOLKnowledgeBase kb, List<Chain> sos,
 			List<Chain> background) {
 		constructInternalDataStructures(kb, sos, background);
 	}
-
-	public void resetToStartPoint() {
-		for (int i = 0; i < 2; i++) {
-			Map<String, List<Chain>> heads = null;
-			Map<String, Integer> startIndexes = null;
-			if (0 == i) {
-				heads = posHeads;
-				startIndexes = posStartIndexes;
-			} else {
-				heads = negHeads;
-				startIndexes = negStartIndexes;
-			}
-			for (String key : startIndexes.keySet()) {
-				List<Chain> farParents = heads.get(key);
-				int start = startIndexes.get(key);
-				while (farParents.size() > start) {
-					farParents.remove(farParents.size() - 1);
-				}
-			}
-		}
-	}
 	
-	public int getNoNextFarParents(Chain nextFarParent) {
-		Literal nearestHead = nextFarParent.getHead();
+	public int getNumberFarParents(Chain farParent) {
+		Literal head = farParent.getHead();
 
-		Map<String, List<Chain>> candidateHeads = null;
-		if (nearestHead.isPositiveLiteral()) {
-			candidateHeads = posHeads;
-		} else {
-			candidateHeads = negHeads;
-		}
-		Predicate nearPredicate = nearestHead.getPredicate();
-		String nearestKey = nearPredicate.getPredicateName();
-
-		List<Chain> farParents = candidateHeads.get(nearestKey);
-		if (null != farParents) {
-			return farParents.size();
-		}
-		return 0;
-	}
-
-	public void resetNextIndexTo(Chain nearParent, int toStart) {
-		Literal nearestHead = nearParent.getHead();
 		Map<String, List<Chain>> heads = null;
-		if (nearestHead.isPositiveLiteral()) {
+		if (head.isPositiveLiteral()) {
 			heads = posHeads;
 		} else {
 			heads = negHeads;
 		}
-		String key = nearestHead.getPredicate().getPredicateName();
+		String headKey = head.getPredicate().getPredicateName();
+
+		List<Chain> farParents = heads.get(headKey);
+		if (null != farParents) {
+			return farParents.size();
+		}
+		return 0;
+	}
+
+	public void resetNumberFarParentsTo(Chain farParent, int toSize) {
+		Literal head = farParent.getHead();
+		Map<String, List<Chain>> heads = null;
+		if (head.isPositiveLiteral()) {
+			heads = posHeads;
+		} else {
+			heads = negHeads;
+		}
+		String key = head.getPredicate().getPredicateName();
 		List<Chain> farParents = heads.get(key);
-		while (farParents.size() > toStart) {
+		while (farParents.size() > toSize) {
 			farParents.remove(farParents.size() - 1);
 		}
 	}
 	
-	public int getNoCandidateFarParents(Chain nearParent) {
+	public int getNumberCandidateFarParents(Chain nearParent) {
 		Literal nearestHead = nearParent.getHead();
 
 		Map<String, List<Chain>> candidateHeads = null;
@@ -413,8 +401,8 @@ class IndexedFarParents {
 		} else {
 			candidateHeads = posHeads;
 		}
-		Predicate nearPredicate = nearestHead.getPredicate();
-		String nearestKey = nearPredicate.getPredicateName();
+
+		String nearestKey = nearestHead.getPredicate().getPredicateName();
 
 		List<Chain> farParents = candidateHeads.get(nearestKey);
 		if (null != farParents) {
@@ -423,8 +411,7 @@ class IndexedFarParents {
 		return 0;
 	}
 	
-	// Note: Reduction occurs here
-	public Chain nextNearestParent(FOLKnowledgeBase kb, Chain nearParent,
+	public Chain attemptReduction(FOLKnowledgeBase kb, Chain nearParent,
 			int farParentIndex) {
 		Chain nnpc = null;
 
@@ -491,6 +478,7 @@ class IndexedFarParents {
 				farParents = new ArrayList<Chain>();
 				toAddTo.put(key, farParents);
 			}
+			// Ensure is standardized apart when added.
 			farParents.add(kb.standardizeApart(c));
 		}
 	}
@@ -531,25 +519,6 @@ class IndexedFarParents {
 
 		for (Chain c : toIndex) {
 			addToIndex(kb, c);
-		}
-		
-		setStartPoint();
-	}
-
-	private void setStartPoint() {
-		for (int i = 0; i < 2; i++) {
-			Map<String, List<Chain>> heads = null;
-			Map<String, Integer> startIndexes = null;
-			if (0 == i) {
-				heads = posHeads;
-				startIndexes = posStartIndexes;
-			} else {
-				heads = negHeads;
-				startIndexes = negStartIndexes;
-			}
-			for (String key : heads.keySet()) {
-				startIndexes.put(key, heads.get(key).size());
-			}
 		}
 	}
 }

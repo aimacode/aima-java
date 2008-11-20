@@ -8,12 +8,12 @@ import aima.logic.fol.inference.FOLTFMResolution;
  */
 public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 
-	public void testDefiniteClauseKBKingsQueryCriminalXFails() {
-		testDefiniteClauseKBKingsQueryCriminalXFails(new FOLTFMResolution());
+	public void testDefiniteClauseKBKingsQueryCriminalXFalse() {
+		testDefiniteClauseKBKingsQueryCriminalXFalse(new FOLTFMResolution());
 	}
 	
-	public void testDefiniteClauseKBKingsQueryRichardEvilFails() {
-		testDefiniteClauseKBKingsQueryRichardEvilFails(new FOLTFMResolution());
+	public void testDefiniteClauseKBKingsQueryRichardEvilFalse() {
+		testDefiniteClauseKBKingsQueryRichardEvilFalse(new FOLTFMResolution());
 	}
 
 	public void testDefiniteClauseKBKingsQueryJohnEvilSucceeds() {
@@ -35,7 +35,7 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 	public void testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew() {
 		// The clauses in this KB can keep creating resolvents infinitely,
 		// therefore give it 10 seconds to find the 4 answers to this, should
-		// be enough.
+		// be more than enough.
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(new FOLTFMResolution(
 				10 * 1000), false);
 	}
@@ -52,5 +52,12 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 		// Two minutes should be more than plenty for this query to finish.
 		testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds(new FOLTFMResolution(
 				120 * 1000), false);
+	}
+	
+	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse() {
+		// This query will not return using TFM as keep expanding
+		// clauses through resolution for this KB.
+		testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(new FOLTFMResolution(
+				10 * 1000), true);
 	}
 }

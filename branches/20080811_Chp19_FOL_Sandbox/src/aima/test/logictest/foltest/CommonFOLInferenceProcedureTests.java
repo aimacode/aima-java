@@ -24,7 +24,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	//
 	// Protected Methods
 	//
-	protected void testDefiniteClauseKBKingsQueryCriminalXFails(
+	protected void testDefiniteClauseKBKingsQueryCriminalXFalse(
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
@@ -35,7 +35,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertTrue(0 == answer.size());
 	}
 	
-	protected void testDefiniteClauseKBKingsQueryRichardEvilFails(
+	protected void testDefiniteClauseKBKingsQueryRichardEvilFalse(
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
@@ -173,6 +173,24 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 			assertTrue(null != answer);
 			assertEquals(1, answer.size());
 			assertEquals(0, answer.iterator().next().size());
+		}
+	}
+	
+	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
+			InferenceProcedure infp, boolean expectedToTimeOut) {
+		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase(infp);
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("Jack"));
+		terms.add(new Constant("Tuna"));
+		Predicate query = new Predicate("Kills", terms);
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+		
+		if (expectedToTimeOut) {
+			assertNull(answer);
+		} else {
+			assertTrue(null != answer);
+			assertEquals(0, answer.size());
 		}
 	}
 

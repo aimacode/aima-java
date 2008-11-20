@@ -8,12 +8,12 @@ import aima.logic.fol.inference.FOLBCAsk;
  */
 public class FOLBCAskTest extends CommonFOLInferenceProcedureTests {
 
-	public void testDefiniteClauseKBKingsQueryCriminalXFails() {
-		testDefiniteClauseKBKingsQueryCriminalXFails(new FOLBCAsk());
+	public void testDefiniteClauseKBKingsQueryCriminalXFalse() {
+		testDefiniteClauseKBKingsQueryCriminalXFalse(new FOLBCAsk());
 	}
 	
-	public void testDefiniteClauseKBKingsQueryRichardEvilFails() {
-		testDefiniteClauseKBKingsQueryRichardEvilFails(new FOLBCAsk());
+	public void testDefiniteClauseKBKingsQueryRichardEvilFalse() {
+		testDefiniteClauseKBKingsQueryRichardEvilFalse(new FOLBCAsk());
 	}
 
 	public void testDefiniteClauseKBKingsQueryJohnEvilSucceeds() {
