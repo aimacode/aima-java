@@ -9,6 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.Connectors;
+import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.StandardizeApartIndexicalFactory;
+import aima.logic.fol.SubstVisitor;
+import aima.logic.fol.Unifier;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -35,6 +40,9 @@ public class FOLModelElimination implements InferenceProcedure {
 
 	// Ten seconds is default maximum query time permitted
 	private long maxQueryTime = 10 * 1000;
+	//
+	private Unifier unifier = new Unifier();
+	private SubstVisitor substVisitor = new SubstVisitor();
 	
 	public FOLModelElimination() {
 
@@ -65,7 +73,7 @@ public class FOLModelElimination implements InferenceProcedure {
 		// an answer (supports use of answer literals).
 		AnswerHandler ansHandler = new AnswerHandler(kb, aQuery, maxQueryTime);
 
-		IndexedFarParents ifps = new IndexedFarParents(kb, ansHandler
+		IndexedFarParents ifps = new IndexedFarParents(ansHandler
 				.getSetOfSupport(), background);
 		
 		// Iterative deepening to be used
@@ -74,7 +82,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			ansHandler.resetMaxDepthReached();
 			
 			for (Chain nearParent : ansHandler.getSetOfSupport()) {
-				recursiveDLS(kb, maxDepth, 0, nearParent, ifps, ansHandler);
+				recursiveDLS(maxDepth, 0, nearParent, ifps, ansHandler);
 				if (ansHandler.isComplete()) {
 					return ansHandler.getResult();
 				}
@@ -116,7 +124,7 @@ public class FOLModelElimination implements InferenceProcedure {
 	}
 
 	// Recursive Depth Limited Search
-	private void recursiveDLS(FOLKnowledgeBase kb, int maxDepth,
+	private void recursiveDLS(int maxDepth,
 			int currentDepth,
 			Chain nearParent, IndexedFarParents indexedFarParents, AnswerHandler ansHandler) {
 		
@@ -136,7 +144,8 @@ public class FOLModelElimination implements InferenceProcedure {
 			}
 			
 			// Reduction
-			Chain nextNearParent = indexedFarParents.attemptReduction(kb, nearParent,
+			Chain nextNearParent = indexedFarParents.attemptReduction(
+					nearParent,
 					farParentIdx);
 			
 			if (null == nextNearParent) {
@@ -150,15 +159,13 @@ public class FOLModelElimination implements InferenceProcedure {
 			do {
 				cancelled = false;
 				Chain nextParent = null;
-				while (nextNearParent != (nextParent = tryCancellation(kb,
-						nextNearParent))) {
+				while (nextNearParent != (nextParent = tryCancellation(nextNearParent))) {
 					nextNearParent = nextParent;
 					cancelled = true;
 				}
 
 				dropped = false;
-				while (nextNearParent != (nextParent = tryDropping(kb,
-						nextNearParent))) {
+				while (nextNearParent != (nextParent = tryDropping(nextNearParent))) {
 					nextNearParent = nextParent;
 					dropped = true;
 				}
@@ -172,10 +179,10 @@ public class FOLModelElimination implements InferenceProcedure {
 				int noNextFarParents = indexedFarParents
 						.getNumberFarParents(nextNearParent);
 				// Add to indexed far parents
-				indexedFarParents.addToIndex(kb, nextNearParent);
+				indexedFarParents.addToIndex(nextNearParent);
 				
 				// Check the next level
-				recursiveDLS(kb, maxDepth, currentDepth + 1, nextNearParent,
+				recursiveDLS(maxDepth, currentDepth + 1, nextNearParent,
 						indexedFarParents,
 						ansHandler);
 				
@@ -188,14 +195,14 @@ public class FOLModelElimination implements InferenceProcedure {
 	}
 
 	// Returns c if no cancellation occurred
-	private Chain tryCancellation(FOLKnowledgeBase kb, Chain c) {
+	private Chain tryCancellation(Chain c) {
 		Literal head = c.getHead();
 		if (null != head && !(head instanceof ReducedLiteral)) {
 			for (Literal l : c.getTail()) {
 				if (l instanceof ReducedLiteral) {
 					// if they can be resolved
 					if (head.isNegativeLiteral() != l.isNegativeLiteral()) {
-						Map<Variable, Term> subst = kb.unify(head
+						Map<Variable, Term> subst = unifier.unify(head
 								.getPredicate(), l.getPredicate());
 						if (null != subst) {
 							// I have a cancellation
@@ -203,7 +210,8 @@ public class FOLModelElimination implements InferenceProcedure {
 							// literals in the cancellation
 							List<Literal> cancLits = new ArrayList<Literal>();
 							for (Literal lfc : c.getTail()) {
-								Predicate p = (Predicate) kb.subst(subst, lfc
+								Predicate p = (Predicate) substVisitor.subst(
+										subst, lfc
 										.getPredicate());
 								cancLits.add(lfc.newInstance(p));
 							}
@@ -217,7 +225,7 @@ public class FOLModelElimination implements InferenceProcedure {
 	}
 
 	// Returns c if no dropping occurred
-	private Chain tryDropping(FOLKnowledgeBase kb, Chain c) {
+	private Chain tryDropping(Chain c) {
 		Literal head = c.getHead();
 		if (null != head && (head instanceof ReducedLiteral)) {
 			return new Chain(c.getTail());
@@ -351,12 +359,19 @@ public class FOLModelElimination implements InferenceProcedure {
 }
 
 class IndexedFarParents {
+	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
+			.newStandardizeApartIndexical('i');
+
+	private Unifier unifier = new Unifier();
+	private SubstVisitor substVisitor = new SubstVisitor();
+	private StandardizeApart standardizeApart = new StandardizeApart();
+	//
 	private Map<String, List<Chain>> posHeads = new LinkedHashMap<String, List<Chain>>();
 	private Map<String, List<Chain>> negHeads = new LinkedHashMap<String, List<Chain>>();
 
-	public IndexedFarParents(FOLKnowledgeBase kb, List<Chain> sos,
+	public IndexedFarParents(List<Chain> sos,
 			List<Chain> background) {
-		constructInternalDataStructures(kb, sos, background);
+		constructInternalDataStructures(sos, background);
 	}
 	
 	public int getNumberFarParents(Chain farParent) {
@@ -411,7 +426,7 @@ class IndexedFarParents {
 		return 0;
 	}
 	
-	public Chain attemptReduction(FOLKnowledgeBase kb, Chain nearParent,
+	public Chain attemptReduction(Chain nearParent,
 			int farParentIndex) {
 		Chain nnpc = null;
 
@@ -431,7 +446,8 @@ class IndexedFarParents {
 			Chain farParent = farParents.get(farParentIndex);
 			Literal farLiteral = farParent.getHead();
 			Predicate farPredicate = farLiteral.getPredicate();
-			Map<Variable, Term> subst = kb.unify(nearPredicate, farPredicate);
+			Map<Variable, Term> subst = unifier.unify(nearPredicate,
+					farPredicate);
 			
 			// If I was able to unify with one
 			// of the far heads
@@ -445,13 +461,16 @@ class IndexedFarParents {
 				// literals in the reduction
 				List<Literal> reduction = new ArrayList<Literal>();
 				for (Literal l : topChain.getTail()) {
-					Predicate p = (Predicate) kb.subst(subst, l.getPredicate());
+					Predicate p = (Predicate) substVisitor.subst(subst, l
+							.getPredicate());
 					reduction.add(l.newInstance(p));
 				}
-				reduction.add(new ReducedLiteral((Predicate) kb.subst(subst,
+				reduction.add(new ReducedLiteral((Predicate) substVisitor
+						.subst(subst,
 						botLit.getPredicate()), botLit.isNegativeLiteral()));
 				for (Literal l : botChain.getTail()) {
-					Predicate p = (Predicate) kb.subst(subst, l.getPredicate());
+					Predicate p = (Predicate) substVisitor.subst(subst, l
+							.getPredicate());
 					reduction.add(l.newInstance(p));
 				}
 				
@@ -462,7 +481,7 @@ class IndexedFarParents {
 		return nnpc;
 	}
 	
-	public void addToIndex(FOLKnowledgeBase kb, Chain c) {
+	public void addToIndex(Chain c) {
 		Literal head = c.getHead();
 		if (null != head) {
 			Map<String, List<Chain>> toAddTo = null;
@@ -479,7 +498,7 @@ class IndexedFarParents {
 				toAddTo.put(key, farParents);
 			}
 			// Ensure is standardized apart when added.
-			farParents.add(kb.standardizeApart(c));
+			farParents.add(standardizeApart.standardizeApart(c, _saIndexical));
 		}
 	}
 	
@@ -510,7 +529,7 @@ class IndexedFarParents {
 	// 
 	// PRIVATE METHODS
 	//
-	private void constructInternalDataStructures(FOLKnowledgeBase kb,
+	private void constructInternalDataStructures(
 			List<Chain> sos,
 			List<Chain> background) {
 		List<Chain> toIndex = new ArrayList<Chain>();
@@ -518,7 +537,7 @@ class IndexedFarParents {
 		toIndex.addAll(background);
 
 		for (Chain c : toIndex) {
-			addToIndex(kb, c);
+			addToIndex(c);
 		}
 	}
 }

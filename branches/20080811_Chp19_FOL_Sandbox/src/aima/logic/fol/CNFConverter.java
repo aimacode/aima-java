@@ -321,10 +321,20 @@ class NegationsIn implements FOLVisitor {
 }
 
 class StandardizeQuantiferVariables implements FOLVisitor {
+	// Just use a localized indexical here.
+	private StandardizeApartIndexical quantifiedIndexical = new StandardizeApartIndexical() {
+		private int index = 0;
 
+		public String getPrefix() {
+			return "q";
+		}
+
+		public int getNextIndex() {
+			return index++;
+		}
+	};
+	
 	private SubstVisitor substVisitor = null;
-	private StandardizeApartIndexical quantifierIndexical = new StandardizeApartIndexical(
-			"q");
 
 	public StandardizeQuantiferVariables(SubstVisitor substVisitor) {
 		this.substVisitor = substVisitor;
@@ -382,8 +392,8 @@ class StandardizeQuantiferVariables implements FOLVisitor {
 			// If local variable has be renamed already
 			// then I need to come up with own name
 			if (seenSoFar.contains(v)) {
-				Variable sV = new Variable(quantifierIndexical.getPrefix()
-						+ quantifierIndexical.getNextIndex());
+				Variable sV = new Variable(quantifiedIndexical.getPrefix()
+						+ quantifiedIndexical.getNextIndex());
 				localSubst.put(v, sV);
 				// Replacement variables should contain new name for variable
 				replVariables.add(sV);

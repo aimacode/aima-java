@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.kb.FOLKnowledgeBase;
@@ -40,6 +43,9 @@ import aima.logic.fol.parsing.ast.Variable;
 // factors are standardized apart uniquely.
 public class Clause {
 	//
+	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
+			.newStandardizeApartIndexical('c');
+	//
 	private final Set<Predicate> positiveLiterals = new LinkedHashSet<Predicate>();
 	private final Set<Predicate> negativeLiterals = new LinkedHashSet<Predicate>();
 	private final List<Predicate> sortedPositiveLiterals = new ArrayList<Predicate>();
@@ -50,6 +56,7 @@ public class Clause {
 	private String approxIdentity = "";
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
+	private StandardizeApart standardizeApart = new StandardizeApart();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
 
 	public Clause() {
@@ -137,8 +144,8 @@ public class Clause {
 		return Collections.unmodifiableList(sortedNegativeLiterals);
 	}
 
-	public Set<Clause> getFactors(FOLKnowledgeBase KB) {
-		Set<Clause> factors = getNonTrivialFactors(KB);
+	public Set<Clause> getFactors() {
+		Set<Clause> factors = getNonTrivialFactors();
 		// Need to add self, even though a non-trivial
 		// factor. See: slide 30
 		// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture10.pdf
@@ -149,7 +156,7 @@ public class Clause {
 		return factors;
 	}
 	
-	public Set<Clause> getNonTrivialFactors(FOLKnowledgeBase KB) {
+	public Set<Clause> getNonTrivialFactors() {
 		Set<Clause> ntFactors = new LinkedHashSet<Clause>();
 
 		Map<Variable, Term> theta = new HashMap<Variable, Term>();
@@ -198,12 +205,8 @@ public class Clause {
 									substitution, litX));
 						}
 						Clause c = new Clause(posLits, negLits);
-						Set<Clause> cntfs = c.getNonTrivialFactors(KB);
-						if (0 == cntfs.size()) {
-							ntFactors.add(KB.standardizeApart(c));
-						} else {
-							ntFactors.addAll(cntfs);
-						}
+						c = standardizeApart.standardizeApart(c, _saIndexical);
+						ntFactors.addAll(c.getFactors());
 					}
 				}
 			}
@@ -216,7 +219,7 @@ public class Clause {
 	// Note: Assumes all clauses are standardized apart when calling.
 	// Note: returns a set with an empty clause if both clauses
 	// are empty, otherwise returns a set of binary resolvents.
-	public Set<Clause> binaryResolvents(FOLKnowledgeBase KB, Clause othC) {
+	public Set<Clause> binaryResolvents(Clause othC) {
 		Set<Clause> resolvents = new LinkedHashSet<Clause>();
 		// Resolving two empty clauses
 		// gives you an empty clause
@@ -274,8 +277,9 @@ public class Clause {
 						}
 						
 						// Ensure the resolvents are standardized apart
-						resolvents.add(KB.standardizeApart(new Clause(
-								copyRPosLits, copyRNegLits)));
+						resolvents.add(standardizeApart.standardizeApart(
+								new Clause(copyRPosLits, copyRNegLits),
+								_saIndexical));
 					}
 				}
 			}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
+import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.DomainFactory;
@@ -22,6 +23,8 @@ public class FOLKnowledgeBaseTest extends TestCase {
 
 	@Override
 	public void setUp() {
+		StandardizeApartIndexicalFactory.flush();
+		
 		weaponsKB = new FOLKnowledgeBase(DomainFactory.weaponsDomain());
 
 		kingsKB = new FOLKnowledgeBase(DomainFactory.kingsDomain());

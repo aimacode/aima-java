@@ -130,22 +130,22 @@ public class FOLTFMResolution implements InferenceProcedure {
 					}
 					
 					// Get the Factors for each clause
-					Set<Clause> cIFactors = cI.getFactors(KB);
+					Set<Clause> cIFactors = cI.getFactors();
 
-					Set<Clause> cJFactors = cJ.getFactors(KB);
+					Set<Clause> cJFactors = cJ.getFactors();
 					
 					for (Clause cIFac : cIFactors) {
 						for (Clause cJFac : cJFactors) {
 							// resolvent <- FOL-RESOLVE(Ci, Cj)
 							Set<Clause> resolvents = cIFac
-									.binaryResolvents(KB,
+									.binaryResolvents(
 									cJFac);
 
 							if (resolvents.size() > 0) {
 								toAdd.clear();
 								// new <- new <UNION> resolvent
 								for (Clause rc : resolvents) {
-									toAdd.addAll(rc.getFactors(KB));
+									toAdd.addAll(rc.getFactors());
 								}
 								
 								if (null != tracer) {

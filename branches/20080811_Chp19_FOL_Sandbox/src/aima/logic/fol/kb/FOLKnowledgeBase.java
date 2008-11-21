@@ -12,6 +12,7 @@ import java.util.Set;
 import aima.logic.fol.CNFConverter;
 import aima.logic.fol.StandardizeApart;
 import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.StandardizeApartResult;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
@@ -63,10 +64,10 @@ public class FOLKnowledgeBase {
 	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
 	private Map<String, List<Predicate>> indexFacts = new HashMap<String, List<Predicate>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
-	private StandardizeApartIndexical variableIndexical = new StandardizeApartIndexical(
-			"v");
-	private StandardizeApartIndexical queryIndexical = new StandardizeApartIndexical(
-			"q");
+	private StandardizeApartIndexical variableIndexical = StandardizeApartIndexicalFactory
+			.newStandardizeApartIndexical('v');
+	private StandardizeApartIndexical queryIndexical = StandardizeApartIndexicalFactory
+			.newStandardizeApartIndexical('q');
 
 	//
 	// PUBLIC METHODS
