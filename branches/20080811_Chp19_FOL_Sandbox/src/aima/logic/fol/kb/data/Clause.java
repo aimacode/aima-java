@@ -15,7 +15,6 @@ import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
-import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -37,10 +36,6 @@ import aima.logic.fol.parsing.ast.Variable;
 // and for performance reasons do not standardize apart in most cases.
 // Therefore be aware of this restriction when using this class.
 //
-// TODO-are currently re-calculating factors on each call, would
-// probably be more efficient to calculate once when the identity is
-// recalculated. However, current factor logic requires KB to ensure
-// factors are standardized apart uniquely.
 public class Clause {
 	//
 	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
@@ -58,6 +53,8 @@ public class Clause {
 	private SubstVisitor substVisitor = new SubstVisitor();
 	private StandardizeApart standardizeApart = new StandardizeApart();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
+	private Set<Clause> factors = null;
+	private Set<Clause> nonTrivialFactors = null;
 
 	public Clause() {
 		// i.e. the empty clause
@@ -145,74 +142,17 @@ public class Clause {
 	}
 
 	public Set<Clause> getFactors() {
-		Set<Clause> factors = getNonTrivialFactors();
-		// Need to add self, even though a non-trivial
-		// factor. See: slide 30
-		// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture10.pdf
-		// for example of incompleteness when
-		// trivial factor not included.
-		factors.add(this);
-
-		return factors;
+		if (null == factors) {
+			calculateFactors(null);
+		}
+		return Collections.unmodifiableSet(factors);
 	}
 	
 	public Set<Clause> getNonTrivialFactors() {
-		Set<Clause> ntFactors = new LinkedHashSet<Clause>();
-
-		Map<Variable, Term> theta = new HashMap<Variable, Term>();
-		for (int i = 0; i < 2; i++) {
-			List<Predicate> lits = new ArrayList<Predicate>();
-			if (i == 0) {
-				// Look at the positive literals
-				lits.addAll(positiveLiterals);
-			} else {
-				// Look at the negative literals
-				lits.addAll(negativeLiterals);
-			}
-			for (int x = 0; x < lits.size(); x++) {
-				for (int y = 0; y < lits.size(); y++) {
-					if (y == x) {
-						continue;
-					}
-					Predicate litX = lits.get(x);
-					Predicate litY = lits.get(y);
-
-					theta.clear();
-					Map<Variable, Term> substitution = unifier.unify(litX,
-							litY, theta);
-					if (null != substitution) {
-						List<Predicate> posLits = new ArrayList<Predicate>();
-						List<Predicate> negLits = new ArrayList<Predicate>();
-						for (Predicate pl : positiveLiterals) {
-							if (pl == litX || pl == litY) {
-								continue;
-							}
-							posLits.add((Predicate) substVisitor.subst(
-									substitution, pl));
-						}
-						for (Predicate nl : negativeLiterals) {
-							if (nl == litX || nl == litY) {
-								continue;
-							}
-							negLits.add((Predicate) substVisitor.subst(
-									substitution, nl));
-						}
-						if (i == 0) {
-							posLits.add((Predicate) substVisitor.subst(
-									substitution, litX));
-						} else {
-							negLits.add((Predicate) substVisitor.subst(
-									substitution, litX));
-						}
-						Clause c = new Clause(posLits, negLits);
-						c = standardizeApart.standardizeApart(c, _saIndexical);
-						ntFactors.addAll(c.getFactors());
-					}
-				}
-			}
+		if (null == nonTrivialFactors) {
+			calculateFactors(null);
 		}
-
-		return ntFactors;
+		return Collections.unmodifiableSet(nonTrivialFactors);
 	}
 
 	// Note: Applies binary resolution rule and factoring
@@ -275,11 +215,11 @@ public class Clause {
 										.subst(copyRBindings, l));
 							}
 						}
-						
 						// Ensure the resolvents are standardized apart
-						resolvents.add(standardizeApart.standardizeApart(
-								new Clause(copyRPosLits, copyRNegLits),
-								_saIndexical));
+						standardizeApart.standardizeApart(copyRPosLits,
+								copyRNegLits, _saIndexical);					
+						Clause c = new Clause(copyRPosLits, copyRNegLits);
+						resolvents.add(c);
 					}
 				}
 			}
@@ -440,7 +380,89 @@ public class Clause {
 			}
 
 			approxIdentity = newIdentity.toString();
+			
+			// Reset, these as will need to re-calcualte
+			// if requested for again, best to only
+			// access lazily.
+			factors = null;
+			nonTrivialFactors = null;
 		}
+	}
+
+	private void calculateFactors(Set<Clause> parentFactors) {
+		nonTrivialFactors = new LinkedHashSet<Clause>();
+
+		Map<Variable, Term> theta = new HashMap<Variable, Term>();
+		for (int i = 0; i < 2; i++) {
+			List<Predicate> lits = new ArrayList<Predicate>();
+			if (i == 0) {
+				// Look at the positive literals
+				lits.addAll(positiveLiterals);
+			} else {
+				// Look at the negative literals
+				lits.addAll(negativeLiterals);
+			}
+			for (int x = 0; x < lits.size(); x++) {
+				for (int y = x + 1; y < lits.size(); y++) {
+					Predicate litX = lits.get(x);
+					Predicate litY = lits.get(y);
+
+					theta.clear();
+					Map<Variable, Term> substitution = unifier.unify(litX,
+							litY, theta);
+					if (null != substitution) {
+						List<Predicate> posLits = new ArrayList<Predicate>();
+						List<Predicate> negLits = new ArrayList<Predicate>();
+						if (i == 0) {
+							posLits.add((Predicate) substVisitor.subst(
+									substitution, litX));
+						} else {
+							negLits.add((Predicate) substVisitor.subst(
+									substitution, litX));
+						}
+						for (Predicate pl : positiveLiterals) {
+							if (pl == litX || pl == litY) {
+								continue;
+							}
+							posLits.add((Predicate) substVisitor.subst(
+									substitution, pl));
+						}
+						for (Predicate nl : negativeLiterals) {
+							if (nl == litX || nl == litY) {
+								continue;
+							}
+							negLits.add((Predicate) substVisitor.subst(
+									substitution, nl));
+						}
+						// Ensure the non trivial factor is standardized apart
+						standardizeApart.standardizeApart(posLits, negLits,
+								_saIndexical);
+						Clause c = new Clause(posLits, negLits);
+						if (isImmutable()) {
+							c.setImmutable();
+						}
+						if (null == parentFactors) {
+							c.calculateFactors(nonTrivialFactors);
+							nonTrivialFactors.addAll(c.getFactors());
+						} else {
+							if (!parentFactors.contains(c)) {
+								c.calculateFactors(nonTrivialFactors);
+								nonTrivialFactors.addAll(c.getFactors());
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		factors = new LinkedHashSet<Clause>();
+		// Need to add self, even though a non-trivial
+		// factor. See: slide 30
+		// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture10.pdf
+		// for example of incompleteness when
+		// trivial factor not included.
+		factors.add(this);
+		factors.addAll(nonTrivialFactors);
 	}
 
 	class SortPredicatesByName implements Comparator<Predicate> {

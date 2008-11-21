@@ -446,7 +446,7 @@ public class ClauseTest extends TestCase {
 		posLits.add((Predicate) parser.parse("Q(y,x)"));
 
 		Clause c = new Clause(posLits, negLits);
-		assertEquals("[{~P(B,A),P(B,A),Q(A,B)}]", c.getNonTrivialFactors()
+		assertEquals("[{~P(B,A),Q(A,B),P(B,A)}]", c.getNonTrivialFactors()
 				.toString());
 		
 		// p(x,y), q(a,b), ¬p(b,a), ¬q(y,x)
@@ -468,26 +468,28 @@ public class ClauseTest extends TestCase {
 		posLits.add((Predicate) parser.parse("P(F(y),u)"));
 
 		c = new Clause(posLits, negLits);
-		// Should be: [{P(G(F(c#)),F(c#)),P(F(c#),F(c#))}]
+		// Should be: [{P(F(c#),F(c#)),P(G(F(c#)),F(c#))}]
 		c = c.getNonTrivialFactors().iterator().next();
 		Predicate p = c.getPositiveLiterals().get(0);
 		assertEquals("P", p.getPredicateName());
 		Function f = (Function) p.getTerms().get(0);
-		assertEquals("G", f.getFunctionName());
-		f = (Function) f.getTerms().get(0);
 		assertEquals("F", f.getFunctionName());
 		Variable v = (Variable) f.getTerms().get(0);
 		f = (Function) p.getTerms().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
+			
 		//
 		p = c.getPositiveLiterals().get(1);
 		f = (Function) p.getTerms().get(0);
+		assertEquals("G", f.getFunctionName());
+		f = (Function) f.getTerms().get(0);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
 		f = (Function) p.getTerms().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
+
 		
 		// p(g(x)), q(x), p(f(a)), p(x), p(g(f(x))), q(f(a))
 		posLits.clear();
@@ -500,7 +502,7 @@ public class ClauseTest extends TestCase {
 		posLits.add((Predicate) parser.parse("Q(F(A))"));
 
 		c = new Clause(posLits, negLits);
-		assertEquals("[{P(G(F(A))),P(F(A)),P(G(F(F(A)))),Q(F(A))}]", c
+		assertEquals("[{Q(F(A)),P(G(F(A))),P(F(A)),P(G(F(F(A))))}]", c
 				.getNonTrivialFactors().toString());
 	}
 }

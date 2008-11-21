@@ -133,4 +133,46 @@ public class StandardizeApart {
 
 		return new Chain(lits);
 	}
+	
+	public void standardizeApart(List<Predicate> positiveLiterals,
+			List<Predicate> negativeLiterals,
+			StandardizeApartIndexical standardizeApartIndexical) {
+		Set<Variable> toRename = new HashSet<Variable>();
+
+		for (Predicate pl : positiveLiterals) {
+			toRename.addAll(variableCollector.collectAllVariables(pl));
+		}
+		for (Predicate nl : negativeLiterals) {
+			toRename.addAll(variableCollector.collectAllVariables(nl));
+		}
+
+		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
+
+		for (Variable var : toRename) {
+			Variable v = null;
+			do {
+				v = new Variable(standardizeApartIndexical.getPrefix()
+						+ standardizeApartIndexical.getNextIndex());
+				// Ensure the new variable name is not already
+				// accidentally used in the sentence
+			} while (toRename.contains(v));
+
+			renameSubstitution.put(var, v);
+		}
+
+		List<Predicate> posLits = new ArrayList<Predicate>();
+		List<Predicate> negLits = new ArrayList<Predicate>();
+
+		for (Predicate pl : positiveLiterals) {
+			posLits.add((Predicate) substVisitor.subst(renameSubstitution, pl));
+		}
+		for (Predicate nl : negativeLiterals) {
+			negLits.add((Predicate) substVisitor.subst(renameSubstitution, nl));
+		}
+
+		positiveLiterals.clear();
+		positiveLiterals.addAll(posLits);
+		negativeLiterals.clear();
+		negativeLiterals.addAll(negLits);
+	}	
 }
