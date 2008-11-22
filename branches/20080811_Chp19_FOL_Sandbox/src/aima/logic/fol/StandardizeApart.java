@@ -64,15 +64,8 @@ public class StandardizeApart {
 	
 	public Clause standardizeApart(Clause clause,
 			StandardizeApartIndexical standardizeApartIndexical) {
-		Set<Variable> toRename = new HashSet<Variable>();
-
-		for (Predicate pl : clause.getPositiveLiterals()) {
-			toRename.addAll(variableCollector.collectAllVariables(pl));
-		}
-		for (Predicate nl : clause.getNegativeLiterals()) {
-			toRename.addAll(variableCollector.collectAllVariables(nl));
-		}
-
+		
+		Set<Variable> toRename = variableCollector.collectAllVariables(clause);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 
 		for (Variable var : toRename) {
@@ -102,13 +95,8 @@ public class StandardizeApart {
 	
 	public Chain standardizeApart(Chain chain,
 			StandardizeApartIndexical standardizeApartIndexical) {
-		Set<Variable> toRename = new HashSet<Variable>();
-
-		for (Literal l : chain.getLiterals()) {
-			toRename.addAll(variableCollector.collectAllVariables(l
-					.getPredicate()));
-		}
-
+		
+		Set<Variable> toRename = variableCollector.collectAllVariables(chain);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 
 		for (Variable var : toRename) {

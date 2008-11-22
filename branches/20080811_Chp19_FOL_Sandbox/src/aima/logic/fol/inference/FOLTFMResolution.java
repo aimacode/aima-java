@@ -76,6 +76,8 @@ public class FOLTFMResolution implements InferenceProcedure {
 		// clauses <- the set of clauses in CNF representation of KB ^ ~alpha
 		Set<Clause> clauses = new LinkedHashSet<Clause>();
 		for (Clause c : KB.getAllClauses()) {
+			c = KB.standardizeApart(c);
+			c.setStandardizedApartCheckNotRequired();
 			clauses.addAll(c.getFactors());
 		}
 		Sentence notAlpha = new NotSentence(alpha);
@@ -90,13 +92,18 @@ public class FOLTFMResolution implements InferenceProcedure {
 			Sentence notAlphaWithAnswer = new ConnectedSentence(Connectors.OR,
 					notAlpha, answerLiteral);
 			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
+				c = KB.standardizeApart(c);
+				c.setStandardizedApartCheckNotRequired();
 				clauses.addAll(c.getFactors());
 			}
 
 			answerClause.addPositiveLiteral(answerLiteral);
 		} else {
-			for (Clause c : KB.convertToClauses(notAlpha))
+			for (Clause c : KB.convertToClauses(notAlpha)) {
+				c = KB.standardizeApart(c);
+				c.setStandardizedApartCheckNotRequired();
 				clauses.addAll(c.getFactors());
+			}
 		}
 
 		// Track maxQueryTime
@@ -140,7 +147,7 @@ public class FOLTFMResolution implements InferenceProcedure {
 					if (resolvents.size() > 0) {
 						toAdd.clear();
 						// new <- new <UNION> resolvent
-						for (Clause rc : resolvents) {
+						for (Clause rc : resolvents) {							
 							toAdd.addAll(rc.getFactors());
 						}
 

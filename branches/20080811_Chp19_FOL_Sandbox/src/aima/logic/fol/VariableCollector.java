@@ -9,8 +9,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import aima.logic.fol.kb.data.Chain;
+import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.AbstractFOLVisitor;
 import aima.logic.fol.parsing.ast.Function;
+import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Variable;
@@ -38,6 +42,30 @@ public class VariableCollector extends AbstractFOLVisitor {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
 		aFunction.accept(this, variables);
+
+		return variables;
+	}
+	
+	public Set<Variable> collectAllVariables(Clause aClause) {
+		Set<Variable> variables = new LinkedHashSet<Variable>();
+
+		for (Predicate p : aClause.getPositiveLiterals()) {
+			p.accept(this, variables);
+		}
+
+		for (Predicate p : aClause.getNegativeLiterals()) {
+			p.accept(this, variables);
+		}
+
+		return variables;
+	}
+	
+	public Set<Variable> collectAllVariables(Chain aChain) {
+		Set<Variable> variables = new LinkedHashSet<Variable>();
+
+		for (Literal l : aChain.getLiterals()) {
+			l.getPredicate().accept(this, variables);
+		}
 
 		return variables;
 	}

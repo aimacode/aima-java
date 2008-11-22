@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.VariableCollector;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -29,13 +31,7 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 
-// TODO-Possibly will want to consider a better way of doing this.
-// Note: The factor, equals and binary resolution logic in this
-// class all work on the assumption that all clauses being
-// used are already standardized apart - i.e. these methods use unification
-// and for performance reasons do not standardize apart in most cases.
-// Therefore be aware of this restriction when using this class.
-//
+// TODO-Convert over to using Literals and not Predicates.
 public class Clause {
 	//
 	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
@@ -48,9 +44,11 @@ public class Clause {
 	private final Map<String, List<Predicate>> cmpPosLiterals = new LinkedHashMap<String, List<Predicate>>();
 	private final Map<String, List<Predicate>> cmpNegLiterals = new LinkedHashMap<String, List<Predicate>>();
 	private boolean immutable = false;
+	private boolean saCheckRequired = true;
 	private String approxIdentity = "";
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
+	private VariableCollector variableCollector = new VariableCollector();
 	private StandardizeApart standardizeApart = new StandardizeApart();
 	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
 	private Set<Clause> factors = null;
@@ -62,7 +60,7 @@ public class Clause {
 
 	public Clause(List<Predicate> positiveLiterals,
 			List<Predicate> negativeLiterals) {
-		
+
 		this.positiveLiterals.addAll(positiveLiterals);
 		this.negativeLiterals.addAll(negativeLiterals);
 		recalculateIdentity();
@@ -74,6 +72,14 @@ public class Clause {
 
 	public void setImmutable() {
 		immutable = true;
+	}
+
+	public boolean isStandardizedApartCheckRequired() {
+		return saCheckRequired;
+	}
+
+	public void setStandardizedApartCheckNotRequired() {
+		saCheckRequired = false;
 	}
 
 	public boolean isEmpty() {
@@ -111,7 +117,7 @@ public class Clause {
 		positiveLiterals.add(literal);
 		recalculateIdentity();
 	}
-	
+
 	public int getNumberLiterals() {
 		return getNumberPositiveLiterals() + getNumberNegativeLiterals();
 	}
@@ -123,7 +129,7 @@ public class Clause {
 	public List<Predicate> getPositiveLiterals() {
 		return Collections.unmodifiableList(sortedPositiveLiterals);
 	}
-	
+
 	public void addNegativeLiteral(Predicate literal) {
 		if (isImmutable()) {
 			throw new IllegalStateException(
@@ -147,7 +153,7 @@ public class Clause {
 		}
 		return Collections.unmodifiableSet(factors);
 	}
-	
+
 	public Set<Clause> getNonTrivialFactors() {
 		if (null == nonTrivialFactors) {
 			calculateFactors(null);
@@ -156,7 +162,6 @@ public class Clause {
 	}
 
 	// Note: Applies binary resolution rule and factoring
-	// Note: Assumes all clauses are standardized apart when calling.
 	// Note: returns a set with an empty clause if both clauses
 	// are empty, otherwise returns a set of binary resolvents.
 	public Set<Clause> binaryResolvents(Clause othC) {
@@ -166,8 +171,12 @@ public class Clause {
 		if (isEmpty() && othC.isEmpty()) {
 			resolvents.add(new Clause());
 			return resolvents;
-		}				
-		
+		}
+
+		// Ensure Standardized Apart
+		// Before attempting binary resolution
+		othC = saIfRequired(othC);
+
 		List<Predicate> allPosLits = new ArrayList<Predicate>();
 		List<Predicate> allNegLits = new ArrayList<Predicate>();
 		allPosLits.addAll(this.positiveLiterals);
@@ -179,7 +188,7 @@ public class Clause {
 		List<Predicate> trNegLits = new ArrayList<Predicate>();
 		List<Predicate> copyRPosLits = new ArrayList<Predicate>();
 		List<Predicate> copyRNegLits = new ArrayList<Predicate>();
-		
+
 		for (int i = 0; i < 2; i++) {
 			trPosLits.clear();
 			trNegLits.clear();
@@ -217,8 +226,14 @@ public class Clause {
 						}
 						// Ensure the resolvents are standardized apart
 						standardizeApart.standardizeApart(copyRPosLits,
-								copyRNegLits, _saIndexical);					
+								copyRNegLits, _saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
+						if (isImmutable()) {
+							c.setImmutable();
+						}
+						if (!isStandardizedApartCheckRequired()) {
+							c.setStandardizedApartCheckNotRequired();
+						}
 						resolvents.add(c);
 					}
 				}
@@ -276,6 +291,10 @@ public class Clause {
 		// of identically named positive and negative
 		// literals.
 
+		// Ensure are standardized apart before
+		// checking their equality.
+		othClause = saIfRequired(othClause);
+
 		// Check if the collections of literals unify
 		// Note: As the clauses may have multiple of the
 		// same named literals, it is possilbe they
@@ -305,8 +324,6 @@ public class Clause {
 					for (int z = 0; z < matches.length; z++) {
 						Predicate ol = othLits.get(z);
 						theta.clear();
-						// TODO-note possible problem with standardized apart
-						// issue
 						if (null != unifier.unify(tl, ol, theta)) {
 							unified = true;
 							matches[z] = true;
@@ -344,7 +361,7 @@ public class Clause {
 
 			Collections.sort(sortedNegativeLiterals, predicateNameSorter);
 			Collections.sort(sortedPositiveLiterals, predicateNameSorter);
-			
+
 			cmpNegLiterals.clear();
 			cmpPosLiterals.clear();
 
@@ -380,7 +397,7 @@ public class Clause {
 			}
 
 			approxIdentity = newIdentity.toString();
-			
+
 			// Reset, these as will need to re-calcualte
 			// if requested for again, best to only
 			// access lazily.
@@ -441,6 +458,9 @@ public class Clause {
 						if (isImmutable()) {
 							c.setImmutable();
 						}
+						if (!isStandardizedApartCheckRequired()) {
+							c.setStandardizedApartCheckNotRequired();
+						}
 						if (null == parentFactors) {
 							c.calculateFactors(nonTrivialFactors);
 							nonTrivialFactors.addAll(c.getFactors());
@@ -454,7 +474,7 @@ public class Clause {
 				}
 			}
 		}
-		
+
 		factors = new LinkedHashSet<Clause>();
 		// Need to add self, even though a non-trivial
 		// factor. See: slide 30
@@ -463,6 +483,27 @@ public class Clause {
 		// trivial factor not included.
 		factors.add(this);
 		factors.addAll(nonTrivialFactors);
+	}
+
+	private Clause saIfRequired(Clause othClause) {
+
+		if (isStandardizedApartCheckRequired()) {
+			Set<Variable> mVariables = variableCollector
+					.collectAllVariables(this);
+			Set<Variable> oVariables = variableCollector
+					.collectAllVariables(othClause);
+
+			Set<Variable> cVariables = new HashSet<Variable>();
+			cVariables.addAll(mVariables);
+			cVariables.addAll(oVariables);
+
+			if (cVariables.size() < (mVariables.size() + oVariables.size())) {
+				othClause = standardizeApart.standardizeApart(othClause,
+						_saIndexical);
+			}
+		}
+
+		return othClause;
 	}
 
 	class SortPredicatesByName implements Comparator<Predicate> {

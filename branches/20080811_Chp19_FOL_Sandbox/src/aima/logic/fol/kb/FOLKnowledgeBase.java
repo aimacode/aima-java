@@ -223,11 +223,6 @@ public class FOLKnowledgeBase {
 		return unifier.unify(x, y);
 	}
 
-	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
-			Map<Variable, Term> theta) {
-		return unifier.unify(x, y, theta);
-	}
-
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
 		return substVisitor.subst(theta, aSentence);
 	}

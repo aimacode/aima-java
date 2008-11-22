@@ -64,6 +64,10 @@ public class Unifier {
 
 	}
 
+	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
+		return unify(x, y, new LinkedHashMap<Variable, Term>());
+	}
+
 	/**
 	 * <code>
 	 * function UNIFY(x, y, theta) returns a substitution to make x and y identical
@@ -76,10 +80,6 @@ public class Unifier {
 	 *         of variable/term pairs, see pg. 254 for a description) or null
 	 *         which is used to indicate a failure to unify.
 	 */
-	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
-		return unify(x, y, new LinkedHashMap<Variable, Term>());
-	}
-
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
 			Map<Variable, Term> theta) {
 
