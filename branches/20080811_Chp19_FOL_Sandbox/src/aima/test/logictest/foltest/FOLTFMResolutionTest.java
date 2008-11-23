@@ -41,7 +41,7 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {
-		// This query takes too long to run as a unit test using TFM,
+		// This query takes too long to run (approx 25 mins) as a unit test using TFM,
 		// however, give it ten seconds and expect it to return
 		// null as its answer - i.e. does not know.
 		testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds(
