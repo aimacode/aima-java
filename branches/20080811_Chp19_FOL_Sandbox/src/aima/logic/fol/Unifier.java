@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
-import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
-import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -210,10 +209,8 @@ public class Unifier {
 	private List<Term> args(FOLNode x) {
 		if (x instanceof Function) {
 			return ((Function) x).getTerms();
-		} else if (x instanceof Predicate) {
-			return ((Predicate) x).getTerms();
-		} else if (x instanceof TermEquality) {
-			return ((TermEquality) x).getTerms();
+		} else if (x instanceof AtomicSentence) {
+			return ((AtomicSentence) x).getTerms();
 		} else {
 			return null;
 		}
@@ -222,18 +219,15 @@ public class Unifier {
 	private String op(FOLNode x) {
 		if (x instanceof Function) {
 			return ((Function) x).getFunctionName();
-		} else if (x instanceof Predicate) {
-			return ((Predicate) x).getPredicateName();
-		} else if (x instanceof TermEquality) {
-			return TermEquality.getEqualitySynbol();
+		} else if (x instanceof AtomicSentence) {
+			return ((AtomicSentence) x).getSymbolicName();
 		} else {
 			return null;
 		}
 	}
 
 	private boolean isCompound(FOLNode x) {
-		return (x instanceof Predicate) || (x instanceof Function)
-				|| (x instanceof TermEquality);
+		return (x instanceof AtomicSentence) || (x instanceof Function);
 	}
 
 	// See:
