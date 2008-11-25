@@ -15,6 +15,7 @@ import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -208,5 +209,88 @@ public class UnifierTest extends TestCase {
 
 		assertEquals("{y=F(G(A)), x=G(G(A)), v=H(G(A),G(A)), w=G(A), z=G(A)}",
 				result.toString());
+	}
+	
+	public void testTermEquality() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addFunction("Plus");
+
+		FOLParser parser = new FOLParser(domain);
+
+		TermEquality te1 = (TermEquality) parser.parse("x = x");
+		TermEquality te2 = (TermEquality) parser.parse("x = x");
+
+		// Both term equalities the same,
+		// should unify but no substitutions.
+		Map<Variable, Term> result = unifier.unify(te1, te2);
+		
+		assertNotNull(result);
+		assertEquals(0, result.size());
+		
+		// Different variable names but should unify.
+		te1 = (TermEquality) parser.parse("x1 = x1");
+		te2 = (TermEquality) parser.parse("x2 = x2");
+
+		result = unifier.unify(te1, te2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals("{x1=x2}", result.toString());
+		
+		// Test simple unification with reflexivity axiom
+		te1 = (TermEquality) parser.parse("x1 = x1");
+		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,B)");
+
+		result = unifier.unify(te1, te2);
+
+		assertNotNull(result);
+
+		assertEquals(1, result.size());
+		assertEquals("{x1=Plus(A,B)}", result.toString());
+		
+		// Test more complex unification with reflexivity axiom
+		te1 = (TermEquality) parser.parse("x1 = x1");
+		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,z1)");
+
+		result = unifier.unify(te1, te2);
+
+		assertNotNull(result);
+
+		assertEquals(2, result.size());
+		assertEquals("{x1=Plus(A,B), z1=B}", result.toString());
+		
+		// Test reverse of previous unification with reflexivity axiom
+		// Should still be the same.
+		te1 = (TermEquality) parser.parse("x1 = x1");
+		te2 = (TermEquality) parser.parse("Plus(A,z1) = Plus(A,B)");
+
+		result = unifier.unify(te1, te2);
+
+		assertNotNull(result);
+
+		assertEquals(2, result.size());
+		assertEquals("{x1=Plus(A,B), z1=B}", result.toString());
+		
+		// Test with nested terms
+		te1 = (TermEquality) parser
+				.parse("Plus(Plus(Plus(A,B),B, A)) = Plus(Plus(Plus(A,B),B, A))");
+		te2 = (TermEquality) parser
+				.parse("Plus(Plus(Plus(A,B),B, A)) = Plus(Plus(Plus(A,B),B, A))");
+
+		result = unifier.unify(te1, te2);
+
+		assertNotNull(result);
+
+		assertEquals(0, result.size());
+		
+		// Simple term equality unification fails
+		te1 = (TermEquality) parser.parse("Plus(A,B) = Plus(B,A)");
+		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,B)");
+
+		result = unifier.unify(te1, te2);
+
+		assertNull(result);
 	}
 }

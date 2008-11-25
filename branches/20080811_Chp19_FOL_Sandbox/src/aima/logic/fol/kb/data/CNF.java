@@ -29,16 +29,6 @@ public class CNF {
 		return Collections.unmodifiableList(conjunctionOfClauses);
 	}
 
-	public boolean isHornClause() {
-		return conjunctionOfClauses.size() == 1
-				&& conjunctionOfClauses.get(0).isHornClause();
-	}
-
-	public boolean isDefiniteClause() {
-		return conjunctionOfClauses.size() == 1
-				&& conjunctionOfClauses.get(0).isDefiniteClause();
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < conjunctionOfClauses.size(); i++) {

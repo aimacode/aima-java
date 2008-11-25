@@ -9,6 +9,7 @@ import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -211,6 +212,8 @@ public class Unifier {
 			return ((Function) x).getTerms();
 		} else if (x instanceof Predicate) {
 			return ((Predicate) x).getTerms();
+		} else if (x instanceof TermEquality) {
+			return ((TermEquality) x).getTerms();
 		} else {
 			return null;
 		}
@@ -221,13 +224,16 @@ public class Unifier {
 			return ((Function) x).getFunctionName();
 		} else if (x instanceof Predicate) {
 			return ((Predicate) x).getPredicateName();
+		} else if (x instanceof TermEquality) {
+			return TermEquality.getEqualitySynbol();
 		} else {
 			return null;
 		}
 	}
 
 	private boolean isCompound(FOLNode x) {
-		return (x instanceof Predicate) || (x instanceof Function);
+		return (x instanceof Predicate) || (x instanceof Function)
+				|| (x instanceof TermEquality);
 	}
 
 	// See:

@@ -4,30 +4,36 @@
  */
 package aima.logic.fol.parsing.ast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import aima.logic.fol.parsing.FOLVisitor;
 
 public class TermEquality implements AtomicSentence {
 	private Term term1, term2;
+	private List<Term> terms = new ArrayList<Term>();
 
-	public void setTerm1(Sentence term1) {
-		this.term1 = (Term) term1;
+	public static String getEqualitySynbol() {
+		return "=";
 	}
-
-	public void setTerm2(Sentence term2) {
-		this.term2 = (Term) term2;
+	
+	public TermEquality(Term term1, Term term2) {
+		this.term1 = term1;
+		this.term2 = term2;
+		terms.add(term1);
+		terms.add(term2);
+	}	
+	
+	public List<Term> getTerms() {
+		return terms;
 	}
-
+	
 	public Term getTerm1() {
 		return term1;
 	}
 
 	public Term getTerm2() {
 		return term2;
-	}
-
-	public TermEquality(Term term1, Term term2) {
-		this.term1 = term1;
-		this.term2 = term2;
 	}
 
 	@Override
