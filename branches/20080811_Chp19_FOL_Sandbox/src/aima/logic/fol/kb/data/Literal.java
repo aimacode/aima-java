@@ -1,6 +1,6 @@
 package aima.logic.fol.kb.data;
 
-import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 204.
@@ -14,24 +14,22 @@ import aima.logic.fol.parsing.ast.Predicate;
  * @author Ciaran O'Reilly
  * 
  */
-// TODO: Should contain an AtomicSentence not a predicate, change when support
-// term equality.
 public class Literal {
-	private Predicate predicate = null;
+	private AtomicSentence atom = null;
 	private boolean negativeLiteral = false;
 	private String strRep = null;
 
-	public Literal(Predicate p) {
-		this.predicate = p;
+	public Literal(AtomicSentence atom) {
+		this.atom = atom;
 	}
 
-	public Literal(Predicate p, boolean negated) {
-		this.predicate = p;
+	public Literal(AtomicSentence atom, boolean negated) {
+		this.atom = atom;
 		this.negativeLiteral = negated;
 	}
 	
-	public Literal newInstance(Predicate p) {
-		return new Literal(p, negativeLiteral);
+	public Literal newInstance(AtomicSentence atom) {
+		return new Literal(atom, negativeLiteral);
 	}
 
 	public boolean isPositiveLiteral() {
@@ -42,8 +40,8 @@ public class Literal {
 		return negativeLiteral;
 	}
 
-	public Predicate getPredicate() {
-		return predicate;
+	public AtomicSentence getAtomicSentence() {
+		return atom;
 	}
 	
 	public String toString() {
@@ -52,7 +50,7 @@ public class Literal {
 			if (isNegativeLiteral()) {
 				sb.append("~");
 			}
-			sb.append(getPredicate().toString());
+			sb.append(getAtomicSentence().toString());
 			strRep = sb.toString();
 		}
 

@@ -64,7 +64,7 @@ public class VariableCollector extends AbstractFOLVisitor {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
 		for (Literal l : aChain.getLiterals()) {
-			l.getPredicate().accept(this, variables);
+			l.getAtomicSentence().accept(this, variables);
 		}
 
 		return variables;

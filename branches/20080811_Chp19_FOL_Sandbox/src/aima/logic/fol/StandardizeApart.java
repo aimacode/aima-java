@@ -10,6 +10,7 @@ import java.util.Set;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
@@ -114,9 +115,9 @@ public class StandardizeApart {
 		List<Literal> lits = new ArrayList<Literal>();
 
 		for (Literal l : chain.getLiterals()) {
-			Predicate p = (Predicate) substVisitor.subst(renameSubstitution, l
-					.getPredicate());
-			lits.add(l.newInstance(p));
+			AtomicSentence atom = (AtomicSentence) substVisitor.subst(
+					renameSubstitution, l.getAtomicSentence());
+			lits.add(l.newInstance(atom));
 		}
 
 		return new Chain(lits);

@@ -23,13 +23,22 @@ public class Predicate implements AtomicSentence {
 		this.predicateName = predicateName;
 		this.terms = terms;
 	}
-
-	public String getPredicateName() {
-		return predicateName;
+	
+	//
+	// START-AtomicSentence
+	public String getSymbolicName() {
+		return getPredicateName();
 	}
 
 	public List<Term> getTerms() {
 		return terms;
+	}
+	
+	// END-AtomicSentence
+	//
+
+	public String getPredicateName() {
+		return predicateName;
 	}
 
 	@Override

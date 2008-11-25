@@ -1,6 +1,6 @@
 package aima.logic.fol.kb.data;
 
-import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 
 /**
  * @see http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf
@@ -13,16 +13,16 @@ import aima.logic.fol.parsing.ast.Predicate;
 public class ReducedLiteral extends Literal {
 	private String strRep = null;
 	
-	public ReducedLiteral(Predicate p) {
-		super(p);
+	public ReducedLiteral(AtomicSentence atom) {
+		super(atom);
 	}
 
-	public ReducedLiteral(Predicate p, boolean negated) {
-		super(p, negated);
+	public ReducedLiteral(AtomicSentence atom, boolean negated) {
+		super(atom, negated);
 	}
 	
-	public Literal newInstance(Predicate p) {
-		return new ReducedLiteral(p, isNegativeLiteral());
+	public Literal newInstance(AtomicSentence atom) {
+		return new ReducedLiteral(atom, isNegativeLiteral());
 	}
 	
 	public String toString() {
@@ -32,7 +32,7 @@ public class ReducedLiteral extends Literal {
 			if (isNegativeLiteral()) {
 				sb.append("~");
 			}
-			sb.append(getPredicate().toString());
+			sb.append(getAtomicSentence().toString());
 			sb.append("]");
 			strRep = sb.toString();
 		}

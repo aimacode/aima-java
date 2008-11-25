@@ -19,6 +19,7 @@ import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.kb.data.ReducedLiteral;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.NotSentence;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -203,17 +204,18 @@ public class FOLModelElimination implements InferenceProcedure {
 					// if they can be resolved
 					if (head.isNegativeLiteral() != l.isNegativeLiteral()) {
 						Map<Variable, Term> subst = unifier.unify(head
-								.getPredicate(), l.getPredicate());
+								.getAtomicSentence(), l.getAtomicSentence());
 						if (null != subst) {
 							// I have a cancellation
 							// Need to apply subst to all of the
 							// literals in the cancellation
 							List<Literal> cancLits = new ArrayList<Literal>();
 							for (Literal lfc : c.getTail()) {
-								Predicate p = (Predicate) substVisitor.subst(
+								AtomicSentence a = (AtomicSentence) substVisitor
+										.subst(
 										subst, lfc
-										.getPredicate());
-								cancLits.add(lfc.newInstance(p));
+										.getAtomicSentence());
+								cancLits.add(lfc.newInstance(a));
 							}
 							return new Chain(cancLits);
 						}
@@ -255,13 +257,13 @@ public class FOLModelElimination implements InferenceProcedure {
 			Literal answerLiteral = new Literal(kb
 					.createAnswerLiteral(refutationQuery));
 			answerLiteralVariables = kb.collectAllVariables(answerLiteral
-					.getPredicate());
+					.getAtomicSentence());
 
 			// Create the Set of Support based on the Query.
 			if (answerLiteralVariables.size() > 0) {
 				Sentence refutationQueryWithAnswer = new ConnectedSentence(
 						Connectors.OR, refutationQuery, answerLiteral
-								.getPredicate());
+								.getAtomicSentence());
 
 				sos = createChainsFromClauses(kb
 						.convertToClauses(refutationQueryWithAnswer));
@@ -317,13 +319,14 @@ public class FOLModelElimination implements InferenceProcedure {
 							"Generated an empty chain while looking for an answer, implies original KB is unsatisfiable");
 				}
 				if (1 == nearParent.getNumberLiterals()
-						&& nearParent.getHead().getPredicate()
-								.getPredicateName().equals(
-										answerChain.getHead().getPredicate()
-												.getPredicateName())) {
+						&& nearParent.getHead().getAtomicSentence()
+								.getSymbolicName().equals(
+										answerChain.getHead()
+												.getAtomicSentence()
+												.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
-					Predicate ans = nearParent.getHead().getPredicate();
-					List<Term> answerTerms = ans.getTerms();
+					List<Term> answerTerms = nearParent.getHead()
+							.getAtomicSentence().getTerms();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
 						answerBindings.put(v, answerTerms.get(idx));
@@ -383,7 +386,7 @@ class IndexedFarParents {
 		} else {
 			heads = negHeads;
 		}
-		String headKey = head.getPredicate().getPredicateName();
+		String headKey = head.getAtomicSentence().getSymbolicName();
 
 		List<Chain> farParents = heads.get(headKey);
 		if (null != farParents) {
@@ -400,7 +403,7 @@ class IndexedFarParents {
 		} else {
 			heads = negHeads;
 		}
-		String key = head.getPredicate().getPredicateName();
+		String key = head.getAtomicSentence().getSymbolicName();
 		List<Chain> farParents = heads.get(key);
 		while (farParents.size() > toSize) {
 			farParents.remove(farParents.size() - 1);
@@ -417,7 +420,7 @@ class IndexedFarParents {
 			candidateHeads = posHeads;
 		}
 
-		String nearestKey = nearestHead.getPredicate().getPredicateName();
+		String nearestKey = nearestHead.getAtomicSentence().getSymbolicName();
 
 		List<Chain> farParents = candidateHeads.get(nearestKey);
 		if (null != farParents) {
@@ -439,15 +442,14 @@ class IndexedFarParents {
 			candidateHeads = posHeads;
 		}
 
-		Predicate nearPredicate = nearLiteral.getPredicate();
-		String nearestKey = nearPredicate.getPredicateName();
+		AtomicSentence nearAtom = nearLiteral.getAtomicSentence();
+		String nearestKey = nearAtom.getSymbolicName();
 		List<Chain> farParents = candidateHeads.get(nearestKey);
 		if (null != farParents) {
 			Chain farParent = farParents.get(farParentIndex);
 			Literal farLiteral = farParent.getHead();
-			Predicate farPredicate = farLiteral.getPredicate();
-			Map<Variable, Term> subst = unifier.unify(nearPredicate,
-					farPredicate);
+			AtomicSentence farAtom = farLiteral.getAtomicSentence();
+			Map<Variable, Term> subst = unifier.unify(nearAtom, farAtom);
 			
 			// If I was able to unify with one
 			// of the far heads
@@ -461,17 +463,18 @@ class IndexedFarParents {
 				// literals in the reduction
 				List<Literal> reduction = new ArrayList<Literal>();
 				for (Literal l : topChain.getTail()) {
-					Predicate p = (Predicate) substVisitor.subst(subst, l
-							.getPredicate());
-					reduction.add(l.newInstance(p));
+					AtomicSentence atom = (AtomicSentence) substVisitor.subst(
+							subst, l.getAtomicSentence());
+					reduction.add(l.newInstance(atom));
 				}
-				reduction.add(new ReducedLiteral((Predicate) substVisitor
+				reduction.add(new ReducedLiteral((AtomicSentence) substVisitor
 						.subst(subst,
-						botLit.getPredicate()), botLit.isNegativeLiteral()));
+						botLit.getAtomicSentence()), botLit
+						.isNegativeLiteral()));
 				for (Literal l : botChain.getTail()) {
-					Predicate p = (Predicate) substVisitor.subst(subst, l
-							.getPredicate());
-					reduction.add(l.newInstance(p));
+					AtomicSentence atom = (AtomicSentence) substVisitor.subst(
+							subst, l.getAtomicSentence());
+					reduction.add(l.newInstance(atom));
 				}
 				
 				nnpc = new Chain(reduction);
@@ -491,7 +494,7 @@ class IndexedFarParents {
 				toAddTo = negHeads;
 			}
 	
-			String key = head.getPredicate().getPredicateName();
+			String key = head.getAtomicSentence().getSymbolicName();
 			List<Chain> farParents = toAddTo.get(key);
 			if (null == farParents) {
 				farParents = new ArrayList<Chain>();

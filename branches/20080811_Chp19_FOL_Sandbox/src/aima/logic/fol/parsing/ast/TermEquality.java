@@ -24,9 +24,18 @@ public class TermEquality implements AtomicSentence {
 		terms.add(term2);
 	}	
 	
+	//
+	// START-AtomicSentence
+	public String getSymbolicName() {
+		return getEqualitySynbol();
+	}
+	
 	public List<Term> getTerms() {
 		return terms;
 	}
+
+	// END-AtomicSentence
+	//
 	
 	public Term getTerm1() {
 		return term1;
