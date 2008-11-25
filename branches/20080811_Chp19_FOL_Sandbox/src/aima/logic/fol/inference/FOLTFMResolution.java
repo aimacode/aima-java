@@ -10,6 +10,7 @@ import aima.logic.fol.Connectors;
 import aima.logic.fol.inference.trace.FOLTFMResolutionTracer;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.NotSentence;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -231,8 +232,9 @@ public class FOLTFMResolution implements InferenceProcedure {
 				if (resolvent.equals(answerClause)) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
 					if (!answerClause.isEmpty()) {
-						Predicate fact = resolvent.getPositiveLiterals().get(0);
-						List<Term> answerTerms = fact.getTerms();
+						Literal fact = resolvent.getPositiveLiterals().get(0);
+						List<Term> answerTerms = fact.getAtomicSentence()
+								.getTerms();
 						int idx = 0;
 						for (Variable v : answerLiteralVariables) {
 							answerBindings.put(v, answerTerms.get(idx));

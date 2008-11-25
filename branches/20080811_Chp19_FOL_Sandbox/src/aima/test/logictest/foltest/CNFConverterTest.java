@@ -150,7 +150,7 @@ public class CNFConverterTest extends TestCase {
 
 		cnf = cnfConv.convertToCNF(origSentence);
 
-		assertEquals("{~R(y2,z2),Q(SC1,y2,z2)},{~Q(SC1,y2,z2),R(y2,z2)}", cnf
+		assertEquals("{~R(y2,z2),Q(SC1,y2,z2)},{R(y2,z2),~Q(SC1,y2,z2)}", cnf
 				.toString());
 		
 		// Ax.Ey.(~p(x,y) => Az.(q(x,y,z)))
@@ -203,7 +203,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnfDef3 = cnfConv.convertToCNF(def3);
 
 		assertEquals(
-				"{~F(x,y),~F(x,z),~Diff(y,z),Probation(x)},{~Probation(x),F(x,y)},{~Probation(x),F(x,z)},{~Probation(x),Diff(y,z)}",
+				"{~F(x,y),~F(x,z),~Diff(y,z),Probation(x)},{F(x,y),~Probation(x)},{F(x,z),~Probation(x)},{Diff(y,z),~Probation(x)}",
 				cnfDef3.toString());
 		
 		// a(x,y) & a(x,z) & diff(y,z) <=> award(x)
@@ -212,7 +212,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnfDef4 = cnfConv.convertToCNF(def4);
 
 		assertEquals(
-				"{~A(x,y),~A(x,z),~Diff(y,z),Award(x)},{~Award(x),A(x,y)},{~Award(x),A(x,z)},{~Award(x),Diff(y,z)}",
+				"{~A(x,y),~A(x,z),~Diff(y,z),Award(x)},{A(x,y),~Award(x)},{A(x,z),~Award(x)},{Diff(y,z),~Award(x)}",
 				cnfDef4.toString());
 		
 		// f(x,y) <=> ~a(x,y)
@@ -237,7 +237,9 @@ public class CNFConverterTest extends TestCase {
 		Sentence sent = parser.parse("NOT(((((NOT(P(A)) OR NOT(Q(A)))) => NOT((P(A) OR Q(A)))) => R(A)))");
 		CNF cnf = cnfConv.convertToCNF(sent);
 		
-		assertEquals("{~P(A),P(A)},{~P(A),Q(A)},{~Q(A),P(A)},{~Q(A),Q(A)},{~R(A)}", cnf.toString());
+		assertEquals(
+				"{P(A),~P(A)},{Q(A),~P(A)},{P(A),~Q(A)},{Q(A),~Q(A)},{~R(A)}",
+				cnf.toString());
 	}
 	
 	public void testInductionAxiomSchema() {

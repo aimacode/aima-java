@@ -11,7 +11,6 @@ import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.AtomicSentence;
-import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -81,17 +80,13 @@ public class StandardizeApart {
 			renameSubstitution.put(var, v);
 		}
 
-		List<Predicate> posLits = new ArrayList<Predicate>();
-		List<Predicate> negLits = new ArrayList<Predicate>();
+		List<Literal> literals = new ArrayList<Literal>();
 
-		for (Predicate pl : clause.getPositiveLiterals()) {
-			posLits.add((Predicate) substVisitor.subst(renameSubstitution, pl));
-		}
-		for (Predicate nl : clause.getNegativeLiterals()) {
-			negLits.add((Predicate) substVisitor.subst(renameSubstitution, nl));
+		for (Literal l : clause.getLiterals()) {
+			literals.add(substVisitor.subst(renameSubstitution, l));
 		}
 
-		return new Clause(posLits, negLits);
+		return new Clause(literals);
 	}
 	
 	public Chain standardizeApart(Chain chain,
@@ -123,16 +118,18 @@ public class StandardizeApart {
 		return new Chain(lits);
 	}
 	
-	public void standardizeApart(List<Predicate> positiveLiterals,
-			List<Predicate> negativeLiterals,
+	public void standardizeApart(List<Literal> positiveLiterals,
+			List<Literal> negativeLiterals,
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = new HashSet<Variable>();
 
-		for (Predicate pl : positiveLiterals) {
-			toRename.addAll(variableCollector.collectAllVariables(pl));
+		for (Literal pl : positiveLiterals) {
+			toRename.addAll(variableCollector.collectAllVariables(pl
+					.getAtomicSentence()));
 		}
-		for (Predicate nl : negativeLiterals) {
-			toRename.addAll(variableCollector.collectAllVariables(nl));
+		for (Literal nl : negativeLiterals) {
+			toRename.addAll(variableCollector.collectAllVariables(nl
+					.getAtomicSentence()));
 		}
 
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
@@ -149,14 +146,14 @@ public class StandardizeApart {
 			renameSubstitution.put(var, v);
 		}
 
-		List<Predicate> posLits = new ArrayList<Predicate>();
-		List<Predicate> negLits = new ArrayList<Predicate>();
+		List<Literal> posLits = new ArrayList<Literal>();
+		List<Literal> negLits = new ArrayList<Literal>();
 
-		for (Predicate pl : positiveLiterals) {
-			posLits.add((Predicate) substVisitor.subst(renameSubstitution, pl));
+		for (Literal pl : positiveLiterals) {
+			posLits.add(substVisitor.subst(renameSubstitution, pl));
 		}
-		for (Predicate nl : negativeLiterals) {
-			negLits.add((Predicate) substVisitor.subst(renameSubstitution, nl));
+		for (Literal nl : negativeLiterals) {
+			negLits.add(substVisitor.subst(renameSubstitution, nl));
 		}
 
 		positiveLiterals.clear();

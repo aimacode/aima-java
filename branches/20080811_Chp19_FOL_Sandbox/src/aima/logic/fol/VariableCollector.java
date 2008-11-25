@@ -14,7 +14,6 @@ import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.AbstractFOLVisitor;
 import aima.logic.fol.parsing.ast.Function;
-import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Variable;
@@ -49,12 +48,8 @@ public class VariableCollector extends AbstractFOLVisitor {
 	public Set<Variable> collectAllVariables(Clause aClause) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
-		for (Predicate p : aClause.getPositiveLiterals()) {
-			p.accept(this, variables);
-		}
-
-		for (Predicate p : aClause.getNegativeLiterals()) {
-			p.accept(this, variables);
+		for (Literal l : aClause.getLiterals()) {
+			l.getAtomicSentence().accept(this, variables);
 		}
 
 		return variables;

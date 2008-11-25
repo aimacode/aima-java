@@ -10,6 +10,7 @@ import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
@@ -121,34 +122,34 @@ public class ClauseTest extends TestCase {
 		assertFalse(c1.isDefiniteClause());
 	}
 	
-	public void testIsAtomicClause() {
+	public void testIsUnitClause() {
 		Clause c1 = new Clause();
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 		
 		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		assertTrue(c1.isAtomicClause());
+		assertTrue(c1.isUnitClause());
 
 		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 
 
 		c1 = new Clause();
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 		
 		c1.addPositiveLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		assertTrue(c1.isAtomicClause());
+		assertTrue(c1.isUnitClause());
 
 		c1.addNegativeLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 		
 		c1 = new Clause();
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 		
 		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
-		assertFalse(c1.isAtomicClause());
+		assertTrue(c1.isUnitClause());
 
 		c1.addPositiveLiteral(new Predicate("Pred2", new ArrayList<Term>()));
-		assertFalse(c1.isAtomicClause());
+		assertFalse(c1.isUnitClause());
 	}
 	
 	public void testIsImplicationDefiniteClause() {
@@ -438,70 +439,62 @@ public class ClauseTest extends TestCase {
 		FOLParser parser = new FOLParser(domain);
 
 		// p(x,y), q(a,b), ¬p(b,a), q(y,x)
-		List<Predicate> posLits = new ArrayList<Predicate>();
-		List<Predicate> negLits = new ArrayList<Predicate>();
-		posLits.add((Predicate) parser.parse("P(x,y)"));
-		posLits.add((Predicate) parser.parse("Q(A,B)"));
-		negLits.add((Predicate) parser.parse("P(B,A)"));
-		posLits.add((Predicate) parser.parse("Q(y,x)"));
+		Clause c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(x,y)"));
+		c.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		c.addNegativeLiteral((Predicate) parser.parse("P(B,A)"));
+		c.addPositiveLiteral((Predicate) parser.parse("Q(y,x)"));
 
-		Clause c = new Clause(posLits, negLits);
-		assertEquals("[{~P(B,A),Q(A,B),P(B,A)}]", c.getNonTrivialFactors()
+		assertEquals("[{Q(A,B),P(B,A),~P(B,A)}]", c.getNonTrivialFactors()
 				.toString());
 		
 		// p(x,y), q(a,b), ¬p(b,a), ¬q(y,x)
-		posLits.clear();
-		negLits.clear();
-		posLits.add((Predicate) parser.parse("P(x,y)"));
-		posLits.add((Predicate) parser.parse("Q(A,B)"));
-		negLits.add((Predicate) parser.parse("P(B,A)"));
-		negLits.add((Predicate) parser.parse("Q(y,x)"));
+		c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(x,y)"));
+		c.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		c.addNegativeLiteral((Predicate) parser.parse("P(B,A)"));
+		c.addNegativeLiteral((Predicate) parser.parse("Q(y,x)"));
 
-		c = new Clause(posLits, negLits);
 		assertEquals("[]", c.getNonTrivialFactors().toString());
 		
 		// p(x,f(y)), p(g(u),x), p(f(y),u)
-		posLits.clear();
-		negLits.clear();
-		posLits.add((Predicate) parser.parse("P(x,F(y))"));
-		posLits.add((Predicate) parser.parse("P(G(u),x)"));
-		posLits.add((Predicate) parser.parse("P(F(y),u)"));
+		c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(x,F(y))"));
+		c.addPositiveLiteral((Predicate) parser.parse("P(G(u),x)"));
+		c.addPositiveLiteral((Predicate) parser.parse("P(F(y),u)"));
 
-		c = new Clause(posLits, negLits);
 		// Should be: [{P(F(c#),F(c#)),P(G(F(c#)),F(c#))}]
 		c = c.getNonTrivialFactors().iterator().next();
-		Predicate p = c.getPositiveLiterals().get(0);
-		assertEquals("P", p.getPredicateName());
-		Function f = (Function) p.getTerms().get(0);
+		Literal p = c.getPositiveLiterals().get(0);
+		assertEquals("P", p.getAtomicSentence().getSymbolicName());
+		Function f = (Function) p.getAtomicSentence().getTerms().get(0);
 		assertEquals("F", f.getFunctionName());
 		Variable v = (Variable) f.getTerms().get(0);
-		f = (Function) p.getTerms().get(1);
+		f = (Function) p.getAtomicSentence().getTerms().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
 			
 		//
 		p = c.getPositiveLiterals().get(1);
-		f = (Function) p.getTerms().get(0);
+		f = (Function) p.getAtomicSentence().getTerms().get(0);
 		assertEquals("G", f.getFunctionName());
 		f = (Function) f.getTerms().get(0);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
-		f = (Function) p.getTerms().get(1);
+		f = (Function) p.getAtomicSentence().getTerms().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
 
 		
 		// p(g(x)), q(x), p(f(a)), p(x), p(g(f(x))), q(f(a))
-		posLits.clear();
-		negLits.clear();
-		posLits.add((Predicate) parser.parse("P(G(x))"));
-		posLits.add((Predicate) parser.parse("Q(x)"));
-		posLits.add((Predicate) parser.parse("P(F(A))"));
-		posLits.add((Predicate) parser.parse("P(x)"));
-		posLits.add((Predicate) parser.parse("P(G(F(x)))"));
-		posLits.add((Predicate) parser.parse("Q(F(A))"));
+		c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(G(x))"));
+		c.addPositiveLiteral((Predicate) parser.parse("Q(x)"));
+		c.addPositiveLiteral((Predicate) parser.parse("P(F(A))"));
+		c.addPositiveLiteral((Predicate) parser.parse("P(x)"));
+		c.addPositiveLiteral((Predicate) parser.parse("P(G(F(x)))"));
+		c.addPositiveLiteral((Predicate) parser.parse("Q(F(A))"));
 
-		c = new Clause(posLits, negLits);
 		assertEquals("[{Q(F(A)),P(G(F(A))),P(F(A)),P(G(F(F(A))))}]", c
 				.getNonTrivialFactors().toString());
 	}

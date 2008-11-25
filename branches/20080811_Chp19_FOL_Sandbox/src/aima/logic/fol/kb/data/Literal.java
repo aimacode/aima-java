@@ -1,6 +1,7 @@
 package aima.logic.fol.kb.data;
 
 import aima.logic.fol.parsing.ast.AtomicSentence;
+import aima.logic.fol.parsing.ast.Term;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 204.
@@ -55,5 +56,39 @@ public class Literal {
 		}
 
 		return strRep;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+
+		if (this == o) {
+			return true;
+		}
+		if (o.getClass() != getClass()) {
+			// This prevents ReducedLiterals
+			// being treated as equivalent to
+			// normal Literals.
+			return false;
+		}
+		if (!(o instanceof Literal)) {
+			return false;
+		}
+		Literal l = (Literal) o;
+		return l.isPositiveLiteral() == isPositiveLiteral()
+				&& l.getAtomicSentence().getSymbolicName().equals(
+						atom.getSymbolicName())
+				&& l.getAtomicSentence().getTerms().equals(atom.getTerms());
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 37 * result + (getClass().getSimpleName().hashCode())
+				+ (isPositiveLiteral() ? "+".hashCode() : "-".hashCode())
+				+ atom.getSymbolicName().hashCode();
+		for (Term t : atom.getTerms()) {
+			result = 37 * result + t.hashCode();
+		}
+		return result;
 	}
 }

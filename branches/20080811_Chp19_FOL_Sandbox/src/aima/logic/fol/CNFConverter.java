@@ -38,9 +38,6 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-// TODO: Currently do not handle Term equality!
-// TODO: Ensure handling of Predicate and Function terms is implemented
-// correctly.
 public class CNFConverter {
 
 	private FOLParser parser = null;
@@ -102,7 +99,7 @@ class StripExtraParenthesis implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -153,7 +150,7 @@ class ImplicationsOut implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -225,7 +222,7 @@ class NegationsIn implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -345,7 +342,7 @@ class StandardizeQuantiferVariables implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -433,7 +430,7 @@ class RemoveQuantifiers implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -532,7 +529,7 @@ class DistributeOrOverAnd implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
@@ -635,7 +632,13 @@ class CNFConstructor implements FOLVisitor {
 	}
 
 	public Object visitTermEquality(TermEquality equality, Object arg) {
-		throw new UnsupportedOperationException("Not Supported.");
+		ArgData ad = (ArgData) arg;
+		if (ad.negated) {
+			ad.clauses.get(ad.clauses.size() - 1).addNegativeLiteral(equality);
+		} else {
+			ad.clauses.get(ad.clauses.size() - 1).addPositiveLiteral(equality);
+		}
+		return equality;
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {

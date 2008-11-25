@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.AbstractFOLVisitor;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -46,6 +48,12 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	
 	public Function subst(Map<Variable, Term> theta, Function aFunction) {
 		return (Function) ((Function) aFunction.accept(this, theta)).copy();
+	}
+	
+	public Literal subst(Map<Variable, Term> theta, Literal aLiteral) {
+		return aLiteral.newInstance(
+				(AtomicSentence) aLiteral.getAtomicSentence().accept(this,
+						theta));
 	}
 
 	@SuppressWarnings("unchecked")

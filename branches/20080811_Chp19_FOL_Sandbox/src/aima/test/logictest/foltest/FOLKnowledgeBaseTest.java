@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
@@ -51,7 +52,7 @@ public class FOLKnowledgeBaseTest extends TestCase {
 		Clause dcRule = weaponsKB.getAllDefiniteClauseImplications().get(0);
 		assertNotNull(dcRule);
 		assertEquals(true, dcRule.isImplicationDefiniteClause());
-		assertEquals(new Predicate("Criminal", terms), dcRule
+		assertEquals(new Literal(new Predicate("Criminal", terms)), dcRule
 				.getPositiveLiterals().get(0));
 	}
 

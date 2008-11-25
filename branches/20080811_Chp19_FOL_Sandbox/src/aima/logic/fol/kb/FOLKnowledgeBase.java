@@ -23,6 +23,7 @@ import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -38,8 +39,6 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-
-// TODO: Handle Equality.
 public class FOLKnowledgeBase {
 
 	private FOLParser parser;
@@ -62,7 +61,7 @@ public class FOLKnowledgeBase {
 	private List<Clause> allDefiniteClauses = new ArrayList<Clause>();
 	private List<Clause> implicationDefiniteClauses = new ArrayList<Clause>();
 	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
-	private Map<String, List<Predicate>> indexFacts = new HashMap<String, List<Predicate>>();
+	private Map<String, List<Literal>> indexFacts = new HashMap<String, List<Literal>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
 	private StandardizeApartIndexical variableIndexical = StandardizeApartIndexicalFactory
 			.newStandardizeApartIndexical('v');
@@ -185,15 +184,15 @@ public class FOLKnowledgeBase {
 	}
 
 	// Note: pg 278, FETCH(q) concept.
-	public synchronized Set<Map<Variable, Term>> fetch(Predicate p) {
+	public synchronized Set<Map<Variable, Term>> fetch(Literal l) {
 		// Get all of the substitutions in the KB that p unifies with
 		Set<Map<Variable, Term>> allUnifiers = new LinkedHashSet<Map<Variable, Term>>();
 
-		List<Predicate> matchingPredicates = indexFacts.get(p
-				.getPredicateName());
-		if (null != matchingPredicates) {
-			for (Predicate fact : matchingPredicates) {
-				Map<Variable, Term> substitution = unifier.unify(p, fact);
+		List<Literal> matchingFacts = fetchMatchingFacts(l);
+		if (null != matchingFacts) {
+			for (Literal fact : matchingFacts) {
+				Map<Variable, Term> substitution = unifier.unify(l
+						.getAtomicSentence(), fact.getAtomicSentence());
 				if (null != substitution) {
 					allUnifiers.add(substitution);
 				}
@@ -204,13 +203,12 @@ public class FOLKnowledgeBase {
 	}
 
 	// TODO: Note: To support FOL-FC-Ask
-	public Set<Map<Variable, Term>> fetch(List<Predicate> predicates) {
+	public Set<Map<Variable, Term>> fetch(List<Literal> literals) {
 		Set<Map<Variable, Term>> possibleSubstitutions = new LinkedHashSet<Map<Variable, Term>>();
 
-		if (predicates.size() > 0) {
-			Predicate first = predicates.get(0);
-			List<Predicate> rest = new ArrayList<Predicate>(predicates.subList(
-					1, predicates.size()));
+		if (literals.size() > 0) {
+			Literal first = literals.get(0);
+			List<Literal> rest = literals.subList(1, literals.size());
 
 			recursiveFetch(new LinkedHashMap<Variable, Term>(), first, rest,
 					possibleSubstitutions);
@@ -225,6 +223,10 @@ public class FOLKnowledgeBase {
 
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
 		return substVisitor.subst(theta, aSentence);
+	}
+	
+	public Literal subst(Map<Variable, Term> theta, Literal l) {
+		return substVisitor.subst(theta, l);
 	}
 	
 	public Term subst(Map<Variable, Term> theta, Term aTerm) {
@@ -272,20 +274,21 @@ public class FOLKnowledgeBase {
 	}
 
 	// Note: see pg. 281
-	public boolean isRenaming(Predicate p) {
-		List<Predicate> possibleMatches = indexFacts.get(p.getPredicateName());
+	public boolean isRenaming(Literal l) {
+		List<Literal> possibleMatches = fetchMatchingFacts(l);
 		if (null != possibleMatches) {
-			return isRenaming(p, possibleMatches);
+			return isRenaming(l, possibleMatches);
 		}
 
 		return false;
 	}
 
 	// Note: see pg. 281
-	public boolean isRenaming(Predicate p, List<Predicate> possibleMatches) {
+	public boolean isRenaming(Literal l, List<Literal> possibleMatches) {
 
-		for (Predicate q : possibleMatches) {
-			Map<Variable, Term> subst = unifier.unify(p, q);
+		for (Literal q : possibleMatches) {
+			Map<Variable, Term> subst = unifier.unify(l.getAtomicSentence(), q
+					.getAtomicSentence());
 			if (null != subst) {
 				int cntVarTerms = 0;
 				for (Term t : subst.values()) {
@@ -354,31 +357,32 @@ public class FOLKnowledgeBase {
 				if (c.isImplicationDefiniteClause()) {
 					implicationDefiniteClauses.add(c);
 				}
-				if (c.isAtomicClause()) {
-					indexFact(c.getPositiveLiterals().get(0));
+				if (c.isUnitClause()) {
+					indexFact(c.getLiterals().iterator().next());
 				}
 			}
 		}
 	}
 
-	// Only if it is a Predicate does it get indexed as a fact
-	// see pg. 279.
-	private void indexFact(Predicate fact) {
-		if (!indexFacts.containsKey(fact.getPredicateName())) {
-			indexFacts.put(fact.getPredicateName(), new ArrayList<Predicate>());
+	// Only if it is a unit clause does it get indexed as a fact
+	// see pg. 279 for general idea.
+	private void indexFact(Literal fact) {
+		String factKey = getFactKey(fact);
+		if (!indexFacts.containsKey(factKey)) {
+			indexFacts.put(factKey, new ArrayList<Literal>());
 		}
 
-		indexFacts.get(fact.getPredicateName()).add(fact);
+		indexFacts.get(factKey).add(fact);
 	}
 
-	private void recursiveFetch(Map<Variable, Term> theta, Predicate p,
-			List<Predicate> remainingPredicates,
+	private void recursiveFetch(Map<Variable, Term> theta, Literal l,
+			List<Literal> remainingLiterals,
 			Set<Map<Variable, Term>> possibleSubstitutions) {
 
 		// Find all substitutions for current predicate based on the
 		// substitutions of prior predicates in the list (i.e. SUBST with
 		// theta).
-		Set<Map<Variable, Term>> pSubsts = fetch((Predicate) subst(theta, p));
+		Set<Map<Variable, Term>> pSubsts = fetch(subst(theta, l));
 
 		// No substitutions, therefore cannot continue
 		if (null == pSubsts) {
@@ -390,19 +394,34 @@ public class FOLKnowledgeBase {
 			// along the chain of predicates (i.e. for shared variables
 			// across the predicates).
 			psubst.putAll(theta);
-			if (remainingPredicates.size() == 0) {
+			if (remainingLiterals.size() == 0) {
 				// This means I am at the end of the chain of predicates
 				// and have found a valid substitution.
 				possibleSubstitutions.add(psubst);
 			} else {
 				// Need to move to the next link in the chain of substitutions
-				Predicate first = remainingPredicates.get(0);
-				List<Predicate> rest = new ArrayList<Predicate>(
-						remainingPredicates.subList(1, remainingPredicates
-								.size()));
+				Literal first = remainingLiterals.get(0);
+				List<Literal> rest = remainingLiterals.subList(1,
+						remainingLiterals.size());
 
 				recursiveFetch(psubst, first, rest, possibleSubstitutions);
 			}
 		}
+	}
+	
+	private List<Literal> fetchMatchingFacts(Literal l) {
+		return indexFacts.get(getFactKey(l));
+	}
+
+	private String getFactKey(Literal l) {
+		StringBuilder key = new StringBuilder();
+		if (l.isPositiveLiteral()) {
+			key.append("+");
+		} else {
+			key.append("-");
+		}
+		key.append(l.getAtomicSentence().getSymbolicName());
+
+		return key.toString();
 	}
 }

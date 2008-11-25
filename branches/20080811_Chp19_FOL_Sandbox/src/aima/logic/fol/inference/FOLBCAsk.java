@@ -9,7 +9,8 @@ import java.util.Set;
 
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
-import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.kb.data.Literal;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -51,13 +52,13 @@ public class FOLBCAsk implements InferenceProcedure {
 	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence query) {
 		// Assertions on the type queries this Inference procedure
 		// supports
-		if (!Predicate.class.isInstance(query)) {
+		if (!(query instanceof AtomicSentence)) {
 			throw new IllegalArgumentException(
-					"Only Predicate Queries are supported.");
+					"Only Atomic Queries are supported.");
 		}
 
-		List<Predicate> goals = new ArrayList<Predicate>();
-		goals.add((Predicate) query);
+		List<Literal> goals = new ArrayList<Literal>();
+		goals.add(new Literal((AtomicSentence) query));
 
 		return folbcask(KB, goals, new HashMap<Variable, Term>());
 	}
@@ -78,7 +79,7 @@ public class FOLBCAsk implements InferenceProcedure {
 	 * </code>
 	 */
 	private Set<Map<Variable, Term>> folbcask(FOLKnowledgeBase KB,
-			List<Predicate> goals, Map<Variable, Term> theta) {
+			List<Literal> goals, Map<Variable, Term> theta) {
 		// local variables: answers, a set of substitutions, initially empty
 		Set<Map<Variable, Term>> answers = new LinkedHashSet<Map<Variable, Term>>();
 
@@ -89,7 +90,7 @@ public class FOLBCAsk implements InferenceProcedure {
 		}
 
 		// qDelta <- SUBST(theta, FIRST(goals))
-		Predicate qDelta = (Predicate) KB.subst(theta, goals.get(0));
+		Literal qDelta = (Literal) KB.subst(theta, goals.get(0));
 		if (null == qDelta) {
 			return answers;
 		}
@@ -101,10 +102,10 @@ public class FOLBCAsk implements InferenceProcedure {
 			// and thetaDelta <- UNIFY(q, qDelta) succeeds
 			Map<Variable, Term> thetaDelta = KB
 					.unify(r.getPositiveLiterals()
-					.get(0), qDelta);
+					.get(0).getAtomicSentence(), qDelta.getAtomicSentence());
 			if (null != thetaDelta) {
 				// new_goals <- [p1,...,pn|REST(goals)]
-				List<Predicate> newGoals = new ArrayList<Predicate>(r
+				List<Literal> newGoals = new ArrayList<Literal>(r
 						.getNegativeLiterals());
 				newGoals.addAll(goals.subList(1, goals.size()));
 				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,

@@ -17,7 +17,7 @@ import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
-import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
@@ -30,19 +30,18 @@ import aima.logic.fol.parsing.ast.Variable;
  * @author Ciaran O'Reilly
  * 
  */
-
-// TODO-Convert over to using Literals and not Predicates.
 public class Clause {
 	//
 	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
 			.newStandardizeApartIndexical('c');
 	//
-	private final Set<Predicate> positiveLiterals = new LinkedHashSet<Predicate>();
-	private final Set<Predicate> negativeLiterals = new LinkedHashSet<Predicate>();
-	private final List<Predicate> sortedPositiveLiterals = new ArrayList<Predicate>();
-	private final List<Predicate> sortedNegativeLiterals = new ArrayList<Predicate>();
-	private final Map<String, List<Predicate>> cmpPosLiterals = new LinkedHashMap<String, List<Predicate>>();
-	private final Map<String, List<Predicate>> cmpNegLiterals = new LinkedHashMap<String, List<Predicate>>();
+	private final Set<Literal> literals = new LinkedHashSet<Literal>();
+	private final Set<Literal> positiveLiterals = new LinkedHashSet<Literal>();
+	private final Set<Literal> negativeLiterals = new LinkedHashSet<Literal>();
+	private final List<Literal> sortedPositiveLiterals = new ArrayList<Literal>();
+	private final List<Literal> sortedNegativeLiterals = new ArrayList<Literal>();
+	private final Map<String, List<Literal>> cmpPosLiterals = new LinkedHashMap<String, List<Literal>>();
+	private final Map<String, List<Literal>> cmpNegLiterals = new LinkedHashMap<String, List<Literal>>();
 	private boolean immutable = false;
 	private boolean saCheckRequired = true;
 	private String approxIdentity = "";
@@ -50,7 +49,7 @@ public class Clause {
 	private SubstVisitor substVisitor = new SubstVisitor();
 	private VariableCollector variableCollector = new VariableCollector();
 	private StandardizeApart standardizeApart = new StandardizeApart();
-	private SortPredicatesByName predicateNameSorter = new SortPredicatesByName();
+	private SortLiteralsBySymbolicName literalNameSorter = new SortLiteralsBySymbolicName();
 	private Set<Clause> factors = null;
 	private Set<Clause> nonTrivialFactors = null;
 
@@ -58,11 +57,28 @@ public class Clause {
 		// i.e. the empty clause
 	}
 
-	public Clause(List<Predicate> positiveLiterals,
-			List<Predicate> negativeLiterals) {
+	public Clause(List<Literal> lits) {
+		this.literals.addAll(lits);
+		for (Literal l : literals) {
+			if (l.isPositiveLiteral()) {
+				this.positiveLiterals.add(l);
+			} else {
+				this.negativeLiterals.add(l);
+			}
+		}
+		recalculateIdentity();
+	}
 
-		this.positiveLiterals.addAll(positiveLiterals);
-		this.negativeLiterals.addAll(negativeLiterals);
+	public Clause(List<Literal> lits1, List<Literal> lits2) {
+		literals.addAll(lits1);
+		literals.addAll(lits2);
+		for (Literal l : literals) {
+			if (l.isPositiveLiteral()) {
+				this.positiveLiterals.add(l);
+			} else {
+				this.negativeLiterals.add(l);
+			}
+		}
 		recalculateIdentity();
 	}
 
@@ -83,23 +99,17 @@ public class Clause {
 	}
 
 	public boolean isEmpty() {
-		return positiveLiterals.size() == 0 && negativeLiterals.size() == 0;
+		return literals.size() == 0;
 	}
 
-	public boolean isHornClause() {
-		// A Horn clause is a disjunction of literals of which at most one is
-		// positive.
-		return !isEmpty() && positiveLiterals.size() <= 1;
+	public boolean isUnitClause() {
+		return literals.size() == 1;
 	}
 
 	public boolean isDefiniteClause() {
 		// A Definite Clause is a disjunction of literals of which exactly 1 is
 		// positive.
 		return !isEmpty() && positiveLiterals.size() == 1;
-	}
-
-	public boolean isAtomicClause() {
-		return isDefiniteClause() && negativeLiterals.size() == 0;
 	}
 
 	public boolean isImplicationDefiniteClause() {
@@ -109,41 +119,55 @@ public class Clause {
 		return isDefiniteClause() && negativeLiterals.size() >= 1;
 	}
 
-	public void addPositiveLiteral(Predicate literal) {
+	public boolean isHornClause() {
+		// A Horn clause is a disjunction of literals of which at most one is
+		// positive.
+		return !isEmpty() && positiveLiterals.size() <= 1;
+	}
+
+	public void addLiteral(Literal literal) {
 		if (isImmutable()) {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
-		positiveLiterals.add(literal);
+		literals.add(literal);
+		if (literal.isPositiveLiteral()) {
+			positiveLiterals.add(literal);
+		} else {
+			negativeLiterals.add(literal);
+		}
 		recalculateIdentity();
+	}
+	
+	public void addPositiveLiteral(AtomicSentence atom) {
+		addLiteral(new Literal(atom));
+	}
+
+	public void addNegativeLiteral(AtomicSentence atom) {
+		addLiteral(new Literal(atom, true));
 	}
 
 	public int getNumberLiterals() {
-		return getNumberPositiveLiterals() + getNumberNegativeLiterals();
+		return literals.size();
 	}
 
 	public int getNumberPositiveLiterals() {
 		return positiveLiterals.size();
 	}
 
-	public List<Predicate> getPositiveLiterals() {
-		return Collections.unmodifiableList(sortedPositiveLiterals);
-	}
-
-	public void addNegativeLiteral(Predicate literal) {
-		if (isImmutable()) {
-			throw new IllegalStateException(
-					"Clause is immutable, cannot be updated.");
-		}
-		negativeLiterals.add(literal);
-		recalculateIdentity();
-	}
-
 	public int getNumberNegativeLiterals() {
 		return negativeLiterals.size();
 	}
 
-	public List<Predicate> getNegativeLiterals() {
+	public Set<Literal> getLiterals() {
+		return Collections.unmodifiableSet(literals);
+	}
+
+	public List<Literal> getPositiveLiterals() {
+		return Collections.unmodifiableList(sortedPositiveLiterals);
+	}
+
+	public List<Literal> getNegativeLiterals() {
 		return Collections.unmodifiableList(sortedNegativeLiterals);
 	}
 
@@ -177,18 +201,18 @@ public class Clause {
 		// Before attempting binary resolution
 		othC = saIfRequired(othC);
 
-		List<Predicate> allPosLits = new ArrayList<Predicate>();
-		List<Predicate> allNegLits = new ArrayList<Predicate>();
+		List<Literal> allPosLits = new ArrayList<Literal>();
+		List<Literal> allNegLits = new ArrayList<Literal>();
 		allPosLits.addAll(this.positiveLiterals);
 		allPosLits.addAll(othC.positiveLiterals);
 		allNegLits.addAll(this.negativeLiterals);
 		allNegLits.addAll(othC.negativeLiterals);
 
-		List<Predicate> trPosLits = new ArrayList<Predicate>();
-		List<Predicate> trNegLits = new ArrayList<Predicate>();
-		List<Predicate> copyRPosLits = new ArrayList<Predicate>();
-		List<Predicate> copyRNegLits = new ArrayList<Predicate>();
-
+		List<Literal> trPosLits = new ArrayList<Literal>();
+		List<Literal> trNegLits = new ArrayList<Literal>();
+		List<Literal> copyRPosLits = new ArrayList<Literal>();
+		List<Literal> copyRNegLits = new ArrayList<Literal>();
+		
 		for (int i = 0; i < 2; i++) {
 			trPosLits.clear();
 			trNegLits.clear();
@@ -206,22 +230,23 @@ public class Clause {
 			}
 
 			// Now check to see if they resolve
-			for (Predicate pl : trPosLits) {
-				for (Predicate nl : trNegLits) {
+			for (Literal pl : trPosLits) {
+				for (Literal nl : trNegLits) {
 					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
-					if (null != unifier.unify(pl, nl, copyRBindings)) {
+					if (null != unifier.unify(pl.getAtomicSentence(), nl
+							.getAtomicSentence(), copyRBindings)) {
 						copyRPosLits.clear();
 						copyRNegLits.clear();
-						for (Predicate l : allPosLits) {
+						for (Literal l : allPosLits) {
 							if (!pl.equals(l)) {
-								copyRPosLits.add((Predicate) substVisitor
-										.subst(copyRBindings, l));
+								copyRPosLits.add(substVisitor.subst(
+										copyRBindings, l));
 							}
 						}
-						for (Predicate l : allNegLits) {
+						for (Literal l : allNegLits) {
 							if (!nl.equals(l)) {
-								copyRNegLits.add((Predicate) substVisitor
-										.subst(copyRBindings, l));
+								copyRNegLits.add(substVisitor.subst(
+										copyRBindings, l));
 							}
 						}
 						// Ensure the resolvents are standardized apart
@@ -247,19 +272,14 @@ public class Clause {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
 
-		List<Predicate> literals = new ArrayList<Predicate>();
-		literals.addAll(negativeLiterals);
-		literals.addAll(positiveLiterals);
-
-		for (int i = 0; i < literals.size(); i++) {
-			if (i > 0) {
+		boolean first = true;
+		for (Literal l : literals) {
+			if (first) {
+				first = false;
+			} else {
 				sb.append(",");
 			}
-			if (i < negativeLiterals.size()) {
-				sb.append("~");
-			}
-
-			sb.append(literals.get(i).toString());
+			sb.append(l.toString());
 		}
 
 		sb.append("}");
@@ -303,8 +323,8 @@ public class Clause {
 		// check all of these.
 		Map<Variable, Term> theta = new HashMap<Variable, Term>();
 		for (int i = 0; i < 2; i++) {
-			Map<String, List<Predicate>> thisCmpLits = null;
-			Map<String, List<Predicate>> othCmpLits = null;
+			Map<String, List<Literal>> thisCmpLits = null;
+			Map<String, List<Literal>> othCmpLits = null;
 			if (i == 0) {
 				thisCmpLits = this.cmpNegLiterals;
 				othCmpLits = othClause.cmpNegLiterals;
@@ -314,17 +334,18 @@ public class Clause {
 			}
 
 			for (String pName : thisCmpLits.keySet()) {
-				List<Predicate> thisLits = thisCmpLits.get(pName);
-				List<Predicate> othLits = othCmpLits.get(pName);
+				List<Literal> thisLits = thisCmpLits.get(pName);
+				List<Literal> othLits = othCmpLits.get(pName);
 				boolean[] matches = new boolean[thisLits.size()];
 
 				for (int x = 0; x < matches.length; x++) {
-					Predicate tl = thisLits.get(x);
+					Literal tl = thisLits.get(x);
 					boolean unified = false;
 					for (int z = 0; z < matches.length; z++) {
-						Predicate ol = othLits.get(z);
+						Literal ol = othLits.get(z);
 						theta.clear();
-						if (null != unifier.unify(tl, ol, theta)) {
+						if (null != unifier.unify(tl.getAtomicSentence(), ol
+								.getAtomicSentence(), theta)) {
 							unified = true;
 							matches[z] = true;
 						}
@@ -359,41 +380,45 @@ public class Clause {
 			sortedNegativeLiterals.addAll(negativeLiterals);
 			sortedPositiveLiterals.addAll(positiveLiterals);
 
-			Collections.sort(sortedNegativeLiterals, predicateNameSorter);
-			Collections.sort(sortedPositiveLiterals, predicateNameSorter);
+			Collections.sort(sortedNegativeLiterals, literalNameSorter);
+			Collections.sort(sortedPositiveLiterals, literalNameSorter);
 
 			cmpNegLiterals.clear();
 			cmpPosLiterals.clear();
 
 			StringBuilder newIdentity = new StringBuilder("NOT(");
 			boolean first = true;
-			for (Predicate l : sortedNegativeLiterals) {
+			for (Literal l : sortedNegativeLiterals) {
 				if (first) {
 					first = false;
 				} else {
 					newIdentity.append(",");
 				}
-				newIdentity.append(l.getPredicateName());
-				if (!cmpNegLiterals.containsKey(l.getPredicateName())) {
-					cmpNegLiterals.put(l.getPredicateName(),
-							new ArrayList<Predicate>());
+				newIdentity.append(l.getAtomicSentence().getSymbolicName());
+				if (!cmpNegLiterals.containsKey(l.getAtomicSentence()
+						.getSymbolicName())) {
+					cmpNegLiterals.put(l.getAtomicSentence().getSymbolicName(),
+							new ArrayList<Literal>());
 				}
-				cmpNegLiterals.get(l.getPredicateName()).add(l);
+				cmpNegLiterals.get(l.getAtomicSentence().getSymbolicName())
+						.add(l);
 			}
 			newIdentity.append(")");
 			first = true;
-			for (Predicate l : sortedPositiveLiterals) {
+			for (Literal l : sortedPositiveLiterals) {
 				if (first) {
 					first = false;
 				} else {
 					newIdentity.append(",");
 				}
-				newIdentity.append(l.getPredicateName());
-				if (!cmpPosLiterals.containsKey(l.getPredicateName())) {
-					cmpPosLiterals.put(l.getPredicateName(),
-							new ArrayList<Predicate>());
+				newIdentity.append(l.getAtomicSentence().getSymbolicName());
+				if (!cmpPosLiterals.containsKey(l.getAtomicSentence()
+						.getSymbolicName())) {
+					cmpPosLiterals.put(l.getAtomicSentence().getSymbolicName(),
+							new ArrayList<Literal>());
 				}
-				cmpPosLiterals.get(l.getPredicateName()).add(l);
+				cmpPosLiterals.get(l.getAtomicSentence().getSymbolicName())
+						.add(l);
 			}
 
 			approxIdentity = newIdentity.toString();
@@ -411,7 +436,7 @@ public class Clause {
 
 		Map<Variable, Term> theta = new HashMap<Variable, Term>();
 		for (int i = 0; i < 2; i++) {
-			List<Predicate> lits = new ArrayList<Predicate>();
+			List<Literal> lits = new ArrayList<Literal>();
 			if (i == 0) {
 				// Look at the positive literals
 				lits.addAll(positiveLiterals);
@@ -421,34 +446,35 @@ public class Clause {
 			}
 			for (int x = 0; x < lits.size(); x++) {
 				for (int y = x + 1; y < lits.size(); y++) {
-					Predicate litX = lits.get(x);
-					Predicate litY = lits.get(y);
+					Literal litX = lits.get(x);
+					Literal litY = lits.get(y);
 
 					theta.clear();
-					Map<Variable, Term> substitution = unifier.unify(litX,
-							litY, theta);
+					Map<Variable, Term> substitution = unifier.unify(litX
+							.getAtomicSentence(), litY.getAtomicSentence(),
+							theta);
 					if (null != substitution) {
-						List<Predicate> posLits = new ArrayList<Predicate>();
-						List<Predicate> negLits = new ArrayList<Predicate>();
+						List<Literal> posLits = new ArrayList<Literal>();
+						List<Literal> negLits = new ArrayList<Literal>();
 						if (i == 0) {
-							posLits.add((Predicate) substVisitor.subst(
+							posLits.add(substVisitor.subst(
 									substitution, litX));
 						} else {
-							negLits.add((Predicate) substVisitor.subst(
+							negLits.add(substVisitor.subst(
 									substitution, litX));
 						}
-						for (Predicate pl : positiveLiterals) {
+						for (Literal pl : positiveLiterals) {
 							if (pl == litX || pl == litY) {
 								continue;
 							}
-							posLits.add((Predicate) substVisitor.subst(
+							posLits.add(substVisitor.subst(
 									substitution, pl));
 						}
-						for (Predicate nl : negativeLiterals) {
+						for (Literal nl : negativeLiterals) {
 							if (nl == litX || nl == litY) {
 								continue;
 							}
-							negLits.add((Predicate) substVisitor.subst(
+							negLits.add(substVisitor.subst(
 									substitution, nl));
 						}
 						// Ensure the non trivial factor is standardized apart
@@ -506,9 +532,16 @@ public class Clause {
 		return othClause;
 	}
 
-	class SortPredicatesByName implements Comparator<Predicate> {
-		public int compare(Predicate o1, Predicate o2) {
-			return o1.getPredicateName().compareTo(o2.getPredicateName());
+	class SortLiteralsBySymbolicName implements Comparator<Literal> {
+		public int compare(Literal o1, Literal o2) {
+			if (o1.isPositiveLiteral() != o2.isPositiveLiteral()) {
+				if (o1.isPositiveLiteral()) {
+					return 1;
+				}
+				return -1;
+			}
+			return o1.getAtomicSentence().getSymbolicName().compareTo(
+					o2.getAtomicSentence().getSymbolicName());
 		}
 	}
 }

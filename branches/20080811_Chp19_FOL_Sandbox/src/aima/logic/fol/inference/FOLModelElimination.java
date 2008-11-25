@@ -22,7 +22,6 @@ import aima.logic.fol.kb.data.ReducedLiteral;
 import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -107,16 +106,8 @@ public class FOLModelElimination implements InferenceProcedure {
 	private List<Chain> createChainsFromClauses(Set<Clause> clauses) {
 		List<Chain> chains = new ArrayList<Chain>();
 
-		List<Literal> lits = new ArrayList<Literal>();
 		for (Clause c : clauses) {
-			lits.clear();
-			for (Predicate p : c.getPositiveLiterals()) {
-				lits.add(new Literal(p));
-			}
-			for (Predicate np : c.getNegativeLiterals()) {
-				lits.add(new Literal(np, true));
-			}
-			Chain chn = new Chain(lits);
+			Chain chn = new Chain(c.getLiterals());
 			chains.add(chn);
 			chains.addAll(chn.getContrapositives());
 		}

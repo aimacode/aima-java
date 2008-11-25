@@ -3,6 +3,7 @@ package aima.logic.fol.kb.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @see http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf
@@ -25,6 +26,10 @@ public class Chain {
 	}
 	
 	public Chain(List<Literal> literals) {
+		this.literals.addAll(literals);
+	}
+	
+	public Chain(Set<Literal> literals) {
 		this.literals.addAll(literals);
 	}
 

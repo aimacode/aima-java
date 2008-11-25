@@ -8,7 +8,8 @@ import java.util.Set;
 
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
-import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.kb.data.Literal;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -64,15 +65,15 @@ public class FOLFCAsk implements InferenceProcedure {
 	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence query) {
 		// Assertions on the type of queries this Inference procedure
 		// supports
-		if (!Predicate.class.isInstance(query)) {
+		if (!(query instanceof AtomicSentence)) {
 			throw new IllegalArgumentException(
-					"Only Predicate Queries are supported.");
+					"Only Atomic Queries are supported.");
 		}
 
-		Predicate alpha = (Predicate) query;
+		Literal alpha = new Literal((AtomicSentence) query);
 
 		// local variables: new, the new sentences inferred on each iteration
-		List<Predicate> newSentences = new ArrayList<Predicate>();
+		List<Literal> newSentences = new ArrayList<Literal>();
 
 		// Ensure query is not already a know fact before
 		// attempting forward chaining.
@@ -93,9 +94,10 @@ public class FOLFCAsk implements InferenceProcedure {
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
 				// SUBST(theta, p'1 ^ ... ^ p'n)
 				// --- for some p'1,...,p'n in KB
-				for (Map<Variable, Term> theta : KB.fetch(impl.getNegativeLiterals())) {
+				for (Map<Variable, Term> theta : KB.fetch(invert(impl
+						.getNegativeLiterals()))) {
 					// q' <- SUBST(theta, q)
-					Predicate qDelta = (Predicate) KB.subst(theta, impl
+					Literal qDelta = KB.subst(theta, impl
 							.getPositiveLiterals().get(0));
 					// if q' is not a renaming of some sentence already in KB or
 					// new then do
@@ -104,17 +106,22 @@ public class FOLFCAsk implements InferenceProcedure {
 						// add q' to new
 						newSentences.add(qDelta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta, alpha);
+						theta = KB.unify(qDelta.getAtomicSentence(), alpha
+								.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {
-							KB.tell(newSentences);
+							for (Literal l : newSentences) {
+								KB.tell(l.getAtomicSentence());
+							}
 							return KB.fetch(alpha);
 						}
 					}
 				}
 			}
 			// add new to KB
-			KB.tell(newSentences);
+			for (Literal l : newSentences) {
+				KB.tell(l.getAtomicSentence());
+			}
 		} while (newSentences.size() > 0);
 
 		// return false
@@ -123,4 +130,16 @@ public class FOLFCAsk implements InferenceProcedure {
 
 	// END-InferenceProcedure
 	//
+
+	//
+	// PRIVATE METHODS
+	//
+	private List<Literal> invert(List<Literal> lits) {
+		List<Literal> invLits = new ArrayList<Literal>();
+		for (Literal l : lits) {
+			invLits.add(new Literal(l.getAtomicSentence(), (l
+					.isPositiveLiteral() ? true : false)));
+		}
+		return invLits;
+	}
 }
