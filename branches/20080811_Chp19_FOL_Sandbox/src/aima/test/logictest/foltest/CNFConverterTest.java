@@ -292,4 +292,90 @@ public class CNFConverterTest extends TestCase {
 				cnf.toString());
 	}
 	
+	public void testTermEquality() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("P");
+		domain.addPredicate("Q");
+		domain.addPredicate("R");
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addConstant("D");
+		domain.addFunction("Plus");
+		domain.addConstant("ONE");
+		domain.addConstant("ZERO");
+
+		FOLParser parser = new FOLParser(domain);
+		CNFConverter cnfConv = new CNFConverter(parser);
+		
+		// x=y
+		Sentence sent = parser.parse("x = y");
+		CNF cnf = cnfConv.convertToCNF(sent);
+
+		assertEquals("{x = y}", cnf.toString());
+
+		// x!=y
+		sent = parser.parse("NOT(x = y)");
+		cnf = cnfConv.convertToCNF(sent);
+
+		assertEquals("{~x = y}", cnf.toString());
+
+		// A=B
+		sent = parser.parse("A = B");
+		cnf = cnfConv.convertToCNF(sent);
+
+		assertEquals("{A = B}", cnf.toString());
+		
+		// A!=B
+		sent = parser.parse("NOT(A = B)");
+		cnf = cnfConv.convertToCNF(sent);
+
+		assertEquals("{~A = B}", cnf.toString());
+		
+		// ~(((~A=B or ~D=C) => ~(A=B or D=C)) => A=D)
+		sent = parser
+				.parse("NOT(((((NOT(A = B) OR NOT(D = C))) => NOT((A = B OR D = C))) => A = D))");
+		cnf = cnfConv.convertToCNF(sent);
+
+		assertEquals(
+				"{A = B,~A = B},{D = C,~A = B},{A = B,~D = C},{D = C,~D = C},{~A = D}",
+				cnf.toString());
+		
+		//
+		// Induction Axiom Schema using Term Equality
+
+		// Base Case:
+		sent = parser
+				.parse("NOT(FORALL x (FORALL y (Plus(Plus(x,y),ZERO) = Plus(x,Plus(y,ZERO)))))");
+		cnf = cnfConv.convertToCNF(sent);
+		assertEquals("{~Plus(Plus(SC0,SC1),ZERO) = Plus(SC0,Plus(SC1,ZERO))}",
+				cnf.toString());
+
+		// Instance of Induction Axion Scmema
+		sent = parser
+				.parse("(("
+						+ "Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO))"
+						+ " AND "
+						+ "(FORALL x (FORALL y (FORALL z("
+						+ "Plus(Plus(x,y),z) = Plus(x,Plus(y,z))"
+						+ " => "
+						+ "Plus(Plus(x,y),Plus(z,ONE)) = Plus(x,Plus(y,Plus(z,ONE)))"
+						+ "))))" + ")" + " => "
+						+ "FORALL x (FORALL y (FORALL z("
+						+ "Plus(Plus(x,y),z) = Plus(x,Plus(y,z))"
+						+ "))))");
+		cnf = cnfConv.convertToCNF(sent);
+		assertEquals(
+				"{~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)),Plus(Plus(SC2,SC3),SC4) = Plus(SC2,Plus(SC3,SC4)),Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2))},{~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)),~Plus(Plus(SC2,SC3),Plus(SC4,ONE)) = Plus(SC2,Plus(SC3,Plus(SC4,ONE))),Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2))}",
+				cnf.toString());
+
+		// Goal
+		sent = parser
+				.parse("NOT(FORALL x (FORALL y (FORALL z (Plus(Plus(x,y),z) = Plus(x,Plus(y,z))))))");
+		cnf = cnfConv.convertToCNF(sent);
+		assertEquals(
+				"{~Plus(Plus(SC5,SC6),SC7) = Plus(SC5,Plus(SC6,SC7))}",
+				cnf.toString());
+
+	}	
 }
