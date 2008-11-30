@@ -226,30 +226,40 @@ public class FOLTFMResolution implements InferenceProcedure {
 			Set<Map<Variable, Term>> result, Clause answerClause,
 			Set<Variable> answerLiteralVariables) {
 
-		// Can only be the answer if an atomic clause
-		if (resolvents.contains(answerClause)) {
-			for (Clause resolvent : resolvents) {
-				if (resolvent.equals(answerClause)) {
-					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
-					if (!answerClause.isEmpty()) {
-						Literal fact = resolvent.getPositiveLiterals().get(0);
-						List<Term> answerTerms = fact.getAtomicSentence()
-								.getTerms();
-						int idx = 0;
-						for (Variable v : answerLiteralVariables) {
-							answerBindings.put(v, answerTerms.get(idx));
-							idx++;
-						}
-					}
-					result.add(answerBindings);
-				}
-			}
-
-			// If the answer clause has no bindings
-			// then finish processing once the
-			// empty clause is detected.
-			if (answerClause.isEmpty()) {
+		// If no bindings being looked for, then
+		// is just a true false query.
+		if (answerClause.isEmpty()) {
+			// Is true if the empty clause detected.
+			if (resolvents.contains(answerClause)) {
+				Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
+				result.add(answerBindings);
 				return true;
+			}
+		} else {
+			Literal answerLiteral = answerClause.getPositiveLiterals().get(0);
+			for (Clause resolvent : resolvents) {
+				if (resolvent.isUnitClause() && resolvent.isDefiniteClause()) {
+					Literal resolvedLiteral = resolvent.getPositiveLiterals()
+							.get(0);
+					if (answerLiteral.getAtomicSentence().getSymbolicName()
+							.equals(
+									resolvedLiteral.getAtomicSentence()
+											.getSymbolicName())) {
+						Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
+						if (!answerClause.isEmpty()) {
+							Literal fact = resolvent.getPositiveLiterals().get(
+									0);
+							List<Term> answerTerms = fact.getAtomicSentence()
+									.getArgs();
+							int idx = 0;
+							for (Variable v : answerLiteralVariables) {
+								answerBindings.put(v, answerTerms.get(idx));
+								idx++;
+							}
+						}
+						result.add(answerBindings);
+					}
+				}
 			}
 		}
 

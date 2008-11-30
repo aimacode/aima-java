@@ -321,17 +321,8 @@ public class FOLKnowledgeBase {
 
 	// Note: pg 278, STORE(s) concept.
 	private synchronized void store(Sentence aSentence) {
-		// Keep a copy of the original sentences, so do
-		// not have to worry about them being manipulated
-		// externally.
-		Sentence orig = (Sentence) aSentence.copy();
-
-		// Standardize apart the sentence first
-		// to ensure no clashes
-		Sentence sa = standardizeApart(orig);
-
 		// Convert the sentence to CNF
-		CNF cnfOfOrig = cnfConverter.convertToCNF(sa);
+		CNF cnfOfOrig = cnfConverter.convertToCNF(aSentence);
 		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
 			if (c.isEmpty()) {
 				// This should not happen, if so the user
@@ -339,7 +330,7 @@ public class FOLKnowledgeBase {
 				// to the KB.
 				throw new IllegalArgumentException(
 						"Attempted to add unsatisfiable sentence to KB, orig=["
-								+ orig + "] CNF=" + cnfOfOrig);
+								+ aSentence + "] CNF=" + cnfOfOrig);
 			}
 			
 			// Ensure all clauses added to the KB are Standardized Apart.

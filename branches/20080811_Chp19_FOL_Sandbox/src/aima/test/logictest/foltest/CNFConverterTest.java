@@ -26,7 +26,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnf = cnfConv.convertToCNF(origSentence);
 
 		assertEquals(
-				"{~American(x),~Weapon(y),~Sells(x,y,z),~Hostile(z),Criminal(x)}",
+				"[~American(x), ~Hostile(z), ~Sells(x,y,z), ~Weapon(y), Criminal(x)]",
 				cnf.toString());
 	}
 
@@ -42,7 +42,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnf = cnfConv.convertToCNF(origSentence);
 
 		assertEquals(
-				"{Animal(SF0(x)),Loves(SF1(x),x)},{~Loves(x,SF0(x)),Loves(SF1(x),x)}",
+				"[Animal(SF0(x)), Loves(SF1(x),x)],[~Loves(x,SF0(x)), Loves(SF1(x),x)]",
 				cnf.toString());
 	}
 
@@ -60,7 +60,7 @@ public class CNFConverterTest extends TestCase {
 
 		// CNF A1. and A2.
 		assertEquals(
-				"{Animal(SF0(x)),Loves(SF1(x),x)},{~Loves(x,SF0(x)),Loves(SF1(x),x)}",
+				"[Animal(SF0(x)), Loves(SF1(x),x)],[~Loves(x,SF0(x)), Loves(SF1(x),x)]",
 				cnf.toString());
 
 		// FOL B.
@@ -71,7 +71,7 @@ public class CNFConverterTest extends TestCase {
 
 		// CNF B.
 		assertEquals(
-				"{~Animal(y),~Kills(x,y),~Loves(z,x)}",
+				"[~Animal(y), ~Kills(x,y), ~Loves(z,x)]",
 				cnf.toString());
 
 		// FOL C.
@@ -80,7 +80,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(origSentence);
 
 		// CNF C.
-		assertEquals("{~Animal(x),Loves(Jack,x)}", cnf
+		assertEquals("[~Animal(x), Loves(Jack,x)]", cnf
 				.toString());
 
 		// FOL D.
@@ -90,7 +90,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(origSentence);
 
 		// CNF D.
-		assertEquals("{Kills(Jack,Tuna),Kills(Curiosity,Tuna)}", cnf
+		assertEquals("[Kills(Curiosity,Tuna), Kills(Jack,Tuna)]", cnf
 				.toString());
 
 		// FOL E.
@@ -99,7 +99,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(origSentence);
 
 		// CNF E.
-		assertEquals("{Cat(Tuna)}", cnf.toString());
+		assertEquals("[Cat(Tuna)]", cnf.toString());
 
 		// FOL F.
 		origSentence = parser.parse("FORALL x (Cat(x) => Animal(x))");
@@ -107,7 +107,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(origSentence);
 
 		// CNF F.
-		assertEquals("{~Cat(x),Animal(x)}", cnf.toString());
+		assertEquals("[~Cat(x), Animal(x)]", cnf.toString());
 
 		// FOL G.
 		origSentence = parser.parse("NOT(Kills(Curiosity, Tuna))");
@@ -115,7 +115,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(origSentence);
 
 		// CNF G.
-		assertEquals("{~Kills(Curiosity,Tuna)}", cnf.toString());
+		assertEquals("[~Kills(Curiosity,Tuna)]", cnf.toString());
 	}
 
 	public void testNestedExistsAndOrs() {
@@ -133,7 +133,7 @@ public class CNFConverterTest extends TestCase {
 
 		CNF cnf = cnfConv.convertToCNF(origSentence);
 		
-		assertEquals("{~Q(SC0,z),~P(x,SF0(x))},{~Q(SC0,z),R(SF0(x))}", cnf
+		assertEquals("[~P(x,SF0(x)), ~Q(SC0,z)],[~Q(SC0,z), R(SF0(x))]", cnf
 				.toString());
 
 		// Ax.Ay.(p(x,y) => Ez.(q(x,y,z)))
@@ -142,7 +142,7 @@ public class CNFConverterTest extends TestCase {
 
 		cnf = cnfConv.convertToCNF(origSentence);
 
-		assertEquals("{~P(x1,y1),Q(x1,y1,SF1(x1,y1))}", cnf.toString());
+		assertEquals("[~P(x1,y1), Q(x1,y1,SF1(x1,y1))]", cnf.toString());
 
 		// Ex.Ay.Az.(r(y,z) <=> q(x,y,z))
 		origSentence = parser
@@ -150,7 +150,7 @@ public class CNFConverterTest extends TestCase {
 
 		cnf = cnfConv.convertToCNF(origSentence);
 
-		assertEquals("{~R(y2,z2),Q(SC1,y2,z2)},{R(y2,z2),~Q(SC1,y2,z2)}", cnf
+		assertEquals("[~R(y2,z2), Q(SC1,y2,z2)],[~Q(SC1,y2,z2), R(y2,z2)]", cnf
 				.toString());
 		
 		// Ax.Ey.(~p(x,y) => Az.(q(x,y,z)))
@@ -159,7 +159,7 @@ public class CNFConverterTest extends TestCase {
 
 		cnf = cnfConv.convertToCNF(origSentence);
 
-		assertEquals("{P(x3,SF2(x3)),Q(x3,SF2(x3),z3)}", cnf.toString());
+		assertEquals("[P(x3,SF2(x3)), Q(x3,SF2(x3),z3)]", cnf.toString());
 		
 		// Ew.Ex.Ey.Ez.(r(x,y) & q(x,w,z))
 		origSentence = parser
@@ -167,7 +167,7 @@ public class CNFConverterTest extends TestCase {
 
 		cnf = cnfConv.convertToCNF(origSentence);
 
-		assertEquals("{~R(x4,y4),~Q(x4,w4,z4)}", cnf.toString());
+		assertEquals("[~Q(x4,w4,z4), ~R(x4,y4)]", cnf.toString());
 	}
 
 	public void testImplicationsAndExtendedAndsOrs() {
@@ -188,13 +188,13 @@ public class CNFConverterTest extends TestCase {
 		Sentence def1 = parser.parse("(Cheat(x,y) => F(x,y))");
 		CNF cnfDef1 = cnfConv.convertToCNF(def1);
 		
-		assertEquals("{~Cheat(x,y),F(x,y)}", cnfDef1.toString());
+		assertEquals("[~Cheat(x,y), F(x,y)]", cnfDef1.toString());
 		
 		// extra(x,y) | knows(x) => a(x,y)
 		Sentence def2 = parser.parse("((Extra(x,y) OR Knows(x)) => A(x,y))");
 		CNF cnfDef2 = cnfConv.convertToCNF(def2);
 
-		assertEquals("{~Extra(x,y),A(x,y)},{~Knows(x),A(x,y)}", cnfDef2
+		assertEquals("[~Extra(x,y), A(x,y)],[~Knows(x), A(x,y)]", cnfDef2
 				.toString());
 		
 		// f(x,y) & f(x,z) & diff(y,z) <=> probation(x)
@@ -203,7 +203,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnfDef3 = cnfConv.convertToCNF(def3);
 
 		assertEquals(
-				"{~F(x,y),~F(x,z),~Diff(y,z),Probation(x)},{F(x,y),~Probation(x)},{F(x,z),~Probation(x)},{Diff(y,z),~Probation(x)}",
+				"[~Diff(y,z), ~F(x,y), ~F(x,z), Probation(x)],[~Probation(x), F(x,y)],[~Probation(x), F(x,z)],[~Probation(x), Diff(y,z)]",
 				cnfDef3.toString());
 		
 		// a(x,y) & a(x,z) & diff(y,z) <=> award(x)
@@ -212,7 +212,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnfDef4 = cnfConv.convertToCNF(def4);
 
 		assertEquals(
-				"{~A(x,y),~A(x,z),~Diff(y,z),Award(x)},{A(x,y),~Award(x)},{A(x,z),~Award(x)},{Diff(y,z),~Award(x)}",
+				"[~A(x,y), ~A(x,z), ~Diff(y,z), Award(x)],[~Award(x), A(x,y)],[~Award(x), A(x,z)],[~Award(x), Diff(y,z)]",
 				cnfDef4.toString());
 		
 		// f(x,y) <=> ~a(x,y)
@@ -220,7 +220,7 @@ public class CNFConverterTest extends TestCase {
 				.parse("( ( NOT(F(x,y)) OR NOT(A(x,y))) AND ( F(x,y) OR NOT(NOT(A(x,y))) ) )");
 		CNF cnfDef5 = cnfConv.convertToCNF(def5);
 
-		assertEquals("{~F(x,y),~A(x,y)},{F(x,y),A(x,y)}", cnfDef5.toString());
+		assertEquals("[~A(x,y), ~F(x,y)],[A(x,y), F(x,y)]", cnfDef5.toString());
 	}
 	
 	public void testNegationsAndNestedImplications() {
@@ -238,7 +238,7 @@ public class CNFConverterTest extends TestCase {
 		CNF cnf = cnfConv.convertToCNF(sent);
 		
 		assertEquals(
-				"{P(A),~P(A)},{Q(A),~P(A)},{P(A),~Q(A)},{Q(A),~Q(A)},{~R(A)}",
+				"[~P(A), P(A)],[~P(A), Q(A)],[~Q(A), P(A)],[~Q(A), Q(A)],[~R(A)]",
 				cnf.toString());
 	}
 	
@@ -260,7 +260,7 @@ public class CNFConverterTest extends TestCase {
 				.parse("NOT(FORALL x (FORALL y (Equal(Plus(Plus(x,y),ZERO), Plus(x,Plus(y,ZERO))))))");
 		CNF cnf = cnfConv.convertToCNF(sent);
 		assertEquals(
-				"{~Equal(Plus(Plus(SC0,SC1),ZERO),Plus(SC0,Plus(SC1,ZERO)))}",
+				"[~Equal(Plus(Plus(SC0,SC1),ZERO),Plus(SC0,Plus(SC1,ZERO)))]",
 				cnf.toString());
 		
 		// Instance of Induction Axion Scmema
@@ -280,7 +280,7 @@ public class CNFConverterTest extends TestCase {
 				);
 		cnf = cnfConv.convertToCNF(sent);
 		assertEquals(
-				"{~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))),Equal(Plus(Plus(SC2,SC3),SC4),Plus(SC2,Plus(SC3,SC4))),Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2)))},{~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))),~Equal(Plus(Plus(SC2,SC3),Plus(SC4,ONE)),Plus(SC2,Plus(SC3,Plus(SC4,ONE)))),Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2)))}",
+				"[~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))), Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2))), Equal(Plus(Plus(SC2,SC3),SC4),Plus(SC2,Plus(SC3,SC4)))],[~Equal(Plus(Plus(A,B),ZERO),Plus(A,Plus(B,ZERO))), ~Equal(Plus(Plus(SC2,SC3),Plus(SC4,ONE)),Plus(SC2,Plus(SC3,Plus(SC4,ONE)))), Equal(Plus(Plus(q0,q1),q2),Plus(q0,Plus(q1,q2)))]",
 				cnf.toString());
 		
 		// Goal
@@ -288,7 +288,7 @@ public class CNFConverterTest extends TestCase {
 				.parse("NOT(FORALL x (FORALL y (FORALL z (Equal(Plus(Plus(x,y),z), Plus(x,Plus(y,z)))))))");
 		cnf = cnfConv.convertToCNF(sent);
 		assertEquals(
-				"{~Equal(Plus(Plus(SC5,SC6),SC7),Plus(SC5,Plus(SC6,SC7)))}",
+				"[~Equal(Plus(Plus(SC5,SC6),SC7),Plus(SC5,Plus(SC6,SC7)))]",
 				cnf.toString());
 	}
 	
@@ -312,25 +312,25 @@ public class CNFConverterTest extends TestCase {
 		Sentence sent = parser.parse("x = y");
 		CNF cnf = cnfConv.convertToCNF(sent);
 
-		assertEquals("{x = y}", cnf.toString());
+		assertEquals("[x = y]", cnf.toString());
 
 		// x!=y
 		sent = parser.parse("NOT(x = y)");
 		cnf = cnfConv.convertToCNF(sent);
 
-		assertEquals("{~x = y}", cnf.toString());
+		assertEquals("[~x = y]", cnf.toString());
 
 		// A=B
 		sent = parser.parse("A = B");
 		cnf = cnfConv.convertToCNF(sent);
 
-		assertEquals("{A = B}", cnf.toString());
+		assertEquals("[A = B]", cnf.toString());
 		
 		// A!=B
 		sent = parser.parse("NOT(A = B)");
 		cnf = cnfConv.convertToCNF(sent);
 
-		assertEquals("{~A = B}", cnf.toString());
+		assertEquals("[~A = B]", cnf.toString());
 		
 		// ~(((~A=B or ~D=C) => ~(A=B or D=C)) => A=D)
 		sent = parser
@@ -338,7 +338,7 @@ public class CNFConverterTest extends TestCase {
 		cnf = cnfConv.convertToCNF(sent);
 
 		assertEquals(
-				"{A = B,~A = B},{D = C,~A = B},{A = B,~D = C},{D = C,~D = C},{~A = D}",
+				"[~A = B, A = B],[~A = B, D = C],[~D = C, A = B],[~D = C, D = C],[~A = D]",
 				cnf.toString());
 		
 		//
@@ -348,7 +348,7 @@ public class CNFConverterTest extends TestCase {
 		sent = parser
 				.parse("NOT(FORALL x (FORALL y (Plus(Plus(x,y),ZERO) = Plus(x,Plus(y,ZERO)))))");
 		cnf = cnfConv.convertToCNF(sent);
-		assertEquals("{~Plus(Plus(SC0,SC1),ZERO) = Plus(SC0,Plus(SC1,ZERO))}",
+		assertEquals("[~Plus(Plus(SC0,SC1),ZERO) = Plus(SC0,Plus(SC1,ZERO))]",
 				cnf.toString());
 
 		// Instance of Induction Axion Scmema
@@ -366,7 +366,7 @@ public class CNFConverterTest extends TestCase {
 						+ "))))");
 		cnf = cnfConv.convertToCNF(sent);
 		assertEquals(
-				"{~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)),Plus(Plus(SC2,SC3),SC4) = Plus(SC2,Plus(SC3,SC4)),Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2))},{~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)),~Plus(Plus(SC2,SC3),Plus(SC4,ONE)) = Plus(SC2,Plus(SC3,Plus(SC4,ONE))),Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2))}",
+				"[~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)), Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2)), Plus(Plus(SC2,SC3),SC4) = Plus(SC2,Plus(SC3,SC4))],[~Plus(Plus(A,B),ZERO) = Plus(A,Plus(B,ZERO)), ~Plus(Plus(SC2,SC3),Plus(SC4,ONE)) = Plus(SC2,Plus(SC3,Plus(SC4,ONE))), Plus(Plus(q0,q1),q2) = Plus(q0,Plus(q1,q2))]",
 				cnf.toString());
 
 		// Goal
@@ -374,7 +374,7 @@ public class CNFConverterTest extends TestCase {
 				.parse("NOT(FORALL x (FORALL y (FORALL z (Plus(Plus(x,y),z) = Plus(x,Plus(y,z))))))");
 		cnf = cnfConv.convertToCNF(sent);
 		assertEquals(
-				"{~Plus(Plus(SC5,SC6),SC7) = Plus(SC5,Plus(SC6,SC7))}",
+				"[~Plus(Plus(SC5,SC6),SC7) = Plus(SC5,Plus(SC6,SC7))]",
 				cnf.toString());
 
 	}	

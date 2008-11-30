@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import aima.logic.fol.CNFConverter;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.kb.FOLKnowledgeBase;
+import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.DomainFactory;
@@ -16,6 +18,7 @@ import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
 
@@ -305,6 +308,10 @@ public class ClauseTest extends TestCase {
 					Set<Clause> cIresolvents = cI.binaryResolvents(cJ);
 					Set<Clause> cJresolvents = cJ.binaryResolvents(cI);
 					if (!cIresolvents.equals(cJresolvents)) {
+						System.err.println("cI=" + cI);
+						System.err.println("cJ=" + cJ);
+						System.err.println("cIR=" + cIresolvents);
+						System.err.println("cJR=" + cJresolvents);				
 						fail("Ordering of binary resolvents has become important, which should not be the case");
 					}
 					
@@ -349,7 +356,7 @@ public class ClauseTest extends TestCase {
 		assertEquals(c1.hashCode(), c2.hashCode());
 	}
 	
-	public void testEquals() {
+	public void testSimpleEquals() {
 		Term cons1 = new Constant("C1");
 		Term cons2 = new Constant("C2");
 		Term var1 = new Variable("v1");
@@ -426,6 +433,106 @@ public class ClauseTest extends TestCase {
 		assertTrue(c2.equals(c1));
 	}
 	
+	public void testComplexEquals() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");		
+		domain.addConstant("D");
+		domain.addPredicate("P");
+		domain.addPredicate("Animal");
+		domain.addPredicate("Kills");
+		domain.addFunction("F");
+		domain.addFunction("SF0");
+
+		FOLParser parser = new FOLParser(domain);
+
+		CNFConverter cnfConverter = new CNFConverter(parser);
+		Sentence s1 = parser.parse("((x1 = y1 AND y1 = z1) => x1 = z1)");
+		Sentence s2 = parser.parse("((x2 = y2 AND F(y2) = z2) => F(x2) = z2)");
+		CNF cnf1 = cnfConverter.convertToCNF(s1);
+		CNF cnf2 = cnfConverter.convertToCNF(s2);
+		
+		Clause c1 = cnf1.getConjunctionOfClauses().get(0);
+		Clause c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertFalse(c1.equals(c2));
+		
+		s1 = parser.parse("((x1 = y1 AND y1 = z1) => x1 = z1)");
+		s2 = parser.parse("((x2 = y2 AND y2 = z2) => x2 = z2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+	
+		assertTrue(c1.equals(c2));
+		
+		s1 = parser.parse("((x1 = y1 AND y1 = z1) => x1 = z1)");
+		s2 = parser.parse("((y2 = z2 AND x2 = y2) => x2 = z2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+		
+		assertTrue(c1.equals(c2));
+		
+		s1 = parser.parse("(((x1 = y1 AND y1 = z1) AND z1 = r1) => x1 = r1)");
+		s2 = parser.parse("(((x2 = y2 AND y2 = z2) AND z2 = r2) => x2 = r2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertTrue(c1.equals(c2));
+		
+		s1 = parser.parse("(((x1 = y1 AND y1 = z1) AND z1 = r1) => x1 = r1)");
+		s2 = parser.parse("(((z2 = r2 AND y2 = z2) AND x2 = y2) => x2 = r2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertTrue(c1.equals(c2));
+		
+		s1 = parser.parse("(((x1 = y1 AND y1 = z1) AND z1 = r1) => x1 = r1)");
+		s2 = parser.parse("(((x2 = y2 AND y2 = z2) AND z2 = y2) => x2 = r2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertFalse(c1.equals(c2));
+		
+		s1 = parser
+				.parse("(((((x1 = y1 AND y1 = z1) AND z1 = r1) AND r1 = q1) AND q1 = s1) => x1 = r1)");
+		s2 = parser
+				.parse("(((((x2 = y2 AND y2 = z2) AND z2 = r2) AND r2 = q2) AND q2 = s2) => x2 = r2)");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertTrue(c1.equals(c2));
+		
+		s1 = parser
+				.parse("((((NOT(Animal(c1920)) OR NOT(Animal(c1921))) OR NOT(Kills(c1922,c1920))) OR NOT(Kills(c1919,c1921))) OR NOT(Kills(SF0(c1922),SF0(c1919))))");
+		s2 = parser
+				.parse("((((NOT(Animal(c1929)) OR NOT(Animal(c1928))) OR NOT(Kills(c1927,c1929))) OR NOT(Kills(c1930,c1928))) OR NOT(Kills(SF0(c1930),SF0(c1927))))");
+		cnf1 = cnfConverter.convertToCNF(s1);
+		cnf2 = cnfConverter.convertToCNF(s2);
+
+		c1 = cnf1.getConjunctionOfClauses().get(0);
+		c2 = cnf2.getConjunctionOfClauses().get(0);
+
+		assertTrue(c1.equals(c2));
+	}
+	
 	public void testNonTrivialFactors() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("A");
@@ -445,7 +552,7 @@ public class ClauseTest extends TestCase {
 		c.addNegativeLiteral((Predicate) parser.parse("P(B,A)"));
 		c.addPositiveLiteral((Predicate) parser.parse("Q(y,x)"));
 
-		assertEquals("[{Q(A,B),P(B,A),~P(B,A)}]", c.getNonTrivialFactors()
+		assertEquals("[[~P(B,A), P(B,A), Q(A,B)]]", c.getNonTrivialFactors()
 				.toString());
 		
 		// p(x,y), q(a,b), ¬p(b,a), ¬q(y,x)
@@ -467,21 +574,21 @@ public class ClauseTest extends TestCase {
 		c = c.getNonTrivialFactors().iterator().next();
 		Literal p = c.getPositiveLiterals().get(0);
 		assertEquals("P", p.getAtomicSentence().getSymbolicName());
-		Function f = (Function) p.getAtomicSentence().getTerms().get(0);
+		Function f = (Function) p.getAtomicSentence().getArgs().get(0);
 		assertEquals("F", f.getFunctionName());
 		Variable v = (Variable) f.getTerms().get(0);
-		f = (Function) p.getAtomicSentence().getTerms().get(1);
+		f = (Function) p.getAtomicSentence().getArgs().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
 			
 		//
 		p = c.getPositiveLiterals().get(1);
-		f = (Function) p.getAtomicSentence().getTerms().get(0);
+		f = (Function) p.getAtomicSentence().getArgs().get(0);
 		assertEquals("G", f.getFunctionName());
 		f = (Function) f.getTerms().get(0);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
-		f = (Function) p.getAtomicSentence().getTerms().get(1);
+		f = (Function) p.getAtomicSentence().getArgs().get(1);
 		assertEquals("F", f.getFunctionName());
 		assertEquals(v, f.getTerms().get(0));
 
@@ -495,7 +602,7 @@ public class ClauseTest extends TestCase {
 		c.addPositiveLiteral((Predicate) parser.parse("P(G(F(x)))"));
 		c.addPositiveLiteral((Predicate) parser.parse("Q(F(A))"));
 
-		assertEquals("[{Q(F(A)),P(G(F(A))),P(F(A)),P(G(F(F(A))))}]", c
+		assertEquals("[[P(F(A)), P(G(F(F(A)))), P(G(F(A))), Q(F(A))]]", c
 				.getNonTrivialFactors().toString());
 	}
 }

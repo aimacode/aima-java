@@ -48,6 +48,9 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 				new FOLTFMResolution(10 * 1000), true);
 	}
 
+	// Note: This test is a memory hog due to the number of clauses
+	// created when trying to find the answer, therefore run with
+	// VM arguments: -Xms256m -Xmx1024m
 	public void testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds() {
 		// Two minutes should be more than plenty for this query to finish.
 		testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds(new FOLTFMResolution(
@@ -59,5 +62,14 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 		// clauses through resolution for this KB.
 		testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(new FOLTFMResolution(
 				10 * 1000), true);
+	}
+	
+	public void testEqualityAxiomsKBabcAEqualsCSucceeds() {
+		testEqualityAxiomsKBabcAEqualsCSucceeds(new FOLTFMResolution(10 * 1000));
+	}
+	
+	public void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds() {
+		testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(new FOLTFMResolution(
+				10 * 1000));
 	}
 }

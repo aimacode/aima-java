@@ -47,7 +47,7 @@ public class FOLKnowledgeBaseTest extends TestCase {
 		assertEquals(1, weaponsKB.getNumberRules());
 
 		List<Term> terms = new ArrayList<Term>();
-		terms.add(new Variable("v3"));
+		terms.add(new Variable("v0"));
 
 		Clause dcRule = weaponsKB.getAllDefiniteClauseImplications().get(0);
 		assertNotNull(dcRule);

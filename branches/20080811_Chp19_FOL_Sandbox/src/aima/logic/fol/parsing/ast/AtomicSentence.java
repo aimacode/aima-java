@@ -7,6 +7,6 @@ import java.util.List;
  * 
  */
 public interface AtomicSentence extends Sentence {
-	String getSymbolicName();
-	List<Term> getTerms();
+	List<Term> getArgs();
+	AtomicSentence copy();
 }

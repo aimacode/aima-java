@@ -54,4 +54,12 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 		testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
 				new FOLModelElimination(), false);
 	}
+	
+	public void testEqualityAxiomsKBabcAEqualsCSucceeds() {
+		testEqualityAxiomsKBabcAEqualsCSucceeds(new FOLModelElimination());
+	}
+	
+	public void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds() {
+		testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(new FOLModelElimination());
+	}
 }

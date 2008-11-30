@@ -93,8 +93,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows1() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(John,Jane)");
-		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
-				theta);
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane, theta);
 		assertEquals(theta, result);
 		assertTrue(theta.keySet().contains(new Variable("x"))); // x =
 		assertEquals(new Constant("Jane"), theta.get(new Variable("x"))); // Jane
@@ -104,8 +103,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows2() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Bill)");
-		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
-				theta);
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane, theta);
 
 		assertEquals(2, result.size());
 
@@ -118,8 +116,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows3() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,Mother(y))");
-		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
-				theta);
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane, theta);
 
 		assertEquals(2, result.size());
 
@@ -133,8 +130,7 @@ public class UnifierTest extends TestCase {
 	public void testKnows5() {
 		Sentence query = parser.parse("Knows(John,x)");
 		Sentence johnKnowsJane = parser.parse("Knows(y,z)");
-		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane,
-				theta);
+		Map<Variable, Term> result = unifier.unify(query, johnKnowsJane, theta);
 
 		assertEquals(2, result.size());
 
@@ -142,7 +138,7 @@ public class UnifierTest extends TestCase {
 		assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y =
 		// John
 	}
-	
+
 	public void testCascadedOccursCheck() {
 		parser = new FOLParser(DomainFactory.lovesAnimalDomain());
 		parser.getFOLDomain().addFunction("SF0");
@@ -154,7 +150,7 @@ public class UnifierTest extends TestCase {
 
 		assertNull(result);
 	}
-	
+
 	public void testAdditionalVariableMixtures() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("A");
@@ -165,20 +161,20 @@ public class UnifierTest extends TestCase {
 		domain.addPredicate("P");
 
 		FOLParser parser = new FOLParser(domain);
-		
+
 		// Test Cascade Substitutions handled correctly
 		Sentence s1 = parser.parse("P(z, x)");
 		Sentence s2 = parser.parse("P(x, a)");
 		Map<Variable, Term> result = unifier.unify(s1, s2);
 
 		assertEquals("{z=a, x=a}", result.toString());
-		
+
 		s1 = parser.parse("P(x, z)");
 		s2 = parser.parse("P(a, x)");
 		result = unifier.unify(s1, s2);
 
 		assertEquals("{x=a, z=a}", result.toString());
-		
+
 		s1 = parser.parse("P(w, w, w)");
 		s2 = parser.parse("P(x, y, z)");
 		result = unifier.unify(s1, s2);
@@ -202,7 +198,7 @@ public class UnifierTest extends TestCase {
 		result = unifier.unify(s1, s2);
 
 		assertNull(result);
-		
+
 		s1 = parser.parse("P(F(G(A)), x,    F(H(z,z)), H(y,    G(w)))");
 		s2 = parser.parse("P(y,       G(z), F(v     ), H(F(w), x   ))");
 		result = unifier.unify(s1, s2);
@@ -210,7 +206,7 @@ public class UnifierTest extends TestCase {
 		assertEquals("{y=F(G(A)), x=G(G(A)), v=H(G(A),G(A)), w=G(A), z=G(A)}",
 				result.toString());
 	}
-	
+
 	public void testTermEquality() {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("A");
@@ -225,10 +221,10 @@ public class UnifierTest extends TestCase {
 		// Both term equalities the same,
 		// should unify but no substitutions.
 		Map<Variable, Term> result = unifier.unify(te1, te2);
-		
+
 		assertNotNull(result);
 		assertEquals(0, result.size());
-		
+
 		// Different variable names but should unify.
 		te1 = (TermEquality) parser.parse("x1 = x1");
 		te2 = (TermEquality) parser.parse("x2 = x2");
@@ -238,7 +234,7 @@ public class UnifierTest extends TestCase {
 		assertNotNull(result);
 		assertEquals(1, result.size());
 		assertEquals("{x1=x2}", result.toString());
-		
+
 		// Test simple unification with reflexivity axiom
 		te1 = (TermEquality) parser.parse("x1 = x1");
 		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,B)");
@@ -249,7 +245,7 @@ public class UnifierTest extends TestCase {
 
 		assertEquals(1, result.size());
 		assertEquals("{x1=Plus(A,B)}", result.toString());
-		
+
 		// Test more complex unification with reflexivity axiom
 		te1 = (TermEquality) parser.parse("x1 = x1");
 		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,z1)");
@@ -260,7 +256,7 @@ public class UnifierTest extends TestCase {
 
 		assertEquals(2, result.size());
 		assertEquals("{x1=Plus(A,B), z1=B}", result.toString());
-		
+
 		// Test reverse of previous unification with reflexivity axiom
 		// Should still be the same.
 		te1 = (TermEquality) parser.parse("x1 = x1");
@@ -272,7 +268,7 @@ public class UnifierTest extends TestCase {
 
 		assertEquals(2, result.size());
 		assertEquals("{x1=Plus(A,B), z1=B}", result.toString());
-		
+
 		// Test with nested terms
 		te1 = (TermEquality) parser
 				.parse("Plus(Plus(Plus(A,B),B, A)) = Plus(Plus(Plus(A,B),B, A))");
@@ -284,7 +280,7 @@ public class UnifierTest extends TestCase {
 		assertNotNull(result);
 
 		assertEquals(0, result.size());
-		
+
 		// Simple term equality unification fails
 		te1 = (TermEquality) parser.parse("Plus(A,B) = Plus(B,A)");
 		te2 = (TermEquality) parser.parse("Plus(A,B) = Plus(A,B)");
@@ -292,5 +288,247 @@ public class UnifierTest extends TestCase {
 		result = unifier.unify(te1, te2);
 
 		assertNull(result);
+	}
+
+	public void testNOTSentence() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addFunction("Plus");
+		domain.addPredicate("P");
+
+		FOLParser parser = new FOLParser(domain);
+
+		Sentence s1 = parser.parse("NOT(P(A))");
+		Sentence s2 = parser.parse("NOT(P(A))");
+
+		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("NOT(P(A))");
+		s2 = parser.parse("NOT(P(B))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("NOT(P(A))");
+		s2 = parser.parse("NOT(P(x))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("A"), result.get(new Variable("x")));
+	}
+
+	public void testConnectedSentence() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addFunction("Plus");
+		domain.addPredicate("P");
+
+		FOLParser parser = new FOLParser(domain);
+
+		Sentence s1 = parser.parse("(P(A) AND P(B))");
+		Sentence s2 = parser.parse("(P(A) AND P(B))");
+
+		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("(P(A) AND P(B))");
+		s2 = parser.parse("(P(A) AND P(C))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("(P(A) AND P(B))");
+		s2 = parser.parse("(P(A) AND P(x))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("B"), result.get(new Variable("x")));
+
+		s1 = parser.parse("(P(A) OR P(B))");
+		s2 = parser.parse("(P(A) OR P(B))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("(P(A) OR P(B))");
+		s2 = parser.parse("(P(A) OR P(C))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("(P(A) OR P(B))");
+		s2 = parser.parse("(P(A) OR P(x))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("B"), result.get(new Variable("x")));
+
+		s1 = parser.parse("(P(A) => P(B))");
+		s2 = parser.parse("(P(A) => P(B))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("(P(A) => P(B))");
+		s2 = parser.parse("(P(A) => P(C))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("(P(A) => P(B))");
+		s2 = parser.parse("(P(A) => P(x))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("B"), result.get(new Variable("x")));
+
+		s1 = parser.parse("(P(A) <=> P(B))");
+		s2 = parser.parse("(P(A) <=> P(B))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("(P(A) <=> P(B))");
+		s2 = parser.parse("(P(A) <=> P(C))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("(P(A) <=> P(B))");
+		s2 = parser.parse("(P(A) <=> P(x))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("B"), result.get(new Variable("x")));
+
+		s1 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(C))))");
+		s2 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(C))))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(C))))");
+		s2 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(A))))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(C))))");
+		s2 = parser.parse("((P(A) AND P(B)) OR (P(C) => (P(A) <=> P(x))))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("C"), result.get(new Variable("x")));
+	}
+
+	public void testQuantifiedSentence() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addFunction("Plus");
+		domain.addPredicate("P");
+
+		FOLParser parser = new FOLParser(domain);
+
+		Sentence s1 = parser
+				.parse("FORALL x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		Sentence s2 = parser
+				.parse("FORALL x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+
+		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("FORALL x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("FORALL x   ((P(x) AND P(A)) OR (P(A) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("FORALL x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("FORALL x,y ((P(x) AND P(A)) OR (P(B) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("FORALL x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("FORALL x,y ((P(A) AND P(A)) OR (P(A) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("A"), result.get(new Variable("x")));
+
+		//
+		s1 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+
+		s1 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("EXISTS x   ((P(x) AND P(A)) OR (P(A) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(B) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+
+		s1 = parser.parse("EXISTS x,y ((P(x) AND P(A)) OR (P(A) => P(y)))");
+		s2 = parser.parse("EXISTS x,y ((P(A) AND P(A)) OR (P(A) => P(y)))");
+
+		result = unifier.unify(s1, s2);
+
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals(new Constant("A"), result.get(new Variable("x")));
 	}
 }

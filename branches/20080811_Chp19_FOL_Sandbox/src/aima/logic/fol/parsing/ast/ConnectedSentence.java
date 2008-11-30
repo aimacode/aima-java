@@ -4,24 +4,29 @@
  */
 package aima.logic.fol.parsing.ast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import aima.logic.fol.parsing.FOLVisitor;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-public class ConnectedSentence extends ParanthizedSentence {
-
-	private Sentence first, second;
-
+public class ConnectedSentence implements Sentence {
 	private String connector;
+	private Sentence first, second;
+	private List<Sentence> args = new ArrayList<Sentence>();
+	private String stringRep = null;
+	private int hashCode = 0;
 
 	public ConnectedSentence(String connector, Sentence first, Sentence second) {
-		super();
+		this.connector = connector;
 		this.first = first;
 		this.second = second;
-		this.connector = connector;
-
+		args.add(first);
+		args.add(second);
 	}
 
 	public String getConnector() {
@@ -36,13 +41,30 @@ public class ConnectedSentence extends ParanthizedSentence {
 		return second;
 	}
 
-	public void setFirst(Sentence first) {
-		this.first = first;
+	//
+	// START-Sentence
+	public String getSymbolicName() {
+		return getConnector();
 	}
 
-	public void setSecond(Sentence second) {
-		this.second = second;
+	public boolean isCompound() {
+		return true;
 	}
+
+	public List<Sentence> getArgs() {
+		return Collections.unmodifiableList(args);
+	}
+
+	public Object accept(FOLVisitor v, Object arg) {
+		return v.visitConnectedSentence(this, arg);
+	}
+
+	public ConnectedSentence copy() {
+		return new ConnectedSentence(connector, first.copy(), second.copy());
+	}
+
+	// END-Sentence
+	//
 
 	@Override
 	public boolean equals(Object o) {
@@ -54,37 +76,35 @@ public class ConnectedSentence extends ParanthizedSentence {
 			return false;
 		}
 		ConnectedSentence cs = (ConnectedSentence) o;
-		return ((cs.getConnector().equals(getConnector()))
-				&& (cs.getFirst().equals(getFirst())) && (cs.getSecond()
-				.equals(getSecond())));
-
+		return cs.getConnector().equals(getConnector())
+				&& cs.getFirst().equals(getFirst())
+				&& cs.getSecond().equals(getSecond());
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = 37 * result + getConnector().hashCode();
-		result = 37 * result + getFirst().hashCode();
-		result = 37 * result + getSecond().hashCode();
-		return result;
+		if (0 == hashCode) {
+			hashCode = 17;
+			hashCode = 37 * hashCode + getConnector().hashCode();
+			hashCode = 37 * hashCode + getFirst().hashCode();
+			hashCode = 37 * hashCode + getSecond().hashCode();
+		}
+		return hashCode;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + first.toString() + " " + connector + " "
-				+ second.toString() + ")";
+		if (null == stringRep) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("(");
+			sb.append(first.toString());
+			sb.append(" ");
+			sb.append(connector);
+			sb.append(" ");
+			sb.append(second.toString());
+			sb.append(")");
+			stringRep = sb.toString();
+		}
+		return stringRep;
 	}
-
-	@Override
-	public Object accept(FOLVisitor v, Object arg) {
-
-		return v.visitConnectedSentence(this, arg);
-	}
-
-	@Override
-	public FOLNode copy() {
-		return new ConnectedSentence(connector, (Sentence) first.copy(),
-				(Sentence) second.copy());
-	}
-
 }

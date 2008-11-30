@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.FOLNode;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Term;
@@ -107,7 +106,8 @@ public class Unifier {
 
 	// else if LIST?(x) and LIST?(y) then
 	// return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
-	public Map<Variable, Term> unify(List<Term> x, List<Term> y,
+	public Map<Variable, Term> unify(List<? extends FOLNode> x,
+			List<? extends FOLNode> y,
 			Map<Variable, Term> theta) {
 		if (theta == null) {
 			return null;
@@ -206,28 +206,16 @@ public class Unifier {
 		}
 	}
 
-	private List<Term> args(FOLNode x) {
-		if (x instanceof Function) {
-			return ((Function) x).getTerms();
-		} else if (x instanceof AtomicSentence) {
-			return ((AtomicSentence) x).getTerms();
-		} else {
-			return null;
-		}
+	private List<? extends FOLNode> args(FOLNode x) {
+		return x.getArgs();
 	}
 
 	private String op(FOLNode x) {
-		if (x instanceof Function) {
-			return ((Function) x).getFunctionName();
-		} else if (x instanceof AtomicSentence) {
-			return ((AtomicSentence) x).getSymbolicName();
-		} else {
-			return null;
-		}
+		return x.getSymbolicName();
 	}
 
 	private boolean isCompound(FOLNode x) {
-		return (x instanceof AtomicSentence) || (x instanceof Function);
+		return x.isCompound();
 	}
 
 	// See:

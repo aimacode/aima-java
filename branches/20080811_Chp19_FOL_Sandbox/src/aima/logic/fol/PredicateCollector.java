@@ -12,7 +12,6 @@ import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.ParanthizedSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -65,12 +64,6 @@ public class PredicateCollector implements FOLVisitor {
 	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
 		sentence.getFirst().accept(this, arg);
 		sentence.getSecond().accept(this, arg);
-		return arg;
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		sentence.getParanthized().accept(this, arg);
 		return arg;
 	}
 

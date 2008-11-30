@@ -17,8 +17,16 @@ import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
+import aima.logic.fol.parsing.FOLVisitor;
 import aima.logic.fol.parsing.ast.AtomicSentence;
+import aima.logic.fol.parsing.ast.ConnectedSentence;
+import aima.logic.fol.parsing.ast.Constant;
+import aima.logic.fol.parsing.ast.Function;
+import aima.logic.fol.parsing.ast.NotSentence;
+import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -36,22 +44,19 @@ public class Clause {
 			.newStandardizeApartIndexical('c');
 	//
 	private final Set<Literal> literals = new LinkedHashSet<Literal>();
-	private final Set<Literal> positiveLiterals = new LinkedHashSet<Literal>();
-	private final Set<Literal> negativeLiterals = new LinkedHashSet<Literal>();
-	private final List<Literal> sortedPositiveLiterals = new ArrayList<Literal>();
-	private final List<Literal> sortedNegativeLiterals = new ArrayList<Literal>();
-	private final Map<String, List<Literal>> cmpPosLiterals = new LinkedHashMap<String, List<Literal>>();
-	private final Map<String, List<Literal>> cmpNegLiterals = new LinkedHashMap<String, List<Literal>>();
+	private final List<Literal> positiveLiterals = new ArrayList<Literal>();
+	private final List<Literal> negativeLiterals = new ArrayList<Literal>();
 	private boolean immutable = false;
 	private boolean saCheckRequired = true;
-	private String approxIdentity = "";
+	private String equalityIdentity = "";
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
 	private VariableCollector variableCollector = new VariableCollector();
 	private StandardizeApart standardizeApart = new StandardizeApart();
-	private SortLiteralsBySymbolicName literalNameSorter = new SortLiteralsBySymbolicName();
+	private LiteralsSorter literalSorter = new LiteralsSorter();
 	private Set<Clause> factors = null;
 	private Set<Clause> nonTrivialFactors = null;
+	private String stringRep = "{}";
 
 	public Clause() {
 		// i.e. the empty clause
@@ -130,15 +135,18 @@ public class Clause {
 			throw new IllegalStateException(
 					"Clause is immutable, cannot be updated.");
 		}
+		int origSize = literals.size();
 		literals.add(literal);
-		if (literal.isPositiveLiteral()) {
-			positiveLiterals.add(literal);
-		} else {
-			negativeLiterals.add(literal);
+		if (literals.size() > origSize) {
+			if (literal.isPositiveLiteral()) {
+				positiveLiterals.add(literal);
+			} else {
+				negativeLiterals.add(literal);
+			}
 		}
 		recalculateIdentity();
 	}
-	
+
 	public void addPositiveLiteral(AtomicSentence atom) {
 		addLiteral(new Literal(atom));
 	}
@@ -164,11 +172,11 @@ public class Clause {
 	}
 
 	public List<Literal> getPositiveLiterals() {
-		return Collections.unmodifiableList(sortedPositiveLiterals);
+		return Collections.unmodifiableList(positiveLiterals);
 	}
 
 	public List<Literal> getNegativeLiterals() {
-		return Collections.unmodifiableList(sortedNegativeLiterals);
+		return Collections.unmodifiableList(negativeLiterals);
 	}
 
 	public Set<Clause> getFactors() {
@@ -212,7 +220,7 @@ public class Clause {
 		List<Literal> trNegLits = new ArrayList<Literal>();
 		List<Literal> copyRPosLits = new ArrayList<Literal>();
 		List<Literal> copyRNegLits = new ArrayList<Literal>();
-		
+
 		for (int i = 0; i < 2; i++) {
 			trPosLits.clear();
 			trNegLits.clear();
@@ -269,26 +277,11 @@ public class Clause {
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{");
-
-		boolean first = true;
-		for (Literal l : literals) {
-			if (first) {
-				first = false;
-			} else {
-				sb.append(",");
-			}
-			sb.append(l.toString());
-		}
-
-		sb.append("}");
-
-		return sb.toString();
+		return stringRep;
 	}
 
 	public int hashCode() {
-		return approxIdentity.hashCode();
+		return equalityIdentity.hashCode();
 	}
 
 	public boolean equals(Object othObj) {
@@ -302,126 +295,32 @@ public class Clause {
 			return false;
 		}
 		Clause othClause = (Clause) othObj;
-		if (!approxIdentity.equals(othClause.approxIdentity)) {
-			return false;
-		}
 
-		// Note: If the clauses approx identities
-		// match, then they contain the same #
-		// of identically named positive and negative
-		// literals.
-
-		// Ensure are standardized apart before
-		// checking their equality.
-		othClause = saIfRequired(othClause);
-
-		// Check if the collections of literals unify
-		// Note: As the clauses may have multiple of the
-		// same named literals, it is possilbe they
-		// are ordered differently based on their
-		// terms but that still unify, so need
-		// check all of these.
-		Map<Variable, Term> theta = new HashMap<Variable, Term>();
-		for (int i = 0; i < 2; i++) {
-			Map<String, List<Literal>> thisCmpLits = null;
-			Map<String, List<Literal>> othCmpLits = null;
-			if (i == 0) {
-				thisCmpLits = this.cmpNegLiterals;
-				othCmpLits = othClause.cmpNegLiterals;
-			} else {
-				thisCmpLits = this.cmpPosLiterals;
-				othCmpLits = othClause.cmpPosLiterals;
-			}
-
-			for (String pName : thisCmpLits.keySet()) {
-				List<Literal> thisLits = thisCmpLits.get(pName);
-				List<Literal> othLits = othCmpLits.get(pName);
-				boolean[] matches = new boolean[thisLits.size()];
-
-				for (int x = 0; x < matches.length; x++) {
-					Literal tl = thisLits.get(x);
-					boolean unified = false;
-					for (int z = 0; z < matches.length; z++) {
-						Literal ol = othLits.get(z);
-						theta.clear();
-						if (null != unifier.unify(tl.getAtomicSentence(), ol
-								.getAtomicSentence(), theta)) {
-							unified = true;
-							matches[z] = true;
-						}
-					}
-					if (!unified) {
-						return false;
-					}
-				}
-				// Check matches are all true
-				for (int x = 0; x < matches.length; x++) {
-					if (!matches[x]) {
-						return false;
-					}
-				}
-			}
-		}
-
-		// If got this far then the two clauses are
-		// unify equivalent.
-		return true;
+		return equalityIdentity.equals(othClause.equalityIdentity);
 	}
 
 	//
 	// PRIVATE METHODS
 	//
 	private void recalculateIdentity() {
-		synchronized (approxIdentity) {
-			// Order the literals, so that clauses with the same literals
-			// but different ordering will get the same approxIdentity.
-			sortedNegativeLiterals.clear();
-			sortedPositiveLiterals.clear();
-			sortedNegativeLiterals.addAll(negativeLiterals);
-			sortedPositiveLiterals.addAll(positiveLiterals);
+		synchronized (equalityIdentity) {
 
-			Collections.sort(sortedNegativeLiterals, literalNameSorter);
-			Collections.sort(sortedPositiveLiterals, literalNameSorter);
+			// Sort the literals first based on negation, atomic sentence,
+			// constant, function and variable.
+			List<Literal> sortedLiterals = new ArrayList<Literal>(literals);
+			Collections.sort(sortedLiterals, literalSorter);
+			
+			stringRep = sortedLiterals.toString();
 
-			cmpNegLiterals.clear();
-			cmpPosLiterals.clear();
+			// All variables are considered the same as regards
+			// sorting. Therefore, to determine if two clauses
+			// are equivalent you need to determine
+			// the # of unique variables they contain and
+			// there positions across the clauses
+			ClauseEqualityIdentityConstructor ceic = new ClauseEqualityIdentityConstructor(
+					sortedLiterals, literalSorter);
 
-			StringBuilder newIdentity = new StringBuilder("NOT(");
-			boolean first = true;
-			for (Literal l : sortedNegativeLiterals) {
-				if (first) {
-					first = false;
-				} else {
-					newIdentity.append(",");
-				}
-				newIdentity.append(l.getAtomicSentence().getSymbolicName());
-				if (!cmpNegLiterals.containsKey(l.getAtomicSentence()
-						.getSymbolicName())) {
-					cmpNegLiterals.put(l.getAtomicSentence().getSymbolicName(),
-							new ArrayList<Literal>());
-				}
-				cmpNegLiterals.get(l.getAtomicSentence().getSymbolicName())
-						.add(l);
-			}
-			newIdentity.append(")");
-			first = true;
-			for (Literal l : sortedPositiveLiterals) {
-				if (first) {
-					first = false;
-				} else {
-					newIdentity.append(",");
-				}
-				newIdentity.append(l.getAtomicSentence().getSymbolicName());
-				if (!cmpPosLiterals.containsKey(l.getAtomicSentence()
-						.getSymbolicName())) {
-					cmpPosLiterals.put(l.getAtomicSentence().getSymbolicName(),
-							new ArrayList<Literal>());
-				}
-				cmpPosLiterals.get(l.getAtomicSentence().getSymbolicName())
-						.add(l);
-			}
-
-			approxIdentity = newIdentity.toString();
+			equalityIdentity = ceic.getIdentity();
 
 			// Reset, these as will need to re-calcualte
 			// if requested for again, best to only
@@ -457,25 +356,21 @@ public class Clause {
 						List<Literal> posLits = new ArrayList<Literal>();
 						List<Literal> negLits = new ArrayList<Literal>();
 						if (i == 0) {
-							posLits.add(substVisitor.subst(
-									substitution, litX));
+							posLits.add(substVisitor.subst(substitution, litX));
 						} else {
-							negLits.add(substVisitor.subst(
-									substitution, litX));
+							negLits.add(substVisitor.subst(substitution, litX));
 						}
 						for (Literal pl : positiveLiterals) {
 							if (pl == litX || pl == litY) {
 								continue;
 							}
-							posLits.add(substVisitor.subst(
-									substitution, pl));
+							posLits.add(substVisitor.subst(substitution, pl));
 						}
 						for (Literal nl : negativeLiterals) {
 							if (nl == litX || nl == litY) {
 								continue;
 							}
-							negLits.add(substVisitor.subst(
-									substitution, nl));
+							negLits.add(substVisitor.subst(substitution, nl));
 						}
 						// Ensure the non trivial factor is standardized apart
 						standardizeApart.standardizeApart(posLits, negLits,
@@ -531,17 +426,276 @@ public class Clause {
 
 		return othClause;
 	}
+}
 
-	class SortLiteralsBySymbolicName implements Comparator<Literal> {
-		public int compare(Literal o1, Literal o2) {
-			if (o1.isPositiveLiteral() != o2.isPositiveLiteral()) {
-				if (o1.isPositiveLiteral()) {
-					return 1;
-				}
-				return -1;
+class LiteralsSorter implements Comparator<Literal> {
+	public int compare(Literal o1, Literal o2) {
+		int rVal = 0;
+		// If literals are not negated the same
+		// then positive literals are considered
+		// (by convention here) to be of higher
+		// order than negative literals
+		if (o1.isPositiveLiteral() != o2.isPositiveLiteral()) {
+			if (o1.isPositiveLiteral()) {
+				return 1;
 			}
-			return o1.getAtomicSentence().getSymbolicName().compareTo(
-					o2.getAtomicSentence().getSymbolicName());
+			return -1;
 		}
+
+		// Check their symbolic names for order first
+		rVal = o1.getAtomicSentence().getSymbolicName().compareTo(
+				o2.getAtomicSentence().getSymbolicName());
+
+		// If have same symbolic names
+		// then need to compare individual arguments
+		// for order.
+		if (0 == rVal) {
+			rVal = compareArgs(o1.getAtomicSentence().getArgs(), o2
+					.getAtomicSentence().getArgs());
+		}
+
+		return rVal;
 	}
+
+	private int compareArgs(List<Term> args1, List<Term> args2) {
+		int rVal = 0;
+
+		// Compare argument sizes first
+		rVal = args1.size() - args2.size();
+
+		if (0 == rVal && args1.size() > 0) {
+			// Move forward and compare the
+			// first arguments
+			Term t1 = args1.get(0);
+			Term t2 = args2.get(0);
+
+			if (t1.getClass() == t2.getClass()) {
+				// Note: Variables are considered to have
+				// the same order
+				if (t1 instanceof Constant) {
+					rVal = t1.getSymbolicName().compareTo(t2.getSymbolicName());
+				} else if (t1 instanceof Function) {
+					rVal = t1.getSymbolicName().compareTo(t2.getSymbolicName());
+					if (0 == rVal) {
+						// Same function names, therefore
+						// compare the function arguments
+						rVal = compareArgs(t1.getArgs(), t2.getArgs());
+					}
+				}
+
+				// If the first args are the same
+				// then compare the ordering of the
+				// remaining arguments
+				if (0 == rVal) {
+					rVal = compareArgs(args1.subList(1, args1.size()), args2
+							.subList(1, args2.size()));
+				}
+			} else {
+				// Order for different Terms is:
+				// Constant > Function > Variable
+				if (t1 instanceof Constant) {
+					rVal = 1;
+				} else if (t2 instanceof Constant) {
+					rVal = -1;
+				} else if (t1 instanceof Function) {
+					rVal = 1;
+				} else {
+					rVal = -1;
+				}
+			}
+		}
+
+		return rVal;
+	}
+}
+
+class ClauseEqualityIdentityConstructor implements FOLVisitor {
+	private StringBuilder identity = new StringBuilder();
+	private int noVarPositions = 0;
+	private int[] clauseVarCounts = null;
+	private int currentLiteral = 0;
+	private Map<String, List<Integer>> varPositions = new LinkedHashMap<String, List<Integer>>();
+
+	public ClauseEqualityIdentityConstructor(List<Literal> literals,
+			LiteralsSorter sorter) {
+
+		clauseVarCounts = new int[literals.size()];
+
+		boolean first = true;
+		for (Literal l : literals) {
+			if (first) {
+				first = false;
+			} else {
+				identity.append(",");
+			}
+			if (l.isNegativeLiteral()) {
+				identity.append("~");
+			}
+			identity.append(l.getAtomicSentence().getSymbolicName());
+			identity.append("(");
+			boolean firstTerm = true;
+			for (Term t : l.getAtomicSentence().getArgs()) {
+				if (firstTerm) {
+					firstTerm = false;
+				} else {
+					identity.append(",");
+				}
+				t.accept(this, null);
+			}
+			identity.append(")");
+			currentLiteral++;
+		}
+		
+		int min, max;
+		min = max = 0;
+		for (int i = 0; i < literals.size(); i++) {
+			int incITo = i;
+			int next = i + 1;
+			max += clauseVarCounts[i];
+			while (next < literals.size()) {
+				if (0 != sorter.compare(literals.get(i), literals.get(next))) {
+					break;
+				}
+				max += clauseVarCounts[next];
+				incITo = next; // Need to skip to the end of the range
+				next++;
+			}
+			// This indicates two or more literals are identical
+			// except for variable naming (note: identical
+			// same name would be removed as are working
+			// with sets so don't need to worry about this).
+			if ((next - i) > 1) {
+				// Need to check each variable
+				// and if it has a position within the
+				// current min/max range then need
+				// to include its alternative
+				// sort order positions as well
+				for (String key : varPositions.keySet()) {
+					List<Integer> positions = varPositions.get(key);
+					List<Integer> additPositions = new ArrayList<Integer>();
+					// Add then subtract for all possible
+					// positions in range
+					for (int pos : positions) {
+						if (pos >= min && pos < max) {
+							int pPos = pos;
+							int nPos = pos;
+							for (int candSlot = 0; candSlot < (next - 1); candSlot++) {
+								pPos += clauseVarCounts[i];
+								if (pPos >= min && pPos < max) {
+									if (!positions.contains(pPos)
+											&& !additPositions.contains(pPos)) {
+										additPositions.add(pPos);
+									}
+								}
+								nPos -= clauseVarCounts[i];
+								if (nPos >= min && nPos < max) {
+									if (!positions.contains(nPos)
+											&& !additPositions.contains(nPos)) {
+										additPositions.add(nPos);
+									}
+								}
+							}
+						}
+					}
+					positions.addAll(additPositions);
+				}
+			}
+			min = max;
+			i = incITo;
+		}
+
+		// Sort the individual position lists
+		for (String key : varPositions.keySet()) {
+			List<Integer> positions = varPositions.get(key);
+			Collections.sort(positions);
+		}
+
+		// Determine the maxWidth
+		int maxWidth = 1;
+		while (noVarPositions >= 10) {
+			noVarPositions = noVarPositions / 10;
+			maxWidth++;
+		}
+		String format = "%0" + maxWidth + "d";
+		List<String> varOffsets = new ArrayList<String>();
+		for (String key : varPositions.keySet()) {
+			List<Integer> positions = varPositions.get(key);
+			StringBuilder sb = new StringBuilder();
+			sb.append("[");
+			for (int pos : positions) {
+				sb.append(String.format(format, pos));
+			}
+			sb.append("]");
+			varOffsets.add(sb.toString());
+		}
+		Collections.sort(varOffsets);
+		identity.append(varOffsets.toString());
+	}
+
+	public String getIdentity() {
+		return identity.toString();
+	}
+
+	//
+	// START-FOLVisitor
+	public Object visitVariable(Variable var, Object arg) {
+		// All variables will be marked with an *
+		identity.append("*");
+
+		List<Integer> positions = varPositions.get(var.getValue());
+		if (null == positions) {
+			varPositions.put(var.getValue(), new ArrayList<Integer>());
+		}
+		varPositions.get(var.getValue()).add(noVarPositions);
+
+		noVarPositions++;
+		clauseVarCounts[currentLiteral]++;
+		return var;
+	}
+
+	public Object visitConstant(Constant constant, Object arg) {
+		identity.append(constant.getValue());
+		return constant;
+	}
+
+	public Object visitFunction(Function function, Object arg) {
+		boolean firstTerm = true;
+		identity.append(function.getFunctionName());
+		identity.append("(");
+		for (Term t : function.getTerms()) {
+			if (firstTerm) {
+				firstTerm = false;
+			} else {
+				identity.append(",");
+			}
+			t.accept(this, arg);
+		}
+		identity.append(")");
+
+		return function;
+	}
+
+	public Object visitPredicate(Predicate predicate, Object arg) {
+		throw new IllegalStateException("Should not be called");
+	}
+
+	public Object visitTermEquality(TermEquality equality, Object arg) {
+		throw new IllegalStateException("Should not be called");
+	}
+
+	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
+			Object arg) {
+		throw new IllegalStateException("Should not be called");
+	}
+
+	public Object visitNotSentence(NotSentence sentence, Object arg) {
+		throw new IllegalStateException("Should not be called");
+	}
+
+	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
+		throw new IllegalStateException("Should not be called");
+	}
+
+	// END-FOLVisitor
+	//
 }

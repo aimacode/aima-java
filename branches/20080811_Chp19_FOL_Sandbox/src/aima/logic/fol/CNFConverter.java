@@ -15,7 +15,6 @@ import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.ParanthizedSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -28,10 +27,9 @@ import aima.logic.fol.parsing.ast.Variable;
  * Every sentence of first-order logic can be converted into an inferentially
  * equivalent CNF sentence.
  * 
- * Note: Transformation rules extracted from pg 215, 296, and 297 and:
- * INSEADO method outlined in:
+ * Note: Transformation rules extracted from pg 215, 296, and 297, which
+ * is essentially the INSEADO method outlined in:
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture09.pdf
- * which is complete.
  */
 
 /**
@@ -49,14 +47,9 @@ public class CNFConverter {
 		this.substVisitor = new SubstVisitor();
 	}
 
-	public CNF convertToCNF(Sentence aSentence) {
-		// Strip out extra parenthesis (e.g. ((alpha ^ beta)))
-		// in order to simplify remaining logic.
-		Sentence noExtraParenthesis = (Sentence) aSentence.accept(
-				new StripExtraParenthesis(), null);
-		
+	public CNF convertToCNF(Sentence aSentence) {		
 		// I)mplications Out:
-		Sentence implicationsOut = (Sentence) noExtraParenthesis.accept(
+		Sentence implicationsOut = (Sentence) aSentence.accept(
 				new ImplicationsOut(), null);
 		
 		// N)egations In:
@@ -86,57 +79,6 @@ public class CNFConverter {
 
 		// O)perators Out 
 		return (new CNFConstructor()).construct(orDistributedOverAnd);
-	}
-}
-
-class StripExtraParenthesis implements FOLVisitor {
-
-	public StripExtraParenthesis() {
-	}
-
-	public Object visitPredicate(Predicate p, Object arg) {
-		return p;
-	}
-
-	public Object visitTermEquality(TermEquality equality, Object arg) {
-		return equality;
-	}
-
-	public Object visitVariable(Variable variable, Object arg) {
-		return variable;
-	}
-
-	public Object visitConstant(Constant constant, Object arg) {
-		return constant;
-	}
-
-	public Object visitFunction(Function function, Object arg) {
-		return function;
-	}
-
-	public Object visitNotSentence(NotSentence sentence, Object arg) {
-		return new NotSentence((Sentence) sentence.getNegated().accept(this,
-				arg));
-	}
-
-	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
-		return new ConnectedSentence(sentence.getConnector(),
-				(Sentence) sentence.getFirst().accept(this, arg),
-				(Sentence) sentence.getSecond().accept(this, arg));
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This causes nested parenthesis to be removed.
-		return sentence.getParanthized().accept(this, arg);
-	}
-
-	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
-			Object arg) {
-
-		return new QuantifiedSentence(sentence.getQuantifier(), sentence
-				.getVariables(), (Sentence) sentence.getQuantified().accept(
-				this, arg));
 	}
 }
 
@@ -193,14 +135,6 @@ class ImplicationsOut implements FOLVisitor {
 		}
 
 		return new ConnectedSentence(sentence.getConnector(), alpha, beta);
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
@@ -300,14 +234,6 @@ class NegationsIn implements FOLVisitor {
 				.accept(this, arg), (Sentence) sentence.getSecond().accept(this, arg));
 	}
 
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
-	}
-
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
 
@@ -366,14 +292,6 @@ class StandardizeQuantiferVariables implements FOLVisitor {
 		return new ConnectedSentence(sentence.getConnector(),
 				(Sentence) sentence.getFirst().accept(this, arg),
 				(Sentence) sentence.getSecond().accept(this, arg));
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -454,14 +372,6 @@ class RemoveQuantifiers implements FOLVisitor {
 		return new ConnectedSentence(sentence.getConnector(),
 				(Sentence) sentence.getFirst().accept(this, arg),
 				(Sentence) sentence.getSecond().accept(this, arg));
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -591,14 +501,6 @@ class DistributeOrOverAnd implements FOLVisitor {
 		return new ConnectedSentence(sentence.getConnector(), alpha, beta);
 	}
 
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
-	}
-
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
 		// This should not be called as should have already
@@ -678,14 +580,6 @@ class CNFConstructor implements FOLVisitor {
 		second.accept(this, arg);
 
 		return sentence;
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		// This should not be called as these should have already
-		// been stripped. Throw an exception to indicate this
-		throw new IllegalStateException(
-				"All paranthized sentences should have been stripped out.");
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,

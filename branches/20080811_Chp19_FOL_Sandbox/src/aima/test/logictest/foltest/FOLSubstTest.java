@@ -143,7 +143,7 @@ public class FOLSubstTest extends TestCase {
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
 		assertEquals(expectedAfterSubst, afterSubst);
-		assertEquals(parser.parse("FORALL x King(x,John))"), beforeSubst);
+		assertEquals(parser.parse("FORALL x,y King(x,y))"), beforeSubst);
 	}
 
 	public void testSubstWithExistentialQuantifierAndSngleVariable() {

@@ -6,13 +6,16 @@ import java.util.Map;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Constant;
+import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -176,7 +179,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		}
 	}
 	
-	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
+	protected void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
 			InferenceProcedure infp, boolean expectedToTimeOut) {
 		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
@@ -193,7 +196,40 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 			assertEquals(0, answer.size());
 		}
 	}
+	
+	protected void testEqualityAxiomsKBabcAEqualsCSucceeds(
+			InferenceProcedure infp) {
+		FOLKnowledgeBase akb = createABCEqualityAxiomsKnowledgeBase(infp);
 
+		TermEquality query = new TermEquality(new Constant("A"), new Constant(
+				"C"));
+		
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		assertEquals(1, answer.size());
+		assertEquals(0, answer.iterator().next().size());
+	}
+	
+	protected void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(
+			InferenceProcedure infp) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("A"));
+		Function fa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(fa);
+		TermEquality query = new TermEquality(new Function("F", terms),
+				new Constant("A"));
+		
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		assertEquals(1, answer.size());
+		assertEquals(0, answer.iterator().next().size());
+	}
+	
 	//
 	// PRIVATE
 	//
@@ -279,6 +315,63 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		// 10. { c(Ernie) } Premise
 		kb.tell("Caught(Ernie)");
 
+		return kb;
+	}
+	
+	// Note: see -
+	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
+	// slide 12 for where this test example was taken from.
+	private FOLKnowledgeBase createABCEqualityAxiomsKnowledgeBase(
+			InferenceProcedure infp) {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain, infp);
+
+		kb.tell("B = A");
+		kb.tell("B = C");
+		// Reflexivity Axiom
+		kb.tell("x = x");
+		// Symmetry Axiom
+		kb.tell("(x = y => y = x)");
+		// Transitivity Axiom
+		kb.tell("((x = y AND y = z) => x = z)");
+
+		return kb;
+	}
+	
+	// Note: see -
+	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
+	// slide 16,17, and 18 for where this test example was taken from.
+	private FOLKnowledgeBase createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(
+			InferenceProcedure infp) {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addConstant("D");
+		domain.addPredicate("P");
+		domain.addFunction("F");
+
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain, infp);
+
+		kb.tell("F(A) = B");
+		kb.tell("F(B) = A");
+		kb.tell("C = D");
+		kb.tell("P(C)");
+		// Reflexivity Axiom
+		kb.tell("x = x");
+		// Symmetry Axiom
+		kb.tell("(x = y => y = x)");
+		// Transitivity Axiom
+		kb.tell("((x = y AND y = z) => x = z)");
+		// Function F Substitution Axiom
+		kb.tell("((x = y AND F(y) = z) => F(x) = z)");
+		// Predicate P Substitution Axiom
+		kb.tell("((x = y AND P(y)) => P(x))");
+		
 		return kb;
 	}
 }

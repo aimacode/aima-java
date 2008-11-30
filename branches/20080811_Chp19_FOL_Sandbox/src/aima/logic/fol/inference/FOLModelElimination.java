@@ -317,7 +317,7 @@ public class FOLModelElimination implements InferenceProcedure {
 												.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
 					List<Term> answerTerms = nearParent.getHead()
-							.getAtomicSentence().getTerms();
+							.getAtomicSentence().getArgs();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
 						answerBindings.put(v, answerTerms.get(idx));

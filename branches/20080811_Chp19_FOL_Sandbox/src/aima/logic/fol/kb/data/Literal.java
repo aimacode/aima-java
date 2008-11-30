@@ -77,7 +77,7 @@ public class Literal {
 		return l.isPositiveLiteral() == isPositiveLiteral()
 				&& l.getAtomicSentence().getSymbolicName().equals(
 						atom.getSymbolicName())
-				&& l.getAtomicSentence().getTerms().equals(atom.getTerms());
+				&& l.getAtomicSentence().getArgs().equals(atom.getArgs());
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class Literal {
 		result = 37 * result + (getClass().getSimpleName().hashCode())
 				+ (isPositiveLiteral() ? "+".hashCode() : "-".hashCode())
 				+ atom.getSymbolicName().hashCode();
-		for (Term t : atom.getTerms()) {
+		for (Term t : atom.getArgs()) {
 			result = 37 * result + t.hashCode();
 		}
 		return result;

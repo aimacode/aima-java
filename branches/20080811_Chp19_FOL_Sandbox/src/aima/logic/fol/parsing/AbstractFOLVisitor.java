@@ -7,7 +7,6 @@ import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.ParanthizedSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -87,11 +86,5 @@ public class AbstractFOLVisitor implements FOLVisitor {
 				.accept(this, arg);
 		return new ConnectedSentence(sentence.getConnector(), substFirst,
 				substSecond);
-	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		return new ParanthizedSentence((Sentence) sentence.getParanthized()
-				.accept(this, arg));
 	}
 }
