@@ -230,6 +230,42 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertEquals(0, answer.iterator().next().size());
 	}
 	
+	protected void testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(
+			InferenceProcedure infp) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("D"));
+		Predicate query = new Predicate("P", terms);
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		assertEquals(1, answer.size());
+		assertEquals(0, answer.iterator().next().size());
+	}
+	
+	protected void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(
+			InferenceProcedure infp) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("A"));
+		Function fa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(fa);
+		Function ffa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(ffa);
+		Predicate query = new Predicate("P", terms);
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		assertEquals(1, answer.size());
+		assertEquals(0, answer.iterator().next().size());
+	}
+	
 	//
 	// PRIVATE
 	//
@@ -360,6 +396,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		kb.tell("F(A) = B");
 		kb.tell("F(B) = A");
 		kb.tell("C = D");
+		kb.tell("P(A)");
 		kb.tell("P(C)");
 		// Reflexivity Axiom
 		kb.tell("x = x");

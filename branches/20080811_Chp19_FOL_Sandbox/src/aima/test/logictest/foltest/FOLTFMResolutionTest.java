@@ -72,4 +72,14 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 		testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(new FOLTFMResolution(
 				10 * 1000));
 	}
+	
+	public void testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds() {
+		testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(new FOLTFMResolution(
+				10 * 1000));
+	}
+	
+	public void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds() {
+		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(new FOLTFMResolution(
+				10 * 1000));
+	}
 }
