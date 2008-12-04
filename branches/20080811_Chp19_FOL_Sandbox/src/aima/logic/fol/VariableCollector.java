@@ -41,10 +41,10 @@ public class VariableCollector implements FOLVisitor {
 		return variables;
 	}
 
-	public Set<Variable> collectAllVariables(Function aFunction) {
+	public Set<Variable> collectAllVariables(Term aTerm) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
-		aFunction.accept(this, variables);
+		aTerm.accept(this, variables);
 
 		return variables;
 	}
