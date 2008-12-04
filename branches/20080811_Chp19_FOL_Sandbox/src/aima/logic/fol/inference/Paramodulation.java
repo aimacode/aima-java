@@ -142,19 +142,18 @@ public class Paramodulation extends AbstractModulation {
 
 		if (possibleMatch != null && substitution != null) {
 			// Note:
-			// http://www.cs.miami.edu/~geoff/Courses/CSC648-07F/Content/Paramodulation.shtml
-			// It is never necessary to paramodulate into variables,
-			// i.e, it is never necessary to replace a variable sub-term by a
-			// non-variable equality literal argument, using paramodulation.
-			if (!(possibleMatch instanceof Variable && !(toMatch instanceof Variable))) {
-				// TODO: Find out whether the following statement from same
-				// source actually the case, as it was not positive but
+			// [Brand 1975] showed that paramodulation into
+			// variables is unnecessary.
+			if (!(possibleMatch instanceof Variable)) {
+				// TODO: Find out whether the following statement from:
+				// http://www.cs.miami.edu/~geoff/Courses/CSC648-07F/Content/Paramodulation.shtml
+				// is actually the case, as it was not positive but
 				// intuitively makes sense:
 				// "Similarly, depending on how paramodulation is used, it is
 				// often unnecessary to paramodulate from variables."
-				if (!(toMatch instanceof Variable)) {
-					return true;
-				}
+				// if (!(toMatch instanceof Variable)) {
+				return true;
+				// }
 			}
 		}
 		return false;

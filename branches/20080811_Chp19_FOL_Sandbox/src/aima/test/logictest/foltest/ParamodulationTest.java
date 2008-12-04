@@ -56,10 +56,12 @@ public class ParamodulationTest extends TestCase {
 		Clause c2 = new Clause(lits);
 
 		Set<Clause> paras = paramodulation.apply(c1, c2);
-		assertEquals(1, paras.size());
+		assertEquals(2, paras.size());
 
 		Iterator<Clause> it = paras.iterator();
 		assertEquals("[P(B,A), Q(A), R(B)]", it.next().toString());
+		assertEquals("[P(F(A,F(x,B)),x), Q(x), R(F(x,B))]", it.next()
+				.toString());
 	}
 
 	public void testMultipleTermEqualitiesInBothClausesExample() {
@@ -102,11 +104,14 @@ public class ParamodulationTest extends TestCase {
 		Clause c2 = new Clause(lits);
 
 		Set<Clause> paras = paramodulation.apply(c1, c2);
-		assertEquals(4, paras.size());
+		assertEquals(5, paras.size());
 
 		Iterator<Clause> it = paras.iterator();
 		assertEquals(
 				"[F(B,B) = C, F(C,A) = D, A = D, P(B,A), Q(A), R(A), R(B), R(C)]",
+				it.next().toString());
+		assertEquals(
+				"[F(A,F(C,x)) = D, F(B,F(C,x)) = C, A = D, P(F(x,B),x), Q(x), R(F(C,x)), R(A), R(C)]",
 				it.next().toString());
 		assertEquals(
 				"[F(A,B) = B, F(C,B) = D, A = D, P(C,B), Q(B), R(A), R(B), R(C)]",
