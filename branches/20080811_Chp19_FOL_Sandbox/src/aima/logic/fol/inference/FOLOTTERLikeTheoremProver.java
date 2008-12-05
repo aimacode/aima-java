@@ -309,30 +309,16 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			Clause clause, Set<Clause> sos, Set<Clause> usable) {
 
 		Set<Clause> toCheck = new LinkedHashSet<Clause>();
-		if (ansHandler.isLookingForAnswerLiteral()) {
-			if (2 == clause.getNumberLiterals()) {
-				for (Clause s : sos) {
-					if (2 == s.getNumberLiterals()) {
-						toCheck.add(s);
-					}
-				}
-				for (Clause u : usable) {
-					if (2 == u.getNumberLiterals()) {
-						toCheck.add(u);
-					}
+
+		if (ansHandler.isCheckForUnitRefutation(clause)) {
+			for (Clause s : sos) {
+				if (s.isUnitClause()) {
+					toCheck.add(s);
 				}
 			}
-		} else {
-			if (clause.isUnitClause()) {
-				for (Clause s : sos) {
-					if (s.isUnitClause()) {
-						toCheck.add(s);
-					}
-				}
-				for (Clause u : usable) {
-					if (u.isUnitClause()) {
-						toCheck.add(u);
-					}
+			for (Clause u : usable) {
+				if (u.isUnitClause()) {
+					toCheck.add(u);
 				}
 			}
 		}
@@ -394,6 +380,25 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		
 		public boolean isLookingForAnswerLiteral() {
 			return !answerClause.isEmpty();
+		}
+		
+		public boolean isCheckForUnitRefutation(Clause clause) {
+
+			if (isLookingForAnswerLiteral()) {
+				if (2 == clause.getNumberLiterals()) {
+					for (Literal t : clause.getLiterals()) {
+						if (t.getAtomicSentence().getSymbolicName().equals(
+								answerLiteral.getAtomicSentence()
+										.getSymbolicName())) {
+							return true;
+						}
+					}
+				}
+			} else {
+				return clause.isUnitClause();
+			}
+
+			return false;
 		}
 		
 		public boolean isAnswer(Clause aClause) {
