@@ -20,6 +20,8 @@ import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.inference.InferenceProcedure;
+import aima.logic.fol.inference.InferenceResult;
+import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -121,16 +123,13 @@ public class FOLKnowledgeBase {
 	/**
 	 * 
 	 * @param aQuerySentence
-	 * @return two possible return values exist. 1. an empty Set, the query
-	 *         returned false. 2. a Set of substitutions, indicates true and the
-	 *         bindings for different possible answers to the query (Note: refer
-	 *         to page 256).
+	 * @return an InferenceResult.
 	 */
-	public Set<Map<Variable, Term>> ask(String aQuerySentence) {
+	public InferenceResult ask(String aQuerySentence) {
 		return ask(parser.parse(aQuerySentence));
 	}
 
-	public Set<Map<Variable, Term>> ask(Sentence aQuery) {
+	public InferenceResult ask(Sentence aQuery) {
 		// Want to standardize apart the query to ensure
 		// it does not clash with any of the sentences
 		// in the database
@@ -140,23 +139,19 @@ public class FOLKnowledgeBase {
 		// Need to map the result variables (as they are standardized apart)
 		// to the original queries variables so that the caller can easily
 		// understand and use the returned set of substitutions
-		Set<Map<Variable, Term>> internalResult = getInferenceProcedure().ask(
+		InferenceResult infResult = getInferenceProcedure().ask(
 				this, saResult.getStandardized());
-		Set<Map<Variable, Term>> externalResult = null;
-		// Ensure the inference procedure was able to come up with an answer
-		if (null != internalResult) {
-			externalResult = new LinkedHashSet<Map<Variable, Term>>();
-			for (Map<Variable, Term> im : internalResult) {
-				Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
-				for (Variable rev : saResult.getReverseSubstitution().keySet()) {
+		for (Proof p : infResult.getProofs()) {
+			Map<Variable, Term> im = p.getAnswerBindings();
+			Map<Variable, Term> em = new LinkedHashMap<Variable, Term>();
+			for (Variable rev : saResult.getReverseSubstitution().keySet()) {
 					em.put((Variable) saResult.getReverseSubstitution()
 							.get(rev), im.get(rev));
-				}
-				externalResult.add(em);
 			}
+			p.replaceAnswerBindings(em);
 		}
 
-		return externalResult;
+		return infResult;
 	}
 
 	public int getNumberFacts() {

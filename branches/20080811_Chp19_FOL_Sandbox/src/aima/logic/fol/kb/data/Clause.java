@@ -17,6 +17,10 @@ import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
+import aima.logic.fol.inference.proof.ProofStep;
+import aima.logic.fol.inference.proof.ProofStepClauseBinaryResolvent;
+import aima.logic.fol.inference.proof.ProofStepClauseFactor;
+import aima.logic.fol.inference.proof.ProofStepPremise;
 import aima.logic.fol.parsing.FOLVisitor;
 import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
@@ -57,6 +61,7 @@ public class Clause {
 	private Set<Clause> factors = null;
 	private Set<Clause> nonTrivialFactors = null;
 	private String stringRep = "{}";
+	private ProofStep proofStep = null; 
 
 	public Clause() {
 		// i.e. the empty clause
@@ -85,6 +90,18 @@ public class Clause {
 			}
 		}
 		recalculateIdentity();
+	}
+	
+	public ProofStep getProofStep() {
+		if (null == proofStep) {
+			// Assume was a premise
+			proofStep = new ProofStepPremise(this.toString());
+		}
+		return proofStep;
+	}
+	
+	public void setProofStep(ProofStep proofStep) {
+		this.proofStep = proofStep;
 	}
 
 	public boolean isImmutable() {
@@ -279,6 +296,8 @@ public class Clause {
 						standardizeApart.standardizeApart(copyRPosLits,
 								copyRNegLits, _saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
+						c.setProofStep(new ProofStepClauseBinaryResolvent(c,
+								this, othC));
 						if (isImmutable()) {
 							c.setImmutable();
 						}
@@ -394,6 +413,7 @@ public class Clause {
 						standardizeApart.standardizeApart(posLits, negLits,
 								_saIndexical);
 						Clause c = new Clause(posLits, negLits);
+						c.setProofStep(new ProofStepClauseFactor(c, this));
 						if (isImmutable()) {
 							c.setImmutable();
 						}
@@ -426,7 +446,10 @@ public class Clause {
 
 	private Clause saIfRequired(Clause othClause) {
 
-		if (isStandardizedApartCheckRequired()) {
+		// If performing resolution with self
+		// then need to standardize apart in
+		// order to work correctly.
+		if (isStandardizedApartCheckRequired() || this == othClause) {
 			Set<Variable> mVariables = variableCollector
 					.collectAllVariables(this);
 			Set<Variable> oVariables = variableCollector

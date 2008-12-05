@@ -37,7 +37,8 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 		// seconds is more than enough to extract the 4 answers
 		// that are expected
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(
-				new FOLModelElimination(2 * 1000), false);
+				new FOLModelElimination(
+				2 * 1000));
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {

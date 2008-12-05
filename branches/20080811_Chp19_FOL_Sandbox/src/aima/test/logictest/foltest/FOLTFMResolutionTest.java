@@ -37,24 +37,19 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 		// therefore give it 10 seconds to find the 4 answers to this, should
 		// be more than enough.
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(new FOLTFMResolution(
-				10 * 1000), false);
+				10 * 1000));
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {
-		// This query takes too long to run (approx 25 mins) as a unit test using TFM,
-		// however, give it ten seconds and expect it to return
-		// null as its answer - i.e. does not know.
+		// 10 seconds should be more than plenty for this query to finish.
 		testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds(
-				new FOLTFMResolution(10 * 1000), true);
+				new FOLTFMResolution(10 * 1000), false);
 	}
 
-	// Note: This test is a memory hog due to the number of clauses
-	// created when trying to find the answer, therefore run with
-	// VM arguments: -Xms256m -Xmx1024m
 	public void testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds() {
-		// Two minutes should be more than plenty for this query to finish.
+		// 10 seconds should be more than plenty for this query to finish.
 		testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds(new FOLTFMResolution(
-				120 * 1000), false);
+				10 * 1000), false);
 	}
 	
 	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse() {

@@ -9,6 +9,7 @@ import java.util.Set;
 import aima.logic.fol.StandardizeApart;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
+import aima.logic.fol.inference.proof.ProofStepClauseParamodulation;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.AtomicSentence;
@@ -134,16 +135,26 @@ public class Paramodulation extends AbstractModulation {
 
 								// Only apply paramodulation at most once
 								// for each term equality.
-
+								Clause nc = null;
 								if (standardizeApart) {
 									sApart.standardizeApart(newLits,
 											_emptyLiteralList, _saIndexical);
-									Clause nc = new Clause(newLits);
-									nc.setStandardizedApartCheckNotRequired();
-									paraExpressions.add(nc);
+									nc = new Clause(newLits);
+																	
 								} else {
-									paraExpressions.add(new Clause(newLits));
+									nc = new Clause(newLits);
 								}
+								nc
+										.setProofStep(new ProofStepClauseParamodulation(
+												nc, topClause, equalityClause,
+												assertion));
+								if (c1.isImmutable()) {
+									nc.setImmutable();
+								}
+								if (!c1.isStandardizedApartCheckRequired()) {
+									c1.setStandardizedApartCheckNotRequired();
+								}
+								paraExpressions.add(nc);
 								break;
 							}
 						}

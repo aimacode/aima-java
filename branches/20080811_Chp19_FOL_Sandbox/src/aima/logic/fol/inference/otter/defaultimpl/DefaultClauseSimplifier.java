@@ -34,7 +34,7 @@ public class DefaultClauseSimplifier implements ClauseSimplifier {
 		// the clause
 		for (TermEquality te : rewrites) {
 			Clause dc = simplified;
-			// Keep apply the rewrite as many times as it
+			// Keep applying the rewrite as many times as it
 			// can be applied before moving on to the next one.
 			while (null != (dc = demodulation.apply(te, dc))) {
 				simplified = dc;

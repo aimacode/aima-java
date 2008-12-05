@@ -1,13 +1,11 @@
 package aima.test.regression.logic.fol;
 
-import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.inference.FOLTFMResolution;
+import aima.logic.fol.inference.InferenceResult;
 import aima.logic.fol.inference.trace.FOLTFMResolutionTracer;
 import aima.logic.fol.kb.data.Clause;
-import aima.logic.fol.parsing.ast.Term;
-import aima.logic.fol.parsing.ast.Variable;
 import aima.test.logictest.foltest.CommonFOLInferenceProcedureTests;
 
 /**
@@ -75,7 +73,7 @@ public class FOLTFMResolutionRegression extends
 		}
 
 		public void stepFinished(Set<Clause> clauses,
-				Set<Map<Variable, Term>> result) {
+				InferenceResult result) {
 			System.out.println("Total # Pairs of Clauses Considered:"
 					+ noPairsConsidered);
 			System.out.println("Total # Pairs of Clauses Resolved  :"

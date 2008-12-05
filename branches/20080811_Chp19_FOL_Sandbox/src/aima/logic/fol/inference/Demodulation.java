@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.inference.proof.ProofStepClauseDemodulation;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.AtomicSentence;
@@ -58,6 +59,14 @@ public class Demodulation extends AbstractModulation {
 				// Only apply demodulation at most once on
 				// each call.
 				altClExpression = new Clause(newLits);
+				altClExpression.setProofStep(new ProofStepClauseDemodulation(
+						altClExpression, clExpression, assertion));
+				if (clExpression.isImmutable()) {
+					altClExpression.setImmutable();
+				}
+				if (!clExpression.isStandardizedApartCheckRequired()) {
+					altClExpression.setStandardizedApartCheckNotRequired();
+				}
 				break;
 			}
 		}

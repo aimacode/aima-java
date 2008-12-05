@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import aima.logic.fol.inference.proof.ProofStep;
+import aima.logic.fol.inference.proof.ProofStepPremise;
+
 /**
  * @see http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf
  * 
@@ -20,6 +23,7 @@ public class Chain {
 			.unmodifiableList(new ArrayList<Literal>());
 	//
 	private List<Literal> literals = new ArrayList<Literal>();
+	private ProofStep proofStep = null;
 
 	public Chain() {
 		// i.e. the empty chain
@@ -31,6 +35,18 @@ public class Chain {
 	
 	public Chain(Set<Literal> literals) {
 		this.literals.addAll(literals);
+	}
+	
+	public ProofStep getProofStep() {
+		if (null == proofStep) {
+			// Assume was a premise
+			proofStep = new ProofStepPremise(this.toString());
+		}
+		return proofStep;
+	}
+
+	public void setProofStep(ProofStep proofStep) {
+		this.proofStep = proofStep;
 	}
 
 	public boolean isEmpty() {

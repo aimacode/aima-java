@@ -1,11 +1,12 @@
 package aima.logic.fol.inference;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.inference.proof.Proof;
+import aima.logic.fol.inference.proof.ProofFinal;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
@@ -62,13 +63,15 @@ public class FOLFCAsk implements InferenceProcedure {
 	 *           alpha, the query, an atomic sentence
 	 * </code>
 	 */
-	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence query) {
+	public InferenceResult ask(FOLKnowledgeBase KB, Sentence query) {
 		// Assertions on the type of queries this Inference procedure
 		// supports
 		if (!(query instanceof AtomicSentence)) {
 			throw new IllegalArgumentException(
 					"Only Atomic Queries are supported.");
 		}
+		
+		FCAskAnswerHandler ansHandler = new FCAskAnswerHandler();
 
 		Literal alpha = new Literal((AtomicSentence) query);
 
@@ -77,9 +80,10 @@ public class FOLFCAsk implements InferenceProcedure {
 
 		// Ensure query is not already a know fact before
 		// attempting forward chaining.
-		Set<Map<Variable, Term>> answer = KB.fetch(alpha);
-		if (answer.size() > 0) {
-			return answer;
+		Set<Map<Variable, Term>> answers = KB.fetch(alpha);
+		if (answers.size() > 0) {
+			ansHandler.setAnswers(alpha, answers);
+			return ansHandler;
 		}
 
 		// repeat until new is empty
@@ -113,7 +117,8 @@ public class FOLFCAsk implements InferenceProcedure {
 							for (Literal l : newSentences) {
 								KB.tell(l.getAtomicSentence());
 							}
-							return KB.fetch(alpha);
+							ansHandler.setAnswers(alpha, KB.fetch(alpha));
+							return ansHandler;
 						}
 					}
 				}
@@ -125,7 +130,7 @@ public class FOLFCAsk implements InferenceProcedure {
 		} while (newSentences.size() > 0);
 
 		// return false
-		return new HashSet<Map<Variable, Term>>();
+		return ansHandler;
 	}
 
 	// END-InferenceProcedure
@@ -141,5 +146,46 @@ public class FOLFCAsk implements InferenceProcedure {
 					.isPositiveLiteral() ? true : false)));
 		}
 		return invLits;
+	}
+	
+	class FCAskAnswerHandler implements InferenceResult {
+
+		private List<Proof> proofs = new ArrayList<Proof>();
+
+		public FCAskAnswerHandler() {
+
+		}
+
+		//
+		// START-InferenceResult
+		public boolean isFalse() {
+			return proofs.size() == 0;
+		}
+
+		public boolean isTrue() {
+			return proofs.size() > 0;
+		}
+
+		public boolean isUnknownDueToTimeout() {
+			return false;
+		}
+
+		public boolean isPartialResultDueToTimeout() {
+			return false;
+		}
+
+		public List<Proof> getProofs() {
+			return proofs;
+		}
+
+		// END-InferenceResult
+		//
+
+		public void setAnswers(Literal alpha, Set<Map<Variable, Term>> answers) {
+			for (Map<Variable, Term> ans : answers) {
+				// TODO-proof step required.
+				proofs.add(new ProofFinal(null, ans));
+			}
+		}
 	}
 }

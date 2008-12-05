@@ -87,7 +87,8 @@ public class FOLOTTERLikeTheoremProverTest extends CommonFOLInferenceProcedureTe
 		// seconds is more than enough to extract the 4 answers
 		// that are expected
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(
-				new FOLOTTERLikeTheoremProver(2 * 1000, false), false);
+				new FOLOTTERLikeTheoremProver(
+				2 * 1000, false));
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {

@@ -1,5 +1,6 @@
 package aima.logic.fol.inference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,6 +14,9 @@ import aima.logic.fol.inference.otter.LightestClauseHeuristic;
 import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseFilter;
 import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseSimplifier;
 import aima.logic.fol.inference.otter.defaultimpl.DefaultLightestClauseHeuristic;
+import aima.logic.fol.inference.proof.Proof;
+import aima.logic.fol.inference.proof.ProofFinal;
+import aima.logic.fol.inference.proof.ProofStepGoal;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
@@ -147,7 +151,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 	//
 	// START-InferenceProcedure
-	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence alpha) {
+	public InferenceResult ask(FOLKnowledgeBase KB, Sentence alpha) {
 		Set<Clause> sos = new LinkedHashSet<Clause>();
 		Set<Clause> usable = new LinkedHashSet<Clause>();
 
@@ -185,6 +189,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					notAlpha, answerLiteral.getAtomicSentence());
 			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
 				c = KB.standardizeApart(c);
+				c.setProofStep(new ProofStepGoal(c.toString()));
 				c.setStandardizedApartCheckNotRequired();
 				sos.addAll(c.getFactors());
 			}
@@ -193,6 +198,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		} else {
 			for (Clause c : KB.convertToClauses(notAlpha)) {
 				c = KB.standardizeApart(c);
+				c.setProofStep(new ProofStepGoal(c.toString()));
 				c.setStandardizedApartCheckNotRequired();
 				sos.addAll(c.getFactors());
 			}
@@ -214,7 +220,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	 *   usable, background knowledge potentially relevant to the problem
 	 * </pre>
 	 */
-	private Set<Map<Variable, Term>> otter(OTTERAnswerHandler ansHandler,
+	private InferenceResult otter(OTTERAnswerHandler ansHandler,
 			Set<Clause> sos, Set<Clause> usable) {
 
 		getLightestClauseHeuristic().initialSOS(sos);
@@ -234,7 +240,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			// * until sos = [] or a refutation has been found
 		} while (sos.size() != 0 && !ansHandler.isComplete());
 
-		return ansHandler.getResult();
+		return ansHandler;
 	}
 
 	/**
@@ -356,13 +362,14 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		}
 	}
 
-	class OTTERAnswerHandler {
+	class OTTERAnswerHandler implements InferenceResult {
 		private Literal answerLiteral = null;
 		private Set<Variable> answerLiteralVariables = null;
 		private Clause answerClause = null;
-		private Set<Map<Variable, Term>> result = new LinkedHashSet<Map<Variable, Term>>();
 		private long finishTime = 0L;
 		private boolean complete = false;
+		private List<Proof> proofs = new ArrayList<Proof>();
+		private boolean timedOut = false;
 
 		public OTTERAnswerHandler(Literal answerLiteral,
 				Set<Variable> answerLiteralVariables, Clause answerClause,
@@ -373,10 +380,31 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			//
 			this.finishTime = System.currentTimeMillis() + maxQueryTime;
 		}
-
-		public Set<Map<Variable, Term>> getResult() {
-			return result;
+		
+		//
+		// START-InferenceResult
+		public boolean isFalse() {
+			return !timedOut && proofs.size() == 0;
 		}
+		
+		public boolean isTrue() {
+			return proofs.size() > 0;
+		}
+
+		public boolean isUnknownDueToTimeout() {
+			return timedOut && proofs.size() == 0;
+		}
+
+		public boolean isPartialResultDueToTimeout() {
+			return timedOut && proofs.size() > 0;
+		}
+
+		public List<Proof> getProofs() {
+			return proofs;
+		}
+
+		// END-InferenceResult
+		//
 
 		public boolean isComplete() {
 			return complete;
@@ -410,7 +438,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 			if (answerClause.isEmpty()) {
 				if (aClause.isEmpty()) {
-					result.add(new HashMap<Variable, Term>());
+					proofs.add(new ProofFinal(aClause.getProofStep(),
+							new HashMap<Variable, Term>()));
 					complete = true;
 					isAns = true;
 				}
@@ -438,20 +467,25 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 						answerBindings.put(v, answerTerms.get(idx));
 						idx++;
 					}
-					result.add(answerBindings);
+					boolean addNewAnswer = true;
+					for (Proof p : proofs) {
+						if (p.getAnswerBindings().equals(answerBindings)) {
+							addNewAnswer = false;
+							break;
+						}
+					}
+					if (addNewAnswer) {
+						proofs.add(new ProofFinal(aClause.getProofStep(),
+							answerBindings));
+					}
 					isAns = true;
 				}
 			}
 
 			if (System.currentTimeMillis() > finishTime) {
 				complete = true;
-				// If have run out of query time and no result
-				// found yet (i.e. partial results via answer literal
-				// bindings are allowed.)
-				// return null to indicate answer unknown.
-				if (0 == result.size()) {
-					result = null;
-				}
+				// Indicate that I have run out of query time
+				timedOut = true;
 			}
 
 			return isAns;
@@ -461,7 +495,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			StringBuilder sb = new StringBuilder();
 			sb.append("isComplete=" + complete);
 			sb.append("\n");
-			sb.append("result=" + result);
+			sb.append("result=" + proofs);
 			return sb.toString();
 		}
 	}

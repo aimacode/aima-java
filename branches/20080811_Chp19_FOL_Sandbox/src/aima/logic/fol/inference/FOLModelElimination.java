@@ -3,7 +3,6 @@ package aima.logic.fol.inference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +13,8 @@ import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.inference.proof.Proof;
+import aima.logic.fol.inference.proof.ProofFinal;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -63,7 +64,7 @@ public class FOLModelElimination implements InferenceProcedure {
 	//
 	// START-InferenceProcedure
 
-	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase kb, Sentence aQuery) {
+	public InferenceResult ask(FOLKnowledgeBase kb, Sentence aQuery) {
 		//
 		// Get the background knowledge - are assuming this is satisfiable
 		// as using Set of Support strategy.
@@ -84,18 +85,18 @@ public class FOLModelElimination implements InferenceProcedure {
 			for (Chain nearParent : ansHandler.getSetOfSupport()) {
 				recursiveDLS(maxDepth, 0, nearParent, ifps, ansHandler);
 				if (ansHandler.isComplete()) {
-					return ansHandler.getResult();
+					return ansHandler;
 				}
 			}
 			// This means the search tree
 			// has bottomed out (i.e. finite).
 			// Return what I know based on exploring everything.
 			if (ansHandler.getMaxDepthReached() < maxDepth) {
-				return ansHandler.getResult();
+				return ansHandler;
 			}
 		}		
 		
-		return ansHandler.getResult();
+		return ansHandler;
 	}
 	// END-InferenceProcedure
 	//
@@ -227,14 +228,15 @@ public class FOLModelElimination implements InferenceProcedure {
 		return c;
 	}
 	
-	class AnswerHandler {
-		private Set<Map<Variable, Term>> result = new LinkedHashSet<Map<Variable, Term>>();
+	class AnswerHandler implements InferenceResult {
 		private Chain answerChain = new Chain();
 		private Set<Variable> answerLiteralVariables;
 		private List<Chain> sos = null;
 		private boolean complete = false;
 		private long finishTime = 0L;
 		private int maxDepthReached = 0;
+		private List<Proof> proofs = new ArrayList<Proof>();
+		private boolean timedOut = false;
 
 		public AnswerHandler(FOLKnowledgeBase kb, Sentence aQuery,
 				long maxQueryTime) {
@@ -264,6 +266,31 @@ public class FOLModelElimination implements InferenceProcedure {
 						.convertToClauses(refutationQuery));
 			}
 		}
+		
+		//
+		// START-InferenceResult
+		public boolean isFalse() {
+			return !timedOut && proofs.size() == 0;
+		}
+
+		public boolean isTrue() {
+			return proofs.size() > 0;
+		}
+
+		public boolean isUnknownDueToTimeout() {
+			return timedOut && proofs.size() == 0;
+		}
+
+		public boolean isPartialResultDueToTimeout() {
+			return timedOut && proofs.size() > 0;
+		}
+
+		public List<Proof> getProofs() {
+			return proofs;
+		}
+
+		// END-InferenceResult
+		//
 
 		public List<Chain> getSetOfSupport() {
 			return sos;
@@ -271,10 +298,6 @@ public class FOLModelElimination implements InferenceProcedure {
 
 		public boolean isComplete() {
 			return complete;
-		}
-
-		public Set<Map<Variable, Term>> getResult() {
-			return result;
 		}
 		
 		public void resetMaxDepthReached() {
@@ -295,7 +318,8 @@ public class FOLModelElimination implements InferenceProcedure {
 			boolean isAns = false;
 			if (answerChain.isEmpty()) {
 				if (nearParent.isEmpty()) {
-					result.add(new HashMap<Variable, Term>());
+					proofs.add(new ProofFinal(nearParent.getProofStep(),
+							new HashMap<Variable, Term>()));
 					complete = true;
 					isAns = true;
 				}
@@ -322,20 +346,25 @@ public class FOLModelElimination implements InferenceProcedure {
 						answerBindings.put(v, answerTerms.get(idx));
 						idx++;
 					}
-					result.add(answerBindings);
+					boolean addNewAnswer = true;
+					for (Proof p : proofs) {
+						if (p.getAnswerBindings().equals(answerBindings)) {
+							addNewAnswer = false;
+							break;
+						}
+					}
+					if (addNewAnswer) {
+						proofs.add(new ProofFinal(nearParent.getProofStep(),
+								answerBindings));
+					}
 					isAns = true;
 				}
 			}
 			
 			if (System.currentTimeMillis() > finishTime) {
 				complete = true;
-				// If have run out of query time and no result
-				// found yet (i.e. partial results via answer literal
-				// bindings are allowed.)
-				// return null to indicate answer unknown.
-				if (0 == result.size()) {
-					result = null;
-				}
+				// Indicate that I have run out of query time
+				timedOut = true;
 			}
 			
 			return isAns;
@@ -345,7 +374,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			StringBuilder sb = new StringBuilder();
 			sb.append("isComplete=" + complete);
 			sb.append("\n");
-			sb.append("result=" + result);
+			sb.append("result=" + proofs);
 			return sb.toString();
 		}
 	}

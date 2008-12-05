@@ -315,7 +315,9 @@ public class ClauseTest extends TestCase {
 						fail("Ordering of binary resolvents has become important, which should not be the case");
 					}
 					
-					newClauses.addAll(cIresolvents);
+					for (Clause r : cIresolvents) {
+						newClauses.addAll(r.getFactors());
+					}
 					
 					if (System.currentTimeMillis() > finishTime) {
 						break;
