@@ -261,7 +261,7 @@ public class FOLKnowledgeBase {
 		return new LinkedHashSet<Clause>(cnf.getConjunctionOfClauses());
 	}
 	
-	public Predicate createAnswerLiteral(Sentence forQuery) {
+	public Literal createAnswerLiteral(Sentence forQuery) {
 		String alName = parser.getFOLDomain().addAnswerLiteral();
 		List<Term> terms = new ArrayList<Term>();
 		
@@ -270,7 +270,7 @@ public class FOLKnowledgeBase {
 			terms.add(v);
 		}
 		
-		return new Predicate(alName, terms);
+		return new Literal(new Predicate(alName, terms));
 	}
 
 	// Note: see pg. 281

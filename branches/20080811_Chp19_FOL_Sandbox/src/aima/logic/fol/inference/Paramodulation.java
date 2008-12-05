@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartIndexical;
+import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.AtomicSentence;
@@ -30,10 +33,20 @@ import aima.logic.fol.parsing.ast.Variable;
  * 
  */
 public class Paramodulation extends AbstractModulation {
+	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
+			.newStandardizeApartIndexical('p');
+	private static List<Literal> _emptyLiteralList = new ArrayList<Literal>();
+	//
+	private StandardizeApart sApart = new StandardizeApart();
+
 	public Paramodulation() {
 	}
 
 	public Set<Clause> apply(Clause c1, Clause c2) {
+		return apply(c1, c2, false);
+	}
+
+	public Set<Clause> apply(Clause c1, Clause c2, boolean standardizeApart) {
 		Set<Clause> paraExpressions = new LinkedHashSet<Clause>();
 
 		for (int i = 0; i < 2; i++) {
@@ -121,7 +134,16 @@ public class Paramodulation extends AbstractModulation {
 
 								// Only apply paramodulation at most once
 								// for each term equality.
-								paraExpressions.add(new Clause(newLits));
+
+								if (standardizeApart) {
+									sApart.standardizeApart(newLits,
+											_emptyLiteralList, _saIndexical);
+									Clause nc = new Clause(newLits);
+									nc.setStandardizedApartCheckNotRequired();
+									paraExpressions.add(nc);
+								} else {
+									paraExpressions.add(new Clause(newLits));
+								}
 								break;
 							}
 						}

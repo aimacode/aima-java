@@ -245,8 +245,7 @@ public class FOLModelElimination implements InferenceProcedure {
 
 			// Want to use an answer literal to pull
 			// query variables where necessary
-			Literal answerLiteral = new Literal(kb
-					.createAnswerLiteral(refutationQuery));
+			Literal answerLiteral = kb.createAnswerLiteral(refutationQuery);
 			answerLiteralVariables = kb.collectAllVariables(answerLiteral
 					.getAtomicSentence());
 

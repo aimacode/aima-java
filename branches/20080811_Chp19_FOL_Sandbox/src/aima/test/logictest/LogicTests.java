@@ -16,6 +16,7 @@ import aima.test.logictest.foltest.FOLFCAskTest;
 import aima.test.logictest.foltest.FOLKnowledgeBaseTest;
 import aima.test.logictest.foltest.FOLLexerTest;
 import aima.test.logictest.foltest.FOLModelEliminationTest;
+import aima.test.logictest.foltest.FOLOTTERLikeTheoremProverTest;
 import aima.test.logictest.foltest.FOLParserTest;
 import aima.test.logictest.foltest.FOLSubstTest;
 import aima.test.logictest.foltest.FOLTFMResolutionTest;
@@ -48,6 +49,7 @@ public class LogicTests {
 		suite.addTest(new TestSuite(FOLKnowledgeBaseTest.class));
 		suite.addTest(new TestSuite(FOLLexerTest.class));
 		suite.addTest(new TestSuite(FOLModelEliminationTest.class));
+		suite.addTest(new TestSuite(FOLOTTERLikeTheoremProverTest.class));
 		suite.addTest(new TestSuite(FOLParserTest.class));
 		suite.addTest(new TestSuite(FOLSubstTest.class));
 		suite.addTest(new TestSuite(FOLTFMResolutionTest.class));

@@ -50,7 +50,10 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 				new FOLModelElimination(), false);
 	}
 	
-	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse() {
+	public void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse() {		
+		// Note: While the KB expands infinitely, the answer
+		// search for this bottoms out indicating the
+		// KB does not entail the fact.
 		testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
 				new FOLModelElimination(), false);
 	}
@@ -69,5 +72,25 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 	
 	public void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds() {
 		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(new FOLModelElimination());
+	}
+	
+	public void testEqualityNoAxiomsKBabcAEqualsCSucceeds() {
+		testEqualityNoAxiomsKBabcAEqualsCSucceeds(new FOLModelElimination(),
+				true);
+	}
+
+	public void testEqualityAndSubstitutionNoAxiomsKBabcdFFASucceeds() {
+		testEqualityAndSubstitutionNoAxiomsKBabcdFFASucceeds(
+				new FOLModelElimination(), true);
+	}
+
+	public void testEqualityAndSubstitutionNoAxiomsKBabcdPDSucceeds() {
+		testEqualityAndSubstitutionNoAxiomsKBabcdPDSucceeds(
+				new FOLModelElimination(), true);
+	}
+
+	public void testEqualityAndSubstitutionNoAxiomsKBabcdPFFASucceeds() {
+		testEqualityAndSubstitutionNoAxiomsKBabcdPFFASucceeds(
+				new FOLModelElimination(), true);
 	}
 }

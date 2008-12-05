@@ -8,6 +8,6 @@ import aima.logic.fol.kb.data.Clause;
  * @author Ciaran O'Reilly
  * 
  */
-public interface FilterClauses {
+public interface ClauseFilter {
 	Set<Clause> filter(Set<Clause> clauses);
 }

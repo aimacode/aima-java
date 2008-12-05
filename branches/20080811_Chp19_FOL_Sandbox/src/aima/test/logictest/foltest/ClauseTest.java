@@ -605,4 +605,43 @@ public class ClauseTest extends TestCase {
 		assertEquals("[[P(F(A)), P(G(F(F(A)))), P(G(F(A))), Q(F(A))]]", c
 				.getNonTrivialFactors().toString());
 	}
+	
+	// Note: Tests derived from:
+	// http://logic.stanford.edu/classes/cs157/2008/notes/chap09.pdf
+	// page 16.
+	public void testIsTautology() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addPredicate("P");
+		domain.addPredicate("Q");
+		domain.addPredicate("R");
+		domain.addFunction("F");
+
+		FOLParser parser = new FOLParser(domain);
+
+		// {p(f(a)),~p(f(a))}
+		Clause c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(F(A))"));
+		assertFalse(c.isTautology());
+		c.addNegativeLiteral((Predicate) parser.parse("P(F(A))"));
+		assertTrue(c.isTautology());
+		
+		// {p(x),q(y),~q(y),r(z)}
+		c = new Clause();
+		c.addPositiveLiteral((Predicate) parser.parse("P(x)"));
+		assertFalse(c.isTautology());
+		c.addPositiveLiteral((Predicate) parser.parse("Q(y)"));
+		assertFalse(c.isTautology());
+		c.addNegativeLiteral((Predicate) parser.parse("Q(y)"));
+		assertTrue(c.isTautology());
+		c.addPositiveLiteral((Predicate) parser.parse("R(z)"));
+		assertTrue(c.isTautology());
+		
+		// {~p(a),p(x)}
+		c = new Clause();
+		c.addNegativeLiteral((Predicate) parser.parse("P(A)"));
+		assertFalse(c.isTautology());
+		c.addPositiveLiteral((Predicate) parser.parse("P(x)"));
+		assertFalse(c.isTautology());
+	}
 }

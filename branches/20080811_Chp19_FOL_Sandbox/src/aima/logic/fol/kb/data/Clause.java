@@ -129,6 +129,24 @@ public class Clause {
 		// positive.
 		return !isEmpty() && positiveLiterals.size() <= 1;
 	}
+	
+	public boolean isTautology() {
+
+		for (Literal pl : positiveLiterals) {
+			// Literals in a clause must be exact complements
+			// for tautology elimination to apply. Do not
+			// remove non-identical literals just because
+			// they are complements under unification, see pg16:
+			// http://logic.stanford.edu/classes/cs157/2008/notes/chap09.pdf
+			for (Literal nl : negativeLiterals) {
+				if (pl.getAtomicSentence().equals(nl.getAtomicSentence())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	public void addLiteral(Literal literal) {
 		if (isImmutable()) {

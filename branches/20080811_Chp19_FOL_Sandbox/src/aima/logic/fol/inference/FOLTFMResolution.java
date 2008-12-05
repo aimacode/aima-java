@@ -13,7 +13,6 @@ import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;
@@ -84,21 +83,21 @@ public class FOLTFMResolution implements InferenceProcedure {
 		Sentence notAlpha = new NotSentence(alpha);
 		// Want to use an answer literal to pull
 		// query variables where necessary
-		Predicate answerLiteral = KB.createAnswerLiteral(notAlpha);
+		Literal answerLiteral = KB.createAnswerLiteral(notAlpha);
 		Set<Variable> answerLiteralVariables = KB
-				.collectAllVariables(answerLiteral);
+				.collectAllVariables(answerLiteral.getAtomicSentence());
 		Clause answerClause = new Clause();
 
 		if (answerLiteralVariables.size() > 0) {
 			Sentence notAlphaWithAnswer = new ConnectedSentence(Connectors.OR,
-					notAlpha, answerLiteral);
+					notAlpha, answerLiteral.getAtomicSentence());
 			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
 				c = KB.standardizeApart(c);
 				c.setStandardizedApartCheckNotRequired();
 				clauses.addAll(c.getFactors());
 			}
 
-			answerClause.addPositiveLiteral(answerLiteral);
+			answerClause.addLiteral(answerLiteral);
 		} else {
 			for (Clause c : KB.convertToClauses(notAlpha)) {
 				c = KB.standardizeApart(c);

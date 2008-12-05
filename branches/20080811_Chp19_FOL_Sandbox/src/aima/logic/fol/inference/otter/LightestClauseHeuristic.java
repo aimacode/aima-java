@@ -27,7 +27,7 @@ public interface LightestClauseHeuristic {
 	// to having to recalculate each time.
 	void initialSOS(Set<Clause> clauses);
 
-	void willAddClauseToSOS(Clause clause);
+	void addedClauseToSOS(Clause clause);
 
-	void willRemoveClauseToSOS(Clause clause);
+	void removedClauseFromSOS(Clause clause);
 }

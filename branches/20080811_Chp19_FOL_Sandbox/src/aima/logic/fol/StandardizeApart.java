@@ -118,16 +118,16 @@ public class StandardizeApart {
 		return new Chain(lits);
 	}
 	
-	public void standardizeApart(List<Literal> positiveLiterals,
-			List<Literal> negativeLiterals,
+	public void standardizeApart(List<Literal> l1Literals,
+			List<Literal> l2Literals,
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = new HashSet<Variable>();
 
-		for (Literal pl : positiveLiterals) {
+		for (Literal pl : l1Literals) {
 			toRename.addAll(variableCollector.collectAllVariables(pl
 					.getAtomicSentence()));
 		}
-		for (Literal nl : negativeLiterals) {
+		for (Literal nl : l2Literals) {
 			toRename.addAll(variableCollector.collectAllVariables(nl
 					.getAtomicSentence()));
 		}
@@ -149,16 +149,16 @@ public class StandardizeApart {
 		List<Literal> posLits = new ArrayList<Literal>();
 		List<Literal> negLits = new ArrayList<Literal>();
 
-		for (Literal pl : positiveLiterals) {
+		for (Literal pl : l1Literals) {
 			posLits.add(substVisitor.subst(renameSubstitution, pl));
 		}
-		for (Literal nl : negativeLiterals) {
+		for (Literal nl : l2Literals) {
 			negLits.add(substVisitor.subst(renameSubstitution, nl));
 		}
 
-		positiveLiterals.clear();
-		positiveLiterals.addAll(posLits);
-		negativeLiterals.clear();
-		negativeLiterals.addAll(negLits);
+		l1Literals.clear();
+		l1Literals.addAll(posLits);
+		l2Literals.clear();
+		l2Literals.addAll(negLits);
 	}	
 }

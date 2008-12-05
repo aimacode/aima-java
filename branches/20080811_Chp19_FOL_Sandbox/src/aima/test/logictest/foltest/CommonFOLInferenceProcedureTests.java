@@ -199,7 +199,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	
 	protected void testEqualityAxiomsKBabcAEqualsCSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCEqualityAxiomsKnowledgeBase(infp);
+		FOLKnowledgeBase akb = createABCEqualityKnowledgeBase(infp, true);
 
 		TermEquality query = new TermEquality(new Constant("A"), new Constant(
 				"C"));
@@ -213,7 +213,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	
 	protected void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -232,7 +233,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	
 	protected void testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("D"));
@@ -247,7 +249,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	
 	protected void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(infp);
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -264,6 +267,95 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertTrue(null != answer);
 		assertEquals(1, answer.size());
 		assertEquals(0, answer.iterator().next().size());
+	}
+	
+	protected void testEqualityNoAxiomsKBabcAEqualsCSucceeds(
+			InferenceProcedure infp, boolean expectedToFail) {
+		FOLKnowledgeBase akb = createABCEqualityKnowledgeBase(infp, false);
+
+		TermEquality query = new TermEquality(new Constant("A"), new Constant(
+				"C"));
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		if (expectedToFail) {
+			assertEquals(0, answer.size());
+		} else {
+			assertEquals(1, answer.size());
+			assertEquals(0, answer.iterator().next().size());
+		}
+	}
+
+	protected void testEqualityAndSubstitutionNoAxiomsKBabcdFFASucceeds(
+			InferenceProcedure infp, boolean expectedToFail) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, false);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("A"));
+		Function fa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(fa);
+		TermEquality query = new TermEquality(new Function("F", terms),
+				new Constant("A"));
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		if (expectedToFail) {
+			assertEquals(0, answer.size());
+		} else {
+			assertEquals(1, answer.size());
+			assertEquals(0, answer.iterator().next().size());
+		}
+	}
+
+	protected void testEqualityAndSubstitutionNoAxiomsKBabcdPDSucceeds(
+			InferenceProcedure infp, boolean expectedToFail) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, false);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("D"));
+		Predicate query = new Predicate("P", terms);
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+
+		if (expectedToFail) {
+			assertEquals(0, answer.size());
+		} else {
+			assertEquals(1, answer.size());
+			assertEquals(0, answer.iterator().next().size());
+		}
+	}
+
+	protected void testEqualityAndSubstitutionNoAxiomsKBabcdPFFASucceeds(
+			InferenceProcedure infp, boolean expectedToFail) {
+		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
+				infp, false);
+
+		List<Term> terms = new ArrayList<Term>();
+		terms.add(new Constant("A"));
+		Function fa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(fa);
+		Function ffa = new Function("F", terms);
+		terms = new ArrayList<Term>();
+		terms.add(ffa);
+		Predicate query = new Predicate("P", terms);
+
+		Set<Map<Variable, Term>> answer = akb.ask(query);
+
+		assertTrue(null != answer);
+		if (expectedToFail) {
+			assertEquals(0, answer.size());
+		} else {
+			assertEquals(1, answer.size());
+			assertEquals(0, answer.iterator().next().size());
+		}
 	}
 	
 	//
@@ -357,8 +449,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	// Note: see -
 	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
 	// slide 12 for where this test example was taken from.
-	private FOLKnowledgeBase createABCEqualityAxiomsKnowledgeBase(
-			InferenceProcedure infp) {
+	private FOLKnowledgeBase createABCEqualityKnowledgeBase(
+			InferenceProcedure infp, boolean includeEqualityAxioms) {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("A");
 		domain.addConstant("B");
@@ -368,12 +460,15 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		kb.tell("B = A");
 		kb.tell("B = C");
-		// Reflexivity Axiom
-		kb.tell("x = x");
-		// Symmetry Axiom
-		kb.tell("(x = y => y = x)");
-		// Transitivity Axiom
-		kb.tell("((x = y AND y = z) => x = z)");
+		
+		if (includeEqualityAxioms) {
+			// Reflexivity Axiom
+			kb.tell("x = x");
+			// Symmetry Axiom
+			kb.tell("(x = y => y = x)");
+			// Transitivity Axiom
+			kb.tell("((x = y AND y = z) => x = z)");
+		}
 
 		return kb;
 	}
@@ -381,8 +476,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	// Note: see -
 	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
 	// slide 16,17, and 18 for where this test example was taken from.
-	private FOLKnowledgeBase createABCDEqualityAndSubstitutionAxiomsKnowledgeBase(
-			InferenceProcedure infp) {
+	private FOLKnowledgeBase createABCDEqualityAndSubstitutionKnowledgeBase(
+			InferenceProcedure infp, boolean includeEqualityAxioms) {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("A");
 		domain.addConstant("B");
@@ -398,16 +493,19 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		kb.tell("C = D");
 		kb.tell("P(A)");
 		kb.tell("P(C)");
-		// Reflexivity Axiom
-		kb.tell("x = x");
-		// Symmetry Axiom
-		kb.tell("(x = y => y = x)");
-		// Transitivity Axiom
-		kb.tell("((x = y AND y = z) => x = z)");
-		// Function F Substitution Axiom
-		kb.tell("((x = y AND F(y) = z) => F(x) = z)");
-		// Predicate P Substitution Axiom
-		kb.tell("((x = y AND P(y)) => P(x))");
+		
+		if (includeEqualityAxioms) {
+			// Reflexivity Axiom
+			kb.tell("x = x");
+			// Symmetry Axiom
+			kb.tell("(x = y => y = x)");
+			// Transitivity Axiom
+			kb.tell("((x = y AND y = z) => x = z)");
+			// Function F Substitution Axiom
+			kb.tell("((x = y AND F(y) = z) => F(x) = z)");
+			// Predicate P Substitution Axiom
+			kb.tell("((x = y AND P(y)) => P(x))");
+		}
 		
 		return kb;
 	}

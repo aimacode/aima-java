@@ -1,12 +1,26 @@
 package aima.logic.fol.inference;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.Connectors;
+import aima.logic.fol.inference.otter.ClauseFilter;
+import aima.logic.fol.inference.otter.ClauseSimplifier;
+import aima.logic.fol.inference.otter.LightestClauseHeuristic;
+import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseFilter;
+import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseSimplifier;
+import aima.logic.fol.inference.otter.defaultimpl.DefaultLightestClauseHeuristic;
 import aima.logic.fol.kb.FOLKnowledgeBase;
+import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
+import aima.logic.fol.parsing.ast.ConnectedSentence;
+import aima.logic.fol.parsing.ast.NotSentence;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
+import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
 
 /**
@@ -55,18 +69,23 @@ import aima.logic.fol.parsing.ast.Variable;
 // http://www.cs.unm.edu/~mccune/mace4/
 // Should you wish to play with a mature implementation of a theorem prover :-)
 // For lots of interesting problems to play with, see
-// The TPTP Problem Library for Automated Theorem Proving:
+// 'The TPTP Problem Library for Automated Theorem Proving':
 // http://www.cs.miami.edu/~tptp/
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-
-// TODO: Remember to add reflexivity axiom if using paramodulation.
 public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
+	//
 	// Ten seconds is default maximum query time permitted
 	private long maxQueryTime = 10 * 1000;
+	private boolean useParamodulation = true;
+	private LightestClauseHeuristic lightestClauseHeuristic = new DefaultLightestClauseHeuristic();
+	private ClauseFilter clauseFilter = new DefaultClauseFilter();
+	private ClauseSimplifier clauseSimplifier = new DefaultClauseSimplifier();
+	//
+	private Paramodulation paramodulation = new Paramodulation();
 
 	public FOLOTTERLikeTheoremProver() {
 
@@ -74,6 +93,16 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 	public FOLOTTERLikeTheoremProver(long maxQueryTime) {
 		setMaxQueryTime(maxQueryTime);
+	}
+	
+	public FOLOTTERLikeTheoremProver(boolean useParamodulation) {
+		setUseParamodulation(useParamodulation);
+	}
+	
+	public FOLOTTERLikeTheoremProver(long maxQueryTime,
+			boolean useParamodulation) {
+		setMaxQueryTime(maxQueryTime);
+		setUseParamodulation(useParamodulation);
 	}
 
 	public long getMaxQueryTime() {
@@ -84,13 +113,348 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		this.maxQueryTime = maxQueryTime;
 	}
 	
+	public boolean isUseParamodulation() {
+		return useParamodulation;
+	}
+
+	public void setUseParamodulation(boolean useParamodulation) {
+		this.useParamodulation = useParamodulation;
+	}
+
+	public LightestClauseHeuristic getLightestClauseHeuristic() {
+		return lightestClauseHeuristic;
+	}
+
+	public void setLightestClauseHeuristic(
+			LightestClauseHeuristic lightestClauseHeuristic) {
+		this.lightestClauseHeuristic = lightestClauseHeuristic;
+	}
+
+	public ClauseFilter getClauseFilter() {
+		return clauseFilter;
+	}
+
+	public void setClauseFilter(ClauseFilter clauseFilter) {
+		this.clauseFilter = clauseFilter;
+	}
+
+	public ClauseSimplifier getClauseSimplifier() {
+		return clauseSimplifier;
+	}
+
+	public void setClauseSimplifier(ClauseSimplifier clauseSimplifier) {
+		this.clauseSimplifier = clauseSimplifier;
+	}
+
 	//
 	// START-InferenceProcedure
 	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence alpha) {
-		Set<Map<Variable, Term>> result = new LinkedHashSet<Map<Variable, Term>>();
-		return result;
+		Set<Clause> sos = new LinkedHashSet<Clause>();
+		Set<Clause> usable = new LinkedHashSet<Clause>();
+		
+		// Usable set will be the set of clauses in the KB,
+		// are assuming this is satisfiable as using the
+		// Set of Support strategy.
+		for (Clause c : KB.getAllClauses()) {
+			c = KB.standardizeApart(c);
+			c.setStandardizedApartCheckNotRequired();
+			usable.addAll(c.getFactors());
+		}
+		
+		// Ensure reflexivity axiom is added to usable if using paramodulation.
+		if (isUseParamodulation()) {
+			// Reflexivity Axiom: x = x
+			TermEquality reflexivityAxiom = new TermEquality(new Variable("x"),
+					new Variable("x"));
+			Clause reflexivityClause = new Clause();
+			reflexivityClause.addLiteral(new Literal(reflexivityAxiom));
+			reflexivityClause = KB.standardizeApart(reflexivityClause);
+			reflexivityClause.setStandardizedApartCheckNotRequired();
+			usable.add(reflexivityClause);
+		}
+
+		Sentence notAlpha = new NotSentence(alpha);
+		// Want to use an answer literal to pull
+		// query variables where necessary
+		Literal answerLiteral = KB.createAnswerLiteral(notAlpha);
+		Set<Variable> answerLiteralVariables = KB
+				.collectAllVariables(answerLiteral.getAtomicSentence());
+		Clause answerClause = new Clause();
+
+		if (answerLiteralVariables.size() > 0) {
+			Sentence notAlphaWithAnswer = new ConnectedSentence(Connectors.OR,
+					notAlpha, answerLiteral.getAtomicSentence());
+			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
+				c = KB.standardizeApart(c);
+				c.setStandardizedApartCheckNotRequired();
+				sos.addAll(c.getFactors());
+			}
+
+			answerClause.addLiteral(answerLiteral);
+		} else {
+			for (Clause c : KB.convertToClauses(notAlpha)) {
+				c = KB.standardizeApart(c);
+				c.setStandardizedApartCheckNotRequired();
+				sos.addAll(c.getFactors());
+			}
+		}
+		
+		OTTERAnswerHandler ansHandler = new OTTERAnswerHandler(answerLiteral,
+				answerLiteralVariables, answerClause,
+				maxQueryTime);
+
+		return otter(ansHandler, sos, usable);
 	}
 
 	// END-InferenceProcedure
 	// 
+
+	/**
+	 * <pre>
+	 * procedure OTTER(sos, usable) 
+	 *   inputs: sos, a set of support-clauses defining the problem (a global variable) 
+	 *   usable, background knowledge potentially relevant to the problem
+	 * </pre>
+	 */
+	private Set<Map<Variable, Term>> otter(OTTERAnswerHandler ansHandler,
+			Set<Clause> sos, Set<Clause> usable) {
+		
+		getLightestClauseHeuristic().initialSOS(sos);
+		
+		// * repeat
+		do {			
+			// * clause <- the lightest member of sos
+			Clause clause = getLightestClauseHeuristic().getLightestClause();
+			if (null != clause) {
+				// * move clause from sos to usable
+				sos.remove(clause);
+				usable.add(clause);
+				getLightestClauseHeuristic().removedClauseFromSOS(clause);
+				// * PROCESS(INFER(clause, usable), sos)
+				process(ansHandler, infer(clause, usable), sos, usable);
+			}
+			// * until sos = [] or a refutation has been found
+		} while (sos.size() !=0 && !ansHandler.isComplete());
+		
+		return ansHandler.getResult();
+	}
+
+	/**
+	 * <pre>
+	 * function INFER(clause, usable) returns clauses
+	 */
+	private Set<Clause> infer(Clause clause, Set<Clause> usable) {
+		Set<Clause> resultingClauses = new LinkedHashSet<Clause>();
+
+		// * resolve clause with each member of usable
+		for (Clause c : usable) {
+			Set<Clause> resolvents = clause.binaryResolvents(c);
+			for (Clause rc : resolvents) {
+				resultingClauses.addAll(rc.getFactors());
+			}
+			
+			// if using paramodulation to handle equality
+			if (isUseParamodulation()) {
+				Set<Clause> paras = paramodulation.apply(clause, c, true);
+				for (Clause p : paras) {
+					resultingClauses.addAll(p.getFactors());
+				}
+			}
+		}
+
+		// * return the resulting clauses after applying filter
+		return getClauseFilter().filter(resultingClauses);
+	}
+
+	// procedure PROCESS(clauses, sos)
+	private void process(OTTERAnswerHandler ansHandler, Set<Clause> clauses,
+			Set<Clause> sos, Set<Clause> usable) {
+
+		// * for each clause in clauses do
+		for (Clause clause : clauses) {
+			// * clause <- SIMPLIFY(clause)
+			clause = getClauseSimplifier().simplify(clause);
+
+			// * merge identical literals
+			// Note: Not required as handled by Clause Implementation
+			// which keeps literals within a Set, so no duplicates
+			// will exist.
+
+			// * discard clause if it is a tautology
+			if (clause.isTautology()) {
+				continue;
+			}
+
+			// * if clause has no literals then a refutation has been found
+			// or if it just contains the answer literal.
+			if (!ansHandler.isAnswer(clause)) {
+				// * sos <- [clause | sos]
+				int origSize = sos.size();
+				sos.add(clause);
+				if (origSize < sos.size()) {
+					getLightestClauseHeuristic().addedClauseToSOS(clause);
+				}
+
+				// * if clause has one literal then look for unit refutation
+				lookForUnitRefutation(ansHandler, clause, sos, usable);
+			}
+
+			if (ansHandler.isComplete()) {
+				break;
+			}
+		}
+	}
+	
+	private void lookForUnitRefutation(OTTERAnswerHandler ansHandler,
+			Clause clause, Set<Clause> sos, Set<Clause> usable) {
+
+		Set<Clause> toCheck = new LinkedHashSet<Clause>();
+		if (ansHandler.isLookingForAnswerLiteral()) {
+			if (2 == clause.getNumberLiterals()) {
+				for (Clause s : sos) {
+					if (2 == s.getNumberLiterals()) {
+						toCheck.add(s);
+					}
+				}
+				for (Clause u : usable) {
+					if (2 == u.getNumberLiterals()) {
+						toCheck.add(u);
+					}
+				}
+			}
+		} else {
+			if (clause.isUnitClause()) {
+				for (Clause s : sos) {
+					if (s.isUnitClause()) {
+						toCheck.add(s);
+					}
+				}
+				for (Clause u : usable) {
+					if (u.isUnitClause()) {
+						toCheck.add(u);
+					}
+				}
+			}
+		}
+		
+		if (toCheck.size() > 0) {
+			toCheck = infer(clause, toCheck);
+			for (Clause t : toCheck) {
+				// * clause <- SIMPLIFY(clause)
+				t = getClauseSimplifier().simplify(t);
+
+				// * discard clause if it is a tautology
+				if (t.isTautology()) {
+					continue;
+				}
+
+				// * if clause has no literals then a refutation has been found
+				// or if it just contains the answer literal.
+				if (!ansHandler.isAnswer(t)) {
+					// * sos <- [clause | sos]
+					int origSize = sos.size();
+					sos.add(t);
+					if (origSize < sos.size()) {
+						getLightestClauseHeuristic().addedClauseToSOS(t);
+					}
+				}
+
+				if (ansHandler.isComplete()) {
+					break;
+				}
+			}
+		}
+	}
+	
+	class OTTERAnswerHandler {
+		private Literal answerLiteral = null;
+		private Set<Variable> answerLiteralVariables = null;
+		private Clause answerClause = null;
+		private Set<Map<Variable, Term>> result = new LinkedHashSet<Map<Variable, Term>>();
+		private long finishTime = 0L;
+		private boolean complete = false;
+
+		public OTTERAnswerHandler(Literal answerLiteral,
+				Set<Variable> answerLiteralVariables, Clause answerClause,
+				long maxQueryTime) {
+			this.answerLiteral = answerLiteral;
+			this.answerLiteralVariables = answerLiteralVariables;
+			this.answerClause = answerClause;
+			//
+			this.finishTime = System.currentTimeMillis() + maxQueryTime;
+		}
+
+		public Set<Map<Variable, Term>> getResult() {
+			return result;
+		}
+		
+		public boolean isComplete() {
+			return complete;
+		}
+		
+		public boolean isLookingForAnswerLiteral() {
+			return !answerClause.isEmpty();
+		}
+		
+		public boolean isAnswer(Clause aClause) {
+			boolean isAns = false;
+
+			if (answerClause.isEmpty()) {
+				if (aClause.isEmpty()) {
+					result.add(new HashMap<Variable, Term>());
+					complete = true;
+					isAns = true;
+				}
+			} else {
+				if (aClause.isEmpty()) {
+					// This should not happen
+					// as added an answer literal to sos, which
+					// implies the database (i.e. premises) are
+					// unsatisfiable to begin with.
+					throw new IllegalStateException(
+							"Generated an empty clause while looking for an answer, implies original KB or usable is unsatisfiable");
+				}
+				
+				if (aClause.isUnitClause()
+						&& aClause.isDefiniteClause()
+						&& aClause.getPositiveLiterals().get(0)
+								.getAtomicSentence().getSymbolicName().equals(
+										answerLiteral.getAtomicSentence()
+												.getSymbolicName())) {
+					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
+					List<Term> answerTerms = aClause.getPositiveLiterals().get(
+							0)
+							.getAtomicSentence().getArgs();
+					int idx = 0;
+					for (Variable v : answerLiteralVariables) {
+						answerBindings.put(v, answerTerms.get(idx));
+						idx++;
+					}
+					result.add(answerBindings);
+					isAns = true;
+				}
+			}
+
+			if (System.currentTimeMillis() > finishTime) {
+				complete = true;
+				// If have run out of query time and no result
+				// found yet (i.e. partial results via answer literal
+				// bindings are allowed.)
+				// return null to indicate answer unknown.
+				if (0 == result.size()) {
+					result = null;
+				}
+			}
+
+			return isAns;
+		}
+		
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("isComplete=" + complete);
+			sb.append("\n");
+			sb.append("result=" + result);
+			return sb.toString();
+		}
+	}
 }
