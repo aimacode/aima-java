@@ -1,6 +1,17 @@
 package aima.test.logictest.foltest;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import aima.logic.fol.CNFConverter;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
+import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseSimplifier;
+import aima.logic.fol.kb.data.CNF;
+import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.Sentence;
+import aima.logic.fol.parsing.ast.TermEquality;
 
 /**
  * @author Ciaran O'Reilly
@@ -8,6 +19,39 @@ import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
  */
 public class FOLOTTERLikeTheoremProverTest extends CommonFOLInferenceProcedureTests {
 
+	public void testDefaultClauseSimplifier() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("ZERO");
+		domain.addConstant("ONE");
+		domain.addPredicate("P");
+		domain.addFunction("Plus");
+		domain.addFunction("Power");
+
+		FOLParser parser = new FOLParser(domain);
+
+		List<TermEquality> rewrites = new ArrayList<TermEquality>();
+		rewrites.add((TermEquality) parser.parse("Plus(x, ZERO) = x"));
+		rewrites.add((TermEquality) parser.parse("Plus(ZERO, x) = x"));
+		rewrites.add((TermEquality) parser.parse("Power(x, ONE) = x"));
+		rewrites.add((TermEquality) parser.parse("Power(x, ZERO) = ONE"));
+		DefaultClauseSimplifier simplifier = new DefaultClauseSimplifier(
+				rewrites);
+		
+		Sentence s1 = parser
+				.parse("((P(Plus(y,ZERO),Plus(ZERO,y)) OR P(Power(y, ONE),Power(y,ZERO))) OR P(Power(y,ZERO),Plus(y,ZERO)))");
+		
+		CNFConverter cnfConverter = new CNFConverter(parser);
+		
+		CNF cnf = cnfConverter.convertToCNF(s1);
+
+		assertEquals(1, cnf.getNumberOfClauses());
+
+		Clause simplified = simplifier.simplify(cnf.getConjunctionOfClauses()
+				.get(0));
+
+		assertEquals("[P(y,y), P(y,ONE), P(ONE,y)]", simplified.toString());
+	}
+	
 	public void testDefiniteClauseKBKingsQueryCriminalXFalse() {
 		testDefiniteClauseKBKingsQueryCriminalXFalse(new FOLOTTERLikeTheoremProver(
 				false));
