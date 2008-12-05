@@ -41,7 +41,8 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class FOLTFMResolution implements InferenceProcedure {
 
-	private long maxQueryTime = 200 * 1000;
+	private long maxQueryTime = 10 * 1000;
+	
 	private FOLTFMResolutionTracer tracer = null;
 
 	public FOLTFMResolution() {
