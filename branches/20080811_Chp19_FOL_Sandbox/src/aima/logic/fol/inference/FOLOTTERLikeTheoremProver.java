@@ -343,7 +343,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					// introduced which will cause the
 					// LightestClauseHeuristic to loop continuously
 					// on the same pair of objects.
-					if (!sos.contains(clause) && !usable.contains(clause)) {
+					if (!sos.contains(t) && !usable.contains(t)) {
 						sos.add(t);
 						getLightestClauseHeuristic().addedClauseToSOS(t);
 					}
