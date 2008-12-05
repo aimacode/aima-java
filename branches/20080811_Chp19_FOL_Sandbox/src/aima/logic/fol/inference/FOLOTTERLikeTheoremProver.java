@@ -71,7 +71,6 @@ import aima.logic.fol.parsing.ast.Variable;
 // For lots of interesting problems to play with, see
 // 'The TPTP Problem Library for Automated Theorem Proving':
 // http://www.cs.miami.edu/~tptp/
-
 /**
  * @author Ciaran O'Reilly
  * 
@@ -94,11 +93,11 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	public FOLOTTERLikeTheoremProver(long maxQueryTime) {
 		setMaxQueryTime(maxQueryTime);
 	}
-	
+
 	public FOLOTTERLikeTheoremProver(boolean useParamodulation) {
 		setUseParamodulation(useParamodulation);
 	}
-	
+
 	public FOLOTTERLikeTheoremProver(long maxQueryTime,
 			boolean useParamodulation) {
 		setMaxQueryTime(maxQueryTime);
@@ -112,7 +111,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	public void setMaxQueryTime(long maxQueryTime) {
 		this.maxQueryTime = maxQueryTime;
 	}
-	
+
 	public boolean isUseParamodulation() {
 		return useParamodulation;
 	}
@@ -151,7 +150,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	public Set<Map<Variable, Term>> ask(FOLKnowledgeBase KB, Sentence alpha) {
 		Set<Clause> sos = new LinkedHashSet<Clause>();
 		Set<Clause> usable = new LinkedHashSet<Clause>();
-		
+
 		// Usable set will be the set of clauses in the KB,
 		// are assuming this is satisfiable as using the
 		// Set of Support strategy.
@@ -160,7 +159,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			c.setStandardizedApartCheckNotRequired();
 			usable.addAll(c.getFactors());
 		}
-		
+
 		// Ensure reflexivity axiom is added to usable if using paramodulation.
 		if (isUseParamodulation()) {
 			// Reflexivity Axiom: x = x
@@ -198,10 +197,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				sos.addAll(c.getFactors());
 			}
 		}
-		
+
 		OTTERAnswerHandler ansHandler = new OTTERAnswerHandler(answerLiteral,
-				answerLiteralVariables, answerClause,
-				maxQueryTime);
+				answerLiteralVariables, answerClause, maxQueryTime);
 
 		return otter(ansHandler, sos, usable);
 	}
@@ -218,11 +216,11 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	 */
 	private Set<Map<Variable, Term>> otter(OTTERAnswerHandler ansHandler,
 			Set<Clause> sos, Set<Clause> usable) {
-		
+
 		getLightestClauseHeuristic().initialSOS(sos);
-		
+
 		// * repeat
-		do {			
+		do {
 			// * clause <- the lightest member of sos
 			Clause clause = getLightestClauseHeuristic().getLightestClause();
 			if (null != clause) {
@@ -234,8 +232,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				process(ansHandler, infer(clause, usable), sos, usable);
 			}
 			// * until sos = [] or a refutation has been found
-		} while (sos.size() !=0 && !ansHandler.isComplete());
-		
+		} while (sos.size() != 0 && !ansHandler.isComplete());
+
 		return ansHandler.getResult();
 	}
 
@@ -252,7 +250,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			for (Clause rc : resolvents) {
 				resultingClauses.addAll(rc.getFactors());
 			}
-			
+
 			// if using paramodulation to handle equality
 			if (isUseParamodulation()) {
 				Set<Clause> paras = paramodulation.apply(clause, c, true);
@@ -289,9 +287,12 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			// or if it just contains the answer literal.
 			if (!ansHandler.isAnswer(clause)) {
 				// * sos <- [clause | sos]
-				int origSize = sos.size();
-				sos.add(clause);
-				if (origSize < sos.size()) {
+				// This check ensure duplicate clauses are not
+				// introduced which will cause the
+				// LightestClauseHeuristic to loop continuously
+				// on the same pair of objects.
+				if (!sos.contains(clause) && !usable.contains(clause)) {
+					sos.add(clause);
 					getLightestClauseHeuristic().addedClauseToSOS(clause);
 				}
 
@@ -304,7 +305,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			}
 		}
 	}
-	
+
 	private void lookForUnitRefutation(OTTERAnswerHandler ansHandler,
 			Clause clause, Set<Clause> sos, Set<Clause> usable) {
 
@@ -322,7 +323,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				}
 			}
 		}
-		
+
 		if (toCheck.size() > 0) {
 			toCheck = infer(clause, toCheck);
 			for (Clause t : toCheck) {
@@ -338,9 +339,12 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				// or if it just contains the answer literal.
 				if (!ansHandler.isAnswer(t)) {
 					// * sos <- [clause | sos]
-					int origSize = sos.size();
-					sos.add(t);
-					if (origSize < sos.size()) {
+					// This check ensure duplicate clauses are not
+					// introduced which will cause the
+					// LightestClauseHeuristic to loop continuously
+					// on the same pair of objects.
+					if (!sos.contains(clause) && !usable.contains(clause)) {
+						sos.add(t);
 						getLightestClauseHeuristic().addedClauseToSOS(t);
 					}
 				}
@@ -351,7 +355,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			}
 		}
 	}
-	
+
 	class OTTERAnswerHandler {
 		private Literal answerLiteral = null;
 		private Set<Variable> answerLiteralVariables = null;
@@ -373,15 +377,15 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		public Set<Map<Variable, Term>> getResult() {
 			return result;
 		}
-		
+
 		public boolean isComplete() {
 			return complete;
 		}
-		
+
 		public boolean isLookingForAnswerLiteral() {
 			return !answerClause.isEmpty();
 		}
-		
+
 		public boolean isCheckForUnitRefutation(Clause clause) {
 
 			if (isLookingForAnswerLiteral()) {
@@ -400,7 +404,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 			return false;
 		}
-		
+
 		public boolean isAnswer(Clause aClause) {
 			boolean isAns = false;
 
@@ -419,7 +423,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					throw new IllegalStateException(
 							"Generated an empty clause while looking for an answer, implies original KB or usable is unsatisfiable");
 				}
-				
+
 				if (aClause.isUnitClause()
 						&& aClause.isDefiniteClause()
 						&& aClause.getPositiveLiterals().get(0)
@@ -428,8 +432,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 												.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
 					List<Term> answerTerms = aClause.getPositiveLiterals().get(
-							0)
-							.getAtomicSentence().getArgs();
+							0).getAtomicSentence().getArgs();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
 						answerBindings.put(v, answerTerms.get(idx));
@@ -453,7 +456,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 			return isAns;
 		}
-		
+
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
 			sb.append("isComplete=" + complete);
