@@ -54,7 +54,8 @@ public class DefaultLightestClauseHeuristic implements LightestClauseHeuristic {
 
 class LightestClauseSorter implements Comparator<Clause> {
 	public int compare(Clause c1, Clause c2) {
-		return (new Integer(c1.getNumberLiterals())).compareTo(new Integer(c2
-				.getNumberLiterals()));
+		int c1Val = c1.getNumberLiterals();
+		int c2Val = c2.getNumberLiterals();
+		return (c1Val < c2Val ? -1 : (c1Val == c2Val ? 0 : 1));
 	}
 }
