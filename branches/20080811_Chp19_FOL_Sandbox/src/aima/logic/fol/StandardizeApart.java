@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import aima.logic.fol.inference.proof.ProofStepRenaming;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
@@ -27,7 +28,7 @@ public class StandardizeApart {
 		variableCollector = new VariableCollector();
 		substVisitor = new SubstVisitor();
 	}
-	
+
 	public StandardizeApart(VariableCollector variableCollector,
 			SubstVisitor substVisitor) {
 		this.variableCollector = variableCollector;
@@ -61,10 +62,10 @@ public class StandardizeApart {
 		return new StandardizeApartResult(aSentence, standardized,
 				renameSubstitution, reverseSubstitution);
 	}
-	
+
 	public Clause standardizeApart(Clause clause,
 			StandardizeApartIndexical standardizeApartIndexical) {
-		
+
 		Set<Variable> toRename = variableCollector.collectAllVariables(clause);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 
@@ -80,18 +81,24 @@ public class StandardizeApart {
 			renameSubstitution.put(var, v);
 		}
 
-		List<Literal> literals = new ArrayList<Literal>();
+		if (renameSubstitution.size() > 0) {
+			List<Literal> literals = new ArrayList<Literal>();
 
-		for (Literal l : clause.getLiterals()) {
-			literals.add(substVisitor.subst(renameSubstitution, l));
+			for (Literal l : clause.getLiterals()) {
+				literals.add(substVisitor.subst(renameSubstitution, l));
+			}
+			Clause renamed = new Clause(literals);
+			renamed.setProofStep(new ProofStepRenaming(renamed.toString(),
+					clause.getProofStep()));
+			return renamed;
 		}
 
-		return new Clause(literals);
+		return clause;
 	}
-	
+
 	public Chain standardizeApart(Chain chain,
 			StandardizeApartIndexical standardizeApartIndexical) {
-		
+
 		Set<Variable> toRename = variableCollector.collectAllVariables(chain);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 
@@ -107,18 +114,27 @@ public class StandardizeApart {
 			renameSubstitution.put(var, v);
 		}
 
-		List<Literal> lits = new ArrayList<Literal>();
+		if (renameSubstitution.size() > 0) {
+			List<Literal> lits = new ArrayList<Literal>();
 
-		for (Literal l : chain.getLiterals()) {
-			AtomicSentence atom = (AtomicSentence) substVisitor.subst(
-					renameSubstitution, l.getAtomicSentence());
-			lits.add(l.newInstance(atom));
+			for (Literal l : chain.getLiterals()) {
+				AtomicSentence atom = (AtomicSentence) substVisitor.subst(
+						renameSubstitution, l.getAtomicSentence());
+				lits.add(l.newInstance(atom));
+			}
+
+			Chain renamed = new Chain(lits);
+
+			renamed.setProofStep(new ProofStepRenaming(renamed.toString(),
+					chain.getProofStep()));
+
+			return renamed;
 		}
 
-		return new Chain(lits);
+		return chain;
 	}
-	
-	public void standardizeApart(List<Literal> l1Literals,
+
+	public Map<Variable, Term> standardizeApart(List<Literal> l1Literals,
 			List<Literal> l2Literals,
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = new HashSet<Variable>();
@@ -160,5 +176,7 @@ public class StandardizeApart {
 		l1Literals.addAll(posLits);
 		l2Literals.clear();
 		l2Literals.addAll(negLits);
-	}	
+
+		return renameSubstitution;
+	}
 }

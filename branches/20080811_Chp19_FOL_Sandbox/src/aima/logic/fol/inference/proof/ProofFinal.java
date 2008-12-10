@@ -54,6 +54,26 @@ public class ProofFinal implements Proof {
 	private void calcualteProofSteps() {
 		proofSteps = new ArrayList<ProofStep>();
 		addToProofSteps(finalStep);
+		
+		// Move all premises to the front of the
+		// list of steps
+		int to = 0;
+		for (int i = 0; i < proofSteps.size(); i++) {
+			if (proofSteps.get(i) instanceof ProofStepPremise) {
+				ProofStep m = proofSteps.remove(i);
+				proofSteps.add(to, m);
+				to++;
+			}
+		}
+		
+		// Move the Goals after the premises
+		for (int i = 0; i < proofSteps.size(); i++) {
+			if (proofSteps.get(i) instanceof ProofStepGoal) {
+				ProofStep m = proofSteps.remove(i);
+				proofSteps.add(to, m);
+				to++;
+			}
+		}
 
 		// Assign the step #s now that all the proof
 		// steps have been unwound

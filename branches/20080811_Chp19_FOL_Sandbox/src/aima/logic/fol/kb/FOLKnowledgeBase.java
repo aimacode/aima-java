@@ -22,6 +22,7 @@ import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.inference.InferenceResult;
 import aima.logic.fol.inference.proof.Proof;
+import aima.logic.fol.inference.proof.ProofStepClauseClausifySentence;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -333,6 +334,7 @@ public class FOLKnowledgeBase {
 		// Convert the sentence to CNF
 		CNF cnfOfOrig = cnfConverter.convertToCNF(aSentence);
 		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
+			c.setProofStep(new ProofStepClauseClausifySentence(c, aSentence));
 			if (c.isEmpty()) {
 				// This should not happen, if so the user
 				// is trying to add an unsatisfiable sentence

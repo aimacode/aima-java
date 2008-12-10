@@ -15,6 +15,11 @@ import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.inference.proof.ProofFinal;
+import aima.logic.fol.inference.proof.ProofStepChainCancellation;
+import aima.logic.fol.inference.proof.ProofStepChainDropped;
+import aima.logic.fol.inference.proof.ProofStepChainFromClause;
+import aima.logic.fol.inference.proof.ProofStepChainReduction;
+import aima.logic.fol.inference.proof.ProofStepGoal;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -109,6 +114,7 @@ public class FOLModelElimination implements InferenceProcedure {
 
 		for (Clause c : clauses) {
 			Chain chn = new Chain(c.getLiterals());
+			chn.setProofStep(new ProofStepChainFromClause(chn, c));
 			chains.add(chn);
 			chains.addAll(chn.getContrapositives());
 		}
@@ -209,7 +215,11 @@ public class FOLModelElimination implements InferenceProcedure {
 										.getAtomicSentence());
 								cancLits.add(lfc.newInstance(a));
 							}
-							return new Chain(cancLits);
+							Chain cancellation = new Chain(cancLits);
+							cancellation
+									.setProofStep(new ProofStepChainCancellation(
+											cancellation, c, subst));
+							return cancellation;
 						}
 					}
 				}
@@ -222,7 +232,9 @@ public class FOLModelElimination implements InferenceProcedure {
 	private Chain tryDropping(Chain c) {
 		Literal head = c.getHead();
 		if (null != head && (head instanceof ReducedLiteral)) {
-			return new Chain(c.getTail());
+			Chain dropped = new Chain(c.getTail());
+			dropped.setProofStep(new ProofStepChainDropped(dropped, c));
+			return dropped;
 		}
 
 		return c;
@@ -264,6 +276,10 @@ public class FOLModelElimination implements InferenceProcedure {
 			} else {
 				sos = createChainsFromClauses(kb
 						.convertToClauses(refutationQuery));
+			}
+			
+			for (Chain s : sos) {
+				s.setProofStep(new ProofStepGoal(s.toString()));
 			}
 		}
 		
@@ -497,6 +513,8 @@ class IndexedFarParents {
 				}
 				
 				nnpc = new Chain(reduction);
+				nnpc.setProofStep(new ProofStepChainReduction(nnpc, nearParent,
+						farParent, subst));
 			}
 		}
 		

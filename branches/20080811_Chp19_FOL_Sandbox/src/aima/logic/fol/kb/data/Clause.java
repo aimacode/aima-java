@@ -299,11 +299,12 @@ public class Clause {
 										copyRBindings, l));
 						}
 						// Ensure the resolvents are standardized apart
-						standardizeApart.standardizeApart(copyRPosLits,
+						Map<Variable, Term> renameSubstitituon = standardizeApart
+								.standardizeApart(copyRPosLits,
 								copyRNegLits, _saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
 						c.setProofStep(new ProofStepClauseBinaryResolvent(c,
-								this, othC));
+								this, othC, copyRBindings, renameSubstitituon));
 						if (isImmutable()) {
 							c.setImmutable();
 						}

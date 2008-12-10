@@ -5,21 +5,37 @@
 package aima.logic.fol.demos;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import aima.logic.fol.CNFConverter;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
+import aima.logic.fol.Unifier;
+import aima.logic.fol.domain.FOLDomain;
+import aima.logic.fol.inference.Demodulation;
 import aima.logic.fol.inference.FOLBCAsk;
 import aima.logic.fol.inference.FOLFCAsk;
+import aima.logic.fol.inference.FOLModelElimination;
 import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
 import aima.logic.fol.inference.FOLTFMResolution;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.inference.InferenceResult;
+import aima.logic.fol.inference.Paramodulation;
 import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.inference.proof.ProofPrinter;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.FOLKnowledgeBaseFactory;
+import aima.logic.fol.kb.data.CNF;
+import aima.logic.fol.kb.data.Clause;
+import aima.logic.fol.kb.data.Literal;
+import aima.logic.fol.parsing.DomainFactory;
+import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Predicate;
+import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
@@ -30,20 +46,33 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class FolDemo {
 	public static void main(String[] args) {
-		substDemo();
 		unifierDemo();
 		fOL_fcAskDemo();
 		fOL_bcAskDemo();
+		fOL_CNFConversion();
 		fOL_TFMResolutionDemo();
+		fOL_Demodulation();
+		fOL_Paramodulation();
 		fOL_OTTERDemo();
-	}
-
-	private static void substDemo() {
-		// TODO write this ?
+		fOL_ModelEliminationDemo();
 	}
 
 	private static void unifierDemo() {
-		// TODO write this
+		FOLParser parser = new FOLParser(DomainFactory.knowsDomain());
+		Unifier unifier = new Unifier();
+		Map<Variable, Term> theta = new Hashtable<Variable, Term>();
+
+		Sentence query = parser.parse("Knows(John,x)");
+		Sentence johnKnowsJane = parser.parse("Knows(y,Mother(y))");
+
+		System.out.println("------------");
+		System.out.println("Unifier Demo");
+		System.out.println("------------");
+		System.out.println("Unify " + query + " with " + johnKnowsJane);
+
+		Map<Variable, Term> subst = unifier.unify(query, johnKnowsJane, theta);
+		System.out.println("Substitution=" + subst);
+		System.out.println("");
 	}
 
 	private static void fOL_fcAskDemo() {
@@ -75,6 +104,24 @@ public class FolDemo {
 		System.out.println("----------------------------");
 		weaponsDemo(new FOLBCAsk());
 	}
+	
+	private static void fOL_CNFConversion() {
+		System.out.println("-------------------------------------------------");
+		System.out.println("Conjuctive Normal Form for First Order Logic Demo");
+		System.out.println("-------------------------------------------------");
+		FOLDomain domain = DomainFactory.lovesAnimalDomain();
+		FOLParser parser = new FOLParser(domain);
+
+		Sentence origSentence = parser
+				.parse("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
+
+		CNFConverter cnfConv = new CNFConverter(parser);
+
+		CNF cnf = cnfConv.convertToCNF(origSentence);
+
+		System.out.println("Convert '" + origSentence + "' to CNF.");
+		System.out.println("CNF=" + cnf.toString());
+	}
 
 	private static void fOL_TFMResolutionDemo() {
 		System.out.println("----------------------------");
@@ -98,7 +145,82 @@ public class FolDemo {
 		System.out.println("---------------------------------------");
 		abcEqualityAxiomDemo(new FOLTFMResolution());
 	}
+	
+	private static void fOL_Demodulation() {
+		System.out.println("-----------------");
+		System.out.println("Demodulation Demo");
+		System.out.println("-----------------");
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addConstant("D");
+		domain.addConstant("E");
+		domain.addPredicate("P");
+		domain.addFunction("F");
+		domain.addFunction("G");
+		domain.addFunction("H");
+		domain.addFunction("J");
 
+		FOLParser parser = new FOLParser(domain);
+
+		Predicate expression = (Predicate) parser
+				.parse("P(A,F(B,G(A,H(B)),C),D)");
+		TermEquality assertion = (TermEquality) parser.parse("B = E");
+
+		Demodulation demodulation = new Demodulation();
+		Predicate altExpression = (Predicate) demodulation.apply(assertion,
+				expression);
+
+		System.out.println("Demodulate '" + expression + "' with '" + assertion
+				+ "' to give");
+		System.out.println(altExpression.toString());
+		System.out.println("and again to give");
+		System.out.println(demodulation.apply(assertion, altExpression)
+				.toString());
+		System.out.println("");
+	}
+
+	private static void fOL_Paramodulation() {
+		System.out.println("-------------------");
+		System.out.println("Paramodulation Demo");
+		System.out.println("-------------------");
+		
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addPredicate("P");
+		domain.addPredicate("Q");
+		domain.addPredicate("R");
+		domain.addFunction("F");
+
+		FOLParser parser = new FOLParser(domain);
+
+		List<Literal> lits = new ArrayList<Literal>();
+		AtomicSentence a1 = (AtomicSentence) parser.parse("P(F(x,B),x)");
+		AtomicSentence a2 = (AtomicSentence) parser.parse("Q(x)");
+		lits.add(new Literal(a1));
+		lits.add(new Literal(a2));
+
+		Clause c1 = new Clause(lits);
+
+		lits.clear();
+		a1 = (AtomicSentence) parser.parse("F(A,y) = y");
+		a2 = (AtomicSentence) parser.parse("R(y)");
+		lits.add(new Literal(a1));
+		lits.add(new Literal(a2));
+
+		Clause c2 = new Clause(lits);
+
+		Paramodulation paramodulation = new Paramodulation();
+		Set<Clause> paras = paramodulation.apply(c1, c2);
+
+		System.out.println("Paramodulate '" + c1 + "' with '" + c2
+				+ "' to give");
+		System.out.println(paras.toString());
+		System.out.println("");
+	}
+	
 	private static void fOL_OTTERDemo() {
 		System.out.println("---------------------------------------");
 		System.out.println("OTTER Like Theorem Prover, Kings Demo 1");
@@ -131,6 +253,30 @@ public class FolDemo {
 				.println("-----------------------------------------------------");
 		abcEqualityNoAxiomDemo(new FOLOTTERLikeTheoremProver(true));
 	}
+	
+	private static void fOL_ModelEliminationDemo() {
+		System.out.println("-------------------------------");
+		System.out.println("Model Elimination, Kings Demo 1");
+		System.out.println("-------------------------------");
+		kingsDemo1(new FOLModelElimination());
+		System.out.println("-------------------------------");
+		System.out.println("Model Elimination, Kings Demo 2");
+		System.out.println("-------------------------------");
+		kingsDemo2(new FOLModelElimination());
+		System.out.println("-------------------------------");
+		System.out.println("Model Elimination, Weapons Demo");
+		System.out.println("-------------------------------");
+		weaponsDemo(new FOLModelElimination());
+		System.out.println("------------------------------------");
+		System.out.println("Model Elimination, Loves Animal Demo");
+		System.out.println("------------------------------------");
+		lovesAnimalDemo(new FOLModelElimination());
+		System.out.println("------------------------------------------");
+		System.out.println("Model Elimination, ABC Equality Axiom Demo");
+		System.out.println("-------------------------------------------");
+		abcEqualityAxiomDemo(new FOLModelElimination());
+	}
+
 
 	private static void kingsDemo1(InferenceProcedure ip) {
 		StandardizeApartIndexicalFactory.flush();

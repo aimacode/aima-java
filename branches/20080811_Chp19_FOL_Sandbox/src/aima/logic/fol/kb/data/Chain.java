@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.logic.fol.inference.proof.ProofStep;
+import aima.logic.fol.inference.proof.ProofStepChainContrapositive;
 import aima.logic.fol.inference.proof.ProofStepPremise;
 
 /**
@@ -28,15 +29,15 @@ public class Chain {
 	public Chain() {
 		// i.e. the empty chain
 	}
-	
+
 	public Chain(List<Literal> literals) {
 		this.literals.addAll(literals);
 	}
-	
+
 	public Chain(Set<Literal> literals) {
 		this.literals.addAll(literals);
 	}
-	
+
 	public ProofStep getProofStep() {
 		if (null == proofStep) {
 			// Assume was a premise
@@ -52,18 +53,18 @@ public class Chain {
 	public boolean isEmpty() {
 		return literals.size() == 0;
 	}
-	
+
 	public void addLiteral(Literal literal) {
 		literals.add(literal);
 	}
-	
+
 	public Literal getHead() {
 		if (0 == literals.size()) {
 			return null;
 		}
 		return literals.get(0);
 	}
-	
+
 	public List<Literal> getTail() {
 		if (0 == literals.size()) {
 			return _emptyLiteralsList;
@@ -71,7 +72,7 @@ public class Chain {
 		return Collections.unmodifiableList(literals
 				.subList(1, literals.size()));
 	}
-	
+
 	public int getNumberLiterals() {
 		return literals.size();
 	}
@@ -79,7 +80,7 @@ public class Chain {
 	public List<Literal> getLiterals() {
 		return Collections.unmodifiableList(literals);
 	}
-	
+
 	/**
 	 * A contrapositive of a chain is a permutation in which a different literal
 	 * is placed at the front. The contrapositives of a chain are logically
@@ -96,12 +97,14 @@ public class Chain {
 			lits.add(literals.get(i));
 			lits.addAll(literals.subList(0, i));
 			lits.addAll(literals.subList(i + 1, literals.size()));
-			contrapositives.add(new Chain(lits));
+			Chain cont = new Chain(lits);
+			cont.setProofStep(new ProofStepChainContrapositive(cont, this));
+			contrapositives.add(cont);
 		}
 
 		return contrapositives;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<");
