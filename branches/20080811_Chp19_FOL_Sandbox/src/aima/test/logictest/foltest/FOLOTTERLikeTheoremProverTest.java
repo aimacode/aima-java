@@ -125,7 +125,7 @@ public class FOLOTTERLikeTheoremProverTest extends CommonFOLInferenceProcedureTe
 	
 	public void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds() {
 		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(new FOLOTTERLikeTheoremProver(
-				false));
+				false), false);
 	}
 	
 	public void testEqualityNoAxiomsKBabcAEqualsCSucceeds() {

@@ -278,19 +278,25 @@ public class Clause {
 					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
 					if (null != unifier.unify(pl.getAtomicSentence(), nl
 							.getAtomicSentence(), copyRBindings)) {
-						copyRPosLits.clear();
+						copyRPosLits.clear(); 
 						copyRNegLits.clear();
+						boolean found = false;
 						for (Literal l : allPosLits) {
-							if (!pl.equals(l)) {
-								copyRPosLits.add(substVisitor.subst(
-										copyRBindings, l));
+							if (!found && pl.equals(l)) {								
+								found = true;
+								continue;
 							}
+							copyRPosLits.add(substVisitor.subst(
+										copyRBindings, l));
 						}
+						found = false;
 						for (Literal l : allNegLits) {
-							if (!nl.equals(l)) {
-								copyRNegLits.add(substVisitor.subst(
-										copyRBindings, l));
+							if (!found && nl.equals(l)) {
+								found = true;
+								continue;
 							}
+							copyRNegLits.add(substVisitor.subst(
+										copyRBindings, l));
 						}
 						// Ensure the resolvents are standardized apart
 						standardizeApart.standardizeApart(copyRPosLits,

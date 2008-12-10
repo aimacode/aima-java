@@ -15,6 +15,7 @@ import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
 import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
+import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.Predicate;
@@ -190,7 +191,10 @@ public class ClauseTest extends TestCase {
 		c1.addNegativeLiteral(new Predicate("Pred1", new ArrayList<Term>()));
 		assertNotNull(c1.binaryResolvents(c1));
 		assertEquals(1, c1.binaryResolvents(c1).size());
-		assertTrue(c1.binaryResolvents(c1).iterator().next().isEmpty());
+		// i.e. resolving a tautology with a tautology gives you
+		// back a tautology.
+		assertEquals("[~Pred1(), Pred1()]", c1.binaryResolvents(c1).iterator()
+				.next().toString());
 		
 		// Check if try to resolve with self and no resolvents
 		c1 = new Clause();
@@ -328,6 +332,27 @@ public class ClauseTest extends TestCase {
 				}
 			}
 		} while (System.currentTimeMillis() < finishTime);
+	}
+	
+	public void testEqualityBinaryResolvents() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+
+		FOLParser parser = new FOLParser(domain);
+
+		// B = A
+		Clause c1 = new Clause();
+		c1.addPositiveLiteral((AtomicSentence) parser.parse("B = A"));
+
+		Clause c2 = new Clause();
+		c2.addNegativeLiteral((AtomicSentence) parser.parse("B = A"));
+		c2.addPositiveLiteral((AtomicSentence) parser.parse("B = A"));
+
+		Set<Clause> resolvents = c1.binaryResolvents(c2);
+
+		assertEquals(1, resolvents.size());
+		assertEquals("[[B = A]]", resolvents.toString());
 	}
 	
 	public void testHashCode() {

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.inference.proof.ProofFinal;
+import aima.logic.fol.inference.proof.ProofStepBwChGoal;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
@@ -60,8 +61,14 @@ public class FOLBCAsk implements InferenceProcedure {
 		List<Literal> goals = new ArrayList<Literal>();
 		goals.add(new Literal((AtomicSentence) query));
 
-		return folbcask(KB, new BCAskAnswerHandler(), goals,
-				new HashMap<Variable, Term>());
+		BCAskAnswerHandler ansHandler = new BCAskAnswerHandler();
+
+		List<List<ProofStepBwChGoal>> allProofSteps = folbcask(KB, ansHandler,
+				goals, new HashMap<Variable, Term>());
+
+		ansHandler.setAllProofSteps(allProofSteps);
+
+		return ansHandler;
 	}
 
 	// END-InferenceProcedure
@@ -79,15 +86,16 @@ public class FOLBCAsk implements InferenceProcedure {
 	 *          theta, the current substitution, initially the empty substitution {}
 	 * </code>
 	 */
-	private InferenceResult folbcask(FOLKnowledgeBase KB,
+	private List<List<ProofStepBwChGoal>> folbcask(FOLKnowledgeBase KB,
 			BCAskAnswerHandler ansHandler, List<Literal> goals,
 			Map<Variable, Term> theta) {
+		List<List<ProofStepBwChGoal>> thisLevelProofSteps = new ArrayList<List<ProofStepBwChGoal>>();
 		// local variables: answers, a set of substitutions, initially empty
 
 		// if goals is empty then return {theta}
 		if (goals.isEmpty()) {
-			ansHandler.setAnswer(theta);
-			return ansHandler;
+			thisLevelProofSteps.add(new ArrayList<ProofStepBwChGoal>());
+			return thisLevelProofSteps;
 		}
 
 		// qDelta <- SUBST(theta, FIRST(goals))
@@ -101,20 +109,25 @@ public class FOLBCAsk implements InferenceProcedure {
 			Map<Variable, Term> thetaDelta = KB.unify(r.getPositiveLiterals()
 					.get(0).getAtomicSentence(), qDelta.getAtomicSentence());
 			if (null != thetaDelta) {
-				ansHandler.setGoalStep(r, qDelta);
 				// new_goals <- [p1,...,pn|REST(goals)]
 				List<Literal> newGoals = new ArrayList<Literal>(r
 						.getNegativeLiterals());
 				newGoals.addAll(goals.subList(1, goals.size()));
 				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
 				// theta)) U answers
-				folbcask(KB, ansHandler, newGoals, compose(KB, thetaDelta,
-						theta));
+				Map<Variable, Term> composed = compose(KB, thetaDelta, theta);
+				List<List<ProofStepBwChGoal>> lowerLevelProofSteps = folbcask(
+						KB, ansHandler, newGoals, composed);
+
+				ansHandler.addProofStep(lowerLevelProofSteps, r, qDelta,
+						composed);
+				
+				thisLevelProofSteps.addAll(lowerLevelProofSteps);
 			}
 		}
 
 		// return answers
-		return ansHandler;
+		return thisLevelProofSteps;
 	}
 
 	// Artificial Intelligence A Modern Approach (2nd Edition): page 288.
@@ -163,8 +176,7 @@ public class FOLBCAsk implements InferenceProcedure {
 	class BCAskAnswerHandler implements InferenceResult {
 
 		private List<Proof> proofs = new ArrayList<Proof>();
-		private Clause lastGoalStep = null;
-
+		
 		public BCAskAnswerHandler() {
 
 		}
@@ -194,12 +206,29 @@ public class FOLBCAsk implements InferenceProcedure {
 		// END-InferenceResult
 		//
 
-		public void setAnswer(Map<Variable, Term> theta) {
-			proofs.add(new ProofFinal(lastGoalStep.getProofStep(), theta));
+		public void setAllProofSteps(List<List<ProofStepBwChGoal>> allProofSteps) {
+			for (List<ProofStepBwChGoal> steps : allProofSteps) {
+				ProofStepBwChGoal lastStep = steps.get(steps.size() - 1);
+				Map<Variable, Term> theta = lastStep.getBindings();
+				proofs.add(new ProofFinal(lastStep, theta));
+			}
 		}
 
-		public void setGoalStep(Clause c, Literal qDelta) {
-			lastGoalStep = c;
+		public void addProofStep(
+				List<List<ProofStepBwChGoal>> currentLevelProofSteps,
+				Clause toProve, Literal currentGoal,
+				Map<Variable, Term> bindings) {
+
+			if (currentLevelProofSteps.size() > 0) {
+				ProofStepBwChGoal predecessor = new ProofStepBwChGoal(toProve,
+						currentGoal, bindings);
+				for (List<ProofStepBwChGoal> steps : currentLevelProofSteps) {
+					if (steps.size() > 0) {
+						steps.get(0).setPredecessor(predecessor);
+					}
+					steps.add(0, predecessor);
+				}
+			}
 		}
 	}
 }

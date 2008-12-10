@@ -74,8 +74,10 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 	}
 	
 	public void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds() {
+		// TFM is unable to find the correct answer to this in a reasonable
+		// amount of time for a JUnit test.
 		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(new FOLTFMResolution(
-				10 * 1000));
+				10 * 1000), true);
 	}
 	
 	public void testEqualityNoAxiomsKBabcAEqualsCSucceeds() {

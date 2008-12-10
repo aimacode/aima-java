@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
-import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.inference.InferenceResult;
 import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.kb.FOLKnowledgeBase;
-import aima.logic.fol.parsing.DomainFactory;
+import aima.logic.fol.kb.FOLKnowledgeBaseFactory;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
@@ -30,7 +29,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	//
 	protected void testDefiniteClauseKBKingsQueryCriminalXFalse(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
+		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
+				.createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
@@ -45,7 +45,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testDefiniteClauseKBKingsQueryRichardEvilFalse(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
+		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
+				.createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("Richard"));
 		Predicate query = new Predicate("Evil", terms);
@@ -60,7 +61,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testDefiniteClauseKBKingsQueryJohnEvilSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
+		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
+				.createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("John"));
 		Predicate query = new Predicate("Evil", terms);
@@ -77,7 +79,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testDefiniteClauseKBKingsQueryEvilXReturnsJohnSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
+		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
+				.createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Evil", terms);
@@ -96,7 +99,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testDefiniteClauseKBKingsQueryKingXReturnsJohnAndRichardSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kkb = createKingsKnowledgeBase(infp);
+		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
+				.createKingsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("King", terms);
@@ -131,7 +135,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testDefiniteClauseKBWeaponsQueryCriminalXReturnsWestSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase wkb = createWeaponsKnowledgeBase(infp);
+		FOLKnowledgeBase wkb = FOLKnowledgeBaseFactory
+				.createWeaponsKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
@@ -151,13 +156,14 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase rotkb = createRingOfThievesKnowledgeBase(infp);
+		FOLKnowledgeBase rotkb = FOLKnowledgeBaseFactory
+				.createRingOfThievesKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Skis", terms);
 
 		InferenceResult answer = rotkb.ask(query);
-		
+
 		assertTrue(null != answer);
 		assertFalse(answer.isFalse());
 		assertTrue(answer.isTrue());
@@ -169,7 +175,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertTrue(1 == answer.getProofs().get(1).getAnswerBindings().size());
 		assertTrue(1 == answer.getProofs().get(2).getAnswerBindings().size());
 		assertTrue(1 == answer.getProofs().get(3).getAnswerBindings().size());
-		
+
 		List<Constant> expected = new ArrayList<Constant>();
 		expected.add(new Constant("Nancy"));
 		expected.add(new Constant("Red"));
@@ -183,7 +189,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds(
 			InferenceProcedure infp, boolean expectedToTimeOut) {
-		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase(infp);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createLovesAnimalKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("Curiosity"));
 		terms.add(new Constant("Tuna"));
@@ -210,14 +217,15 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testFullFOLKBLovesAnimalQueryNotKillsJackTunaSucceeds(
 			InferenceProcedure infp, boolean expectedToTimeOut) {
-		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase(infp);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createLovesAnimalKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("Jack"));
 		terms.add(new Constant("Tuna"));
 		NotSentence query = new NotSentence(new Predicate("Kills", terms));
 
 		InferenceResult answer = akb.ask(query);
-		
+
 		assertTrue(null != answer);
 		if (expectedToTimeOut) {
 			assertFalse(answer.isFalse());
@@ -238,7 +246,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testFullFOLKBLovesAnimalQueryKillsJackTunaFalse(
 			InferenceProcedure infp, boolean expectedToTimeOut) {
-		FOLKnowledgeBase akb = createLovesAnimalKnowledgeBase(infp);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createLovesAnimalKnowledgeBase(infp);
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("Jack"));
 		terms.add(new Constant("Tuna"));
@@ -264,7 +273,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAxiomsKBabcAEqualsCSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCEqualityKnowledgeBase(infp, true);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCEqualityKnowledgeBase(infp, true);
 
 		TermEquality query = new TermEquality(new Constant("A"), new Constant(
 				"C"));
@@ -282,8 +292,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, true);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -306,8 +316,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, true);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("D"));
@@ -325,9 +335,9 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 	}
 
 	protected void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(
-			InferenceProcedure infp) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, true);
+			InferenceProcedure infp, boolean expectedToTimeOut) {
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -341,18 +351,28 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		InferenceResult answer = akb.ask(query);
 
-		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
-		assertTrue(answer.isTrue());
-		assertFalse(answer.isUnknownDueToTimeout());
-		assertFalse(answer.isPartialResultDueToTimeout());
-		assertTrue(1 == answer.getProofs().size());
-		assertTrue(0 == answer.getProofs().get(0).getAnswerBindings().size());
+		if (expectedToTimeOut) {
+			assertFalse(answer.isFalse());
+			assertFalse(answer.isTrue());
+			assertTrue(answer.isUnknownDueToTimeout());
+			assertFalse(answer.isPartialResultDueToTimeout());
+			assertTrue(0 == answer.getProofs().size());
+		} else {
+			assertTrue(null != answer);
+			assertFalse(answer.isFalse());
+			assertTrue(answer.isTrue());
+			assertFalse(answer.isUnknownDueToTimeout());
+			assertFalse(answer.isPartialResultDueToTimeout());
+			assertTrue(1 == answer.getProofs().size());
+			assertTrue(0 == answer.getProofs().get(0).getAnswerBindings()
+					.size());
+		}
 	}
 
 	protected void testEqualityNoAxiomsKBabcAEqualsCSucceeds(
 			InferenceProcedure infp, boolean expectedToFail) {
-		FOLKnowledgeBase akb = createABCEqualityKnowledgeBase(infp, false);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCEqualityKnowledgeBase(infp, false);
 
 		TermEquality query = new TermEquality(new Constant("A"), new Constant(
 				"C"));
@@ -379,8 +399,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAndSubstitutionNoAxiomsKBabcdFFASucceeds(
 			InferenceProcedure infp, boolean expectedToFail) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, false);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -412,8 +432,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAndSubstitutionNoAxiomsKBabcdPDSucceeds(
 			InferenceProcedure infp, boolean expectedToFail) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, false);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("D"));
@@ -441,8 +461,8 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 	protected void testEqualityAndSubstitutionNoAxiomsKBabcdPFFASucceeds(
 			InferenceProcedure infp, boolean expectedToFail) {
-		FOLKnowledgeBase akb = createABCDEqualityAndSubstitutionKnowledgeBase(
-				infp, false);
+		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
+				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
 		List<Term> terms = new ArrayList<Term>();
 		terms.add(new Constant("A"));
@@ -472,157 +492,5 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 			assertTrue(0 == answer.getProofs().get(0).getAnswerBindings()
 					.size());
 		}
-	}
-
-	//
-	// PRIVATE
-	//
-
-	private FOLKnowledgeBase createKingsKnowledgeBase(InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory.kingsDomain(),
-				infp);
-		kb.tell("((King(x) AND Greedy(x)) => Evil(x))");
-		kb.tell("King(John)");
-		kb.tell("King(Richard)");
-		kb.tell("Greedy(John)");
-
-		return kb;
-	}
-
-	private FOLKnowledgeBase createWeaponsKnowledgeBase(InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.weaponsDomain(), infp);
-		kb
-				.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
-		kb.tell(" Owns(Nono, M1)");
-		kb.tell(" Missile(M1)");
-		kb.tell("((Missile(x) AND Owns(Nono,x)) => Sells(West,x,Nono))");
-		kb.tell("(Missile(x) => Weapon(x))");
-		kb.tell("(Enemy(x,America) => Hostile(x))");
-		kb.tell("American(West)");
-		kb.tell("Enemy(Nono,America)");
-
-		return kb;
-	}
-
-	private FOLKnowledgeBase createLovesAnimalKnowledgeBase(
-			InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.lovesAnimalDomain(), infp);
-
-		kb
-				.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
-		kb
-				.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
-		kb.tell("FORALL x (Animal(x) => Loves(Jack, x))");
-		kb.tell("(Kills(Jack, Tuna) OR Kills(Curiosity, Tuna))");
-		kb.tell("Cat(Tuna)");
-		kb.tell("FORALL x (Cat(x) => Animal(x))");
-
-		return kb;
-	}
-
-	private FOLKnowledgeBase createRingOfThievesKnowledgeBase(
-			InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.ringOfThievesDomain(), infp);
-
-		// s(x) => ~c(x) One who skis never gets caught
-		kb.tell("(Skis(x) => NOT(Caught(x)))");
-		// c(x) => ~s(x) Those who are caught don't ever ski
-		kb.tell("(Caught(x) => NOT(Skis(x)))");
-		// p(x,y) & c(y) => s(x) Jailbird parents have skiing kids
-		kb.tell("((Parent(x,y) AND Caught(y)) => Skis(x))");
-		// s(x) & f(x,y) => s(y) All friends ski together
-		kb.tell("(Skis(x) AND Friend(x,y) => Skis(y))");
-		// f(x,y) => f(y,x) Friendship is symmetric
-		kb.tell("(Friend(x,y) => Friend(y,x))");
-		// FACTS
-		// 1. { p(Mike,Joe) } Premise
-		kb.tell("Parent(Mike, Joe)");
-		// 2. { p(Janet,Joe) } Premise
-		kb.tell("Parent(Janet,Joe)");
-		// 3. { p(Nancy,Mike) } Premise
-		kb.tell("Parent(Nancy,Mike)");
-		// 4. { p(Ernie,Janet) } Premise
-		kb.tell("Parent(Ernie,Janet)");
-		// 5. { p(Bert,Nancy) } Premise
-		kb.tell("Parent(Bert,Nancy)");
-		// 6. { p(Red,Ernie) } Premise
-		kb.tell("Parent(Red,Ernie)");
-		// 7. { f(Red,Bert) } Premise
-		kb.tell("Friend(Red,Bert)");
-		// 8. { f(Drew,Nancy) } Premise
-		kb.tell("Friend(Drew,Nancy)");
-		// 9. { c(Mike) } Premise
-		kb.tell("Caught(Mike)");
-		// 10. { c(Ernie) } Premise
-		kb.tell("Caught(Ernie)");
-
-		return kb;
-	}
-
-	// Note: see -
-	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
-	// slide 12 for where this test example was taken from.
-	private FOLKnowledgeBase createABCEqualityKnowledgeBase(
-			InferenceProcedure infp, boolean includeEqualityAxioms) {
-		FOLDomain domain = new FOLDomain();
-		domain.addConstant("A");
-		domain.addConstant("B");
-		domain.addConstant("C");
-
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain, infp);
-
-		kb.tell("B = A");
-		kb.tell("B = C");
-
-		if (includeEqualityAxioms) {
-			// Reflexivity Axiom
-			kb.tell("x = x");
-			// Symmetry Axiom
-			kb.tell("(x = y => y = x)");
-			// Transitivity Axiom
-			kb.tell("((x = y AND y = z) => x = z)");
-		}
-
-		return kb;
-	}
-
-	// Note: see -
-	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf
-	// slide 16,17, and 18 for where this test example was taken from.
-	private FOLKnowledgeBase createABCDEqualityAndSubstitutionKnowledgeBase(
-			InferenceProcedure infp, boolean includeEqualityAxioms) {
-		FOLDomain domain = new FOLDomain();
-		domain.addConstant("A");
-		domain.addConstant("B");
-		domain.addConstant("C");
-		domain.addConstant("D");
-		domain.addPredicate("P");
-		domain.addFunction("F");
-
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain, infp);
-
-		kb.tell("F(A) = B");
-		kb.tell("F(B) = A");
-		kb.tell("C = D");
-		kb.tell("P(A)");
-		kb.tell("P(C)");
-
-		if (includeEqualityAxioms) {
-			// Reflexivity Axiom
-			kb.tell("x = x");
-			// Symmetry Axiom
-			kb.tell("(x = y => y = x)");
-			// Transitivity Axiom
-			kb.tell("((x = y AND y = z) => x = z)");
-			// Function F Substitution Axiom
-			kb.tell("((x = y AND F(y) = z) => F(x) = z)");
-			// Predicate P Substitution Axiom
-			kb.tell("((x = y AND P(y)) => P(x))");
-		}
-
-		return kb;
 	}
 }

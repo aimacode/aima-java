@@ -72,7 +72,8 @@ public class FOLModelEliminationTest extends CommonFOLInferenceProcedureTests {
 	}
 	
 	public void testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds() {
-		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(new FOLModelElimination());
+		testEqualityAndSubstitutionAxiomsKBabcdPFFASucceeds(
+				new FOLModelElimination(), false);
 	}
 	
 	public void testEqualityNoAxiomsKBabcAEqualsCSucceeds() {

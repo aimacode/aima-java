@@ -197,7 +197,7 @@ public class FOLKnowledgeBase {
 		return allUnifiers;
 	}
 
-	// TODO: Note: To support FOL-FC-Ask
+	// Note: To support FOL-FC-Ask
 	public Set<Map<Variable, Term>> fetch(List<Literal> literals) {
 		Set<Map<Variable, Term>> possibleSubstitutions = new LinkedHashSet<Map<Variable, Term>>();
 
@@ -282,6 +282,9 @@ public class FOLKnowledgeBase {
 	public boolean isRenaming(Literal l, List<Literal> possibleMatches) {
 
 		for (Literal q : possibleMatches) {
+			if (l.isPositiveLiteral() != q.isPositiveLiteral()) {
+				continue;
+			}
 			Map<Variable, Term> subst = unifier.unify(l.getAtomicSentence(), q
 					.getAtomicSentence());
 			if (null != subst) {
@@ -301,6 +304,15 @@ public class FOLKnowledgeBase {
 
 		return false;
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Sentence s : originalSentences) {
+			sb.append(s.toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 
 	//
 	// PROTECTED METHODS
@@ -316,6 +328,8 @@ public class FOLKnowledgeBase {
 
 	// Note: pg 278, STORE(s) concept.
 	private synchronized void store(Sentence aSentence) {
+		originalSentences.add(aSentence);
+		
 		// Convert the sentence to CNF
 		CNF cnfOfOrig = cnfConverter.convertToCNF(aSentence);
 		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
