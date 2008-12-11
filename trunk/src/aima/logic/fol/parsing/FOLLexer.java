@@ -10,31 +10,36 @@ import java.util.Set;
 import aima.logic.common.Lexer;
 import aima.logic.common.LogicTokenTypes;
 import aima.logic.common.Token;
-import aima.logic.fol.FOLDomain;
+import aima.logic.fol.Connectors;
+import aima.logic.fol.Quantifiers;
+import aima.logic.fol.domain.FOLDomain;
 
 /**
  * @author Ravi Mohan
  * 
  */
 public class FOLLexer extends Lexer {
-	private Set<String> constants, functions, predicates, connectors,
+	private FOLDomain domain;
+	private Set<String> connectors,
 			quantifiers;
 
 	public FOLLexer(FOLDomain domain) {
-		this.constants = domain.getConstants();
-		this.functions = domain.getFunctions();
-		this.predicates = domain.getPredicates();
+		this.domain = domain;
 
 		connectors = new HashSet<String>();
-		connectors.add("NOT");
-		connectors.add("AND");
-		connectors.add("OR");
-		connectors.add("=>");
-		connectors.add("<=>");
+		connectors.add(Connectors.NOT);
+		connectors.add(Connectors.AND);
+		connectors.add(Connectors.OR);
+		connectors.add(Connectors.IMPLIES);
+		connectors.add(Connectors.BICOND);
 
 		quantifiers = new HashSet<String>();
-		quantifiers.add("FORALL");
-		quantifiers.add("EXISTS");
+		quantifiers.add(Quantifiers.FORALL);
+		quantifiers.add(Quantifiers.EXISTS);
+	}
+	
+	public FOLDomain getFOLDomain() {
+		return domain;
 	}
 
 	@Override
@@ -71,7 +76,8 @@ public class FOLLexer extends Lexer {
 
 	private Token identifier() {
 		StringBuffer sbuf = new StringBuffer();
-		while ((Character.isLetter(lookAhead(1))) || partOfConnector()) {
+		while ((Character.isJavaIdentifierPart(lookAhead(1)))
+				|| partOfConnector()) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
@@ -81,11 +87,11 @@ public class FOLLexer extends Lexer {
 			return new Token(LogicTokenTypes.CONNECTOR, readString);
 		} else if (quantifiers.contains(readString)) {
 			return new Token(LogicTokenTypes.QUANTIFIER, readString);
-		} else if (predicates.contains(readString)) {
+		} else if (domain.getPredicates().contains(readString)) {
 			return new Token(LogicTokenTypes.PREDICATE, readString);
-		} else if (functions.contains(readString)) {
+		} else if (domain.getFunctions().contains(readString)) {
 			return new Token(LogicTokenTypes.FUNCTION, readString);
-		} else if (constants.contains(readString)) {
+		} else if (domain.getConstants().contains(readString)) {
 			return new Token(LogicTokenTypes.CONSTANT, readString);
 		} else if (isVariable(readString)) {
 			return new Token(LogicTokenTypes.VARIABLE, readString);

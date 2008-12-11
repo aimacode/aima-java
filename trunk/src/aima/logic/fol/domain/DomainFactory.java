@@ -2,9 +2,8 @@
  * Created on Sep 20, 2004
  *
  */
-package aima.logic.fol.parsing;
+package aima.logic.fol.domain;
 
-import aima.logic.fol.FOLDomain;
 
 /**
  * @author Ravi Mohan
@@ -44,8 +43,8 @@ public class DomainFactory {
 		FOLDomain domain = new FOLDomain();
 		domain.addConstant("West");
 		domain.addConstant("America");
-		domain.addConstant("Mone");
-		domain.addConstant("NoNo");
+		domain.addConstant("M1");
+		domain.addConstant("Nono");
 		domain.addPredicate("American");
 		domain.addPredicate("Weapon");
 		domain.addPredicate("Sells");
@@ -68,4 +67,33 @@ public class DomainFactory {
 		return domain;
 	}
 
+	
+	public static FOLDomain lovesAnimalDomain() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("Animal");
+		domain.addPredicate("Loves");
+		domain.addPredicate("Kills");
+		domain.addPredicate("Cat");
+		domain.addConstant("Jack");
+		domain.addConstant("Tuna");
+		domain.addConstant("Curiosity");
+		return domain;
+	}
+	
+	public static FOLDomain ringOfThievesDomain() {
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("Parent");
+		domain.addPredicate("Caught");
+		domain.addPredicate("Friend");
+		domain.addPredicate("Skis");
+		domain.addConstant("Mike");
+		domain.addConstant("Joe");
+		domain.addConstant("Janet");
+		domain.addConstant("Nancy");
+		domain.addConstant("Ernie");
+		domain.addConstant("Bert");
+		domain.addConstant("Red");
+		domain.addConstant("Drew");
+		return domain;
+	}
 }

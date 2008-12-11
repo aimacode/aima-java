@@ -4,7 +4,13 @@
  */
 package aima.logic.fol.parsing.ast;
 
-public abstract class Term implements FOLNode {
+import java.util.List;
 
-	public abstract Term copy();
+/**
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ */
+public interface Term extends FOLNode {
+	List<Term> getArgs();
+	Term copy();
 }

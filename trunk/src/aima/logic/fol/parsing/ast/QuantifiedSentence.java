@@ -5,28 +5,72 @@
 package aima.logic.fol.parsing.ast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import aima.logic.fol.parsing.FOLVisitor;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-
 public class QuantifiedSentence implements Sentence {
 	private String quantifier;
-
-	private List<Variable> variables;
-
+	private List<Variable> variables = new ArrayList<Variable>();
 	private Sentence quantified;
+	private List<FOLNode> args = new ArrayList<FOLNode>();
+	private String stringRep = null;
+	private int hashCode = 0;
 
 	public QuantifiedSentence(String quantifier, List<Variable> variables,
 			Sentence quantified) {
 		this.quantifier = quantifier;
-		this.variables = variables;
+		this.variables.addAll(variables);
 		this.quantified = quantified;
+		this.args.addAll(variables);
+		this.args.add(quantified);
 	}
+
+	public String getQuantifier() {
+		return quantifier;
+	}
+
+	public List<Variable> getVariables() {
+		return Collections.unmodifiableList(variables);
+	}
+
+	public Sentence getQuantified() {
+		return quantified;
+	}
+
+	//
+	// START-Sentence
+	public String getSymbolicName() {
+		return getQuantifier();
+	}
+
+	public boolean isCompound() {
+		return true;
+	}
+
+	public List<FOLNode> getArgs() {
+		return Collections.unmodifiableList(args);
+	}
+
+	public Object accept(FOLVisitor v, Object arg) {
+		return v.visitQuantifiedSentence(this, arg);
+	}
+
+	public QuantifiedSentence copy() {
+		List<Variable> copyVars = new ArrayList<Variable>();
+		for (Variable v : variables) {
+			copyVars.add(v.copy());
+		}
+		return new QuantifiedSentence(quantifier, copyVars, quantified.copy());
+	}
+
+	// END-Sentence
+	//
 
 	@Override
 	public boolean equals(Object o) {
@@ -38,72 +82,37 @@ public class QuantifiedSentence implements Sentence {
 			return false;
 		}
 		QuantifiedSentence cs = (QuantifiedSentence) o;
-		return ((cs.quantifier.equals(quantifier))
-				&& (variables.equals(variables)) && (quantified
-				.equals(quantified)));
-
+		return cs.quantifier.equals(quantifier)
+				&& cs.variables.equals(variables)
+				&& cs.quantified.equals(quantified);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = 37 * result + quantifier.hashCode();
-		for (Variable v : variables) {
-			result = 37 * result + v.hashCode();
+		if (0 == hashCode) {
+			hashCode = 17;
+			hashCode = 37 * hashCode + quantifier.hashCode();
+			for (Variable v : variables) {
+				hashCode = 37 * hashCode + v.hashCode();
+			}
+			hashCode = hashCode * 37 + quantified.hashCode();
 		}
-		result = result * 37 + quantified.hashCode();
-		return result;
+		return hashCode;
 	}
 
 	@Override
 	public String toString() {
-		String pre = quantifier + " ";
-		for (int i = 0; i < variables.size(); i++) {
-			pre = pre + variables.get(i).toString() + " ";
+		if (null == stringRep) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(quantifier);
+			sb.append(" ");
+			for (Variable v : variables) {
+				sb.append(v.toString());
+				sb.append(" ");
+			}
+			sb.append(quantified.toString());
+			stringRep = sb.toString();
 		}
-		pre += " ";
-		String post = " " + quantified.toString() + "  ";
-		return pre + post;
-	}
-
-	public Object accept(FOLVisitor v, Object arg) {
-
-		return v.visitQuantifiedSentence(this, arg);
-
-	}
-
-	public QuantifiedSentence copy() {
-		List<Variable> copyVars = new ArrayList<Variable>();
-		for (int i = 0; i < variables.size(); i++) {
-			Variable v = variables.get(i);
-			copyVars.add(v.copy());
-		}
-		return new QuantifiedSentence(quantifier, copyVars,
-				(Sentence) quantified.copy());
-	}
-
-	public Sentence getQuantified() {
-		return quantified;
-	}
-
-	public List getVariables() {
-		return variables;
-	}
-
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
-
-	public String getQuantifier() {
-		return quantifier;
-	}
-
-	public List<String> getVariablesAsString() {
-		List<String> ret = new ArrayList<String>();
-		for (int i = 0; i < variables.size(); i++) {
-			Variable var = variables.get(i);
-			ret.add(var.getValue());
-		}
-		return ret;
+		return stringRep;
 	}
 }

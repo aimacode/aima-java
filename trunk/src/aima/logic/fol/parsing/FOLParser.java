@@ -5,7 +5,7 @@ import java.util.List;
 
 import aima.logic.common.LogicTokenTypes;
 import aima.logic.common.Token;
-import aima.logic.fol.FOLDomain;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
@@ -35,6 +35,10 @@ public class FOLParser {
 
 	public FOLParser(FOLDomain domain) {
 		this(new FOLLexer(domain));
+	}
+	
+	public FOLDomain getFOLDomain() {
+		return lexer.getFOLDomain();
 	}
 
 	public Sentence parse(String s) {

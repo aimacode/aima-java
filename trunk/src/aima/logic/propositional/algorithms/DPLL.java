@@ -140,10 +140,6 @@ public class DPLL {
 
 	}
 
-	public Set findUnitClauses(Set clauses, Symbol symbol, Model m) {
-		return null;
-	}
-
 	public List<Sentence> clausesWithNonTrueValues(List<Sentence> clauseList,
 			Model model) {
 		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();

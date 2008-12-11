@@ -6,7 +6,7 @@ package aima.test.logictest.foltest;
 import junit.framework.TestCase;
 import aima.logic.common.LogicTokenTypes;
 import aima.logic.common.Token;
-import aima.logic.fol.FOLDomain;
+import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.parsing.FOLLexer;
 
 /**
