@@ -7,7 +7,6 @@ import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.ParanthizedSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.Sentence;
@@ -21,29 +20,30 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class AbstractFOLVisitor implements FOLVisitor {
 
-	private FOLParser parser;
-
-	public AbstractFOLVisitor(FOLParser parser) {
-		this.parser = parser;
+	public AbstractFOLVisitor() {
 	}
 
 	protected Sentence recreate(Object ast) {
-		return parser.parse(((Sentence) ast).toString());
+		return (Sentence) ((Sentence) ast).copy();
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
-
-		return null;
+		return variable;
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
+		List<Variable> variables = new ArrayList<Variable>();
+		for (Variable var : sentence.getVariables()) {
+			variables.add((Variable) var.accept(this, arg));
+		}
 
-		return null;
+		return new QuantifiedSentence(sentence.getQuantifier(), variables,
+				(Sentence) sentence.getQuantified().accept(this, arg));
 	}
 
 	public Object visitPredicate(Predicate predicate, Object arg) {
-		List terms = predicate.getTerms();
+		List<Term> terms = predicate.getTerms();
 		List<Term> newTerms = new ArrayList<Term>();
 		for (int i = 0; i < terms.size(); i++) {
 			Term t = (Term) terms.get(i);
@@ -78,7 +78,6 @@ public class AbstractFOLVisitor implements FOLVisitor {
 	public Object visitNotSentence(NotSentence sentence, Object arg) {
 		return new NotSentence((Sentence) sentence.getNegated().accept(this,
 				arg));
-
 	}
 
 	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg) {
@@ -87,14 +86,5 @@ public class AbstractFOLVisitor implements FOLVisitor {
 				.accept(this, arg);
 		return new ConnectedSentence(sentence.getConnector(), substFirst,
 				substSecond);
-
 	}
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg) {
-		return new ParanthizedSentence((Sentence) sentence.getParanthized()
-				.accept(this, arg));
-
-	}
-
 }

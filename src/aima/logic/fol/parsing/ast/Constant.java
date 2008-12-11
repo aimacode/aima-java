@@ -4,15 +4,17 @@
  */
 package aima.logic.fol.parsing.ast;
 
+import java.util.List;
+
 import aima.logic.fol.parsing.FOLVisitor;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-
-public class Constant extends Term {
+public class Constant implements Term {
 	private String value;
+	private int hashCode = 0;
 
 	public Constant(String s) {
 		value = s;
@@ -22,49 +24,58 @@ public class Constant extends Term {
 		return value;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (this.getClass() != o.getClass())) {
-			return false;
-		}
-		Constant c = (Constant) o;
-		return (c.getValue().equals(getValue()));
-
+	//
+	// START-Term
+	public String getSymbolicName() {
+		return getValue();
 	}
 
-	@Override
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result + value.hashCode();
-
-		return result;
+	public boolean isCompound() {
+		return false;
 	}
 
-	public boolean renamingEquals(Sentence s) {
-		return equals(s);
-	}
-
-	@Override
-	public String toString() {
-		return value;
+	public List<Term> getArgs() {
+		// Is not Compound, therefore should
+		// return null for its arguments
+		return null;
 	}
 
 	public Object accept(FOLVisitor v, Object arg) {
 		return v.visitConstant(this, arg);
 	}
 
-	@Override
-	public Object clone() {
-		return new Constant(value);
-	}
-
-	@Override
 	public Constant copy() {
 		return new Constant(value);
 	}
 
+	// END-Term
+	//
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Constant)) {
+			return false;
+		}
+		Constant c = (Constant) o;
+		return c.getValue().equals(getValue());
+
+	}
+
+	@Override
+	public int hashCode() {
+		if (0 == hashCode) {
+			hashCode = 17;
+			hashCode = 37 * hashCode + value.hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		return value;
+	}
 }

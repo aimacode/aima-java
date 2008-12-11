@@ -1,5 +1,9 @@
 AIMA JAVA Notes By Ravi(magesmail@yahoo.com)
 
+Note: If running the unite tests be sure to include the vm arguments:
+-Xms256m -Xmx1024m
+as some of the First Order Logic algorithms (i.e. FOLTFMResolution) are
+memory hungry. 
 
 version 0.92
 ***********

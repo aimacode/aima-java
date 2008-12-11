@@ -4,17 +4,31 @@
  */
 package aima.logic.fol.parsing.ast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import aima.logic.fol.parsing.FOLVisitor;
 
-public class TermEquality implements Sentence {
+/**
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ */
+public class TermEquality implements AtomicSentence {
 	private Term term1, term2;
+	private List<Term> terms = new ArrayList<Term>();
+	private String stringRep = null;
+	private int hashCode = 0;
 
-	public void setTerm1(Sentence term1) {
-		this.term1 = (Term) term1;
+	public static String getEqualitySynbol() {
+		return "=";
 	}
 
-	public void setTerm2(Sentence term2) {
-		this.term2 = (Term) term2;
+	public TermEquality(Term term1, Term term2) {
+		this.term1 = term1;
+		this.term2 = term2;
+		terms.add(term1);
+		terms.add(term2);
 	}
 
 	public Term getTerm1() {
@@ -25,10 +39,30 @@ public class TermEquality implements Sentence {
 		return term2;
 	}
 
-	public TermEquality(Term term1, Term term2) {
-		this.term1 = term1;
-		this.term2 = term2;
+	//
+	// START-AtomicSentence
+	public String getSymbolicName() {
+		return getEqualitySynbol();
 	}
+
+	public boolean isCompound() {
+		return true;
+	}
+
+	public List<Term> getArgs() {
+		return Collections.unmodifiableList(terms);
+	}
+
+	public Object accept(FOLVisitor v, Object arg) {
+		return v.visitTermEquality(this, arg);
+	}
+
+	public TermEquality copy() {
+		return new TermEquality(term1.copy(), term2.copy());
+	}
+
+	// END-AtomicSentence
+	//
 
 	@Override
 	public boolean equals(Object o) {
@@ -40,35 +74,29 @@ public class TermEquality implements Sentence {
 			return false;
 		}
 		TermEquality te = (TermEquality) o;
-		boolean term1eq = (te.getTerm1().equals(term1));
 
-		boolean eq = (term1eq && (te.getTerm2().equals(term2)));
-
-		return eq;
-
+		return te.getTerm1().equals(term1) && te.getTerm2().equals(term2);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = 37 * result + getTerm1().hashCode();
-		result = 37 * result + getTerm2().hashCode();
-		return result;
-	}
-
-	public Object accept(FOLVisitor v, Object arg) {
-		return v.visitTermEquality(this, arg);
+		if (0 == hashCode) {
+			hashCode = 17;
+			hashCode = 37 * hashCode + getTerm1().hashCode();
+			hashCode = 37 * hashCode + getTerm2().hashCode();
+		}
+		return hashCode;
 	}
 
 	@Override
 	public String toString() {
-		String pre = term1.toString();
-		String mid = " = ";
-		String post = term2.toString();
-		return pre + mid + post;
-	}
-
-	public FOLNode copy() {
-		return new TermEquality(term1.copy(), term2.copy());
+		if (null == stringRep) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(term1.toString());
+			sb.append(" = ");
+			sb.append(term2.toString());
+			stringRep = sb.toString();
+		}
+		return stringRep;
 	}
 }

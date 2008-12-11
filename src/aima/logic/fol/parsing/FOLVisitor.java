@@ -8,7 +8,6 @@ import aima.logic.fol.parsing.ast.ConnectedSentence;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
-import aima.logic.fol.parsing.ast.ParanthizedSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
 import aima.logic.fol.parsing.ast.TermEquality;
@@ -32,9 +31,6 @@ public interface FOLVisitor {
 	public Object visitNotSentence(NotSentence sentence, Object arg);
 
 	public Object visitConnectedSentence(ConnectedSentence sentence, Object arg);
-
-	public Object visitParanthizedSentence(ParanthizedSentence sentence,
-			Object arg);
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg);
