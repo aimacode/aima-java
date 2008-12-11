@@ -8,7 +8,7 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 import aima.logic.fol.VariableCollector;
-import aima.logic.fol.parsing.DomainFactory;
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Variable;

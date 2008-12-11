@@ -5,10 +5,10 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
-import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.Variable;

@@ -2,9 +2,8 @@
  * Created on Sep 20, 2004
  *
  */
-package aima.logic.fol.parsing;
+package aima.logic.fol.domain;
 
-import aima.logic.fol.domain.FOLDomain;
 
 /**
  * @author Ravi Mohan

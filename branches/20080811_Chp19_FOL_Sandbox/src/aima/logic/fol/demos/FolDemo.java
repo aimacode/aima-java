@@ -13,6 +13,7 @@ import java.util.Set;
 import aima.logic.fol.CNFConverter;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.Demodulation;
 import aima.logic.fol.inference.FOLBCAsk;
@@ -30,7 +31,6 @@ import aima.logic.fol.kb.FOLKnowledgeBaseFactory;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.kb.data.Literal;
-import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.AtomicSentence;
 import aima.logic.fol.parsing.ast.Constant;
@@ -68,10 +68,9 @@ public class FolDemo {
 		System.out.println("------------");
 		System.out.println("Unifier Demo");
 		System.out.println("------------");
-		System.out.println("Unify " + query + " with " + johnKnowsJane);
-
 		Map<Variable, Term> subst = unifier.unify(query, johnKnowsJane, theta);
-		System.out.println("Substitution=" + subst);
+		System.out.println("Unify '" + query + "' with '" + johnKnowsJane
+				+ "' to get the substitution " + subst + ".");
 		System.out.println("");
 	}
 
@@ -121,6 +120,7 @@ public class FolDemo {
 
 		System.out.println("Convert '" + origSentence + "' to CNF.");
 		System.out.println("CNF=" + cnf.toString());
+		System.out.println("");
 	}
 
 	private static void fOL_TFMResolutionDemo() {

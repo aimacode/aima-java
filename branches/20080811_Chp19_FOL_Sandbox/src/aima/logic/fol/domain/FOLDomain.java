@@ -13,7 +13,6 @@ import java.util.Set;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-
 public class FOLDomain {
 	private Set<String> constants, functions, predicates;
 	private int skolemConstantIndexical = 0;

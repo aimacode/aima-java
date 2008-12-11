@@ -45,8 +45,6 @@ public abstract class AbstractModulation {
 	protected IdentifyCandidateMatchingTerm getMatchingSubstitution(
 			Term toMatch, AtomicSentence expression) {
 
-		// By convention will match using the left hand side of the equation
-		// and replace with the right hand of the equation.
 		IdentifyCandidateMatchingTerm icm = new IdentifyCandidateMatchingTerm(
 				toMatch, expression);
 

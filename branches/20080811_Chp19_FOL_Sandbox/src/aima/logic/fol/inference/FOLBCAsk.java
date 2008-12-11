@@ -19,7 +19,7 @@ import aima.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.6, page 288.
  * 
- * <code>
+ * <pre>
  * function FOL-BC-ASK(KB, goals, theta) returns a set of substitutions
  *   input: KB, a knowledge base
  *          goals, a list of conjuncts forming a query (theta already applied)
@@ -33,7 +33,7 @@ import aima.logic.fol.parsing.ast.Variable;
  *       new_goals <- [p1,...,pn|REST(goals)]
  *       answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
  *   return answers
- * </code>
+ * </pre>
  * 
  * Figure 9.6 A simple backward-chaining algorithm.
  */
@@ -183,7 +183,7 @@ public class FOLBCAsk implements InferenceProcedure {
 
 		//
 		// START-InferenceResult
-		public boolean isFalse() {
+		public boolean isPossiblyFalse() {
 			return proofs.size() == 0;
 		}
 

@@ -13,7 +13,7 @@ import aima.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.1, page 278.
  * 
- * <code>
+ * <pre>
  * function UNIFY(x, y, theta) returns a substitution to make x and y identical
  *   inputs: x, a variable, constant, list, or compound
  *           y, a variable, constant, list, or compound
@@ -40,7 +40,7 @@ import aima.logic.fol.parsing.ast.Variable;
  *   else if {x/val} E theta then return UNIFY(var, val, theta)
  *   else if OCCUR-CHECK?(var, x) then return failure
  *   else return add {var/x} to theta
- * </code>
+ * </pre>
  * 
  * Figure 9.1 The unification algorithm. The algorithm works by comparing the structures
  * of the inputs, elements by element. The substitution theta that is the argument to UNIFY is built

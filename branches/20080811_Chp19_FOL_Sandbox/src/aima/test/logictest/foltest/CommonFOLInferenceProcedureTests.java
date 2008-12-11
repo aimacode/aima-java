@@ -36,7 +36,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		Predicate query = new Predicate("Criminal", terms);
 		InferenceResult answer = kkb.ask(query);
 		assertTrue(null != answer);
-		assertTrue(answer.isFalse());
+		assertTrue(answer.isPossiblyFalse());
 		assertFalse(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -52,7 +52,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		Predicate query = new Predicate("Evil", terms);
 		InferenceResult answer = kkb.ask(query);
 		assertTrue(null != answer);
-		assertTrue(answer.isFalse());
+		assertTrue(answer.isPossiblyFalse());
 		assertFalse(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -69,7 +69,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = kkb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -87,7 +87,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = kkb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -107,7 +107,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = kkb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -144,7 +144,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = wkb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -165,7 +165,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = rotkb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		// DB can expand infinitely so is only partial.
@@ -199,13 +199,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = akb.ask(query);
 		assertTrue(null != answer);
 		if (expectedToTimeOut) {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertTrue(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -228,13 +228,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToTimeOut) {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertTrue(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -257,13 +257,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToTimeOut) {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertTrue(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertTrue(answer.isFalse());
+			assertTrue(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -282,7 +282,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = akb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -306,7 +306,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = akb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -326,7 +326,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = akb.ask(query);
 
 		assertTrue(null != answer);
-		assertFalse(answer.isFalse());
+		assertFalse(answer.isPossiblyFalse());
 		assertTrue(answer.isTrue());
 		assertFalse(answer.isUnknownDueToTimeout());
 		assertFalse(answer.isPartialResultDueToTimeout());
@@ -352,14 +352,14 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		InferenceResult answer = akb.ask(query);
 
 		if (expectedToTimeOut) {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertTrue(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
 			assertTrue(null != answer);
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -381,13 +381,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToFail) {
-			assertTrue(answer.isFalse());
+			assertTrue(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -414,13 +414,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToFail) {
-			assertTrue(answer.isFalse());
+			assertTrue(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -443,13 +443,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToFail) {
-			assertTrue(answer.isFalse());
+			assertTrue(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
@@ -478,13 +478,13 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 
 		assertTrue(null != answer);
 		if (expectedToFail) {
-			assertTrue(answer.isFalse());
+			assertTrue(answer.isPossiblyFalse());
 			assertFalse(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());
 			assertTrue(0 == answer.getProofs().size());
 		} else {
-			assertFalse(answer.isFalse());
+			assertFalse(answer.isPossiblyFalse());
 			assertTrue(answer.isTrue());
 			assertFalse(answer.isUnknownDueToTimeout());
 			assertFalse(answer.isPartialResultDueToTimeout());

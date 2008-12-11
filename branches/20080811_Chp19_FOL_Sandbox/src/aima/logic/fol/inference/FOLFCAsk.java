@@ -22,7 +22,7 @@ import aima.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.3, page 282.
  * 
- * <code>
+ * <pre>
  * function FOL-FC-ASK(KB, alpha) returns a substitution or false
  *   inputs: KB, the knowledge base, a set of first order definite clauses
  *           alpha, the query, an atomic sentence
@@ -41,7 +41,7 @@ import aima.logic.fol.parsing.ast.Variable;
  *                   if theta is not fail then return theta
  *      add new to KB
  *   return false
- * </code>
+ * </pre>
  * 
  * Figure 9.3 A conceptually straightforward, but very inefficient forward-chaining algo-
  * rithm. On each iteration, it adds to KB all the atomic sentences that can be inferred in one
@@ -177,7 +177,7 @@ public class FOLFCAsk implements InferenceProcedure {
 
 		//
 		// START-InferenceResult
-		public boolean isFalse() {
+		public boolean isPossiblyFalse() {
 			return proofs.size() == 0;
 		}
 

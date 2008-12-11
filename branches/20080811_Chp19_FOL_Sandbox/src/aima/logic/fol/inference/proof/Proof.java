@@ -13,7 +13,7 @@ import aima.logic.fol.parsing.ast.Variable;
 public interface Proof {
 	/**
 	 * 
-	 * @return A list of proof steps show how an answer was derived.
+	 * @return A list of proof steps that show how an answer was derived.
 	 */
 	List<ProofStep> getSteps();
 
@@ -24,11 +24,12 @@ public interface Proof {
 	 *         original query.
 	 */
 	Map<Variable, Term> getAnswerBindings();
-	
+
 	/**
 	 * 
 	 * @param updatedBindings
-	 *            allows the bindings to be renamed.
+	 *            allows for the bindings to be renamed. Note: should not be
+	 *            used for any other reason.
 	 */
 	void replaceAnswerBindings(Map<Variable, Term> updatedBindings);
 }

@@ -225,7 +225,7 @@ public class FOLTFMResolution implements InferenceProcedure {
 
 		//
 		// START-InferenceResult
-		public boolean isFalse() {
+		public boolean isPossiblyFalse() {
 			return !timedOut && proofs.size() == 0;
 		}
 

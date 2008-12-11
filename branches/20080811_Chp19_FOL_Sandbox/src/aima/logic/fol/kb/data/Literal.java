@@ -19,6 +19,7 @@ public class Literal {
 	private AtomicSentence atom = null;
 	private boolean negativeLiteral = false;
 	private String strRep = null;
+	private int hashCode = 0;
 
 	public Literal(AtomicSentence atom) {
 		this.atom = atom;
@@ -28,7 +29,7 @@ public class Literal {
 		this.atom = atom;
 		this.negativeLiteral = negated;
 	}
-	
+
 	public Literal newInstance(AtomicSentence atom) {
 		return new Literal(atom, negativeLiteral);
 	}
@@ -44,7 +45,7 @@ public class Literal {
 	public AtomicSentence getAtomicSentence() {
 		return atom;
 	}
-	
+
 	public String toString() {
 		if (null == strRep) {
 			StringBuilder sb = new StringBuilder();
@@ -57,7 +58,7 @@ public class Literal {
 
 		return strRep;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -82,13 +83,15 @@ public class Literal {
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = 37 * result + (getClass().getSimpleName().hashCode())
-				+ (isPositiveLiteral() ? "+".hashCode() : "-".hashCode())
-				+ atom.getSymbolicName().hashCode();
-		for (Term t : atom.getArgs()) {
-			result = 37 * result + t.hashCode();
+		if (0 == hashCode) {
+			hashCode = 17;
+			hashCode = 37 * hashCode + (getClass().getSimpleName().hashCode())
+					+ (isPositiveLiteral() ? "+".hashCode() : "-".hashCode())
+					+ atom.getSymbolicName().hashCode();
+			for (Term t : atom.getArgs()) {
+				hashCode = 37 * hashCode + t.hashCode();
+			}
 		}
-		return result;
+		return hashCode;
 	}
 }

@@ -2,8 +2,19 @@ package aima.logic.fol.inference.proof;
 
 import java.util.List;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class ProofPrinter {
 
+	/**
+	 * Utility method for outputting proofs in a formatted textual
+	 * representation.
+	 * 
+	 * @param aProof
+	 * @return a String representation of the Proof.
+	 */
 	public static String printProof(Proof aProof) {
 		StringBuilder sb = new StringBuilder();
 
@@ -17,7 +28,7 @@ public class ProofPrinter {
 		int maxProofWidth = "Proof".length();
 		int maxJustificationWidth = "Justification".length();
 		
-		// Calcualte the maximum width for each column in the proof
+		// Calculate the maximum width for each column in the proof
 		for (ProofStep step : steps) {
 			String sn = "" + step.getStepNumber();
 			if (sn.length() > maxStepWidth) {

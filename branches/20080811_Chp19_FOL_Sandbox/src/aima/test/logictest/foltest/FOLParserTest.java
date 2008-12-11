@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.domain.FOLDomain;
-import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLLexer;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.ConnectedSentence;

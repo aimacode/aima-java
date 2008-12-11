@@ -30,7 +30,7 @@ import aima.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.14, page 307.
  * 
- * <code>
+ * <pre>
  * procedure OTTER(sos, usable)
  *   inputs: sos, a set of support-clauses defining the problem (a global variable)
  *   usable, background knowledge potentially relevant to the problem
@@ -59,7 +59,7 @@ import aima.logic.fol.parsing.ast.Variable;
  *       sos <- [clause | sos]
  *       if clause has no literals then a refutation has been found
  *       if clause has one literal then look for unit refutation
- * </code>
+ * </pre>
  * 
  * Figure 9.14 Sketch of the OTTER theorem prover. Heuristic control is applied in the
  * selection of the "lightest" clause and in the FILTER function that eliminates uninteresting
@@ -389,7 +389,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		
 		//
 		// START-InferenceResult
-		public boolean isFalse() {
+		public boolean isPossiblyFalse() {
 			return !timedOut && proofs.size() == 0;
 		}
 		

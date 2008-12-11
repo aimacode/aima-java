@@ -21,7 +21,7 @@ public interface LightestClauseHeuristic {
 	// Get the lightest clause from the SOS
 	Clause getLightestClause();
 
-	// SOS lifecycle methods allowing implementations
+	// SOS life-cycle methods allowing implementations
 	// of this interface to incrementally update
 	// the calculation of the lightest clause as opposed
 	// to having to recalculate each time.

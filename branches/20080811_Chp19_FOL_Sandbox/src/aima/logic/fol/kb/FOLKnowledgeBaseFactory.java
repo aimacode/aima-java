@@ -1,9 +1,13 @@
 package aima.logic.fol.kb;
 
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.InferenceProcedure;
-import aima.logic.fol.parsing.DomainFactory;
 
+/**
+ * @author Ciaran O'Reilly
+ * 
+ */
 public class FOLKnowledgeBaseFactory {
 	
 	public static FOLKnowledgeBase createKingsKnowledgeBase(

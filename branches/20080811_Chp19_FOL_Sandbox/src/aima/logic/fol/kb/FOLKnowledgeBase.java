@@ -18,7 +18,7 @@ import aima.logic.fol.SubstVisitor;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.domain.FOLDomain;
-import aima.logic.fol.inference.FOLTFMResolution;
+import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
 import aima.logic.fol.inference.InferenceProcedure;
 import aima.logic.fol.inference.InferenceResult;
 import aima.logic.fol.inference.proof.Proof;
@@ -63,7 +63,7 @@ public class FOLKnowledgeBase {
 	// along with those that represent implications.
 	private List<Clause> allDefiniteClauses = new ArrayList<Clause>();
 	private List<Clause> implicationDefiniteClauses = new ArrayList<Clause>();
-	// All the facts in the KB indexed by Predicate name (Note: pg. 279)
+	// All the facts in the KB indexed by Atomic Sentence name (Note: pg. 279)
 	private Map<String, List<Literal>> indexFacts = new HashMap<String, List<Literal>>();
 	// Keep track of indexical keys for uniquely standardizing apart sentences
 	private StandardizeApartIndexical variableIndexical = StandardizeApartIndexicalFactory
@@ -76,7 +76,7 @@ public class FOLKnowledgeBase {
 	//
 	public FOLKnowledgeBase(FOLDomain domain) {
 		// Default to Full Resolution if not set.
-		this(domain, new FOLTFMResolution());
+		this(domain, new FOLOTTERLikeTheoremProver());
 	}
 
 	public FOLKnowledgeBase(FOLDomain domain,

@@ -7,8 +7,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 import aima.logic.fol.Unifier;
+import aima.logic.fol.domain.DomainFactory;
 import aima.logic.fol.domain.FOLDomain;
-import aima.logic.fol.parsing.DomainFactory;
 import aima.logic.fol.parsing.FOLParser;
 import aima.logic.fol.parsing.ast.Constant;
 import aima.logic.fol.parsing.ast.Function;

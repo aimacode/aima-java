@@ -12,7 +12,6 @@ import aima.logic.fol.parsing.FOLVisitor;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-
 public class Constant implements Term {
 	private String value;
 	private int hashCode = 0;
