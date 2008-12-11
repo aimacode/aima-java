@@ -48,9 +48,13 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||7.19||226||PL-Wumpus-Agent||---||
 ||9||273||Subst||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/SubstVisitor.java SubstVisitor]||
 ||9.1||278||Unify||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/Unifier.java Unifier]||
-||9.3||282||FOL-FC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/DLKnowledgeBase.java (method)-forwardChain(String query)]||
-||9.6||288||FOL-BC-Ask||---||
-||9.14||307||Otter||---||
+||9.3||282||FOL-FC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
+||9.6||288||FOL-BC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLBCAsk.java FOLBCAsk]||
+||9||295||CNF||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/CNFConverter.java CNFConverter]||
+||9||297||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLTFMResolution.java FOLTFMResolution]||
+||9||304||Demodulation||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Demodulation.java Demodulation]||
+||9||304||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Paramodulation.java Paramodulation]||
+||9.14||307||Otter||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLOTTERLikeTheoremProver.java FOLOTTERLikeTheoremProver]||
 ||11.2||380||Airport-problem||---||
 ||11.3||381||Spare-Tire-Problem||---||
 ||11.4||383||Three-Block-Tower||---||
