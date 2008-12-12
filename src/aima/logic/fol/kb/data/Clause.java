@@ -359,8 +359,6 @@ public class Clause {
 			// constant, function and variable.
 			List<Literal> sortedLiterals = new ArrayList<Literal>(literals);
 			Collections.sort(sortedLiterals, _literalSorter);
-			
-			stringRep = sortedLiterals.toString();
 
 			// All variables are considered the same as regards
 			// sorting. Therefore, to determine if two clauses
@@ -575,7 +573,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 	private int noVarPositions = 0;
 	private int[] clauseVarCounts = null;
 	private int currentLiteral = 0;
-	private Map<String, List<Integer>> varPositions = new LinkedHashMap<String, List<Integer>>();
+	private Map<String, List<Integer>> varPositions = new HashMap<String, List<Integer>>();
 
 	public ClauseEqualityIdentityConstructor(List<Literal> literals,
 			LiteralsSorter sorter) {
@@ -640,7 +638,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 						if (pos >= min && pos < max) {
 							int pPos = pos;
 							int nPos = pos;
-							for (int candSlot = 0; candSlot < (next - 1); candSlot++) {
+							for (int candSlot = i; candSlot < (next - 1); candSlot++) {
 								pPos += clauseVarCounts[i];
 								if (pPos >= min && pPos < max) {
 									if (!positions.contains(pPos)
@@ -664,13 +662,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			min = max;
 			i = incITo;
 		}
-
-		// Sort the individual position lists
-		for (String key : varPositions.keySet()) {
-			List<Integer> positions = varPositions.get(key);
-			Collections.sort(positions);
-		}
-
+		
 		// Determine the maxWidth
 		int maxWidth = 1;
 		while (noVarPositions >= 10) {
@@ -678,19 +670,27 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			maxWidth++;
 		}
 		String format = "%0" + maxWidth + "d";
+
+		// Sort the individual position lists
+		// And then add their string representations
+		// together
 		List<String> varOffsets = new ArrayList<String>();
 		for (String key : varPositions.keySet()) {
 			List<Integer> positions = varPositions.get(key);
+			Collections.sort(positions);
 			StringBuilder sb = new StringBuilder();
-			sb.append("[");
 			for (int pos : positions) {
 				sb.append(String.format(format, pos));
 			}
-			sb.append("]");
 			varOffsets.add(sb.toString());
-		}
+		}		
 		Collections.sort(varOffsets);
-		identity.append(varOffsets.toString());
+		for (int i = 0; i < varOffsets.size(); i++) {
+			identity.append(varOffsets.get(i));
+			if (i < (varOffsets.size() - 1)) {
+				identity.append(",");
+			}
+		}
 	}
 
 	public String getIdentity() {
@@ -705,9 +705,10 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 
 		List<Integer> positions = varPositions.get(var.getValue());
 		if (null == positions) {
-			varPositions.put(var.getValue(), new ArrayList<Integer>());
+			positions = new ArrayList<Integer>();
+			varPositions.put(var.getValue(), positions);
 		}
-		varPositions.get(var.getValue()).add(noVarPositions);
+		positions.add(noVarPositions);
 
 		noVarPositions++;
 		clauseVarCounts[currentLiteral]++;
