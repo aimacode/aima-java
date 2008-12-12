@@ -46,6 +46,11 @@ public class Clause {
 	//
 	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
 			.newStandardizeApartIndexical('c');
+	private static Unifier _unifier = new Unifier();
+	private static SubstVisitor _substVisitor = new SubstVisitor();
+	private static VariableCollector _variableCollector = new VariableCollector();
+	private static StandardizeApart _standardizeApart = new StandardizeApart();
+	private static LiteralsSorter _literalSorter = new LiteralsSorter();
 	//
 	private final Set<Literal> literals = new LinkedHashSet<Literal>();
 	private final List<Literal> positiveLiterals = new ArrayList<Literal>();
@@ -53,14 +58,9 @@ public class Clause {
 	private boolean immutable = false;
 	private boolean saCheckRequired = true;
 	private String equalityIdentity = "";
-	private Unifier unifier = new Unifier();
-	private SubstVisitor substVisitor = new SubstVisitor();
-	private VariableCollector variableCollector = new VariableCollector();
-	private StandardizeApart standardizeApart = new StandardizeApart();
-	private LiteralsSorter literalSorter = new LiteralsSorter();
 	private Set<Clause> factors = null;
 	private Set<Clause> nonTrivialFactors = null;
-	private String stringRep = "{}";
+	private String stringRep = null;
 	private ProofStep proofStep = null; 
 
 	public Clause() {
@@ -276,7 +276,7 @@ public class Clause {
 			for (Literal pl : trPosLits) {
 				for (Literal nl : trNegLits) {
 					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
-					if (null != unifier.unify(pl.getAtomicSentence(), nl
+					if (null != _unifier.unify(pl.getAtomicSentence(), nl
 							.getAtomicSentence(), copyRBindings)) {
 						copyRPosLits.clear(); 
 						copyRNegLits.clear();
@@ -286,7 +286,7 @@ public class Clause {
 								found = true;
 								continue;
 							}
-							copyRPosLits.add(substVisitor.subst(
+							copyRPosLits.add(_substVisitor.subst(
 										copyRBindings, l));
 						}
 						found = false;
@@ -295,11 +295,11 @@ public class Clause {
 								found = true;
 								continue;
 							}
-							copyRNegLits.add(substVisitor.subst(
+							copyRNegLits.add(_substVisitor.subst(
 										copyRBindings, l));
 						}
 						// Ensure the resolvents are standardized apart
-						Map<Variable, Term> renameSubstitituon = standardizeApart
+						Map<Variable, Term> renameSubstitituon = _standardizeApart
 								.standardizeApart(copyRPosLits,
 								copyRNegLits, _saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
@@ -321,6 +321,12 @@ public class Clause {
 	}
 
 	public String toString() {
+		if (null == stringRep) {
+			List<Literal> sortedLiterals = new ArrayList<Literal>(literals);
+			Collections.sort(sortedLiterals, _literalSorter);
+
+			stringRep = sortedLiterals.toString();
+		}
 		return stringRep;
 	}
 
@@ -352,7 +358,7 @@ public class Clause {
 			// Sort the literals first based on negation, atomic sentence,
 			// constant, function and variable.
 			List<Literal> sortedLiterals = new ArrayList<Literal>(literals);
-			Collections.sort(sortedLiterals, literalSorter);
+			Collections.sort(sortedLiterals, _literalSorter);
 			
 			stringRep = sortedLiterals.toString();
 
@@ -362,7 +368,7 @@ public class Clause {
 			// the # of unique variables they contain and
 			// there positions across the clauses
 			ClauseEqualityIdentityConstructor ceic = new ClauseEqualityIdentityConstructor(
-					sortedLiterals, literalSorter);
+					sortedLiterals, _literalSorter);
 
 			equalityIdentity = ceic.getIdentity();
 
@@ -371,6 +377,9 @@ public class Clause {
 			// access lazily.
 			factors = null;
 			nonTrivialFactors = null;
+			// Reset the objects string representation
+			// until it is requested for.
+			stringRep = null;
 		}
 	}
 
@@ -393,31 +402,35 @@ public class Clause {
 					Literal litY = lits.get(y);
 
 					theta.clear();
-					Map<Variable, Term> substitution = unifier.unify(litX
+					Map<Variable, Term> substitution = _unifier.unify(litX
 							.getAtomicSentence(), litY.getAtomicSentence(),
 							theta);
 					if (null != substitution) {
 						List<Literal> posLits = new ArrayList<Literal>();
 						List<Literal> negLits = new ArrayList<Literal>();
 						if (i == 0) {
-							posLits.add(substVisitor.subst(substitution, litX));
+							posLits
+									.add(_substVisitor
+											.subst(substitution, litX));
 						} else {
-							negLits.add(substVisitor.subst(substitution, litX));
+							negLits
+									.add(_substVisitor
+											.subst(substitution, litX));
 						}
 						for (Literal pl : positiveLiterals) {
 							if (pl == litX || pl == litY) {
 								continue;
 							}
-							posLits.add(substVisitor.subst(substitution, pl));
+							posLits.add(_substVisitor.subst(substitution, pl));
 						}
 						for (Literal nl : negativeLiterals) {
 							if (nl == litX || nl == litY) {
 								continue;
 							}
-							negLits.add(substVisitor.subst(substitution, nl));
+							negLits.add(_substVisitor.subst(substitution, nl));
 						}
 						// Ensure the non trivial factor is standardized apart
-						standardizeApart.standardizeApart(posLits, negLits,
+						_standardizeApart.standardizeApart(posLits, negLits,
 								_saIndexical);
 						Clause c = new Clause(posLits, negLits);
 						c.setProofStep(new ProofStepClauseFactor(c, this));
@@ -457,9 +470,9 @@ public class Clause {
 		// then need to standardize apart in
 		// order to work correctly.
 		if (isStandardizedApartCheckRequired() || this == othClause) {
-			Set<Variable> mVariables = variableCollector
+			Set<Variable> mVariables = _variableCollector
 					.collectAllVariables(this);
-			Set<Variable> oVariables = variableCollector
+			Set<Variable> oVariables = _variableCollector
 					.collectAllVariables(othClause);
 
 			Set<Variable> cVariables = new HashSet<Variable>();
@@ -467,7 +480,7 @@ public class Clause {
 			cVariables.addAll(oVariables);
 
 			if (cVariables.size() < (mVariables.size() + oVariables.size())) {
-				othClause = standardizeApart.standardizeApart(othClause,
+				othClause = _standardizeApart.standardizeApart(othClause,
 						_saIndexical);
 			}
 		}

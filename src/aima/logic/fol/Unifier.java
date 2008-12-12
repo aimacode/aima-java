@@ -56,8 +56,8 @@ import aima.logic.fol.parsing.ast.Variable;
  */
 public class Unifier {
 	//
-	private SubstVisitor substVisitor = new SubstVisitor();
-	private VariableCollector variableCollector = new VariableCollector();
+	private static SubstVisitor _substVisitor = new SubstVisitor();
+	private static VariableCollector _variableCollector = new VariableCollector();
 
 	public Unifier() {
 
@@ -134,7 +134,7 @@ public class Unifier {
 	protected boolean occurCheck(Map<Variable, Term> theta, Variable var,
 			FOLNode x) {
 		if (x instanceof Function) {
-			Set<Variable> vars = variableCollector
+			Set<Variable> vars = _variableCollector
 					.collectAllVariables((Function) x);
 			if (vars.contains(var)) {
 				return true;
@@ -150,7 +150,7 @@ public class Unifier {
 					if (vars.contains(v)) {
 						// then need to ensure the function this variable
 						// is to be replaced by does not contain var.
-						Set<Variable> indirectvars = variableCollector
+						Set<Variable> indirectvars = _variableCollector
 								.collectAllVariables((Function) t);
 						if (indirectvars.contains(var)) {
 							return true;
@@ -226,7 +226,7 @@ public class Unifier {
 		theta.put(var, x);
 		for (Variable v : theta.keySet()) {
 			Term t = theta.get(v);
-			theta.put(v, substVisitor.subst(theta, t));		
+			theta.put(v, _substVisitor.subst(theta, t));		
 		}
 	}
 }
