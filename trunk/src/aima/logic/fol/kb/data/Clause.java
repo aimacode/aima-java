@@ -580,13 +580,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 
 		clauseVarCounts = new int[literals.size()];
 
-		boolean first = true;
 		for (Literal l : literals) {
-			if (first) {
-				first = false;
-			} else {
-				identity.append(",");
-			}
 			if (l.isNegativeLiteral()) {
 				identity.append("~");
 			}
