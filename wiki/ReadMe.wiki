@@ -2,10 +2,12 @@
 #labels Featured
 
 = Introduction =
-Current release is 0.93:
-It includes:
-  - a completion of the First Order Logic concepts from Chapter 9.
-  - the addition of the LRTA*-Agent from Chapter 4.
+Current release is 0.93:<br>
+It includes:<br>
+  - a completion of the First Order Logic concepts from Chapter 9.<br>
+  - the addition of the LRTA Agent from Chapter 4.<br>
+
+The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
 
 Previous release is 0.92:
 
@@ -14,8 +16,6 @@ It includes a rewrite of the neural network algorithms (in the earlier version t
  
 Heuristics are now doubles (vs ints in the old version).
 One minor change is that I've dropped the make file. Please use [http://ant.apache.org/ant  ant]
-
-The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
 
 ==bug reports - acknowledgment ==
 
