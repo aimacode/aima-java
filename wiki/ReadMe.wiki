@@ -2,8 +2,12 @@
 #labels Featured
 
 = Introduction =
+Current release is 0.93:
+It includes:
+  - a completion of the First Order Logic concepts from Chapter 9.
+  - the addition of the LRTA*-Agent from Chapter 4.
 
-This is the 0.92 release
+Previous release is 0.92:
 
 It includes a rewrite of the neural network algorithms (in the earlier version the nn s were getting saturated because the data was not pre processed)
  +  more algorithms  from chapter 4.
@@ -44,13 +48,13 @@ The following people sent in excellent comments and bug reports. Thank you!!!!
 
 ==Build Instructions==
 
-f you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
+If you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
 
 if you want  to rebuild from source, run the unit tests etc follow the instructions below.
 
 you need [http://ant.apache.org/ ant] to build from source.
 
- Many IDE's have built in ant versions. So you may want to try that first. 
+Many IDE's have built in ant versions. So you may want to try that first. 
 
 To build from the command line,
 
@@ -150,16 +154,12 @@ Again, if you get confused, look at the demos.
 The ONE thing you need to watch out for is that the Parsers are VERY finicky . If you get  a lexing or parsing error, there is a high probability there is an error in your logic string.
 
 To use First Order Logic, first you need to create a subclass of aima.logic.fol.FOLDomain which collects the constants, predicates, functions etc that you use to solve a particular problem.
-  A parser (that understands the Grammar in figure 8.3 (page 247 in my copy) ) needs to be instantiated with this domain (eg: 
+
+A parser (that understands the Grammar in figure 8.3 (page 247 in my copy) ) needs to be instantiated with this domain (eg: 
 FOLDomain weaponsDomain = DomainFactory.weaponsDomain();
 FOLParser parser = new FOLParser(weaponsDomain);  ).
 
 the basic design of all the logic code is that the parser creates a Composite (Design Patterns by Gamma, et al) parse tree over which various Visitors(Design Patterns by Gamma, et al) traverse . the key difference between the Visitor elucidated in the GOF book and the code is that in the former the visit() methods have a void visit(ConcreteNode) signature while the visitors used in the logic code have a Object visit(ConcreteNode,Object arg) signature. This makes testing easier and allows some recursive code that is hard with the former .
-
-miscellany 
- - a DLKnowledgeBase represents an instance of a datalog knowledge base which contains
- only data log rules or facts 
- -Standardise apart is NOT implemented  which means that for now , every variable ina databse needs to be different. On the other hand, a variable can be any string that starts with small letter so it shouldn't eb too hard to work around this limitation.
 
 ==Probability Notes==
 
