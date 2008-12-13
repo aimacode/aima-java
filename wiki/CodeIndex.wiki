@@ -53,7 +53,7 @@ Names in italics indicate algorithms that have been completed but have not made 
 ||9||295||CNF||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/CNFConverter.java CNFConverter]||
 ||9||297||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLTFMResolution.java FOLTFMResolution]||
 ||9||304||Demodulation||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Demodulation.java Demodulation]||
-||9||304||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Paramodulation.java Paramodulation]||
+||9||304||Paramodulation||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Paramodulation.java Paramodulation]||
 ||9.14||307||Otter||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLOTTERLikeTheoremProver.java FOLOTTERLikeTheoremProver]||
 ||11.2||380||Airport-problem||---||
 ||11.3||381||Spare-Tire-Problem||---||
