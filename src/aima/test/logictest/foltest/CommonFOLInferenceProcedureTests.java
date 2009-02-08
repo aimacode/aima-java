@@ -314,7 +314,7 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertTrue(0 == answer.getProofs().get(0).getAnswerBindings().size());
 	}
 
-	protected void testEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(
+	protected void xtestEqualityAndSubstitutionAxiomsKBabcdPDSucceeds(
 			InferenceProcedure infp) {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
