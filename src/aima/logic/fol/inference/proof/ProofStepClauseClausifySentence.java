@@ -18,7 +18,7 @@ public class ProofStepClauseClausifySentence extends AbstractProofStep {
 	public ProofStepClauseClausifySentence(Clause clausified,
 			Sentence origSentence) {
 		this.clausified = clausified;
-		this.predecessors.add(new ProofStepPremise(origSentence.toString()));
+		this.predecessors.add(new ProofStepPremise(origSentence));
 	}
 
 	//

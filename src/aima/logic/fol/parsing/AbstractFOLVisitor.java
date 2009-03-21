@@ -28,7 +28,7 @@ public class AbstractFOLVisitor implements FOLVisitor {
 	}
 
 	public Object visitVariable(Variable variable, Object arg) {
-		return variable;
+		return variable.copy();
 	}
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,

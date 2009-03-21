@@ -88,7 +88,7 @@ public class StandardizeApart {
 				literals.add(substVisitor.subst(renameSubstitution, l));
 			}
 			Clause renamed = new Clause(literals);
-			renamed.setProofStep(new ProofStepRenaming(renamed.toString(),
+			renamed.setProofStep(new ProofStepRenaming(renamed,
 					clause.getProofStep()));
 			return renamed;
 		}
@@ -125,7 +125,7 @@ public class StandardizeApart {
 
 			Chain renamed = new Chain(lits);
 
-			renamed.setProofStep(new ProofStepRenaming(renamed.toString(),
+			renamed.setProofStep(new ProofStepRenaming(renamed,
 					chain.getProofStep()));
 
 			return renamed;

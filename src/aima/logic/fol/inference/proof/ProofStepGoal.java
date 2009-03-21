@@ -12,9 +12,9 @@ public class ProofStepGoal extends AbstractProofStep {
 	//
 	private static final List<ProofStep> _noPredecessors = new ArrayList<ProofStep>();
 	//
-	private String proof = "";
+	private Object proof = "";
 
-	public ProofStepGoal(String proof) {
+	public ProofStepGoal(Object proof) {
 		this.proof = proof;
 	}
 

@@ -39,15 +39,15 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	 * 
 	 */
 	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
-		return (Sentence) ((Sentence) aSentence.accept(this, theta)).copy();
+		return (Sentence) aSentence.accept(this, theta);
 	}
 	
 	public Term subst(Map<Variable, Term> theta, Term aTerm) {
-		return (Term) ((Term) aTerm.accept(this, theta)).copy();
+		return (Term) aTerm.accept(this, theta);
 	}
 	
 	public Function subst(Map<Variable, Term> theta, Function aFunction) {
-		return (Function) ((Function) aFunction.accept(this, theta)).copy();
+		return (Function) aFunction.accept(this, theta);
 	}
 	
 	public Literal subst(Map<Variable, Term> theta, Literal aLiteral) {
@@ -63,7 +63,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		if (substitution.containsKey(variable)) {
 			return substitution.get(variable).copy();
 		}
-		return variable;
+		return variable.copy();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -83,12 +83,12 @@ public class SubstVisitor extends AbstractFOLVisitor {
 				if (st instanceof Variable) {
 					// Only if it is a variable to I replace it, otherwise
 					// I drop it.
-					variables.add((Variable) st);
+					variables.add((Variable) st.copy());
 				}
 			} else {
 				// No substitution for the quantified variable, so
 				// keep it.
-				variables.add(v);
+				variables.add(v.copy());
 			}
 		}
 

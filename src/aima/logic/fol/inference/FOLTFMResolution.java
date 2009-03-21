@@ -97,7 +97,7 @@ public class FOLTFMResolution implements InferenceProcedure {
 					notAlpha, answerLiteral.getAtomicSentence());
 			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
 				c = KB.standardizeApart(c);
-				c.setProofStep(new ProofStepGoal(c.toString()));
+				c.setProofStep(new ProofStepGoal(c));
 				c.setStandardizedApartCheckNotRequired();
 				clauses.addAll(c.getFactors());
 			}
@@ -106,7 +106,7 @@ public class FOLTFMResolution implements InferenceProcedure {
 		} else {
 			for (Clause c : KB.convertToClauses(notAlpha)) {
 				c = KB.standardizeApart(c);
-				c.setProofStep(new ProofStepGoal(c.toString()));
+				c.setProofStep(new ProofStepGoal(c));
 				c.setStandardizedApartCheckNotRequired();
 				clauses.addAll(c.getFactors());
 			}
