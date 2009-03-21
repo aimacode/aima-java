@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class ProofStepRenaming extends AbstractProofStep {
 	private List<ProofStep> predecessors = new ArrayList<ProofStep>();	
-	private String proof = "";
+	private Object proof = "";
 
-	public ProofStepRenaming(String proof, ProofStep predecessor) {
+	public ProofStepRenaming(Object proof, ProofStep predecessor) {
 		this.proof = proof;
 		this.predecessors.add(predecessor);
 	}

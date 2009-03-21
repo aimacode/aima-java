@@ -12,9 +12,9 @@ public class ProofStepPremise extends AbstractProofStep {
 	//
 	private static final List<ProofStep> _noPredecessors = new ArrayList<ProofStep>();
 	//
-	private String proof = "";
+	private Object proof = "";
 
-	public ProofStepPremise(String proof) {
+	public ProofStepPremise(Object proof) {
 		this.proof = proof;
 	}
 

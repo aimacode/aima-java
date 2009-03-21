@@ -189,7 +189,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					notAlpha, answerLiteral.getAtomicSentence());
 			for (Clause c : KB.convertToClauses(notAlphaWithAnswer)) {
 				c = KB.standardizeApart(c);
-				c.setProofStep(new ProofStepGoal(c.toString()));
+				c.setProofStep(new ProofStepGoal(c));
 				c.setStandardizedApartCheckNotRequired();
 				sos.addAll(c.getFactors());
 			}
@@ -198,7 +198,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		} else {
 			for (Clause c : KB.convertToClauses(notAlpha)) {
 				c = KB.standardizeApart(c);
-				c.setProofStep(new ProofStepGoal(c.toString()));
+				c.setProofStep(new ProofStepGoal(c));
 				c.setStandardizedApartCheckNotRequired();
 				sos.addAll(c.getFactors());
 			}

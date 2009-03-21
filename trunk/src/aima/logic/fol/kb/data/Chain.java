@@ -41,7 +41,7 @@ public class Chain {
 	public ProofStep getProofStep() {
 		if (null == proofStep) {
 			// Assume was a premise
-			proofStep = new ProofStepPremise(this.toString());
+			proofStep = new ProofStepPremise(this);
 		}
 		return proofStep;
 	}

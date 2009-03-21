@@ -178,7 +178,7 @@ public class FOLModelElimination implements InferenceProcedure {
 				int noNextFarParents = indexedFarParents
 						.getNumberFarParents(nextNearParent);
 				// Add to indexed far parents
-				indexedFarParents.addToIndex(nextNearParent);
+				nextNearParent = indexedFarParents.addToIndex(nextNearParent);
 				
 				// Check the next level
 				recursiveDLS(maxDepth, currentDepth + 1, nextNearParent,
@@ -279,7 +279,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			}
 			
 			for (Chain s : sos) {
-				s.setProofStep(new ProofStepGoal(s.toString()));
+				s.setProofStep(new ProofStepGoal(s));
 			}
 		}
 		
@@ -521,7 +521,8 @@ class IndexedFarParents {
 		return nnpc;
 	}
 	
-	public void addToIndex(Chain c) {
+	public Chain addToIndex(Chain c) {
+		Chain added = null;
 		Literal head = c.getHead();
 		if (null != head) {
 			Map<String, List<Chain>> toAddTo = null;
@@ -538,8 +539,10 @@ class IndexedFarParents {
 				toAddTo.put(key, farParents);
 			}
 			// Ensure is standardized apart when added.
-			farParents.add(standardizeApart.standardizeApart(c, _saIndexical));
+			added = standardizeApart.standardizeApart(c, _saIndexical);
+			farParents.add(added);
 		}
+		return added;
 	}
 	
 	public String toString() {
