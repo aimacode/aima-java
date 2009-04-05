@@ -11,6 +11,7 @@ import aima.learning.framework.DataSet;
 import aima.learning.framework.DataSetFactory;
 import aima.learning.inductive.DLTest;
 import aima.learning.inductive.DLTestFactory;
+import aima.learning.learners.CurrentBestLearner;
 import aima.learning.learners.DecisionListLearner;
 import aima.learning.learners.DecisionTreeLearner;
 import aima.learning.learners.MajorityLearner;
@@ -126,4 +127,13 @@ public class LearnerTests extends TestCase {
 		assertEquals(0, result[1]);
 	}
 
+	public void testCurrentBestLearnerOnRestaurantDataSet() throws Exception {
+		DataSet ds = DataSetFactory.getRestaurantDataSet();
+		CurrentBestLearner learner = new CurrentBestLearner("Yes");
+		learner.train(ds);
+		// TODO
+		//int[] result = learner.test(ds);
+		//assertEquals(12, result[0]);
+		//assertEquals(0, result[1]);
+	}
 }
