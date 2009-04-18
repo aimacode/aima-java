@@ -131,9 +131,9 @@ public class LearnerTests extends TestCase {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		CurrentBestLearner learner = new CurrentBestLearner("Yes");
 		learner.train(ds);
-		// TODO
-		//int[] result = learner.test(ds);
-		//assertEquals(12, result[0]);
-		//assertEquals(0, result[1]);
+
+		int[] result = learner.test(ds);
+		assertEquals(12, result[0]);
+		assertEquals(0, result[1]);
 	}
 }
