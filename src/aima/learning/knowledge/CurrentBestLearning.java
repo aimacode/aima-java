@@ -2,6 +2,9 @@ package aima.learning.knowledge;
 
 import java.util.List;
 
+import aima.logic.fol.kb.FOLKnowledgeBase;
+import aima.logic.fol.kb.data.Clause;
+
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 19.2, page 681.
  * 
@@ -28,20 +31,27 @@ import java.util.List;
  */
 public class CurrentBestLearning {
 	private FOLDataSetDomain folDSDomain = null;
+	private FOLKnowledgeBase kbForLearning = null;
 
 	//
 	// PUBLIC METHODS
 	//
-	public CurrentBestLearning(FOLDataSetDomain folDSDomain) {
+	public CurrentBestLearning(FOLDataSetDomain folDSDomain, FOLKnowledgeBase kbForLearning) {
 		this.folDSDomain = folDSDomain;
+		this.kbForLearning = kbForLearning;
 	}
 
 	// * function CURRENT-BEST-LEARNING(examples) returns a hypothesis
 	public Hypothesis currentBestLearning(List<FOLExample> examples) {
-		// TODO-remove this test behavior code
-//		for (FOLExample fe : examples) {
-//			System.out.println(fe.toString());
-//		}
+		
+		// TODO-use the default from pg 679 for now.
+		String c1 = "patrons(v,Some)";
+		String c2 = "patrons(v,Full) AND (hungry(v) AND type(v,French))";
+		String c3 = "patrons(v,Full) AND (hungry(v) AND (type(v,Thai) AND fri_sat(v)))";
+		String c4 = "patrons(v,Full) AND (hungry(v) AND type(v,Burger))";
+		String sh = "FORALL v (will_wait(v) <=> ("+c1+" OR ("+c2+" OR ("+c3+" OR ("+c4+")))))";
+		
+		Hypothesis H = new Hypothesis(kbForLearning.tell(sh));
 
 		// TODO
 		// * H <- any hypothesis consistent with the first example in examples.
@@ -53,7 +63,7 @@ public class CurrentBestLearning {
 		// * if no consistent specialization/generalization can be found then
 		// fail
 		// * return H
-		return null;
+		return H;
 	}
 
 	//

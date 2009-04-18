@@ -35,6 +35,7 @@ public class DefaultLightestClauseHeuristic implements LightestClauseHeuristic {
 	}
 
 	public void initialSOS(Set<Clause> clauses) {
+		sos.clear();
 		sos.addAll(clauses);
 		Collections.sort(sos, lightestClauseSorter);
 	}

@@ -62,7 +62,7 @@ public class FOLExample {
 		// Create the classification sentence
 		classification = new Predicate(folDSDomain.getGoalPredicateName(), terms);
 		if (!example.getAttributeValueAsString(
-				folDSDomain.getGoalPredicateName()).equals(
+				folDSDomain.getDataSetTargetName()).equals(
 				folDSDomain.getTrueGoalValue())) {
 			// if not true then needs to be a Not sentence
 			classification = new NotSentence(classification);
@@ -70,7 +70,8 @@ public class FOLExample {
 
 		// Create the description sentence
 		List<Sentence> descParts = new ArrayList<Sentence>();
-		for (String dname : folDSDomain.getDescriptionPredicateNames()) {
+		for (String dname : folDSDomain.getDescriptionDataSetNames()) {
+			String foldDName = folDSDomain.getFOLName(dname);
 			terms = new ArrayList<Term>();
 			terms.add(ithExampleConstant);
 			// If multivalued becomes a two place predicate
@@ -79,10 +80,10 @@ public class FOLExample {
 			// see pg 679 of AIMA
 			Sentence part = null;
 			if (folDSDomain.isMultivalued(dname)) {
-				terms.add(new Constant(example.getAttributeValueAsString(dname)));
-				part = new Predicate(dname, terms);
+				terms.add(new Constant(folDSDomain.getFOLName(example.getAttributeValueAsString(dname))));
+				part = new Predicate(foldDName, terms);
 			} else {
-				part = new Predicate(dname, terms);
+				part = new Predicate(foldDName, terms);
 				// Need to determine if false
 				if (!folDSDomain.getTrueGoalValue().equals(example.getAttributeValueAsString(dname))) {
 					part = new NotSentence(part);

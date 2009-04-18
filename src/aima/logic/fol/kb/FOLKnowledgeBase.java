@@ -96,6 +96,14 @@ public class FOLKnowledgeBase {
 				substVisitor);
 		this.cnfConverter = new CNFConverter(parser);
 	}
+	
+	public void clear() {
+		this.originalSentences.clear();
+		this.clauses.clear();
+		this.allDefiniteClauses.clear();
+		this.implicationDefiniteClauses.clear();
+		this.indexFacts.clear();
+	}
 
 	public InferenceProcedure getInferenceProcedure() {
 		return inferenceProcedure;
@@ -107,8 +115,10 @@ public class FOLKnowledgeBase {
 		}
 	}
 
-	public void tell(String aSentence) {
-		tell(parser.parse(aSentence));
+	public Sentence tell(String aSentence) {
+		Sentence s = parser.parse(aSentence);
+		tell(s);
+		return s;
 	}
 
 	public void tell(List<? extends Sentence> sentences) {
