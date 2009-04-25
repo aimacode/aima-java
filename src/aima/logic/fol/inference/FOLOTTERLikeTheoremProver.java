@@ -253,21 +253,21 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		// Remember to resolve with self
 		Set<Clause> resolvents = clause.binaryResolvents(clause);
 		for (Clause rc : resolvents) {
-			resultingClauses.addAll(rc.getFactors());
+			resultingClauses.add(rc);
 		}
 
 		// * resolve clause with each member of usable
 		for (Clause c : usable) {
 			resolvents = clause.binaryResolvents(c);
 			for (Clause rc : resolvents) {
-				resultingClauses.addAll(rc.getFactors());
+				resultingClauses.add(rc);
 			}
 
 			// if using paramodulation to handle equality
 			if (isUseParamodulation()) {
 				Set<Clause> paras = paramodulation.apply(clause, c, true);
 				for (Clause p : paras) {
-					resultingClauses.addAll(p.getFactors());
+					resultingClauses.add(p);
 				}
 			}
 		}
@@ -304,8 +304,12 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				// LightestClauseHeuristic to loop continuously
 				// on the same pair of objects.
 				if (!sos.contains(clause) && !usable.contains(clause)) {
-					sos.add(clause);
-					getLightestClauseHeuristic().addedClauseToSOS(clause);
+					for (Clause ac : clause.getFactors()) {
+						if (!sos.contains(ac) && !usable.contains(ac)) {
+							sos.add(ac);
+							getLightestClauseHeuristic().addedClauseToSOS(ac);
+						}
+					}
 				}
 
 				// * if clause has one literal then look for unit refutation

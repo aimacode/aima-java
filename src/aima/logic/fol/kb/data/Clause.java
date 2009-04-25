@@ -348,6 +348,10 @@ public class Clause {
 
 		return equalityIdentity.equals(othClause.equalityIdentity);
 	}
+	
+	public String getEqualityIdentity() {
+		return equalityIdentity;
+	}
 
 	//
 	// PRIVATE METHODS
