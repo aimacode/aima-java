@@ -273,7 +273,8 @@ public class FOLKnowledgeBase {
 		
 		Set<Variable> vars = variableCollector.collectAllVariables(forQuery);
 		for (Variable v : vars) {
-			terms.add(v);
+			// Ensure copies of the variables are used.
+			terms.add(v.copy());
 		}
 		
 		return new Literal(new Predicate(alName, terms));
