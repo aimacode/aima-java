@@ -9,6 +9,7 @@ import java.util.Set;
 
 import aima.logic.fol.Connectors;
 import aima.logic.fol.StandardizeApart;
+import aima.logic.fol.StandardizeApartInPlace;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
@@ -20,6 +21,7 @@ import aima.logic.fol.inference.proof.ProofStepChainDropped;
 import aima.logic.fol.inference.proof.ProofStepChainFromClause;
 import aima.logic.fol.inference.proof.ProofStepChainReduction;
 import aima.logic.fol.inference.proof.ProofStepGoal;
+import aima.logic.fol.inference.trace.FOLModelEliminationTracer;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.Chain;
 import aima.logic.fol.kb.data.Clause;
@@ -47,14 +49,26 @@ public class FOLModelElimination implements InferenceProcedure {
 	// Ten seconds is default maximum query time permitted
 	private long maxQueryTime = 10 * 1000;
 	//
+	private FOLModelEliminationTracer tracer = null;
+	//
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
-	
+
 	public FOLModelElimination() {
 
 	}
-	
+
 	public FOLModelElimination(long maxQueryTime) {
+		setMaxQueryTime(maxQueryTime);
+	}
+
+	public FOLModelElimination(FOLModelEliminationTracer tracer) {
+		this.tracer = tracer;
+	}
+
+	public FOLModelElimination(FOLModelEliminationTracer tracer,
+			long maxQueryTime) {
+		this.tracer = tracer;
 		setMaxQueryTime(maxQueryTime);
 	}
 
@@ -65,7 +79,7 @@ public class FOLModelElimination implements InferenceProcedure {
 	public void setMaxQueryTime(long maxQueryTime) {
 		this.maxQueryTime = maxQueryTime;
 	}
-	
+
 	//
 	// START-InferenceProcedure
 
@@ -74,19 +88,23 @@ public class FOLModelElimination implements InferenceProcedure {
 		// Get the background knowledge - are assuming this is satisfiable
 		// as using Set of Support strategy.
 		List<Chain> background = createChainsFromClauses(kb.getAllClauses());
-		
+
 		// Collect the information necessary for constructing
 		// an answer (supports use of answer literals).
 		AnswerHandler ansHandler = new AnswerHandler(kb, aQuery, maxQueryTime);
 
 		IndexedFarParents ifps = new IndexedFarParents(ansHandler
 				.getSetOfSupport(), background);
-		
+
 		// Iterative deepening to be used
 		for (int maxDepth = 1; maxDepth < Integer.MAX_VALUE; maxDepth++) {
 			// Track the depth actually reached
 			ansHandler.resetMaxDepthReached();
-			
+
+			if (null != tracer) {
+				tracer.reset();
+			}
+
 			for (Chain nearParent : ansHandler.getSetOfSupport()) {
 				recursiveDLS(maxDepth, 0, nearParent, ifps, ansHandler);
 				if (ansHandler.isComplete()) {
@@ -99,10 +117,11 @@ public class FOLModelElimination implements InferenceProcedure {
 			if (ansHandler.getMaxDepthReached() < maxDepth) {
 				return ansHandler;
 			}
-		}		
-		
+		}
+
 		return ansHandler;
 	}
+
 	// END-InferenceProcedure
 	//
 
@@ -123,35 +142,38 @@ public class FOLModelElimination implements InferenceProcedure {
 	}
 
 	// Recursive Depth Limited Search
-	private void recursiveDLS(int maxDepth,
-			int currentDepth,
-			Chain nearParent, IndexedFarParents indexedFarParents, AnswerHandler ansHandler) {
-		
+	private void recursiveDLS(int maxDepth, int currentDepth, Chain nearParent,
+			IndexedFarParents indexedFarParents, AnswerHandler ansHandler) {
+
 		// Keep track of the maximum depth reached.
 		ansHandler.updateMaxDepthReached(currentDepth);
-		
+
 		if (currentDepth == maxDepth) {
 			return;
 		}
-		
-		int noCandidateFarParents = indexedFarParents.getNumberCandidateFarParents(nearParent);
+
+		int noCandidateFarParents = indexedFarParents
+				.getNumberCandidateFarParents(nearParent);
+		if (null != tracer) {
+			tracer.increment(currentDepth, noCandidateFarParents);
+		}
+		indexedFarParents.standardizeApart(nearParent);
 		for (int farParentIdx = 0; farParentIdx < noCandidateFarParents; farParentIdx++) {
 			// If have a complete answer, don't keep
 			// checking candidate far parents
 			if (ansHandler.isComplete()) {
 				break;
 			}
-			
+
 			// Reduction
 			Chain nextNearParent = indexedFarParents.attemptReduction(
-					nearParent,
-					farParentIdx);
-			
+					nearParent, farParentIdx);
+
 			if (null == nextNearParent) {
 				// Unable to remove the head via reduction
 				continue;
 			}
-			
+
 			// Handle Canceling and Dropping
 			boolean cancelled = false;
 			boolean dropped = false;
@@ -169,7 +191,7 @@ public class FOLModelElimination implements InferenceProcedure {
 					dropped = true;
 				}
 			} while (dropped || cancelled);
-			
+
 			// Check if have answer before
 			// going to the next level
 			if (!ansHandler.isAnswer(nextNearParent)) {
@@ -179,12 +201,11 @@ public class FOLModelElimination implements InferenceProcedure {
 						.getNumberFarParents(nextNearParent);
 				// Add to indexed far parents
 				nextNearParent = indexedFarParents.addToIndex(nextNearParent);
-				
+
 				// Check the next level
 				recursiveDLS(maxDepth, currentDepth + 1, nextNearParent,
-						indexedFarParents,
-						ansHandler);
-				
+						indexedFarParents, ansHandler);
+
 				// Reset the number of far parents possible
 				// when recursing back up.
 				indexedFarParents.resetNumberFarParentsTo(nextNearParent,
@@ -210,9 +231,7 @@ public class FOLModelElimination implements InferenceProcedure {
 							List<Literal> cancLits = new ArrayList<Literal>();
 							for (Literal lfc : c.getTail()) {
 								AtomicSentence a = (AtomicSentence) substVisitor
-										.subst(
-										subst, lfc
-										.getAtomicSentence());
+										.subst(subst, lfc.getAtomicSentence());
 								cancLits.add(lfc.newInstance(a));
 							}
 							Chain cancellation = new Chain(cancLits);
@@ -239,7 +258,7 @@ public class FOLModelElimination implements InferenceProcedure {
 
 		return c;
 	}
-	
+
 	class AnswerHandler implements InferenceResult {
 		private Chain answerChain = new Chain();
 		private Set<Variable> answerLiteralVariables;
@@ -252,7 +271,7 @@ public class FOLModelElimination implements InferenceProcedure {
 
 		public AnswerHandler(FOLKnowledgeBase kb, Sentence aQuery,
 				long maxQueryTime) {
-			
+
 			finishTime = System.currentTimeMillis() + maxQueryTime;
 
 			Sentence refutationQuery = new NotSentence(aQuery);
@@ -267,7 +286,7 @@ public class FOLModelElimination implements InferenceProcedure {
 			if (answerLiteralVariables.size() > 0) {
 				Sentence refutationQueryWithAnswer = new ConnectedSentence(
 						Connectors.OR, refutationQuery, answerLiteral
-								.getAtomicSentence());
+								.getAtomicSentence().copy());
 
 				sos = createChainsFromClauses(kb
 						.convertToClauses(refutationQueryWithAnswer));
@@ -277,12 +296,12 @@ public class FOLModelElimination implements InferenceProcedure {
 				sos = createChainsFromClauses(kb
 						.convertToClauses(refutationQuery));
 			}
-			
+
 			for (Chain s : sos) {
 				s.setProofStep(new ProofStepGoal(s));
 			}
 		}
-		
+
 		//
 		// START-InferenceResult
 		public boolean isPossiblyFalse() {
@@ -315,7 +334,7 @@ public class FOLModelElimination implements InferenceProcedure {
 		public boolean isComplete() {
 			return complete;
 		}
-		
+
 		public void resetMaxDepthReached() {
 			maxDepthReached = 0;
 		}
@@ -376,16 +395,16 @@ public class FOLModelElimination implements InferenceProcedure {
 					isAns = true;
 				}
 			}
-			
+
 			if (System.currentTimeMillis() > finishTime) {
 				complete = true;
 				// Indicate that I have run out of query time
 				timedOut = true;
 			}
-			
+
 			return isAns;
 		}
-		
+
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
 			sb.append("isComplete=" + complete);
@@ -397,21 +416,18 @@ public class FOLModelElimination implements InferenceProcedure {
 }
 
 class IndexedFarParents {
-	private static StandardizeApartIndexical _saIndexical = StandardizeApartIndexicalFactory
-			.newStandardizeApartIndexical('i');
-
+	//
+	private int saIdx = 0;
 	private Unifier unifier = new Unifier();
 	private SubstVisitor substVisitor = new SubstVisitor();
-	private StandardizeApart standardizeApart = new StandardizeApart();
 	//
 	private Map<String, List<Chain>> posHeads = new LinkedHashMap<String, List<Chain>>();
 	private Map<String, List<Chain>> negHeads = new LinkedHashMap<String, List<Chain>>();
 
-	public IndexedFarParents(List<Chain> sos,
-			List<Chain> background) {
+	public IndexedFarParents(List<Chain> sos, List<Chain> background) {
 		constructInternalDataStructures(sos, background);
 	}
-	
+
 	public int getNumberFarParents(Chain farParent) {
 		Literal head = farParent.getHead();
 
@@ -444,7 +460,7 @@ class IndexedFarParents {
 			farParents.remove(farParents.size() - 1);
 		}
 	}
-	
+
 	public int getNumberCandidateFarParents(Chain nearParent) {
 		Literal nearestHead = nearParent.getHead();
 
@@ -463,13 +479,12 @@ class IndexedFarParents {
 		}
 		return 0;
 	}
-	
-	public Chain attemptReduction(Chain nearParent,
-			int farParentIndex) {
+
+	public Chain attemptReduction(Chain nearParent, int farParentIndex) {
 		Chain nnpc = null;
 
 		Literal nearLiteral = nearParent.getHead();
-		
+
 		Map<String, List<Chain>> candidateHeads = null;
 		if (nearLiteral.isPositiveLiteral()) {
 			candidateHeads = negHeads;
@@ -482,10 +497,11 @@ class IndexedFarParents {
 		List<Chain> farParents = candidateHeads.get(nearestKey);
 		if (null != farParents) {
 			Chain farParent = farParents.get(farParentIndex);
+			standardizeApart(farParent);
 			Literal farLiteral = farParent.getHead();
 			AtomicSentence farAtom = farLiteral.getAtomicSentence();
 			Map<Variable, Term> subst = unifier.unify(nearAtom, farAtom);
-			
+
 			// If I was able to unify with one
 			// of the far heads
 			if (null != subst) {
@@ -493,7 +509,7 @@ class IndexedFarParents {
 				Chain topChain = farParent;
 				Literal botLit = nearLiteral;
 				Chain botChain = nearParent;
-				
+
 				// Need to apply subst to all of the
 				// literals in the reduction
 				List<Literal> reduction = new ArrayList<Literal>();
@@ -503,24 +519,23 @@ class IndexedFarParents {
 					reduction.add(l.newInstance(atom));
 				}
 				reduction.add(new ReducedLiteral((AtomicSentence) substVisitor
-						.subst(subst,
-						botLit.getAtomicSentence()), botLit
+						.subst(subst, botLit.getAtomicSentence()), botLit
 						.isNegativeLiteral()));
 				for (Literal l : botChain.getTail()) {
 					AtomicSentence atom = (AtomicSentence) substVisitor.subst(
 							subst, l.getAtomicSentence());
 					reduction.add(l.newInstance(atom));
 				}
-				
+
 				nnpc = new Chain(reduction);
 				nnpc.setProofStep(new ProofStepChainReduction(nnpc, nearParent,
 						farParent, subst));
 			}
 		}
-		
+
 		return nnpc;
 	}
-	
+
 	public Chain addToIndex(Chain c) {
 		Chain added = null;
 		Literal head = c.getHead();
@@ -531,20 +546,24 @@ class IndexedFarParents {
 			} else {
 				toAddTo = negHeads;
 			}
-	
+
 			String key = head.getAtomicSentence().getSymbolicName();
 			List<Chain> farParents = toAddTo.get(key);
 			if (null == farParents) {
 				farParents = new ArrayList<Chain>();
 				toAddTo.put(key, farParents);
 			}
-			// Ensure is standardized apart when added.
-			added = standardizeApart.standardizeApart(c, _saIndexical);
+			
+			added = c;
 			farParents.add(added);
 		}
 		return added;
 	}
 	
+	public void standardizeApart(Chain c) {
+		saIdx = StandardizeApartInPlace.standardizeApart(c, saIdx);
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
@@ -572,8 +591,7 @@ class IndexedFarParents {
 	// 
 	// PRIVATE METHODS
 	//
-	private void constructInternalDataStructures(
-			List<Chain> sos,
+	private void constructInternalDataStructures(List<Chain> sos,
 			List<Chain> background) {
 		List<Chain> toIndex = new ArrayList<Chain>();
 		toIndex.addAll(sos);
