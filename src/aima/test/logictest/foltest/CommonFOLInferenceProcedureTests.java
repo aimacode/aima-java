@@ -170,11 +170,11 @@ public abstract class CommonFOLInferenceProcedureTests extends TestCase {
 		assertFalse(answer.isUnknownDueToTimeout());
 		// DB can expand infinitely so is only partial.
 		assertTrue(answer.isPartialResultDueToTimeout());
-		assertTrue(4 == answer.getProofs().size());
-		assertTrue(1 == answer.getProofs().get(0).getAnswerBindings().size());
-		assertTrue(1 == answer.getProofs().get(1).getAnswerBindings().size());
-		assertTrue(1 == answer.getProofs().get(2).getAnswerBindings().size());
-		assertTrue(1 == answer.getProofs().get(3).getAnswerBindings().size());
+		assertEquals(4, answer.getProofs().size());
+		assertEquals(1, answer.getProofs().get(0).getAnswerBindings().size());
+		assertEquals(1, answer.getProofs().get(1).getAnswerBindings().size());
+		assertEquals(1, answer.getProofs().get(2).getAnswerBindings().size());
+		assertEquals(1, answer.getProofs().get(3).getAnswerBindings().size());
 
 		List<Constant> expected = new ArrayList<Constant>();
 		expected.add(new Constant("Nancy"));
