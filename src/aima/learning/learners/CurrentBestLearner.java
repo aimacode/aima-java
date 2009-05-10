@@ -10,7 +10,7 @@ import aima.learning.knowledge.CurrentBestLearning;
 import aima.learning.knowledge.FOLDataSetDomain;
 import aima.learning.knowledge.FOLExample;
 import aima.learning.knowledge.Hypothesis;
-import aima.logic.fol.inference.FOLModelElimination;
+import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
 import aima.logic.fol.inference.InferenceResult;
 import aima.logic.fol.kb.FOLKnowledgeBase;
 
@@ -43,7 +43,7 @@ public class CurrentBestLearner implements Learner {
 		}
 
 		// Setup a KB to be used for learning
-		kb = new FOLKnowledgeBase(folDSDomain, new FOLModelElimination(1000));
+		kb = new FOLKnowledgeBase(folDSDomain, new FOLOTTERLikeTheoremProver(1000, false));
 
 		CurrentBestLearning cbl = new CurrentBestLearning(folDSDomain, kb);
 

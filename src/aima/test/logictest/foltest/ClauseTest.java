@@ -671,4 +671,206 @@ public class ClauseTest extends TestCase {
 		c.addPositiveLiteral((Predicate) parser.parse("P(x)"));
 		assertFalse(c.isTautology());
 	}
+	
+	// Note: Tests derived from:
+	// http://logic.stanford.edu/classes/cs157/2008/lectures/lecture12.pdf
+	// slides 17 and 18.
+	public void testSubsumes() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("A");
+		domain.addConstant("B");
+		domain.addConstant("C");
+		domain.addConstant("D");
+		domain.addConstant("E");
+		domain.addConstant("F");
+		domain.addConstant("G");
+		domain.addConstant("H");
+		domain.addConstant("I");
+		domain.addConstant("J");
+		domain.addPredicate("P");
+		domain.addPredicate("Q");
+		
+		FOLParser parser = new FOLParser(domain);
+
+		// Example
+		// {~p(a,b),q(c)}
+		Clause psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(x,y)}
+		Clause phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(x,y)"));
+		
+		assertTrue(phi.subsumes(psi));
+		// Non-Example
+		// {~p(x,b),q(x)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(x,B)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(x)"));
+		// {~p(a,y)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,y)"));
+		// Reason for Non-Example:
+		// {p(b,b)}
+		// {~q(b)}
+		assertFalse(phi.subsumes(psi));
+		
+		//
+		// Additional Examples
+		
+		// Non-Example
+		// {~p(x,b),q(z)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(x,B)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(z)"));
+		// {~p(a,y)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,y)"));
+
+		assertFalse(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(w,z),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(w,z)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(x,y),~p(a,b)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(x,y)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Non-Example
+		// {~p(v,b),~p(w,z),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(v,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(w,z)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(x,y),~p(a,b)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(x,y)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		
+		assertFalse(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(c,d),~p(e,f),~p(g,h),~p(i,j),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(i,j)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(c,d),~p(e,f),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(e,f),~p(a,b),~p(c,d)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(c,d),~p(e,f),~p(g,h),~p(i,j),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(i,j),~p(c,d)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Non-Example
+		// {~p(a,b),~p(x,d),~p(e,f),~p(g,h),~p(i,j),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(x,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(i,j),~p(c,d)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		
+		assertFalse(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(c,d),~p(e,f),~p(g,h),~p(i,j),q(c)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C)"));
+		// {~p(i,j),~p(a,x)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,x)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Example
+		// {~p(a,b),~p(c,d),~p(e,f),~p(g,h),~p(i,j),q(a,b),q(c,d),q(e,f)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C,D)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(E,F)"));
+		// {~p(i,j),~p(a,b),q(e,f),q(a,b)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		phi.addPositiveLiteral((Predicate) parser.parse("Q(E,F)"));
+		phi.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		
+		assertTrue(phi.subsumes(psi));
+		
+		// Non-Example
+		// {~p(a,b),~p(c,d),~p(e,f),~p(g,h),~p(i,j),q(a,b),q(c,d),q(e,f)}
+		psi = new Clause();
+		psi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(C,D)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(E,F)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(G,H)"));
+		psi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(C,D)"));
+		psi.addPositiveLiteral((Predicate) parser.parse("Q(E,F)"));
+		// {~p(i,j),~p(a,b),q(e,f),q(a,b)}
+		phi = new Clause();
+		phi.addNegativeLiteral((Predicate) parser.parse("P(I,J)"));
+		phi.addNegativeLiteral((Predicate) parser.parse("P(A,B)"));
+		phi.addPositiveLiteral((Predicate) parser.parse("Q(E,A)"));
+		phi.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
+		
+		assertFalse(phi.subsumes(psi));
+	}
 }

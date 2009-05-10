@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.logic.fol.Connectors;
+import aima.logic.fol.SubsumptionElimination;
 import aima.logic.fol.inference.otter.ClauseFilter;
 import aima.logic.fol.inference.otter.ClauseSimplifier;
 import aima.logic.fol.inference.otter.LightestClauseHeuristic;
@@ -163,6 +164,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			c.setStandardizedApartCheckNotRequired();
 			usable.addAll(c.getFactors());
 		}
+		usable.removeAll(SubsumptionElimination.findSubsumedClauses(usable));
 
 		// Ensure reflexivity axiom is added to usable if using paramodulation.
 		if (isUseParamodulation()) {

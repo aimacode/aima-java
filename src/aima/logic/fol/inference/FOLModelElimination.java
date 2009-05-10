@@ -3,6 +3,7 @@ package aima.logic.fol.inference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +14,7 @@ import aima.logic.fol.StandardizeApartInPlace;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
+import aima.logic.fol.SubsumptionElimination;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.inference.proof.Proof;
 import aima.logic.fol.inference.proof.ProofFinal;
@@ -87,7 +89,9 @@ public class FOLModelElimination implements InferenceProcedure {
 		//
 		// Get the background knowledge - are assuming this is satisfiable
 		// as using Set of Support strategy.
-		List<Chain> background = createChainsFromClauses(kb.getAllClauses());
+		Set<Clause> bgClauses = new LinkedHashSet<Clause>(kb.getAllClauses());
+		bgClauses.removeAll(SubsumptionElimination.findSubsumedClauses(bgClauses));
+		List<Chain> background = createChainsFromClauses(bgClauses);
 
 		// Collect the information necessary for constructing
 		// an answer (supports use of answer literals).

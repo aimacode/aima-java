@@ -140,13 +140,28 @@ public class UnifierTest extends TestCase {
 	}
 
 	public void testCascadedOccursCheck() {
-		parser = new FOLParser(DomainFactory.lovesAnimalDomain());
-		parser.getFOLDomain().addFunction("SF0");
-		parser.getFOLDomain().addFunction("SF1");
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("P");
+		domain.addFunction("F");
+		domain.addFunction("SF0");
+		domain.addFunction("SF1");
+		FOLParser parser = new FOLParser(domain);
 
-		Sentence s1 = parser.parse("Loves(SF1(v2),v2)");
-		Sentence s2 = parser.parse("Loves(v3,SF0(v3))");
+		Sentence s1 = parser.parse("P(SF1(v2),v2)");
+		Sentence s2 = parser.parse("P(v3,SF0(v3))");
 		Map<Variable, Term> result = unifier.unify(s1, s2);
+
+		assertNull(result);
+		
+		s1 = parser.parse("P(v1,SF0(v1),SF0(v1),SF0(v1),SF0(v1))");
+		s2 = parser.parse("P(v2,SF0(v2),v2,     v3,     v2)");
+		result = unifier.unify(s1, s2);
+
+		assertNull(result);
+		
+		s1 = parser.parse("P(v1,   F(v2),F(v2),F(v2),v1,      F(F(v1)),F(F(F(v1))),v2)");
+		s2 = parser.parse("P(F(v3),v4,   v5,   v6,   F(F(v5)),v4,      F(v3),      F(F(v5)))");
+		result = unifier.unify(s1, s2);
 
 		assertNull(result);
 	}
