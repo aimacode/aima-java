@@ -37,7 +37,7 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 		// therefore give it 20 seconds to find the 4 answers to this, should
 		// be more than enough.
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(new FOLTFMResolution(
-				30 * 1000));
+				40 * 1000));
 	}
 
 	public void testFullFOLKBLovesAnimalQueryKillsCuriosityTunaSucceeds() {
@@ -65,7 +65,7 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 
 	public void testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds() {
 		testEqualityAndSubstitutionAxiomsKBabcdFFASucceeds(new FOLTFMResolution(
-				30 * 1000));
+				40 * 1000));
 	}
 
 	// Note: Requires VM arguments to be:
