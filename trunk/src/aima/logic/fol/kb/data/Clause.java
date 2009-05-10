@@ -15,6 +15,7 @@ import aima.logic.fol.StandardizeApart;
 import aima.logic.fol.StandardizeApartIndexical;
 import aima.logic.fol.StandardizeApartIndexicalFactory;
 import aima.logic.fol.SubstVisitor;
+import aima.logic.fol.SubsumptionElimination;
 import aima.logic.fol.Unifier;
 import aima.logic.fol.VariableCollector;
 import aima.logic.fol.inference.proof.ProofStep;
@@ -29,9 +30,11 @@ import aima.logic.fol.parsing.ast.Function;
 import aima.logic.fol.parsing.ast.NotSentence;
 import aima.logic.fol.parsing.ast.Predicate;
 import aima.logic.fol.parsing.ast.QuantifiedSentence;
+import aima.logic.fol.parsing.ast.Sentence;
 import aima.logic.fol.parsing.ast.Term;
 import aima.logic.fol.parsing.ast.TermEquality;
 import aima.logic.fol.parsing.ast.Variable;
+import aima.util.MixedRadixNumber;
 
 /**
  * A Clause: A disjunction of literals.
@@ -61,7 +64,7 @@ public class Clause {
 	private Set<Clause> factors = null;
 	private Set<Clause> nonTrivialFactors = null;
 	private String stringRep = null;
-	private ProofStep proofStep = null; 
+	private ProofStep proofStep = null;
 
 	public Clause() {
 		// i.e. the empty clause
@@ -91,7 +94,7 @@ public class Clause {
 		}
 		recalculateIdentity();
 	}
-	
+
 	public ProofStep getProofStep() {
 		if (null == proofStep) {
 			// Assume was a premise
@@ -99,7 +102,7 @@ public class Clause {
 		}
 		return proofStep;
 	}
-	
+
 	public void setProofStep(ProofStep proofStep) {
 		this.proofStep = proofStep;
 	}
@@ -146,7 +149,7 @@ public class Clause {
 		// positive.
 		return !isEmpty() && positiveLiterals.size() <= 1;
 	}
-	
+
 	public boolean isTautology() {
 
 		for (Literal pl : positiveLiterals) {
@@ -228,6 +231,47 @@ public class Clause {
 		return Collections.unmodifiableSet(nonTrivialFactors);
 	}
 
+	public boolean subsumes(Clause othC) {
+		boolean subsumes = false;
+
+		// Equality is not subsumption
+		if (!(this == othC)) {
+			// Ensure this has less literals total and that
+			// it is a subset of the other clauses positive and negative counts
+			if (this.getNumberLiterals() < othC.getNumberLiterals()
+					&& this.getNumberPositiveLiterals() <= othC
+							.getNumberPositiveLiterals()
+					&& this.getNumberNegativeLiterals() <= othC
+							.getNumberNegativeLiterals()) {
+
+				Map<String, List<Literal>> thisToTry = collectLikeLiterals(this.literals);
+				Map<String, List<Literal>> othCToTry = collectLikeLiterals(othC.literals);
+				// Ensure all like literals from this clause are a subset 
+				// of the other clause.
+				if (othCToTry.keySet().containsAll(thisToTry.keySet())) {
+					boolean isAPossSubset = true;
+					// Ensure that each set of same named literals
+					// from this clause is a subset of the other
+					// clauses same named literals.
+					for (String pk : thisToTry.keySet()) {
+						if (thisToTry.get(pk).size() > othCToTry.get(pk).size()) {
+							isAPossSubset = false;
+							break;
+						}
+					}
+					if (isAPossSubset) {
+						// At this point I know this this Clause's
+						// literal/arity names are a subset of the
+						// other clauses literal/arity names
+						subsumes = checkSubsumes(othC, thisToTry, othCToTry);
+					}
+				}
+			}
+		}
+
+		return subsumes;
+	}
+
 	// Note: Applies binary resolution rule and factoring
 	// Note: returns a set with an empty clause if both clauses
 	// are empty, otherwise returns a set of binary resolvents.
@@ -273,21 +317,22 @@ public class Clause {
 			}
 
 			// Now check to see if they resolve
+			Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
 			for (Literal pl : trPosLits) {
-				for (Literal nl : trNegLits) {
-					Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
+				for (Literal nl : trNegLits) {	
+					copyRBindings.clear();
 					if (null != _unifier.unify(pl.getAtomicSentence(), nl
 							.getAtomicSentence(), copyRBindings)) {
-						copyRPosLits.clear(); 
+						copyRPosLits.clear();
 						copyRNegLits.clear();
 						boolean found = false;
 						for (Literal l : allPosLits) {
-							if (!found && pl.equals(l)) {								
+							if (!found && pl.equals(l)) {
 								found = true;
 								continue;
 							}
-							copyRPosLits.add(_substVisitor.subst(
-										copyRBindings, l));
+							copyRPosLits.add(_substVisitor.subst(copyRBindings,
+									l));
 						}
 						found = false;
 						for (Literal l : allNegLits) {
@@ -295,13 +340,13 @@ public class Clause {
 								found = true;
 								continue;
 							}
-							copyRNegLits.add(_substVisitor.subst(
-										copyRBindings, l));
+							copyRNegLits.add(_substVisitor.subst(copyRBindings,
+									l));
 						}
 						// Ensure the resolvents are standardized apart
 						Map<Variable, Term> renameSubstitituon = _standardizeApart
-								.standardizeApart(copyRPosLits,
-								copyRNegLits, _saIndexical);
+								.standardizeApart(copyRPosLits, copyRNegLits,
+										_saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
 						c.setProofStep(new ProofStepClauseBinaryResolvent(c,
 								this, othC, copyRBindings, renameSubstitituon));
@@ -348,7 +393,7 @@ public class Clause {
 
 		return equalityIdentity.equals(othClause.equalityIdentity);
 	}
-	
+
 	public String getEqualityIdentity() {
 		return equalityIdentity;
 	}
@@ -389,8 +434,9 @@ public class Clause {
 		nonTrivialFactors = new LinkedHashSet<Clause>();
 
 		Map<Variable, Term> theta = new HashMap<Variable, Term>();
+		List<Literal> lits = new ArrayList<Literal>();
 		for (int i = 0; i < 2; i++) {
-			List<Literal> lits = new ArrayList<Literal>();
+			lits.clear();
 			if (i == 0) {
 				// Look at the positive literals
 				lits.addAll(positiveLiterals);
@@ -464,6 +510,13 @@ public class Clause {
 		// trivial factor not included.
 		factors.add(this);
 		factors.addAll(nonTrivialFactors);
+		
+		// Remove subsumed factors
+		if (null == parentFactors) {
+			Set<Clause> subsumed = SubsumptionElimination.findSubsumedClauses(factors);
+			nonTrivialFactors.removeAll(subsumed);
+			factors.removeAll(subsumed);			
+		}
 	}
 
 	private Clause saIfRequired(Clause othClause) {
@@ -488,6 +541,138 @@ public class Clause {
 		}
 
 		return othClause;
+	}
+
+	private Map<String, List<Literal>> collectLikeLiterals(Set<Literal> literals) {
+		Map<String, List<Literal>> likeLiterals = new HashMap<String, List<Literal>>();
+		for (Literal l : literals) {
+			// Want to ensure P(a, b) is considered different than P(a, b, c)
+			// i.e. consider an atom's arity P/#.
+			String literalName = (l.isNegativeLiteral() ? "~" : "")
+					+ l.getAtomicSentence().getSymbolicName() + "/"
+					+ l.getAtomicSentence().getArgs().size();
+			List<Literal> like = likeLiterals.get(literalName);
+			if (null == like) {
+				like = new ArrayList<Literal>();
+				likeLiterals.put(literalName, like);
+			}
+			like.add(l);
+		}
+		return likeLiterals;
+	}
+
+	private boolean checkSubsumes(Clause othC,
+			Map<String, List<Literal>> thisToTry,
+			Map<String, List<Literal>> othCToTry) {
+		boolean subsumes = false;
+
+		List<Term> thisTerms = new ArrayList<Term>();
+		List<Term> othCTerms = new ArrayList<Term>();
+
+		// Want to track possible number of permuations
+		List<Integer> radixs = new ArrayList<Integer>();
+		for (String literalName : thisToTry.keySet()) {
+			int sizeT = thisToTry.get(literalName).size();
+			int sizeO = othCToTry.get(literalName).size();
+
+			if (sizeO > 1) {
+				// The following is being used to
+				// track the number of permutations
+				// that can be mapped from the
+				// other clauses like literals to this
+				// clauses like literals. 
+				// i.e. n!/(n-r)!
+				// where n=sizeO and r =sizeT
+				for (int i = 0; i < sizeT; i++) {
+					int r = sizeO - i;
+					if (r > 1) {
+						radixs.add(r);
+					}
+				}
+			}
+			// Track the terms for this clause
+			for (Literal tl : thisToTry.get(literalName)) {
+				thisTerms.addAll(tl.getAtomicSentence().getArgs());
+			}
+		}
+		Predicate thisPredicate = new Predicate("P", thisTerms);
+		
+		MixedRadixNumber permutation = null;
+		long numPermutations = 1L;
+		if (radixs.size() > 0) {
+			permutation = new MixedRadixNumber(0, radixs);
+			numPermutations = permutation.getMaxAllowedValue() + 1;
+		}
+		// Want to ensure none of the othCVariables are
+		// part of the key set of a unification as
+		// this indicates it is not a legal subsumption.
+		Set<Variable> othCVariables = _variableCollector
+				.collectAllVariables(othC);
+		Map<Variable, Term> theta = new LinkedHashMap<Variable, Term>();
+		List<Literal> literalPermuations = new ArrayList<Literal>();
+		for (long l = 0L; l < numPermutations; l++) {
+			// Track the other clause's terms for this
+			// permutation.
+			othCTerms.clear();
+			int radixIdx = 0;			
+			for (String literalName : thisToTry.keySet()) {
+				int sizeT = thisToTry.get(literalName).size();
+				literalPermuations.clear();
+				literalPermuations.addAll(othCToTry.get(literalName));
+				int sizeO = literalPermuations.size();	
+				
+				if (sizeO > 1) {
+					for (int i = 0; i < sizeT; i++) {
+						int r = sizeO - i;
+						if (r > 1) {
+							// If not a 1 to 1 mapping then you need
+							// to use the correct permuation
+							int numPos = permutation.getCurrentNumeralValue(radixIdx);
+							othCTerms.addAll(literalPermuations.remove(numPos).getAtomicSentence().getArgs());
+							radixIdx++;
+						} else {
+							// is the last mapping, therefore
+							// won't be on the radix
+							othCTerms.addAll(literalPermuations.get(0).getAtomicSentence().getArgs());
+						}
+					}
+				} else {
+					// a 1 to 1 mapping
+					othCTerms.addAll(literalPermuations.get(0).getAtomicSentence().getArgs());
+				}
+			}
+			
+			Predicate othPredicate = new Predicate("P", othCTerms);
+			// Note: on unifier
+			// unifier.unify(P(w, x), P(y, z)))={w=y, x=z}
+			// unifier.unify(P(y, z), P(w, x)))={y=w, z=x}
+			// Therefore want this clause to be the first
+			// so can do the othCVariables check for an invalid
+			// subsumes.
+			theta.clear();
+			if (null != _unifier.unify(thisPredicate, othPredicate, theta)) {
+				boolean containsAny = false;
+				for (Variable v : theta.keySet()) {
+					if (othCVariables.contains(v)) {
+						containsAny = true;
+						break;
+					}
+				}
+				if (!containsAny) {
+					subsumes = true;
+					break;
+				}
+			}
+
+			// If there is more than 1 mapping
+			// keep track of where I am in the
+			// possible number of mapping permutations.
+			if (null != permutation) {
+				permutation.increment();
+			}
+		}
+
+		return subsumes;
 	}
 }
 
@@ -602,7 +787,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			identity.append(")");
 			currentLiteral++;
 		}
-		
+
 		int min, max;
 		min = max = 0;
 		for (int i = 0; i < literals.size(); i++) {
@@ -660,7 +845,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			min = max;
 			i = incITo;
 		}
-		
+
 		// Determine the maxWidth
 		int maxWidth = 1;
 		while (noVarPositions >= 10) {
@@ -681,7 +866,7 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 				sb.append(String.format(format, pos));
 			}
 			varOffsets.add(sb.toString());
-		}		
+		}
 		Collections.sort(varOffsets);
 		for (int i = 0; i < varOffsets.size(); i++) {
 			identity.append(varOffsets.get(i));

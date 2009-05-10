@@ -22,6 +22,7 @@ import aima.test.logictest.foltest.FOLSubstTest;
 import aima.test.logictest.foltest.FOLTFMResolutionTest;
 import aima.test.logictest.foltest.ParamodulationTest;
 import aima.test.logictest.foltest.PredicateCollectorTest;
+import aima.test.logictest.foltest.SubsumptionEliminationTest;
 import aima.test.logictest.foltest.UnifierTest;
 import aima.test.logictest.foltest.VariableCollectorTest;
 import aima.test.logictest.prop.PropTests;
@@ -55,6 +56,7 @@ public class LogicTests {
 		suite.addTest(new TestSuite(FOLTFMResolutionTest.class));
 		suite.addTest(new TestSuite(ParamodulationTest.class));
 		suite.addTest(new TestSuite(PredicateCollectorTest.class));
+		suite.addTest(new TestSuite(SubsumptionEliminationTest.class));
 		suite.addTest(new TestSuite(UnifierTest.class));
 		suite.addTest(new TestSuite(VariableCollectorTest.class));
 

@@ -1,5 +1,6 @@
 package aima.logic.fol;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,12 +82,11 @@ public class Unifier {
 	 */
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
 			Map<Variable, Term> theta) {
-
 		// if theta = failure then return failure
 		if (theta == null) {
 			return null;
 		} else if (x.equals(y)) {
-			// else if x = y the return theta
+			// else if x = y then return theta
 			return theta;
 		} else if (x instanceof Variable) {
 			// else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
@@ -134,30 +134,23 @@ public class Unifier {
 	protected boolean occurCheck(Map<Variable, Term> theta, Variable var,
 			FOLNode x) {
 		if (x instanceof Function) {
-			Set<Variable> vars = _variableCollector
+			Set<Variable> varsToCheck = _variableCollector
 					.collectAllVariables((Function) x);
-			if (vars.contains(var)) {
+			if (varsToCheck.contains(var)) {
 				return true;
 			}
 			
 			// Now need to check if cascading will cause occurs to happen
-			// e.g. Loves(SF1(v2),v2) and Loves(v3,SF0(v3))
-			for (Variable v : theta.keySet()) {
-				Term t = theta.get(v);
-				if (t instanceof Function) {
-					// If a possible occurs problem
-					// i.e. the term x contains this variable
-					if (vars.contains(v)) {
-						// then need to ensure the function this variable
-						// is to be replaced by does not contain var.
-						Set<Variable> indirectvars = _variableCollector
-								.collectAllVariables((Function) t);
-						if (indirectvars.contains(var)) {
-							return true;
-						}
-					}
-				}
-			}
+			// e.g. 
+			// Loves(SF1(v2),v2)
+			// Loves(v3,SF0(v3))
+			// or
+			// P(v1,SF0(v1),SF0(v1))
+			// P(v2,SF0(v2),v2     )
+			// or
+			// P(v1,   F(v2),F(v2),F(v2),v1,      F(F(v1)),F(F(F(v1))),v2)
+			// P(F(v3),v4,   v5,   v6,   F(F(v5)),v4,      F(v3),      F(F(v5)))
+			return cascadeOccurCheck(theta, var, varsToCheck, new HashSet<Variable>(varsToCheck));
 		}
 		return false;
 	}
@@ -216,6 +209,46 @@ public class Unifier {
 
 	private boolean isCompound(FOLNode x) {
 		return x.isCompound();
+	}
+	
+	private boolean cascadeOccurCheck(Map<Variable, Term> theta, Variable var, Set<Variable> varsToCheck, Set<Variable> varsCheckedAlready) {
+		// Want to check if any of the variable to check end up
+		// looping back around on the new variable.
+		Set<Variable> nextLevelToCheck = new HashSet<Variable>();
+		for (Variable v : varsToCheck) {
+			Term t = theta.get(v);
+			if (null == t) {
+				// Variable may not be a key so skip
+				continue;
+			}
+			if (t.equals(var)) {
+				// e.g.
+				// v1=v2
+				// v2=SFO(v1)
+				return true;
+			} else if (t instanceof Function) {
+				// Need to ensure the function this variable
+				// is to be replaced by does not contain var.
+				Set<Variable> indirectvars = _variableCollector
+					.collectAllVariables((Function) t);
+				if (indirectvars.contains(var)) {
+					return true;
+				} else {
+					// Determine the next cascade/level
+					// of variables to check for looping
+					for (Variable iv : indirectvars) {
+						if (!varsCheckedAlready.contains(iv)) {
+							nextLevelToCheck.add(iv);
+						}
+					}
+				}
+			}
+		}
+		if (nextLevelToCheck.size() > 0) {
+			varsCheckedAlready.addAll(nextLevelToCheck);
+			return cascadeOccurCheck(theta, var, nextLevelToCheck, varsCheckedAlready);
+		}
+		return false;
 	}
 
 	// See:

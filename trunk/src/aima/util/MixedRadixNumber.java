@@ -27,7 +27,9 @@ public class MixedRadixNumber extends Number {
 	public MixedRadixNumber(long value, List<Integer> radixs) {
 		this.value = value;
 		this.radixs = new int[radixs.size()];
-		System.arraycopy(radixs.toArray(), 0, this.radixs, 0, this.radixs.length);
+		for (int i = 0; i < radixs.size(); i++) {
+			this.radixs[i] = radixs.get(i);
+		}
 		calculateMaxValue();
 	}
 	
@@ -93,6 +95,18 @@ public class MixedRadixNumber extends Number {
 	}
 	// END-Number
 	//
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < radixs.length; i++) {
+			sb.append("[");
+			sb.append(this.getCurrentNumeralValue(i));
+			sb.append("]");
+		}
+		
+		return sb.toString();
+	}
 	
 	//
 	// PRIVATE
