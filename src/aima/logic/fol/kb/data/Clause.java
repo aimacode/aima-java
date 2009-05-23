@@ -595,7 +595,6 @@ public class Clause {
 				thisTerms.addAll(tl.getAtomicSentence().getArgs());
 			}
 		}
-		Predicate thisPredicate = new Predicate("P", thisTerms);
 		
 		MixedRadixNumber permutation = null;
 		long numPermutations = 1L;
@@ -642,7 +641,6 @@ public class Clause {
 				}
 			}
 			
-			Predicate othPredicate = new Predicate("P", othCTerms);
 			// Note: on unifier
 			// unifier.unify(P(w, x), P(y, z)))={w=y, x=z}
 			// unifier.unify(P(y, z), P(w, x)))={y=w, z=x}
@@ -650,7 +648,7 @@ public class Clause {
 			// so can do the othCVariables check for an invalid
 			// subsumes.
 			theta.clear();
-			if (null != _unifier.unify(thisPredicate, othPredicate, theta)) {
+			if (null != _unifier.unify(thisTerms, othCTerms, theta)) {
 				boolean containsAny = false;
 				for (Variable v : theta.keySet()) {
 					if (othCVariables.contains(v)) {
