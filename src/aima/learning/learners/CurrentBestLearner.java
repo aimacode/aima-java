@@ -43,7 +43,8 @@ public class CurrentBestLearner implements Learner {
 		}
 
 		// Setup a KB to be used for learning
-		kb = new FOLKnowledgeBase(folDSDomain, new FOLOTTERLikeTheoremProver(1000, false));
+		kb = new FOLKnowledgeBase(folDSDomain, new FOLOTTERLikeTheoremProver(
+				1000, false));
 
 		CurrentBestLearning cbl = new CurrentBestLearning(folDSDomain, kb);
 
@@ -57,16 +58,15 @@ public class CurrentBestLearner implements Learner {
 			kb.clear();
 			kb.tell(etp.getDescription());
 			kb.tell(currentBestHypothesis.getHypothesis());
-
 			InferenceResult ir = kb.ask(etp.getClassification());
 			if (ir.isTrue()) {
-				prediction = e.targetValue();
-			} else if (ir.isUnknownDueToTimeout()) {
-				// If unknown due to timeout then assume
-				// is true by default, as can't prove
-				// either way based on known hypothesis,
-				// facts and available time.
-				prediction = e.targetValue();
+				if (trueGoalValue.equals(e.targetValue())) {
+					prediction = e.targetValue();
+				}
+			} else if (ir.isPossiblyFalse() || ir.isUnknownDueToTimeout()) {
+				if (!trueGoalValue.equals(e.targetValue())) {
+					prediction = e.targetValue();
+				}
 			}
 		}
 

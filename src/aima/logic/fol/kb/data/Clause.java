@@ -246,7 +246,7 @@ public class Clause {
 
 				Map<String, List<Literal>> thisToTry = collectLikeLiterals(this.literals);
 				Map<String, List<Literal>> othCToTry = collectLikeLiterals(othC.literals);
-				// Ensure all like literals from this clause are a subset 
+				// Ensure all like literals from this clause are a subset
 				// of the other clause.
 				if (othCToTry.keySet().containsAll(thisToTry.keySet())) {
 					boolean isAPossSubset = true;
@@ -319,7 +319,7 @@ public class Clause {
 			// Now check to see if they resolve
 			Map<Variable, Term> copyRBindings = new LinkedHashMap<Variable, Term>();
 			for (Literal pl : trPosLits) {
-				for (Literal nl : trNegLits) {	
+				for (Literal nl : trNegLits) {
 					copyRBindings.clear();
 					if (null != _unifier.unify(pl.getAtomicSentence(), nl
 							.getAtomicSentence(), copyRBindings)) {
@@ -510,13 +510,6 @@ public class Clause {
 		// trivial factor not included.
 		factors.add(this);
 		factors.addAll(nonTrivialFactors);
-		
-		// Remove subsumed factors
-		if (null == parentFactors) {
-			Set<Clause> subsumed = SubsumptionElimination.findSubsumedClauses(factors);
-			nonTrivialFactors.removeAll(subsumed);
-			factors.removeAll(subsumed);			
-		}
 	}
 
 	private Clause saIfRequired(Clause othClause) {
@@ -580,7 +573,7 @@ public class Clause {
 				// track the number of permutations
 				// that can be mapped from the
 				// other clauses like literals to this
-				// clauses like literals. 
+				// clauses like literals.
 				// i.e. n!/(n-r)!
 				// where n=sizeO and r =sizeT
 				for (int i = 0; i < sizeT; i++) {
@@ -595,7 +588,7 @@ public class Clause {
 				thisTerms.addAll(tl.getAtomicSentence().getArgs());
 			}
 		}
-		
+
 		MixedRadixNumber permutation = null;
 		long numPermutations = 1L;
 		if (radixs.size() > 0) {
@@ -613,34 +606,38 @@ public class Clause {
 			// Track the other clause's terms for this
 			// permutation.
 			othCTerms.clear();
-			int radixIdx = 0;			
+			int radixIdx = 0;
 			for (String literalName : thisToTry.keySet()) {
 				int sizeT = thisToTry.get(literalName).size();
 				literalPermuations.clear();
 				literalPermuations.addAll(othCToTry.get(literalName));
-				int sizeO = literalPermuations.size();	
-				
+				int sizeO = literalPermuations.size();
+
 				if (sizeO > 1) {
 					for (int i = 0; i < sizeT; i++) {
 						int r = sizeO - i;
 						if (r > 1) {
 							// If not a 1 to 1 mapping then you need
 							// to use the correct permuation
-							int numPos = permutation.getCurrentNumeralValue(radixIdx);
-							othCTerms.addAll(literalPermuations.remove(numPos).getAtomicSentence().getArgs());
+							int numPos = permutation
+									.getCurrentNumeralValue(radixIdx);
+							othCTerms.addAll(literalPermuations.remove(numPos)
+									.getAtomicSentence().getArgs());
 							radixIdx++;
 						} else {
 							// is the last mapping, therefore
 							// won't be on the radix
-							othCTerms.addAll(literalPermuations.get(0).getAtomicSentence().getArgs());
+							othCTerms.addAll(literalPermuations.get(0)
+									.getAtomicSentence().getArgs());
 						}
 					}
 				} else {
 					// a 1 to 1 mapping
-					othCTerms.addAll(literalPermuations.get(0).getAtomicSentence().getArgs());
+					othCTerms.addAll(literalPermuations.get(0)
+							.getAtomicSentence().getArgs());
 				}
 			}
-			
+
 			// Note: on unifier
 			// unifier.unify(P(w, x), P(y, z)))={w=y, x=z}
 			// unifier.unify(P(y, z), P(w, x)))={y=w, z=x}

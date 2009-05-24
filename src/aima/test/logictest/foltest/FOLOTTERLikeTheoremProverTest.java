@@ -3,10 +3,15 @@ package aima.test.logictest.foltest;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import aima.logic.fol.CNFConverter;
 import aima.logic.fol.domain.FOLDomain;
 import aima.logic.fol.inference.FOLOTTERLikeTheoremProver;
+import aima.logic.fol.inference.InferenceResult;
+import aima.logic.fol.inference.InferenceResultPrinter;
 import aima.logic.fol.inference.otter.defaultimpl.DefaultClauseSimplifier;
+import aima.logic.fol.kb.FOLKnowledgeBase;
 import aima.logic.fol.kb.data.CNF;
 import aima.logic.fol.kb.data.Clause;
 import aima.logic.fol.parsing.FOLParser;
@@ -51,6 +56,59 @@ public class FOLOTTERLikeTheoremProverTest extends
 				.get(0));
 
 		assertEquals("[P(y,y), P(y,ONE), P(ONE,y)]", simplified.toString());
+	}
+	
+	// This tests to ensure the OTTERLike theorem prover
+	// uses subsumption correctly so that it exhausts
+	// its search space.
+	public void testExhaustsSearchSpace() {
+		// Taken from AIMA pg 679
+		FOLDomain domain = new FOLDomain();
+		domain.addPredicate("alternate");
+		domain.addPredicate("bar");
+		domain.addPredicate("fri_sat");
+		domain.addPredicate("hungry");		
+		domain.addPredicate("patrons");
+		domain.addPredicate("price");
+		domain.addPredicate("raining");
+		domain.addPredicate("reservation");
+		domain.addPredicate("type");
+		domain.addPredicate("wait_estimate");
+		domain.addPredicate("will_wait");
+		domain.addConstant("Some");
+		domain.addConstant("Full");
+		domain.addConstant("French");
+		domain.addConstant("Thai");
+		domain.addConstant("Burger");
+		domain.addConstant("$");
+		domain.addConstant("_30_60");
+		domain.addConstant("X0");
+		FOLParser parser = new FOLParser(domain);
+
+		// The hypothesis
+		String c1 = "patrons(v,Some)";
+		String c2 = "patrons(v,Full) AND (hungry(v) AND type(v,French))";
+		String c3 = "patrons(v,Full) AND (hungry(v) AND (type(v,Thai) AND fri_sat(v)))";
+		String c4 = "patrons(v,Full) AND (hungry(v) AND type(v,Burger))";
+		String sh = "FORALL v (will_wait(v) <=> (" + c1 + " OR (" + c2
+				+ " OR (" + c3 + " OR (" + c4 + ")))))";
+
+		Sentence hypothesis = parser.parse(sh);
+		Sentence desc = parser.parse("(((((((((alternate(X0) AND NOT(bar(X0))) AND NOT(fri_sat(X0))) AND hungry(X0)) AND patrons(X0,Full)) AND price(X0,$)) AND NOT(raining(X0))) AND NOT(reservation(X0))) AND type(X0,Thai)) AND wait_estimate(X0,_30_60))");
+		Sentence classification = parser.parse("will_wait(X0)");
+		
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain, new FOLOTTERLikeTheoremProver(false));
+		
+		kb.tell(hypothesis);
+		kb.tell(desc);
+		
+		InferenceResult ir = kb.ask(classification);
+		
+		Assert.assertFalse(ir.isTrue());
+		Assert.assertTrue(ir.isPossiblyFalse());
+		Assert.assertFalse(ir.isUnknownDueToTimeout());
+		Assert.assertFalse(ir.isPartialResultDueToTimeout());
+		Assert.assertEquals(0, ir.getProofs().size());
 	}
 
 	public void testDefiniteClauseKBKingsQueryCriminalXFalse() {
