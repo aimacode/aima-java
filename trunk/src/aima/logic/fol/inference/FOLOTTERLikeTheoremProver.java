@@ -379,6 +379,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		}
 	}
 
+	// This is a simple indexing on the clauses to support
+	// more efficient forward and backward subsumption testing.
 	class IndexedClauses {
 		private LightestClauseHeuristic lightestClauseHeuristic = null;
 		// Group the clauses by their # of literals.
@@ -390,10 +392,10 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 		public IndexedClauses(LightestClauseHeuristic lightestClauseHeuristic,
 				Set<Clause> sos, Set<Clause> usable) {
 			this.lightestClauseHeuristic = lightestClauseHeuristic;
-			Set<Clause> allClauses = new HashSet<Clause>();
-			allClauses.addAll(sos);
-			allClauses.addAll(usable);
-			for (Clause c : allClauses) {
+			for (Clause c : sos) {
+				indexClause(c);
+			}
+			for (Clause c : usable) {
 				indexClause(c);
 			}
 		}
@@ -420,7 +422,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				sos.add(c);
 				lightestClauseHeuristic.addedClauseToSOS(c);
 				indexClause(c);
-				// Perform backward subsumption elimination
+				// Have added clause, therefore
+				// perform backward subsumption elimination
 				Set<Clause> subsumed = new HashSet<Clause>();
 				for (int i = c.getNumberLiterals() + 1; i <= maxNoLiterals; i++) {
 					subsumed.clear();
