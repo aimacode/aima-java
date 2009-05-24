@@ -20,12 +20,17 @@ public class InferenceResultPrinter {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("InferenceResult.isTrue=" + ir.isTrue());
+		sb.append("\n");
 		sb.append("InferenceResult.isPossiblyFalse=" + ir.isPossiblyFalse());
+		sb.append("\n");
 		sb.append("InferenceResult.isUnknownDueToTimeout="
 				+ ir.isUnknownDueToTimeout());
+		sb.append("\n");
 		sb.append("InferenceResult.isPartialResultDueToTimeout="
 				+ ir.isPartialResultDueToTimeout());
+		sb.append("\n");		
 		sb.append("InferenceResult.#Proofs=" + ir.getProofs().size());
+		sb.append("\n");
 		int proofNo = 0;
 		for (Proof p : ir.getProofs()) {
 			proofNo++;

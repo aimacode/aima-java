@@ -2,6 +2,7 @@ package aima.logic.fol.inference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -153,8 +154,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	//
 	// START-InferenceProcedure
 	public InferenceResult ask(FOLKnowledgeBase KB, Sentence alpha) {
-		Set<Clause> sos = new LinkedHashSet<Clause>();
-		Set<Clause> usable = new LinkedHashSet<Clause>();
+		Set<Clause> sos = new HashSet<Clause>();
+		Set<Clause> usable = new HashSet<Clause>();
 
 		// Usable set will be the set of clauses in the KB,
 		// are assuming this is satisfiable as using the
@@ -164,7 +165,6 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			c.setStandardizedApartCheckNotRequired();
 			usable.addAll(c.getFactors());
 		}
-		usable.removeAll(SubsumptionElimination.findSubsumedClauses(usable));
 
 		// Ensure reflexivity axiom is added to usable if using paramodulation.
 		if (isUseParamodulation()) {
@@ -206,14 +206,21 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			}
 		}
 
+		// Ensure all subsumed clauses are removed
+		usable.removeAll(SubsumptionElimination.findSubsumedClauses(usable));
+		sos.removeAll(SubsumptionElimination.findSubsumedClauses(sos));
+
 		OTTERAnswerHandler ansHandler = new OTTERAnswerHandler(answerLiteral,
 				answerLiteralVariables, answerClause, maxQueryTime);
 
-		return otter(ansHandler, sos, usable);
+		IndexedClauses idxdClauses = new IndexedClauses(
+				getLightestClauseHeuristic(), sos, usable);
+
+		return otter(ansHandler, idxdClauses, sos, usable);
 	}
 
 	// END-InferenceProcedure
-	// 
+	//
 
 	/**
 	 * <pre>
@@ -223,7 +230,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	 * </pre>
 	 */
 	private InferenceResult otter(OTTERAnswerHandler ansHandler,
-			Set<Clause> sos, Set<Clause> usable) {
+			IndexedClauses idxdClauses, Set<Clause> sos, Set<Clause> usable) {
 
 		getLightestClauseHeuristic().initialSOS(sos);
 
@@ -234,11 +241,13 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			if (null != clause) {
 				// * move clause from sos to usable
 				sos.remove(clause);
-				usable.add(clause);
 				getLightestClauseHeuristic().removedClauseFromSOS(clause);
+				usable.add(clause);
 				// * PROCESS(INFER(clause, usable), sos)
-				process(ansHandler, infer(clause, usable), sos, usable);
+				process(ansHandler, idxdClauses, infer(clause, usable), sos,
+						usable);
 			}
+
 			// * until sos = [] or a refutation has been found
 		} while (sos.size() != 0 && !ansHandler.isComplete());
 
@@ -251,7 +260,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	 */
 	private Set<Clause> infer(Clause clause, Set<Clause> usable) {
 		Set<Clause> resultingClauses = new LinkedHashSet<Clause>();
-		
+
 		// Remember to resolve with self
 		Set<Clause> resolvents = clause.binaryResolvents(clause);
 		for (Clause rc : resolvents) {
@@ -279,8 +288,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	}
 
 	// procedure PROCESS(clauses, sos)
-	private void process(OTTERAnswerHandler ansHandler, Set<Clause> clauses,
-			Set<Clause> sos, Set<Clause> usable) {
+	private void process(OTTERAnswerHandler ansHandler,
+			IndexedClauses idxdClauses, Set<Clause> clauses, Set<Clause> sos,
+			Set<Clause> usable) {
 
 		// * for each clause in clauses do
 		for (Clause clause : clauses) {
@@ -308,14 +318,15 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 				if (!sos.contains(clause) && !usable.contains(clause)) {
 					for (Clause ac : clause.getFactors()) {
 						if (!sos.contains(ac) && !usable.contains(ac)) {
-							sos.add(ac);
-							getLightestClauseHeuristic().addedClauseToSOS(ac);
+							idxdClauses.addClause(ac, sos, usable);
+
+							// * if clause has one literal then look for unit
+							// refutation
+							lookForUnitRefutation(ansHandler, idxdClauses, ac,
+									sos, usable);
 						}
 					}
 				}
-
-				// * if clause has one literal then look for unit refutation
-				lookForUnitRefutation(ansHandler, clause, sos, usable);
 			}
 
 			if (ansHandler.isComplete()) {
@@ -325,7 +336,8 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	}
 
 	private void lookForUnitRefutation(OTTERAnswerHandler ansHandler,
-			Clause clause, Set<Clause> sos, Set<Clause> usable) {
+			IndexedClauses idxdClauses, Clause clause, Set<Clause> sos,
+			Set<Clause> usable) {
 
 		Set<Clause> toCheck = new LinkedHashSet<Clause>();
 
@@ -362,8 +374,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					// LightestClauseHeuristic to loop continuously
 					// on the same pair of objects.
 					if (!sos.contains(t) && !usable.contains(t)) {
-						sos.add(t);
-						getLightestClauseHeuristic().addedClauseToSOS(t);
+						idxdClauses.addClause(t, sos, usable);
 					}
 				}
 
@@ -371,6 +382,90 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					break;
 				}
 			}
+		}
+	}
+
+	class IndexedClauses {
+		private LightestClauseHeuristic lightestClauseHeuristic = null;
+		// Group the clauses by their # of literals.
+		private Map<Integer, Set<Clause>> clausesGroupedBySize = new HashMap<Integer, Set<Clause>>();
+		// Keep track of the min and max # of literals.
+		private int minNoLiterals = Integer.MAX_VALUE;
+		private int maxNoLiterals = 0;
+
+		public IndexedClauses(LightestClauseHeuristic lightestClauseHeuristic,
+				Set<Clause> sos, Set<Clause> usable) {
+			this.lightestClauseHeuristic = lightestClauseHeuristic;
+			Set<Clause> allClauses = new HashSet<Clause>();
+			allClauses.addAll(sos);
+			allClauses.addAll(usable);
+			for (Clause c : allClauses) {
+				indexClause(c);
+			}
+		}
+
+		public void addClause(Clause c, Set<Clause> sos, Set<Clause> usable) {
+			// Perform forward subsumption elimination
+			boolean addToSOS = true;
+			for (int i = minNoLiterals; i < c.getNumberLiterals(); i++) {
+				Set<Clause> fs = clausesGroupedBySize.get(i);
+				if (null != fs) {
+					for (Clause s : fs) {
+						if (s.subsumes(c)) {
+							addToSOS = false;
+							break;
+						}
+					}
+				}
+				if (!addToSOS) {
+					break;
+				}
+			}
+
+			if (addToSOS) {
+				sos.add(c);
+				lightestClauseHeuristic.addedClauseToSOS(c);
+				indexClause(c);
+				// Perform backward subsumption elimination
+				Set<Clause> subsumed = new HashSet<Clause>();
+				for (int i = c.getNumberLiterals() + 1; i <= maxNoLiterals; i++) {
+					subsumed.clear();
+					Set<Clause> bs = clausesGroupedBySize.get(i);
+					if (null != bs) {
+						for (Clause s : bs) {
+							if (c.subsumes(s)) {
+								subsumed.add(s);
+								if (sos.contains(s)) {
+									sos.remove(s);
+									lightestClauseHeuristic
+											.removedClauseFromSOS(s);
+								}
+								usable.remove(s);
+							}
+						}
+						bs.removeAll(subsumed);
+					}					
+				}
+			}
+		}
+
+		//
+		// PRIVATE METHODS
+		//
+		private void indexClause(Clause c) {
+			int size = c.getNumberLiterals();
+			if (size < minNoLiterals) {
+				minNoLiterals = size;
+			}
+			if (size > maxNoLiterals) {
+				maxNoLiterals = size;
+			}
+			Set<Clause> cforsize = clausesGroupedBySize.get(size);
+			if (null == cforsize) {
+				cforsize = new HashSet<Clause>();
+				clausesGroupedBySize.put(size, cforsize);
+			}
+			cforsize.add(c);
 		}
 	}
 
@@ -392,13 +487,13 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			//
 			this.finishTime = System.currentTimeMillis() + maxQueryTime;
 		}
-		
+
 		//
 		// START-InferenceResult
 		public boolean isPossiblyFalse() {
 			return !timedOut && proofs.size() == 0;
 		}
-		
+
 		public boolean isTrue() {
 			return proofs.size() > 0;
 		}
@@ -488,7 +583,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 					}
 					if (addNewAnswer) {
 						proofs.add(new ProofFinal(aClause.getProofStep(),
-							answerBindings));
+								answerBindings));
 					}
 					isAns = true;
 				}
