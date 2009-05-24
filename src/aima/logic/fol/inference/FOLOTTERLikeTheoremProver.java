@@ -261,15 +261,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 	private Set<Clause> infer(Clause clause, Set<Clause> usable) {
 		Set<Clause> resultingClauses = new LinkedHashSet<Clause>();
 
-		// Remember to resolve with self
-		Set<Clause> resolvents = clause.binaryResolvents(clause);
-		for (Clause rc : resolvents) {
-			resultingClauses.add(rc);
-		}
-
 		// * resolve clause with each member of usable
 		for (Clause c : usable) {
-			resolvents = clause.binaryResolvents(c);
+			Set<Clause> resolvents = clause.binaryResolvents(c);
 			for (Clause rc : resolvents) {
 				resultingClauses.add(rc);
 			}
