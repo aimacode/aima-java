@@ -2,14 +2,25 @@
 #labels Featured
 
 = Introduction =
-Current release is 0.93:<br>
+The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
+
+Current release is 0.94:<br>
+This is a patch release for the FOL Logic and includes the following fixes:<br>
+  - Fixed subtle defect in Model Elimination inference algorithm, which caused it to miss portions of the search space.<br>
+  - Improved the performance of both theorem provers, in particular added support for forward and backward subsumption elimination, which improves significantly the performance and use of the OTTER Like theorem prover.<br>
+  - Fixed defect in cascade occurs check in unifier logic.<br>
+
+Previous release is 0.93:<br>
 It includes:<br>
   - a completion of the First Order Logic concepts from Chapter 9.<br>
   - the addition of the LRTA Agent from Chapter 4.<br>
 
-The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
+  Note: If running the unite tests be sure to include the vm arguments:
+  -Xms256m -Xmx1024m
+  as some of the First Order Logic algorithms (i.e. FOLTFMResolution) are
+  memory hungry.
 
-Previous release is 0.92:
+Previous release is 0.92:<br>
 
 It includes a rewrite of the neural network algorithms (in the earlier version the nn s were getting saturated because the data was not pre processed)
  +  more algorithms  from chapter 4.
