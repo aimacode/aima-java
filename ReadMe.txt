@@ -32,6 +32,7 @@ One minor change is that I've dropped the make file. Please use [http://ant.apac
 ==bug reports - acknowledgment ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!
+  * Ali Tozan
 
   * Carl Anderson, Senior Scientist, ArchimedesModel.com
  
