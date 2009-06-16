@@ -300,7 +300,7 @@ public class TicTacToeTest extends TestCase {
 	private void checkSuccessorList(ArrayList successorList,
 			String playerToMove, int sizeOfSuccessors) {
 		for (int i = 0; i < successorList.size(); i++) {
-			GameState h = (GameState) successorList.get(0);
+			GameState h = (GameState) successorList.get(i);
 
 			ArrayList successors2 = new TicTacToe().getSuccessorStates(h);
 			assertEquals(sizeOfSuccessors, successors2.size());
