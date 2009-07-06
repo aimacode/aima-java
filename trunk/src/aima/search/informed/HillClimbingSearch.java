@@ -86,7 +86,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	}
 
 	private Node getHighestValuedNodeFrom(List children, Problem p) {
-		double highestValue = Double.MIN_VALUE;
+		double highestValue = Double.NEGATIVE_INFINITY;
 		Node nodeWithHighestValue = null;
 		for (int i = 0; i < children.size(); i++) {
 			Node child = (Node) children.get(i);
