@@ -1,8 +1,7 @@
-package aima.test.learningtest.neural;
+package aima.learning.neural;
 
 import java.util.ArrayList;
 
-import aima.learning.neural.NNDataSet;
 
 public class IrisNNDataSet extends NNDataSet {
 
