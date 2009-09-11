@@ -1,5 +1,6 @@
 package aima.basic.vaccum;
 
+import aima.basic.Agent;
 import aima.basic.AgentProgram;
 import aima.basic.Percept;
 
@@ -21,7 +22,7 @@ public class ModelBasedTVEVaccumAgentProgram extends AgentProgram {
 		myModel.setLocationStatus(location, locationStatus);
 
 		if (myModel.bothLocationsClean()) {
-			return "NoOp";
+			return Agent.NO_OP;
 		} else if (locationStatus.equals("Dirty")) {
 			return "Suck";
 		} else if (location.equals("A")) {
