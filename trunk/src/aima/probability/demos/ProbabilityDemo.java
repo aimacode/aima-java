@@ -31,7 +31,6 @@ import aima.probability.reasoning.HMMFactory;
 import aima.probability.reasoning.HiddenMarkovModel;
 import aima.probability.reasoning.HmmConstants;
 import aima.probability.reasoning.ParticleSet;
-import aima.test.probabilitytest.MockRandomizer;
 import aima.util.Pair;
 
 /**
@@ -267,8 +266,7 @@ public class ProbabilityDemo {
 		;
 		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent<CellWorldPosition, String>(
 				fourByThree);
-		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.9, 0.2, 0.8,
-				0.3, 0.7, 0.4, 0.6, 0.5 });
+		Randomizer r = new JavaRandomizer();
 
 		// Randomizer r = new JavaRandomizer();
 		Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
