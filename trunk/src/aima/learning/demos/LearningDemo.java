@@ -19,11 +19,11 @@ import aima.learning.learners.StumpLearner;
 import aima.learning.neural.BackPropLearning;
 import aima.learning.neural.FeedForwardNeuralNetwork;
 import aima.learning.neural.IrisDataSetNumerizer;
+import aima.learning.neural.IrisNNDataSet;
 import aima.learning.neural.NNConfig;
 import aima.learning.neural.NNDataSet;
 import aima.learning.neural.Numerizer;
 import aima.learning.neural.Perceptron;
-import aima.test.learningtest.neural.IrisNNDataSet;
 import aima.util.Util;
 
 public class LearningDemo {
