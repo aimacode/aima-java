@@ -230,7 +230,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 	 * Returns always the heuristic value 0.
 	 */
 	static class H1 extends AdaptableHeuristicFunction {
-		@Override
+
 		public double getHeuristicValue(Object state) {
 			return 0.0;
 		}
@@ -242,7 +242,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 	 * between them as heuristic value.
 	 */
 	static class H2 extends AdaptableHeuristicFunction {
-		@Override
+
 		public double getHeuristicValue(Object state) {
 			return map.getStraightLineDistance((String) state, (String) goal);
 		}
