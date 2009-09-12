@@ -14,6 +14,11 @@ import java.util.Hashtable;
  */
 public abstract class Agent extends ObjectWithDynamicAttributes {
 
+	/**
+	 * Name of an action which indicates, the Agent is unwilling to generate any
+	 * more goals and should therefore DIE. This indicates final success.
+	 */
+	public static final String DIE = "DIE";
 	// Used to define No Operations/Action is to be performed.
 	public static final String NO_OP = "NoOP";
 
