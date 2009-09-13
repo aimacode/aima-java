@@ -1,5 +1,8 @@
 package aima.search.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import aima.basic.Agent;
 import aima.basic.Environment;
 import aima.basic.Percept;
@@ -43,8 +46,15 @@ public class MapEnvironment extends Environment {
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
-		return new Percept(DynAttributeNames.PERCEPT_IN, anAgent
-				.getAttribute(DynAttributeNames.AGENT_LOCATION));
+		String currLoc = (String) anAgent.getAttribute(
+				DynAttributeNames.AGENT_LOCATION);
+		List<Object> possibleActions = new ArrayList<Object>();
+		for (String a : aMap.getLocationsLinkedTo(currLoc)) {
+			possibleActions.add(a);
+			possibleActions.add(new Integer(aMap.getDistance(currLoc, a)));
+		}
+		return new Percept(DynAttributeNames.PERCEPT_IN, currLoc,
+				DynAttributeNames.PERCEPT_POSSIBLE_ACTIONS, possibleActions);
 	}
 
 	public Map getMap() {
