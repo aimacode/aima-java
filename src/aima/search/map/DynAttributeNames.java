@@ -15,29 +15,32 @@ package aima.search.map;
 public class DynAttributeNames {
 	/**
 	 * Name of a dynamic attribute, which contains the current location of the
-	 * agent.
+	 * agent. Expected value type: String.
 	 */
 	public static final String AGENT_LOCATION = "location";
 	/**
 	 * Name of a dynamic attribute, which maintains the total traveling distance
-	 * of the agent since birth. Should be of type Integer.
+	 * of the agent since birth. Expected value type: Integer.
 	 */
 	public static final String AGENT_TRAVEL_DISTANCE = "travelDistance";
 	/**
 	 * Name of a dynamic attribute, which indicates the current status of the
-	 * agent, such as traveling, completed or aborted.
+	 * agent, such as traveling, completed or aborted. Expected value type:
+	 * String.
 	 */
 	public static final String AGENT_STATUS = "status";
 
 	/**
-	 * Name of a dynamic attribute, which tells the agent where it is.
+	 * Name of a dynamic attribute, which tells the agent where it is. Expected
+	 * value type: String.
 	 */
 	public static final String PERCEPT_IN = "In";
 	/**
 	 * Name of a dynamic attribute, which tells the agent which actions are
-	 * possible at the current location of the agent.
+	 * possible at the current location of the agent. Expected value type: List
+	 * of alternating Strings and Integers.
 	 */
-	public static final String PERCEPT_POSSIBLE_ACTIONS = "Signpost";
+	public static final String PERCEPT_POSSIBLE_ACTIONS = "PossibleActions";
 	/**
 	 * Name of a dynamic attribute. It provides access to informations which are
 	 * available at the current location of the agent.
