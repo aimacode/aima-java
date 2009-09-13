@@ -30,7 +30,7 @@ public class MapSuccessorFunction implements SuccessorFunction {
 		String location = currentState.toString();
 		if (currentState instanceof Percept) {
 			location = (String) ((Percept) currentState)
-					.getAttribute(MapEnvironment.STATE_IN);
+					.getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 
 		List<String> linkedLocations = map.getLocationsLinkedTo(location);

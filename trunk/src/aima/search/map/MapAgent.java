@@ -66,7 +66,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	//
 	@Override
 	protected Object updateState(Percept p) {
-		currentLocation = (String) p.getAttribute("In");
+		currentLocation = (String) p.getAttribute(DynAttributeNames.PERCEPT_IN);
 
 		return currentLocation;
 	}

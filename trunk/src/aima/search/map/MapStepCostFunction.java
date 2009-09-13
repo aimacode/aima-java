@@ -33,9 +33,9 @@ public class MapStepCostFunction implements StepCostFunction {
 		String toLoc = toNextState.toString();
 		if (fromCurrentState instanceof Percept) {
 			fromLoc = (String) ((Percept) fromCurrentState)
-					.getAttribute(MapEnvironment.STATE_IN);
+					.getAttribute(DynAttributeNames.PERCEPT_IN);
 			toLoc = (String) ((Percept) toNextState)
-					.getAttribute(MapEnvironment.STATE_IN);
+					.getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 
 		Integer distance = map.getDistance(fromLoc, toLoc);
