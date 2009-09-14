@@ -21,8 +21,8 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/** A scenario. */
 	protected Scenario scenario;
 	/**
-	 * Some location names. For routing problems, only one location should be
-	 * specified.
+	 * Some location names. For route planning problems, only one location
+	 * should be specified.
 	 */
 	protected List<String> destinations;
 	/** Search method to be used. */
