@@ -14,15 +14,18 @@ package aima.search.framework;
 
 public class Problem {
 
-	Object initialState;
+	protected Object initialState;
 
-	SuccessorFunction successorFunction;
+	protected SuccessorFunction successorFunction;
 
-	GoalTest goalTest;
+	protected GoalTest goalTest;
 
-	StepCostFunction stepCostFunction;
+	protected StepCostFunction stepCostFunction;
 
-	HeuristicFunction heuristicFunction;
+	protected HeuristicFunction heuristicFunction;
+
+	protected Problem() {
+	}
 
 	public Problem(Object initialState, SuccessorFunction successorFunction,
 			GoalTest goalTest) {
