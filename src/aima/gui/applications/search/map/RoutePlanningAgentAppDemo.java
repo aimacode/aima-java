@@ -8,12 +8,12 @@ import aima.gui.framework.AgentAppModel;
 import aima.gui.framework.SimpleAgentAppDemo;
 import aima.search.framework.SearchFactory;
 import aima.search.map.AdaptableHeuristicFunction;
+import aima.search.map.Map;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
-import aima.search.map.MapWithSLD;
 import aima.search.map.Scenario;
 import aima.search.map.SimplifiedRoadMapOfAustralia;
-import aima.search.map.SimplifiedRoadMapOfRomania;
+import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
 
 /**
  * Demo example of a route planning agent application with GUI. The main method
@@ -113,21 +113,21 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 		 */
 		@Override
 		protected void selectScenarioAndDest(int scenarioIdx, int destIdx) {
-			MapWithSLD map = new MapWithSLD();
+			Map map = new Map();
 			MapEnvironment env = new MapEnvironment(map);
 			String agentLoc = null;
 			switch (scenarioIdx) {
 			case 0:
-				SimplifiedRoadMapOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfRomania.ARAD;
+				SimplifiedRoadMapOfPartOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfPartOfRomania.ARAD;
 				break;
 			case 1:
-				SimplifiedRoadMapOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfRomania.LUGOJ;
+				SimplifiedRoadMapOfPartOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfPartOfRomania.LUGOJ;
 				break;
 			case 2:
-				SimplifiedRoadMapOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfRomania.FAGARAS;
+				SimplifiedRoadMapOfPartOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfPartOfRomania.FAGARAS;
 				break;
 			case 3:
 				SimplifiedRoadMapOfAustralia.initMap(map);
@@ -144,13 +144,14 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 			if (scenarioIdx < 3) {
 				switch (destIdx) {
 				case 0:
-					destinations.add(SimplifiedRoadMapOfRomania.BUCHAREST);
+					destinations
+							.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 					break;
 				case 1:
-					destinations.add(SimplifiedRoadMapOfRomania.EFORIE);
+					destinations.add(SimplifiedRoadMapOfPartOfRomania.EFORIE);
 					break;
 				case 2:
-					destinations.add(SimplifiedRoadMapOfRomania.NEAMT);
+					destinations.add(SimplifiedRoadMapOfPartOfRomania.NEAMT);
 					break;
 				case 3:
 					destinations.add(map.randomlyGenerateDestination());
