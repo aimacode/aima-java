@@ -17,7 +17,7 @@ public class LRTAStarAgentTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		aMap = new Map(new String[] { "A", "B", "C", "D", "E", "F" });
+		aMap = new Map();
 		aMap.addBidirectionalLink("A", "B", 4);
 		aMap.addBidirectionalLink("B", "C", 4);
 		aMap.addBidirectionalLink("C", "D", 4);

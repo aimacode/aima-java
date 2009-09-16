@@ -28,17 +28,16 @@ public class RecursiveBestFirstSearchTest extends TestCase {
 	public void setUp() {
 		envChanges = new StringBuffer();
 
-		aMap = SimplifiedRoadMapOfPartOfRomania.getMapOfRomania();
+		aMap = new SimplifiedRoadMapOfPartOfRomania();
 
 		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
 				new AStarEvaluationFunction());
 
 		heuristicFunction = new HeuristicFunction() {
 			public double getHeuristicValue(Object state) {
-				return SimplifiedRoadMapOfPartOfRomania
-						.getStraightLineDistancesToBucharest().getDistance(
-								(String) state,
-								SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				Map map = new SimplifiedRoadMapOfPartOfRomania();
+				return map.getStraightLineDistance((String) state,
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 			}
 		};
 	}
@@ -79,7 +78,7 @@ public class RecursiveBestFirstSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Bucharest):Sibiu:Rimnicu Vilcea:Pitesti:Bucharest:METRIC[pathCost]=422.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:NoOP:",
+				"CurrentLocation=In(Arad), Goal=In(Bucharest):Sibiu:RimnicuVilcea:Pitesti:Bucharest:METRIC[pathCost]=422.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:NoOP:",
 				envChanges.toString());
 	}
 }

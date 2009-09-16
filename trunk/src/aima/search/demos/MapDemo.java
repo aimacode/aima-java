@@ -6,15 +6,16 @@ import aima.search.framework.HeuristicFunction;
 import aima.search.framework.TreeSearch;
 import aima.search.informed.AStarEvaluationFunction;
 import aima.search.informed.RecursiveBestFirstSearch;
+import aima.search.map.Map;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.search.uninformed.BidirectionalSearch;
 import aima.search.uninformed.BreadthFirstSearch;
-import aima.search.uninformed.UniformCostSearch;
 import aima.search.uninformed.DepthFirstSearch;
 import aima.search.uninformed.DepthLimitedSearch;
 import aima.search.uninformed.IterativeDeepeningSearch;
+import aima.search.uninformed.UniformCostSearch;
 
 /**
  * @author Ciaran O'Reilly
@@ -39,8 +40,8 @@ public class MapDemo {
 	private static void mapWithBreadthFirstSearch() {
 		System.out.println("\nMapDemo BFS -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me,
 				new BreadthFirstSearch(new GraphSearch()), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -54,8 +55,8 @@ public class MapDemo {
 		// of nodes expanded etc... will more than likely differ
 		System.out.println("\nMapDemo UCS (using a TreeSearch) -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new UniformCostSearch(new TreeSearch()),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -64,8 +65,7 @@ public class MapDemo {
 
 		System.out.println("\nMapDemo UCS (using a GraphSearch) -->");
 
-		me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		me = new MapEnvironment(new SimplifiedRoadMapOfPartOfRomania());
 		ma = new MapAgent(me, new UniformCostSearch(new GraphSearch()),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -76,8 +76,8 @@ public class MapDemo {
 	private static void mapWithDepthFirstSearch() {
 		System.out.println("\nMapDemo DFS -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new DepthFirstSearch(new GraphSearch()),
 				2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -88,8 +88,8 @@ public class MapDemo {
 	private static void mapWithRecursiveDLS() {
 		System.out.println("\nMapDemo recursive DLS -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new DepthLimitedSearch(8), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
@@ -99,8 +99,8 @@ public class MapDemo {
 	private static void mapWithIterativeDeepeningSearch() {
 		System.out.println("\nMapDemo Iterative DS  -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new IterativeDeepeningSearch(), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
@@ -110,8 +110,8 @@ public class MapDemo {
 	private static void mapWithBidrectionalSearch() {
 		System.out.println("\nMapDemo Bidirectional Search  -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new BidirectionalSearch(),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ORADEA);
@@ -122,17 +122,17 @@ public class MapDemo {
 	private static void mapWithRecursiveBestFirstSearch() {
 		System.out.println("\nMapDemo RecursiveBestFirstSearch Search  -->");
 
-		MapEnvironment me = new MapEnvironment(SimplifiedRoadMapOfPartOfRomania
-				.getMapOfRomania());
+		MapEnvironment me = new MapEnvironment(
+				new SimplifiedRoadMapOfPartOfRomania());
 		MapAgent ma = new MapAgent(me, new RecursiveBestFirstSearch(
 				new AStarEvaluationFunction()),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		ma.setHeuristicFunction(new HeuristicFunction() {
+			Map map = new SimplifiedRoadMapOfPartOfRomania();
+
 			public double getHeuristicValue(Object state) {
-				return SimplifiedRoadMapOfPartOfRomania
-						.getStraightLineDistancesToBucharest().getDistance(
-								(String) state,
-								SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				return map.getStraightLineDistance((String) state,
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 			}
 		});
 

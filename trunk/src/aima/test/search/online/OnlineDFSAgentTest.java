@@ -15,7 +15,7 @@ public class OnlineDFSAgentTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		aMap = new Map(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+		aMap = new Map();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "D", 4);
@@ -81,8 +81,7 @@ public class OnlineDFSAgentTest extends TestCase {
 	}
 
 	public void testFig4_18() {
-		aMap = new Map(new String[] { "1,1", "1,2", "1,3", "2,1", "2,2", "2,3",
-				"3,1", "3,2", "3,3" });
+		aMap = new Map();
 		aMap.addBidirectionalLink("1,1", "1,2", 1);
 		aMap.addBidirectionalLink("1,1", "2,1", 1);
 		aMap.addBidirectionalLink("1,2", "1,3", 1);

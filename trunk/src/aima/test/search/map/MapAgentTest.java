@@ -1,7 +1,6 @@
 package aima.test.search.map;
 
 import junit.framework.TestCase;
-
 import aima.basic.BasicEnvironmentView;
 import aima.search.framework.GraphSearch;
 import aima.search.map.Map;
@@ -22,7 +21,7 @@ public class MapAgentTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		aMap = new Map(new String[] { "A", "B", "C", "D", "E" });
+		aMap = new Map();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "C", 4);
