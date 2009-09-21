@@ -71,7 +71,7 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * 
 	 * @serial internal array storage.
 	 */
-	private double[][] A;
+	private final double[][] A;
 
 	/**
 	 * Row and column dimensions.
@@ -79,7 +79,7 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * @serial row dimension.
 	 * @serial column dimension.
 	 */
-	private int m, n;
+	private final int m, n;
 
 	/*
 	 * ------------------------ Constructors ------------------------
@@ -436,9 +436,9 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * 
 	 * @param r
 	 *            Array of row indices.
-	 * @param i0
+	 * @param j0
 	 *            Initial column index
-	 * @param i1
+	 * @param j1
 	 *            Final column index
 	 * @return A(r(:),j0:j1)
 	 * @exception ArrayIndexOutOfBoundsException

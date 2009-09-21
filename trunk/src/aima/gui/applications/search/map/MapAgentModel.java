@@ -11,8 +11,8 @@ import aima.search.map.Scenario;
  * Provides a ready-to-use implementation of a model for route planning agent
  * applications. It is based on a scenario description and a list of
  * destinations. Some features are not used. Subclasses can support those
- * features by overriding the methods {@link #hasSignpost(String)},
- * {@link #hasInfos(String)}, and {@link #hasObjects(String)}.
+ * features by overriding the methods {@link #hasInfos(String)}, and
+ * {@link #hasObjects(String)}.
  * 
  * @author R. Lunde
  */

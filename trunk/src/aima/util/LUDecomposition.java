@@ -25,7 +25,7 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @serial internal array storage.
 	 */
-	private double[][] LU;
+	private final double[][] LU;
 
 	/**
 	 * Row and column dimensions, and pivot sign.
@@ -34,25 +34,26 @@ public class LUDecomposition implements java.io.Serializable {
 	 * @serial row dimension.
 	 * @serial pivot sign.
 	 */
-	private int m, n, pivsign;
+	private final int m, n;
+
+	private int pivsign;
 
 	/**
 	 * Internal storage of pivot vector.
 	 * 
 	 * @serial pivot vector.
 	 */
-	private int[] piv;
+	private final int[] piv;
 
 	/*
 	 * ------------------------ Constructor ------------------------
 	 */
 
 	/**
-	 * LU Decomposition
+	 * LU Decomposition, a structure to access L, U and piv.
 	 * 
 	 * @param A
 	 *            Rectangular matrix
-	 * @return Structure to access L, U and piv.
 	 */
 
 	public LUDecomposition(Matrix A) {
