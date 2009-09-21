@@ -5,12 +5,11 @@ import java.util.List;
 
 import aima.probability.RandomVariable;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class HMMFactory {
-
-	/**
-	 * @author Ravi Mohan
-	 * 
-	 */
 
 	public static HiddenMarkovModel createRobotHMM() {
 

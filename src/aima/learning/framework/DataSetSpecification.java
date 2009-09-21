@@ -70,7 +70,7 @@ public class DataSetSpecification {
 	}
 
 	/**
-	 * @param targetAttribute
+	 * @param target
 	 *            The targetAttribute to set.
 	 */
 	public void setTarget(String target) {

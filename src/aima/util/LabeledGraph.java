@@ -1,7 +1,6 @@
 package aima.util;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -86,11 +85,8 @@ public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 		List<VertexLabelType> result = new ArrayList<VertexLabelType>();
 		Hashtable<VertexLabelType, EdgeLabelType> localEdgeLookup = globalEdgeLookup
 				.get(v);
-		if (localEdgeLookup != null) {
-			Enumeration<VertexLabelType> successors = localEdgeLookup.keys();
-			while (successors.hasMoreElements())
-				result.add(successors.nextElement());
-		}
+		if (localEdgeLookup != null)
+			result.addAll(localEdgeLookup.keySet());
 		return result;
 	}
 

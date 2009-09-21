@@ -1,13 +1,16 @@
 <body>
 <html>
-<p>This package contains classes which are useful to create
-map agents. The contained <code>MapWithSLD</code> class extends
-the original <code>aima.search.map.Map</code> by features
-such as location coordinates and straight-line distances.
+<p>This package contains classes, which are useful to create
+map agents. The contained <code>Map</code> class maintains
+named locations with coordinates, links between them, and
+straight-line distances. The <code>MapEnvironment</code>
+enables a <code>MapAgent</code> to travel trough a world
+whose topology is described by a map.
 Adaptable heuristic functions let the agent modify the
 heuristic function with respect to the current goal. Standardized
-dynamic attribute names make information exchange between environment
-and agent safer without introducing direct dependencies.
+dynamic attribute names in class <code>DynAttributeNames</code>
+make information exchange between environment
+and agent a bit safer without introducing direct dependencies.
 </p>
 </html>
 </body>
