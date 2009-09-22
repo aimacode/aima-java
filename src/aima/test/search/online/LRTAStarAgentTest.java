@@ -4,12 +4,12 @@ import junit.framework.TestCase;
 import aima.basic.BasicEnvironmentView;
 import aima.search.framework.HeuristicFunction;
 import aima.search.map.BidirectionalMapProblem;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapEnvironment;
 import aima.search.online.LRTAStarAgent;
 
 public class LRTAStarAgentTest extends TestCase {
-	Map aMap;
+	ExtendableMap aMap;
 
 	StringBuffer envChanges;
 
@@ -17,7 +17,7 @@ public class LRTAStarAgentTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		aMap = new Map();
+		aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 4);
 		aMap.addBidirectionalLink("B", "C", 4);
 		aMap.addBidirectionalLink("C", "D", 4);

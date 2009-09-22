@@ -6,9 +6,10 @@ import aima.search.framework.HeuristicFunction;
 import aima.search.framework.TreeSearch;
 import aima.search.informed.AStarEvaluationFunction;
 import aima.search.informed.RecursiveBestFirstSearch;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
+import aima.search.map.Point2D;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.search.uninformed.BidirectionalSearch;
 import aima.search.uninformed.BreadthFirstSearch;
@@ -128,11 +129,12 @@ public class MapDemo {
 				new AStarEvaluationFunction()),
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		ma.setHeuristicFunction(new HeuristicFunction() {
-			Map map = new SimplifiedRoadMapOfPartOfRomania();
+			ExtendableMap map = new SimplifiedRoadMapOfPartOfRomania();
 
 			public double getHeuristicValue(Object state) {
-				return map.getStraightLineDistance((String) state,
-						SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				Point2D pt1 = map.getPosition((String) state);
+				Point2D pt2 = map.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				return pt1.distance(pt2);
 			}
 		});
 

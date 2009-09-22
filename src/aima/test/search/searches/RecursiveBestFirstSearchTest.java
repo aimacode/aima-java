@@ -8,6 +8,7 @@ import aima.search.informed.RecursiveBestFirstSearch;
 import aima.search.map.Map;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
+import aima.search.map.Point2D;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
 
 /**
@@ -35,9 +36,9 @@ public class RecursiveBestFirstSearchTest extends TestCase {
 
 		heuristicFunction = new HeuristicFunction() {
 			public double getHeuristicValue(Object state) {
-				Map map = new SimplifiedRoadMapOfPartOfRomania();
-				return map.getStraightLineDistance((String) state,
-						SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				Point2D pt1 = aMap.getPosition((String) state);
+				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				return pt1.distance(pt2);
 			}
 		};
 	}

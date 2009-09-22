@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 
 /**
  * @author Ciaran O'Reilly
@@ -13,11 +13,11 @@ import aima.search.map.Map;
 
 public class MapTest extends TestCase {
 
-	Map aMap;
+	ExtendableMap aMap;
 
 	@Override
 	public void setUp() {
-		aMap = new Map();
+		aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "C", 4);

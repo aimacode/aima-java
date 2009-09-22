@@ -8,6 +8,7 @@ import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentView;
 import aima.search.framework.SearchFactory;
 import aima.search.map.Map;
+import aima.search.map.Point2D;
 
 
 /**
@@ -60,7 +61,7 @@ public class MapAgentFrame extends AgentAppFrame {
 		
 		/** Clears the panel and draws the map and the tour history. */
 		public void paint(java.awt.Graphics g) {
-			AbstractMapAgentModel maModel = (AbstractMapAgentModel) model;
+			MapAgentModel maModel = (MapAgentModel) model;
 		    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 		    g2.setColor(Color.white);
 		    g2.fillRect(0, 0, getWidth(), getHeight());
@@ -78,7 +79,7 @@ public class MapAgentFrame extends AgentAppFrame {
 		 * view without scrolling.
 		 */
 		private void adjustTransformation() {
-			AbstractMapAgentModel maModel = (AbstractMapAgentModel) model;
+			MapAgentModel maModel = (MapAgentModel) model;
 			List<String> locs = maModel.getLocations();
 	    	// adjust coordinates relative to the left upper corner of the graph area
 	    	double minX = Double.POSITIVE_INFINITY;
@@ -86,11 +87,11 @@ public class MapAgentFrame extends AgentAppFrame {
 	    	double maxX = Double.NEGATIVE_INFINITY;
 	    	double maxY = Double.NEGATIVE_INFINITY;
 	    	for (String loc : locs) {
-	    		double[] xy = maModel.getLocCoords(loc);
-	    		if (xy[0] < minX) minX = xy[0];
-	    		if (xy[1] < minY) minY = xy[1];
-	    		if (xy[0] > maxX) maxX = xy[0];
-	    		if (xy[1] > maxY) maxY = xy[1];
+	    		Point2D xy = maModel.getLocCoords(loc);
+	    		if (xy.getX() < minX) minX = xy.getX();
+	    		if (xy.getY() < minY) minY = xy.getY();
+	    		if (xy.getX() > maxX) maxX = xy.getX();
+	    		if (xy.getY() > maxY) maxY = xy.getY();
 	    	}
 	    	this.setBorder(20, 20, 20, 100);
 	    	adjustTransformation(minX, minY, maxX, maxY);
@@ -100,31 +101,31 @@ public class MapAgentFrame extends AgentAppFrame {
 		 * Represents roads by lines and locations by name-labeled points.
 		 */
 		private void paintMap(java.awt.Graphics2D g2) {
-			AbstractMapAgentModel maModel = (AbstractMapAgentModel) model;
+			MapAgentModel maModel = (MapAgentModel) model;
 			Map envMap = maModel.getEnvMap();
 			Map agentMap = maModel.getAgentMap();
 			List<Roadblock> roadblocks = new ArrayList<Roadblock>();
 			for (String l1 : maModel.getLocations()) {
-				double[] xy1 = maModel.getLocCoords(l1);
+				Point2D pt1 = maModel.getLocCoords(l1);
 				List<String> linkedLocs = envMap.getLocationsLinkedTo(l1);
 				for (String l2 : agentMap.getLocationsLinkedTo(l1))
 					if (!linkedLocs.contains(l2))
 						linkedLocs.add(l2);
 				for (String l2 : linkedLocs) {
-					double[] xy2 = maModel.getLocCoords(l2);
+					Point2D pt2 = maModel.getLocCoords(l2);
 					g2.setColor(Color.lightGray);
-		    		g2.drawLine(x(xy1), y(xy1), x(xy2), y(xy2));
+		    		g2.drawLine(x(pt1), y(pt1), x(pt2), y(pt2));
 		    		boolean blockedInEnv =
 		    			!envMap.getLocationsLinkedTo(l2).contains(l1);
 		    		boolean blockedInAgent =
 		    			!agentMap.getLocationsLinkedTo(l2).contains(l1);
-		    		roadblocks.add(new Roadblock(xy1, xy2, blockedInEnv, blockedInAgent));
+		    		roadblocks.add(new Roadblock(pt1, pt2, blockedInEnv, blockedInAgent));
 		    		if (blockedInEnv && blockedInAgent) {
 		    			boolean blockedInEnvOtherDir =
 			    			!envMap.getLocationsLinkedTo(l1).contains(l2);
 		    			boolean blockedInAgentOtherDir =
 			    			!agentMap.getLocationsLinkedTo(l1).contains(l2);
-		    			roadblocks.add(new Roadblock(xy2, xy1, blockedInEnvOtherDir, blockedInAgentOtherDir));
+		    			roadblocks.add(new Roadblock(pt2, pt1, blockedInEnvOtherDir, blockedInAgentOtherDir));
 		    		}
 				}
 			}
@@ -134,15 +135,15 @@ public class MapAgentFrame extends AgentAppFrame {
 		
 		/** The track of the agent is visualized with red lines. */
 		private void paintTour(java.awt.Graphics2D g2) {
-			AbstractMapAgentModel maModel = (AbstractMapAgentModel) model;
-		    double[] lastXY = null;
+			MapAgentModel maModel = (MapAgentModel) model;
+		    Point2D lastPt = null;
 		    g2.setColor(Color.red);
 		    for (String loc : maModel.getTourHistory()) {
-		    	double[] xy = maModel.getLocCoords(loc);
-		    	if (xy != null && lastXY != null) {
-		    		g2.drawLine(x(xy), y(xy), x(lastXY), y(lastXY));
+		    	Point2D pt = maModel.getLocCoords(loc);
+		    	if (pt != null && lastPt != null) {
+		    		g2.drawLine(x(pt), y(pt), x(lastPt), y(lastPt));
 		    	}
-		    	lastXY = xy;
+		    	lastPt = pt;
 		    }
 		}
 		
@@ -166,11 +167,11 @@ public class MapAgentFrame extends AgentAppFrame {
 		}
 		
 	    private void paintLoc(java.awt.Graphics2D g2, String loc) {
-	    	AbstractMapAgentModel maModel = (AbstractMapAgentModel) model;
-			double[] xy = maModel.getLocCoords(loc);
-	    	if (xy != null) {
-	    		int x = x(xy);
-	    		int y = y(xy);
+	    	MapAgentModel maModel = (MapAgentModel) model;
+			Point2D pt = maModel.getLocCoords(loc);
+	    	if (pt != null) {
+	    		int x = x(pt);
+	    		int y = y(pt);
 		    	String info = "";
 		    	List<String> history = maModel.getTourHistory();
 		    	ArrayList<Integer> list = new ArrayList<Integer>();
@@ -214,11 +215,11 @@ public class MapAgentFrame extends AgentAppFrame {
 	 * the road itself so that they always appear in front.
 	 */
 	private static class Roadblock {
-		double[] pos1;
-		double[] pos2;
+		Point2D pos1;
+		Point2D pos2;
 		boolean inEnvMap;
 		boolean inAgentMap;
-		private Roadblock(double[] pos1, double[] pos2, boolean inEnvMap, boolean inAgentMap) {
+		private Roadblock(Point2D pos1, Point2D pos2, boolean inEnvMap, boolean inAgentMap) {
 			this.pos1 = pos1;
 			this.pos2 = pos2;
 			this.inEnvMap = inEnvMap;

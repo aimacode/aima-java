@@ -3,12 +3,12 @@ package aima.search.map;
 /**
  * Represents a simplified road map of Australia. The initialization method is
  * declared static. So it can also be used to initialize other specialized
- * subclasses of {@link Map} with road map data from Australia. The data was
+ * subclasses of {@link ExtendableMap} with road map data from Australia. The data was
  * extracted from a class developed by Felix Knittel.
  * 
  * @author R. Lunde
  */
-public class SimplifiedRoadMapOfAustralia extends Map {
+public class SimplifiedRoadMapOfAustralia extends ExtendableMap {
 
 	public SimplifiedRoadMapOfAustralia() {
 		initMap(this);
@@ -60,7 +60,7 @@ public class SimplifiedRoadMapOfAustralia extends Map {
 	/**
 	 * Initializes a map with a simplified road map of Australia.
 	 */
-	public static void initMap(Map map) {
+	public static void initMap(ExtendableMap map) {
 		map.clear();
 		// Add links
 		// Distances from http://maps.google.com
@@ -125,46 +125,46 @@ public class SimplifiedRoadMapOfAustralia extends Map {
 		// Therefore x and y coordinates refer to Alice Springs. Note that
 		// the coordinates are not very precise and partly modified to
 		// get a more real shape of Australia.
-		map.setCoords(ADELAIDE, 417, -1289);
-		map.setCoords(ALBANY, -1559, -1231);
-		map.setCoords(ALICE_SPRINGS, 0, 0);
-		map.setCoords(BRISBANE, 1882, -415);
-		map.setCoords(BROKEN_HILL, 709, -873);
-		map.setCoords(BROOME, -1189, 645);
-		map.setCoords(CAIRNS, 1211, 791);
-		map.setCoords(CAMARVON, -2004, 34);
-		map.setCoords(CANBERRA, 1524, -1189);
-		map.setCoords(CHARLEVILLE, 1256, -268);
-		map.setCoords(COOBER_PEDY, 86, -593);
-		map.setCoords(DARWIN, -328, 1237);
-		map.setCoords(DUBBO, 1474, -881);
-		map.setCoords(ESPERANCE, -1182, -1132);
-		map.setCoords(GERALDTON, -1958, -405);
-		map.setCoords(HALLS_CREEK, -630, 624);
-		map.setCoords(HAY, 985, -1143);
-		map.setCoords(KALGOORLIE, -1187, -729);
-		map.setCoords(KATHERINE, -183, 1025);
-		map.setCoords(LAKES_ENTRANCE, 1412, -1609);
-		map.setCoords(LONGREACH, 1057, 49);
-		map.setCoords(MACKAY, 1553, 316);
-		map.setCoords(MELBOURNE, 1118, -1570);
-		map.setCoords(MOUNT_GAMBIER, 602, -1531);
-		map.setCoords(MT_ISA, 563, 344);
-		map.setCoords(NEWCASTLE, 1841, -979);
-		map.setCoords(NORSEMAN, -1162, -881);
-		map.setCoords(NYNGAN, 1312, -781);
-		map.setCoords(PERTH, -1827, -814);
-		map.setCoords(PORT_AUGUSTA, 358, -996);
-		map.setCoords(PORT_HEDLAND, -1558, 438);
-		map.setCoords(PORT_LINCOLN, 169, -1205);
-		map.setCoords(PORT_MACQUARIE, 1884, -849);
-		map.setCoords(ROCKHAMPTON, 1693, 59);
-		map.setCoords(SYDNEY, 1778, -1079);
-		map.setCoords(TAMWORTH, 1752, -722);
-		map.setCoords(TENNANT_CREEK, 30, 445);
-		map.setCoords(TOWNSVILLE, 1318, 520);
-		map.setCoords(WAGGA_WAGGA, 1322, -1125);
-		map.setCoords(WARNAMBOOL, 761, -1665);
-		map.setCoords(WYNDHAM, -572, 932);
+		map.setPosition(ADELAIDE, 417, -1289);
+		map.setPosition(ALBANY, -1559, -1231);
+		map.setPosition(ALICE_SPRINGS, 0, 0);
+		map.setPosition(BRISBANE, 1882, -415);
+		map.setPosition(BROKEN_HILL, 709, -873);
+		map.setPosition(BROOME, -1189, 645);
+		map.setPosition(CAIRNS, 1211, 791);
+		map.setPosition(CAMARVON, -2004, 34);
+		map.setPosition(CANBERRA, 1524, -1189);
+		map.setPosition(CHARLEVILLE, 1256, -268);
+		map.setPosition(COOBER_PEDY, 86, -593);
+		map.setPosition(DARWIN, -328, 1237);
+		map.setPosition(DUBBO, 1474, -881);
+		map.setPosition(ESPERANCE, -1182, -1132);
+		map.setPosition(GERALDTON, -1958, -405);
+		map.setPosition(HALLS_CREEK, -630, 624);
+		map.setPosition(HAY, 985, -1143);
+		map.setPosition(KALGOORLIE, -1187, -729);
+		map.setPosition(KATHERINE, -183, 1025);
+		map.setPosition(LAKES_ENTRANCE, 1412, -1609);
+		map.setPosition(LONGREACH, 1057, 49);
+		map.setPosition(MACKAY, 1553, 316);
+		map.setPosition(MELBOURNE, 1118, -1570);
+		map.setPosition(MOUNT_GAMBIER, 602, -1531);
+		map.setPosition(MT_ISA, 563, 344);
+		map.setPosition(NEWCASTLE, 1841, -979);
+		map.setPosition(NORSEMAN, -1162, -881);
+		map.setPosition(NYNGAN, 1312, -781);
+		map.setPosition(PERTH, -1827, -814);
+		map.setPosition(PORT_AUGUSTA, 358, -996);
+		map.setPosition(PORT_HEDLAND, -1558, 438);
+		map.setPosition(PORT_LINCOLN, 169, -1205);
+		map.setPosition(PORT_MACQUARIE, 1884, -849);
+		map.setPosition(ROCKHAMPTON, 1693, 59);
+		map.setPosition(SYDNEY, 1778, -1079);
+		map.setPosition(TAMWORTH, 1752, -722);
+		map.setPosition(TENNANT_CREEK, 30, 445);
+		map.setPosition(TOWNSVILLE, 1318, 520);
+		map.setPosition(WAGGA_WAGGA, 1322, -1125);
+		map.setPosition(WARNAMBOOL, 761, -1665);
+		map.setPosition(WYNDHAM, -572, 932);
 	}
 }

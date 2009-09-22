@@ -3,19 +3,19 @@ package aima.test.search.online;
 import junit.framework.TestCase;
 import aima.basic.BasicEnvironmentView;
 import aima.search.map.BidirectionalMapProblem;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapEnvironment;
 import aima.search.online.OnlineDFSAgent;
 
 public class OnlineDFSAgentTest extends TestCase {
 
-	Map aMap;
+	ExtendableMap aMap;
 
 	StringBuffer envChanges;
 
 	@Override
 	public void setUp() {
-		aMap = new Map();
+		aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "D", 4);
@@ -81,7 +81,7 @@ public class OnlineDFSAgentTest extends TestCase {
 	}
 
 	public void testFig4_18() {
-		aMap = new Map();
+		aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("1,1", "1,2", 1);
 		aMap.addBidirectionalLink("1,1", "2,1", 1);
 		aMap.addBidirectionalLink("1,2", "1,3", 1);
