@@ -38,7 +38,7 @@ public class MapStepCostFunction implements StepCostFunction {
 					.getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 
-		Integer distance = map.getDistance(fromLoc, toLoc);
+		Double distance = map.getDistance(fromLoc, toLoc);
 
 		if (null == distance || distance < 0) {
 			return constantCost;

@@ -28,16 +28,16 @@ public class MapEnvironment extends Environment {
 	public void addAgent(Agent a, String startLocation) {
 		super.addAgent(a);
 		a.setAttribute(DynAttributeNames.AGENT_LOCATION, startLocation);
-		a.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE, 0);
+		a.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE, 0.0);
 	}
 
 	@Override
 	public void executeAction(Agent a, String act) {
 		String currLoc = (String) a
 				.getAttribute(DynAttributeNames.AGENT_LOCATION);
-		Integer distance = aMap.getDistance(currLoc, act);
+		Double distance = aMap.getDistance(currLoc, act);
 		if (distance != null) {
-			int currTD = (Integer) a
+			double currTD = (Double) a
 					.getAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE);
 			a.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE, currTD
 					+ distance);
@@ -52,7 +52,7 @@ public class MapEnvironment extends Environment {
 		List<Object> possibleActions = new ArrayList<Object>();
 		for (String a : aMap.getLocationsLinkedTo(currLoc)) {
 			possibleActions.add(a);
-			possibleActions.add(new Integer(aMap.getDistance(currLoc, a)));
+			possibleActions.add(new Double(aMap.getDistance(currLoc, a)));
 		}
 		return new Percept(DynAttributeNames.PERCEPT_IN, currLoc,
 				DynAttributeNames.PERCEPT_POSSIBLE_ACTIONS, possibleActions);

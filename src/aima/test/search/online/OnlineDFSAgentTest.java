@@ -16,12 +16,12 @@ public class OnlineDFSAgentTest extends TestCase {
 	@Override
 	public void setUp() {
 		aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("A", "C", 6);
-		aMap.addBidirectionalLink("B", "D", 4);
-		aMap.addBidirectionalLink("B", "E", 7);
-		aMap.addBidirectionalLink("D", "F", 4);
-		aMap.addBidirectionalLink("D", "G", 8);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("A", "C", 6.0);
+		aMap.addBidirectionalLink("B", "D", 4.0);
+		aMap.addBidirectionalLink("B", "E", 7.0);
+		aMap.addBidirectionalLink("D", "F", 4.0);
+		aMap.addBidirectionalLink("D", "G", 8.0);
 
 		envChanges = new StringBuffer();
 	}
@@ -82,14 +82,14 @@ public class OnlineDFSAgentTest extends TestCase {
 
 	public void testFig4_18() {
 		aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("1,1", "1,2", 1);
-		aMap.addBidirectionalLink("1,1", "2,1", 1);
-		aMap.addBidirectionalLink("1,2", "1,3", 1);
-		aMap.addBidirectionalLink("1,2", "2,2", 1);
-		aMap.addBidirectionalLink("1,3", "2,3", 1);
-		aMap.addBidirectionalLink("2,2", "3,2", 1);
-		aMap.addBidirectionalLink("2,3", "3,3", 1);
-		aMap.addBidirectionalLink("3,1", "3,2", 1);
+		aMap.addBidirectionalLink("1,1", "1,2", 1.0);
+		aMap.addBidirectionalLink("1,1", "2,1", 1.0);
+		aMap.addBidirectionalLink("1,2", "1,3", 1.0);
+		aMap.addBidirectionalLink("1,2", "2,2", 1.0);
+		aMap.addBidirectionalLink("1,3", "2,3", 1.0);
+		aMap.addBidirectionalLink("2,2", "3,2", 1.0);
+		aMap.addBidirectionalLink("2,3", "3,3", 1.0);
+		aMap.addBidirectionalLink("3,1", "3,2", 1.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new BidirectionalMapProblem(

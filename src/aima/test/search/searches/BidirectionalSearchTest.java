@@ -55,8 +55,8 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test IG(A)<->(B)<->(C)
 	public void test_ABC_StartingAtGoal() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -83,7 +83,7 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<->G(B)
 	public void test_AB_BothWaysPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -110,8 +110,8 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<->(B)<->G(C)
 	public void test_ABC_BothWaysPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -138,9 +138,9 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<->(B)<->(C)<->(D)
 	public void test_ABCD_BothWaysPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
-		aMap.addBidirectionalLink("C", "D", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
+		aMap.addBidirectionalLink("C", "D", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -167,7 +167,7 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)->G(B)
 	public void test_AB_OriginalOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addUnidirectionalLink("A", "B", 5);
+		aMap.addUnidirectionalLink("A", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -194,8 +194,8 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)->(B)->G(C)
 	public void test_ABC_OriginalOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addUnidirectionalLink("A", "B", 5);
-		aMap.addUnidirectionalLink("B", "C", 5);
+		aMap.addUnidirectionalLink("A", "B", 5.0);
+		aMap.addUnidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -222,10 +222,10 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)->(B)->(C)<->(D)<->G(E)
 	public void test_ABCDE_OriginalOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addUnidirectionalLink("B", "C", 5);
-		aMap.addBidirectionalLink("C", "D", 5);
-		aMap.addBidirectionalLink("D", "E", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addUnidirectionalLink("B", "C", 5.0);
+		aMap.addBidirectionalLink("C", "D", 5.0);
+		aMap.addBidirectionalLink("D", "E", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -252,7 +252,7 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<-G(B)
 	public void test_AB_ReverseOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addUnidirectionalLink("B", "A", 5);
+		aMap.addUnidirectionalLink("B", "A", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -278,8 +278,8 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<-(B)<-G(C)
 	public void test_ABC_ReverseOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addUnidirectionalLink("B", "A", 5);
-		aMap.addUnidirectionalLink("C", "B", 5);
+		aMap.addUnidirectionalLink("B", "A", 5.0);
+		aMap.addUnidirectionalLink("C", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -304,10 +304,10 @@ public class BidirectionalSearchTest extends TestCase {
 	// Test I(A)<->(B)<->(C)<-(D)<-G(E)
 	public void test_ABCDE_ReverseOnlyPath() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
-		aMap.addUnidirectionalLink("D", "C", 5);
-		aMap.addUnidirectionalLink("E", "D", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
+		aMap.addUnidirectionalLink("D", "C", 5.0);
+		aMap.addUnidirectionalLink("E", "D", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -334,12 +334,12 @@ public class BidirectionalSearchTest extends TestCase {
 	// -------------------------
 	public void test_ABCDEF_OriginalFirst() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
-		aMap.addBidirectionalLink("C", "D", 5);
-		aMap.addBidirectionalLink("D", "E", 5);
-		aMap.addBidirectionalLink("E", "F", 5);
-		aMap.addUnidirectionalLink("B", "F", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
+		aMap.addBidirectionalLink("C", "D", 5.0);
+		aMap.addBidirectionalLink("D", "E", 5.0);
+		aMap.addBidirectionalLink("E", "F", 5.0);
+		aMap.addUnidirectionalLink("B", "F", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -367,12 +367,12 @@ public class BidirectionalSearchTest extends TestCase {
 	// -------------------------
 	public void test_ABCDEF_ReverseFirstButNotFromOriginal() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
-		aMap.addBidirectionalLink("C", "D", 5);
-		aMap.addBidirectionalLink("D", "E", 5);
-		aMap.addBidirectionalLink("E", "F", 5);
-		aMap.addUnidirectionalLink("E", "A", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
+		aMap.addBidirectionalLink("C", "D", 5.0);
+		aMap.addBidirectionalLink("D", "E", 5.0);
+		aMap.addBidirectionalLink("E", "F", 5.0);
+		aMap.addUnidirectionalLink("E", "A", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
@@ -402,13 +402,13 @@ public class BidirectionalSearchTest extends TestCase {
 	// -------------------------
 	public void test_ABCDEF_MoreComplexReverseFirstButNotFromOriginal() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("B", "C", 5);
-		aMap.addBidirectionalLink("C", "D", 5);
-		aMap.addBidirectionalLink("D", "E", 5);
-		aMap.addUnidirectionalLink("F", "E", 5);
-		aMap.addBidirectionalLink("E", "A", 5);
-		aMap.addBidirectionalLink("D", "F", 5);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("B", "C", 5.0);
+		aMap.addBidirectionalLink("C", "D", 5.0);
+		aMap.addBidirectionalLink("D", "E", 5.0);
+		aMap.addUnidirectionalLink("F", "E", 5.0);
+		aMap.addBidirectionalLink("E", "A", 5.0);
+		aMap.addBidirectionalLink("D", "F", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,

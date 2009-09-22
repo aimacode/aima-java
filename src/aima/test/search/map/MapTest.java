@@ -18,11 +18,11 @@ public class MapTest extends TestCase {
 	@Override
 	public void setUp() {
 		aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("A", "C", 6);
-		aMap.addBidirectionalLink("B", "C", 4);
-		aMap.addBidirectionalLink("C", "D", 7);
-		aMap.addUnidirectionalLink("B", "E", 14);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("A", "C", 6.0);
+		aMap.addBidirectionalLink("B", "C", 4.0);
+		aMap.addBidirectionalLink("C", "D", 7.0);
+		aMap.addUnidirectionalLink("B", "E", 14.0);
 	}
 
 	public void testLocationsLinkedTo() {
@@ -59,16 +59,16 @@ public class MapTest extends TestCase {
 	}
 
 	public void testDistances() {
-		assertEquals(new Integer(5), aMap.getDistance("A", "B"));
-		assertEquals(new Integer(6), aMap.getDistance("A", "C"));
-		assertEquals(new Integer(4), aMap.getDistance("B", "C"));
-		assertEquals(new Integer(7), aMap.getDistance("C", "D"));
-		assertEquals(new Integer(14), aMap.getDistance("B", "E"));
+		assertEquals(new Double(5), aMap.getDistance("A", "B"));
+		assertEquals(new Double(6), aMap.getDistance("A", "C"));
+		assertEquals(new Double(4), aMap.getDistance("B", "C"));
+		assertEquals(new Double(7), aMap.getDistance("C", "D"));
+		assertEquals(new Double(14), aMap.getDistance("B", "E"));
 		//
-		assertEquals(new Integer(5), aMap.getDistance("B", "A"));
-		assertEquals(new Integer(6), aMap.getDistance("C", "A"));
-		assertEquals(new Integer(4), aMap.getDistance("C", "B"));
-		assertEquals(new Integer(7), aMap.getDistance("D", "C"));
+		assertEquals(new Double(5), aMap.getDistance("B", "A"));
+		assertEquals(new Double(6), aMap.getDistance("C", "A"));
+		assertEquals(new Double(4), aMap.getDistance("C", "B"));
+		assertEquals(new Double(7), aMap.getDistance("D", "C"));
 
 		// No distances should be returned if links not established or locations
 		// do not exist
