@@ -6,6 +6,7 @@ import java.util.List;
 import aima.basic.Agent;
 import aima.basic.Environment;
 import aima.basic.Percept;
+import aima.util.Util;
 
 /**
  * Represents the environment a MapAgent can navigate.
@@ -59,9 +60,5 @@ public class MapEnvironment extends Environment {
 
 	public Map getMap() {
 		return aMap;
-	}
-
-	public String randomlySelectDestination() {
-		return aMap.randomlyGenerateDestination();
 	}
 }

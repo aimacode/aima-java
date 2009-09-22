@@ -3,7 +3,7 @@ package aima.test.search.map;
 import junit.framework.TestCase;
 import aima.basic.Percept;
 import aima.search.framework.GraphSearch;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
 import aima.search.uninformed.UniformCostSearch;
@@ -20,7 +20,7 @@ public class MapEnvironmentTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		Map aMap = new Map();
+		ExtendableMap aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "C", 4);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 import aima.search.framework.Successor;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapSuccessorFunction;
 
 /**
@@ -17,7 +17,7 @@ public class MapSuccessorFunctionTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		Map aMap = new Map();
+		ExtendableMap aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 5);
 		aMap.addBidirectionalLink("A", "C", 6);
 		aMap.addBidirectionalLink("B", "C", 4);

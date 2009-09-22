@@ -8,9 +8,10 @@ import aima.gui.framework.AgentAppModel;
 import aima.gui.framework.SimpleAgentAppDemo;
 import aima.search.framework.SearchFactory;
 import aima.search.map.AdaptableHeuristicFunction;
-import aima.search.map.Map;
+import aima.search.map.ExtendableMap;
 import aima.search.map.MapAgent;
 import aima.search.map.MapEnvironment;
+import aima.search.map.Point2D;
 import aima.search.map.Scenario;
 import aima.search.map.SimplifiedRoadMapOfAustralia;
 import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
@@ -113,7 +114,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 		 */
 		@Override
 		protected void selectScenarioAndDest(int scenarioIdx, int destIdx) {
-			Map map = new Map();
+			ExtendableMap map = new ExtendableMap();
 			MapEnvironment env = new MapEnvironment(map);
 			String agentLoc = null;
 			switch (scenarioIdx) {
@@ -245,7 +246,12 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 	static class H2 extends AdaptableHeuristicFunction {
 
 		public double getHeuristicValue(Object state) {
-			return map.getStraightLineDistance((String) state, (String) goal);
+			double result = 0.0;
+			Point2D pt1 = map.getPosition((String) state);
+			Point2D pt2 = map.getPosition((String) goal);
+			if (pt1 != null && pt2 != null)
+				result = pt1.distance(pt2);
+			return result;
 		}
 	}
 

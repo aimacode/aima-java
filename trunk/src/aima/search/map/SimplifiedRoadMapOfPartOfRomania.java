@@ -3,7 +3,7 @@ package aima.search.map;
 /**
  * Represents a simplified road map of Romania. The initialization method is
  * declared static. So it can also be used to initialize other specialized
- * subclasses of {@link Map} with road map data from Romania. Location names,
+ * subclasses of {@link ExtendableMap} with road map data from Romania. Location names,
  * road distances and directions have been extracted from Artificial
  * Intelligence A Modern Approach (2nd Edition), Figure 3.2, page 63. The
  * straight-line distances to Bucharest have been taken from Artificial
@@ -11,7 +11,7 @@ package aima.search.map;
  * 
  * @author R. Lunde
  */
-public class SimplifiedRoadMapOfPartOfRomania extends Map {
+public class SimplifiedRoadMapOfPartOfRomania extends ExtendableMap {
 
 	public SimplifiedRoadMapOfPartOfRomania() {
 		initMap(this);
@@ -42,7 +42,7 @@ public class SimplifiedRoadMapOfPartOfRomania extends Map {
 	/**
 	 * Initializes a map with a simplified road map of Romania.
 	 */
-	public static void initMap(Map map) {
+	public static void initMap(ExtendableMap map) {
 		// mapOfRomania
 		map.clear();
 		map.addBidirectionalLink(ORADEA, ZERIND, 71);

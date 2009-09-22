@@ -33,7 +33,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/** Clears the model's tour history. */
 	@Override
 	public void clearAgent() {
-		((AbstractMapAgentModel) model).clearTourHistory();
+		((MapAgentModel) model).clearTourHistory();
 		frame.modelChanged();
 	}
 

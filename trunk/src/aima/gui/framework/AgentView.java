@@ -2,6 +2,8 @@ package aima.gui.framework;
 
 import java.awt.Color;
 
+import aima.search.map.Point2D;
+
 /**
  * Simple agent view without content but with some useful transformation
  * features. The transformation features allow to scale and translate 2D world
@@ -59,13 +61,13 @@ public class AgentView extends AgentAppFrame.AbstractAgentView {
 	}
 
 	/** Returns the x_view of a given point in world coordinates. */
-	protected int x(double[] xyW) {
-		return x(xyW[0]);
+	protected int x(Point2D xyW) {
+		return x(xyW.getX());
 	}
 
 	/** Returns the y_view of a given point in world coordinates. */
-	protected int y(double[] xyW) {
-		return y(xyW[1]);
+	protected int y(Point2D xyW) {
+		return y(xyW.getY());
 	}
 
 	/** Returns the x_view of a given x-value in world coordinates. */

@@ -4,9 +4,8 @@ import aima.search.framework.HeuristicFunction;
 
 /**
  * This class extends heuristic functions in two ways: It maintains a goal and a
- * map to estimate distance to goal for states in routing and tour problems, and
+ * map to estimate distance to goal for states in route planning problems, and
  * it provides a method to adapt to different goals.
- * 
  * @author R. Lunde
  */
 public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
@@ -33,5 +32,5 @@ public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
 	}
 
 	// when subclassing: Don't forget to implement the most important method
-	// double getHeuristicValue(Object state)
+	// public double getHeuristicValue(Object state)
 }

@@ -4,14 +4,14 @@ package aima.search.map;
 /**
  * A scenario specifies an environment, the agent's knowledge about the
  * environment, and the agents initial location. It can be used to specify
- * settings for routing and touring problems.
+ * settings for route planning agent applications.
  * 
  * @author R. Lunde
  */
 public class Scenario {
 	/**
 	 * A map-based environment. Note that the contained map must be of type
-	 * {@link Map}.
+	 * {@link ExtendableMap}.
 	 */
 	private final MapEnvironment env;
 	/** A map reflecting the knowledge of the agent about the environment. */
@@ -24,7 +24,7 @@ public class Scenario {
 	 * 
 	 * @param env
 	 *            a map-based environment. Note that the contained map must be
-	 *            of type {@link Map}
+	 *            of type {@link ExtendableMap}
 	 * @param agentMap
 	 *            a map reflecting the knowledge of the agent about the
 	 *            environment

@@ -75,7 +75,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	protected Object formulateGoal() {
 		Object goal = null;
 		if (null == goalTests) {
-			goal = mapEnvironment.randomlySelectDestination();
+			goal = mapEnvironment.getMap().randomlyGenerateDestination();
 		} else {
 			goal = goalTests[goalTestPos];
 			goalTestPos++;
