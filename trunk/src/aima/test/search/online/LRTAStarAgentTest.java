@@ -18,11 +18,11 @@ public class LRTAStarAgentTest extends TestCase {
 	@Override
 	public void setUp() {
 		aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 4);
-		aMap.addBidirectionalLink("B", "C", 4);
-		aMap.addBidirectionalLink("C", "D", 4);
-		aMap.addBidirectionalLink("D", "E", 4);
-		aMap.addBidirectionalLink("E", "F", 4);
+		aMap.addBidirectionalLink("A", "B", 4.0);
+		aMap.addBidirectionalLink("B", "C", 4.0);
+		aMap.addBidirectionalLink("C", "D", 4.0);
+		aMap.addBidirectionalLink("D", "E", 4.0);
+		aMap.addBidirectionalLink("E", "F", 4.0);
 		hf = new HeuristicFunction() {
 			public double getHeuristicValue(Object state) {
 				return 1;

@@ -21,11 +21,11 @@ public class MapEnvironmentTest extends TestCase {
 	@Override
 	public void setUp() {
 		ExtendableMap aMap = new ExtendableMap();
-		aMap.addBidirectionalLink("A", "B", 5);
-		aMap.addBidirectionalLink("A", "C", 6);
-		aMap.addBidirectionalLink("B", "C", 4);
-		aMap.addBidirectionalLink("C", "D", 7);
-		aMap.addUnidirectionalLink("B", "E", 14);
+		aMap.addBidirectionalLink("A", "B", 5.0);
+		aMap.addBidirectionalLink("A", "C", 6.0);
+		aMap.addBidirectionalLink("B", "C", 4.0);
+		aMap.addBidirectionalLink("C", "D", 7.0);
+		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
 		ma = new MapAgent(me, new UniformCostSearch(new GraphSearch()),

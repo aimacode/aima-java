@@ -20,7 +20,7 @@ public interface Map {
 	 * Returns the travel distance between the two specified locations if
 	 * they are linked by a connection and null otherwise.
 	 */
-	public Integer getDistance(String fromLocation, String toLocation);
+	public Double getDistance(String fromLocation, String toLocation);
 
 	/**
 	 * Returns an array with two integers describing the the position of the
