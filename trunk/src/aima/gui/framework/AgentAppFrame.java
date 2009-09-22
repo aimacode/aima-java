@@ -125,7 +125,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	 */
 	public void setAgentView(AbstractAgentView view) {
 		agentView = view;
-		centerPane.add(centerPane.LEFT, new JScrollPane(agentView));
+		centerPane.add(centerPane.LEFT, agentView);
 	}
 
 	/** Specifies how to distribute extra space when resizing the split pane. */

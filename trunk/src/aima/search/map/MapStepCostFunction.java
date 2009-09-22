@@ -40,10 +40,10 @@ public class MapStepCostFunction implements StepCostFunction {
 
 		Double distance = map.getDistance(fromLoc, toLoc);
 
-		if (null == distance || distance < 0) {
+		if (distance == null || distance <= 0) {
 			return constantCost;
 		}
 
-		return constantCost + new Double(distance);
+		return new Double(distance);
 	}
 }

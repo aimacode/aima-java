@@ -61,11 +61,10 @@ public class MapAgentFrame extends AgentAppFrame {
 		
 		/** Clears the panel and draws the map and the tour history. */
 		public void paint(java.awt.Graphics g) {
+			super.paint(g);
 			MapAgentModel maModel = (MapAgentModel) model;
-		    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
-		    g2.setColor(Color.white);
-		    g2.fillRect(0, 0, getWidth(), getHeight());
 		    if (maModel != null && !maModel.isEmpty()) {
+		    	java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 		    	adjustTransformation();
 		    	paintMap(g2);
 		    	paintTour(g2);

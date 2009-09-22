@@ -63,7 +63,7 @@ public class MapAgentTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:NoOP:",
+				"CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:NoOP:",
 				envChanges.toString());
 	}
 
