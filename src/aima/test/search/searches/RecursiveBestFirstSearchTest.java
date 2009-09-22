@@ -79,7 +79,7 @@ public class RecursiveBestFirstSearchTest extends TestCase {
 		me.stepUntilNoOp();
 
 		assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Bucharest):Sibiu:RimnicuVilcea:Pitesti:Bucharest:METRIC[pathCost]=422.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:NoOP:",
+				"CurrentLocation=In(Arad), Goal=In(Bucharest):Sibiu:RimnicuVilcea:Pitesti:Bucharest:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:NoOP:",
 				envChanges.toString());
 	}
 }
