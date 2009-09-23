@@ -42,7 +42,7 @@ public class MapAgentTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:NoOP:",
@@ -60,7 +60,7 @@ public class MapAgentTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(D):C:D:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:NoOP:",
@@ -78,7 +78,7 @@ public class MapAgentTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(E), Goal=In(A):NoOP:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:NoOP:",

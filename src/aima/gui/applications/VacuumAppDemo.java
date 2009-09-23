@@ -191,7 +191,7 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 		public void runAgent() {
 			VacuumModel vmodel = (VacuumModel) model;
 			frame.logMessage("<simulation-log>");
-			vmodel.getEnv().stepUntilNoOp();
+			vmodel.getEnv().stepUntilDone();
 			frame.logMessage("Performance: " +
 					vmodel.getEnv().getAgentperformance(vmodel.getAgent()));
 			frame.logMessage("</simulation-log>");

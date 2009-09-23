@@ -34,7 +34,7 @@ public class TableDrivenVaccumAgentTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("RightLeftRightNoOP", envChanges.toString());
 	}
@@ -51,7 +51,7 @@ public class TableDrivenVaccumAgentTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("RightSuckLeftNoOP", envChanges.toString());
 	}
@@ -68,7 +68,7 @@ public class TableDrivenVaccumAgentTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("SuckRightLeftNoOP", envChanges.toString());
 	}
@@ -85,7 +85,7 @@ public class TableDrivenVaccumAgentTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("SuckRightSuckNoOP", envChanges.toString());
 	}

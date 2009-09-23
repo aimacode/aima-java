@@ -43,7 +43,7 @@ public class LRTAStarAgentTest extends TestCase {
 				envChanges.append(command).append("->");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals("NoOP->", envChanges.toString());
 	}
@@ -59,7 +59,7 @@ public class LRTAStarAgentTest extends TestCase {
 				envChanges.append(command).append("->");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals("B->A->B->C->B->C->D->C->D->E->D->E->F->NoOP->",
 				envChanges.toString());

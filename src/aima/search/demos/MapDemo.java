@@ -47,7 +47,7 @@ public class MapDemo {
 				new BreadthFirstSearch(new GraphSearch()), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithUniformCostSearch() {
@@ -62,7 +62,7 @@ public class MapDemo {
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		System.out.println("\nMapDemo UCS (using a GraphSearch) -->");
 
@@ -71,7 +71,7 @@ public class MapDemo {
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithDepthFirstSearch() {
@@ -83,7 +83,7 @@ public class MapDemo {
 				2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithRecursiveDLS() {
@@ -94,7 +94,7 @@ public class MapDemo {
 		MapAgent ma = new MapAgent(me, new DepthLimitedSearch(8), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithIterativeDeepeningSearch() {
@@ -105,7 +105,7 @@ public class MapDemo {
 		MapAgent ma = new MapAgent(me, new IterativeDeepeningSearch(), 2);
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithBidrectionalSearch() {
@@ -117,7 +117,7 @@ public class MapDemo {
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ORADEA);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 
 	private static void mapWithRecursiveBestFirstSearch() {
@@ -140,6 +140,6 @@ public class MapDemo {
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.registerView(new BasicEnvironmentView());
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 	}
 }

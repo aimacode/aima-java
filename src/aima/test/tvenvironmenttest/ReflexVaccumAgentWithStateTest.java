@@ -34,7 +34,7 @@ public class ReflexVaccumAgentWithStateTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("RightNoOP", envChanges.toString());
 	}
@@ -51,7 +51,7 @@ public class ReflexVaccumAgentWithStateTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("RightSuckNoOP", envChanges.toString());
 	}
@@ -68,7 +68,7 @@ public class ReflexVaccumAgentWithStateTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("SuckRightNoOP", envChanges.toString());
 	}
@@ -85,7 +85,7 @@ public class ReflexVaccumAgentWithStateTest extends TestCase {
 			}
 		});
 
-		tve.stepUntilNoOp();
+		tve.stepUntilDone();
 
 		assertEquals("SuckRightSuckNoOP", envChanges.toString());
 	}

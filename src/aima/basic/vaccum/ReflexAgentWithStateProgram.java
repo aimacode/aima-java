@@ -2,6 +2,7 @@ package aima.basic.vaccum;
 
 import java.util.Set;
 
+import aima.basic.Agent;
 import aima.basic.AgentProgram;
 import aima.basic.ObjectWithDynamicAttributes;
 import aima.basic.Percept;
@@ -29,9 +30,6 @@ import aima.basic.simplerule.Rule;
  * 
  */
 public abstract class ReflexAgentWithStateProgram extends AgentProgram {
-	// Used to define No Operations/Action is to be performed.
-	public static final String NO_OP = "NoOP";
-
 	//
 	// static state, a description of the current world state
 	private ObjectWithDynamicAttributes state = null;
@@ -96,6 +94,6 @@ public abstract class ReflexAgentWithStateProgram extends AgentProgram {
 	}
 
 	protected String ruleAction(Rule r) {
-		return null == r ? NO_OP : r.getAction();
+		return null == r ? Agent.NO_OP : r.getAction();
 	}
 }
