@@ -80,7 +80,7 @@ public abstract class Environment {
 		}
 	}
 
-	public void stepUntilNoOp() {
+	public void stepUntilDone() {
 		while (!(this.isDone())) {
 			step();
 		}

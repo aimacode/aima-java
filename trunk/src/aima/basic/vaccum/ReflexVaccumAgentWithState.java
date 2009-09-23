@@ -58,7 +58,7 @@ public class ReflexVaccumAgentWithState extends Agent {
 				.add(new Rule(new ANDCondition(new EQUALCondition(
 						"statusLocationA", "Clean"), new EQUALCondition(
 						"statusLocationB", "Clean")),
-						ReflexAgentWithStateProgram.NO_OP));
+						Agent.NO_OP));
 		rules
 				.add(new Rule(new EQUALCondition("currentStatus", "Dirty"),
 						"Suck"));

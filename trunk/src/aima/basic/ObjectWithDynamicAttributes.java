@@ -18,6 +18,10 @@ public class ObjectWithDynamicAttributes {
 	public Object getAttribute(Object key) {
 		return attributes.get(key);
 	}
+	
+	public void removeAttribute(Object key) {
+		attributes.remove(key);
+	}
 
 	public Iterator<Object> getSortedAttributeKeys() {
 		// Want to guarantee the keys are returned back ordered

@@ -68,8 +68,9 @@ public class TrivialVaccumEnvironment extends Environment {
 				setLocationStatus(getAgentLocation(a), "Clean");
 				setAgentPerformance(a, getAgentperformance(a) + 10);
 			}
-
-		} else if (agentAction.equals("NoOP")) {
+			
+		} else if (agentAction.equals(Agent.NO_OP)) {
+			// this is a bit unfair, but it simplifies testing...
 			a.die();
 
 		}

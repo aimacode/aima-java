@@ -223,7 +223,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 						scenario.getAgentMap()));
 			}
 			env.addAgent(agent, scenario.getInitAgentLocation());
-			env.stepUntilNoOp();
+			env.stepUntilDone();
 			frame.logMessage("</route-planning-simulation-protocol>\n");
 		}
 	}

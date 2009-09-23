@@ -51,7 +51,6 @@ public class MapAgentFrame extends AgentAppFrame {
 	//////////////////////////////////////////////////////////
 	// inner classes
 	
-	
 	/**
 	 * Agent view for map and tour agent applications. This
 	 * view requires the used model to be of type

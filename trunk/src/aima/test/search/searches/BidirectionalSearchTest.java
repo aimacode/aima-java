@@ -40,7 +40,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:NoOP:",
@@ -68,7 +68,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(A):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:NoOP:",
@@ -95,7 +95,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=2:NoOP:",
@@ -123,7 +123,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:NoOP:",
@@ -152,7 +152,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(D):B:C:D:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:NoOP:",
@@ -179,7 +179,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(B):B:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=2:NoOP:",
@@ -207,7 +207,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(C):B:C:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:NoOP:",
@@ -237,7 +237,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(E):B:C:D:E:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:NoOP:",
@@ -264,7 +264,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(B):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=3:NoOP:",
@@ -291,7 +291,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(C):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:NoOP:",
@@ -319,7 +319,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(E):NoOP:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=0:METRIC[nodesExpanded]=8:NoOP:",
@@ -351,7 +351,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(F):B:F:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=5:METRIC[queueSize]=5:METRIC[nodesExpanded]=6:NoOP:",
@@ -384,7 +384,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(F):B:C:D:E:F:METRIC[pathCost]=25.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=6:METRIC[nodesExpanded]=7:NoOP:",
@@ -420,7 +420,7 @@ public class BidirectionalSearchTest extends TestCase {
 				envChanges.append(command).append(":");
 			}
 		});
-		me.stepUntilNoOp();
+		me.stepUntilDone();
 
 		assertEquals(
 				"CurrentLocation=In(A), Goal=In(F):B:C:D:F:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=7:NoOP:",

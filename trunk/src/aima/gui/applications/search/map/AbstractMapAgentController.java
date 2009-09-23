@@ -70,13 +70,13 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 					.getAttribute(DynAttributeNames.AGENT_STATUS);
 			Double travelDistance = (Double) agent
 					.getAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE);
-			StringBuffer statusMsg = new StringBuffer("Task ");
+			StringBuffer statusMsg = new StringBuffer();
 			if (status != null)
-				statusMsg.append(status);
+				statusMsg.append("Agent status: " + status);
 			else
-				statusMsg.append("completed");
+				statusMsg.append("Task completed");
 			if (travelDistance != null)
-				statusMsg.append("; travel distance " + travelDistance);
+				statusMsg.append("; travel distance: " + travelDistance);
 			statusMsg.append(".");
 			frame.setStatus(statusMsg.toString());
 		}
