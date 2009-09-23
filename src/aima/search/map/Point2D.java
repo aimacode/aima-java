@@ -1,7 +1,7 @@
 package aima.search.map;
 
 /**
- * Simplified version of {@link java.awt.geom.Point}. We do not
+ * Simplified version of <code>java.awt.geom.Point2D</code>. We do not
  * want dependencies to presentation layer packages here.
  * @author R. Lunde
  */

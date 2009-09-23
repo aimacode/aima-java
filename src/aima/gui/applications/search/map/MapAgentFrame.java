@@ -15,7 +15,7 @@ import aima.search.map.Point2D;
  * Universal frame for experiments with route planning
  * agents. It configures the agent application frame with some selectors
  * and an agent view which is designed for cooperation with an
- * {@link AbstractMapAgentModel}. Since items for scenario, agent, destination,
+ * {@link MapAgentModel}. Since items for scenario, agent, destination,
  * agent, and heuristic selection are application specific, this general
  * implementation provides items only for search strategy and mode selection.
  * @author R. Lunde
@@ -52,9 +52,9 @@ public class MapAgentFrame extends AgentAppFrame {
 	// inner classes
 	
 	/**
-	 * Agent view for map and tour agent applications. This
+	 * Agent view for map agent applications. This
 	 * view requires the used model to be of type
-	 * {@link AbstractMapAgentModel}.
+	 * {@link MapAgentModel}.
 	 */
 	class MapAgentView extends AgentView {
 		

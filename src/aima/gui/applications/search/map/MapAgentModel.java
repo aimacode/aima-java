@@ -42,7 +42,7 @@ public class MapAgentModel extends AgentAppModel {
 	 * Reacts on environment changes and updates the tour history. The command
 	 * string is always send to all registered model change listeners. If the
 	 * command is a location name (with attached position info) or
-	 * {@link aima.basic.Agent#NO_OP} or {@link aima.basic.Agent#DONE}, the
+	 * {@link aima.basic.Agent#NO_OP}, the
 	 * agent's current location is added to the tour history and all listeners
 	 * are informed about the change.
 	 */
