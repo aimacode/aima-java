@@ -1,5 +1,6 @@
 package aima.gui.applications.search.map;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import aima.basic.Agent;
@@ -75,8 +76,10 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 				statusMsg.append("Agent status: " + status);
 			else
 				statusMsg.append("Task completed");
-			if (travelDistance != null)
-				statusMsg.append("; travel distance: " + travelDistance);
+			if (travelDistance != null) {
+				DecimalFormat f = new DecimalFormat("#0.0");
+				statusMsg.append("; travel distance: " + f.format(travelDistance));
+			}
 			statusMsg.append(".");
 			frame.setStatus(statusMsg.toString());
 		}
