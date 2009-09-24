@@ -20,7 +20,7 @@ import aima.search.map.SimplifiedRoadMapOfPartOfRomania;
  * Demo example of a route planning agent application with GUI. The main method
  * starts a map agent frame and supports runtime experiments. This
  * implementation is based on the {@link aima.search.map.MapAgent} and the
- * {@link aima.search.map.MapEnvironment} from the aima library. It can be used
+ * {@link aima.search.map.MapEnvironment}. It can be used
  * as a code template for creating new applications with different specialized
  * kinds of agents and environments.
  * 
