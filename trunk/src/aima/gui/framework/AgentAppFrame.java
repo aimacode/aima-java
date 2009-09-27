@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 /**
  * <p>
@@ -165,14 +166,32 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 			e.printStackTrace();
 		}
 	}
-
+	
 	/** Prints a log message on the text area. */
 	public void logMessage(String message) {
-		int start = textArea.getDocument().getLength();
-		textArea.append(message + "\n");
-		int end = textArea.getDocument().getLength();
-		textArea.setSelectionStart(start);
-		textArea.setSelectionEnd(end);
+		MessageLogger ml = new MessageLogger();
+		ml.message = message;
+		if (SwingUtilities.isEventDispatchThread()) {
+			ml.run();
+		} else {
+		    try {
+		    	SwingUtilities.invokeAndWait(ml);
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    }
+		}
+	}
+	
+	/** Helper class which makes logging thread save. */
+	private class MessageLogger implements Runnable {
+		String message;
+		public void run() {
+        	int start = textArea.getDocument().getLength();
+    		textArea.append(message + "\n");
+    		int end = textArea.getDocument().getLength();
+    		textArea.setSelectionStart(start);
+    		textArea.setSelectionEnd(end);
+        }
 	}
 
 	/** Assembles the inner structure of the frame. */

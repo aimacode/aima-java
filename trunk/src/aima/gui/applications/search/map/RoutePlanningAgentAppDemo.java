@@ -206,8 +206,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 		@Override
 		protected void startAgent() {
 			if (destinations.size() != 1) {
-				frame
-						.logMessage("Error: This agent requires exact one destination.");
+				frame.logMessage("Error: This agent requires exact one destination.");
 				return;
 			}
 			frame.logMessage("<route-planning-simulation-protocol>");
