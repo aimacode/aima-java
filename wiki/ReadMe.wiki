@@ -1,10 +1,28 @@
-#summary some notes
 #labels Featured
+AIMA JAVA Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
+
+#summary some notes
 
 = Introduction =
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
 
-Current release is 0.94:<br>
+Current release is 0.95:<br>
+This is our first release containing GUIs (thanks to Ruediger Lunde):<br>
+  - aima.gui.applications.VacuumAppDemo<br>
+    Provides a demo of the different agents described in Chapter 2 and 3
+    for tackling the Vacuum World.<br>
+  - aima.gui.applications.search.map.RoutePlanningAgentAppDemo<br>
+    Provides a demo of the different agents/search algorithms described 
+    in Chapters 3 and 4, for tackling route planning tasks within 
+    simplified Map environments.<br>
+  - aima.gui.framework.SimpleAgentAppDemo<br>
+    Provides a basic example of how to create your own Agent based 
+    demonstrations based on the provided framework.<br>
+<br>    
+This will also be our last full release based on the 2nd edition of AIMA. 
+We are currently in the planning phases to re-organize this project based on the 3rd edition of AIMA, which should be available soon.
+
+Previous release is 0.94:<br>
 This is a patch release for the FOL Logic and includes the following fixes:<br>
   - Fixed subtle defect in Model Elimination inference algorithm, which caused it to miss portions of the search space.<br>
   - Improved the performance of both theorem provers, in particular added support for forward and backward subsumption elimination, which improves significantly the performance and use of the OTTER Like theorem prover.<br>
@@ -15,7 +33,7 @@ It includes:<br>
   - a completion of the First Order Logic concepts from Chapter 9.<br>
   - the addition of the LRTA Agent from Chapter 4.<br>
 
-  Note: If running the unite tests be sure to include the vm arguments:
+  Note: If running the unit tests be sure to include the vm arguments:
   -Xms256m -Xmx1024m
   as some of the First Order Logic algorithms (i.e. FOLTFMResolution) are
   memory hungry.
@@ -28,37 +46,23 @@ It includes a rewrite of the neural network algorithms (in the earlier version t
 Heuristics are now doubles (vs ints in the old version).
 One minor change is that I've dropped the make file. Please use [http://ant.apache.org/ant  ant]
 
-==bug reports - acknowledgment ==
+==Bug Reports - acknowledgment ==
 
-The following people sent in excellent comments and bug reports. Thank you!!!!
-
-  * Carl Anderson, Senior Scientist, ArchimedesModel.com
- 
-  * Don Cochrane from (?) University
-
-  * Mike Angelotti  from Miami University
-
-  * Chad Carff ,University of Western Florida .  EXCELLENT test cases . thank you .
-
-  * Dr .Eman El-Sheikh, Ph.D.,University of Western Florida
-
-  * Ravindra Guravannavar, Aztec Software,Bangalore
-
-  * Cameron Jenkins,University Of New Orleans
-
-  * Nils Knoblauch (Project Manager, Camline) - winner of the No Prize for the best bug report ! Thanks!
-
-  * Phil Snowberger, Artificial Intelligence and Robotics Laboratory,University of Notre Dame
-
-
-
+The following people sent in excellent comments and bug reports. Thank you!!!!<br>
+  * Ali Tozan<br>
+  * Carl Anderson, Senior Scientist, ArchimedesModel.com<br>
+  * Don Cochrane from (?) University<br>
+  * Mike Angelotti  from Miami University<br>
+  * Chad Carff ,University of Western Florida .  EXCELLENT test cases . thank you.<br>
+  * Dr .Eman El-Sheikh, Ph.D.,University of Western Florida<br>
+  * Ravindra Guravannavar, Aztec Software,Bangalore<br>
+  * Cameron Jenkins,University Of New Orleans<br>
+  * Nils Knoblauch (Project Manager, Camline) - winner of the No Prize for the best bug report ! Thanks!<br>
+  * Phil Snowberger, Artificial Intelligence and Robotics Laboratory,University of Notre Dame<br>
 
 = Details =
 
-
-
 ==Build Instructions==
-
 If you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
 
 if you want  to rebuild from source, run the unit tests etc follow the instructions below.
@@ -76,7 +80,6 @@ To build from the command line,
  # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit 3.8.1 (note the version number)] on the classpath
  # type 'ant' 
 
-
 I have included the eclipse.classpath and .projectfiles for those who use [http://www.eclipse.org eclipse] .
 
 ==Code Navigation==
@@ -84,9 +87,7 @@ I have included the eclipse.classpath and .projectfiles for those who use [http:
  # If the Demo Files don't exist yet , look at the unit tests . they often cover much of how a particular feature works . 
  # If all else fails , write to me . Comprehensive documentation, both java doc and otherwise are in the pipeline , but will probably have to wait till I finish the code .
 
-
 ==Notes on Search==
-
 
 To solve a problem with (non CSP )Search .
    # you need to write four classes .
@@ -94,7 +95,6 @@ To solve a problem with (non CSP )Search .
 	 # a subclass of aima.search.framework.GoalTest.This implements only a single function ---boolean isGoalState(Object state); The parameter state is an instance of the class you created in  step 1-a above. For the NQueensProblem you would need to write something like aima.search.nqueens.NqueensBoardTest
 	 # a subclass of aima.search.framework.SuccessorFunction .This generates a stream of Successors where a Successor is an object that represents an (action, resultantState) pair. In this release of the code the action is  a String (something like "placeQueenAt4,4" and the resultant State is an instance of the class you create in step 1.a . An example is aima.search.nqueens.NQueensSuccessorFunction.
 	 # If you need to do an informed search, you should create a fourth class which subclasses aima.search.framework.HeuristicFunction. This implements a single function  int getHeuristicValue(Object state); keep in mind that the heuristic should DECREASE as the goal state comes nearer .  For the NQueens problem, you need to write something like aima.search.nqueens.QueensToBePlacedHeuristic.
-
 
 that is all you need to do (unless you plan to write a different search than is available in the code base ).
 
@@ -124,6 +124,7 @@ A good example (from the NQueens Demo ) is
 			      }
 	}
 }}}
+
 ==Search Inheritance Trees ==
 
 there are two inheritance trees in Search. one deals with "mechanism" of search.
@@ -146,8 +147,6 @@ The second tree deals with the search instances  you can use to solve a problem.
 
 etc
 
-
-
 So if you see a declaration like 
 "SimulatedAnnealingSearch extends NodeExpander implements Search" , do not be confused.
 	
@@ -160,8 +159,6 @@ Again, if you get confused, look at the demos.
 
 
 ==Logic Notes==
-
-
 The ONE thing you need to watch out for is that the Parsers are VERY finicky . If you get  a lexing or parsing error, there is a high probability there is an error in your logic string.
 
 To use First Order Logic, first you need to create a subclass of aima.logic.fol.FOLDomain which collects the constants, predicates, functions etc that you use to solve a particular problem.
@@ -179,8 +176,6 @@ Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have b
 ==LearningNotes==
 
 ===Main Classes and responsibilities===
-
-
 A <DataSet> is a collection of <Example>s .Wherever you see "examples" in plural in the text , the code uses a DataSet . This makes it easy to aggregate operations that work on collections of examples in one place.
 
 An Example is a collection of Attributes. Each example is a data point for Supervised Learning .
@@ -220,4 +215,4 @@ when you send in a bug report please include
      # what you actually saw.
 
  
-A bug report that says "there is some bug in Search" (I actually got a mail like this) is next to useless .
+A bug report that says "there is some bug in Search" (I actually got a mail like this) is next to useless.
