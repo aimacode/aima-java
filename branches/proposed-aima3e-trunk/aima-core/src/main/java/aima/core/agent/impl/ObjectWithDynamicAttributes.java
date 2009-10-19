@@ -1,0 +1,71 @@
+package aima.core.agent.impl;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ */
+public abstract class ObjectWithDynamicAttributes {
+	private Map<Object, Object> attributes = new LinkedHashMap<Object, Object>();
+	
+	//
+	// PUBLIC METHODS
+	//
+	public abstract String getName();
+	
+	public Set<Object> getKeySet() {
+		return Collections.unmodifiableSet(attributes.keySet());
+	}
+	
+	public void setAttribute(Object key, Object value) {
+		attributes.put(key, value);
+	}
+
+	public Object getAttribute(Object key) {
+		return attributes.get(key);
+	}
+
+	public void removeAttribute(Object key) {
+		attributes.remove(key);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return super.equals(o);
+		}
+		return attributes.equals(((ObjectWithDynamicAttributes)o).attributes);
+	}
+
+	@Override
+	public int hashCode() {
+		return attributes.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(getName());
+		sb.append("[");
+		boolean first = true;
+		for (Object key : attributes.keySet()) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(", ");
+			}
+
+			sb.append(key);
+			sb.append("==");
+			sb.append(attributes.get(key));
+		}
+		sb.append("]");
+
+		return sb.toString();
+	}
+}
