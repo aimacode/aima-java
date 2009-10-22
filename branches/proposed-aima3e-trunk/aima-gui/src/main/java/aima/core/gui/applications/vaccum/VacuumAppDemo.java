@@ -1,4 +1,4 @@
-package aima.core.gui.applications;
+package aima.core.gui.applications.vaccum;
 
 import java.awt.Color;
 import java.util.ArrayList;
