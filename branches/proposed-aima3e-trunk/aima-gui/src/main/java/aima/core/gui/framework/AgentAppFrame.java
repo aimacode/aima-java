@@ -3,6 +3,8 @@ package aima.core.gui.framework;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,9 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -230,8 +234,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		agentView = new AbstractAgentView() {
 			@Override
 			public void updateView(AgentAppModel model) {
-			} // dummy
-			// implementation
+			} // dummy implementation
 		};
 		JScrollPane scrollGPane = new JScrollPane(agentView);
 		centerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -264,8 +267,23 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		cancelButton.setBorder(new javax.swing.border.EtchedBorder());
 		statusPanel.add(cancelButton, BorderLayout.EAST);
 		getContentPane().add(statusPanel, BorderLayout.SOUTH);
+		createPopups();
 	}
 
+	/** Responsible for creating all popup menus. */
+	protected void createPopups() {
+		JPopupMenu popup = new JPopupMenu();
+	    JMenuItem menuItem = new JMenuItem("Clear");
+	    menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				textArea.setText("");
+			}
+	    });
+	    popup.add(menuItem);
+	    textArea.addMouseListener(new PopupShower(popup));
+	}
+	
 	/** Enables/disables all combos and buttons. */
 	private void setButtonsEnabled(boolean b) {
 		clearButton.setEnabled(b);
@@ -497,6 +515,31 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		public abstract void runAgent();
 	}
 
+	/**
+	 * Useful helper class for showing popup menus. The
+	 * idea is taken from the java tutorial "How to Use Menus".
+	 * @author R. Lunde
+	 */
+	public static class PopupShower extends MouseAdapter {
+		JPopupMenu popup;
+
+		public PopupShower(JPopupMenu popup) {
+			this.popup = popup;
+		}
+	    public void mousePressed(MouseEvent e) {
+	        maybeShowPopup(e);
+	    }
+	    public void mouseReleased(MouseEvent e) {
+	        maybeShowPopup(e);
+	    }
+	    private void maybeShowPopup(MouseEvent e) {
+	        if (e.isPopupTrigger()) {
+	            popup.show(e.getComponent(), e.getX(), e.getY());
+	        }
+	    }
+	}
+	
+	
 	// ///////////////////////////////////////////////////////////////
 	// for testing...
 
