@@ -1,24 +1,24 @@
-package aima.test.core.unit.agent.impl.vaccum;
+package aima.test.core.unit.agent.impl.vacuum;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.impl.vaccum.TableDrivenVaccumAgent;
-import aima.core.agent.impl.vaccum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.SimpleReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.VaccumEnvironment;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-public class TableDrivenVaccumAgentTest {
-	private TableDrivenVaccumAgent agent;
+public class SimpleReflexVaccumAgentTest {
+	private SimpleReflexVaccumAgent agent;
 
 	private StringBuilder envChanges;
 
 	@Before
 	public void setUp() {
-		agent = new TableDrivenVaccumAgent();
+		agent = new SimpleReflexVaccumAgent();
 		envChanges = new StringBuilder();
 	}
 
@@ -31,9 +31,10 @@ public class TableDrivenVaccumAgentTest {
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
-		tve.stepUntilDone();
+		tve.step(8);
 
-		Assert.assertEquals("Action[name==Right]Action[name==Left]Action[name==Right]Action[name==NoOp]", envChanges.toString());
+		Assert.assertEquals("Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]", envChanges
+				.toString());
 	}
 
 	@Test
@@ -45,9 +46,10 @@ public class TableDrivenVaccumAgentTest {
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
-		tve.stepUntilDone();
+		tve.step(8);
 
-		Assert.assertEquals("Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==NoOp]", envChanges.toString());
+		Assert.assertEquals("Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]", envChanges
+				.toString());
 	}
 
 	@Test
@@ -59,9 +61,10 @@ public class TableDrivenVaccumAgentTest {
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
-		tve.stepUntilDone();
+		tve.step(8);
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==NoOp]", envChanges.toString());
+		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]", envChanges
+				.toString());
 	}
 
 	@Test
@@ -73,8 +76,9 @@ public class TableDrivenVaccumAgentTest {
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
-		tve.stepUntilDone();
+		tve.step(8);
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==NoOp]", envChanges.toString());
+		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]", envChanges
+				.toString());
 	}
 }

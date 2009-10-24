@@ -1,29 +1,29 @@
-package aima.test.core.unit.agent.impl.vaccum;
+package aima.test.core.unit.agent.impl.vacuum;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.impl.vaccum.SimpleReflexVaccumAgent;
-import aima.core.agent.impl.vaccum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.ReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.VaccumEnvironment;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-public class SimpleReflexVaccumAgentTest {
-	private SimpleReflexVaccumAgent agent;
+public class ReflexVaccumAgentTest {
+	private ReflexVaccumAgent agent;
 
 	private StringBuilder envChanges;
 
 	@Before
 	public void setUp() {
-		agent = new SimpleReflexVaccumAgent();
+		agent = new ReflexVaccumAgent();
 		envChanges = new StringBuilder();
 	}
 
 	@Test
-	public void testCleanClean() {
+	public void testCleanClean() {		
 		VaccumEnvironment tve = new VaccumEnvironment(
 				VaccumEnvironment.LocationState.Clean,
 				VaccumEnvironment.LocationState.Clean);
@@ -38,7 +38,7 @@ public class SimpleReflexVaccumAgentTest {
 	}
 
 	@Test
-	public void testCleanDirty() {
+	public void testCleanDirty() {		
 		VaccumEnvironment tve = new VaccumEnvironment(
 				VaccumEnvironment.LocationState.Clean,
 				VaccumEnvironment.LocationState.Dirty);
@@ -68,7 +68,7 @@ public class SimpleReflexVaccumAgentTest {
 	}
 
 	@Test
-	public void testDirtyDirty() {
+	public void testDirtyDirty() {	
 		VaccumEnvironment tve = new VaccumEnvironment(
 				VaccumEnvironment.LocationState.Dirty,
 				VaccumEnvironment.LocationState.Dirty);

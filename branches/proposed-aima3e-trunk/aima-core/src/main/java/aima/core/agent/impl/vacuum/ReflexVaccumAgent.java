@@ -1,4 +1,4 @@
-package aima.core.agent.impl.vaccum;
+package aima.core.agent.impl.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;

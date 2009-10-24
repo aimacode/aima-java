@@ -1,11 +1,11 @@
-package aima.test.core.unit.agent.impl.vaccum;
+package aima.test.core.unit.agent.impl.vacuum;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.impl.vaccum.ModelBasedReflexVaccumAgent;
-import aima.core.agent.impl.vaccum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.ModelBasedReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.VaccumEnvironment;
 
 /**
  * @author Ravi Mohan

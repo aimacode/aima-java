@@ -7,11 +7,11 @@ import aima.test.core.unit.agent.impl.DynamicPerceptTest;
 import aima.test.core.unit.agent.impl.PerceptSequenceTest;
 import aima.test.core.unit.agent.impl.aprog.TableDrivenAgentProgramTest;
 import aima.test.core.unit.agent.impl.aprog.simplerule.RuleTest;
-import aima.test.core.unit.agent.impl.vaccum.ModelBasedReflexVaccumAgentTest;
-import aima.test.core.unit.agent.impl.vaccum.ReflexVaccumAgentTest;
-import aima.test.core.unit.agent.impl.vaccum.SimpleReflexVaccumAgentTest;
-import aima.test.core.unit.agent.impl.vaccum.TableDrivenVaccumAgentTest;
-import aima.test.core.unit.agent.impl.vaccum.VaccumEnvironmentTest;
+import aima.test.core.unit.agent.impl.vacuum.ModelBasedReflexVaccumAgentTest;
+import aima.test.core.unit.agent.impl.vacuum.ReflexVaccumAgentTest;
+import aima.test.core.unit.agent.impl.vacuum.SimpleReflexVaccumAgentTest;
+import aima.test.core.unit.agent.impl.vacuum.TableDrivenVaccumAgentTest;
+import aima.test.core.unit.agent.impl.vacuum.VaccumEnvironmentTest;
 import aima.test.core.unit.agent.impl.xyenv.XYEnvironmentTest;
 
 @RunWith(Suite.class)

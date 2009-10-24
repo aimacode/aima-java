@@ -1,4 +1,4 @@
-package aima.core.agent.impl.vaccum;
+package aima.core.agent.impl.vacuum;
 
 import java.util.ArrayList;
 import java.util.HashMap;

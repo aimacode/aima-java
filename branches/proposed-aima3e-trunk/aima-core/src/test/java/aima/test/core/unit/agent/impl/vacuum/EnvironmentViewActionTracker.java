@@ -1,4 +1,4 @@
-package aima.test.core.unit.agent.impl.vaccum;
+package aima.test.core.unit.agent.impl.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.EnvironmentState;

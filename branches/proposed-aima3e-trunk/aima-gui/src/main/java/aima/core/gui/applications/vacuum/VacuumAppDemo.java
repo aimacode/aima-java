@@ -1,4 +1,4 @@
-package aima.core.gui.applications.vaccum;
+package aima.core.gui.applications.vacuum;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.vaccum.ReflexVaccumAgent;
-import aima.core.agent.impl.vaccum.ModelBasedReflexVaccumAgent;
-import aima.core.agent.impl.vaccum.SimpleReflexVaccumAgent;
-import aima.core.agent.impl.vaccum.TableDrivenVaccumAgent;
-import aima.core.agent.impl.vaccum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.ModelBasedReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.ReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.SimpleReflexVaccumAgent;
+import aima.core.agent.impl.vacuum.TableDrivenVaccumAgent;
+import aima.core.agent.impl.vacuum.VaccumEnvironment;
 import aima.core.gui.framework.AgentAppController;
 import aima.core.gui.framework.AgentAppFrame;
 import aima.core.gui.framework.AgentAppModel;
