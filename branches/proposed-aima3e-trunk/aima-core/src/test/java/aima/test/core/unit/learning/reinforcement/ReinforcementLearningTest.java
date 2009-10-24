@@ -131,10 +131,8 @@ public class ReinforcementLearningTest {
 				0.001);
 	}
 
-	@Ignore
-	// TODO - Why?
 	@Test
-	public void xtestQLearningAgent() {
+	public void testQLearningAgent() {
 		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent(
 				fourByThree);
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.9, 0.2, 0.8,
@@ -150,8 +148,8 @@ public class ReinforcementLearningTest {
 
 		}
 		// qTable.normalize();
-		System.out.println(qTable);
-		System.out.println(qTable.getPolicy());
+		//System.out.println(qTable);
+		//System.out.println(qTable.getPolicy());
 	}
 
 	@Test

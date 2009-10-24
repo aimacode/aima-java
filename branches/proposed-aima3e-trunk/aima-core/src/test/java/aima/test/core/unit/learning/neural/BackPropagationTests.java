@@ -1,7 +1,6 @@
 package aima.test.core.unit.learning.neural;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.learning.framework.DataSet;
@@ -69,10 +68,8 @@ public class BackPropagationTests {
 		Assert.assertEquals(0.7322, outputLayerBias.getValue(0), 0.001);
 	}
 
-	@Ignore
-	// TODO - Why?
 	@Test
-	public void xtestFeedForwardAndBAckLoopWorksWithMomentum() {
+	public void testFeedForwardAndBAckLoopWorksWithMomentum() {
 		// example 11.14 of Neural Network Design by Hagan, Demuth and Beale
 		Matrix hiddenLayerWeightMatrix = new Matrix(2, 1);
 		hiddenLayerWeightMatrix.set(0, 0, -0.27);
@@ -122,10 +119,8 @@ public class BackPropagationTests {
 		Assert.assertEquals(0.6061, outputLayerBias.getValue(0), 0.001);
 	}
 
-	@Ignore
-	// TODO - Why?
 	@Test
-	public void xtestDataSetPopulation() throws Exception {
+	public void testDataSetPopulation() throws Exception {
 		DataSet irisDataSet = DataSetFactory.getIrisDataSet();
 		Numerizer numerizer = new IrisDataSetNumerizer();
 		NNDataSet innds = new IrisNNDataSet();

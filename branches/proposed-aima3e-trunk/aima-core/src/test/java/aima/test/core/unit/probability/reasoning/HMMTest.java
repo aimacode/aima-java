@@ -135,8 +135,6 @@ public class HMMTest {
 				.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 	}
 
-	@Ignore
-	// test disabled pending algorithm clarification
 	@Test
 	public void testForwardBackwardAndFixedLagSmoothingGiveSameResults() {
 		List<String> perceptions = new ArrayList<String>();
@@ -154,14 +152,14 @@ public class HMMTest {
 		Assert.assertEquals(4, fbResults.size());
 
 		RandomVariable fbDayOneResult = fbResults.get(1);
-		System.out.println(fbDayOneResult);
+		//System.out.println(fbDayOneResult);
 
 		FixedLagSmoothing fls = new FixedLagSmoothing(rainmanHmm, 2);
 
 		Assert.assertNull(fls.smooth(dayOnePerception));
-		System.out.println(fls.smooth(dayTwoPerception));
+		//System.out.println(fls.smooth(dayTwoPerception));
 		RandomVariable flsDayoneResult = fls.smooth(dayThreePerception);
-		System.out.println(flsDayoneResult);
+		//System.out.println(flsDayoneResult);
 	}
 
 	@Test
