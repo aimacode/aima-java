@@ -4,30 +4,30 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.impl.vacuum.TableDrivenVaccumAgent;
-import aima.core.agent.impl.vacuum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.TableDrivenVacuumAgent;
+import aima.core.agent.impl.vacuum.VacuumEnvironment;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-public class TableDrivenVaccumAgentTest {
-	private TableDrivenVaccumAgent agent;
+public class TableDrivenVacuumAgentTest {
+	private TableDrivenVacuumAgent agent;
 
 	private StringBuilder envChanges;
 
 	@Before
 	public void setUp() {
-		agent = new TableDrivenVaccumAgent();
+		agent = new TableDrivenVacuumAgent();
 		envChanges = new StringBuilder();
 	}
 
 	@Test
 	public void testCleanClean() {
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Clean,
-				VaccumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Clean,
+				VacuumEnvironment.LocationState.Clean);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -38,10 +38,10 @@ public class TableDrivenVaccumAgentTest {
 
 	@Test
 	public void testCleanDirty() {
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Clean,
-				VaccumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Clean,
+				VacuumEnvironment.LocationState.Dirty);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -52,10 +52,10 @@ public class TableDrivenVaccumAgentTest {
 
 	@Test
 	public void testDirtyClean() {
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Dirty,
-				VaccumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Dirty,
+				VacuumEnvironment.LocationState.Clean);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -66,10 +66,10 @@ public class TableDrivenVaccumAgentTest {
 
 	@Test
 	public void testDirtyDirty() {
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Dirty,
-				VaccumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Dirty,
+				VacuumEnvironment.LocationState.Dirty);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 

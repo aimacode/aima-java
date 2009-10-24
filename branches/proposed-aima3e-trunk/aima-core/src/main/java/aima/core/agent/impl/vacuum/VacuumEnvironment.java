@@ -13,7 +13,7 @@ import aima.core.agent.impl.DynamicAction;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class VaccumEnvironment extends AbstractEnvironment {
+public class VacuumEnvironment extends AbstractEnvironment {
 	// Allowable Actions within the Vaccum Environment
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
@@ -29,18 +29,18 @@ public class VaccumEnvironment extends AbstractEnvironment {
 	};
 
 	//
-	private VaccumEnvironmentState envState = null;
+	private VacuumEnvironmentState envState = null;
 	private boolean isDone = false; 
 
-	public VaccumEnvironment() {
+	public VacuumEnvironment() {
 		Random r = new Random();
-		envState = new VaccumEnvironmentState(
+		envState = new VacuumEnvironmentState(
 				0 == r.nextInt(2) ? LocationState.Clean : LocationState.Dirty,
 				0 == r.nextInt(2) ? LocationState.Clean : LocationState.Dirty);
 	}
 
-	public VaccumEnvironment(LocationState locAState, LocationState locBState) {
-		envState = new VaccumEnvironmentState(locAState, locBState);
+	public VacuumEnvironment(LocationState locAState, LocationState locBState) {
+		envState = new VacuumEnvironmentState(locAState, locBState);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class VaccumEnvironment extends AbstractEnvironment {
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		Location agentLocation = envState.getAgentLocation(anAgent);
-		return new VaccumEnvPercept(agentLocation, envState.getLocationState(agentLocation));
+		return new VacuumEnvPercept(agentLocation, envState.getLocationState(agentLocation));
 	}
 	
 	@Override

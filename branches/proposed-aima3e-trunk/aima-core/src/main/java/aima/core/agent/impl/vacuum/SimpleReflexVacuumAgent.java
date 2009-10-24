@@ -12,9 +12,9 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * @author Ciaran O'Reilly
  * 
  */
-public class SimpleReflexVaccumAgent extends AbstractAgent {
+public class SimpleReflexVacuumAgent extends AbstractAgent {
 
-	public SimpleReflexVaccumAgent() {
+	public SimpleReflexVacuumAgent() {
 		super(new SimpleReflexAgentProgram(getRuleSet()));
 	}
 
@@ -30,17 +30,17 @@ public class SimpleReflexVaccumAgent extends AbstractAgent {
 		// Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.8,
 		// page 46.
 
-		rules.add(new Rule(new EQUALCondition(VaccumEnvPercept.ATTRIBUTE_STATE,
-				VaccumEnvironment.LocationState.Dirty),
-				VaccumEnvironment.ACTION_SUCK));
+		rules.add(new Rule(new EQUALCondition(VacuumEnvPercept.ATTRIBUTE_STATE,
+				VacuumEnvironment.LocationState.Dirty),
+				VacuumEnvironment.ACTION_SUCK));
 		rules.add(new Rule(new EQUALCondition(
-				VaccumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
-				VaccumEnvironment.Location.A),
-				VaccumEnvironment.ACTION_MOVE_RIGHT));
+				VacuumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
+				VacuumEnvironment.Location.A),
+				VacuumEnvironment.ACTION_MOVE_RIGHT));
 		rules.add(new Rule(new EQUALCondition(
-				VaccumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
-				VaccumEnvironment.Location.B),
-				VaccumEnvironment.ACTION_MOVE_LEFT));
+				VacuumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
+				VacuumEnvironment.Location.B),
+				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;
 	}

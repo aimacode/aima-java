@@ -2,25 +2,25 @@ package aima.core.agent.impl.vacuum;
 
 import aima.core.agent.impl.DynamicPercept;
 
-public class VaccumEnvPercept extends DynamicPercept {
+public class VacuumEnvPercept extends DynamicPercept {
 	public static final String ATTRIBUTE_AGENT_LOCATION = "agentLocation";
 	public static final String ATTRIBUTE_STATE          = "state";
 	
-	private VaccumEnvironment.Location agentLocation; 
-	private VaccumEnvironment.LocationState state;
+	private VacuumEnvironment.Location agentLocation; 
+	private VacuumEnvironment.LocationState state;
 	
-	public VaccumEnvPercept(VaccumEnvironment.Location agentLocation, VaccumEnvironment.LocationState state) {
+	public VacuumEnvPercept(VacuumEnvironment.Location agentLocation, VacuumEnvironment.LocationState state) {
 		this.agentLocation = agentLocation;
 		this.state = state;
 		setAttribute(ATTRIBUTE_AGENT_LOCATION, agentLocation);
 		setAttribute(ATTRIBUTE_STATE, state);
 	}
 	
-	public VaccumEnvironment.Location getAgentLocation() {
+	public VacuumEnvironment.Location getAgentLocation() {
 		return agentLocation;
 	}
 	
-	public VaccumEnvironment.LocationState getLocationState() {
+	public VacuumEnvironment.LocationState getLocationState() {
 		return state;
 	}
 	

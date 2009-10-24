@@ -6,11 +6,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.vacuum.ModelBasedReflexVaccumAgent;
-import aima.core.agent.impl.vacuum.ReflexVaccumAgent;
-import aima.core.agent.impl.vacuum.SimpleReflexVaccumAgent;
-import aima.core.agent.impl.vacuum.TableDrivenVaccumAgent;
-import aima.core.agent.impl.vacuum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.ModelBasedReflexVacuumAgent;
+import aima.core.agent.impl.vacuum.ReflexVacuumAgent;
+import aima.core.agent.impl.vacuum.SimpleReflexVacuumAgent;
+import aima.core.agent.impl.vacuum.TableDrivenVacuumAgent;
+import aima.core.agent.impl.vacuum.VacuumEnvironment;
 import aima.core.gui.framework.AgentAppController;
 import aima.core.gui.framework.AgentAppFrame;
 import aima.core.gui.framework.AgentAppModel;
@@ -52,14 +52,14 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 	 * locations.
 	 */
 	protected static class VacuumModel extends AgentAppModel {
-		private VaccumEnvironment env;
+		private VacuumEnvironment env;
 		private AbstractAgent agent;
 
-		public void setEnv(VaccumEnvironment env) {
+		public void setEnv(VacuumEnvironment env) {
 			this.env = env;
 		}
 
-		public VaccumEnvironment getEnv() {
+		public VacuumEnvironment getEnv() {
 			return env;
 		}
 
@@ -72,22 +72,22 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 		}
 
 		/** Returns the names of all locations used. */
-		public List<VaccumEnvironment.Location> getLocations() {
-			List<VaccumEnvironment.Location> result = new ArrayList<VaccumEnvironment.Location>();
+		public List<VacuumEnvironment.Location> getLocations() {
+			List<VacuumEnvironment.Location> result = new ArrayList<VacuumEnvironment.Location>();
 			if (env != null) {
-				result.add(VaccumEnvironment.Location.A);
-				result.add(VaccumEnvironment.Location.B);
+				result.add(VacuumEnvironment.Location.A);
+				result.add(VacuumEnvironment.Location.B);
 			}
 			return result;
 		}
 
 		/** Checks whether the specified location is dirty. */
-		public boolean isDirty(VaccumEnvironment.Location location) {
-			return VaccumEnvironment.LocationState.Dirty == env.getLocationState(location);
+		public boolean isDirty(VacuumEnvironment.Location location) {
+			return VacuumEnvironment.LocationState.Dirty == env.getLocationState(location);
 		}
 
 		/** Checks whether the agent is currently at the specified location. */
-		public boolean hasAgent(VaccumEnvironment.Location location) {
+		public boolean hasAgent(VacuumEnvironment.Location location) {
 			return agent != null
 					&& location.equals(env.getAgentLocation(agent));
 		}
@@ -122,9 +122,9 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 	 * panel using 2D-graphics.
 	 */
 	protected static class VacuumView extends AgentView {
-		Hashtable<VaccumEnvironment.Location, int[]> dirtLookup = new Hashtable<VaccumEnvironment.Location, int[]>();
+		Hashtable<VacuumEnvironment.Location, int[]> dirtLookup = new Hashtable<VacuumEnvironment.Location, int[]>();
 
-		int[] getDirt(VaccumEnvironment.Location location) {
+		int[] getDirt(VacuumEnvironment.Location location) {
 			int[] coords = dirtLookup.get(location);
 			if (coords == null) {
 				java.util.Random rand = new java.util.Random();
@@ -147,13 +147,13 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 		@Override
 		public void paint(java.awt.Graphics g) {
 			VacuumModel vmodel = (VacuumModel) model;
-			List<VaccumEnvironment.Location> locations = vmodel.getLocations();
+			List<VacuumEnvironment.Location> locations = vmodel.getLocations();
 			this.adjustTransformation(0, 0, 11 * locations.size() - 1, 10);
 			java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 			g2.setColor(Color.white);
 			g2.fillRect(0, 0, getWidth(), getHeight());
 			for (int i = 0; i < locations.size(); i++) {
-				VaccumEnvironment.Location location = locations.get(i);
+				VacuumEnvironment.Location location = locations.get(i);
 				g2.setColor(Color.black);
 				g2.drawRect(x(11 * i), y(0), scale(10), scale(10));
 				if (vmodel.isDirty(location)) {
@@ -190,31 +190,31 @@ public class VacuumAppDemo extends SimpleAgentAppDemo {
 		@Override
 		public void prepareAgent() {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
-			VaccumEnvironment env = null;
+			VacuumEnvironment env = null;
 			AbstractAgent agent = null;
 			switch (selState.getValue(VacuumFrame.ENV_SEL)) {
 			case 0:
-				env = new VaccumEnvironment();
+				env = new VacuumEnvironment();
 				break;
 			}
 			switch (selState.getValue(VacuumFrame.AGENT_SEL)) {
 			case 0:
-				agent = new TableDrivenVaccumAgent();
+				agent = new TableDrivenVacuumAgent();
 				break;
 			case 1:
-				agent = new ReflexVaccumAgent();
+				agent = new ReflexVacuumAgent();
 				break;
 			case 2:
-				agent = new SimpleReflexVaccumAgent();
+				agent = new SimpleReflexVacuumAgent();
 				break;
 			case 3:
-				agent = new ModelBasedReflexVaccumAgent();
+				agent = new ModelBasedReflexVacuumAgent();
 				break;
 			}
 			((VacuumModel) model).setEnv(env);
 			((VacuumModel) model).setAgent(agent);
 			if (env != null && agent != null) {
-				env.addAgent(agent, VaccumEnvironment.Location.A);
+				env.addAgent(agent, VacuumEnvironment.Location.A);
 				env.addEnvironmentView(model);
 				frame.modelChanged();
 			}

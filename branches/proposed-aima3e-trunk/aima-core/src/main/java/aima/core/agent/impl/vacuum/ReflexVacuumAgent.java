@@ -23,24 +23,24 @@ import aima.core.agent.impl.NoOpAction;
  * @author Ciaran O'Reilly
  * 
  */
-public class ReflexVaccumAgent extends AbstractAgent {
+public class ReflexVacuumAgent extends AbstractAgent {
 
-	public ReflexVaccumAgent() {
+	public ReflexVacuumAgent() {
 		super(new AgentProgram() {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an
 			// action
 			public Action execute(Percept percept) {
-				VaccumEnvPercept vep = (VaccumEnvPercept) percept;
+				VacuumEnvPercept vep = (VacuumEnvPercept) percept;
 				
 				// if status = Dirty then return Suck
-				if (VaccumEnvironment.LocationState.Dirty == vep.getLocationState()) {
-					return VaccumEnvironment.ACTION_SUCK;
+				if (VacuumEnvironment.LocationState.Dirty == vep.getLocationState()) {
+					return VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (VaccumEnvironment.Location.A == vep.getAgentLocation()) {
-					return VaccumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (VaccumEnvironment.Location.B == vep.getAgentLocation()) {
+				} else if (VacuumEnvironment.Location.A == vep.getAgentLocation()) {
+					return VacuumEnvironment.ACTION_MOVE_RIGHT;
+				} else if (VacuumEnvironment.Location.B == vep.getAgentLocation()) {
 					// else if location = B then return Left
-					return VaccumEnvironment.ACTION_MOVE_LEFT;
+					return VacuumEnvironment.ACTION_MOVE_LEFT;
 				}
 
 				// Note: This should not be returned if the

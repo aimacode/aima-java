@@ -4,30 +4,30 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.impl.vacuum.ReflexVaccumAgent;
-import aima.core.agent.impl.vacuum.VaccumEnvironment;
+import aima.core.agent.impl.vacuum.SimpleReflexVacuumAgent;
+import aima.core.agent.impl.vacuum.VacuumEnvironment;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-public class ReflexVaccumAgentTest {
-	private ReflexVaccumAgent agent;
+public class SimpleReflexVacuumAgentTest {
+	private SimpleReflexVacuumAgent agent;
 
 	private StringBuilder envChanges;
 
 	@Before
 	public void setUp() {
-		agent = new ReflexVaccumAgent();
+		agent = new SimpleReflexVacuumAgent();
 		envChanges = new StringBuilder();
 	}
 
 	@Test
-	public void testCleanClean() {		
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Clean,
-				VaccumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+	public void testCleanClean() {
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Clean,
+				VacuumEnvironment.LocationState.Clean);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -38,11 +38,11 @@ public class ReflexVaccumAgentTest {
 	}
 
 	@Test
-	public void testCleanDirty() {		
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Clean,
-				VaccumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+	public void testCleanDirty() {
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Clean,
+				VacuumEnvironment.LocationState.Dirty);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -54,10 +54,10 @@ public class ReflexVaccumAgentTest {
 
 	@Test
 	public void testDirtyClean() {
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Dirty,
-				VaccumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Dirty,
+				VacuumEnvironment.LocationState.Clean);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -68,11 +68,11 @@ public class ReflexVaccumAgentTest {
 	}
 
 	@Test
-	public void testDirtyDirty() {	
-		VaccumEnvironment tve = new VaccumEnvironment(
-				VaccumEnvironment.LocationState.Dirty,
-				VaccumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VaccumEnvironment.Location.A);
+	public void testDirtyDirty() {
+		VacuumEnvironment tve = new VacuumEnvironment(
+				VacuumEnvironment.LocationState.Dirty,
+				VacuumEnvironment.LocationState.Dirty);
+		tve.addAgent(agent, VacuumEnvironment.Location.A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 

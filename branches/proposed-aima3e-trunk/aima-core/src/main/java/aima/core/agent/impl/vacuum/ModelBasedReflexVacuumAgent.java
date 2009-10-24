@@ -17,14 +17,14 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * @author Ciaran O'Reilly
  * 
  */
-public class ModelBasedReflexVaccumAgent extends AbstractAgent {
+public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 
 	private static final String ATTRIBUTE_CURRENT_LOCATION = "currentLocation";
 	private static final String ATTRIBUTE_CURRENT_STATE = "currentState";
 	private static final String ATTRIBUTE_STATE_LOCATION_A = "stateLocationA";
 	private static final String ATTRIBUTE_STATE_LOCATION_B = "stateLocationB";
 
-	public ModelBasedReflexVaccumAgent() {
+	public ModelBasedReflexVacuumAgent() {
 		super(new ModelBasedReflexAgentProgram() {
 			@Override
 			protected void init() {
@@ -35,14 +35,14 @@ public class ModelBasedReflexVaccumAgent extends AbstractAgent {
 			protected DynamicModel updateState(DynamicModel envState,
 					Action anAction, Percept percept) {
 
-				VaccumEnvPercept vep = (VaccumEnvPercept) percept;
+				VacuumEnvPercept vep = (VacuumEnvPercept) percept;
 
 				envState.setAttribute(ATTRIBUTE_CURRENT_LOCATION, vep
 						.getAgentLocation());
 				envState.setAttribute(ATTRIBUTE_CURRENT_STATE, vep
 						.getLocationState());
 				// Keep track of the state of the different locations
-				if (VaccumEnvironment.Location.A == vep.getAgentLocation()) {
+				if (VacuumEnvironment.Location.A == vep.getAgentLocation()) {
 					envState.setAttribute(ATTRIBUTE_STATE_LOCATION_A, vep
 							.getLocationState());
 				} else {
@@ -64,18 +64,18 @@ public class ModelBasedReflexVaccumAgent extends AbstractAgent {
 
 		rules.add(new Rule(new ANDCondition(new EQUALCondition(
 				ATTRIBUTE_STATE_LOCATION_A,
-				VaccumEnvironment.LocationState.Clean), new EQUALCondition(
+				VacuumEnvironment.LocationState.Clean), new EQUALCondition(
 				ATTRIBUTE_STATE_LOCATION_B,
-				VaccumEnvironment.LocationState.Clean)), NoOpAction.NO_OP));
+				VacuumEnvironment.LocationState.Clean)), NoOpAction.NO_OP));
 		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_STATE,
-				VaccumEnvironment.LocationState.Dirty),
-				VaccumEnvironment.ACTION_SUCK));
+				VacuumEnvironment.LocationState.Dirty),
+				VacuumEnvironment.ACTION_SUCK));
 		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
-				VaccumEnvironment.Location.A),
-				VaccumEnvironment.ACTION_MOVE_RIGHT));
+				VacuumEnvironment.Location.A),
+				VacuumEnvironment.ACTION_MOVE_RIGHT));
 		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
-				VaccumEnvironment.Location.B),
-				VaccumEnvironment.ACTION_MOVE_LEFT));
+				VacuumEnvironment.Location.B),
+				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;
 	}
