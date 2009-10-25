@@ -1,6 +1,11 @@
 package aima.core.util.datastructure;
 
 /**
+ * Note: If looking at a rectangle - the coordinate (x=0, y=0) will be the top left hand corner.
+ * This corresponds with Java's AWT coordinate system.
+ */
+
+/**
  * @author Ravi Mohan
  * 
  */
@@ -9,9 +14,9 @@ public class XYLocation {
 	
 	int xCoOrdinate, yCoOrdinate;
 
-	public XYLocation(int i, int j) {
-		xCoOrdinate = i;
-		yCoOrdinate = j;
+	public XYLocation(int x, int y) {
+		xCoOrdinate = x;
+		yCoOrdinate = y;
 	}
 
 	public int getXCoOrdinate() {

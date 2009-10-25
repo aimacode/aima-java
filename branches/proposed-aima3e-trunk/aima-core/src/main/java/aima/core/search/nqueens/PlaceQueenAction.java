@@ -3,25 +3,25 @@ package aima.core.search.nqueens;
 import aima.core.agent.impl.DynamicAction;
 
 public class PlaceQueenAction extends DynamicAction {
-	public static final String ATTRIBUTE_QUEEN_ROW = "row";
-	public static final String ATTRIBUTE_QUEEN_COL = "col";
+	public static final String ATTRIBUTE_QUEEN_X = "x";
+	public static final String ATTRIBUTE_QUEEN_Y = "y";
 	
-	private int row = 0;
-	private int col = 0;
+	private int x = 0;
+    private int y = 0;
 	
-	public PlaceQueenAction(int row, int col) {
+	public PlaceQueenAction(int x, int y) {
 		super("placeQueenAt");
-		this.row = row;
-		this.col = col;
-		setAttribute(ATTRIBUTE_QUEEN_ROW, row);
-		setAttribute(ATTRIBUTE_QUEEN_COL, col);
+		this.x = x;
+		this.y = y;
+		setAttribute(ATTRIBUTE_QUEEN_X, x);
+		setAttribute(ATTRIBUTE_QUEEN_Y, y);
 	}
 	
-	public int getRow() {
-		return row;
+	public int getX() {
+		return x;
 	}
 	
-	public int getCol() {
-		return col;
+	public int getY() {
+		return y;
 	}
 }

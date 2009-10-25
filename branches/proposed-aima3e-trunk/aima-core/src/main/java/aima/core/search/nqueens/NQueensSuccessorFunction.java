@@ -28,13 +28,13 @@ public class NQueensSuccessorFunction implements SuccessorFunction {
 		return successors;
 	}
 
-	private NQueensBoard placeQueenAt(int row, int column,
+	private NQueensBoard placeQueenAt(int x, int y,
 			NQueensBoard parentBoard) {
 
 		NQueensBoard newBoard = new NQueensBoard(parentBoard.getSize());
 		List<XYLocation> queenPositionsOnParentBoard = parentBoard
 				.getQueenPositions();
-		queenPositionsOnParentBoard.add(new XYLocation(row, column));
+		queenPositionsOnParentBoard.add(new XYLocation(x, y));
 		newBoard.setBoard(queenPositionsOnParentBoard);
 		return newBoard;
 	}
