@@ -1,4 +1,4 @@
-package aima.gui.demo;
+package aima.gui.applications;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
