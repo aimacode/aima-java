@@ -66,7 +66,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	@Override
 	public void runAgent() {
 		startAgent();
-		Set<Agent> agents = scenario.getEnv().getAgents();
+		List<Agent> agents = scenario.getEnv().getAgents();
 		if (agents.size() == 1) {
 			Double travelDistance = scenario.getEnv().getAgentTravelDistance();
 			StringBuffer statusMsg = new StringBuffer();
