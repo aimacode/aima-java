@@ -49,7 +49,7 @@ public class MapAgentModel extends AgentAppModel {
 	 * change.
 	 */
 	@Override
-	public void envChanged(Action command, EnvironmentState state) {
+	public void envChanged(Agent agent, Action command, EnvironmentState state) {
 		for (AgentAppModel.ModelChangedListener listener : listeners) {
 			listener.logMessage(command.toString());
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 
@@ -45,7 +46,7 @@ public class AgentAppModel implements EnvironmentView {
 	 * Reacts on environment changes. This implementation informs all registered
 	 * model change listeners and provides their log with the given command.
 	 */
-	public void envChanged(Action command, EnvironmentState state) {
+	public void envChanged(Agent agent, Action command, EnvironmentState state) {
 		for (ModelChangedListener listener : listeners) {
 			listener.logMessage(command.toString());
 			listener.modelChanged();
