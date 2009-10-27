@@ -1,12 +1,12 @@
 package aima.core.agent;
 
-import java.util.Set;
+import java.util.List;
 
 public interface Environment {
-	Set<Agent> getAgents();
+	List<Agent> getAgents();
 	void addAgent(Agent a);
 	void removeAgent(Agent a);
-	Set<EnvironmentObject> getEnvironmentObjects();
+	List<EnvironmentObject> getEnvironmentObjects();
 	void addEnvironmentObject(EnvironmentObject eo);
 	void removeEnvironmentObject(EnvironmentObject eo);
 	void step();

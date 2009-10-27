@@ -1,8 +1,10 @@
 package aima.core.agent.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,6 +29,8 @@ import aima.core.agent.Percept;
  */
 public abstract class AbstractEnvironment implements Environment {
 
+	// Note: Use LinkedHashSet's in order to ensure order is respected as provide
+	// access to these elements via List interface.
 	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<EnvironmentObject>();
 
 	protected Set<Agent> agents = new LinkedHashSet<Agent>();
@@ -47,8 +51,9 @@ public abstract class AbstractEnvironment implements Environment {
 
 	//
 	// START-Environment
-	public Set<Agent> getAgents() {
-		return Collections.unmodifiableSet(agents);
+	public List<Agent> getAgents() {
+		// Return as a List but also ensures the caller cannot modify
+		return new ArrayList<Agent>(agents);
 	}
 	
 	public void addAgent(Agent a) {
@@ -61,8 +66,9 @@ public abstract class AbstractEnvironment implements Environment {
 		envObjects.remove(a);
 	}
 
-	public Set<EnvironmentObject> getEnvironmentObjects() {
-		return Collections.unmodifiableSet(envObjects);
+	public List<EnvironmentObject> getEnvironmentObjects() {
+		// Return as a List but also ensures the caller cannot modify
+		return new ArrayList<EnvironmentObject>(envObjects);
 	}
 	
 	public void addEnvironmentObject(EnvironmentObject eo) {
