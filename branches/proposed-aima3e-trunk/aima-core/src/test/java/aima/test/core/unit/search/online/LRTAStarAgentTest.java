@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.agent.Action;
+import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 import aima.core.search.framework.HeuristicFunction;
@@ -49,7 +50,7 @@ public class LRTAStarAgentTest {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action, EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});
@@ -69,7 +70,7 @@ public class LRTAStarAgentTest {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action, EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});
@@ -92,7 +93,7 @@ public class LRTAStarAgentTest {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action, EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});

@@ -91,7 +91,7 @@ public abstract class AbstractEnvironment implements Environment {
 
 				EnvironmentState es = executeAction(agent, anAction);
 				
-				updateEnvironmentViews(anAction, es);
+				updateEnvironmentViews(agent, anAction, es);
 			}
 		}
 	}
@@ -152,9 +152,9 @@ public abstract class AbstractEnvironment implements Environment {
 	// PROTECTED METHODS
 	//
 
-	protected void updateEnvironmentViews(Action action, EnvironmentState state) {
+	protected void updateEnvironmentViews(Agent agent, Action action, EnvironmentState state) {
 		for (EnvironmentView view : views) {
-			view.envChanged(action, state);
+			view.envChanged(agent, action, state);
 		}
 	}
 }

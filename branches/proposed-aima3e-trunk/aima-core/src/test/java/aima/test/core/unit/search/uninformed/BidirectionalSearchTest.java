@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.agent.Action;
+import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 import aima.core.search.map.ExtendableMap;
@@ -40,15 +41,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "A" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -73,15 +66,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "A" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -105,15 +90,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -138,15 +115,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -172,15 +141,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "D" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -204,15 +165,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -238,15 +191,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -274,15 +219,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "E" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -307,15 +244,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -339,15 +268,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -372,15 +293,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "E" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -409,15 +322,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "F" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -448,15 +353,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "F" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -489,15 +386,7 @@ public class BidirectionalSearchTest {
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
 				new String[] { "F" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-			
-			public void envChanged(Action action, EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -508,5 +397,15 @@ public class BidirectionalSearchTest {
 		Assert.assertEquals(
 				BidirectionalSearch.SearchOutcome.PATH_FOUND_BETWEEN_PROBLEMS,
 				bidirectionalSearch.getSearchOutcome());
+	}
+	
+	class BDSEnvironmentView implements EnvironmentView {
+		public void notify(String msg) {
+			envChanges.append(msg).append(":");
+		}
+		
+		public void envChanged(Agent agent, Action action, EnvironmentState state) {
+			envChanges.append(action).append(":");
+		}
 	}
 }

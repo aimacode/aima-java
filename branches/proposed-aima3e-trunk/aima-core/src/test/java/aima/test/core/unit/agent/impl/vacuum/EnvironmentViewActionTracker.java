@@ -1,6 +1,7 @@
 package aima.test.core.unit.agent.impl.vacuum;
 
 import aima.core.agent.Action;
+import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 
@@ -16,7 +17,7 @@ public class EnvironmentViewActionTracker implements EnvironmentView {
 		// Do nothing by default.
 	}
 	
-	public void envChanged(Action action, EnvironmentState state) {
+	public void envChanged(Agent agent, Action action, EnvironmentState state) {
 		actions.append(action);
 	}
 	
