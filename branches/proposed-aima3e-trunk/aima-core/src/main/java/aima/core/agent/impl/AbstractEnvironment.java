@@ -127,10 +127,6 @@ public abstract class AbstractEnvironment implements Environment {
 		return pm;
 	}
 	
-	public void updatePerformanceMeasure(Agent forAgent, double addTo) {
-		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent)+addTo);
-	}
-	
 	public void addEnvironmentView(EnvironmentView ev) {
 		views.add(ev);
 	}
@@ -151,6 +147,10 @@ public abstract class AbstractEnvironment implements Environment {
 	//
 	// PROTECTED METHODS
 	//
+	
+	protected void updatePerformanceMeasure(Agent forAgent, double addTo) {
+		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent)+addTo);
+	}
 
 	protected void updateEnvironmentViews(Agent agent, Action action, EnvironmentState state) {
 		for (EnvironmentView view : views) {
