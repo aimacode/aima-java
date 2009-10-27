@@ -1,35 +1,41 @@
 package aima.core.util.datastructure;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-public class FIFOQueue extends DefaultQueue {
-	@Override
-	public void add(Object anItem) {
-		super.addToFront(anItem);
+public class FIFOQueue<E> extends LinkedList<E> implements Queue<E> {
+	private static final long serialVersionUID = 1;
+	
+	public FIFOQueue() {
+		super();
+	}
+	
+	public FIFOQueue(Collection<? extends E> c) {
+		super(c);
+	}
+	
+	//
+	// START-Queue
+	public boolean isEmpty() {
+		return 0 == size();
 	}
 
-	@Override
-	public void add(List items) {
-		List<Object> reversed = new ArrayList<Object>();
-		for (int i = items.size() - 1; i > -1; i--) {
-			reversed.add(items.get(i));
+	
+	public E pop() {
+		return poll();
+	}
+
+	
+	public Queue<E> insert(E element) {
+		if (offer(element)) {
+			return this;
 		}
-		super.addToFront(reversed);
+		return null;
 	}
-
-	@Override
-	public Object remove() {
-		return super.removeLast();
-	}
-
-	@Override
-	public Object get() {
-		return super.getLast();
-	}
-
+	// END-Queue
+	//
 }

@@ -502,7 +502,7 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B, distance==5.0]:Action[name==moveTo, location==C, distance==5.0]:Action[name==moveTo, location==D, distance==5.0]:Action[name==moveTo, location==F, distance==5.0]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=7:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==E, distance==5.0]:Action[name==moveTo, location==D, distance==5.0]:Action[name==moveTo, location==F, distance==5.0]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(

@@ -1,7 +1,10 @@
 package aima.core.search.uninformed;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
@@ -12,8 +15,8 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.Successor;
-import aima.core.search.nodestore.CachedStateNodeStore;
-import aima.core.search.nodestore.FIFONodeStore;
+import aima.core.util.datastructure.FIFOQueue;
+import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 79.
@@ -56,10 +59,8 @@ public class BidirectionalSearch implements Search {
 		Problem op = ((BidirectionalProblem) p).getOriginalProblem();
 		Problem rp = ((BidirectionalProblem) p).getReverseProblem();
 
-		CachedStateNodeStore opFringe = new CachedStateNodeStore(
-				new FIFONodeStore());
-		CachedStateNodeStore rpFringe = new CachedStateNodeStore(
-				new FIFONodeStore());
+		CachedStateQueue<Node> opFrontier = new CachedStateQueue<Node>();
+		CachedStateQueue<Node> rpFrontier = new CachedStateQueue<Node>();
 
 		GraphSearch ogs = new GraphSearch();
 		GraphSearch rgs = new GraphSearch();
@@ -72,30 +73,30 @@ public class BidirectionalSearch implements Search {
 
 		Node opNode = new Node(op.getInitialState());
 		Node rpNode = new Node(rp.getInitialState());
-		opFringe.add(opNode);
-		rpFringe.add(rpNode);
+		opFrontier.add(opNode);
+		rpFrontier.add(rpNode);
 
-		setQueueSize(opFringe.size() + rpFringe.size());
+		setQueueSize(opFrontier.size() + rpFrontier.size());
 		setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
 
-		while (!(opFringe.isEmpty() && rpFringe.isEmpty())) {
+		while (!(opFrontier.isEmpty() && rpFrontier.isEmpty())) {
 			// Determine the nodes to work with and expand their fringes
 			// in preparation for testing whether or not the two
 			// searches meet or one or other is at the GOAL.
-			if (!opFringe.isEmpty()) {
-				opNode = opFringe.remove();
-				ogs.addExpandedNodesToFringe(opFringe, opNode, op);
+			if (!opFrontier.isEmpty()) {
+				opNode = opFrontier.pop();
+				ogs.addExpandedNodesToFringe(opFrontier, opNode, op);
 			} else {
 				opNode = null;
 			}
-			if (!rpFringe.isEmpty()) {
-				rpNode = rpFringe.remove();
-				rgs.addExpandedNodesToFringe(rpFringe, rpNode, rp);
+			if (!rpFrontier.isEmpty()) {
+				rpNode = rpFrontier.remove();
+				rgs.addExpandedNodesToFringe(rpFrontier, rpNode, rp);
 			} else {
 				rpNode = null;
 			}
 
-			setQueueSize(opFringe.size() + rpFringe.size());
+			setQueueSize(opFrontier.size() + rpFrontier.size());
 			setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
 
 			//
@@ -103,12 +104,12 @@ public class BidirectionalSearch implements Search {
 			if (null != opNode && null != rpNode) {
 				Node popNode = null;
 				Node prpNode = null;
-				if (opFringe.containsNodeBasedOn(rpNode.getState())) {
-					popNode = opFringe.getNodeBasedOn(rpNode.getState());
+				if (opFrontier.containsNodeBasedOn(rpNode.getState())) {
+					popNode = opFrontier.getNodeBasedOn(rpNode.getState());
 					prpNode = rpNode;
-				} else if (rpFringe.containsNodeBasedOn(opNode.getState())) {
+				} else if (rpFrontier.containsNodeBasedOn(opNode.getState())) {
 					popNode = opNode;
-					prpNode = rpFringe.getNodeBasedOn(opNode.getState());
+					prpNode = rpFrontier.getNodeBasedOn(opNode.getState());
 					// Need to also check whether or not the nodes that
 					// have been taken off the fringe actually represent the
 					// same state, otherwise there are instances whereby
@@ -319,5 +320,56 @@ public class BidirectionalSearch implements Search {
 		}
 
 		return rVal;
+	}
+}
+
+class CachedStateQueue<E> extends FIFOQueue<E> {
+	private static final long serialVersionUID = 1;
+	//
+	private Map<Object, Node> cachedState = new HashMap<Object, Node>();
+	
+	public CachedStateQueue() {
+		super();
+	}
+	
+	public CachedStateQueue(Collection<? extends E> c) {
+		super(c);
+	}
+	
+	public boolean containsNodeBasedOn(Object state) {
+		return cachedState.containsKey(state);
+	}
+
+	public Node getNodeBasedOn(Object state) {
+		return cachedState.get(state);
+	}
+	
+	//
+	// START-Queue
+	public boolean isEmpty() {
+		return super.isEmpty();
+	}
+
+	
+	public E pop() {
+		E popped = super.pop();
+		cachedState.remove(((Node)popped).getState());
+		return popped;
+	}
+
+	
+	public Queue<E> insert(E element) {
+		cachedState.put(((Node)element).getState(), (Node) element);
+		return super.insert(element);
+	}
+	// END-Queue
+	//
+	
+	@Override
+	public boolean addAll(Collection<? extends E> c) {
+		for (E element : c) {
+			cachedState.put(((Node)element).getState(), (Node) element);
+		}
+		return super.addAll(c);
 	}
 }

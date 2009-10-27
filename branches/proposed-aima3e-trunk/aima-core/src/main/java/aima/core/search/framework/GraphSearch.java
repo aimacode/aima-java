@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.util.datastructure.Queue;
 
 
 /**
@@ -38,13 +39,13 @@ public class GraphSearch extends QueueSearch {
 	// Need to override search() method so that I can re-initialize
 	// the closed list should multiple calls to search be made.
 	@Override
-	public List<Action> search(Problem problem, NodeStore fringe) {
+	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		closed.clear();
-		return super.search(problem, fringe);
+		return super.search(problem, frontier);
 	}
 
 	@Override
-	public void addExpandedNodesToFringe(NodeStore fringe, Node node,
+	public void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
 			Problem problem) {
 
 		// if STATE[node] is not in closed then
@@ -52,7 +53,7 @@ public class GraphSearch extends QueueSearch {
 			// add STATE[node] to closed
 			closed.add(node.getState());
 			// fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
-			fringe.add(expandNode(node, problem));
+			frontier.addAll(expandNode(node, problem));
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.util.datastructure.Queue;
 
 /**
  * @author Ravi Mohan
@@ -16,19 +17,19 @@ public abstract class QueueSearch extends NodeExpander {
 
 	private static String PATH_COST = "pathCost";
 
-	public List<Action> search(Problem problem, NodeStore fringe) {
+	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		clearInstrumentation();
-		fringe.add(new Node(problem.getInitialState()));
-		setQueueSize(fringe.size());
-		while (!(fringe.isEmpty())) {
-			Node node = fringe.remove();
-			setQueueSize(fringe.size());
+		frontier.insert(new Node(problem.getInitialState()));
+		setQueueSize(frontier.size());
+		while (!(frontier.isEmpty())) {
+			Node node = frontier.pop();
+			setQueueSize(frontier.size());
 			if (problem.isGoalState(node.getState())) {
 				setPathCost(node.getPathCost());
 				return SearchUtils.actionsFromNodes(node.getPathFromRoot());
 			}
-			addExpandedNodesToFringe(fringe, node, problem);
-			setQueueSize(fringe.size());
+			addExpandedNodesToFringe(frontier, node, problem);
+			setQueueSize(frontier.size());
 		}
 		return new ArrayList<Action>();// Empty List indicates Failure
 	}
@@ -66,6 +67,6 @@ public abstract class QueueSearch extends NodeExpander {
 		metrics.set(PATH_COST, pathCost);
 	}
 
-	public abstract void addExpandedNodesToFringe(NodeStore fringe, Node node,
+	public abstract void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
 			Problem p);
 }

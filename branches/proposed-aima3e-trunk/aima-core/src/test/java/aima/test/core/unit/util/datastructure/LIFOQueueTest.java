@@ -15,8 +15,8 @@ import aima.core.util.datastructure.LIFOQueue;
 public class LIFOQueueTest {
 
 	@Test
-	public void testFifoQueue() {
-		LIFOQueue queue = new LIFOQueue();
+	public void testLIFOQueue() {
+		LIFOQueue<String> queue = new LIFOQueue<String>();
 		Assert.assertTrue(queue.isEmpty());
 
 		queue.add("Hello");
@@ -30,15 +30,17 @@ public class LIFOQueueTest {
 		String s = (String) queue.remove();
 		Assert.assertEquals("Hi", s);
 		Assert.assertEquals(1, queue.size());
-		Assert.assertEquals("Hello", queue.get());
+		Assert.assertEquals("Hello", queue.peek());
 
 		List<String> l = new ArrayList<String>();
-		l.add("bonjour");
 		l.add("salaam alaikum");
-		queue.add(l);
+		l.add("bonjour");
+		queue.addAll(l);
 		Assert.assertEquals(3, queue.size());
-		Assert.assertEquals("salaam alaikum", queue.get());
-
-		queue.add(l);
+		Assert.assertEquals("salaam alaikum", queue.pop());
+		Assert.assertEquals("bonjour", queue.pop());
+		Assert.assertEquals("Hello", queue.pop());
+		
+		Assert.assertEquals(0, queue.size());
 	}
 }

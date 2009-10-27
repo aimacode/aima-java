@@ -15,8 +15,8 @@ import aima.core.util.datastructure.FIFOQueue;
 public class FIFOQueueTest {
 
 	@Test
-	public void testFifoQueue() {
-		FIFOQueue queue = new FIFOQueue();
+	public void testFIFOQueue() {
+		FIFOQueue<String> queue = new FIFOQueue<String>();
 		Assert.assertTrue(queue.isEmpty());
 
 		queue.add("Hello");
@@ -27,19 +27,20 @@ public class FIFOQueueTest {
 		Assert.assertEquals(2, queue.size());
 		Assert.assertFalse(queue.isEmpty());
 
-		String s = (String) queue.remove();
+		String s = queue.remove();
 		Assert.assertEquals("Hello", s);
 		Assert.assertEquals(1, queue.size());
-		Assert.assertEquals("Hi", queue.get());
+		Assert.assertEquals("Hi", queue.peek());
 
 		List<String> l = new ArrayList<String>();
 		l.add("bonjour");
 		l.add("salaam alaikum");
-		queue.add(l);
+		queue.addAll(l);
 		Assert.assertEquals(3, queue.size());
-		Assert.assertEquals("Hi", queue.remove());
-		Assert.assertEquals("bonjour", queue.get());
-
-		queue.add(l);
+		Assert.assertEquals("Hi", queue.pop());
+		Assert.assertEquals("bonjour", queue.pop());
+		Assert.assertEquals("salaam alaikum", queue.pop());
+		
+		Assert.assertEquals(0, queue.size());
 	}
 }

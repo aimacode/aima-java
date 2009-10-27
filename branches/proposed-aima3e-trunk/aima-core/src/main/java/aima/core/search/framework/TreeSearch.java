@@ -1,5 +1,7 @@
 package aima.core.search.framework;
 
+import aima.core.util.datastructure.Queue;
+
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.7, page 70.
  * <code>
@@ -52,9 +54,8 @@ package aima.core.search.framework;
 public class TreeSearch extends QueueSearch {
 
 	@Override
-	public void addExpandedNodesToFringe(NodeStore fringe, Node node,
+	public void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
 			Problem problem) {
-		fringe.add(expandNode(node, problem));
+		frontier.addAll(expandNode(node, problem));
 	}
-
 }

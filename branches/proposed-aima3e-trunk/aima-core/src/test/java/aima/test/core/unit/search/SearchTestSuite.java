@@ -47,6 +47,6 @@ import aima.test.core.unit.search.uninformed.UniformCostSearchTest;
 		BreadthFirstSearchTest.class, DepthFirstSearchTest.class,
 		DepthLimitedSearchTest.class, IterativeDeepeningSearchTest.class,
 		UniformCostSearchTest.class, MisplacedTileHeuristicFunctionTest.class,
-		NodeTest.class, QueueTest.class })
+		NodeTest.class })
 public class SearchTestSuite {
 }
