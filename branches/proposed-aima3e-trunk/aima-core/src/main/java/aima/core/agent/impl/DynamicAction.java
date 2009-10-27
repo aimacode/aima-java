@@ -13,6 +13,10 @@ public class DynamicAction extends ObjectWithDynamicAttributes implements Action
 		this.setAttribute(ATTRIBUTE_NAME, name);
 	}
 	
+	public String getName() {
+		return (String) getAttribute(ATTRIBUTE_NAME);
+	}
+	
 	//
 	// START-Action
 	public boolean isNoOp() {
@@ -21,7 +25,8 @@ public class DynamicAction extends ObjectWithDynamicAttributes implements Action
 	// END-Action
 	//
 	
-	public String getName() {
+	@Override
+	public String describeType() {
 		return Action.class.getSimpleName();
 	}
 }

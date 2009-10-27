@@ -11,7 +11,8 @@ public class DynamicPercept extends ObjectWithDynamicAttributes implements Perce
 
 	}
 	
-	public String getName() {
+	@Override
+	public String describeType() {
 		return Percept.class.getSimpleName();
 	}
 	

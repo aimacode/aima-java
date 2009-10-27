@@ -10,7 +10,8 @@ public class DynamicModel extends ObjectWithDynamicAttributes implements Model {
 
 	}
 	
-	public String getName() {
+	@Override
+	public String describeType() {
 		return Model.class.getSimpleName();
 	}
 }

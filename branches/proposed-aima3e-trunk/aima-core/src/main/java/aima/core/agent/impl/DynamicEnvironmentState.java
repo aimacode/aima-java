@@ -11,7 +11,8 @@ public class DynamicEnvironmentState extends ObjectWithDynamicAttributes impleme
 
 	}
 	
-	public String getName() {
+	@Override
+	public String describeType() {
 		return EnvironmentState.class.getSimpleName();
 	}
 }

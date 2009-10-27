@@ -15,7 +15,30 @@ public abstract class ObjectWithDynamicAttributes {
 	//
 	// PUBLIC METHODS
 	//
-	public abstract String getName();
+	public String describeType() {
+		return getClass().getSimpleName();
+	}
+	
+	public String describeAttributes() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[");
+		boolean first = true;
+		for (Object key : attributes.keySet()) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(", ");
+			}
+
+			sb.append(key);
+			sb.append("==");
+			sb.append(attributes.get(key));
+		}
+		sb.append("]");
+		
+		return sb.toString();
+	}
 	
 	public Set<Object> getKeySet() {
 		return Collections.unmodifiableSet(attributes.keySet());
@@ -48,23 +71,10 @@ public abstract class ObjectWithDynamicAttributes {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
-		sb.append(getName());
-		sb.append("[");
-		boolean first = true;
-		for (Object key : attributes.keySet()) {
-			if (first) {
-				first = false;
-			} else {
-				sb.append(", ");
-			}
-
-			sb.append(key);
-			sb.append("==");
-			sb.append(attributes.get(key));
-		}
-		sb.append("]");
+		sb.append(describeType());
+		sb.append(describeAttributes());
 
 		return sb.toString();
 	}
