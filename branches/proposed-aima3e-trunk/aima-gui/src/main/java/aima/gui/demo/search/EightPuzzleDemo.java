@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import aima.core.search.eightpuzzle.EightPuzzleBoard;
 import aima.core.search.eightpuzzle.EightPuzzleGoalTest;
-import aima.core.search.eightpuzzle.EightPuzzleSuccessorFunction;
+import aima.core.search.eightpuzzle.EightPuzzleFunctionFactory;
 import aima.core.search.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.search.eightpuzzle.MisplacedTilleHeuristicFunction;
 import aima.core.search.framework.GraphSearch;
@@ -48,7 +48,8 @@ public class EightPuzzleDemo {
 		System.out.println("\nEightPuzzleDemo recursive DLS -->");
 		try {
 			Problem problem = new Problem(random1,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest());
 			Search search = new DepthLimitedSearch(9);
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -64,7 +65,8 @@ public class EightPuzzleDemo {
 		System.out.println("\nEightPuzzleDemo Iterative DLS -->");
 		try {
 			Problem problem = new Problem(random1,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest());
 			Search search = new IterativeDeepeningSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -81,7 +83,8 @@ public class EightPuzzleDemo {
 				.println("\nEightPuzzleDemo Greedy Best First Search (MisplacedTileHeursitic)-->");
 		try {
 			Problem problem = new Problem(boardWithThreeMoveSolution,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(),
 					new MisplacedTilleHeuristicFunction());
 			Search search = new GreedyBestFirstSearch(new GraphSearch());
@@ -99,7 +102,8 @@ public class EightPuzzleDemo {
 				.println("\nEightPuzzleDemo Greedy Best First Search (ManhattanHeursitic)-->");
 		try {
 			Problem problem = new Problem(boardWithThreeMoveSolution,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
 			Search search = new GreedyBestFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -116,7 +120,8 @@ public class EightPuzzleDemo {
 				.println("\nEightPuzzleDemo AStar Search (MisplacedTileHeursitic)-->");
 		try {
 			Problem problem = new Problem(random1,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(),
 					new MisplacedTilleHeuristicFunction());
 			Search search = new AStarSearch(new GraphSearch());
@@ -133,7 +138,8 @@ public class EightPuzzleDemo {
 		System.out.println("\nEightPuzzleDemo Simulated Annealing  Search -->");
 		try {
 			Problem problem = new Problem(random1,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
 			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -151,7 +157,8 @@ public class EightPuzzleDemo {
 				.println("\nEightPuzzleDemo AStar Search (ManhattanHeursitic)-->");
 		try {
 			Problem problem = new Problem(random1,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
 			Search search = new AStarSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);

@@ -17,7 +17,7 @@ import aima.core.search.informed.ga.GeneticAlgorithm;
 import aima.core.search.nqueens.NQueensBoard;
 import aima.core.search.nqueens.NQueensFitnessFunction;
 import aima.core.search.nqueens.NQueensGoalTest;
-import aima.core.search.nqueens.NQueensSuccessorFunction;
+import aima.core.search.nqueens.NQueensFunctionFactory;
 import aima.core.search.nqueens.QueensToBePlacedHeuristic;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
@@ -51,7 +51,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo recursive DLS -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(),
+					new NQueensGoalTest());
 			Search search = new DepthLimitedSearch(8);
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
@@ -66,7 +68,9 @@ public class NQueensDemo {
 		try {
 			System.out.println("\nNQueensDemo BFS -->");
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(),
+					new NQueensGoalTest());
 			Search search = new BreadthFirstSearch(new TreeSearch());
 			SearchAgent agent2 = new SearchAgent(problem, search);
 			printActions(agent2.getActions());
@@ -81,7 +85,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo DFS -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(), 
+					new NQueensGoalTest());
 			Search search = new DepthFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
@@ -95,7 +101,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo Iterative DS  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest());
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(),
+					new NQueensGoalTest());
 			Search search = new IterativeDeepeningSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
@@ -111,7 +119,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest(),
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(),
+					new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
 			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -130,7 +140,9 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					new NQueensSuccessorFunction(), new NQueensGoalTest(),
+					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getResultFunction(), 
+					new NQueensGoalTest(),
 					new QueensToBePlacedHeuristic());
 			HillClimbingSearch search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
