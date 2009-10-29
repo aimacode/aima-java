@@ -14,7 +14,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
-import aima.core.search.framework.Successor;
 import aima.core.util.datastructure.FIFOQueue;
 import aima.core.util.datastructure.Queue;
 
@@ -278,15 +277,13 @@ public class BidirectionalSearch implements Search {
 		for (int i = 0; i < (path.size() - 1); i++) {
 			Object currentState = path.get(i).getState();
 			Object nextState = path.get(i + 1).getState();
-			List<Successor> successors = op.getSuccessorFunction()
-					.getSuccessors(currentState);
 			boolean found = false;
-			for (Successor s : successors) {
-				if (nextState.equals(s.getState())) {
+			for (Action a : op.getActionsFunction().actions(currentState)) {
+				Object isNext = op.getResultFunction().result(currentState, a);
+				if (nextState.equals(isNext)) {
 					found = true;
-					pc += op.getStepCostFunction().calculateStepCost(
-							currentState, nextState, s.getAction());
-					actions.add(s.getAction());
+					pc += op.getStepCostFunction().cost(currentState, a, nextState);
+					actions.add(a);
 					break;
 				}
 			}
@@ -309,10 +306,9 @@ public class BidirectionalSearch implements Search {
 		// Only need to test if not already at root
 		if (!originalPath.isRootNode()) {
 			rVal = false;
-			List<Successor> successors = rp.getSuccessorFunction()
-					.getSuccessors(reversePath.getState());
-			for (Successor s : successors) {
-				if (originalPath.getParent().getState().equals(s.getState())) {
+			for (Action a : rp.getActionsFunction().actions(reversePath.getState())) {
+				Object nextState = rp.getResultFunction().result(reversePath.getState(), a);
+				if (originalPath.getParent().getState().equals(nextState)) {
 					rVal = true;
 					break;
 				}

@@ -17,25 +17,30 @@ public class BidirectionalMapProblem extends Problem implements
 
 	public BidirectionalMapProblem(Map aMap, String initialState,
 			String goalState) {
-		super(initialState, new MapSuccessorFunction(aMap), new MapGoalTest(
-				goalState), new MapStepCostFunction(aMap));
+		super(initialState, MapFunctionFactory.getActionsFunction(aMap),
+				MapFunctionFactory.getResultFunction(), new MapGoalTest(
+						goalState), new MapStepCostFunction(aMap));
 
 		map = aMap;
 
-		reverseProblem = new Problem(goalState, new MapSuccessorFunction(aMap),
-				new MapGoalTest(initialState), new MapStepCostFunction(aMap));
+		reverseProblem = new Problem(goalState, MapFunctionFactory
+				.getActionsFunction(aMap), MapFunctionFactory
+				.getResultFunction(), new MapGoalTest(initialState),
+				new MapStepCostFunction(aMap));
 	}
 
 	public BidirectionalMapProblem(Map aMap, String initialState,
 			String goalState, HeuristicFunction hf) {
-		super(initialState, new MapSuccessorFunction(aMap), new MapGoalTest(
-				goalState), new MapStepCostFunction(aMap), hf);
+		super(initialState, MapFunctionFactory.getActionsFunction(aMap),
+				MapFunctionFactory.getResultFunction(), new MapGoalTest(
+						goalState), new MapStepCostFunction(aMap), hf);
 
 		map = aMap;
 
-		reverseProblem = new Problem(goalState, new MapSuccessorFunction(aMap),
-				new MapGoalTest(initialState), new MapStepCostFunction(aMap),
-				hf);
+		reverseProblem = new Problem(goalState, MapFunctionFactory
+				.getActionsFunction(aMap), MapFunctionFactory
+				.getResultFunction(), new MapGoalTest(initialState),
+				new MapStepCostFunction(aMap), hf);
 	}
 
 	//

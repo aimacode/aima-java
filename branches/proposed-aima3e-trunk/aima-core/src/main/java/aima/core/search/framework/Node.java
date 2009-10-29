@@ -51,9 +51,10 @@ public class Node {
 		this.pathCost = new Double(0);
 	}
 
-	public Node(Node parent, Object state) {
+	public Node(Node parent, Action action, Object state) {
 		this(state);
 		this.parent = parent;
+		this.action = action;
 		this.depth = parent.getDepth() + 1;
 	}
 

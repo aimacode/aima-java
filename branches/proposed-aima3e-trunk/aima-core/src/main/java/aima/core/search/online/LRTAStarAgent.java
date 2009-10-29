@@ -1,15 +1,13 @@
 package aima.core.search.online;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.Successor;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.23, page
@@ -146,27 +144,17 @@ public class LRTAStarAgent extends AbstractAgent {
 	}
 
 	// function LRTA*-COST(s, a, s', H) returns a cost estimate
-	private double lrtaCost(Percept s, Action action, Percept sComma) {
+	private double lrtaCost(Percept s, Action action, Percept sQuote) {
 		// if s' is undefined then return h(s)
-		if (null == sComma) {
+		if (null == sQuote) {
 			return getProblem().getHeuristicFunction().getHeuristicValue(s);
 		}
 		// else return c(s, a, s') + H[s']
-		return getProblem().getStepCostFunction().calculateStepCost(s, sComma,
-				action)
-				+ H.get(sComma);
+		return getProblem().getStepCostFunction().cost(s, action, sQuote)
+				+ H.get(sQuote);
 	}
 
-	private List<Action> actions(Percept state) {
-		List<Action> actions = new ArrayList<Action>();
-
-		List<Successor> successors = getProblem().getSuccessorFunction()
-				.getSuccessors(state);
-
-		for (Successor s : successors) {
-			actions.add(s.getAction());
-		}
-
-		return actions;
+	private Set<Action> actions(Percept state) {
+		return problem.getActionsFunction().actions(state);
 	}
 }

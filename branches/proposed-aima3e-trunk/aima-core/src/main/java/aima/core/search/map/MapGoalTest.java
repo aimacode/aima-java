@@ -11,7 +11,6 @@ import aima.core.search.framework.GoalTest;
  * @author Ciaran O'Reilly
  * 
  */
-
 public class MapGoalTest implements GoalTest {
 	private String goalState = null;
 
@@ -22,6 +21,8 @@ public class MapGoalTest implements GoalTest {
 	public boolean isGoalState(Object currentState) {
 
 		String location = currentState.toString();
+
+		// TODO-Why are we doing this?
 		if (currentState instanceof DynamicPercept) {
 			location = (String) ((DynamicPercept) currentState)
 					.getAttribute(DynAttributeNames.PERCEPT_IN);

@@ -71,6 +71,7 @@ public class MapEnvironment extends AbstractEnvironment {
 		for (String a : aMap.getLocationsLinkedTo(currLoc)) {
 			possibleActions.add(new MoveToAction(a, new Double(aMap.getDistance(currLoc, a))));
 		}
+		// TODO-should the possible actions be added to the Percept?
 		return new DynamicPercept(DynAttributeNames.PERCEPT_IN, currLoc,
 				DynAttributeNames.PERCEPT_POSSIBLE_ACTIONS, possibleActions);
 	}

@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import aima.core.search.eightpuzzle.EightPuzzleBoard;
 import aima.core.search.eightpuzzle.EightPuzzleGoalTest;
-import aima.core.search.eightpuzzle.EightPuzzleSuccessorFunction;
+import aima.core.search.eightpuzzle.EightPuzzleFunctionFactory;
 import aima.core.search.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
@@ -28,7 +28,8 @@ public class AStarSearchTest {
 					0, 4, 6, 2, 3, 5 });
 
 			Problem problem = new Problem(board,
-					new EightPuzzleSuccessorFunction(),
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
 			Search search = new AStarSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);

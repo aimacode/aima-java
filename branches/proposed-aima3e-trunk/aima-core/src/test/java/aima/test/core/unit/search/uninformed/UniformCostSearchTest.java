@@ -11,7 +11,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.nqueens.NQueensBoard;
 import aima.core.search.nqueens.NQueensGoalTest;
-import aima.core.search.nqueens.NQueensSuccessorFunction;
+import aima.core.search.nqueens.NQueensFunctionFactory;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**
@@ -23,7 +23,9 @@ public class UniformCostSearchTest {
 	@Test
 	public void testUniformCostSuccesfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(8),
-				new NQueensSuccessorFunction(), new NQueensGoalTest());
+				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getResultFunction(),
+				new NQueensGoalTest());
 		Search search = new UniformCostSearch(new GraphSearch());
 		SearchAgent agent = new SearchAgent(problem, search);
 
@@ -40,7 +42,9 @@ public class UniformCostSearchTest {
 
 	public void testUniformCostUnSuccesfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(3),
-				new NQueensSuccessorFunction(), new NQueensGoalTest());
+				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getResultFunction(),
+				new NQueensGoalTest());
 		Search search = new UniformCostSearch(new GraphSearch());
 		SearchAgent agent = new SearchAgent(problem, search);
 

@@ -3,6 +3,8 @@ package aima.core.search.framework;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.agent.Action;
+
 /**
  * @author Ravi Mohan
  * 
@@ -21,24 +23,26 @@ public class NodeExpander {
 	}
 
 	public List<Node> expandNode(Node node, Problem problem) {
+		List<Node> childNodes = new ArrayList<Node>();
 
-		List<Node> nodes = new ArrayList<Node>();
-		List<Successor> successors = problem.getSuccessorFunction().getSuccessors(
-				node.getState());
-		for (int i = 0; i < successors.size(); i++) {
-			Successor successor = (Successor) successors.get(i);
-			Node aNode = new Node(node, successor.getState());
-			aNode.setAction(successor.getAction());
-			Double stepCost = problem.getStepCostFunction().calculateStepCost(
-					node.getState(), successor.getState(),
-					successor.getAction());
-			aNode.setStepCost(stepCost);
-			aNode.addToPathCost(stepCost);
-			nodes.add(aNode);
+		ActionsFunction actionsFunction = problem.getActionsFunction();
+		ResultFunction resultFunction = problem.getResultFunction();
+		StepCostFunction stepCostFunction = problem.getStepCostFunction();
 
+		for (Action action : actionsFunction.actions(node.getState())) {
+			Object successorState = resultFunction.result(node.getState(),
+					action);
+
+			Node childNode = new Node(node, action, successorState);
+			double stepCost = stepCostFunction.cost(node.getState(), action,
+					successorState);
+			childNode.setStepCost(stepCost);
+			childNode.addToPathCost(stepCost);
+			childNodes.add(childNode);
 		}
 		metrics.set(NODES_EXPANDED, metrics.getInt(NODES_EXPANDED) + 1);
-		return nodes;
+
+		return childNodes;
 	}
 
 	public int getNodesExpanded() {

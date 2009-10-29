@@ -56,6 +56,19 @@ public abstract class ObjectWithDynamicAttributes {
 		attributes.remove(key);
 	}
 	
+	public ObjectWithDynamicAttributes copy() {
+		ObjectWithDynamicAttributes copy = null;
+		
+		try {
+			copy = getClass().newInstance();
+			copy.attributes.putAll(attributes);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return copy;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) {

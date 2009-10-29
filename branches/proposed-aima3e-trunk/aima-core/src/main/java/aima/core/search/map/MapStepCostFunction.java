@@ -26,11 +26,15 @@ public class MapStepCostFunction implements StepCostFunction {
 		this.map = aMap;
 	}
 
-	public Double calculateStepCost(Object fromCurrentState,
-			Object toNextState, Action action) {
+	//
+	// START-StepCostFunction
+	public double cost(Object fromCurrentState,
+			 Action action, Object toNextState) {
 
 		String fromLoc = fromCurrentState.toString();
 		String toLoc = toNextState.toString();
+		
+		// TODO-Why are we doing this?
 		if (fromCurrentState instanceof DynamicPercept) {
 			fromLoc = (String) ((DynamicPercept) fromCurrentState)
 					.getAttribute(DynAttributeNames.PERCEPT_IN);
@@ -46,4 +50,7 @@ public class MapStepCostFunction implements StepCostFunction {
 
 		return new Double(distance);
 	}
+	
+	// END-StepCostFunction
+	//
 }

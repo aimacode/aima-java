@@ -1,22 +1,37 @@
 package aima.core.search.framework;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
  * 
+ * A problem can be defined formally by five components: <br>
+ * <ul>
+ * <li>The <b>initial state</b> that the agent starts in.</li>
+ * <li>A description of the possible <b>actions</b> available to the agent. 
+ * Given a particular state s, ACTIONS(s) returns the set of actions that can 
+ * be executed in s.</li>
+ * <li>A description of what each action does; the formal name for this is the 
+ * <b>transition model, specified by a function RESULT(s, a) that returns the 
+ * state that results from doing action a in state s.</b></li>
+ * <li>The <b>goal test</b>, which determines whether a given state is a goal 
+ * state.</li>
+ * <li>A <b>path cost</b> function that assigns a numeric cost to each path. 
+ * The problem-solving agent chooses a cost function that reflects its own 
+ * performance measure. The <b>step cost</b> of taking action a in state s 
+ * to reach state s' is denoted by c(s,a,s')</li>
+ * </ul>
  */
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 62.
- * 
- * A problem can be defined formally by four components: 1) Initial State. 2)
- * Successor Function. 3) Goal Test. 4) Path Cost.
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
  */
-
 public class Problem {
 
 	protected Object initialState;
 
-	protected SuccessorFunction successorFunction;
+	protected ActionsFunction actionsFunction;
+	
+	protected ResultFunction resultFunction;
 
 	protected GoalTest goalTest;
 
@@ -24,35 +39,37 @@ public class Problem {
 
 	protected HeuristicFunction heuristicFunction;
 
-	protected Problem() {
-	}
-
-	public Problem(Object initialState, SuccessorFunction successorFunction,
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			ResultFunction resultFunction,
 			GoalTest goalTest) {
 
 		this.initialState = initialState;
-		this.successorFunction = successorFunction;
+		this.actionsFunction = actionsFunction;
+		this.resultFunction = resultFunction;
 		this.goalTest = goalTest;
 		this.stepCostFunction = new DefaultStepCostFunction();
 		this.heuristicFunction = new DefaultHeuristicFunction();
 	}
 
-	public Problem(Object initialState, SuccessorFunction successorFunction,
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			ResultFunction resultFunction,
 			GoalTest goalTest, StepCostFunction stepCostFunction) {
-		this(initialState, successorFunction, goalTest);
+		this(initialState, actionsFunction, resultFunction, goalTest);
 		this.stepCostFunction = stepCostFunction;
 	}
 
-	public Problem(Object initialState, SuccessorFunction successorFunction,
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			ResultFunction resultFunction,
 			GoalTest goalTest, HeuristicFunction heuristicFunction) {
-		this(initialState, successorFunction, goalTest);
+		this(initialState, actionsFunction, resultFunction, goalTest);
 		this.heuristicFunction = heuristicFunction;
 	}
 
-	public Problem(Object initialState, SuccessorFunction successorFunction,
+	public Problem(Object initialState,ActionsFunction actionsFunction,
+			ResultFunction resultFunction,
 			GoalTest goalTest, StepCostFunction stepCostFunction,
 			HeuristicFunction heuristicFunction) {
-		this(initialState, successorFunction, goalTest, stepCostFunction);
+		this(initialState, actionsFunction, resultFunction, goalTest, stepCostFunction);
 		this.heuristicFunction = heuristicFunction;
 	}
 
@@ -66,15 +83,25 @@ public class Problem {
 		return goalTest.isGoalState(state);
 	}
 
-	public StepCostFunction getStepCostFunction() {
-		return stepCostFunction;
+	public ActionsFunction getActionsFunction() {
+		return actionsFunction;
 	}
-
-	public SuccessorFunction getSuccessorFunction() {
-		return successorFunction;
+	
+	public ResultFunction getResultFunction() {
+		return resultFunction;
 	}
 
 	public HeuristicFunction getHeuristicFunction() {
 		return heuristicFunction;
+	}
+	
+	public StepCostFunction getStepCostFunction() {
+		return stepCostFunction;
+	}
+	
+	//
+	// PROTECTED METHODS
+	//
+	protected Problem() {
 	}
 }

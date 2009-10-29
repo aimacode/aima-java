@@ -2,7 +2,6 @@ package aima.test.core.unit.search.online;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.agent.Action;

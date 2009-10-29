@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.Successor;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.20, page 126.
@@ -154,15 +154,6 @@ public class OnlineDFSAgent extends AbstractAgent {
 	}
 
 	private List<Action> actions(Percept state) {
-		List<Action> actions = new ArrayList<Action>();
-
-		List<Successor> successors = getProblem().getSuccessorFunction()
-				.getSuccessors(state);
-
-		for (Successor s : successors) {
-			actions.add(s.getAction());
-		}
-
-		return actions;
+		return new ArrayList<Action>(problem.getActionsFunction().actions(state));
 	}
 }

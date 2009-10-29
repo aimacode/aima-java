@@ -11,7 +11,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.nqueens.NQueensBoard;
 import aima.core.search.nqueens.NQueensGoalTest;
-import aima.core.search.nqueens.NQueensSuccessorFunction;
+import aima.core.search.nqueens.NQueensFunctionFactory;
 import aima.core.search.uninformed.DepthLimitedSearch;
 
 public class DepthLimitedSearchTest {
@@ -19,7 +19,9 @@ public class DepthLimitedSearchTest {
 	@Test
 	public void testSuccesfulDepthLimitedSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(8),
-				new NQueensSuccessorFunction(), new NQueensGoalTest());
+				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getResultFunction(),
+				new NQueensGoalTest());
 		Search search = new DepthLimitedSearch(8);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
@@ -31,7 +33,9 @@ public class DepthLimitedSearchTest {
 	@Test
 	public void testCutOff() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(8),
-				new NQueensSuccessorFunction(), new NQueensGoalTest());
+				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getResultFunction(),
+				new NQueensGoalTest());
 		Search search = new DepthLimitedSearch(1);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
@@ -41,7 +45,9 @@ public class DepthLimitedSearchTest {
 	@Test
 	public void testFailure() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(3),
-				new NQueensSuccessorFunction(), new NQueensGoalTest());
+				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getResultFunction(),
+				new NQueensGoalTest());
 		Search search = new DepthLimitedSearch(5);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
@@ -52,14 +58,22 @@ public class DepthLimitedSearchTest {
 	// PRIVATE METHODS
 	//
 	private void assertCorrectPlacement(List<Action> actions) {
-		Assert.assertEquals(8, actions.size());		
-		Assert.assertEquals("Action[name==placeQueenAt, x==0, y==0]", actions.get(0).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==1, y==4]", actions.get(1).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==2, y==7]", actions.get(2).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==3, y==5]", actions.get(3).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==4, y==2]", actions.get(4).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==5, y==6]", actions.get(5).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==6, y==1]", actions.get(6).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==7, y==3]", actions.get(7).toString());
+		Assert.assertEquals(8, actions.size());
+		Assert.assertEquals("Action[name==placeQueenAt, x==0, y==0]", actions
+				.get(0).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==1, y==4]", actions
+				.get(1).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==2, y==7]", actions
+				.get(2).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==3, y==5]", actions
+				.get(3).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==4, y==2]", actions
+				.get(4).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==5, y==6]", actions
+				.get(5).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==6, y==1]", actions
+				.get(6).toString());
+		Assert.assertEquals("Action[name==placeQueenAt, x==7, y==3]", actions
+				.get(7).toString());
 	}
 }
