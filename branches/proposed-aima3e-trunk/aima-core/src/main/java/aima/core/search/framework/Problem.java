@@ -72,6 +72,35 @@ public class Problem {
 		this(initialState, actionsFunction, resultFunction, goalTest, stepCostFunction);
 		this.heuristicFunction = heuristicFunction;
 	}
+	
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			GoalTest goalTest) {
+
+		this.initialState = initialState;
+		this.actionsFunction = actionsFunction;
+		this.goalTest = goalTest;
+		this.stepCostFunction = new DefaultStepCostFunction();
+		this.heuristicFunction = new DefaultHeuristicFunction();
+	}
+
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			GoalTest goalTest, StepCostFunction stepCostFunction) {
+		this(initialState, actionsFunction, goalTest);
+		this.stepCostFunction = stepCostFunction;
+	}
+
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			GoalTest goalTest, HeuristicFunction heuristicFunction) {
+		this(initialState, actionsFunction, goalTest);
+		this.heuristicFunction = heuristicFunction;
+	}
+
+	public Problem(Object initialState,ActionsFunction actionsFunction,
+			GoalTest goalTest, StepCostFunction stepCostFunction,
+			HeuristicFunction heuristicFunction) {
+		this(initialState, actionsFunction, goalTest, stepCostFunction);
+		this.heuristicFunction = heuristicFunction;
+	}
 
 	public Object getInitialState() {
 

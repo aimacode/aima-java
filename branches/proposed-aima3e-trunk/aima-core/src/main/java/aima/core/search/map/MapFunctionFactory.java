@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.framework.ActionsFunction;
+import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.ResultFunction;
 
 /**
@@ -20,6 +22,7 @@ import aima.core.search.framework.ResultFunction;
  */
 public class MapFunctionFactory {
 	private static ResultFunction _resultFunction = null;
+	private static PerceptToStateFunction _perceptToStateFunction = null;
 	
 	public static ActionsFunction getActionsFunction(Map aMap) {
 		return new MapActionsFunction(aMap);
@@ -40,15 +43,8 @@ public class MapFunctionFactory {
 		}
 
 		public Set<Action> actions(Object state) {
-
 			Set<Action> actions = new LinkedHashSet<Action>();
 			String location = state.toString();
-			
-			// TODO-Why are we doing this?
-			if (state instanceof DynamicPercept) {
-				location = (String) ((DynamicPercept) state)
-						.getAttribute(DynAttributeNames.PERCEPT_IN);
-			}
 
 			List<String> linkedLocations = map.getLocationsLinkedTo(location);
 			for (String linkLoc : linkedLocations) {
@@ -58,6 +54,13 @@ public class MapFunctionFactory {
 
 			return actions;
 		}
+	}
+	
+	public static PerceptToStateFunction getPerceptToStateFunction() {
+		if (null == _perceptToStateFunction) {
+			_perceptToStateFunction = new MapPerceptToStateFunction();
+		}
+		return _perceptToStateFunction;
 	}
 
 	private static class MapResultFunction implements ResultFunction {
@@ -69,21 +72,18 @@ public class MapFunctionFactory {
 			if (a instanceof MoveToAction) {
 				MoveToAction mta = (MoveToAction) a;
 				
-				Object newLocation = mta.getToLocation();
-				
-				// TODO-Due to the code above with DynamicPercept
-				// I'm being forced to create and turn one here, why?
-				if (s instanceof DynamicPercept) {
-					newLocation = ((DynamicPercept)s).copy();
-					((DynamicPercept)newLocation).setAttribute(DynAttributeNames.PERCEPT_IN, mta.getToLocation());
-				}
-				
-				return newLocation;
+				return mta.getToLocation();
 			}
 				
 			// The Action is not understood or is a NoOp
 			// the result will be the current state.	
 			return s;
+		}
+	}
+	
+	private static class MapPerceptToStateFunction implements PerceptToStateFunction {
+		public Object getState(Percept p) {
+			return ((DynamicPercept)p).getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 	}
 }

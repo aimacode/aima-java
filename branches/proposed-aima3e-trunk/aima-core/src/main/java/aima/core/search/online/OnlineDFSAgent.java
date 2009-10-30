@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.Problem;
 
 /**
@@ -48,6 +48,7 @@ import aima.core.search.framework.Problem;
 public class OnlineDFSAgent extends AbstractAgent {
 
 	private Problem problem;
+	private PerceptToStateFunction ptsFunction;
 	// static: result, a table, indexed by action and state, initially empty
 	private final Map<ActionState, Percept> result = new HashMap<ActionState, Percept>();
 	// unexplored, a table that lists, for each visited state, the actions not
@@ -60,8 +61,9 @@ public class OnlineDFSAgent extends AbstractAgent {
 	private Percept s = null;
 	private Action a = null;
 
-	public OnlineDFSAgent(Problem problem) {
+	public OnlineDFSAgent(Problem problem, PerceptToStateFunction ptsFunction) {
 		setProblem(problem);
+		setPerceptToStateFunction(ptsFunction);
 	}
 
 	public Problem getProblem() {
@@ -72,43 +74,51 @@ public class OnlineDFSAgent extends AbstractAgent {
 		this.problem = problem;
 		init();
 	}
+	
+	public PerceptToStateFunction getPerceptToStateFunction() {
+		return ptsFunction;
+	}
+
+	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
+		this.ptsFunction = ptsFunction;
+	}
 
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept sComma) {
+	public Action execute(Percept sPrime) {
 		// if GOAL-TEST(s') then return stop
-		if (!goalTest(sComma)) {
+		if (!goalTest(sPrime)) {
 			// if s' is a new state then unexplored[s'] <- ACTIONS(s')
-			if (!unexplored.containsKey(sComma)) {
-				unexplored.put(sComma, actions(sComma));
+			if (!unexplored.containsKey(sPrime)) {
+				unexplored.put(sPrime, actions(sPrime));
 			}
 
 			// if s is not null then do
 			if (null != s) {
 				// result[a, s] <- s'
-				result.put(new ActionState(a, s), sComma);
+				result.put(new ActionState(a, s), sPrime);
 
 				// Ensure the unbacktracked always has a list for s'
-				if (!unbacktracked.containsKey(sComma)) {
-					unbacktracked.put(sComma, new ArrayList<Percept>());
+				if (!unbacktracked.containsKey(sPrime)) {
+					unbacktracked.put(sPrime, new ArrayList<Percept>());
 				}
 
 				// add s to the front of the unbacktracked[s']
-				unbacktracked.get(sComma).add(s);
+				unbacktracked.get(sPrime).add(s);
 			}
 			// if unexplored[s'] is empty then
-			if (unexplored.get(sComma).size() == 0) {
+			if (unexplored.get(sPrime).size() == 0) {
 				// if unbacktracked[s'] is empty then return stop
-				if (unbacktracked.get(sComma).size() == 0) {
+				if (unbacktracked.get(sPrime).size() == 0) {
 					a = NoOpAction.NO_OP;
 				} else {
 					// else a <- an action b such that result[b, s'] =
 					// POP(unbacktracked[s'])
-					Percept popped = unbacktracked.get(sComma).remove(
-							unbacktracked.get(sComma).size() - 1);
+					Percept popped = unbacktracked.get(sPrime).remove(
+							unbacktracked.get(sPrime).size() - 1);
 					for (ActionState as : result.keySet()) {
-						if (as.getState().equals(sComma)
+						if (as.getState().equals(sPrime)
 								&& result.get(as).equals(popped)) {
 							a = as.getAction();
 							break;
@@ -117,8 +127,8 @@ public class OnlineDFSAgent extends AbstractAgent {
 				}
 			} else {
 				// else a <- POP(unexplored[s'])
-				a = unexplored.get(sComma).remove(
-						unexplored.get(sComma).size() - 1);
+				a = unexplored.get(sPrime).remove(
+						unexplored.get(sPrime).size() - 1);
 			}
 		} else {
 			a = NoOpAction.NO_OP;
@@ -131,7 +141,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 		}
 
 		// s <- s'
-		s = sComma;
+		s = sPrime;
 		// return a
 		return a;
 	}
@@ -150,10 +160,10 @@ public class OnlineDFSAgent extends AbstractAgent {
 	}
 
 	private boolean goalTest(Percept state) {
-		return getProblem().isGoalState(state);
+		return getProblem().isGoalState(ptsFunction.getState(state));
 	}
 
 	private List<Action> actions(Percept state) {
-		return new ArrayList<Action>(problem.getActionsFunction().actions(state));
+		return new ArrayList<Action>(problem.getActionsFunction().actions(ptsFunction.getState(state)));
 	}
 }

@@ -1,10 +1,7 @@
 package aima.test.core.unit.search.online;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.agent.Action;
@@ -14,6 +11,7 @@ import aima.core.agent.EnvironmentView;
 import aima.core.search.map.BidirectionalMapProblem;
 import aima.core.search.map.ExtendableMap;
 import aima.core.search.map.MapEnvironment;
+import aima.core.search.map.MapFunctionFactory;
 import aima.core.search.online.OnlineDFSAgent;
 
 public class OnlineDFSAgentTest {
@@ -39,7 +37,7 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new BidirectionalMapProblem(
-				me.getMap(), "A", "A"));
+				me.getMap(), "A", "A"), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -59,7 +57,7 @@ public class OnlineDFSAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new BidirectionalMapProblem(
-				me.getMap(), "A", "G"));
+				me.getMap(), "A", "G"), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -87,7 +85,7 @@ public class OnlineDFSAgentTest {
 		aMap.addBidirectionalLink("A", "B", 1.0);
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new BidirectionalMapProblem(
-				me.getMap(), "A", "X"));
+				me.getMap(), "A", "X"), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -121,7 +119,7 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new BidirectionalMapProblem(
-				me.getMap(), "1,1", "3,3"));
+				me.getMap(), "1,1", "3,3"), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "1,1");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {

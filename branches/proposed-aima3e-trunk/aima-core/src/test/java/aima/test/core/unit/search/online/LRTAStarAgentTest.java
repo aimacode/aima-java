@@ -12,6 +12,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.map.BidirectionalMapProblem;
 import aima.core.search.map.ExtendableMap;
 import aima.core.search.map.MapEnvironment;
+import aima.core.search.map.MapFunctionFactory;
 import aima.core.search.online.LRTAStarAgent;
 
 public class LRTAStarAgentTest {
@@ -42,7 +43,7 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "A", hf));
+				.getMap(), "A", "A", hf), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -62,7 +63,7 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "F", hf));
+				.getMap(), "A", "F", hf), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -85,7 +86,7 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "G", hf));
+				.getMap(), "A", "G", hf), MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {

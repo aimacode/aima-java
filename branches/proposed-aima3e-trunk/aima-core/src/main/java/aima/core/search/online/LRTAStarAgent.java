@@ -7,6 +7,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.Problem;
 
 /**
@@ -49,6 +50,7 @@ import aima.core.search.framework.Problem;
 public class LRTAStarAgent extends AbstractAgent {
 
 	private Problem problem;
+	private PerceptToStateFunction ptsFunction;
 	// static: result, a table, indexed by action and state, initially empty
 	private final Hashtable<ActionState, Percept> result = new Hashtable<ActionState, Percept>();
 	// H, a table of cost estimates indexed by state, initially empty
@@ -57,8 +59,9 @@ public class LRTAStarAgent extends AbstractAgent {
 	private Percept s = null;
 	private Action a = null;
 
-	public LRTAStarAgent(Problem problem) {
+	public LRTAStarAgent(Problem problem, PerceptToStateFunction ptsFunction) {
 		setProblem(problem);
+		setPerceptToStateFunction(ptsFunction);
 	}
 
 	public Problem getProblem() {
@@ -70,22 +73,30 @@ public class LRTAStarAgent extends AbstractAgent {
 		init();
 	}
 
+	public PerceptToStateFunction getPerceptToStateFunction() {
+		return ptsFunction;
+	}
+
+	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
+		this.ptsFunction = ptsFunction;
+	}
+
 	// function LRTA*AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept sComma) {
+	public Action execute(Percept sPrime) {
 
 		// if GOAL-TEST(s') then return stop
-		if (!goalTest(sComma)) {
+		if (!goalTest(sPrime)) {
 			// if s' is new state (not in H) then H[s'] <- h(s')
-			if (!H.containsKey(sComma)) {
-				H.put(sComma, getProblem().getHeuristicFunction()
-						.getHeuristicValue(sComma));
+			if (!H.containsKey(sPrime)) {
+				H.put(sPrime, getProblem().getHeuristicFunction()
+						.getHeuristicValue(ptsFunction.getState(sPrime)));
 			}
 			// unless s is null
 			if (null != s) {
 				// result[a, s] <- s'
-				result.put(new ActionState(a, s), sComma);
+				result.put(new ActionState(a, s), sPrime);
 
 				// H[s] <- min LRTA*-COST(s, b, result[b, s], H)
 				// b (element of) ACTIONS(s)
@@ -104,9 +115,9 @@ public class LRTAStarAgent extends AbstractAgent {
 			double min = Double.MAX_VALUE;
 			// Just in case no actions
 			a = NoOpAction.NO_OP;
-			for (Action b : actions(sComma)) {
-				double cost = lrtaCost(sComma, b, result.get(new ActionState(b,
-						sComma)));
+			for (Action b : actions(sPrime)) {
+				double cost = lrtaCost(sPrime, b, result.get(new ActionState(b,
+						sPrime)));
 				if (cost < min) {
 					min = cost;
 					a = b;
@@ -117,7 +128,7 @@ public class LRTAStarAgent extends AbstractAgent {
 		}
 
 		// s <- s'
-		s = sComma;
+		s = sPrime;
 
 		if (a.isNoOp()) {
 			// I'm either at the Goal or can't get to it,
@@ -140,21 +151,21 @@ public class LRTAStarAgent extends AbstractAgent {
 	}
 
 	private boolean goalTest(Percept state) {
-		return getProblem().isGoalState(state);
+		return getProblem().isGoalState(ptsFunction.getState(state));
 	}
 
 	// function LRTA*-COST(s, a, s', H) returns a cost estimate
-	private double lrtaCost(Percept s, Action action, Percept sQuote) {
+	private double lrtaCost(Percept s, Action action, Percept sPrime) {
 		// if s' is undefined then return h(s)
-		if (null == sQuote) {
-			return getProblem().getHeuristicFunction().getHeuristicValue(s);
+		if (null == sPrime) {
+			return getProblem().getHeuristicFunction().getHeuristicValue(ptsFunction.getState(s));
 		}
 		// else return c(s, a, s') + H[s']
-		return getProblem().getStepCostFunction().cost(s, action, sQuote)
-				+ H.get(sQuote);
+		return getProblem().getStepCostFunction().cost(ptsFunction.getState(s), action, ptsFunction.getState(sPrime))
+				+ H.get(sPrime);
 	}
 
 	private Set<Action> actions(Percept state) {
-		return problem.getActionsFunction().actions(state);
+		return problem.getActionsFunction().actions(ptsFunction.getState(state));
 	}
 }

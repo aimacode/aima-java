@@ -1,7 +1,6 @@
 package aima.core.search.map;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.framework.StepCostFunction;
 
 /**
@@ -33,14 +32,6 @@ public class MapStepCostFunction implements StepCostFunction {
 
 		String fromLoc = fromCurrentState.toString();
 		String toLoc = toNextState.toString();
-		
-		// TODO-Why are we doing this?
-		if (fromCurrentState instanceof DynamicPercept) {
-			fromLoc = (String) ((DynamicPercept) fromCurrentState)
-					.getAttribute(DynAttributeNames.PERCEPT_IN);
-			toLoc = (String) ((DynamicPercept) toNextState)
-					.getAttribute(DynAttributeNames.PERCEPT_IN);
-		}
 
 		Double distance = map.getDistance(fromLoc, toLoc);
 
