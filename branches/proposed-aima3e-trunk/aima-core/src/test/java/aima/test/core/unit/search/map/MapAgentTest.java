@@ -78,7 +78,7 @@ public class MapAgentTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(D):Action[name==moveTo, location==C, distance==6.0]:Action[name==moveTo, location==D, distance==7.0]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(D):Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name==NoOp]:",
 						envChanges.toString());
 	}
 

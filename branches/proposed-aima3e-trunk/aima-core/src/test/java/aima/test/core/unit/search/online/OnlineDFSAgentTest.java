@@ -72,7 +72,7 @@ public class OnlineDFSAgentTest {
 
 		Assert
 				.assertEquals(
-						"Action[name==moveTo, location==C, distance==6.0]->Action[name==moveTo, location==A, distance==6.0]->Action[name==moveTo, location==B, distance==5.0]->Action[name==moveTo, location==E, distance==7.0]->Action[name==moveTo, location==B, distance==7.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==G, distance==8.0]->Action[name==NoOp]->",
+						"Action[name==moveTo, location==C]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==E]->Action[name==moveTo, location==B]->Action[name==moveTo, location==D]->Action[name==moveTo, location==G]->Action[name==NoOp]->",
 						envChanges.toString());
 	}
 
@@ -102,7 +102,7 @@ public class OnlineDFSAgentTest {
 		// oscillation between existing nodes.
 		me.step(5);
 
-		Assert.assertEquals("Action[name==moveTo, location==B, distance==1.0]->Action[name==moveTo, location==A, distance==1.0]->Action[name==moveTo, location==B, distance==1.0]->Action[name==moveTo, location==A, distance==1.0]->Action[name==moveTo, location==B, distance==1.0]->", envChanges.toString());
+		Assert.assertEquals("Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->", envChanges.toString());
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class OnlineDFSAgentTest {
 
 		Assert
 				.assertEquals(
-						"Action[name==moveTo, location==2,1, distance==1.0]->Action[name==moveTo, location==1,1, distance==1.0]->Action[name==moveTo, location==1,2, distance==1.0]->Action[name==moveTo, location==2,2, distance==1.0]->Action[name==moveTo, location==3,2, distance==1.0]->Action[name==moveTo, location==3,1, distance==1.0]->Action[name==moveTo, location==3,2, distance==1.0]->Action[name==moveTo, location==2,2, distance==1.0]->Action[name==moveTo, location==1,2, distance==1.0]->Action[name==moveTo, location==1,3, distance==1.0]->Action[name==moveTo, location==2,3, distance==1.0]->Action[name==moveTo, location==3,3, distance==1.0]->Action[name==NoOp]->",
+						"Action[name==moveTo, location==2,1]->Action[name==moveTo, location==1,1]->Action[name==moveTo, location==1,2]->Action[name==moveTo, location==2,2]->Action[name==moveTo, location==3,2]->Action[name==moveTo, location==3,1]->Action[name==moveTo, location==3,2]->Action[name==moveTo, location==2,2]->Action[name==moveTo, location==1,2]->Action[name==moveTo, location==1,3]->Action[name==moveTo, location==2,3]->Action[name==moveTo, location==3,3]->Action[name==NoOp]->",
 						envChanges.toString());
 	}
 }

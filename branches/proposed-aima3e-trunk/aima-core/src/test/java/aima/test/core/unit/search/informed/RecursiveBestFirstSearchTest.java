@@ -96,7 +96,7 @@ public class RecursiveBestFirstSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu, distance==140.0]:Action[name==moveTo, location==RimnicuVilcea, distance==80.0]:Action[name==moveTo, location==Pitesti, distance==97.0]:Action[name==moveTo, location==Bucharest, distance==101.0]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+						"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
 						envChanges.toString());
 	}
 }

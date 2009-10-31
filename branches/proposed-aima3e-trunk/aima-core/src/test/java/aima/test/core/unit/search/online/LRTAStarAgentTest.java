@@ -78,7 +78,7 @@ public class LRTAStarAgentTest {
 
 		Assert
 				.assertEquals(
-						"Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==A, distance==4.0]->Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==E, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==E, distance==4.0]->Action[name==moveTo, location==F, distance==4.0]->Action[name==NoOp]->",
+						"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==NoOp]->",
 						envChanges.toString());
 	}
 
@@ -102,7 +102,7 @@ public class LRTAStarAgentTest {
 		// reasonablbe, against which to test.
 		me.step(14);
 
-		Assert.assertEquals("Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==A, distance==4.0]->Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==B, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==C, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==E, distance==4.0]->Action[name==moveTo, location==D, distance==4.0]->Action[name==moveTo, location==E, distance==4.0]->Action[name==moveTo, location==F, distance==4.0]->Action[name==moveTo, location==E, distance==4.0]->",
+		Assert.assertEquals("Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
 				envChanges.toString());
 	}
 }

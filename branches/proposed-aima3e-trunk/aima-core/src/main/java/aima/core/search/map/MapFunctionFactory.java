@@ -48,8 +48,7 @@ public class MapFunctionFactory {
 
 			List<String> linkedLocations = map.getLocationsLinkedTo(location);
 			for (String linkLoc : linkedLocations) {
-				actions.add(new MoveToAction(linkLoc, map.getDistance(location,
-						linkLoc)));
+				actions.add(new MoveToAction(linkLoc));
 			}
 
 			return actions;

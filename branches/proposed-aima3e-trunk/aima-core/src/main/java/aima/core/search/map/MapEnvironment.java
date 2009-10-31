@@ -1,8 +1,5 @@
 package aima.core.search.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
@@ -67,13 +64,7 @@ public class MapEnvironment extends AbstractEnvironment {
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		String currLoc = (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION);
-		List<Action> possibleActions = new ArrayList<Action>();
-		for (String a : aMap.getLocationsLinkedTo(currLoc)) {
-			possibleActions.add(new MoveToAction(a, new Double(aMap.getDistance(currLoc, a))));
-		}
-		// TODO-should the possible actions be added to the Percept?
-		return new DynamicPercept(DynAttributeNames.PERCEPT_IN, currLoc,
-				DynAttributeNames.PERCEPT_POSSIBLE_ACTIONS, possibleActions);
+		return new DynamicPercept(DynAttributeNames.PERCEPT_IN, currLoc);
 	}
 
 	public Map getMap() {

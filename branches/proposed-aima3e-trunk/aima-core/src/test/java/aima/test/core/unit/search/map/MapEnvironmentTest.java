@@ -45,7 +45,7 @@ public class MapEnvironmentTest {
 	@Test
 	public void testExecuteAction() {
 		me.addAgent(ma, "D");
-		me.executeAction(ma, new MoveToAction("C", 7.0));
+		me.executeAction(ma, new MoveToAction("C"));
 		Assert.assertEquals(me.getAgenetLocation(), "C");
 	}
 

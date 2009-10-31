@@ -28,20 +28,4 @@ public class DynAttributeNames {
 	 * value type: String.
 	 */
 	public static final String PERCEPT_IN = "In";
-	/**
-	 * Name of a dynamic attribute, which tells the agent which actions are
-	 * possible at the current location of the agent. Expected value type: List
-	 * of alternating Strings and Integers.
-	 */
-	public static final String PERCEPT_POSSIBLE_ACTIONS = "PossibleActions";
-	/**
-	 * Name of a dynamic attribute. It provides access to informations which are
-	 * available at the current location of the agent.
-	 */
-	public static final String PERCEPT_INFOS = "Infos";
-	/**
-	 * Name of a dynamic attribute. It provides access to objects, which are
-	 * visible at the current location of the agent.
-	 */
-	public static final String PERCEPT_OBJECTS = "Objects";
 }
