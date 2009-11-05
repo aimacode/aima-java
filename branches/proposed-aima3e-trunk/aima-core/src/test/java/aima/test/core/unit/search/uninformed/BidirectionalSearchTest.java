@@ -120,7 +120,7 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(C):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(C):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=4:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(
@@ -146,7 +146,7 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(D):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=4:METRIC[nodesExpanded]=4:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(D):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=4:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(
@@ -224,7 +224,7 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(E):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==E]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(E):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==E]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert
@@ -298,16 +298,20 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(E):Action[name==NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=0:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(E):Action[name==NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(BidirectionalSearch.SearchOutcome.PATH_NOT_FOUND,
 				bidirectionalSearch.getSearchOutcome());
 	}
 
-	// Test I(A)<->(B)<->(C)<->(D)<->(E)<->G(F)
-	// | +
-	// -------------------------
+	/**
+	 * <code>
+	 * Test I(A)<->(B)<->(C)<->(D)<->(E)<->(F)<->(G)<->G(H)
+	 *              |                                    +
+	 *              --------------------------------------
+	 * </code>
+	 */
 	@Test
 	public void test_ABCDEF_OriginalFirst() {
 		ExtendableMap aMap = new ExtendableMap();
@@ -316,18 +320,20 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("C", "D", 5.0);
 		aMap.addBidirectionalLink("D", "E", 5.0);
 		aMap.addBidirectionalLink("E", "F", 5.0);
-		aMap.addUnidirectionalLink("B", "F", 5.0);
+		aMap.addBidirectionalLink("F", "G", 5.0);
+		aMap.addBidirectionalLink("G", "H", 5.0);
+		aMap.addUnidirectionalLink("B", "H", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, bidirectionalSearch,
-				new String[] { "F" });
+				new String[] { "H" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==F]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=5:METRIC[queueSize]=5:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(H):Action[name==moveTo, location==B]:Action[name==moveTo, location==H]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=3:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert
@@ -336,9 +342,13 @@ public class BidirectionalSearchTest {
 						bidirectionalSearch.getSearchOutcome());
 	}
 
-	// Test I(A)<->(B)<->(C)<->(D)<->(E)<->G(F)
-	// + |
-	// -------------------------
+	/**
+	 * <code>
+	 * Test I(A)<->(B)<->(C)<->(D)<->(E)<->G(F)
+	 *        +                       |
+	 *        -------------------------
+	 * </code>
+	 */
 	@Test
 	public void test_ABCDEF_ReverseFirstButNotFromOriginal() {
 		ExtendableMap aMap = new ExtendableMap();
@@ -358,7 +368,7 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==E]:Action[name==moveTo, location==F]:METRIC[pathCost]=25.0:METRIC[maxQueueSize]=6:METRIC[queueSize]=6:METRIC[nodesExpanded]=7:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==E]:Action[name==moveTo, location==F]:METRIC[pathCost]=25.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=3:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(
@@ -366,11 +376,15 @@ public class BidirectionalSearchTest {
 				bidirectionalSearch.getSearchOutcome());
 	}
 
-	// -------------
-	// + +
-	// Test I(A)<->(B)<->(C)<->(D)<->(E)<-G(F)
-	// + +
-	// -------------------------
+	/**
+	 * <code>
+	 *                          -------------
+	 *                          +           +
+	 * Test I(A)<->(B)<->(C)<->(D)<->(E)<-G(F)
+	 *        +                       +
+	 *        -------------------------
+	 * </code>
+	 */
 	@Test
 	public void test_ABCDEF_MoreComplexReverseFirstButNotFromOriginal() {
 		ExtendableMap aMap = new ExtendableMap();
@@ -391,20 +405,21 @@ public class BidirectionalSearchTest {
 
 		Assert
 				.assertEquals(
-						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==E]:Action[name==moveTo, location==D]:Action[name==moveTo, location==F]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=9:METRIC[queueSize]=9:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+						"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==F]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
 						envChanges.toString());
 
 		Assert.assertEquals(
 				BidirectionalSearch.SearchOutcome.PATH_FOUND_BETWEEN_PROBLEMS,
 				bidirectionalSearch.getSearchOutcome());
 	}
-	
+
 	class BDSEnvironmentView implements EnvironmentView {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
-		
-		public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+		public void envChanged(Agent agent, Action action,
+				EnvironmentState state) {
 			envChanges.append(action).append(":");
 		}
 	}

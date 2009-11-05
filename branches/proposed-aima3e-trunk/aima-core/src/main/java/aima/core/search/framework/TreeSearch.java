@@ -3,48 +3,17 @@ package aima.core.search.framework;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.7, page 70.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page ??.
  * <code>
- * function TREE-SEARCH(problem, strategy) returns a solution, or failure
- *   initialize the search tree using the initial state of problem
+ * function TREE-SEARCH(problem) returns a solution, or failure
+ *   initialize the frontier using the initial state of the problem
  *   loop do
- *     if there are no candidates for expansion then return failure
- *     choose a leaf node for expansion according to strategy
+ *     if the frontier is empty then return failure
+ *     choose a leaf node and remove it from the frontier
  *     if the node contains a goal state then return the corresponding solution
- *     else expand the node and add the resulting nodes to the search tree.
+ *     expand the chosen node, adding the resulting nodes to the frontier
  * </code>
  * Figure 3.7 An informal description of the general tree-search algorithm.
- * 
- * 
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.9, page 72.
- * <code>
- * function TREE-SEARCH(problem, fringe) returns a solution, or failure
- *   
- *   fringe <- INSERT(MAKE-NODE(INITIAL-STATE[problem]), fringe)
- *   loop do
- *     if EMPTY?(fringe) then return failure
- *     node <- REMOVE-FIRST(fringe)
- *     if GOAL-TEST[problem] applied to STATE[node] succeeds
- *       the return SOLUTION(node)
- *     fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
- * ---------------------------------------------------------------------
- * function EXPAND(node, problem) returns a set of nodes
- * 
- *   successors <- empty set
- *   for each <action, result> in SUCCESSOR-FN[problem](STATE[node]) do
- *     s <- a new NODE
- *     STATE[s] <- result
- *     PARENT-NODE[s] <- node
- *     ACTION[s] <- action
- *     PATH-COST[s] <- PATH-COST[node] + STEP-COSTS(STATE[node], action, result)
- *     DEPTH[s] <- DEPTH[node] + 1
- *     add s to successor
- *   return successors
- * </code>
- * Figure 3.9 The general tree-search algorithm. (Note that the fringe argument must be an
- * empty queue, and the type of the queue will affect the order of the search.) The SOLUTION
- * function returns the sequence of actions obtained by following parent pointers back to the
- * root.
  */
 
 /**
@@ -54,8 +23,9 @@ import aima.core.util.datastructure.Queue;
 public class TreeSearch extends QueueSearch {
 
 	@Override
-	public void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
+	public void expandNodeAddingResultingNodesToFrontier(Queue<Node> frontier, Node nodeToExpand,
 			Problem problem) {
-		frontier.addAll(expandNode(node, problem));
+		// expand the chosen node, adding the resulting nodes to the frontier
+		frontier.addAll(expandNode(nodeToExpand, problem));
 	}
 }

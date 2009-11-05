@@ -7,57 +7,62 @@ import java.util.Set;
 import aima.core.agent.Action;
 import aima.core.util.datastructure.Queue;
 
-
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 3.19, page
- * 83. <code>
- * function GRAPH-SEARCH(problem, fringe) returns a solution, or failure
- * 
- *   closed <- an empty set
- *   fringe <- INSERT(MAKE-NODE(INITIAL-STATE[problem]), fringe)
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page ??. 
+ * <code>
+ * function GRAPH-SEARCH(problem) returns a solution, or failure
+ *   initialize the frontier using the initial state of problem
+ *   initialize the explored set to be empty
  *   loop do
- *     if EMPTY?(fringe) then return failure
- *     node <- REMOVE-FIRST(fringe)
- *     if (GOAL-TEST[problem](STATE[node]) then return SOLUTION(node)
- *     if STATE[node] is not in closed then
- *       add STATE[node] to closed
- *       fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
- * </code> Figure 3.19 The general graph-search algorithm, The set closed can be
- * implemented with a hash table to allow efficient checking for repeated
- * states. This algorithm assumes that the first path to a state s is the
- * cheapest (see text).
+ *     if the frontier is empty then return failure
+ *     choose a leaf node and remove it from the frontier
+ *     if the node contains a goal state then return the corresponding solution
+ *     add the node to the explored set
+ *     expand the chosen node, adding the resulting nodes to the frontier
+ *       only if not in the frontier or explored set
+ * </code> 
+ * Figure 3.7 An informal description of the general graph-search algorithm.
  */
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
 public class GraphSearch extends QueueSearch {
 
-	Set<Object> closed = new HashSet<Object>();
-
+	private Set<Object> explored = new HashSet<Object>();
+	private Set<Object> frontierState = new HashSet<Object>();
+	
 	// Need to override search() method so that I can re-initialize
-	// the closed list should multiple calls to search be made.
+	// the explored set should multiple calls to search be made.
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
-		closed.clear();
+		// initialize the explored set to be empty
+		explored.clear();
+		frontierState.add(problem.getInitialState());
 		return super.search(problem, frontier);
+	}
+	
+	@Override
+	public Node removeNodeFromFrontier(Queue<Node> frontier) {
+		Node toRemove = super.removeNodeFromFrontier(frontier);
+		frontierState.remove(toRemove.getState());
+		return toRemove;
 	}
 
 	@Override
-	public void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
-			Problem problem) {
+	public void expandNodeAddingResultingNodesToFrontier(Queue<Node> frontier,
+			Node nodeToExpand, Problem problem) {
 
-		// if STATE[node] is not in closed then
-		if (!(alreadySeen(node))) {
-			// add STATE[node] to closed
-			closed.add(node.getState());
-			// fringe <- INSERT-ALL(EXPAND(node, problem), fringe)
-			frontier.addAll(expandNode(node, problem));
+		// add the node to the explored set
+		explored.add(nodeToExpand.getState());		
+		// expand the chosen node, adding the resulting nodes to the frontier
+		for (Node cfn : expandNode(nodeToExpand, problem)) {
+			// only if not in the frontier or explored set
+			if (!frontierState.contains(cfn.getState()) && !explored.contains(cfn.getState())) {
+				frontier.insert(cfn);
+				frontierState.add(cfn.getState());
+			}
 		}
-	}
-
-	private boolean alreadySeen(Node node) {
-		return closed.contains(node.getState());
 	}
 }

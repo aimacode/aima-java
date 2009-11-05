@@ -34,11 +34,11 @@ public class AStarSearchTest {
 			Search search = new AStarSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
-			Assert.assertEquals("906", agent.getInstrumentation().getProperty(
+			Assert.assertEquals("908", agent.getInstrumentation().getProperty(
 					"nodesExpanded"));
-			Assert.assertEquals("914", agent.getInstrumentation().getProperty(
+			Assert.assertEquals("539", agent.getInstrumentation().getProperty(
 					"queueSize"));
-			Assert.assertEquals("920", agent.getInstrumentation().getProperty(
+			Assert.assertEquals("540", agent.getInstrumentation().getProperty(
 					"maxQueueSize"));
 		} catch (Exception e) {
 			e.printStackTrace();

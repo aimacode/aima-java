@@ -11,35 +11,49 @@ import aima.core.util.datastructure.Queue;
  * 
  */
 public abstract class QueueSearch extends NodeExpander {
-	private static String QUEUE_SIZE = "queueSize";
+	public static final String METRIC_QUEUE_SIZE = "queueSize";
 
-	private static String MAX_QUEUE_SIZE = "maxQueueSize";
+	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 
-	private static String PATH_COST = "pathCost";
+	public static final String METRIC_PATH_COST = "pathCost";
 
+	// Note: This follows the general structure of TREE-SEARCH as described in fig 3.7.
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		clearInstrumentation();
+		// initialize the frontier using the initial state of the problem
 		frontier.insert(new Node(problem.getInitialState()));
 		setQueueSize(frontier.size());
 		while (!(frontier.isEmpty())) {
-			Node node = frontier.pop();
+			// choose a leaf node and remove it from the frontier
+			Node nodeToExpand = removeNodeFromFrontier(frontier);
 			setQueueSize(frontier.size());
-			if (problem.isGoalState(node.getState())) {
-				setPathCost(node.getPathCost());
-				return SearchUtils.actionsFromNodes(node.getPathFromRoot());
+			// if the node contains a goal state then return the corresponding solution
+			if (problem.isGoalState(nodeToExpand.getState())) {
+				setPathCost(nodeToExpand.getPathCost());
+				return SearchUtils.actionsFromNodes(nodeToExpand.getPathFromRoot());
 			}
-			addExpandedNodesToFringe(frontier, node, problem);
+			// expand the chosen node, adding the resulting nodes to the frontier
+			expandNodeAddingResultingNodesToFrontier(frontier, nodeToExpand, problem);
 			setQueueSize(frontier.size());
 		}
-		return new ArrayList<Action>();// Empty List indicates Failure
+		// if the frontier is empty then return failure
+		// Note: we use the empty List to indicate failure
+		return new ArrayList<Action>();
 	}
-
+	
+	public Node removeNodeFromFrontier(Queue<Node> frontier) {
+		return frontier.pop();
+	}
+	
+	public abstract void expandNodeAddingResultingNodesToFrontier(Queue<Node> frontier, Node nodeToExpand,
+			Problem p);
+	
 	@Override
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
-		metrics.set(QUEUE_SIZE, 0);
-		metrics.set(MAX_QUEUE_SIZE, 0);
-		metrics.set(PATH_COST, 0);
+		metrics.set(METRIC_QUEUE_SIZE, 0);
+		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);
+		metrics.set(METRIC_PATH_COST, 0);
 	}
 
 	public int getQueueSize() {
@@ -48,25 +62,22 @@ public abstract class QueueSearch extends NodeExpander {
 
 	public void setQueueSize(int queueSize) {
 
-		metrics.set(QUEUE_SIZE, queueSize);
-		int maxQSize = metrics.getInt(MAX_QUEUE_SIZE);
+		metrics.set(METRIC_QUEUE_SIZE, queueSize);
+		int maxQSize = metrics.getInt(METRIC_MAX_QUEUE_SIZE);
 		if (queueSize > maxQSize) {
-			metrics.set(MAX_QUEUE_SIZE, queueSize);
+			metrics.set(METRIC_MAX_QUEUE_SIZE, queueSize);
 		}
 	}
 
 	public int getMaxQueueSize() {
-		return metrics.getInt(MAX_QUEUE_SIZE);
+		return metrics.getInt(METRIC_MAX_QUEUE_SIZE);
 	}
 
 	public double getPathCost() {
-		return metrics.getDouble(PATH_COST);
+		return metrics.getDouble(METRIC_PATH_COST);
 	}
 
 	public void setPathCost(Double pathCost) {
-		metrics.set(PATH_COST, pathCost);
+		metrics.set(METRIC_PATH_COST, pathCost);
 	}
-
-	public abstract void addExpandedNodesToFringe(Queue<Node> frontier, Node node,
-			Problem p);
 }

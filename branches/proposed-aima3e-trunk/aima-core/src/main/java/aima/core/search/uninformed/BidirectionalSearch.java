@@ -72,8 +72,8 @@ public class BidirectionalSearch implements Search {
 
 		Node opNode = new Node(op.getInitialState());
 		Node rpNode = new Node(rp.getInitialState());
-		opFrontier.add(opNode);
-		rpFrontier.add(rpNode);
+		opFrontier.insert(opNode);
+		rpFrontier.insert(rpNode);
 
 		setQueueSize(opFrontier.size() + rpFrontier.size());
 		setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
@@ -84,13 +84,15 @@ public class BidirectionalSearch implements Search {
 			// searches meet or one or other is at the GOAL.
 			if (!opFrontier.isEmpty()) {
 				opNode = opFrontier.pop();
-				ogs.addExpandedNodesToFringe(opFrontier, opNode, op);
+				ogs.expandNodeAddingResultingNodesToFrontier(opFrontier,
+						opNode, op);
 			} else {
 				opNode = null;
 			}
 			if (!rpFrontier.isEmpty()) {
-				rpNode = rpFrontier.remove();
-				rgs.addExpandedNodesToFringe(rpFrontier, rpNode, rp);
+				rpNode = rpFrontier.pop();
+				rgs.expandNodeAddingResultingNodesToFrontier(rpFrontier,
+						rpNode, rp);
 			} else {
 				rpNode = null;
 			}
@@ -99,7 +101,7 @@ public class BidirectionalSearch implements Search {
 			setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
 
 			//
-			// First Check if either fringe contains the other's state
+			// First Check if either frontier contains the other's state
 			if (null != opNode && null != rpNode) {
 				Node popNode = null;
 				Node prpNode = null;
@@ -110,7 +112,7 @@ public class BidirectionalSearch implements Search {
 					popNode = opNode;
 					prpNode = rpFrontier.getNodeBasedOn(opNode.getState());
 					// Need to also check whether or not the nodes that
-					// have been taken off the fringe actually represent the
+					// have been taken off the frontier actually represent the
 					// same state, otherwise there are instances whereby
 					// the searches can pass each other by
 				} else if (opNode.getState().equals(rpNode.getState())) {
@@ -282,7 +284,8 @@ public class BidirectionalSearch implements Search {
 				Object isNext = op.getResultFunction().result(currentState, a);
 				if (nextState.equals(isNext)) {
 					found = true;
-					pc += op.getStepCostFunction().cost(currentState, a, nextState);
+					pc += op.getStepCostFunction().cost(currentState, a,
+							nextState);
 					actions.add(a);
 					break;
 				}
@@ -306,8 +309,10 @@ public class BidirectionalSearch implements Search {
 		// Only need to test if not already at root
 		if (!originalPath.isRootNode()) {
 			rVal = false;
-			for (Action a : rp.getActionsFunction().actions(reversePath.getState())) {
-				Object nextState = rp.getResultFunction().result(reversePath.getState(), a);
+			for (Action a : rp.getActionsFunction().actions(
+					reversePath.getState())) {
+				Object nextState = rp.getResultFunction().result(
+						reversePath.getState(), a);
 				if (originalPath.getParent().getState().equals(nextState)) {
 					rVal = true;
 					break;
@@ -323,15 +328,15 @@ class CachedStateQueue<E> extends FIFOQueue<E> {
 	private static final long serialVersionUID = 1;
 	//
 	private Map<Object, Node> cachedState = new HashMap<Object, Node>();
-	
+
 	public CachedStateQueue() {
 		super();
 	}
-	
+
 	public CachedStateQueue(Collection<? extends E> c) {
 		super(c);
 	}
-	
+
 	public boolean containsNodeBasedOn(Object state) {
 		return cachedState.containsKey(state);
 	}
@@ -339,32 +344,32 @@ class CachedStateQueue<E> extends FIFOQueue<E> {
 	public Node getNodeBasedOn(Object state) {
 		return cachedState.get(state);
 	}
-	
+
 	//
 	// START-Queue
-	public boolean isEmpty() {
-		return super.isEmpty();
-	}
-
-	
 	public E pop() {
 		E popped = super.pop();
-		cachedState.remove(((Node)popped).getState());
+		cachedState.remove(((Node) popped).getState());
 		return popped;
 	}
 
-	
-	public Queue<E> insert(E element) {
-		cachedState.put(((Node)element).getState(), (Node) element);
-		return super.insert(element);
-	}
 	// END-Queue
 	//
-	
+
+	// Note: This is called by FIFOQueue.insert()->LinkedList.offer();
+	@Override
+	public boolean add(E element) {
+		boolean added = super.add(element);
+		if (added) {
+			cachedState.put(((Node) element).getState(), (Node) element);
+		}
+		return added;
+	}
+
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		for (E element : c) {
-			cachedState.put(((Node)element).getState(), (Node) element);
+			cachedState.put(((Node) element).getState(), (Node) element);
 		}
 		return super.addAll(c);
 	}

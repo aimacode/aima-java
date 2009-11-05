@@ -31,12 +31,12 @@ public class GreedyBestFirstSearchTest {
 					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
 			Search search = new GreedyBestFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
-			Assert.assertEquals(81, agent.getActions().size());
-			Assert.assertEquals("304", agent.getInstrumentation().getProperty(
+			Assert.assertEquals(49, agent.getActions().size());
+			Assert.assertEquals("197", agent.getInstrumentation().getProperty(
 					"nodesExpanded"));
-			Assert.assertEquals("268", agent.getInstrumentation().getProperty(
+			Assert.assertEquals("140", agent.getInstrumentation().getProperty(
 					"queueSize"));
-			Assert.assertEquals("269", agent.getInstrumentation().getProperty(
+			Assert.assertEquals("141", agent.getInstrumentation().getProperty(
 					"maxQueueSize"));
 		} catch (Exception e) {
 			e.printStackTrace();

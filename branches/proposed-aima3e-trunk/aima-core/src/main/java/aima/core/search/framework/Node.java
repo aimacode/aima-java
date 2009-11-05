@@ -118,6 +118,6 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return getState().toString();
+		return "[parent=" + parent + ", action=" + action + ", state="+getState()+", pathCost="+pathCost+"]";
 	}
 }
