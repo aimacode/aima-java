@@ -1,5 +1,6 @@
 package aima.core.search.framework;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,7 @@ public class GraphSearch extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
 	private Set<Object> frontierState = new HashSet<Object>();
+	private List<Node> addToFrontier = new ArrayList<Node>();
 	
 	// Need to override search() method so that I can re-initialize
 	// the explored set should multiple calls to search be made.
@@ -39,6 +41,7 @@ public class GraphSearch extends QueueSearch {
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
+		frontierState.clear();
 		frontierState.add(problem.getInitialState());
 		return super.search(problem, frontier);
 	}
@@ -51,18 +54,21 @@ public class GraphSearch extends QueueSearch {
 	}
 
 	@Override
-	public void expandNodeAddingResultingNodesToFrontier(Queue<Node> frontier,
+	public List<Node> getResultingNodesToAddToFrontier(
 			Node nodeToExpand, Problem problem) {
 
+		addToFrontier.clear();
 		// add the node to the explored set
 		explored.add(nodeToExpand.getState());		
 		// expand the chosen node, adding the resulting nodes to the frontier
 		for (Node cfn : expandNode(nodeToExpand, problem)) {
 			// only if not in the frontier or explored set
 			if (!frontierState.contains(cfn.getState()) && !explored.contains(cfn.getState())) {
-				frontier.insert(cfn);
+				addToFrontier.add(cfn);
 				frontierState.add(cfn.getState());
 			}
 		}
+		
+		return addToFrontier;
 	}
 }

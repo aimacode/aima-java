@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.agent.impl.NoOpAction;
 
 /**
  * @author Ravi Mohan
@@ -12,13 +13,19 @@ import aima.core.agent.Action;
 public class SearchUtils {
 
 	public static List<Action> actionsFromNodes(List<Node> nodeList) {
-		List<Action> stateList = new ArrayList<Action>();
-		for (int i = 1; i < nodeList.size(); i++) { // ignore root node this has
-			// no action hence index starts from 1 not
-			// zero
-			Node node = nodeList.get(i);
-			stateList.add(node.getAction());
+		List<Action> actions = new ArrayList<Action>();
+		if (nodeList.size() == 1) {
+			// I'm at the root node, this indicates I started at the 
+			// Goal node, therefore just return a NoOp
+			actions.add(NoOpAction.NO_OP);
+		} else {
+			for (int i = 1; i < nodeList.size(); i++) { // ignore root node this has
+				// no action hence index starts from 1 not
+				// zero
+				Node node = nodeList.get(i);
+				actions.add(node.getAction());
+			}
 		}
-		return stateList;
+		return actions;
 	}
 }

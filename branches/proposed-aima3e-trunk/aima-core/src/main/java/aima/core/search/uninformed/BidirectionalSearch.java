@@ -15,7 +15,6 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.datastructure.FIFOQueue;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 79.
@@ -84,15 +83,13 @@ public class BidirectionalSearch implements Search {
 			// searches meet or one or other is at the GOAL.
 			if (!opFrontier.isEmpty()) {
 				opNode = opFrontier.pop();
-				ogs.expandNodeAddingResultingNodesToFrontier(opFrontier,
-						opNode, op);
+				opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode, op));
 			} else {
 				opNode = null;
 			}
 			if (!rpFrontier.isEmpty()) {
 				rpNode = rpFrontier.pop();
-				rgs.expandNodeAddingResultingNodesToFrontier(rpFrontier,
-						rpNode, rp);
+				rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode, rp));				
 			} else {
 				rpNode = null;
 			}

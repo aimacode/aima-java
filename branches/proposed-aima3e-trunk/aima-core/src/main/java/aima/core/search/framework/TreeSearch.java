@@ -1,6 +1,6 @@
 package aima.core.search.framework;
 
-import aima.core.util.datastructure.Queue;
+import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page ??.
@@ -23,9 +23,9 @@ import aima.core.util.datastructure.Queue;
 public class TreeSearch extends QueueSearch {
 
 	@Override
-	public void expandNodeAddingResultingNodesToFrontier(Queue<Node> frontier, Node nodeToExpand,
+	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
 			Problem problem) {
 		// expand the chosen node, adding the resulting nodes to the frontier
-		frontier.addAll(expandNode(nodeToExpand, problem));
+		return expandNode(nodeToExpand, problem);
 	}
 }

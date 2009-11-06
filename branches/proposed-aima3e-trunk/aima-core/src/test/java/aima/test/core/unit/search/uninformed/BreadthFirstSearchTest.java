@@ -27,7 +27,7 @@ public class BreadthFirstSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("1965", agent.getInstrumentation().getProperty(
+		Assert.assertEquals("1665", agent.getInstrumentation().getProperty(
 				"nodesExpanded"));
 
 		problem = new Problem(new NQueensBoard(3), NQueensFunctionFactory
