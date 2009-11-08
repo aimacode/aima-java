@@ -1,6 +1,12 @@
-package aima.core.search.framework;
+package aima.core.search.informed;
 
 import java.util.Comparator;
+
+import aima.core.search.framework.EvaluationFunction;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.PrioritySearch;
+import aima.core.search.framework.Problem;
+import aima.core.search.framework.QueueSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (2nd Edition): page 94.

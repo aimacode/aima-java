@@ -1,6 +1,5 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.BestFirstSearch;
 import aima.core.search.framework.QueueSearch;
 
 /**

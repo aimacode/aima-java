@@ -40,7 +40,7 @@ public class MapAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(new GraphSearch()), new String[] { "A" });
+				new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -63,7 +63,7 @@ public class MapAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(new GraphSearch()), new String[] { "D" });
+				new UniformCostSearch(), new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -86,7 +86,7 @@ public class MapAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(new GraphSearch()), new String[] { "A" });
+				new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "E");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {

@@ -42,7 +42,6 @@ public class GraphSearch extends QueueSearch {
 		// initialize the explored set to be empty
 		explored.clear();
 		frontierState.clear();
-		frontierState.add(problem.getInitialState());
 		return super.search(problem, frontier);
 	}
 	
