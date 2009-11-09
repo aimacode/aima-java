@@ -32,38 +32,42 @@ public class MapEnvironment extends AbstractEnvironment {
 		state.setAttribute(DynAttributeNames.AGENT_LOCATION, startLocation);
 		state.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE, 0.0);
 	}
-	
+
 	public String getAgenetLocation() {
 		return (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION);
 	}
-	
+
 	public Double getAgentTravelDistance() {
-		return (Double) state.getAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE);
+		return (Double) state
+				.getAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE);
 	}
 
 	@Override
 	public EnvironmentState executeAction(Agent agent, Action a) {
-		
+
 		if (!a.isNoOp()) {
 			MoveToAction act = (MoveToAction) a;
-			
-			String currLoc = (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION);
+
+			String currLoc = (String) state
+					.getAttribute(DynAttributeNames.AGENT_LOCATION);
 			Double distance = aMap.getDistance(currLoc, act.getToLocation());
 			if (distance != null) {
 				double currTD = (Double) state
 						.getAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE);
-				state.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE, currTD
-						+ distance);
-				state.setAttribute(DynAttributeNames.AGENT_LOCATION, act.getToLocation());
+				state.setAttribute(DynAttributeNames.AGENT_TRAVEL_DISTANCE,
+						currTD + distance);
+				state.setAttribute(DynAttributeNames.AGENT_LOCATION, act
+						.getToLocation());
 			}
 		}
-		
+
 		return state;
 	}
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
-		String currLoc = (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION);
+		String currLoc = (String) state
+				.getAttribute(DynAttributeNames.AGENT_LOCATION);
 		return new DynamicPercept(DynAttributeNames.PERCEPT_IN, currLoc);
 	}
 

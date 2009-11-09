@@ -16,8 +16,8 @@ import aima.core.search.map.MapGoalTest;
 import aima.core.search.map.MapStepCostFunction;
 import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.nqueens.NQueensBoard;
-import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.nqueens.NQueensFunctionFactory;
+import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**
@@ -81,7 +81,11 @@ public class UniformCostSearchTest {
 
 		List<Action> actions = agent.getActions();
 
-		Assert.assertEquals("[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]", actions.toString());
-		Assert.assertEquals("278.0", search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+						actions.toString());
+		Assert.assertEquals("278.0", search.getMetrics().get(
+				QueueSearch.METRIC_PATH_COST));
 	}
 }

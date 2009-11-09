@@ -60,8 +60,6 @@ public class DataSet {
 			}
 		}
 
-		double totalTargetAttributeCount = 0;
-
 		double[] data = new double[counts.keySet().size()];
 		Iterator<Integer> iter = counts.values().iterator();
 		for (int i = 0; i < data.length; i++) {

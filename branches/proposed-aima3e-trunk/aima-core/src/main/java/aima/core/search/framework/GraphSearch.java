@@ -34,7 +34,7 @@ public class GraphSearch extends QueueSearch {
 	private Set<Object> explored = new HashSet<Object>();
 	private Set<Object> frontierState = new HashSet<Object>();
 	private List<Node> addToFrontier = new ArrayList<Node>();
-	
+
 	// Need to override search() method so that I can re-initialize
 	// the explored set should multiple calls to search be made.
 	@Override
@@ -44,7 +44,7 @@ public class GraphSearch extends QueueSearch {
 		frontierState.clear();
 		return super.search(problem, frontier);
 	}
-	
+
 	@Override
 	public Node removeNodeFromFrontier(Queue<Node> frontier) {
 		Node toRemove = super.removeNodeFromFrontier(frontier);
@@ -53,21 +53,22 @@ public class GraphSearch extends QueueSearch {
 	}
 
 	@Override
-	public List<Node> getResultingNodesToAddToFrontier(
-			Node nodeToExpand, Problem problem) {
+	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
+			Problem problem) {
 
 		addToFrontier.clear();
 		// add the node to the explored set
-		explored.add(nodeToExpand.getState());		
+		explored.add(nodeToExpand.getState());
 		// expand the chosen node, adding the resulting nodes to the frontier
 		for (Node cfn : expandNode(nodeToExpand, problem)) {
 			// only if not in the frontier or explored set
-			if (!frontierState.contains(cfn.getState()) && !explored.contains(cfn.getState())) {
+			if (!frontierState.contains(cfn.getState())
+					&& !explored.contains(cfn.getState())) {
 				addToFrontier.add(cfn);
 				frontierState.add(cfn.getState());
 			}
 		}
-		
+
 		return addToFrontier;
 	}
 }

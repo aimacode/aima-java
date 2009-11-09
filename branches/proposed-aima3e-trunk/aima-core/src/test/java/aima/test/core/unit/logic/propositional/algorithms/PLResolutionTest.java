@@ -32,7 +32,7 @@ public class PLResolutionTest {
 		Sentence one = (Sentence) parser.parse("(A OR B)");
 		Sentence two = (Sentence) parser.parse("((NOT B) OR C)");
 		Sentence expected = (Sentence) parser.parse("(A OR C)");
-		Set resolvents = resolution.plResolve(one, two);
+		Set<Sentence> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
 		Assert.assertTrue(resolvents.contains(expected));
 	}
@@ -41,7 +41,7 @@ public class PLResolutionTest {
 	public void testPLResolveWithNoLiteralMatching() {
 		Sentence one = (Sentence) parser.parse("(A OR B)");
 		Sentence two = (Sentence) parser.parse("(C OR D)");
-		Set resolvents = resolution.plResolve(one, two);
+		Set<Sentence> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(0, resolvents.size());
 	}
 
@@ -50,7 +50,7 @@ public class PLResolutionTest {
 		Sentence one = (Sentence) parser.parse("A");
 		Sentence two = (Sentence) parser.parse("(NOT A)");
 		// Sentence expected =(Sentence) parser.parse("(A OR C)");
-		Set resolvents = resolution.plResolve(one, two);
+		Set<Sentence> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
 		Assert.assertTrue(resolvents.contains(new Symbol("EMPTY_CLAUSE")));
 	}
@@ -63,7 +63,7 @@ public class PLResolutionTest {
 				.parse("(  ( P12 OR P21 ) OR  ( NOT P21 )  )");
 		Sentence expected2 = (Sentence) parser
 				.parse("(  ( B11 OR P12 ) OR  ( NOT B11 )  )");
-		Set resolvents = resolution.plResolve(one, two);
+		Set<Sentence> resolvents = resolution.plResolve(one, two);
 
 		Assert.assertEquals(2, resolvents.size());
 		Assert.assertTrue(resolvents.contains(expected1));

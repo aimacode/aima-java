@@ -37,7 +37,6 @@ public class Table<RowHeaderType, ColumnHeaderType, ValueType> {
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		for (RowHeaderType r : rowHeaders) {
-			Hashtable<ColumnHeaderType, ValueType> rowValues = rows.get(r);
 			for (ColumnHeaderType c : columnHeaders) {
 				buf.append(get(r, c).toString());
 				buf.append(" ");

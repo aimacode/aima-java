@@ -9,7 +9,7 @@ public class DynamicModel extends ObjectWithDynamicAttributes implements Model {
 	public DynamicModel() {
 
 	}
-	
+
 	@Override
 	public String describeType() {
 		return Model.class.getSimpleName();

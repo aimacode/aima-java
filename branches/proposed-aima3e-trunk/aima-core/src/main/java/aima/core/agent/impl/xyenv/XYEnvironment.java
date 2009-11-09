@@ -25,12 +25,12 @@ public class XYEnvironment extends AbstractEnvironment {
 	// PUBLIC METHODS
 	//
 	public XYEnvironment(int width, int height) {
-		assert(width > 0);
-		assert(height > 0);
-		
+		assert (width > 0);
+		assert (height > 0);
+
 		envState = new XYEnvironmentState(width, height);
 	}
-	
+
 	@Override
 	public EnvironmentState executeAction(Agent a, Action action) {
 		return envState;
@@ -44,18 +44,19 @@ public class XYEnvironment extends AbstractEnvironment {
 	public void addObjectToLocation(EnvironmentObject eo, XYLocation loc) {
 		moveObjectToAbsoluteLocation(eo, loc);
 	}
-	
-	public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
+
+	public void moveObjectToAbsoluteLocation(EnvironmentObject eo,
+			XYLocation loc) {
 		// Ensure is added to the environment
 		addEnvironmentObject(eo);
-		
+
 		// Ensure the object is not already at a location
 		envState.moveObjectToAbsoluteLocation(eo, loc);
 	}
 
-	public void moveObject(EnvironmentObject eo, XYLocation.Direction direction) {	
+	public void moveObject(EnvironmentObject eo, XYLocation.Direction direction) {
 		XYLocation presentLocation = envState.getCurrentLocationFor(eo);
-		
+
 		if (null != presentLocation) {
 			XYLocation locationToMoveTo = presentLocation.locationAt(direction);
 			if (!(isBlocked(locationToMoveTo))) {
@@ -63,7 +64,7 @@ public class XYEnvironment extends AbstractEnvironment {
 			}
 		}
 	}
-	
+
 	public XYLocation getCurrentLocationFor(EnvironmentObject eo) {
 		return envState.getCurrentLocationFor(eo);
 	}
@@ -105,20 +106,22 @@ public class XYEnvironment extends AbstractEnvironment {
 class XYEnvironmentState implements EnvironmentState {
 	int width;
 	int height;
-	
+
 	private Map<XYLocation, Set<EnvironmentObject>> objsAtLocation = new LinkedHashMap<XYLocation, Set<EnvironmentObject>>();
-	
+
 	public XYEnvironmentState(int width, int height) {
 		this.width = width;
 		this.height = height;
 		for (int h = 1; h <= height; h++) {
 			for (int w = 1; w <= width; w++) {
-				objsAtLocation.put(new XYLocation(h, w), new LinkedHashSet<EnvironmentObject>());
+				objsAtLocation.put(new XYLocation(h, w),
+						new LinkedHashSet<EnvironmentObject>());
 			}
 		}
 	}
-	
-	public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
+
+	public void moveObjectToAbsoluteLocation(EnvironmentObject eo,
+			XYLocation loc) {
 		// Ensure is not already at another location
 		for (Set<EnvironmentObject> eos : objsAtLocation.values()) {
 			if (eos.remove(eo)) {
@@ -128,7 +131,7 @@ class XYEnvironmentState implements EnvironmentState {
 		// Add it to the location specified
 		getObjectsAt(loc).add(eo);
 	}
-	
+
 	public Set<EnvironmentObject> getObjectsAt(XYLocation loc) {
 		Set<EnvironmentObject> objectsAt = objsAtLocation.get(loc);
 		if (null == objectsAt) {
@@ -138,7 +141,7 @@ class XYEnvironmentState implements EnvironmentState {
 		}
 		return objectsAt;
 	}
-	
+
 	public XYLocation getCurrentLocationFor(EnvironmentObject eo) {
 		for (XYLocation loc : objsAtLocation.keySet()) {
 			if (objsAtLocation.get(loc).contains(eo)) {
@@ -147,10 +150,10 @@ class XYEnvironmentState implements EnvironmentState {
 		}
 		return null;
 	}
-	
+
 	public Set<EnvironmentObject> getObjectsNear(Agent agent, int radius) {
 		Set<EnvironmentObject> objsNear = new LinkedHashSet<EnvironmentObject>();
-		
+
 		XYLocation agentLocation = getCurrentLocationFor(agent);
 		for (XYLocation loc : objsAtLocation.keySet()) {
 			if (withinRadius(radius, agentLocation, loc)) {
@@ -158,24 +161,27 @@ class XYEnvironmentState implements EnvironmentState {
 			}
 		}
 		// Ensure the 'agent' is not included in the Set of
-		// objects  near
+		// objects near
 		objsNear.remove(agent);
-		
+
 		return objsNear;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "XYEnvironmentState:"+objsAtLocation.toString();
+		return "XYEnvironmentState:" + objsAtLocation.toString();
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
 	private boolean withinRadius(int radius, XYLocation agentLocation,
 			XYLocation objectLocation) {
-		int xdifference = agentLocation.getXCoOrdinate() - objectLocation.getXCoOrdinate();
-		int ydifference = agentLocation.getYCoOrdinate() - objectLocation.getYCoOrdinate();
-		return Math.sqrt((xdifference * xdifference) + (ydifference * ydifference)) <= radius;
+		int xdifference = agentLocation.getXCoOrdinate()
+				- objectLocation.getXCoOrdinate();
+		int ydifference = agentLocation.getYCoOrdinate()
+				- objectLocation.getYCoOrdinate();
+		return Math.sqrt((xdifference * xdifference)
+				+ (ydifference * ydifference)) <= radius;
 	}
 }

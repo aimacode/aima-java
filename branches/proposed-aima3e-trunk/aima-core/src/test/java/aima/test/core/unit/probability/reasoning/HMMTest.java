@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.probability.RandomVariable;
@@ -151,15 +150,15 @@ public class HMMTest {
 				.forward_backward(perceptions);
 		Assert.assertEquals(4, fbResults.size());
 
-		RandomVariable fbDayOneResult = fbResults.get(1);
-		//System.out.println(fbDayOneResult);
+		// RandomVariable fbDayOneResult = fbResults.get(1);
+		// System.out.println(fbDayOneResult);
 
 		FixedLagSmoothing fls = new FixedLagSmoothing(rainmanHmm, 2);
 
 		Assert.assertNull(fls.smooth(dayOnePerception));
-		//System.out.println(fls.smooth(dayTwoPerception));
-		RandomVariable flsDayoneResult = fls.smooth(dayThreePerception);
-		//System.out.println(flsDayoneResult);
+		// System.out.println(fls.smooth(dayTwoPerception));
+		// RandomVariable flsDayoneResult = fls.smooth(dayThreePerception);
+		// System.out.println(flsDayoneResult);
 	}
 
 	@Test

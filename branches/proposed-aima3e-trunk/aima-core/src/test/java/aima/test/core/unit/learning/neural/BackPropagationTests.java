@@ -140,7 +140,7 @@ public class BackPropagationTests {
 		ffnn.trainOn(innds, 10);
 
 		innds.refreshDataset();
-		int[] result = ffnn.testOnDataSet(innds);
+		ffnn.testOnDataSet(innds);
 	}
 
 	@Test
@@ -156,6 +156,6 @@ public class BackPropagationTests {
 		perc.trainOn(innds, 10);
 
 		innds.refreshDataset();
-		int[] result = perc.testOnDataSet(innds);
+		perc.testOnDataSet(innds);
 	}
 }

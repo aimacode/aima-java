@@ -60,6 +60,7 @@ import java.util.Locale;
  */
 
 public class Matrix implements Cloneable, java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/*
 	 * ------------------------ Class variables ------------------------

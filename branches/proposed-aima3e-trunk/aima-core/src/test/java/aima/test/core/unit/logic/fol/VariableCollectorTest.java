@@ -9,7 +9,6 @@ import org.junit.Test;
 import aima.core.logic.fol.VariableCollector;
 import aima.core.logic.fol.domain.DomainFactory;
 import aima.core.logic.fol.parsing.FOLParser;
-import aima.core.logic.fol.parsing.ast.Sentence;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
@@ -17,7 +16,6 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * 
  */
 public class VariableCollectorTest {
-	private Sentence sentence;
 
 	FOLParser parser;
 

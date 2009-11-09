@@ -35,6 +35,6 @@ public class MapCSPTest {
 
 	@Test
 	public void testMCSearch() {
-		Assignment results = csp.mcSearch(100);
+		csp.mcSearch(100);
 	}
 }

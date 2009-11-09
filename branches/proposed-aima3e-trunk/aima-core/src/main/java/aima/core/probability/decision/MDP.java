@@ -71,15 +71,11 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		MDPUtilityFunction<STATE_TYPE> utilityFunction = initialUtilityFunction();
 
 		for (int i = 0; i < numberOfIterations; i++) {
-			MDPUtilityFunction<STATE_TYPE> cachedUtilityFunction = utilityFunction
-					.copy();
-
 			Pair<MDPUtilityFunction<STATE_TYPE>, Double> result = valueIterateOnce(
 					gamma, utilityFunction);
 			utilityFunction = result.getFirst();
-			double maxUtilityGrowth = result.getSecond();
+			// double maxUtilityGrowth = result.getSecond();
 			// System.out.println("maxUtilityGrowth " + maxUtilityGrowth);
-
 		}
 
 		return utilityFunction;
@@ -110,9 +106,6 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		MDPUtilityFunction<STATE_TYPE> newUtilityFunction = new MDPUtilityFunction<STATE_TYPE>();
 
 		for (STATE_TYPE s : nonFinalstates) {
-			Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
-					.getTransitionWithMaximumExpectedUtility(s,
-							presentUtilityFunction);
 			// double utility = rewardFunction.getRewardFor(s)
 			// + (gamma * highestUtilityTransition.getSecond());
 
@@ -130,7 +123,6 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 				newUtilityFunction.setUtility(state, presentUtilityFunction
 						.getUtility(state));
 			}
-
 		}
 
 		return new Pair<MDPUtilityFunction<STATE_TYPE>, Double>(

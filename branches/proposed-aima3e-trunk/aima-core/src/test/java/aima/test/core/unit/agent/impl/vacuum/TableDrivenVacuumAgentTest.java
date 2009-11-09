@@ -33,7 +33,10 @@ public class TableDrivenVacuumAgentTest {
 
 		tve.stepUntilDone();
 
-		Assert.assertEquals("Action[name==Right]Action[name==Left]Action[name==Right]Action[name==NoOp]", envChanges.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Right]Action[name==Left]Action[name==Right]Action[name==NoOp]",
+						envChanges.toString());
 	}
 
 	@Test
@@ -47,7 +50,10 @@ public class TableDrivenVacuumAgentTest {
 
 		tve.stepUntilDone();
 
-		Assert.assertEquals("Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==NoOp]", envChanges.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==NoOp]",
+						envChanges.toString());
 	}
 
 	@Test
@@ -61,7 +67,10 @@ public class TableDrivenVacuumAgentTest {
 
 		tve.stepUntilDone();
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==NoOp]", envChanges.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==NoOp]",
+						envChanges.toString());
 	}
 
 	@Test
@@ -75,6 +84,9 @@ public class TableDrivenVacuumAgentTest {
 
 		tve.stepUntilDone();
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==NoOp]", envChanges.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==NoOp]",
+						envChanges.toString());
 	}
 }

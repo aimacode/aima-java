@@ -29,7 +29,7 @@ public class MapFunctionFactoryTest {
 		aMap.addBidirectionalLink("B", "C", 4.0);
 		aMap.addBidirectionalLink("C", "D", 7.0);
 		aMap.addUnidirectionalLink("B", "E", 14.0);
-		
+
 		af = MapFunctionFactory.getActionsFunction(aMap);
 		rf = MapFunctionFactory.getResultFunction();
 	}
@@ -43,7 +43,8 @@ public class MapFunctionFactoryTest {
 		locations.add("B");
 		locations.add("C");
 		for (Action a : af.actions("A")) {
-			Assert.assertTrue(locations.contains(((MoveToAction)a).getToLocation()));
+			Assert.assertTrue(locations.contains(((MoveToAction) a)
+					.getToLocation()));
 			Assert.assertTrue(locations.contains(rf.result("A", a)));
 		}
 
@@ -53,7 +54,8 @@ public class MapFunctionFactoryTest {
 		locations.add("C");
 		locations.add("E");
 		for (Action a : af.actions("B")) {
-			Assert.assertTrue(locations.contains(((MoveToAction)a).getToLocation()));
+			Assert.assertTrue(locations.contains(((MoveToAction) a)
+					.getToLocation()));
 			Assert.assertTrue(locations.contains(rf.result("B", a)));
 		}
 
@@ -63,7 +65,8 @@ public class MapFunctionFactoryTest {
 		locations.add("B");
 		locations.add("D");
 		for (Action a : af.actions("C")) {
-			Assert.assertTrue(locations.contains(((MoveToAction)a).getToLocation()));
+			Assert.assertTrue(locations.contains(((MoveToAction) a)
+					.getToLocation()));
 			Assert.assertTrue(locations.contains(rf.result("C", a)));
 		}
 
@@ -71,7 +74,8 @@ public class MapFunctionFactoryTest {
 		locations.clear();
 		locations.add("C");
 		for (Action a : af.actions("D")) {
-			Assert.assertTrue(locations.contains(((MoveToAction)a).getToLocation()));
+			Assert.assertTrue(locations.contains(((MoveToAction) a)
+					.getToLocation()));
 			Assert.assertTrue(locations.contains(rf.result("D", a)));
 		}
 		// E

@@ -74,7 +74,6 @@ public class DecisionListTest {
 	public void testDecisionListHandlesEmptyDataSet() throws Exception {
 		// tests first base case of recursion
 		DecisionList dlist = new DecisionList("Yes", "No");
-		DataSet ds = DataSetFactory.getRestaurantDataSet();
 
 		DLTest test1 = new DLTest();
 		test1.add("type", "Thai"); // doesn't match first example

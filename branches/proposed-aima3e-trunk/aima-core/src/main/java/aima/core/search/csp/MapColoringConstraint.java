@@ -1,7 +1,7 @@
 package aima.core.search.csp;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ravi Mohan

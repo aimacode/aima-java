@@ -83,13 +83,15 @@ public class BidirectionalSearch implements Search {
 			// searches meet or one or other is at the GOAL.
 			if (!opFrontier.isEmpty()) {
 				opNode = opFrontier.pop();
-				opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode, op));
+				opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode,
+						op));
 			} else {
 				opNode = null;
 			}
 			if (!rpFrontier.isEmpty()) {
 				rpNode = rpFrontier.pop();
-				rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode, rp));				
+				rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode,
+						rp));
 			} else {
 				rpNode = null;
 			}

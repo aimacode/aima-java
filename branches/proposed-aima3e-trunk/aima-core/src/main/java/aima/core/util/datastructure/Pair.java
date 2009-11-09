@@ -25,9 +25,11 @@ public class Pair<X, Y> {
 
 	@Override
 	public boolean equals(Object o) {
-
-		Pair<X, Y> p = (Pair<X, Y>) o;
-		return a.equals(p.a) && b.equals(p.b);
+		if (o instanceof Pair) {
+			Pair<X, Y> p = (Pair<X, Y>) o;
+			return a.equals(p.a) && b.equals(p.b);
+		}
+		return false;
 	}
 
 	@Override

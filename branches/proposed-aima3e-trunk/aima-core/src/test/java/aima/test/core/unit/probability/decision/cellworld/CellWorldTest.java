@@ -285,8 +285,6 @@ public class CellWorldTest {
 	public void testMaximumTransitionDetection() {
 		// aka policy extraction
 		// given a utility function
-		MDPTransitionModel<CellWorldPosition, String> mtm = cw
-				.getTransitionModel();
 
 		// create the Utility Function depicted in Fig 17.3
 		MDPUtilityFunction<CellWorldPosition> uf = new MDPUtilityFunction<CellWorldPosition>();

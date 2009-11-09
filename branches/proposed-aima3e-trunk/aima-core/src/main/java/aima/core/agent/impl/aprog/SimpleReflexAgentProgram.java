@@ -38,7 +38,7 @@ public class SimpleReflexAgentProgram implements AgentProgram {
 	public SimpleReflexAgentProgram(Set<Rule> aRuleSet) {
 		rules = aRuleSet;
 	}
-	
+
 	//
 	// START-AgentProgram
 
@@ -54,7 +54,7 @@ public class SimpleReflexAgentProgram implements AgentProgram {
 		// return action
 		return ruleAction(rule);
 	}
-	
+
 	// END-AgentProgram
 	//
 

@@ -6,16 +6,17 @@ import aima.core.agent.Percept;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class DynamicPercept extends ObjectWithDynamicAttributes implements Percept {
+public class DynamicPercept extends ObjectWithDynamicAttributes implements
+		Percept {
 	public DynamicPercept() {
 
 	}
-	
+
 	@Override
 	public String describeType() {
 		return Percept.class.getSimpleName();
 	}
-	
+
 	public DynamicPercept(Object key1, Object value1) {
 		setAttribute(key1, value1);
 	}

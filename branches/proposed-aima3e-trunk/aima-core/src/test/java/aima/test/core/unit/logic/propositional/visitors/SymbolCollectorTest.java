@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 
 /**
@@ -29,7 +30,7 @@ public class SymbolCollectorTest {
 	public void testCollectSymbolsFromComplexSentence() {
 		Sentence sentence = (Sentence) parser
 				.parse(" (  (  ( NOT B11 )  OR  ( P12 OR P21 ) ) AND  (  ( B11 OR  ( NOT P12 )  ) AND  ( B11 OR  ( NOT P21 )  ) ) )");
-		Set s = collector.getSymbolsIn(sentence);
+		Set<Symbol> s = collector.getSymbolsIn(sentence);
 		Assert.assertEquals(3, s.size());
 		Sentence b11 = (Sentence) parser.parse("B11");
 		Sentence p21 = (Sentence) parser.parse("P21");

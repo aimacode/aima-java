@@ -47,7 +47,7 @@ public class BreadthFirstSearch implements Search {
 	public BreadthFirstSearch() {
 		this(new GraphSearch());
 	}
-	
+
 	public BreadthFirstSearch(QueueSearch search) {
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.

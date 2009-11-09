@@ -40,7 +40,7 @@ public class FIFOQueueTest {
 		Assert.assertEquals("Hi", queue.pop());
 		Assert.assertEquals("bonjour", queue.pop());
 		Assert.assertEquals("salaam alaikum", queue.pop());
-		
+
 		Assert.assertEquals(0, queue.size());
 	}
 }

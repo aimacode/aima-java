@@ -32,7 +32,7 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 	private static String PATH_COST = "pathCost";
 
 	private final int infinity = Integer.MAX_VALUE; // Not infinity, but will do
-													// :-)
+	// :-)
 
 	private final Metrics iterationMetrics;
 

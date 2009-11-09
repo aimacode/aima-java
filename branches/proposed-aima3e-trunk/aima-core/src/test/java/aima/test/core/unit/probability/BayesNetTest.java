@@ -23,7 +23,7 @@ public class BayesNetTest {
 
 	@Test
 	public void testVariablesAreCorrectlyObtainedFromBayesNetwork() {
-		List variables = net.getVariables();
+		List<String> variables = net.getVariables();
 		Assert.assertEquals(5, variables.size());
 		Assert.assertEquals("Burglary", (String) variables.get(0));
 		Assert.assertEquals("EarthQuake", (String) variables.get(1));

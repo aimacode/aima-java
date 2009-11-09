@@ -14,8 +14,6 @@ import aima.core.util.Util;
  */
 public class MajorityLearner implements Learner {
 
-	private DataSet dataset;
-
 	private String result;
 
 	public void train(DataSet ds) {

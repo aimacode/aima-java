@@ -30,7 +30,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 
 	//
 	private VacuumEnvironmentState envState = null;
-	private boolean isDone = false; 
+	private boolean isDone = false;
 
 	public VacuumEnvironment() {
 		Random r = new Random();
@@ -53,8 +53,10 @@ public class VacuumEnvironment extends AbstractEnvironment {
 			envState.setAgentLocation(a, Location.A);
 			updatePerformanceMeasure(a, -1);
 		} else if (ACTION_SUCK == agentAction) {
-			if (LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(a))) {
-				envState.setLocationState(envState.getAgentLocation(a), LocationState.Clean);
+			if (LocationState.Dirty == envState.getLocationState(envState
+					.getAgentLocation(a))) {
+				envState.setLocationState(envState.getAgentLocation(a),
+						LocationState.Clean);
 				updatePerformanceMeasure(a, 10);
 			}
 		} else if (agentAction.isNoOp()) {
@@ -62,16 +64,17 @@ public class VacuumEnvironment extends AbstractEnvironment {
 			// the agent generates a NoOp.
 			isDone = true;
 		}
-		
+
 		return envState;
 	}
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		Location agentLocation = envState.getAgentLocation(anAgent);
-		return new VacuumEnvPercept(agentLocation, envState.getLocationState(agentLocation));
+		return new VacuumEnvPercept(agentLocation, envState
+				.getLocationState(agentLocation));
 	}
-	
+
 	@Override
 	public boolean isDone() {
 		return super.isDone() || isDone;

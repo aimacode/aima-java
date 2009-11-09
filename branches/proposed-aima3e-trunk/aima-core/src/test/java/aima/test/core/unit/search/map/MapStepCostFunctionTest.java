@@ -29,20 +29,33 @@ public class MapStepCostFunctionTest {
 
 	@Test
 	public void testCosts() {
-		Assert.assertEquals(new Double(5), mscf.cost("A", new MoveToAction("B"), "B"));
-		Assert.assertEquals(new Double(6), mscf.cost("A", new MoveToAction("C"), "C"));
-		Assert.assertEquals(new Double(4), mscf.cost("B", new MoveToAction("C"), "C"));
-		Assert.assertEquals(new Double(7), mscf.cost("C", new MoveToAction("D"), "D"));
-		Assert.assertEquals(new Double(14), mscf.cost("B", new MoveToAction("E"), "E"));
+		Assert.assertEquals(new Double(5), mscf.cost("A",
+				new MoveToAction("B"), "B"));
+		Assert.assertEquals(new Double(6), mscf.cost("A",
+				new MoveToAction("C"), "C"));
+		Assert.assertEquals(new Double(4), mscf.cost("B",
+				new MoveToAction("C"), "C"));
+		Assert.assertEquals(new Double(7), mscf.cost("C",
+				new MoveToAction("D"), "D"));
+		Assert.assertEquals(new Double(14), mscf.cost("B",
+				new MoveToAction("E"), "E"));
 		//
-		Assert.assertEquals(new Double(5), mscf.cost("B", new MoveToAction("A"), "A"));
-		Assert.assertEquals(new Double(6), mscf.cost("C", new MoveToAction("A"), "A"));
-		Assert.assertEquals(new Double(4), mscf.cost("C", new MoveToAction("B"), "B"));
-		Assert.assertEquals(new Double(7), mscf.cost("D", new MoveToAction("C"), "C"));
+		Assert.assertEquals(new Double(5), mscf.cost("B",
+				new MoveToAction("A"), "A"));
+		Assert.assertEquals(new Double(6), mscf.cost("C",
+				new MoveToAction("A"), "A"));
+		Assert.assertEquals(new Double(4), mscf.cost("C",
+				new MoveToAction("B"), "B"));
+		Assert.assertEquals(new Double(7), mscf.cost("D",
+				new MoveToAction("C"), "C"));
 		//
-		Assert.assertEquals(new Double(1), mscf.cost("X", new MoveToAction("Z"), "Z"));
-		Assert.assertEquals(new Double(1), mscf.cost("A", new MoveToAction("Z"), "Z"));
-		Assert.assertEquals(new Double(1), mscf.cost("A", new MoveToAction("D"), "D"));
-		Assert.assertEquals(new Double(1), mscf.cost("A", new MoveToAction("B"), "E"));
+		Assert.assertEquals(new Double(1), mscf.cost("X",
+				new MoveToAction("Z"), "Z"));
+		Assert.assertEquals(new Double(1), mscf.cost("A",
+				new MoveToAction("Z"), "Z"));
+		Assert.assertEquals(new Double(1), mscf.cost("A",
+				new MoveToAction("D"), "D"));
+		Assert.assertEquals(new Double(1), mscf.cost("A",
+				new MoveToAction("B"), "E"));
 	}
 }

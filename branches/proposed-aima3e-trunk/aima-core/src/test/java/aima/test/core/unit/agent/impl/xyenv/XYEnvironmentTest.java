@@ -94,10 +94,13 @@ public class XYEnvironmentTest {
 		XYLocation southLoc = new XYLocation(5, 4);
 		XYLocation westLoc = new XYLocation(4, 5);
 
-		env.addObjectToLocation(new Wall(), northLoc); // wall to the north of object
+		env.addObjectToLocation(new Wall(), northLoc); // wall to the north of
+														// object
 		Assert.assertTrue(env.isBlocked(northLoc));
-		env.addObjectToLocation(new Wall(), southLoc); // wall to the south of object
-		env.addObjectToLocation(new Wall(), westLoc); // wall to the west of object
+		env.addObjectToLocation(new Wall(), southLoc); // wall to the south of
+														// object
+		env.addObjectToLocation(new Wall(), westLoc); // wall to the west of
+														// object
 		Assert.assertEquals(4, env.getEnvironmentObjects().size());
 
 		env.moveObject(a, XYLocation.Direction.North); // should not move

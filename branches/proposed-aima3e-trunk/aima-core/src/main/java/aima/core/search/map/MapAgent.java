@@ -20,7 +20,7 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
  */
 public class MapAgent extends SimpleProblemSolvingAgent {
 	private MapEnvironment mapEnvironment = null;
-	
+
 	private DynamicModel model = new DynamicModel();
 
 	private Search search = null;
@@ -66,8 +66,9 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	@Override
 	protected Model updateState(Percept p) {
 		DynamicPercept dp = (DynamicPercept) p;
-		
-		model.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
+
+		model.setAttribute(DynAttributeNames.AGENT_LOCATION, dp
+				.getAttribute(DynAttributeNames.PERCEPT_IN));
 
 		return model;
 	}
@@ -81,7 +82,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 			goal = goalTests[goalTestPos];
 			goalTestPos++;
 		}
-		mapEnvironment.notifyViews("CurrentLocation=In(" + model.getAttribute(DynAttributeNames.AGENT_LOCATION)
+		mapEnvironment.notifyViews("CurrentLocation=In("
+				+ model.getAttribute(DynAttributeNames.AGENT_LOCATION)
 				+ "), Goal=In(" + goal + ")");
 
 		return goal;
@@ -91,10 +93,14 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	protected Problem formulateProblem(Object goal) {
 		if (null == getHeuristicFunction()) {
 			return new BidirectionalMapProblem(mapEnvironment.getMap(),
-					(String) model.getAttribute(DynAttributeNames.AGENT_LOCATION), (String) goal);
+					(String) model
+							.getAttribute(DynAttributeNames.AGENT_LOCATION),
+					(String) goal);
 		} else {
 			return new BidirectionalMapProblem(mapEnvironment.getMap(),
-					(String) model.getAttribute(DynAttributeNames.AGENT_LOCATION), (String) goal, getHeuristicFunction());
+					(String) model
+							.getAttribute(DynAttributeNames.AGENT_LOCATION),
+					(String) goal, getHeuristicFunction());
 		}
 	}
 

@@ -11,7 +11,7 @@ import aima.core.agent.Action;
  */
 public class NodeExpander {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
-	
+
 	protected Metrics metrics;
 
 	public NodeExpander() {
@@ -21,7 +21,7 @@ public class NodeExpander {
 	public void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 	}
-	
+
 	public int getNodesExpanded() {
 		return metrics.getInt(METRIC_NODES_EXPANDED);
 	}
@@ -48,7 +48,8 @@ public class NodeExpander {
 			childNode.addToPathCost(stepCost);
 			childNodes.add(childNode);
 		}
-		metrics.set(METRIC_NODES_EXPANDED, metrics.getInt(METRIC_NODES_EXPANDED) + 1);
+		metrics.set(METRIC_NODES_EXPANDED, metrics
+				.getInt(METRIC_NODES_EXPANDED) + 1);
 
 		return childNodes;
 	}

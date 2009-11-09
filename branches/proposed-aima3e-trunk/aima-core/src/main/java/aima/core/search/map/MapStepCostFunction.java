@@ -27,8 +27,8 @@ public class MapStepCostFunction implements StepCostFunction {
 
 	//
 	// START-StepCostFunction
-	public double cost(Object fromCurrentState,
-			 Action action, Object toNextState) {
+	public double cost(Object fromCurrentState, Action action,
+			Object toNextState) {
 
 		String fromLoc = fromCurrentState.toString();
 		String toLoc = toNextState.toString();
@@ -41,7 +41,7 @@ public class MapStepCostFunction implements StepCostFunction {
 
 		return new Double(distance);
 	}
-	
+
 	// END-StepCostFunction
 	//
 }

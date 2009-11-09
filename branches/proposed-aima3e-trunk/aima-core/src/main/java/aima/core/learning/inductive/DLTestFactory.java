@@ -18,9 +18,6 @@ public class DLTestFactory {
 							+ i);
 		}
 		List<String> nonTargetAttributes = ds.getNonTargetAttributes();
-		String targetAttribute = ds.getTargetAttributeName();
-		List<String> targetValues = ds
-				.getPossibleAttributeValues(targetAttribute);
 		List<DLTest> tests = new ArrayList<DLTest>();
 		for (String ntAttribute : nonTargetAttributes) {
 			List<String> ntaValues = ds.getPossibleAttributeValues(ntAttribute);

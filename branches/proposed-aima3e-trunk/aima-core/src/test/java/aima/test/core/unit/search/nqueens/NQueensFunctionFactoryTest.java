@@ -27,7 +27,7 @@ public class NQueensFunctionFactoryTest {
 	public void setUp() {
 		oneBoard = new NQueensBoard(1);
 		eightBoard = new NQueensBoard(8);
-		
+
 		af = NQueensFunctionFactory.getActionsFunction();
 		rf = NQueensFunctionFactory.getResultFunction();
 	}
@@ -44,7 +44,8 @@ public class NQueensFunctionFactoryTest {
 	public void testComplexBoardSuccessorGenerator() {
 		List<Action> actions = new ArrayList<Action>(af.actions(eightBoard));
 		Assert.assertEquals(8, actions.size());
-		NQueensBoard next = (NQueensBoard) rf.result(eightBoard, actions.get(0));
+		NQueensBoard next = (NQueensBoard) rf
+				.result(eightBoard, actions.get(0));
 		Assert.assertEquals(1, next.getNumberOfQueensOnBoard());
 
 		actions = new ArrayList<Action>(af.actions(next));

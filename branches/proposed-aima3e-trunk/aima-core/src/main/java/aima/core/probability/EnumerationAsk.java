@@ -14,7 +14,6 @@ import aima.core.util.Util;
 public class EnumerationAsk {
 
 	public static double[] ask(Query q, BayesNet net) {
-		String queryVariable = q.getQueryVariable();
 		Hashtable<String, Boolean> evidenceVariables = q.getEvidenceVariables();
 
 		double[] probDist = new double[2];

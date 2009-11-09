@@ -5,8 +5,8 @@ import java.util.Set;
 import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
 import aima.core.agent.Percept;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.agent.impl.DynamicModel;
+import aima.core.agent.impl.NoOpAction;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
 /**
@@ -59,7 +59,7 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 
 	//
 	// START-AgentProgram
-	
+
 	// function REFLEX-AGENT-WITH-STATE(percept) returns an action
 	public Action execute(Percept percept) {
 		// state <- UPDATE-STATE(state, action, percept)
@@ -71,7 +71,7 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 		// return action
 		return action;
 	}
-	
+
 	// END-AgentProgram
 	//
 
@@ -85,12 +85,10 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 	 */
 	protected abstract void init();
 
-	protected abstract DynamicModel updateState(
-			DynamicModel envState, Action anAction,
-			Percept percept);
+	protected abstract DynamicModel updateState(DynamicModel envState,
+			Action anAction, Percept percept);
 
-	protected Rule ruleMatch(DynamicModel envState,
-			Set<Rule> rulesSet) {
+	protected Rule ruleMatch(DynamicModel envState, Set<Rule> rulesSet) {
 		for (Rule r : rulesSet) {
 			if (r.evaluate(envState)) {
 				return r;

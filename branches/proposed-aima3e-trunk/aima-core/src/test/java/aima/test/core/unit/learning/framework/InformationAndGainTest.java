@@ -53,7 +53,6 @@ public class InformationAndGainTest {
 	@Test
 	public void testGainCalculation() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
-		Hashtable<String, DataSet> hash = ds.splitByAttribute("patrons");
 		double gain = ds.calculateGainFor("patrons");
 		Assert.assertEquals(0.541, gain, 0.001);
 		gain = ds.calculateGainFor("type");

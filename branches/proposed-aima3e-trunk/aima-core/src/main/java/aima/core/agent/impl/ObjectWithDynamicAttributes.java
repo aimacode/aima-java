@@ -11,17 +11,17 @@ import java.util.Set;
  */
 public abstract class ObjectWithDynamicAttributes {
 	private Map<Object, Object> attributes = new LinkedHashMap<Object, Object>();
-	
+
 	//
 	// PUBLIC METHODS
 	//
 	public String describeType() {
 		return getClass().getSimpleName();
 	}
-	
+
 	public String describeAttributes() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("[");
 		boolean first = true;
 		for (Object key : attributes.keySet()) {
@@ -36,14 +36,14 @@ public abstract class ObjectWithDynamicAttributes {
 			sb.append(attributes.get(key));
 		}
 		sb.append("]");
-		
+
 		return sb.toString();
 	}
-	
+
 	public Set<Object> getKeySet() {
 		return Collections.unmodifiableSet(attributes.keySet());
 	}
-	
+
 	public void setAttribute(Object key, Object value) {
 		attributes.put(key, value);
 	}
@@ -55,26 +55,26 @@ public abstract class ObjectWithDynamicAttributes {
 	public void removeAttribute(Object key) {
 		attributes.remove(key);
 	}
-	
+
 	public ObjectWithDynamicAttributes copy() {
 		ObjectWithDynamicAttributes copy = null;
-		
+
 		try {
 			copy = getClass().newInstance();
 			copy.attributes.putAll(attributes);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		return copy;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) {
 			return super.equals(o);
 		}
-		return attributes.equals(((ObjectWithDynamicAttributes)o).attributes);
+		return attributes.equals(((ObjectWithDynamicAttributes) o).attributes);
 	}
 
 	@Override

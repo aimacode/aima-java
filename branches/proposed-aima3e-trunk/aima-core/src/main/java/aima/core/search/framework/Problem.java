@@ -30,7 +30,7 @@ public class Problem {
 	protected Object initialState;
 
 	protected ActionsFunction actionsFunction;
-	
+
 	protected ResultFunction resultFunction;
 
 	protected GoalTest goalTest;
@@ -40,8 +40,7 @@ public class Problem {
 	protected HeuristicFunction heuristicFunction;
 
 	public Problem(Object initialState, ActionsFunction actionsFunction,
-			ResultFunction resultFunction,
-			GoalTest goalTest) {
+			ResultFunction resultFunction, GoalTest goalTest) {
 
 		this.initialState = initialState;
 		this.actionsFunction = actionsFunction;
@@ -52,27 +51,28 @@ public class Problem {
 	}
 
 	public Problem(Object initialState, ActionsFunction actionsFunction,
-			ResultFunction resultFunction,
-			GoalTest goalTest, StepCostFunction stepCostFunction) {
+			ResultFunction resultFunction, GoalTest goalTest,
+			StepCostFunction stepCostFunction) {
 		this(initialState, actionsFunction, resultFunction, goalTest);
 		this.stepCostFunction = stepCostFunction;
 	}
 
 	public Problem(Object initialState, ActionsFunction actionsFunction,
-			ResultFunction resultFunction,
-			GoalTest goalTest, HeuristicFunction heuristicFunction) {
+			ResultFunction resultFunction, GoalTest goalTest,
+			HeuristicFunction heuristicFunction) {
 		this(initialState, actionsFunction, resultFunction, goalTest);
 		this.heuristicFunction = heuristicFunction;
 	}
 
-	public Problem(Object initialState,ActionsFunction actionsFunction,
-			ResultFunction resultFunction,
-			GoalTest goalTest, StepCostFunction stepCostFunction,
+	public Problem(Object initialState, ActionsFunction actionsFunction,
+			ResultFunction resultFunction, GoalTest goalTest,
+			StepCostFunction stepCostFunction,
 			HeuristicFunction heuristicFunction) {
-		this(initialState, actionsFunction, resultFunction, goalTest, stepCostFunction);
+		this(initialState, actionsFunction, resultFunction, goalTest,
+				stepCostFunction);
 		this.heuristicFunction = heuristicFunction;
 	}
-	
+
 	public Problem(Object initialState, ActionsFunction actionsFunction,
 			GoalTest goalTest) {
 
@@ -95,7 +95,7 @@ public class Problem {
 		this.heuristicFunction = heuristicFunction;
 	}
 
-	public Problem(Object initialState,ActionsFunction actionsFunction,
+	public Problem(Object initialState, ActionsFunction actionsFunction,
 			GoalTest goalTest, StepCostFunction stepCostFunction,
 			HeuristicFunction heuristicFunction) {
 		this(initialState, actionsFunction, goalTest, stepCostFunction);
@@ -115,7 +115,7 @@ public class Problem {
 	public ActionsFunction getActionsFunction() {
 		return actionsFunction;
 	}
-	
+
 	public ResultFunction getResultFunction() {
 		return resultFunction;
 	}
@@ -123,11 +123,11 @@ public class Problem {
 	public HeuristicFunction getHeuristicFunction() {
 		return heuristicFunction;
 	}
-	
+
 	public StepCostFunction getStepCostFunction() {
 		return stepCostFunction;
 	}
-	
+
 	//
 	// PROTECTED METHODS
 	//

@@ -62,8 +62,9 @@ public class RecursiveBestFirstSearchTest {
 			public void notify(String msg) {
 				envChanges.append(msg).append(":");
 			}
-			
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append(":");
 			}
 		});
@@ -87,8 +88,9 @@ public class RecursiveBestFirstSearchTest {
 			public void notify(String msg) {
 				envChanges.append(msg).append(":");
 			}
-			
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append(":");
 			}
 		});

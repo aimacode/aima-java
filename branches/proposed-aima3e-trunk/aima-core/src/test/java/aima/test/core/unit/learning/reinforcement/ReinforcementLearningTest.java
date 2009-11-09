@@ -4,7 +4,6 @@ import java.util.Hashtable;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.learning.reinforcement.PassiveADPAgent;
@@ -148,8 +147,8 @@ public class ReinforcementLearningTest {
 
 		}
 		// qTable.normalize();
-		//System.out.println(qTable);
-		//System.out.println(qTable.getPolicy());
+		// System.out.println(qTable);
+		// System.out.println(qTable.getPolicy());
 	}
 
 	@Test

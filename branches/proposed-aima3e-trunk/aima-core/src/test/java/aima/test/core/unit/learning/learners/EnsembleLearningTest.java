@@ -18,7 +18,6 @@ import aima.core.learning.learners.StumpLearner;
  * 
  */
 public class EnsembleLearningTest {
-	private static final String UNABLE_TO_CLASSIFY = "Unable to Classify";
 
 	private static final String YES = "Yes";
 
@@ -26,7 +25,7 @@ public class EnsembleLearningTest {
 	public void testAdaBoostEnablesCollectionOfStumpsToClassifyDataSetAccurately()
 			throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
-		List stumps = DecisionTree.getStumpsFor(ds, YES, "No");
+		List<DecisionTree> stumps = DecisionTree.getStumpsFor(ds, YES, "No");
 		List<Learner> learners = new ArrayList<Learner>();
 		for (Object stump : stumps) {
 			DecisionTree sl = (DecisionTree) stump;

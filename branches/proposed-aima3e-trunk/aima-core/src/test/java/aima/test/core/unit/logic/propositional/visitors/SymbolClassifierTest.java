@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.visitors.SymbolClassifier;
 
 /**
@@ -30,14 +31,14 @@ public class SymbolClassifierTest {
 	public void testSimpleNegativeSymbol() {
 		Sentence sentence = (Sentence) parser.parse("(NOT B)");
 
-		Set neg = classifier.getNegativeSymbolsIn(sentence);
-		Set pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set pure = classifier.getPureSymbolsIn(sentence);
-		Set impure = classifier.getImpureSymbolsIn(sentence);
+		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence b = (Sentence) parser.parse("B");
 
@@ -60,14 +61,14 @@ public class SymbolClassifierTest {
 	@Test
 	public void testSimplePositiveSymbol() {
 		Sentence sentence = (Sentence) parser.parse("B");
-		Set neg = classifier.getNegativeSymbolsIn(sentence);
-		Set pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set pure = classifier.getPureSymbolsIn(sentence);
-		Set impure = classifier.getImpureSymbolsIn(sentence);
+		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Assert.assertEquals(0, neg.size());
 
@@ -89,14 +90,14 @@ public class SymbolClassifierTest {
 	@Test
 	public void testSingleSymbolPositiveAndNegative() {
 		Sentence sentence = (Sentence) parser.parse("(B AND (NOT B))");
-		Set neg = classifier.getNegativeSymbolsIn(sentence);
-		Set pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set pure = classifier.getPureSymbolsIn(sentence);
-		Set impure = classifier.getImpureSymbolsIn(sentence);
+		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence b = (Sentence) parser.parse("B");
 
@@ -118,14 +119,14 @@ public class SymbolClassifierTest {
 		Sentence sentence = (Sentence) parser
 				.parse("(((A OR (NOT B)) AND ((NOT B) OR (NOT C))) AND (C OR A))");
 
-		Set neg = classifier.getNegativeSymbolsIn(sentence);
-		Set pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set pure = classifier.getPureSymbolsIn(sentence);
-		Set impure = classifier.getImpureSymbolsIn(sentence);
+		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");

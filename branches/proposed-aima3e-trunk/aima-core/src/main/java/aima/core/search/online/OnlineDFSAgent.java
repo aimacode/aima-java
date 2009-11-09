@@ -74,7 +74,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 		this.problem = problem;
 		init();
 	}
-	
+
 	public PerceptToStateFunction getPerceptToStateFunction() {
 		return ptsFunction;
 	}
@@ -164,6 +164,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	}
 
 	private List<Action> actions(Percept state) {
-		return new ArrayList<Action>(problem.getActionsFunction().actions(ptsFunction.getState(state)));
+		return new ArrayList<Action>(problem.getActionsFunction().actions(
+				ptsFunction.getState(state)));
 	}
 }

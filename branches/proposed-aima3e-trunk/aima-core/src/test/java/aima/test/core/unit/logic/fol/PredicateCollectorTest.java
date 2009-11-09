@@ -9,6 +9,7 @@ import org.junit.Test;
 import aima.core.logic.fol.PredicateCollector;
 import aima.core.logic.fol.domain.DomainFactory;
 import aima.core.logic.fol.parsing.FOLParser;
+import aima.core.logic.fol.parsing.ast.Predicate;
 import aima.core.logic.fol.parsing.ast.Sentence;
 
 /**
@@ -29,7 +30,7 @@ public class PredicateCollectorTest {
 	@Test
 	public void testSimpleSentence() {
 		Sentence s = parser.parse("(Missile(x) => Weapon(x))");
-		List predicates = collector.getPredicates(s);
+		List<Predicate> predicates = collector.getPredicates(s);
 		Assert.assertNotNull(predicates);
 	}
 }

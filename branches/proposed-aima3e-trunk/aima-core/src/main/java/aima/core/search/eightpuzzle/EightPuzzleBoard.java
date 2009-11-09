@@ -22,7 +22,7 @@ public class EightPuzzleBoard {
 	public static Action DOWN = new DynamicAction("Down");
 
 	private int[] board;
-	
+
 	//
 	// PUBLIC METHODS
 	//
@@ -33,17 +33,17 @@ public class EightPuzzleBoard {
 
 	public EightPuzzleBoard(int[] aBoard) {
 		board = new int[aBoard.length];
-		System.arraycopy(aBoard, 0, board, 0, board.length);		
+		System.arraycopy(aBoard, 0, board, 0, board.length);
 	}
-	
+
 	public EightPuzzleBoard(EightPuzzleBoard copyBoard) {
 		this(copyBoard.getBoard());
 	}
-	
+
 	public int[] getBoard() {
 		return board;
 	}
-	
+
 	public int getValueAt(XYLocation loc) {
 		return getValueAt(loc.getXCoOrdinate(), loc.getYCoOrdinate());
 	}
@@ -54,7 +54,7 @@ public class EightPuzzleBoard {
 		int ypos = xycoordinatesFromAbsoluteCoordinate(abspos)[1];
 		return new XYLocation(xpos, ypos);
 	}
-	
+
 	public void moveGapRight() {
 		int gapPosition = getGapPosition();
 		int xpos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[0];
@@ -151,7 +151,7 @@ public class EightPuzzleBoard {
 
 		return retVal;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -170,7 +170,7 @@ public class EightPuzzleBoard {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int result = 17;
@@ -188,7 +188,7 @@ public class EightPuzzleBoard {
 				+ board[6] + " " + board[7] + " " + board[8];
 		return retVal;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

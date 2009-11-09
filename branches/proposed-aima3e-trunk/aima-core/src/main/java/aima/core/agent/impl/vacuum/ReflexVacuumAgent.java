@@ -31,21 +31,24 @@ public class ReflexVacuumAgent extends AbstractAgent {
 			// action
 			public Action execute(Percept percept) {
 				VacuumEnvPercept vep = (VacuumEnvPercept) percept;
-				
+
 				// if status = Dirty then return Suck
-				if (VacuumEnvironment.LocationState.Dirty == vep.getLocationState()) {
+				if (VacuumEnvironment.LocationState.Dirty == vep
+						.getLocationState()) {
 					return VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (VacuumEnvironment.Location.A == vep.getAgentLocation()) {
+				} else if (VacuumEnvironment.Location.A == vep
+						.getAgentLocation()) {
 					return VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (VacuumEnvironment.Location.B == vep.getAgentLocation()) {
+				} else if (VacuumEnvironment.Location.B == vep
+						.getAgentLocation()) {
 					// else if location = B then return Left
 					return VacuumEnvironment.ACTION_MOVE_LEFT;
 				}
 
 				// Note: This should not be returned if the
 				// environment is correct
-				return NoOpAction.NO_OP; 
+				return NoOpAction.NO_OP;
 			}
 		});
 	}

@@ -12,7 +12,8 @@ package aima.core.agent;
  */
 public interface Agent extends EnvironmentObject {
 	/**
-	 * Call the Agent's program, which maps any given percept sequences to an action.
+	 * Call the Agent's program, which maps any given percept sequences to an
+	 * action.
 	 * 
 	 * @param percept
 	 *            The current percept of a sequence perceived by the Agent.

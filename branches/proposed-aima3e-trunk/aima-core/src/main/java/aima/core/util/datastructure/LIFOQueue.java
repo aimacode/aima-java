@@ -47,7 +47,7 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 		addFirst(e);
 		return true;
 	}
-	
+
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		return addAll(0, c);

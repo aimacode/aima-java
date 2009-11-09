@@ -2,6 +2,7 @@ package aima.core.search.informed;
 
 import java.util.List;
 
+import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
@@ -48,7 +49,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	// inputs: problem, a problem
-	public List search(Problem p) throws Exception {
+	public List<Action> search(Problem p) throws Exception {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
@@ -59,7 +60,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		Node neighbor = null;
 		// loop do
 		while (true) {
-			List children = expandNode(current, p);
+			List<Node> children = expandNode(current, p);
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
 
@@ -85,7 +86,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return lastState;
 	}
 
-	private Node getHighestValuedNodeFrom(List children, Problem p) {
+	private Node getHighestValuedNodeFrom(List<Node> children, Problem p) {
 		double highestValue = Double.NEGATIVE_INFINITY;
 		Node nodeWithHighestValue = null;
 		for (int i = 0; i < children.size(); i++) {

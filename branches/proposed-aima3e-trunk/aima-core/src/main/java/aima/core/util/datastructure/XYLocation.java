@@ -10,8 +10,10 @@ package aima.core.util.datastructure;
  * 
  */
 public class XYLocation {
-	public enum Direction {North, South, East, West};
-	
+	public enum Direction {
+		North, South, East, West
+	};
+
 	int xCoOrdinate, yCoOrdinate;
 
 	public XYLocation(int x, int y) {
@@ -75,7 +77,7 @@ public class XYLocation {
 			throw new RuntimeException("Unknown direction " + direction);
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (null == o || !(o instanceof XYLocation)) {

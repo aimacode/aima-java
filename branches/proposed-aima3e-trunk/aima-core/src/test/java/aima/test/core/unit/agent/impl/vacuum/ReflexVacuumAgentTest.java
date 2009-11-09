@@ -23,7 +23,7 @@ public class ReflexVacuumAgentTest {
 	}
 
 	@Test
-	public void testCleanClean() {		
+	public void testCleanClean() {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Clean);
@@ -33,12 +33,14 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert.assertEquals("Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]", envChanges
-				.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
+						envChanges.toString());
 	}
 
 	@Test
-	public void testCleanDirty() {		
+	public void testCleanDirty() {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Dirty);
@@ -48,8 +50,10 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert.assertEquals("Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]", envChanges
-				.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
+						envChanges.toString());
 	}
 
 	@Test
@@ -63,12 +67,14 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]", envChanges
-				.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
+						envChanges.toString());
 	}
 
 	@Test
-	public void testDirtyDirty() {	
+	public void testDirtyDirty() {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Dirty);
@@ -78,7 +84,9 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert.assertEquals("Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]", envChanges
-				.toString());
+		Assert
+				.assertEquals(
+						"Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
+						envChanges.toString());
 	}
 }

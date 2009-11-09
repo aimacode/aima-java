@@ -158,14 +158,17 @@ public class LRTAStarAgent extends AbstractAgent {
 	private double lrtaCost(Percept s, Action action, Percept sPrime) {
 		// if s' is undefined then return h(s)
 		if (null == sPrime) {
-			return getProblem().getHeuristicFunction().getHeuristicValue(ptsFunction.getState(s));
+			return getProblem().getHeuristicFunction().getHeuristicValue(
+					ptsFunction.getState(s));
 		}
 		// else return c(s, a, s') + H[s']
-		return getProblem().getStepCostFunction().cost(ptsFunction.getState(s), action, ptsFunction.getState(sPrime))
+		return getProblem().getStepCostFunction().cost(ptsFunction.getState(s),
+				action, ptsFunction.getState(sPrime))
 				+ H.get(sPrime);
 	}
 
 	private Set<Action> actions(Percept state) {
-		return problem.getActionsFunction().actions(ptsFunction.getState(state));
+		return problem.getActionsFunction()
+				.actions(ptsFunction.getState(state));
 	}
 }

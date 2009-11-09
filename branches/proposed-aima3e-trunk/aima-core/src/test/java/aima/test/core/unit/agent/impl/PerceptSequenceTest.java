@@ -24,8 +24,9 @@ public class PerceptSequenceTest {
 
 		ps.add(new DynamicPercept("key1", "value1", "key2", "value2"));
 
-		Assert.assertEquals("[Percept[key1==value1], Percept[key1==value1, key2==value2]]", ps
-				.toString());
+		Assert.assertEquals(
+				"[Percept[key1==value1], Percept[key1==value1, key2==value2]]",
+				ps.toString());
 	}
 
 	@Test

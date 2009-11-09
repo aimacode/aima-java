@@ -63,8 +63,6 @@ public class DecisionTreeTest {
 	@Test
 	public void testStumpPredictionForDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
-		List<DecisionTree> trees = DecisionTree.getStumpsFor(ds, YES,
-				"Unable to classify");
 
 		List<String> unmatchedValues = new ArrayList<String>();
 		unmatchedValues.add(NO);

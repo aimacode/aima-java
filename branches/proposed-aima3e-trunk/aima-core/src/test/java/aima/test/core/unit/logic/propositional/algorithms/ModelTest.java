@@ -109,8 +109,10 @@ public class ModelTest {
 		m = m.extend(new Symbol(p), true);
 		m = m.extend(new Symbol(q), false);
 		Sentence sent = (Sentence) parser.parse("((P OR Q) AND  (P => Q))");
-		Sentence sent2 = (Sentence) parser.parse("((P OR Q) AND  (Q))");
 		Assert.assertFalse(m.isTrue(sent));
 		Assert.assertTrue(m.isFalse(sent));
+		Sentence sent2 = (Sentence) parser.parse("((P OR Q) AND  (Q))");
+		Assert.assertFalse(m.isTrue(sent2));
+		Assert.assertTrue(m.isFalse(sent2));
 	}
 }

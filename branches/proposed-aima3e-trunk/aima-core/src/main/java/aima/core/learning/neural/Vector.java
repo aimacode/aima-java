@@ -5,6 +5,7 @@ import java.util.List;
 import aima.core.util.math.Matrix;
 
 public class Vector extends Matrix {
+	private static final long serialVersionUID = 1L;
 
 	// Vector is modelled as a matrix with a single column;
 	public Vector(int size) {

@@ -1,6 +1,5 @@
 package aima.test.core.unit.learning.framework;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import aima.core.learning.framework.DataSetFactory;
 import aima.core.learning.framework.DataSetSpecification;
 import aima.core.learning.framework.Example;
 import aima.core.learning.neural.IrisDataSetNumerizer;
-import aima.core.learning.neural.NNExample;
 import aima.core.learning.neural.Numerizer;
 import aima.core.learning.neural.RabbitEyeDataSet;
 import aima.core.util.datastructure.Pair;
@@ -22,8 +20,6 @@ import aima.core.util.datastructure.Pair;
  * 
  */
 public class DataSetTest {
-	private static final String NO = "No";
-
 	private static final String YES = "Yes";
 
 	DataSetSpecification spec;
@@ -61,9 +57,9 @@ public class DataSetTest {
 		RabbitEyeDataSet reds = new RabbitEyeDataSet();
 		reds.createExamplesFromFile("rabbiteyes");
 		Assert.assertEquals(70, reds.howManyExamplesLeft());
-		NNExample e = reds.getExampleAtRandom();
+		reds.getExampleAtRandom();
 		Assert.assertEquals(69, reds.howManyExamplesLeft());
-		NNExample e2 = reds.getExampleAtRandom();
+		reds.getExampleAtRandom();
 		Assert.assertEquals(68, reds.howManyExamplesLeft());
 	}
 

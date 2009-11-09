@@ -24,7 +24,7 @@ public class NQueensGoalTest implements GoalTest {
 		return board.getNumberOfQueensOnBoard() == board.getSize();
 	}
 
-	private boolean allQueenPositionsHaveZeroAttacks(List positions) {
+	private boolean allQueenPositionsHaveZeroAttacks(List<XYLocation> positions) {
 
 		for (int i = 0; i < positions.size(); i++) {
 			XYLocation location = (XYLocation) positions.get(i);

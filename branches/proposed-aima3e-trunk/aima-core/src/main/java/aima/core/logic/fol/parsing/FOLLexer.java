@@ -39,10 +39,6 @@ public class FOLLexer extends Lexer {
 
 	@Override
 	public Token nextToken() {
-		Token result = null;
-		int tokenType;
-		String tokenContent;
-
 		if (lookAhead(1) == '(') {
 			consume();
 			return new Token(LogicTokenTypes.LPAREN, "(");

@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.agent.impl.DynamicPercept;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.map.DynAttributeNames;
 import aima.core.search.map.ExtendableMap;
 import aima.core.search.map.MapAgent;
@@ -32,8 +31,7 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new MapAgent(me, new UniformCostSearch(),
-				new String[] { "A" });
+		ma = new MapAgent(me, new UniformCostSearch(), new String[] { "A" });
 	}
 
 	@Test

@@ -117,10 +117,10 @@ public class UnifierTest {
 		Assert.assertEquals(2, result.size());
 
 		Assert.assertEquals(new Constant("Bill"), theta.get(new Variable("x"))); // x
-																					// =
+		// =
 		// Bill
 		Assert.assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y
-																					// =
+		// =
 		// John
 	}
 
@@ -148,10 +148,10 @@ public class UnifierTest {
 		Assert.assertEquals(2, result.size());
 
 		Assert.assertEquals(new Variable("z"), theta.get(new Variable("x"))); // x
-																				// =
-																				// z
+		// =
+		// z
 		Assert.assertEquals(new Constant("John"), theta.get(new Variable("y"))); // y
-																					// =
+		// =
 		// John
 	}
 

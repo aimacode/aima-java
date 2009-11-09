@@ -48,8 +48,6 @@ public class DataSetFactory {
 				attributes.put(name, attribute);
 			}
 			String targetAttributeName = dataSetSpec.getTarget();
-			AttributeSpecification attributeSpec = dataSetSpec
-					.getAttributeSpecFor(targetAttributeName);
 			return new Example(attributes, attributes.get(targetAttributeName));
 		} else {
 			throw new RuntimeException("Unable to construct Example from "
@@ -99,5 +97,4 @@ public class DataSetFactory {
 				"versicolor", "virginica" });
 		return dss;
 	}
-
 }

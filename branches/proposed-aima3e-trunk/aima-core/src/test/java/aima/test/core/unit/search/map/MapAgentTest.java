@@ -8,7 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.map.ExtendableMap;
 import aima.core.search.map.MapAgent;
 import aima.core.search.map.MapEnvironment;
@@ -39,15 +38,16 @@ public class MapAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(), new String[] { "A" });
+		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
+				new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append(":");
 			}
-			
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append(":");
 			}
 		});
@@ -62,15 +62,16 @@ public class MapAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(), new String[] { "D" });
+		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
+				new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append(":");
 			}
-			
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append(":");
 			}
 		});
@@ -85,15 +86,16 @@ public class MapAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me,
-				new UniformCostSearch(), new String[] { "A" });
+		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
+				new String[] { "A" });
 		me.addAgent(ma, "E");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append(":");
 			}
-			
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append(":");
 			}
 		});

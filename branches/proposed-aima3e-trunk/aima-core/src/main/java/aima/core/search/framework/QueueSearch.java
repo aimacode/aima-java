@@ -24,7 +24,7 @@ public abstract class QueueSearch extends NodeExpander {
 	public boolean isFailure(List<Action> result) {
 		return 0 == result.size();
 	}
-	
+
 	/**
 	 * 
 	 * @param problem
@@ -126,7 +126,7 @@ public abstract class QueueSearch extends NodeExpander {
 	public void setPathCost(Double pathCost) {
 		metrics.set(METRIC_PATH_COST, pathCost);
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

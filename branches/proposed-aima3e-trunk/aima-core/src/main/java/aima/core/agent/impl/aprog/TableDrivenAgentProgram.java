@@ -41,16 +41,16 @@ public class TableDrivenAgentProgram implements AgentProgram {
 	// static: percepts, a sequence, initially empty
 	// table, a table of actions, indexed by percept sequences, initially fully
 	// specified
-	public TableDrivenAgentProgram(Map<List<Percept>, Action> perceptSequenceActions) {
-		
+	public TableDrivenAgentProgram(
+			Map<List<Percept>, Action> perceptSequenceActions) {
+
 		List<List<Percept>> rowHeaders = new ArrayList<List<Percept>>(
 				perceptSequenceActions.keySet());
 
 		List<String> colHeaders = new ArrayList<String>();
 		colHeaders.add(ACTION);
 
-		table = new Table<List<Percept>, String, Action>(rowHeaders,
-				colHeaders);
+		table = new Table<List<Percept>, String, Action>(rowHeaders, colHeaders);
 
 		for (List<Percept> row : rowHeaders) {
 			table.set(row, ACTION, perceptSequenceActions.get(row));
@@ -59,7 +59,7 @@ public class TableDrivenAgentProgram implements AgentProgram {
 
 	//
 	// START-AgentProgram
-	
+
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
 	public Action execute(Percept percept) {
 		// append percept to end of percepts
@@ -69,7 +69,7 @@ public class TableDrivenAgentProgram implements AgentProgram {
 		// return action
 		return lookupCurrentAction();
 	}
-	
+
 	// END-AgentProgram
 	//
 

@@ -18,7 +18,7 @@ public interface StepCostFunction {
 	 * Calculate the step cost of taking action a in state s1 to reach state s2.
 	 * 
 	 * @param s1
-	 * the state from which action a is to be performed.
+	 *            the state from which action a is to be performed.
 	 * @param a
 	 * 
 	 * @param s2

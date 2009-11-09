@@ -12,15 +12,16 @@ import aima.core.agent.impl.DynamicAction;
  */
 public class CutOffIndicatorAction extends DynamicAction {
 	public static final CutOffIndicatorAction CUT_OFF = new CutOffIndicatorAction();
-	
+
 	//
 	// START-Action
 	public boolean isNoOp() {
 		return true;
 	}
+
 	// END-Action
 	//
-	
+
 	private CutOffIndicatorAction() {
 		super("CutOff");
 	}

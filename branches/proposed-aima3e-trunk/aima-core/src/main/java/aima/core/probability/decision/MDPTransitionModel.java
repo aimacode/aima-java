@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
 /**
@@ -152,8 +151,8 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 
 	public ACTION_TYPE randomActionFor(STATE_TYPE s) {
 		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions = getTransitionsStartingWith(s);
-		MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util
-				.selectRandomlyFromList(transitions);
+		//MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util
+		//		.selectRandomlyFromList(transitions);
 		return transitions.get(0).getAction();
 		// return randomTransition.getAction();
 	}

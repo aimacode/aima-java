@@ -23,7 +23,7 @@ import aima.core.search.framework.ResultFunction;
 public class MapFunctionFactory {
 	private static ResultFunction _resultFunction = null;
 	private static PerceptToStateFunction _perceptToStateFunction = null;
-	
+
 	public static ActionsFunction getActionsFunction(Map aMap) {
 		return new MapActionsFunction(aMap);
 	}
@@ -54,7 +54,7 @@ public class MapFunctionFactory {
 			return actions;
 		}
 	}
-	
+
 	public static PerceptToStateFunction getPerceptToStateFunction() {
 		if (null == _perceptToStateFunction) {
 			_perceptToStateFunction = new MapPerceptToStateFunction();
@@ -67,22 +67,24 @@ public class MapFunctionFactory {
 		}
 
 		public Object result(Object s, Action a) {
-			
+
 			if (a instanceof MoveToAction) {
 				MoveToAction mta = (MoveToAction) a;
-				
+
 				return mta.getToLocation();
 			}
-				
+
 			// The Action is not understood or is a NoOp
-			// the result will be the current state.	
+			// the result will be the current state.
 			return s;
 		}
 	}
-	
-	private static class MapPerceptToStateFunction implements PerceptToStateFunction {
+
+	private static class MapPerceptToStateFunction implements
+			PerceptToStateFunction {
 		public Object getState(Percept p) {
-			return ((DynamicPercept)p).getAttribute(DynAttributeNames.PERCEPT_IN);
+			return ((DynamicPercept) p)
+					.getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 	}
 }

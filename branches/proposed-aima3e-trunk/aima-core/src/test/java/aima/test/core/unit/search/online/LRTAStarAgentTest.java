@@ -43,14 +43,16 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "A", hf), MapFunctionFactory.getPerceptToStateFunction());
+				.getMap(), "A", "A", hf), MapFunctionFactory
+				.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});
@@ -63,14 +65,16 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "F", hf), MapFunctionFactory.getPerceptToStateFunction());
+				.getMap(), "A", "F", hf), MapFunctionFactory
+				.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});
@@ -86,14 +90,16 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "G", hf), MapFunctionFactory.getPerceptToStateFunction());
+				.getMap(), "A", "G", hf), MapFunctionFactory
+				.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
 				envChanges.append(msg).append("->");
 			}
 
-			public void envChanged(Agent agent, Action action, EnvironmentState state) {
+			public void envChanged(Agent agent, Action action,
+					EnvironmentState state) {
 				envChanges.append(action).append("->");
 			}
 		});
@@ -102,7 +108,9 @@ public class LRTAStarAgentTest {
 		// reasonablbe, against which to test.
 		me.step(14);
 
-		Assert.assertEquals("Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
-				envChanges.toString());
+		Assert
+				.assertEquals(
+						"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
+						envChanges.toString());
 	}
 }

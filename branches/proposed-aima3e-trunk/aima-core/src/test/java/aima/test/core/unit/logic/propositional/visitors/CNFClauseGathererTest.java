@@ -30,7 +30,7 @@ public class CNFClauseGathererTest {
 	public void testSymbol() {
 		Sentence simple = (Sentence) parser.parse("A");
 		Sentence a = (Sentence) parser.parse("A");
-		Set clauses = gatherer.getClausesFrom(simple);
+		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertNotNull(clauses);
 		Assert.assertEquals(1, clauses.size());
 		Assert.assertTrue(clauses.contains(a));
@@ -40,7 +40,7 @@ public class CNFClauseGathererTest {
 	public void testNotSentence() {
 		Sentence simple = (Sentence) parser.parse("(NOT A)");
 		Sentence a = (Sentence) parser.parse("(NOT A)");
-		Set clauses = gatherer.getClausesFrom(simple);
+		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertNotNull(clauses);
 		Assert.assertEquals(1, clauses.size());
 		Assert.assertTrue(clauses.contains(a));
@@ -51,7 +51,7 @@ public class CNFClauseGathererTest {
 		Sentence simple = (Sentence) parser.parse("(A AND B)");
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");
-		Set clauses = gatherer.getClausesFrom(simple);
+		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertEquals(2, clauses.size());
 		Assert.assertTrue(clauses.contains(a));
 		Assert.assertTrue(clauses.contains(b));
@@ -60,7 +60,7 @@ public class CNFClauseGathererTest {
 	@Test
 	public void testMultiAndClause() {
 		Sentence simple = (Sentence) parser.parse("((A AND B) AND C)");
-		Set clauses = gatherer.getClausesFrom(simple);
+		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertEquals(3, clauses.size());
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");
@@ -73,7 +73,7 @@ public class CNFClauseGathererTest {
 	@Test
 	public void testMultiAndClause2() {
 		Sentence simple = (Sentence) parser.parse("(A AND (B AND C))");
-		Set clauses = gatherer.getClausesFrom(simple);
+		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertEquals(3, clauses.size());
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");
@@ -88,7 +88,7 @@ public class CNFClauseGathererTest {
 		Sentence aimaEg = (Sentence) parser.parse("( B11 <=> (P12 OR P21))");
 		CNFTransformer transformer = new CNFTransformer();
 		Sentence transformed = transformer.transform(aimaEg);
-		Set clauses = gatherer.getClausesFrom(transformed);
+		Set<Sentence> clauses = gatherer.getClausesFrom(transformed);
 		Sentence clause1 = (Sentence) parser.parse("( B11 OR  ( NOT P12 )  )");
 		Sentence clause2 = (Sentence) parser.parse("( B11 OR  ( NOT P21 )  )");
 		Sentence clause3 = (Sentence) parser

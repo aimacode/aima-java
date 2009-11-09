@@ -39,7 +39,7 @@ public interface Queue<E> extends java.util.Queue<E> {
 	 * @param element
 	 *            to be inserted in the queue.
 	 * @return the resulting queue with the element inserted. null is returned
-	 * if the element could not be inserted.
+	 *         if the element could not be inserted.
 	 */
 	Queue<E> insert(E element);
 }

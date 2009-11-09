@@ -171,8 +171,8 @@ public class Util {
 			// doesn't work use incremental formulation
 
 		}
-		double variance = sumOfDiffSquared; 
-		// (listSize - 1); 
+		double variance = sumOfDiffSquared;
+		// (listSize - 1);
 		// assumes at least 2 members in list.
 		return Math.sqrt(variance);
 	}

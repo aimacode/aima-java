@@ -31,6 +31,6 @@ public class RandomVariableTest {
 
 	@Test(expected = RuntimeException.class)
 	public void testGettingValuesOnInvalidStateThrowsException() {
-		double d = aDistribution.getProbabilityOf("invalid");
+		aDistribution.getProbabilityOf("invalid");
 	}
 }

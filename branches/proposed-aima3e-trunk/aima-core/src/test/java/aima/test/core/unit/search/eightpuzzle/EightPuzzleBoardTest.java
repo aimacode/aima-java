@@ -76,7 +76,7 @@ public class EightPuzzleBoardTest {
 		expected.add(new XYLocation(2, 0));
 		expected.add(new XYLocation(1, 2));
 
-		List actual = board.getPositions();
+		List<XYLocation> actual = board.getPositions();
 		Assert.assertEquals(expected, actual);
 	}
 

@@ -63,7 +63,7 @@ public class UniformCostSearch extends PrioritySearch {
 			}
 		};
 	}
-	
+
 	//
 	// PRIVATE
 	//
@@ -72,7 +72,7 @@ public class UniformCostSearch extends PrioritySearch {
 		private Queue<Node> frontier = null;
 		private Map<Object, Node> frontierState = new HashMap<Object, Node>();
 		private List<Node> addToFrontier = new ArrayList<Node>();
-		
+
 		// Need to override search() method so that I can re-initialize
 		// the explored set should multiple calls to search be made.
 		@Override
@@ -80,13 +80,13 @@ public class UniformCostSearch extends PrioritySearch {
 			// Need to keep track of the frontier
 			// as will need to remove items with higher path cost
 			// to the same state.
-			this.frontier = frontier; 
+			this.frontier = frontier;
 			// initialize the explored set to be empty
 			explored.clear();
-			frontierState.clear();			
+			frontierState.clear();
 			return super.search(problem, frontier);
 		}
-		
+
 		@Override
 		public Node removeNodeFromFrontier(Queue<Node> frontier) {
 			Node toRemove = super.removeNodeFromFrontier(frontier);
@@ -95,22 +95,25 @@ public class UniformCostSearch extends PrioritySearch {
 		}
 
 		@Override
-		public List<Node> getResultingNodesToAddToFrontier(
-				Node nodeToExpand, Problem problem) {
+		public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
+				Problem problem) {
 
 			addToFrontier.clear();
 			// add the node to the explored set
-			explored.add(nodeToExpand.getState());		
-			// expand the chosen node, adding the resulting nodes to the frontier
+			explored.add(nodeToExpand.getState());
+			// expand the chosen node, adding the resulting nodes to the
+			// frontier
 			for (Node cfn : expandNode(nodeToExpand, problem)) {
 				Node frontierNode = frontierState.get(cfn.getState());
 				boolean yesAddToFrontier = false;
 				// only if not in the frontier or explored set
 				if (null == frontierNode && !explored.contains(cfn.getState())) {
 					yesAddToFrontier = true;
-				} else if (null != frontierNode && frontierNode.getPathCost() > cfn.getPathCost()) {
+				} else if (null != frontierNode
+						&& frontierNode.getPathCost() > cfn.getPathCost()) {
 					yesAddToFrontier = true;
-					// Want to replace the current frontier node with the child node
+					// Want to replace the current frontier node with the child
+					// node
 					// therefore mark the child to be added and remove the
 					// current fontierNode
 					frontier.remove(frontierNode);
@@ -118,13 +121,13 @@ public class UniformCostSearch extends PrioritySearch {
 					// as 1 or more may reach the same state at the same time
 					addToFrontier.remove(frontierNode);
 				}
-				
+
 				if (yesAddToFrontier) {
 					addToFrontier.add(cfn);
-					frontierState.put(cfn.getState(), cfn);		
+					frontierState.put(cfn.getState(), cfn);
 				}
 			}
-			
+
 			return addToFrontier;
 		}
 	}

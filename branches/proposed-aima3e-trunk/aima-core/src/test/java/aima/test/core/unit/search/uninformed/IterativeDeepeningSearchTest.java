@@ -10,8 +10,8 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.nqueens.NQueensBoard;
-import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.nqueens.NQueensFunctionFactory;
+import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 
 public class IterativeDeepeningSearchTest {

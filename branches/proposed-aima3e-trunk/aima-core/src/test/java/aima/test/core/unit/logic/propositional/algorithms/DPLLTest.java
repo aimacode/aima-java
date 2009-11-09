@@ -64,7 +64,7 @@ public class DPLLTest {
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
 								.transform(sentence)));
-		List clausesWithNonTrueValues = dpll.clausesWithNonTrueValues(
+		List<Sentence> clausesWithNonTrueValues = dpll.clausesWithNonTrueValues(
 				clauseList, model);
 		Assert.assertEquals(1, clausesWithNonTrueValues.size());
 		Sentence nonTrueClause = (Sentence) parser.parse("(B AND C)");
@@ -82,7 +82,7 @@ public class DPLLTest {
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
 								.transform(sentence)));
-		List clausesWithNonTrueValues = dpll.clausesWithNonTrueValues(
+		List<Sentence> clausesWithNonTrueValues = dpll.clausesWithNonTrueValues(
 				clauseList, model);
 		Assert.assertEquals(0, clausesWithNonTrueValues.size());
 	}
@@ -153,7 +153,6 @@ public class DPLLTest {
 
 	@Test
 	public void testDPLLSucceedsWithStackOverflowBugReport1() {
-		KnowledgeBase kb = new KnowledgeBase();
 		Sentence sentence = (Sentence) parser
 				.parse("((A OR (NOT A)) AND (A OR B))");
 		Assert.assertTrue(dpll.dpllSatisfiable(sentence));
