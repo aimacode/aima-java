@@ -33,6 +33,11 @@ import aima.core.util.datastructure.FIFOQueue;
  */
 
 /**
+ * Note: Supports both Tree and Graph based versions by assigning an instance
+ * of TreeSearch or GraphSearch to its constructor.
+ */
+
+/**
  * @author Ciaran O'Reilly
  */
 public class BreadthFirstSearch implements Search {

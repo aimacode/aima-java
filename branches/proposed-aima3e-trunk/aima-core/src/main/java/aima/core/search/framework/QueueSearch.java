@@ -1,6 +1,6 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -16,12 +16,24 @@ public abstract class QueueSearch extends NodeExpander {
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 
 	public static final String METRIC_PATH_COST = "pathCost";
-	
+
 	//
 	//
 	private boolean checkGoalBeforeAddingToFrontier = false;
 
-	// Note: This follows the general structure of TREE-SEARCH as described in fig 3.7.
+	public boolean isFailure(List<Action> result) {
+		return 0 == result.size();
+	}
+	
+	/**
+	 * 
+	 * @param problem
+	 * @param frontier
+	 * @return if goal found, the list of actions to the Goal. If already at the
+	 *         goal you will receive a List with a single NoOp Action in it. If
+	 *         fail to find the Goal, an empty list will be returned to indicate
+	 *         that the search failed.
+	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
@@ -40,43 +52,48 @@ public abstract class QueueSearch extends NodeExpander {
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
 			if (!isCheckGoalBeforeAddingToFrontier()) {
-				// if the node contains a goal state then return the corresponding solution
+				// if the node contains a goal state then return the
+				// corresponding solution
 				if (problem.isGoalState(nodeToExpand.getState())) {
 					setPathCost(nodeToExpand.getPathCost());
-					return SearchUtils.actionsFromNodes(nodeToExpand.getPathFromRoot());
+					return SearchUtils.actionsFromNodes(nodeToExpand
+							.getPathFromRoot());
 				}
 			}
-			// expand the chosen node, adding the resulting nodes to the frontier			
-			for (Node fn : getResultingNodesToAddToFrontier(nodeToExpand, problem)) {
+			// expand the chosen node, adding the resulting nodes to the
+			// frontier
+			for (Node fn : getResultingNodesToAddToFrontier(nodeToExpand,
+					problem)) {
 				if (isCheckGoalBeforeAddingToFrontier()) {
 					if (problem.isGoalState(fn.getState())) {
-						return SearchUtils.actionsFromNodes(fn.getPathFromRoot());
+						return SearchUtils.actionsFromNodes(fn
+								.getPathFromRoot());
 					}
-				} 
+				}
 				frontier.insert(fn);
 			}
 			setQueueSize(frontier.size());
 		}
 		// if the frontier is empty then return failure
-		// Note: we use an empty list to indicate failure
-		return new ArrayList<Action>();
+		return failure();
 	}
-	
+
 	public boolean isCheckGoalBeforeAddingToFrontier() {
 		return checkGoalBeforeAddingToFrontier;
 	}
-	
-	public void setCheckGoalBeforeAddingToFrontier(boolean checkGoalBeforeAddingToFrontier) {
+
+	public void setCheckGoalBeforeAddingToFrontier(
+			boolean checkGoalBeforeAddingToFrontier) {
 		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
 	}
-	
+
 	public Node removeNodeFromFrontier(Queue<Node> frontier) {
 		return frontier.pop();
 	}
-	
-	public abstract List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
-			Problem p);
-	
+
+	public abstract List<Node> getResultingNodesToAddToFrontier(
+			Node nodeToExpand, Problem p);
+
 	@Override
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
@@ -108,5 +125,12 @@ public abstract class QueueSearch extends NodeExpander {
 
 	public void setPathCost(Double pathCost) {
 		metrics.set(METRIC_PATH_COST, pathCost);
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+	private List<Action> failure() {
+		return Collections.emptyList();
 	}
 }

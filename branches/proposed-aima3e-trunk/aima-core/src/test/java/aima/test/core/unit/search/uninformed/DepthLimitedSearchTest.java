@@ -36,10 +36,10 @@ public class DepthLimitedSearchTest {
 				NQueensFunctionFactory.getActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
-		Search search = new DepthLimitedSearch(1);
+		DepthLimitedSearch search = new DepthLimitedSearch(1);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
-		Assert.assertEquals("cutoff", actions.get(0));
+		Assert.assertEquals(true, search.isCutOff(actions));
 	}
 
 	@Test
@@ -48,10 +48,10 @@ public class DepthLimitedSearchTest {
 				NQueensFunctionFactory.getActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
-		Search search = new DepthLimitedSearch(5);
+		DepthLimitedSearch search = new DepthLimitedSearch(5);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
-		Assert.assertEquals(0, actions.size());
+		Assert.assertEquals(true, search.isFailure(actions));
 	}
 
 	//
