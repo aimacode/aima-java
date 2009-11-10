@@ -19,6 +19,7 @@ public abstract class QueueSearch extends NodeExpander {
 
 	//
 	//
+	private Queue<Node> frontier = null;
 	private boolean checkGoalBeforeAddingToFrontier = false;
 
 	public boolean isFailure(List<Action> result) {
@@ -35,6 +36,8 @@ public abstract class QueueSearch extends NodeExpander {
 	 *         that the search failed.
 	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
+		this.frontier = frontier;
+		
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
@@ -47,7 +50,7 @@ public abstract class QueueSearch extends NodeExpander {
 		setQueueSize(frontier.size());
 		while (!(frontier.isEmpty())) {
 			// choose a leaf node and remove it from the frontier
-			Node nodeToExpand = removeNodeFromFrontier(frontier);
+			Node nodeToExpand = popNodeFromFrontier();
 			setQueueSize(frontier.size());
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
@@ -87,8 +90,12 @@ public abstract class QueueSearch extends NodeExpander {
 		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
 	}
 
-	public Node removeNodeFromFrontier(Queue<Node> frontier) {
+	public Node popNodeFromFrontier() {
 		return frontier.pop();
+	}
+	
+	public boolean removeNodeFromFrontier(Node toRemove) {
+		return frontier.remove(toRemove);
 	}
 
 	public abstract List<Node> getResultingNodesToAddToFrontier(

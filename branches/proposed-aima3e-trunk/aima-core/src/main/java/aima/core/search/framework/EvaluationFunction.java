@@ -1,8 +1,10 @@
 package aima.core.search.framework;
 
 /**
- * Interface describing an evaluation function which is used to determine which
- * Nodes should be expanded based on the value returned. 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * 
+ * The evaluation function is construed as a cost estimate, so the node with the lowest evaluation 
+ * is expanded first.
  */
 
 /**

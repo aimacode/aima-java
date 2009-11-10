@@ -103,7 +103,7 @@ public class SearchFactory {
 			result = new IterativeDeepeningSearch();
 			break;
 		case UC_SEARCH:
-			result = new UniformCostSearch();
+			result = new UniformCostSearch(qs);
 			break;
 		case GBF_SEARCH:
 			result = new GreedyBestFirstSearch(qs);

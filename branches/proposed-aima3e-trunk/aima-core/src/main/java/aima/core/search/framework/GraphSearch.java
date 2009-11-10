@@ -1,8 +1,11 @@
 package aima.core.search.framework;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
@@ -32,8 +35,18 @@ import aima.core.util.datastructure.Queue;
 public class GraphSearch extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
-	private Set<Object> frontierState = new HashSet<Object>();
+	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
+	private Comparator<Node> replaceFrontierNodeAtStateCostFunction = null;
 	private List<Node> addToFrontier = new ArrayList<Node>();
+	
+	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
+		return replaceFrontierNodeAtStateCostFunction;
+	}
+
+	public void setReplaceFrontierNodeAtStateCostFunction(
+			Comparator<Node> replaceFrontierNodeAtStateCostFunction) {
+		this.replaceFrontierNodeAtStateCostFunction = replaceFrontierNodeAtStateCostFunction;
+	}
 
 	// Need to override search() method so that I can re-initialize
 	// the explored set should multiple calls to search be made.
@@ -46,10 +59,19 @@ public class GraphSearch extends QueueSearch {
 	}
 
 	@Override
-	public Node removeNodeFromFrontier(Queue<Node> frontier) {
-		Node toRemove = super.removeNodeFromFrontier(frontier);
+	public Node popNodeFromFrontier() {
+		Node toRemove = super.popNodeFromFrontier();
 		frontierState.remove(toRemove.getState());
 		return toRemove;
+	}
+	
+	@Override
+	public boolean removeNodeFromFrontier(Node toRemove) {
+		boolean removed = super.removeNodeFromFrontier(toRemove);
+		if (removed) {
+			frontierState.remove(toRemove.getState());
+		}
+		return removed;
 	}
 
 	@Override
@@ -61,11 +83,29 @@ public class GraphSearch extends QueueSearch {
 		explored.add(nodeToExpand.getState());
 		// expand the chosen node, adding the resulting nodes to the frontier
 		for (Node cfn : expandNode(nodeToExpand, problem)) {
+			Node frontierNode = frontierState.get(cfn.getState());
+			boolean yesAddToFrontier = false;
 			// only if not in the frontier or explored set
-			if (!frontierState.contains(cfn.getState())
-					&& !explored.contains(cfn.getState())) {
+			if (null == frontierNode && !explored.contains(cfn.getState())) {
+				yesAddToFrontier = true;
+			} else if (null != frontierNode &&
+					null != replaceFrontierNodeAtStateCostFunction &&
+					replaceFrontierNodeAtStateCostFunction.compare(cfn, frontierNode) < 0) {
+				// child.STATE is in frontier with higher cost
+				// replace that frontier node with child
+				yesAddToFrontier = true;
+				// Want to replace the current frontier node with the child
+				// node therefore mark the child to be added and remove the
+				// current fontierNode
+				removeNodeFromFrontier(frontierNode);
+				// Ensure removed from add to frontier as well
+				// as 1 or more may reach the same state at the same time
+				addToFrontier.remove(frontierNode);
+			}
+
+			if (yesAddToFrontier) {
 				addToFrontier.add(cfn);
-				frontierState.add(cfn.getState());
+				frontierState.put(cfn.getState(), cfn);
 			}
 		}
 
