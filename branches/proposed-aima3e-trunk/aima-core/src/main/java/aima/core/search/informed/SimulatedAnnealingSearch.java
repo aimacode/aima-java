@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
@@ -50,13 +51,15 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		FAILURE, SOLUTION_FOUND
 	};
 
+	private final HeuristicFunction hf;
 	private final Scheduler scheduler;
 
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 
 	private Object lastState = null;
 
-	public SimulatedAnnealingSearch() {
+	public SimulatedAnnealingSearch(HeuristicFunction hf) {
+		this.hf = hf;
 		this.scheduler = new Scheduler();
 	}
 
@@ -127,12 +130,9 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 	}
 
 	private double getValue(Problem p, Node n) {
-		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
+		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
-	}
-
-	private double getHeuristic(Problem p, Node aNode) {
-		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
+		return -1 * hf.h(n.getState());
 	}
 }

@@ -14,7 +14,7 @@ public abstract class PrioritySearch implements Search {
 	protected QueueSearch search;
 
 	public List<Action> search(Problem p) throws Exception {
-		return search.search(p, new PriorityQueue<Node>(5, getComparator(p)));
+		return search.search(p, new PriorityQueue<Node>(5, getComparator()));
 	}
 
 	public Metrics getMetrics() {
@@ -24,5 +24,5 @@ public abstract class PrioritySearch implements Search {
 	//
 	// PROTECTED METHODS
 	//
-	protected abstract Comparator<Node> getComparator(Problem p);
+	protected abstract Comparator<Node> getComparator();
 }

@@ -29,25 +29,23 @@ public class RecursiveBestFirstSearchTest {
 
 	RecursiveBestFirstSearch recursiveBestFirstSearch;
 
-	HeuristicFunction heuristicFunction;
-
 	@Before
 	public void setUp() {
 		envChanges = new StringBuffer();
 
 		aMap = new SimplifiedRoadMapOfPartOfRomania();
 
-		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
-				new AStarEvaluationFunction());
-
-		heuristicFunction = new HeuristicFunction() {
-			public double getHeuristicValue(Object state) {
+		HeuristicFunction heuristicFunction = new HeuristicFunction() {
+			public double h(Object state) {
 				Point2D pt1 = aMap.getPosition((String) state);
 				Point2D pt2 = aMap
 						.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 				return pt1.distance(pt2);
 			}
 		};
+		
+		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
+				new AStarEvaluationFunction(heuristicFunction));
 	}
 
 	@Test
@@ -55,7 +53,6 @@ public class RecursiveBestFirstSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
-		ma.setHeuristicFunction(heuristicFunction);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 		me.addEnvironmentView(new EnvironmentView() {
@@ -81,7 +78,6 @@ public class RecursiveBestFirstSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
-		ma.setHeuristicFunction(heuristicFunction);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.addEnvironmentView(new EnvironmentView() {

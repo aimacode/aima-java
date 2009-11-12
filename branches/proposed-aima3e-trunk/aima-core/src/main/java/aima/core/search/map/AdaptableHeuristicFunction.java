@@ -33,5 +33,5 @@ public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
 	}
 
 	// when subclassing: Don't forget to implement the most important method
-	// public double getHeuristicValue(Object state)
+	// public double h(Object state)
 }

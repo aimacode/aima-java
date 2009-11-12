@@ -31,7 +31,7 @@ public class LRTAStarAgentTest {
 		aMap.addBidirectionalLink("D", "E", 4.0);
 		aMap.addBidirectionalLink("E", "F", 4.0);
 		hf = new HeuristicFunction() {
-			public double getHeuristicValue(Object state) {
+			public double h(Object state) {
 				return 1;
 			}
 		};
@@ -43,8 +43,8 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "A", hf), MapFunctionFactory
-				.getPerceptToStateFunction());
+				.getMap(), "A", "A"), MapFunctionFactory
+				.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -65,8 +65,8 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "F", hf), MapFunctionFactory
-				.getPerceptToStateFunction());
+				.getMap(), "A", "F"), MapFunctionFactory
+				.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -90,8 +90,8 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "G", hf), MapFunctionFactory
-				.getPerceptToStateFunction());
+				.getMap(), "A", "G"), MapFunctionFactory
+				.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {

@@ -27,9 +27,8 @@ public class GreedyBestFirstSearchTest {
 
 			Problem problem = new Problem(board, EightPuzzleFunctionFactory
 					.getActionsFunction(), EightPuzzleFunctionFactory
-					.getResultFunction(), new EightPuzzleGoalTest(),
-					new ManhattanHeuristicFunction());
-			Search search = new GreedyBestFirstSearch(new GraphSearch());
+					.getResultFunction(), new EightPuzzleGoalTest());
+			Search search = new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());
 			Assert.assertEquals("197", agent.getInstrumentation().getProperty(

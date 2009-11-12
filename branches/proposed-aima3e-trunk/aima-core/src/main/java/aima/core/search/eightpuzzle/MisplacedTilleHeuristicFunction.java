@@ -7,13 +7,11 @@ import aima.core.util.datastructure.XYLocation;
  * @author Ravi Mohan
  * 
  */
-
 public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
 
-	public double getHeuristicValue(Object state) {
+	public double h(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		return getNumberOfMisplacedTiles(board);
-
 	}
 
 	private int getNumberOfMisplacedTiles(EightPuzzleBoard board) {

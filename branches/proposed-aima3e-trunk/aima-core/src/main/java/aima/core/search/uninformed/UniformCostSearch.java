@@ -5,7 +5,6 @@ import java.util.Comparator;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.QueueSearch;
 
 /**
@@ -61,7 +60,7 @@ public class UniformCostSearch extends PrioritySearch {
 	// PROTECTED METHODS
 	//
 	@Override
-	protected Comparator<Node> getComparator(Problem p) {
+	protected Comparator<Node> getComparator() {
 		return _g;
 	}
 }

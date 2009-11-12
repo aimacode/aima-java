@@ -6,7 +6,6 @@ import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.QueueSearch;
 
 /**
@@ -37,11 +36,11 @@ public class BestFirstSearch extends PrioritySearch {
 	// PROTECTED METHODS
 	//
 	@Override
-	protected Comparator<Node> getComparator(final Problem p) {
+	protected Comparator<Node> getComparator() {
 		Comparator<Node> f = new Comparator<Node>() {
-			public int compare(Node one, Node two) {
-				Double f1 = evaluationFunction.getValue(p, one);
-				Double f2 = evaluationFunction.getValue(p, two);
+			public int compare(Node n1, Node n2) {
+				Double f1 = evaluationFunction.f(n1);
+				Double f2 = evaluationFunction.f(n2);
 
 				return f1.compareTo(f2);
 			}

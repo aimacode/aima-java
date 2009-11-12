@@ -29,9 +29,8 @@ public class AStarSearchTest {
 
 			Problem problem = new Problem(board, EightPuzzleFunctionFactory
 					.getActionsFunction(), EightPuzzleFunctionFactory
-					.getResultFunction(), new EightPuzzleGoalTest(),
-					new ManhattanHeuristicFunction());
-			Search search = new AStarSearch(new GraphSearch());
+					.getResultFunction(), new EightPuzzleGoalTest());
+			Search search = new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("926", agent.getInstrumentation().getProperty(

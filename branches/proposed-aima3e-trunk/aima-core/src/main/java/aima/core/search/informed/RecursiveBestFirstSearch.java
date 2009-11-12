@@ -61,8 +61,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
 		Node n = new Node(p.getInitialState());
-		SearchResult sr = rbfs(p, n, evaluationFunction.getValue(p, n),
-				INFINITY, 0);
+		SearchResult sr = rbfs(p, n, evaluationFunction.f(n), INFINITY, 0);
 		if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {
 			Node s = sr.getSolution();
 			actions = SearchUtils.actionsFromNodes(s.getPathFromRoot());
@@ -126,7 +125,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		int size = successors.size();
 		for (int s = 0; s < size; s++) {
 			// f[s] <- max(g(s) + h(s), f[node])
-			f[s] = Math.max(evaluationFunction.getValue(p, successors.get(s)),
+			f[s] = Math.max(evaluationFunction.f(successors.get(s)),
 					fNode);
 		}
 

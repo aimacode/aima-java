@@ -9,7 +9,6 @@ import aima.core.agent.Model;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicModel;
 import aima.core.agent.impl.DynamicPercept;
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
@@ -28,8 +27,6 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	private String[] goalTests = null;
 
 	private int goalTestPos = 0;
-
-	private HeuristicFunction heuristicFunction = null;
 
 	public MapAgent(MapEnvironment mapEnvironment, Search search) {
 		this.mapEnvironment = mapEnvironment;
@@ -50,14 +47,6 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 		this.search = search;
 		this.goalTests = new String[goalTests.length];
 		System.arraycopy(goalTests, 0, this.goalTests, 0, goalTests.length);
-	}
-
-	public HeuristicFunction getHeuristicFunction() {
-		return heuristicFunction;
-	}
-
-	public void setHeuristicFunction(HeuristicFunction heuristicFunction) {
-		this.heuristicFunction = heuristicFunction;
 	}
 
 	//
@@ -91,17 +80,10 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected Problem formulateProblem(Object goal) {
-		if (null == getHeuristicFunction()) {
-			return new BidirectionalMapProblem(mapEnvironment.getMap(),
+		return new BidirectionalMapProblem(mapEnvironment.getMap(),
 					(String) model
 							.getAttribute(DynAttributeNames.AGENT_LOCATION),
 					(String) goal);
-		} else {
-			return new BidirectionalMapProblem(mapEnvironment.getMap(),
-					(String) model
-							.getAttribute(DynAttributeNames.AGENT_LOCATION),
-					(String) goal, getHeuristicFunction());
-		}
 	}
 
 	@Override

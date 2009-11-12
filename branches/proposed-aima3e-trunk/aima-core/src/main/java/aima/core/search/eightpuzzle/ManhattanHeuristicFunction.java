@@ -7,10 +7,9 @@ import aima.core.util.datastructure.XYLocation;
  * @author Ravi Mohan
  * 
  */
-
 public class ManhattanHeuristicFunction implements HeuristicFunction {
 
-	public double getHeuristicValue(Object state) {
+	public double h(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		int retVal = 0;
 		for (int i = 1; i < 9; i++) {

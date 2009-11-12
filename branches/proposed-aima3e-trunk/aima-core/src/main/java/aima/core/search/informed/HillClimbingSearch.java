@@ -3,6 +3,7 @@ package aima.core.search.informed;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
@@ -40,11 +41,14 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		FAILURE, SOLUTION_FOUND
 	};
 
+	private HeuristicFunction hf = null;
+	
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 
 	private Object lastState = null;
 
-	public HillClimbingSearch() {
+	public HillClimbingSearch(HeuristicFunction hf) {
+		this.hf = hf;
 	}
 
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
@@ -66,7 +70,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 
 			// if VALUE[neighbor] <= VALUE[current] then return STATE[current]
 			if ((neighbor == null)
-					|| (getValue(p, neighbor) <= getValue(p, current))) {
+					|| (getValue(neighbor) <= getValue(current))) {
 				if (p.isGoalState(current.getState())) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
@@ -91,7 +95,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		Node nodeWithHighestValue = null;
 		for (int i = 0; i < children.size(); i++) {
 			Node child = (Node) children.get(i);
-			double value = getValue(p, child);
+			double value = getValue(child);
 			if (value > highestValue) {
 				highestValue = value;
 				nodeWithHighestValue = child;
@@ -100,12 +104,9 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return nodeWithHighestValue;
 	}
 
-	private double getValue(Problem p, Node n) {
-		return -1 * getHeuristic(p, n); // assumption greater heuristic value =>
+	private double getValue(Node n) {
+		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
-	}
-
-	private double getHeuristic(Problem p, Node aNode) {
-		return p.getHeuristicFunction().getHeuristicValue(aNode.getState());
+		return -1 * hf.h(n.getState()); 
 	}
 }

@@ -1,7 +1,6 @@
 package aima.core.search.map;
 
 import aima.core.search.framework.BidirectionalProblem;
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Problem;
 
 /**
@@ -27,20 +26,6 @@ public class BidirectionalMapProblem extends Problem implements
 				.getActionsFunction(aMap), MapFunctionFactory
 				.getResultFunction(), new MapGoalTest(initialState),
 				new MapStepCostFunction(aMap));
-	}
-
-	public BidirectionalMapProblem(Map aMap, String initialState,
-			String goalState, HeuristicFunction hf) {
-		super(initialState, MapFunctionFactory.getActionsFunction(aMap),
-				MapFunctionFactory.getResultFunction(), new MapGoalTest(
-						goalState), new MapStepCostFunction(aMap), hf);
-
-		map = aMap;
-
-		reverseProblem = new Problem(goalState, MapFunctionFactory
-				.getActionsFunction(aMap), MapFunctionFactory
-				.getResultFunction(), new MapGoalTest(initialState),
-				new MapStepCostFunction(aMap), hf);
 	}
 
 	//

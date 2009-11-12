@@ -12,5 +12,5 @@ package aima.core.search.framework;
  * 
  */
 public interface EvaluationFunction {
-	Double getValue(Problem p, Node n);
+	double f(Node n);
 }

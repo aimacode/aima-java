@@ -11,7 +11,7 @@ public class SimulatedAnnealingSearchTest {
 	public void testForGivenNegativeDeltaEProbabilityOfAcceptanceDecreasesWithDecreasingTemperature() {
 		// this isn't very nice. the object's state is uninitialized but is ok
 		// for this test.
-		SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
+		SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(null);
 		int deltaE = -1;
 		double higherTemperature = 30.0;
 		double lowerTemperature = 29.5;
