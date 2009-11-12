@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import aima.core.agent.Action;
 import aima.core.search.eightpuzzle.EightPuzzleBoard;
 import aima.core.search.eightpuzzle.EightPuzzleGoalTest;
 import aima.core.search.eightpuzzle.EightPuzzleFunctionFactory;
@@ -85,9 +86,9 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(boardWithThreeMoveSolution,
 					EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(),
-					new EightPuzzleGoalTest(),
+					new EightPuzzleGoalTest());
+			Search search = new GreedyBestFirstSearch(new GraphSearch(),
 					new MisplacedTilleHeuristicFunction());
-			Search search = new GreedyBestFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -104,8 +105,8 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(boardWithThreeMoveSolution,
 					EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(),
-					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			Search search = new GreedyBestFirstSearch(new GraphSearch());
+					new EightPuzzleGoalTest());
+			Search search = new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -122,9 +123,8 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(random1,
 					EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(),
-					new EightPuzzleGoalTest(),
-					new MisplacedTilleHeuristicFunction());
-			Search search = new AStarSearch(new GraphSearch());
+					new EightPuzzleGoalTest());
+			Search search = new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -140,8 +140,8 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(random1,
 					EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(),
-					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
+					new EightPuzzleGoalTest());
+			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Search Outcome=" + search.getOutcome());
@@ -159,8 +159,8 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(random1,
 					EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(),
-					new EightPuzzleGoalTest(), new ManhattanHeuristicFunction());
-			Search search = new AStarSearch(new GraphSearch());
+					new EightPuzzleGoalTest());
+			Search search = new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -171,7 +171,7 @@ public class EightPuzzleDemo {
 	}
 
 	private static void printInstrumentation(Properties properties) {
-		Iterator keys = properties.keySet().iterator();
+		Iterator<Object> keys = properties.keySet().iterator();
 		while (keys.hasNext()) {
 			String key = (String) keys.next();
 			String property = properties.getProperty(key);
@@ -180,7 +180,7 @@ public class EightPuzzleDemo {
 
 	}
 
-	private static void printActions(List actions) {
+	private static void printActions(List<Action> actions) {
 		for (int i = 0; i < actions.size(); i++) {
 			String action = actions.get(i).toString();
 			System.out.println(action);

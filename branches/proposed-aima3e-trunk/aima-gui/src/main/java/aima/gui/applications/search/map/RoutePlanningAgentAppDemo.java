@@ -2,7 +2,8 @@ package aima.gui.applications.search.map;
 
 import java.util.ArrayList;
 
-import aima.core.search.framework.SearchFactory;
+import aima.gui.applications.search.SearchFactory;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.map.AdaptableHeuristicFunction;
 import aima.core.search.map.ExtendableMap;
 import aima.core.search.map.MapAgent;
@@ -191,12 +192,14 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 		 */
 		@Override
 		protected AdaptableHeuristicFunction createHeuristic(int heuIdx) {
+			AdaptableHeuristicFunction ahf = null;
 			switch (heuIdx) {
 			case 0:
-				return new H1();
+				ahf = new H1();
 			default:
-				return new H2();
+				ahf = new H2();
 			}
+			return ahf.getAdaptation(destinations.get(0), scenario.getAgentMap());
 		}
 
 		/**
@@ -219,8 +222,6 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 				frame
 						.logMessage("heuristic: "
 								+ heuristic.getClass().getName());
-				agent.setHeuristicFunction(heuristic.getAdaptation(goal,
-						scenario.getAgentMap()));
 			}
 			env.addAgent(agent, scenario.getInitAgentLocation());
 			env.stepUntilDone();
@@ -233,7 +234,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 	 */
 	static class H1 extends AdaptableHeuristicFunction {
 
-		public double getHeuristicValue(Object state) {
+		public double h(Object state) {
 			return 0.0;
 		}
 	}
@@ -245,7 +246,7 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 	 */
 	static class H2 extends AdaptableHeuristicFunction {
 
-		public double getHeuristicValue(Object state) {
+		public double h(Object state) {
 			double result = 0.0;
 			Point2D pt1 = map.getPosition((String) state);
 			Point2D pt2 = map.getPosition((String) goal);

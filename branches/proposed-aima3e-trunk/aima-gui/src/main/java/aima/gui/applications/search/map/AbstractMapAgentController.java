@@ -2,14 +2,11 @@ package aima.gui.applications.search.map;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Set;
 
 import aima.core.agent.Agent;
-import aima.core.agent.impl.AbstractAgent;
-import aima.core.search.framework.SearchFactory;
 import aima.core.search.map.AdaptableHeuristicFunction;
-import aima.core.search.map.DynAttributeNames;
 import aima.core.search.map.Scenario;
+import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
 
 /**
@@ -52,10 +49,11 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		selectScenarioAndDest(state.getValue(MapAgentFrame.SCENARIO_SEL), state
 				.getValue(MapAgentFrame.DESTINATION_SEL));
 		prepareModel();
+		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
 				state.getValue(MapAgentFrame.SEARCH_SEL),
-				state.getValue(MapAgentFrame.SEARCH_MODE_SEL));
-		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
+				state.getValue(MapAgentFrame.SEARCH_MODE_SEL),
+				heuristic);
 		scenario.getEnv().addEnvironmentView(model);
 	}
 

@@ -121,9 +121,8 @@ public class NQueensDemo {
 			Problem problem = new Problem(new NQueensBoard(8),
 					NQueensFunctionFactory.getActionsFunction(), 
 					NQueensFunctionFactory.getResultFunction(),
-					new NQueensGoalTest(),
-					new QueensToBePlacedHeuristic());
-			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch();
+					new NQueensGoalTest());
+			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(new QueensToBePlacedHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
@@ -142,9 +141,8 @@ public class NQueensDemo {
 			Problem problem = new Problem(new NQueensBoard(8),
 					NQueensFunctionFactory.getActionsFunction(), 
 					NQueensFunctionFactory.getResultFunction(), 
-					new NQueensGoalTest(),
-					new QueensToBePlacedHeuristic());
-			HillClimbingSearch search = new HillClimbingSearch();
+					new NQueensGoalTest());
+			HillClimbingSearch search = new HillClimbingSearch(new QueensToBePlacedHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
