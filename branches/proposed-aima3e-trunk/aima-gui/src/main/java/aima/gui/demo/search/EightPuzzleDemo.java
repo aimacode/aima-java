@@ -16,7 +16,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
-import aima.core.search.informed.SimulatedAnnealingSearch;
+import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 
