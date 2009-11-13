@@ -38,7 +38,7 @@ public class BestFirstSearch extends PrioritySearch {
 	@Override
 	protected Comparator<Node> getComparator() {
 		Comparator<Node> f = new Comparator<Node>() {
-			public int compare(Node n1, Node n2) {
+			public int compare(Node n1, Node n2) {				
 				Double f1 = evaluationFunction.f(n1);
 				Double f2 = evaluationFunction.f(n2);
 

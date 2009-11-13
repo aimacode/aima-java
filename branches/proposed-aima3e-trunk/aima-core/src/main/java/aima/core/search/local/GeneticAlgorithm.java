@@ -1,4 +1,4 @@
-package aima.core.search.informed.ga;
+package aima.core.search.local;
 
 import java.util.HashSet;
 import java.util.Random;

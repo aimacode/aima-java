@@ -12,26 +12,28 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.5, page 102.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page ??.
  * 
  * <code>
  * function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure
- *   RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
+ *   return RBFS(problem, MAKE-NODE(problem.INITIAL-STATE), infinity)
  *   
  * function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
- *   if GOAL-TEST[problem](STATE[node]) then return node
- *   successors <- EXPAND(node, problem)
+ *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+ *   successors <- []
+ *   for each action in problem.ACTION(node.STATE) do
+ *       add CHILD-NODE(problem, node, action) into successors
  *   if successors is empty then return failure, infinity
- *   for each s in successors do
- *     f[s] <- max(g(s) + h(s), f[node])
+ *   for each s in successors do // update f with value from previous search, if any
+ *     s.f <- max(s.g + s.h, node.f)
  *   repeat
  *     best <- the lowest f-value node in successors
- *     if f[best] > f_limit then return failure, f[best]
+ *     if best.f > f_limit then return failure, best.f
  *     alternative <- the second-lowest f-value among successors
- *     result, f[best] <- RBFS(problem, best, min(f_limit, alternative))
- *     if result <> failure then return result
+ *     result, best.f <- RBFS(problem, best, min(f_limit, alternative))
+ *     if result != failure then return result
  * </code>
- * Figure 4.5 The algorithm for recursive best-first search.
+ * Figure 3.26 The algorithm for recursive best-first search.
  */
 
 /**
@@ -104,17 +106,19 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	// 
 	// function RBFS(problem, node, f_limit) returns a solution, or failure and
 	// a new f-cost limit
-	private SearchResult rbfs(Problem p, Node n, Double fNode, Double fLimit,
+	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit,
 			int recursiveDepth) {
 
 		setMaxRecursiveDepth(recursiveDepth);
 
-		// if GOAL-TEST[problem](STATE[node]) then return node
+		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 		if (p.isGoalState(n.getState())) {
 			return new SearchResult(n, fLimit);
 		}
 
-		// successors <- EXPAND(node, problem)
+		// successors <- []
+		// for each action in problem.ACTION(node.STATE) do
+		// add CHILD-NODE(problem, node, action) into successors
 		List<Node> successors = expandNode(n, p);
 		// if successors is empty then return failure, infinity
 		if (0 == successors.size()) {
@@ -122,28 +126,28 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		}
 		double[] f = new double[successors.size()];
 		// for each s in successors do
+		// update f with value from previous search, if any
 		int size = successors.size();
 		for (int s = 0; s < size; s++) {
-			// f[s] <- max(g(s) + h(s), f[node])
-			f[s] = Math.max(evaluationFunction.f(successors.get(s)),
-					fNode);
+			// s.f <- max(s.g + s.h, node.f)
+			f[s] = Math.max(evaluationFunction.f(successors.get(s)), node_f);
 		}
 
 		// repeat
 		while (true) {
 			// best <- the lowest f-value node in successors
 			int bestIndex = getBestFValueIndex(f);
-			// if f[best] > f_limit then return failure, f[best]
+			// if best.f > f_limit then return failure, best.f
 			if (f[bestIndex] > fLimit) {
 				return new SearchResult(null, f[bestIndex]);
 			}
-			// alternative <- the second-lowest f-value among successors
+			// if best.f > f_limit then return failure, best.f
 			int altIndex = getNextBestFValueIndex(f, bestIndex);
-			// result, f[best] <- RBFS(problem, best, min(f_limit, alternative))
+			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
 			SearchResult sr = rbfs(p, successors.get(bestIndex), f[bestIndex],
 					Math.min(fLimit, f[altIndex]), recursiveDepth + 1);
 			f[bestIndex] = sr.getFCostLimit();
-			// if result <> failure then return result
+			// if result != failure then return result
 			if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {
 				return sr;
 			}

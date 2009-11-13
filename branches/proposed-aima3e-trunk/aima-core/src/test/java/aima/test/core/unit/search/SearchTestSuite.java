@@ -13,7 +13,7 @@ import aima.test.core.unit.search.games.TicTacToeTest;
 import aima.test.core.unit.search.informed.AStarSearchTest;
 import aima.test.core.unit.search.informed.GreedyBestFirstSearchTest;
 import aima.test.core.unit.search.informed.RecursiveBestFirstSearchTest;
-import aima.test.core.unit.search.informed.SimulatedAnnealingSearchTest;
+import aima.test.core.unit.search.local.SimulatedAnnealingSearchTest;
 import aima.test.core.unit.search.map.MapAgentTest;
 import aima.test.core.unit.search.map.MapEnvironmentTest;
 import aima.test.core.unit.search.map.MapFunctionFactoryTest;

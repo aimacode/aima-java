@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 import aima.core.search.framework.GoalTest;
-import aima.core.search.informed.ga.FitnessFunction;
+import aima.core.search.local.FitnessFunction;
 import aima.core.util.datastructure.XYLocation;
 
 /**
@@ -29,7 +29,7 @@ public class NQueensFitnessFunction implements FitnessFunction, GoalTest {
 
 	//
 	// START - Interface FitnessFunction
-	public Double getValue(String individual) {
+	public double getValue(String individual) {
 		double fitness = 0;
 
 		NQueensBoard board = getBoardForIndividual(individual);

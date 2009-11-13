@@ -11,7 +11,14 @@ import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
+import aima.core.search.map.Map;
+import aima.core.search.map.MapFunctionFactory;
+import aima.core.search.map.MapGoalTest;
+import aima.core.search.map.MapStepCostFunction;
+import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.search.map.StraightLineDistanceHeuristicFunction;
 
 public class AStarSearchTest {
 
@@ -30,7 +37,8 @@ public class AStarSearchTest {
 			Problem problem = new Problem(board, EightPuzzleFunctionFactory
 					.getActionsFunction(), EightPuzzleFunctionFactory
 					.getResultFunction(), new EightPuzzleGoalTest());
-			Search search = new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction());
+			Search search = new AStarSearch(new GraphSearch(),
+					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("926", agent.getInstrumentation().getProperty(
@@ -43,5 +51,57 @@ public class AStarSearchTest {
 			e.printStackTrace();
 			Assert.fail("Exception thrown");
 		}
+	}
+
+	@Test
+	public void testAIMA3eFigure3_24() throws Exception {
+		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.ARAD,
+				MapFunctionFactory.getActionsFunction(romaniaMap),
+				MapFunctionFactory.getResultFunction(), new MapGoalTest(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				new MapStepCostFunction(romaniaMap));
+
+		Search search = new AStarSearch(new TreeSearch(),
+				new StraightLineDistanceHeuristicFunction(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent agent = new SearchAgent(problem, search);
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+						agent.getActions().toString());
+		Assert.assertEquals(4, agent.getActions().size());
+		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
+				"nodesExpanded"));
+		Assert.assertEquals("10", agent.getInstrumentation().getProperty(
+				"queueSize"));
+		Assert.assertEquals("11", agent.getInstrumentation().getProperty(
+				"maxQueueSize"));
+	}
+
+	@Test
+	public void testAIMA3eFigure3_24_using_GraphSearch() throws Exception {
+		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.ARAD,
+				MapFunctionFactory.getActionsFunction(romaniaMap),
+				MapFunctionFactory.getResultFunction(), new MapGoalTest(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				new MapStepCostFunction(romaniaMap));
+
+		Search search = new AStarSearch(new GraphSearch(),
+				new StraightLineDistanceHeuristicFunction(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent agent = new SearchAgent(problem, search);
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+						agent.getActions().toString());
+		Assert.assertEquals(4, agent.getActions().size());
+		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
+				"nodesExpanded"));
+		Assert.assertEquals("4", agent.getInstrumentation().getProperty(
+				"queueSize"));
+		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
+				"maxQueueSize"));
 	}
 }

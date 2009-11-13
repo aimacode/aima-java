@@ -1,4 +1,4 @@
-package aima.core.search.informed.ga;
+package aima.core.search.local;
 
 /**
  * Interface representing a fitness function used by the GeneticAlgorithm
@@ -11,5 +11,5 @@ package aima.core.search.informed.ga;
  * 
  */
 public interface FitnessFunction {
-	Double getValue(String individual);
+	double getValue(String individual);
 }

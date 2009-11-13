@@ -74,7 +74,7 @@ public class RecursiveBestFirstSearchTest {
 	}
 
 	@Test
-	public void testExampleFromBookFigure4_6Page103() {
+	public void  testAIMA3eFigure3_27() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });

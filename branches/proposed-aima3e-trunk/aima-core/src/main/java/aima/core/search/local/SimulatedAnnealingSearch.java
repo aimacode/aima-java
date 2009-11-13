@@ -1,4 +1,4 @@
-package aima.core.search.informed;
+package aima.core.search.local;
 
 import java.util.ArrayList;
 import java.util.List;

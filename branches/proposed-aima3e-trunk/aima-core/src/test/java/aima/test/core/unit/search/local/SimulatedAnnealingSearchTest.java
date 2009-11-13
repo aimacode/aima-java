@@ -1,9 +1,9 @@
-package aima.test.core.unit.search.informed;
+package aima.test.core.unit.search.local;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.search.informed.SimulatedAnnealingSearch;
+import aima.core.search.local.SimulatedAnnealingSearch;
 
 public class SimulatedAnnealingSearchTest {
 
