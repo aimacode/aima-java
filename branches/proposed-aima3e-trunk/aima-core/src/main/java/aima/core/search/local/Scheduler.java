@@ -4,7 +4,6 @@ package aima.core.search.local;
  * @author Ravi Mohan
  * 
  */
-
 public class Scheduler {
 
 	private final int k, limit;

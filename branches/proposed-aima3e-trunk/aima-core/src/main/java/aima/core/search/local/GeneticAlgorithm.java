@@ -9,7 +9,7 @@ import aima.core.search.framework.Metrics;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.17, page 119.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page ??.
  * 
  * <code>
  * function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
@@ -18,7 +18,7 @@ import aima.core.util.Util;
  *           
  *   repeat
  *     new_population <- empty set
- *     loop for i from 1 to SIZE(population) do
+ *     for i = 1 to SIZE(population) do
  *       x <- RANDOM-SELECTION(population, FITNESS-FN)
  *       y <- RANDOM-SELECTION(population, FITNESS-FN)
  *       child <- REPRODUCE(x, y)
@@ -31,13 +31,12 @@ import aima.core.util.Util;
  * function REPRODUCE(x, y) returns an individual
  *   inputs: x, y, parent individuals
  *   
- *   n <- LENGTH(x)
- *   c <- random number from 1 to n
+ *   n <- LENGTH(x); c <- random number from 1 to n
  *   return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
  * </code>
  * 
- * Figure 4.17 A genetic algorithm. The algorithm is the same as the one diagrammed
- * in Figure 4.15, with one variation: in this more popular version, each mating of 
+ * Figure 4.8 A genetic algorithm. The algorithm is the same as the one diagrammed
+ * in Figure 4.6, with one variation: in this more popular version, each mating of 
  * two parents produces only one offspring, not two.
  */
 
@@ -143,11 +142,18 @@ public class GeneticAlgorithm {
 	private void validatePopulation(Set<String> population) {
 		// Require at least 1 individual in population in order
 		// for algorithm to work
-		assert (population.size() >= 1);
+		if (population.size() < 1) {
+			throw new IllegalArgumentException(
+					"Must start with at least a population of size 1");
+		}
 		// String lengths are assumed to be of fixed size,
 		// therefore ensure initial populations lengths correspond to this
 		for (String individual : population) {
-			assert (individual.length() == this.individualLength);
+			if (individual.length() != this.individualLength) {
+				throw new IllegalArgumentException("Individual [" + individual
+						+ "] in population is not the required length of "
+						+ this.individualLength);
+			}
 		}
 	}
 
@@ -155,7 +161,7 @@ public class GeneticAlgorithm {
 		// new_population <- empty set
 		Set<String> newPopulation = new HashSet<String>();
 
-		// loop for i from 1 to SIZE(population) do
+		// for i = 1 to SIZE(population) do
 		for (int i = 0; i < population.size(); i++) {
 			// x <- RANDOM-SELECTION(population, FITNESS-FN)
 			String x = randomSelection(population, fitnessFn);
@@ -216,7 +222,7 @@ public class GeneticAlgorithm {
 	// function REPRODUCE(x, y) returns an individual
 	// inputs: x, y, parent individuals
 	private String reproduce(String x, String y) {
-		// n <- LENGTH(x)
+		// n <- LENGTH(x);
 		// Note: this is = this.individualLength
 		// c <- random number from 1 to n
 		int c = randomOffset(individualLength);
@@ -238,8 +244,8 @@ public class GeneticAlgorithm {
 	private String retrieveBestIndividual(Set<String> population,
 			FitnessFunction fitnessFn) {
 		String bestIndividual = null;
-		double bestSoFarFValue = Double.MIN_VALUE;
-
+		double bestSoFarFValue = Double.NEGATIVE_INFINITY;
+		
 		for (String individual : population) {
 			double fValue = fitnessFn.getValue(individual);
 			if (fValue > bestSoFarFValue) {

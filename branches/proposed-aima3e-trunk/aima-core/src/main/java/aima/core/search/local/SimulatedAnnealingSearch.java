@@ -14,31 +14,25 @@ import aima.core.search.framework.SearchUtils;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.14, page
- * 116.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page ??.
  * 
  * <code>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
- *   inputs: problem, a problem
- *           schedule, a mapping from time to "temperature"
- *   local variables: current, a node
- *                    next, a node
- *                    T, a "temperature" controlling the probability of downward steps
  *                    
- *   current <- MAKE-NODE(INITIAL-STATE[problem])
- *   for t <- 1 to INFINITY do
- *     T <- schedule[t]
+ *   current <- MAKE-NODE(problem.INITIAL-STATE)
+ *   for t = 1 to INFINITY do
+ *     T <- schedule(t)
  *     if T = 0 then return current
  *     next <- a randomly selected successor of current
- *     /\E <- VALUE[next] - VALUE[current]
+ *     /\E <- next.VALUE - current.value
  *     if /\E > 0 then current <- next
- *     else current <- next only with probablity e^(/\E/T)
+ *     else current <- next only with probability e^(/\E/T)
  * </code>
- * Figure 4.14 The simulated annealing search algorithm, a version of the
+ * Figure 4.5 The simulated annealing search algorithm, a version of
  * stochastic hill climbing where some downhill moves are allowed. Downhill
  * moves are accepted readily early in the annealing schedule and then less
- * often as time goes on. The schedule input determines the value of T as a
- * function of time.
+ * often as time goes on. The schedule input determines the value of
+ * the temperature T as a function of time.
  */
 
 /**
@@ -62,25 +56,25 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		this.hf = hf;
 		this.scheduler = new Scheduler();
 	}
+	
+	public SimulatedAnnealingSearch(HeuristicFunction hf, Scheduler scheduler) {
+		this.hf = hf;
+		this.scheduler = scheduler;
+	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
-	// inputs: problem, a problem
-	// schedule, a mapping from time to "temperature"
 	public List<Action> search(Problem p) throws Exception {
-		// local variables: current, a node
-		// next, a node
-		// T, a "temperature" controlling the probability of downward steps
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
-		// current <- MAKE-NODE(INITIAL-STATE[problem])
+		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = new Node(p.getInitialState());
 		Node next = null;
 		List<Action> ret = new ArrayList<Action>();
-		// for t <- 1 to INFINITY do
+		//  for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (true) {
-			// temperature <- schedule[t]
+			// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;
 			// if temperature = 0 then return current
@@ -97,7 +91,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
 				next = Util.selectRandomlyFromList(children);
-				// /\E <- VALUE[next] - VALUE[current]
+				// /\E <- next.VALUE - current.value
 				double deltaE = getValue(p, next) - getValue(p, current);
 
 				if (shouldAccept(temperature, deltaE)) {
@@ -110,7 +104,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 	}
 
 	// if /\E > 0 then current <- next
-	// else current <- next only with probablity e^(/\E/T)
+	// else current <- next only with probability e^(/\E/T)
 	private boolean shouldAccept(double temperature, double deltaE) {
 		return (deltaE > 0.0)
 				|| (new Random().nextDouble() <= probabilityOfAcceptance(

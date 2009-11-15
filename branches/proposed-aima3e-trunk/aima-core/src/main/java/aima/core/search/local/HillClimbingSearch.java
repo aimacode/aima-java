@@ -11,21 +11,18 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.11, page 112.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page ??.
  * 
  * <code>
  * function HILL-CLIMBING(problem) returns a state that is a local maximum
- *   inputs: problem, a problem
- *   local variables: current, a node
- *                    neighbor, a node
  *                    
- *   current <- MAKE-NODE(INITIAL-STATE[problem])
+ *   current <- MAKE-NODE(problem.INITIAL-STATE)
  *   loop do
  *     neighbor <- a highest-valued successor of current
- *     if VALUE[neighbor] <= VALUE[current] then return STATE[current]
+ *     if neighbor.VALUE <= current.VALUE then return current.STATE
  *     current <- neighbor
  * </code>
- * Figure 4.11 The hill-climbing search algorithm (steepest ascent version), which is the
+ * Figure 4.3 The hill-climbing search algorithm (steepest-ascent version), which is the
  * most basic local search technique. At each step the current node is replaced by the best
  * neighbor; in this version, that means the neighbor with the highest VALUE, but if a heuristic
  * cost estimate h is used, we would find the neighbor with the lowest h.
@@ -52,14 +49,11 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	}
 
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
-	// inputs: problem, a problem
 	public List<Action> search(Problem p) throws Exception {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
-		// local variables: current, a node
-		// neighbor, a node
-		// current <- MAKE-NODE(INITIAL-STATE[problem])
+		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = new Node(p.getInitialState());
 		Node neighbor = null;
 		// loop do
@@ -68,7 +62,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
 
-			// if VALUE[neighbor] <= VALUE[current] then return STATE[current]
+			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if ((neighbor == null)
 					|| (getValue(neighbor) <= getValue(current))) {
 				if (p.isGoalState(current.getState())) {
