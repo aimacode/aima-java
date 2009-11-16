@@ -238,7 +238,7 @@ public class GeneticAlgorithm {
 	private String retrieveBestIndividual(Set<String> population,
 			FitnessFunction fitnessFn) {
 		String bestIndividual = null;
-		double bestSoFarFValue = Double.MIN_VALUE;
+		double bestSoFarFValue = Double.NEGATIVE_INFINITY;
 
 		for (String individual : population) {
 			double fValue = fitnessFn.getValue(individual);
