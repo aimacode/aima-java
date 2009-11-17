@@ -31,24 +31,24 @@ public class QTableTest {
 
 	@Test
 	public void testInitialSetup() {
-		Assert.assertEquals(0.0, qt.getQValue("A", "toB"));
-		Assert.assertEquals(0.0, qt.getQValue("F", "toF"));
+		Assert.assertEquals(0.0, qt.getQValue("A", "toB"), 0.001);
+		Assert.assertEquals(0.0, qt.getQValue("F", "toF"), 0.001);
 	}
 
 	@Test
 	public void testQUpDate() {
-		Assert.assertEquals(0.0, qt.getQValue("B", "toF"));
+		Assert.assertEquals(0.0, qt.getQValue("B", "toF"), 0.001);
 
 		qt.upDateQ("B", "toF", "B", 1.0, 100, 0.8);
-		Assert.assertEquals(100.0, qt.getQValue("B", "toF"));
+		Assert.assertEquals(100.0, qt.getQValue("B", "toF"), 0.001);
 
 		qt.upDateQ("D", "toB", "B", 1.0, 0, 0.8);
-		Assert.assertEquals(80.0, qt.getQValue("D", "toB"));
+		Assert.assertEquals(80.0, qt.getQValue("D", "toB"), 0.001);
 
 		qt.upDateQ("A", "toB", "B", 1.0, 0, 0.8);
-		Assert.assertEquals(80.0, qt.getQValue("A", "toB"));
+		Assert.assertEquals(80.0, qt.getQValue("A", "toB"), 0.001);
 
 		qt.upDateQ("A", "toD", "D", 1.0, 0, 0.8);
-		Assert.assertEquals(64.0, qt.getQValue("A", "toD"));
+		Assert.assertEquals(64.0, qt.getQValue("A", "toD"), 0.001);
 	}
 }

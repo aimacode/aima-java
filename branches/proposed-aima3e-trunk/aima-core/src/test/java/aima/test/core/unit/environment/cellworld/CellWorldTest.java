@@ -222,7 +222,7 @@ public class CellWorldTest {
 		// cell
 		double transitionProb = cw.getTransitionProbability(startingPosition,
 				CellWorld.RIGHT, endingPosition);
-		Assert.assertEquals(0.0, transitionProb);
+		Assert.assertEquals(0.0, transitionProb, 0.001);
 	}
 
 	@Test
@@ -231,7 +231,7 @@ public class CellWorldTest {
 		CellWorldPosition endingPosition = new CellWorldPosition(3, 3);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
 				CellWorld.UP, endingPosition);
-		Assert.assertEquals(0.0, transitionProb);
+		Assert.assertEquals(0.0, transitionProb, 0.001);
 	}
 
 	@Test
@@ -240,7 +240,7 @@ public class CellWorldTest {
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
 				CellWorld.UP, endingPosition);
-		Assert.assertEquals(0.8, transitionProb);
+		Assert.assertEquals(0.8, transitionProb, 0.001);
 	}
 
 	@Test
@@ -249,7 +249,7 @@ public class CellWorldTest {
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
 		double transitionProb = cw.getTransitionProbability(startingPosition,
 				CellWorld.UP, endingPosition);
-		Assert.assertEquals(0.2, transitionProb);
+		Assert.assertEquals(0.2, transitionProb, 0.001);
 	}
 
 	@Test
@@ -259,14 +259,14 @@ public class CellWorldTest {
 		CellWorldPosition startingPosition = new CellWorldPosition(1, 1);
 		CellWorldPosition endingPosition = new CellWorldPosition(2, 1);
 		Assert.assertEquals(0.8, mtm.getTransitionProbability(startingPosition,
-				CellWorld.UP, endingPosition));
+				CellWorld.UP, endingPosition), 0.001);
 
 		CellWorldPosition endingPosition2 = new CellWorldPosition(1, 1);
 		Assert.assertEquals(0.1, mtm.getTransitionProbability(startingPosition,
-				CellWorld.UP, endingPosition2));
+				CellWorld.UP, endingPosition2), 0.001);
 		CellWorldPosition endingPosition3 = new CellWorldPosition(1, 2);
 		Assert.assertEquals(0.1, mtm.getTransitionProbability(startingPosition,
-				CellWorld.UP, endingPosition3));
+				CellWorld.UP, endingPosition3), 0.001);
 	}
 
 	@Test
@@ -276,9 +276,9 @@ public class CellWorldTest {
 		CellWorldPosition terminalOne = new CellWorldPosition(2, 4);
 		CellWorldPosition terminalTwo = new CellWorldPosition(3, 4);
 		Assert.assertEquals(0.0, mtm.getTransitionProbability(terminalOne,
-				CellWorld.UP, terminalTwo));
+				CellWorld.UP, terminalTwo), 0.001);
 		Assert.assertEquals(0.0, mtm.getTransitionProbability(terminalTwo,
-				CellWorld.DOWN, terminalOne));
+				CellWorld.DOWN, terminalOne), 0.001);
 	}
 
 	@Test

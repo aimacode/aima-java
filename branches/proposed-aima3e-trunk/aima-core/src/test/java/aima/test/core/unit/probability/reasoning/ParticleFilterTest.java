@@ -105,10 +105,10 @@ public class ParticleFilterTest {
 	public void testParticleSetConversionToRandomVariable() {
 
 		RandomVariable rv = particleSet.toRandomVariable();
-		Assert.assertEquals(0.75, rv.getProbabilityOf(HmmConstants.RAINING));
+		Assert.assertEquals(0.75, rv.getProbabilityOf(HmmConstants.RAINING), 0.001);
 		Assert
 				.assertEquals(0.25, rv
-						.getProbabilityOf(HmmConstants.NOT_RAINING));
+						.getProbabilityOf(HmmConstants.NOT_RAINING), 0.001);
 	}
 
 	@Test

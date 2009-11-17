@@ -44,12 +44,12 @@ public class UtilTest {
 
 	@Test
 	public void testMeanCalculation() {
-		Assert.assertEquals(3.0, Util.calculateMean(values));
+		Assert.assertEquals(3.0, Util.calculateMean(values), 0.001);
 	}
 
 	@Test
 	public void testStDevCalculation() {
-		Assert.assertEquals(1.5811, Util.calculateStDev(values, 3.0), 0.001);
+		Assert.assertEquals(1.5811, Util.calculateStDev(values, 3.0), 0.0001);
 	}
 
 	@Test

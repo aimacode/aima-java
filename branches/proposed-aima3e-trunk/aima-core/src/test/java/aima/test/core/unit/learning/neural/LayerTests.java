@@ -89,7 +89,7 @@ public class LayerTests {
 		layer2Sensitivity.sensitivityMatrixFromErrorMatrix(errorVector);
 
 		Matrix sensitivityMatrix = layer2Sensitivity.getSensitivityMatrix();
-		Assert.assertEquals(-2.522, sensitivityMatrix.get(0, 0));
+		Assert.assertEquals(-2.522, sensitivityMatrix.get(0, 0), 0.0001);
 	}
 
 	@Test
@@ -334,7 +334,7 @@ public class LayerTests {
 
 		layer2.updateBiases();
 		Vector newBiasVector2 = layer2.getBiasVector();
-		Assert.assertEquals(0.7322, newBiasVector2.getValue(0));
+		Assert.assertEquals(0.7322, newBiasVector2.getValue(0), 0.00001);
 
 		layer1.updateWeights();
 		Matrix newWeightMatrix1 = layer1.getWeightMatrix();

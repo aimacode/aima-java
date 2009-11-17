@@ -20,9 +20,9 @@ public class InformationAndGainTest {
 		double[] fairCoinProbabilities = new double[] { 0.5, 0.5 };
 		double[] loadedCoinProbabilities = new double[] { 0.01, 0.99 };
 
-		Assert.assertEquals(1.0, Util.information(fairCoinProbabilities));
+		Assert.assertEquals(1.0, Util.information(fairCoinProbabilities), 0.001);
 		Assert.assertEquals(0.08079313589591118, Util
-				.information(loadedCoinProbabilities));
+				.information(loadedCoinProbabilities), 0.000000000000000001);
 	}
 
 	@Test
@@ -32,7 +32,7 @@ public class InformationAndGainTest {
 		// be the
 		// generic
 		// distribution
-		Assert.assertEquals(1.0, infoForTargetAttribute);
+		Assert.assertEquals(1.0, infoForTargetAttribute, 0.001);
 	}
 
 	@Test
