@@ -3,22 +3,22 @@ package aima.test.core.unit.search.informed;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.search.eightpuzzle.EightPuzzleBoard;
-import aima.core.search.eightpuzzle.EightPuzzleFunctionFactory;
-import aima.core.search.eightpuzzle.EightPuzzleGoalTest;
-import aima.core.search.eightpuzzle.ManhattanHeuristicFunction;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
+import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
+import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
+import aima.core.environment.map.Map;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapGoalTest;
+import aima.core.environment.map.MapStepCostFunction;
+import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.StraightLineDistanceHeuristicFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
-import aima.core.search.map.Map;
-import aima.core.search.map.MapFunctionFactory;
-import aima.core.search.map.MapGoalTest;
-import aima.core.search.map.MapStepCostFunction;
-import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.map.StraightLineDistanceHeuristicFunction;
 
 public class GreedyBestFirstSearchTest {
 

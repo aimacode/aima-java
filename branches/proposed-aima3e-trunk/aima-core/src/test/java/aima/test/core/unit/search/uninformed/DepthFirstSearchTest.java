@@ -6,13 +6,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.agent.Action;
+import aima.core.environment.nqueens.NQueensBoard;
+import aima.core.environment.nqueens.NQueensFunctionFactory;
+import aima.core.environment.nqueens.NQueensGoalTest;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.nqueens.NQueensBoard;
-import aima.core.search.nqueens.NQueensFunctionFactory;
-import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.uninformed.DepthFirstSearch;
 
 public class DepthFirstSearchTest {

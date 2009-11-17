@@ -8,9 +8,9 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.search.map.ExtendableMap;
-import aima.core.search.map.MapAgent;
-import aima.core.search.map.MapEnvironment;
+import aima.core.environment.map.ExtendableMap;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapEnvironment;
 import aima.core.search.uninformed.BidirectionalSearch;
 
 /**

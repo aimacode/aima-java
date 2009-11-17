@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.environment.cellworld.CellWorldPosition;
 import aima.core.probability.decision.MDP;
 import aima.core.probability.decision.MDPFactory;
 import aima.core.probability.decision.MDPPolicy;
 import aima.core.probability.decision.MDPUtilityFunction;
-import aima.core.probability.decision.cellworld.CellWorldPosition;
 
 /**
  * @author Ravi Mohan

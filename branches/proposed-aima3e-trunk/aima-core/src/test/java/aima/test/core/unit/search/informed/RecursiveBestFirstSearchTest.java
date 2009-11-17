@@ -8,13 +8,13 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.environment.map.Map;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
-import aima.core.search.map.Map;
-import aima.core.search.map.MapAgent;
-import aima.core.search.map.MapEnvironment;
-import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.datastructure.Point2D;
 
 /**

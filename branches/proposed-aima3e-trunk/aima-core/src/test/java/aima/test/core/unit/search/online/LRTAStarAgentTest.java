@@ -8,11 +8,11 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.environment.map.BidirectionalMapProblem;
+import aima.core.environment.map.ExtendableMap;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.map.BidirectionalMapProblem;
-import aima.core.search.map.ExtendableMap;
-import aima.core.search.map.MapEnvironment;
-import aima.core.search.map.MapFunctionFactory;
 import aima.core.search.online.LRTAStarAgent;
 
 public class LRTAStarAgentTest {

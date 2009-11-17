@@ -6,18 +6,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.agent.Action;
+import aima.core.environment.map.Map;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapGoalTest;
+import aima.core.environment.map.MapStepCostFunction;
+import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.nqueens.NQueensBoard;
+import aima.core.environment.nqueens.NQueensFunctionFactory;
+import aima.core.environment.nqueens.NQueensGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.QueueSearch;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.map.Map;
-import aima.core.search.map.MapFunctionFactory;
-import aima.core.search.map.MapGoalTest;
-import aima.core.search.map.MapStepCostFunction;
-import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.nqueens.NQueensBoard;
-import aima.core.search.nqueens.NQueensFunctionFactory;
-import aima.core.search.nqueens.NQueensGoalTest;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**

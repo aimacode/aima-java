@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.environment.cellworld.CellWorld;
+import aima.core.environment.cellworld.CellWorldPosition;
 import aima.core.learning.reinforcement.PassiveADPAgent;
 import aima.core.learning.reinforcement.PassiveTDAgent;
 import aima.core.learning.reinforcement.QLearningAgent;
@@ -16,8 +18,6 @@ import aima.core.probability.decision.MDPFactory;
 import aima.core.probability.decision.MDPPerception;
 import aima.core.probability.decision.MDPPolicy;
 import aima.core.probability.decision.MDPUtilityFunction;
-import aima.core.probability.decision.cellworld.CellWorld;
-import aima.core.probability.decision.cellworld.CellWorldPosition;
 import aima.core.util.datastructure.Pair;
 import aima.test.core.unit.probability.MockRandomizer;
 
