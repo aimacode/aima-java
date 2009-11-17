@@ -3,14 +3,14 @@ package aima.gui.applications.search.map;
 import java.util.ArrayList;
 
 import aima.gui.applications.search.SearchFactory;
+import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.ExtendableMap;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.Scenario;
+import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
+import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.map.AdaptableHeuristicFunction;
-import aima.core.search.map.ExtendableMap;
-import aima.core.search.map.MapAgent;
-import aima.core.search.map.MapEnvironment;
-import aima.core.search.map.Scenario;
-import aima.core.search.map.SimplifiedRoadMapOfAustralia;
-import aima.core.search.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
@@ -20,8 +20,8 @@ import aima.gui.framework.SimpleAgentAppDemo;
 /**
  * Demo example of a route planning agent application with GUI. The main method
  * starts a map agent frame and supports runtime experiments. This
- * implementation is based on the {@link aima.core.search.map.MapAgent} and the
- * {@link aima.core.search.map.MapEnvironment}. It can be used as a code
+ * implementation is based on the {@link aima.core.environment.map.MapAgent} and the
+ * {@link aima.core.environment.map.MapEnvironment}. It can be used as a code
  * template for creating new applications with different specialized kinds of
  * agents and environments.
  * 

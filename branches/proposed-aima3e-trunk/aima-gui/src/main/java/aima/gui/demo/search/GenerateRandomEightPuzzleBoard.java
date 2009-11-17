@@ -2,7 +2,7 @@ package aima.gui.demo.search;
 
 import java.util.Random;
 
-import aima.core.search.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 
 /**
  * @author Ravi Mohan

@@ -1,8 +1,8 @@
 package aima.gui.demo.search;
 
-import aima.core.search.games.GameState;
-import aima.core.search.games.TicTacToe;
-import aima.core.search.games.TicTacToeBoard;
+import aima.core.environment.games.GameState;
+import aima.core.environment.games.TicTacToe;
+import aima.core.environment.games.TicTacToeBoard;
 
 /**
  * @author Ravi Mohan

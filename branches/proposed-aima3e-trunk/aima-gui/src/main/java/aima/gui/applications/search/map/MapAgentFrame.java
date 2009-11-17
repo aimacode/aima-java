@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.gui.applications.search.SearchFactory;
-import aima.core.search.map.Map;
+import aima.core.environment.map.Map;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentView;

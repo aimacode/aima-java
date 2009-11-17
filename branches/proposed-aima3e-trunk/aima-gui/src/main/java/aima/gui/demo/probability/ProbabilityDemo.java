@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import aima.core.environment.cellworld.CellWorld;
+import aima.core.environment.cellworld.CellWorldPosition;
 import aima.core.learning.reinforcement.PassiveADPAgent;
 import aima.core.learning.reinforcement.PassiveTDAgent;
 import aima.core.learning.reinforcement.QLearningAgent;
@@ -21,8 +23,6 @@ import aima.core.probability.decision.MDP;
 import aima.core.probability.decision.MDPFactory;
 import aima.core.probability.decision.MDPPolicy;
 import aima.core.probability.decision.MDPUtilityFunction;
-import aima.core.probability.decision.cellworld.CellWorld;
-import aima.core.probability.decision.cellworld.CellWorldPosition;
 import aima.core.probability.reasoning.HMMFactory;
 import aima.core.probability.reasoning.HiddenMarkovModel;
 import aima.core.probability.reasoning.HmmConstants;

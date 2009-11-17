@@ -4,8 +4,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import aima.core.agent.Agent;
-import aima.core.search.map.AdaptableHeuristicFunction;
-import aima.core.search.map.Scenario;
+import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.Scenario;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
 

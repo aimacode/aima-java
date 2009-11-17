@@ -6,9 +6,9 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
-import aima.core.search.map.Map;
-import aima.core.search.map.MoveToAction;
-import aima.core.search.map.Scenario;
+import aima.core.environment.map.Map;
+import aima.core.environment.map.MoveToAction;
+import aima.core.environment.map.Scenario;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppModel;
 

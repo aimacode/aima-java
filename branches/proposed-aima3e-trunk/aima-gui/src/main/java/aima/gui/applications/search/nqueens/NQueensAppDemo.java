@@ -6,11 +6,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.vacuum.ModelBasedReflexVacuumAgent;
-import aima.core.agent.impl.vacuum.ReflexVacuumAgent;
-import aima.core.agent.impl.vacuum.SimpleReflexVacuumAgent;
-import aima.core.agent.impl.vacuum.TableDrivenVacuumAgent;
-import aima.core.agent.impl.vacuum.VacuumEnvironment;
+import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
+import aima.core.environment.vacuum.ReflexVacuumAgent;
+import aima.core.environment.vacuum.SimpleReflexVacuumAgent;
+import aima.core.environment.vacuum.TableDrivenVacuumAgent;
+import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentAppModel;

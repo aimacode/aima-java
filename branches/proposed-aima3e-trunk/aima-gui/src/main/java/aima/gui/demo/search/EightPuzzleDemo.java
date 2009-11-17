@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Properties;
 
 import aima.core.agent.Action;
-import aima.core.search.eightpuzzle.EightPuzzleBoard;
-import aima.core.search.eightpuzzle.EightPuzzleGoalTest;
-import aima.core.search.eightpuzzle.EightPuzzleFunctionFactory;
-import aima.core.search.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.search.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
+import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
+import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
+import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
