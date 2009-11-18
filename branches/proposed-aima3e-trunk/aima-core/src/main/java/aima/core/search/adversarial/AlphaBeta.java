@@ -1,4 +1,4 @@
-package aima.core.environment.games;
+package aima.core.search.adversarial;
 
 /**
  * @author Ravi Mohan

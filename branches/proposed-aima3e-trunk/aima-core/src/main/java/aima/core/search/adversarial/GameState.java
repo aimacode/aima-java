@@ -1,4 +1,4 @@
-package aima.core.environment.games;
+package aima.core.search.adversarial;
 
 import java.util.Hashtable;
 import java.util.Iterator;

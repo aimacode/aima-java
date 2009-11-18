@@ -1,4 +1,4 @@
-package aima.core.environment.games;
+package aima.core.environment.tictactoe;
 
 import java.util.ArrayList;
 import java.util.List;

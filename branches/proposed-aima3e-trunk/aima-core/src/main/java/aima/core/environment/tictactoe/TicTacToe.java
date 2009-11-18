@@ -1,7 +1,10 @@
-package aima.core.environment.games;
+package aima.core.environment.tictactoe;
 
 import java.util.ArrayList;
 
+import aima.core.search.adversarial.AlphaBeta;
+import aima.core.search.adversarial.Game;
+import aima.core.search.adversarial.GameState;
 import aima.core.util.datastructure.XYLocation;
 
 /**

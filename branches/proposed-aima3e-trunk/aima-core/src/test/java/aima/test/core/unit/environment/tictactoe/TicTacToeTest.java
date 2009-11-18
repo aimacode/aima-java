@@ -1,4 +1,4 @@
-package aima.test.core.unit.environment.games;
+package aima.test.core.unit.environment.tictactoe;
 
 import java.util.ArrayList;
 
@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.games.AlphaBeta;
-import aima.core.environment.games.GameState;
-import aima.core.environment.games.TicTacToe;
-import aima.core.environment.games.TicTacToeBoard;
+import aima.core.environment.tictactoe.TicTacToe;
+import aima.core.environment.tictactoe.TicTacToeBoard;
+import aima.core.search.adversarial.AlphaBeta;
+import aima.core.search.adversarial.GameState;
 
 /**
  * @author Ravi Mohan
