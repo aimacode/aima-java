@@ -54,7 +54,7 @@ public class MapAgentModel extends AgentAppModel {
 			listener.logMessage(command.toString());
 		}
 		if (command.isNoOp() || getLocCoords(((MoveToAction)command).getToLocation()) != null) {
-			String loc = scenario.getEnv().getAgenetLocation();
+			String loc = scenario.getEnv().getAgentLocation(agent);
 			tourHistory.add(loc);
 			fireModelChanged();
 		}
