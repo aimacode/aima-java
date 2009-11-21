@@ -10,35 +10,31 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.search.framework.Problem;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 4.20, page 126.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page ???.
  * <code>
  * function ONLINE-DFS-AGENT(s') returns an action
  *   inputs: s', a percept that identifies the current state
- *   static: result, a table, indexed by action and state, initially empty
- *           unexplored, a table that lists, for each visited state, the actions not yet tried
- *           unbacktracked, a table that lists, for each visited state, the backtracks not yet tried
- *           s, a, the previous state and action, initially null
+ *   persistent: result, a table, indexed by state and action, initially empty
+ *               untried, a table that lists, for each state, the actions not yet tried
+ *               unbacktracked, a table that lists, for each state, the backtracks not yet tried
+ *               s, a, the previous state and action, initially null
  *    
  *   if GOAL-TEST(s') then return stop
- *   if s' is a new state then unexplored[s'] <- ACTIONS(s')
- *   if s is not null then do
- *       result[a, s] <- s'
+ *   if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
+ *   if s is not null then
+ *       result[s, a] <- s'
  *       add s to the front of the unbacktracked[s']
- *   if unexplored[s'] is empty then
+ *   if untried[s'] is empty then
  *       if unbacktracked[s'] is empty then return stop
- *       else a <- an action b such that result[b, s'] = POP(unbacktracked[s'])
- *   else a <- POP(unexplored[s'])
+ *       else a <- an action b such that result[s', b] = POP(unbacktracked[s'])
+ *   else a <- POP(untried[s'])
  *   s <- s'
  *   return a
  * </code>
- * Figure 4.20 An online search agent that uses depth-first exploration. The agent is
- * applicable only in bidirectional search spaces.<br>
- * <br>
- * Note: This algorithm fails to exit if the goal does not exist (e.g. A<->B Goal=X),
- * this could be an issue with the implementation. Comments welcome.
+ * Figure 4.21 An online search agent that uses depth-first exploration. The agent is
+ * applicable only in state spaces in which every action can be "undone" by some other action.<br>
  */
 
 /**
@@ -47,30 +43,29 @@ import aima.core.search.framework.Problem;
  */
 public class OnlineDFSAgent extends AbstractAgent {
 
-	private Problem problem;
+	private OnlineSearchProblem problem;
 	private PerceptToStateFunction ptsFunction;
-	// static: result, a table, indexed by action and state, initially empty
-	private final Map<ActionState, Percept> result = new HashMap<ActionState, Percept>();
-	// unexplored, a table that lists, for each visited state, the actions not
-	// yet tried
-	private final Map<Percept, List<Action>> unexplored = new HashMap<Percept, List<Action>>();
+	// persistent: result, a table, indexed by state and action, initially empty
+	private final Map<StateAction, Object> result = new HashMap<StateAction, Object>();
+	// untried, a table that lists, for each state, the actions not yet tried
+	private final Map<Object, List<Action>> untried = new HashMap<Object, List<Action>>();
 	// unbacktracked, a table that lists,
-	// for each visited state, the backtracks not yet tried
-	private final Map<Percept, List<Percept>> unbacktracked = new HashMap<Percept, List<Percept>>();
+	// for each state, the backtracks not yet tried
+	private final Map<Object, List<Object>> unbacktracked = new HashMap<Object, List<Object>>();
 	// s, a, the previous state and action, initially null
-	private Percept s = null;
+	private Object s = null;
 	private Action a = null;
 
-	public OnlineDFSAgent(Problem problem, PerceptToStateFunction ptsFunction) {
+	public OnlineDFSAgent(OnlineSearchProblem problem, PerceptToStateFunction ptsFunction) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 	}
 
-	public Problem getProblem() {
+	public OnlineSearchProblem getProblem() {
 		return problem;
 	}
 
-	public void setProblem(Problem problem) {
+	public void setProblem(OnlineSearchProblem problem) {
 		this.problem = problem;
 		init();
 	}
@@ -86,52 +81,58 @@ public class OnlineDFSAgent extends AbstractAgent {
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept sPrime) {
+	public Action execute(Percept psPrime) {
+		Object sPrime = ptsFunction.getState(psPrime);
 		// if GOAL-TEST(s') then return stop
-		if (!goalTest(sPrime)) {
-			// if s' is a new state then unexplored[s'] <- ACTIONS(s')
-			if (!unexplored.containsKey(sPrime)) {
-				unexplored.put(sPrime, actions(sPrime));
+		if (goalTest(sPrime)) {
+			a = NoOpAction.NO_OP;
+		} else {
+			// if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
+			if (!untried.containsKey(sPrime)) {
+				untried.put(sPrime, actions(sPrime)); 
 			}
 
 			// if s is not null then do
 			if (null != s) {
-				// result[a, s] <- s'
-				result.put(new ActionState(a, s), sPrime);
-
-				// Ensure the unbacktracked always has a list for s'
-				if (!unbacktracked.containsKey(sPrime)) {
-					unbacktracked.put(sPrime, new ArrayList<Percept>());
+				StateAction sa = new StateAction(s, a);
+				// Note: If I've already seen the result of this
+				// [s, a] then don't put it back on the unbacktracked
+				// list otherwise you can keep oscillating
+				// between the same states endlessly.
+				if (!(sPrime.equals(result.get(sa)))) {
+					// result[s, a] <- s'
+					result.put(sa, sPrime);
+	
+					// Ensure the unbacktracked always has a list for s'
+					if (!unbacktracked.containsKey(sPrime)) {
+						unbacktracked.put(sPrime, new ArrayList<Object>());
+					}
+	
+					// add s to the front of the unbacktracked[s']
+					unbacktracked.get(sPrime).add(0, s);
 				}
-
-				// add s to the front of the unbacktracked[s']
-				unbacktracked.get(sPrime).add(s);
 			}
-			// if unexplored[s'] is empty then
-			if (unexplored.get(sPrime).size() == 0) {
+			// if untried[s'] is empty then
+			if (untried.get(sPrime).isEmpty()) {
 				// if unbacktracked[s'] is empty then return stop
-				if (unbacktracked.get(sPrime).size() == 0) {
+				if (unbacktracked.get(sPrime).isEmpty()) {
 					a = NoOpAction.NO_OP;
 				} else {
-					// else a <- an action b such that result[b, s'] =
+					// else a <- an action b such that result[s', b] =
 					// POP(unbacktracked[s'])
-					Percept popped = unbacktracked.get(sPrime).remove(
-							unbacktracked.get(sPrime).size() - 1);
-					for (ActionState as : result.keySet()) {
-						if (as.getState().equals(sPrime)
-								&& result.get(as).equals(popped)) {
-							a = as.getAction();
+					Object popped = unbacktracked.get(sPrime).remove(0);
+					for (StateAction sa : result.keySet()) {
+						if (sa.getState().equals(sPrime)
+								&& result.get(sa).equals(popped)) {
+							a = sa.getAction();
 							break;
 						}
 					}
 				}
 			} else {
-				// else a <- POP(unexplored[s'])
-				a = unexplored.get(sPrime).remove(
-						unexplored.get(sPrime).size() - 1);
+				// else a <- POP(untried[s'])
+				a = untried.get(sPrime).remove(0);
 			}
-		} else {
-			a = NoOpAction.NO_OP;
 		}
 
 		if (a.isNoOp()) {
@@ -153,18 +154,17 @@ public class OnlineDFSAgent extends AbstractAgent {
 	private void init() {
 		setAlive(true);
 		result.clear();
-		unexplored.clear();
+		untried.clear();
 		unbacktracked.clear();
 		s = null;
 		a = null;
 	}
 
-	private boolean goalTest(Percept state) {
-		return getProblem().isGoalState(ptsFunction.getState(state));
+	private boolean goalTest(Object state) {
+		return getProblem().isGoalState(state);
 	}
 
-	private List<Action> actions(Percept state) {
-		return new ArrayList<Action>(problem.getActionsFunction().actions(
-				ptsFunction.getState(state)));
+	private List<Action> actions(Object state) {
+		return new ArrayList<Action>(problem.getActionsFunction().actions(state));
 	}
 }

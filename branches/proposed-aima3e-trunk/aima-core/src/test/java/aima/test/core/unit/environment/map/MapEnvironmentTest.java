@@ -37,14 +37,14 @@ public class MapEnvironmentTest {
 	@Test
 	public void testAddAgent() {
 		me.addAgent(ma, "E");
-		Assert.assertEquals(me.getAgenetLocation(), "E");
+		Assert.assertEquals(me.getAgentLocation(ma), "E");
 	}
 
 	@Test
 	public void testExecuteAction() {
 		me.addAgent(ma, "D");
 		me.executeAction(ma, new MoveToAction("C"));
-		Assert.assertEquals(me.getAgenetLocation(), "C");
+		Assert.assertEquals(me.getAgentLocation(ma), "C");
 	}
 
 	@Test
@@ -53,4 +53,18 @@ public class MapEnvironmentTest {
 		DynamicPercept p = (DynamicPercept) me.getPerceptSeenBy(ma);
 		Assert.assertEquals(p.getAttribute(DynAttributeNames.PERCEPT_IN), "D");
 	}
+	
+	@Test
+	public void testTwoAgentsSupported() {
+		MapAgent ma1 = new MapAgent(me, new UniformCostSearch(), new String[] { "A" });
+		MapAgent ma2 = new MapAgent(me, new UniformCostSearch(), new String[] { "A" });
+		
+		me.addAgent(ma1, "A");
+		me.addAgent(ma2, "A");
+		me.executeAction(ma1, new MoveToAction("B"));
+		me.executeAction(ma2, new MoveToAction("C"));
+		
+		Assert.assertEquals(me.getAgentLocation(ma1), "B");
+		Assert.assertEquals(me.getAgentLocation(ma2), "C");
+	}	
 }

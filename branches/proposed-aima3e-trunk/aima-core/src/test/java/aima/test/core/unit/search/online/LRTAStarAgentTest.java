@@ -8,12 +8,14 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapGoalTest;
+import aima.core.environment.map.MapStepCostFunction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.online.LRTAStarAgent;
+import aima.core.search.online.OnlineSearchProblem;
 
 public class LRTAStarAgentTest {
 	ExtendableMap aMap;
@@ -42,9 +44,10 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "A"), MapFunctionFactory
-				.getPerceptToStateFunction(), hf);
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
+				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+						"A"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -64,9 +67,10 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "F"), MapFunctionFactory
-				.getPerceptToStateFunction(), hf);
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
+				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+						"F"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {
@@ -89,9 +93,10 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new BidirectionalMapProblem(me
-				.getMap(), "A", "G"), MapFunctionFactory
-				.getPerceptToStateFunction(), hf);
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
+				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+						"G"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new EnvironmentView() {
 			public void notify(String msg) {

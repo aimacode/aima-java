@@ -19,12 +19,6 @@ public class DynAttributeNames {
 	 */
 	public static final String AGENT_LOCATION = "location";
 	/**
-	 * Name of a dynamic attribute, which maintains the total traveling distance
-	 * of the agent since birth. Expected value type: Integer.
-	 */
-	public static final String AGENT_TRAVEL_DISTANCE = "travelDistance";
-
-	/**
 	 * Name of a dynamic attribute, which tells the agent where it is. Expected
 	 * value type: String.
 	 */

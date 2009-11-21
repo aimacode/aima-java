@@ -16,7 +16,7 @@ import aima.core.agent.EnvironmentView;
 import aima.core.agent.Percept;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 32.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
  * 
  * Environment.
  */
