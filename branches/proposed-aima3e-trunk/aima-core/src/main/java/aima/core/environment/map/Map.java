@@ -27,8 +27,8 @@ public interface Map {
 	public Double getDistance(String fromLocation, String toLocation);
 
 	/**
-	 * Returns an array with two integers describing the the position of the
-	 * specified location.
+	 * Returns the position of the specified location. The position
+	 * is represented by two coordinates, e.g. latitude and longitude values.
 	 */
 	public Point2D getPosition(String loc);
 

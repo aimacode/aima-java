@@ -11,7 +11,7 @@ import aima.core.util.datastructure.Point2D;
 /**
  * Implements a map with locations, distance labeled links between the
  * locations, straight line distances, and 2d-placement positions of locations.
- * Locations are represented by strings and travel distances by integer values.
+ * Locations are represented by strings and travel distances by double values.
  * Locations and links can be added dynamically and removed after creation. This
  * enables to read maps from file or to modify them with respect to newly
  * obtained knowledge.
@@ -138,8 +138,8 @@ public class ExtendableMap implements Map {
 	}
 
 	/**
-	 * Returns an array with two integers describing the the position of the
-	 * specified location.
+	 * Returns the position of the specified location as with respect to an
+	 * orthogonal coordinate system.
 	 */
 	public Point2D getPosition(String loc) {
 		return locationPositions.get(loc);
