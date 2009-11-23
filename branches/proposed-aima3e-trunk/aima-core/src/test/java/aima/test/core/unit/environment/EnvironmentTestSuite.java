@@ -36,7 +36,7 @@ import aima.test.core.unit.environment.xyenv.XYEnvironmentTest;
 		NQueensFunctionFactoryTest.class,
 		ModelBasedReflexVacuumAgentTest.class, ReflexVacuumAgentTest.class,
 		SimpleReflexVacuumAgentTest.class, TableDrivenVacuumAgentTest.class,
-		VacuumEnvironmentTest.class, XYEnvironmentTest.class, })
+		VacuumEnvironmentTest.class, XYEnvironmentTest.class })
 public class EnvironmentTestSuite {
 
 }

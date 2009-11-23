@@ -4,11 +4,11 @@
 	<property name="build" value="build" />
 	<property name="src" value="src" />
 	<property name="doc" value="doc" />
-	<property name="lib" value="/home/ravi/projects/java/javalibs" />
+	<property name="lib" value="lib" />
 
 
 	<path id="build.classpath">
-		<pathelement path="${lib}/junit3.8.2/junit.jar" />
+		<pathelement path="${lib}/junit/junit-4.7.jar" />
 		<pathelement path="${build}" />
 	</path>
 
@@ -16,7 +16,6 @@
 	<target name="clean">
 		<delete dir="build" />
 		<delete dir="doc" />
-
 	</target>
 
 
@@ -25,13 +24,12 @@
 		<mkdir dir="${build}" />
 		<mkdir dir="${doc}" />
 		<mkdir dir="${doc}/javadoc" />
-
 	</target>
 
 
+
 	<target name="compile-all" depends="makedirs">
-		<javac srcdir="${src}" destdir="${build}">
-		</javac>
+		<javac srcdir="${src}" destdir="${build}" classpathref="build.classpath"/>
 	</target>
 
 
@@ -39,7 +37,7 @@
 	<target name="test-all" depends="compile-all">
 		<junit haltonfailure="true">
 			<formatter type="plain" usefile="no" />
-			<test name="aima.test.AllAimaTests" />
+			<test name="aima.test.core.unit.AllAIMAUnitTestSuite" />
 			<classpath refid="build.classpath" />
 		</junit>
 	</target>
@@ -47,8 +45,7 @@
 
 
 	<target name="makedocs" depends="compile-all">
-		<javadoc destdir="${doc}/javadoc" packagenames="aima.*" sourcepath="${src}" />
-
+		<javadoc destdir="${doc}/javadoc" packagenames="aima.*" sourcepath="${src}/main/java" />
 	</target>
 
 
