@@ -7,6 +7,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.Percept;
 
 /**
  * Facade hiding application specific design decisions from the
@@ -42,11 +43,18 @@ public class AgentAppModel implements EnvironmentView {
 			listener.modelChanged();
 		}
 	}
+	
+	public void agentAdded(Agent agent, Percept perceives) {
+		for (ModelChangedListener listener : listeners) {
+			listener.modelChanged();
+		}
+	}
+	
 	/**
 	 * Reacts on environment changes. This implementation informs all registered
 	 * model change listeners and provides their log with the given command.
 	 */
-	public void envChanged(Agent agent, Action command, EnvironmentState state) {
+	public void agentActed(Agent agent, Action command, EnvironmentState state) {
 		for (ModelChangedListener listener : listeners) {
 			listener.logMessage(command.toString());
 			listener.modelChanged();

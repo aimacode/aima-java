@@ -13,7 +13,7 @@ import aima.gui.framework.AgentAppController;
  * Provides a useful base class for agent application controller implementations
  * in the context of route planning agent application development. To get it
  * ready to work, all you need to do is, to provide implementations for the four
- * abstract methods. See {@link RoutePlanningAgentAppDemo} for an example.
+ * abstract methods. See {@link RoutePlanningAgentApp} for an example.
  * 
  * @author R. Lunde
  */

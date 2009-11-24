@@ -15,7 +15,7 @@ import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentAppModel;
 import aima.gui.framework.AgentView;
-import aima.gui.framework.SimpleAgentAppDemo;
+import aima.gui.framework.SimpleAgentApp;
 
 /**
  * Simple graphical application for experiments with a 
@@ -23,7 +23,7 @@ import aima.gui.framework.SimpleAgentAppDemo;
  * 
  * @author Ciaran O'Reilly
  */
-public class NQueensAppDemo extends SimpleAgentAppDemo {
+public class NQueensApp extends SimpleAgentApp {
 
 	/** Returns a <code>VacuumModel</code>. */
 	@Override
@@ -240,6 +240,6 @@ public class NQueensAppDemo extends SimpleAgentAppDemo {
 	 * Starts the application.
 	 */
 	public static void main(String args[]) {
-		new NQueensAppDemo().startApplication();
+		new NQueensApp().startApplication();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
+import aima.core.agent.Percept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.Scenario;
@@ -39,6 +40,13 @@ public class MapAgentModel extends AgentAppModel {
 	public void clearTourHistory() {
 		tourHistory.clear();
 	}
+	
+	@Override
+	public void agentAdded(Agent agent, Percept perceives) {
+		String loc = scenario.getEnv().getAgentLocation(agent);
+		tourHistory.add(loc);
+		fireModelChanged();
+	}
 
 	/**
 	 * Reacts on environment changes and updates the tour history. The command
@@ -49,7 +57,7 @@ public class MapAgentModel extends AgentAppModel {
 	 * change.
 	 */
 	@Override
-	public void envChanged(Agent agent, Action command, EnvironmentState state) {
+	public void agentActed(Agent agent, Action command, EnvironmentState state) {
 		for (AgentAppModel.ModelChangedListener listener : listeners) {
 			listener.logMessage(command.toString());
 		}

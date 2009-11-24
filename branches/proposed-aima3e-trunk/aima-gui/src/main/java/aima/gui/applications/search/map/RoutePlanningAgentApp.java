@@ -14,7 +14,7 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentAppModel;
-import aima.gui.framework.SimpleAgentAppDemo;
+import aima.gui.framework.SimpleAgentApp;
 
 /**
  * Demo example of a route planning agent application with GUI. The main method
@@ -26,7 +26,7 @@ import aima.gui.framework.SimpleAgentAppDemo;
  * 
  * @author R. Lunde
  */
-public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
+public class RoutePlanningAgentApp extends SimpleAgentApp {
 
 	/** Creates a <code>MapAgentModel</code>. */
 	@Override
@@ -260,6 +260,6 @@ public class RoutePlanningAgentAppDemo extends SimpleAgentAppDemo {
 
 	/** Application starter. */
 	public static void main(String args[]) {
-		new RoutePlanningAgentAppDemo().startApplication();
+		new RoutePlanningAgentApp().startApplication();
 	}
 }

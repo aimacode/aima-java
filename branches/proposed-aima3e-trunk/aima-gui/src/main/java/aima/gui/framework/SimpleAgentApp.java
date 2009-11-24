@@ -10,7 +10,7 @@ package aima.gui.framework;
  * 
  * @author R. Lunde
  */
-public class SimpleAgentAppDemo {
+public class SimpleAgentApp {
 	/**
 	 * Creates an agent application, makes the parts know each other, and
 	 * finally sets the frame visible.
@@ -67,6 +67,6 @@ public class SimpleAgentAppDemo {
 	 * Starts a simple test frame application.
 	 */
 	public static void main(String args[]) {
-		new SimpleAgentAppDemo().startApplication();
+		new SimpleAgentApp().startApplication();
 	}
 }
