@@ -56,13 +56,11 @@ public abstract class AbstractEnvironment implements Environment {
 	}
 
 	public void addAgent(Agent a) {
-		agents.add(a);
-		envObjects.add(a);
+		addEnvironmentObject(a);
 	}
 
 	public void removeAgent(Agent a) {
-		agents.remove(a);
-		envObjects.remove(a);
+		removeEnvironmentObject(a);
 	}
 
 	public List<EnvironmentObject> getEnvironmentObjects() {
@@ -73,7 +71,11 @@ public abstract class AbstractEnvironment implements Environment {
 	public void addEnvironmentObject(EnvironmentObject eo) {
 		envObjects.add(eo);
 		if (eo instanceof Agent) {
-			agents.add((Agent) eo);
+			Agent a = (Agent) eo;
+			if (!agents.contains(a)) {				
+				agents.add(a);
+				this.updateEnvironmentViewsAgentAdded(a);
+			}
 		}
 	}
 
@@ -85,12 +87,13 @@ public abstract class AbstractEnvironment implements Environment {
 	public void step() {
 		if (!isDone()) {
 			for (Agent agent : agents) {
+				if (agent.isAlive()) {
+					Action anAction = agent.execute(getPerceptSeenBy(agent));
 
-				Action anAction = agent.execute(getPerceptSeenBy(agent));
+					EnvironmentState es = executeAction(agent, anAction);
 
-				EnvironmentState es = executeAction(agent, anAction);
-
-				updateEnvironmentViews(agent, anAction, es);
+					updateEnvironmentViewsAgentActed(agent, anAction, es);
+				}
 			}
 		}
 	}
@@ -152,10 +155,16 @@ public abstract class AbstractEnvironment implements Environment {
 				+ addTo);
 	}
 
-	protected void updateEnvironmentViews(Agent agent, Action action,
+	protected void updateEnvironmentViewsAgentAdded(Agent agent) {
+		for (EnvironmentView view : views) {
+			view.agentAdded(agent, getPerceptSeenBy(agent));
+		}
+	}
+
+	protected void updateEnvironmentViewsAgentActed(Agent agent, Action action,
 			EnvironmentState state) {
 		for (EnvironmentView view : views) {
-			view.envChanged(agent, action, state);
+			view.agentActed(agent, action, state);
 		}
 	}
 }

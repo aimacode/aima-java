@@ -8,6 +8,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -417,8 +418,12 @@ public class BidirectionalSearchTest {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
+		
+		public void agentAdded(Agent agent, Percept perceives) {
+			// Nothing.
+		}
 
-		public void envChanged(Agent agent, Action action,
+		public void agentActed(Agent agent, Action action,
 				EnvironmentState state) {
 			envChanges.append(action).append(":");
 		}

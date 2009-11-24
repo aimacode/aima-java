@@ -25,8 +25,11 @@ public class MapEnvironment extends AbstractEnvironment {
 	}
 
 	public void addAgent(Agent a, String startLocation) {
-		super.addAgent(a);
+		// Ensure the agent state information is tracked before
+		// adding to super, as super will notify the registered
+		// EnvironmentViews that is was added.
 		state.setAgentLocationAndTravelDistance(a, startLocation, 0.0);
+		super.addAgent(a);
 	}
 
 	public String getAgentLocation(Agent a) {

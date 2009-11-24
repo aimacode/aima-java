@@ -8,6 +8,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -41,16 +42,7 @@ public class MapAgentTest {
 		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
 				new String[] { "A" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -65,16 +57,7 @@ public class MapAgentTest {
 		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
 				new String[] { "D" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -89,21 +72,27 @@ public class MapAgentTest {
 		MapAgent ma = new MapAgent(me, new UniformCostSearch(),
 				new String[] { "A" });
 		me.addAgent(ma, "E");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
 				.assertEquals(
 						"CurrentLocation=In(E), Goal=In(A):Action[name==NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:Action[name==NoOp]:",
 						envChanges.toString());
+	}
+	
+	private class TestEnvironmentView implements EnvironmentView {
+		public void notify(String msg) {
+			envChanges.append(msg).append(":");
+		}
+		
+		public void agentAdded(Agent agent, Percept perceives) {
+			// Nothing
+		}
+
+		public void agentActed(Agent agent, Action action,
+				EnvironmentState state) {
+			envChanges.append(action).append(":");
+		}
 	}
 }

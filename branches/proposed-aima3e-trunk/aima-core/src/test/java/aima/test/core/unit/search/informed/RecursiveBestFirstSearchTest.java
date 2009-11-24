@@ -8,6 +8,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.Percept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -43,7 +44,7 @@ public class RecursiveBestFirstSearchTest {
 				return pt1.distance(pt2);
 			}
 		};
-		
+
 		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
 				new AStarEvaluationFunction(heuristicFunction));
 	}
@@ -55,16 +56,7 @@ public class RecursiveBestFirstSearchTest {
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -74,27 +66,33 @@ public class RecursiveBestFirstSearchTest {
 	}
 
 	@Test
-	public void  testAIMA3eFigure3_27() {
+	public void testAIMA3eFigure3_27() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		MapAgent ma = new MapAgent(me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append(":");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append(":");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
 				.assertEquals(
 						"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
 						envChanges.toString());
+	}
+
+	private class TestEnvironmentView implements EnvironmentView {
+		public void notify(String msg) {
+			envChanges.append(msg).append(":");
+		}
+
+		public void agentAdded(Agent agent, Percept perceives) {
+			// Nothing.
+		}
+		
+		public void agentActed(Agent agent, Action action,
+				EnvironmentState state) {
+			envChanges.append(action).append(":");
+		}
 	}
 }

@@ -80,9 +80,12 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		return super.isDone() || isDone;
 	}
 
-	public void addAgent(Agent a, Location location) {
-		envState.setAgentLocation(a, location);
+	public void addAgent(Agent a, Location location) {	
+		// Ensure the agent state information is tracked before
+		// adding to super, as super will notify the registered
+		// EnvironmentViews that is was added.
 		addAgent(a);
+		envState.setAgentLocation(a, location);
 	}
 
 	public LocationState getLocationState(Location location) {

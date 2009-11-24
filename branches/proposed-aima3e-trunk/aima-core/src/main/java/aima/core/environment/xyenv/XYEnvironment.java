@@ -47,11 +47,11 @@ public class XYEnvironment extends AbstractEnvironment {
 
 	public void moveObjectToAbsoluteLocation(EnvironmentObject eo,
 			XYLocation loc) {
-		// Ensure is added to the environment
-		addEnvironmentObject(eo);
-
 		// Ensure the object is not already at a location
 		envState.moveObjectToAbsoluteLocation(eo, loc);
+		
+		// Ensure is added to the environment
+		addEnvironmentObject(eo);
 	}
 
 	public void moveObject(EnvironmentObject eo, XYLocation.Direction direction) {

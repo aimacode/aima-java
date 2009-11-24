@@ -8,6 +8,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
@@ -49,16 +50,7 @@ public class LRTAStarAgentTest {
 						"A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append("->");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append("->");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals("Action[name==NoOp]->", envChanges.toString());
@@ -72,16 +64,7 @@ public class LRTAStarAgentTest {
 						"F"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append("->");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append("->");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert
@@ -98,16 +81,7 @@ public class LRTAStarAgentTest {
 						"G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new EnvironmentView() {
-			public void notify(String msg) {
-				envChanges.append(msg).append("->");
-			}
-
-			public void envChanged(Agent agent, Action action,
-					EnvironmentState state) {
-				envChanges.append(action).append("->");
-			}
-		});
+		me.addEnvironmentView(new TestEnvironmentView());
 		// Note: Will search forever if no path is possible,
 		// Therefore restrict the number of steps to something
 		// reasonablbe, against which to test.
@@ -117,5 +91,20 @@ public class LRTAStarAgentTest {
 				.assertEquals(
 						"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
 						envChanges.toString());
+	}
+	
+	private class TestEnvironmentView implements EnvironmentView {
+		public void notify(String msg) {
+			envChanges.append(msg).append("->");
+		}
+
+		public void agentAdded(Agent agent, Percept perceives) {
+			// Nothing.
+		}
+		
+		public void agentActed(Agent agent, Action action,
+				EnvironmentState state) {
+			envChanges.append(action).append("->");
+		}
 	}
 }
