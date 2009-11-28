@@ -6,6 +6,11 @@ import java.util.Hashtable;
  * a holder for config data for neural networks and possibly for other
  * learning systems.
  */
+
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class NNConfig {
 	private final Hashtable<String, Object> hash;
 

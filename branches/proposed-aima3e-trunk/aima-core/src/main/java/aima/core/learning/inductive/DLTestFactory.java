@@ -1,14 +1,14 @@
 package aima.core.learning.inductive;
 
-/**
- * @author Ravi Mohan
- * 
- */
 import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.learning.framework.DataSet;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DLTestFactory {
 
 	public List<DLTest> createDLTestsWithAttributeCount(DataSet ds, int i) {
@@ -31,5 +31,4 @@ public class DLTestFactory {
 		}
 		return tests;
 	}
-
 }

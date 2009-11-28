@@ -11,7 +11,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class IrisDataSetNumerizer implements Numerizer {
 
 	public Pair<List<Double>, List<Double>> numerize(Example e) {
@@ -55,6 +54,9 @@ public class IrisDataSetNumerizer implements Numerizer {
 		}
 	}
 
+	//
+	// PRIVATE METHODS
+	//
 	private double round(Double d) {
 		if (d < 0) {
 			return 0.0;
@@ -78,5 +80,4 @@ public class IrisDataSetNumerizer implements Numerizer {
 			throw new RuntimeException("invalid plant category");
 		}
 	}
-
 }

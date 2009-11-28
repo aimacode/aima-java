@@ -8,7 +8,6 @@ import aima.core.probability.decision.MDPPerception;
  * @author Ravi Mohan
  * 
  */
-
 public abstract class MDPAgent<STATE_TYPE, ACTION_TYPE> {
 
 	protected MDP<STATE_TYPE, ACTION_TYPE> mdp;
@@ -86,5 +85,4 @@ public abstract class MDPAgent<STATE_TYPE, ACTION_TYPE> {
 	public STATE_TYPE getCurrentState() {
 		return currentState;
 	}
-
 }

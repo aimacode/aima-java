@@ -4,7 +4,6 @@ package aima.core.learning.framework;
  * @author Ravi Mohan
  * 
  */
-
 public class NumericAttribute implements Attribute {
 	double value;
 
@@ -26,5 +25,4 @@ public class NumericAttribute implements Attribute {
 	public double valueAsDouble() {
 		return value;
 	}
-
 }

@@ -2,7 +2,12 @@ package aima.core.learning.neural;
 
 import aima.core.util.Util;
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Layer {
 	// vectors are represented by n * 1 matrices;
 	private final Matrix weightMatrix;
@@ -53,7 +58,6 @@ public class Layer {
 		initializeMatrix(weightMatrix, lowerLimitForWeights,
 				upperLimitForWeights);
 		initializeVector(biasVector, lowerLimitForWeights, upperLimitForWeights);
-
 	}
 
 	public Vector feedForward(Vector inputVector) {
@@ -99,29 +103,7 @@ public class Layer {
 	public Vector getLastInducedField() {
 		return lastInducedField;
 	}
-
-	private static void initializeMatrix(Matrix aMatrix, double lowerLimit,
-			double upperLimit) {
-		for (int i = 0; i < aMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < aMatrix.getColumnDimension(); j++) {
-				double random = Util.generateRandomDoubleBetween(lowerLimit,
-						upperLimit);
-				aMatrix.set(i, j, random);
-			}
-		}
-
-	}
-
-	private static void initializeVector(Vector aVector, double lowerLimit,
-			double upperLimit) {
-		for (int i = 0; i < aVector.size(); i++) {
-
-			double random = Util.generateRandomDoubleBetween(lowerLimit,
-					upperLimit);
-			aVector.setValue(i, random);
-		}
-	}
-
+	
 	public Matrix getLastWeightUpdateMatrix() {
 		return lastWeightUpdateMatrix;
 	}
@@ -196,4 +178,28 @@ public class Layer {
 
 	}
 
+	//
+	// PRIVATE METHODS
+	//
+	private static void initializeMatrix(Matrix aMatrix, double lowerLimit,
+			double upperLimit) {
+		for (int i = 0; i < aMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < aMatrix.getColumnDimension(); j++) {
+				double random = Util.generateRandomDoubleBetween(lowerLimit,
+						upperLimit);
+				aMatrix.set(i, j, random);
+			}
+		}
+
+	}
+
+	private static void initializeVector(Vector aVector, double lowerLimit,
+			double upperLimit) {
+		for (int i = 0; i < aVector.size(); i++) {
+
+			double random = Util.generateRandomDoubleBetween(lowerLimit,
+					upperLimit);
+			aVector.setValue(i, random);
+		}
+	}
 }

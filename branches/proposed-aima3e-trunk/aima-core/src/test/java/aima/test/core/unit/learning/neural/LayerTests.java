@@ -8,8 +8,8 @@ import aima.core.learning.neural.Layer;
 import aima.core.learning.neural.LayerSensitivity;
 import aima.core.learning.neural.LogSigActivationFunction;
 import aima.core.learning.neural.PureLinearActivationFunction;
-import aima.core.learning.neural.Vector;
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
 public class LayerTests {
 

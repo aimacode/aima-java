@@ -7,7 +7,6 @@ import aima.core.learning.inductive.DecisionTree;
  * @author Ravi Mohan
  * 
  */
-
 public class StumpLearner extends DecisionTreeLearner {
 
 	public StumpLearner(DecisionTree sl, String unable_to_classify) {

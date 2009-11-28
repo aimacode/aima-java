@@ -1,7 +1,12 @@
 package aima.core.learning.neural;
 
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class BackPropLearning implements NNTrainingScheme {
 	private final double learningRate;
 	private final double momentum;

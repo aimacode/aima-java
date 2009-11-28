@@ -13,7 +13,6 @@ import aima.core.learning.inductive.DecisionList;
  * @author Ravi Mohan
  * 
  */
-
 public class DecisionListLearner implements Learner {
 	public static final String FAILURE = "Failure";
 
@@ -55,6 +54,16 @@ public class DecisionListLearner implements Learner {
 		return results;
 	}
 
+	/**
+	 * @return Returns the decisionList.
+	 */
+	public DecisionList getDecisionList() {
+		return decisionList;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 	private DecisionList decisionListLearning(DataSet ds) {
 		if (ds.size() == 0) {
 			return new DecisionList(positive, negative);
@@ -96,12 +105,4 @@ public class DecisionListLearner implements Learner {
 		}
 		return true;
 	}
-
-	/**
-	 * @return Returns the decisionList.
-	 */
-	public DecisionList getDecisionList() {
-		return decisionList;
-	}
-
 }

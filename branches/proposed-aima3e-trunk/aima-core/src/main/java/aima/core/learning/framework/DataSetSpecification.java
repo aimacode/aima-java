@@ -1,13 +1,13 @@
 package aima.core.learning.framework;
 
-/**
- * @author Ravi Mohan
- * 
- */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DataSetSpecification {
 	List<AttributeSpecification> attributeSpecifications;
 
@@ -95,5 +95,4 @@ public class DataSetSpecification {
 		}
 		return names;
 	}
-
 }

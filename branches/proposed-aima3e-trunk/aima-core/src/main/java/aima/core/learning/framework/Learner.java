@@ -4,7 +4,6 @@ package aima.core.learning.framework;
  * @author Ravi Mohan
  * 
  */
-
 public interface Learner {
 	void train(DataSet ds);
 

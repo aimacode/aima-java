@@ -1,9 +1,12 @@
-package aima.core.learning.neural;
+package aima.core.util.math;
 
 import java.util.List;
 
-import aima.core.util.math.Matrix;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Vector extends Matrix {
 	private static final long serialVersionUID = 1L;
 
@@ -67,5 +70,4 @@ public class Vector extends Matrix {
 		}
 		return res;
 	}
-
 }

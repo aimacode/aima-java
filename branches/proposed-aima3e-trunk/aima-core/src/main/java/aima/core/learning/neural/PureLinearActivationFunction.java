@@ -1,5 +1,9 @@
 package aima.core.learning.neural;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class PureLinearActivationFunction implements ActivationFunction {
 
 	public double activation(double parameter) {
@@ -10,5 +14,4 @@ public class PureLinearActivationFunction implements ActivationFunction {
 
 		return 1;
 	}
-
 }

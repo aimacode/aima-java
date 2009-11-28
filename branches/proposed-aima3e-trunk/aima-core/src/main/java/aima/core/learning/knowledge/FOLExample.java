@@ -80,7 +80,7 @@ public class FOLExample {
 			// If multivalued becomes a two place predicate
 			// e.g: Patrons(X1, Some)
 			// otherwise: Hungry(X1) or ~ Hungry(X1)
-			// see pg 679 of AIMA
+			// see pg 769 of AIMA
 			Sentence part = null;
 			if (folDSDomain.isMultivalued(dname)) {
 				terms.add(new Constant(folDSDomain.getFOLName(example

@@ -1,7 +1,12 @@
 package aima.core.learning.neural;
 
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class Perceptron implements FunctionApproximator {
 
 	private final Layer layer;
@@ -58,5 +63,4 @@ public class Perceptron implements FunctionApproximator {
 		}
 		return result;
 	}
-
 }

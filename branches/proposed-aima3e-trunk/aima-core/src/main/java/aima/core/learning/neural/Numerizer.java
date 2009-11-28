@@ -9,7 +9,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public interface Numerizer {
 	// A Numerizer understands how to convert an example from a particular
 	// dataset
@@ -19,5 +18,4 @@ public interface Numerizer {
 	Pair<List<Double>, List<Double>> numerize(Example e);
 
 	String denumerize(List<Double> outputValue);
-
 }

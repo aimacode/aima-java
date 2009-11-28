@@ -11,6 +11,10 @@ import aima.core.learning.framework.Example;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public abstract class NNDataSet {
 	/*
 	 * This class represents a source of examples to the rest of the nn
@@ -53,30 +57,9 @@ public abstract class NNDataSet {
 	public abstract void setTargetColumns();
 
 	/*
-	 * create Example instances from a normalized data "table".
-	 */
-	private void createExamples() {
-		dataset = new ArrayList<NNExample>();
-		for (List<Double> dataLine : nds) {
-			List<Double> input = new ArrayList<Double>();
-			List<Double> target = new ArrayList<Double>();
-			for (int i = 0; i < dataLine.size(); i++) {
-				if (targetColumnNumbers.contains(i)) {
-					target.add(dataLine.get(i));
-				} else {
-					input.add(dataLine.get(i));
-				}
-			}
-			dataset.add(new NNExample(input, target));
-		}
-		refreshDataset();// to populate the preentlyProcessed dataset
-	}
-
-	/*
 	 * create a normalized data "table" from the data in the file. At this
 	 * stage, the data isnot split into input pattern and tragets
 	 */
-
 	public void createNormalizedDataFromFile(String filename) throws Exception {
 
 		List<List<Double>> rds = new ArrayList<List<Double>>();
@@ -100,7 +83,6 @@ public abstract class NNDataSet {
 	 * remove redundancy of recreating the target columns. the numerizer has
 	 * already isolated the targets
 	 */
-
 	public void createNormalizedDataFromDataSet(DataSet ds, Numerizer numerizer)
 			throws Exception {
 
@@ -108,77 +90,7 @@ public abstract class NNDataSet {
 		// normalize raw dataset
 		nds = normalize(rds);
 	}
-
-	private List<List<Double>> normalize(List<List<Double>> rds) {
-		int rawDataLength = rds.get(0).size();
-		List<List<Double>> nds = new ArrayList<List<Double>>();
-
-		means = new ArrayList<Double>();
-		stdevs = new ArrayList<Double>();
-
-		List<List<Double>> normalizedColumns = new ArrayList<List<Double>>();
-		// clculate means for each coponent of example data
-		for (int i = 0; i < rawDataLength; i++) {
-			List<Double> columnValues = new ArrayList<Double>();
-			for (List<Double> rawDatum : rds) {
-				columnValues.add(rawDatum.get(i));
-			}
-			double mean = Util.calculateMean(columnValues);
-			means.add(mean);
-
-			double stdev = Util.calculateStDev(columnValues, mean);
-			stdevs.add(stdev);
-
-			normalizedColumns.add(Util.normalizeFromMeanAndStdev(columnValues,
-					mean, stdev));
-
-		}
-		// re arrange data from columns
-		// TODO Assert normalized columns have same size etc
-
-		int columnLength = normalizedColumns.get(0).size();
-		int numberOfColumns = normalizedColumns.size();
-		for (int i = 0; i < columnLength; i++) {
-			List<Double> lst = new ArrayList<Double>();
-			for (int j = 0; j < numberOfColumns; j++) {
-				lst.add(normalizedColumns.get(j).get(i));
-			}
-			nds.add(lst);
-		}
-		return nds;
-	}
-
-	private List<Double> exampleFromString(String line, String separator) {
-		// assumes all values for inout and target are doubles
-		List<Double> rexample = new ArrayList<Double>();
-		List<String> attributeValues = Arrays.asList(line.split(separator));
-		for (String valString : attributeValues) {
-			rexample.add(Double.parseDouble(valString));
-		}
-		return rexample;
-	}
-
-	private List<List<Double>> rawExamplesFromDataSet(DataSet ds,
-			Numerizer numerizer) {
-		// assumes all values for inout and target are doubles
-		List<List<Double>> rds = new ArrayList<List<Double>>();
-		for (int i = 0; i < ds.size(); i++) {
-			List<Double> rexample = new ArrayList<Double>();
-			Example e = ds.getExample(i);
-			Pair<List<Double>, List<Double>> p = numerizer.numerize(e);
-			List<Double> attributes = p.getFirst();
-			for (Double d : attributes) {
-				rexample.add(d);
-			}
-			List<Double> targets = p.getSecond();
-			for (Double d : targets) {
-				rexample.add(d);
-			}
-			rds.add(rexample);
-		}
-		return rds;
-	}
-
+	
 	/*
 	 * Gets (and removes) a random example from the 'presentlyProcessed'
 	 */
@@ -255,5 +167,98 @@ public abstract class NNDataSet {
 	public List<Double> getStdevs() {
 		return stdevs;
 	}
+	
+	//
+	// PRIVATE METHODS
+	//
+	
+	/*
+	 * create Example instances from a normalized data "table".
+	 */
+	private void createExamples() {
+		dataset = new ArrayList<NNExample>();
+		for (List<Double> dataLine : nds) {
+			List<Double> input = new ArrayList<Double>();
+			List<Double> target = new ArrayList<Double>();
+			for (int i = 0; i < dataLine.size(); i++) {
+				if (targetColumnNumbers.contains(i)) {
+					target.add(dataLine.get(i));
+				} else {
+					input.add(dataLine.get(i));
+				}
+			}
+			dataset.add(new NNExample(input, target));
+		}
+		refreshDataset();// to populate the preentlyProcessed dataset
+	}
 
+	private List<List<Double>> normalize(List<List<Double>> rds) {
+		int rawDataLength = rds.get(0).size();
+		List<List<Double>> nds = new ArrayList<List<Double>>();
+
+		means = new ArrayList<Double>();
+		stdevs = new ArrayList<Double>();
+
+		List<List<Double>> normalizedColumns = new ArrayList<List<Double>>();
+		// clculate means for each coponent of example data
+		for (int i = 0; i < rawDataLength; i++) {
+			List<Double> columnValues = new ArrayList<Double>();
+			for (List<Double> rawDatum : rds) {
+				columnValues.add(rawDatum.get(i));
+			}
+			double mean = Util.calculateMean(columnValues);
+			means.add(mean);
+
+			double stdev = Util.calculateStDev(columnValues, mean);
+			stdevs.add(stdev);
+
+			normalizedColumns.add(Util.normalizeFromMeanAndStdev(columnValues,
+					mean, stdev));
+
+		}
+		// re arrange data from columns
+		// TODO Assert normalized columns have same size etc
+
+		int columnLength = normalizedColumns.get(0).size();
+		int numberOfColumns = normalizedColumns.size();
+		for (int i = 0; i < columnLength; i++) {
+			List<Double> lst = new ArrayList<Double>();
+			for (int j = 0; j < numberOfColumns; j++) {
+				lst.add(normalizedColumns.get(j).get(i));
+			}
+			nds.add(lst);
+		}
+		return nds;
+	}
+
+	private List<Double> exampleFromString(String line, String separator) {
+		// assumes all values for inout and target are doubles
+		List<Double> rexample = new ArrayList<Double>();
+		List<String> attributeValues = Arrays.asList(line.split(separator));
+		for (String valString : attributeValues) {
+			rexample.add(Double.parseDouble(valString));
+		}
+		return rexample;
+	}
+
+	private List<List<Double>> rawExamplesFromDataSet(DataSet ds,
+			Numerizer numerizer) {
+		// assumes all values for inout and target are doubles
+		List<List<Double>> rds = new ArrayList<List<Double>>();
+		for (int i = 0; i < ds.size(); i++) {
+			List<Double> rexample = new ArrayList<Double>();
+			Example e = ds.getExample(i);
+			Pair<List<Double>, List<Double>> p = numerizer.numerize(e);
+			List<Double> attributes = p.getFirst();
+			for (Double d : attributes) {
+				rexample.add(d);
+			}
+			List<Double> targets = p.getSecond();
+			for (Double d : targets) {
+				rexample.add(d);
+			}
+			rds.add(rexample);
+		}
+		return rds;
+	}
 }

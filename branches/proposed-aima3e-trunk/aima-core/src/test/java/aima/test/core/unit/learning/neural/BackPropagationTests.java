@@ -13,8 +13,8 @@ import aima.core.learning.neural.NNConfig;
 import aima.core.learning.neural.NNDataSet;
 import aima.core.learning.neural.Numerizer;
 import aima.core.learning.neural.Perceptron;
-import aima.core.learning.neural.Vector;
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
 public class BackPropagationTests {
 

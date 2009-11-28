@@ -10,7 +10,6 @@ import aima.core.util.FrequencyCounter;
  * @author Ravi Mohan
  * 
  */
-
 public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 		MDPAgent<STATE_TYPE, ACTION_TYPE> {
 
@@ -59,6 +58,14 @@ public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 		return previousAction;
 	}
 
+	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
+		return utilityFunction;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+	
 	private MDPUtilityFunction<STATE_TYPE> updateUtilityFunction(double gamma) {
 		MDPUtilityFunction<STATE_TYPE> uf = utilityFunction.copy();
 		double u_s = utilityFunction.getUtility(previousState);
@@ -69,10 +76,5 @@ public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 				* (previousReward + gammaUtilDIff);
 		uf.setUtility(previousState, u_s + alphaTerm);
 		return uf;
-	}
-
-	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
-
-		return utilityFunction;
 	}
 }

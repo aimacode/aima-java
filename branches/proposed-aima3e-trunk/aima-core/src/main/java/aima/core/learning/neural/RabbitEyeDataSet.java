@@ -2,6 +2,10 @@ package aima.core.learning.neural;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class RabbitEyeDataSet extends NNDataSet {
 
 	@Override
@@ -15,7 +19,5 @@ public class RabbitEyeDataSet extends NNDataSet {
 		targetColumnNumbers = new ArrayList<Integer>();
 
 		targetColumnNumbers.add(1); // using zero based indexing
-
 	}
-
 }

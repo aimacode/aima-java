@@ -14,7 +14,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class DecisionTreeLearner implements Learner {
 	private DecisionTree tree;
 
@@ -53,7 +52,15 @@ public class DecisionTreeLearner implements Learner {
 		}
 		return results;
 	}
+	
+	public DecisionTree getDecisionTree() {
+		return tree;
+	}
 
+	//
+	// PRIVATE METHODS
+	//
+	
 	private DecisionTree decisionTreeLearning(DataSet ds,
 			List<String> attributeNames, ConstantDecisonTree defaultTree) {
 		if (ds.size() == 0) {
@@ -115,9 +122,4 @@ public class DecisionTreeLearner implements Learner {
 		}
 		return true;
 	}
-
-	public DecisionTree getDecisionTree() {
-		return tree;
-	}
-
 }

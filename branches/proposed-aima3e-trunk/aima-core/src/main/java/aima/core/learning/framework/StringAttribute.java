@@ -4,7 +4,6 @@ package aima.core.learning.framework;
  * @author Ravi Mohan
  * 
  */
-
 public class StringAttribute implements Attribute {
 	private StringAttributeSpecification spec;
 
@@ -22,5 +21,4 @@ public class StringAttribute implements Attribute {
 	public String name() {
 		return spec.getAttributeName().trim();
 	}
-
 }

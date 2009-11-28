@@ -1,9 +1,5 @@
 package aima.core.learning.framework;
 
-/**
- * @author Ravi Mohan
- * 
- */
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,6 +7,10 @@ import java.util.List;
 
 import aima.core.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DataSet {
 	protected DataSet() {
 

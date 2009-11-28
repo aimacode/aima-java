@@ -1,14 +1,14 @@
 package aima.core.learning.inductive;
 
-/**
- * @author Ravi Mohan
- * 
- */
 import java.util.Hashtable;
 
 import aima.core.learning.framework.DataSet;
 import aima.core.learning.framework.Example;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DLTest {
 
 	// represents a single test in the Decision List
@@ -64,5 +64,4 @@ public class DLTest {
 		buf.append(" DECISION ");
 		return buf.toString();
 	}
-
 }

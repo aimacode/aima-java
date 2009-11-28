@@ -1,12 +1,12 @@
 package aima.core.learning.framework;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Ravi Mohan
  * 
  */
-import java.util.Arrays;
-import java.util.List;
-
 public class StringAttributeSpecification implements AttributeSpecification {
 	String attributeName;
 

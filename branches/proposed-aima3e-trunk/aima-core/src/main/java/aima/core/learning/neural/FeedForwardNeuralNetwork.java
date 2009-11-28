@@ -2,7 +2,12 @@ package aima.core.learning.neural;
 
 import aima.core.learning.framework.DataSet;
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class FeedForwardNeuralNetwork implements FunctionApproximator {
 
 	public static final String UPPER_LIMIT_WEIGHTS = "upper_limit_weights";
@@ -10,6 +15,7 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 	public static final String NUMBER_OF_OUTPUTS = "number_of_outputs";
 	public static final String NUMBER_OF_HIDDEN_NEURONS = "number_of_hidden_neurons";
 	public static final String NUMBER_OF_INPUTS = "number_of_inputs";
+	//
 	private final Layer hiddenLayer;
 	private final Layer outputLayer;
 
@@ -137,5 +143,4 @@ public class FeedForwardNeuralNetwork implements FunctionApproximator {
 		this.trainingScheme = trainingScheme;
 		trainingScheme.setNeuralNetwork(this);
 	}
-
 }

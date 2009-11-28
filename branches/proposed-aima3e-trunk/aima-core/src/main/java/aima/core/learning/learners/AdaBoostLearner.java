@@ -48,12 +48,28 @@ public class AdaBoostLearner implements Learner {
 					* Math.log((1.0 - error) / error);
 			learnerWeights.put(learner, newHypothesisWeight);
 		}
-
 	}
 
 	public String predict(Example e) {
 		return weightedMajority(e);
 	}
+	
+	public int[] test(DataSet ds) {
+		int[] results = new int[] { 0, 0 };
+
+		for (Example e : ds.examples) {
+			if (e.targetValue().equals(predict(e))) {
+				results[0] = results[0] + 1;
+			} else {
+				results[1] = results[1] + 1;
+			}
+		}
+		return results;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private String weightedMajority(Example e) {
 		List<String> targetValues = dataSet.getPossibleAttributeValues(dataSet
@@ -107,19 +123,6 @@ public class AdaBoostLearner implements Learner {
 		return targetValueWithMaxScore;
 	}
 
-	public int[] test(DataSet ds) {
-		int[] results = new int[] { 0, 0 };
-
-		for (Example e : ds.examples) {
-			if (e.targetValue().equals(predict(e))) {
-				results[0] = results[0] + 1;
-			} else {
-				results[1] = results[1] + 1;
-			}
-		}
-		return results;
-	}
-
 	private void initializeExampleWeights(int size) {
 		if (size == 0) {
 			throw new RuntimeException(
@@ -130,7 +133,6 @@ public class AdaBoostLearner implements Learner {
 		for (int i = 0; i < size; i++) {
 			exampleWeights[i] = value;
 		}
-
 	}
 
 	private void initializeHypothesisWeights(int size) {
@@ -165,7 +167,6 @@ public class AdaBoostLearner implements Learner {
 			}
 		}
 		exampleWeights = Util.normalize(exampleWeights);
-
 	}
 
 	private double scoreOfValue(String targetValue,
@@ -176,5 +177,4 @@ public class AdaBoostLearner implements Learner {
 		}
 		return score;
 	}
-
 }

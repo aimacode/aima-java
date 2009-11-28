@@ -4,7 +4,6 @@ package aima.core.learning.framework;
  * @author Ravi Mohan
  * 
  */
-
 public interface AttributeSpecification {
 
 	boolean isValid(String string);
@@ -12,5 +11,4 @@ public interface AttributeSpecification {
 	String getAttributeName();
 
 	Attribute createAttribute(String rawValue);
-
 }

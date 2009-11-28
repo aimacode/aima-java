@@ -13,7 +13,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class QTable<STATE_TYPE, ACTION_TYPE> {
 
 	Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> table;
@@ -84,6 +83,26 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 		}
 	}
 
+	public MDPPolicy<STATE_TYPE, ACTION_TYPE> getPolicy() {
+		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy = new MDPPolicy<STATE_TYPE, ACTION_TYPE>();
+		List<STATE_TYPE> startingStatesRecorded = getAllStartingStates();
+
+		for (STATE_TYPE state : startingStatesRecorded) {
+			ACTION_TYPE action = getRecordedActionWithMaximumQValue(state);
+			policy.setAction(state, action);
+		}
+		return policy;
+	}
+	
+	@Override
+	public String toString() {
+		return table.toString();
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+
 	private Double findMaximumValue() {
 		Set<Pair<STATE_TYPE, ACTION_TYPE>> keys = table.keySet();
 		if (keys.size() > 0) {
@@ -100,18 +119,7 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 			return 0.0;
 		}
 	}
-
-	public MDPPolicy<STATE_TYPE, ACTION_TYPE> getPolicy() {
-		MDPPolicy<STATE_TYPE, ACTION_TYPE> policy = new MDPPolicy<STATE_TYPE, ACTION_TYPE>();
-		List<STATE_TYPE> startingStatesRecorded = getAllStartingStates();
-
-		for (STATE_TYPE state : startingStatesRecorded) {
-			ACTION_TYPE action = getRecordedActionWithMaximumQValue(state);
-			policy.setAction(state, action);
-		}
-		return policy;
-	}
-
+	
 	private ACTION_TYPE getRecordedActionWithMaximumQValue(STATE_TYPE state) {
 		Double maxValue = Double.NEGATIVE_INFINITY;
 		ACTION_TYPE action = null;
@@ -138,10 +146,4 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 		}
 		return states;
 	}
-
-	@Override
-	public String toString() {
-		return table.toString();
-	}
-
 }

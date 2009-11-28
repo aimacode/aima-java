@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.util.math.Matrix;
+import aima.core.util.math.Vector;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class LayerSensitivity {
 	/*
 	 * contains sensitivity matrices and related calculations for each layer.
@@ -47,6 +52,14 @@ public class LayerSensitivity {
 		sensitivityMatrix = calculatedSensitivityMatrix.copy();
 		return sensitivityMatrix;
 	}
+	
+	public Layer getLayer() {
+		return layer;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private Matrix createDerivativeMatrix(Vector lastInducedField) {
 		List<Double> lst = new ArrayList<Double>();
@@ -56,9 +69,4 @@ public class LayerSensitivity {
 		}
 		return Matrix.createDiagonalMatrix(lst);
 	}
-
-	public Layer getLayer() {
-		return layer;
-	}
-
 }

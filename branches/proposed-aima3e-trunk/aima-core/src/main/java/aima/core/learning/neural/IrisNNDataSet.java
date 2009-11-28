@@ -2,6 +2,10 @@ package aima.core.learning.neural;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class IrisNNDataSet extends NNDataSet {
 
 	@Override
@@ -17,7 +21,5 @@ public class IrisNNDataSet extends NNDataSet {
 		targetColumnNumbers.add(size - 1); // last column
 		targetColumnNumbers.add(size - 2); // last but one column
 		targetColumnNumbers.add(size - 3); // and the one before that
-
 	}
-
 }

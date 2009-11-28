@@ -29,5 +29,4 @@ public class NumericAttributeSpecification implements AttributeSpecification {
 	public Attribute createAttribute(String rawValue) {
 		return new NumericAttribute(Double.parseDouble(rawValue), this);
 	}
-
 }

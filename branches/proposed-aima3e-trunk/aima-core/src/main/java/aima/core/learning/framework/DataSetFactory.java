@@ -1,9 +1,5 @@
 package aima.core.learning.framework;
 
-/**
- * @author Ravi Mohan
- * 
- */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -13,6 +9,10 @@ import java.util.List;
 
 import aima.core.util.Util;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class DataSetFactory {
 
 	public DataSet fromFile(String filename, DataSetSpecification spec,

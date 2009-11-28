@@ -14,7 +14,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 		MDPAgent<STATE_TYPE, ACTION_TYPE> {
 	private MDPPolicy<STATE_TYPE, ACTION_TYPE> policy;
@@ -94,6 +93,13 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 		return previousAction;
 	}
 
+	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
+		return utilityFunction;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 	private MDPUtilityFunction<STATE_TYPE> valueDetermination(
 			List<MDPTransition<STATE_TYPE, ACTION_TYPE>> validTransitions,
 			double gamma) {
@@ -112,10 +118,4 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 
 		return uf;
 	}
-
-	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
-
-		return utilityFunction;
-	}
-
 }

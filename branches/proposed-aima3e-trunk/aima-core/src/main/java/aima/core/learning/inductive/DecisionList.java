@@ -62,5 +62,4 @@ public class DecisionList {
 		buf.append("END");
 		return buf.toString();
 	}
-
 }

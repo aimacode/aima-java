@@ -61,6 +61,18 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 		}
 
 	}
+	
+	public Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> getQ() {
+		return Q;
+	}
+
+	public QTable<STATE_TYPE, ACTION_TYPE> getQTable() {
+		return qTable;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private void updateLearnerState(ACTION_TYPE chosenAction) {
 		// previousAction = actionMaximizingLearningFunction();
@@ -80,7 +92,6 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 				currentState, alpha, currentReward, 0.8);
 
 		return ac;
-
 	}
 
 	private double calculateProbabilityOf(STATE_TYPE state, ACTION_TYPE action) {
@@ -139,13 +150,4 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 				state, action);
 		stateActionCount.incrementFor(stateActionPair);
 	}
-
-	public Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> getQ() {
-		return Q;
-	}
-
-	public QTable<STATE_TYPE, ACTION_TYPE> getQTable() {
-		return qTable;
-	}
-
 }

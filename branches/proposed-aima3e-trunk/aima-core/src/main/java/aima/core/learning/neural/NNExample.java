@@ -3,6 +3,12 @@ package aima.core.learning.neural;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.util.math.Vector;
+
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class NNExample {
 	private final List<Double> normalizedInput, normalizedTarget;
 
@@ -43,5 +49,4 @@ public class NNExample {
 		return getTarget().indexHavingMaxValue() == prediction
 				.indexHavingMaxValue();
 	}
-
 }

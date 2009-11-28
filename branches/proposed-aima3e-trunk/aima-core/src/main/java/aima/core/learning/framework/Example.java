@@ -1,11 +1,11 @@
 package aima.core.learning.framework;
 
+import java.util.Hashtable;
+
 /**
  * @author Ravi Mohan
  * 
  */
-import java.util.Hashtable;
-
 public class Example {
 	Hashtable<String, Attribute> attributes;
 
