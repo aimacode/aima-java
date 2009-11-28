@@ -32,6 +32,11 @@ public class XYEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
+	public EnvironmentState getCurrentState() {
+		return envState;
+	}
+
+	@Override
 	public EnvironmentState executeAction(Agent a, Action action) {
 		return envState;
 	}
@@ -49,7 +54,7 @@ public class XYEnvironment extends AbstractEnvironment {
 			XYLocation loc) {
 		// Ensure the object is not already at a location
 		envState.moveObjectToAbsoluteLocation(eo, loc);
-		
+
 		// Ensure is added to the environment
 		addEnvironmentObject(eo);
 	}

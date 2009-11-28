@@ -76,7 +76,7 @@ public class GreedyBestFirstSearchTest {
 		Assert.assertEquals("7", agent.getInstrumentation().getProperty(
 				"maxQueueSize"));
 	}
-	
+
 	@Test
 	public void testAIMA3eFigure3_23_using_GraphSearch() throws Exception {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();

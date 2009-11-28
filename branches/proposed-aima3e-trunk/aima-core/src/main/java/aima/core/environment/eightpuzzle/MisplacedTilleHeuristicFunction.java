@@ -45,5 +45,4 @@ public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
 		}
 		return numberOfMisplacedTiles;
 	}
-
 }

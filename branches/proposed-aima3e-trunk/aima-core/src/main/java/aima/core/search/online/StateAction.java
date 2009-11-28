@@ -2,6 +2,9 @@ package aima.core.search.online;
 
 import aima.core.agent.Action;
 
+/**
+ * @author Ciaran O'Reilly
+ */
 public class StateAction {
 	private final Object state;
 	private final Action action;

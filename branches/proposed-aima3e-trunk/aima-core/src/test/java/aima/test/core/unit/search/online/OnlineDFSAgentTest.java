@@ -8,7 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
@@ -113,13 +112,13 @@ public class OnlineDFSAgentTest {
 						"Action[name==moveTo, location==1,2]->Action[name==moveTo, location==1,1]->Action[name==moveTo, location==2,1]->Action[name==moveTo, location==1,1]->Action[name==moveTo, location==2,1]->Action[name==moveTo, location==2,2]->Action[name==moveTo, location==2,1]->Action[name==moveTo, location==3,1]->Action[name==moveTo, location==2,1]->Action[name==moveTo, location==3,1]->Action[name==moveTo, location==3,2]->Action[name==moveTo, location==3,1]->Action[name==moveTo, location==3,2]->Action[name==moveTo, location==3,3]->Action[name==NoOp]->",
 						envChanges.toString());
 	}
-	
+
 	private class TestEnvironmentView implements EnvironmentView {
 		public void notify(String msg) {
 			envChanges.append(msg).append("->");
 		}
-		
-		public void agentAdded(Agent agent, Percept perceives) {
+
+		public void agentAdded(Agent agent, EnvironmentState state) {
 			// Nothing.
 		}
 

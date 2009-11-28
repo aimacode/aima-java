@@ -4,7 +4,6 @@ package aima.core.util.datastructure;
  * @author Ravi Mohan
  * 
  */
-
 public class Triplet<X, Y, Z> {
 	private final X x;
 
@@ -35,7 +34,7 @@ public class Triplet<X, Y, Z> {
 		if (o instanceof Triplet) {
 			Triplet<X, Y, Z> other = (Triplet<X, Y, Z>) o;
 			return (x.equals(other.x)) && (y.equals(other.y))
-				&& (z.equals(other.z));
+					&& (z.equals(other.z));
 		}
 		return false;
 	}
@@ -50,5 +49,4 @@ public class Triplet<X, Y, Z> {
 		return "< " + x.toString() + " , " + y.toString() + " , "
 				+ z.toString() + " >";
 	}
-
 }

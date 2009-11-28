@@ -48,7 +48,7 @@ public class Rule {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		return sb.append("if ").append(con).append(" then ").append(action)
 				.append(".").toString();

@@ -8,7 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.Percept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -86,10 +85,10 @@ public class RecursiveBestFirstSearchTest {
 			envChanges.append(msg).append(":");
 		}
 
-		public void agentAdded(Agent agent, Percept perceives) {
+		public void agentAdded(Agent agent, EnvironmentState state) {
 			// Nothing.
 		}
-		
+
 		public void agentActed(Agent agent, Action action,
 				EnvironmentState state) {
 			envChanges.append(action).append(":");

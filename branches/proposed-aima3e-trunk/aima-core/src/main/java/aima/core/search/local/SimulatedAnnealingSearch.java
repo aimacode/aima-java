@@ -14,7 +14,7 @@ import aima.core.search.framework.SearchUtils;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page 126.
  * 
  * <code>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
@@ -56,7 +56,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		this.hf = hf;
 		this.scheduler = new Scheduler();
 	}
-	
+
 	public SimulatedAnnealingSearch(HeuristicFunction hf, Scheduler scheduler) {
 		this.hf = hf;
 		this.scheduler = scheduler;
@@ -71,7 +71,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		Node current = new Node(p.getInitialState());
 		Node next = null;
 		List<Action> ret = new ArrayList<Action>();
-		//  for t = 1 to INFINITY do
+		// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (true) {
 			// temperature <- schedule(t)
@@ -103,14 +103,6 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return ret;
 	}
 
-	// if /\E > 0 then current <- next
-	// else current <- next only with probability e^(/\E/T)
-	private boolean shouldAccept(double temperature, double deltaE) {
-		return (deltaE > 0.0)
-				|| (new Random().nextDouble() <= probabilityOfAcceptance(
-						temperature, deltaE));
-	}
-
 	public double probabilityOfAcceptance(double temperature, double deltaE) {
 		return Math.exp(deltaE / temperature);
 	}
@@ -121,6 +113,18 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
 	public Object getLastSearchState() {
 		return lastState;
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+
+	// if /\E > 0 then current <- next
+	// else current <- next only with probability e^(/\E/T)
+	private boolean shouldAccept(double temperature, double deltaE) {
+		return (deltaE > 0.0)
+				|| (new Random().nextDouble() <= probabilityOfAcceptance(
+						temperature, deltaE));
 	}
 
 	private double getValue(Problem p, Node n) {

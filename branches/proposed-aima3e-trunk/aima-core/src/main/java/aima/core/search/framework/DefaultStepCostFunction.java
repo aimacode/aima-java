@@ -10,7 +10,7 @@ public class DefaultStepCostFunction implements StepCostFunction {
 
 	//
 	// START-StepCostFunction
-	public double cost(Object stateFrom, Action action, Object stateTo) {
+	public double c(Object stateFrom, Action action, Object stateTo) {
 		return 1;
 	}
 

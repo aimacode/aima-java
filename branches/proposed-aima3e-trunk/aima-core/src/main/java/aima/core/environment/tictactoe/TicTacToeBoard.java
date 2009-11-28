@@ -20,19 +20,6 @@ public class TicTacToeBoard {
 
 	String[] bottomRow = { " ", " ", " " };
 
-	private String[] whichRow(int rowNumber) {
-		String[] whichRow = null;
-		if (rowNumber == 0) {
-			whichRow = topRow;
-		} else if (rowNumber == 1) {
-			whichRow = midRow;
-		} else if (rowNumber == 2) {
-			whichRow = bottomRow;
-		}
-		return whichRow;
-
-	}
-
 	public boolean isEmpty(int row, int col) {
 		String[] whichRow = whichRow(row);
 
@@ -208,5 +195,20 @@ public class TicTacToeBoard {
 
 	public boolean isMarked(String string, int i, int j) {
 		return getValue(i, j).equals(string);
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private String[] whichRow(int rowNumber) {
+		String[] whichRow = null;
+		if (rowNumber == 0) {
+			whichRow = topRow;
+		} else if (rowNumber == 1) {
+			whichRow = midRow;
+		} else if (rowNumber == 2) {
+			whichRow = bottomRow;
+		}
+		return whichRow;
 	}
 }

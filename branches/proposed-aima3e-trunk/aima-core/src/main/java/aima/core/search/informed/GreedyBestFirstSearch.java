@@ -4,7 +4,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.QueueSearch;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 92.
  * 
  * Greedy best-first search tries to expand the node that is closest to the goal,
  * on the grounds that this is likely to lead to a solution quickly. Thus, it evaluates

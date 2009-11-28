@@ -8,7 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -80,13 +79,13 @@ public class MapAgentTest {
 						"CurrentLocation=In(E), Goal=In(A):Action[name==NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:Action[name==NoOp]:",
 						envChanges.toString());
 	}
-	
+
 	private class TestEnvironmentView implements EnvironmentView {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
-		
-		public void agentAdded(Agent agent, Percept perceives) {
+
+		public void agentAdded(Agent agent, EnvironmentState state) {
 			// Nothing
 		}
 

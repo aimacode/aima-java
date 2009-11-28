@@ -13,7 +13,6 @@ package aima.core.util.math;
  * decomposition is in the solution of square systems of simultaneous linear
  * equations. This will fail if isNonsingular() returns false.
  */
-
 public class LUDecomposition implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +55,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * @param A
 	 *            Rectangular matrix
 	 */
-
 	public LUDecomposition(Matrix A) {
 
 		// Use a "left-looking", dot-product, Crout/Doolittle algorithm.
@@ -164,7 +162,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @return true if U, and hence A, is nonsingular.
 	 */
-
 	public boolean isNonsingular() {
 		for (int j = 0; j < n; j++) {
 			if (LU[j][j] == 0)
@@ -178,7 +175,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @return L
 	 */
-
 	public Matrix getL() {
 		Matrix X = new Matrix(m, n);
 		double[][] L = X.getArray();
@@ -201,7 +197,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @return U
 	 */
-
 	public Matrix getU() {
 		Matrix X = new Matrix(n, n);
 		double[][] U = X.getArray();
@@ -222,7 +217,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @return piv
 	 */
-
 	public int[] getPivot() {
 		int[] p = new int[m];
 		for (int i = 0; i < m; i++) {
@@ -236,7 +230,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * 
 	 * @return (double) piv
 	 */
-
 	public double[] getDoublePivot() {
 		double[] vals = new double[m];
 		for (int i = 0; i < m; i++) {
@@ -252,7 +245,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * @exception IllegalArgumentException
 	 *                Matrix must be square
 	 */
-
 	public double det() {
 		if (m != n) {
 			throw new IllegalArgumentException("Matrix must be square.");
@@ -275,7 +267,6 @@ public class LUDecomposition implements java.io.Serializable {
 	 * @exception RuntimeException
 	 *                Matrix is singular.
 	 */
-
 	public Matrix solve(Matrix B) {
 		if (B.getRowDimension() != m) {
 			throw new IllegalArgumentException(

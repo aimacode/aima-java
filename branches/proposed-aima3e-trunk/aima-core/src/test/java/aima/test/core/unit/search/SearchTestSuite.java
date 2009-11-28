@@ -24,11 +24,10 @@ import aima.test.core.unit.search.uninformed.UniformCostSearchTest;
 @Suite.SuiteClasses( { AssignmentTest.class, DomainsTest.class,
 		MapCSPTest.class, AStarSearchTest.class,
 		GreedyBestFirstSearchTest.class, RecursiveBestFirstSearchTest.class,
-		SimulatedAnnealingSearchTest.class,  LRTAStarAgentTest.class,
+		SimulatedAnnealingSearchTest.class, LRTAStarAgentTest.class,
 		OnlineDFSAgentTest.class, BidirectionalSearchTest.class,
 		BreadthFirstSearchTest.class, DepthFirstSearchTest.class,
 		DepthLimitedSearchTest.class, IterativeDeepeningSearchTest.class,
-		UniformCostSearchTest.class, 
-		NodeTest.class })
+		UniformCostSearchTest.class, NodeTest.class })
 public class SearchTestSuite {
 }

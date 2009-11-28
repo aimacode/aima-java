@@ -5,6 +5,13 @@ import java.util.Comparator;
 import java.util.SortedSet;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): pg 80.<br>
+ * 
+ * The priority queue, which pops the element of the queue with the highest
+ * priority according to some ordering function.
+ */
+
+/**
  * @author Ciaran O'Reilly
  */
 public class PriorityQueue<E> extends java.util.PriorityQueue<E> implements

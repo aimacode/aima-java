@@ -31,7 +31,7 @@ public class EQUALCondition extends Condition {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		return sb.append(key).append("==").append(value).toString();
 	}

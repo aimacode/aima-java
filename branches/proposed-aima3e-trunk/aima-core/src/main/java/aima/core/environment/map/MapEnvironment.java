@@ -41,6 +41,11 @@ public class MapEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
+	public EnvironmentState getCurrentState() {
+		return state;
+	}
+
+	@Override
 	public EnvironmentState executeAction(Agent agent, Action a) {
 
 		if (!a.isNoOp()) {
@@ -50,7 +55,8 @@ public class MapEnvironment extends AbstractEnvironment {
 			Double distance = aMap.getDistance(currLoc, act.getToLocation());
 			if (distance != null) {
 				double currTD = getAgentTravelDistance(agent);
-				state.setAgentLocationAndTravelDistance(agent, act.getToLocation(), currTD+distance);
+				state.setAgentLocationAndTravelDistance(agent, act
+						.getToLocation(), currTD + distance);
 			}
 		}
 
@@ -59,7 +65,8 @@ public class MapEnvironment extends AbstractEnvironment {
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
-		return new DynamicPercept(DynAttributeNames.PERCEPT_IN, getAgentLocation(anAgent));
+		return new DynamicPercept(DynAttributeNames.PERCEPT_IN,
+				getAgentLocation(anAgent));
 	}
 
 	public Map getMap() {

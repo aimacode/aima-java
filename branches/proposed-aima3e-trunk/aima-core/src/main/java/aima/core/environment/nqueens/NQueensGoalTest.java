@@ -9,7 +9,6 @@ import aima.core.util.datastructure.XYLocation;
  * @author Ravi Mohan
  * 
  */
-
 public class NQueensGoalTest implements GoalTest {
 	NQueensBoard board;
 

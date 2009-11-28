@@ -144,5 +144,4 @@ public class ExtendableMap implements Map {
 	public Point2D getPosition(String loc) {
 		return locationPositions.get(loc);
 	}
-
 }

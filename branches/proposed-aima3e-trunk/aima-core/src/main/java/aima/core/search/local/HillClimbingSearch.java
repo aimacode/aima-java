@@ -11,7 +11,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page 122.
  * 
  * <code>
  * function HILL-CLIMBING(problem) returns a state that is a local maximum
@@ -39,7 +39,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	};
 
 	private HeuristicFunction hf = null;
-	
+
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 
 	private Object lastState = null;
@@ -63,8 +63,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 			neighbor = getHighestValuedNodeFrom(children, p);
 
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
-			if ((neighbor == null)
-					|| (getValue(neighbor) <= getValue(current))) {
+			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
 				if (p.isGoalState(current.getState())) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
@@ -101,6 +100,6 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	private double getValue(Node n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
-		return -1 * hf.h(n.getState()); 
+		return -1 * hf.h(n.getState());
 	}
 }

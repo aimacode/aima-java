@@ -1,6 +1,7 @@
 package aima.core.search.framework;
+
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 78.
  * 
  */
 

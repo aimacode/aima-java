@@ -2,6 +2,10 @@ package aima.core.environment.nqueens;
 
 import aima.core.agent.impl.DynamicAction;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class PlaceQueenAction extends DynamicAction {
 	public static final String ATTRIBUTE_QUEEN_X = "x";
 	public static final String ATTRIBUTE_QUEEN_Y = "y";

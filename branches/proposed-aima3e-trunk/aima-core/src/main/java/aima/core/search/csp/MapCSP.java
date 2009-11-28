@@ -8,32 +8,26 @@ import java.util.List;
  * @author Ravi Mohan
  * 
  */
-
 public class MapCSP extends CSP {
-	public static String WA = "WA";
+	public static final String WA = "WA";
 
-	public static String NT = "NT";
+	public static final String NT = "NT";
 
-	public static String SA = "SA";
+	public static final String SA = "SA";
 
-	public static String Q = "Q";
+	public static final String Q = "Q";
 
-	public static String NSW = "NSW";
+	public static final String NSW = "NSW";
 
-	public static String V = "V";
+	public static final String V = "V";
 
-	public static String T = "T";
+	public static final String T = "T";
 
-	public static String RED = "RED";
+	public static final String RED = "RED";
 
-	public static String BLUE = "BLUE";
+	public static final String BLUE = "BLUE";
 
-	public static String GREEN = "GREEN";
-
-	private MapCSP(List<String> variables, Constraint constraints) {
-		super(variables, constraints);
-
-	}
+	public static final String GREEN = "GREEN";
 
 	public static CSP getMap() {
 		List<String> variables = new ArrayList<String>();
@@ -122,5 +116,12 @@ public class MapCSP extends CSP {
 		l.add(four);
 		l.add(five);
 		neighbors.put(whose, l);
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private MapCSP(List<String> variables, Constraint constraints) {
+		super(variables, constraints);
 	}
 }

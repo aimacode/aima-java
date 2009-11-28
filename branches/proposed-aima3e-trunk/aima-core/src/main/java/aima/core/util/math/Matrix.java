@@ -58,7 +58,6 @@ import java.util.Locale;
  *         Technology.
  * @version 5 August 1998
  */
-
 public class Matrix implements Cloneable, java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -1282,5 +1281,4 @@ public class Matrix implements Cloneable, java.io.Serializable {
 			throw new IllegalArgumentException("Matrix dimensions must agree.");
 		}
 	}
-
 }

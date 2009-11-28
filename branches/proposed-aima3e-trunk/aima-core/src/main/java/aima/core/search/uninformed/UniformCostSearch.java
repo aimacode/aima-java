@@ -8,7 +8,7 @@ import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.QueueSearch;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.14, page ??. 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.14, page 84. 
  * <code>
  * function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
  *   node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
@@ -40,19 +40,20 @@ import aima.core.search.framework.QueueSearch;
 public class UniformCostSearch extends PrioritySearch {
 	private static final Comparator<Node> _g = new Comparator<Node>() {
 		public int compare(Node node1, Node node2) {
-			return (new Double(node1.getPathCost()).compareTo(new Double(
-					node2.getPathCost())));
+			return (new Double(node1.getPathCost()).compareTo(new Double(node2
+					.getPathCost())));
 		}
 	};
 
 	public UniformCostSearch() {
 		this(new GraphSearch());
 	}
-	
+
 	public UniformCostSearch(QueueSearch search) {
 		this.search = search;
 		if (search instanceof GraphSearch) {
-			((GraphSearch)search).setReplaceFrontierNodeAtStateCostFunction(_g);
+			((GraphSearch) search)
+					.setReplaceFrontierNodeAtStateCostFunction(_g);
 		}
 	}
 

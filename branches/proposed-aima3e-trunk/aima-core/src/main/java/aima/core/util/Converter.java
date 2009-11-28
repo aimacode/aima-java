@@ -17,10 +17,7 @@ public class Converter<T> {
 	}
 
 	public Set<T> listToSet(List<T> l) {
-
 		Set<T> retVal = new HashSet<T>(l);
 		return retVal;
-
 	}
-
 }

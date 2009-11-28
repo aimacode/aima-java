@@ -13,7 +13,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page 88.
  * 
  * <code>
  * function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff

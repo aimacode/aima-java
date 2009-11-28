@@ -41,12 +41,9 @@ public class NodeExpander {
 			Object successorState = resultFunction.result(node.getState(),
 					action);
 
-			Node childNode = new Node(node, action, successorState);
-			double stepCost = stepCostFunction.cost(node.getState(), action,
+			double stepCost = stepCostFunction.c(node.getState(), action,
 					successorState);
-			childNode.setStepCost(stepCost);
-			childNode.addToPathCost(stepCost);
-			childNodes.add(childNode);
+			childNodes.add(new Node(successorState, node, action, stepCost));
 		}
 		metrics.set(METRIC_NODES_EXPANDED, metrics
 				.getInt(METRIC_NODES_EXPANDED) + 1);

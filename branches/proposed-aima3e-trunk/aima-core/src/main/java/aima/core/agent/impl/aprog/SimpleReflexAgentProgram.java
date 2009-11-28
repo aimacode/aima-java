@@ -11,14 +11,14 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.10, page 47.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.10, page 49.
  * <code>
  * function SIMPLE-RELEX-AGENT(percept) returns an action
- *   static: rules, a set of condition-action rules
+ *   persistent: rules, a set of condition-action rules
  *   
  *   state  <- INTERPRET-INPUT(percept);
  *   rule   <- RULE-MATCH(state, rules);
- *   action <- RULE-ACTION(rule);
+ *   action <- rule.ACTION;
  *   return action
  * </code>
  * Figure 2.10 A simple reflex agent. It acts according to a rule whose condition matches
@@ -29,10 +29,9 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * @author Ciaran O'Reilly
  * 
  */
-
 public class SimpleReflexAgentProgram implements AgentProgram {
 	//
-	// static: rules, a set of condition-action rules
+	// persistent: rules, a set of condition-action rules
 	private Set<Rule> rules;
 
 	public SimpleReflexAgentProgram(Set<Rule> aRuleSet) {
@@ -50,7 +49,7 @@ public class SimpleReflexAgentProgram implements AgentProgram {
 		ObjectWithDynamicAttributes state = interpretInput(percept);
 		// rule <- RULE-MATCH(state, rules);
 		Rule rule = ruleMatch(state, rules);
-		// action <- RULE-ACTION(rule);
+		// action <- rule.ACTION;
 		// return action
 		return ruleAction(rule);
 	}

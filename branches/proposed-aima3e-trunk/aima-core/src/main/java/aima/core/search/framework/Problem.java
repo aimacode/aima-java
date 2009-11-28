@@ -1,7 +1,7 @@
 package aima.core.search.framework;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 66.
  * 
  * A problem can be defined formally by five components: <br>
  * <ul>
@@ -39,31 +39,17 @@ public class Problem {
 
 	public Problem(Object initialState, ActionsFunction actionsFunction,
 			ResultFunction resultFunction, GoalTest goalTest) {
-		this.initialState = initialState;
-		this.actionsFunction = actionsFunction;
-		this.resultFunction = resultFunction;
-		this.goalTest = goalTest;
-		this.stepCostFunction = new DefaultStepCostFunction();
+		this(initialState, actionsFunction, resultFunction, goalTest,
+				new DefaultStepCostFunction());
 	}
 
 	public Problem(Object initialState, ActionsFunction actionsFunction,
 			ResultFunction resultFunction, GoalTest goalTest,
 			StepCostFunction stepCostFunction) {
-		this(initialState, actionsFunction, resultFunction, goalTest);
-		this.stepCostFunction = stepCostFunction;
-	}
-
-	public Problem(Object initialState, ActionsFunction actionsFunction,
-			GoalTest goalTest) {
 		this.initialState = initialState;
 		this.actionsFunction = actionsFunction;
+		this.resultFunction = resultFunction;
 		this.goalTest = goalTest;
-		this.stepCostFunction = new DefaultStepCostFunction();
-	}
-
-	public Problem(Object initialState, ActionsFunction actionsFunction,
-			GoalTest goalTest, StepCostFunction stepCostFunction) {
-		this(initialState, actionsFunction, goalTest);
 		this.stepCostFunction = stepCostFunction;
 	}
 

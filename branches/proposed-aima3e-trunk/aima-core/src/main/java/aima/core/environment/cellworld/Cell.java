@@ -4,7 +4,6 @@ package aima.core.environment.cellworld;
  * @author Ravi Mohan
  * 
  */
-
 public class Cell {
 	private int x_co_ord, y_co_ord;
 
@@ -35,5 +34,4 @@ public class Cell {
 	public CellWorldPosition position() {
 		return new CellWorldPosition(getX(), getY());
 	}
-
 }

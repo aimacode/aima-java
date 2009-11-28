@@ -4,7 +4,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.QueueSearch;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 93.
  * 
  * The most widely known form of best-first search is called A* Search (pronounced
  * "A-star search"). It evaluates nodes by combining g(n), the cost to reach the node,

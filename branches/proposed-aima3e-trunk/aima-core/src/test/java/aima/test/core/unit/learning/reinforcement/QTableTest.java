@@ -22,8 +22,9 @@ public class QTableTest {
 		// simple qlearning example from
 		//http://people.revoledu.com/kardi/tutorial/ReinforcementLearning/index.
 		// html
-		//List<String> states = Arrays.asList(new String[] { "A", "B", "C", "D",
-		//		"E", "F" });
+		// List<String> states = Arrays.asList(new String[] { "A", "B", "C",
+		// "D",
+		// "E", "F" });
 		List<String> actions = Arrays.asList(new String[] { "toA", "toB",
 				"toC", "toD", "toE", "toF" });
 		qt = new QTable<String, String>(actions);

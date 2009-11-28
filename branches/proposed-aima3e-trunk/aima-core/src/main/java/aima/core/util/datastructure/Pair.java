@@ -4,7 +4,6 @@ package aima.core.util.datastructure;
  * @author Ravi Mohan
  * 
  */
-
 public class Pair<X, Y> {
 	private final X a;
 
@@ -42,5 +41,4 @@ public class Pair<X, Y> {
 		return "< " + getFirst().toString() + " , " + getSecond().toString()
 				+ " > ";
 	}
-
 }

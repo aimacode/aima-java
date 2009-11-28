@@ -17,7 +17,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class CellWorld implements MDPSource<CellWorldPosition, String> {
 	public static final String LEFT = "left";
 
@@ -340,5 +339,4 @@ public class CellWorld implements MDPSource<CellWorldPosition, String> {
 
 		return Arrays.asList(new String[] { LEFT, RIGHT, UP, DOWN });
 	}
-
 }

@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.agent.Model;
 import aima.core.agent.Percept;
-import aima.core.agent.impl.DynamicModel;
+import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
+import aima.core.agent.impl.DynamicState;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
@@ -20,7 +20,7 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
 public class MapAgent extends SimpleProblemSolvingAgent {
 	private MapEnvironment mapEnvironment = null;
 
-	private DynamicModel model = new DynamicModel();
+	private DynamicState state = new DynamicState();
 
 	private Search search = null;
 
@@ -53,13 +53,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	// PROTECTED METHODS
 	//
 	@Override
-	protected Model updateState(Percept p) {
+	protected State updateState(Percept p) {
 		DynamicPercept dp = (DynamicPercept) p;
 
-		model.setAttribute(DynAttributeNames.AGENT_LOCATION, dp
+		state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp
 				.getAttribute(DynAttributeNames.PERCEPT_IN));
 
-		return model;
+		return state;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 			goalTestPos++;
 		}
 		mapEnvironment.notifyViews("CurrentLocation=In("
-				+ model.getAttribute(DynAttributeNames.AGENT_LOCATION)
+				+ state.getAttribute(DynAttributeNames.AGENT_LOCATION)
 				+ "), Goal=In(" + goal + ")");
 
 		return goal;
@@ -81,9 +81,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	@Override
 	protected Problem formulateProblem(Object goal) {
 		return new BidirectionalMapProblem(mapEnvironment.getMap(),
-					(String) model
-							.getAttribute(DynAttributeNames.AGENT_LOCATION),
-					(String) goal);
+				(String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
+				(String) goal);
 	}
 
 	@Override

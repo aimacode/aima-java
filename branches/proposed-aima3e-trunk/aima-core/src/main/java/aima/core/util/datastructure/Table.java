@@ -80,5 +80,4 @@ public class Table<RowHeaderType, ColumnHeaderType, ValueType> {
 		}
 
 	}
-
 }

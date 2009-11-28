@@ -1,7 +1,7 @@
 package aima.core.util.datastructure;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): pg ??.<br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): pg 79.<br>
  * The operations on a queue are as follows:<br>
  * <ul>
  * <li>EMPTY?(queue) returns true only if there are no elements in the queue</li>

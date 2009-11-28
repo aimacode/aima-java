@@ -12,7 +12,7 @@ import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.PerceptToStateFunction;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page ???.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page 150.
  * <code>
  * function ONLINE-DFS-AGENT(s') returns an action
  *   inputs: s', a percept that identifies the current state
@@ -56,7 +56,8 @@ public class OnlineDFSAgent extends AbstractAgent {
 	private Object s = null;
 	private Action a = null;
 
-	public OnlineDFSAgent(OnlineSearchProblem problem, PerceptToStateFunction ptsFunction) {
+	public OnlineDFSAgent(OnlineSearchProblem problem,
+			PerceptToStateFunction ptsFunction) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 	}
@@ -87,9 +88,10 @@ public class OnlineDFSAgent extends AbstractAgent {
 		if (goalTest(sPrime)) {
 			a = NoOpAction.NO_OP;
 		} else {
-			// if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
+			// if s' is a new state (not in untried) then untried[s'] <-
+			// ACTIONS(s')
 			if (!untried.containsKey(sPrime)) {
-				untried.put(sPrime, actions(sPrime)); 
+				untried.put(sPrime, actions(sPrime));
 			}
 
 			// if s is not null then do
@@ -102,12 +104,12 @@ public class OnlineDFSAgent extends AbstractAgent {
 				if (!(sPrime.equals(result.get(sa)))) {
 					// result[s, a] <- s'
 					result.put(sa, sPrime);
-	
+
 					// Ensure the unbacktracked always has a list for s'
 					if (!unbacktracked.containsKey(sPrime)) {
 						unbacktracked.put(sPrime, new ArrayList<Object>());
 					}
-	
+
 					// add s to the front of the unbacktracked[s']
 					unbacktracked.get(sPrime).add(0, s);
 				}
@@ -165,6 +167,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	}
 
 	private List<Action> actions(Object state) {
-		return new ArrayList<Action>(problem.getActionsFunction().actions(state));
+		return new ArrayList<Action>(problem.getActionsFunction()
+				.actions(state));
 	}
 }

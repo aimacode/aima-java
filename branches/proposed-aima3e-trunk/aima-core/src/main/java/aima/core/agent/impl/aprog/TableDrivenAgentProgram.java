@@ -11,20 +11,18 @@ import aima.core.agent.impl.NoOpAction;
 import aima.core.util.datastructure.Table;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.7, page 45.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.7, page 47.
  * <code>
  * function TABLE-DRIVEN-AGENT(percept) returns an action
- *   static: percepts, a sequence, initially empty
- *           table, a table of actions, indexed by percept sequences, initially fully specified
+ *   persistent: percepts, a sequence, initially empty
+ *               table, a table of actions, indexed by percept sequences, initially fully specified
  *           
  *   append percept to end of percepts
  *   action <- LOOKUP(percepts, table)
- *   
  *   return action
  * </code>
  * Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new percept and 
- * returns an action each time. It keeps track of the percept sequence using its own private data
- * structure.
+ * returns an action each time. It retains the complete percept sequence in memory.
  */
 
 /**
@@ -38,7 +36,7 @@ public class TableDrivenAgentProgram implements AgentProgram {
 
 	private static final String ACTION = "action";
 
-	// static: percepts, a sequence, initially empty
+	// persistent: percepts, a sequence, initially empty
 	// table, a table of actions, indexed by percept sequences, initially fully
 	// specified
 	public TableDrivenAgentProgram(

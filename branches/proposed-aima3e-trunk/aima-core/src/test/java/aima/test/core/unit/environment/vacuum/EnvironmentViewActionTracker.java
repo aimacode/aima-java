@@ -4,7 +4,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.Percept;
 
 public class EnvironmentViewActionTracker implements EnvironmentView {
 	private StringBuilder actions = null;
@@ -18,8 +17,8 @@ public class EnvironmentViewActionTracker implements EnvironmentView {
 	public void notify(String msg) {
 		// Do nothing by default.
 	}
-	
-	public void agentAdded(Agent agent, Percept perceives) {
+
+	public void agentAdded(Agent agent, EnvironmentState state) {
 		// Do nothing by default.
 	}
 

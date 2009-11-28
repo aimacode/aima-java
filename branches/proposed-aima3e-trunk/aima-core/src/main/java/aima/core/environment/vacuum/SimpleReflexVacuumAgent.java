@@ -27,8 +27,8 @@ public class SimpleReflexVacuumAgent extends AbstractAgent {
 		Set<Rule> rules = new LinkedHashSet<Rule>();
 
 		// Rules based on REFLEX-VACUUM-AGENT:
-		// Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.8,
-		// page 46.
+		// Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.8,
+		// page 48.
 
 		rules.add(new Rule(new EQUALCondition(VacuumEnvPercept.ATTRIBUTE_STATE,
 				VacuumEnvironment.LocationState.Dirty),

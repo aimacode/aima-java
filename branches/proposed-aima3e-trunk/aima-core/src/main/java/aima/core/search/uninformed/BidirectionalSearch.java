@@ -17,7 +17,7 @@ import aima.core.search.framework.SearchUtils;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 90.
  * Bidirectional search.
  * 
  * Note: Based on the description of this algorithm i.e. 'Bidirectional search
@@ -289,8 +289,8 @@ public class BidirectionalSearch implements Search {
 				Object isNext = op.getResultFunction().result(currentState, a);
 				if (nextState.equals(isNext)) {
 					found = true;
-					pc += op.getStepCostFunction().cost(currentState, a,
-							nextState);
+					pc += op.getStepCostFunction()
+							.c(currentState, a, nextState);
 					actions.add(a);
 					break;
 				}

@@ -9,7 +9,7 @@ import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.QueueSearch;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 92.
  * 
  * Best-first search is an instance of the general TREE-SEARCH or GRAPH-SEARCH algorithm 
  * in which a node is selected for expansion based on an evaluation function, f(n). The 
@@ -38,18 +38,19 @@ public class BestFirstSearch extends PrioritySearch {
 	@Override
 	protected Comparator<Node> getComparator() {
 		Comparator<Node> f = new Comparator<Node>() {
-			public int compare(Node n1, Node n2) {				
+			public int compare(Node n1, Node n2) {
 				Double f1 = evaluationFunction.f(n1);
 				Double f2 = evaluationFunction.f(n2);
 
 				return f1.compareTo(f2);
 			}
 		};
-		
+
 		if (this.search instanceof GraphSearch) {
-			((GraphSearch)this.search).setReplaceFrontierNodeAtStateCostFunction(f);
+			((GraphSearch) this.search)
+					.setReplaceFrontierNodeAtStateCostFunction(f);
 		}
-		
+
 		return f;
 	}
 }

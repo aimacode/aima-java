@@ -12,7 +12,7 @@ import aima.core.agent.Action;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page ??. 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77. 
  * <code>
  * function GRAPH-SEARCH(problem) returns a solution, or failure
  *   initialize the frontier using the initial state of problem
@@ -38,7 +38,7 @@ public class GraphSearch extends QueueSearch {
 	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
 	private Comparator<Node> replaceFrontierNodeAtStateCostFunction = null;
 	private List<Node> addToFrontier = new ArrayList<Node>();
-	
+
 	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
 		return replaceFrontierNodeAtStateCostFunction;
 	}
@@ -64,7 +64,7 @@ public class GraphSearch extends QueueSearch {
 		frontierState.remove(toRemove.getState());
 		return toRemove;
 	}
-	
+
 	@Override
 	public boolean removeNodeFromFrontier(Node toRemove) {
 		boolean removed = super.removeNodeFromFrontier(toRemove);
@@ -88,9 +88,10 @@ public class GraphSearch extends QueueSearch {
 			// only if not in the frontier or explored set
 			if (null == frontierNode && !explored.contains(cfn.getState())) {
 				yesAddToFrontier = true;
-			} else if (null != frontierNode &&
-					null != replaceFrontierNodeAtStateCostFunction &&
-					replaceFrontierNodeAtStateCostFunction.compare(cfn, frontierNode) < 0) {
+			} else if (null != frontierNode
+					&& null != replaceFrontierNodeAtStateCostFunction
+					&& replaceFrontierNodeAtStateCostFunction.compare(cfn,
+							frontierNode) < 0) {
 				// child.STATE is in frontier with higher cost
 				// replace that frontier node with child
 				yesAddToFrontier = true;

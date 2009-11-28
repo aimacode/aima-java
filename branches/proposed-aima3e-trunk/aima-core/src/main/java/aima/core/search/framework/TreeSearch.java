@@ -3,7 +3,7 @@ package aima.core.search.framework;
 import java.util.List;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
  * <code>
  * function TREE-SEARCH(problem) returns a solution, or failure
  *   initialize the frontier using the initial state of the problem

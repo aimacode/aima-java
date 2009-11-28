@@ -11,9 +11,9 @@ import aima.core.search.framework.Search;
 import aima.core.util.datastructure.LIFOQueue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 85.
  * 
- * Depth-first search.
+ * Depth-first search always expands the deepest node in the current frontier of the search tree.
  * 
  * Note: Supports both Tree and Graph based versions by assigning an instance
  * of TreeSearch or GraphSearch to its constructor.

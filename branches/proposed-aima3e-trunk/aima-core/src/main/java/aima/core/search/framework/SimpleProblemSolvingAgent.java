@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
-import aima.core.agent.Model;
 import aima.core.agent.Percept;
+import aima.core.agent.State;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.
  * <code>
  * function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
  *   persistent: seq, an action sequence, initially empty
@@ -106,7 +106,7 @@ public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 	//
 	// PROTECTED METHODS
 	//
-	protected abstract Model updateState(Percept p);
+	protected abstract State updateState(Percept p);
 
 	protected abstract Object formulateGoal();
 

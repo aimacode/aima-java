@@ -7,7 +7,6 @@ import java.util.Map;
  * @author Ravi Mohan
  * 
  */
-
 public class MapColoringConstraint implements Constraint {
 	private Map neighbors;
 
@@ -31,5 +30,4 @@ public class MapColoringConstraint implements Constraint {
 		}
 		return true;
 	}
-
 }

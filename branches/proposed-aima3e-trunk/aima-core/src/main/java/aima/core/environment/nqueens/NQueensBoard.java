@@ -5,6 +5,10 @@ import java.util.List;
 
 import aima.core.util.datastructure.XYLocation;
 
+/**
+ * @author Ravi Mohan
+ * 
+ */
 public class NQueensBoard {
 
 	/**
@@ -266,5 +270,4 @@ public class NQueensBoard {
 		}
 		return buf.toString();
 	}
-
 }

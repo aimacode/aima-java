@@ -1,7 +1,7 @@
 package aima.core.agent;
 
 /**
- * Allows external applications/logic to view the interaction of Agents with an Environment. 
+ * Allows external applications/logic to view the interaction of Agent(s) with an Environment. 
  */
 
 /**
@@ -10,7 +10,8 @@ package aima.core.agent;
  */
 public interface EnvironmentView {
 	/**
-	 * A simple notification message from the Environment, from one of its objects.
+	 * A simple notification message from the Environment, from one of its
+	 * objects.
 	 * 
 	 * @param msg
 	 *            the message received.
@@ -23,10 +24,11 @@ public interface EnvironmentView {
 	 * 
 	 * @param agent
 	 *            the Agent just added to the Environment.
-	 * @param perceives
-	 *            what the Agent initially perceives.
+	 * @param resultingState
+	 *            the EnvironmentState that resulted from the Agent being added
+	 *            to the Environment.
 	 */
-	void agentAdded(Agent agent, Percept perceives);
+	void agentAdded(Agent agent, EnvironmentState resultingState);
 
 	/**
 	 * Indicates the Environment has changed as a result of an Agent's action.

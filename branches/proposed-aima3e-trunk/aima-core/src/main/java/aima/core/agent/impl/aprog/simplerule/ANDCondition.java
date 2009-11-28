@@ -31,7 +31,7 @@ public class ANDCondition extends Condition {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		return sb.append("[").append(left).append(" && ").append(right).append(
 				"]").toString();

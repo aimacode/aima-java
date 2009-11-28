@@ -6,7 +6,7 @@ import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.StepCostFunction;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 147.
  * 
  * An online search problem must be solved by an agent executing actions, 
  * rather than by pure computation. We assume a deterministic and fully
@@ -28,15 +28,16 @@ public class OnlineSearchProblem {
 	protected ActionsFunction actionsFunction;
 
 	protected StepCostFunction stepCostFunction;
-	
+
 	protected GoalTest goalTest;
 
-	public OnlineSearchProblem(ActionsFunction actionsFunction, GoalTest goalTest) {
+	public OnlineSearchProblem(ActionsFunction actionsFunction,
+			GoalTest goalTest) {
 		this(actionsFunction, goalTest, new DefaultStepCostFunction());
 	}
 
-	public OnlineSearchProblem(ActionsFunction actionsFunction, GoalTest goalTest,
-			StepCostFunction stepCostFunction) {
+	public OnlineSearchProblem(ActionsFunction actionsFunction,
+			GoalTest goalTest, StepCostFunction stepCostFunction) {
 		this.actionsFunction = actionsFunction;
 		this.goalTest = goalTest;
 		this.stepCostFunction = stepCostFunction;

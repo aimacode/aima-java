@@ -2,6 +2,10 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.impl.DynamicPercept;
 
+/**
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ */
 public class VacuumEnvPercept extends DynamicPercept {
 	public static final String ATTRIBUTE_AGENT_LOCATION = "agentLocation";
 	public static final String ATTRIBUTE_STATE = "state";

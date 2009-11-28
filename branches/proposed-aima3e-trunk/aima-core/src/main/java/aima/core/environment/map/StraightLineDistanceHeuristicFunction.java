@@ -2,16 +2,17 @@ package aima.core.environment.map;
 
 import aima.core.util.datastructure.Point2D;
 
-/** 
+/**
  * @author R. Lunde
  */
-public class StraightLineDistanceHeuristicFunction extends AdaptableHeuristicFunction {
-	
+public class StraightLineDistanceHeuristicFunction extends
+		AdaptableHeuristicFunction {
+
 	public StraightLineDistanceHeuristicFunction(Object goal, Map map) {
 		this.goal = goal;
-		this.map  = map;
+		this.map = map;
 	}
-	
+
 	public double h(Object state) {
 		double result = 0.0;
 		Point2D pt1 = map.getPosition((String) state);

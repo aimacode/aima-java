@@ -11,11 +11,11 @@ import aima.test.core.unit.probability.reasoning.ParticleFilterTest;
 import aima.test.core.unit.probability.reasoning.RandomVariableTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { PolicyIterationTest.class,
-		ValueIterationTest.class, HMMAgentTest.class, HMMTest.class,
-		ParticleFilterTest.class, RandomVariableTest.class,
-		BayesNetNodeTest.class, BayesNetTest.class, EnumerationAskTest.class,
-		EnumerationJointAskTest.class, ProbabilitySamplingTest.class })
+@Suite.SuiteClasses( { PolicyIterationTest.class, ValueIterationTest.class,
+		HMMAgentTest.class, HMMTest.class, ParticleFilterTest.class,
+		RandomVariableTest.class, BayesNetNodeTest.class, BayesNetTest.class,
+		EnumerationAskTest.class, EnumerationJointAskTest.class,
+		ProbabilitySamplingTest.class })
 public class ProbabilityTestSuite {
 
 }

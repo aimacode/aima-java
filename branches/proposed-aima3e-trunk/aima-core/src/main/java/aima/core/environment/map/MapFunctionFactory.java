@@ -12,11 +12,6 @@ import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.ResultFunction;
 
 /**
- * Implementation of SuccessorFunction interface that derives successors based on the
- * locations linked/traversible to the current location.
- */
-
-/**
  * @author Ciaran O'Reilly
  * 
  */

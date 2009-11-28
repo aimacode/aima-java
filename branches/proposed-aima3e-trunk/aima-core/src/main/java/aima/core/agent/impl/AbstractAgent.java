@@ -6,12 +6,6 @@ import aima.core.agent.AgentProgram;
 import aima.core.agent.Percept;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 2.1, page 33.
- * 
- * Figure 2.1 Agents interact with environments through sensors and actuators.
- */
-
-/**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

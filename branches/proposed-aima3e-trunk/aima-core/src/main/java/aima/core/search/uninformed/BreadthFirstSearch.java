@@ -12,7 +12,7 @@ import aima.core.search.framework.Search;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page 82.
  * <code>
  * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
  *   node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
@@ -62,5 +62,4 @@ public class BreadthFirstSearch implements Search {
 	public Metrics getMetrics() {
 		return search.getMetrics();
 	}
-
 }

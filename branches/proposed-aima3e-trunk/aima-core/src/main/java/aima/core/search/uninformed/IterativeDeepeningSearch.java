@@ -10,7 +10,7 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page 89.
  * 
  * <code>
  * function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
@@ -26,13 +26,13 @@ import aima.core.search.framework.Search;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
 public class IterativeDeepeningSearch extends NodeExpander implements Search {
-	private static String PATH_COST = "pathCost";
+	public static final String PATH_COST = "pathCost";
 
-	private final int infinity = Integer.MAX_VALUE; // Not infinity, but will do
-	// :-)
+	// Not infinity, but will do, :-)
+	private final int infinity = Integer.MAX_VALUE;
 
 	private final Metrics iterationMetrics;
 

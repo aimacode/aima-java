@@ -8,7 +8,6 @@ import java.util.Set;
  * @author Ravi Mohan
  * 
  */
-
 public class GameState {
 	private Hashtable<String, Object> state;
 

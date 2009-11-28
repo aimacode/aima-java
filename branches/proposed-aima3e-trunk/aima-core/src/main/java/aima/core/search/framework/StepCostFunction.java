@@ -3,7 +3,7 @@ package aima.core.search.framework;
 import aima.core.agent.Action;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 68.
  * 
  * The <b>step cost</b> of taking action a in state s to reach state s' 
  * is denoted by c(s, a, s').
@@ -15,14 +15,16 @@ import aima.core.agent.Action;
  */
 public interface StepCostFunction {
 	/**
-	 * Calculate the step cost of taking action a in state s1 to reach state s2.
+	 * Calculate the step cost of taking action a in state s to reach state s'.
 	 * 
-	 * @param s1
+	 * @param s
 	 *            the state from which action a is to be performed.
 	 * @param a
+	 *            the action to be taken.
 	 * 
-	 * @param s2
+	 * @param sPrime
+	 *            the state reached by taking the action.
 	 * @return
 	 */
-	double cost(Object s1, Action a, Object s2);
+	double c(Object s, Action a, Object sPrime);
 }

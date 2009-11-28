@@ -112,19 +112,6 @@ public class TicTacToe extends Game {
 		return utility;
 	}
 
-	private int computeUtility(TicTacToeBoard aBoard, String playerToMove) {
-		int retVal = 0;
-		if (aBoard.lineThroughBoard()) {
-			if (playerToMove.equals("X")) {
-				retVal = -1;
-			} else {
-				retVal = 1;
-			}
-
-		}
-		return retVal;
-	}
-
 	@Override
 	public boolean terminalTest(GameState state) {
 		TicTacToeBoard board = (TicTacToeBoard) state.get("board");
@@ -177,5 +164,21 @@ public class TicTacToe extends Game {
 					Integer.MAX_VALUE);
 			return minValue(state, initial);
 		}
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private int computeUtility(TicTacToeBoard aBoard, String playerToMove) {
+		int retVal = 0;
+		if (aBoard.lineThroughBoard()) {
+			if (playerToMove.equals("X")) {
+				retVal = -1;
+			} else {
+				retVal = 1;
+			}
+
+		}
+		return retVal;
 	}
 }

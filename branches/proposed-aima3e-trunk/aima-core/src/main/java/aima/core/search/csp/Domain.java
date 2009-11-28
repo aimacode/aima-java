@@ -9,7 +9,6 @@ import java.util.List;
  * @author Ravi Mohan
  * 
  */
-
 public class Domain {
 	private Hashtable<String, List<Object>> variablesToValues;
 
@@ -50,5 +49,4 @@ public class Domain {
 	public String toString() {
 		return variablesToValues.toString();
 	}
-
 }

@@ -1,6 +1,6 @@
 package aima.core.search.online;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Set;
 
 import aima.core.agent.Action;
@@ -11,7 +11,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
 
 /**
- * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page ??.<br>
+ * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page 152.<br>
  * <code>
  * function LRTA*-AGENT(s') returns an action
  *   inputs: s', a percept that identifies the current state
@@ -51,9 +51,9 @@ public class LRTAStarAgent extends AbstractAgent {
 	private PerceptToStateFunction ptsFunction;
 	private HeuristicFunction hf;
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final Hashtable<StateAction, Object> result = new Hashtable<StateAction, Object>();
+	private final HashMap<StateAction, Object> result = new HashMap<StateAction, Object>();
 	// H, a table of cost estimates indexed by state, initially empty
-	private final Hashtable<Object, Double> H = new Hashtable<Object, Double>();
+	private final HashMap<Object, Double> H = new HashMap<Object, Double>();
 	// s, a, the previous state and action, initially null
 	private Object s = null;
 	private Action a = null;
@@ -112,7 +112,8 @@ public class LRTAStarAgent extends AbstractAgent {
 				// b (element of) ACTIONS(s)
 				double min = Double.MAX_VALUE;
 				for (Action b : actions(s)) {
-					double cost = lrtaCost(s, b, result.get(new StateAction(s, b)));
+					double cost = lrtaCost(s, b, result.get(new StateAction(s,
+							b)));
 					if (cost < min) {
 						min = cost;
 					}
@@ -125,7 +126,8 @@ public class LRTAStarAgent extends AbstractAgent {
 			// Just in case no actions
 			a = NoOpAction.NO_OP;
 			for (Action b : actions(sPrime)) {
-				double cost = lrtaCost(sPrime, b, result.get(new StateAction(sPrime, b)));
+				double cost = lrtaCost(sPrime, b, result.get(new StateAction(
+						sPrime, b)));
 				if (cost < min) {
 					min = cost;
 					a = b;
@@ -167,7 +169,7 @@ public class LRTAStarAgent extends AbstractAgent {
 			return getHeuristicFunction().h(s);
 		}
 		// else return c(s, a, s') + H[s']
-		return getProblem().getStepCostFunction().cost(s, action, sPrime)
+		return getProblem().getStepCostFunction().c(s, action, sPrime)
 				+ H.get(sPrime);
 	}
 

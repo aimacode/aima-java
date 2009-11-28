@@ -13,11 +13,26 @@ public abstract class Game {
 
 	protected GameState presentState = new GameState();
 
+	protected int level;
+
+	public Game() {
+	}
+
+	public abstract ArrayList getSuccessorStates(GameState state);
+
+	public abstract GameState makeMove(GameState state, Object o);
+
+	public abstract int getMiniMaxValue(GameState state);
+
+	public abstract int getAlphaBetaValue(GameState state);
+
+	public boolean hasEnded() {
+		return (terminalTest(getState()));
+	}
+
 	public int getLevel(GameState g) {
 		return (((Integer) g.get("level")).intValue());
 	}
-
-	protected int level;
 
 	public ArrayList getMoves(GameState state) {
 		return (ArrayList) state.get("moves");
@@ -34,10 +49,6 @@ public abstract class Game {
 	public GameState getState() {
 		return presentState;
 	}
-
-	protected abstract int computeUtility(GameState state);
-
-	protected abstract boolean terminalTest(GameState state);
 
 	public int maxValue(GameState state) {
 		int v = Integer.MIN_VALUE;
@@ -74,30 +85,6 @@ public abstract class Game {
 					v = maximumValueOfSuccessors;
 					state.put("next", successor);
 				}
-			}
-			return v;
-		}
-
-	}
-
-	protected int maxValue(GameState state, AlphaBeta ab) {
-		int v = Integer.MIN_VALUE;
-		if (terminalTest(state)) {
-			return computeUtility(state);
-		} else {
-			ArrayList successorList = getSuccessorStates(state);
-			for (int i = 0; i < successorList.size(); i++) {
-				GameState successor = (GameState) successorList.get(i);
-				int minimumValueOfSuccessor = minValue(successor, ab.copy());
-				if (minimumValueOfSuccessor > v) {
-					v = minimumValueOfSuccessor;
-					state.put("next", successor);
-				}
-				if (v >= ab.beta()) {
-					// System.out.println("pruning from max");
-					return v;
-				}
-				ab.setAlpha(Util.max(ab.alpha(), v));
 			}
 			return v;
 		}
@@ -153,18 +140,34 @@ public abstract class Game {
 
 	}
 
-	public abstract ArrayList getSuccessorStates(GameState state);
+	//
+	// PROTECTED METHODS
+	//
+	protected abstract int computeUtility(GameState state);
 
-	public abstract GameState makeMove(GameState state, Object o);
+	protected abstract boolean terminalTest(GameState state);
 
-	public boolean hasEnded() {
-		return (terminalTest(getState()));
+	protected int maxValue(GameState state, AlphaBeta ab) {
+		int v = Integer.MIN_VALUE;
+		if (terminalTest(state)) {
+			return computeUtility(state);
+		} else {
+			ArrayList successorList = getSuccessorStates(state);
+			for (int i = 0; i < successorList.size(); i++) {
+				GameState successor = (GameState) successorList.get(i);
+				int minimumValueOfSuccessor = minValue(successor, ab.copy());
+				if (minimumValueOfSuccessor > v) {
+					v = minimumValueOfSuccessor;
+					state.put("next", successor);
+				}
+				if (v >= ab.beta()) {
+					// System.out.println("pruning from max");
+					return v;
+				}
+				ab.setAlpha(Util.max(ab.alpha(), v));
+			}
+			return v;
+		}
+
 	}
-
-	public Game() {
-	}
-
-	public abstract int getMiniMaxValue(GameState state);
-
-	public abstract int getAlphaBetaValue(GameState state);
 }

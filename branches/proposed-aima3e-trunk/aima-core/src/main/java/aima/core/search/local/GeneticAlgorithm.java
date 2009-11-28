@@ -9,7 +9,7 @@ import aima.core.search.framework.Metrics;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page 129.
  * 
  * <code>
  * function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
@@ -245,7 +245,7 @@ public class GeneticAlgorithm {
 			FitnessFunction fitnessFn) {
 		String bestIndividual = null;
 		double bestSoFarFValue = Double.NEGATIVE_INFINITY;
-		
+
 		for (String individual : population) {
 			double fValue = fitnessFn.getValue(individual);
 			if (fValue > bestSoFarFValue) {

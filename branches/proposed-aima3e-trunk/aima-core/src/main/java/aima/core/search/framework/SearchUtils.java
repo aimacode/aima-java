@@ -19,10 +19,9 @@ public class SearchUtils {
 			// Goal node, therefore just return a NoOp
 			actions.add(NoOpAction.NO_OP);
 		} else {
-			for (int i = 1; i < nodeList.size(); i++) { // ignore root node this
-														// has
-				// no action hence index starts from 1 not
-				// zero
+			// ignore the root node this has no action
+			// hence index starts from 1 not zero
+			for (int i = 1; i < nodeList.size(); i++) {
 				Node node = nodeList.get(i);
 				actions.add(node.getAction());
 			}

@@ -1,7 +1,7 @@
 package aima.core.search.framework;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 92.
  * 
  * a heuristic function, denoted h(n):<br>
  *   h(n) = estimated cost of the cheapest path from the state at node n to a goal state.<br>

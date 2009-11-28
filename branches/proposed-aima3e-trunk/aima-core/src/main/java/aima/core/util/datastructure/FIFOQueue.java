@@ -4,6 +4,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): pg 80.<br>
+ * 
+ * First-in, first-out or FIFO queue, which pops the oldest element of the queue;
+ */
+
+/**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

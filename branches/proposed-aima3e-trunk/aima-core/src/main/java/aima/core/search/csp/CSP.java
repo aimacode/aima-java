@@ -11,8 +11,6 @@ import aima.core.util.Util;
  */
 public class CSP {
 
-	// private Assignment assignment;
-
 	private Domain domains;
 
 	private Constraint constraints;
@@ -41,27 +39,6 @@ public class CSP {
 		return recursiveBackTrackingSearch(new Assignment(variables));
 	}
 
-	private Assignment recursiveBackTrackingSearch(Assignment anAssignment) {
-		if (anAssignment.isComplete()) {
-			return anAssignment;
-		}
-		String variable = anAssignment.selectFirstUnassignedVariable();
-		List<Object> domainValues = defaultOrderDomainOf(variable);
-		for (int i = 0; i < domainValues.size(); i++) {
-			Object value = domainValues.get(i);
-
-			if (constraints.isSatisfiedWith(anAssignment, variable, value)) {
-				anAssignment.setAssignment(variable, value);
-				Assignment result = recursiveBackTrackingSearch(anAssignment);
-				if (result != null) {
-					return result;
-				}
-				anAssignment.remove(variable);
-			}
-		}
-		return null;// failure
-	}
-
 	public Assignment mcSearch(int maxSteps) {
 		Assignment randomAssignment = generateRandomAssignment();
 
@@ -85,6 +62,30 @@ public class CSP {
 
 	}
 
+	//
+	// PRIVATE METHODS
+	//
+	private Assignment recursiveBackTrackingSearch(Assignment anAssignment) {
+		if (anAssignment.isComplete()) {
+			return anAssignment;
+		}
+		String variable = anAssignment.selectFirstUnassignedVariable();
+		List<Object> domainValues = defaultOrderDomainOf(variable);
+		for (int i = 0; i < domainValues.size(); i++) {
+			Object value = domainValues.get(i);
+
+			if (constraints.isSatisfiedWith(anAssignment, variable, value)) {
+				anAssignment.setAssignment(variable, value);
+				Assignment result = recursiveBackTrackingSearch(anAssignment);
+				if (result != null) {
+					return result;
+				}
+				anAssignment.remove(variable);
+			}
+		}
+		return null;// failure
+	}
+
 	private Assignment generateRandomAssignment() {
 		List<String> vars = new ArrayList<String>();
 		for (int i = 0; i < variables.size(); i++) {
@@ -100,5 +101,4 @@ public class CSP {
 		}
 		return assignment;
 	}
-
 }

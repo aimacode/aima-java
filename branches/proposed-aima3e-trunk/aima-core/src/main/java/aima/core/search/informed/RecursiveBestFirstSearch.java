@@ -12,7 +12,7 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page 99.
  * 
  * <code>
  * function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure

@@ -8,7 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.Percept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
@@ -92,16 +91,16 @@ public class LRTAStarAgentTest {
 						"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
 						envChanges.toString());
 	}
-	
+
 	private class TestEnvironmentView implements EnvironmentView {
 		public void notify(String msg) {
 			envChanges.append(msg).append("->");
 		}
 
-		public void agentAdded(Agent agent, Percept perceives) {
+		public void agentAdded(Agent agent, EnvironmentState state) {
 			// Nothing.
 		}
-		
+
 		public void agentActed(Agent agent, Action action,
 				EnvironmentState state) {
 			envChanges.append(action).append("->");

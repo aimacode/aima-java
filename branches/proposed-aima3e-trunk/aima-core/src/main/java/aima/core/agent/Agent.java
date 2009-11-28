@@ -1,9 +1,9 @@
 package aima.core.agent;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): pg ??.<br>
- * An agent is anything that can be viewed as perceiving its environment 
- * through sensors and acting upon that environment through actuators.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.1, page 35.<br>
+ * 
+ * Figure 2.1 Agents interact with environments through sensors and actuators.
  */
 
 /**

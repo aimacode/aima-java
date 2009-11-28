@@ -1,9 +1,10 @@
 package aima.core.search.local;
 
 /**
- * Interface representing a fitness function used by the GeneticAlgorithm
- * to determine the fitness of individuals within the population being
- * evolved.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 127.
+ * 
+ * Each state is rated by the objective function, or (in Genetic Algorithm terminology) the fitness function.
+ * A fitness function should return higher values for better states.
  */
 
 /**

@@ -37,7 +37,7 @@ public abstract class QueueSearch extends NodeExpander {
 	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		this.frontier = frontier;
-		
+
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
@@ -93,7 +93,7 @@ public abstract class QueueSearch extends NodeExpander {
 	public Node popNodeFromFrontier() {
 		return frontier.pop();
 	}
-	
+
 	public boolean removeNodeFromFrontier(Node toRemove) {
 		return frontier.remove(toRemove);
 	}

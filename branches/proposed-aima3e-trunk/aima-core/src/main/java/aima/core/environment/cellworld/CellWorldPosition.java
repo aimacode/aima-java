@@ -4,7 +4,6 @@ package aima.core.environment.cellworld;
  * @author Ravi Mohan
  * 
  */
-
 public class CellWorldPosition {
 	private int x, y;
 
@@ -42,5 +41,4 @@ public class CellWorldPosition {
 	public String toString() {
 		return "< " + x + " , " + y + " > ";
 	}
-
 }

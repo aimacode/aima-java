@@ -7,7 +7,7 @@ import aima.core.search.framework.HeuristicFunction;
  * 
  */
 public class QueensToBePlacedHeuristic implements HeuristicFunction {
-	
+
 	public double h(Object state) {
 		NQueensBoard board = (NQueensBoard) state;
 		return board.size - board.getNumberOfQueensOnBoard();

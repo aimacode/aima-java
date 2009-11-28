@@ -54,5 +54,4 @@ public class ManhattanHeuristicFunction implements HeuristicFunction {
 		}
 		return retVal;
 	}
-
 }

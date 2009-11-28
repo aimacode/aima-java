@@ -3,7 +3,7 @@ package aima.core.search.framework;
 import aima.core.agent.Action;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 67.
  * 
  * A description of what each action does; the formal name for this is the
  * transition model, specified by a function RESULT(s, a) that returns the state

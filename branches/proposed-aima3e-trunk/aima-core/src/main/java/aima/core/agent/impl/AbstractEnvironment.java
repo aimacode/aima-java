@@ -16,12 +16,6 @@ import aima.core.agent.EnvironmentView;
 import aima.core.agent.Percept;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page ??.
- * 
- * Environment.
- */
-
-/**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
@@ -44,6 +38,8 @@ public abstract class AbstractEnvironment implements Environment {
 
 	// 
 	// Methods to be implemented by subclasses.
+	public abstract EnvironmentState getCurrentState();
+
 	public abstract EnvironmentState executeAction(Agent agent, Action action);
 
 	public abstract Percept getPerceptSeenBy(Agent anAgent);
@@ -72,7 +68,7 @@ public abstract class AbstractEnvironment implements Environment {
 		envObjects.add(eo);
 		if (eo instanceof Agent) {
 			Agent a = (Agent) eo;
-			if (!agents.contains(a)) {				
+			if (!agents.contains(a)) {
 				agents.add(a);
 				this.updateEnvironmentViewsAgentAdded(a);
 			}
@@ -157,7 +153,7 @@ public abstract class AbstractEnvironment implements Environment {
 
 	protected void updateEnvironmentViewsAgentAdded(Agent agent) {
 		for (EnvironmentView view : views) {
-			view.agentAdded(agent, getPerceptSeenBy(agent));
+			view.agentAdded(agent, getCurrentState());
 		}
 	}
 

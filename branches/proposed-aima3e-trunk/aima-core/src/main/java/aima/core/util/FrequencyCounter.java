@@ -1,18 +1,18 @@
 package aima.core.util;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Ravi Mohan
  * 
  */
-
 public class FrequencyCounter<T> {
-	private Hashtable<T, Integer> counter;
+	private Map<T, Integer> counter;
 
 	public FrequencyCounter() {
-		counter = new Hashtable<T, Integer>();
+		counter = new HashMap<T, Integer>();
 	}
 
 	public Integer getCount(T key) {
@@ -53,5 +53,4 @@ public class FrequencyCounter<T> {
 	public Set<T> getStates() {
 		return counter.keySet();
 	}
-
 }
