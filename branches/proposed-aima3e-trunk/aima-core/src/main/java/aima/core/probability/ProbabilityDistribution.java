@@ -11,7 +11,6 @@ import aima.core.logic.propositional.algorithms.Model;
  * @author Ravi Mohan
  * 
  */
-
 public class ProbabilityDistribution {
 	private List<Row> rows;
 
@@ -103,6 +102,12 @@ public class ProbabilityDistribution {
 
 		return prob;
 	}
+	
+	public double probabilityOf(String variableName, boolean b) {
+		Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
+		h.put(variableName, new Boolean(b));
+		return probabilityOf(h);
+	}
 
 	class Row {
 		Model model;
@@ -119,11 +124,4 @@ public class ProbabilityDistribution {
 			return model.toString() + " => " + probability;
 		}
 	}
-
-	public double probabilityOf(String variableName, boolean b) {
-		Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
-		h.put(variableName, new Boolean(b));
-		return probabilityOf(h);
-	}
-
 }

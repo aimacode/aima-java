@@ -126,6 +126,66 @@ public class FOLParser {
 		match("NOT");
 		return new NotSentence(parseSentence());
 	}
+	
+	//
+	// PROTECTED METHODS
+	//
+	protected Token lookAhead(int i) {
+		return lookAheadBuffer[i - 1];
+	}
+
+	protected void consume() {
+		// System.out.println("consuming" +lookAheadBuffer[0].getText());
+		loadNextTokenFromInput();
+		// System.out.println("next token " +lookAheadBuffer[0].getText());
+	}
+
+	protected void loadNextTokenFromInput() {
+
+		boolean eoiEncountered = false;
+		for (int i = 0; i < lookAhead - 1; i++) {
+
+			lookAheadBuffer[i] = lookAheadBuffer[i + 1];
+			if (isEndOfInput(lookAheadBuffer[i])) {
+				eoiEncountered = true;
+				break;
+			}
+		}
+		if (!eoiEncountered) {
+			try {
+				lookAheadBuffer[lookAhead - 1] = lexer.nextToken();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	protected boolean isEndOfInput(Token t) {
+		return (t.getType() == LogicTokenTypes.EOI);
+	}
+
+	protected void fillLookAheadBuffer() {
+		for (int i = 0; i < lookAhead; i++) {
+			lookAheadBuffer[i] = lexer.nextToken();
+		}
+	}
+
+	protected void match(String terminalSymbol) {
+		if (lookAhead(1).getText().equals(terminalSymbol)) {
+			consume();
+		} else {
+			throw new RuntimeException(
+					"Syntax error detected at match. Expected "
+							+ terminalSymbol + " but got "
+							+ lookAhead(1).getText());
+		}
+
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private Sentence parseSentence() {
 		Token t = lookAhead(1);
@@ -218,58 +278,4 @@ public class FOLParser {
 			return false;
 		}
 	}
-
-	protected Token lookAhead(int i) {
-		return lookAheadBuffer[i - 1];
-	}
-
-	protected void consume() {
-		// System.out.println("consuming" +lookAheadBuffer[0].getText());
-		loadNextTokenFromInput();
-		// System.out.println("next token " +lookAheadBuffer[0].getText());
-	}
-
-	protected void loadNextTokenFromInput() {
-
-		boolean eoiEncountered = false;
-		for (int i = 0; i < lookAhead - 1; i++) {
-
-			lookAheadBuffer[i] = lookAheadBuffer[i + 1];
-			if (isEndOfInput(lookAheadBuffer[i])) {
-				eoiEncountered = true;
-				break;
-			}
-		}
-		if (!eoiEncountered) {
-			try {
-				lookAheadBuffer[lookAhead - 1] = lexer.nextToken();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	protected boolean isEndOfInput(Token t) {
-		return (t.getType() == LogicTokenTypes.EOI);
-	}
-
-	protected void fillLookAheadBuffer() {
-		for (int i = 0; i < lookAhead; i++) {
-			lookAheadBuffer[i] = lexer.nextToken();
-		}
-	}
-
-	protected void match(String terminalSymbol) {
-		if (lookAhead(1).getText().equals(terminalSymbol)) {
-			consume();
-		} else {
-			throw new RuntimeException(
-					"Syntax error detected at match. Expected "
-							+ terminalSymbol + " but got "
-							+ lookAhead(1).getText());
-		}
-
-	}
-
 }

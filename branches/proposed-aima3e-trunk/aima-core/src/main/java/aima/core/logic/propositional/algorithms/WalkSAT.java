@@ -18,7 +18,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class WalkSAT {
 	private Model myModel;
 

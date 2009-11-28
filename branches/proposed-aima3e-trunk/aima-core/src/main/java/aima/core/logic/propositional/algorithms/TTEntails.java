@@ -15,7 +15,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class TTEntails {
 	public boolean ttEntails(KnowledgeBase kb, String alpha) {
 		Sentence kbSentence = kb.asSentence();

@@ -4,7 +4,7 @@ import aima.core.logic.fol.parsing.ast.AtomicSentence;
 import aima.core.logic.fol.parsing.ast.Term;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 204.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 244.
  * 
  * A literal is either an atomic sentence (a positive literal) or
  * a negated atomic sentence (a negative literal).

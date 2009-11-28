@@ -17,7 +17,6 @@ import aima.core.util.Converter;
  * @author Ravi Mohan
  * 
  */
-
 public class PLFCEntails {
 
 	private Hashtable<HornClause, Integer> count;

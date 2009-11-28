@@ -10,7 +10,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 
 	private Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double> transitionToProbability = new Hashtable<MDPTransition<STATE_TYPE, ACTION_TYPE>, Double>();
@@ -83,6 +82,31 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 
 	}
 
+	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWithStartingStateAndAction(
+			STATE_TYPE s, ACTION_TYPE a) {
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> result = new ArrayList<MDPTransition<STATE_TYPE, ACTION_TYPE>>();
+		for (MDPTransition<STATE_TYPE, ACTION_TYPE> transition : transitionToProbability
+				.keySet()) {
+			if ((transition.getInitialState().equals(s))
+					&& (transition.getAction().equals(a))) {
+				result.add(transition);
+			}
+		}
+		return result;
+	}
+
+	public ACTION_TYPE randomActionFor(STATE_TYPE s) {
+		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions = getTransitionsStartingWith(s);
+		// MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util
+		// .selectRandomlyFromList(transitions);
+		return transitions.get(0).getAction();
+		// return randomTransition.getAction();
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+
 	private boolean isTerminal(STATE_TYPE s) {
 		return terminalStates.contains(s);
 	}
@@ -134,26 +158,5 @@ public class MDPTransitionModel<STATE_TYPE, ACTION_TYPE> {
 			}
 		}
 		return result;
-	}
-
-	public List<MDPTransition<STATE_TYPE, ACTION_TYPE>> getTransitionsWithStartingStateAndAction(
-			STATE_TYPE s, ACTION_TYPE a) {
-		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> result = new ArrayList<MDPTransition<STATE_TYPE, ACTION_TYPE>>();
-		for (MDPTransition<STATE_TYPE, ACTION_TYPE> transition : transitionToProbability
-				.keySet()) {
-			if ((transition.getInitialState().equals(s))
-					&& (transition.getAction().equals(a))) {
-				result.add(transition);
-			}
-		}
-		return result;
-	}
-
-	public ACTION_TYPE randomActionFor(STATE_TYPE s) {
-		List<MDPTransition<STATE_TYPE, ACTION_TYPE>> transitions = getTransitionsStartingWith(s);
-		// MDPTransition<STATE_TYPE, ACTION_TYPE> randomTransition = Util
-		// .selectRandomlyFromList(transitions);
-		return transitions.get(0).getAction();
-		// return randomTransition.getAction();
 	}
 }

@@ -4,7 +4,6 @@ package aima.core.probability.decision;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPPerception<STATE_TYPE> {
 
 	private STATE_TYPE state;
@@ -28,5 +27,4 @@ public class MDPPerception<STATE_TYPE> {
 	public String toString() {
 		return "[ " + state.toString() + " , " + reward + " ] ";
 	}
-
 }

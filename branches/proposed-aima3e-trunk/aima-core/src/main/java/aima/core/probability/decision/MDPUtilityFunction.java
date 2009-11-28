@@ -6,7 +6,6 @@ import java.util.Hashtable;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPUtilityFunction<STATE_TYPE> {
 	private Hashtable<STATE_TYPE, Double> hash;
 

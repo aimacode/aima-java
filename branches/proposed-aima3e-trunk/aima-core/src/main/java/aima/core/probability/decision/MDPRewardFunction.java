@@ -6,7 +6,6 @@ import java.util.Hashtable;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPRewardFunction<STATE_TYPE> {
 	Hashtable<STATE_TYPE, Double> stateToReward;
 

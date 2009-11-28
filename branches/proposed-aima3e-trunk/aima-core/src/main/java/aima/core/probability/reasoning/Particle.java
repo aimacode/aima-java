@@ -4,7 +4,6 @@ package aima.core.probability.reasoning;
  * @author Ravi Mohan
  * 
  */
-
 public class Particle {
 
 	private String state;
@@ -21,7 +20,6 @@ public class Particle {
 	}
 
 	public boolean hasState(String aState) {
-
 		return state.equals(aState);
 	}
 
@@ -35,7 +33,5 @@ public class Particle {
 
 	public void setWeight(double particleWeight) {
 		weight = particleWeight;
-
 	}
-
 }

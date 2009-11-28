@@ -20,7 +20,7 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.3, page 282.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.3, page 332.
  * 
  * <pre>
  * function FOL-FC-ASK(KB, alpha) returns a substitution or false
@@ -30,12 +30,12 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   
  *   repeat until new is empty
  *      new <- {}
- *      for each sentence r in KB do
- *          (p1 ^ ... ^ pn => q) <- STANDARDIZE-APART(r)
+ *      for each rule in KB do
+ *          (p1 ^ ... ^ pn => q) <- STANDARDIZE-VARAIBLES(rule)
  *          for each theta such that SUBST(theta, p1 ^ ... ^ pn) = SUBST(theta, p'1 ^ ... ^ p'n)
  *                         for some p'1,...,p'n in KB
  *              q' <- SUBST(theta, q)
- *              if q' is not a renaming of some sentence already in KB or new then do
+ *              if q' does not unify with some sentence already in KB or new then
  *                   add q' to new
  *                   theta <- UNIFY(q', alpha)
  *                   if theta is not fail then return theta
@@ -45,7 +45,9 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * 
  * Figure 9.3 A conceptually straightforward, but very inefficient forward-chaining algo-
  * rithm. On each iteration, it adds to KB all the atomic sentences that can be inferred in one
- * step from the implication sentences and the atomic sentences already in KB.
+ * step from the implication sentences and the atomic sentences already in KB. The function
+ * STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have
+ * not been used before.
  */
 
 /**
@@ -96,8 +98,8 @@ public class FOLFCAsk implements InferenceProcedure {
 
 			// new <- {}
 			newSentences.clear();
-			// for each sentence r in KB do
-			// (p1 ^ ... ^ pn => q) <-STANDARDIZE-APART(r)
+			// for each rule in KB do
+			// (p1 ^ ... ^ pn => q) <-STANDARDIZE-VARIABLES(rule)
 			for (Clause impl : KB.getAllDefiniteClauseImplications()) {
 				impl = KB.standardizeApart(impl);
 				// for each theta such that SUBST(theta, p1 ^ ... ^ pn) =
@@ -106,17 +108,17 @@ public class FOLFCAsk implements InferenceProcedure {
 				for (Map<Variable, Term> theta : KB.fetch(invert(impl
 						.getNegativeLiterals()))) {
 					// q' <- SUBST(theta, q)
-					Literal qDelta = KB.subst(theta, impl.getPositiveLiterals()
+					Literal qPrime = KB.subst(theta, impl.getPositiveLiterals()
 							.get(0));
-					// if q' is not a renaming of some sentence already in KB or
+					// if q' does not unify with some sentence already in KB or
 					// new then do
-					if (!KB.isRenaming(qDelta)
-							&& !KB.isRenaming(qDelta, newSentences)) {
+					if (!KB.isRenaming(qPrime)
+							&& !KB.isRenaming(qPrime, newSentences)) {
 						// add q' to new
-						newSentences.add(qDelta);
-						ansHandler.addProofStep(impl, qDelta, theta);
+						newSentences.add(qPrime);
+						ansHandler.addProofStep(impl, qPrime, theta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta.getAtomicSentence(), alpha
+						theta = KB.unify(qPrime.getAtomicSentence(), alpha
 								.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {

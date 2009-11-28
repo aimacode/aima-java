@@ -23,12 +23,13 @@ import aima.core.logic.fol.parsing.ast.TermEquality;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 296.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 345.
+ * 
  * Every sentence of first-order logic can be converted into an inferentially
  * equivalent CNF sentence.
  * 
- * Note: Transformation rules extracted from pg 215, 296, and 297, which
- * is essentially the INSEADO method outlined in:
+ * Note: Transformation rules extracted from 346 and 347, which
+ * are essentially the INSEADO method outlined in:
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture09.pdf
  */
 

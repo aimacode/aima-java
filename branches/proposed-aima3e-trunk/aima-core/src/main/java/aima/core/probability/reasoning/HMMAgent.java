@@ -6,7 +6,6 @@ import aima.core.probability.RandomVariable;
  * @author Ravi Mohan
  * 
  */
-
 public class HMMAgent {
 	private HiddenMarkovModel hmm;
 
@@ -30,9 +29,6 @@ public class HMMAgent {
 	}
 
 	public void perceive(String perception) {
-
 		belief = hmm.perceptionUpdate(belief, perception);
-
 	}
-
 }

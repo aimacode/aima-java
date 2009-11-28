@@ -11,7 +11,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class BayesNet {
 	private List<BayesNetNode> roots = new ArrayList<BayesNetNode>();
 
@@ -42,48 +41,6 @@ public class BayesNet {
 			variables.add(variableNode.getVariable());
 		}
 		return variables;
-	}
-
-	private List<BayesNetNode> getVariableNodes() {
-		// TODO dicey initalisation works fine but unclear . clarify
-		if (variableNodes == null) {
-			List<BayesNetNode> newVariableNodes = new ArrayList<BayesNetNode>();
-			List<BayesNetNode> parents = roots;
-			List<BayesNetNode> traversedParents = new ArrayList<BayesNetNode>();
-
-			while (parents.size() != 0) {
-				List<BayesNetNode> newParents = new ArrayList<BayesNetNode>();
-				for (BayesNetNode parent : parents) {
-					// if parent unseen till now
-					if (!(traversedParents.contains(parent))) {
-						newVariableNodes.add(parent);
-						// add any unseen children to next generation of parents
-						List<BayesNetNode> children = parent.getChildren();
-						for (BayesNetNode child : children) {
-							if (!newParents.contains(child)) {
-								newParents.add(child);
-							}
-						}
-						traversedParents.add(parent);
-					}
-				}
-
-				parents = newParents;
-			}
-			variableNodes = newVariableNodes;
-		}
-
-		return variableNodes;
-	}
-
-	private BayesNetNode getNodeOf(String y) {
-		List<BayesNetNode> variableNodes = getVariableNodes();
-		for (BayesNetNode node : variableNodes) {
-			if (node.getVariable().equals(y)) {
-				return node;
-			}
-		}
-		return null;
 	}
 
 	public double probabilityOf(String Y, Boolean value,
@@ -148,19 +105,7 @@ public class BayesNet {
 		}
 		return Util.normalize(retval);
 	}
-
-	private boolean consistent(Hashtable sample, Hashtable evidence) {
-		Iterator iter = evidence.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = (String) iter.next();
-			Boolean value = (Boolean) evidence.get(key);
-			if (!(value.equals(sample.get(key)))) {
-				return false;
-			}
-		}
-		return true;
-	}
-
+	
 	public double[] likelihoodWeighting(String X,
 			Hashtable<String, Boolean> evidence, int numberOfSamples,
 			Randomizer r) {
@@ -216,6 +161,81 @@ public class BayesNet {
 			}
 		}
 		return Util.normalize(retval);
+	}
+	
+	public double[] mcmcAsk(String X, Hashtable<String, Boolean> evidence,
+			int numberOfVariables) {
+		return mcmcAsk(X, evidence, numberOfVariables, new JavaRandomizer());
+	}
+
+	public double[] likelihoodWeighting(String X,
+			Hashtable<String, Boolean> evidence, int numberOfSamples) {
+		return likelihoodWeighting(X, evidence, numberOfSamples,
+				new JavaRandomizer());
+	}
+
+	public double[] rejectionSample(String X,
+			Hashtable<String, Boolean> evidence, int numberOfSamples) {
+		return rejectionSample(X, evidence, numberOfSamples,
+				new JavaRandomizer());
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+	
+	private List<BayesNetNode> getVariableNodes() {
+		// TODO dicey initalisation works fine but unclear . clarify
+		if (variableNodes == null) {
+			List<BayesNetNode> newVariableNodes = new ArrayList<BayesNetNode>();
+			List<BayesNetNode> parents = roots;
+			List<BayesNetNode> traversedParents = new ArrayList<BayesNetNode>();
+
+			while (parents.size() != 0) {
+				List<BayesNetNode> newParents = new ArrayList<BayesNetNode>();
+				for (BayesNetNode parent : parents) {
+					// if parent unseen till now
+					if (!(traversedParents.contains(parent))) {
+						newVariableNodes.add(parent);
+						// add any unseen children to next generation of parents
+						List<BayesNetNode> children = parent.getChildren();
+						for (BayesNetNode child : children) {
+							if (!newParents.contains(child)) {
+								newParents.add(child);
+							}
+						}
+						traversedParents.add(parent);
+					}
+				}
+
+				parents = newParents;
+			}
+			variableNodes = newVariableNodes;
+		}
+
+		return variableNodes;
+	}
+
+	private BayesNetNode getNodeOf(String y) {
+		List<BayesNetNode> variableNodes = getVariableNodes();
+		for (BayesNetNode node : variableNodes) {
+			if (node.getVariable().equals(y)) {
+				return node;
+			}
+		}
+		return null;
+	}
+
+	private boolean consistent(Hashtable sample, Hashtable evidence) {
+		Iterator iter = evidence.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = (String) iter.next();
+			Boolean value = (Boolean) evidence.get(key);
+			if (!(value.equals(sample.get(key)))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private Boolean truthValue(double[] ds, Randomizer r) {
@@ -300,22 +320,4 @@ public class BayesNet {
 		}
 		return table;
 	}
-
-	public double[] mcmcAsk(String X, Hashtable<String, Boolean> evidence,
-			int numberOfVariables) {
-		return mcmcAsk(X, evidence, numberOfVariables, new JavaRandomizer());
-	}
-
-	public double[] likelihoodWeighting(String X,
-			Hashtable<String, Boolean> evidence, int numberOfSamples) {
-		return likelihoodWeighting(X, evidence, numberOfSamples,
-				new JavaRandomizer());
-	}
-
-	public double[] rejectionSample(String X,
-			Hashtable<String, Boolean> evidence, int numberOfSamples) {
-		return rejectionSample(X, evidence, numberOfSamples,
-				new JavaRandomizer());
-	}
-
 }

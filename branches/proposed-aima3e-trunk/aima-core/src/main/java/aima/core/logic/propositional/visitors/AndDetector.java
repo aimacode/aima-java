@@ -13,7 +13,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public class AndDetector implements PLVisitor {
 
 	public Object visitSymbol(Symbol s, Object arg) {
@@ -52,5 +51,4 @@ public class AndDetector implements PLVisitor {
 	public boolean containsEmbeddedAnd(Sentence s) {
 		return ((Boolean) s.accept(this, null)).booleanValue();
 	}
-
 }

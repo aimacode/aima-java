@@ -20,7 +20,6 @@ import aima.core.util.SetOps;
  * Super class of Visitors that are "read only" and gather information from an
  * existing parse tree .
  */
-
 public class BasicTraverser implements PLVisitor {
 
 	public Object visitSymbol(Symbol s, Object arg) {
@@ -50,5 +49,4 @@ public class BasicTraverser implements PLVisitor {
 	public Object visitMultiSentence(MultiSentence fs, Object arg) {
 		throw new RuntimeException("Can't handle MultiSentence");
 	}
-
 }

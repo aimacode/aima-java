@@ -19,7 +19,6 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-
 public class DPLL {
 
 	private static final Converter<Symbol> SYMBOL_CONVERTER = new Converter<Symbol>();
@@ -42,6 +41,80 @@ public class DPLL {
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);
 	}
+	
+	public List<Sentence> clausesWithNonTrueValues(List<Sentence> clauseList,
+			Model model) {
+		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();
+		for (int i = 0; i < clauseList.size(); i++) {
+			Sentence clause = clauseList.get(i);
+			if (!(isClauseTrueInModel(clause, model))) {
+				if (!(clausesWithNonTrueValues.contains(clause))) {// defensive
+					// programming not really necessary
+					clausesWithNonTrueValues.add(clause);
+				}
+			}
+
+		}
+		return clausesWithNonTrueValues;
+	}
+
+	public SymbolValuePair findPureSymbolValuePair(List<Sentence> clauseList,
+			Model model, List symbols) {
+		List clausesWithNonTrueValues = clausesWithNonTrueValues(clauseList,
+				model);
+		Sentence nonTrueClauses = LogicUtils.chainWith("AND",
+				clausesWithNonTrueValues);
+		// System.out.println("Unsatisfied clauses = "
+		// + clausesWithNonTrueValues.size());
+		Set<Symbol> symbolsAlreadyAssigned = model.getAssignedSymbols();
+
+		// debug
+		// List symList = asList(symbolsAlreadyAssigned);
+		//
+		// System.out.println(" assignedSymbols = " + symList.size());
+		// if (symList.size() == 52) {
+		// System.out.println("untrue clauses = " + clausesWithNonTrueValues);
+		// System.out.println("model= " + model);
+		// }
+
+		// debug
+		List<Symbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(SetOps
+				.difference(new SymbolClassifier()
+						.getPurePositiveSymbolsIn(nonTrueClauses),
+						symbolsAlreadyAssigned));
+
+		List<Symbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(SetOps
+				.difference(new SymbolClassifier()
+						.getPureNegativeSymbolsIn(nonTrueClauses),
+						symbolsAlreadyAssigned));
+		// if none found return "not found
+		if ((purePositiveSymbols.size() == 0)
+				&& (pureNegativeSymbols.size() == 0)) {
+			return new SymbolValuePair();// automatically set to null values
+		} else {
+			if (purePositiveSymbols.size() > 0) {
+				Symbol symbol = new Symbol((purePositiveSymbols.get(0))
+						.getValue());
+				if (pureNegativeSymbols.contains(symbol)) {
+					throw new RuntimeException("Symbol " + symbol.getValue()
+							+ "misclassified");
+				}
+				return new SymbolValuePair(symbol, true);
+			} else {
+				Symbol symbol = new Symbol((pureNegativeSymbols.get(0))
+						.getValue());
+				if (purePositiveSymbols.contains(symbol)) {
+					throw new RuntimeException("Symbol " + symbol.getValue()
+							+ "misclassified");
+				}
+				return new SymbolValuePair(symbol, false);
+			}
+		}
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private boolean dpll(Set<Sentence> clauses, List symbols, Model model) {
 		// List<Sentence> clauseList = asList(clauses);
@@ -135,76 +208,6 @@ public class DPLL {
 
 	}
 
-	public List<Sentence> clausesWithNonTrueValues(List<Sentence> clauseList,
-			Model model) {
-		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();
-		for (int i = 0; i < clauseList.size(); i++) {
-			Sentence clause = clauseList.get(i);
-			if (!(isClauseTrueInModel(clause, model))) {
-				if (!(clausesWithNonTrueValues.contains(clause))) {// defensive
-					// programming not really necessary
-					clausesWithNonTrueValues.add(clause);
-				}
-			}
-
-		}
-		return clausesWithNonTrueValues;
-	}
-
-	public SymbolValuePair findPureSymbolValuePair(List<Sentence> clauseList,
-			Model model, List symbols) {
-		List clausesWithNonTrueValues = clausesWithNonTrueValues(clauseList,
-				model);
-		Sentence nonTrueClauses = LogicUtils.chainWith("AND",
-				clausesWithNonTrueValues);
-		// System.out.println("Unsatisfied clauses = "
-		// + clausesWithNonTrueValues.size());
-		Set<Symbol> symbolsAlreadyAssigned = model.getAssignedSymbols();
-
-		// debug
-		// List symList = asList(symbolsAlreadyAssigned);
-		//
-		// System.out.println(" assignedSymbols = " + symList.size());
-		// if (symList.size() == 52) {
-		// System.out.println("untrue clauses = " + clausesWithNonTrueValues);
-		// System.out.println("model= " + model);
-		// }
-
-		// debug
-		List<Symbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(SetOps
-				.difference(new SymbolClassifier()
-						.getPurePositiveSymbolsIn(nonTrueClauses),
-						symbolsAlreadyAssigned));
-
-		List<Symbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(SetOps
-				.difference(new SymbolClassifier()
-						.getPureNegativeSymbolsIn(nonTrueClauses),
-						symbolsAlreadyAssigned));
-		// if none found return "not found
-		if ((purePositiveSymbols.size() == 0)
-				&& (pureNegativeSymbols.size() == 0)) {
-			return new SymbolValuePair();// automatically set to null values
-		} else {
-			if (purePositiveSymbols.size() > 0) {
-				Symbol symbol = new Symbol((purePositiveSymbols.get(0))
-						.getValue());
-				if (pureNegativeSymbols.contains(symbol)) {
-					throw new RuntimeException("Symbol " + symbol.getValue()
-							+ "misclassified");
-				}
-				return new SymbolValuePair(symbol, true);
-			} else {
-				Symbol symbol = new Symbol((pureNegativeSymbols.get(0))
-						.getValue());
-				if (purePositiveSymbols.contains(symbol)) {
-					throw new RuntimeException("Symbol " + symbol.getValue()
-							+ "misclassified");
-				}
-				return new SymbolValuePair(symbol, false);
-			}
-		}
-	}
-
 	private SymbolValuePair findUnitClause(List clauseList, Model model,
 			List symbols) {
 		for (int i = 0; i < clauseList.size(); i++) {
@@ -275,5 +278,4 @@ public class DPLL {
 			return symbolString + " -> " + valueString;
 		}
 	}
-
 }

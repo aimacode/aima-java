@@ -11,7 +11,6 @@ import aima.core.util.math.Matrix;
  * @author Ravi Mohan
  * 
  */
-
 public class TransitionModel {
 
 	private Table<String, String, Double> table;
@@ -49,7 +48,6 @@ public class TransitionModel {
 	}
 
 	public double get(String old_state_action, String newState) {
-
 		return table.get(old_state_action, newState);
 	}
 
@@ -77,14 +75,12 @@ public class TransitionModel {
 	}
 
 	public String getStateForProbability(String oldState, double probability) {
-
 		return getStateForGivenActionAndProbability(oldState,
 				HmmConstants.DO_NOTHING, probability);
 	}
 
 	public String getStateForProbability(String oldState, String action,
 			double probability) {
-
 		return getStateForGivenActionAndProbability(oldState, action,
 				probability);
 	}
@@ -102,5 +98,4 @@ public class TransitionModel {
 		}
 		return null;
 	}
-
 }

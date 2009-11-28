@@ -4,7 +4,6 @@ package aima.core.logic.common;
  * @author Ravi Mohan
  * 
  */
-
 public interface LogicTokenTypes {
 	static final int SYMBOL = 1;
 
@@ -35,5 +34,4 @@ public interface LogicTokenTypes {
 	static final int WHITESPACE = 1000;
 
 	static final int EOI = 9999;
-
 }

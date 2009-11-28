@@ -6,7 +6,6 @@ import aima.core.util.datastructure.Triplet;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 	private Triplet<STATE_TYPE, ACTION_TYPE, STATE_TYPE> triplet;
 
@@ -54,5 +53,4 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 	public String toString() {
 		return triplet.toString();
 	}
-
 }

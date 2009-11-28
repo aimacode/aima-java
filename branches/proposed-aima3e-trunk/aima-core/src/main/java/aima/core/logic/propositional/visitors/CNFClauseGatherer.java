@@ -12,7 +12,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public class CNFClauseGatherer extends BasicTraverser {
 	AndDetector detector;
 
@@ -33,15 +32,6 @@ public class CNFClauseGatherer extends BasicTraverser {
 
 	}
 
-	private Set<Sentence> processSubTerm(Sentence s, Set<Sentence> soFar) {
-		if (detector.containsEmbeddedAnd(s)) {
-			return (Set<Sentence>) s.accept(this, soFar);
-		} else {
-			soFar.add(s);
-			return soFar;
-		}
-	}
-
 	public Set<Sentence> getClausesFrom(Sentence sentence) {
 		Set<Sentence> set = new HashSet<Sentence>();
 		if (sentence instanceof Symbol) {
@@ -53,5 +43,16 @@ public class CNFClauseGatherer extends BasicTraverser {
 		}
 		return set;
 	}
-
+	
+	//
+	// PRIVATE METHODS
+	//
+	private Set<Sentence> processSubTerm(Sentence s, Set<Sentence> soFar) {
+		if (detector.containsEmbeddedAnd(s)) {
+			return (Set<Sentence>) s.accept(this, soFar);
+		} else {
+			soFar.add(s);
+			return soFar;
+		}
+	}
 }

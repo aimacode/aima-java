@@ -14,7 +14,6 @@ import aima.core.util.math.Matrix;
  * @author Ravi Mohan
  * 
  */
-
 public class RandomVariable {
 	private String name;
 
@@ -134,5 +133,4 @@ public class RandomVariable {
 		}
 		throw new RuntimeException("cannot handle " + rvalue);
 	}
-
 }

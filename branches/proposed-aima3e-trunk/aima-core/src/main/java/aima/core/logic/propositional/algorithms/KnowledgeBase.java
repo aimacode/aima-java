@@ -9,8 +9,8 @@ import aima.core.logic.propositional.visitors.CNFTransformer;
 
 /**
  * @author Ravi Mohan
+ * 
  */
-
 public class KnowledgeBase {
 	private List<Sentence> sentences;
 

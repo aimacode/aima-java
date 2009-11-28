@@ -7,7 +7,6 @@ import aima.core.environment.cellworld.CellWorldPosition;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPFactory {
 
 	public static MDP<CellWorldPosition, String> createFourByThreeMDP() {
@@ -24,5 +23,4 @@ public class MDPFactory {
 		cw.setReward(3, 4, 1);
 		return cw.asMdp();
 	}
-
 }

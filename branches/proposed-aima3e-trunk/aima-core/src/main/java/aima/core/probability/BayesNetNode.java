@@ -8,7 +8,6 @@ import java.util.List;
  * @author Ravi Mohan
  * 
  */
-
 public class BayesNetNode {
 	private String variable;
 
@@ -21,18 +20,6 @@ public class BayesNetNode {
 		parents = new ArrayList<BayesNetNode>();
 		children = new ArrayList<BayesNetNode>();
 		distribution = new ProbabilityDistribution(variable);
-	}
-
-	private void addParent(BayesNetNode node) {
-		if (!(parents.contains(node))) {
-			parents.add(node);
-		}
-	}
-
-	private void addChild(BayesNetNode node) {
-		if (!(children.contains(node))) {
-			children.add(node);
-		}
 	}
 
 	public void influencedBy(BayesNetNode parent1) {
@@ -55,11 +42,7 @@ public class BayesNetNode {
 		}
 
 	}
-
-	private boolean isRoot() {
-		return (parents.size() == 0);
-	}
-
+	
 	public void setProbability(boolean b, boolean c, double d) {
 		distribution.set(b, c, d);
 
@@ -119,4 +102,22 @@ public class BayesNetNode {
 		return variable.equals(another.variable);
 	}
 
+	//
+	// PRIVATE METHODS
+	//
+	private void addParent(BayesNetNode node) {
+		if (!(parents.contains(node))) {
+			parents.add(node);
+		}
+	}
+
+	private void addChild(BayesNetNode node) {
+		if (!(children.contains(node))) {
+			children.add(node);
+		}
+	}
+	
+	private boolean isRoot() {
+		return (parents.size() == 0);
+	}
 }

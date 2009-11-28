@@ -6,7 +6,6 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * @author Ravi Mohan
  * 
  */
-
 public class Symbol extends AtomicSentence {
 	private String value;
 
@@ -48,5 +47,4 @@ public class Symbol extends AtomicSentence {
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitSymbol(this, arg);
 	}
-
 }

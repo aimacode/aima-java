@@ -14,16 +14,16 @@ import aima.core.logic.fol.parsing.ast.TermEquality;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 304.<br>
- * Demodulation: For any terms x, y, z, where UNIFY(x,z) = theta and m<sub>n</sub>[z] is a
- * literal containing z:<br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 354.<br>
+ * Demodulation: For any terms x, y, and z, where z appears somewhere in literal m<sub>i</sub>
+ * and where UNIFY(x,z) = theta:<br>
  * <pre>
- *     x=y, m1 OR ... OR m<sub>n</sub>[z]
- *     ----------------------------------
- *     m1 OR ... m<sub>n</sub>[SUBST(theta,y)]
+ *                 x=y,    m1 OR ... OR m<sub>n</sub>[z]
+ *     ------------------------------------------------------------
+ *     SUB(SUBST(theta,x), SUBST(theta,y), m1 OR ... m<sub>n</sub>)
  * </pre>
- * Demodulation is typically used for simplifying expressions using collections of assertions
- * such as x + 0 = x, x<sup>1</sup> = x, and so on.<br>
+ * where SUBST is the usual substitution of a binding list, and SUB(x,y,m) means to
+ * replace x with y everywhere that x occurs within m.<br>
  * <br>
  * Some additional restrictions/clarifications highlighted in:<br>
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf<br>

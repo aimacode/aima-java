@@ -10,7 +10,6 @@ import aima.core.util.math.Matrix;
  * @author Ravi Mohan
  * 
  */
-
 public class HiddenMarkovModel {
 
 	SensorModel sensorModel;
@@ -62,12 +61,10 @@ public class HiddenMarkovModel {
 
 	public RandomVariable forward(RandomVariable aBelief, String action,
 			String perception) {
-
 		return perceptionUpdate(predict(aBelief, action), perception);
 	}
 
 	public RandomVariable forward(RandomVariable aBelief, String perception) {
-
 		return forward(aBelief, HmmConstants.DO_NOTHING, perception);
 	}
 
@@ -128,12 +125,10 @@ public class HiddenMarkovModel {
 	}
 
 	public SensorModel sensorModel() {
-
 		return sensorModel;
 	}
 
 	public TransitionModel transitionModel() {
-
 		return transitionModel;
 	}
 

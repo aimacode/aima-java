@@ -12,7 +12,6 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-
 public class NegativeSymbolCollector extends BasicTraverser {
 	@Override
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
@@ -29,5 +28,4 @@ public class NegativeSymbolCollector extends BasicTraverser {
 	public Set<Symbol> getNegativeSymbolsIn(Sentence s) {
 		return (Set<Symbol>) s.accept(this, new HashSet());
 	}
-
 }

@@ -114,7 +114,5 @@ public class HMMFactory {
 		// probability of a perception is p
 
 		return hmm;
-
 	}
-
 }

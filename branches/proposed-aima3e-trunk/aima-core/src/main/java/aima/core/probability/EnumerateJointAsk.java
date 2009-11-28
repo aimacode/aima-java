@@ -8,7 +8,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class EnumerateJointAsk {
 
 	public static double[] ask(Query q, ProbabilityDistribution pd) {
@@ -22,7 +21,5 @@ public class EnumerateJointAsk {
 		h.put(q.getQueryVariable(), new Boolean(false));
 		probDist[1] = pd.probabilityOf(h);
 		return Util.normalize(probDist);
-
 	}
-
 }

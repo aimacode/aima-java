@@ -10,7 +10,6 @@ import aima.core.logic.propositional.parsing.ast.Symbol;
  * @author Ravi Mohan
  * 
  */
-
 public class SymbolCollector extends BasicTraverser {
 
 	@Override
@@ -26,5 +25,4 @@ public class SymbolCollector extends BasicTraverser {
 		}
 		return (Set<Symbol>) s.accept(this, new HashSet());
 	}
-
 }

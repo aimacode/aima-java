@@ -10,7 +10,6 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-
 public class SymbolClassifier {
 
 	public Set<Symbol> getPositiveSymbolsIn(Sentence sentence) {
@@ -48,5 +47,4 @@ public class SymbolClassifier {
 	public Set<Symbol> getSymbolsIn(Sentence sentence) {
 		return new SymbolCollector().getSymbolsIn(sentence);
 	}
-
 }

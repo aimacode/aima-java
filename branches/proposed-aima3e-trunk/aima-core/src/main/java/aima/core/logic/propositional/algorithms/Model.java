@@ -18,7 +18,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public class Model implements PLVisitor {
 
 	Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
@@ -168,6 +167,31 @@ public class Model implements PLVisitor {
 		// TODO remove this?
 		return null;
 	}
+	
+	public Set<Symbol> getAssignedSymbols() {
+		Set<Symbol> set = new HashSet<Symbol>();
+		Iterator i = this.h.keySet().iterator();
+		while (i.hasNext()) {
+			Symbol key = new Symbol((String) i.next());
+			if (!(isUnknown(key))) {
+				set.add(key);
+			}
+		}
+		return set;
+	}
+
+	public boolean matches(String variable, boolean value) {
+		if (value) {
+			return isTrue(new Symbol(variable));
+		} else if (!(value)) {
+			return isFalse(new Symbol(variable));
+		}
+		return false;
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private Boolean evaluateAnd(Boolean firstValue, Boolean secondValue) {
 		if ((firstValue.equals(Boolean.TRUE))
@@ -204,26 +228,4 @@ public class Model implements PLVisitor {
 			return Boolean.FALSE;
 		}
 	}
-
-	public Set<Symbol> getAssignedSymbols() {
-		Set<Symbol> set = new HashSet<Symbol>();
-		Iterator i = this.h.keySet().iterator();
-		while (i.hasNext()) {
-			Symbol key = new Symbol((String) i.next());
-			if (!(isUnknown(key))) {
-				set.add(key);
-			}
-		}
-		return set;
-	}
-
-	public boolean matches(String variable, boolean value) {
-		if (value) {
-			return isTrue(new Symbol(variable));
-		} else if (!(value)) {
-			return isFalse(new Symbol(variable));
-		}
-		return false;
-	}
-
 }

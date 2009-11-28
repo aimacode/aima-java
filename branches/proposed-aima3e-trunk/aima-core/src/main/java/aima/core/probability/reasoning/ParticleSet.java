@@ -11,7 +11,6 @@ import aima.core.probability.Randomizer;
  * @author Ravi Mohan
  * 
  */
-
 public class ParticleSet {
 
 	private List<Particle> particles;
@@ -120,12 +119,9 @@ public class ParticleSet {
 
 		}
 		return result;
-
 	}
 
 	public Particle getParticle(int i) {
-
 		return particles.get(i);
 	}
-
 }

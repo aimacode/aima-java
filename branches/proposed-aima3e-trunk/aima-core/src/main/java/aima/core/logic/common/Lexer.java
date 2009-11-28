@@ -7,7 +7,6 @@ import java.io.StringReader;
  * @author Ravi Mohan
  * 
  */
-
 public abstract class Lexer {
 	protected abstract Token nextToken();
 
@@ -21,6 +20,11 @@ public abstract class Lexer {
 		lookAheadBuffer = new int[lookAhead];
 		this.input = new StringReader(inputString);
 		fillLookAheadBuffer();
+	}
+	
+	public void clear() {
+		this.input = null;
+		lookAheadBuffer = null;
 	}
 
 	protected void fillLookAheadBuffer() {
@@ -64,11 +68,4 @@ public abstract class Lexer {
 	protected void consume() {
 		loadNextCharacterFromInput();
 	}
-
-	public void clear() {
-		this.input = null;
-		lookAheadBuffer = null;
-
-	}
-
 }

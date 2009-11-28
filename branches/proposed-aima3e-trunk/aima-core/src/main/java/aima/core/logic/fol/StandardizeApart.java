@@ -35,7 +35,7 @@ public class StandardizeApart {
 		this.substVisitor = substVisitor;
 	}
 
-	// Note: see page 277.
+	// Note: see page 327.
 	public StandardizeApartResult standardizeApart(Sentence aSentence,
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = variableCollector

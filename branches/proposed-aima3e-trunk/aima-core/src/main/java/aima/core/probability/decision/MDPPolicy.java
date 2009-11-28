@@ -7,7 +7,6 @@ import java.util.Set;
  * @author Ravi Mohan
  * 
  */
-
 public class MDPPolicy<STATE_TYPE, ACTION_TYPE> {
 	Hashtable<STATE_TYPE, ACTION_TYPE> stateToAction;
 
@@ -32,5 +31,4 @@ public class MDPPolicy<STATE_TYPE, ACTION_TYPE> {
 
 		return stateToAction.keySet();
 	}
-
 }

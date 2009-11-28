@@ -4,7 +4,6 @@ package aima.core.logic.common;
  * @author Ravi Mohan
  * 
  */
-
 public class Token {
 	private String text;
 
@@ -48,5 +47,4 @@ public class Token {
 	public String toString() {
 		return "[ " + type + " " + text + " ]";
 	}
-
 }

@@ -6,7 +6,6 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * @author Ravi Mohan
  * 
  */
-
 public class UnarySentence extends ComplexSentence {
 	private Sentence negated;
 

@@ -12,7 +12,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public interface PLVisitor extends Visitor {
 	public Object visitSymbol(Symbol s, Object arg);
 

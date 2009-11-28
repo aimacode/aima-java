@@ -9,7 +9,6 @@ import aima.core.util.math.Matrix;
  * @author Ravi Mohan
  * 
  */
-
 public class FixedLagSmoothing {
 
 	// This implementation is almost certainly wrong (see comments below).
@@ -80,7 +79,5 @@ public class FixedLagSmoothing {
 		} else {
 			return null;
 		}
-
 	}
-
 }

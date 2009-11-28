@@ -8,7 +8,6 @@ import aima.core.probability.Randomizer;
  * @author Ravi Mohan
  * 
  */
-
 public interface MDPSource<STATE_TYPE, ACTION_TYPE> {
 	MDP<STATE_TYPE, ACTION_TYPE> asMdp();
 
@@ -26,5 +25,4 @@ public interface MDPSource<STATE_TYPE, ACTION_TYPE> {
 			Randomizer r);
 
 	List<ACTION_TYPE> getAllActions();
-
 }

@@ -161,7 +161,7 @@ public class FOLBCAsk implements InferenceProcedure {
 	}
 
 	// See:
-	//http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
+	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
 	// for need for this.
 	private Map<Variable, Term> cascadeSubstitutions(FOLKnowledgeBase KB,
 			Map<Variable, Term> theta) {

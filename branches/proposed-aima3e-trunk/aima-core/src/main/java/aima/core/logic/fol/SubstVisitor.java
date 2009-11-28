@@ -23,8 +23,8 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	}
 
 	/**
-	 * Note: Refer to Artificial Intelligence A Modern Approach (2nd Edition):
-	 * page 273.
+	 * Note: Refer to Artificial Intelligence A Modern Approach (3rd Edition):
+	 * page 323.
 	 * 
 	 * @param theta
 	 *            a substitution.

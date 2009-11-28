@@ -10,7 +10,6 @@ import aima.core.util.math.Matrix;
  * @author Ravi Mohan
  * 
  */
-
 public class SensorModel {
 	private Table<String, String, Double> table;
 
@@ -24,11 +23,9 @@ public class SensorModel {
 	public void setSensingProbability(String state, String perception,
 			double probability) {
 		table.set(state, perception, probability);
-
 	}
 
 	public Double get(String state, String perception) {
-
 		return table.get(state, perception);
 	}
 
@@ -41,5 +38,4 @@ public class SensorModel {
 		Matrix OMatrix = Matrix.createDiagonalMatrix(values);
 		return OMatrix;
 	}
-
 }

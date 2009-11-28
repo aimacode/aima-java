@@ -11,7 +11,6 @@ import aima.core.logic.common.Token;
  * @author Ravi Mohan
  * 
  */
-
 public class PELexer extends Lexer {
 
 	Set<String> connectors;
@@ -112,5 +111,4 @@ public class PELexer extends Lexer {
 	private boolean isConnector(String aSymbol) {
 		return (connectors.contains(aSymbol));
 	}
-
 }

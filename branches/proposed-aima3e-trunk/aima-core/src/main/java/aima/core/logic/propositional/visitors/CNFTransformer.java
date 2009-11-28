@@ -99,5 +99,4 @@ public class CNFTransformer extends AbstractPLVisitor {
 				"OR", alpha, beta), new BinarySentence("OR", alpha, gamma));
 		return distributed;
 	}
-
 }

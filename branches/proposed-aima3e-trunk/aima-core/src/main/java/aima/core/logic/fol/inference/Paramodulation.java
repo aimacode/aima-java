@@ -18,15 +18,16 @@ import aima.core.logic.fol.parsing.ast.TermEquality;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): page 304.<br>
- * Paramodulation: For any terms x, y, z, where UNIFY(x,z) = theta,<br>
+ * Artificial Intelligence A Modern Approach (3r Edition): page 354.<br>
+ * 
+ * Paramodulation: For any terms x, y, and z, where z appears somewhere in literal m<sub>i</sub>,
+ * and where UNIFY(x,z) = theta,<br>
  * <pre>
- *     l1 OR ... l<sub>k</sub> OR x=y,     m1 OR ... OR m<sub>n</sub>[z]
- *     -----------------------------------------------------------------
- *     SUBST(theta, l1 OR ... l<sub>k</sub> OR m1 OR ... OR m<sub>n</sub>[y])
+ *                          l1 OR ... l<sub>k</sub> OR x=y,     m1 OR ... OR m<sub>n</sub>
+ *     -------------------------------------------------------------------------------------------------------
+ *     SUB(SUBST(theta,x), SUBST(theta,y), SUBST(theta, l1 OR ... l<sub>k</sub> OR m1 OR ... OR m<sub>n</sub>)
  * </pre>
- * Unlike demodulation, paramodulation yields a complete inference procedure for first-order
- * logic with equality.
+ * Paramodulation yields a complete inference procedure for first-order logic with equality.
  */
 
 /**

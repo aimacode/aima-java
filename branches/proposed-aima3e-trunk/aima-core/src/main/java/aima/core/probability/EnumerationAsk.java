@@ -10,7 +10,6 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-
 public class EnumerationAsk {
 
 	public static double[] ask(Query q, BayesNet net) {
@@ -73,7 +72,6 @@ public class EnumerationAsk {
 
 			}
 		}
-
 	}
 
 	private static Hashtable<String, Boolean> cloneEvidenceVariables(
@@ -91,5 +89,4 @@ public class EnumerationAsk {
 		}
 		return cloned;
 	}
-
 }

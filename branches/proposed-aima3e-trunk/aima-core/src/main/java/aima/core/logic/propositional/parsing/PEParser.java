@@ -20,7 +20,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public class PEParser extends Parser {
 
 	public PEParser() {
@@ -35,16 +34,13 @@ public class PEParser extends Parser {
 	}
 
 	private TrueSentence parseTrue() {
-
 		consume();
 		return new TrueSentence();
-
 	}
 
 	private FalseSentence parseFalse() {
 		consume();
 		return new FalseSentence();
-
 	}
 
 	private Symbol parseSymbol() {

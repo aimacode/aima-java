@@ -8,6 +8,14 @@ import java.util.Set;
 import aima.core.logic.fol.kb.data.Clause;
 
 /**
+ * /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 345.
+ * 
+ * The subsumption method eliminates all sentences that are subsumed by (that
+ * is, more specific than) an existing sentence in the KB. For example, P(x) is in the KB, then
+ * there is no sense in adding P(A) and even less sense in adding P(A) V Q(B). Subsumption
+ * helps keep the KB small and thus helps keep the search space small.
+ * 
  * Note: From slide 17.  
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture12.pdf
  * 

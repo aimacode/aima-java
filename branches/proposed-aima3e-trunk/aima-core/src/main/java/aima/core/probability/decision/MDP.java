@@ -9,7 +9,6 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-
 public class MDP<STATE_TYPE, ACTION_TYPE> {
 	private STATE_TYPE initialState;
 
@@ -130,18 +129,6 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	}
 
-	private double valueIterateOnceForGivenState(double gamma,
-			MDPUtilityFunction<STATE_TYPE> presentUtilityFunction,
-			STATE_TYPE state) {
-		Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
-				.getTransitionWithMaximumExpectedUtility(state,
-						presentUtilityFunction);
-		double utility = rewardFunction.getRewardFor(state)
-				+ (gamma * highestUtilityTransition.getSecond());
-
-		return utility;
-	}
-
 	public MDPPolicy<STATE_TYPE, ACTION_TYPE> policyIteration(double gamma) {
 		MDPUtilityFunction<STATE_TYPE> U = initialUtilityFunction();
 		MDPPolicy<STATE_TYPE, ACTION_TYPE> pi = randomPolicy();
@@ -174,25 +161,6 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 			U_dash = valueIterateOnceWith(gamma, pi, U_dash);
 		}
-		return U_dash;
-	}
-
-	private MDPUtilityFunction<STATE_TYPE> valueIterateOnceWith(double gamma,
-			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
-			MDPUtilityFunction<STATE_TYPE> U) {
-		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
-		for (STATE_TYPE s : nonFinalstates) {
-
-			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
-					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
-							U);
-			double utility = rewardFunction.getRewardFor(s)
-					+ (gamma * highestPolicyTransition.getSecond());
-			U_dash.setUtility(s, utility);
-
-		}
-		// System.out.println("ValueIterationOnce before " + U);
-		// System.out.println("ValueIterationOnce after " + U_dash);
 		return U_dash;
 	}
 
@@ -262,5 +230,39 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 				+ "\n transitionModel = " + transitionModel.toString()
 				+ "\n states = " + nonFinalstates.toString();
 	}
+	
+	//
+	// PRIVATE METHODS
+	// 
+	
+	private double valueIterateOnceForGivenState(double gamma,
+			MDPUtilityFunction<STATE_TYPE> presentUtilityFunction,
+			STATE_TYPE state) {
+		Pair<ACTION_TYPE, Double> highestUtilityTransition = transitionModel
+				.getTransitionWithMaximumExpectedUtility(state,
+						presentUtilityFunction);
+		double utility = rewardFunction.getRewardFor(state)
+				+ (gamma * highestUtilityTransition.getSecond());
 
+		return utility;
+	}
+
+	private MDPUtilityFunction<STATE_TYPE> valueIterateOnceWith(double gamma,
+			MDPPolicy<STATE_TYPE, ACTION_TYPE> pi,
+			MDPUtilityFunction<STATE_TYPE> U) {
+		MDPUtilityFunction<STATE_TYPE> U_dash = U.copy();
+		for (STATE_TYPE s : nonFinalstates) {
+
+			Pair<ACTION_TYPE, Double> highestPolicyTransition = transitionModel
+					.getTransitionWithMaximumExpectedUtilityUsingPolicy(pi, s,
+							U);
+			double utility = rewardFunction.getRewardFor(s)
+					+ (gamma * highestPolicyTransition.getSecond());
+			U_dash.setUtility(s, utility);
+
+		}
+		// System.out.println("ValueIterationOnce before " + U);
+		// System.out.println("ValueIterationOnce after " + U_dash);
+		return U_dash;
+	}
 }

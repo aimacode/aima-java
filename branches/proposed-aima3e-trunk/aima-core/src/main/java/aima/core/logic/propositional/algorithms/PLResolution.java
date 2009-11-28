@@ -23,7 +23,6 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-
 public class PLResolution {
 
 	public boolean plResolution(KnowledgeBase kb, String alpha) {
@@ -64,6 +63,29 @@ public class PLResolution {
 
 	}
 
+	public Set<Sentence> plResolve(Sentence clause1, Sentence clause2) {
+		Set<Sentence> resolvents = new HashSet<Sentence>();
+		ClauseSymbols cs = new ClauseSymbols(clause1, clause2);
+		Iterator iter = cs.getComplementedSymbols().iterator();
+		while (iter.hasNext()) {
+			Symbol symbol = (Symbol) iter.next();
+			resolvents.add(createResolventClause(cs, symbol));
+		}
+
+		return resolvents;
+	}
+	
+	public boolean plResolution(String kbs, String alphaString) {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell(kbs);
+		Sentence alpha = (Sentence) new PEParser().parse(alphaString);
+		return plResolution(kb, alpha);
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+
 	private Set<Sentence> filterOutClausesWithTwoComplementaryLiterals(
 			Set<Sentence> clauses) {
 		Set<Sentence> filtered = new HashSet<Sentence>();
@@ -81,19 +103,7 @@ public class PLResolution {
 		}
 		return filtered;
 	}
-
-	public Set<Sentence> plResolve(Sentence clause1, Sentence clause2) {
-		Set<Sentence> resolvents = new HashSet<Sentence>();
-		ClauseSymbols cs = new ClauseSymbols(clause1, clause2);
-		Iterator iter = cs.getComplementedSymbols().iterator();
-		while (iter.hasNext()) {
-			Symbol symbol = (Symbol) iter.next();
-			resolvents.add(createResolventClause(cs, symbol));
-		}
-
-		return resolvents;
-	}
-
+	
 	private Sentence createResolventClause(ClauseSymbols cs, Symbol toRemove) {
 		List<Symbol> positiveSymbols = new Converter<Symbol>().setToList(SetOps
 				.union(cs.clause1PositiveSymbols, cs.clause2PositiveSymbols));
@@ -184,12 +194,5 @@ public class PLResolution {
 					negativeInClause1PositiveInClause2);
 		}
 
-	}
-
-	public boolean plResolution(String kbs, String alphaString) {
-		KnowledgeBase kb = new KnowledgeBase();
-		kb.tell(kbs);
-		Sentence alpha = (Sentence) new PEParser().parse(alphaString);
-		return plResolution(kb, alpha);
 	}
 }

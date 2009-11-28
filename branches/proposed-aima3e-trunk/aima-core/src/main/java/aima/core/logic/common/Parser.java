@@ -4,7 +4,6 @@ package aima.core.logic.common;
  * @author Ravi Mohan
  * 
  */
-
 public abstract class Parser {
 
 	protected Lexer lexer;
@@ -12,6 +11,8 @@ public abstract class Parser {
 	protected Token[] lookAheadBuffer;
 
 	protected int lookAhead = 3;
+	
+	public abstract ParseTreeNode parse(String input);
 
 	protected void fillLookAheadBuffer() {
 		for (int i = 0; i < lookAhead; i++) {
@@ -63,7 +64,4 @@ public abstract class Parser {
 		}
 
 	}
-
-	public abstract ParseTreeNode parse(String input);
-
 }

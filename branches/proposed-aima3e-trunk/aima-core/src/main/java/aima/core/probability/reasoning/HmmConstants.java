@@ -4,7 +4,6 @@ package aima.core.probability.reasoning;
  * @author Ravi Mohan
  * 
  */
-
 public class HmmConstants {
 	public static final String PUSH_DOOR = "push";
 
@@ -25,5 +24,4 @@ public class HmmConstants {
 	public static final String SEE_UMBRELLA = "carries_umbrella";
 
 	public static final String SEE_NO_UMBRELLA = "does_not_carry_umbrella";
-
 }

@@ -8,7 +8,6 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * @author Ravi Mohan
  * 
  */
-
 public class MultiSentence extends ComplexSentence {
 	private String operator;
 
@@ -64,5 +63,4 @@ public class MultiSentence extends ComplexSentence {
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitMultiSentence(this, arg);
 	}
-
 }

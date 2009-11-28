@@ -15,7 +15,6 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  * @author Ravi Mohan
  * 
  */
-
 public class AbstractPLVisitor implements PLVisitor {
 	private PEParser parser = new PEParser();
 
@@ -54,5 +53,4 @@ public class AbstractPLVisitor implements PLVisitor {
 	protected Sentence recreate(Object ast) {
 		return (Sentence) parser.parse(((Sentence) ast).toString());
 	}
-
 }

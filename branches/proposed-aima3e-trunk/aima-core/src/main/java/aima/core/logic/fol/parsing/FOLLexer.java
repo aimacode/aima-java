@@ -108,5 +108,4 @@ public class FOLLexer extends Lexer {
 		return (lookAhead(1) == '=') || (lookAhead(1) == '<')
 				|| (lookAhead(1) == '>');
 	}
-
 }

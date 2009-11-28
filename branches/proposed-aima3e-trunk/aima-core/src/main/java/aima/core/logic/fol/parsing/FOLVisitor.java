@@ -30,5 +30,4 @@ public interface FOLVisitor {
 
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg);
-
 }

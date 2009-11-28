@@ -12,7 +12,6 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-
 public class PositiveSymbolCollector extends BasicTraverser {
 	@Override
 	public Object visitSymbol(Symbol symbol, Object arg) {

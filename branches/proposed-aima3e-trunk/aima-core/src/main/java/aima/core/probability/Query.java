@@ -6,7 +6,6 @@ import java.util.Hashtable;
  * @author Ravi Mohan
  * 
  */
-
 public class Query {
 
 	private String queryVariable;

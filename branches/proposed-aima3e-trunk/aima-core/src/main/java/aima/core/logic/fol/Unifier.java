@@ -12,7 +12,7 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.1, page 278.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.1, page 328.
  * 
  * <pre>
  * function UNIFY(x, y, theta) returns a substitution to make x and y identical
@@ -25,18 +25,15 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
  *   else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
  *   else if COMPOUND?(x) and COMPOUND?(y) then
- *       return UNIFY(ARGS[x], ARGS[y], UNIFY(OP[x], OP[y], theta))
+ *       return UNIFY(x.ARGS, y.ARGS, UNIFY(x.OP, y.OP, theta))
  *   else if LIST?(x) and LIST?(y) then
- *       return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
+ *       return UNIFY(x.REST, y.REST, UNIFY(x.FIRST, y.FIRST, theta))
  *   else return failure
  *   
- * -------------------------------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------------------------------
  * 
  * function UNIFY-VAR(var, x, theta) returns a substitution
- *   inputs: var, a variable
- *           x, any expression
- *           theta, the substitution built up so far
- *           
+ *            
  *   if {var/val} E theta then return UNIFY(val, x, theta)
  *   else if {x/val} E theta then return UNIFY(var, val, theta)
  *   else if OCCUR-CHECK?(var, x) then return failure
@@ -46,8 +43,8 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * Figure 9.1 The unification algorithm. The algorithm works by comparing the structures
  * of the inputs, elements by element. The substitution theta that is the argument to UNIFY is built
  * up along the way and is used to make sure that later comparisons are consistent with bindings
- * that were established earlier. In a compound expression, such as F(A, B), the function OP
- * picks out the function symbol F and the function ARGS picks out the argument list (A, B).
+ * that were established earlier. In a compound expression, such as F(A, B), the OP field picks
+ * out the function symbol F and the ARGS field picks out the argument list (A, B).
  */
 
 /**
@@ -77,8 +74,8 @@ public class Unifier {
 	 * </code>
 	 * 
 	 * @return a Map<Variable, Term> representing the substitution (i.e. a set
-	 *         of variable/term pairs, see pg. 254 for a description) or null
-	 *         which is used to indicate a failure to unify.
+	 *         of variable/term pairs) or null which is used to indicate a
+	 *         failure to unify.
 	 */
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y,
 			Map<Variable, Term> theta) {
@@ -96,7 +93,7 @@ public class Unifier {
 			return unifyVar((Variable) y, x, theta);
 		} else if (isCompound(x) && isCompound(y)) {
 			// else if COMPOUND?(x) and COMPOUND?(y) then
-			// return UNIFY(ARGS[x], ARGS[y], UNIFY(OP[x], OP[y], theta))
+			// return UNIFY(x.ARGS, y.ARGS, UNIFY(x.OP, y.OP, theta))
 			return unify(args(x), args(y), unifyOps(op(x), op(y), theta));
 		} else {
 			// else return failure
@@ -105,7 +102,7 @@ public class Unifier {
 	}
 
 	// else if LIST?(x) and LIST?(y) then
-	// return UNIFY(REST[x], REST[y], UNIFY(FIRST[x], FIRST[y], theta))
+	// return UNIFY(x.REST, y.REST, UNIFY(x.FIRST, y.FIRST, theta))
 	public Map<Variable, Term> unify(List<? extends FOLNode> x,
 			List<? extends FOLNode> y, Map<Variable, Term> theta) {
 		if (theta == null) {
