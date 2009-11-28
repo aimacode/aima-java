@@ -83,7 +83,8 @@ public class VacuumApp extends SimpleAgentApp {
 
 		/** Checks whether the specified location is dirty. */
 		public boolean isDirty(VacuumEnvironment.Location location) {
-			return VacuumEnvironment.LocationState.Dirty == env.getLocationState(location);
+			return VacuumEnvironment.LocationState.Dirty == env
+					.getLocationState(location);
 		}
 
 		/** Checks whether the agent is currently at the specified location. */
@@ -106,11 +107,9 @@ public class VacuumApp extends SimpleAgentApp {
 					"Select Environment", "Select Agent" });
 			setSelectorItems(ENV_SEL, new String[] { "A/B Environment" }, 0);
 			setSelectorItems(AGENT_SEL, new String[] {
-					"TableDrivenVaccumAgent",
-					"ReflexVaccumAgent",
-					"SimpleReflexVaccumAgent", 
-					"ModelBasedReflexVaccumAgent"
-					}, 0);
+					"TableDrivenVaccumAgent", "ReflexVaccumAgent",
+					"SimpleReflexVaccumAgent", "ModelBasedReflexVaccumAgent" },
+					0);
 			setTitle("Vacuum Agent Application");
 			setSize(800, 400);
 			setUpdateDelay(500);

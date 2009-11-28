@@ -49,7 +49,7 @@ public class SimpleAgentApp {
 				new String[] { "Y=1", "Y=2", "Y=3" }, 0);
 		result.setTitle("Demo Agent Application");
 		result.setSplitPaneResizeWeight(0.5); // puts split bar in center
-												// position.
+		// position.
 		result.setSize(600, 400);
 		result.setUpdateDelay(500);
 		return result;

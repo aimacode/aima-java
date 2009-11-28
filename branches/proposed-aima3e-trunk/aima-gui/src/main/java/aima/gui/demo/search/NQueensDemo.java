@@ -51,7 +51,7 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo recursive DLS -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
 			Search search = new DepthLimitedSearch(8);
@@ -68,7 +68,7 @@ public class NQueensDemo {
 		try {
 			System.out.println("\nNQueensDemo BFS -->");
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
 			Search search = new BreadthFirstSearch(new TreeSearch());
@@ -85,8 +85,8 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo DFS -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
-					NQueensFunctionFactory.getResultFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
+					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
 			Search search = new DepthFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -101,7 +101,7 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo Iterative DS  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
 			Search search = new IterativeDeepeningSearch();
@@ -119,10 +119,11 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
-			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(new QueensToBePlacedHeuristic());
+			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(
+					new QueensToBePlacedHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();
@@ -139,10 +140,11 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
 			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(), 
-					NQueensFunctionFactory.getResultFunction(), 
+					NQueensFunctionFactory.getActionsFunction(),
+					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
-			HillClimbingSearch search = new HillClimbingSearch(new QueensToBePlacedHeuristic());
+			HillClimbingSearch search = new HillClimbingSearch(
+					new QueensToBePlacedHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();

@@ -117,7 +117,8 @@ public class SearchFactory {
 			result = new AStarSearch(qs, hf);
 			break;
 		case RBF_SEARCH:
-			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(hf));
+			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(
+					hf));
 			break;
 		case HILL_SEARCH:
 			result = new HillClimbingSearch(hf);

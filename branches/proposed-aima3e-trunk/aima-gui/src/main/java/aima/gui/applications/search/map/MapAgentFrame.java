@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.gui.applications.search.SearchFactory;
 import aima.core.environment.map.Map;
 import aima.core.util.datastructure.Point2D;
+import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentView;
 

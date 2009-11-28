@@ -6,7 +6,6 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
-import aima.core.agent.Percept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.Scenario;
@@ -40,9 +39,9 @@ public class MapAgentModel extends AgentAppModel {
 	public void clearTourHistory() {
 		tourHistory.clear();
 	}
-	
+
 	@Override
-	public void agentAdded(Agent agent, Percept perceives) {
+	public void agentAdded(Agent agent, EnvironmentState state) {
 		String loc = scenario.getEnv().getAgentLocation(agent);
 		tourHistory.add(loc);
 		fireModelChanged();
@@ -52,16 +51,17 @@ public class MapAgentModel extends AgentAppModel {
 	 * Reacts on environment changes and updates the tour history. The command
 	 * string is always send to all registered model change listeners. If the
 	 * command is a location name (with attached position info) or
-	 * {@link aima.core.agent.impl.AbstractAgent#NO_OP}, the agent's current location is
-	 * added to the tour history and all listeners are informed about the
-	 * change.
+	 * {@link aima.core.agent.impl.AbstractAgent#NO_OP}, the agent's current
+	 * location is added to the tour history and all listeners are informed
+	 * about the change.
 	 */
 	@Override
 	public void agentActed(Agent agent, Action command, EnvironmentState state) {
 		for (AgentAppModel.ModelChangedListener listener : listeners) {
 			listener.logMessage(command.toString());
 		}
-		if (command.isNoOp() || getLocCoords(((MoveToAction)command).getToLocation()) != null) {
+		if (command.isNoOp()
+				|| getLocCoords(((MoveToAction) command).getToLocation()) != null) {
 			String loc = scenario.getEnv().getAgentLocation(agent);
 			tourHistory.add(loc);
 			fireModelChanged();

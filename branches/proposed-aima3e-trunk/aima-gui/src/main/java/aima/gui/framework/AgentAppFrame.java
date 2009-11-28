@@ -248,17 +248,17 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		JPanel statusPanel = new JPanel(new BorderLayout());
 		statusLabel = new JLabel("");
 		statusLabel.setBorder(new javax.swing.border.EtchedBorder()); // BevelBorder
-																		// (
-																		// javax
-																		// .
-																		// swing
-																		// .
-																		// border
-																		// .
-																		// BevelBorder
-																		// .
-																		// RAISED
-																		// ));
+		// (
+		// javax
+		// .
+		// swing
+		// .
+		// border
+		// .
+		// BevelBorder
+		// .
+		// RAISED
+		// ));
 		statusPanel.add(statusLabel, BorderLayout.CENTER);
 		cancelButton = new JButton("Cancel");
 		cancelButton.setToolTipText("Cancel Agent");
@@ -273,17 +273,17 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	/** Responsible for creating all popup menus. */
 	protected void createPopups() {
 		JPopupMenu popup = new JPopupMenu();
-	    JMenuItem menuItem = new JMenuItem("Clear");
-	    menuItem.addActionListener(new ActionListener() {
+		JMenuItem menuItem = new JMenuItem("Clear");
+		menuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				textArea.setText("");
 			}
-	    });
-	    popup.add(menuItem);
-	    textArea.addMouseListener(new PopupShower(popup));
+		});
+		popup.add(menuItem);
+		textArea.addMouseListener(new PopupShower(popup));
 	}
-	
+
 	/** Enables/disables all combos and buttons. */
 	private void setButtonsEnabled(boolean b) {
 		clearButton.setEnabled(b);
@@ -516,8 +516,9 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	}
 
 	/**
-	 * Useful helper class for showing popup menus. The
-	 * idea is taken from the java tutorial "How to Use Menus".
+	 * Useful helper class for showing popup menus. The idea is taken from the
+	 * java tutorial "How to Use Menus".
+	 * 
 	 * @author R. Lunde
 	 */
 	public static class PopupShower extends MouseAdapter {
@@ -526,20 +527,22 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		public PopupShower(JPopupMenu popup) {
 			this.popup = popup;
 		}
-	    public void mousePressed(MouseEvent e) {
-	        maybeShowPopup(e);
-	    }
-	    public void mouseReleased(MouseEvent e) {
-	        maybeShowPopup(e);
-	    }
-	    private void maybeShowPopup(MouseEvent e) {
-	        if (e.isPopupTrigger()) {
-	            popup.show(e.getComponent(), e.getX(), e.getY());
-	        }
-	    }
+
+		public void mousePressed(MouseEvent e) {
+			maybeShowPopup(e);
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			maybeShowPopup(e);
+		}
+
+		private void maybeShowPopup(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
 	}
-	
-	
+
 	// ///////////////////////////////////////////////////////////////
 	// for testing...
 

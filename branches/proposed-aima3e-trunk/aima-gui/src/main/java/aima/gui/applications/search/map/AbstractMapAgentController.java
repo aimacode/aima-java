@@ -52,8 +52,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
 				state.getValue(MapAgentFrame.SEARCH_SEL),
-				state.getValue(MapAgentFrame.SEARCH_MODE_SEL),
-				heuristic);
+				state.getValue(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
 		scenario.getEnv().addEnvironmentView(model);
 	}
 
@@ -66,7 +65,8 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		startAgent();
 		List<Agent> agents = scenario.getEnv().getAgents();
 		if (agents.size() == 1) {
-			Double travelDistance = scenario.getEnv().getAgentTravelDistance(agents.get(0));
+			Double travelDistance = scenario.getEnv().getAgentTravelDistance(
+					agents.get(0));
 			StringBuffer statusMsg = new StringBuffer();
 			statusMsg.append("Task completed");
 			if (travelDistance != null) {

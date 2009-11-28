@@ -2,7 +2,6 @@ package aima.gui.applications.search.map;
 
 import java.util.ArrayList;
 
-import aima.gui.applications.search.SearchFactory;
 import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
@@ -11,6 +10,7 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.datastructure.Point2D;
+import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.AgentAppModel;
@@ -19,10 +19,10 @@ import aima.gui.framework.SimpleAgentApp;
 /**
  * Demo example of a route planning agent application with GUI. The main method
  * starts a map agent frame and supports runtime experiments. This
- * implementation is based on the {@link aima.core.environment.map.MapAgent} and the
- * {@link aima.core.environment.map.MapEnvironment}. It can be used as a code
- * template for creating new applications with different specialized kinds of
- * agents and environments.
+ * implementation is based on the {@link aima.core.environment.map.MapAgent} and
+ * the {@link aima.core.environment.map.MapEnvironment}. It can be used as a
+ * code template for creating new applications with different specialized kinds
+ * of agents and environments.
  * 
  * @author R. Lunde
  */
@@ -198,7 +198,8 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 			default:
 				ahf = new H2();
 			}
-			return ahf.getAdaptation(destinations.get(0), scenario.getAgentMap());
+			return ahf.getAdaptation(destinations.get(0), scenario
+					.getAgentMap());
 		}
 
 		/**

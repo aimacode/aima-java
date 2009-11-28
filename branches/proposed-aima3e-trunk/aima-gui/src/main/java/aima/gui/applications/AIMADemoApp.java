@@ -1,24 +1,24 @@
 package aima.gui.applications;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import java.awt.Point;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JMenuItem;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JFrame;
-import javax.swing.JDialog;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-
-import java.awt.Dimension;
 
 public class AIMADemoApp {
 
@@ -39,23 +39,26 @@ public class AIMADemoApp {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-				    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				        if ("Nimbus".equals(info.getName())) {
-				            UIManager.setLookAndFeel(info.getClassName());
-				            break;
-				        }
-				    }
+					for (LookAndFeelInfo info : UIManager
+							.getInstalledLookAndFeels()) {
+						if ("Nimbus".equals(info.getName())) {
+							UIManager.setLookAndFeel(info.getClassName());
+							break;
+						}
+					}
 				} catch (Exception e) {
 					try {
-						// If Nimbus is not available, you can set the GUI to another look and feel.
-						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+						// If Nimbus is not available, you can set the GUI to
+						// another look and feel.
+						UIManager.setLookAndFeel(UIManager
+								.getSystemLookAndFeelClassName());
 					} catch (Exception ex) {
 						// I tried!
 					}
 				}
 			}
 		});
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				AIMADemoApp application = new AIMADemoApp();
@@ -70,9 +73,11 @@ public class AIMADemoApp {
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(getJJMenuBar());
 			jFrame.setPreferredSize(new Dimension(800, 600));
-			jFrame.setSize(jFrame.getPreferredSize().width, jFrame.getPreferredSize().height);
+			jFrame.setSize(jFrame.getPreferredSize().width, jFrame
+					.getPreferredSize().height);
 			jFrame.setContentPane(getJContentPane());
-			jFrame.setTitle("Artificial Intelligence a Modern Approach 3rd ed. (AIMA3e) Java Demos");
+			jFrame
+					.setTitle("Artificial Intelligence a Modern Approach 3rd ed. (AIMA3e) Java Demos");
 		}
 		return jFrame;
 	}
@@ -188,7 +193,7 @@ public class AIMADemoApp {
 		}
 		return viewDemoExplorerMenuItem;
 	}
-	
+
 	private TreeModel getDemoApps() {
 		// Search
 		// - Vaccum World
