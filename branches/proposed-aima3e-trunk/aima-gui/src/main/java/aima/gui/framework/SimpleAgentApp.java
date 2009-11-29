@@ -1,5 +1,8 @@
 package aima.gui.framework;
 
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+
 /**
  * In this framework a graphical agent application consists of at least three
  * parts: An {@link AgentAppModel}, an {@link AgentAppFrame}, and an
@@ -24,8 +27,29 @@ public class SimpleAgentApp {
 		controller.setFrame(frame);
 		controller.setModel(model);
 		model.addModelChangedListener(frame);
+		
+		JFrame mainAppFrame = new JFrame();
+		mainAppFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent evt) {
+				System.exit(0);
+			}
+		});
+		mainAppFrame.setSize(frame.getSize());
+		JDesktopPane desktop = new JDesktopPane();
+		mainAppFrame.setContentPane(desktop);
+		desktop.add(frame);
+
+		try {
+			frame.setMaximum(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		frame.setVisible(true);
 		frame.setDefaultSelection();
+		
+		mainAppFrame.setVisible(true);
+		mainAppFrame.setTitle("AIMA : "+frame.getTitle());
 	}
 
 	/** Factory method, responsible for creating the model. */
