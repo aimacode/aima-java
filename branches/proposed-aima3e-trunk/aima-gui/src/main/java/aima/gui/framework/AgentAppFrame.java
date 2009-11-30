@@ -37,7 +37,7 @@ import javax.swing.SwingUtilities;
  * 
  * @author R. Lunde
  */
-public class AgentAppFrame extends javax.swing.JInternalFrame implements
+public class AgentAppFrame extends javax.swing.JFrame implements
 		AgentAppModel.ModelChangedListener {
 
 	/** The controller, which executes the domain-level commands. */
@@ -201,6 +201,12 @@ public class AgentAppFrame extends javax.swing.JInternalFrame implements
 
 	/** Assembles the inner structure of the frame. */
 	private void initComponents() {
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent evt) {
+				System.exit(0);
+			}
+		});
 		toolbar = new JToolBar();
 		// toolbar.setFloatable(false);
 		selectors = new SelectorContainer();
