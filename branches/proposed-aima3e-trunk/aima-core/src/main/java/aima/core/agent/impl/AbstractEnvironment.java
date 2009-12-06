@@ -13,13 +13,14 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentObject;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
+import aima.core.agent.NotifyEnvironmentViews;
 import aima.core.agent.Percept;
 
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public abstract class AbstractEnvironment implements Environment {
+public abstract class AbstractEnvironment implements Environment, NotifyEnvironmentViews {
 
 	// Note: Use LinkedHashSet's in order to ensure order is respected as
 	// provide

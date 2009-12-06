@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.agent.NotifyEnvironmentViews;
 import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
@@ -18,7 +19,9 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
  * 
  */
 public class MapAgent extends SimpleProblemSolvingAgent {
-	private MapEnvironment mapEnvironment = null;
+	private Map map = null;
+	
+	private NotifyEnvironmentViews notifier = null;
 
 	private DynamicState state = new DynamicState();
 
@@ -28,22 +31,25 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	private int goalTestPos = 0;
 
-	public MapAgent(MapEnvironment mapEnvironment, Search search) {
-		this.mapEnvironment = mapEnvironment;
+	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search) {
+		this.map = map;
+		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public MapAgent(MapEnvironment mapEnvironment, Search search,
+	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search,
 			int maxGoalsToFormulate) {
 		super(maxGoalsToFormulate);
-		this.mapEnvironment = mapEnvironment;
+		this.map = map;
+		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public MapAgent(MapEnvironment mapEnvironment, Search search,
+	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search,
 			String[] goalTests) {
 		super(goalTests.length);
-		this.mapEnvironment = mapEnvironment;
+		this.map = map;
+		this.notifier = notifier;
 		this.search = search;
 		this.goalTests = new String[goalTests.length];
 		System.arraycopy(goalTests, 0, this.goalTests, 0, goalTests.length);
@@ -66,12 +72,12 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	protected Object formulateGoal() {
 		Object goal = null;
 		if (null == goalTests) {
-			goal = mapEnvironment.getMap().randomlyGenerateDestination();
+			goal = map.randomlyGenerateDestination();
 		} else {
 			goal = goalTests[goalTestPos];
 			goalTestPos++;
 		}
-		mapEnvironment.notifyViews("CurrentLocation=In("
+		notifier.notifyViews("CurrentLocation=In("
 				+ state.getAttribute(DynAttributeNames.AGENT_LOCATION)
 				+ "), Goal=In(" + goal + ")");
 
@@ -80,7 +86,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected Problem formulateProblem(Object goal) {
-		return new BidirectionalMapProblem(mapEnvironment.getMap(),
+		return new BidirectionalMapProblem(map,
 				(String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
 				(String) goal);
 	}
@@ -103,7 +109,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	protected void notifyViewOfMetrics() {
 		Set<String> keys = search.getMetrics().keySet();
 		for (String key : keys) {
-			mapEnvironment.notifyViews("METRIC[" + key + "]="
+			notifier.notifyViews("METRIC[" + key + "]="
 					+ search.getMetrics().get(key));
 		}
 	}
