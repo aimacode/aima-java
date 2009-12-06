@@ -217,7 +217,7 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 			frame.logMessage("search: " + search.getClass().getName());
 			MapEnvironment env = scenario.getEnv();
 			String goal = destinations.get(0);
-			MapAgent agent = new MapAgent(env, search, new String[] { goal });
+			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
 			if (heuristic != null) {
 				frame
 						.logMessage("heuristic: "
