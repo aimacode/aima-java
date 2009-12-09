@@ -59,7 +59,7 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
 	// failure/cutoff
 	/**
-	 * @param problem
+	 * @param p
 	 * @return if goal found, the list of actions to the Goal. If already at the
 	 *         goal you will receive a List with a single NoOp Action in it. If
 	 *         fail to find the Goal, an empty list will be returned to indicate

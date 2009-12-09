@@ -24,7 +24,7 @@ public interface StepCostFunction {
 	 * 
 	 * @param sPrime
 	 *            the state reached by taking the action.
-	 * @return
+	 * @return the cost of taking action a in state s to reach state s'.
 	 */
 	double c(Object s, Action a, Object sPrime);
 }
