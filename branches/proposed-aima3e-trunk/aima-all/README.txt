@@ -4,7 +4,7 @@ Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
 = Introduction =
 The latest (and ever evolving) code can be found at:<br>
 
-http://code.google.com/p/aima-java/source/browse/trunk
+http://aima-java.googlecode.com/svn/trunk/
 
 == Current Release: 1.0.0-AIMA3e Published ==
 1.0.0-AIMA3e Published : 12/10/2009 :<br>
