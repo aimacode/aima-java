@@ -8,8 +8,7 @@ import java.util.Set;
 import aima.core.logic.fol.kb.data.Clause;
 
 /**
- * /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 345.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 356.
  * 
  * The subsumption method eliminates all sentences that are subsumed by (that
  * is, more specific than) an existing sentence in the KB. For example, P(x) is in the KB, then

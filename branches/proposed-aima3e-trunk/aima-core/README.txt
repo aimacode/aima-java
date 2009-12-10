@@ -14,6 +14,7 @@ updates have been included in this release:<br>
   * Agent package defined now in terms of interfaces as opposed to
     abstract classes.
   ** Added explicit Action interface.
+  ** General improvements/enhancements across all the APIs.
   * All algorithms from chapters 1-4 have been updated to reflect
     changes in their description in AIMA3e. Primarily this involved
     splitting the Successor function concept from AIMA2e into 
@@ -49,104 +50,98 @@ Note: Many IDE's have built in ant versions. So you may want to try that first.
 Included in the aima-core directory are .classpath and .project files for the [http://www.eclipse.org Eclipse] IDE.
 
 == Index of Implemented Algorithms ==
-|| *Fig* || *Page* || *Name (in book)*           || *Code* ||
-||   2   ||      34|| Environment                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/Environment.java Environment]||
-||   2.1 ||      35|| Agent                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/Agent.java Agent]||
-||   2.3 ||      36|| Table-Driven-Vacuum-Agent  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/environment/vacuum/TableDrivenVacuumAgent.java TableDrivenVacuumAgent]||
-||   2.7 ||      47|| Table-Driven-Agent         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java TableDrivenAgent]||
-||   2.8 ||      48|| Reflex-Vacuum-Agent        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/environment/vacuum/ReflexVacuumAgent.java ReflexVacuumAgent]||
-||   2.10||      49|| Simple-Reflex-Agent        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
-||   2.12||      51|| Model-Based-Reflex-Agent   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java ModelBasedReflexAgentProgram]||
-||3.1||61||Simple-Problem-Solving-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
-||3||62||Problem||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Problem.java Problem]||
-||3.2||63||Romania||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
-||3||69||Node||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/Node.java Node]||
-||3.7||70||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
-||3||71||Queue||[http://aima-java.googlecode.com/svn/trunk/src/aima/util/AbstractQueue.java AbstractQueue]||
-||3.9||72||Tree-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/TreeSearch.java TreeSearch]||
-||3||73||Breadth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BreadthFirstSearch.java BreadthFirstSearch]||
-||3||75||Uniform-cost-search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/UniformCostSearch.java UniformCostSearch]||
-||3||75||Depth-first search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthFirstSearch.java DepthFirstSearch]||
-||3.13||77||Depth-Limited-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/DepthLimitedSearch.java DepthLimitedSearch]||
-||3.14||78||Iterative-Deepening-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/IterativeDeepeningSearch.java Iterative Deepening Search]||
-||3||79||Bidirectional-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/uninformed/BidirectionalSearch.java BidirectionalSearch]||
-||3.19||83||Graph-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/GraphSearch.java GraphSearch]||
-||4||95||Best-First-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/framework/BestFirstSearch.java BestFirstSearch]||
-||4||97||A`*`-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/AStarSearch.java AStarSearch]||
-||4.5||102||Recursive-Best-First-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
-||4.11||112||Hill-Climbing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/HillClimbingSearch.java HillClimbingSearch]||
-||4.14||116||Simulated-Annealing||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
-||4.17||119||Genetic-Algorithm||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/informed/ga/GeneticAlgorithm.java GeneticAlgorithm]||
-||4.20||126||Online-DFS-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/online/OnlineDFSAgent.java OnlineDFSAgent]||
-||4.23||128||LRTA`*`-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/online/LRTAStarAgent.java LRTAStarAgent]||
-||5||137||CSP||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java CSP]||
-||5.3||142||Backtracking-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java (method)-backtrackingSearch()]||
-||5.7||146||AC-3||---||
-||5.8||151||Min-Conflicts||[http://aima-java.googlecode.com/svn/trunk/src/aima/search/csp/CSP.java (method)-mcSearch()]||
-||6.3||166||Minimax-Decision||[http://aima-java.googlecode.com/svn/trunk/src/aima/games/Game.java (method)-makeMiniMaxMove()]||
-||6.7||170||Alpha-Beta-Search||[http://aima-java.googlecode.com/svn/trunk/src/aima/games/Game.java -(method)-makeAlphaBetaMove()]||
-||7||195||KB||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/KnowledgeBase.java KnowledgeBase]||
-||7.1||196||KB-Agent||---||
-||7.7||205||Propositional-Logic-Sentence||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/parsing/ast/Sentence.java Sentence]||
-||7.10||209||TT-Entails||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/TTEntails.java TTEntails]||
-||7||215||Convert-to-CNF||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/visitors/CNFTransformer.java CNFTransformer]||
-||7.12||216||PL-Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/PLResolution.java PLResolution]||
-||7.14||219||PL-FC-Entails?||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/PLFCEntails.java PLFCEntails]||
-||7.16||222||DPLL-Satisfiable?||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/DPLL.java (method)-dpllSatisfiable(String)]||
-||7.17||223||WalkSAT||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/propositional/algorithms/WalkSAT.java WalkSAT]||
-||7.19||226||PL-Wumpus-Agent||---||
-||9||273||Subst||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/SubstVisitor.java SubstVisitor]||
-||9.1||278||Unify||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/Unifier.java Unifier]||
-||9.3||282||FOL-FC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
-||9.6||288||FOL-BC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLBCAsk.java FOLBCAsk]||
-||9||295||CNF||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/CNFConverter.java CNFConverter]||
-||9||297||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLTFMResolution.java FOLTFMResolution]||
-||9||304||Demodulation||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Demodulation.java Demodulation]||
-||9||304||Resolution||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/Paramodulation.java Paramodulation]||
-||9.14||307||Otter||[http://aima-java.googlecode.com/svn/trunk/src/aima/logic/fol/inference/FOLOTTERLikeTheoremProver.java FOLOTTERLikeTheoremProver]||
-||11.2||380||Airport-problem||---||
-||11.3||381||Spare-Tire-Problem||---||
-||11.4||383||Three-Block-Tower||---||
-||11||390||Partial-Order-Planner||---||
-||11.11||396||Cake-Problem||---||
-||11.13||399||Graphplan||---||
-||11.15||403||SATPlan||---||
-||12.1||418||Job-Shop-Problem||---||
-||12.3||421||Job-Shop-Problem-With-Resources||---||
-||12.6||424||House-Building-Problem||---||
-||12.10||435||And-Or-Graph-Search||---||
-||12.22||449||Continuous-POP-Agent||---||
-||12.23||450||Doubles-tennis||---||
-||13.1||466||DT-Agent||---||
-||13||469||Discrete-Probability-Distribution||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/ProbabilityDistribution.java ProbabilityDistribution]||
-||13.4||477||Enumerate-Joint-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/EnumerateJointAsk.java EnumerateJointAsk]||
-||14.10||509||Elimination-Ask||---||
-||14.12||512||Prior-Sample||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/BayesNet.java (method)-getPriorSample()]||
-||14.13||513||Rejection-Sampling||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/BayesNet.java (method)-rejectionSample(String X, Hashtable evidence,int numberOfSamples, Randomizer r) ]||
-||14.14||515||Likelihood-Weighting||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/BayesNet.java (method)-likelihoodWeighting()]||
-||14.15||517||MCMC-Ask||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/BayesNet.java (method)-mcmcAsk]||
-||15.4||546||Forward-Backward||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/reasoning/HiddenMarkovModel.java (method)-forwardbackWard()]||
-||15.6||552||Fixed-Lag-Smoothing||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/reasoning/FixedLagSmoothing.java FixedLagSmoothing]||
-||15.15||566||Particle-Filtering||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/reasoning/ParticleSet.java (method)-filter()]||
-||16.8||603||Information-Gathering-Agent||---||
-||17.4||621||Value-Iteration||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/decision/MDP.java (multiple overloaded methods)]||
-||17.7||624||Policy-Iteration||[http://aima-java.googlecode.com/svn/trunk/src/aima/probability/decision/MDP.java (method)-policyIteration]||
-||18.5||658||Decision-Tree-Learning||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/learners/DecisionTreeLearner.java DecisiontreeLearner]||
-||18.10||667||AdaBoost||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/learners/AdaBoostLearner.java AdaBoostLearner]||
-||18.14||672||Decision-List-Learning||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/learners/DecisionListLearner.java DecisionListLearner]||
-||19.2||681||Current-Best-Learning||---||
-||19.3||683||Version-Space-Learning||---||
-||19.8||696||Minimal-Consistent-Det||---||
-||19.12||702||FOIL||---||
-||20.21||742||Perceptron-Learning||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/neural/Perceptron.java PerceptronLearning]||
-||20.25||746||Back-Prop-Learning||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/neural/BackPropLearning.java StandardBackPropogation]||
-||21.2||768||Passive-ADP-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/reinforcement/PassiveADPAgent.java PassiveADPAgent]||
-||21.4||769||Passive-TD-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/reinforcement/PassiveTDAgent.java PassiveTDAgent]||
-||21.8||776||Q-Learning-Agent||[http://aima-java.googlecode.com/svn/trunk/src/aima/learning/reinforcement/QLearningAgent.java QLearningAgent]||
-||22.2||796||Naive-Communicating-Agent||---||
-||22.7||801||Chart-Parse||---||
-||23.1||837||Viterbi-Segmentation||---||
-||24.21||892||Align||---||
+|| *Fig* || *Page* || *Name (in book)*             || *Code* ||
+||   2   ||      34|| Environment                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/Environment.java Environment]||
+||   2.1 ||      35|| Agent                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/Agent.java Agent]||
+||   2.3 ||      36|| Table-Driven-Vacuum-Agent    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/environment/vacuum/TableDrivenVacuumAgent.java TableDrivenVacuumAgent]||
+||   2.7 ||      47|| Table-Driven-Agent           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java TableDrivenAgent]||
+||   2.8 ||      48|| Reflex-Vacuum-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/environment/vacuum/ReflexVacuumAgent.java ReflexVacuumAgent]||
+||   2.10||      49|| Simple-Reflex-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
+||   2.12||      51|| Model-Based-Reflex-Agent     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java ModelBasedReflexAgentProgram]||
+||   3   ||      66|| Problem                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/framework/Problem.java Problem]||
+||   3.1 ||      67|| Simple-Problem-Solving-Agent ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
+||   3.2 ||      68|| Romania                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
+||   3.7 ||      77|| Tree-Search                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/framework/TreeSearch.java TreeSearch]||
+||   3.7 ||      77|| Graph-Search                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/framework/GraphSearch.java GraphSearch]||
+||   3.10||      79|| Node                         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/framework/Node.java Node]||
+||   3   ||      79|| Queue                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/util/datastructure/Queue.java Queue]||
+||   3.11||      82|| Breadth-First-Search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/BreadthFirstSearch.java BreadthFirstSearch]||
+||   3.14||      84|| Uniform-Cost-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/UniformCostSearch.java UniformCostSearch]||
+||   3   ||      85|| Depth-first Search           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/DepthFirstSearch.java DepthFirstSearch]||
+||   3.17||      88|| Depth-Limited-Search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/DepthLimitedSearch.java DepthLimitedSearch]||
+||   3.18||      89|| Iterative-Deepening-Search   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/IterativeDeepeningSearch.java IterativeDeepeningSearch]||
+||   3   ||      90|| Bidirectional search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/uninformed/BidirectionalSearch.java BidirectionalSearch]||
+||   3   ||      92|| Best-First search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/informed/BestFirstSearch.java BestFirstSearch]||
+||   3   ||      92|| Greedy best-First search     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/informed/GreedyBestFirstSearch.java GreedyBestFirstSearch]||
+||   3   ||      93|| A`*` search                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/informed/AStarSearch.java AStarSearch]||
+||   3.26||      99|| Recursive-Best-First-Search  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
+||   4.2 ||     122|| Hill-Climbing                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/local/HillClimbingSearch.java HillClimbingSearch]||
+||   4.5 ||     126|| Simulated-Annealing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/local/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
+||   4.8 ||     129|| Genetic-Algorithm            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/local/GeneticAlgorithm.java GeneticAlgorithm]||
+||   4.11||     136|| And-Or-Graph-Search          ||---||
+||   4   ||     147|| Online search problem        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/online/OnlineSearchProblem.java OnlineSearchProblem] ||
+||   4.21||     150|| Online-DFS-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/online/OnlineDFSAgent.java OnlineDFSAgent] ||
+||   4.24||     152|| LRTA`*`-Agent                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/online/OnlineDFSAgent.java LRTAStarAgent] ||
+||   5.3 ||     166|| Minimax-Decision             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/adversarial/Game.java (method)-makeMiniMaxMove()]||
+||   5.7 ||     170|| Alpha-Beta-Search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/adversarial/Game.java (method)-makeAlphaBetaMove()]||
+||   6   ||     202|| CSP                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/csp/CSP.java CSP]||
+||   6.3 ||     209|| AC-3                         ||---||
+||   6.5 ||     215|| Backtracking-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/csp/CSP.java (method)-backtrackingSearch()]||
+||   6.8 ||     221|| Min-Conflicts                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/search/csp/CSP.java (method)-mcSearch()]||
+||   6.11||     209|| Tree-CSP-Solver              ||---||
+||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/KnowledgeBase.java KnowledgeBase]||
+||   7.1 ||     236|| KB-Agent                     ||---||
+||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence]||
+||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/TTEntails.java TTEntails]||
+||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/visitors/CNFTransformer.java CNFTransformer]||
+||   7.12||     255|| PL-Resolution                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/PLResolution.java PLResolution]||
+||   7.15||     258|| PL-FC-Entails?               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/PLFCEntails.java PLFCEntails]||
+||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/DPLL.java (method)-dpllSatisfiable(String)]||
+||   7.18||     263|| WalkSAT                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/propositional/algorithms/WalkSAT.java WalkSAT]||
+||   7.20||     270|| Hybrid-Wumpus-Agent          ||---||
+||   7.22||     272|| SATPlan                      ||---||
+||   9   ||     323|| Subst                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/SubstVisitor.java SubstVisitor]||
+||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/Unifier.java Unifier]||
+||   9.3 ||     332|| FOL-FC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
+||   9.3 ||     332|| FOL-BC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/inference/FOLBCAsk.java FOLBCAsk]||
+||   9   ||     345|| CNF                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/CNFConverter.java CNFConverter]||
+||   9   ||     347|| Resolution                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/inference/FOLTFMResolution.java FOLTFMResolution]||
+||   9   ||     354|| Demodulation                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/inference/Demodulation.java Demodulation]||
+||   9   ||     354|| Paramodulation               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/inference/Paramodulation.java Paramodulation]||
+||   9   ||     345|| Subsumption                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/logic/fol/SubsumptionElimination.java SubsumptionElimination]||
+||  10.9 ||     383|| Graphplan                    ||---||
+||  11.5 ||     409|| Hierarchical-Search          ||---||
+||  11.8 ||     414|| Angelic-Search               ||---||
+||  13.1 ||     484|| DT-Agent                     ||---||
+||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution]||
+||  14.9 ||     525|| Enumeration-Ask              ||---||
+||  14.11||     528|| Elimination-Ask              ||---||
+||  14.13||     531|| Prior-Sample                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/BayesNet.java (method)-getPriorSample()]||
+||  14.14||     533|| Rejection-Sampling           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/BayesNet.java (method)-rejectionSample() ]||
+||  14.15||     534|| Likelihood-Weighting         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/BayesNet.java (method)-likelihoodWeighting()]||
+||  14.16||     537|| GIBBS-Ask                    ||---||
+||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/reasoning/HiddenMarkovModel.java (method)-forward_backward()]||
+||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/reasoning/FixedLagSmoothing.java FixedLagSmoothing]||
+||  15.17||     598|| Particle-Filtering           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/reasoning/ParticleSet.java (method)-filter()]||
+||  16.9 ||     632|| Information-Gathering-Agent  ||---||
+||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/decision/MDP.java (method)-valueIteration()]||
+||  17.7 ||     657|| Policy-Iteration             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/probability/decision/MDP.java (method)-policyIteration]||
+||  17.9 ||     663|| POMDP-Value-Iteration        ||---||
+||  18.5 ||     702|| Decision-Tree-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/learners/DecisionTreeLearner.java DecisionTreeLearner]||
+||  18.8 ||     710|| Cross-Validation-Wrapper     ||---||
+||  18.11||     717|| Decision-List-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/learners/DecisionListLearner.java DecisionListLearner]||
+||  18.24||     734|| Back-Prop-Learning           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/neural/BackPropLearning.java BackPropLearning]||
+||  18.34||     751|| AdaBoost                     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/learners/AdaBoostLearner.java AdaBoostLearner]||
+||  19.2 ||     771|| Current-Best-Learning        ||---||
+||  19.3 ||     773|| Version-Space-Learning       ||---||
+||  19.8 ||     786|| Minimal-Consistent-Det       ||---||
+||  19.12||     793|| FOIL                         ||---||
+||  21.2 ||     834|| Passive-ADP-Agent            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/reinforcement/PassiveADPAgent.java PassiveADPAgent]||
+||  21.4 ||     837|| Passive-TD-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/reinforcement/PassiveTDAgent.java PassiveTDAgent]||
+||  21.8 ||     844|| Q-Learning-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/aima/core/learning/reinforcement/QLearningAgent.java QLearningAgent]||
+||  22.1 ||     871|| HITS                         ||---||
+||  23.5 ||     894|| CYK-Parse                    ||---||
+||  25.9 ||     982|| Monte-Carlo-Localization     ||---||
 
 == Notes on Search ==
 

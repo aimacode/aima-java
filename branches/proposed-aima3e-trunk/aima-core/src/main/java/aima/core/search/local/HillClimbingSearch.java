@@ -22,10 +22,10 @@ import aima.core.search.framework.SearchUtils;
  *     if neighbor.VALUE <= current.VALUE then return current.STATE
  *     current <- neighbor
  * </code>
- * Figure 4.3 The hill-climbing search algorithm (steepest-ascent version), which is the
- * most basic local search technique. At each step the current node is replaced by the best
- * neighbor; in this version, that means the neighbor with the highest VALUE, but if a heuristic
- * cost estimate h is used, we would find the neighbor with the lowest h.
+ * Figure 4.2 The hill-climbing search algorithm, which is the most basic local search technique. 
+ * At each step the current node is replaced by the best neighbor; in this version, that means 
+ * the neighbor with the highest VALUE, but if a heuristic cost estimate h is used, we would find 
+ * the neighbor with the lowest h.
  */
 
 /**
@@ -82,6 +82,10 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	public Object getLastSearchState() {
 		return lastState;
 	}
+	
+	//
+	// PRIVATE METHODS
+	//
 
 	private Node getHighestValuedNodeFrom(List<Node> children, Problem p) {
 		double highestValue = Double.NEGATIVE_INFINITY;
