@@ -29,6 +29,7 @@
 		<mkdir dir="${aima-core.dir.build.bin}/test" />
 		<mkdir dir="${aima-core.dir.build.doc}" />
 		<mkdir dir="${aima-core.dir.build.doc}/javadoc" />
+		<mkdir dir="${aima-core.dir.build.release}" />
 	</target>
 
 	<target name="aima-core.compile-all" depends="aima-core.makedirs">
@@ -68,6 +69,18 @@
 			sourcepathref="aima-core.javadoc.src" />
 	</target>
 
-	<target name="aima-core.all" depends="aima-core.makedocs,aima-core.test-all">
+	<target name="aima-core.release" depends="aima-core.compile-all">
+		<jar destfile="${aima-core.dir.build.release}/aima-core.jar">
+			<manifest>
+		    	<attribute name="Implementation-Title" value="AIMA-CORE" />
+		        <attribute name="Implementation-Version" value="${aima-core.version}" />
+		        <attribute name="AIMA-CORE-Version" value="${aima-core.version}" />
+		    </manifest>
+			 <fileset dir="${aima-core.dir.build.bin}/main" />
+			 <fileset dir="${aima-core.dir.src}/main/resource" excludes="**/*.svn" />
+		</jar>
+	</target>
+		
+	<target name="aima-core.all" depends="aima-core.release,aima-core.makedocs,aima-core.test-all">
 	</target>
 </project>

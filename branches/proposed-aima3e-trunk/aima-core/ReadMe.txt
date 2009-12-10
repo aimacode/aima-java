@@ -1,51 +1,43 @@
-AIMA JAVA Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
+= AIMA-CORE =
 
-#summary some notes
+== Requirements ==
+# JDK 1.6 - is the baseline JDK against which this project is developed. 
 
-= Introduction =
-The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
-
-Current release is 0.95:<br>
-This is our first release containing GUIs (thanks to Ruediger Lunde):<br>
-  - aima.gui.applications.VacuumAppDemo<br>
-    Provides a demo of the different agents described in Chapter 2 and 3
-    for tackling the Vacuum World.<br>
-  - aima.gui.applications.search.map.RoutePlanningAgentAppDemo<br>
-    Provides a demo of the different agents/search algorithms described 
-    in Chapters 3 and 4, for tackling route planning tasks within 
-    simplified Map environments.<br>
-  - aima.gui.framework.SimpleAgentAppDemo<br>
-    Provides a basic example of how to create your own Agent based 
-    demonstrations based on the provided framework.<br>
-<br>    
-This will also be our last full release based on the 2nd edition of AIMA. 
-We are currently in the planning phases to re-organize this project based on the 3rd edition of AIMA, which should be available soon.
-
-Previous release is 0.94:<br>
-This is a patch release for the FOL Logic and includes the following fixes:<br>
-  - Fixed subtle defect in Model Elimination inference algorithm, which caused it to miss portions of the search space.<br>
-  - Improved the performance of both theorem provers, in particular added support for forward and backward subsumption elimination, which improves significantly the performance and use of the OTTER Like theorem prover.<br>
-  - Fixed defect in cascade occurs check in unifier logic.<br>
-
-Previous release is 0.93:<br>
-It includes:<br>
-  - a completion of the First Order Logic concepts from Chapter 9.<br>
-  - the addition of the LRTA Agent from Chapter 4.<br>
-
-  Note: If running the unit tests be sure to include the vm arguments:
-  -Xms256m -Xmx1024m
-  as some of the First Order Logic algorithms (i.e. FOLTFMResolution) are
-  memory hungry.
-
-Previous release is 0.92:<br>
-
-It includes a rewrite of the neural network algorithms (in the earlier version the nn s were getting saturated because the data was not pre processed)
- +  more algorithms  from chapter 4.
- 
-Heuristics are now doubles (vs ints in the old version).
-One minor change is that I've dropped the make file. Please use [http://ant.apache.org/ant  ant]
-
-==Bug Reports - acknowledgment ==
+== Current Release: 0.9.7-AIMA3e Published ==
+0.9.7-AIMA3e Published : 12/10/2009 :<br>
+First full release based on the 3rd edition of AIMA. The following major 
+updates have been included in this release:<br>
+  * All code has been re-organized into a new sub-project/package structure
+    to make it easier to find relevant information.
+  ** aima-core: is this project and contains all the implemented algorithms
+     described in AIMA3e.
+  ** aima-gui: contains the GUI and command line demo code.
+  ** aima-all: top level project, used by aima-java developers, for building
+     and releasing sub-projects.
+  * Sub-Project directory organization now based on Maven standard layout, see:
+  ** http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html
+  * Re-organized packages to more closely reflect AIMA3e structure:
+  ** Renamed basic to agent
+  ** Moved general purpose data structures underneath util.
+  ** Moved all Environment implementations under environment.    
+  * Agent package defined now in terms of interfaces as opposed to
+    abstract classes.
+  ** Added explicit Action interface.
+  * All algorithms from chapters 1-4 have been updated to reflect
+    changes in their description in AIMA3e. Primarily this involved
+    separating the Successor function concept from AIMA2e into 
+    separate Action and Result functions as described in AIMA3e.
+  * All tests have been updated to JUnit 4.7, which is included
+    explicitly as a testing dependency of this project (see /lib).
+  * Bug fixes to OnlineDFSAgent and GeneticAlgorithm implementations.
+  * SetOPs, converted to use static methods and based implementation on:
+    http://java.sun.com/docs/books/tutorial/collections/interfaces/set.html
+  * Queue implementations now extends Java's corresponding collection classes.
+  * Dependencies between Map Agents and their Environment have been
+    decoupled by introducing appropriate intermediaries.
+  * All source formated using Eclipse 3.4 default settings.
+  
+== Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
   * Ali Tozan<br>
@@ -61,7 +53,7 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
 
 = Details =
 
-==Build Instructions==
+== Build Instructions ==
 If you just want to use the classes, all you need to do is put the aima-java/build directory on your CLASSPATH.
 
 if you want  to rebuild from source, run the unit tests etc follow the instructions below.
@@ -79,14 +71,18 @@ To build from the command line,
  # put [http://prdownloads.sourceforge.net/junit/junit3.8.1.zip?download junit 3.8.1 (note the version number)] on the classpath
  # type 'ant' 
 
-I have included the eclipse.classpath and .projectfiles for those who use [http://www.eclipse.org eclipse] .
+I have included the Eclipse .classpath and .project files for those who 
+use [http://www.eclipse.org eclipse] this IDE.
 
-==Code Navigation==
+== Implemented Algorithms ==
+
+
+== Code Navigation ==
  # To understand how a particular feature works , FIRST look at the demo files.There are four main demo files  SearchDemo , LogicDemo ,ProbabilityDemo and LearningDemo.
  # If the Demo Files don't exist yet , look at the unit tests . they often cover much of how a particular feature works . 
  # If all else fails , write to me . Comprehensive documentation, both java doc and otherwise are in the pipeline , but will probably have to wait till I finish the code .
 
-==Notes on Search==
+== Notes on Search ==
 
 To solve a problem with (non CSP )Search .
    # you need to write four classes .
@@ -124,7 +120,7 @@ A good example (from the NQueens Demo ) is
 	}
 }}}
 
-==Search Inheritance Trees ==
+== Search Inheritance Trees ==
 
 there are two inheritance trees in Search. one deals with "mechanism" of search.
 
@@ -157,7 +153,7 @@ Searches like DepthFirstSearch which need to be used as a search (so implementin
 Again, if you get confused, look at the demos.
 
 
-==Logic Notes==
+== Logic Notes ==
 The ONE thing you need to watch out for is that the Parsers are VERY finicky . If you get  a lexing or parsing error, there is a high probability there is an error in your logic string.
 
 To use First Order Logic, first you need to create a subclass of aima.logic.fol.FOLDomain which collects the constants, predicates, functions etc that you use to solve a particular problem.
@@ -168,13 +164,13 @@ FOLParser parser = new FOLParser(weaponsDomain);  ).
 
 the basic design of all the logic code is that the parser creates a Composite (Design Patterns by Gamma, et al) parse tree over which various Visitors(Design Patterns by Gamma, et al) traverse . the key difference between the Visitor elucidated in the GOF book and the code is that in the former the visit() methods have a void visit(ConcreteNode) signature while the visitors used in the logic code have a Object visit(ConcreteNode,Object arg) signature. This makes testing easier and allows some recursive code that is hard with the former .
 
-==Probability Notes==
+== Probability Notes ==
 
 Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have been implemented. I have tried to make the code stick very closely to Dr.Norvig's' pseudocode . Looking at the demo and tests will reveal how to use the code . 
 
 ==LearningNotes==
 
-===Main Classes and responsibilities===
+=== Main Classes and responsibilities ===
 A <DataSet> is a collection of <Example>s .Wherever you see "examples" in plural in the text , the code uses a DataSet . This makes it easy to aggregate operations that work on collections of examples in one place.
 
 An Example is a collection of Attributes. Each example is a data point for Supervised Learning .
@@ -183,7 +179,7 @@ DataSetSpecification and AttributeSpecification do some error checking on the at
 
 A Numerizer specifies how a particular DataSet's examples may be converted to Lists of DOubles so they can be used in Neural Networks . There is presently one numerizer in the codebase (IrisDataSetNumerizer)  but it is trivial to write more by implementing the Numerizer interface.
 
-===how to apply learners===
+=== How to Apply Learners ===
 
 The DecisionTreeLearner and DecisionList Learner work only on datasets with ordinal attributes (no numbers).Numbers are treated as distinct strings.
 
@@ -194,16 +190,35 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets* .If you int
 2.Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps? )  you need to implement this interface .
 
  LearningDemo.java contains examples of how to use all the learners . LearnerTests may be of help too. There are specific test files for Decison Trees, Decision Lists and Neural networks.
-
-
-#Probabilistic Decision Making and  reinforcement learning
-TBD
  
-==Final Thoughts==
+= Change History (Update in reverse chronological order) =
+
+0.95-AIMA2eFinal : 10/03/2009 :<br>
+Last full release based on the 2nd edition of AIMA. This is our first release 
+containing GUIs (thanks to Ruediger Lunde):<br>
+  * aima.gui.applications.VacuumAppDemo<br>
+    Provides a demo of the different agents described in Chapter 2 and 3
+    for tackling the Vacuum World.<br>
+  * aima.gui.applications.search.map.RoutePlanningAgentAppDemo<br>
+    Provides a demo of the different agents/search algorithms described 
+    in Chapters 3 and 4, for tackling route planning tasks within 
+    simplified Map environments.<br>
+  * aima.gui.framework.SimpleAgentAppDemo<br>
+    Provides a basic example of how to create your own Agent based 
+    demonstrations based on the provided framework.<br>
+<br>    
+This will also be our last full release based on the 2nd edition of AIMA. 
+We are currently in the planning phases to re-organize this project based 
+on the 3rd edition of AIMA, which should be available soon.
+                            
+= Final Thoughts =
 
 If you need any help with the java code, do write to me at magesmail@yahoo.com.
 
-I am happy to receive any mails/bug reports and generally respond within a day, unless I am travelling .The only mails I do NOT respond to are those asking me to do your homework! Don't even try ! :-) These  mails are rejected without even reading them! 
+I am happy to receive any mails/bug reports and generally respond within a day, 
+unless I am traveling. The only mails I do NOT respond to are those asking me 
+to do your homework! Don't even try ! :-) These  mails are rejected without even 
+reading them! 
 
 
 Bug Reports are greatly appreciated! 
@@ -212,6 +227,6 @@ when you send in a bug report please include
      # what you did to see the bug
      # what you expected to see
      # what you actually saw.
-
  
-A bug report that says "there is some bug in Search" (I actually got a mail like this) is next to useless.
+A bug report that says "there is some bug in Search" 
+(I actually got a mail like this) is next to useless.
