@@ -75,6 +75,25 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 		return recursiveDLS(new Node(p.getInitialState()), p, limit);
 	}
 
+
+	@Override
+	public void clearInstrumentation() {
+		super.clearInstrumentation();
+		metrics.set(PATH_COST, 0);
+	}
+
+	public double getPathCost() {
+		return metrics.getDouble(PATH_COST);
+	}
+
+	public void setPathCost(Double pathCost) {
+		metrics.set(PATH_COST, pathCost);
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
 	// failure/cutoff
 	private List<Action> recursiveDLS(Node node, Problem problem, int limit) {
@@ -111,24 +130,7 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 			}
 		}
 	}
-
-	@Override
-	public void clearInstrumentation() {
-		super.clearInstrumentation();
-		metrics.set(PATH_COST, 0);
-	}
-
-	public double getPathCost() {
-		return metrics.getDouble(PATH_COST);
-	}
-
-	public void setPathCost(Double pathCost) {
-		metrics.set(PATH_COST, pathCost);
-	}
-
-	//
-	// PRIVATE METHODS
-	//
+	
 	private List<Action> cutoff() {
 		// Only want to created once
 		if (null == cutoffResult) {
