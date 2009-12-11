@@ -4,10 +4,8 @@
 # Depends on the aima-core project. 
 
 == Current Release: 0.1.0-AIMA3e Published ==
-First full release based on the 3rd edition of AIMA. 
-This projects contains all the GUI and command line demo 
-code from the original separated out from the original 
-AIMA2e source tree and has been updated to work with the 
+First full release based on the 3rd edition of AIMA. This projects contains all the GUI and command line demo 
+code separated out from the original AIMA2e source tree and has been updated to work with the 
 latest version of the aima-core library.
 
 == Running the GUIs and Command Line Demos ==
