@@ -1,4 +1,0 @@
-parameter 1 = age in days
-parameter 2 = weights of eyelenses in milligrams
-
-source = Neural Networks A Comprehensive Foundation - Simon Haykin
