@@ -8,13 +8,13 @@
 First full release based on the 3rd edition of AIMA. The following major 
 updates have been included in this release:<br>
   * Re-organized packages to more closely reflect AIMA3e structure:
-  ** Renamed basic to agent
-  ** Moved general purpose data structures underneath util.
-  ** Moved all Environment implementations under environment.    
+   * Renamed basic to agent
+   * Moved general purpose data structures underneath util.
+   * Moved all Environment implementations under environment.    
   * Agent package defined now in terms of interfaces as opposed to
     abstract classes.
-  ** Added explicit Action interface.
-  ** General improvements/enhancements across all the APIs.
+   * Added explicit Action interface.
+   * General improvements/enhancements across all the APIs.
   * All algorithms from chapters 1-4 have been updated to reflect
     changes in their description in AIMA3e. Primarily this involved
     splitting the Successor function concept from AIMA2e into 
@@ -42,9 +42,9 @@ To build from the command line:
  # Unzip
  # Go to the aima-core directory
  # Type 'ant'. This will generate a build directory, which will include the following sub-directories:
- ## bin/ will contain all the main and test Java classes.
- ## doc/ will contain generated JavaDoc for the project.
- ## release/ will contain a jar file of all the core algorithms.
+  # bin/ will contain all the main and test Java classes.
+  # doc/ will contain generated JavaDoc for the project.
+  # release/ will contain a jar file of all the core algorithms.
 
 Note: Many IDE's have built in ant versions. So you may want to try that first. 
 Included in the aima-core directory are .classpath and .project files for the [http://www.eclipse.org Eclipse] IDE.
