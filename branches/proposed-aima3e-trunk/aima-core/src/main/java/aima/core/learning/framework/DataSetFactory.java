@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import aima.core.learning.data.DataResource;
 import aima.core.util.Util;
 
 /**
@@ -20,8 +21,7 @@ public class DataSetFactory {
 		// assumed file in data directory and ends in .csv
 		DataSet ds = new DataSet(spec);
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(this.getClass().getResourceAsStream(
-						"../data/" + filename + ".csv")));
+				new InputStreamReader(DataResource.class.getResourceAsStream(filename + ".csv")));
 		String line;
 		while ((line = reader.readLine()) != null) {
 			ds.add(exampleFromString(line, spec, separator));
