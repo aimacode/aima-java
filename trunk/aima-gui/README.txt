@@ -1,4 +1,4 @@
-= AIMA-CORE =
+= AIMA-GUI =
 
 == Requirements ==
 # Depends on the aima-core project. 
