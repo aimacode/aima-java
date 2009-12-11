@@ -12,12 +12,12 @@ This is the first full release based on the 3rd edition of AIMA. This is based o
   * aima-core (0.9.7) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (0.1.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
 
-= Project Organization =
-* This project is now organized into 3 sub-projects:
-  ** aima-core: contains all the implemented algorithms described in AIMA3e.
-  ** aima-gui : contains the GUI and command line demo applications. This project is dependent on aima-core.
-  ** aima-all : is the master project, used by aima-java developers, for creating releases.
-* Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
+== Project Organization ==
+ * This project is now organized into 3 sub-projects:
+  * aima-core: contains all the implemented algorithms described in AIMA3e.
+  * aima-gui : contains the GUI and command line demo applications. This project is dependent on aima-core.
+  * aima-all : is the master project, used by aima-java developers, for creating releases.
+ * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
 == Bug Report - Acknowledgments ==
 
