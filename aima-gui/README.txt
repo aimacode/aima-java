@@ -13,11 +13,11 @@ latest version of the aima-core library.
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * java -classpath aima-gui.jar aima.gui.applications.search.map.RoutePlanningAgentApp
- ** provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
+  * provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
  * java -classpath aima-gui.jar aima.gui.applications.vacuum.VacuumApp
- ** provides a demo of the different agents described in Chapter 2 and 3 for tackling the Vacuum World.
+  * provides a demo of the different agents described in Chapter 2 and 3 for tackling the Vacuum World.
  * java -jar aima-gui.jar
- ** this will run the default AIMADemoApp, this is currently just a place holder, which we intend to evolve in future releases.
+  * this will run the default AIMADemoApp, this is currently just a place holder, which we intend to evolve in future releases.
 
 The following command line demos can be run as well (Note we plan to convert these over to run in the AIMADemoApp):
  * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
