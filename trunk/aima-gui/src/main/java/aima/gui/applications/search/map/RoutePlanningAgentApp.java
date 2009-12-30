@@ -195,10 +195,11 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 			switch (heuIdx) {
 			case 0:
 				ahf = new H1();
+				break;
 			default:
 				ahf = new H2();
 			}
-			return ahf.getAdaptation(destinations.get(0), scenario
+			return ahf.adaptToGoal(destinations.get(0), scenario
 					.getAgentMap());
 		}
 

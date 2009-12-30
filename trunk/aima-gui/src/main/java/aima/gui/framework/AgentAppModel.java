@@ -44,9 +44,7 @@ public class AgentAppModel implements EnvironmentView {
 	}
 
 	public void agentAdded(Agent agent, EnvironmentState state) {
-		for (ModelChangedListener listener : listeners) {
-			listener.modelChanged();
-		}
+		fireModelChanged();
 	}
 
 	/**
