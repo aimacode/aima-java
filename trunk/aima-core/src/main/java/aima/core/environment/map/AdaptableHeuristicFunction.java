@@ -17,19 +17,13 @@ public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
 	protected Map map;
 
 	/**
-	 * Creates a clone and stores goal and map in the corresponding attributes.
-	 * This method MUST be called before using the heuristic!
+	 * Modifies goal and map information and returns the modified
+	 * heuristic function.
 	 */
-	public AdaptableHeuristicFunction getAdaptation(Object goal, Map map) {
-		AdaptableHeuristicFunction result = null;
-		try {
-			result = (AdaptableHeuristicFunction) this.clone();
-			result.goal = goal;
-			result.map = map;
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		return result;
+	public AdaptableHeuristicFunction adaptToGoal(Object goal, Map map) {
+		this.goal = goal;
+		this.map = map;
+		return this;
 	}
 
 	// when subclassing: Don't forget to implement the most important method

@@ -54,13 +54,15 @@ public class Problem {
 	}
 
 	public Object getInitialState() {
-
 		return initialState;
 	}
 
 	public boolean isGoalState(Object state) {
-
 		return goalTest.isGoalState(state);
+	}
+	
+	public GoalTest getGoalTest() {
+		return goalTest;
 	}
 
 	public ActionsFunction getActionsFunction() {
