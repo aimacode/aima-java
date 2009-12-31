@@ -35,11 +35,11 @@ class OsmActionsFunction implements ActionsFunction {
 				MapNode next;
 				if (wayNodes.size() > nodeIdx+1) {
 					next = wayNodes.get(nodeIdx+1);
-					result.add(new OsmMoveAction(next));
+					result.add(new OsmMoveAction(way, next));
 				}
 				if (nodeIdx > 0 && (!way.isOneway() || ignoreOneWays)) {
 					next = wayNodes.get(nodeIdx-1);
-					result.add(new OsmMoveAction(next));
+					result.add(new OsmMoveAction(way, next));
 				}
 			}
 		}

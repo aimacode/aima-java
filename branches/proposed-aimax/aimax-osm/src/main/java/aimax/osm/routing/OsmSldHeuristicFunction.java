@@ -4,7 +4,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
-class OsmSldHeuristicFunction implements HeuristicFunction {
+public class OsmSldHeuristicFunction implements HeuristicFunction {
 	MapNode goalState;
 	
 	public OsmSldHeuristicFunction(MapNode goalState) {

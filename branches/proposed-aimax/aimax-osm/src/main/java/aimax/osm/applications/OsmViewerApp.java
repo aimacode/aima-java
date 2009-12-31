@@ -7,7 +7,8 @@ import aimax.osm.viewer.MapViewFrame;
 
 /**
  * Opens a <code>MapViewFrame</code> and initializes it with a
- * map of Ulm, provided that a file with name data/ulm.osm is found.
+ * map of Ulm, provided that a file with name ulm.osm is found
+ * in the resource/maps path.
  * @author R. Lunde
  */
 public class OsmViewerApp {

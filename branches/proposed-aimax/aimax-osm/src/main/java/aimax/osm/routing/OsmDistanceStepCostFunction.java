@@ -5,7 +5,7 @@ import aima.core.search.framework.StepCostFunction;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
-class OsmDistanceStepCostFunction implements StepCostFunction {
+public class OsmDistanceStepCostFunction implements StepCostFunction {
 	@Override
 	public double c(Object s, Action a, Object prime) {
 		MapNode from = (MapNode) s;
