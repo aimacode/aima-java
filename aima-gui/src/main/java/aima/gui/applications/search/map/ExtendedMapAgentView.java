@@ -1,22 +1,29 @@
 package aima.gui.applications.search.map;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.environment.map.Map;
 import aima.core.environment.map.Scenario;
 import aima.core.util.datastructure.Point2D;
-
+/**
+ * Extends the <code>MapAgentView</code> by visualization of
+ * scenario, destination, and agent map information.
+ * @author R. Lunde
+ *
+ */
 public class ExtendedMapAgentView extends MapAgentView {
 	
 	/** A scenario. */
 	protected Scenario scenario;
 	/** A list of location names, possibly null. */
 	protected List<String> destinations;
-	
+	/** Map which reflects the agent's knowledge about the environment. */
 	protected Map agentMap;
 
+	/** Sets data to be displayed. All values may be null. */
 	public void setData(Scenario scenario, List<String> destinations, Map agentMap) {
 		this.scenario = scenario;
 		this.destinations = destinations;
@@ -61,7 +68,8 @@ public class ExtendedMapAgentView extends MapAgentView {
 			paintRoadblock(g2, block);
 	}
 	
-	protected void paintLoc(java.awt.Graphics2D g2, String loc) {
+	/** Displays a map location. */
+	protected void paintLoc(Graphics2D g2, String loc) {
 		Map map = getMapEnv().getMap();
 		Point2D pt = map.getPosition(loc);
 		if (pt != null) {
@@ -108,8 +116,8 @@ public class ExtendedMapAgentView extends MapAgentView {
 	}
 	
 	/**
-	 * Roadblocks are represented by filled rectangles. Blue denotes, the
-	 * agent doesn't know it, red dentotes, there is no roadblock, but the
+	 * Blocked roads are represented by filled rectangles. Blue denotes, the
+	 * agent doesn't know it, red denotes, the road is no blocked, but the
 	 * agent thinks so.
 	 */
 	private void paintRoadblock(java.awt.Graphics2D g2, Roadblock block) {
@@ -117,7 +125,7 @@ public class ExtendedMapAgentView extends MapAgentView {
 			int x = (int) (0.2 * x(block.pos1) + 0.8 * x(block.pos2) - 4);
 			int y = (int) (0.2 * y(block.pos1) + 0.8 * y(block.pos2) - 4);
 			if (!block.inAgentMap)
-				g2.setColor(Color.blue); // agent doesn't know the roadblock
+				g2.setColor(Color.blue); // agent doesn't know the road block
 			else if (!block.inEnvMap)
 				g2.setColor(Color.red); // agent doesn't know the way
 			else
@@ -127,8 +135,9 @@ public class ExtendedMapAgentView extends MapAgentView {
 	}
 	
 	/**
-	 * Stores roadblock information. Roadblocks are generally printed after the
-	 * road itself so that they always appear in front.
+	 * Stores road block information. Informations about obstacles are
+	 * generally printed after the roads itself so that they always appear
+	 * in front.
 	 */
 	private static class Roadblock {
 		Point2D pos1;
