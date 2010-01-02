@@ -3,7 +3,7 @@ package aimax.osm.routing;
 import aima.core.agent.Action;
 import aima.core.search.framework.ResultFunction;
 
-class OsmResultFunction implements ResultFunction {
+public class OsmResultFunction implements ResultFunction {
 	@Override
 	public Object result(Object s, Action a) {
 		if (a instanceof OsmMoveAction)
