@@ -18,6 +18,7 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.framework.AgentAppController;
+import aima.gui.framework.MessageLogger;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayAttFilter;
@@ -48,8 +49,6 @@ public class OsmAgentController extends AgentAppController {
 	@Override
 	public void prepareAgent() {
 		env = new MapEnvironment(map);
-		env.addEnvironmentView(model);
-		((OsmAgentModel) model).prepare(env);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
 		MapDataStore mapData = map.getMapData();
@@ -70,11 +69,7 @@ public class OsmAgentController extends AgentAppController {
 				state.getValue(MapAgentFrame.SEARCH_SEL),
 				state.getValue(MapAgentFrame.SEARCH_MODE_SEL),
 				heuristic);
-		
-		mapData.getTracks().clear();
-		mapData.fireMapDataEvent
-		(new MapDataEvent(mapData, MapDataEvent.Type.MAP_MODIFIED));
-		//frame.logMessage("prepared.");
+		frame.getEnvView().setEnvironment(env);
 	}
 
 	/**
@@ -122,9 +117,10 @@ public class OsmAgentController extends AgentAppController {
 	 * state of the agent.
 	 */
 	protected void startAgent() {
+		MessageLogger logger = frame.getMessageLogger();
 		List<MapNode> marks = map.getMapData().getMarks();
 		if (marks.size() < 2) {
-			frame.logMessage("Error: Please set two marks with MouseLeft.");
+			logger.log("Error: Please set two marks with MouseLeft.");
 			return;
 		}
 		String[] locs = new String[2];
@@ -133,12 +129,12 @@ public class OsmAgentController extends AgentAppController {
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
 			locs[i] = map.getNearestLocation(pt);
 		}
-		frame.logMessage("<osm-agent-simulation-protocol>");
+		logger.log("<osm-agent-simulation-protocol>");
 		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			frame.logMessage("search: " + search.getClass().getName());
+			logger.log("search: " + search.getClass().getName());
 			heuristic.adaptToGoal(locs[1], map);
 			agent = new MapAgent(map, env, search, new String[] { locs[1] });
 			break;
@@ -151,10 +147,10 @@ public class OsmAgentController extends AgentAppController {
 			(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 			break;
 		}
-		frame.logMessage("heuristic: " + heuristic.getClass().getName());
+		logger.log("heuristic: " + heuristic.getClass().getName());
 		env.addAgent(agent, locs[0]);
 		env.stepUntilDone();
-		frame.logMessage("</osm-agent-simulation-protocol>\n");
+		logger.log("</osm-agent-simulation-protocol>\n");
 	}
 
 	

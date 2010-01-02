@@ -6,14 +6,13 @@ import java.util.logging.Logger;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.AgentAppModel;
 import aima.gui.framework.SimpleAgentApp;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
 import aimax.osm.routing.agent.OsmAgentController;
 import aimax.osm.routing.agent.OsmAgentFrame;
-import aimax.osm.routing.agent.OsmAgentModel;
+import aimax.osm.routing.agent.OsmAgentView;
 import aimax.osm.routing.agent.OsmMap;
 
 /**
@@ -33,10 +32,9 @@ public class OsmAgentApp extends SimpleAgentApp {
 		map = new OsmMap(mapData);
 	}
 	
-	/** Factory method, which creates an <code>OsmMapAgentModel</code>. */
-	@Override
-	public AgentAppModel createModel() {
-		return new OsmAgentModel(map);
+	/** Creates an <code>OsmAgentView</code>. */
+	public OsmAgentView createEnvironmentView() {
+		return new OsmAgentView(map.getMapData());
 	}
 
 	/** Factory method, which creates and configures a <code>OsmMapAgentFrame</code>. */

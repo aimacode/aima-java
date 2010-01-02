@@ -1,40 +1,41 @@
 package aimax.osm.routing.agent;
 
+import java.awt.BorderLayout;
+
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
-import aima.gui.framework.AgentAppModel;
+import aima.gui.framework.AgentAppEnvironmentView;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.viewer.MapViewPane;
 
-/**
- * Provides a simple ready-to-use implementation of a model for OSM agent
- * applications.
- * @author R. Lunde
- */
-public class OsmAgentModel extends AgentAppModel {
-	
-	protected OsmMap map;
-	protected MapEnvironment env;
+public class OsmAgentView extends AgentAppEnvironmentView {
 
-	public OsmAgentModel(OsmMap map) {
-		this.map = map;
+	MapViewPane mapViewPane;
+	
+	public OsmAgentView(MapDataStore mapData) {
+		mapViewPane = new MapViewPane();
+		mapViewPane.setModel(mapData);
+		this.setLayout(new BorderLayout());
+		add(mapViewPane, BorderLayout.CENTER);
 	}
 	
-	public MapDataStore getMapData() {
-		return (map != null) ? map.getMapData() : null;
+	public MapViewPane getMapViewPane() {
+		return mapViewPane;
 	}
 	
-	public void prepare(MapEnvironment env) {
-		this.env = env;
-		map.getMapData().getTracks().clear();
-		fireModelChanged();
+	protected MapEnvironment getMapEnv() {
+		return (MapEnvironment) env;
 	}
 	
-	public void agentAdded(Agent agent, EnvironmentState state) {
-		fireModelChanged();
+	@Override
+	public void setEnvironment(Environment env) {
+		mapViewPane.getModel().clearTrack("Agent Track");
+		super.setEnvironment(env);
 	}
 
 	/**
@@ -47,15 +48,20 @@ public class OsmAgentModel extends AgentAppModel {
 	 */
 	@Override
 	public void agentActed(Agent agent, Action command, EnvironmentState state) {
-		for (AgentAppModel.ModelChangedListener listener : listeners) {
-			listener.logMessage(command.toString());
-		}
+		OsmMap map = (OsmMap) getMapEnv().getMap();
 		if (command.isNoOp() || map.getPosition
 				(((MoveToAction) command).getToLocation()) != null) {
-			String loc = env.getAgentLocation(agent);
+			String loc = getMapEnv().getAgentLocation(agent);
 			MapNode node = map.getWayNode(loc);
 			map.getMapData().addToTrack("Agent Track", node.getLat(), node.getLon());
-			fireModelChanged();
+			notify(command.toString());
 		}
 	}
+
+	@Override
+	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

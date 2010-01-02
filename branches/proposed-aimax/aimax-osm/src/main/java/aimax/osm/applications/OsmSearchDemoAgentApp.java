@@ -16,11 +16,13 @@ import aima.core.search.framework.Search;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
+import aima.gui.framework.MessageLogger;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.routing.SimpleGoalTest;
 import aimax.osm.routing.agent.OsmAgentController;
 import aimax.osm.routing.agent.OsmAgentFrame;
+import aimax.osm.routing.agent.OsmAgentView;
 import aimax.osm.routing.agent.OsmMap;
 import aimax.osm.viewer.DefaultMapEntityRenderer;
 import aimax.osm.viewer.EntityPrintInfo;
@@ -48,6 +50,14 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		super(osmFile);
 	}
 	
+	/** Creates an <code>OsmAgentView</code>. */
+	@Override
+	public OsmAgentView createEnvironmentView() {
+		OsmAgentView result = super.createEnvironmentView();
+		result.getMapViewPane().setRenderer(new SDMapEntityRenderer());
+		return result;
+	}
+	
 	@Override
 	public AgentAppFrame createFrame() {
 		return new SDFrame(map);
@@ -67,8 +77,6 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 			super(map);
 			setTitle("OSDA - the OSM Search Demo Agent Application");
 			this.setSelectorItems(AGENT_SEL, new String[]{}, -1);
-			MapViewPane mapView = getMapViewer();
-			mapView.setRenderer(new SDMapEntityRenderer());
 		}
 	}
 	
@@ -93,10 +101,11 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		 * state of the agent.
 		 */
 		protected void startAgent() {
+			MessageLogger logger = frame.getMessageLogger();
 			visitedStates.clear();
 			List<MapNode> marks = map.getMapData().getMarks();
 			if (marks.size() < 2) {
-				frame.logMessage("Error: Please set two marks with MouseLeft.");
+				logger.log("Error: Please set two marks with MouseLeft.");
 				return;
 			}
 			String[] locs = new String[2];
@@ -105,14 +114,14 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locs[i] = map.getNearestLocation(pt);
 			}
-			frame.logMessage("<osm-agent-simulation-protocol>");
-			frame.logMessage("search: " + search.getClass().getName());
+			logger.log("<osm-agent-simulation-protocol>");
+			logger.log("search: " + search.getClass().getName());
 			heuristic.adaptToGoal(locs[1], map);
 			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
-			frame.logMessage("heuristic: " + heuristic.getClass().getName());
+			logger.log("heuristic: " + heuristic.getClass().getName());
 			env.addAgent(agent, locs[0]);
 			env.stepUntilDone();
-			frame.logMessage("</osm-agent-simulation-protocol>\n");
+			logger.log("</osm-agent-simulation-protocol>\n");
 		}
 	}
 	
