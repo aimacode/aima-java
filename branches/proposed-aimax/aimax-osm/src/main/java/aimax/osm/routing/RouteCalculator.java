@@ -53,8 +53,11 @@ public class RouteCalculator {
 				List<Action> actions = search.search(problem);
 				mapData.addToTrack(ROUTE_TRACK_NAME, fromRNode.getLat(), fromRNode.getLon());
 				for (Object action : actions) {
-					MapNode node = ((OsmMoveAction) action).getTo();
-					mapData.addToTrack(ROUTE_TRACK_NAME, node.getLat(), node.getLon());
+					OsmMoveAction a = (OsmMoveAction) action;
+					for (MapNode node : a.getNodes())
+						if (!node.equals(a.getFrom()))
+							mapData.addToTrack
+							(ROUTE_TRACK_NAME, node.getLat(), node.getLon());
 				}
 				fromRNode = toRNode;
 			}

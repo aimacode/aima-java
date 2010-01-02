@@ -25,7 +25,8 @@ public class RouteFindingProblem extends Problem {
 	public RouteFindingProblem(MapNode from, MapNode to,
 			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays) {
 		initialState = from;
-		actionsFunction = new OsmActionsFunction(mapData, filter, ignoreOneWays);
+		actionsFunction = new OsmActionsFunction
+		(mapData, filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
 		goalTest = new SimpleGoalTest(to);
 		stepCostFunction = new OsmDistanceStepCostFunction();
@@ -43,7 +44,8 @@ public class RouteFindingProblem extends Problem {
 			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays,
 			StepCostFunction costs) {
 		initialState = from;
-		actionsFunction = new OsmActionsFunction(mapData, filter, ignoreOneWays);
+		actionsFunction = new OsmActionsFunction
+		(mapData, filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
 		goalTest = new SimpleGoalTest(to);
 		stepCostFunction = costs;
