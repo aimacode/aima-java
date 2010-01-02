@@ -3,24 +3,17 @@ package aima.gui.framework;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 
 /**
  * <p>
@@ -30,22 +23,16 @@ import javax.swing.SwingUtilities;
  * </p>
  * <p>
  * To make the frame fit to your needs, you will at least have to add some
- * selectors and replace the dummy agent view pane by a view which is capable to
- * visualize your agent. The frame is configurable at run-time, so subclassing
+ * selectors. The frame is configurable at run-time, so subclassing
  * will not always be necessary.
  * </p>
  * 
  * @author R. Lunde
  */
-public class AgentAppFrame extends javax.swing.JFrame implements
-		AgentAppModel.ModelChangedListener {
+public class AgentAppFrame extends JFrame {
 
 	/** The controller, which executes the domain-level commands. */
-	protected Controller controller;
-	/** The model, which provides data about agent and environment state. */
-	private AgentAppModel model;
-	/** Extra waiting time after each model change, used for animation. */
-	private int updateDelay;
+	protected AgentAppController controller;
 	/** Thread running the agent. */
 	protected AgentThread agentThread;
 	/** Flag, indicating whether the agent is ready for running. */
@@ -60,8 +47,8 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	private JButton cancelButton;
 
 	JSplitPane centerPane;
-	protected JTextArea textArea;
-	protected AbstractAgentView agentView;
+	MessageLoggerPanel messageLogger;
+	protected AgentAppEnvironmentView envView;
 
 	private JLabel statusLabel;
 
@@ -70,12 +57,16 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		initComponents();
 		pack();
 		// redirect the standard output into the text area
-		System.setOut(new PrintStream(new TextAreaOutputStream()));
-		// System.setErr(new PrintStream(new TextAreaOutputStream()));
-		updateDelay = 0;
+		System.setOut(messageLogger.getPrintStream());
+		// System.setErr(messageLogger.getPrintStream());
 		setButtonsEnabled(true);
 	}
 
+	/** Returns a logger which displays messages in a message log pane. */
+	public MessageLoggerPanel getMessageLogger() {
+		return messageLogger;
+	}
+	
 	/**
 	 * Specifies a set of combo boxes to be added to the toolbar. Each combobox
 	 * has a name, which is used to access its selection state on software level
@@ -86,7 +77,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	 * 
 	 */
 	public void setSelectors(String[] selectorNames, String[] tooltips) {
-		Controller cont = controller;
+		AgentAppController cont = controller;
 		controller = null; // suppress reactions on parameter changes.
 		selectors.setSelectors(selectorNames, tooltips);
 		controller = cont;
@@ -98,7 +89,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	 */
 	public void setSelectorItems(String selectorName, String[] items,
 			int defaultIdx) {
-		Controller cont = controller;
+		AgentAppController cont = controller;
 		controller = null; // suppress reactions on parameter changes.
 		selectors.setSelectorItems(selectorName, items, defaultIdx);
 		controller = cont;
@@ -106,7 +97,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 
 	/** Adjusts selection state of all selectors. */
 	public void setDefaultSelection() {
-		Controller cont = controller;
+		AgentAppController cont = controller;
 		controller = null; // suppress reactions on parameter changes.
 		selectors.setDefaults();
 		if (cont != null) {
@@ -124,13 +115,21 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	}
 
 	/**
-	 * Template method, replacing the agent view. The agent view is the panel to
-	 * the left of the splitbar. It typically implements a 2D-visualization of
-	 * the agent in its environment.
+	 * Returns the environment view which is currently used to display
+	 * the agents in their environment.
 	 */
-	public void setAgentView(AbstractAgentView view) {
-		agentView = view;
-		centerPane.add(JSplitPane.LEFT, agentView);
+	public AgentAppEnvironmentView getEnvView() {
+		return envView;
+	}
+	
+	/**
+	 * Replaces the environment view. The environment view is the 
+	 * panel to the left of the splitbar. It typically implements a
+	 * 2D-visualization of agents in their environment.
+	 */
+	public void setEnvView(AgentAppEnvironmentView view) {
+		envView = view;
+		centerPane.add(JSplitPane.LEFT, envView);
 	}
 
 	/** Specifies how to distribute extra space when resizing the split pane. */
@@ -139,64 +138,13 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 	}
 
 	/** Defines, who should react on button and selection events. */
-	public void setController(Controller controller) {
+	public void setController(AgentAppController controller) {
 		this.controller = controller;
-	}
-
-	/** Gives the frame access to agent and environment data. */
-	public void setModel(AgentAppModel model) {
-		this.model = model;
-		agentView.updateView(model);
-	}
-
-	/** Sets a delay for displaying model changes. Used for animation. */
-	public void setUpdateDelay(int msec) {
-		updateDelay = msec;
 	}
 
 	/** Displays a text in the status bar. */
 	public void setStatus(String status) {
 		statusLabel.setText(status);
-	}
-
-	/** Updates the agent view after the state of the model has changed. */
-	public void modelChanged() {
-		agentView.updateView(model);
-		try {
-			Thread.sleep(updateDelay);
-		} catch (Exception e) {
-			logMessage("Error: Something went wrong when updating "
-					+ "the view after a model change (" + e + ").");
-			e.printStackTrace();
-		}
-	}
-
-	/** Prints a log message on the text area. */
-	public void logMessage(String message) {
-		MessageLogger ml = new MessageLogger();
-		ml.message = message;
-		if (SwingUtilities.isEventDispatchThread()) {
-			ml.run();
-		} else {
-			try {
-				SwingUtilities.invokeAndWait(ml);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/** Helper class which makes logging thread save. */
-	private class MessageLogger implements Runnable {
-		String message;
-
-		public void run() {
-			int start = textArea.getDocument().getLength();
-			textArea.append(message + "\n");
-			int end = textArea.getDocument().getLength();
-			textArea.setSelectionStart(start);
-			textArea.setSelectionEnd(end);
-		}
 	}
 
 	/** Assembles the inner structure of the frame. */
@@ -210,7 +158,6 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		toolbar = new JToolBar();
 		// toolbar.setFloatable(false);
 		selectors = new SelectorContainer();
-		// toolbar.add(selectors.selectorPanel);
 		toolbar.add(Box.createHorizontalGlue());
 
 		clearButton = new JButton("Clear");
@@ -227,38 +174,17 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		toolbar.add(runButton);
 		getContentPane().add(toolbar, java.awt.BorderLayout.NORTH);
 
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		JScrollPane scrollTPane = new JScrollPane(textArea);
-		// scrollTPane.setPreferredSize(new java.awt.Dimension(900, 600));
-		agentView = new AbstractAgentView() {
-			@Override
-			public void updateView(AgentAppModel model) {
-			} // dummy implementation
-		};
-		JScrollPane scrollGPane = new JScrollPane(agentView);
+		messageLogger = new MessageLoggerPanel();
+
 		centerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		// centerPane.setDividerLocation(0.7);
-		centerPane.add(JSplitPane.LEFT, scrollGPane);
-		centerPane.add(JSplitPane.RIGHT, scrollTPane);
+		centerPane.add(JSplitPane.RIGHT, messageLogger);
 		centerPane.setDividerSize(5);
-		centerPane.setResizeWeight(0.8);
+		centerPane.setResizeWeight(0.7);
 		getContentPane().add(centerPane, BorderLayout.CENTER);
 
 		JPanel statusPanel = new JPanel(new BorderLayout());
 		statusLabel = new JLabel("");
 		statusLabel.setBorder(new javax.swing.border.EtchedBorder()); // BevelBorder
-		// (
-		// javax
-		// .
-		// swing
-		// .
-		// border
-		// .
-		// BevelBorder
-		// .
-		// RAISED
-		// ));
 		statusPanel.add(statusLabel, BorderLayout.CENTER);
 		cancelButton = new JButton("Cancel");
 		cancelButton.setToolTipText("Cancel Agent");
@@ -267,21 +193,6 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 		cancelButton.setBorder(new javax.swing.border.EtchedBorder());
 		statusPanel.add(cancelButton, BorderLayout.EAST);
 		getContentPane().add(statusPanel, BorderLayout.SOUTH);
-		createPopups();
-	}
-
-	/** Responsible for creating all popup menus. */
-	protected void createPopups() {
-		JPopupMenu popup = new JPopupMenu();
-		JMenuItem menuItem = new JMenuItem("Clear");
-		menuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				textArea.setText("");
-			}
-		});
-		popup.add(menuItem);
-		textArea.addMouseListener(new PopupShower(popup));
 	}
 
 	/** Enables/disables all combos and buttons. */
@@ -316,8 +227,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 					if (source == clearButton /* || source == clearMenuItem */) {
 						// additionally clear the text area
 						text = "when clearing the views ";
-						javax.swing.text.Document doc = textArea.getDocument();
-						doc.remove(0, doc.getLength());
+						messageLogger.clear();
 						statusLabel.setText("");
 						controller.clearAgent();
 						// isPrepared = false;
@@ -349,7 +259,7 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 					}
 				}
 			} catch (Exception e) {
-				logMessage("Error: Something went wrong " + text + "(" + e
+				messageLogger.log("Error: Something went wrong " + text + "(" + e
 						+ ").");
 				e.printStackTrace();
 			}
@@ -364,21 +274,12 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 			try {
 				controller.runAgent();
 			} catch (Exception e) {
-				logMessage("Error: Somthing went wrong running the agent (" + e
+				messageLogger.log("Error: Somthing went wrong running the agent (" + e
 						+ ").");
 				e.printStackTrace(); // for debugging
 			}
 			setButtonsEnabled(true);
 			agentThread = null;
-		}
-	}
-
-	/** Writes everything into the text area. */
-	private class TextAreaOutputStream extends java.io.OutputStream {
-		@Override
-		public void write(int b) throws java.io.IOException {
-			String s = new String(new char[] { (char) b });
-			textArea.append(s);
 		}
 	}
 
@@ -494,60 +395,5 @@ public class AgentAppFrame extends javax.swing.JFrame implements
 			result.append("]");
 			return result.toString();
 		}
-	}
-
-	/** Base class for all agent views. */
-	public static abstract class AbstractAgentView extends JPanel {
-		/** Called by the agent application frame after model changes. */
-		public abstract void updateView(AgentAppModel model);
-	}
-
-	/**
-	 * The agent application frame delegates the execution of all domain-level
-	 * commands to a controller. Any class implementing this interface is in
-	 * principle suitable.
-	 */
-	public static interface Controller {
-		public abstract void clearAgent();
-
-		public abstract void prepareAgent();
-
-		public abstract void runAgent();
-	}
-
-	/**
-	 * Useful helper class for showing popup menus. The idea is taken from the
-	 * java tutorial "How to Use Menus".
-	 * 
-	 * @author R. Lunde
-	 */
-	public static class PopupShower extends MouseAdapter {
-		JPopupMenu popup;
-
-		public PopupShower(JPopupMenu popup) {
-			this.popup = popup;
-		}
-
-		public void mousePressed(MouseEvent e) {
-			maybeShowPopup(e);
-		}
-
-		public void mouseReleased(MouseEvent e) {
-			maybeShowPopup(e);
-		}
-
-		private void maybeShowPopup(MouseEvent e) {
-			if (e.isPopupTrigger()) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		}
-	}
-
-	// ///////////////////////////////////////////////////////////////
-	// for testing...
-
-	public static void main(String[] args) {
-		AgentAppFrame frame = new AgentAppFrame();
-		frame.setVisible(true);
 	}
 }

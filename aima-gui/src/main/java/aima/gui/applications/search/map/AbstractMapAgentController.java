@@ -11,9 +11,9 @@ import aima.gui.framework.AgentAppController;
 
 /**
  * Provides a useful base class for agent application controller implementations
- * in the context of route planning agent application development. To get it
+ * in the context of route finding agent application development. To get it
  * ready to work, all you need to do is, to provide implementations for the four
- * abstract methods. See {@link RoutePlanningAgentApp} for an example.
+ * abstract methods. See {@link RouteFindingAgentApp} for an example.
  * 
  * @author R. Lunde
  */
@@ -33,8 +33,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/** Clears the model's tour history. */
 	@Override
 	public void clearAgent() {
-		((MapAgentModel) model).clearTourHistory();
-		frame.modelChanged();
+		((MapAgentView) frame.getEnvView()).clearTracks();
 	}
 
 	/**
@@ -48,12 +47,11 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		selectScenarioAndDest(state.getValue(MapAgentFrame.SCENARIO_SEL), state
 				.getValue(MapAgentFrame.DESTINATION_SEL));
-		prepareModel();
+		prepareView();
 		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
 				state.getValue(MapAgentFrame.SEARCH_SEL),
 				state.getValue(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
-		scenario.getEnv().addEnvironmentView(model);
 	}
 
 	/**
@@ -89,10 +87,10 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	abstract protected void selectScenarioAndDest(int scenarioIdx, int destIdx);
 
 	/**
-	 * Primitive operation, responsible for preparing the model. Scenario and
+	 * Primitive operation, responsible for preparing the view. Scenario and
 	 * destinations are already selected when this method is called.
 	 */
-	abstract protected void prepareModel();
+	abstract protected void prepareView();
 
 	/**
 	 * Factory method, responsible for creating a heuristic function.

@@ -12,12 +12,13 @@ import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
+import aima.gui.framework.AgentAppEnvironmentView;
 import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.AgentAppModel;
+import aima.gui.framework.MessageLogger;
 import aima.gui.framework.SimpleAgentApp;
 
 /**
- * Demo example of a route planning agent application with GUI. The main method
+ * Demo example of a route finding agent application with GUI. The main method
  * starts a map agent frame and supports runtime experiments. This
  * implementation is based on the {@link aima.core.environment.map.MapAgent} and
  * the {@link aima.core.environment.map.MapEnvironment}. It can be used as a
@@ -26,31 +27,30 @@ import aima.gui.framework.SimpleAgentApp;
  * 
  * @author R. Lunde
  */
-public class RoutePlanningAgentApp extends SimpleAgentApp {
+public class RouteFindingAgentApp extends SimpleAgentApp {
 
-	/** Creates a <code>MapAgentModel</code>. */
-	@Override
-	public AgentAppModel createModel() {
-		return new MapAgentModel();
+	/** Creates a <code>MapAgentView</code>. */
+	public AgentAppEnvironmentView createEnvironmentView() {
+		return new ExtendedMapAgentView();
 	}
-
-	/** Creates and configures a <code>RoutePlanningAgentFrame</code>. */
+	
+	/** Creates and configures a <code>RouteFindingAgentFrame</code>. */
 	@Override
 	public AgentAppFrame createFrame() {
-		return new RoutePlanningAgentFrame();
+		return new RouteFindingAgentFrame();
 	}
 
-	/** Creates a <code>RoutePlanningAgentController</code>. */
+	/** Creates a <code>RouteFindingAgentController</code>. */
 	@Override
 	public AgentAppController createController() {
-		return new RoutePlanningAgentController();
+		return new RouteFindingAgentController();
 	}
 
 	// //////////////////////////////////////////////////////////
 	// local classes
 
-	/** Frame for a graphical route planning agent application. */
-	protected static class RoutePlanningAgentFrame extends MapAgentFrame {
+	/** Frame for a graphical route finding agent application. */
+	protected static class RouteFindingAgentFrame extends MapAgentFrame {
 		public static enum MapType {
 			ROMANIA, AUSTRALIA
 		};
@@ -64,7 +64,7 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 				"D4 (to random)" };
 
 		/** Creates a new frame. */
-		public RoutePlanningAgentFrame() {
+		public RouteFindingAgentFrame() {
 			setTitle("RPA - the Route Planning Agent");
 			setSelectorItems(SCENARIO_SEL, new String[] {
 					"S1 (Romania, from Arad)", "S2 (Romania, from Lugoj)",
@@ -86,7 +86,7 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 		protected void selectionChanged() {
 			SelectionState state = getSelection();
 			int scenarioIdx = state.getValue(MapAgentFrame.SCENARIO_SEL);
-			RoutePlanningAgentFrame.MapType mtype = (scenarioIdx < 3) ? MapType.ROMANIA
+			RouteFindingAgentFrame.MapType mtype = (scenarioIdx < 3) ? MapType.ROMANIA
 					: MapType.AUSTRALIA;
 			if (mtype != usedMap) {
 				usedMap = mtype;
@@ -105,8 +105,8 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 		}
 	}
 
-	/** Controller for a graphical route planning agent application. */
-	protected static class RoutePlanningAgentController extends
+	/** Controller for a graphical route finding agent application. */
+	protected static class RouteFindingAgentController extends
 			AbstractMapAgentController {
 		/**
 		 * Configures a scenario and a list of destinations. Note that for route
@@ -177,12 +177,14 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Prepares the model for the previously specified scenario and
+		 * Prepares the view for the previously specified scenario and
 		 * destinations.
 		 */
 		@Override
-		protected void prepareModel() {
-			((MapAgentModel) model).prepare(scenario, destinations);
+		protected void prepareView() {
+			ExtendedMapAgentView mEnv = (ExtendedMapAgentView) frame.getEnvView();
+			mEnv.setData(scenario, destinations, null);
+			mEnv.setEnvironment(scenario.getEnv());
 		}
 
 		/**
@@ -209,24 +211,28 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 		 */
 		@Override
 		protected void startAgent() {
+			MessageLogger logger = frame.getMessageLogger();
 			if (destinations.size() != 1) {
-				frame
-						.logMessage("Error: This agent requires exact one destination.");
+				logger.log("Error: This agent requires exact one destination.");
 				return;
 			}
-			frame.logMessage("<route-planning-simulation-protocol>");
-			frame.logMessage("search: " + search.getClass().getName());
+			logger.log("<route-planning-simulation-protocol>");
+			logger.log("search: " + search.getClass().getName());
 			MapEnvironment env = scenario.getEnv();
 			String goal = destinations.get(0);
 			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
 			if (heuristic != null) {
-				frame
-						.logMessage("heuristic: "
+				logger.log("heuristic: "
 								+ heuristic.getClass().getName());
 			}
 			env.addAgent(agent, scenario.getInitAgentLocation());
-			env.stepUntilDone();
-			frame.logMessage("</route-planning-simulation-protocol>\n");
+			while (!env.isDone()) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {}
+				env.step();
+			}
+			logger.log("</route-planning-simulation-protocol>\n");
 		}
 	}
 
@@ -262,6 +268,6 @@ public class RoutePlanningAgentApp extends SimpleAgentApp {
 
 	/** Application starter. */
 	public static void main(String args[]) {
-		new RoutePlanningAgentApp().startApplication();
+		new RouteFindingAgentApp().startApplication();
 	}
 }
