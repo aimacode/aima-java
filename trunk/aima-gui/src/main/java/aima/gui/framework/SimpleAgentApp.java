@@ -2,7 +2,7 @@ package aima.gui.framework;
 
 /**
  * In this framework a graphical agent application consists of at least three
- * parts: An {@link AgentAppModel}, an {@link AgentAppFrame}, and an
+ * parts: An {@link AgentAppEnvironmentView}, an {@link AgentAppFrame}, and an
  * {@link AgentAppController}. This class demonstrates, how this three parts are
  * plugged together. The easiest way to create a new graphical agent application
  * is to create subclasses of the three parts as needed, and then to subclass
@@ -16,21 +16,20 @@ public class SimpleAgentApp {
 	 * finally sets the frame visible.
 	 */
 	public void startApplication() {
-		AgentAppModel model = createModel();
+		AgentAppEnvironmentView envView = createEnvironmentView();
 		AgentAppFrame frame = createFrame();
 		AgentAppController controller = createController();
+		frame.setEnvView(envView);
+		envView.setMessageLogger(frame.getMessageLogger());
 		frame.setController(controller);
-		frame.setModel(model);
 		controller.setFrame(frame);
-		controller.setModel(model);
-		model.addModelChangedListener(frame);
 		frame.setVisible(true);
 		frame.setDefaultSelection();
 	}
 
 	/** Factory method, responsible for creating the model. */
-	public AgentAppModel createModel() {
-		return new AgentAppModel();
+	public AgentAppEnvironmentView createEnvironmentView() {
+		return new EmptyEnvironmentView();
 	}
 
 	/**
@@ -40,7 +39,6 @@ public class SimpleAgentApp {
 	 */
 	public AgentAppFrame createFrame() {
 		AgentAppFrame result = new AgentAppFrame();
-		result.setAgentView(new AgentView());
 		result.setSelectors(new String[] { "XSelect", "YSelect" },
 				new String[] { "Select X", "Select Y" });
 		result.setSelectorItems("XSelect", new String[] { "X1 (Small)",
@@ -49,18 +47,16 @@ public class SimpleAgentApp {
 				new String[] { "Y=1", "Y=2", "Y=3" }, 0);
 		result.setTitle("Demo Agent Application");
 		result.setSplitPaneResizeWeight(0.5); // puts split bar in center
-		// position.
 		result.setSize(600, 400);
-		result.setUpdateDelay(500);
 		return result;
 	}
 
 	/** Factory method, responsible for creating the controller. */
 	public AgentAppController createController() {
-		return new AgentAppController();
+		return new DemoController();
 	}
 
-	// ///////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
 	// main method for testing
 
 	/**

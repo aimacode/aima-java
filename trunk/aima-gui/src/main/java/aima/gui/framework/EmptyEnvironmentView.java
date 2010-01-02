@@ -2,24 +2,23 @@ package aima.gui.framework;
 
 import java.awt.Color;
 
+import aima.core.agent.Action;
+import aima.core.agent.Agent;
+import aima.core.agent.Environment;
+import aima.core.agent.EnvironmentState;
 import aima.core.util.datastructure.Point2D;
 
 /**
- * Simple agent view without content but with some useful transformation
- * features. The transformation features allow to scale and translate 2D world
- * coordinates into view coordinates. When creating subclasses, it should
- * normally be sufficient to override the method
+ * Simple graphical environment view without content but with some useful
+ * transformation features. The transformation features allow to scale
+ * and translate 2D world coordinates into view coordinates. When creating
+ * subclasses, it should normally be sufficient to override the method
  * {@link #paint(java.awt.Graphics)}.
  * 
  * @author R. Lunde
  */
-public class AgentView extends AgentAppFrame.AbstractAgentView {
-	/**
-	 * Maintains a reference to the model which provides the data to be
-	 * displayed.
-	 */
-	protected AgentAppModel model;
-
+public class EmptyEnvironmentView extends AgentAppEnvironmentView {
+	
 	private int borderTop = 10;
 	private int borderLeft = 10;
 	private int borderBottom = 10;
@@ -87,10 +86,21 @@ public class AgentView extends AgentAppFrame.AbstractAgentView {
 
 	/** Stores the model and initiates painting. */
 	@Override
-	public void updateView(AgentAppModel model) {
-		this.model = model;
-		if (model != null)
-			repaint();
+	public void setEnvironment(Environment env) {
+		super.setEnvironment(env);
+		repaint();
+	}
+	
+
+	@Override
+	public void agentActed(Agent agent, Action action,
+			EnvironmentState resultingState) {
+		repaint();
+	}
+
+	@Override
+	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+		repaint();
 	}
 
 	/**
