@@ -60,8 +60,9 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 
 	@Override
 	public void agentAdded(Agent agent, EnvironmentState resultingState) {
-		// TODO Auto-generated method stub
-		
+		OsmMap map = (OsmMap) getMapEnv().getMap();
+		String loc = getMapEnv().getAgentLocation(agent);
+		MapNode node = map.getWayNode(loc);
+		map.getMapData().addToTrack("Agent Track", node.getLat(), node.getLon());
 	}
-
 }

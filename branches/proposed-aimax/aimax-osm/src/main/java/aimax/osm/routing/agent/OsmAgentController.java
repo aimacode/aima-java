@@ -106,11 +106,12 @@ public class OsmAgentController extends AgentAppController {
 			locs[i] = map.getNearestLocation(pt);
 		}
 		logger.log("<osm-agent-simulation-protocol>");
+		logger.log("search: " + search.getClass().getName());
+		logger.log("heuristic: " + heuristic.getClass().getName());
 		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			logger.log("search: " + search.getClass().getName());
 			heuristic.adaptToGoal(locs[1], map);
 			agent = new MapAgent(map, env, search, new String[] { locs[1] });
 			break;
@@ -123,7 +124,6 @@ public class OsmAgentController extends AgentAppController {
 			(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 			break;
 		}
-		logger.log("heuristic: " + heuristic.getClass().getName());
 		env.addAgent(agent, locs[0]);
 		try {
 			while (!env.isDone()) {

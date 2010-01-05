@@ -27,7 +27,6 @@ import aimax.osm.routing.agent.OsmMap;
 import aimax.osm.viewer.DefaultMapEntityRenderer;
 import aimax.osm.viewer.EntityPrintInfo;
 import aimax.osm.viewer.Icon;
-import aimax.osm.viewer.MapViewPane;
 
 
 /**
