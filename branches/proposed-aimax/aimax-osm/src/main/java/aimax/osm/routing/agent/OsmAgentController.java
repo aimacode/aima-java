@@ -18,8 +18,8 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.framework.AgentAppController;
+import aima.gui.framework.AgentThread;
 import aima.gui.framework.MessageLogger;
-import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
@@ -42,12 +42,12 @@ public class OsmAgentController extends AgentAppController {
 	}
 	
 	@Override
-	public void clearAgent() {
+	public void clear() {
 		map.getMapData().clearMarksAndTracks();
 	}
 
 	@Override
-	public void prepareAgent() {
+	public void prepare() {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
@@ -89,35 +89,11 @@ public class OsmAgentController extends AgentAppController {
 	}
 	
 	/**
-	 * Template method, which starts the agent and afterwards updates
-	 * the status bar of the frame.
-	 */
-	@Override
-	public void runAgent() {
-		startAgent();
-		List<Agent> agents = env.getAgents();
-		if (agents.size() == 1) {
-			Double travelDistance = env.getAgentTravelDistance(
-					agents.get(0));
-			StringBuffer statusMsg = new StringBuffer();
-			statusMsg.append("Task completed");
-			if (travelDistance != null) {
-				DecimalFormat f = new DecimalFormat("#0.0");
-				statusMsg.append("; travel distance: "
-						+ f.format(travelDistance));
-			}
-			statusMsg.append(".");
-			frame.setStatus(statusMsg.toString());
-		}
-	}
-	
-	/**
 	 * Primitive operation, which creates environment and agent,
 	 * starts the agent and initiates some text outputs describing the
 	 * state of the agent.
 	 */
-	protected void startAgent() {
-		MessageLogger logger = frame.getMessageLogger();
+	public void run(MessageLogger logger) {
 		List<MapNode> marks = map.getMapData().getMarks();
 		if (marks.size() < 2) {
 			logger.log("Error: Please set two marks with MouseLeft.");
@@ -149,12 +125,39 @@ public class OsmAgentController extends AgentAppController {
 		}
 		logger.log("heuristic: " + heuristic.getClass().getName());
 		env.addAgent(agent, locs[0]);
-		env.stepUntilDone();
+		try {
+			while (!env.isDone()) {
+				Thread.sleep(20);
+				env.step();
+			}
+		} catch (InterruptedException e) {}
 		logger.log("</osm-agent-simulation-protocol>\n");
 	}
 
+	/** Updates the status of the frame. */
+	public void update(AgentThread agentThread) {
+		if (agentThread.isCancelled()) {
+			frame.setStatus("Task cancelled.");
+		} else {
+			StringBuffer statusMsg = new StringBuffer();
+			statusMsg.append("Task completed");
+			List<Agent> agents = env.getAgents();
+			if (agents.size() == 1) {
+				Double travelDistance = env.getAgentTravelDistance(
+						agents.get(0));
+				if (travelDistance != null) {
+					DecimalFormat f = new DecimalFormat("#0.0");
+					statusMsg.append("; travel distance: "
+							+ f.format(travelDistance));
+				}
+			}
+			statusMsg.append(".");
+			frame.setStatus(statusMsg.toString());
+		}
+	}
 	
-	// //////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////
 	// local classes
 	
 	/**

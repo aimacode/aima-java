@@ -90,18 +90,17 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		}
 		
 		@Override
-		public void clearAgent() {
+		public void clear() {
 			visitedStates.clear();
-			super.clearAgent();
+			super.clear();
 		}
 		
 		/**
-		 * Primitive operation, which creates environment and agent,
+		 * Creates environment and agent,
 		 * starts the agent and initiates some text outputs describing the
 		 * state of the agent.
 		 */
-		protected void startAgent() {
-			MessageLogger logger = frame.getMessageLogger();
+		public void run(MessageLogger logger) {
 			visitedStates.clear();
 			List<MapNode> marks = map.getMapData().getMarks();
 			if (marks.size() < 2) {
@@ -116,11 +115,16 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 			}
 			logger.log("<osm-agent-simulation-protocol>");
 			logger.log("search: " + search.getClass().getName());
+			logger.log("heuristic: " + heuristic.getClass().getName());
 			heuristic.adaptToGoal(locs[1], map);
 			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
-			logger.log("heuristic: " + heuristic.getClass().getName());
 			env.addAgent(agent, locs[0]);
-			env.stepUntilDone();
+			try {
+				while (!env.isDone()) {
+					Thread.sleep(20);
+					env.step();
+				}
+			} catch (InterruptedException e) {}
 			logger.log("</osm-agent-simulation-protocol>\n");
 		}
 	}
