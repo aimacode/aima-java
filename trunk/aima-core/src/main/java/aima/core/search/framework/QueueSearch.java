@@ -48,7 +48,7 @@ public abstract class QueueSearch extends NodeExpander {
 		}
 		frontier.insert(root);
 		setQueueSize(frontier.size());
-		while (!(frontier.isEmpty())) {
+		while (!(frontier.isEmpty()) && !Thread.interrupted()) {
 			// choose a leaf node and remove it from the frontier
 			Node nodeToExpand = popNodeFromFrontier();
 			setQueueSize(frontier.size());
