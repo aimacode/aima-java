@@ -41,7 +41,8 @@ public class MessageLoggerPanel extends JPanel implements MessageLogger {
 			ml.run();
 		} else {
 			try {
-				SwingUtilities.invokeAndWait(ml);
+				//SwingUtilities.invokeAndWait(ml);
+				SwingUtilities.invokeLater(ml);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

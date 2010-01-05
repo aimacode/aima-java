@@ -210,28 +210,26 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		 * text outputs describing the state of the agent.
 		 */
 		@Override
-		protected void startAgent() {
-			MessageLogger logger = frame.getMessageLogger();
+		public void run(MessageLogger logger) {
 			if (destinations.size() != 1) {
 				logger.log("Error: This agent requires exact one destination.");
 				return;
 			}
 			logger.log("<route-planning-simulation-protocol>");
 			logger.log("search: " + search.getClass().getName());
+			if (heuristic != null)
+				logger.log
+				("heuristic: " + heuristic.getClass().getName());
 			MapEnvironment env = scenario.getEnv();
 			String goal = destinations.get(0);
 			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
-			if (heuristic != null) {
-				logger.log("heuristic: "
-								+ heuristic.getClass().getName());
-			}
 			env.addAgent(agent, scenario.getInitAgentLocation());
-			while (!env.isDone()) {
-				try {
+			try {
+				while (!env.isDone()) {
 					Thread.sleep(500);
-				} catch (InterruptedException e) {}
-				env.step();
-			}
+					env.step();
+				}
+			} catch (InterruptedException e) {}
 			logger.log("</route-planning-simulation-protocol>\n");
 		}
 	}

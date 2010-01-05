@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 /**
  * <p>
@@ -196,7 +197,7 @@ public class AgentAppFrame extends JFrame {
 	}
 
 	/** Enables/disables all combos and buttons. */
-	private void setButtonsEnabled(boolean b) {
+	public void setButtonsEnabled(boolean b) {
 		clearButton.setEnabled(b);
 		prepareButton.setEnabled(b);
 		runButton.setEnabled(b);
@@ -208,7 +209,7 @@ public class AgentAppFrame extends JFrame {
 	/** Tells the controller to prepare the agent. */
 	protected void selectionChanged() {
 		if (controller != null) {
-			controller.prepareAgent();
+			controller.prepare();
 			isPrepared = true;
 		}
 	}
@@ -219,67 +220,49 @@ public class AgentAppFrame extends JFrame {
 	/** Sends commands to the controller. */
 	private class FrameActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
-			String text = "";
+			String err = "";
 			try {
 				if (controller != null) {
 					setStatus("");
 					Object source = evt.getSource();
 					if (source == clearButton /* || source == clearMenuItem */) {
 						// additionally clear the text area
-						text = "when clearing the views ";
+						err = "when clearing the views ";
 						messageLogger.clear();
 						statusLabel.setText("");
-						controller.clearAgent();
+						controller.clear();
 						// isPrepared = false;
 					} else if (source == prepareButton) {
-						text = "when preparing the agent ";
-						controller.prepareAgent();
+						err = "when preparing the agent ";
+						controller.prepare();
 						isPrepared = true;
 					} else if (source == runButton) {
-						text = "when preparing the agent ";
+						err = "when preparing the agent ";
 						if (isPrepared == false)
-							controller.prepareAgent();
-						text = "when running the agent ";
+							controller.prepare();
+						err = "when running the agent ";
 						setButtonsEnabled(false);
-						agentThread = new AgentThread();
+						setStatus("");
+						agentThread = new AgentThread(AgentAppFrame.this, controller);
 						agentThread.start();
 						isPrepared = false;
 					} else if (source == cancelButton) {
-						text = "when cancelling the agent ";
+						err = "when cancelling the agent ";
 						if (agentThread != null) {
-							agentThread.stop(); // quick and dirty!
+							agentThread.interrupt();
 							agentThread = null;
-							setStatus("Task cancelled.");
-							setButtonsEnabled(true);
 						}
 						isPrepared = false;
 					} else if (selectors.combos.contains(source)) {
-						text = "when preparing the agent ";
+						err = "when preparing the agent ";
 						selectionChanged();
 					}
 				}
 			} catch (Exception e) {
-				messageLogger.log("Error: Something went wrong " + text + "(" + e
+				messageLogger.log("Error: Something went wrong " + err + "(" + e
 						+ ").");
 				e.printStackTrace();
 			}
-		}
-	}
-
-	/** Thread, which helps to perform GUI updates during simulation. */
-	private class AgentThread extends Thread {
-		@Override
-		public void run() {
-			agentThread = this;
-			try {
-				controller.runAgent();
-			} catch (Exception e) {
-				messageLogger.log("Error: Somthing went wrong running the agent (" + e
-						+ ").");
-				e.printStackTrace(); // for debugging
-			}
-			setButtonsEnabled(true);
-			agentThread = null;
 		}
 	}
 
