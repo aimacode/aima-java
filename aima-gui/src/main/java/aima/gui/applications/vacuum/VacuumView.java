@@ -12,7 +12,7 @@ import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.framework.EmptyEnvironmentView;
 
 /**
- * Displays the informations provided by the <code>VacuumModel</code> on a
+ * Displays the informations provided by a <code>VacuumEnvironment</code> on a
  * panel using 2D-graphics.
  */
 public class VacuumView extends EmptyEnvironmentView {

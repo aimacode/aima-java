@@ -32,7 +32,7 @@ public abstract class AgentAppController {
 	 * The associated {@link AgentAppFrame} calls this method when the run
 	 * button is activated. This code runs in a second thread, which can be
 	 * stopped by the GUI at any time. Implementations should avoid to
-	 * access swing components because they are not thread safe. 
+	 * access swing components because they are not thread-safe. 
 	 */
 	public abstract void run(MessageLogger logger);
 	
