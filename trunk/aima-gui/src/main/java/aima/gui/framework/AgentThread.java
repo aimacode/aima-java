@@ -4,15 +4,15 @@ import javax.swing.SwingUtilities;
 
 /** Thread, which is used to run agents in background. */
 public class AgentThread extends Thread {
-	AgentAppFrame frame;
-	AgentAppController controller;
+	private AgentAppFrame frame;
+	private AgentAppController controller;
+	/** Remembers interrupt method calls. */
+	private boolean isCancelled = false;
 	
 	public AgentThread(AgentAppFrame frame, AgentAppController controller) {
 		this.frame = frame;
 		this.controller = controller;
 	}
-	/** Remembers interrupt method calls. */
-	boolean isCancelled = false;
 	
 	/** Returns true if the thread was interrupted. */
 	public boolean isCancelled() {

@@ -249,8 +249,13 @@ public class AgentAppFrame extends JFrame {
 					} else if (source == cancelButton) {
 						err = "when cancelling the agent ";
 						if (agentThread != null) {
-							agentThread.interrupt();
-							agentThread = null;
+							if (agentThread.isCancelled()) {
+								agentThread.stop(); // agent has ignored the interrupt
+								setButtonsEnabled(true);
+								setStatus("Task stopped.");
+								agentThread = null;
+							} else
+								agentThread.interrupt();
 						}
 						isPrepared = false;
 					} else if (selectors.combos.contains(source)) {
