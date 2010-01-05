@@ -19,19 +19,28 @@ public abstract class AgentAppController {
 	 * The associated {@link AgentAppFrame} calls this method when the clear
 	 * button is pressed.
 	 */
-	public abstract void clearAgent();
+	public abstract void clear();
 
 	/**
 	 * The associated {@link AgentAppFrame} calls this method when the prepare
 	 * button is pressed, the selection state of the selectors changes, and also
 	 * when the run button is pressed without previously performed preparation.
 	 */
-	public abstract void prepareAgent();
+	public abstract void prepare();
 
 	/**
 	 * The associated {@link AgentAppFrame} calls this method when the run
 	 * button is activated. This code runs in a second thread, which can be
-	 * stopped by the GUI at any time.
+	 * stopped by the GUI at any time. Implementations should avoid to
+	 * access swing components because they are not thread safe. 
 	 */
-	public abstract void runAgent();
+	public abstract void run(MessageLogger logger);
+	
+	/**
+	 * This method is automatically called after the run method has finished.
+	 * Implementations are responsible for displaying status information in
+	 * the frame.
+	 * @param agentThread The thread which was used to run the agent.
+	 */
+	public abstract void update(AgentThread agentThread);
 }

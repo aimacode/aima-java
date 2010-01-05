@@ -8,6 +8,7 @@ import aima.core.environment.vacuum.TableDrivenVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
+import aima.gui.framework.AgentThread;
 import aima.gui.framework.MessageLogger;
 
 /**
@@ -15,12 +16,12 @@ import aima.gui.framework.MessageLogger;
  */
 public class VacuumController extends AgentAppController {
 	
-	VacuumEnvironment env = null;
-	AbstractAgent agent = null;
+	protected VacuumEnvironment env = null;
+	protected AbstractAgent agent = null;
 	
 	/** Does nothing. */
 	@Override
-	public void clearAgent() {
+	public void clear() {
 	}
 
 	/**
@@ -28,7 +29,7 @@ public class VacuumController extends AgentAppController {
 	 * selection state of the selectors and finally updates the model.
 	 */
 	@Override
-	public void prepareAgent() {
+	public void prepare() {
 		AgentAppFrame.SelectionState selState = frame.getSelection();
 		env = null;
 		agent = null;
@@ -57,23 +58,29 @@ public class VacuumController extends AgentAppController {
 		}
 	}
 
-	/** Starts the agent and afterwards updates the status of the frame. */
+	/** Starts the agent. */
 	@Override
-	public void runAgent() {
+	public void run(MessageLogger logger) {
 		if (env != null && agent != null) {
-			MessageLogger logger = frame.getMessageLogger();
 			logger.log("<simulation-log>");
-			while (!env.isDone()) {
-				try {
+			try {
+				while (!env.isDone()) {
 					Thread.sleep(500);
-				} catch (InterruptedException e) {}
-				env.step();
-			}
+					env.step();
+				}
+			} catch (InterruptedException e) {}
 			logger.log("Performance: "
 					+ env.getPerformanceMeasure(agent));
 			logger.log("</simulation-log>");
-			frame.setStatus("Task completed.");
 		}
+	}
+	
+	/** Updates the status of the frame. */
+	public void update(AgentThread agentThread) {
+		if (agentThread.isCancelled())
+			frame.setStatus("Task cancelled.");
+		else
+			frame.setStatus("Task completed.");
 	}
 }
 
