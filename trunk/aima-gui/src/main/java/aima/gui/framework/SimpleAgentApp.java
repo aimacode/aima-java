@@ -1,12 +1,12 @@
 package aima.gui.framework;
 
 /**
- * In this framework a graphical agent application consists of at least three
+ * In this framework a graphical agent application consists at least of three
  * parts: An {@link AgentAppEnvironmentView}, an {@link AgentAppFrame}, and an
  * {@link AgentAppController}. This class demonstrates, how this three parts are
  * plugged together. The easiest way to create a new graphical agent application
- * is to create subclasses of the three parts as needed, and then to subclass
- * this class and override the three factory methods.
+ * is to create subclasses of the three parts as needed, and then to create a
+ * subclass this class and override the three factory methods.
  * 
  * @author R. Lunde
  */
@@ -27,7 +27,7 @@ public class SimpleAgentApp {
 		frame.setDefaultSelection();
 	}
 
-	/** Factory method, responsible for creating the model. */
+	/** Factory method, responsible for creating the environment view. */
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new EmptyEnvironmentView();
 	}

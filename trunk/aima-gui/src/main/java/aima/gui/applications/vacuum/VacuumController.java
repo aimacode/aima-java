@@ -26,7 +26,8 @@ public class VacuumController extends AgentAppController {
 
 	/**
 	 * Creates a vacuum agent and a corresponding environment based on the
-	 * selection state of the selectors and finally updates the model.
+	 * selection state of the selectors and finally passes the
+	 * environment to the viewer.
 	 */
 	@Override
 	public void prepare() {
@@ -75,7 +76,7 @@ public class VacuumController extends AgentAppController {
 		}
 	}
 	
-	/** Updates the status of the frame. */
+	/** Updates the status of the frame after the agent has finished its work. */
 	public void update(AgentThread agentThread) {
 		if (agentThread.isCancelled())
 			frame.setStatus("Task cancelled.");
