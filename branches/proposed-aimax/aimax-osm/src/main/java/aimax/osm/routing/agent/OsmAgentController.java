@@ -108,18 +108,17 @@ public class OsmAgentController extends AgentAppController {
 		logger.log("<osm-agent-simulation-protocol>");
 		logger.log("search: " + search.getClass().getName());
 		logger.log("heuristic: " + heuristic.getClass().getName());
+		heuristic.adaptToGoal(locs[1], map);
 		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			heuristic.adaptToGoal(locs[1], map);
 			agent = new MapAgent(map, env, search, new String[] { locs[1] });
 			break;
 		case 1:
 			Problem p = new BidirectionalMapProblem(map, null, locs[1]);
 			OnlineSearchProblem osp = new OnlineSearchProblem
 			(p.getActionsFunction(), p.getGoalTest(), p.getStepCostFunction());
-			heuristic.adaptToGoal(locs[1], map);
 			agent = new LRTAStarAgent
 			(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 			break;
