@@ -38,6 +38,16 @@ public class MapAgentView extends EmptyEnvironmentView {
 		agentTracks.clear();
 	}
 	
+	
+	/**
+	 * Reacts on environment changes and updates the agent tracks.
+	 */
+	@Override
+	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+		updateTracks();
+		super.agentAdded(agent, resultingState);
+	}
+
 	/**
 	 * Reacts on environment changes and updates the agent tracks. The command
 	 * is always send to the message logger as string.
@@ -45,8 +55,10 @@ public class MapAgentView extends EmptyEnvironmentView {
 	@Override
 	public void agentActed(Agent agent, Action command, EnvironmentState state) {
 		MapEnvironment mEnv = getMapEnv();
-		int idx = mEnv.getAgents().indexOf(agent);
-		logger.log("A" + idx + ": " + command.toString());
+		String msg = "";
+		if (mEnv.getAgents().size() > 1)
+			msg = "A" + mEnv.getAgents().indexOf(agent) + ": ";
+		logger.log(msg + command.toString());
 		updateTracks();
 		repaint();
 	}
