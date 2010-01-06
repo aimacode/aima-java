@@ -306,6 +306,11 @@ public class MapViewPane extends JPanel implements MapDataEventListener {
 					repaint();
 				} else
 					zoom(1/1.5f, getWidth()/2, getHeight()/2); break;
+			case KeyEvent.VK_SPACE:
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) == 0)
+					zoom(1.5f, getWidth()/2, getHeight()/2);
+				else
+					zoom(1/1.5f, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_LEFT:
 				adjust((int) (0.3 * getWidth()), 0); break;
 			case KeyEvent.VK_RIGHT:
