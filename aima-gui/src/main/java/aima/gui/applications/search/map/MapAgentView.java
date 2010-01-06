@@ -58,7 +58,7 @@ public class MapAgentView extends EmptyEnvironmentView {
 		String msg = "";
 		if (mEnv.getAgents().size() > 1)
 			msg = "A" + mEnv.getAgents().indexOf(agent) + ": ";
-		logger.log(msg + command.toString());
+		notify(msg + command.toString());
 		updateTracks();
 		repaint();
 	}
