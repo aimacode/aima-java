@@ -60,6 +60,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 	protected List<MapEntity> nodeBuffer;
 	protected List<Track> trackBuffer;
 	protected List<NameInfo> nameInfoBuffer;
+	private List<MapNode> tmpNodeBuffer; // to improve thread-safety
 	private BasicStroke standardStroke;
 	
 	/** Standard constructor. */
@@ -71,6 +72,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		nodeBuffer = new ArrayList<MapEntity>();
 		trackBuffer = new ArrayList<Track>();
 		nameInfoBuffer = new ArrayList<NameInfo>();
+		tmpNodeBuffer = new ArrayList<MapNode>();
 		setDefaults();
 	}
 	
@@ -357,10 +359,11 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 	/** Prints a track entity. */
 	protected void printTrack(Track track) {
 		EntityPrintInfo pInfo = getTrackInfo(track.getName());
-		List<MapNode> nodes = track.getTrkPts();
-		if (!nodes.isEmpty()) {
-			printLine(g2, nodes, pInfo, false, null);
-			printPoint(g2, nodes.get(nodes.size()-1), pInfo, null);
+		tmpNodeBuffer.clear();
+		tmpNodeBuffer.addAll(track.getTrkPts());
+		if (!tmpNodeBuffer.isEmpty()) {
+			printLine(g2, tmpNodeBuffer, pInfo, false, null);
+			printPoint(g2, tmpNodeBuffer.get(tmpNodeBuffer.size()-1), pInfo, null);
 		}
 	}
 	
