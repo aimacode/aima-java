@@ -208,7 +208,7 @@ public class MapDataStore implements MapDataConsumer {
 	
 	public Track getTrack(String trackName) {
 		for (Track track : tracks)
-			if (track.getName() == trackName)
+			if (track.getName().equals(trackName))
 				return track;
 		return null;
 	}

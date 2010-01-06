@@ -99,9 +99,9 @@ public class OsmAgentController extends AgentAppController {
 			logger.log("Error: Please set two marks with MouseLeft.");
 			return;
 		}
-		String[] locs = new String[2];
-		for (int i = 0; i < 2; i++) {
-			MapNode node = (i==0) ? marks.get(0) : marks.get(marks.size()-1);
+		String[] locs = new String[marks.size()];
+		for (int i = 0; i < marks.size(); i++) {
+			MapNode node = marks.get(i);
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
 			locs[i] = map.getNearestLocation(pt);
 		}
@@ -148,7 +148,7 @@ public class OsmAgentController extends AgentAppController {
 				if (travelDistance != null) {
 					DecimalFormat f = new DecimalFormat("#0.0");
 					statusMsg.append("; travel distance: "
-							+ f.format(travelDistance));
+							+ f.format(travelDistance) + "km");
 				}
 			}
 			statusMsg.append(".");
