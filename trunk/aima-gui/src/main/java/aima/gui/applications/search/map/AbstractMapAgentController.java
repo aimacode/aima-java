@@ -58,7 +58,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		
 	/** Updates the status of the frame. */
 	public void update(AgentThread agentThread) {
-		if (agentThread.isCancelled()) {
+		if (agentThread.isCanceled()) {
 			frame.setStatus("Task cancelled.");
 		} else {
 			StringBuffer statusMsg = new StringBuffer();

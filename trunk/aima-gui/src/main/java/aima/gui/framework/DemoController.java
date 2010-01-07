@@ -53,7 +53,7 @@ public class DemoController extends AgentAppController {
 	 * @param agentThread The thread which was used to run the agent.
 	 */
 	public void update(AgentThread agentThread) {
-		if (agentThread.isCancelled())
+		if (agentThread.isCanceled())
 			frame.setStatus("Task cancelled.");
 		else
 			frame.setStatus("Task completed.");
