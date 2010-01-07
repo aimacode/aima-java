@@ -36,14 +36,13 @@ public class VacuumView extends EmptyEnvironmentView {
 	 */
 	@Override
 	public void paint(java.awt.Graphics g) {
-		List<Object> locations = getLocations();
+		List<String> locations = getLocations();
 		this.adjustTransformation(0, 0, 11 * locations.size() - 1, 10);
 		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 		g2.setColor(Color.white);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		for (int i = 0; i < locations.size(); i++) {
-			VacuumEnvironment.Location location =
-				(VacuumEnvironment.Location) locations.get(i);
+			String location = locations.get(i);
 			g2.setColor(Color.black);
 			g2.drawRect(x(11 * i), y(0), scale(10), scale(10));
 			if (isDirty(location)) {
@@ -64,19 +63,19 @@ public class VacuumView extends EmptyEnvironmentView {
 	}
 	
 	/** Returns the names of all locations used. */
-	protected List<Object> getLocations() {
-		List<Object> result = new ArrayList<Object>();
+	protected List<String> getLocations() {
+		List<String> result = new ArrayList<String>();
 		if (env != null) {
-			result.add(VacuumEnvironment.Location.A);
-			result.add(VacuumEnvironment.Location.B);
+			result.add(VacuumEnvironment.LOCATION_A);
+			result.add(VacuumEnvironment.LOCATION_B);
 		}
 		return result;
 	}
 
 	/** Checks whether the specified location is dirty. */
-	protected boolean isDirty(Object location) {
+	protected boolean isDirty(String location) {
 		return VacuumEnvironment.LocationState.Dirty == getVacuumEnv()
-				.getLocationState((VacuumEnvironment.Location) location);
+				.getLocationState(location);
 	}
 
 	/** Checks whether the agent is currently at the specified location. */
