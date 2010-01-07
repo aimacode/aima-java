@@ -22,5 +22,5 @@ public class DynAttributeNames {
 	 * Name of a dynamic attribute, which tells the agent where it is. Expected
 	 * value type: String.
 	 */
-	public static final String PERCEPT_IN = "In";
+	public static final String PERCEPT_IN = "in";
 }
