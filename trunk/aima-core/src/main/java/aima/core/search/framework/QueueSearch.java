@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.util.CancelableThread;
 import aima.core.util.datastructure.Queue;
 
 /**
@@ -48,7 +49,7 @@ public abstract class QueueSearch extends NodeExpander {
 		}
 		frontier.insert(root);
 		setQueueSize(frontier.size());
-		while (!(frontier.isEmpty()) && !Thread.interrupted()) {
+		while (!(frontier.isEmpty()) && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
 			Node nodeToExpand = popNodeFromFrontier();
 			setQueueSize(frontier.size());
