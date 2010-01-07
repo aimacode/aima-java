@@ -55,7 +55,7 @@ public class VacuumController extends AgentAppController {
 		}
 		if (env != null && agent != null) {
 			frame.getEnvView().setEnvironment(env);
-			env.addAgent(agent, VacuumEnvironment.Location.A);
+			env.addAgent(agent);
 		}
 	}
 
