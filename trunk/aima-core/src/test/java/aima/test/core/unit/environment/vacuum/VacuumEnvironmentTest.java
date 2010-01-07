@@ -32,19 +32,19 @@ public class VacuumEnvironmentTest {
 	@Test
 	public void testTVEConstruction() {
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve2
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve2
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 	}
 
 	@Test
 	public void testAgentAdd() {
-		tve.addAgent(a, VacuumEnvironment.Location.A);
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		tve.addAgent(a, VacuumEnvironment.LOCATION_A);
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(a));
 		Assert.assertEquals(1, tve.getAgents().size());
 	}

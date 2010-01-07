@@ -35,11 +35,11 @@ public class SimpleReflexVacuumAgent extends AbstractAgent {
 				VacuumEnvironment.ACTION_SUCK));
 		rules.add(new Rule(new EQUALCondition(
 				VacuumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
-				VacuumEnvironment.Location.A),
+				VacuumEnvironment.LOCATION_A),
 				VacuumEnvironment.ACTION_MOVE_RIGHT));
 		rules.add(new Rule(new EQUALCondition(
 				VacuumEnvPercept.ATTRIBUTE_AGENT_LOCATION,
-				VacuumEnvironment.Location.B),
+				VacuumEnvironment.LOCATION_B),
 				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;

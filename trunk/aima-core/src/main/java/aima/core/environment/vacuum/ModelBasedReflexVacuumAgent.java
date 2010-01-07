@@ -43,7 +43,7 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 				envState.setAttribute(ATTRIBUTE_CURRENT_STATE, vep
 						.getLocationState());
 				// Keep track of the state of the different locations
-				if (VacuumEnvironment.Location.A == vep.getAgentLocation()) {
+				if (VacuumEnvironment.LOCATION_A == vep.getAgentLocation()) {
 					envState.setAttribute(ATTRIBUTE_STATE_LOCATION_A, vep
 							.getLocationState());
 				} else {
@@ -72,10 +72,10 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 				VacuumEnvironment.LocationState.Dirty),
 				VacuumEnvironment.ACTION_SUCK));
 		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
-				VacuumEnvironment.Location.A),
+				VacuumEnvironment.LOCATION_A),
 				VacuumEnvironment.ACTION_MOVE_RIGHT));
 		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
-				VacuumEnvironment.Location.B),
+				VacuumEnvironment.LOCATION_B),
 				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;

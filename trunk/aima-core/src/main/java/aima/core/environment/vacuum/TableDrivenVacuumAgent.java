@@ -40,19 +40,19 @@ public class TableDrivenVacuumAgent extends AbstractAgent {
 		//
 		// Level 1: 4 states
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 
@@ -60,102 +60,102 @@ public class TableDrivenVacuumAgent extends AbstractAgent {
 		// Level 2: 4x4 states
 		// 1
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 2
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 3
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 4
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 
@@ -163,530 +163,530 @@ public class TableDrivenVacuumAgent extends AbstractAgent {
 		// Level 3: 4x4x4 states
 		// 1-1
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 1-2
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 1-3
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 1-4
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 2-1
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 2-2
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 2-3
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 2-4
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 3-1
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 3-2
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 3-3
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 3-4
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 4-1
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 4-2
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 4-3
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		// 4-4
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_RIGHT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.A,
+				VacuumEnvironment.LOCATION_A,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Clean));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_MOVE_LEFT);
 		ps = createPerceptSequence(new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty), new VacuumEnvPercept(
-				VacuumEnvironment.Location.B,
+				VacuumEnvironment.LOCATION_B,
 				VacuumEnvironment.LocationState.Dirty));
 		perceptSequenceActions.put(ps, VacuumEnvironment.ACTION_SUCK);
 

@@ -18,19 +18,16 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
 	public static final Action ACTION_SUCK = new DynamicAction("Suck");
-
-	//
-	public enum Location {
-		A, B
-	};
+	public static final String LOCATION_A = "A";
+	public static final String LOCATION_B = "B";
 
 	public enum LocationState {
 		Clean, Dirty
 	};
 
 	//
-	private VacuumEnvironmentState envState = null;
-	private boolean isDone = false;
+	protected VacuumEnvironmentState envState = null;
+	protected boolean isDone = false;
 
 	public VacuumEnvironment() {
 		Random r = new Random();
@@ -52,10 +49,10 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	public EnvironmentState executeAction(Agent a, Action agentAction) {
 
 		if (ACTION_MOVE_RIGHT == agentAction) {
-			envState.setAgentLocation(a, Location.B);
+			envState.setAgentLocation(a, LOCATION_B);
 			updatePerformanceMeasure(a, -1);
 		} else if (ACTION_MOVE_LEFT == agentAction) {
-			envState.setAgentLocation(a, Location.A);
+			envState.setAgentLocation(a, LOCATION_A);
 			updatePerformanceMeasure(a, -1);
 		} else if (ACTION_SUCK == agentAction) {
 			if (LocationState.Dirty == envState.getLocationState(envState
@@ -75,7 +72,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
-		Location agentLocation = envState.getAgentLocation(anAgent);
+		String agentLocation = envState.getAgentLocation(anAgent);
 		return new VacuumEnvPercept(agentLocation, envState
 				.getLocationState(agentLocation));
 	}
@@ -85,19 +82,26 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		return super.isDone() || isDone;
 	}
 
-	public void addAgent(Agent a, Location location) {
+	@Override
+	public void addAgent(Agent a) {
+		int idx = new Random().nextInt(2);
+		envState.setAgentLocation(a, idx == 0 ? LOCATION_A : LOCATION_B);
+		super.addAgent(a);
+	}
+	
+	public void addAgent(Agent a, String location) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
-		addAgent(a);
 		envState.setAgentLocation(a, location);
+		super.addAgent(a);
 	}
 
-	public LocationState getLocationState(Location location) {
+	public LocationState getLocationState(String location) {
 		return envState.getLocationState(location);
 	}
 
-	public Location getAgentLocation(Agent a) {
+	public String getAgentLocation(Agent a) {
 		return envState.getAgentLocation(a);
 	}
 }

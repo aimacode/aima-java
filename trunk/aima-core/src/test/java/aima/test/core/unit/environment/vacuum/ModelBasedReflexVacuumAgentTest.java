@@ -28,7 +28,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -43,7 +43,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -59,7 +59,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -75,7 +75,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -92,28 +92,28 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // cleans location A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // moves to lcation B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // cleans location B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(19, tve.getPerformanceMeasure(agent), 0.001);
 	}
@@ -123,33 +123,33 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.B);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_B);
 
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // cleans location B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // moves to lcation A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // cleans location A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(19, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -158,23 +158,23 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // moves to location B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(-1, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -183,23 +183,23 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.B);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_B);
 
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // moves to location A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(-1, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -208,28 +208,28 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // moves to B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // cleans location B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(9, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -238,28 +238,28 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.B);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_B);
 
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // cleans B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // moves to A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(9, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -268,28 +268,28 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // cleans A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // moves to B
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(9, tve.getPerformanceMeasure(agent), 0.001);
 	}
 
@@ -298,28 +298,28 @@ public class ModelBasedReflexVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.B);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_B);
 
-		Assert.assertEquals(VacuumEnvironment.Location.B, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_B, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(1, tve.getAgents().size());
 		tve.step(); // moves to A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Dirty, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // cleans A
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		tve.step(); // NOOP
-		Assert.assertEquals(VacuumEnvironment.Location.A, tve
+		Assert.assertEquals(VacuumEnvironment.LOCATION_A, tve
 				.getAgentLocation(agent));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.A));
+				.getLocationState(VacuumEnvironment.LOCATION_A));
 		Assert.assertEquals(VacuumEnvironment.LocationState.Clean, tve
-				.getLocationState(VacuumEnvironment.Location.B));
+				.getLocationState(VacuumEnvironment.LOCATION_B));
 		Assert.assertEquals(9, tve.getPerformanceMeasure(agent), 0.001);
 	}
 }

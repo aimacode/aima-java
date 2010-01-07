@@ -12,29 +12,34 @@ import aima.core.agent.EnvironmentState;
  */
 public class VacuumEnvironmentState implements EnvironmentState {
 
-	private Map<VacuumEnvironment.Location, VacuumEnvironment.LocationState> state = new LinkedHashMap<VacuumEnvironment.Location, VacuumEnvironment.LocationState>();
-	private Map<Agent, VacuumEnvironment.Location> agentLocations = new LinkedHashMap<Agent, VacuumEnvironment.Location>();
+	private Map<String, VacuumEnvironment.LocationState> state ;
+	private Map<Agent, String> agentLocations;
 
+	public VacuumEnvironmentState() {
+		state = new LinkedHashMap<String, VacuumEnvironment.LocationState>();
+		agentLocations = new LinkedHashMap<Agent, String>();
+	}
+	
 	public VacuumEnvironmentState(VacuumEnvironment.LocationState locAState,
 			VacuumEnvironment.LocationState locBState) {
-		state.put(VacuumEnvironment.Location.A, locAState);
-		state.put(VacuumEnvironment.Location.B, locBState);
+		this();
+		state.put(VacuumEnvironment.LOCATION_A, locAState);
+		state.put(VacuumEnvironment.LOCATION_B, locBState);
 	}
 
-	public VacuumEnvironment.Location getAgentLocation(Agent a) {
+	public String getAgentLocation(Agent a) {
 		return agentLocations.get(a);
 	}
 
-	public void setAgentLocation(Agent a, VacuumEnvironment.Location location) {
+	public void setAgentLocation(Agent a, String location) {
 		agentLocations.put(a, location);
 	}
 
-	public VacuumEnvironment.LocationState getLocationState(
-			VacuumEnvironment.Location location) {
+	public VacuumEnvironment.LocationState getLocationState(String location) {
 		return state.get(location);
 	}
 
-	public void setLocationState(VacuumEnvironment.Location location,
+	public void setLocationState(String location,
 			VacuumEnvironment.LocationState s) {
 		state.put(location, s);
 	}
