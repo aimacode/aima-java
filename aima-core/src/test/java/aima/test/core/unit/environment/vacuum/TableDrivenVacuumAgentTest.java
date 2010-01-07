@@ -27,7 +27,7 @@ public class TableDrivenVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -44,7 +44,7 @@ public class TableDrivenVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Clean,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -61,7 +61,7 @@ public class TableDrivenVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Clean);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 
@@ -78,7 +78,7 @@ public class TableDrivenVacuumAgentTest {
 		VacuumEnvironment tve = new VacuumEnvironment(
 				VacuumEnvironment.LocationState.Dirty,
 				VacuumEnvironment.LocationState.Dirty);
-		tve.addAgent(agent, VacuumEnvironment.Location.A);
+		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
 		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
 

@@ -10,14 +10,14 @@ public class VacuumEnvPercept extends DynamicPercept {
 	public static final String ATTRIBUTE_AGENT_LOCATION = "agentLocation";
 	public static final String ATTRIBUTE_STATE = "state";
 
-	public VacuumEnvPercept(VacuumEnvironment.Location agentLocation,
+	public VacuumEnvPercept(String agentLocation,
 			VacuumEnvironment.LocationState state) {
 		setAttribute(ATTRIBUTE_AGENT_LOCATION, agentLocation);
 		setAttribute(ATTRIBUTE_STATE, state);
 	}
 
-	public VacuumEnvironment.Location getAgentLocation() {
-		return (VacuumEnvironment.Location) getAttribute(ATTRIBUTE_AGENT_LOCATION);
+	public String getAgentLocation() {
+		return (String) getAttribute(ATTRIBUTE_AGENT_LOCATION);
 	}
 
 	public VacuumEnvironment.LocationState getLocationState() {

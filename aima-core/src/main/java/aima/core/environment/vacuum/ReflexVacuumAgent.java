@@ -37,10 +37,10 @@ public class ReflexVacuumAgent extends AbstractAgent {
 						.getLocationState()) {
 					return VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (VacuumEnvironment.Location.A == vep
+				} else if (VacuumEnvironment.LOCATION_A == vep
 						.getAgentLocation()) {
 					return VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (VacuumEnvironment.Location.B == vep
+				} else if (VacuumEnvironment.LOCATION_B == vep
 						.getAgentLocation()) {
 					// else if location = B then return Left
 					return VacuumEnvironment.ACTION_MOVE_LEFT;
