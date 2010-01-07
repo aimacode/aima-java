@@ -16,6 +16,11 @@ public class SimpleAgentApp {
 	 * finally sets the frame visible.
 	 */
 	public void startApplication() {
+		AgentAppFrame frame = constructApplicationFrame();
+		frame.setVisible(true);
+	}
+
+	public AgentAppFrame constructApplicationFrame() {
 		AgentAppEnvironmentView envView = createEnvironmentView();
 		AgentAppFrame frame = createFrame();
 		AgentAppController controller = createController();
@@ -23,10 +28,10 @@ public class SimpleAgentApp {
 		envView.setMessageLogger(frame.getMessageLogger());
 		frame.setController(controller);
 		controller.setFrame(frame);
-		frame.setVisible(true);
 		frame.setDefaultSelection();
+		return frame;
 	}
-
+	
 	/** Factory method, responsible for creating the environment view. */
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new EmptyEnvironmentView();
