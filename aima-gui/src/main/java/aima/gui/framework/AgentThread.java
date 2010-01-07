@@ -2,26 +2,21 @@ package aima.gui.framework;
 
 import javax.swing.SwingUtilities;
 
+import aima.core.util.CancelableThread;
+
 /** Thread, which is used to run agents in background. */
-public class AgentThread extends Thread {
+public class AgentThread extends CancelableThread {
 	private AgentAppFrame frame;
 	private AgentAppController controller;
-	/** Remembers interrupt method calls. */
-	private boolean isCancelled = false;
 	
 	public AgentThread(AgentAppFrame frame, AgentAppController controller) {
 		this.frame = frame;
 		this.controller = controller;
 	}
 	
-	/** Returns true if the thread was interrupted. */
-	public boolean isCancelled() {
-		return isCancelled;
-	}
-	
 	@Override
 	public void interrupt() {
-		isCancelled = true;
+		cancel();
 		super.interrupt();
 	}
 	

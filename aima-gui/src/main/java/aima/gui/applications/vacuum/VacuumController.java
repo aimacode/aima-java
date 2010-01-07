@@ -78,7 +78,7 @@ public class VacuumController extends AgentAppController {
 	
 	/** Updates the status of the frame after the agent has finished its work. */
 	public void update(AgentThread agentThread) {
-		if (agentThread.isCancelled())
+		if (agentThread.isCanceled())
 			frame.setStatus("Task cancelled.");
 		else
 			frame.setStatus("Task completed.");
