@@ -132,6 +132,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("tourism", "camp_site", new EntityPrintInfo(1000, 60000, Color.GRAY, Icon.createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), 27));
 		entityClassifier.addRule("tourism", "attraction", new EntityPrintInfo(6000, 60000, Color.GRAY, Icon.createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), 26));
 		entityClassifier.addRule("tourism", "viewpoint", new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), 25));
+		entityClassifier.addRule("tourism", "museum", new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), 25));
 		entityClassifier.addRule("tourism", "hotel", new EntityPrintInfo(30000, 200000, Color.GRAY, Icon.createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), 24));
 		entityClassifier.addRule("tourism", null, new EntityPrintInfo(30000, 100000, Color.GREEN.darker(), Icon.createRectangle(4, Color.GREEN.darker()), 23));
 		entityClassifier.addRule("amenity", "place_of_worship", new EntityPrintInfo(20000, 200000, Color.GRAY, Icon.createTriangle(11, "+", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
