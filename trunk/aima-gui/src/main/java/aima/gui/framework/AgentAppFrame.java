@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 
 /**
  * <p>
@@ -156,6 +155,10 @@ public class AgentAppFrame extends JFrame {
 				System.exit(0);
 			}
 		});
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BorderLayout());
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
 		toolbar = new JToolBar();
 		// toolbar.setFloatable(false);
 		selectors = new SelectorContainer();
@@ -173,7 +176,7 @@ public class AgentAppFrame extends JFrame {
 		runButton.setToolTipText("Run Agent");
 		runButton.addActionListener(new FrameActionListener());
 		toolbar.add(runButton);
-		getContentPane().add(toolbar, java.awt.BorderLayout.NORTH);
+		contentPanel.add(toolbar, java.awt.BorderLayout.NORTH);
 
 		messageLogger = new MessageLoggerPanel();
 
@@ -181,7 +184,7 @@ public class AgentAppFrame extends JFrame {
 		centerPane.add(JSplitPane.RIGHT, messageLogger);
 		centerPane.setDividerSize(5);
 		centerPane.setResizeWeight(0.7);
-		getContentPane().add(centerPane, BorderLayout.CENTER);
+		contentPanel.add(centerPane, BorderLayout.CENTER);
 
 		JPanel statusPanel = new JPanel(new BorderLayout());
 		statusLabel = new JLabel("");
@@ -193,7 +196,7 @@ public class AgentAppFrame extends JFrame {
 		cancelButton.setPreferredSize(new java.awt.Dimension(80, 20));
 		cancelButton.setBorder(new javax.swing.border.EtchedBorder());
 		statusPanel.add(cancelButton, BorderLayout.EAST);
-		getContentPane().add(statusPanel, BorderLayout.SOUTH);
+		contentPanel.add(statusPanel, BorderLayout.SOUTH);
 	}
 
 	/** Enables/disables all combos and buttons. */
