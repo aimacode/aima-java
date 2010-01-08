@@ -29,6 +29,7 @@ public class SimpleAgentApp {
 		frame.setController(controller);
 		controller.setFrame(frame);
 		frame.setDefaultSelection();
+		frame.centerPane.setDividerLocation(frame.centerPane.getResizeWeight());
 		return frame;
 	}
 	
