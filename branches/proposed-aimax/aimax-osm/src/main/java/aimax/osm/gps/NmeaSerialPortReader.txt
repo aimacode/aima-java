@@ -122,8 +122,6 @@ public class NmeaSerialPortReader extends NmeaReader {
 	public static void main(String[] args) {
 		try {
 			NmeaSerialPortReader reader = new NmeaSerialPortReader();
-			//new NmeaSerialPortReader("COM4"); // navilock NL-454US
-			//new NmeaSerialPortReader("COM2"); // garmin oregon via spanner
 			reader.openStream();
 			
 			NmeaMessageListener consoleLogger = new NmeaMessageListener() {
