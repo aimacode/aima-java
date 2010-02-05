@@ -3,10 +3,9 @@
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 0.1.0-AIMA3e Published ==
-First full release based on the 3rd edition of AIMA. This projects contains all the GUI and command line demo 
-code separated out from the original AIMA2e source tree and has been updated to work with the 
-latest version of the aima-core library.
+== Current Release: 0.1.1-AIMAX-OSM Added ==
+0.1.1-AIMAX-OSM Added : 05 Feb 2010 :<br>
+ * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -30,3 +29,9 @@ The following command line demos can be run as well (Note we plan to convert the
  * java -classpath aima-gui.jar aima.gui.demo.search.EightPuzzleDemo
  * java -classpath aima-gui.jar aima.gui.demo.search.NQueensDemo
  * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo
+ 
+ = Change History (Update in reverse chronological order) =
+0.1.0-AIMA3e Published : 10 Dec 2009 :<br>
+First full release based on the 3rd edition of AIMA. This projects contains all the GUI and command line demo 
+code separated out from the original AIMA2e source tree and has been updated to work with the 
+latest version of the aima-core library.
