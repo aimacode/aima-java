@@ -11,8 +11,8 @@ http://aima-java.googlecode.com/svn/trunk/
 This is the first release of AIMA3e-Java with a new extension (aimax) project - Open Street Map (OSM) library, which 
 leverages functionality from the two core (aima-core and aima-core) AIMA3e-Java projects. 
 This is based on the following sub-project releases:
-  * aima-core (0.9.7) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (0.1.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aima-core (0.9.8) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (0.1.1) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
   * aimax-osm (0.1.1) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
