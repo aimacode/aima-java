@@ -3,6 +3,7 @@
 package aimax.osm.reader;
 
 import java.io.File;
+import java.io.InputStream;
 
 import aimax.osm.data.MapDataStore;
 
@@ -12,6 +13,7 @@ import aimax.osm.data.MapDataStore;
  */
 public interface MapReader {
 	public void readMap(File file, MapDataStore mapData);
+	public void readMap(InputStream is, MapDataStore mapData);
 	public String fileFormatDescription();
 	public String fileFormatExtension();
 }

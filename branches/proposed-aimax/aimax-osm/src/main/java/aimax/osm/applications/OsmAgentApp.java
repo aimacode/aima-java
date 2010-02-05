@@ -1,12 +1,14 @@
 package aimax.osm.applications;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.SimpleAgentApp;
+import aimax.osm.data.DataResource;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
@@ -25,7 +27,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	protected OsmMap map;
 	
 	/** Reads a map from the specified file and stores it in {@link #map}. */
-	public OsmAgentApp(File osmFile) {
+	public OsmAgentApp(InputStream osmFile) {
 		MapDataStore mapData = new MapDataStore();
 		MapReader mapReader = new OsmReader();
 		mapReader.readMap(osmFile, mapData);
@@ -58,8 +60,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		File file = new File("src/main/resource/maps/ulm.osm");
-		OsmAgentApp demo = new OsmAgentApp(file);
+		OsmAgentApp demo = new OsmAgentApp(DataResource.getULMFileResource());
 		demo.startApplication();
 	}
 }

@@ -2,6 +2,7 @@ package aimax.osm.applications;
 
 import java.io.File;
 
+import aimax.osm.data.DataResource;
 import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapViewFrame;
 
@@ -17,9 +18,8 @@ public class OsmViewerApp {
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		File file = new File("src/main/resource/maps/Ulm.osm");
 		MapReader mapReader = new aimax.osm.reader.OsmReader();
-		MapViewFrame frame = new MapViewFrame(mapReader, file);
+		MapViewFrame frame = new MapViewFrame(mapReader, DataResource.getULMFileResource());
 		frame.setTitle("OSM Viewer");
 		frame.setSize(800, 600);
 		frame.setVisible(true);

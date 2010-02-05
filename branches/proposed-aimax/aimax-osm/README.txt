@@ -1,4 +1,4 @@
-= AIMA-OSM =
+= AIMAX-OSM =
 
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent

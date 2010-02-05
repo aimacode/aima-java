@@ -2,6 +2,7 @@ package aimax.osm.applications;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,6 +18,7 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.MessageLogger;
+import aimax.osm.data.DataResource;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.routing.SimpleGoalTest;
@@ -45,7 +47,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 */
 	static final HashSet visitedStates = new HashSet();
 	
-	public OsmSearchDemoAgentApp(File osmFile) {
+	public OsmSearchDemoAgentApp(InputStream osmFile) {
 		super(osmFile);
 	}
 	
@@ -194,8 +196,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		File file = new File("src/main/resource/maps/ulm.osm");
-		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp(file);
+		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp(DataResource.getULMFileResource());
 		demo.startApplication();
 	}
 }

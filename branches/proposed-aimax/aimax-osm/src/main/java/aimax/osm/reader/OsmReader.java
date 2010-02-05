@@ -2,6 +2,7 @@ package aimax.osm.reader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -30,18 +31,27 @@ public class OsmReader implements MapReader {
 	 * Reads all data from the file and send it to the sink.
 	 */
 	public void readMap(File file, MapDataStore mapData) {
-		InputStream inputStream = null;
+		try  {
+			readMap(new FileInputStream(file), mapData);
+		} catch (FileNotFoundException fnfe) {
+			LOG.warning("File does not exist "+file);
+		}
+	}
+	
+	/**
+	 * Reads all data from the file and send it to the sink.
+	 */
+	public void readMap(InputStream inputStream, MapDataStore mapData) {
 
 		try {
 			mapData.clearAll();
-			inputStream = new FileInputStream(file);
 			SAXParser parser = createParser();
 			parser.parse(inputStream, new OsmHandler(mapData));
 			mapData.compileData();
 
 		} catch (SAXParseException e) {
 			throw new OsmRuntimeException(
-					"Unable to parse xml file " + file
+					"Unable to parse input stream"
 					+ ".  publicId=(" + e.getPublicId()
 					+ "), systemId=(" + e.getSystemId()
 					+ "), lineNumber=" + e.getLineNumber()
@@ -50,7 +60,7 @@ public class OsmReader implements MapReader {
 		} catch (SAXException e) {
 			throw new OsmRuntimeException("Unable to parse XML.", e);
 		} catch (IOException e) {
-			throw new OsmRuntimeException("Unable to read XML file " + file + ".", e);
+			throw new OsmRuntimeException("Unable to read XML input stream.", e);
 		} finally {
 			if (inputStream != null) {
 				try {

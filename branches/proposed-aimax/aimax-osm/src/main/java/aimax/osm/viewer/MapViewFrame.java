@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Logger;
@@ -83,20 +85,22 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		view.addMapViewEventListener(eventHandler);
 	}
 	
-	public MapViewFrame(MapReader mapReader, File defaultMap) {
+	public MapViewFrame(MapReader mapReader, File defaultMap) throws Exception {
+		this(mapReader, new FileInputStream(defaultMap));
+		if (defaultMap != null && defaultMap.exists()) {
+			fileChooser.setSelectedFile(defaultMap.getAbsoluteFile());			
+		}
+	}
+		
+	public MapViewFrame(MapReader mapReader, InputStream defaultMap) {
 		this();
 		this.mapReader = mapReader;
 		if (mapReader != null) {
 			FileFilter filter = new FileNameExtensionFilter
 			(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
 			fileChooser.addChoosableFileFilter(filter);
-			if (defaultMap != null && defaultMap.exists()) {
-				mapReader.readMap(defaultMap, mapData);
-				fileChooser.setSelectedFile(defaultMap.getAbsoluteFile());
-			} else {
-				Logger.getLogger("aimax.osm").warning
-				("Default map file " + defaultMap + " not found.");
-			}
+			
+			mapReader.readMap(defaultMap, mapData);
 		}
 	}
 	

@@ -3,11 +3,13 @@ package aimax.osm.applications;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
 
+import aimax.osm.data.DataResource;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
@@ -28,7 +30,7 @@ public class RoutePlannerApp implements ActionListener {
 	protected JButton calcButton;
 	protected RouteCalculator routeCalculator;
 	
-	public RoutePlannerApp(File osmFile) {
+	public RoutePlannerApp(InputStream osmFile) {
 		MapReader mapReader = new OsmReader();
 		frame = new MapViewFrame(mapReader, osmFile);
 		frame.setTitle("OSM Route Planner");
@@ -77,8 +79,7 @@ public class RoutePlannerApp implements ActionListener {
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		File file = new File("src/main/resource/maps/ulm.osm");
-		RoutePlannerApp demo = new RoutePlannerApp(file);
+		RoutePlannerApp demo = new RoutePlannerApp(DataResource.getULMFileResource());
 		demo.showFrame();
 	}
 }
