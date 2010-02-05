@@ -1,4 +1,4 @@
-= AIMA JAVA =
+= AIMA3e-JAVA =
 Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
 
 = Introduction =
@@ -6,17 +6,22 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
-== Current Release: 1.0.0-AIMA3e Published ==
-1.0.0-AIMA3e Published : 12/10/2009 :<br>
-This is the first full release based on the 3rd edition of AIMA. This is based on the following sub-project releases:
+== Current Release: 1.1.0-AIMA3e Published ==
+1.1.0-AIMA3e Open Street Map (OSM) extension project added : 05 Feb 2010 :<br>
+This is the first release of AIMA3e-Java with a new extension (aimax) project - Open Street Map (OSM) library, which 
+leverages functionality from the two core (aima-core and aima-core) AIMA3e-Java projects. 
+This is based on the following sub-project releases:
   * aima-core (0.9.7) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (0.1.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (0.1.1) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License.  
 
 == Project Organization ==
- * This project is now organized into 3 sub-projects:
+ * This project is now organized into 4 sub-projects:
   * aima-core: contains all the implemented algorithms described in AIMA3e.
-  * aima-gui : contains the GUI and command line demo applications. This project is dependent on aima-core.
-  * aima-all : is the master project, used by aima-java developers, for creating releases.
+  * aima-gui  : contains the GUI and command line demo applications. This project is dependent on aima-core.
+  * aimax-osm : contains the Open Street Map (OSM) library and applications. This project is dependent on aima-core and aima-gui.
+  * aima-all  : is the master project, used by aima-java developers, for creating releases.
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
 == Bug Report - Acknowledgments ==
@@ -34,6 +39,11 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+
+1.0.0-AIMA3e Published : 10 Dec 2009 :<br>
+This is the first full release based on the 3rd edition of AIMA. This is based on the following sub-project releases:
+  * aima-core (0.9.7) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (0.1.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
 
 = Final Thoughts =
 
