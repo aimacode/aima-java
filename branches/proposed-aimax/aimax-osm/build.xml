@@ -50,7 +50,7 @@
 	<target name="aimax-osm.release" depends="aima-gui.release,aimax-osm.compile-all">
 		<jar destfile="${aimax-osm.dir.build.release}/aimax-osm.jar">
 			<manifest>
-				<attribute name="Class-Path" value="aima-core.jar" />
+				<attribute name="Class-Path" value="aima-gui.jar" />
 				<attribute name="Main-Class" value="aimax.osm.applications.OsmViewerApp" />
 		    	<attribute name="Implementation-Title" value="AIMAX-OSM" />
 		        <attribute name="Implementation-Version" value="${aimax-osm.version}" />

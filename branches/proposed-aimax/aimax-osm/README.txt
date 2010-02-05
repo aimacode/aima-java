@@ -56,16 +56,17 @@ OSM library.
 
 
 == Applications ==
-
-aimax.osm.applications.OsmViewerApp
-- just the plain viewer (not dependent on AIMA)
-aimax.osm.applications.OsmViewerPlusApp
-- demonstrates, how to configure and extend the viewer
-aimax.osm.applications.RoutePlannerApp
-- uses aima-core search functionality for routing in OSM maps
-aimax.osm.applications.OsmAgentApp
-- lets map agents from aima-core act in map environments which are defined by OSM data 
-aimax.osm.applications.OsmSearchDemoAgentApp
-- visualizes simulated search space exploration of different search strategies
-aimax.osm.applications.MiniNaviApp
-- provides a base for GPS navigation system development
+Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
+Ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
+ * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerApp
+  * just the plain viewer (not dependent on AIMA)
+ * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerPlusApp
+  * demonstrates, how to configure and extend the viewer
+ * java -classpath aimax-osm.jar aimax.osm.applications.RoutePlannerApp
+  * uses aima-core search functionality for routing in OSM maps
+ * java -classpath aimax-osm.jar aimax.osm.applications.OsmAgentApp
+  * lets map agents from aima-core act in map environments which are defined by OSM data 
+ * java -classpath aimax-osm.jar aimax.osm.applications.OsmSearchDemoAgentApp
+  * visualizes simulated search space exploration of different search strategies
+ * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
+  * provides a base for GPS navigation system development
