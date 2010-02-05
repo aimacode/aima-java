@@ -6,7 +6,7 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
-== Current Release: 1.1.0-AIMA3e Published ==
+== Current Release: 1.1.0-AIMA3e Open Street Map (OSM) extension project added ==
 1.1.0-AIMA3e Open Street Map (OSM) extension project added : 05 Feb 2010 :<br>
 This is the first release of AIMA3e-Java with a new extension (aimax) project - Open Street Map (OSM) library, which 
 leverages functionality from the two core (aima-core and aima-core) AIMA3e-Java projects. 
