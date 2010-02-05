@@ -3,32 +3,12 @@
 == Requirements ==
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
-== Current Release: 0.9.7-AIMA3e Published ==
-0.9.7-AIMA3e Published : 12/10/2009 :<br>
-First full release based on the 3rd edition of AIMA. The following major 
-updates have been included in this release:<br>
-  * Re-organized packages to more closely reflect AIMA3e structure:
-   * Renamed basic to agent
-   * Moved general purpose data structures underneath util.
-   * Moved all Environment implementations under environment.    
-  * Agent package defined now in terms of interfaces as opposed to
-    abstract classes.
-   * Added explicit Action interface.
-   * General improvements/enhancements across all the APIs.
-  * All algorithms from chapters 1-4 have been updated to reflect
-    changes in their description in AIMA3e. Primarily this involved
-    splitting the Successor function concept from AIMA2e into 
-    separate Action and Result functions as described in AIMA3e.
-  * All tests have been updated to JUnit 4.7, which is included
-    explicitly as a testing dependency of this project (see /lib).
-  * Bug fixes to OnlineDFSAgent and GeneticAlgorithm implementations.
-  * SetOPs, converted to use static methods based on:
-    http://java.sun.com/docs/books/tutorial/collections/interfaces/set.html
-  * Queue implementations now extends Java's corresponding collection classes.
-  * Dependencies between Map Agents and their Environment have been
-    decoupled by introducing appropriate intermediaries.
-  * All source formatted using Eclipse 3.4 default settings.
-
+== Current Release: 0.9.8-AIMAX-OSM Added ==
+0.9.8-AIMAX-OSM Added : 05 Feb 2010 :<br>
+ * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
+ * Vacuum world locations changed from enum to Strings to better support extensibility.
+ * Queue Searches may now be canceled from within a thread (see CancelableThread).
+ 
 = Details =
 
 == Build Instructions ==
@@ -252,8 +232,32 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 2. Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps?) you need to implement this interface.
  
 = Change History (Update in reverse chronological order) =
-
-0.95-AIMA2eFinal : 10/03/2009 :<br>
+0.9.7-AIMA3e Published : 10 Dec 2009 :<br>
+First full release based on the 3rd edition of AIMA. The following major 
+updates have been included in this release:<br>
+  * Re-organized packages to more closely reflect AIMA3e structure:
+   * Renamed basic to agent
+   * Moved general purpose data structures underneath util.
+   * Moved all Environment implementations under environment.    
+  * Agent package defined now in terms of interfaces as opposed to
+    abstract classes.
+   * Added explicit Action interface.
+   * General improvements/enhancements across all the APIs.
+  * All algorithms from chapters 1-4 have been updated to reflect
+    changes in their description in AIMA3e. Primarily this involved
+    splitting the Successor function concept from AIMA2e into 
+    separate Action and Result functions as described in AIMA3e.
+  * All tests have been updated to JUnit 4.7, which is included
+    explicitly as a testing dependency of this project (see /lib).
+  * Bug fixes to OnlineDFSAgent and GeneticAlgorithm implementations.
+  * SetOPs, converted to use static methods based on:
+    http://java.sun.com/docs/books/tutorial/collections/interfaces/set.html
+  * Queue implementations now extends Java's corresponding collection classes.
+  * Dependencies between Map Agents and their Environment have been
+    decoupled by introducing appropriate intermediaries.
+  * All source formatted using Eclipse 3.4 default settings.
+<br>
+0.95-AIMA2eFinal : 03 Oct 2009 :<br>
 Last full release based on the 2nd edition of AIMA. This is our first release 
 containing GUIs (thanks to Ruediger Lunde):<br>
   * aima.gui.applications.VacuumAppDemo<br>
