@@ -2,7 +2,6 @@ package aimax.osm.applications;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.InputStream;
 
 import javax.swing.JButton;

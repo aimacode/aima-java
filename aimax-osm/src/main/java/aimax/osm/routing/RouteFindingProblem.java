@@ -38,7 +38,7 @@ public class RouteFindingProblem extends Problem {
 	 * @param to A way node complying to the filter.
 	 * @param mapData The map representation.
 	 * @param filter A filter for ways constraining routing results.
-	 * @param setCostFunction Maps <code>OsmMoveAction</code>s to costs.
+	 * @param costs Maps <code>OsmMoveAction</code>s to costs.
 	 */
 	public RouteFindingProblem(MapNode from, MapNode to,
 			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays,
