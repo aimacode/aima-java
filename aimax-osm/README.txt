@@ -25,9 +25,8 @@ can be loaded and displayed without any problem if enough heap space
 is provided (VM argument -Xmx500M). The tool Osmosis can be used to generate
 maps complying to this requirement.
 
-Getting started: Run one of the classes in the applications sub-package.
-If no map is displayed, edit the map file name in the main method of the
-application's source file and try again.
+If no map is displayed, make sure that the main/resource folder is included 
+in the build path of your project, recompile and start again.
 Then place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
 mouse-drag, ctrl-mouse-left, plus button, minus button, ctrl-plus, ctrl-minus,
 arrow buttons, and also the mouse-wheel for navigation,
@@ -49,11 +48,9 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 for details.
 
 
-== Current Release: 0.1.1-AIMA3e Published ==
-
-First release based on the 3rd edition of AIMA which contains the
-OSM library.
-
+== Current Release: 0.1.1-AIMAX-OSM Added ==
+0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
+First release based on the 3rd edition of AIMA which contains the Open Streem Map (OSM) library.
 
 == Applications ==
 Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
@@ -70,3 +67,5 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
   * visualizes simulated search space exploration of different search strategies
  * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
   * provides a base for GPS navigation system development
+  
+= Change History (Update in reverse chronological order) =
