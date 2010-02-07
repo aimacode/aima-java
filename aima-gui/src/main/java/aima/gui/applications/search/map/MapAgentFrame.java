@@ -1,15 +1,16 @@
 package aima.gui.applications.search.map;
 
+import aima.core.environment.map.MapEnvironment;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppFrame;
 
 /**
  * Universal frame for experiments with route planning agents. It configures the
  * agent application frame with some selectors and an agent view which is
- * designed for cooperation with an {@link MapAgentModel}. Since items for
- * scenario, agent, destination, agent, and heuristic selection are application
- * specific, this general implementation provides items only for search strategy
- * and mode selection.
+ * designed for cooperation with an {@link aima.core.environment.map.MapEnvironment}.
+ * Since items for scenario, agent, destination, agent, and heuristic selection
+ * are application specific, this general implementation provides items only
+ * for search strategy and mode selection.
  * 
  * @author R. Lunde
  */
