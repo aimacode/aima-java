@@ -4,7 +4,7 @@
 # Depends on the aima-core project. 
 
 == Current Release: 0.1.1-AIMAX-OSM Added ==
-0.1.1-AIMAX-OSM Added : 05 Feb 2010 :<br>
+0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
  * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
 
 == Running the GUIs and Command Line Demos ==
