@@ -4,7 +4,7 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 == Current Release: 0.9.8-AIMAX-OSM Added ==
-0.9.8-AIMAX-OSM Added : 05 Feb 2010 :<br>
+0.9.8-AIMAX-OSM Added : 06 Feb 2010 :<br>
  * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
  * Vacuum world locations changed from enum to Strings to better support extensibility.
  * Queue Searches may now be canceled from within a thread (see CancelableThread).
