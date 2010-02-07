@@ -1,6 +1,5 @@
 package aimax.osm.applications;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;

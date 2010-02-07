@@ -1,7 +1,6 @@
 package aimax.osm.applications;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;

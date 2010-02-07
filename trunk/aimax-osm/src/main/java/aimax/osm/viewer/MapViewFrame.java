@@ -7,10 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -84,13 +84,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		mapData.addMapDataEventListener(eventHandler);
 		view.addMapViewEventListener(eventHandler);
 	}
-	
-	public MapViewFrame(MapReader mapReader, File defaultMap) throws Exception {
-		this(mapReader, new FileInputStream(defaultMap));
-		if (defaultMap != null && defaultMap.exists()) {
-			fileChooser.setSelectedFile(defaultMap.getAbsoluteFile());			
-		}
-	}
 		
 	public MapViewFrame(MapReader mapReader, InputStream defaultMap) {
 		this();
@@ -99,8 +92,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			FileFilter filter = new FileNameExtensionFilter
 			(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
 			fileChooser.addChoosableFileFilter(filter);
-			
-			mapReader.readMap(defaultMap, mapData);
+			if (mapData != null)
+				mapReader.readMap(defaultMap, mapData);
 		}
 	}
 	
@@ -108,6 +101,23 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		super.setVisible(b);
 		if (b && !mapData.isEmpty())
 			view.adjustToFit();
+	}
+	
+	public MapViewFrame(MapReader mapReader, File defaultMap) {
+		this(mapReader, createStream(defaultMap));
+		if (defaultMap != null) {
+			fileChooser.setSelectedFile(defaultMap.getAbsoluteFile());			
+		}
+	}
+	
+	private static FileInputStream createStream(File file) {
+		FileInputStream result = null;
+		try {
+			result = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			// just return null...
+		}
+		return result;
 	}
 	
 	public MapDataStore getMapData() {

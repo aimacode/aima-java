@@ -1,7 +1,5 @@
 package aimax.osm.applications;
 
-import java.io.File;
-
 import aimax.osm.data.DataResource;
 import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapViewFrame;
