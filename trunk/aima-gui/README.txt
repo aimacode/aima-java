@@ -5,11 +5,12 @@
 
 == Current Release: 0.1.1-AIMAX-OSM Added ==
 0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
+ * Major redesign, structures simplified, agent environment now serves as mvc-model.
  * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
- * java -classpath aima-gui.jar aima.gui.applications.search.map.RoutePlanningAgentApp
+ * java -classpath aima-gui.jar aima.gui.applications.search.map.RouteFindingAgentApp
   * provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
  * java -classpath aima-gui.jar aima.gui.applications.vacuum.VacuumApp
   * provides a demo of the different agents described in Chapter 2 and 3 for tackling the Vacuum World.

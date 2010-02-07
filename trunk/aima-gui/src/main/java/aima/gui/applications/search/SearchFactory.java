@@ -61,7 +61,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all search strategies, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int)}.
+	 * {@link #createSearch(int, int, HeuristicFunction)}.
 	 */
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
@@ -72,7 +72,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all search modes, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int)}.
+	 * {@link #createSearch(int, int, HeuristicFunction)}.
 	 */
 	public String[] getSearchModeNames() {
 		return new String[] { "Tree Search", "Graph Search" };

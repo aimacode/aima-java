@@ -41,7 +41,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/**
 	 * Template method, which performs necessary preparations for running the
 	 * agent. The behavior is strongly influenced by the primitive operations
-	 * {@link #selectScenarioAndDest(int, int)}, {@link #prepareModel()} and
+	 * {@link #selectScenarioAndDest(int, int)}, {@link #prepareView()} and
 	 * {@link #createHeuristic(int)}.
 	 */
 	@Override
