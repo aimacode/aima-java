@@ -110,7 +110,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("natural", "wood", new EntityPrintInfo(200, 30000, GREEN, 1, GREEN, 17));
 		entityClassifier.addRule("natural", "scrub", new EntityPrintInfo(200, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, 16));
 		entityClassifier.addRule("natural", "heath", new EntityPrintInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, 16));
-		entityClassifier.addRule("natural", "peak", new EntityPrintInfo(1000, 3000, Color.DARK_GRAY, Icon.createTriangle(10, Color.ORANGE), 15));
+		entityClassifier.addRule("natural", "peak", new EntityPrintInfo(1000, 30000, Color.DARK_GRAY, Icon.createTriangle(10, Color.ORANGE), 15));
 		entityClassifier.addRule("natural", null, new EntityPrintInfo(10000, 30000, Color.DARK_GRAY, Icon.createTriangle(10, Color.GREEN.darker()), 25));
 		entityClassifier.addRule("leisure", "park", new EntityPrintInfo(500, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, 14));
 		entityClassifier.addRule("leisure", "garden", new EntityPrintInfo(500, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, 14));
@@ -146,7 +146,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 
 		entityClassifier.addRule("mountain_pass", null, new EntityPrintInfo(0, 1000, Color.DARK_GRAY, null, 20));
 		entityClassifier.addRule("shop", null, new EntityPrintInfo(40000, 300000, Color.CYAN, Icon.createRectangle(4, Color.CYAN), 10));
-		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createCircle(defaultSize, Color.RED), 5));
+		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createCircle(defaultSize, Color.RED), 100));
 
 		entityClassifier.addRule(null, null, new EntityPrintInfo());
 	} 
