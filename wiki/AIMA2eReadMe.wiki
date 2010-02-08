@@ -1,11 +1,10 @@
 #labels Featured
-= AIMA2e JAVA =
-Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
-
-= DEPRECATED =
+= (DEPRECATED) AIMA2e JAVA =
 Note: This README file refers to the old version of this project that was based on the 2nd edition of Artificial Intelligence a Modern Approach (AIMA2e). We do not intend to continue actively developing this but the archived version can be obtained from:
 
 http://aima-java.googlecode.com/svn/branches/AIMA2e
+
+Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
 
 = Introduction =
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
