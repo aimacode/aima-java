@@ -146,7 +146,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 
 		entityClassifier.addRule("mountain_pass", null, new EntityPrintInfo(0, 1000, Color.DARK_GRAY, null, 20));
 		entityClassifier.addRule("shop", null, new EntityPrintInfo(40000, 300000, Color.CYAN, Icon.createRectangle(4, Color.CYAN), 10));
-		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createCircle(defaultSize, Color.RED), 100));
+		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createPin(defaultSize, Color.RED), 100));
 
 		entityClassifier.addRule(null, null, new EntityPrintInfo());
 	} 
@@ -342,8 +342,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		
 		if (pInfo.icon != null) {
 			width = Math.round(pInfo.icon.size * displayFactor);
-			int offset = Math.round(pInfo.icon.size * displayFactor / 2f);
-			pInfo.icon.draw(g2, x-offset, y-offset, displayFactor);
+			pInfo.icon.draw(g2, x, y, displayFactor);
 		}
 		
 		if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
@@ -351,7 +350,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 			if (name != null && pInfo.nameColor != null) {
 				NameInfo info = new NameInfo(name, pInfo.nameColor);
 				info.x = x + width;
-				info.y = y - width/4;
+				info.y = y + width/4;
 				nameInfoBuffer.add(info);
 			}
 		}
@@ -451,8 +450,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		
 		if (pInfo.icon != null) {
 			width = Math.round(pInfo.icon.size * displayFactor);
-			int offset = Math.round(pInfo.icon.size * displayFactor / 2f);
-			pInfo.icon.draw(g2, x-offset, y-offset, displayFactor);
+			pInfo.icon.draw(g2, x, y, displayFactor);
 		}
 		
 		if (nameColor != null) {
@@ -461,7 +459,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 			if (name != null) {
 				NameInfo info = new NameInfo(name, nameColor);
 				info.x = x + width;
-				info.y = y - width/4;
+				info.y = y + width/4;
 				nameInfoBuffer.add(info);
 			}
 		}
