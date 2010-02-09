@@ -92,7 +92,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			FileFilter filter = new FileNameExtensionFilter
 			(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
 			fileChooser.addChoosableFileFilter(filter);
-			if (mapData != null)
+			if (defaultMap != null)
 				mapReader.readMap(defaultMap, mapData);
 		}
 	}
