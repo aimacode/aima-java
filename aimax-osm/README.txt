@@ -22,24 +22,28 @@ In the current version, relation entities are ignored and
 the size of the map should be limited to about a million nodes
 to avoid long loading times. E.g. detailed maps of cities like Berlin 
 can be loaded and displayed without any problem if enough heap space
-is provided (VM argument -Xmx500M). The tool Osmosis can be used to generate
-maps complying to this requirement.
+is provided (VM argument -Xmx500M).
 
-If no map is displayed, make sure that the main/resource folder is included 
+Getting started: Run one of the applications in the
+<code>aimax.osm.applications</code> package. If no map is displayed
+by default, make sure that the main/resource folder is included 
 in the build path of your project, recompile and start again.
 Then place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
 mouse-drag, ctrl-mouse-left, plus button, minus button, ctrl-plus, ctrl-minus,
-arrow buttons, and also the mouse-wheel for navigation,
+space, ctrl-space, arrow buttons, and also the mouse-wheel for navigation,
 mark setting, and track definition. For routing, at least two marks
 must be set.
 
+
 == Current Release: 0.1.1-AIMAX-OSM Added ==
 0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
-First release based on the 3rd edition of AIMA, which contains the Open Streem Map (OSM) library.
+First release based on the 3rd edition of AIMA, which contains the Open Street Map (OSM) library.
+
 
 == Keywords ==
 
 Open Street Map, OSM, Routing, OSM Viewer, Java
+
 
 == Requirements ==
 
@@ -49,7 +53,9 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 (http://www.rxtx.org/) must be installed. See gps package documentation
 for details.
 
+
 == Example OSM Maps ==
+
 Can be downloaded from the AIMA project website, example-osm-maps.zip :
 
 http://code.google.com/p/aima-java/downloads/list
@@ -79,6 +85,7 @@ For details, see:
 
 http://www.openstreetmap.org/
 http://creativecommons.org/licenses/by-sa/2.0/
+
 
 == Applications ==
 Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
