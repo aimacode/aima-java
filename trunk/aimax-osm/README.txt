@@ -33,11 +33,13 @@ arrow buttons, and also the mouse-wheel for navigation,
 mark setting, and track definition. For routing, at least two marks
 must be set.
 
+== Current Release: 0.1.1-AIMAX-OSM Added ==
+0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
+First release based on the 3rd edition of AIMA, which contains the Open Streem Map (OSM) library.
 
 == Keywords ==
 
 Open Street Map, OSM, Routing, OSM Viewer, Java
-
 
 == Requirements ==
 
@@ -47,10 +49,36 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 (http://www.rxtx.org/) must be installed. See gps package documentation
 for details.
 
+== Example OSM Maps ==
+Can be downloaded from the AIMA project website, example-osm-maps.zip :
 
-== Current Release: 0.1.1-AIMAX-OSM Added ==
-0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
-First release based on the 3rd edition of AIMA which contains the Open Streem Map (OSM) library.
+http://code.google.com/p/aima-java/downloads/list
+
+All provided example maps have been created based on the data published at:
+http://download.geofabrik.de/osm/
+
+Data extraction for specific areas such as german cities has been performed using
+the free Osmosis tool. See e.g. http://wiki.openstreetmap.org/index.php/Osmosis.
+
+If you want to create a map of your home town, the easiest way to get the
+coordinates for the bounding box is to select the export tab from page
+http://www.openstreetmap.org/ and then navigate to the area which
+you want to extract. Unfortunately, the XML export typically doesn't work, but you
+find the needed coordinates on the left side.
+
+The following lines give you an example how Osmosis could be called within a Windows
+cmd file to extract the region of Ulm from the Geofabrik germany.osm.bz2 file:
+
+set JAVACMD_OPTIONS=-Xmx1024M
+osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm
+
+Open Street Map data is published under the
+Creative Commons Attribution-ShareAlike 2.0 license.
+
+For details, see:
+
+http://www.openstreetmap.org/
+http://creativecommons.org/licenses/by-sa/2.0/
 
 == Applications ==
 Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
