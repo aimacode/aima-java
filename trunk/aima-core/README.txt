@@ -3,11 +3,9 @@
 == Requirements ==
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
-== Current Release: 0.9.8-AIMAX-OSM Added ==
-0.9.8-AIMAX-OSM Added : 06 Feb 2010 :<br>
- * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
- * Vacuum world locations changed from enum to Strings to better support extensibility.
- * Queue Searches may now be canceled from within a thread (see CancelableThread).
+== Current Release: 0.9.9-AIMAX-OSM Minor Fixes ==
+0.9.9-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
+  * Java Doc now uses newer package-info.java mechanism.
  
 = Details =
 
@@ -232,6 +230,11 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 2. Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps?) you need to implement this interface.
  
 = Change History (Update in reverse chronological order) =
+0.9.8-AIMAX-OSM Added : 06 Feb 2010 :<br>
+ * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
+ * Vacuum world locations changed from enum to Strings to better support extensibility.
+ * Queue Searches may now be canceled from within a thread (see CancelableThread).
+ 
 0.9.7-AIMA3e Published : 10 Dec 2009 :<br>
 First full release based on the 3rd edition of AIMA. The following major 
 updates have been included in this release:<br>
