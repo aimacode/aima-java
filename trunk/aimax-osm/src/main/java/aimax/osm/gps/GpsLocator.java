@@ -116,7 +116,7 @@ public class GpsLocator implements NmeaReader.NmeaMessageListener {
 			float lon;
 			int x = (buffer.charAt(13) == '.') ? 0 : -4;
 			
-			if (buffer.charAt(43) == '0')
+			if (buffer.charAt(43+x) == '0')
 				posOK = false;
 			
 			float deg = Float.parseFloat(buffer.substring(18+x, 20+x));
