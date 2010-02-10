@@ -12,7 +12,7 @@ This is a minor patch release to 1.1.0, which includes fixes/cleanup related to 
 This is based on the following sub-project releases:
   * aima-core (0.9.9) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
-  * aimax-osm (0.1.3) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+  * aimax-osm (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Project Organization ==
