@@ -1,4 +1,4 @@
-package aimax.osm.routing.agent;
+package aimax.osm.routing.mapagent;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

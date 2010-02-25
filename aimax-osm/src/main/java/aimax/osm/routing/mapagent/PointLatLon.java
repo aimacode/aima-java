@@ -1,4 +1,4 @@
-package aimax.osm.routing.agent;
+package aimax.osm.routing.mapagent;
 
 import aima.core.util.datastructure.Point2D;
 import aimax.osm.data.Position;

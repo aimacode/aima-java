@@ -4,4 +4,4 @@
  * and also a map adapter which provides access to OSM data using the
  * simple aima-core <code>Map</code> interface.
  */
-package aimax.osm.routing.agent;
+package aimax.osm.routing.mapagent;

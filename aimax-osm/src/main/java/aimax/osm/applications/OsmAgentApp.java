@@ -11,10 +11,10 @@ import aimax.osm.data.DataResource;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
-import aimax.osm.routing.agent.OsmAgentController;
-import aimax.osm.routing.agent.OsmAgentFrame;
-import aimax.osm.routing.agent.OsmAgentView;
-import aimax.osm.routing.agent.OsmMap;
+import aimax.osm.routing.mapagent.OsmAgentController;
+import aimax.osm.routing.mapagent.OsmAgentFrame;
+import aimax.osm.routing.mapagent.OsmAgentView;
+import aimax.osm.routing.mapagent.OsmMap;
 
 /**
  * Demonstrates, how the OSM map viewer can be integrated into a graphical
