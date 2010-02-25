@@ -22,8 +22,8 @@ public class KDTree {
 	private int maxEntities;
 	private int maxDepth;
 	private ArrayList<MapEntity> entities;
-	private float splitValue;
 	private boolean splitAtLat;
+	private float splitValue;
 	
 	/**
 	 * Constructs the root of the tree.
@@ -158,15 +158,65 @@ public class KDTree {
 	 * meet the location requirement are visited.
 	 */
 	public void visitEntities(MapEntityVisitor visitor, BoundingBox vbox) {
-		for (MapEntity entity : entities)
-			entity.accept(visitor);
+		if (!entities.isEmpty()) {
+			VisibilityTest vtest = new VisibilityTest(bb, vbox);
+			for (MapEntity entity : entities)
+				if (vtest.isVisible(entity))
+					entity.accept(visitor);
+		}
 		if (children != null) {
-			double vMin = (splitAtLat ? vbox.getLatMin() : vbox.getLonMin());
-			double vMax = (splitAtLat ? vbox.getLatMax() : vbox.getLonMax());
+			float vMin = (splitAtLat ? vbox.getLatMin() : vbox.getLonMin());
+			float vMax = (splitAtLat ? vbox.getLatMax() : vbox.getLonMax());
 			if (vMin <= splitValue)
 				children[0].visitEntities(visitor, vbox);
 			if (vMax >= splitValue)
 				children[1].visitEntities(visitor, vbox);
+		}
+	}
+	
+	private static class VisibilityTest {
+		private boolean isTrue;
+		private float testLatMin;
+		private float testLonMin;
+		private float testLatMax;
+		private float testLonMax;
+		
+		VisibilityTest(BoundingBox treeBox, BoundingBox visibleBox) {
+			isTrue = true;
+			testLatMin = visibleBox.getLatMin();
+			testLonMin = visibleBox.getLonMin();
+			testLatMax = visibleBox.getLatMax();
+			testLonMax = visibleBox.getLonMax();
+			if (treeBox.getLatMin() > testLatMin) {
+				testLatMin = -1f;
+				isTrue = false;
+			}
+			if (treeBox.getLonMin() > testLonMin) {
+				testLonMin = -1f;
+				isTrue = false;
+			}
+			if (treeBox.getLatMax() < testLatMax) {
+				testLatMax = -1f;
+				isTrue = false;
+			}
+			if (treeBox.getLonMax() < testLonMax) {
+				testLonMax = -1f;
+				isTrue = false;
+			}
+		}
+		
+		boolean isVisible(MapEntity entity) {
+			if (isTrue)
+				return true;
+			if (testLatMin != -1f && entity.compareLatitude(testLatMin) < 0)
+				return false; // entity below visible area
+			if (testLonMin != -1f && entity.compareLongitude(testLonMin) < 0)
+				return false; // entity to the left of visible area
+			if (testLatMax != -1f && entity.compareLatitude(testLatMax) > 0)
+				return false; // entity above visible area
+			if (testLonMax != -1f && entity.compareLongitude(testLonMax) > 0)
+				return false; // entity to the right of visible area
+			return true;
 		}
 	}
 }
