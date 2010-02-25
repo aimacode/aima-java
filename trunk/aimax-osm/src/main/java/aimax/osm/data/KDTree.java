@@ -203,13 +203,13 @@ public class KDTree {
 		boolean isVisible(MapEntity entity) {
 			if (isTrue)
 				return true;
-			if (testLatMin != -1f && entity.compareLatitude(testLatMin) < 0)
+			if (testLatMin != Float.NaN && entity.compareLatitude(testLatMin) < 0)
 				return false; // entity below visible area
-			if (testLonMin != -1f && entity.compareLongitude(testLonMin) < 0)
+			if (testLonMin != Float.NaN && entity.compareLongitude(testLonMin) < 0)
 				return false; // entity to the left of visible area
-			if (testLatMax != -1f && entity.compareLatitude(testLatMax) > 0)
+			if (testLatMax != Float.NaN && entity.compareLatitude(testLatMax) > 0)
 				return false; // entity above visible area
-			if (testLonMax != -1f && entity.compareLongitude(testLonMax) > 0)
+			if (testLonMax != Float.NaN && entity.compareLongitude(testLonMax) > 0)
 				return false; // entity to the right of visible area
 			return true;
 		}
