@@ -1,4 +1,4 @@
-package aimax.osm.routing.agent;
+package aimax.osm.routing.mapagent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,10 +14,27 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.MapNode.WayRef;
 
+/**
+ * Adapter class which provides an aima-core <code>Map</code> interface for
+ * OSM data. This enables map environments to access real maps which are
+ * generated from OSM data. Note that location strings are dynamically
+ * generated from map node ids (long values), so always use the equal
+ * method for comparison.
+ * @author R. Lunde
+ */
 public class OsmMap implements Map {
 
+	/** A map which is generated from OSM data. */
 	MapDataStore mapData;
+	/**
+	 * A filter, which hides some of the ways
+	 * (e.g. foot ways are irrelevant when traveling by car.).
+	 */
 	MapWayFilter filter;
+	/**
+	 * Controls whether a way which is marked as one-way can be traveled
+	 * in both directions.
+	 */
 	boolean ignoreOneways;
 	
 	public OsmMap(MapDataStore mapData) {
@@ -104,6 +121,11 @@ public class OsmMap implements Map {
 		return Util.selectRandomlyFromList(getLocations());
 	}
 
+	/**
+	 * Returns the ID of the way node in the underlying OSM map
+	 * which is nearest with respect to the specified coordinates
+	 * and additionally passes the filter.
+	 */
 	public String getNearestLocation(Point2D pt) {
 		Position pos = new Position((float) pt.getY(), (float) pt.getX());
 		Collection<MapNode> rNodes = mapData.getWayNodes();
@@ -111,6 +133,7 @@ public class OsmMap implements Map {
 		return (node != null) ? Long.toString(node.getId()) : null;
 	}
 	
+	/** Returns the OSM way node corresponding to the given location string. */ 
 	public MapNode getWayNode(String id) {
 		MapNode result = null;
 		try {

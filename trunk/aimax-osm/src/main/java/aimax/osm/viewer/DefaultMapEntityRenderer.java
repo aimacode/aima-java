@@ -239,9 +239,13 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		if (scale >= pInfo.minScale * displayFactor) {
 			List<MapNode> nodes = way.getNodes();
 			if (pInfo.wayColor != null) {
-				if (nodes.get(0) == nodes.get(nodes.size()-1)
-					&& pInfo.wayFillColor != null
-					&& (way.isArea() || !pInfo.fillAreasOnly))
+				if (pInfo.wayFillColor != null
+						&& nodes.get(0) == nodes.get(nodes.size()-1)
+						&& (way.isArea() || !pInfo.fillAreasOnly))
+//				    alternative solution:
+//					&& (way.isArea() || 
+//							(nodes.get(0) == nodes.get(nodes.size()-1)
+//							&& !pInfo.fillAreasOnly)))
 					areaBuffer.add(way);
 				else
 					wayBuffer.add(way);

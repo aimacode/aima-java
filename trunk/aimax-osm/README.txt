@@ -1,5 +1,7 @@
 = AIMAX-OSM =
 
+by Ruediger Lunde
+
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
 and search concepts from the AIMA library in an interesting, non-trivial
