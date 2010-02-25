@@ -175,32 +175,27 @@ public class KDTree {
 	}
 	
 	private static class VisibilityTest {
-		private boolean isTrue;
-		private float testLatMin;
-		private float testLonMin;
-		private float testLatMax;
-		private float testLonMax;
+		private boolean isTrue = true;
+		private float testLatMin = Float.NaN;
+		private float testLonMin = Float.NaN;
+		private float testLatMax = Float.NaN;
+		private float testLonMax = Float.NaN;
 		
 		VisibilityTest(BoundingBox treeBox, BoundingBox visibleBox) {
-			isTrue = true;
-			testLatMin = visibleBox.getLatMin();
-			testLonMin = visibleBox.getLonMin();
-			testLatMax = visibleBox.getLatMax();
-			testLonMax = visibleBox.getLonMax();
-			if (treeBox.getLatMin() > testLatMin) {
-				testLatMin = -1f;
+			if (treeBox.getLatMin() < visibleBox.getLatMin()) {
+				testLatMin = visibleBox.getLatMin();
 				isTrue = false;
 			}
-			if (treeBox.getLonMin() > testLonMin) {
-				testLonMin = -1f;
+			if (treeBox.getLonMin() < visibleBox.getLonMin()) {
+				testLonMin = visibleBox.getLonMin();
 				isTrue = false;
 			}
-			if (treeBox.getLatMax() < testLatMax) {
-				testLatMax = -1f;
+			if (treeBox.getLatMax() > visibleBox.getLatMax()) {
+				testLatMax = visibleBox.getLatMax();
 				isTrue = false;
 			}
-			if (treeBox.getLonMax() < testLonMax) {
-				testLonMax = -1f;
+			if (treeBox.getLonMax() > visibleBox.getLonMax()) {
+				testLonMax = visibleBox.getLonMax();
 				isTrue = false;
 			}
 		}
