@@ -11,8 +11,8 @@ import aimax.osm.data.entities.MapEntity;
 /**
  * Simple implementation of a kd-tree for map entities. Entities are
  * divided by their two-dimensional geo coordinates. Note, that
- * inner nodes can contain entities, e.g. ways, whose nodes are
- * not contained in the bounding box of the same leaf node.
+ * inner nodes can contain entities, e.g. ways, whose nodes do
+ * not completely fit into the bounding box of one of the child nodes.
  * @author R. Lunde
  */
 public class KDTree {

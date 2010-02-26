@@ -78,8 +78,10 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 	
 	/** Creates the rules which control the visual appearance of the map. */
 	protected void setDefaults() {
+		EntityClassifier<EntityPrintInfo> sc;
 		setBackgroundColor(Color.WHITE);
 		setTrackInfo("default", 0f, Color.RED, GRAY_TRANS);
+		entityClassifier.setDefaultEntityClass(new EntityPrintInfo());
 		entityClassifier.addRule("highway", "motorway", new EntityPrintInfo(0, 20000, Color.BLUE, 2, 50));
 		entityClassifier.addRule("highway", "motorway_link", new EntityPrintInfo(0, 20000, Color.BLUE, 2, 50));
 		entityClassifier.addRule("highway", "trunk", new EntityPrintInfo(0, 60000, Color.BLUE, 2, 50));
@@ -119,8 +121,14 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("landuse", "farmland",  new EntityPrintInfo(500, 30000, LIGHT_YELLOW_TRANS, 1, LIGHT_YELLOW_TRANS, 13));
 		entityClassifier.addRule("landuse", "residential",  new EntityPrintInfo(500, 30000, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, 13));
 		entityClassifier.addRule("landuse", null, new EntityPrintInfo(500, 200000, Color.GRAY, null, false, LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false, 13));
-		entityClassifier.addRule("boundary", null, new EntityPrintInfo(500, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 13));
-
+		
+		sc = entityClassifier.addRule("boundary", null, new EntityPrintInfo(6000, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 13));
+		sc.addRule("admin_level", "1", new EntityPrintInfo(0, 200000, Color.GRAY, null, false, Color.GRAY, 2, true, null, false, 13));
+		sc.addRule("admin_level", "2", new EntityPrintInfo(0, 200000, Color.GRAY, null, false, Color.GRAY, 2, true, null, false, 13));
+		sc.addRule("admin_level", "3", new EntityPrintInfo(500, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 13));
+		sc.addRule("admin_level", "4", new EntityPrintInfo(500, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 13));
+		
+		
 		entityClassifier.addRule("waterway", "riverbank", new EntityPrintInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, 25));
 		entityClassifier.addRule("waterway", null, new EntityPrintInfo(3000, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, 24));
 		entityClassifier.addRule("railway", "rail", new EntityPrintInfo(3000, 30000, Color.GRAY, 1, 30));
@@ -147,8 +155,6 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("mountain_pass", null, new EntityPrintInfo(0, 1000, Color.DARK_GRAY, null, 20));
 		entityClassifier.addRule("shop", null, new EntityPrintInfo(40000, 300000, Color.CYAN, Icon.createRectangle(4, Color.CYAN), 10));
 		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createPin(defaultSize, Color.RED), 100));
-
-		entityClassifier.addRule(null, null, new EntityPrintInfo());
 	} 
 	
 	/** Returns the classifier which maintains all rendering rules. */
