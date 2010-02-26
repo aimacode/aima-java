@@ -135,7 +135,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 						"Map Entity Info", 
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
-						null, options, options[0]) == 0)
+						null, options, options[0]) != 1)
 					done = true;
 			}
 		} else if (ae.getSource() == clearMenuItem) {
