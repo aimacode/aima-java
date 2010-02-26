@@ -101,7 +101,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("highway", "footway", new EntityPrintInfo(10000, 200000, Color.ORANGE, 1, 36));
 		entityClassifier.addRule("highway", "steps", new EntityPrintInfo(10000, 200000, Color.ORANGE, 1, 35));
 		entityClassifier.addRule("highway", "unclassified", new EntityPrintInfo(10000, 200000, Color.LIGHT_GRAY, 1, 34));
-		entityClassifier.addRule("highway", "speed_camera", new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createTriangle(6, Color.RED, Color.WHITE), 32));
+		entityClassifier.addRule("highway", "speed_camera", new EntityPrintInfo(6000, 200000, Color.GRAY, EntityIcon.createTriangle(6, Color.RED, Color.WHITE), 32));
 
 		entityClassifier.addRule("natural", "land", new EntityPrintInfo(200, 30000, LIGHT_BLUE, 1, Color.WHITE, 29));
 		entityClassifier.addRule("natural", "island", new EntityPrintInfo(200, 30000, LIGHT_BLUE, 2, 23));
@@ -112,8 +112,8 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("natural", "wood", new EntityPrintInfo(200, 30000, GREEN, 1, GREEN, 17));
 		entityClassifier.addRule("natural", "scrub", new EntityPrintInfo(200, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, 16));
 		entityClassifier.addRule("natural", "heath", new EntityPrintInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, 16));
-		entityClassifier.addRule("natural", "peak", new EntityPrintInfo(1000, 30000, Color.DARK_GRAY, Icon.createTriangle(10, Color.ORANGE), 15));
-		entityClassifier.addRule("natural", null, new EntityPrintInfo(10000, 30000, Color.DARK_GRAY, Icon.createTriangle(10, Color.GREEN.darker()), 25));
+		entityClassifier.addRule("natural", "peak", new EntityPrintInfo(1000, 30000, Color.DARK_GRAY, EntityIcon.createTriangle(10, Color.ORANGE), 15));
+		entityClassifier.addRule("natural", null, new EntityPrintInfo(10000, 30000, Color.DARK_GRAY, EntityIcon.createTriangle(10, Color.GREEN.darker()), 25));
 		entityClassifier.addRule("leisure", "park", new EntityPrintInfo(500, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, 14));
 		entityClassifier.addRule("leisure", "garden", new EntityPrintInfo(500, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, 14));
 		entityClassifier.addRule("landuse", "forest",  new EntityPrintInfo(200, 30000, GREEN, 1, GREEN, 13));
@@ -132,29 +132,29 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 		entityClassifier.addRule("waterway", "riverbank", new EntityPrintInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, 25));
 		entityClassifier.addRule("waterway", null, new EntityPrintInfo(3000, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, 24));
 		entityClassifier.addRule("railway", "rail", new EntityPrintInfo(3000, 30000, Color.GRAY, 1, 30));
-		entityClassifier.addRule("railway", "station", new EntityPrintInfo(10000, 60000, Color.DARK_GRAY, Icon.createRectangle(4, Color.DARK_GRAY), 29));
+		entityClassifier.addRule("railway", "station", new EntityPrintInfo(10000, 60000, Color.DARK_GRAY, EntityIcon.createRectangle(4, Color.DARK_GRAY), 29));
 		entityClassifier.addRule("aerialway", null, new EntityPrintInfo(1000, 60000, LIGHT_BLUE.brighter(), 2, 28));
 
-		entityClassifier.addRule("historic", null, new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createCircle(11, "H", Color.ORANGE, Color.WHITE), true, Color.GRAY, 1, false, null, false, 30));
-		entityClassifier.addRule("tourism", "caravan_site", new EntityPrintInfo(1000, 60000, Color.GRAY, Icon.createRectangle(8, "P", Color.BLUE, Color.RED), true, Color.GRAY, 1, false, null, false, 28)); 
-		entityClassifier.addRule("tourism", "camp_site", new EntityPrintInfo(1000, 60000, Color.GRAY, Icon.createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), 27));
-		entityClassifier.addRule("tourism", "attraction", new EntityPrintInfo(6000, 60000, Color.GRAY, Icon.createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), 26));
-		entityClassifier.addRule("tourism", "viewpoint", new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), 25));
-		entityClassifier.addRule("tourism", "museum", new EntityPrintInfo(6000, 200000, Color.GRAY, Icon.createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), 25));
-		entityClassifier.addRule("tourism", "hotel", new EntityPrintInfo(30000, 200000, Color.GRAY, Icon.createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), 24));
-		entityClassifier.addRule("tourism", null, new EntityPrintInfo(30000, 100000, Color.GREEN.darker(), Icon.createRectangle(4, Color.GREEN.darker()), 23));
-		entityClassifier.addRule("amenity", "place_of_worship", new EntityPrintInfo(20000, 200000, Color.GRAY, Icon.createTriangle(11, "+", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
-		entityClassifier.addRule("amenity", "parking", new EntityPrintInfo(30000, 200000, Color.GRAY, Icon.createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
-		entityClassifier.addRule("amenity", null, new EntityPrintInfo(30000, 300000, Color.BLUE, Icon.createRectangle(4, Color.BLUE), 10));
+		entityClassifier.addRule("historic", null, new EntityPrintInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "H", Color.ORANGE, Color.WHITE), true, Color.GRAY, 1, false, null, false, 30));
+		entityClassifier.addRule("tourism", "caravan_site", new EntityPrintInfo(1000, 60000, Color.GRAY, EntityIcon.createRectangle(8, "P", Color.BLUE, Color.RED), true, Color.GRAY, 1, false, null, false, 28)); 
+		entityClassifier.addRule("tourism", "camp_site",    new EntityPrintInfo(1000, 60000, Color.GRAY, EntityIcon.createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 27));
+		entityClassifier.addRule("tourism", "attraction", new EntityPrintInfo(6000, 60000, Color.GRAY, EntityIcon.createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
+		entityClassifier.addRule("tourism", "viewpoint", new EntityPrintInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), 25));
+		entityClassifier.addRule("tourism", "museum", new EntityPrintInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), 25));
+		entityClassifier.addRule("tourism", "hotel", new EntityPrintInfo(30000, 200000, Color.GRAY, EntityIcon.createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), 24));
+		entityClassifier.addRule("tourism", null, new EntityPrintInfo(30000, 100000, Color.GREEN.darker(), EntityIcon.createRectangle(4, Color.GREEN.darker()), 23));
+		entityClassifier.addRule("amenity", "place_of_worship", new EntityPrintInfo(20000, 200000, Color.GRAY, EntityIcon.createTriangle(11, "+", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
+		entityClassifier.addRule("amenity", "parking", new EntityPrintInfo(30000, 200000, Color.GRAY, EntityIcon.createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
+		entityClassifier.addRule("amenity", null, new EntityPrintInfo(30000, 300000, Color.BLUE, EntityIcon.createRectangle(4, Color.BLUE), 10));
 
-		entityClassifier.addRule("place", "city", new EntityPrintInfo(0, 100, Color.BLACK, null, 40));
-		entityClassifier.addRule("place", "town", new EntityPrintInfo(0, 1000, Color.BLACK, null, 39));
-		entityClassifier.addRule("place", "village", new EntityPrintInfo(0, 3000, Color.DARK_GRAY, null, 38));
-		entityClassifier.addRule("place", null, new EntityPrintInfo(0, 10000, Color.DARK_GRAY, null, 37));
+		entityClassifier.addRule("place", "city", new EntityPrintInfo(0, 100, Color.BLACK, null, 60));
+		entityClassifier.addRule("place", "town", new EntityPrintInfo(0, 1000, Color.BLACK, null, 59));
+		entityClassifier.addRule("place", "village", new EntityPrintInfo(0, 3000, Color.DARK_GRAY, null, 58));
+		entityClassifier.addRule("place", null, new EntityPrintInfo(0, 10000, Color.DARK_GRAY, null, 57));
 
 		entityClassifier.addRule("mountain_pass", null, new EntityPrintInfo(0, 1000, Color.DARK_GRAY, null, 20));
-		entityClassifier.addRule("shop", null, new EntityPrintInfo(40000, 300000, Color.CYAN, Icon.createRectangle(4, Color.CYAN), 10));
-		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, Icon.createPin(defaultSize, Color.RED), 100));
+		entityClassifier.addRule("shop", null, new EntityPrintInfo(40000, 300000, Color.CYAN, EntityIcon.createRectangle(4, Color.CYAN), 10));
+		entityClassifier.addRule("mark", "yes", new EntityPrintInfo(0, 0, Color.RED, EntityIcon.createPin(defaultSize, Color.RED), 100));
 	} 
 	
 	/** Returns the classifier which maintains all rendering rules. */
@@ -177,7 +177,7 @@ public class DefaultMapEntityRenderer extends AbstractMapEntityRenderer {
 	/** Adds track rendering information to the lookup. */
 	public void setTrackInfo(String trackName, float minScale, Color color, Color fill) {
 		trackPrintInfo.put(trackName, new EntityPrintInfo
-				(minScale, minScale, color, Icon.createCircle(defaultSize, color, fill), true,
+				(minScale, minScale, color, EntityIcon.createCircle(defaultSize, color, fill), true,
 						color, 2f, true, null, false, 0));
 	}
 	

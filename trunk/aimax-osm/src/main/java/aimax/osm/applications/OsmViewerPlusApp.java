@@ -15,7 +15,7 @@ import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
 import aimax.osm.viewer.DefaultMapEntityRenderer;
 import aimax.osm.viewer.EntityPrintInfo;
-import aimax.osm.viewer.Icon;
+import aimax.osm.viewer.EntityIcon;
 import aimax.osm.viewer.MapViewFrame;
 import aimax.osm.viewer.MapViewPane;
 
@@ -98,7 +98,7 @@ public class OsmViewerPlusApp implements ActionListener {
 	    entityClassifier.replaceRule("place", "village", new EntityPrintInfo(0, 3000, Color.GRAY, null, 29));
 	    entityClassifier.replaceRule("place", null, new EntityPrintInfo(0, 10000, Color.GRAY, null, 28));
 	     
-	    entityClassifier.replaceRule("mark", "yes", new EntityPrintInfo(0, 0, Color.GREEN.darker(), Icon.createCircle(12, Color.GREEN.darker()), 5));
+	    entityClassifier.replaceRule("mark", "yes", new EntityPrintInfo(0, 0, Color.GREEN.darker(), EntityIcon.createCircle(12, Color.GREEN.darker()), 5));
 
 		return result;
 	}

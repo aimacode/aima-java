@@ -21,8 +21,10 @@ import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapEntityVisitor;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
 
 /**

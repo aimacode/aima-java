@@ -13,7 +13,7 @@ public class EntityPrintInfo implements Comparable<Object> {
 	 * not specified by parameter.
 	 */
 	private static EntityPrintInfo DEFAULT_INFO = new EntityPrintInfo
-	(20000, 200000, Color.LIGHT_GRAY.darker(), Icon.createRectangle(4, Color.GRAY), false, Color.GRAY, 1, false, null, false, 10);
+	(20000, 200000, Color.LIGHT_GRAY.darker(), EntityIcon.createRectangle(4, Color.GRAY), false, Color.GRAY, 1, false, null, false, 10);
 	
 	/** Changes the default values. */
 	public static void setDefaults(EntityPrintInfo info) {
@@ -30,7 +30,7 @@ public class EntityPrintInfo implements Comparable<Object> {
 	/** The color to print the entity name, null indicates no name display. */
 	public Color nameColor;
 	/** The icon to be used to represent the entity or null (no icon). */
-	public Icon icon;
+	public EntityIcon icon;
 	/**
 	 * Controls, whether the icon is only used for nodes (false)
 	 * or also for ways (true).
@@ -70,7 +70,7 @@ public class EntityPrintInfo implements Comparable<Object> {
 	}
 	
 	/** Simple constructor for points of interest. */
-	public EntityPrintInfo(float minScale, Icon icon, int printOrder) {
+	public EntityPrintInfo(float minScale, EntityIcon icon, int printOrder) {
 		this();
 		this.minScale = minScale;
 		this.icon = icon;
@@ -79,7 +79,7 @@ public class EntityPrintInfo implements Comparable<Object> {
 	
 	/** Constructor for points of interest. */
 	public EntityPrintInfo(float minScale, float minNameScale, Color nameColor,
-			Icon icon, int printOrder) {
+			EntityIcon icon, int printOrder) {
 		this();
 		this.minScale = minScale;
 		this.minNameScale = minNameScale;
@@ -128,7 +128,7 @@ public class EntityPrintInfo implements Comparable<Object> {
 	
 	/** Constructor for general use. */
 	public EntityPrintInfo(float minScale, float minNameScale, Color nameColor,
-			Icon icon, boolean isWayIcon, Color wayColor, float wayWidth, boolean wayDashed,
+			EntityIcon icon, boolean isWayIcon, Color wayColor, float wayWidth, boolean wayDashed,
 			Color wayFillColor, boolean fillAreasOnly, int printOrder) {
 		this.minScale = minScale;
 		this.minNameScale = minNameScale;
