@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-public abstract class Icon {
+public abstract class EntityIcon {
 
 	protected float size;
 	
@@ -19,43 +19,43 @@ public abstract class Icon {
 	/////////////////////////////////////////////////////////////////
 	// useful static creators
 	
-	public static Icon createCircle(float size, Color color) {
+	public static EntityIcon createCircle(float size, Color color) {
 		return new SimpleIcon(Shape.CIRCLE, size, null, color, color, null);
 	}
 	
-	public static Icon createCircle(float size, Color line, Color fill) {
+	public static EntityIcon createCircle(float size, Color line, Color fill) {
 		return new SimpleIcon(Shape.CIRCLE, size, null, line, fill, null);
 	}
 	
-	public static Icon createCircle(float size, String symbol, Color color, Color sym) {
+	public static EntityIcon createCircle(float size, String symbol, Color color, Color sym) {
 		return new SimpleIcon(Shape.CIRCLE, size, symbol, color, color, sym);
 	}
 	
-	public static Icon createRectangle(float size, Color color) {
+	public static EntityIcon createRectangle(float size, Color color) {
 		return new SimpleIcon(Shape.RECTANGLE, size, null, color, color, null);
 	}
 	
-	public static Icon createRectangle(float size, Color line, Color fill) {
+	public static EntityIcon createRectangle(float size, Color line, Color fill) {
 		return new SimpleIcon(Shape.RECTANGLE, size, null, line, fill, null);
 	}
 	
-	public static Icon createRectangle(float size, String symbol, Color color, Color sym) {
+	public static EntityIcon createRectangle(float size, String symbol, Color color, Color sym) {
 		return new SimpleIcon(Shape.RECTANGLE, size, symbol, color, color, sym);
 	}
 	
-	public static Icon createTriangle(float size, Color color) {
+	public static EntityIcon createTriangle(float size, Color color) {
 		return new SimpleIcon(Shape.TRIANGLE, size, null, color, color, null);
 	}
 	
-	public static Icon createTriangle(float size, Color line, Color fill) {
+	public static EntityIcon createTriangle(float size, Color line, Color fill) {
 		return new SimpleIcon(Shape.TRIANGLE, size, null, line, fill, null);
 	}
 	
-	public static Icon createTriangle(float size, String symbol, Color color, Color sym) {
+	public static EntityIcon createTriangle(float size, String symbol, Color color, Color sym) {
 		return new SimpleIcon(Shape.TRIANGLE, size, symbol, color, color, sym);
 	}
 	
-	public static Icon createPin(float size, Color color) {
+	public static EntityIcon createPin(float size, Color color) {
 		return new SimpleIcon(Shape.PIN, size, null, color, color, null);
 	}
 	
@@ -74,7 +74,7 @@ public abstract class Icon {
 	/////////////////////////////////////////////////////////////////
 	// an implementation class
 	
-	public static class SimpleIcon extends Icon {
+	public static class SimpleIcon extends EntityIcon {
 		Shape shape;
 		String symbol;
 		Color lineColor;

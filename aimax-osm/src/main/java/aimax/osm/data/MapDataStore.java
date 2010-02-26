@@ -267,15 +267,15 @@ public class MapDataStore implements MapDataConsumer {
 			boolean excludeMarked) {
 		MapNode result = null;
 		ArrayList<MapNode> foundNodes = new ArrayList<MapNode>();
-		int matchLevel = 4;
+		BestMatchFinder bmf = new BestMatchFinder(pattern);
 		if (includePOIs) {
 			for (MapNode node : pois) {
-				int match = match(node, pattern, matchLevel);
-				if (match > 0) {
+				int match = bmf.checkMatchQuality(node);
+				if (match >= 0) {
 					if (!excludeMarked || !isMarked(node.getLat(), node.getLon())) {
-						if (match < matchLevel) {
+						if (match > 0) {
 							foundNodes.clear();
-							matchLevel = match;
+							bmf.useAsReference(node);
 						}
 						foundNodes.add(node);
 					}
@@ -284,20 +284,20 @@ public class MapDataStore implements MapDataConsumer {
 		}
 		if (includeWayNodes) {
 			for (MapWay way : ways.values()) {
-				int match = match(way, pattern, matchLevel);
-				if (match > 0) {
+				int match = bmf.checkMatchQuality(way);
+				if (match >= 0) {
 					MapNode node = (position == null)
 					? way.getNodes().get(0) : position.selectNearest(way.getNodes(), null);
 					if (!excludeMarked || !isMarked(node.getLat(), node.getLon())) {
-						if (match < matchLevel) {
+						if (match > 0) {
 							foundNodes.clear();
-							matchLevel = match;
+							bmf.useAsReference(way);
 						}
 						foundNodes.add(node);
 					}
 				}
 			}
-		}		
+		}
 		if (!foundNodes.isEmpty()) {
 			if (position != null)
 				result = position.selectNearest(foundNodes, null);
@@ -305,32 +305,6 @@ public class MapDataStore implements MapDataConsumer {
 				result = foundNodes.get(0);
 		}
 		return result;
-	}
-	
-	/**
-	 * Checks whether an entity matches the search pattern.
-	 * @param level Maximal match level to be checked. Value between
-	 *        1 (name identical) and 4 (has attribute name equal to pattern).
-	 * @return match level between 1 and 4 or 0 (no match).
-	 */
-	private int match(MapEntity entity, String pattern, int level) {
-		if (entity.getName() != null) {
-			if (entity.getName().equals(pattern))
-				return 1;
-			else if (level >= 2 && entity.getName().contains(pattern))
-				return 2;
-		}
-		if (level >= 3) {
-			for (EntityAttribute att : entity.getAttributes())
-				if (att.getValue().equals(pattern))
-					return 3;
-		}
-		if (level >= 4) {
-			for (EntityAttribute att : entity.getAttributes())
-				if (att.getName().equals(pattern))
-					return 4;
-		}
-		return 0;
 	}
 	
 	public void addMapDataEventListener(MapDataEventListener listener) {
@@ -347,4 +321,79 @@ public class MapDataStore implements MapDataConsumer {
 			listener.eventHappened(event);
 	}
 	
+	private static class BestMatchFinder {
+		String searchPattern;
+		/**
+		 * Value between 1 and 5 which classifies the reference match level.
+		 * 1: reference entity name equal to pattern;
+		 * 2: reference entity name contains pattern;
+		 * 3: reference entity has attribute value which is identical with the pattern;
+		 * 4: reference entity has attribute name equal to pattern;
+		 * 5: no match found.
+		 */
+		int currMatchLevel = 5;
+		/** contains the render data of the reference entity. */
+		Comparable<Object> currRenderData = null;
+		
+		/* Creates a match finder for a given search pattern. */
+		protected BestMatchFinder(String pattern) {
+			searchPattern = pattern;
+		}
+		
+		/**
+		 * Checks whether an entity matches the search pattern.
+		 * @return Match level (-1: forget new entity,
+		 *                       0: new entity match quality equal to reference entity,
+		 *                       1: new entity matches better then reference entity)
+		 */
+		protected int checkMatchQuality(MapEntity entity) {
+			int matchLevel = getMatchLevel(entity);
+			int result = -1;
+			if (matchLevel < 5) {
+				if (matchLevel < currMatchLevel)
+					result = 1;
+				else if (matchLevel == currMatchLevel)
+					result = compareRenderData(entity.getRenderData());
+			}
+			return result;
+		}
+		
+		protected void useAsReference(MapEntity entity) {
+			currMatchLevel = getMatchLevel(entity);
+			currRenderData = entity.getRenderData();
+		}
+		
+		private int getMatchLevel(MapEntity entity) {
+			if (entity.getName() != null) {
+				if (entity.getName().equals(searchPattern))
+					return 1;
+				else if (currMatchLevel >= 2 && entity.getName().contains(searchPattern))
+					return 2;
+			}
+			if (currMatchLevel >= 3) {
+				for (EntityAttribute att : entity.getAttributes())
+					if (att.getValue().equals(searchPattern))
+						return 3;
+			}
+			if (currMatchLevel >= 4) {
+				for (EntityAttribute att : entity.getAttributes())
+					if (att.getName().equals(searchPattern))
+						return 4;
+			}
+			return 5;
+		}
+		
+		private int compareRenderData(Comparable<Object> newData) {
+			if (currRenderData == null)
+				if (newData == null)
+					return 0;
+				else
+					return 1;
+			else
+				if (newData == null)
+					return -1;
+				else
+					return newData.compareTo(currRenderData);
+		}
+	}
 }
