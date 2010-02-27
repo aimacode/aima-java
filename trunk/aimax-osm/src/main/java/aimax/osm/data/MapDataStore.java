@@ -326,9 +326,9 @@ public class MapDataStore implements MapDataConsumer {
 		/**
 		 * Value between 1 and 5 which classifies the reference match level.
 		 * 1: reference entity name equal to pattern;
-		 * 2: reference entity name contains pattern;
-		 * 3: reference entity has attribute value which is identical with the pattern;
-		 * 4: reference entity has attribute name equal to pattern;
+		 * 2: reference entity has attribute value which is identical with the pattern;
+		 * 3: reference entity has attribute name equal to pattern;
+		 * 4: reference entity name contains pattern;
 		 * 5: no match found.
 		 */
 		int currMatchLevel = 5;
@@ -352,8 +352,12 @@ public class MapDataStore implements MapDataConsumer {
 			if (matchLevel < 5) {
 				if (matchLevel < currMatchLevel)
 					result = 1;
-				else if (matchLevel == currMatchLevel)
-					result = compareRenderData(entity.getRenderData());
+				else if (matchLevel == currMatchLevel) {
+					if (matchLevel == 1 || matchLevel == 4)
+						result = compareRenderData(entity.getRenderData());
+					else
+						result = 0;
+				}
 			}
 			return result;
 		}
@@ -364,22 +368,21 @@ public class MapDataStore implements MapDataConsumer {
 		}
 		
 		private int getMatchLevel(MapEntity entity) {
-			if (entity.getName() != null) {
-				if (entity.getName().equals(searchPattern))
+			String name = entity.getName();
+			if (name != null && entity.getName().equals(searchPattern))
 					return 1;
-				else if (currMatchLevel >= 2 && entity.getName().contains(searchPattern))
-					return 2;
+			if (currMatchLevel >= 2) {
+				for (EntityAttribute att : entity.getAttributes())
+					if (att.getValue().equals(searchPattern))
+						return 2;
 			}
 			if (currMatchLevel >= 3) {
 				for (EntityAttribute att : entity.getAttributes())
-					if (att.getValue().equals(searchPattern))
+					if (att.getName().equals(searchPattern))
 						return 3;
 			}
-			if (currMatchLevel >= 4) {
-				for (EntityAttribute att : entity.getAttributes())
-					if (att.getName().equals(searchPattern))
-						return 4;
-			}
+			if (name != null && currMatchLevel >= 4 && entity.getName().contains(searchPattern))
+				return 4;
 			return 5;
 		}
 		
