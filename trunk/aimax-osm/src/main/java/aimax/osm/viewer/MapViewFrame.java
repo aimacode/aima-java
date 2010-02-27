@@ -133,12 +133,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 	
 	public void find(String namepart) {
-		Position pos = null;
-		List<MapNode> marks = mapData.getMarks();
-		if (!marks.isEmpty())
-			pos = new Position(marks.get(mapData.getMarks().size()-1));
-		else
-			pos = view.getCenterPosition();
+		Position pos = view.getCenterPosition();
 		MapNode node = mapData.findNode
 		(findField.getText(), pos, true, true, true);
 		if (node != null) {
