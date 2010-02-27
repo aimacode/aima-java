@@ -84,7 +84,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	
 
 	private void updateTrack(Agent agent, String location) {
-		OsmMap map = (OsmMap) getMapEnv().getMap();
+		OsmMapAdapter map = (OsmMapAdapter) getMapEnv().getMap();
 		MapNode node = map.getWayNode(location);
 		if (node != null) {
 			int aIdx = getMapEnv().getAgents().indexOf(agent);

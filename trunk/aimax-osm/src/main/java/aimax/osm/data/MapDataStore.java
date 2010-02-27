@@ -107,6 +107,11 @@ public class MapDataStore implements MapDataConsumer {
 				(this, MapDataEvent.Type.MARK_ADDED, node.getId()));
 	}
 	
+	/**
+	 * Adds a new point at the end of a specified track.
+	 * If a track with the specified name does not exist, a new track
+	 * is created. 
+	 */
 	public void addToTrack(String trackName, float lat, float lon) {
 		Track track = getTrack(trackName);
 		if (track == null) {

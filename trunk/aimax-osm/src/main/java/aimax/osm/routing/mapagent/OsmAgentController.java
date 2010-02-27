@@ -27,7 +27,7 @@ import aimax.osm.data.entities.MapNode;
 /** Controller for a graphical OSM agent application. */
 public class OsmAgentController extends AgentAppController {
 	
-	protected OsmMap map;
+	protected OsmMapAdapter map;
 	protected MapEnvironment env;
 	/** Search method to be used. */
 	protected Search search;
@@ -36,7 +36,7 @@ public class OsmAgentController extends AgentAppController {
 	
 	protected List<String> markedLocations;
 	
-	public OsmAgentController(OsmMap map) {
+	public OsmAgentController(OsmMapAdapter map) {
 		this.map = map;
 		markedLocations = new ArrayList<String>();
 	}

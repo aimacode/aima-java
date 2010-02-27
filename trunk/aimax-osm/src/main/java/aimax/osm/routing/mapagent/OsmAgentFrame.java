@@ -7,7 +7,7 @@ import aima.gui.applications.search.map.MapAgentFrame;
 public class OsmAgentFrame extends MapAgentFrame {
 
 	/** Creates a new frame. */
-	public OsmAgentFrame(OsmMap map) {
+	public OsmAgentFrame(OsmMapAdapter map) {
 		setTitle("OAS - the Osm Agent Simulator");
 		setSelectors(new String[]{
 				SCENARIO_SEL, AGENT_SEL,

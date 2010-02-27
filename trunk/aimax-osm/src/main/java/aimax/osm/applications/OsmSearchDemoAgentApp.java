@@ -24,7 +24,7 @@ import aimax.osm.routing.SimpleGoalTest;
 import aimax.osm.routing.mapagent.OsmAgentController;
 import aimax.osm.routing.mapagent.OsmAgentFrame;
 import aimax.osm.routing.mapagent.OsmAgentView;
-import aimax.osm.routing.mapagent.OsmMap;
+import aimax.osm.routing.mapagent.OsmMapAdapter;
 import aimax.osm.viewer.DefaultMapEntityRenderer;
 import aimax.osm.viewer.EntityPrintInfo;
 import aimax.osm.viewer.EntityIcon;
@@ -73,7 +73,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	
 	/** Variant of the <code>OsmAgentFrame</code>. */
 	private class SDFrame extends OsmAgentFrame {
-		SDFrame(OsmMap map) {
+		SDFrame(OsmMapAdapter map) {
 			super(map);
 			setTitle("OSDA - the OSM Search Demo Agent Application");
 			this.setSelectorItems(AGENT_SEL, new String[]{}, -1);
@@ -85,7 +85,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 * starts an agent with a slightly modified goal test function.
 	 */
 	private static class SDController extends OsmAgentController {
-		SDController(OsmMap map) {
+		SDController(OsmMapAdapter map) {
 			super(map);
 		}
 		
