@@ -14,7 +14,7 @@ import aimax.osm.reader.OsmReader;
 import aimax.osm.routing.mapagent.OsmAgentController;
 import aimax.osm.routing.mapagent.OsmAgentFrame;
 import aimax.osm.routing.mapagent.OsmAgentView;
-import aimax.osm.routing.mapagent.OsmMap;
+import aimax.osm.routing.mapagent.OsmMapAdapter;
 
 /**
  * Demonstrates, how the OSM map viewer can be integrated into a graphical
@@ -23,14 +23,14 @@ import aimax.osm.routing.mapagent.OsmMap;
  */
 public class OsmAgentApp extends SimpleAgentApp {
 
-	protected OsmMap map;
+	protected OsmMapAdapter map;
 	
 	/** Reads a map from the specified file and stores it in {@link #map}. */
 	public OsmAgentApp(InputStream osmFile) {
 		MapDataStore mapData = new MapDataStore();
 		MapReader mapReader = new OsmReader();
 		mapReader.readMap(osmFile, mapData);
-		map = new OsmMap(mapData);
+		map = new OsmMapAdapter(mapData);
 	}
 	
 	/** Creates an <code>OsmAgentView</code>. */

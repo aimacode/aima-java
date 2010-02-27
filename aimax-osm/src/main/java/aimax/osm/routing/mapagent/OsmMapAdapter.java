@@ -22,7 +22,7 @@ import aimax.osm.data.entities.MapNode.WayRef;
  * method for comparison.
  * @author R. Lunde
  */
-public class OsmMap implements Map {
+public class OsmMapAdapter implements Map {
 
 	/** A map which is generated from OSM data. */
 	MapDataStore mapData;
@@ -37,7 +37,7 @@ public class OsmMap implements Map {
 	 */
 	boolean ignoreOneways;
 	
-	public OsmMap(MapDataStore mapData) {
+	public OsmMapAdapter(MapDataStore mapData) {
 		this.mapData = mapData;
 	}
 	
@@ -107,6 +107,7 @@ public class OsmMap implements Map {
 		return result;
 	}
 
+	/** Returns a <code>PointLatLon</code> instance. */
 	@Override
 	public Point2D getPosition(String loc) {
 		MapNode node = getWayNode(loc);
