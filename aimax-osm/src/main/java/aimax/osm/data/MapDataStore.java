@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import aimax.osm.data.entities.EntityAttribute;
+import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -15,21 +16,43 @@ import aimax.osm.data.entities.MapNode.WayRef;
 
 
 /**
- * Central container for OSM map data. It is used as model for the viewer.
+ * Central container for OSM map data. It is responsible for storing loaded
+ * map data and also for data preparation to support efficient routing and
+ * map viewing. Data preparation is based on two fundamental tree structures:
+ * 
+ * <p>The first is an entity classifier. It is used to attach viewing information
+ * to map entities based on attribute value checks. Renderers can store whatever
+ * they need in those view information objects. However, the details are not visible
+ * to this layer. The data store only sees the minimal scale in which
+ * the entity shall be visible.</p>
+ * 
+ * <p>The second is a kd-tree (see {@link aimax.osm.data.KDTree}).</p>
+ * 
+ * <p>The map data store is used as model for the viewer.</p>
  * @author R. Lunde
- *
  */
 public class MapDataStore implements MapDataConsumer {
 	private Logger LOG = Logger.getLogger("aimax.osm");
-	
+	/**
+	 * Maintains all map nodes during map loading; after compilation only the
+	 * way nodes remain. IDs are used as keys.
+	 */
 	private Hashtable<Long, MapNode> nodes = new Hashtable<Long, MapNode>();
+	/** Maintains all way nodes. IDs are used as keys. */
 	private Hashtable<Long, MapWay> ways = new Hashtable<Long, MapWay>();
+	/**
+	 * Maintains after compilation all nodes which have a name or at least one
+	 * attribute.
+	 */
 	private ArrayList<MapNode> pois = new ArrayList<MapNode>();
-	private ArrayList<Track> tracks = new ArrayList<Track>();
+	/** Maintains marks (not part of the original map). */
 	private ArrayList<MapNode> marks = new ArrayList<MapNode>();
+	/** Maintains tracks (not part of the original map). */
+	private ArrayList<Track> tracks = new ArrayList<Track>();
 	private long nextTrackId = 0;
 	
 	private BoundingBox boundingBox;
+	private EntityClassifier<EntityViewInfo> entityClassifier;
 	private KDTree entityTree;
 
 	private ArrayList<MapDataEventListener> listeners = new ArrayList<MapDataEventListener>();
@@ -42,8 +65,8 @@ public class MapDataStore implements MapDataConsumer {
 		nodes.clear();
 		ways.clear();
 		pois.clear();
-		tracks.clear();
 		marks.clear();
+		tracks.clear();
 		entityTree = null;
 		boundingBox = null;
 		fireMapDataEvent(new MapDataEvent
@@ -52,8 +75,8 @@ public class MapDataStore implements MapDataConsumer {
 	
 	/** Resets only mark and track information. */
 	public void clearMarksAndTracks() {
-		tracks.clear();
 		marks.clear();
+		tracks.clear();
 		fireMapDataEvent(new MapDataEvent
 				(this, MapDataEvent.Type.MAP_MODIFIED));
 	}
@@ -71,7 +94,7 @@ public class MapDataStore implements MapDataConsumer {
 	/** Checks whether data is available. */
 	public boolean isEmpty() {
 		return nodes.isEmpty() && ways.isEmpty() && pois.isEmpty()
-		&& tracks.isEmpty() && marks.isEmpty();
+		&& marks.isEmpty() && tracks.isEmpty();
 	}
 	
 	/**
@@ -98,10 +121,11 @@ public class MapDataStore implements MapDataConsumer {
 			if (node.getId() >= id)
 				id = node.getId()+1;
 		MapNode node = new MapNode(id, lat, lon);
-		List<EntityAttribute> atts = new ArrayList<EntityAttribute>();
+		List<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
 		atts.add(new EntityAttribute("mark", "yes"));
 		node.setAttributes(atts);
 		node.setName(Long.toString(id));
+		updateEntityViewInfo(node, false);
 		marks.add(node);
 		fireMapDataEvent(new MapDataEvent
 				(this, MapDataEvent.Type.MARK_ADDED, node.getId()));
@@ -115,7 +139,8 @@ public class MapDataStore implements MapDataConsumer {
 	public void addToTrack(String trackName, float lat, float lon) {
 		Track track = getTrack(trackName);
 		if (track == null) {
-			track  =  new Track(nextTrackId++, trackName);
+			track  =  new Track(nextTrackId++, trackName, trackName);
+			updateEntityViewInfo(track, false);
 			tracks.add(track);
 		}
 		MapNode node = new MapNode(-1, lat, lon);
@@ -123,6 +148,16 @@ public class MapDataStore implements MapDataConsumer {
 		track.addTrkPt(node);
 		fireMapDataEvent(new MapDataEvent
 				(this, MapDataEvent.Type.TRACK_MODIFIED, track.getId()));
+	}
+	
+	/**
+	 * Provides the data store with an entity classifier. The classifier strongly
+	 * influences the generation of the entity tree.
+	 */
+	public void setEntityClassifier(EntityClassifier<EntityViewInfo> classifier) {
+		entityClassifier = classifier;
+		if (entityTree != null)
+			applyClassifierAndUpdateTree();
 	}
 	
 	/**
@@ -149,26 +184,40 @@ public class MapDataStore implements MapDataConsumer {
 		boundingBox = new BoundingBox();
 		boundingBox.adjust(nodes.values());
 		boundingBox.adjust(pois);
-		
+		applyClassifierAndUpdateTree();
+	}
+	
+	/**
+	 * Applies the current entity classifier to all currently maintained map
+	 * entities and creates a new entity tree with all relevant ways and
+	 * points of interest.
+	 */
+	protected void applyClassifierAndUpdateTree() {
 		entityTree = new KDTree(boundingBox, 1000, 60);
 		for (MapWay way : ways.values())
-			entityTree.insertEntity(way);
-		
-		//System.out.println(entityTree.depth());
-		
+			updateEntityViewInfo(way, true);
 		for (MapNode poi : pois)
-			entityTree.insertEntity(poi);
+			updateEntityViewInfo(poi, true);
+		for (MapNode mark : marks)
+			updateEntityViewInfo(mark, false);
+		for (Track track : tracks)
+			updateEntityViewInfo(track, false);
 		fireMapDataEvent(new MapDataEvent
 				(this, MapDataEvent.Type.MAP_NEW));
 	}
 	
-	public void clearRenderData() {
-		if (entityTree != null)
-			entityTree.clearRenderData();
-		for (MapNode mark : marks)
-			mark.setRenderData(null);
-		for (Track track : tracks)
-			track.setRenderData(null);
+	/**
+	 * Updates the view information of a given entity by means of the
+	 * current entity classifier. If suitable viewing information was found and
+	 * <code>addToTree</code> is true, the entity is added to the entity tree.
+	 */
+	private void updateEntityViewInfo(MapEntity entity, boolean addToTree) {
+		EntityViewInfo info = null;
+		if (entityClassifier != null)
+			info = entityClassifier.classify(entity);
+		entity.setViewInfo(info);
+		if (addToTree && info != null)
+			entityTree.insertEntity(entity);
 	}
 	
 	/** Looks up a way for a given id (fast). */
@@ -199,28 +248,14 @@ public class MapDataStore implements MapDataConsumer {
 		return pois;
 	}
 	
-	/** Returns all maintained tracks. */
-	public List<Track> getTracks() {
-		return tracks;
-	}
-	
-	public Track getTrack(long trackId) {
-		for (Track track : tracks)
-			if (track.getId() == trackId)
-				return track;
-		return null;
-	}
-	
-	public Track getTrack(String trackName) {
-		for (Track track : tracks)
-			if (track.getName().equals(trackName))
-				return track;
-		return null;
-	}
-	
 	/** Returns all maintained marks. */
 	public List<MapNode> getMarks() {
 		return marks;
+	}
+	
+	/** Returns all maintained tracks. */
+	public List<Track> getTracks() {
+		return tracks;
 	}
 	
 	/** Checks whether a mark is set at the specified position. */
@@ -229,6 +264,36 @@ public class MapDataStore implements MapDataConsumer {
 			if (node.getLat() == lat && node.getLon() == lon)
 				return true;
 		return false;
+	}
+	
+	/** Returns the track with the specified id. */
+	public Track getTrack(long trackId) {
+		for (Track track : tracks)
+			if (track.getId() == trackId)
+				return track;
+		return null;
+	}
+	
+	/** Returns the track with the specified name. */
+	public Track getTrack(String trackName) {
+		for (Track track : tracks)
+			if (track.getName().equals(trackName))
+				return track;
+		return null;
+	}
+	
+	/** Returns all marks and tracks, which are visible in the specified scale. */
+	public List<MapEntity> getVisibleMarksAndTracks(float scale) {
+		List<MapEntity> result = new ArrayList<MapEntity>();
+		for (MapNode mark : marks)
+			if (mark.getViewInfo() != null
+					&& mark.getViewInfo().getMinVisibleScale() <= scale)
+				result.add(mark);
+		for (Track track : tracks)
+			if (track.getViewInfo() != null
+					&& track.getViewInfo().getMinVisibleScale() <= scale)
+				result.add(track);
+		return result;
 	}
 	
 	/** Returns a kd-tree with all entities. */
@@ -326,7 +391,15 @@ public class MapDataStore implements MapDataConsumer {
 			listener.eventHappened(event);
 	}
 	
+	
+	/**
+	 * Helper class which is used to find the best match when searching for
+	 * special entities. 
+	 * @author R. Lunde
+	 *
+	 */
 	private static class BestMatchFinder {
+		/** String, specifying the entity to be searched for. */
 		String searchPattern;
 		/**
 		 * Value between 1 and 5 which classifies the reference match level.
@@ -338,15 +411,16 @@ public class MapDataStore implements MapDataConsumer {
 		 */
 		int currMatchLevel = 5;
 		/** contains the render data of the reference entity. */
-		Comparable<Object> currRenderData = null;
+		EntityViewInfo currViewInfo = null;
 		
-		/* Creates a match finder for a given search pattern. */
+		/** Creates a match finder for a given search pattern. */
 		protected BestMatchFinder(String pattern) {
 			searchPattern = pattern;
 		}
 		
 		/**
-		 * Checks whether an entity matches the search pattern.
+		 * Compares whether a given entity matches the search pattern better
+		 * or worse than the previously defined reference entity.
 		 * @return Match level (-1: forget new entity,
 		 *                       0: new entity match quality equal to reference entity,
 		 *                       1: new entity matches better then reference entity)
@@ -359,7 +433,7 @@ public class MapDataStore implements MapDataConsumer {
 					result = 1;
 				else if (matchLevel == currMatchLevel) {
 					if (matchLevel == 1 || matchLevel == 4)
-						result = compareRenderData(entity.getRenderData());
+						result = compareRenderData(entity.getViewInfo());
 					else
 						result = 0;
 				}
@@ -367,9 +441,10 @@ public class MapDataStore implements MapDataConsumer {
 			return result;
 		}
 		
+		/** Defines a new reference entity for search pattern match checks. */
 		protected void useAsReference(MapEntity entity) {
 			currMatchLevel = getMatchLevel(entity);
-			currRenderData = entity.getRenderData();
+			currViewInfo = entity.getViewInfo();
 		}
 		
 		private int getMatchLevel(MapEntity entity) {
@@ -391,8 +466,9 @@ public class MapDataStore implements MapDataConsumer {
 			return 5;
 		}
 		
-		private int compareRenderData(Comparable<Object> newData) {
-			if (currRenderData == null)
+		/** Prefers entities which are already visible in small scale. */
+		private int compareRenderData(EntityViewInfo newData) {
+			if (currViewInfo == null)
 				if (newData == null)
 					return 0;
 				else
@@ -400,8 +476,12 @@ public class MapDataStore implements MapDataConsumer {
 			else
 				if (newData == null)
 					return -1;
+				else if (newData.getMinVisibleScale() < currViewInfo.getMinVisibleScale())
+					return 1;
+				else if (newData.getMinVisibleScale() > currViewInfo.getMinVisibleScale())
+					return -1;
 				else
-					return newData.compareTo(currRenderData);
+					return 0;
 		}
 	}
 }

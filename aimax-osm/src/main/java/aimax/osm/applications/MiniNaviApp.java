@@ -1,6 +1,5 @@
 package aimax.osm.applications;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -23,7 +22,6 @@ import aimax.osm.gps.NmeaReader.MessageToFileListener;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
 import aimax.osm.routing.RouteCalculator;
-import aimax.osm.viewer.DefaultMapEntityRenderer;
 import aimax.osm.viewer.MapViewFrame;
 
 /**
@@ -61,9 +59,6 @@ public class MiniNaviApp implements ActionListener {
 		routeCalculator = new RouteCalculator();
 		
 		frame.setTitle("MiniNavi");
-		((DefaultMapEntityRenderer) frame.getView().getRenderer()).
-		setTrackInfo("GPS", 0, Color.GREEN,
-				DefaultMapEntityRenderer.GRAY_TRANS);
 		JToolBar toolbar = frame.getToolbar();
 		
 		gpsCombo = new JComboBox

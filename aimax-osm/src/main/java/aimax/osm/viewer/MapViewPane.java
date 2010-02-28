@@ -14,18 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
-import aimax.osm.data.MapEntityVisitor;
 import aimax.osm.data.Position;
-import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
-import aimax.osm.data.entities.Track;
+import aimax.osm.data.entities.MapEntity;
 
 /**
  * Provides a panel which shows map data. As model, a
@@ -36,19 +33,19 @@ import aimax.osm.data.entities.Track;
  * definition.
  * @author R. Lunde
  */
-public class MapViewPane extends JPanel implements MapDataEventListener {
+public class MapViewPane extends JComponent implements MapDataEventListener {
 	private Logger LOG = Logger.getLogger("aimax.osm");
 	/** Maintains a reference to the model which provides the data to be displayed. */
 	protected MapDataStore mapData;
 	protected CoordTransformer transformer;
-	private AbstractMapEntityRenderer renderer;
+	private AbstractEntityRenderer renderer;
 	private ArrayList<MapViewEventListener> eventListeners;
 	protected boolean isAdjusted;
 	protected JPopupMenu popup;
 	
 	public MapViewPane() {
 		transformer = new CoordTransformer();
-		renderer = new DefaultMapEntityRenderer();
+		renderer = new DefaultEntityRenderer();
 		eventListeners = new ArrayList<MapViewEventListener>();
 		isAdjusted = false;
 		popup = createPopup();
@@ -80,17 +77,14 @@ public class MapViewPane extends JPanel implements MapDataEventListener {
 		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.MAP_NEW));
 	}
 	
-	public AbstractMapEntityRenderer getRenderer() {
+	public AbstractEntityRenderer getRenderer() {
 		return renderer;
 	}
 	
 	/** Allows to replace the renderer. */
-	public void setRenderer(AbstractMapEntityRenderer renderer) {
+	public void setRenderer(AbstractEntityRenderer renderer) {
 		this.renderer = renderer;
-		if (mapData != null) {
-			mapData.clearRenderData();
-			repaint();
-		}
+		repaint();
 	}
 	
 	/** Returns the component responsible for coordinate transformation. */
@@ -165,14 +159,15 @@ public class MapViewPane extends JPanel implements MapDataEventListener {
 	    	float lonMin = transformer.lon(0);
 	    	float latMax = transformer.lat(0);
 	    	float lonMax = transformer.lon(getWidth());
+	    	float scale = transformer.getScale();
 	    	BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
+	    	float viewScale = scale / renderer.getDisplayFactor();
 	    	renderer.initForRendering(g2, transformer);
     		if (mapData.getEntityTree() != null)
-    			mapData.getEntityTree().visitEntities(renderer, vbox);
-    		for (MapNode mark : mapData.getMarks())
-    			mark.accept(renderer);
-    		for (Track track : mapData.getTracks())
-    			track.accept(renderer);
+    			mapData.getEntityTree().visitEntities
+    			(renderer, vbox, viewScale);
+    		for (MapEntity entity : mapData.getVisibleMarksAndTracks(viewScale))
+    			entity.accept(renderer);
     		renderer.printBufferedObjects();
     		if (renderer.isDebugModeEnabled()) {
     			List<double[]> splits = mapData.getEntityTree().getSplitCoords();

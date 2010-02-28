@@ -10,9 +10,11 @@ import aima.core.agent.EnvironmentState;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.gui.framework.AgentAppEnvironmentView;
+import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapDataStore;
+import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.viewer.DefaultMapEntityRenderer;
+import aimax.osm.viewer.EntityViewInfoFactory;
 import aimax.osm.viewer.MapViewPane;
 
 /**
@@ -28,17 +30,22 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	
 	MapViewPane mapViewPane;
 	
+	/**
+	 * Creates an agent view which displays agent positions within a map using
+	 * the given map data. This implementation assumes that for the same
+	 * <code>mapData</code> instance only one agent view is created.
+	 */ 
 	public OsmAgentView(MapDataStore mapData) {
+		EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createDefaultClassifier();
+		eClassifier.addRule("track_type", TRACK_NAME+0, EntityViewInfoFactory.createTrackInfo(Color.RED));
+		eClassifier.addRule("track_type", TRACK_NAME+1, EntityViewInfoFactory.createTrackInfo(Color.GREEN));
+		eClassifier.addRule("track_type", TRACK_NAME+2, EntityViewInfoFactory.createTrackInfo(Color.BLUE));
+		mapData.setEntityClassifier(eClassifier);
+		
 		mapViewPane = new MapViewPane();
 		mapViewPane.setModel(mapData);
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		add(mapViewPane, BorderLayout.CENTER);
-		
-		DefaultMapEntityRenderer renderer = 
-		(DefaultMapEntityRenderer) mapViewPane.getRenderer();
-		renderer.setTrackInfo(TRACK_NAME+0, 0, Color.RED, DefaultMapEntityRenderer.LIGHT_GRAY_TRANS);
-		renderer.setTrackInfo(TRACK_NAME+1, 0, Color.GREEN, DefaultMapEntityRenderer.LIGHT_GRAY_TRANS);
-		renderer.setTrackInfo(TRACK_NAME+2, 0, Color.BLUE, DefaultMapEntityRenderer.LIGHT_GRAY_TRANS);
 	}
 	
 	public MapViewPane getMapViewPane() {
@@ -82,7 +89,6 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		}
 	}
 	
-
 	private void updateTrack(Agent agent, String location) {
 		OsmMapAdapter map = (OsmMapAdapter) getMapEnv().getMap();
 		MapNode node = map.getWayNode(location);
@@ -92,5 +98,4 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 			(TRACK_NAME+aIdx, node.getLat(), node.getLon());
 		}
 	}
-	
 }

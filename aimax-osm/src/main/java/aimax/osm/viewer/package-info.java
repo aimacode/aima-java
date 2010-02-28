@@ -1,8 +1,16 @@
 /**
  * This package contains the presentation layer classes of the
- * OSM viewer. The class <code>MapViewPane</code> is responsible for
- * the presentation of a map with all its entities. It can be
- * configured with different renderers. The <code>MapViewFrame</code>
+ * OSM viewer. The class <code>MapViewPane</code> gets its data from a
+ * <code>MapDataStore</code> object and visualizes it on a canvas. It also
+ * reacts on keyboard and mouse events and provides a popup menu.
+ * By default, it uses a <code>DefaultEntityRenderer</code> to draw entities but
+ * other renderers can be used as well. The default renderer does not
+ * decide itself, which icon to use for a certain entity, or which color.
+ * Instead, it assumes, that all entities have been classified before and
+ * provide an attached <code>DefaultEntityViewInfo</code> object. For this
+ * purpose, the map data store must be equipped with an entity classifier.
+ * Suitable examples of entity classifiers are provided by the
+ * <code>EntityViewInfoFactory</code>. The <code>MapViewFrame</code>
  * demonstrates, how the viewer can be embedded within a graphical
  * application frame.</p>
  */

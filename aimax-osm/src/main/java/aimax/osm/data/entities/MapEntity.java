@@ -3,7 +3,7 @@ package aimax.osm.data.entities;
 import java.util.Collections;
 import java.util.List;
 
-import aimax.osm.data.MapEntityVisitor;
+import aimax.osm.data.EntityVisitor;
 
 /**
  * Common base class for all map entities. Map entities have id, name, and
@@ -20,7 +20,7 @@ public abstract class MapEntity {
 	protected long id;
 	protected String name;
 	protected EntityAttribute[] attributes;
-	protected Comparable<Object> renderData;
+	protected EntityViewInfo viewInfo;
 	
 	protected MapEntity() {
 		attributes = EMPTY_ATT_LIST;
@@ -56,12 +56,12 @@ public abstract class MapEntity {
 		}
 	}
 	
-	public Comparable<Object> getRenderData() {
-		return renderData;
+	public EntityViewInfo getViewInfo() {
+		return viewInfo;
 	}
 
-	public void setRenderData(Comparable<Object> renderData) {
-		this.renderData = renderData;
+	public void setViewInfo(EntityViewInfo renderData) {
+		this.viewInfo = renderData;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public abstract class MapEntity {
 	 * Subclasses must call back the entity class specific method
 	 * of the visitor.
 	 */
-	public abstract void accept(MapEntityVisitor visitor);
+	public abstract void accept(EntityVisitor visitor);
 	/**
 	 * Returns -1, if all parts of the entity have
 	 * a lower latitude than <code>lat</code>;

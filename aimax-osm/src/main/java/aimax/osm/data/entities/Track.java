@@ -3,7 +3,7 @@ package aimax.osm.data.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import aimax.osm.data.MapEntityVisitor;
+import aimax.osm.data.EntityVisitor;
 
 /**
  * Represents a track. A track is not really part of a map, but essential
@@ -14,9 +14,12 @@ import aimax.osm.data.MapEntityVisitor;
 public class Track extends MapEntity {
 	private ArrayList<MapNode> trkpts;
 	
-	public Track(long id, String name) {
+	public Track(long id, String name, String trackType) {
 		this.id = id;
 		this.name = name;
+		ArrayList<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
+		atts.add(new EntityAttribute("track_type", trackType));
+		setAttributes(atts);
 		trkpts = new ArrayList<MapNode>();
 	}
 
@@ -35,7 +38,7 @@ public class Track extends MapEntity {
 		this.trkpts.add(node);
 	}
 
-	public void accept(MapEntityVisitor visitor) {
+	public void accept(EntityVisitor visitor) {
 		visitor.visitTrack(this);
 	}
 	
