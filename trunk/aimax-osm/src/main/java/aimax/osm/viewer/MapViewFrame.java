@@ -77,6 +77,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		getContentPane().add(toolbar, BorderLayout.NORTH);
 		
 		mapData = new MapDataStore();
+		setDefaultEntityClassifier();
 		view = new MapViewPane();
 		view.setModel(mapData);
 		getContentPane().add(view, BorderLayout.CENTER);
@@ -97,12 +98,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void setVisible(boolean b) {
-		super.setVisible(b);
-		if (b && !mapData.isEmpty())
-			view.adjustToFit();
-	}
-	
 	public MapViewFrame(MapReader mapReader, File defaultMap) {
 		this(mapReader, createStream(defaultMap));
 		if (defaultMap != null) {
@@ -118,6 +113,16 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			// just return null...
 		}
 		return result;
+	}
+	
+	protected void setDefaultEntityClassifier() {
+		mapData.setEntityClassifier(EntityViewInfoFactory.createDefaultClassifier());
+	}
+	
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+		if (b && !mapData.isEmpty())
+			view.adjustToFit();
 	}
 	
 	public MapDataStore getMapData() {
@@ -219,7 +224,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		public void eventHappened(MapViewEvent event) {
 			if (event.getType() == MapViewEvent.Type.ZOOM) {
 				if (mapData.getMarks().isEmpty())
-					infoField.setText("Scale: " + (int) view.getTransformer().getScale());
+					infoField.setText("Scale Factor: "
+							+ (int) view.getTransformer().getScale()
+							+ " pix -> 1 deg (lat)");
 			}
 		}
 	}

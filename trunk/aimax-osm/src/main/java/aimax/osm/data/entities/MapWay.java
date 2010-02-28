@@ -3,7 +3,7 @@ package aimax.osm.data.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import aimax.osm.data.MapEntityVisitor;
+import aimax.osm.data.EntityVisitor;
 
 /**
  * Represents a way within a map. Ways are defined by lists of nodes.
@@ -42,7 +42,7 @@ public class MapWay extends MapEntity {
 		this.nodes.add(node);
 	}
 
-	public void accept(MapEntityVisitor visitor) {
+	public void accept(EntityVisitor visitor) {
 		visitor.visitMapWay(this);
 	}
 	

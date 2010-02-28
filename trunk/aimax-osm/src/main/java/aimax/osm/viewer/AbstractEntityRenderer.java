@@ -3,8 +3,7 @@ package aimax.osm.viewer;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import aimax.osm.data.MapEntityVisitor;
-import aimax.osm.data.entities.MapEntity;
+import aimax.osm.data.EntityVisitor;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
@@ -18,7 +17,7 @@ import aimax.osm.data.entities.Track;
  * @author R. Lunde
  *
  */
-public abstract class AbstractMapEntityRenderer implements MapEntityVisitor {
+public abstract class AbstractEntityRenderer implements EntityVisitor {
 	protected Graphics2D g2;
 	/** Is responsible for world to view coordinate transformations. */
 	protected CoordTransformer transformer;

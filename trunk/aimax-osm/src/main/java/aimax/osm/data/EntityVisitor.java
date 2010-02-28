@@ -11,7 +11,7 @@ import aimax.osm.data.entities.Track;
  * given entity instance without class checking in if statements.
  * @author R. Lunde
  */
-public interface MapEntityVisitor {
+public interface EntityVisitor {
 	public void visitMapNode(MapNode node);
 	public void visitMapWay(MapWay way);
 	public void visitTrack(Track track);

@@ -9,8 +9,9 @@ import aimax.osm.data.entities.MapEntity;
 
 
 /**
- * Simple implementation of a kd-tree for map entities. Entities are
- * divided by their two-dimensional geo coordinates. Note, that
+ * Implementation of a kd-tree (node) for map entities. Entities are
+ * divided by their two-dimensional geographical coordinates and within each
+ * kd-tree node ordered by ascending minimal visible scale. Note, that
  * inner nodes can contain entities, e.g. ways, whose nodes do
  * not completely fit into the bounding box of one of the child nodes.
  * @author R. Lunde
@@ -24,6 +25,7 @@ public class KDTree {
 	private ArrayList<MapEntity> entities;
 	private boolean splitAtLat;
 	private float splitValue;
+	private boolean isSorted;
 	
 	/**
 	 * Constructs the root of the tree.
@@ -52,11 +54,13 @@ public class KDTree {
 	
 	/**
 	 * Adds an entity at the right position in the tree and extends
-	 * the tree if necessary.
+	 * the tree if necessary. It is assumed that the entity contains
+	 * view information.
 	 */
 	void insertEntity(MapEntity entity) {
 		if (children == null) {
 			entities.add(entity);
+			isSorted = false;
 			if (entities.size() > maxEntities && depth < maxDepth) {
 				computeSplitValues();
 				BoundingBox c1bb;
@@ -88,8 +92,10 @@ public class KDTree {
 				children[0].insertEntity(entity);
 			else if (cr > 0)
 				children[1].insertEntity(entity);
-			else
+			else {
 				entities.add(entity);
+				isSorted = false;
+			}
 		}
 	}
 	
@@ -135,45 +141,63 @@ public class KDTree {
 		return result;
 	}
 	
-	public void sortEntities(Comparator<MapEntity> comp) {
-		Collections.sort(entities, comp);
-		if (children != null) {
-			children[0].sortEntities(comp);
-			children[1].sortEntities(comp);
-		}
-	}
-	
-	public void clearRenderData() {
-		for (MapEntity e : entities)
-			e.setRenderData(null);
-		if (children != null) {
-			children[0].clearRenderData();
-			children[1].clearRenderData();
-		}
-	}
-	
 	/**
 	 * Enables to iterate across all contained entities within a given region
 	 * in an intelligent manner. Only tree nodes, which have a chance to
 	 * meet the location requirement are visited.
 	 */
-	public void visitEntities(MapEntityVisitor visitor, BoundingBox vbox) {
+	public void visitEntities(EntityVisitor visitor, BoundingBox vbox, float scale) {
 		if (!entities.isEmpty()) {
+			if (!isSorted) {
+				Collections.sort(entities, new EntityComparator());
+				isSorted = true;
+			}
 			VisibilityTest vtest = new VisibilityTest(bb, vbox);
-			for (MapEntity entity : entities)
+			for (MapEntity entity : entities) {
+				if (entity.getViewInfo().getMinVisibleScale() > scale)
+					break;
 				if (vtest.isVisible(entity))
 					entity.accept(visitor);
+			}
 		}
 		if (children != null) {
 			float vMin = (splitAtLat ? vbox.getLatMin() : vbox.getLonMin());
 			float vMax = (splitAtLat ? vbox.getLatMax() : vbox.getLonMax());
 			if (vMin <= splitValue)
-				children[0].visitEntities(visitor, vbox);
+				children[0].visitEntities(visitor, vbox, scale);
 			if (vMax >= splitValue)
-				children[1].visitEntities(visitor, vbox);
+				children[1].visitEntities(visitor, vbox, scale);
+		}
+	}
+
+	
+	/////////////////////////////////////////////////////////////////
+	// some inner classes
+	
+	/**
+	 * Compares entities with respect to their minimal visible scale.
+	 * Entities which are already visible in small scales are preferred.
+	 */
+	private static class EntityComparator implements Comparator<MapEntity> {
+		@Override
+		public int compare(MapEntity e1, MapEntity e2) {
+			float vs1 = e1.getViewInfo().getMinVisibleScale();
+			float vs2 = e2.getViewInfo().getMinVisibleScale();
+			if (vs1 < vs2)
+				return -1;
+			else if (vs1 > vs2)
+				return 1;
+			else
+				return 0;
 		}
 	}
 	
+	/**
+	 * If a kd-tree node's bounding box is not completely visible,
+	 * this class helps to check which entities are visible and which not.
+	 * @author R. Lunde
+	 *
+	 */ 
 	private static class VisibilityTest {
 		private boolean isTrue = true;
 		private float testLatMin = Float.NaN;

@@ -11,11 +11,11 @@ import javax.swing.JToolBar;
 
 import aimax.osm.data.DataResource;
 import aimax.osm.data.EntityClassifier;
+import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
-import aimax.osm.viewer.DefaultMapEntityRenderer;
-import aimax.osm.viewer.EntityPrintInfo;
-import aimax.osm.viewer.EntityIcon;
+import aimax.osm.viewer.DefaultEntityRenderer;
+import aimax.osm.viewer.EntityViewInfoFactory;
 import aimax.osm.viewer.MapViewFrame;
 import aimax.osm.viewer.MapViewPane;
 
@@ -28,8 +28,6 @@ import aimax.osm.viewer.MapViewPane;
  */
 public class OsmViewerPlusApp implements ActionListener {
 	protected MapViewFrame frame;
-	protected DefaultMapEntityRenderer dayRenderer;
-	protected DefaultMapEntityRenderer nightRenderer;
 	private JButton zoomInButton;
 	private JButton zoomOutButton;
 	private JButton leftButton;
@@ -42,9 +40,6 @@ public class OsmViewerPlusApp implements ActionListener {
 		MapReader mapReader = new OsmReader();
 		frame = new MapViewFrame(mapReader, file);
 		frame.setTitle("OSM Viewer+");
-		
-		dayRenderer = createDayRenderer();
-		nightRenderer = createNightRenderer();
 		
 		JToolBar toolbar = frame.getToolbar();
 		toolbar.addSeparator();
@@ -71,7 +66,6 @@ public class OsmViewerPlusApp implements ActionListener {
 		toolbar.addSeparator();
 		toolbar.add(nightButton);
 		nightButton.addActionListener(this);
-		frame.getView().setRenderer(dayRenderer);
 	}
 	
 	public void showFrame() {
@@ -80,27 +74,8 @@ public class OsmViewerPlusApp implements ActionListener {
 	}
 	
 	/** Returns the default renderer without change. */
-	protected DefaultMapEntityRenderer createDayRenderer() {
-		return new DefaultMapEntityRenderer();
-	}
-	
-	/** Returns a renderer with modified color settings. */
-	protected DefaultMapEntityRenderer createNightRenderer() {
-		DefaultMapEntityRenderer result = new DefaultMapEntityRenderer();
-		EntityClassifier<EntityPrintInfo> entityClassifier = result.getEntityClassifier(); 
-		// change colors of ways and nodes
-		result.setBackgroundColor(Color.BLACK);
-		result.setTrackInfo
-		("default", 0, Color.WHITE, DefaultMapEntityRenderer.GRAY_TRANS);
-	
-		entityClassifier.replaceRule("place", "city", new EntityPrintInfo(0, 100, Color.WHITE, null, 30));
-	    entityClassifier.replaceRule("place", "town", new EntityPrintInfo(0, 1000, Color.WHITE, null, 29));
-	    entityClassifier.replaceRule("place", "village", new EntityPrintInfo(0, 3000, Color.GRAY, null, 29));
-	    entityClassifier.replaceRule("place", null, new EntityPrintInfo(0, 10000, Color.GRAY, null, 28));
-	     
-	    entityClassifier.replaceRule("mark", "yes", new EntityPrintInfo(0, 0, Color.GREEN.darker(), EntityIcon.createCircle(12, Color.GREEN.darker()), 5));
-
-		return result;
+	protected DefaultEntityRenderer createDayRenderer() {
+		return new DefaultEntityRenderer();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -118,8 +93,15 @@ public class OsmViewerPlusApp implements ActionListener {
 		} else if (e.getSource() == downButton) {
 			view.adjust(0, (int) (-0.3 * view.getHeight()));
 		} else if (e.getSource() == nightButton) {
-			boolean b = nightButton.isSelected();
-			frame.getView().setRenderer(b ? nightRenderer : dayRenderer);		
+			if (nightButton.isSelected()) {
+				EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createNightViewClassifier();
+				frame.getMapData().setEntityClassifier(eClassifier);
+				frame.getView().getRenderer().setBackgroundColor(Color.BLACK);
+			} else {
+				EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createDefaultClassifier();
+				frame.getMapData().setEntityClassifier(eClassifier);
+				frame.getView().getRenderer().setBackgroundColor(Color.WHITE);
+			}		
 		}
 	}
 

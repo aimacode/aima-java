@@ -10,9 +10,10 @@ application area.
 Central part of the project is an OSM viewer implementation. It is designed
 as a general purpose viewer which is highly configurable and extendible.
 The internal map representation is chosen as close as possible to the
-original OSM XML file format. Classification and abstraction
-lies in the responsibility of the renderer. A rather general renderer
-implementation is included, which is based on declarative rendering rules.
+original OSM XML file format. Classification and abstraction of map entities as
+well as their visual appearance within the drawn map are controlled by declarative
+rendering rules. They can be replaced or configured at runtime and by that provide
+a maximum of flexibility.
 
 Routing functionality is based on the AIMA-CORE library.
 All dependencies to the AIMA libraries are encapsulated in the routing

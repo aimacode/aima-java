@@ -25,9 +25,10 @@ import aimax.osm.routing.mapagent.OsmAgentController;
 import aimax.osm.routing.mapagent.OsmAgentFrame;
 import aimax.osm.routing.mapagent.OsmAgentView;
 import aimax.osm.routing.mapagent.OsmMapAdapter;
-import aimax.osm.viewer.DefaultMapEntityRenderer;
-import aimax.osm.viewer.EntityPrintInfo;
+import aimax.osm.viewer.DefaultEntityRenderer;
+import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.EntityIcon;
+import aimax.osm.viewer.EntityViewInfoFactory;
 
 
 /**
@@ -162,12 +163,12 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 * which highlights way nodes mentioned in
 	 * {@link OsmSearchDemoAgentApp#visitedStates}.
 	 */
-	private static class SDMapEntityRenderer extends DefaultMapEntityRenderer {
-		EntityPrintInfo highlightProp = new EntityPrintInfo(0, 0, Color.GREEN, EntityIcon.createRectangle(4, Color.GREEN), 5);
+	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
+		DefaultEntityViewInfo highlightProp = EntityViewInfoFactory.createPoiInfo(0, 0, Color.GREEN, EntityIcon.createRectangle(4, Color.GREEN), 5);
 		@Override
-		public void printWay(MapWay way, EntityPrintInfo eprop, boolean asArea) {
+		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);
-			if (transformer.getScale() >= highlightProp.minScale * displayFactor ) {
+			if (transformer.getScale() >= highlightProp.minVisibleScale * displayFactor ) {
 				for (MapNode node : way.getNodes())
 					if (visitedStates.contains(Long.toString(node.getId())))
 						printPoint(g2, node, highlightProp, null);
