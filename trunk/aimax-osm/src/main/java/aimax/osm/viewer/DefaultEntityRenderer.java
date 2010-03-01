@@ -230,14 +230,24 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	/** Reduces the level of detail by selecting some of the given nodes. */
 	protected List<MapNode> generalizeWay(List<MapNode> wayNodes) {
 		int size = wayNodes.size();
-		List<MapNode> result = new ArrayList<MapNode>(size / wayGeneralizationValue + 2);
-		int i;
-		for (i = 0; i < size; i += wayGeneralizationValue)
-			result.add(wayNodes.get(i));
-		if (i < size - 1 + wayGeneralizationValue)
-			result.add(wayNodes.get(size-1));
-		return result;
+		if (wayGeneralizationValue == 1)
+			return wayNodes;
+		else {
+			List<MapNode> result = new ArrayList<MapNode>(size / wayGeneralizationValue + 2);
+			int i = 0;
+			for (MapNode node : wayNodes) {
+				if (i == 0 || i == size-1 ||
+						node.getId() % wayGeneralizationValue == 0)
+					result.add(node);
+				i++;
+			}
+			if (wayNodes.get(0) == wayNodes.get(size-1) && result.size() < 4)
+				return null;
+			else
+				return result;
+		}
 	}
+	
 	
 	/** Prints a line or fills an area. */
 	protected void printLine(Graphics2D g2, List<MapNode> nodes,
