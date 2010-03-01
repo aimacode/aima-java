@@ -28,7 +28,7 @@ import aimax.osm.routing.mapagent.OsmMapAdapter;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.EntityIcon;
-import aimax.osm.viewer.EntityViewInfoFactory;
+import aimax.osm.viewer.MapStyleFactory;
 
 
 /**
@@ -164,7 +164,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 * {@link OsmSearchDemoAgentApp#visitedStates}.
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
-		DefaultEntityViewInfo highlightProp = EntityViewInfoFactory.createPoiInfo(0, 0, Color.GREEN, EntityIcon.createRectangle(4, Color.GREEN), false, 5);
+		DefaultEntityViewInfo highlightProp = MapStyleFactory.createPoiInfo(0, 0, Color.GREEN, MapStyleFactory.createRectangle(4, Color.GREEN), false, 5);
 		@Override
 		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);

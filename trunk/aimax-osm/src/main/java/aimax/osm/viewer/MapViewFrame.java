@@ -36,7 +36,6 @@ import aimax.osm.reader.MapReader;
  * a text field is included which shows informations like positions,
  * track length, and POI names. 
  * @author R. Lunde
- *
  */
 public class MapViewFrame extends JFrame implements ActionListener {
 	protected MapViewPane view;
@@ -116,7 +115,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 	
 	protected void setDefaultEntityClassifier() {
-		mapData.setEntityClassifier(EntityViewInfoFactory.createDefaultClassifier());
+		mapData.setEntityClassifier(MapStyleFactory.createDefaultClassifier());
 	}
 	
 	public void setVisible(boolean b) {

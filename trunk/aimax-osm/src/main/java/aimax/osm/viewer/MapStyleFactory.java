@@ -4,17 +4,20 @@ import java.awt.Color;
 
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
+import aimax.osm.viewer.EntityIcon.Shape;
+import aimax.osm.viewer.EntityIcon.SimpleIcon;
 
 /**
- * Provides useful static methods for defining entity classifiers which
- * map entities on {@link aimax.osm.viewer.DefaultEntityViewInfo} objects.
+ * Provides useful static methods for defining map styles. Technically spoken,
+ * in this framework a map style is entity classifiers which map entities
+ * on {@link aimax.osm.data.entities.EntityViewInfo} objects.
  * Method {@link #createDefaultClassifier()} is perhaps the most interesting
- * one. Its implementation provides a useful example how this framework maps
+ * one. Its implementation provides a useful example how to map
  * presentation aspects like colors, line widths, symbols etc on OSM map
  * entities.
  * @author R. Lunde
  */
-public class EntityViewInfoFactory {
+public class MapStyleFactory {
 	public static final Color GRAY_TRANS = new Color(0, 0, 0, 40);
 	public static final Color LIGHT_GRAY_TRANS = new Color(0, 0, 0, 20);
 	public static final Color LIGHT_RED_TRANS = new Color(255, 0, 0, 30);
@@ -33,7 +36,7 @@ public class EntityViewInfoFactory {
 			20000, 		// minVisibleScale
 			200000, 	// minNameScale
 			Color.LIGHT_GRAY.darker(), // nameColor
-			EntityIcon.createRectangle(4, Color.GRAY), // icon
+			createRectangle(4, Color.GRAY), // icon
 			false, 		// isWayIcon
 			Color.GRAY, // wayColor
 			1, 			// wayWidth
@@ -78,7 +81,7 @@ public class EntityViewInfoFactory {
 		result.addRule("highway", "footway", createWayInfo(6000, 200000, Color.ORANGE, 1, 36));
 		result.addRule("highway", "steps", createWayInfo(10000, 200000, Color.ORANGE, 1, 35));
 		result.addRule("highway", "unclassified", createWayInfo(10000, 200000, Color.LIGHT_GRAY, 1, 34));
-		result.addRule("highway", "speed_camera", createPoiInfo(6000, 200000, Color.GRAY, EntityIcon.createTriangle(6, Color.RED, Color.WHITE), false, 32));
+		result.addRule("highway", "speed_camera", createPoiInfo(6000, 200000, Color.GRAY, createTriangle(6, Color.RED, Color.WHITE), false, 32));
 
 		result.addRule("natural", "land", createWayInfo(200, 30000, LIGHT_BLUE, 1, Color.WHITE, false, 29));
 		result.addRule("natural", "island", createWayInfo(200, 30000, LIGHT_BLUE, 2, 23));
@@ -90,8 +93,8 @@ public class EntityViewInfoFactory {
 		result.addRule("natural", "wood", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 17));
 		result.addRule("natural", "scrub", createWayInfo(200, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 16));
 		result.addRule("natural", "heath", createWayInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 16));
-		result.addRule("natural", "peak", createPoiInfo(1000, 30000, Color.DARK_GRAY, EntityIcon.createTriangle(10, Color.ORANGE), false, 15));
-		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, EntityIcon.createTriangle(10, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 25));
+		result.addRule("natural", "peak", createPoiInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false, 15));
+		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 25));
 		result.addRule("leisure", "park", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("leisure", "garden", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("landuse", "forest", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 13));
@@ -111,21 +114,21 @@ public class EntityViewInfoFactory {
 		result.addRule("waterway", "riverbank", createWayInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, false, 25));
 		result.addRule("waterway", null, createWayInfo(3000, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, true, 24));
 		result.addRule("railway", "rail", createWayInfo(3000, 30000, Color.GRAY, 1, 30));
-		result.addRule("railway", "station", createPoiInfo(10000, 60000, Color.DARK_GRAY, EntityIcon.createRectangle(4, Color.DARK_GRAY), false, 29));
+		result.addRule("railway", "station", createPoiInfo(10000, 60000, Color.DARK_GRAY, createRectangle(4, Color.DARK_GRAY), false, 29));
 		result.addRule("aerialway", null, createWayInfo(1000, 60000, Color.GRAY, 1, 28));
 
-		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 30));
-		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, Color.GRAY, EntityIcon.createRectangle(8, "P", Color.BLUE, Color.RED), true, 28)); 
-		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, EntityIcon.createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), true, 27));
-		result.addRule("tourism", "attraction", createInfo(6000, 60000, Color.GRAY, EntityIcon.createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
-		result.addRule("tourism", "viewpoint", createPoiInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true, 25));
-		result.addRule("tourism", "museum", createPoiInfo(6000, 200000, Color.GRAY, EntityIcon.createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true, 25));
-		result.addRule("tourism", "alpine_hut", createPoiInfo(1000, 6000, Color.GRAY, EntityIcon.createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true, 24));
-		result.addRule("tourism", "hotel", createPoiInfo(30000, 200000, Color.GRAY, EntityIcon.createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true, 24));
-		result.addRule("tourism", null, createPoiInfo(30000, 100000, Color.GREEN.darker(), EntityIcon.createRectangle(4, Color.GREEN.darker()), false, 23));
-		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, EntityIcon.createTriangle(11, "+", Color.BLUE, Color.WHITE), true, 15));
-		result.addRule("amenity", "parking", createInfo(30000, 200000, Color.GRAY, EntityIcon.createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
-		result.addRule("amenity", null, createPoiInfo(30000, 300000, Color.BLUE, EntityIcon.createRectangle(4, Color.BLUE), false, 10));
+		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 30));
+		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true, 28)); 
+		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), true, 27));
+		result.addRule("tourism", "attraction", createInfo(6000, 60000, Color.GRAY, createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
+		result.addRule("tourism", "viewpoint", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true, 25));
+		result.addRule("tourism", "museum", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true, 25));
+		result.addRule("tourism", "alpine_hut", createPoiInfo(1000, 6000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true, 24));
+		result.addRule("tourism", "hotel", createPoiInfo(30000, 200000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true, 24));
+		result.addRule("tourism", null, createPoiInfo(30000, 100000, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false, 23));
+		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, createTriangle(11, "+", Color.BLUE, Color.WHITE), true, 15));
+		result.addRule("amenity", "parking", createInfo(30000, 200000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
+		result.addRule("amenity", null, createPoiInfo(30000, 300000, Color.BLUE, createRectangle(4, Color.BLUE), false, 10));
 
 		result.addRule("place", "city", createPoiInfo(0, 100, Color.BLACK, null, false, 60));
 		result.addRule("place", "town", createPoiInfo(0, 1000, Color.BLACK, null, false, 59));
@@ -133,9 +136,9 @@ public class EntityViewInfoFactory {
 		result.addRule("place", null, createPoiInfo(0, 10000, Color.DARK_GRAY, null, false, 57));
 
 		result.addRule("mountain_pass", null, createPoiInfo(0, 1000, Color.DARK_GRAY, null, false, 20));
-		result.addRule("shop", null, createPoiInfo(40000, 300000, Color.CYAN, EntityIcon.createRectangle(4, Color.CYAN), true, 10));
+		result.addRule("shop", null, createPoiInfo(40000, 300000, Color.CYAN, createRectangle(4, Color.CYAN), true, 10));
 		
-		result.addRule("mark", "yes", createPoiInfo(0, 0, Color.RED, EntityIcon.createPin(12, Color.RED), false, 100));
+		result.addRule("mark", "yes", createPoiInfo(0, 0, Color.RED, createPin(12, Color.RED), false, 100));
 		result.addRule("track_type", null, createTrackInfo(Color.RED));
 		result.addRule("track_type", "GPS", createTrackInfo(Color.GREEN));
 		
@@ -157,7 +160,7 @@ public class EntityViewInfoFactory {
 		result.replaceRule("place", "village", createPoiInfo(0, 3000, Color.GRAY, null, false, 29));
 		result.replaceRule("place", null, createPoiInfo(0, 10000, Color.GRAY, null, false, 28));
 	     
-		result.replaceRule("mark", "yes", createPoiInfo(0, 0, Color.YELLOW, EntityIcon.createPin(12, Color.YELLOW), false, 100));
+		result.replaceRule("mark", "yes", createPoiInfo(0, 0, Color.YELLOW, createPin(12, Color.YELLOW), false, 100));
 		result.replaceRule("track_type", null, createTrackInfo(Color.WHITE));
 
 		return result;
@@ -232,7 +235,7 @@ public class EntityViewInfoFactory {
 	/** Creates an entity view info for tracks. */
 	public static DefaultEntityViewInfo createTrackInfo(Color color) {
 		return new DefaultEntityViewInfo(0, 0, color,
-				EntityIcon.createCircle(12, color, GRAY_TRANS), true, color, 2f, true, null, false, 0);
+				createCircle(12, color, GRAY_TRANS), true, color, 2f, true, null, false, 0);
 	}
 	
 	/** Creates an entity view info (equivalent to general constructor call). */
@@ -242,5 +245,49 @@ public class EntityViewInfoFactory {
 		return new DefaultEntityViewInfo(minScale, minNameScale, nameColor,
 				icon, isWayIcon, wayColor, wayWidth, wayDashed,
 				wayFillColor, fillAreasOnly, printOrder);
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////
+	// useful icon creators
+	
+	public static EntityIcon createCircle(float size, Color color) {
+		return new SimpleIcon(Shape.CIRCLE, size, null, color, color, null);
+	}
+	
+	public static EntityIcon createCircle(float size, Color line, Color fill) {
+		return new SimpleIcon(Shape.CIRCLE, size, null, line, fill, null);
+	}
+	
+	public static EntityIcon createCircle(float size, String symbol, Color color, Color sym) {
+		return new SimpleIcon(Shape.CIRCLE, size, symbol, color, color, sym);
+	}
+	
+	public static EntityIcon createRectangle(float size, Color color) {
+		return new SimpleIcon(Shape.RECTANGLE, size, null, color, color, null);
+	}
+	
+	public static EntityIcon createRectangle(float size, Color line, Color fill) {
+		return new SimpleIcon(Shape.RECTANGLE, size, null, line, fill, null);
+	}
+	
+	public static EntityIcon createRectangle(float size, String symbol, Color color, Color sym) {
+		return new SimpleIcon(Shape.RECTANGLE, size, symbol, color, color, sym);
+	}
+	
+	public static EntityIcon createTriangle(float size, Color color) {
+		return new SimpleIcon(Shape.TRIANGLE, size, null, color, color, null);
+	}
+	
+	public static EntityIcon createTriangle(float size, Color line, Color fill) {
+		return new SimpleIcon(Shape.TRIANGLE, size, null, line, fill, null);
+	}
+	
+	public static EntityIcon createTriangle(float size, String symbol, Color color, Color sym) {
+		return new SimpleIcon(Shape.TRIANGLE, size, symbol, color, color, sym);
+	}
+	
+	public static EntityIcon createPin(float size, Color color) {
+		return new SimpleIcon(Shape.PIN, size, null, color, color, null);
 	}
 }

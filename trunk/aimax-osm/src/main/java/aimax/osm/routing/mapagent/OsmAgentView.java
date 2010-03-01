@@ -14,7 +14,7 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.viewer.EntityViewInfoFactory;
+import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewPane;
 
 /**
@@ -36,10 +36,10 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * <code>mapData</code> instance only one agent view is created.
 	 */ 
 	public OsmAgentView(MapDataStore mapData) {
-		EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createDefaultClassifier();
-		eClassifier.addRule("track_type", TRACK_NAME+0, EntityViewInfoFactory.createTrackInfo(Color.RED));
-		eClassifier.addRule("track_type", TRACK_NAME+1, EntityViewInfoFactory.createTrackInfo(Color.GREEN));
-		eClassifier.addRule("track_type", TRACK_NAME+2, EntityViewInfoFactory.createTrackInfo(Color.BLUE));
+		EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createDefaultClassifier();
+		eClassifier.addRule("track_type", TRACK_NAME+0, MapStyleFactory.createTrackInfo(Color.RED));
+		eClassifier.addRule("track_type", TRACK_NAME+1, MapStyleFactory.createTrackInfo(Color.GREEN));
+		eClassifier.addRule("track_type", TRACK_NAME+2, MapStyleFactory.createTrackInfo(Color.BLUE));
 		mapData.setEntityClassifier(eClassifier);
 		
 		mapViewPane = new MapViewPane();
