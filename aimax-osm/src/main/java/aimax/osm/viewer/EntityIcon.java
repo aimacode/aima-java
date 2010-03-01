@@ -15,49 +15,8 @@ public abstract class EntityIcon {
 	
 	public abstract void draw(Graphics2D g2, int x, int y, float displayFactor);
 	
-	
 	/////////////////////////////////////////////////////////////////
-	// useful static creators
-	
-	public static EntityIcon createCircle(float size, Color color) {
-		return new SimpleIcon(Shape.CIRCLE, size, null, color, color, null);
-	}
-	
-	public static EntityIcon createCircle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.CIRCLE, size, null, line, fill, null);
-	}
-	
-	public static EntityIcon createCircle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.CIRCLE, size, symbol, color, color, sym);
-	}
-	
-	public static EntityIcon createRectangle(float size, Color color) {
-		return new SimpleIcon(Shape.RECTANGLE, size, null, color, color, null);
-	}
-	
-	public static EntityIcon createRectangle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.RECTANGLE, size, null, line, fill, null);
-	}
-	
-	public static EntityIcon createRectangle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.RECTANGLE, size, symbol, color, color, sym);
-	}
-	
-	public static EntityIcon createTriangle(float size, Color color) {
-		return new SimpleIcon(Shape.TRIANGLE, size, null, color, color, null);
-	}
-	
-	public static EntityIcon createTriangle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.TRIANGLE, size, null, line, fill, null);
-	}
-	
-	public static EntityIcon createTriangle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.TRIANGLE, size, symbol, color, color, sym);
-	}
-	
-	public static EntityIcon createPin(float size, Color color) {
-		return new SimpleIcon(Shape.PIN, size, null, color, color, null);
-	}
+	// an implementation class
 	
 	protected static BasicStroke currStroke;
 	protected static BasicStroke currStroke2;
@@ -70,9 +29,6 @@ public abstract class EntityIcon {
 		}
 		return s2 ? currStroke2 : currStroke;
 	}
-	
-	/////////////////////////////////////////////////////////////////
-	// an implementation class
 	
 	public static class SimpleIcon extends EntityIcon {
 		Shape shape;

@@ -10,7 +10,7 @@
  * provide an attached <code>DefaultEntityViewInfo</code> object. For this
  * purpose, the map data store must be equipped with an entity classifier.
  * Suitable examples of entity classifiers are provided by the
- * <code>EntityViewInfoFactory</code>. The <code>MapViewFrame</code>
+ * <code>MapStyleFactory</code>. The <code>MapViewFrame</code>
  * demonstrates, how the viewer can be embedded within a graphical
  * application frame.</p>
  */

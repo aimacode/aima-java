@@ -15,7 +15,7 @@ import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.reader.MapReader;
 import aimax.osm.reader.OsmReader;
 import aimax.osm.viewer.DefaultEntityRenderer;
-import aimax.osm.viewer.EntityViewInfoFactory;
+import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewFrame;
 import aimax.osm.viewer.MapViewPane;
 
@@ -36,9 +36,9 @@ public class OsmViewerPlusApp implements ActionListener {
 	private JButton rightButton;
 	protected JToggleButton nightButton;
 	
-	public OsmViewerPlusApp(InputStream file) {
+	public OsmViewerPlusApp(InputStream stream) {
 		MapReader mapReader = new OsmReader();
-		frame = new MapViewFrame(mapReader, file);
+		frame = new MapViewFrame(mapReader, stream);
 		frame.setTitle("OSM Viewer+");
 		
 		JToolBar toolbar = frame.getToolbar();
@@ -94,11 +94,11 @@ public class OsmViewerPlusApp implements ActionListener {
 			view.adjust(0, (int) (-0.3 * view.getHeight()));
 		} else if (e.getSource() == nightButton) {
 			if (nightButton.isSelected()) {
-				EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createNightViewClassifier();
+				EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createNightViewClassifier();
 				frame.getMapData().setEntityClassifier(eClassifier);
 				frame.getView().getRenderer().setBackgroundColor(Color.BLACK);
 			} else {
-				EntityClassifier<EntityViewInfo> eClassifier = EntityViewInfoFactory.createDefaultClassifier();
+				EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createDefaultClassifier();
 				frame.getMapData().setEntityClassifier(eClassifier);
 				frame.getView().getRenderer().setBackgroundColor(Color.WHITE);
 			}		
