@@ -8,12 +8,16 @@ and search concepts from the AIMA library in an interesting, non-trivial
 application area.
 
 Central part of the project is an OSM viewer implementation. It is designed
-as a general purpose viewer which is highly configurable and extendible.
+as an efficient general purpose viewer which is highly configurable and extendible.
 The internal map representation is chosen as close as possible to the
-original OSM XML file format. Classification and abstraction of map entities as
-well as their visual appearance within the drawn map are controlled by declarative
+original OSM XML file format. A kd-tree is used to improve rendering efficiency.
+Classification and abstraction of map entities as well as their
+visual appearance within the drawn map are controlled by declarative
 rendering rules. They can be replaced or configured at runtime and by that provide
-a maximum of flexibility.
+a maximum of flexibility. If you want to create your own personal map styles,
+see classes <code>aimax.osm.viewer.EntityViewInfoFactory</code> and
+<code>aimax.osm.application.OsmViewerPlusApp</code> for ideas how that can be
+achieved.
 
 Routing functionality is based on the AIMA-CORE library.
 All dependencies to the AIMA libraries are encapsulated in the routing

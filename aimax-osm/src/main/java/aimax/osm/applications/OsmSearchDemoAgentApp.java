@@ -164,7 +164,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 * {@link OsmSearchDemoAgentApp#visitedStates}.
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
-		DefaultEntityViewInfo highlightProp = EntityViewInfoFactory.createPoiInfo(0, 0, Color.GREEN, EntityIcon.createRectangle(4, Color.GREEN), 5);
+		DefaultEntityViewInfo highlightProp = EntityViewInfoFactory.createPoiInfo(0, 0, Color.GREEN, EntityIcon.createRectangle(4, Color.GREEN), false, 5);
 		@Override
 		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);

@@ -356,8 +356,7 @@ public class MapDataStore implements MapDataConsumer {
 			for (MapWay way : ways.values()) {
 				int match = bmf.checkMatchQuality(way);
 				if (match >= 0) {
-					MapNode node = (position == null)
-					? way.getNodes().get(0) : position.selectNearest(way.getNodes(), null);
+					MapNode node = way.getNodes().get(0);
 					if (!excludeMarked || !isMarked(node.getLat(), node.getLon())) {
 						if (match > 0) {
 							foundNodes.clear();
