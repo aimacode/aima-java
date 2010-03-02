@@ -1,8 +1,6 @@
 package aimax.osm.applications;
 
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
