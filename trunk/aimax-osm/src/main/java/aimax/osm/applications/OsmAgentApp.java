@@ -56,8 +56,8 @@ public class OsmAgentApp extends SimpleAgentApp {
 
 	/** Application starter. */
 	public static void main(String args[]) {
-		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
-		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
+		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
+		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		OsmAgentApp demo = new OsmAgentApp(DataResource.getULMFileResource());
 		demo.startApplication();

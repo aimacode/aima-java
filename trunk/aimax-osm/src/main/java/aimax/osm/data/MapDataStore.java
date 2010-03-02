@@ -132,20 +132,33 @@ public class MapDataStore implements MapDataConsumer {
 	}
 	
 	/**
+	 * Creates a new track and adds it to the list of tracks. Possibly
+	 * exiting tracks with the same name are removed.
+	 */
+	public void createTrack(String trackName, List<Position> positions) {
+		clearTrack(trackName);
+		Track track  =  new Track(nextTrackId++, trackName, trackName);
+		updateEntityViewInfo(track, false);
+		tracks.add(track);
+		for (Position pos : positions)
+			track.addTrkPt(pos);
+		fireMapDataEvent(new MapDataEvent
+				(this, MapDataEvent.Type.TRACK_MODIFIED, track.getId()));
+	}
+	
+	/**
 	 * Adds a new point at the end of a specified track.
 	 * If a track with the specified name does not exist, a new track
 	 * is created. 
 	 */
-	public void addToTrack(String trackName, float lat, float lon) {
+	public void addToTrack(String trackName, Position pos) {
 		Track track = getTrack(trackName);
 		if (track == null) {
 			track  =  new Track(nextTrackId++, trackName, trackName);
 			updateEntityViewInfo(track, false);
 			tracks.add(track);
 		}
-		MapNode node = new MapNode(-1, lat, lon);
-		node.setName("" + (track.getTrkPts().size()+1));
-		track.addTrkPt(node);
+		track.addTrkPt(pos);
 		fireMapDataEvent(new MapDataEvent
 				(this, MapDataEvent.Type.TRACK_MODIFIED, track.getId()));
 	}

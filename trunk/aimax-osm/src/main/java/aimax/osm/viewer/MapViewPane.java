@@ -254,7 +254,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 						(new MapViewEvent(MapViewPane.this, MapViewEvent.Type.MARK_ADDED));
 					} else {
 						// mouse left button + shift -> add track point
-						mapData.addToTrack("Mouse Track", lat, lon);
+						mapData.addToTrack("Mouse Track", new Position(lat, lon));
 						fireMapViewEvent
 						(new MapViewEvent(MapViewPane.this, MapViewEvent.Type.TRK_PT_ADDED));
 					}
