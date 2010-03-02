@@ -48,6 +48,7 @@ public class RouteCalculator {
 			boolean ignoreOneways = (waySelection == 0);
 			Collection<MapNode> rNodes = mapData.getWayNodes();
 			MapNode fromRNode = new Position(locs.get(0)).selectNearest(rNodes, wayFilter);
+			result.add(new Position(fromRNode.getLat(), fromRNode.getLon()));
 			for (int i = 1; i < locs.size() && !CancelableThread.currIsCanceled(); i++) {
 				MapNode toRNode = new Position(locs.get(i)).selectNearest(rNodes, wayFilter);
 				HeuristicFunction hf = createHeuristicFunction(toRNode, waySelection);
@@ -55,12 +56,15 @@ public class RouteCalculator {
 				(fromRNode, toRNode, mapData, wayFilter, ignoreOneways, waySelection);
 				Search search = new AStarSearch(new GraphSearch(), hf);
 				List<Action> actions = search.search(problem);
-				result.add(new Position(fromRNode.getLat(), fromRNode.getLon()));
+				if (actions.isEmpty())
+					break;
 				for (Object action : actions) {
-					OsmMoveAction a = (OsmMoveAction) action;
-					for (MapNode node : a.getNodes())
-						if (!node.equals(a.getFrom()))
-							result.add(new Position(node.getLat(), node.getLon()));
+					if (action instanceof OsmMoveAction) {
+						OsmMoveAction a = (OsmMoveAction) action;
+						for (MapNode node : a.getNodes())
+							if (!node.equals(a.getFrom()))
+								result.add(new Position(node.getLat(), node.getLon()));
+					}
 				}
 				fromRNode = toRNode;
 			}
