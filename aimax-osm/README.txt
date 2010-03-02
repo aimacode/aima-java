@@ -42,16 +42,22 @@ mark setting, and track definition. For routing, at least two marks
 must be set.
 
 
-== Current Release: 0.1.2-AIMAX-OSM Minor Fixes ==
-0.1.2-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
-Minor updates/defect fixes/clean up to project release:
- * Java Doc now uses newer package-info.java mechanism.
- * Default settings improved.
- * Example OSM maps made available in a separate download.
- * Defect fix: OSM applications now start without a default map, if the
-   map cannot be found.
- * Documentation improvements.
- * Marks now represented as pins on the map displays.
+== Current Release: 0.9-AIMAX-OSM Map Style Redesign ==
+
+0.9-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
+Major refactorings
+ * Responsibility for map entity classification moved from presentation to application level.
+ * Classification mechanism for mapping map entities on style parameters extended
+   (now more than one attribute can be checked).
+ * kd-tree is now aware of minimal scales of entities.
+Additionally, several code cleanups and documentation updates are included.
+ 
+New features 
+ * Performance of the viewer improved for large maps.
+ * Default map style improved, especially for alpine maps.
+ * Find function for map entity search improved (checks also attribute names and values).
+ * MiniNavi now performs routing in background thread, which can be canceled.
+
 
 == Keywords ==
 
@@ -117,5 +123,16 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
   * provides a base for GPS navigation system development
   
 = Change History (Update in reverse chronological order) =
+== Current Release: 0.1.2-AIMAX-OSM Minor Fixes ==
+0.1.2-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
+Minor updates/defect fixes/clean up to project release:
+ * Java Doc now uses newer package-info.java mechanism.
+ * Default settings improved.
+ * Example OSM maps made available in a separate download.
+ * Defect fix: OSM applications now start without a default map, if the
+   map cannot be found.
+ * Documentation improvements.
+ * Marks now represented as pins on the map displays.
+
 0.1.1-AIMAX-OSM Added : 06 Feb 2010 :<br>
 First release based on the 3rd edition of AIMA, which contains the Open Street Map (OSM) library.
