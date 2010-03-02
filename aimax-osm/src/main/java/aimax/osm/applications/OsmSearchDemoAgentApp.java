@@ -27,7 +27,6 @@ import aimax.osm.routing.mapagent.OsmAgentView;
 import aimax.osm.routing.mapagent.OsmMapAdapter;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.DefaultEntityViewInfo;
-import aimax.osm.viewer.EntityIcon;
 import aimax.osm.viewer.MapStyleFactory;
 
 
@@ -45,7 +44,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 * corresponding search nodes have been expanded
 	 * during the last search. Quick and dirty solution...
 	 */
-	static final HashSet visitedStates = new HashSet();
+	static final HashSet<Object> visitedStates = new HashSet<Object>();
 	
 	public OsmSearchDemoAgentApp(InputStream osmFile) {
 		super(osmFile);
@@ -193,8 +192,8 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 
 	/** Application starter. */
 	public static void main(String args[]) {
-		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
-		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
+		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
+		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp(DataResource.getULMFileResource());
 		demo.startApplication();

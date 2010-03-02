@@ -85,23 +85,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		view.addMapViewEventListener(eventHandler);
 	}
 		
-	public MapViewFrame(MapReader mapReader, InputStream defaultMap) {
+	public MapViewFrame(MapReader mapReader) {
 		this();
-		this.mapReader = mapReader;
-		if (mapReader != null) {
-			FileFilter filter = new FileNameExtensionFilter
-			(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
-			fileChooser.addChoosableFileFilter(filter);
-			if (defaultMap != null)
-				mapReader.readMap(defaultMap, mapData);
-		}
-	}
-	
-	public MapViewFrame(MapReader mapReader, File defaultMap) {
-		this(mapReader, createStream(defaultMap));
-		if (defaultMap != null) {
-			fileChooser.setSelectedFile(defaultMap.getAbsoluteFile());			
-		}
+		setMapReader(mapReader);
 	}
 	
 	private static FileInputStream createStream(File file) {
@@ -124,16 +110,37 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			view.adjustToFit();
 	}
 	
-	public MapDataStore getMapData() {
-		return mapData;
-	}
-	
 	public MapViewPane getView() {
 		return view;
 	}
 	
+	public MapDataStore getMapData() {
+		return mapData;
+	}
+	
+	public void setMapReader(MapReader mapReader) {
+		this.mapReader = mapReader;
+		FileFilter filter = new FileNameExtensionFilter
+		(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
+		fileChooser.addChoosableFileFilter(filter);
+		fileChooser.setSelectedFile(null);
+	}
+	
+	public void readMap(InputStream map) {
+		mapReader.readMap(map, mapData);
+	}
+	
+	public void readMap(File map) {
+		mapReader.readMap(map, mapData);
+		fileChooser.setSelectedFile(map.getAbsoluteFile());	
+	}
+	
 	public JToolBar getToolbar() {
 		return toolbar;
+	}
+	
+	public JButton getLoadButton() {
+		return loadButton;
 	}
 	
 	public void find(String namepart) {

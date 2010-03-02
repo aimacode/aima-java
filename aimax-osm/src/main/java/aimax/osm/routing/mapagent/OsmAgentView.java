@@ -12,6 +12,7 @@ import aima.core.environment.map.MoveToAction;
 import aima.gui.framework.AgentAppEnvironmentView;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapDataStore;
+import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.viewer.MapStyleFactory;
@@ -95,7 +96,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		if (node != null) {
 			int aIdx = getMapEnv().getAgents().indexOf(agent);
 			map.getMapData().addToTrack
-			(TRACK_NAME+aIdx, node.getLat(), node.getLon());
+			(TRACK_NAME+aIdx, new Position(node.getLat(), node.getLon()));
 		}
 	}
 }

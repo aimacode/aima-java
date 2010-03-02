@@ -1,5 +1,6 @@
 package aimax.osm.routing;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.informed.AStarSearch;
+import aima.core.util.CancelableThread;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.MapWayFilter;
@@ -21,7 +23,10 @@ import aimax.osm.data.entities.MapNode;
  */
 public class RouteCalculator {
 	
-	public final static String ROUTE_TRACK_NAME = "Route";
+	/** Returns the names of all supported way selection options. */
+	public String[] getWaySelectionOptions() {
+		return new String[]{"Distance", "Distance (Car)", "Distance (Bike)"};
+	}
 	
 	/**
 	 * Template method, responsible for shortest path generation between
@@ -35,35 +40,34 @@ public class RouteCalculator {
 	 * @param mapData The information source.
 	 * @param waySelection Number, indicating which kinds of ways are relevant.
 	 */
-	public void calculateRoute(List<MapNode> locs, MapDataStore mapData,
+	public List<Position> calculateRoute(List<MapNode> locs, MapDataStore mapData,
 			int waySelection) {
+		List<Position> result = new ArrayList<Position>();
 		try {
 			MapWayFilter wayFilter = createMapWayFilter(mapData, waySelection);
 			boolean ignoreOneways = (waySelection == 0);
 			Collection<MapNode> rNodes = mapData.getWayNodes();
 			MapNode fromRNode = new Position(locs.get(0)).selectNearest(rNodes, wayFilter);
-			mapData.clearTrack(ROUTE_TRACK_NAME);
-			mapData.addToTrack(ROUTE_TRACK_NAME, fromRNode.getLat(), fromRNode.getLon());
-			for (int i = 1; i < locs.size(); i++) {
+			for (int i = 1; i < locs.size() && !CancelableThread.currIsCanceled(); i++) {
 				MapNode toRNode = new Position(locs.get(i)).selectNearest(rNodes, wayFilter);
 				HeuristicFunction hf = createHeuristicFunction(toRNode, waySelection);
 				Problem problem = createProblem
 				(fromRNode, toRNode, mapData, wayFilter, ignoreOneways, waySelection);
 				Search search = new AStarSearch(new GraphSearch(), hf);
 				List<Action> actions = search.search(problem);
-				mapData.addToTrack(ROUTE_TRACK_NAME, fromRNode.getLat(), fromRNode.getLon());
+				result.add(new Position(fromRNode.getLat(), fromRNode.getLon()));
 				for (Object action : actions) {
 					OsmMoveAction a = (OsmMoveAction) action;
 					for (MapNode node : a.getNodes())
 						if (!node.equals(a.getFrom()))
-							mapData.addToTrack
-							(ROUTE_TRACK_NAME, node.getLat(), node.getLon());
+							result.add(new Position(node.getLat(), node.getLon()));
 				}
 				fromRNode = toRNode;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
 	}
 	
 	/** Factory method, responsible for way filter creation. */

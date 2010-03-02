@@ -17,7 +17,8 @@ public class OsmViewerApp {
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		MapReader mapReader = new aimax.osm.reader.OsmReader();
-		MapViewFrame frame = new MapViewFrame(mapReader, DataResource.getULMFileResource());
+		MapViewFrame frame = new MapViewFrame(mapReader);
+		frame.readMap(DataResource.getULMFileResource());
 		frame.setTitle("OSM Viewer");
 		frame.setSize(800, 600);
 		frame.setVisible(true);

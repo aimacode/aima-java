@@ -3,7 +3,6 @@ package aimax.osm.applications;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -36,9 +35,9 @@ public class OsmViewerPlusApp implements ActionListener {
 	private JButton rightButton;
 	protected JToggleButton nightButton;
 	
-	public OsmViewerPlusApp(InputStream stream) {
+	public OsmViewerPlusApp() {
 		MapReader mapReader = new OsmReader();
-		frame = new MapViewFrame(mapReader, stream);
+		frame = new MapViewFrame(mapReader);
 		frame.setTitle("OSM Viewer+");
 		
 		JToolBar toolbar = frame.getToolbar();
@@ -66,6 +65,10 @@ public class OsmViewerPlusApp implements ActionListener {
 		toolbar.addSeparator();
 		toolbar.add(nightButton);
 		nightButton.addActionListener(this);
+	}
+	
+	public MapViewFrame getFrame() {
+		return frame;
 	}
 	
 	public void showFrame() {
@@ -110,7 +113,8 @@ public class OsmViewerPlusApp implements ActionListener {
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		OsmViewerPlusApp demo = new OsmViewerPlusApp(DataResource.getULMFileResource());
+		OsmViewerPlusApp demo = new OsmViewerPlusApp();
+		demo.getFrame().readMap(DataResource.getULMFileResource());
 		demo.showFrame();
 	}
 }
