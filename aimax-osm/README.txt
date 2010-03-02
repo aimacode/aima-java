@@ -46,7 +46,7 @@ must be set.
 
 0.9-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
 Major refactorings
- * Responsibility for map entity classification moved from presentation to application level.
+ * Responsibility for map entity classification moved from presentation to application layer.
  * Classification mechanism for mapping map entities on style parameters extended
    (now more than one attribute can be checked).
  * kd-tree is now aware of minimal scales of entities.
