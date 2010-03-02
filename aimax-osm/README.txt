@@ -13,9 +13,9 @@ The internal map representation is chosen as close as possible to the
 original OSM XML file format. A kd-tree is used to improve rendering efficiency.
 Classification and abstraction of map entities as well as their
 visual appearance within the drawn map are controlled by declarative
-rendering rules. They can be replaced or configured at runtime and by that provide
-a maximum of flexibility. If you want to create your own personal map styles,
-see classes <code>aimax.osm.viewer.MapStyleFactory</code> and
+rendering rules. They can be replaced or configured at runtime.
+New personal map styles can be created quite easily. See classes
+<code>aimax.osm.viewer.MapStyleFactory</code> and
 <code>aimax.osm.application.OsmViewerPlusApp</code> for ideas how that can be
 achieved.
 
@@ -27,7 +27,7 @@ for building general OSM applications.
 
 In the current version, relation entities are ignored and
 the size of the map should be limited to about a million nodes
-to avoid long loading times. E.g. detailed maps of cities like Berlin 
+to avoid long loading times. For example, detailed maps of cities like Berlin 
 can be loaded and displayed without any problem if enough heap space
 is provided (VM argument -Xmx500M).
 
