@@ -127,7 +127,10 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 	
 	public void readMap(InputStream map) {
-		mapReader.readMap(map, mapData);
+		if (map != null)
+			mapReader.readMap(map, mapData);
+		else
+			System.err.println("Error: Map reading failed because input stream does not exist.");
 	}
 	
 	public void readMap(File map) {
