@@ -42,9 +42,9 @@ mark setting, and track definition. For routing, at least two marks
 must be set.
 
 
-== Current Release: 0.9-AIMAX-OSM Map Style Redesign ==
+== Current Release: 0.9.0-AIMAX-OSM Map Style Redesign ==
 
-0.9-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
+0.9.0-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
 Major refactorings
  * Responsibility for map entity classification moved from presentation to application layer.
  * Classification mechanism for mapping map entities on style parameters extended
@@ -57,7 +57,6 @@ New features
  * Default map style improved, especially for alpine maps.
  * Find function for map entity search improved (checks also attribute names and values).
  * MiniNavi now performs routing in background thread, which can be canceled.
-
 
 == Keywords ==
 
@@ -123,7 +122,6 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
   * provides a base for GPS navigation system development
   
 = Change History (Update in reverse chronological order) =
-== Current Release: 0.1.2-AIMAX-OSM Minor Fixes ==
 0.1.2-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
 Minor updates/defect fixes/clean up to project release:
  * Java Doc now uses newer package-info.java mechanism.
