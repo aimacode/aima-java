@@ -6,7 +6,7 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
-== Current Release: 1.1.1-AIMA3e AIMAX-OSM Map Style Redesign ==
+== Current Release: 1.2.0-AIMA3e AIMAX-OSM Map Style Redesign ==
 1.2.0-AIMA3e AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
 This is a minor release that includes redesign and performance enhancements to the AIMAX-OSM package. 
 This is based on the following sub-project releases:
