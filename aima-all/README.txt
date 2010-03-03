@@ -6,13 +6,13 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
-== Current Release: 1.1.1-AIMA3e Open Street Map (OSM) minor fixes ==
-1.1.1-AIMA3e Open Street Map (OSM) minor fixes : 09 Feb 2010 :<br>
-This is a minor patch release to 1.1.0, which includes fixes/cleanup related to the new aimax-osm project. 
+== Current Release: 1.1.1-AIMA3e AIMAX-OSM Map Style Redesign ==
+1.2.0-AIMA3e AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
+This is a minor release that includes redesign and performance enhancements to the AIMAX-OSM package. 
 This is based on the following sub-project releases:
   * aima-core (0.9.9) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
-  * aimax-osm (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+  * aimax-osm (0.9.0) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Project Organization ==
@@ -38,6 +38,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.1.1-AIMA3e Open Street Map (OSM) minor fixes : 09 Feb 2010 :<br>
+This is a minor patch release to 1.1.0, which includes fixes/cleanup related to the new aimax-osm project. 
+This is based on the following sub-project releases:
+  * aima-core (0.9.9) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (0.1.2) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License. 
+    
 1.1.0-AIMA3e Open Street Map (OSM) extension project added : 06 Feb 2010 :<br>
 This is the first release of AIMA3e-Java with a new extension (aimax) project - Open Street Map (OSM) library, which 
 leverages functionality from the two core (aima-core and aima-core) AIMA3e-Java projects. 
