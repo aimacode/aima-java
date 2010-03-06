@@ -34,9 +34,7 @@ public class AgentAppFrame extends JFrame {
 	/** The controller, which executes the domain-level commands. */
 	protected AgentAppController controller;
 	/** Thread running the agent. */
-	protected AgentThread agentThread;
-	/** Flag, indicating whether the agent is ready for running. */
-	protected boolean isPrepared;
+	private AgentThread agentThread;
 	/** Contains selector specification and resulting comboboxes. */
 	private SelectorContainer selectors;
 
@@ -44,6 +42,7 @@ public class AgentAppFrame extends JFrame {
 	private JButton clearButton;
 	private JButton prepareButton;
 	private JButton runButton;
+	private JButton stepButton;
 	private JButton cancelButton;
 
 	JSplitPane centerPane;
@@ -59,7 +58,7 @@ public class AgentAppFrame extends JFrame {
 		// redirect the standard output into the text area
 		System.setOut(messageLogger.getPrintStream());
 		// System.setErr(messageLogger.getPrintStream());
-		setButtonsEnabled(true);
+		updateEnabledState();
 	}
 
 	/** Returns a logger which displays messages in a message log pane. */
@@ -102,7 +101,7 @@ public class AgentAppFrame extends JFrame {
 		selectors.setDefaults();
 		if (cont != null) {
 			controller = cont;
-			selectionChanged();
+			selectionChanged(null);
 		}
 	}
 
@@ -147,6 +146,20 @@ public class AgentAppFrame extends JFrame {
 		statusLabel.setText(status);
 	}
 
+	/** Returns the current agent thread or null (no simulation running). */
+	protected AgentThread getAgentThread() {
+		return agentThread;
+	}
+	
+	/**
+	 * Sets the current agent thread and updates the enabled state.
+	 * @param agentThread A thread or null
+	 */
+	protected void setAgentThread(AgentThread agentThread) {
+		this.agentThread = agentThread;
+		updateEnabledState();
+	}
+	
 	/** Assembles the inner structure of the frame. */
 	private void initComponents() {
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -176,6 +189,10 @@ public class AgentAppFrame extends JFrame {
 		runButton.setToolTipText("Run Agent");
 		runButton.addActionListener(new FrameActionListener());
 		toolbar.add(runButton);
+		stepButton = new JButton("Step");
+		stepButton.setToolTipText("Execute Step");
+		stepButton.addActionListener(new FrameActionListener());
+		toolbar.add(stepButton);
 		contentPanel.add(toolbar, java.awt.BorderLayout.NORTH);
 
 		messageLogger = new MessageLoggerPanel();
@@ -200,23 +217,27 @@ public class AgentAppFrame extends JFrame {
 	}
 
 	/** Enables/disables all combos and buttons. */
-	public void setButtonsEnabled(boolean b) {
+	public void updateEnabledState() {
+		boolean b = (getAgentThread() == null);
+		boolean prep = b && controller != null && controller.isPrepared();
 		clearButton.setEnabled(b);
 		prepareButton.setEnabled(b);
-		runButton.setEnabled(b);
+		runButton.setEnabled(prep);
+		stepButton.setEnabled(prep);
 		cancelButton.setEnabled(!b);
 		for (JComboBox combo : selectors.combos)
 			combo.setEnabled(b);
 	}
 
 	/** Tells the controller to prepare the agent. */
-	protected void selectionChanged() {
+	protected void selectionChanged(String changedSelector) {
 		if (controller != null) {
-			controller.prepare();
-			isPrepared = true;
+			controller.prepare(changedSelector);
+			updateEnabledState();
 		}
 	}
 
+	
 	// ////////////////////////////////////////////////////////
 	// inner classes
 
@@ -228,42 +249,43 @@ public class AgentAppFrame extends JFrame {
 				if (controller != null) {
 					setStatus("");
 					Object source = evt.getSource();
-					if (source == clearButton /* || source == clearMenuItem */) {
+					if (source == clearButton) {
 						// additionally clear the text area
 						err = "when clearing the views ";
 						messageLogger.clear();
 						statusLabel.setText("");
 						controller.clear();
-						// isPrepared = false;
 					} else if (source == prepareButton) {
 						err = "when preparing the agent ";
-						controller.prepare();
-						isPrepared = true;
+						controller.prepare(null);
 					} else if (source == runButton) {
-						err = "when preparing the agent ";
-						if (isPrepared == false)
-							controller.prepare();
 						err = "when running the agent ";
-						setButtonsEnabled(false);
 						setStatus("");
-						agentThread = new AgentThread(AgentAppFrame.this, controller);
-						agentThread.start();
-						isPrepared = false;
+						setAgentThread(new AgentThread
+								(AgentAppFrame.this, controller, false));
+						getAgentThread().start();
+					} else if (source == stepButton) {
+						err = "when executing step ";
+						setStatus("");
+						setAgentThread(new AgentThread
+								(AgentAppFrame.this, controller, true));
+						getAgentThread().start();
 					} else if (source == cancelButton) {
 						err = "when cancelling the agent ";
-						if (agentThread != null) {
-							if (agentThread.isCanceled()) {
-								agentThread.stop(); // agent has ignored the interrupt
-								setButtonsEnabled(true);
+						AgentThread at = getAgentThread();
+						if (at != null) {
+							if (!at.isCanceled()) {
+								at.interrupt();
+							} else {
+								// agent has ignored the interrupt
+								at.stop();
 								setStatus("Task stopped.");
-								agentThread = null;
-							} else
-								agentThread.interrupt();
+								setAgentThread(null);
+							}	
 						}
-						isPrepared = false;
 					} else if (selectors.combos.contains(source)) {
 						err = "when preparing the agent ";
-						selectionChanged();
+						selectionChanged(selectors.getName((JComboBox) source));
 					}
 				}
 			} catch (Exception e) {
@@ -271,6 +293,7 @@ public class AgentAppFrame extends JFrame {
 						+ ").");
 				e.printStackTrace();
 			}
+			updateEnabledState();
 		}
 	}
 
@@ -327,7 +350,16 @@ public class AgentAppFrame extends JFrame {
 					return combos.get(i);
 			return null;
 		}
+		
+		String getName(JComboBox combo) {
+			int idx = combos.indexOf(combo);
+			if (idx != -1)
+				return selectorNames[idx];
+			else
+				return null;
+		}
 	}
+	
 
 	// ////////////////////////////////////////////////////////
 	// static inner classes

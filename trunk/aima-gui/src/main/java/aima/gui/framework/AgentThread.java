@@ -8,10 +8,12 @@ import aima.core.util.CancelableThread;
 public class AgentThread extends CancelableThread {
 	private AgentAppFrame frame;
 	private AgentAppController controller;
+	private boolean stepMode;
 	
-	public AgentThread(AgentAppFrame frame, AgentAppController controller) {
+	public AgentThread(AgentAppFrame frame, AgentAppController controller, boolean stepMode) {
 		this.frame = frame;
 		this.controller = controller;
+		this.stepMode = stepMode;
 	}
 	
 	@Override
@@ -28,7 +30,10 @@ public class AgentThread extends CancelableThread {
 	public void run() {
 		MessageLogger logger = frame.getMessageLogger();
 		try {
-			controller.run(frame.getMessageLogger());
+			if (!stepMode)
+				controller.run(frame.getMessageLogger());
+			else
+				controller.step(frame.getMessageLogger());
 		} catch (Exception e) {
 			logger.log
 			("Error: Somthing went wrong running the agent (" + e + ").");
@@ -37,8 +42,8 @@ public class AgentThread extends CancelableThread {
 		try {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					frame.setButtonsEnabled(true);
 					controller.update(AgentThread.this);
+					frame.setAgentThread(null);
 				}
 			});
 		} catch(Exception e) {
