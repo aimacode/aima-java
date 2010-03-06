@@ -83,7 +83,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		 * afterwards.
 		 */
 		@Override
-		protected void selectionChanged() {
+		protected void selectionChanged(String changedSelector) {
 			SelectionState state = getSelection();
 			int scenarioIdx = state.getValue(MapAgentFrame.SCENARIO_SEL);
 			RouteFindingAgentFrame.MapType mtype = (scenarioIdx < 3) ? MapType.ROMANIA
@@ -101,7 +101,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 				}
 				setSelectorItems(DESTINATION_SEL, items, 0);
 			}
-			super.selectionChanged();
+			super.selectionChanged(changedSelector);
 		}
 	}
 
@@ -110,7 +110,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 			AbstractMapAgentController {
 		/**
 		 * Configures a scenario and a list of destinations. Note that for route
-		 * planning problems, the size of the list needs to be 1.
+		 * finding problems, the size of the list needs to be 1.
 		 */
 		@Override
 		protected void selectScenarioAndDest(int scenarioIdx, int destIdx) {
@@ -206,33 +206,25 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Creates environment and agent, starts the agent and initiates some
-		 * text outputs describing the state of the agent.
+		 * Creates a new agent if no agent exists in the current environment
+		 * and executes one step.
 		 */
 		@Override
-		public void run(MessageLogger logger) {
-			if (destinations.size() != 1) {
-				logger.log("Error: This agent requires exact one destination.");
-				return;
-			}
-			logger.log("<route-planning-simulation-protocol>");
-			logger.log("search: " + search.getClass().getName());
-			if (heuristic != null)
-				logger.log
-				("heuristic: " + heuristic.getClass().getName());
+		public void step(MessageLogger logger) {
 			MapEnvironment env = scenario.getEnv();
-			String goal = destinations.get(0);
-			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
-			env.addAgent(agent, scenario.getInitAgentLocation());
-			try {
-				while (!env.isDone()) {
-					Thread.sleep(500);
-					env.step();
+			if (env.getAgents().isEmpty()) {
+				if (destinations.size() != 1) {
+					logger.log("Error: This agent requires exact one destination.");
+					return;
 				}
-			} catch (InterruptedException e) {}
-			logger.log("</route-planning-simulation-protocol>\n");
+				String goal = destinations.get(0);
+				MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
+				env.addAgent(agent, scenario.getInitAgentLocation());
+			}
+			env.step();
 		}
 	}
+	
 
 	/**
 	 * Returns always the heuristic value 0.

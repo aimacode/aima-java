@@ -1,6 +1,6 @@
 package aima.gui.framework;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
@@ -14,7 +14,7 @@ import aima.core.agent.EnvironmentView;
  * @author R. Lunde
  */
 public abstract class AgentAppEnvironmentView
-extends JPanel implements EnvironmentView {
+extends JComponent implements EnvironmentView {
 	/** The environment providing the data to be visualized. */
 	protected Environment env;
 	/** Message display is delegated to a separate logger. */
@@ -26,6 +26,7 @@ extends JPanel implements EnvironmentView {
 			this.env.removeEnvironmentView(this);
 		this.env = env;
 		env.addEnvironmentView(this);
+		repaint();
 	}
 	
 	/** Selects a logger for message display. */

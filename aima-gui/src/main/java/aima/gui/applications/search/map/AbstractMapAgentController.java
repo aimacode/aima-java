@@ -31,11 +31,16 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	protected aima.core.search.framework.Search search;
 	/** Heuristic function to be used when performing informed search. */
 	protected AdaptableHeuristicFunction heuristic;
+	protected boolean isPrepared;
+	/** Sleep time between two steps during simulation in msec. */
+	protected long sleepTime = 500l;
 
-	/** Clears the model's tour history. */
+	/** Clears all tracks and prepares simulation if necessary. */
 	@Override
 	public void clear() {
 		((MapAgentView) frame.getEnvView()).clearTracks();
+		if (!isPrepared())
+			prepare(null);
 	}
 
 	/**
@@ -45,7 +50,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	 * {@link #createHeuristic(int)}.
 	 */
 	@Override
-	public void prepare() {
+	public void prepare(String changedSelectors) {
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		selectScenarioAndDest(state.getValue(MapAgentFrame.SCENARIO_SEL), state
 				.getValue(MapAgentFrame.DESTINATION_SEL));
@@ -54,12 +59,44 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		search = SearchFactory.getInstance().createSearch(
 				state.getValue(MapAgentFrame.SEARCH_SEL),
 				state.getValue(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
+		isPrepared = true;
 	}
+	
+	/**
+	 * Checks whether the current scenario contains an environment which is
+	 * not done.
+	 */
+	public boolean isPrepared() {
+		return isPrepared && (scenario.getEnv().getAgents().isEmpty()
+				|| !scenario.getEnv().isDone());
+	}
+	
+	/**
+	 * Executes steps as long as method {@link #isPrepared()} 
+	 * returns true and sends some messages to the logger.
+	 */
+	@Override
+	public void run(MessageLogger logger) {
+		logger.log("<simulation-protocol>");
+		logger.log("search: " + search.getClass().getName());
+		if (heuristic != null)
+			logger.log
+			("heuristic: " + heuristic.getClass().getName());
+		try {
+			while (isPrepared()) {
+				Thread.sleep(sleepTime);
+				step(logger);
+			}
+		} catch (InterruptedException e) {}
+		logger.log("</simulation-protocol>\n");
+	}
+
 		
 	/** Updates the status of the frame. */
 	public void update(AgentThread agentThread) {
 		if (agentThread.isCanceled()) {
-			frame.setStatus("Task cancelled.");
+			frame.setStatus("Task canceled.");
+			isPrepared = false;
 		} else {
 			StringBuffer statusMsg = new StringBuffer();
 			statusMsg.append("Task completed");
@@ -99,9 +136,9 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	abstract protected AdaptableHeuristicFunction createHeuristic(int heuIdx);
 
 	/**
-	 * Responsible for creating and starting the agent.
-	 * Scenario, destinations are selected before as well as search method and
-	 * search heuristic.
+	 * Responsible for performing one step during simulation. If no
+	 * agent exists in the current environment, implementations should
+	 * create and add agents according to the user settings.
 	 */
-	public abstract void run(MessageLogger logger);
+	public abstract void step(MessageLogger logger);
 }

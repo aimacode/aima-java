@@ -18,10 +18,13 @@ public class VacuumController extends AgentAppController {
 	
 	protected VacuumEnvironment env = null;
 	protected AbstractAgent agent = null;
+	protected boolean isPrepared = false;
 	
-	/** Does nothing. */
+	/** Prepare next simulation. */
 	@Override
 	public void clear() {
+		if (!isPrepared())
+		prepare(null);
 	}
 
 	/**
@@ -30,15 +33,15 @@ public class VacuumController extends AgentAppController {
 	 * environment to the viewer.
 	 */
 	@Override
-	public void prepare() {
+	public void prepare(String changedSelector) {
 		AgentAppFrame.SelectionState selState = frame.getSelection();
 		env = null;
-		agent = null;
 		switch (selState.getValue(VacuumFrame.ENV_SEL)) {
 		case 0:
 			env = new VacuumEnvironment();
 			break;
 		}
+		agent = null;
 		switch (selState.getValue(VacuumFrame.AGENT_SEL)) {
 		case 0:
 			agent = new TableDrivenVacuumAgent();
@@ -56,32 +59,45 @@ public class VacuumController extends AgentAppController {
 		if (env != null && agent != null) {
 			frame.getEnvView().setEnvironment(env);
 			env.addAgent(agent);
+			isPrepared = true;
 		}
+	}
+	
+	/** Checks whether a step can be executed. */
+	@Override
+	public boolean isPrepared() {
+		return isPrepared && !env.isDone();
 	}
 
 	/** Starts the agent. */
 	@Override
 	public void run(MessageLogger logger) {
-		if (env != null && agent != null) {
-			logger.log("<simulation-log>");
-			try {
-				while (!env.isDone()) {
-					Thread.sleep(500);
-					env.step();
-				}
-			} catch (InterruptedException e) {}
-			logger.log("Performance: "
-					+ env.getPerformanceMeasure(agent));
-			logger.log("</simulation-log>");
-		}
+		logger.log("<simulation-log>");
+		try {
+			while (!env.isDone()) {
+				Thread.sleep(500);
+				env.step();
+			}
+		} catch (InterruptedException e) {}
+		logger.log("Performance: "
+				+ env.getPerformanceMeasure(agent));
+		logger.log("</simulation-log>\n");
 	}
-	
+
+	/** Executes one step. */
+	@Override
+	public void step(MessageLogger logger) {
+		env.step();
+	}
+
 	/** Updates the status of the frame after the agent has finished its work. */
 	public void update(AgentThread agentThread) {
-		if (agentThread.isCanceled())
-			frame.setStatus("Task cancelled.");
-		else
+		if (agentThread.isCanceled()) {
+			frame.setStatus("Task canceled.");
+			isPrepared = false;
+		} else {
 			frame.setStatus("Task completed.");
+		}
 	}
 }
 
