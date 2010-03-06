@@ -40,7 +40,8 @@ public class Track extends MapEntity {
 	}
 	
 	public void addTrkPt(Position pos) {
-		int idx = getTrkPts().size();
+		int idx = trkpts.isEmpty()
+		? 0 : (int) trkpts.get(trkpts.size()-1).getId()+1;
 		MapNode node = new MapNode(idx, pos.getLat(), pos.getLon());
 		addTrkPt(node);
 	}

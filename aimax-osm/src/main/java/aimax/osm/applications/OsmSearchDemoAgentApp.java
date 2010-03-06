@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
@@ -90,17 +88,13 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		}
 		
 		@Override
-		public void clear() {
+		public void prepare(String changedSelector) {
 			visitedStates.clear();
-			super.clear();
+			super.prepare(changedSelector);
 		}
 		
-		/**
-		 * Creates environment and agent,
-		 * starts the agent and initiates some text outputs describing the
-		 * state of the agent.
-		 */
-		public void run(MessageLogger logger) {
+		/** Creates new agents and adds them to the current environment. */
+		public void initAgents(MessageLogger logger) {
 			visitedStates.clear();
 			List<MapNode> marks = map.getMapData().getMarks();
 			if (marks.size() < 2) {
@@ -113,19 +107,9 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locs[i] = map.getNearestLocation(pt);
 			}
-			logger.log("<osm-agent-simulation-protocol>");
-			logger.log("search: " + search.getClass().getName());
-			logger.log("heuristic: " + heuristic.getClass().getName());
 			heuristic.adaptToGoal(locs[1], map);
 			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
 			env.addAgent(agent, locs[0]);
-			try {
-				while (!env.isDone()) {
-					Thread.sleep(20);
-					env.step();
-				}
-			} catch (InterruptedException e) {}
-			logger.log("</osm-agent-simulation-protocol>\n");
 		}
 	}
 	
