@@ -9,9 +9,10 @@ import aimax.osm.data.EntityVisitor;
  * Common base class for all map entities. Map entities have id, name, and
  * attributes, must accept a visitor (e.g. for rendering), and
  * can be compared with respect to their position relative
- * to a split plane. For efficiency reasons, a map renderer is allowed
- * to attach rendering information to entities. It is assumed, that only
- * one renderer is used at a time.
+ * to a split plane. The attached view information tells the map data store
+ * for which scales the entity is relevant. It can also contain further
+ * data for rendering, but those aspects are not visible on application
+ * layer.
  * @author R. Lunde
  */
 public abstract class MapEntity {

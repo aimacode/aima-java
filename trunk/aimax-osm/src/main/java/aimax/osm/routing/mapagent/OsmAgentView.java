@@ -56,16 +56,6 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	protected MapEnvironment getMapEnv() {
 		return (MapEnvironment) env;
 	}
-	
-	/**
-	 * Clears history and starts listening to changes within the given
-	 * environment.
-	 */
-	@Override
-	public void setEnvironment(Environment env) {
-		mapViewPane.getModel().getTracks().clear();
-		super.setEnvironment(env);
-	}
 
 	/**
 	 * Reacts on environment changes and updates the tracks.

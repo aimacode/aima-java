@@ -35,6 +35,9 @@ public class OsmAgentController extends AgentAppController {
 	protected AdaptableHeuristicFunction heuristic;
 	
 	protected List<String> markedLocations;
+	protected boolean isPrepared;
+	/** Sleep time between two steps during simulation in msec. */
+	protected long sleepTime = 20l;
 	
 	public OsmAgentController(OsmMapAdapter map) {
 		this.map = map;
@@ -44,14 +47,16 @@ public class OsmAgentController extends AgentAppController {
 	@Override
 	public void clear() {
 		map.getMapData().clearMarksAndTracks();
+		prepare(null);
 	}
 
 	@Override
-	public void prepare() {
+	public void prepare(String changedSelector) {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
 		MapDataStore mapData = map.getMapData();
+		mapData.getTracks().clear();
 		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter
 		(MapWayAttFilter.createAnyWayFilter(mapData));
@@ -70,6 +75,15 @@ public class OsmAgentController extends AgentAppController {
 				state.getValue(MapAgentFrame.SEARCH_MODE_SEL),
 				heuristic);
 		frame.getEnvView().setEnvironment(env);
+		isPrepared = true;
+	}
+	
+	/**
+	 * Checks whether the current environment is ready to start
+	 * simulation.
+	 */
+	public boolean isPrepared() {
+		return isPrepared && (env.getAgents().isEmpty() || !env.isDone());
 	}
 
 	/**
@@ -89,14 +103,40 @@ public class OsmAgentController extends AgentAppController {
 	}
 	
 	/**
-	 * Primitive operation, which creates environment and agent,
-	 * starts the agent and initiates some text outputs describing the
-	 * state of the agent.
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and
+	 * then starts simulation until done.
 	 */
 	public void run(MessageLogger logger) {
+		logger.log("<simulation-protocol>");
+		logger.log("search: " + search.getClass().getName());
+		logger.log("heuristic: " + heuristic.getClass().getName());
+		if (env.getAgents().isEmpty())
+			initAgents(logger);
+		try {
+			while (!env.isDone()) {
+				Thread.sleep(20);
+				env.step();
+			}
+		} catch (InterruptedException e) {}
+		logger.log("</simulation-protocol>\n");
+	}
+	
+	/**
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and
+	 * then executes one simulation step.
+	 */
+	@Override
+	public void step(MessageLogger logger) {
+		if (env.getAgents().isEmpty())
+			initAgents(logger);
+		env.step();
+	}
+
+	/** Creates new agents and adds them to the current environment. */
+	protected void initAgents(MessageLogger logger) {
 		List<MapNode> marks = map.getMapData().getMarks();
 		if (marks.size() < 2) {
-			logger.log("Error: Please set two marks with MouseLeft.");
+			logger.log("Error: Please set two marks with mouse-left.");
 			return;
 		}
 		String[] locs = new String[marks.size()];
@@ -105,9 +145,6 @@ public class OsmAgentController extends AgentAppController {
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
 			locs[i] = map.getNearestLocation(pt);
 		}
-		logger.log("<osm-agent-simulation-protocol>");
-		logger.log("search: " + search.getClass().getName());
-		logger.log("heuristic: " + heuristic.getClass().getName());
 		heuristic.adaptToGoal(locs[1], map);
 		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
@@ -124,19 +161,13 @@ public class OsmAgentController extends AgentAppController {
 			break;
 		}
 		env.addAgent(agent, locs[0]);
-		try {
-			while (!env.isDone()) {
-				Thread.sleep(20);
-				env.step();
-			}
-		} catch (InterruptedException e) {}
-		logger.log("</osm-agent-simulation-protocol>\n");
 	}
-
+	
 	/** Updates the status of the frame. */
 	public void update(AgentThread agentThread) {
 		if (agentThread.isCanceled()) {
-			frame.setStatus("Task cancelled.");
+			frame.setStatus("Task canceled.");
+			isPrepared = false;
 		} else {
 			StringBuffer statusMsg = new StringBuffer();
 			statusMsg.append("Task completed");
