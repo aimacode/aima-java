@@ -2,11 +2,13 @@ package aima.gui.applications.vacuum;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
+import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.framework.EmptyEnvironmentView;
 
@@ -16,14 +18,17 @@ import aima.gui.framework.EmptyEnvironmentView;
  */
 public class VacuumView extends EmptyEnvironmentView {
 	
+	private Hashtable<Agent, Action> lastActions = new Hashtable<Agent, Action>();
+	
 	@Override
 	public void agentActed(Agent agent, Action action,
 			EnvironmentState resultingState) {
+		lastActions.put(agent, action);
 		String prefix = "";
 		if (env.getAgents().size() > 1)
 			prefix = "A" + env.getAgents().indexOf(agent) + ": ";
-		super.agentActed(agent, action, resultingState);
 		notify(prefix + action.toString());
+		super.agentActed(agent, action, resultingState);
 	}
 	
 	protected VacuumEnvironment getVacuumEnv() {
@@ -44,6 +49,7 @@ public class VacuumView extends EmptyEnvironmentView {
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		for (int i = 0; i < locations.size(); i++) {
 			String location = locations.get(i);
+			Agent agent = getAgent(location);
 			if (isDirty(location)) {
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.fillRect(x(11 * i), y(0), scale(10), scale(10));
@@ -51,10 +57,14 @@ public class VacuumView extends EmptyEnvironmentView {
 			g2.setColor(Color.black);
 			g2.drawRect(x(11 * i), y(0), scale(10), scale(10));
 			g2.drawString(location.toString(), x(11 * i) + 10, y(0) + 20);
-			if (hasAgent(location)) {
+			if (agent != null) {
+				Action action = lastActions.get(agent);
 				g2.setColor(Color.red);
-				g2.fillArc(x(11 * i + 2), y(2), scale(6), scale(6),
-						200, 320);
+				if (action == null || !((DynamicAction) action).getAttribute("name").equals("Suck")) 
+					g2.fillArc(x(11 * i + 2), y(2), scale(6), scale(6),
+							200, 320);
+				else
+					g2.fillOval(x(11 * i + 2), y(2), scale(6), scale(6));
 			}
 		}
 	}
@@ -75,13 +85,16 @@ public class VacuumView extends EmptyEnvironmentView {
 				.getLocationState(location);
 	}
 
-	/** Checks whether the agent is currently at the specified location. */
-	protected boolean hasAgent(Object location) {
+	/**
+	 * Checks whether an agent is currently at the specified location and
+	 * returns one of them if any.
+	 * */
+	protected Agent getAgent(Object location) {
 		VacuumEnvironment e = getVacuumEnv();
 		for (Agent a : e.getAgents())
 			if (location.equals(e.getAgentLocation(a)))
-				return true;
-		return false;
+				return a;
+		return null;
 	}
 }
 
