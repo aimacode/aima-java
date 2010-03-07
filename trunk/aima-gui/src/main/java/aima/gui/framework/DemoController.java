@@ -6,6 +6,7 @@ package aima.gui.framework;
  * @author R. Lunde
  */
 public class DemoController extends AgentAppController {
+	/** The controller decides when simulation can be started. */
 	private boolean isPrepared = false;
 	
 	/**
@@ -35,7 +36,8 @@ public class DemoController extends AgentAppController {
 	
 	/**
 	 * Checks whether the current environment is prepared for starting
-	 * simulation.
+	 * simulation. The associated {@link AgentAppFrame} uses this information
+	 * for enabling the run and step buttons. 
 	 */
 	public boolean isPrepared() {
 		return isPrepared;
@@ -79,7 +81,7 @@ public class DemoController extends AgentAppController {
 	 * environment if the simulation was canceled.
 	 * @param agentThread The thread which was used to run the agent.
 	 */
-	public void update(AgentThread agentThread) {
+	public void update(SimulationThread agentThread) {
 		if (agentThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;

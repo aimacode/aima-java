@@ -12,14 +12,17 @@ package aima.gui.framework;
  */
 public class SimpleAgentApp {
 	/**
-	 * Creates an agent application, makes the parts know each other, and
-	 * finally sets the frame visible.
+	 * Constructs an agent application and sets the application frame visible.
 	 */
 	public void startApplication() {
 		AgentAppFrame frame = constructApplicationFrame();
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Creates all parts of an agent application and makes the parts know each
+	 * other. Part construction is delegated to factory methods.
+	 */
 	public AgentAppFrame constructApplicationFrame() {
 		AgentAppEnvironmentView envView = createEnvironmentView();
 		AgentAppFrame frame = createFrame();

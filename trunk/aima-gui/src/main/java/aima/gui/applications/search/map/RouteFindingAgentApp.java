@@ -65,7 +65,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 
 		/** Creates a new frame. */
 		public RouteFindingAgentFrame() {
-			setTitle("RPA - the Route Planning Agent");
+			setTitle("RFA - the Route Finding Agent");
 			setSelectorItems(SCENARIO_SEL, new String[] {
 					"S1 (Romania, from Arad)", "S2 (Romania, from Lugoj)",
 					"S3 (Romania, from Fagaras)",
@@ -206,25 +206,20 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Creates a new agent if no agent exists in the current environment
-		 * and executes one step.
+		 * Creates a new agent and adds it to the scenario's environment.
 		 */
 		@Override
-		public void step(MessageLogger logger) {
-			MapEnvironment env = scenario.getEnv();
-			if (env.getAgents().isEmpty()) {
-				if (destinations.size() != 1) {
-					logger.log("Error: This agent requires exact one destination.");
-					return;
-				}
-				String goal = destinations.get(0);
-				MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
-				env.addAgent(agent, scenario.getInitAgentLocation());
+		public void initAgents(MessageLogger logger) {
+			if (destinations.size() != 1) {
+				logger.log("Error: This agent requires exact one destination.");
+				return;
 			}
-			env.step();
+			MapEnvironment env = scenario.getEnv();
+			String goal = destinations.get(0);
+			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
+			env.addAgent(agent, scenario.getInitAgentLocation());
 		}
 	}
-	
 
 	/**
 	 * Returns always the heuristic value 0.

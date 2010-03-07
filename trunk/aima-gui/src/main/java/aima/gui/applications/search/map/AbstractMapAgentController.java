@@ -5,11 +5,12 @@ import java.util.List;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentThread;
 import aima.gui.framework.MessageLogger;
+import aima.gui.framework.SimulationThread;
 
 /**
  * Provides a useful base class for agent application controller implementations
@@ -23,7 +24,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/** A scenario. */
 	protected Scenario scenario;
 	/**
-	 * Some location names. For route planning problems, only one location
+	 * Some location names. For route finding problems, only one location
 	 * should be specified.
 	 */
 	protected List<String> destinations;
@@ -31,6 +32,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	protected aima.core.search.framework.Search search;
 	/** Heuristic function to be used when performing informed search. */
 	protected AdaptableHeuristicFunction heuristic;
+	/** Is the scenario up to date? */
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
 	protected long sleepTime = 500l;
@@ -64,7 +66,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	
 	/**
 	 * Checks whether the current scenario contains an environment which is
-	 * not done.
+	 * ready for simulation (no agents or not done).
 	 */
 	public boolean isPrepared() {
 		return isPrepared && (scenario.getEnv().getAgents().isEmpty()
@@ -72,29 +74,41 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	}
 	
 	/**
-	 * Executes steps as long as method {@link #isPrepared()} 
-	 * returns true and sends some messages to the logger.
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and
+	 * then starts simulation until done.
 	 */
-	@Override
 	public void run(MessageLogger logger) {
 		logger.log("<simulation-protocol>");
 		logger.log("search: " + search.getClass().getName());
 		if (heuristic != null)
-			logger.log
-			("heuristic: " + heuristic.getClass().getName());
+			logger.log("heuristic: " + heuristic.getClass().getName());
+		MapEnvironment env = scenario.getEnv();
+		if (env.getAgents().isEmpty())
+			initAgents(logger);
 		try {
-			while (isPrepared()) {
+			while (!env.isDone()) {
 				Thread.sleep(sleepTime);
-				step(logger);
+				env.step();
 			}
 		} catch (InterruptedException e) {}
 		logger.log("</simulation-protocol>\n");
 	}
-
+	
+	/**
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and
+	 * then executes one simulation step.
+	 */
+	@Override
+	public void step(MessageLogger logger) {
+		MapEnvironment env = scenario.getEnv();
+		if (env.getAgents().isEmpty())
+			initAgents(logger);
+		env.step();
+	}
 		
 	/** Updates the status of the frame. */
-	public void update(AgentThread agentThread) {
-		if (agentThread.isCanceled()) {
+	public void update(SimulationThread simulationThread) {
+		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
 		} else {
@@ -136,9 +150,9 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	abstract protected AdaptableHeuristicFunction createHeuristic(int heuIdx);
 
 	/**
-	 * Responsible for performing one step during simulation. If no
-	 * agent exists in the current environment, implementations should
-	 * create and add agents according to the user settings.
+	 * Primitive operation, responsible for creating new agents and adding
+	 * them to the current environment.
 	 */
-	public abstract void step(MessageLogger logger);
+	protected abstract void initAgents(MessageLogger logger);
+	
 }

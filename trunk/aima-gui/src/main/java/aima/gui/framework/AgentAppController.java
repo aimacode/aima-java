@@ -55,7 +55,7 @@ public abstract class AgentAppController {
 	 * have finished. Implementations are responsible for displaying status
 	 * information in the frame and also for cleaning up the prepared
 	 * environment if the simulation was canceled.
-	 * @param agentThread The thread which was used to run the agent.
+	 * @param simulationThread The thread which was used to run the simulation.
 	 */
-	public abstract void update(AgentThread agentThread);
+	public abstract void update(SimulationThread simulationThread);
 }
