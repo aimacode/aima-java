@@ -98,7 +98,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 			visitedStates.clear();
 			List<MapNode> marks = map.getMapData().getMarks();
 			if (marks.size() < 2) {
-				logger.log("Error: Please set two marks with MouseLeft.");
+				logger.log("Error: Please set two marks with mouse-left.");
 				return;
 			}
 			String[] locs = new String[2];
