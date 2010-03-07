@@ -8,7 +8,7 @@ import aima.core.environment.vacuum.TableDrivenVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.AgentThread;
+import aima.gui.framework.SimulationThread;
 import aima.gui.framework.MessageLogger;
 
 /**
@@ -20,7 +20,7 @@ public class VacuumController extends AgentAppController {
 	protected AbstractAgent agent = null;
 	protected boolean isPrepared = false;
 	
-	/** Prepare next simulation. */
+	/** Prepares next simulation if that makes sense. */
 	@Override
 	public void clear() {
 		if (!isPrepared())
@@ -28,9 +28,8 @@ public class VacuumController extends AgentAppController {
 	}
 
 	/**
-	 * Creates a vacuum agent and a corresponding environment based on the
-	 * selection state of the selectors and finally passes the
-	 * environment to the viewer.
+	 * Creates a vacuum environment and a corresponding agent based on the
+	 * state of the selectors and finally passes the environment to the viewer.
 	 */
 	@Override
 	public void prepare(String changedSelector) {
@@ -63,13 +62,13 @@ public class VacuumController extends AgentAppController {
 		}
 	}
 	
-	/** Checks whether a step can be executed. */
+	/** Checks whether simulation can be started. */
 	@Override
 	public boolean isPrepared() {
 		return isPrepared && !env.isDone();
 	}
 
-	/** Starts the agent. */
+	/** Starts simulation. */
 	@Override
 	public void run(MessageLogger logger) {
 		logger.log("<simulation-log>");
@@ -84,15 +83,15 @@ public class VacuumController extends AgentAppController {
 		logger.log("</simulation-log>\n");
 	}
 
-	/** Executes one step. */
+	/** Executes one simulation step. */
 	@Override
 	public void step(MessageLogger logger) {
 		env.step();
 	}
 
-	/** Updates the status of the frame after the agent has finished its work. */
-	public void update(AgentThread agentThread) {
-		if (agentThread.isCanceled()) {
+	/** Updates the status of the frame after simulation has finished. */
+	public void update(SimulationThread simulationThread) {
+		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
 		} else {

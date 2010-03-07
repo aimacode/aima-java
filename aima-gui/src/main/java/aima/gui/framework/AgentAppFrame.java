@@ -33,10 +33,15 @@ public class AgentAppFrame extends JFrame {
 
 	/** The controller, which executes the domain-level commands. */
 	protected AgentAppController controller;
-	/** Thread running the agent. */
-	private AgentThread agentThread;
+	/** Background thread for simulation. */
+	private SimulationThread simulationThread;
 	/** Contains selector specification and resulting comboboxes. */
 	private SelectorContainer selectors;
+	/**
+	 * Listens to all button events and delegates most of the work to the
+	 * controller.
+	 */
+	protected FrameActionListener actionListener;
 
 	private JToolBar toolbar;
 	private JButton clearButton;
@@ -44,15 +49,15 @@ public class AgentAppFrame extends JFrame {
 	private JButton runButton;
 	private JButton stepButton;
 	private JButton cancelButton;
-
-	JSplitPane centerPane;
-	MessageLoggerPanel messageLogger;
-	protected AgentAppEnvironmentView envView;
-
 	private JLabel statusLabel;
+	
+	protected JSplitPane centerPane;
+	private MessageLoggerPanel messageLogger;
+	private AgentAppEnvironmentView envView;
 
 	/** Standard constructor. */
 	public AgentAppFrame() {
+		actionListener = new FrameActionListener();
 		initComponents();
 		pack();
 		// redirect the standard output into the text area
@@ -146,17 +151,17 @@ public class AgentAppFrame extends JFrame {
 		statusLabel.setText(status);
 	}
 
-	/** Returns the current agent thread or null (no simulation running). */
-	protected AgentThread getAgentThread() {
-		return agentThread;
+	/** Returns the current simulation thread or null (no simulation running). */
+	protected SimulationThread getSimulationThread() {
+		return simulationThread;
 	}
 	
 	/**
 	 * Sets the current agent thread and updates the enabled state.
 	 * @param agentThread A thread or null
 	 */
-	protected void setAgentThread(AgentThread agentThread) {
-		this.agentThread = agentThread;
+	protected void setSimulationThread(SimulationThread thread) {
+		simulationThread = thread;
 		updateEnabledState();
 	}
 	
@@ -179,19 +184,19 @@ public class AgentAppFrame extends JFrame {
 
 		clearButton = new JButton("Clear");
 		clearButton.setToolTipText("Clear Views");
-		clearButton.addActionListener(new FrameActionListener());
+		clearButton.addActionListener(actionListener);
 		toolbar.add(clearButton);
 		prepareButton = new JButton("Prepare");
-		prepareButton.setToolTipText("Prepare Agent");
-		prepareButton.addActionListener(new FrameActionListener());
+		prepareButton.setToolTipText("Prepare Simulation");
+		prepareButton.addActionListener(actionListener);
 		toolbar.add(prepareButton);
 		runButton = new JButton("Run");
-		runButton.setToolTipText("Run Agent");
-		runButton.addActionListener(new FrameActionListener());
+		runButton.setToolTipText("Run Simulation");
+		runButton.addActionListener(actionListener);
 		toolbar.add(runButton);
 		stepButton = new JButton("Step");
-		stepButton.setToolTipText("Execute Step");
-		stepButton.addActionListener(new FrameActionListener());
+		stepButton.setToolTipText("Execute Simulation Step");
+		stepButton.addActionListener(actionListener);
 		toolbar.add(stepButton);
 		contentPanel.add(toolbar, java.awt.BorderLayout.NORTH);
 
@@ -208,17 +213,17 @@ public class AgentAppFrame extends JFrame {
 		statusLabel.setBorder(new javax.swing.border.EtchedBorder()); // BevelBorder
 		statusPanel.add(statusLabel, BorderLayout.CENTER);
 		cancelButton = new JButton("Cancel");
-		cancelButton.setToolTipText("Cancel Agent");
-		cancelButton.addActionListener(new FrameActionListener());
+		cancelButton.setToolTipText("Cancel Simulation");
+		cancelButton.addActionListener(actionListener);
 		cancelButton.setPreferredSize(new java.awt.Dimension(80, 20));
 		cancelButton.setBorder(new javax.swing.border.EtchedBorder());
 		statusPanel.add(cancelButton, BorderLayout.EAST);
 		contentPanel.add(statusPanel, BorderLayout.SOUTH);
 	}
 
-	/** Enables/disables all combos and buttons. */
+	/** Enables/disables combos and buttons. */
 	public void updateEnabledState() {
-		boolean b = (getAgentThread() == null);
+		boolean b = (getSimulationThread() == null);
 		boolean prep = b && controller != null && controller.isPrepared();
 		clearButton.setEnabled(b);
 		prepareButton.setEnabled(b);
@@ -229,7 +234,7 @@ public class AgentAppFrame extends JFrame {
 			combo.setEnabled(b);
 	}
 
-	/** Tells the controller to prepare the agent. */
+	/** Tells the controller to prepare simulation and updates enabled state. */
 	protected void selectionChanged(String changedSelector) {
 		if (controller != null) {
 			controller.prepare(changedSelector);
@@ -256,23 +261,23 @@ public class AgentAppFrame extends JFrame {
 						statusLabel.setText("");
 						controller.clear();
 					} else if (source == prepareButton) {
-						err = "when preparing the agent ";
+						err = "when preparing simulation ";
 						controller.prepare(null);
 					} else if (source == runButton) {
-						err = "when running the agent ";
+						err = "when running simulation ";
 						setStatus("");
-						setAgentThread(new AgentThread
+						setSimulationThread(new SimulationThread
 								(AgentAppFrame.this, controller, false));
-						getAgentThread().start();
+						getSimulationThread().start();
 					} else if (source == stepButton) {
-						err = "when executing step ";
+						err = "when executing simulation step ";
 						setStatus("");
-						setAgentThread(new AgentThread
+						setSimulationThread(new SimulationThread
 								(AgentAppFrame.this, controller, true));
-						getAgentThread().start();
+						getSimulationThread().start();
 					} else if (source == cancelButton) {
-						err = "when cancelling the agent ";
-						AgentThread at = getAgentThread();
+						err = "when canceling simulation ";
+						SimulationThread at = getSimulationThread();
 						if (at != null) {
 							if (!at.isCanceled()) {
 								at.interrupt();
@@ -280,7 +285,7 @@ public class AgentAppFrame extends JFrame {
 								// agent has ignored the interrupt
 								at.stop();
 								setStatus("Task stopped.");
-								setAgentThread(null);
+								setSimulationThread(null);
 							}	
 						}
 					} else if (selectors.combos.contains(source)) {
@@ -312,7 +317,7 @@ public class AgentAppFrame extends JFrame {
 			combos.clear();
 			for (int i = 0; i < selectorNames.length; i++) {
 				JComboBox combo = new JComboBox();
-				combo.addActionListener(new FrameActionListener());
+				combo.addActionListener(actionListener);
 				combos.add(combo);
 				toolbar.add(combo, i);
 				if (tooltips != null)

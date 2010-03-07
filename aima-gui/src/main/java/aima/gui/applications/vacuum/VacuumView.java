@@ -37,8 +37,8 @@ public class VacuumView extends EmptyEnvironmentView {
 	
 	/**
 	 * Creates a 2D-graphics showing the agent in its environment. Locations
-	 * are represented as rectangles, dirt as grey ovals, and the agent as
-	 * red circle.
+	 * are represented as rectangles, dirt as grey background color, and the
+	 * agent as red Pacman.
 	 */
 	@Override
 	public void paint(java.awt.Graphics g) {
@@ -59,7 +59,7 @@ public class VacuumView extends EmptyEnvironmentView {
 			g2.drawString(location.toString(), x(11 * i) + 10, y(0) + 20);
 			if (agent != null) {
 				Action action = lastActions.get(agent);
-				g2.setColor(Color.red);
+				g2.setColor(Color.RED);
 				if (action == null || !((DynamicAction) action).getAttribute("name").equals("Suck")) 
 					g2.fillArc(x(11 * i + 2), y(2), scale(6), scale(6),
 							200, 320);

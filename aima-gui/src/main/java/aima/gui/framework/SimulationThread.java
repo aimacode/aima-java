@@ -4,18 +4,21 @@ import javax.swing.SwingUtilities;
 
 import aima.core.util.CancelableThread;
 
-/** Thread, which is used to run agents in background. */
-public class AgentThread extends CancelableThread {
+/** Background thread, which is used for simulation. */
+public class SimulationThread extends CancelableThread {
 	private AgentAppFrame frame;
 	private AgentAppController controller;
+	/** Decides whether the controller's run or step method is called. */
 	private boolean stepMode;
 	
-	public AgentThread(AgentAppFrame frame, AgentAppController controller, boolean stepMode) {
+	/** Standard constructor. */
+	public SimulationThread(AgentAppFrame frame, AgentAppController controller, boolean stepMode) {
 		this.frame = frame;
 		this.controller = controller;
 		this.stepMode = stepMode;
 	}
 	
+	/** Cancels and interrupts the thread. */
 	@Override
 	public void interrupt() {
 		cancel();
@@ -23,7 +26,7 @@ public class AgentThread extends CancelableThread {
 	}
 	
 	/**
-	 * Calls the run method of the controller and then lets the
+	 * Calls the run or step method of the controller and then lets the
 	 * event dispatching thread perform the update method.
 	 */
 	@Override
@@ -42,8 +45,8 @@ public class AgentThread extends CancelableThread {
 		try {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					controller.update(AgentThread.this);
-					frame.setAgentThread(null);
+					controller.update(SimulationThread.this);
+					frame.setSimulationThread(null);
 				}
 			});
 		} catch(Exception e) {
