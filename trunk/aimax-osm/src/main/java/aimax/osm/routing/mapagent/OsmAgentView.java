@@ -5,7 +5,6 @@ import java.awt.Color;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
