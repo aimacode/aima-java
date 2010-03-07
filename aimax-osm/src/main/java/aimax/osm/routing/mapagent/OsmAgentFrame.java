@@ -3,12 +3,12 @@ package aimax.osm.routing.mapagent;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.applications.search.map.MapAgentFrame;
 
-/** Simple frame which embeds the OSM viewer as agent view. */
+/** Simple frame for running map agents in maps defined by OSM data. */
 public class OsmAgentFrame extends MapAgentFrame {
 
 	/** Creates a new frame. */
 	public OsmAgentFrame(OsmMapAdapter map) {
-		setTitle("OAS - the Osm Agent Simulator");
+		setTitle("OMAS - the Osm Map Agent Simulator");
 		setSelectors(new String[]{
 				SCENARIO_SEL, AGENT_SEL,
 				SEARCH_SEL, SEARCH_MODE_SEL, HEURISTIC_SEL},

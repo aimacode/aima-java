@@ -3,6 +3,11 @@ package aimax.osm.routing.mapagent;
 import aima.core.util.datastructure.Point2D;
 import aimax.osm.data.Position;
 
+/**
+ * Special <code>Point2D</code> implementation which provides correct
+ * distance values in kilometer for geographical positions (x=lon and y=lat).
+ * @author R. Lunde
+ */
 public class PointLatLon extends Point2D {
 	public PointLatLon(double lat, double lon) {
 		super(lon, lat);

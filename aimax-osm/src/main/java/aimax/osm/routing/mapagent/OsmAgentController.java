@@ -18,13 +18,13 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.applications.search.SearchFactory;
 import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentThread;
+import aima.gui.framework.SimulationThread;
 import aima.gui.framework.MessageLogger;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
 
-/** Controller for a graphical OSM agent application. */
+/** Controller for graphical OSM map agent applications. */
 public class OsmAgentController extends AgentAppController {
 	
 	protected OsmMapAdapter map;
@@ -114,7 +114,7 @@ public class OsmAgentController extends AgentAppController {
 			initAgents(logger);
 		try {
 			while (!env.isDone()) {
-				Thread.sleep(20);
+				Thread.sleep(sleepTime);
 				env.step();
 			}
 		} catch (InterruptedException e) {}
@@ -164,8 +164,8 @@ public class OsmAgentController extends AgentAppController {
 	}
 	
 	/** Updates the status of the frame. */
-	public void update(AgentThread agentThread) {
-		if (agentThread.isCanceled()) {
+	public void update(SimulationThread simulationThread) {
+		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
 		} else {
