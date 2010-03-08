@@ -52,12 +52,12 @@ public class DemoController extends AgentAppController {
 	public void run(MessageLogger logger) {
 		logger.log("running...");
 		try {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 10 && !frame.simulationPaused(); i++) {
 				Thread.sleep(500);
 				logger.log(i + " ...");
 			}
 		} catch (InterruptedException e) {}
-		isPrepared = false;
+		isPrepared = frame.simulationPaused();
 	}
 	
 	/**
@@ -85,6 +85,8 @@ public class DemoController extends AgentAppController {
 		if (agentThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
+		} else if (frame.simulationPaused()){
+			frame.setStatus("Task paused.");
 		} else {
 			frame.setStatus("Task completed.");
 		}

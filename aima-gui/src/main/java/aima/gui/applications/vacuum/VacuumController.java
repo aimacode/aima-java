@@ -73,7 +73,7 @@ public class VacuumController extends AgentAppController {
 	public void run(MessageLogger logger) {
 		logger.log("<simulation-log>");
 		try {
-			while (!env.isDone()) {
+			while (!env.isDone() && !frame.simulationPaused()) {
 				Thread.sleep(500);
 				env.step();
 			}
@@ -94,6 +94,8 @@ public class VacuumController extends AgentAppController {
 		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
+		} else if (frame.simulationPaused()){
+			frame.setStatus("Task paused.");
 		} else {
 			frame.setStatus("Task completed.");
 		}
