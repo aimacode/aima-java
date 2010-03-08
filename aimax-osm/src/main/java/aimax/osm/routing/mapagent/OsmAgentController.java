@@ -113,7 +113,7 @@ public class OsmAgentController extends AgentAppController {
 		if (env.getAgents().isEmpty())
 			initAgents(logger);
 		try {
-			while (!env.isDone()) {
+			while (!env.isDone() && !frame.simulationPaused()) {
 				Thread.sleep(sleepTime);
 				env.step();
 			}
@@ -168,6 +168,8 @@ public class OsmAgentController extends AgentAppController {
 		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
+		} else if (frame.simulationPaused()){
+			frame.setStatus("Task paused.");
 		} else {
 			StringBuffer statusMsg = new StringBuffer();
 			statusMsg.append("Task completed");
