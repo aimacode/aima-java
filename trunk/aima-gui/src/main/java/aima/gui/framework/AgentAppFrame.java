@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 /**
@@ -47,6 +48,7 @@ public class AgentAppFrame extends JFrame {
 	private JButton clearButton;
 	private JButton prepareButton;
 	private JButton runButton;
+	private JToggleButton pauseButton;
 	private JButton stepButton;
 	private JButton cancelButton;
 	private JLabel statusLabel;
@@ -165,6 +167,11 @@ public class AgentAppFrame extends JFrame {
 		updateEnabledState();
 	}
 	
+	/** Returns true if simulation was paused by button. */
+	public boolean simulationPaused() {
+		return pauseButton.isSelected();
+	}
+	
 	/** Assembles the inner structure of the frame. */
 	private void initComponents() {
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -194,6 +201,10 @@ public class AgentAppFrame extends JFrame {
 		runButton.setToolTipText("Run Simulation");
 		runButton.addActionListener(actionListener);
 		toolbar.add(runButton);
+		pauseButton = new JToggleButton("Pause");
+		pauseButton.setToolTipText("Pause Simulation");
+		pauseButton.addActionListener(actionListener);
+		toolbar.add(pauseButton);
 		stepButton = new JButton("Step");
 		stepButton.setToolTipText("Execute Simulation Step");
 		stepButton.addActionListener(actionListener);
@@ -228,6 +239,8 @@ public class AgentAppFrame extends JFrame {
 		clearButton.setEnabled(b);
 		prepareButton.setEnabled(b);
 		runButton.setEnabled(prep);
+		if (b) pauseButton.setSelected(false);
+		pauseButton.setEnabled(!b);
 		stepButton.setEnabled(prep);
 		cancelButton.setEnabled(!b);
 		for (JComboBox combo : selectors.combos)
