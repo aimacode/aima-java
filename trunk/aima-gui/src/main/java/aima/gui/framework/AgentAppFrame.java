@@ -167,7 +167,7 @@ public class AgentAppFrame extends JFrame {
 		updateEnabledState();
 	}
 	
-	/** Returns true if simulation was paused by button. */
+	/** Returns true if simulation pause button was pressed. */
 	public boolean simulationPaused() {
 		return pauseButton.isSelected();
 	}
