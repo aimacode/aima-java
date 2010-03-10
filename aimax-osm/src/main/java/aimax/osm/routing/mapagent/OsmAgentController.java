@@ -37,7 +37,7 @@ public class OsmAgentController extends AgentAppController {
 	protected List<String> markedLocations;
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
-	protected long sleepTime = 20l;
+	protected long sleepTime = 0l;
 	
 	public OsmAgentController(OsmMapAdapter map) {
 		this.map = map;

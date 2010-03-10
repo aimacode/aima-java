@@ -9,9 +9,13 @@ import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
+import aima.core.search.online.LRTAStarAgent;
+import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.datastructure.Point2D;
+import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.MessageLogger;
@@ -74,7 +78,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		SDFrame(OsmMapAdapter map) {
 			super(map);
 			setTitle("OSDA - the OSM Search Demo Agent Application");
-			this.setSelectorItems(AGENT_SEL, new String[]{}, -1);
+			//this.setSelectorItems(AGENT_SEL, new String[]{}, -1);
 		}
 	}
 	
@@ -93,25 +97,58 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 			super.prepare(changedSelector);
 		}
 		
+//		/** Creates new agents and adds them to the current environment. */
+//		public void initAgents(MessageLogger logger) {
+//			visitedStates.clear();
+//			List<MapNode> marks = map.getMapData().getMarks();
+//			if (marks.size() < 2) {
+//				logger.log("Error: Please set two marks with mouse-left.");
+//				return;
+//			}
+//			String[] locs = new String[2];
+//			for (int i = 0; i < 2; i++) {
+//				MapNode node = (i==0) ? marks.get(0) : marks.get(marks.size()-1);
+//				Point2D pt = new Point2D(node.getLon(), node.getLat());
+//				locs[i] = map.getNearestLocation(pt);
+//			}
+//			heuristic.adaptToGoal(locs[1], map);
+//			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
+//			env.addAgent(agent, locs[0]);
+//		}
+	
 		/** Creates new agents and adds them to the current environment. */
-		public void initAgents(MessageLogger logger) {
-			visitedStates.clear();
+		protected void initAgents(MessageLogger logger) {
 			List<MapNode> marks = map.getMapData().getMarks();
 			if (marks.size() < 2) {
 				logger.log("Error: Please set two marks with mouse-left.");
 				return;
 			}
-			String[] locs = new String[2];
-			for (int i = 0; i < 2; i++) {
-				MapNode node = (i==0) ? marks.get(0) : marks.get(marks.size()-1);
+			visitedStates.clear();
+			String[] locs = new String[marks.size()];
+			for (int i = 0; i < marks.size(); i++) {
+				MapNode node = marks.get(i);
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locs[i] = map.getNearestLocation(pt);
 			}
 			heuristic.adaptToGoal(locs[1], map);
-			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
+			Agent agent = null;
+			MapAgentFrame.SelectionState state = frame.getSelection();
+			switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
+			case 0:
+				agent = new SDMapAgent(env, search, new String[] { locs[1] });
+				break;
+			case 1:
+				Problem p = new BidirectionalMapProblem(map, null, locs[1]);
+				OnlineSearchProblem osp = new OnlineSearchProblem
+				(p.getActionsFunction(), p.getGoalTest(), p.getStepCostFunction());
+				agent = new LRTAStarAgent
+				(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+				break;
+			}
 			env.addAgent(agent, locs[0]);
 		}
 	}
+	
 	
 	/** Variant of the <code>MapAgent</code>. */
 	private static class SDMapAgent extends MapAgent {
