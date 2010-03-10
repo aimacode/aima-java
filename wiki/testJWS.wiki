@@ -1,0 +1,3 @@
+JWS Test
+
+[http://aima-java.googlecode.com/svn/trunk/aima-all/release/aima-gui-VacuumApp.jnlp Vacuum Demo App]
