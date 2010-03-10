@@ -48,8 +48,8 @@ public class AgentAppFrame extends JFrame {
 	private JButton clearButton;
 	private JButton prepareButton;
 	private JButton runButton;
-	private JToggleButton pauseButton;
 	private JButton stepButton;
+	private JToggleButton pauseButton;
 	private JButton cancelButton;
 	private JLabel statusLabel;
 	
@@ -201,14 +201,14 @@ public class AgentAppFrame extends JFrame {
 		runButton.setToolTipText("Run Simulation");
 		runButton.addActionListener(actionListener);
 		toolbar.add(runButton);
-		pauseButton = new JToggleButton("Pause");
-		pauseButton.setToolTipText("Pause Simulation");
-		pauseButton.addActionListener(actionListener);
-		toolbar.add(pauseButton);
 		stepButton = new JButton("Step");
 		stepButton.setToolTipText("Execute Simulation Step");
 		stepButton.addActionListener(actionListener);
 		toolbar.add(stepButton);
+		pauseButton = new JToggleButton("Pause");
+		pauseButton.setToolTipText("Pause Simulation");
+		pauseButton.addActionListener(actionListener);
+		toolbar.add(pauseButton);
 		contentPanel.add(toolbar, java.awt.BorderLayout.NORTH);
 
 		messageLogger = new MessageLoggerPanel();
