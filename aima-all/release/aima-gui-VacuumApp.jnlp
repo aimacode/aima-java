@@ -5,9 +5,9 @@
     <description>Vacuum Demo Application</description>      
     <vendor>AIMA3e-Java Open Source Project</vendor>    
     <homepage href="http://code.google.com/p/aima-java/"/> 
-    <!-- <icon href="images/todo.jpg"/> -->   
-    <!-- <icon kind="splash" href="images/splash.gif"/> -->   
-    <offline-allowed/>     
+    <icon href="aima3e.jpg"/>
+    <icon kind="splash" href="aima3ebig.gif"/>
+    <offline-allowed/>
   </information>  
   <security>      
     <all-permissions/>
