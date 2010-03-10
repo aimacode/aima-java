@@ -96,25 +96,6 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 			visitedStates.clear();
 			super.prepare(changedSelector);
 		}
-		
-//		/** Creates new agents and adds them to the current environment. */
-//		public void initAgents(MessageLogger logger) {
-//			visitedStates.clear();
-//			List<MapNode> marks = map.getMapData().getMarks();
-//			if (marks.size() < 2) {
-//				logger.log("Error: Please set two marks with mouse-left.");
-//				return;
-//			}
-//			String[] locs = new String[2];
-//			for (int i = 0; i < 2; i++) {
-//				MapNode node = (i==0) ? marks.get(0) : marks.get(marks.size()-1);
-//				Point2D pt = new Point2D(node.getLon(), node.getLat());
-//				locs[i] = map.getNearestLocation(pt);
-//			}
-//			heuristic.adaptToGoal(locs[1], map);
-//			Agent agent = new SDMapAgent(env, search, new String[] { locs[1] });
-//			env.addAgent(agent, locs[0]);
-//		}
 	
 		/** Creates new agents and adds them to the current environment. */
 		protected void initAgents(MessageLogger logger) {
