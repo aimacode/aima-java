@@ -1,3 +1,3 @@
 JWS Test
 
-[http://www.ai.sri.com/~oreilly/aima3ejava/aima-gui-VacuumApp.html Vacuum Demo App]
+[http://www.ai.sri.com/~oreilly/aima3ejava/aima-gui-VacuumApp.html AIMA Java Demo Applications]
