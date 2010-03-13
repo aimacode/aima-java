@@ -42,21 +42,10 @@ mark setting, and track definition. For routing, at least two marks
 must be set.
 
 
-== Current Release: 0.9.0-AIMAX-OSM Map Style Redesign ==
-
-0.9.0-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
-Major refactorings
- * Responsibility for map entity classification moved from presentation to application layer.
- * Classification mechanism for mapping map entities on style parameters extended
-   (now more than one attribute can be checked).
- * kd-tree is now aware of minimal scales of entities.
-Additionally, several code cleanups and documentation updates are included.
- 
-New features 
- * Performance of the viewer improved for large maps.
- * Default map style improved, especially for alpine maps.
- * Find function for map entity search improved (checks also attribute names and values).
- * MiniNavi now performs routing in background thread, which can be canceled.
+== Current Release: 0.9.1-AIMAX-OSM GUI Updates ==
+0.9.1-AIMAX-OSM GUI Updates : 15 Mar 2010 :<br>
+   * Code updated to correspond with changes in AIMA-GUI 0.1.3 release.
+   * Offline search now available in OSM search demo application.
 
 == Keywords ==
 
@@ -122,6 +111,20 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
   * provides a base for GPS navigation system development
   
 = Change History (Update in reverse chronological order) =
+0.9.0-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
+Major refactorings
+ * Responsibility for map entity classification moved from presentation to application layer.
+ * Classification mechanism for mapping map entities on style parameters extended
+   (now more than one attribute can be checked).
+ * kd-tree is now aware of minimal scales of entities.
+Additionally, several code cleanups and documentation updates are included.
+ 
+New features 
+ * Performance of the viewer improved for large maps.
+ * Default map style improved, especially for alpine maps.
+ * Find function for map entity search improved (checks also attribute names and values).
+ * MiniNavi now performs routing in background thread, which can be canceled.
+
 0.1.2-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
 Minor updates/defect fixes/clean up to project release:
  * Java Doc now uses newer package-info.java mechanism.
