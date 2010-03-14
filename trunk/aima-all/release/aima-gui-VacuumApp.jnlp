@@ -5,18 +5,17 @@
     <description>Vacuum Demo Application</description>      
     <vendor>AIMA3e-Java Open Source Project</vendor>    
     <homepage href="http://code.google.com/p/aima-java/"/> 
-    <icon href="aima3e.jpg"/>
-    <icon kind="splash" href="aima3ebig.gif"/>
+    <icon href="images/aima3e.jpg"/>
+    <icon kind="splash" href="images/aima3ebig.jpg"/>
     <offline-allowed/>
   </information>  
   <security>      
     <all-permissions/>
   </security>  
   <resources>    
-    <j2se version="1.6+"/>    
-    <jar href="aima-core.jar"/>  
-    <jar href="aima-gui.jar"/> 
-    <jar href="aimax-osm.jar"/> 
+    <j2se version="1.6.0_17" href="http://java.sun.com/products/autodl/j2se"/>     
+    <jar href="jars/aima-core.jar"/>  
+    <jar href="jars/aima-gui.jar"/>
   </resources>  
   <application-desc main-class="aima.gui.applications.vacuum.VacuumApp" />
 </jnlp> 
