@@ -128,7 +128,8 @@ public class AimaDemoFrame extends JFrame {
 				Object instance = appClass.newInstance();
 				Method m = appClass.getMethod("constructApplicationFrame", new Class[0]);
 				AgentAppFrame af = (AgentAppFrame) m.invoke(instance, null);
-				currPanel = (JComponent) af.getComponent(0);
+				currPanel = (JComponent) af.getContentPane().getComponent(0);
+				af.getContentPane().remove(currPanel);
 				getContentPane().add(currPanel, BorderLayout.CENTER);
 				validate();
 			} catch (Exception e) {
