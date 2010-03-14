@@ -48,6 +48,7 @@ public class AIMADemoApp {
 		AimaDemoFrame frame = new AimaDemoFrame();
 		registerDemos(frame);
 		frame.setSize(1000, 600);
+		frame.setTitle("Artificial Intelligence a Modern Approach 3rd ed. Java Demos (AIMA3e-Java)");
 		frame.setVisible(true);
 	}
 }
