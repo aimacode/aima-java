@@ -19,7 +19,7 @@ import aima.gui.demo.search.TicTacToeDemo;
  * The all-in-one demo application. Shows everything within one frame.
  * @author R. Lunde
  */
-public class AimaDemoApp3 {
+public class AimaDemoApp {
 
 	/** Registers console program demos and applications. */
 	public static void registerDemos(AimaDemoFrame frame) {
