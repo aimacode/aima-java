@@ -81,10 +81,104 @@
   <td><hr /></td>
 </tr>
 <tr>
-  <td width="20%" align="center" valign="top"><a href="aima-gui-RouteFindingAgentApp.jnlp"><img src="images/routefindingagentapp.png" /></a></td>
+  <td width="20%" align="center" valign="top">
+  <a name="route_finding_agent" />
+  <a href="aima-gui-RouteFindingAgentApp.jnlp"><img src="images/routefindingagentapp.png" /></a></td>
   <td valign="top"><a href="aima-gui-RouteFindingAgentApp.jnlp">Route Finding Agent</a> - An example of a route finding agent application.
   It provides a demonstration of the different agents/search algorithms described in chapters three and four of  <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, for tackling route 
   planning tasks within simplified map based environments.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the map and starting location from which the Agent is to start its route. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Destination Selector</td>
+  	<td>Drop down widget beside the 'Scenario Selector'. Used to select the location from the map that the Agent is to end its route. 
+   	</td>
+   </tr>  
+   <tr>
+  	<td valign="top">Agent Selector</td>
+  	<td>Drop down widget beside the 'Destination Selector'. Currently not used. 
+   	</td>
+   </tr> 
+   <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Agent Selector'. The different types of search strategy available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">Uniform Cost</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">Recursive Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+      </ul>
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Search Mode Selector</td>
+  	<td>Drop down widget beside the 'Search Strategy Selector'. The different types of search mode available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">Tree Search</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">Graph Search</a></li>
+      </ul>
+      These are applicable to configuring the general mechanism used by several of the Search Algorithms when traversing their
+      search spaces.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Heuristic Selector</td>
+  	<td>Drop down widget beside the 'Search Mode Selector'. To select a <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/HeuristicFunction.java">heuristic function</a>
+  	to be used by the selected search algorithm, if applicable (e.g. A*). 'H1=0' is equivalent to using no heuristic. 'H2=(sld to goal)' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application) 
+  	    and reset the agent and its environment if necessary.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to place the Agent back at its start location.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to calculate the route between the specified start and end location, and to traverse it.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-AIMADemoApps.jnlp"><img src="images/aimademoapps.png" /></a></td>
+  <td valign="top"><a href="aima-gui-AIMADemoApps.jnlp">AIMA Unified Demo Application</a> - A containing application for running the other
+  AIMA-GUI applications from within one GUI as well as the existing command line demos, which have their output redirected to a text widget when run. 
+  <br />
+  Note: The command line demos will be phased out as we develop more sophisticated GUIs to represent the functionality they
+  demonstrate.<br />
+  </td>
 </tr>
 <tr>
   <td></td>
@@ -96,7 +190,126 @@
 </tr>
 <tr>
   <td width="20%" align="center" valign="top"><a href="aimax-osm-OsmSearchDemoAgentApp.jnlp"><img src="images/osmsearchdemoagentapp.png" /></a></td>
-  <td valign="top"><a href="aimax-osm-OsmSearchDemoAgentApp.jnlp">OSM Agent Search Demo</a> - This application demonstrates how different search strategies explore the state space.
+  <td valign="top"><a href="aimax-osm-OsmSearchDemoAgentApp.jnlp">OSM Agent Search Demo</a> - This application demonstrates how different search strategies explore a complex search space. This is similar
+  to the AIMA-GUI <a href="#route_finding_agent">'Route Finding Agent'</a> application with the exception that it is using realistic map data to construct its environment, which has been obtained from 
+  the <a href="http://www.openstreetmap.org/">Open Street Map</a> repository. In addition, online as opposed to just offline search is supported. 
+  Clicking anywhere on the map will place a numbered marker/pin on the map indicating a point on the route the agent is to visit.
+  A minimum of two markers are required before the agent can calculate its route (i.e. a start and end location).
+  <a name="osmsearchsemoagentapp_navigation" />The following navigation and map control elements are available:
+  <table border="0">
+  <tr>
+  	<th align="left">Command</th>
+  	<th align="left">How To</th>
+  </tr>
+  <tr>
+  	<td valign="top">Pan Left,Right,Up, and Down</td>
+  	<td>Arrow keys. Mouse left click held down and drag.</td>
+  </tr>
+  <tr>
+  	<td valign="top">Zoom In</td>
+  	<td>Space bar. + key. Mouse scroll wheel.</td>
+  </tr>
+  <tr>
+  	<td valign="top">Zoom Out</td>
+  	<td>Ctrl+Space Bar. - key. Mouse scroll wheel.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Increase Symbol and Font Size</td>
+  	<td>Ctrl+'+ key'.</td>
+  </tr>  
+  <tr>
+  	<td valign="top">Decrease Symbol and Font Size</td>
+  	<td>Ctrl+'- key'.</td>
+  </tr>   
+  <tr>
+  	<td valign="top">Context Sensitive Command Menu</td>
+  	<td>Mouse right click. This will bring up a menu with the following options:
+  	<ul>
+  	  <li>Info: Will provide map entity information for the current mouse location on the map.</li>
+  	  <li>Mark: You may remove the currently selected Mark. Load previously saved marks or Save the current set of Marks on the map.</li>
+  	  <li>Clear M&T: Clear all the mark and track information (i.e. if the Agent has calculated a route) on the map.</li>
+  	  <li>Debug: Provides more visual feedback to help with debugging/tracing calculated routes.</li>
+  	<ul>
+  	</td>
+  </tr> 
+  </table>
+  In addition, the general widget controls are:
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the mode of transportation being used by the Agent. 
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Agent Selector</td>
+  	<td>Drop down widget beside the 'Scenario Selector'. Used to select between an Offline Agent (i.e. it calculates the full route
+  	before moving along it) or an <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java">Online search agent</a>, 
+  	which incrementally calculates its route as it moves through its environment. 
+   	</td>
+   </tr> 
+   <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Agent Selector'. The different types of search strategy available for offline search are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">Uniform Cost</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">Recursive Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+      </ul>
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Search Mode Selector</td>
+  	<td>Drop down widget beside the 'Search Strategy Selector'. The different types of search mode available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">Tree Search</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">Graph Search</a></li>
+      </ul>
+      These are applicable to configuring the general mechanism used by several of the Search Algorithms when traversing their
+      search spaces.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Heuristic Selector</td>
+  	<td>Drop down widget beside the 'Search Mode Selector'. To select a <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/HeuristicFunction.java">heuristic function</a>
+  	to be used by the selected search algorithm, if applicable (e.g. A*). 'H1=0' is equivalent to using no heuristic. 'H2=(sld to goal)' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application) 
+  	    and reset the agent and its environment if necessary.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to place the Agent back at its start location.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to calculate the route between the specified start and end location, and to traverse it.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
   </td>
 </tr>
 <tr>
@@ -106,7 +319,8 @@
 <tr>
   <td width="20%" align="center" valign="top"><a href="aimax-osm-MiniNaviApp.jnlp"><img src="images/mininaviapp.png" /></a></td>
   <td valign="top"><a href="aimax-osm-MiniNaviApp.jnlp">Mini Navigation App</a> - A little demo application which shows map and location information from a GPS connection, 
-  	  and additionally provides routing functionality.
+  	  and additionally provides routing functionality. 
+  	  Uses similar navigation controls as the <a href="#osmsearchsemoagentapp_navigation">OSM Agent Search Demo</a>.
   </td>
 </tr>
 <tr>
@@ -116,7 +330,7 @@
 <tr>
   <td width="20%" align="center" valign="top"><a href="aimax-osm-OsmViewerPlusApp.jnlp"><img src="images/osmviewerplusapp.png" /></a></td>
   <td valign="top"><a href="aimax-osm-OsmViewerPlusApp.jnlp">OSM Map Viewer Plus</a> - Adds a night view mode to the map viewer. Used to demonstrate how the Map Viewer can be 
-  	  easily extended.
+  	  easily extended. Uses similar navigation controls as the <a href="#osmsearchsemoagentapp_navigation">OSM Agent Search Demo</a>.
   </td>
 </tr>
 <tr>
