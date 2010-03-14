@@ -24,8 +24,8 @@ public class AimaDemoApp {
 	/** Registers console program demos and applications. */
 	public static void registerDemos(AimaDemoFrame frame) {
 		frame.addDemo(EightPuzzleDemo.class);
-		frame.addDemo(NQueensDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
+		frame.addDemo(NQueensDemo.class);
 		frame.addDemo(CSPDemo.class);
 		
 		frame.addDemo(TTEntailsDemo.class);
