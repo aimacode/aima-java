@@ -1,0 +1,18 @@
+=== CHECK LIST FOR CREATING AN AIMA-JAVA RELEASE ===
+
+--- Create the Release 
+*. Checkout the latest version of all the projects into a clean workspace.
+
+*. Ensure the revisions # in the build.properties files of each project are updated.
+
+*. Ensure the README.txt file in each project is updated to reflect the release (i.e.
+   update the 'Current Release' section at a minimum).
+   
+*. Commit changes to SVN server for each project updated.
+
+*. run the aima-all.release ant task from the aima-all project.
+
+--- Update the Java Web Start Applications
+
+
+--- Publish the Release
