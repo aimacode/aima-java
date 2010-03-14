@@ -1,6 +1,7 @@
 package aima.gui.framework;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
@@ -23,6 +24,8 @@ public class MessageLoggerPanel extends JPanel implements MessageLogger {
 		setLayout(new BorderLayout());
 		textArea = new JTextArea();
 		textArea.setEditable(false);
+		// Use a fixed width font to help make the output easier to read.
+		textArea.setFont(new Font(Font.MONOSPACED, textArea.getFont().getStyle(), 14));
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		add(scrollPane, BorderLayout.CENTER);
 		createPopupMenu();
