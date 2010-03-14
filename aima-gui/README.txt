@@ -6,6 +6,9 @@
 == Current Release: 0.1.3-AIMA-GUI Enhancements ==
 0.1.3-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
 New features added (inspired by course TDDC17)
+  * Added all command line demos and GUI demos to a
+    unified interface for running all of them from one
+    place.
   * Agent simulator now has step and pause button.
   * Logic for simulation control buttons improved.
   * Design of 2d vacuum view updated.
