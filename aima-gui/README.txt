@@ -24,7 +24,7 @@ Under the release/ directory you should find two jar files, aima-core.jar and ai
  * java -classpath aima-gui.jar aima.gui.applications.search.map.RouteFindingAgentApp
   * provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
  * java -jar aima-gui.jar
-  * this will run the default AIMADemoApp, this allows you to run the other applications from a central location as well as all of the current command line demos.
+  * this will run the default AimaDemoApp, this allows you to run the other applications from a central location as well as all of the current command line demos.
 
 The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
