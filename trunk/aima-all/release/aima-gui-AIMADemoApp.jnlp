@@ -17,5 +17,5 @@
     <jar href="jars/aima-core.jar"/>  
     <jar href="jars/aima-gui.jar"/>
   </resources>  
-  <application-desc main-class="aima.gui.applications.AIMADemoApp" />
+  <application-desc main-class="aima.gui.applications.AimaDemoApp" />
 </jnlp> 
