@@ -36,7 +36,7 @@ public class AimaDemoFrame extends JFrame {
 	}
 	
 	/**
-	 * Adds a new demo to the menu. The class is expected
+	 * Adds a new console program demo to the menu. The class is expected
 	 * to be part of a package and to provide a static main method.
 	 */
 	void addDemo(Class demoClass) {
@@ -45,8 +45,9 @@ public class AimaDemoFrame extends JFrame {
 	}
 
 	/**
-	 * Adds a new demo to the menu. The class is expected
-	 * to be part of a package and to provide a static main method.
+	 * Adds a new agent application to the menu. The class is expected
+	 * to be part of a package and to provide a
+	 * <code>constructApplicationFrame</code> method.
 	 */
 	void addApp(Class appClass) {
 		JMenuItem item = addAppToMenu(appMenu, appClass);
