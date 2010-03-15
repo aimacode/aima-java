@@ -3,8 +3,8 @@
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 0.1.3-AIMA-GUI Enhancements ==
-0.1.3-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
+== Current Release: 0.2.0-AIMA-GUI Enhancements ==
+0.2.0-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
 New features added (inspired by course TDDC17)
   * Added all command line demos and GUI demos to a
     unified interface for running all of them from one
