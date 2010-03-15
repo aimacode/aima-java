@@ -44,7 +44,7 @@ must be set.
 
 == Current Release: 0.9.1-AIMAX-OSM GUI Updates ==
 0.9.1-AIMAX-OSM GUI Updates : 15 Mar 2010 :<br>
-   * Code updated to correspond with changes in AIMA-GUI 0.1.3 release.
+   * Code updated to correspond with changes in AIMA-GUI 0.2.0 release.
    * Offline search now available in OSM search demo application.
 
 == Keywords ==
