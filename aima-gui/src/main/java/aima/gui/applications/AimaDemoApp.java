@@ -21,8 +21,11 @@ import aima.gui.demo.search.TicTacToeDemo;
  */
 public class AimaDemoApp {
 
-	/** Registers console program demos and applications. */
+	/** Registers agent applications and console program demos. */
 	public static void registerDemos(AimaDemoFrame frame) {
+		frame.addApp(VacuumApp.class);
+		frame.addApp(RouteFindingAgentApp.class);
+		
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
@@ -38,16 +41,12 @@ public class AimaDemoApp {
 		frame.addDemo(ProbabilityDemo.class);
 		
 		frame.addDemo(LearningDemo.class);
-		
-		frame.addApp(VacuumApp.class);
-		frame.addApp(RouteFindingAgentApp.class);
 	}
 	
 	/** Starts the demo. */
 	public static void main(String[] args) {
 		AimaDemoFrame frame = new AimaDemoFrame();
 		registerDemos(frame);
-		frame.setTitle("Artificial Intelligence a Modern Approach 3rd ed. Java Demos (AIMA3e-Java)");
 		frame.setSize(1000, 600);
 		frame.setVisible(true);
 	}
