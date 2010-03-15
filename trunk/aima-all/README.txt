@@ -11,7 +11,7 @@ http://aima-java.googlecode.com/svn/trunk/
 This is a minor release that includes improvements to the GUI components. 
 This is based on the following sub-project releases:
   * aima-core (0.9.9) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (0.1.3) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aima-gui  (0.2.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
   * aimax-osm (0.9.1) : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
