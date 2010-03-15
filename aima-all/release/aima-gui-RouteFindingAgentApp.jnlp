@@ -13,7 +13,7 @@
     <all-permissions/>
   </security>  
   <resources>    
-    <j2se version="1.6.0_17" href="http://java.sun.com/products/autodl/j2se"/>     
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>     
     <jar href="jars/aima-core.jar"/>  
     <jar href="jars/aima-gui.jar"/> 
   </resources>  
