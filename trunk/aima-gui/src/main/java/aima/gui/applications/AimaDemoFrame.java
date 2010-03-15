@@ -16,34 +16,26 @@ import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.MessageLoggerPanel;
 
 /**
- * Provides a simple frame for starting console program demos and
- * agent applications.
+ * Provides a simple frame for starting agent applications and 
+ * console program demos.
  * @author R. Lunde
  */
 public class AimaDemoFrame extends JFrame {
 	JMenuBar menubar = new JMenuBar();
+	JMenu appMenu = new JMenu("Applications");
 	JMenu demoMenu = new JMenu("Demos");
-	JMenu appMenu = new JMenu("Apps");
 	MessageLoggerPanel textPanel = new MessageLoggerPanel();
 	JComponent currPanel;
 	
 	/** Standard constructor. */
 	AimaDemoFrame() {
+		setTitle("Artificial Intelligence a Modern Approach 3rd ed. Java Demos (AIMA3e-Java)");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menubar);
-		menubar.add(demoMenu);
 		menubar.add(appMenu);
+		menubar.add(demoMenu);
 	}
 	
-	/**
-	 * Adds a new console program demo to the menu. The class is expected
-	 * to be part of a package and to provide a static main method.
-	 */
-	void addDemo(Class demoClass) {
-		JMenuItem item = addAppToMenu(demoMenu, demoClass);
-		item.addActionListener(new DemoStarter(demoClass));
-	}
-
 	/**
 	 * Adds a new agent application to the menu. The class is expected
 	 * to be part of a package and to provide a
@@ -55,7 +47,16 @@ public class AimaDemoFrame extends JFrame {
 	}
 	
 	/**
-	 * Adds a new console demo / agent application to the specified menu.
+	 * Adds a new console program demo to the menu. The class is expected
+	 * to be part of a package and to provide a static main method.
+	 */
+	void addDemo(Class demoClass) {
+		JMenuItem item = addAppToMenu(demoMenu, demoClass);
+		item.addActionListener(new DemoStarter(demoClass));
+	}
+	
+	/**
+	 * Adds a new agent application / console program demo to the specified menu.
 	 */
 	private JMenuItem addAppToMenu(JMenu menu, Class demoClass) {
 		JMenuItem item = new JMenuItem(demoClass.getSimpleName());
@@ -77,6 +78,33 @@ public class AimaDemoFrame extends JFrame {
 	
 	/////////////////////////////////////////////////////////////////
 	// inner classes
+	
+	/**
+	 * Implements an action listener which starts an agent application.
+	 * @author R. Lunde
+	 */
+	class AppStarter implements ActionListener {
+		Class appClass;
+		AppStarter(Class ac) {
+			appClass = ac;
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				if (currPanel != null)
+					getContentPane().remove(currPanel);
+				Object instance = appClass.newInstance();
+				Method m = appClass.getMethod("constructApplicationFrame", new Class[0]);
+				AgentAppFrame af = (AgentAppFrame) m.invoke(instance, null);
+				currPanel = (JComponent) af.getContentPane().getComponent(0);
+				af.getContentPane().remove(currPanel);
+				getContentPane().add(currPanel, BorderLayout.CENTER);
+				validate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	/**
 	 * Implements an action listener which starts a console program demo.
@@ -104,34 +132,6 @@ public class AimaDemoFrame extends JFrame {
 				}
 				Method m = demoClass.getMethod("main", String[].class);
 				m.invoke(null, (Object) new String[]{});
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	/**
-	 * Implements an action listener which starts an agent application.
-	 * @author R. Lunde
-	 */
-	class AppStarter implements ActionListener {
-		Class appClass;
-		AppStarter(Class ac) {
-			appClass = ac;
-		}
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			try {
-				if (currPanel != null)
-					getContentPane().remove(currPanel);
-				Object instance = appClass.newInstance();
-				Method m = appClass.getMethod("constructApplicationFrame", new Class[0]);
-				AgentAppFrame af = (AgentAppFrame) m.invoke(instance, null);
-				currPanel = (JComponent) af.getContentPane().getComponent(0);
-				af.getContentPane().remove(currPanel);
-				getContentPane().add(currPanel, BorderLayout.CENTER);
-				validate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
