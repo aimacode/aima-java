@@ -50,3 +50,15 @@
 *. commit the changes to the aima-all project
 
 --- Publish the Release
+
+*. Copy the aima-all/release .html, .jnlp files and images directory to JWS host (currently my SRI public_html folder).
+
+*. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.
+
+*. Update the 'Project Home' page to indicate the latest revision #. 
+
+*. Update the AIMA3eReadme wiki page with the contents of aima-all/README.txt
+
+*. Update the AIMA Java Blog with a posting.
+
+*. Send an email to team members letting them know the release has gong out the door.
