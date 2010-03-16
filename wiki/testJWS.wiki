@@ -1,3 +1,0 @@
-JWS Test
-
-[http://www.ai.sri.com/~oreilly/aima3ejava/aima3ejavademos.html AIMA Java Demo Applications]
