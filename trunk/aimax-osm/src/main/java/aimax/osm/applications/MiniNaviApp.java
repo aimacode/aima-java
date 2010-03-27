@@ -146,11 +146,11 @@ public class MiniNaviApp implements ActionListener {
 					Track gpsTrack = mapData.getTrack(GPS_TRACK_NAME);
 					if (gpsTrack != null) {
 						routeMarks.add(gpsTrack.getLastTrkPt());
-						routeMarks.add(marks.get(marks.size()-1));
+						routeMarks.add(marks.get(0));
 					} else {
 						routeMarks.addAll(marks);
 					}
-					routingThread = new RoutingThread(marks);
+					routingThread = new RoutingThread(routeMarks);
 					updateEnableState();
 					routingThread.start();
 				}
@@ -214,7 +214,7 @@ public class MiniNaviApp implements ActionListener {
 				if (track != null)
 					node = track.getLastTrkPt();
 				if (node == null || pos.getDistKM(node) > 0.01) {
-					mapData.addToTrack("GPS", pos);
+					mapData.addToTrack(GPS_TRACK_NAME, pos);
 					if (gpsCombo.getSelectedIndex() == 2
 							|| gpsCombo.getSelectedIndex() == 3)
 						frame.getView().adjustToCenter
