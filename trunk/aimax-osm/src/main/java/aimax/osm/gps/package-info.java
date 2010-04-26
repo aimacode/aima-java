@@ -5,7 +5,7 @@
  * therefore necessary, to download the rs232 serial port library
  * from http://www.rxtx.org/ and to install it correctly. After that,
  * rename <code>NmeaSerialPortReader.txt</code> to
- * <code>NmeaSerialPortReader.class</code>.
+ * <code>NmeaSerialPortReader.java</code>.
  *
  * <p>Class <code>GpsLocator</code> is used to publish position
  * informations. It receives NMEA messages via a <code>NmeaReader</code>.
