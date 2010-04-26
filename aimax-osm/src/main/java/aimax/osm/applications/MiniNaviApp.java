@@ -32,7 +32,7 @@ import aimax.osm.viewer.MapViewFrame;
  * <p>To run this class, download the rs232 serial port library from
  * http://www.rxtx.org, install it correctly, and rename file
  * <code>NmeaSerialPortReader.txt</code> in package <code>aimax.osm.gps</code>
- * to <code>NmeaSerialPortReader.class</code>.
+ * to <code>NmeaSerialPortReader.java</code>.
  * One possible choice for installation is, to add the jar-file
  * to the class path (project properties, add jar), to store the DDL
  * locally (e.g. in project-root/lib), and start the application with
