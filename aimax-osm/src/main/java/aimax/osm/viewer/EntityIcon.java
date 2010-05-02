@@ -16,7 +16,7 @@ public abstract class EntityIcon {
 	public abstract void draw(Graphics2D g2, int x, int y, float displayFactor);
 	
 	/////////////////////////////////////////////////////////////////
-	// an implementation class
+	// implementation classes
 	
 	protected static BasicStroke currStroke;
 	protected static BasicStroke currStroke2;
@@ -99,6 +99,34 @@ public abstract class EntityIcon {
 				g2.setFont(font.deriveFont((size-2)*displayFactor));
 				g2.drawString(symbol, x+2.5f*displayFactor, y+dsize-2f*displayFactor);
 				g2.setFont(font);
+			}
+		}
+	}
+	
+	public static class ChurchIcon extends EntityIcon {
+		Color lineColor;
+		Color fillColor;
+		
+		public ChurchIcon(float size, Color line, Color fill) {
+			this.size = size;
+			this.lineColor = line;
+			this.fillColor = fill;
+		}
+		
+		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
+			int dsize = Math.round(size * displayFactor);
+			int offset = Math.round(size * displayFactor / 2f);
+			g2.setStroke(getStroke(displayFactor, false));
+			if (fillColor != null) {
+				g2.setColor(fillColor);
+				g2.fillOval(x, y, dsize, dsize);
+			}
+			if (lineColor != null && !lineColor.equals(fillColor)) {
+				g2.setColor(lineColor);
+				g2.setStroke(getStroke(displayFactor, false));
+				g2.drawOval(x, y, dsize, dsize);
+				g2.drawLine(x+offset, y, x+offset, y-dsize/2);
+				g2.drawLine(x+offset/2, (int)y-offset/2, x+offset*3/2, y-offset/2);
 			}
 		}
 	}

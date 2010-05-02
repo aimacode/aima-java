@@ -3,6 +3,8 @@ package aimax.osm.viewer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -139,8 +141,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	
 	/** Prints all buffered entities according to their rendering informations. */
 	public void printBufferedObjects() {
+		Collections.sort(areaBuffer, new MapAreaComparator());
 		Comparator<MapEntity> comp = new MapEntityComparator();
-		Collections.sort(areaBuffer, comp);
 		if (wayBuffer.size() < 10000)
 			Collections.sort(wayBuffer, comp);
 		if (nodeBuffer.size() < 10000)
@@ -181,16 +183,15 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	protected void printWay(MapWay way, DefaultEntityViewInfo pInfo, boolean asArea) {
 		List<MapNode> nodes = generalizeWay(way.getNodes());
 		if (nodes != null) {
+			boolean asOneway = false;
 			NameInfo textInfo = null;
 			if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
-				String name = way.getName();
-				if (name != null && pInfo.nameColor != null) {
-					if (way.isOneway())
-						name = ">" + name;
-					textInfo = new NameInfo(name, pInfo.nameColor);
+				asOneway = way.isOneway();
+				if (way.getName() != null && pInfo.nameColor != null) {
+					textInfo = new NameInfo(way.getName(), pInfo.nameColor);
 				}
 			}
-			printLine(g2, nodes, pInfo, asArea, textInfo);
+			printLine(g2, nodes, pInfo, asArea, asOneway, textInfo);
 		}
 	}
 	
@@ -222,7 +223,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		tmpNodeBuffer.clear();
 		tmpNodeBuffer.addAll(track.getTrkPts());
 		if (!tmpNodeBuffer.isEmpty()) {
-			printLine(g2, tmpNodeBuffer, vInfo, false, null);
+			printLine(g2, tmpNodeBuffer, vInfo, false, false, null);
 			printPoint(g2, tmpNodeBuffer.get(tmpNodeBuffer.size()-1), vInfo, null);
 		}
 	}
@@ -251,7 +252,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	
 	/** Prints a line or fills an area. */
 	protected void printLine(Graphics2D g2, List<MapNode> nodes,
-			DefaultEntityViewInfo pInfo, boolean asArea, NameInfo textInfo) {
+			DefaultEntityViewInfo pInfo, boolean asArea, boolean asOneway,
+			NameInfo textInfo) {
 		//count++;
 		int [] xPoints = new int[nodes.size()];
 		int [] yPoints = new int[nodes.size()];
@@ -278,6 +280,15 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			        BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f));
 			g2.drawPolyline(xPoints, yPoints, nodes.size());
 		}
+		if (asOneway) {
+			float x = xPoints[xPoints.length-1];
+			float y = yPoints[yPoints.length-1];
+			double angle = Math.atan2
+			(x-xPoints[xPoints.length-2], -(y-yPoints[yPoints.length-2]));
+//			if (textInfo != null)
+//				System.out.println(textInfo.name + " " + angle/Math.PI * 180);
+			printOnewayArrow(x, y, angle);
+		}
 		if (textInfo != null) {
 			setWayNamePosition(textInfo, xPoints, yPoints, filled);
 			nameInfoBuffer.add(textInfo);
@@ -294,6 +305,24 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				++i;
 			}
 		}
+	}
+	
+	/**
+	 * Marks the end of a one-way street with an arrow. The angle
+	 * specifies the direction, zero means north.
+	 */
+	protected void printOnewayArrow(float x, float y, double angle) {
+		Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactor*10f);
+		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+		g2.setColor(Color.GRAY);
+		g2.setStroke(new BasicStroke(displayFactor));
+		at.rotate(angle);
+		g2.draw(at.createTransformedShape(line));
+		line.setLine(0f, 0f, 0f, displayFactor*7f);
+		at.rotate(-Math.PI/6);
+        g2.draw(at.createTransformedShape(line));
+        at.rotate(Math.PI/3);
+        g2.draw(at.createTransformedShape(line));
 	}
 	
 	/** Finds a good place for printing the name of a way entity. */
@@ -365,6 +394,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				return 1;
 			else
 				return 0;
+		}
+	}
+	
+	/** Compares ways with respect to the size of their bounding box. */
+	protected static class MapAreaComparator implements Comparator<MapWay> {
+		@Override
+		public int compare(MapWay arg0, MapWay arg1) {
+			return -Float.compare(arg0.getBBSize(), arg1.getBBSize());
 		}
 	}
 }
