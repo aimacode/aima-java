@@ -15,6 +15,8 @@ public abstract class EntityIcon {
 	
 	public abstract void draw(Graphics2D g2, int x, int y, float displayFactor);
 	
+	
+	
 	/////////////////////////////////////////////////////////////////
 	// implementation classes
 	
@@ -31,6 +33,12 @@ public abstract class EntityIcon {
 	}
 	
 	public static class SimpleIcon extends EntityIcon {
+		
+		public static enum Shape {
+			SOLID_LINE, DASHED_LINE, // for lines
+			CIRCLE, RECTANGLE, TRIANGLE, NONE // for points
+		}
+		
 		Shape shape;
 		String symbol;
 		Color lineColor;
@@ -49,11 +57,9 @@ public abstract class EntityIcon {
 		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);
+			x -= offset;
+			y -= offset;
 			g2.setStroke(getStroke(displayFactor, false));
-			if (shape != Shape.PIN) {
-				x -= offset;
-				y -= offset;
-			}
 			if (fillColor != null) {
 				g2.setColor(fillColor);
 				switch (shape) {
@@ -65,11 +71,6 @@ public abstract class EntityIcon {
 					g2.fillPolygon(
 						new int[] {x, x+dsize, x+offset, x},
 						new int[] {y+dsize, y+dsize, y, y+dsize}, 4);
-					break;
-				case PIN:
-					int l = dsize/3+1;
-					g2.drawLine(x, y, x+dsize, y-dsize);
-					g2.fillOval(x+dsize-l, y-dsize-l, 2*l, 2*l);
 					break;
 				}
 			}
@@ -86,11 +87,6 @@ public abstract class EntityIcon {
 						new int[] {x, x+dsize, x+offset, x},
 						new int[] {y+dsize, y+dsize, y, y+dsize}, 4);
 					break;
-				case PIN:
-					int l = dsize/3+1;
-					g2.drawOval(x+dsize-l, y-dsize-l, 2*l, 2*l);
-					break;
-				
 				}
 			}
 			if (symbol != null) {
@@ -102,6 +98,30 @@ public abstract class EntityIcon {
 			}
 		}
 	}
+	
+	public static class PinIcon extends EntityIcon {
+		Color lineColor;
+		Color fillColor;
+		
+		public PinIcon(float size, Color line, Color fill) {
+			this.size = size;
+			this.lineColor = line;
+			this.fillColor = fill;
+		}
+		
+		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
+			int dsize = Math.round(size * displayFactor);
+			g2.setStroke(getStroke(displayFactor, true));
+			g2.setColor(lineColor);
+			g2.drawLine(x, y, x+dsize, y-dsize);
+			g2.setStroke(getStroke(displayFactor, false));
+			int l = dsize/3+1;
+			g2.setColor(fillColor);
+			l = dsize/3+1;
+			g2.fillOval(x+dsize-l, y-dsize-l, 2*l, 2*l);
+		}
+	}
+	
 	
 	public static class ChurchIcon extends EntityIcon {
 		Color lineColor;
@@ -116,6 +136,8 @@ public abstract class EntityIcon {
 		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);
+			x -= offset;
+			y -= offset;
 			g2.setStroke(getStroke(displayFactor, false));
 			if (fillColor != null) {
 				g2.setColor(fillColor);
@@ -123,7 +145,6 @@ public abstract class EntityIcon {
 			}
 			if (lineColor != null && !lineColor.equals(fillColor)) {
 				g2.setColor(lineColor);
-				g2.setStroke(getStroke(displayFactor, false));
 				g2.drawOval(x, y, dsize, dsize);
 				g2.drawLine(x+offset, y, x+offset, y-dsize/2);
 				g2.drawLine(x+offset/2, (int)y-offset/2, x+offset*3/2, y-offset/2);
@@ -131,8 +152,32 @@ public abstract class EntityIcon {
 		}
 	}
 	
-	public static enum Shape {
-		SOLID_LINE, DASHED_LINE, // for lines
-		CIRCLE, RECTANGLE, TRIANGLE, PIN, NONE // for points
+	
+	public static class TentIcon extends EntityIcon {
+		Color lineColor;
+		Color fillColor;
+	
+		public TentIcon(float size, Color line, Color fill) {
+			this.size = size;
+			lineColor = line;
+			fillColor = fill;
+		}
+		
+		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
+			int dsize = Math.round(size * displayFactor);
+			int offset = Math.round(size * displayFactor / 2f);
+			x -= offset;
+			y -= offset;
+			g2.setColor(fillColor);
+			g2.setStroke(getStroke(displayFactor, false));
+			g2.fillPolygon(
+			new int[] {x, x+dsize, x+offset, x},
+			new int[] {y+dsize, y+dsize, y, y+dsize}, 4);
+			g2.setColor(lineColor);
+			//g2.setStroke(getStroke(displayFactor, true));
+			g2.drawPolyline(
+				new int[] {x+offset+offset/2, x, x+dsize, x+offset-offset/2},
+				new int[] {y-offset/2, y+dsize, y+dsize, y-offset/2}, 4);
+		}
 	}
 }
