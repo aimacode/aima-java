@@ -4,8 +4,9 @@ import java.awt.Color;
 
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
-import aimax.osm.viewer.EntityIcon.Shape;
+import aimax.osm.viewer.EntityIcon.PinIcon;
 import aimax.osm.viewer.EntityIcon.SimpleIcon;
+import aimax.osm.viewer.EntityIcon.TentIcon;
 
 /**
  * Provides useful static methods for defining map styles. Technically spoken,
@@ -95,7 +96,7 @@ public class MapStyleFactory {
 		result.addRule("natural", "heath", createWayInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 16));
 		result.addRule("natural", "fell", createWayInfo(500, 30000, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false, 16));
 		result.addRule("natural", "peak", createPoiInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false, 15));
-		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 25));
+		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, createTriangle(8, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 25));
 		result.addRule("leisure", "park", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("leisure", "garden", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("landuse", "forest", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 13));
@@ -122,14 +123,14 @@ public class MapStyleFactory {
 
 		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 30));
 		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true, 28)); 
-		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "C", Color.GREEN.darker(), Color.WHITE), true, 27));
+		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker().darker()), true, 27));
 		result.addRule("tourism", "attraction", createInfo(6000, 60000, Color.GRAY, createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
 		result.addRule("tourism", "viewpoint", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true, 25));
 		result.addRule("tourism", "museum", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true, 25));
 		result.addRule("tourism", "alpine_hut", createPoiInfo(1000, 6000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true, 24));
 		result.addRule("tourism", "hotel", createPoiInfo(30000, 200000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true, 24));
 		result.addRule("tourism", null, createPoiInfo(30000, 100000, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false, 23));
-		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.BLACK, Color.BLUE), true, 15));
+		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true, 15));
 		result.addRule("amenity", "parking", createInfo(30000, 200000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
 		result.addRule("amenity", null, createPoiInfo(30000, 300000, Color.BLUE, createRectangle(4, Color.BLUE), false, 10));
 
@@ -141,7 +142,7 @@ public class MapStyleFactory {
 		result.addRule("mountain_pass", null, createPoiInfo(0, 1000, Color.DARK_GRAY, null, false, 20));
 		result.addRule("shop", null, createPoiInfo(40000, 300000, Color.CYAN, createRectangle(4, Color.CYAN), true, 10));
 		
-		result.addRule("mark", "yes", createPoiInfo(0, 0, Color.RED, createPin(12, Color.RED), false, 100));
+		result.addRule("mark", "yes", createPoiInfo(0, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false, 100));
 		result.addRule("track_type", null, createTrackInfo(Color.RED));
 		result.addRule("track_type", "GPS", createTrackInfo(Color.GREEN));
 		
@@ -163,7 +164,7 @@ public class MapStyleFactory {
 		result.replaceRule("place", "village", createPoiInfo(0, 3000, Color.GRAY, null, false, 29));
 		result.replaceRule("place", null, createPoiInfo(0, 10000, Color.GRAY, null, false, 28));
 	     
-		result.replaceRule("mark", "yes", createPoiInfo(0, 0, Color.YELLOW, createPin(12, Color.YELLOW), false, 100));
+		result.replaceRule("mark", "yes", createPoiInfo(0, 0, Color.YELLOW, new PinIcon(12, Color.YELLOW, Color.YELLOW), false, 100));
 		result.replaceRule("track_type", null, createTrackInfo(Color.WHITE));
 
 		return result;
@@ -255,42 +256,38 @@ public class MapStyleFactory {
 	// useful icon creators
 	
 	public static EntityIcon createCircle(float size, Color color) {
-		return new SimpleIcon(Shape.CIRCLE, size, null, color, color, null);
+		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, null, color, color, null);
 	}
 	
 	public static EntityIcon createCircle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.CIRCLE, size, null, line, fill, null);
+		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, null, line, fill, null);
 	}
 	
 	public static EntityIcon createCircle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.CIRCLE, size, symbol, color, color, sym);
+		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, symbol, color, color, sym);
 	}
 	
 	public static EntityIcon createRectangle(float size, Color color) {
-		return new SimpleIcon(Shape.RECTANGLE, size, null, color, color, null);
+		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, null, color, color, null);
 	}
 	
 	public static EntityIcon createRectangle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.RECTANGLE, size, null, line, fill, null);
+		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, null, line, fill, null);
 	}
 	
 	public static EntityIcon createRectangle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.RECTANGLE, size, symbol, color, color, sym);
+		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, symbol, color, color, sym);
 	}
 	
 	public static EntityIcon createTriangle(float size, Color color) {
-		return new SimpleIcon(Shape.TRIANGLE, size, null, color, color, null);
+		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, null, color, color, null);
 	}
 	
 	public static EntityIcon createTriangle(float size, Color line, Color fill) {
-		return new SimpleIcon(Shape.TRIANGLE, size, null, line, fill, null);
+		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, null, line, fill, null);
 	}
 	
 	public static EntityIcon createTriangle(float size, String symbol, Color color, Color sym) {
-		return new SimpleIcon(Shape.TRIANGLE, size, symbol, color, color, sym);
-	}
-	
-	public static EntityIcon createPin(float size, Color color) {
-		return new SimpleIcon(Shape.PIN, size, null, color, color, null);
+		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, symbol, color, color, sym);
 	}
 }
