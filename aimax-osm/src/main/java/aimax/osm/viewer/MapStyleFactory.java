@@ -63,10 +63,10 @@ public class MapStyleFactory {
 			new EntityClassifier<EntityViewInfo>();
 		EntityClassifier<EntityViewInfo> sc;
 		result.setDefaultEntityClass(createDefaultInfo());
-		result.addRule("highway", "motorway", createWayInfo(0, 20000, Color.BLUE, 2, 50));
-		result.addRule("highway", "motorway_link", createWayInfo(0, 20000, Color.BLUE, 2, 50));
-		result.addRule("highway", "trunk", createWayInfo(0, 60000, Color.BLUE, 2, 50));
-		result.addRule("highway", "trunk_link", createWayInfo(0, 90000, Color.BLUE, 2, 50));
+		result.addRule("highway", "motorway", createWayInfo(10, 20000, Color.BLUE, 2, 50));
+		result.addRule("highway", "motorway_link", createWayInfo(10, 20000, Color.BLUE, 2, 50));
+		result.addRule("highway", "trunk", createWayInfo(10, 60000, Color.BLUE, 2, 50));
+		result.addRule("highway", "trunk_link", createWayInfo(10, 90000, Color.BLUE, 2, 50));
 		result.addRule("highway", "primary", createWayInfo(200, 90000, Color.PINK, 3, 49));
 		result.addRule("highway", "primary_link", createWayInfo(200, 90000, Color.PINK, 3, 49));
 		result.addRule("highway", "secondary", createWayInfo(500, 90000, Color.PINK, 2, 49));
@@ -86,7 +86,7 @@ public class MapStyleFactory {
 
 		result.addRule("natural", "land", createWayInfo(200, 30000, LIGHT_BLUE, 1, Color.WHITE, false, 29));
 		result.addRule("natural", "island", createWayInfo(200, 30000, LIGHT_BLUE, 2, 23));
-		result.addRule("natural", "coastline", createWayInfo(200, 30000, LIGHT_BLUE, 2, 22));
+		result.addRule("natural", "coastline", createWayInfo(0, 30000, LIGHT_BLUE, 2, 22));
 		result.addRule("natural", "cliff", createWayInfo(200, 30000, Color.GRAY, 1, 21));
 		result.addRule("natural", "water", createInfo(200, 30000, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false, 20));
 		result.addRule("natural", "glacier", createWayInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false, 19));
