@@ -22,7 +22,7 @@ public class MapStyleFactory {
 	public static final Color LIGHT_GRAY_TRANS = new Color(0, 0, 0, 20);
 	public static final Color LIGHT_RED_TRANS = new Color(255, 0, 0, 30);
 	public static final Color LIGHT_GREEN_TRANS = new Color(114, 254, 86, 30);
-	public static final Color LIGHT_YELLOW_TRANS = new Color(230, 255, 0, 60);
+	public static final Color LIGHT_YELLOW = new Color(255, 255, 200);
 	public static final Color VERY_LIGHT_GREEN = new Color(200, 254, 184);
 	public static final Color LIGHT_GREEN = new Color(116, 252, 133);
 	public static final Color GREEN = new Color(91, 210, 95);
@@ -93,15 +93,18 @@ public class MapStyleFactory {
 		result.addRule("natural", "wood", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 17));
 		result.addRule("natural", "scrub", createWayInfo(200, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 16));
 		result.addRule("natural", "heath", createWayInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 16));
+		result.addRule("natural", "fell", createWayInfo(500, 30000, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false, 16));
 		result.addRule("natural", "peak", createPoiInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false, 15));
 		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, createTriangle(10, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 25));
 		result.addRule("leisure", "park", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("leisure", "garden", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("landuse", "forest", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 13));
 		result.addRule("landuse", "reservoir", createWayInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, false, 19));
-		result.addRule("landuse", "farm", createWayInfo(500, 30000, LIGHT_YELLOW_TRANS, 1, LIGHT_YELLOW_TRANS, false, 13));
-		result.addRule("landuse", "farmland", createWayInfo(500, 30000, LIGHT_YELLOW_TRANS, 1, LIGHT_YELLOW_TRANS, false, 13));
+		result.addRule("landuse", "farm", createWayInfo(500, 30000, LIGHT_YELLOW, 1, LIGHT_YELLOW, false, 13));
+		result.addRule("landuse", "farmland", createWayInfo(500, 30000, LIGHT_YELLOW, 1, LIGHT_YELLOW, false, 13));
 		result.addRule("landuse", "residential", createWayInfo(500, 30000, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false, 13));
+		result.addRule("landuse", "village_green", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
+		result.addRule("landuse", "grass", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 14));
 		result.addRule("landuse", null, createInfo(1000, 200000, Color.GRAY, null, false, LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false, 13));
 		
 		sc = result.addRule("boundary", null, createInfo(6000, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 13));
@@ -126,7 +129,7 @@ public class MapStyleFactory {
 		result.addRule("tourism", "alpine_hut", createPoiInfo(1000, 6000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true, 24));
 		result.addRule("tourism", "hotel", createPoiInfo(30000, 200000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true, 24));
 		result.addRule("tourism", null, createPoiInfo(30000, 100000, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false, 23));
-		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, createTriangle(11, "+", Color.BLUE, Color.WHITE), true, 15));
+		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.BLACK, Color.BLUE), true, 15));
 		result.addRule("amenity", "parking", createInfo(30000, 200000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
 		result.addRule("amenity", null, createPoiInfo(30000, 300000, Color.BLUE, createRectangle(4, Color.BLUE), false, 10));
 
