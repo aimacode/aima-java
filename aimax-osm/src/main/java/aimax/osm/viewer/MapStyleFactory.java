@@ -123,7 +123,7 @@ public class MapStyleFactory {
 
 		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 30));
 		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true, 28)); 
-		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker().darker()), true, 27));
+		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true, 27));
 		result.addRule("tourism", "attraction", createInfo(6000, 60000, Color.GRAY, createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
 		result.addRule("tourism", "viewpoint", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true, 25));
 		result.addRule("tourism", "museum", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true, 25));
