@@ -120,9 +120,15 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	
 	public void setMapReader(MapReader mapReader) {
 		this.mapReader = mapReader;
-		FileFilter filter = new FileNameExtensionFilter
-		(mapReader.fileFormatDescription(), mapReader.fileFormatExtension());
-		fileChooser.addChoosableFileFilter(filter);
+		for (int i = fileChooser.getChoosableFileFilters().length-1; i>0; i--)
+			fileChooser.removeChoosableFileFilter
+			(fileChooser.getChoosableFileFilters()[i]);
+		String[] exts = mapReader.fileFormatDescriptions();
+		for (int i = 0 ; i < exts.length; i++) {
+			FileFilter filter = new FileNameExtensionFilter
+			(exts[i], mapReader.fileFormatExtensions()[i]);
+			fileChooser.addChoosableFileFilter(filter);
+		}
 		fileChooser.setSelectedFile(null);
 	}
 	
