@@ -32,7 +32,8 @@ public class OsmReader implements MapReader {
 	 */
 	public void readMap(File file, MapDataStore mapData) {
 		try  {
-			readMap(new FileInputStream(file), mapData);
+			InputStream inputStream = new FileInputStream(file);
+			readMap(inputStream, mapData);
 		} catch (FileNotFoundException fnfe) {
 			LOG.warning("File does not exist "+file);
 		}
@@ -68,18 +69,17 @@ public class OsmReader implements MapReader {
 				} catch (IOException e) {
 					LOG.log(Level.SEVERE, "Unable to close input stream.", e);
 				}
-				inputStream = null;
 			}
 		}
 	}
 	
 
-	public String fileFormatDescription() {
-		return "OSM File";
+	public String[] fileFormatDescriptions() {
+		return new String[] {"OSM File"};
 	}
 	
-	public String fileFormatExtension() {
-		return "osm";
+	public String[] fileFormatExtensions() {
+		return new String[] {"osm"};
 	}
 
 
