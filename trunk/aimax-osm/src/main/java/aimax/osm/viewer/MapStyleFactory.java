@@ -119,6 +119,7 @@ public class MapStyleFactory {
 		result.addRule("waterway", null, createWayInfo(3000, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, true, 24));
 		result.addRule("railway", "rail", createWayInfo(3000, 30000, Color.GRAY, 1, 30));
 		result.addRule("railway", "station", createPoiInfo(10000, 60000, Color.DARK_GRAY, createRectangle(4, Color.DARK_GRAY), false, 29));
+		result.addRule("aeroway", null, createWayInfo(1000, 30000, Color.LIGHT_GRAY, 1, 28));
 		result.addRule("aerialway", null, createWayInfo(1000, 60000, Color.GRAY, 1, 28));
 
 		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 30));
