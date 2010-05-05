@@ -1,8 +1,5 @@
 package aimax.osm.data.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aimax.osm.data.EntityVisitor;
 
 /**
@@ -15,14 +12,9 @@ import aimax.osm.data.EntityVisitor;
 public class MapNode extends MapEntity {
 	private float lat;
 	private float lon;
-	private ArrayList<WayRef> ways;
-	
-	public MapNode() {
-		ways = new ArrayList<WayRef>(0);
-	}
+	private WayRef ways;
 	
 	public MapNode(long id, float lat, float lon) {
-		this();
 		this.id = id;
 		this.lat = lat;
 		this.lon = lon;
@@ -44,13 +36,28 @@ public class MapNode extends MapEntity {
 		this.lon = lon;
 	}
 
-	public List<WayRef> getWays() {
-		return ways;
+	public WayRefList getWayRefs() {
+		return new WayRefList(ways);
 	}
-
+	
 	public void addWayRef(long wayId, int nodeIdx) {
-		if (ways.isEmpty() || ways.get(0).wayId != wayId)
-			ways.add(new WayRef(wayId, nodeIdx));
+		// be careful with closed ways (begin == end)
+		if (ways == null || ways.getWayId() != wayId) {
+			WayRef ref = new WayRef(wayId, (short) nodeIdx);
+			ref.setNext(ways);
+			ways = ref;
+		}
+	}
+	
+	public void removeWayRef(long wayId) {
+		if (ways.getWayId() == wayId)
+			ways = ways.getNext();
+		else {
+			WayRef ref = ways;
+			while (ref.getNext().getWayId() != wayId)
+				ref = ref.getNext();
+			ref.setNext(ref.getNext().getNext());
+		}
 	}
 	
 	public void accept(EntityVisitor visitor) {
@@ -73,21 +80,5 @@ public class MapNode extends MapEntity {
 			return 1;
 		else
 			return 0;
-	}
-	
-	//////////////////////////////////////////////////////////////////////
-	// Some inner classes
-	
-	/**
-	 * Represents a reference to a way. The node index indicates,
-	 * where the node maintaining the reference occurs in the way definition.
-	 */
-	public static class WayRef {
-		public long wayId;
-		public int nodeIdx;
-		public WayRef(long wayId, int nodeIdx) {
-			this.wayId = wayId;
-			this.nodeIdx = nodeIdx;
-		}
 	}
 }

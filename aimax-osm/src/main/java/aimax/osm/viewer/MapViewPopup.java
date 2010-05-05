@@ -30,6 +30,7 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.entities.WayRef;
 
 /**
  * Useful popup menu for the <code>MapViewPane</code>.
@@ -94,16 +95,14 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		if (ae.getSource() == infoMenuItem) {
 			MapNode mNode = pane.getRenderer().getNextNode(x, y);
 			List<MapEntity> entities = new ArrayList<MapEntity>();
-			for (int i = -1; i < mNode.getWays().size(); i++) {
-				MapEntity me;
-				if (i == -1)
-					me = mNode;
-				else
-					me = pane.getModel().getWay(mNode.getWays().get(i).wayId);
+			if (mNode.getName() != null || mNode.getAttributes().length>0
+					|| debugMenuItem.isSelected())
+				entities.add(mNode);
+			for (WayRef ref : mNode.getWayRefs()) {
+				MapEntity me = pane.getModel().getWay(ref.getWayId());
 				if (me.getName() != null || me.getAttributes().length>0
 						|| debugMenuItem.isSelected())
-					entities.add(me);
-					
+					entities.add(me);		
 			}
 			boolean done = false;
 			for (int i=0; i < entities.size() && !done; i++) {

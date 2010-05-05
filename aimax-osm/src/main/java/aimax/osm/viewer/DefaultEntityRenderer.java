@@ -139,18 +139,25 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		}
 	}
 	
+	//int awnodes = 0;
 	/** Prints all buffered entities according to their rendering informations. */
 	public void printBufferedObjects() {
+		int wnodes = 0;
+		//awnodes = 0;
 		Collections.sort(areaBuffer, new MapAreaComparator());
 		Comparator<MapEntity> comp = new MapEntityComparator();
 		if (wayBuffer.size() < 10000)
 			Collections.sort(wayBuffer, comp);
 		if (nodeBuffer.size() < 10000)
 			Collections.sort(nodeBuffer, comp);
-		for (MapWay area: areaBuffer)
+		for (MapWay area: areaBuffer) {
 			printWay(area, (DefaultEntityViewInfo) area.getViewInfo(), true);
-		for (MapWay way: wayBuffer)
+			wnodes+=area.getNodes().size();
+		}
+		for (MapWay way: wayBuffer) {
 			printWay(way, (DefaultEntityViewInfo) way.getViewInfo(), false);
+			wnodes+=way.getNodes().size();
+		}
 		for (MapEntity node: nodeBuffer) {
 			MapNode n;
 			if (node instanceof MapWay)
@@ -162,33 +169,44 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		for (Track track: trackBuffer)
 			printTrack(track);
 
-		// remove identical names at the same place...
-		Hashtable<String, NameInfo> hash = new Hashtable<String, NameInfo>();
-		for (int i = nameInfoBuffer.size()-1; i>=0; i--) {
-			NameInfo iNew = nameInfoBuffer.get(i);
-			NameInfo iOld = hash.get(iNew.name);
-			if (iOld == null)
-				hash.put(iNew.name, iNew);
-			else if (Math.abs(iNew.x-iOld.x)+Math.abs(iNew.y-iOld.y)
-					< 4*fontSize*displayFactor)
-				nameInfoBuffer.remove(i);
+		Collections.sort(nameInfoBuffer);
+		// remove names whose positions are to close to each other
+		for (int i=0; i < nameInfoBuffer.size(); ++i) {
+			NameInfo info = nameInfoBuffer.get(i);
+			for (int j=0; j < i; ++j) {
+				NameInfo info1 = nameInfoBuffer.get(j);
+				int fac = info.name.equals(info1.name) ? 20 : 10;
+				if (Math.max(Math.abs(info.x-info1.x), 8*Math.abs(info.y-info1.y))
+					< fac*fontSize*displayFactor) {
+					nameInfoBuffer.remove(i);
+					--i;
+					j=i;
+				}
+			}
 		}
 		for (NameInfo textInfo : nameInfoBuffer) {
 			g2.setColor(textInfo.color);
 			g2.drawString(textInfo.name, textInfo.x, textInfo.y);
 		}
+//		System.out.print("Areas: " + areaBuffer.size() + "  ");
+//		System.out.print("Ways: " + wayBuffer.size() + "  ");
+//		System.out.print("WNodes: " + wnodes + "/" + awnodes + "  ");
+//		System.out.print("Nodes: " + nodeBuffer.size() + "  ");
+//		System.out.print("Names: " + nameInfoBuffer.size() + "\n");
 	}
 	
 	/** Prints a way entity. */
 	protected void printWay(MapWay way, DefaultEntityViewInfo pInfo, boolean asArea) {
 		List<MapNode> nodes = generalizeWay(way.getNodes());
 		if (nodes != null) {
+			//awnodes+=nodes.size();
 			boolean asOneway = false;
 			NameInfo textInfo = null;
 			if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
 				asOneway = way.isOneway();
 				if (way.getName() != null && pInfo.nameColor != null) {
-					textInfo = new NameInfo(way.getName(), pInfo.nameColor);
+					textInfo = new NameInfo(way.getName(), pInfo.nameColor,
+							pInfo.minVisibleScale);
 				}
 			}
 			printLine(g2, nodes, pInfo, asArea, asOneway, textInfo);
@@ -209,7 +227,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
 			String name = node.getName();
 			if (name != null && pInfo.nameColor != null) {
-				NameInfo info = new NameInfo(name, pInfo.nameColor);
+				NameInfo info = new NameInfo(name, pInfo.nameColor,
+						pInfo.minVisibleScale);
 				info.x = x + width;
 				info.y = y + width/4;
 				nameInfoBuffer.add(info);
@@ -297,8 +316,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				>= 2 * pInfo.minNameScale * displayFactor) {
 			i = 0;
 			for (MapNode node : nodes) {
-				textInfo = new NameInfo
-				(Long.toString(node.getId()), pInfo.nameColor);
+				textInfo = new NameInfo(Long.toString(node.getId()),
+						pInfo.nameColor, pInfo.minVisibleScale);
 				textInfo.x = xPoints[i];
 				textInfo.y = yPoints[i];
 				nameInfoBuffer.add(textInfo);
@@ -356,7 +375,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			String name = (debugMode)
 			? "P"+Long.toString(node.getId()) : node.getName();
 			if (name != null) {
-				NameInfo info = new NameInfo(name, nameColor);
+				NameInfo info = new NameInfo(name, nameColor, pInfo.minVisibleScale);
 				info.x = x + width;
 				info.y = y + width/4;
 				nameInfoBuffer.add(info);
@@ -371,14 +390,26 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	/**
 	 * Stores color and position information for a name to be printed out.
 	 */
-	protected static class NameInfo {
+	protected static class NameInfo implements Comparable<NameInfo> {
 		public String name;
 		public Color color;
 		public int x;
 		public int y;
-		protected NameInfo(String name, Color color) {
+		/** Minimal scale in which the corresponding entity becomes visible. */
+		public float minEntityScale;
+		protected NameInfo(String name, Color color, float scale) {
 			this.name = name;
 			this.color = color;
+			minEntityScale = scale;
+		}
+		@Override
+		public int compareTo(NameInfo arg0) {
+			if (minEntityScale < arg0.minEntityScale)
+				return -1;
+			else if (minEntityScale > arg0.minEntityScale)
+				return 1;
+			else
+				return 0;
 		}
 	}
 	

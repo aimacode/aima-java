@@ -27,7 +27,7 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
-import aimax.osm.data.entities.MapNode.WayRef;
+import aimax.osm.data.entities.WayRef;
 import aimax.osm.reader.MapReader;
 
 /**
@@ -162,8 +162,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			String name = node.getName();
 			if (name == null) {
 				name = "";
-				for (WayRef wr : node.getWays()) {
-					MapWay way = mapData.getWay(wr.wayId);
+				for (WayRef wr : node.getWayRefs()) {
+					MapWay way = mapData.getWay(wr.getWayId());
 					String wayName = way.getName();
 					if (wayName != null && !name.contains(wayName)) {
 						if (!name.isEmpty())

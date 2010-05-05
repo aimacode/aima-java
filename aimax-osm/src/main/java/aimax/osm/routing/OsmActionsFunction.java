@@ -10,7 +10,7 @@ import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
-import aimax.osm.data.entities.MapNode.WayRef;
+import aimax.osm.data.entities.WayRef;
 
 /**
  * Generates {@link aimax.osm.routing.OsmMoveAction}s for states which are
@@ -42,16 +42,16 @@ class OsmActionsFunction implements ActionsFunction {
 	public Set<Action> actions(Object s) {
 		Set<Action> result = new LinkedHashSet<Action>();
 		MapNode from = (MapNode) s;
-		for (WayRef wref : from.getWays()) {
-			if (filter == null || filter.isAccepted(wref.wayId)) {
-				MapWay way = mapData.getWay(wref.wayId);
-				int nodeIdx = wref.nodeIdx;
+		for (WayRef wref : from.getWayRefs()) {
+			if (filter == null || filter.isAccepted(wref.getWayId())) {
+				MapWay way = mapData.getWay(wref.getWayId());
+				int nodeIdx = wref.getNodeIdx();
 				List<MapNode> wayNodes = way.getNodes();
 				MapNode to;
 				for (int idx = nodeIdx+1; idx < wayNodes.size(); idx++) {
 					to = wayNodes.get(idx);
 					if (goal == null || goal == to ||
-							to.getWays().size() > 1 || idx == wayNodes.size()-1) {
+							to.getWayRefs().size() > 1 || idx == wayNodes.size()-1) {
 						result.add(new OsmMoveAction(way, from, to));
 						break;
 					}
@@ -60,7 +60,7 @@ class OsmActionsFunction implements ActionsFunction {
 					for (int idx = nodeIdx-1; idx >= 0; idx--) {
 						to = wayNodes.get(idx);
 						if (goal == null || goal == to ||
-								to.getWays().size() > 1 || idx == 0 ) {
+								to.getWayRefs().size() > 1 || idx == 0 ) {
 							result.add(new OsmMoveAction(way, from, to));
 							break;
 						}

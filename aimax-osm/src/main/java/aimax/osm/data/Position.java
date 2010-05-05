@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapNode.WayRef;
+import aimax.osm.data.entities.WayRef;
 
 
 /**
@@ -60,8 +60,8 @@ public class Position {
 			boolean found = (newDist < dist);
 			if (found && filter != null) {
 				found = false;
-				for (WayRef ref : node.getWays()) {
-					if (filter.isAccepted(ref.wayId))
+				for (WayRef ref : node.getWayRefs()) {
+					if (filter.isAccepted(ref.getWayId()))
 						found = true;
 				}
 			}
