@@ -175,7 +175,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			NameInfo info = nameInfoBuffer.get(i);
 			for (int j=0; j < i; ++j) {
 				NameInfo info1 = nameInfoBuffer.get(j);
-				int fac = info.name.equals(info1.name) ? 20 : 10;
+				int fac = info.name.equals(info1.name) ? 30 : 10;
 				if (Math.max(Math.abs(info.x-info1.x), 8*Math.abs(info.y-info1.y))
 					< fac*fontSize*displayFactor) {
 					nameInfoBuffer.remove(i);
@@ -206,7 +206,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				asOneway = way.isOneway();
 				if (way.getName() != null && pInfo.nameColor != null) {
 					textInfo = new NameInfo(way.getName(), pInfo.nameColor,
-							pInfo.minVisibleScale);
+							pInfo.printOrder);
 				}
 			}
 			printLine(g2, nodes, pInfo, asArea, asOneway, textInfo);
@@ -228,7 +228,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			String name = node.getName();
 			if (name != null && pInfo.nameColor != null) {
 				NameInfo info = new NameInfo(name, pInfo.nameColor,
-						pInfo.minVisibleScale);
+						pInfo.printOrder);
 				info.x = x + width;
 				info.y = y + width/4;
 				nameInfoBuffer.add(info);
@@ -317,7 +317,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			i = 0;
 			for (MapNode node : nodes) {
 				textInfo = new NameInfo(Long.toString(node.getId()),
-						pInfo.nameColor, pInfo.minVisibleScale);
+						pInfo.nameColor, pInfo.printOrder);
 				textInfo.x = xPoints[i];
 				textInfo.y = yPoints[i];
 				nameInfoBuffer.add(textInfo);
@@ -375,7 +375,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			String name = (debugMode)
 			? "P"+Long.toString(node.getId()) : node.getName();
 			if (name != null) {
-				NameInfo info = new NameInfo(name, nameColor, pInfo.minVisibleScale);
+				NameInfo info = new NameInfo(name, nameColor, pInfo.printOrder);
 				info.x = x + width;
 				info.y = y + width/4;
 				nameInfoBuffer.add(info);
@@ -395,18 +395,18 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		public Color color;
 		public int x;
 		public int y;
-		/** Minimal scale in which the corresponding entity becomes visible. */
-		public float minEntityScale;
-		protected NameInfo(String name, Color color, float scale) {
+		/** Print order value of the corresponding entity. */
+		public int printOrder;
+		protected NameInfo(String name, Color color, int printOrder) {
 			this.name = name;
 			this.color = color;
-			minEntityScale = scale;
+			this.printOrder = printOrder;
 		}
 		@Override
 		public int compareTo(NameInfo arg0) {
-			if (minEntityScale < arg0.minEntityScale)
+			if (printOrder > arg0.printOrder)
 				return -1;
-			else if (minEntityScale > arg0.minEntityScale)
+			else if (printOrder < arg0.printOrder)
 				return 1;
 			else
 				return 0;
