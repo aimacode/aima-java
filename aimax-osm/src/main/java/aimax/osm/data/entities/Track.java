@@ -17,7 +17,7 @@ public class Track extends MapEntity {
 	
 	public Track(long id, String name, String trackType) {
 		this.id = id;
-		this.name = name;
+		setName(name);
 		ArrayList<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
 		atts.add(new EntityAttribute("track_type", trackType));
 		setAttributes(atts);

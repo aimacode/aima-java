@@ -25,19 +25,11 @@ public class MapWay extends MapEntity {
 	}
 	
 	public boolean isOneway() {
-		if (attributes != null)
-			for (EntityAttribute a : attributes)
-				if (a.getName().equals("oneway") && a.getValue().equals("yes"))
-					return true;
-		return false;
+		return "yes".equals(getAttributeValue("oneway"));
 	}
 	
 	public boolean isArea() {
-		if (attributes != null)
-			for (EntityAttribute a : attributes)
-				if (a.getName().equals("area") && a.getValue().equals("yes"))
-					return true;
-		return false;
+		return "yes".equals(getAttributeValue("area"));
 	}
 	
 	public List<MapNode> getNodes() {
