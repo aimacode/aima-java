@@ -12,7 +12,7 @@ import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
-import aimax.osm.data.entities.MapNode.WayRef;
+import aimax.osm.data.entities.WayRef;
 
 
 /**
@@ -182,7 +182,7 @@ public class MapDataStore implements MapDataConsumer {
 	public void compileData() {
 		ArrayList<Long> toDelete = new ArrayList<Long>();
 		for (MapNode node : nodes.values()) {
-			if (node.getWays().isEmpty())
+			if (node.getWayRefs().isEmpty())
 				toDelete.add(node.getId());
 			if (node.getName() != null || node.getAttributes().length > 0)
 				pois.add(node);
@@ -206,7 +206,7 @@ public class MapDataStore implements MapDataConsumer {
 	 * points of interest.
 	 */
 	protected void applyClassifierAndUpdateTree() {
-		entityTree = new KDTree(boundingBox, 1000, 60);
+		entityTree = new KDTree(boundingBox, 10000, 60);
 		for (MapWay way : ways.values())
 			updateEntityViewInfo(way, true);
 		for (MapNode poi : pois)
@@ -327,10 +327,10 @@ public class MapDataStore implements MapDataConsumer {
 	 * same way, otherwise returns null.
 	 */
 	public MapWay getWay(MapNode node1, MapNode node2) {
-		for (WayRef wr1 : node1.getWays()) {
-			for (WayRef wr2 : node2.getWays()) {
-				if (wr1.wayId == wr2.wayId) {
-					return getWay(wr1.wayId);
+		for (WayRef wr1 : node1.getWayRefs()) {
+			for (WayRef wr2 : node2.getWayRefs()) {
+				if (wr1.getWayId() == wr2.getWayId()) {
+					return getWay(wr1.getWayId());
 				}
 			}
 		}

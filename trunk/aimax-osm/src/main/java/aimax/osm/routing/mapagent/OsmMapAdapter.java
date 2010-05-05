@@ -12,7 +12,7 @@ import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
-import aimax.osm.data.entities.MapNode.WayRef;
+import aimax.osm.data.entities.WayRef;
 
 /**
  * Adapter class which provides an aima-core <code>Map</code> interface for
@@ -69,8 +69,8 @@ public class OsmMapAdapter implements Map {
 		List<String> result = new ArrayList<String>();
 		for (MapNode node : mapData.getWayNodes()) {
 			boolean relevant = false;
-			for (WayRef wref : node.getWays()) {
-				if (filter == null || filter.isAccepted(wref.wayId)) {
+			for (WayRef wref : node.getWayRefs()) {
+				if (filter == null || filter.isAccepted(wref.getWayId())) {
 					relevant = true;
 					break;
 				}
@@ -87,10 +87,10 @@ public class OsmMapAdapter implements Map {
 		List<String> result = new ArrayList<String>();
 		MapNode node = getWayNode(fromLocation);
 		if (node != null) {
-			for (WayRef wref : node.getWays()) {
-				if (filter == null || filter.isAccepted(wref.wayId)) {
-					MapWay way = mapData.getWay(wref.wayId);
-					int nodeIdx = wref.nodeIdx;
+			for (WayRef wref : node.getWayRefs()) {
+				if (filter == null || filter.isAccepted(wref.getWayId())) {
+					MapWay way = mapData.getWay(wref.getWayId());
+					int nodeIdx = wref.getNodeIdx();
 					List<MapNode> wayNodes = way.getNodes();
 					MapNode next;
 					if (wayNodes.size() > nodeIdx+1) {
