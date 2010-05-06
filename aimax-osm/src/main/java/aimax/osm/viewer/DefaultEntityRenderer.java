@@ -171,16 +171,20 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 		Collections.sort(nameInfoBuffer);
 		// remove names whose positions are to close to each other
+		int charSize = (int) (fontSize * displayFactor);
 		for (int i=0; i < nameInfoBuffer.size(); ++i) {
 			NameInfo info = nameInfoBuffer.get(i);
 			for (int j=0; j < i; ++j) {
 				NameInfo info1 = nameInfoBuffer.get(j);
-				int fac = info.name.equals(info1.name) ? 30 : 10;
-				if (Math.max(Math.abs(info.x-info1.x), 8*Math.abs(info.y-info1.y))
-					< fac*fontSize*displayFactor) {
-					nameInfoBuffer.remove(i);
-					--i;
-					j=i;
+				int fac = (info.name.equals(info1.name)) ? 3 : 2;
+				if (Math.abs(info.y-info1.y) < charSize * fac) {
+					fac = (info.x < info1.x) ?
+							info.name.length() : info1.name.length();
+					if (Math.abs(info.x-info1.x) < charSize * fac) {
+						nameInfoBuffer.remove(i);
+						--i;
+						j=i;
+					}
 				}
 			}
 		}
@@ -404,9 +408,9 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		}
 		@Override
 		public int compareTo(NameInfo arg0) {
-			if (printOrder > arg0.printOrder)
+			if (printOrder < arg0.printOrder)
 				return -1;
-			else if (printOrder < arg0.printOrder)
+			else if (printOrder > arg0.printOrder)
 				return 1;
 			else
 				return 0;
@@ -420,9 +424,9 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			DefaultEntityViewInfo info0 = (DefaultEntityViewInfo) arg0.getViewInfo();
 			DefaultEntityViewInfo info1 = (DefaultEntityViewInfo) arg1.getViewInfo();
 			if (info0.printOrder < info1.printOrder)
-				return -1;
-			else if (info0.printOrder > info1.printOrder)
 				return 1;
+			else if (info0.printOrder > info1.printOrder)
+				return -1;
 			else
 				return 0;
 		}

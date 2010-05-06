@@ -17,6 +17,11 @@ public class DefaultEntityViewInfo implements EntityViewInfo {
 	public float minVisibleScale;
 	/** Controls when the name of the entity appears on the screen. */
 	public float minNameScale;
+	/**
+	 * Controls the order in which entities and names of entities are printed
+	 * out. Small numbers are printed on top.
+	 */
+	public int printOrder;
 	/** The color to print the entity name, null indicates no name display. */
 	public Color nameColor;
 	/** The icon to be used to represent the entity or null (no icon). */
@@ -42,17 +47,14 @@ public class DefaultEntityViewInfo implements EntityViewInfo {
 	 * marked as areas by attribute.
 	 */
 	public boolean fillAreasOnly;
-	/** Controls the order in which entities are printed out. */
-	public int printOrder;
 	
-//	/** Default constructor. */
-//	public DefaultEntityViewInfo() {
-//	}
 	
 	/** Constructor for general use. */
-	public DefaultEntityViewInfo(float minScale, float minNameScale, Color nameColor,
-			EntityIcon icon, boolean isWayIcon, Color wayColor, float wayWidth, boolean wayDashed,
-			Color wayFillColor, boolean fillAreasOnly, int printOrder) {
+	public DefaultEntityViewInfo(float minScale, float minNameScale, int printOrder,
+			Color nameColor, EntityIcon icon, boolean isWayIcon,
+			Color wayColor, float wayWidth, boolean wayDashed,
+			Color wayFillColor, boolean fillAreasOnly) {
+		this.printOrder = printOrder;
 		this.minVisibleScale = minScale;
 		this.minNameScale = minNameScale;
 		this.nameColor = nameColor;
@@ -63,7 +65,6 @@ public class DefaultEntityViewInfo implements EntityViewInfo {
 		this.wayDashed = wayDashed;
 		this.wayFillColor = wayFillColor;
 		this.fillAreasOnly = fillAreasOnly;
-		this.printOrder = printOrder;
 	}
 	
 	public float getMinVisibleScale() {

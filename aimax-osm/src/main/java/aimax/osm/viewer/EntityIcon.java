@@ -139,19 +139,42 @@ public abstract class EntityIcon {
 			x -= offset;
 			y -= offset;
 			g2.setStroke(getStroke(displayFactor, false));
-			if (fillColor != null) {
-				g2.setColor(fillColor);
-				g2.fillOval(x, y, dsize, dsize);
-			}
-			if (lineColor != null && !lineColor.equals(fillColor)) {
-				g2.setColor(lineColor);
-				g2.drawOval(x, y, dsize, dsize);
-				g2.drawLine(x+offset, y, x+offset, y-dsize/2);
-				g2.drawLine(x+offset/2, (int)y-offset/2, x+offset*3/2, y-offset/2);
-			}
+			g2.setColor(fillColor);
+			g2.fillOval(x, y, dsize, dsize);
+			g2.setColor(lineColor);
+			g2.drawOval(x, y, dsize, dsize);
+			g2.drawLine(x+offset, y, x+offset, y-dsize/2);
+			g2.drawLine(x+offset/2, (int)y-offset/2, x+offset*3/2, y-offset/2);
 		}
 	}
 	
+	public static class CastleIcon extends EntityIcon {
+		Color lineColor;
+		Color fillColor;
+		
+		public CastleIcon(float size, Color line, Color fill) {
+			this.size = size;
+			this.lineColor = line;
+			this.fillColor = fill;
+		}
+		
+		public void draw(Graphics2D g2, int x, int y, float displayFactor) {
+			int dsize = Math.round(size * displayFactor);
+			int offset = Math.round(size * displayFactor / 2f);
+			int[] xCoords = new int[] {x+offset, x+dsize, x+offset*2/3};
+			int[] yCoords = new int[] {y-dsize, y-dsize, y-dsize*2/3};
+			g2.setStroke(getStroke(displayFactor, false));
+			g2.setColor(fillColor);
+			g2.fillPolygon(xCoords, yCoords, 3);
+			g2.setColor(lineColor);
+			g2.drawPolygon(xCoords, yCoords, 3);
+			g2.drawLine(x, y, x+offset, y-dsize);
+			g2.setColor(fillColor);
+			g2.fillOval(x-offset, y-offset, dsize, dsize);
+			g2.setColor(lineColor);
+			g2.drawOval(x-offset, y-offset, dsize, dsize);
+		}
+	}
 	
 	public static class TentIcon extends EntityIcon {
 		Color lineColor;
