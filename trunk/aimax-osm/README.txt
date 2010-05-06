@@ -36,10 +36,10 @@ Getting started: Run one of the applications in the
 by default, make sure that the main/resource folder is included 
 in the build path of your project, recompile and start again.
 Then place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
-mouse-drag, ctrl-mouse-left, plus button, minus button, ctrl-plus, ctrl-minus,
-space, ctrl-space, arrow buttons, and also the mouse-wheel for navigation,
-mark setting, and track definition. For routing, at least two marks
-must be set.
+mouse-drag, ctrl-mouse-left, plus button, minus button, shift-plus, shift-minus,
+ctrl-plus, ctrl-minus, space, ctrl-space, arrow buttons, and also the mouse-wheel
+for navigation, mark setting, and track definition. For routing, at least two
+marks must be set.
 
 
 == Current Release: 0.9.1-AIMAX-OSM GUI Updates ==
