@@ -275,10 +275,21 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 			int rot = e.getWheelRotation();
 			int x = e.getX();
 			int y = e.getY();
-			if (rot == -1)
-				zoom(1.5f, x, y);
-			else if (rot == 1)
-				zoom(1 / 1.5f , x, y);
+			float zoom = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
+					1.1f : 1.5f;
+			if (rot == -1) {
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+					renderer.setDisplayFactor(renderer.getDisplayFactor()*zoom);
+					repaint();
+				} else
+					zoom(zoom, x, y);
+			} else if (rot == 1) {
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+					renderer.setDisplayFactor(renderer.getDisplayFactor()/zoom);
+					repaint();
+				} else
+					zoom(1 / zoom , x, y);
+			}
 		}
 	}
 	
@@ -290,24 +301,26 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			float zoom = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
+					1.1f : 1.5f;
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_PLUS:
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()*1.5f);
+					renderer.setDisplayFactor(renderer.getDisplayFactor()*zoom);
 					repaint();
 				} else
-					zoom(1.5f, getWidth()/2, getHeight()/2); break;
+					zoom(zoom, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_MINUS:
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()/1.5f);
+					renderer.setDisplayFactor(renderer.getDisplayFactor()/zoom);
 					repaint();
 				} else
-					zoom(1/1.5f, getWidth()/2, getHeight()/2); break;
+					zoom(1/zoom, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_SPACE:
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) == 0)
-					zoom(1.5f, getWidth()/2, getHeight()/2);
+					zoom(zoom, getWidth()/2, getHeight()/2);
 				else
-					zoom(1/1.5f, getWidth()/2, getHeight()/2); break;
+					zoom(1/zoom, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_LEFT:
 				adjust((int) (0.3 * getWidth()), 0); break;
 			case KeyEvent.VK_RIGHT:

@@ -37,15 +37,15 @@ public class MapStyleFactory {
 	private static DefaultEntityViewInfo DEFAULT_INFO = new DefaultEntityViewInfo(
 			20000, 		// minVisibleScale
 			200000, 	// minNameScale
+			20,     // printOrder
 			Color.LIGHT_GRAY.darker(), // nameColor
 			createRectangle(4, Color.GRAY), // icon
 			false, 		// isWayIcon
 			Color.GRAY, // wayColor
-			0.5f, 			// wayWidth
+			0.5f, 	    // wayWidth
 			false, 		// wayDashed
 			LIGHT_GRAY_TRANS, // wayFillColor
-			true, 		// fillAreasOnly
-			10); 		// printOrder
+			true); 		// fillAreasOnly 		
 	
 	/** Changes the default values. */
 	public static void setDefaults(DefaultEntityViewInfo info) {
@@ -64,90 +64,90 @@ public class MapStyleFactory {
 			new EntityClassifier<EntityViewInfo>();
 		EntityClassifier<EntityViewInfo> sc;
 		result.setDefaultEntityClass(createDefaultInfo());
-		result.addRule("highway", "motorway", createWayInfo(10, 20000, Color.BLUE, 2, 50));
-		result.addRule("highway", "motorway_link", createWayInfo(10, 20000, Color.BLUE, 1, 49));
-		result.addRule("highway", "trunk", createWayInfo(10, 60000, Color.BLUE, 2, 48));
-		result.addRule("highway", "trunk_link", createWayInfo(10, 60000, Color.BLUE, 1, 47));
-		result.addRule("highway", "primary", createWayInfo(200, 60000, Color.PINK, 3, 46));
-		result.addRule("highway", "primary_link", createWayInfo(200, 60000, Color.PINK, 2, 45));
-		result.addRule("highway", "secondary", createWayInfo(500, 60000, Color.PINK, 2, 44));
-		result.addRule("highway", "tertiary", createWayInfo(1000, 60000, Color.PINK, 1, 43));
-		result.addRule("highway", "road", createWayInfo(1000, 60000, Color.PINK, 1, 42));
-		result.addRule("highway", "residential", createWayInfo(2000, 100000, Color.LIGHT_GRAY, 1, 35));
-		result.addRule("highway", "living_street", createWayInfo(2000, 100000, Color.LIGHT_GRAY, 1, 35));
-		result.addRule("highway", "pedestrian", createWayInfo(2000, 100000, Color.ORANGE, 2, Color.ORANGE, true, 35));
-		result.addRule("highway", "cycleway", createWayInfo(3000, 100000, Color.GREEN.darker(), 1, 33));
-		result.addRule("highway", "service", createWayInfo(3000, 100000, Color.LIGHT_GRAY, 1, Color.LIGHT_GRAY, true, 33));
-		result.addRule("highway", "path", createWayInfo(3000, 100000, Color.YELLOW, 1, 33));
-		result.addRule("highway", "track", createWayInfo(6000, 100000, Color.YELLOW, 1, 33));
-		result.addRule("highway", "footway", createWayInfo(6000, 100000, Color.ORANGE, 1, 32));
-		result.addRule("highway", "steps", createWayInfo(10000, 150000, Color.ORANGE, 1, 32));
-		result.addRule("highway", "unclassified", createWayInfo(10000, 200000, Color.LIGHT_GRAY, 1, 35));
-		result.addRule("highway", "speed_camera", createPoiInfo(6000, 200000, Color.GRAY, createTriangle(6, Color.RED, Color.WHITE), false, 32));
+		result.addRule("highway", "motorway",      createWayInfo(10, 20000, 50, Color.BLUE, 2));
+		result.addRule("highway", "motorway_link", createWayInfo(10, 20000, 51, Color.BLUE, 1));
+		result.addRule("highway", "trunk",         createWayInfo(10, 60000, 52, Color.BLUE, 2));
+		result.addRule("highway", "trunk_link",    createWayInfo(10, 60000, 53, Color.BLUE, 1));
+		result.addRule("highway", "primary",       createWayInfo(200, 60000, 54, Color.PINK, 3));
+		result.addRule("highway", "primary_link",  createWayInfo(200, 60000, 55, Color.PINK, 2));
+		result.addRule("highway", "secondary",     createWayInfo(500, 60000, 56, Color.PINK, 2));
+		result.addRule("highway", "tertiary",      createWayInfo(1000, 60000, 57, Color.PINK, 1));
+		result.addRule("highway", "road",          createWayInfo(2000, 60000, 58, Color.PINK, 1));
+		result.addRule("highway", "residential",   createWayInfo(3000, 100000, 65, Color.LIGHT_GRAY, 1));
+		result.addRule("highway", "living_street", createWayInfo(3000, 100000, 65, Color.LIGHT_GRAY, 1));
+		result.addRule("highway", "pedestrian",    createWayInfo(2000, 100000, 65, Color.ORANGE, 2, Color.ORANGE, true));
+		result.addRule("highway", "cycleway",      createWayInfo(3000, 100000, 65, Color.GREEN.darker(), 1));
+		result.addRule("highway", "service",       createWayInfo(3000, 100000, 65, Color.LIGHT_GRAY, 1, Color.LIGHT_GRAY, true));
+		result.addRule("highway", "path",          createWayInfo(3000, 100000, 65, Color.YELLOW, 1));
+		result.addRule("highway", "track",         createWayInfo(6000, 100000, 65, Color.YELLOW, 1));
+		result.addRule("highway", "unclassified",  createWayInfo(10000, 150000, 65, Color.LIGHT_GRAY, 1));
+		result.addRule("highway", "footway",       createWayInfo(6000, 150000, 68, Color.ORANGE, 1));
+		result.addRule("highway", "steps",         createWayInfo(10000, 150000, 68, Color.ORANGE, 1));
+		result.addRule("highway", "speed_camera",  createPoiInfo(6000, 200000, 68, Color.GRAY, createTriangle(6, Color.RED, Color.WHITE), false));
 
-		result.addRule("natural", "land", createWayInfo(200, 10000, LIGHT_BLUE, 1, Color.WHITE, false, 60));
-		result.addRule("natural", "island", createWayInfo(200, 3000, LIGHT_BLUE, 2, 60));
-		result.addRule("natural", "coastline", createWayInfo(0, 3000, LIGHT_BLUE, 2, 60));
-		result.addRule("natural", "cliff", createWayInfo(200, 30000, Color.GRAY, 1, 59));
-		result.addRule("natural", "water", createInfo(200, 10000, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false, 61));
-		result.addRule("natural", "glacier", createWayInfo(200, 10000, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false, 60));
-		result.addRule("natural", "beach", createWayInfo(3000, 30000, Color.YELLOW, 1, Color.YELLOW, false, 20));
-		result.addRule("natural", "wood", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 20));
-		result.addRule("natural", "scrub", createWayInfo(200, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 20));
-		result.addRule("natural", "heath", createWayInfo(500, 30000, LIGHT_GREEN, 1, LIGHT_GREEN, false, 20));
-		result.addRule("natural", "fell", createWayInfo(500, 30000, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false, 20));
-		result.addRule("natural", "peak", createPoiInfo(1000, 10000, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false, 62));
-		result.addRule("natural", null, createInfo(1000, 30000, Color.DARK_GRAY, createTriangle(8, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false, 20));
-		result.addRule("leisure", "park", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 20));
-		result.addRule("leisure", "garden", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 20));
-		result.addRule("landuse", "forest", createWayInfo(200, 30000, GREEN, 1, GREEN, false, 20));
-		result.addRule("landuse", "reservoir", createWayInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, false, 20));
-		result.addRule("landuse", "farm", createWayInfo(500, 30000, LIGHT_YELLOW, 1, LIGHT_YELLOW, false, 20));
-		result.addRule("landuse", "farmland", createWayInfo(500, 30000, LIGHT_YELLOW, 1, LIGHT_YELLOW, false, 20));
-		result.addRule("landuse", "residential", createWayInfo(500, 30000, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false, 20));
-		result.addRule("landuse", "village_green", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 20));
-		result.addRule("landuse", "grass", createWayInfo(1000, 100000, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false, 20));
-		result.addRule("landuse", null, createInfo(1000, 200000, Color.GRAY, null, false, LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false, 20));
+		result.addRule("natural", "land",          createWayInfo(200, 10000, 40, LIGHT_BLUE, 1, Color.WHITE, false));
+		result.addRule("natural", "island",        createWayInfo(200, 3000, 40, LIGHT_BLUE, 2));
+		result.addRule("natural", "coastline",     createWayInfo(0,   3000, 40, LIGHT_BLUE, 2));
+		result.addRule("natural", "cliff",         createWayInfo(200, 30000, 41, Color.GRAY, 1));
+		result.addRule("natural", "water",         createInfo(200, 10000, 39, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
+		result.addRule("natural", "glacier",       createWayInfo(200, 10000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
+		result.addRule("natural", "beach",         createWayInfo(3000, 30000, 80, Color.YELLOW, 1, Color.YELLOW, false));
+		result.addRule("natural", "wood",          createWayInfo(200, 30000, 80, GREEN, 1, GREEN, false));
+		result.addRule("natural", "scrub",         createWayInfo(200, 30000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "heath",         createWayInfo(500, 30000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "fell",          createWayInfo(500, 30000, 80, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false));
+		result.addRule("natural", "peak",          createPoiInfo(1000, 10000, 38, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false));
+		result.addRule("natural", null,            createInfo(1000, 30000, 80, Color.DARK_GRAY, createTriangle(8, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false));
+		result.addRule("leisure", "park",          createWayInfo(1000, 60000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
+		result.addRule("leisure", "garden",        createWayInfo(1000, 100000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
+		result.addRule("landuse", "forest",        createWayInfo(200, 30000, 80, GREEN, 1, GREEN, false));
+		result.addRule("landuse", "reservoir",     createWayInfo(200, 30000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
+		result.addRule("landuse", "farm",          createWayInfo(500, 30000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
+		result.addRule("landuse", "farmland",      createWayInfo(500, 30000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
+		result.addRule("landuse", "residential",   createWayInfo(500, 30000, 80, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false));
+		result.addRule("landuse", "village_green", createWayInfo(1000, 100000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
+		result.addRule("landuse", "grass",         createWayInfo(1000, 100000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
+		result.addRule("landuse", null,            createInfo(1000, 200000, 80, Color.GRAY, null, false, LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false));
 		
-		sc = result.addRule("boundary", null, createInfo(6000, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 10));
-		sc.addRule("admin_level", "1", createInfo(0, 200000, Color.GRAY, null, false, Color.GRAY, 2, true, null, false, 14));
-		sc.addRule("admin_level", "2", createInfo(0, 200000, Color.GRAY, null, false, Color.GRAY, 2, true, null, false, 13));
-		sc.addRule("admin_level", "3", createInfo(500, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 12));
-		sc.addRule("admin_level", "4", createInfo(500, 200000, Color.GRAY, null, false, Color.GRAY, 1, true, null, false, 11));
+		sc = result.addRule("boundary", null, createInfo(6000, 100000, 90, Color.GRAY, null, false, Color.GRAY, 1, true, null, false));
+		sc.addRule("admin_level", "1", createInfo(0, 30000, 86, Color.GRAY, null, false, Color.GRAY, 2, true, null, false));
+		sc.addRule("admin_level", "2", createInfo(0, 30000, 87, Color.GRAY, null, false, Color.GRAY, 2, true, null, false));
+		sc.addRule("admin_level", "3", createInfo(500, 100000, 88, Color.GRAY, null, false, Color.GRAY, 1, true, null, false));
+		sc.addRule("admin_level", "4", createInfo(500, 100000, 89, Color.GRAY, null, false, Color.GRAY, 1, true, null, false));
 		
 		
-		result.addRule("waterway", "riverbank", createWayInfo(200, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, false, 20));
-		result.addRule("waterway", null, createWayInfo(3000, 30000, LIGHT_BLUE, 1, LIGHT_BLUE, true, 24));
-		result.addRule("route", "ferry", createInfo(3000, 30000, Color.GRAY, null, false, Color.BLUE, 1, true, null, false, 30));
-		result.addRule("railway", "rail", createWayInfo(3000, 30000, Color.GRAY, 1, 5));
-		result.addRule("railway", "station", createPoiInfo(10000, 60000, Color.DARK_GRAY, createRectangle(4, Color.DARK_GRAY), false, 40));
-		result.addRule("aeroway", null, createWayInfo(1000, 30000, Color.LIGHT_GRAY, 1, 40));
-		result.addRule("aerialway", null, createWayInfo(1000, 60000, Color.GRAY, 1, 40));
+		result.addRule("waterway", "riverbank", createWayInfo(200, 30000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
+		result.addRule("waterway", null,        createWayInfo(3000, 30000, 76, LIGHT_BLUE, 1, LIGHT_BLUE, true));
+		result.addRule("route", "ferry",        createInfo(3000, 30000, 70, Color.GRAY, null, false, Color.BLUE, 1, true, null, false));
+		result.addRule("railway", "rail",       createWayInfo(3000, 100000, 95, Color.GRAY, 1));
+		result.addRule("railway", "station",    createPoiInfo(10000, 60000, 60, Color.DARK_GRAY, createRectangle(4, Color.DARK_GRAY), false));
+		result.addRule("aeroway", null,         createWayInfo(1000, 30000, 60, Color.LIGHT_GRAY, 1));
+		result.addRule("aerialway", null,       createWayInfo(1000, 60000, 60, Color.GRAY, 1));
 
-		result.addRule("historic", "memorial", createPoiInfo(30000, 200000, Color.GRAY, createCircle(11, "M", Color.ORANGE, Color.WHITE), true, 19));
-		result.addRule("historic", null, createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true, 25));
-		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true, 25)); 
-		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true, 27));
-		result.addRule("tourism", "attraction", createInfo(6000, 60000, Color.GRAY, createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false, 26));
-		result.addRule("tourism", "viewpoint", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true, 25));
-		result.addRule("tourism", "museum", createPoiInfo(6000, 200000, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true, 25));
-		result.addRule("tourism", "alpine_hut", createPoiInfo(1000, 6000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true, 26));
-		result.addRule("tourism", "hotel", createPoiInfo(30000, 200000, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true, 24));
-		result.addRule("tourism", null, createPoiInfo(30000, 100000, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false, 23));
-		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true, 15));
-		result.addRule("amenity", "parking", createInfo(30000, 200000, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true, 15));
-		result.addRule("amenity", null, createPoiInfo(30000, 200000, Color.BLUE, createRectangle(4, Color.BLUE), false, 11));
-		result.addRule("shop", null, createPoiInfo(40000, 200000, Color.CYAN, createRectangle(4, Color.CYAN), true, 11));
-		result.addRule("building", null, createWayInfo(60000, 200000, LIGHT_RED, 0.5f, 10));
-		
-		result.addRule("place", "city", createPoiInfo(0, 100, Color.BLACK, null, false, 99));
-		result.addRule("place", "town", createPoiInfo(0, 1000, Color.BLACK, null, false, 98));
-		result.addRule("place", "village", createPoiInfo(0, 3000, Color.DARK_GRAY, null, false, 97));
-		result.addRule("place", null, createPoiInfo(0, 10000, Color.DARK_GRAY, null, false, 70));
+		result.addRule("historic", "castle",    createPoiInfo(6000, 60000, 40, Color.GRAY, new EntityIcon.CastleIcon(8, Color.DARK_GRAY, Color.ORANGE), true));
+		result.addRule("historic", "memorial",    createPoiInfo(60000, 200000, 81, Color.GRAY, createCircle(11, "M", Color.ORANGE, Color.WHITE), true));
+		result.addRule("historic", null,          createPoiInfo(6000, 200000, 75, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true));
+		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, 75, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true)); 
+		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, 73, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true));
+		result.addRule("tourism", "alpine_hut",   createPoiInfo(1000, 10000, 74, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true));
+		result.addRule("tourism", "attraction",   createInfo(6000, 60000, 74, Color.GRAY, createCircle(11, "A", Color.GREEN.darker(), Color.WHITE), true, Color.GRAY, 1, false, null, false));
+		result.addRule("tourism", "viewpoint",    createPoiInfo(6000, 200000, 75, Color.GRAY, createCircle(11, "V", Color.GREEN.darker(), Color.WHITE), true));
+		result.addRule("tourism", "museum",       createPoiInfo(6000, 150000, 75, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true));
+		result.addRule("tourism", "hotel",        createPoiInfo(30000, 200000, 76, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true));
+		result.addRule("tourism", null,           createPoiInfo(30000, 100000, 77, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false));
+		result.addRule("amenity", "place_of_worship", createPoiInfo(20000, 200000, 85, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true));
+		result.addRule("amenity", "parking",      createInfo(30000, 200000, 85, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true));
+		result.addRule("amenity", null,           createPoiInfo(30000, 200000, 89, Color.BLUE, createRectangle(4, Color.BLUE), false));
+		result.addRule("shop", null,              createPoiInfo(40000, 200000, 89, Color.CYAN, createRectangle(4, Color.CYAN), true));
+		result.addRule("building", null,          createWayInfo(60000, 200000, 90, LIGHT_RED, 0.5f));
+		result.addRule("place", "city",    createPoiInfo(0, 100, 1, Color.BLACK, null, false));
+		result.addRule("place", "town",    createPoiInfo(0, 1000, 2, Color.BLACK, null, false));
+		result.addRule("place", "village", createPoiInfo(0, 3000, 3, Color.DARK_GRAY, null, false));
+		result.addRule("place", null,      createPoiInfo(0, 10000, 30, Color.DARK_GRAY, null, false));
 
-		result.addRule("mountain_pass", null, createPoiInfo(0, 1000, Color.DARK_GRAY, null, false, 90));
+		result.addRule("mountain_pass", null, createPoiInfo(0, 1000, 10, Color.DARK_GRAY, null, false));
 	
-		result.addRule("mark", "yes", createPoiInfo(0, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false, 100));
+		result.addRule("mark", "yes", createPoiInfo(0, 0, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false));
 		result.addRule("track_type", "GPS", createTrackInfo(Color.GREEN));
 		result.addRule("track_type", null, createTrackInfo(Color.RED));
 		
@@ -161,15 +161,15 @@ public class MapStyleFactory {
 	public static EntityClassifier<EntityViewInfo> createNightViewClassifier() {
 		EntityClassifier<EntityViewInfo> result = createDefaultClassifier();
 		
-		result.replaceRule("highway", "path", createWayInfo(3000, 100000, Color.YELLOW.darker(), 1, 38));
-		result.replaceRule("highway", "track", createWayInfo(6000, 100000, Color.YELLOW.darker(), 1, 37));
+		result.replaceRule("highway", "path", createWayInfo(3000, 100000, 38, Color.YELLOW.darker(), 1));
+		result.replaceRule("highway", "track", createWayInfo(6000, 100000, 37, Color.YELLOW.darker(), 1));
 		
-		result.replaceRule("place", "city", createPoiInfo(0, 100, Color.WHITE, null, false, 30));
-		result.replaceRule("place", "town", createPoiInfo(0, 1000, Color.WHITE, null, false, 29));
-		result.replaceRule("place", "village", createPoiInfo(0, 3000, Color.GRAY, null, false, 29));
-		result.replaceRule("place", null, createPoiInfo(0, 10000, Color.GRAY, null, false, 28));
+		result.replaceRule("place", "city", createPoiInfo(0, 100, 30, Color.WHITE, null, false));
+		result.replaceRule("place", "town", createPoiInfo(0, 1000, 29, Color.WHITE, null, false));
+		result.replaceRule("place", "village", createPoiInfo(0, 3000, 29, Color.GRAY, null, false));
+		result.replaceRule("place", null, createPoiInfo(0, 10000, 28, Color.GRAY, null, false));
 	     
-		result.replaceRule("mark", "yes", createPoiInfo(0, 0, Color.YELLOW, new PinIcon(12, Color.YELLOW, Color.YELLOW), false, 100));
+		result.replaceRule("mark", "yes", createPoiInfo(0, 0, 100, Color.YELLOW, new PinIcon(12, Color.YELLOW, Color.YELLOW), false));
 		result.replaceRule("track_type", null, createTrackInfo(Color.WHITE));
 
 		return result;
@@ -180,6 +180,7 @@ public class MapStyleFactory {
 		return new DefaultEntityViewInfo(
 				DEFAULT_INFO.minVisibleScale,
 				DEFAULT_INFO.minNameScale,
+				DEFAULT_INFO.printOrder,
 				DEFAULT_INFO.nameColor,
 				DEFAULT_INFO.icon,
 				DEFAULT_INFO.isWayIcon,
@@ -187,73 +188,73 @@ public class MapStyleFactory {
 				DEFAULT_INFO.wayWidth,
 				DEFAULT_INFO.wayDashed,
 				DEFAULT_INFO.wayFillColor,
-				DEFAULT_INFO.fillAreasOnly,
-				DEFAULT_INFO.printOrder);
+				DEFAULT_INFO.fillAreasOnly);
 	}
 	
 	/** Creates an entity view info for points of interest (simple version). */
-	public static DefaultEntityViewInfo createPoiInfo(float minScale, EntityIcon icon, int printOrder) {
+	public static DefaultEntityViewInfo createPoiInfo(float minScale, int printOrder, EntityIcon icon) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
-		result.icon = icon;
 		result.printOrder = printOrder;
+		result.icon = icon;
 		return result;
 	}
 	
 	/** Creates an entity view info for points of interest. */
-	public static DefaultEntityViewInfo createPoiInfo(float minScale, float minNameScale, Color nameColor,
-			EntityIcon icon, boolean isWayIcon, int printOrder) {
+	public static DefaultEntityViewInfo createPoiInfo(float minScale, float minNameScale,
+			int printOrder, Color nameColor, EntityIcon icon, boolean isWayIcon) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
 		result.minNameScale = minNameScale;
+		result.printOrder = printOrder;
 		result.nameColor = nameColor;
 		result.icon = icon;
 		result.isWayIcon = isWayIcon;
-		result.printOrder = printOrder;
 		return result;
 	}
 	
 	/** Creates an entity view info for ways (simple version). */
 	public static DefaultEntityViewInfo createWayInfo(float minScale, float minNameScale,
-			Color wayColor, float wayWidth, int printOrder) {
+			int printOrder, Color wayColor, float wayWidth) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
 		result.minNameScale = minNameScale;
+		result.printOrder = printOrder;
 		result.wayColor = wayColor;
 		result.wayWidth = wayWidth;
-		result.printOrder = printOrder;
 		return result;
 	}
 	
 	/** Creates an entity view info for ways. */
 	public static DefaultEntityViewInfo createWayInfo(float minScale,
-			float minNameScale,
+			float minNameScale, int printOrder,
 			Color wayColor, float wayWidth,
-			Color wayFillColor, boolean fillAreasOnly, int printOrder) {
+			Color wayFillColor, boolean fillAreasOnly) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
 		result.minNameScale = minNameScale;
+		result.printOrder = printOrder;
 		result.wayColor = wayColor;
 		result.wayWidth = wayWidth;
 		result.wayFillColor = wayFillColor;
 		result.fillAreasOnly = fillAreasOnly;
-		result.printOrder = printOrder;
 		return result;
 	}
 	
 	/** Creates an entity view info for tracks. */
 	public static DefaultEntityViewInfo createTrackInfo(Color color) {
-		return new DefaultEntityViewInfo(0, 0, color,
-				createCircle(12, color, GRAY_TRANS), true, color, 2f, true, null, false, 0);
+		return new DefaultEntityViewInfo(0, 0, 0, color,
+				createCircle(12, color, GRAY_TRANS), true, color, 2f, true, null, false);
 	}
 	
 	/** Creates an entity view info (equivalent to general constructor call). */
-	public static DefaultEntityViewInfo createInfo(float minScale, float minNameScale, Color nameColor,
-			EntityIcon icon, boolean isWayIcon, Color wayColor, float wayWidth, boolean wayDashed,
-			Color wayFillColor, boolean fillAreasOnly, int printOrder) {
-		return new DefaultEntityViewInfo(minScale, minNameScale, nameColor,
-				icon, isWayIcon, wayColor, wayWidth, wayDashed,
-				wayFillColor, fillAreasOnly, printOrder);
+	public static DefaultEntityViewInfo createInfo(float minScale, float minNameScale,
+			int printOrder, Color nameColor, EntityIcon icon, boolean isWayIcon,
+			Color wayColor, float wayWidth, boolean wayDashed,
+			Color wayFillColor, boolean fillAreasOnly) {
+		return new DefaultEntityViewInfo(minScale, minNameScale, printOrder,
+				nameColor, icon, isWayIcon, wayColor, wayWidth, wayDashed,
+				wayFillColor, fillAreasOnly);
 	}
 	
 	
