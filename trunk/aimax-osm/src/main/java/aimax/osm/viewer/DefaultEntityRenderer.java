@@ -284,13 +284,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		int xp;
 		int yp;
 		boolean visible = asArea;
+		Rectangle r = g2.getClipBounds();
+		Rectangle rext = new Rectangle(r.x-100, r.y-100, r.width+200, r.height+200);
 		for (MapNode node : nodes) {
-			Rectangle r = g2.getClipBounds();
 			xp = transformer.x(node.getLon());
 			yp = transformer.y(node.getLat());
 			// bounding box test not sufficient for large scales...
-			if (!visible && xp >= r.x && xp <= r.x + r.width
-				&& yp >= r.y && yp <= r.y + r.height)
+			if (!visible && xp >= rext.x && xp <= rext.x + rext.width
+				&& yp >= rext.y && yp <= rext.y + rext.height)
 				visible = true;
 			xPoints[i]  = xp;
 			yPoints[i]  = yp;
