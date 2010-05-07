@@ -3,12 +3,12 @@ package aimax.osm.viewer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Hashtable;
 import java.util.List;
 
 import aimax.osm.data.Position;
@@ -168,7 +168,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		}
 		for (Track track: trackBuffer)
 			printTrack(track);
-
+		//System.out.print("NamesOrg: " + nameInfoBuffer.size() + "\n");
 		Collections.sort(nameInfoBuffer);
 		// remove names whose positions are to close to each other
 		int charSize = (int) (fontSize * displayFactor);
@@ -281,51 +281,61 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		int [] xPoints = new int[nodes.size()];
 		int [] yPoints = new int[nodes.size()];
 		int i = 0;
+		int xp;
+		int yp;
+		boolean visible = asArea;
 		for (MapNode node : nodes) {
-			xPoints[i]  = transformer.x(node.getLon());
-			yPoints[i]  = transformer.y(node.getLat());
+			Rectangle r = g2.getClipBounds();
+			xp = transformer.x(node.getLon());
+			yp = transformer.y(node.getLat());
+			// bounding box test not sufficient for large scales...
+			if (!visible && xp >= r.x && xp <= r.width
+				&& yp >= r.y && yp <= r.height)
+				visible = true;
+			xPoints[i]  = xp;
+			yPoints[i]  = yp;
 			++i;
 		}
-		boolean filled = false;
-		if (asArea) {
-			g2.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor : pInfo.wayColor);
-			g2.setStroke(standardStroke);
-			g2.fillPolygon(xPoints, yPoints, nodes.size());
-			filled = true;
-		}
-		if (!filled || pInfo.wayFillColor != null && !pInfo.wayFillColor.equals(pInfo.wayColor)) {
-			float dash[] =  null;
-			if (pInfo.wayDashed) {
-				dash = new float[] { pInfo.wayWidth * 2f * displayFactor };
+		if (visible) {
+			boolean filled = false;
+			if (asArea) {
+				g2.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor : pInfo.wayColor);
+				g2.setStroke(standardStroke);
+				g2.fillPolygon(xPoints, yPoints, nodes.size());
+				filled = true;
 			}
-			g2.setColor(pInfo.wayColor);
-			g2.setStroke(new BasicStroke(pInfo.wayWidth * displayFactor, BasicStroke.CAP_BUTT,
-			        BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f));
-			g2.drawPolyline(xPoints, yPoints, nodes.size());
-		}
-		if (asOneway) {
-			float x = xPoints[xPoints.length-1];
-			float y = yPoints[yPoints.length-1];
-			double angle = Math.atan2
-			(x-xPoints[xPoints.length-2], -(y-yPoints[yPoints.length-2]));
-//			if (textInfo != null)
-//				System.out.println(textInfo.name + " " + angle/Math.PI * 180);
-			printOnewayArrow(x, y, angle);
-		}
-		if (textInfo != null) {
-			setWayNamePosition(textInfo, xPoints, yPoints, filled);
-			nameInfoBuffer.add(textInfo);
-		}
-		if (debugMode && transformer.getScale()
-				>= 2 * pInfo.minNameScale * displayFactor) {
-			i = 0;
-			for (MapNode node : nodes) {
-				textInfo = new NameInfo(Long.toString(node.getId()),
-						pInfo.nameColor, pInfo.printOrder);
-				textInfo.x = xPoints[i];
-				textInfo.y = yPoints[i];
+			if (!filled || pInfo.wayFillColor != null && !pInfo.wayFillColor.equals(pInfo.wayColor)) {
+				float dash[] =  null;
+				if (pInfo.wayDashed) {
+					dash = new float[] { pInfo.wayWidth * 2f * displayFactor };
+				}
+				g2.setColor(pInfo.wayColor);
+				g2.setStroke(new BasicStroke(pInfo.wayWidth * displayFactor, BasicStroke.CAP_BUTT,
+				        BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f));
+				g2.drawPolyline(xPoints, yPoints, nodes.size());
+			}
+			if (asOneway) {
+				float x = xPoints[xPoints.length-1];
+				float y = yPoints[yPoints.length-1];
+				double angle = Math.atan2
+				(x-xPoints[xPoints.length-2], -(y-yPoints[yPoints.length-2]));
+				printOnewayArrow(x, y, angle);
+			}
+			if (textInfo != null) {
+				setWayNamePosition(textInfo, xPoints, yPoints, filled);
 				nameInfoBuffer.add(textInfo);
-				++i;
+			}
+			if (debugMode && transformer.getScale()
+					>= 2 * pInfo.minNameScale * displayFactor) {
+				i = 0;
+				for (MapNode node : nodes) {
+					textInfo = new NameInfo(Long.toString(node.getId()),
+							pInfo.nameColor, pInfo.printOrder);
+					textInfo.x = xPoints[i];
+					textInfo.y = yPoints[i];
+					nameInfoBuffer.add(textInfo);
+					++i;
+				}
 			}
 		}
 	}

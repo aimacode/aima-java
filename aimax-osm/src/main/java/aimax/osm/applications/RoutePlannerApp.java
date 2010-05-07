@@ -13,8 +13,8 @@ import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.Position;
+import aimax.osm.reader.OsmBz2Reader;
 import aimax.osm.reader.MapReader;
-import aimax.osm.reader.OsmReader;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
 
@@ -34,7 +34,7 @@ public class RoutePlannerApp implements ActionListener {
 	protected RouteCalculator routeCalculator;
 	
 	public RoutePlannerApp() {
-		MapReader mapReader = new OsmReader();
+		MapReader mapReader = new OsmBz2Reader();
 		frame = new MapViewFrame(mapReader);
 		frame.setTitle("OSM Route Planner");
 		routeCalculator = createRouteCalculator();

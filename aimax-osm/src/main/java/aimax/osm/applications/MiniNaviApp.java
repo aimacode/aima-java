@@ -21,8 +21,8 @@ import aimax.osm.gps.GpsFix;
 import aimax.osm.gps.GpsLocator;
 import aimax.osm.gps.GpsPositionListener;
 import aimax.osm.gps.NmeaReader.MessageToFileListener;
+import aimax.osm.reader.OsmBz2Reader;
 import aimax.osm.reader.MapReader;
-import aimax.osm.reader.OsmReader;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
 
@@ -56,7 +56,7 @@ public class MiniNaviApp implements ActionListener {
 	protected JButton calcButton;
 	
 	public MiniNaviApp() {
-		MapReader mapReader = new OsmReader();
+		MapReader mapReader = new OsmBz2Reader();
 		frame = new MapViewFrame(mapReader);
 		locator = new GpsLocator();
 		locator.addGpsPositionListener(new MyGpsPositionListener());
