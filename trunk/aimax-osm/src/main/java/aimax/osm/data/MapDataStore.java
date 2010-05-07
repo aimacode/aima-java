@@ -206,7 +206,7 @@ public class MapDataStore implements MapDataConsumer {
 	 * points of interest.
 	 */
 	protected void applyClassifierAndUpdateTree() {
-		entityTree = new KDTree(boundingBox, 10000, 60);
+		entityTree = new KDTree(boundingBox, 8000, 60);
 		for (MapWay way : ways.values())
 			updateEntityViewInfo(way, true);
 		for (MapNode poi : pois)

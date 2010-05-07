@@ -87,7 +87,7 @@ public class MapStyleFactory {
 
 		result.addRule("natural", "land",          createWayInfo(200, 10000, 40, LIGHT_BLUE, 1, Color.WHITE, false));
 		result.addRule("natural", "island",        createWayInfo(200, 3000, 40, LIGHT_BLUE, 2));
-		result.addRule("natural", "coastline",     createWayInfo(0,   3000, 40, LIGHT_BLUE, 2));
+		result.addRule("natural", "coastline",     createWayInfo(0,   100, 40, LIGHT_BLUE, 2));
 		result.addRule("natural", "cliff",         createWayInfo(200, 30000, 41, Color.GRAY, 1));
 		result.addRule("natural", "water",         createInfo(200, 10000, 39, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
 		result.addRule("natural", "glacier",       createWayInfo(200, 10000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
