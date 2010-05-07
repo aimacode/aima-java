@@ -139,7 +139,7 @@ public class MapStyleFactory {
 		result.addRule("amenity", "parking",      createInfo(30000, 200000, 85, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true));
 		result.addRule("amenity", null,           createPoiInfo(30000, 200000, 89, Color.BLUE, createRectangle(4, Color.BLUE), false));
 		result.addRule("shop", null,              createPoiInfo(40000, 200000, 89, Color.CYAN, createRectangle(4, Color.CYAN), true));
-		result.addRule("building", null,          createWayInfo(60000, 200000, 90, LIGHT_RED, 0.5f));
+		result.addRule("building", null,          createWayInfo(60000, 200000, 90, LIGHT_RED, 0.5f, LIGHT_RED, false));
 		result.addRule("place", "city",    createPoiInfo(0, 100, 1, Color.BLACK, null, false));
 		result.addRule("place", "town",    createPoiInfo(0, 1000, 2, Color.BLACK, null, false));
 		result.addRule("place", "village", createPoiInfo(0, 3000, 3, Color.DARK_GRAY, null, false));
