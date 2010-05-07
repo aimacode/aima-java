@@ -42,10 +42,13 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 0.9.1-AIMAX-OSM GUI Updates ==
-0.9.1-AIMAX-OSM GUI Updates : 15 Mar 2010 :<br>
-   * Code updated to correspond with changes in AIMA-GUI 0.2.0 release.
-   * Offline search now available in OSM search demo application.
+== Current Release: 0.9.2-AIMAX-OSM Many Improvements ==
+0.9.2-AIMAX-OSM Many Improvements : 07 May 2010 :<br>
+   * Storage efficiency of map representation improved (references to ways).
+   * Rendering speed and quality improved
+     (text placement, area sorting, one-way streets, icons, default style).
+   * osm.gz2 file format support added.
+   * slow zoom (activated with <shift>) added.
 
 == Keywords ==
 
@@ -59,6 +62,11 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 - To establish a connection to a GPS, the RXTX serial port library
 (http://www.rxtx.org/) must be installed. See gps package documentation
 for details.
+
+- To enable the osm.bz2 reader, the Apache Commons Compress library
+(see http://commons.apache.org/compress/) is needed. If you want to read
+compressed osm files, download the corresponding jar file and add it to
+your class path.
 
 
 == Example OSM Maps ==
@@ -108,9 +116,15 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
  * java -classpath aimax-osm.jar aimax.osm.applications.OsmSearchDemoAgentApp
   * visualizes simulated search space exploration of different search strategies
  * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
-  * provides a base for GPS navigation system development
+  * provides a base for car navigation system development
+ 
   
 = Change History (Update in reverse chronological order) =
+
+0.9.1-AIMAX-OSM GUI Updates : 15 Mar 2010 :<br>
+   * Code updated to correspond with changes in AIMA-GUI 0.2.0 release.
+   * Offline search now available in OSM search demo application.
+
 0.9.0-AIMAX-OSM Map Style Redesign : 02 Mar 2010 :<br>
 Major refactorings
  * Responsibility for map entity classification moved from presentation to application layer.
