@@ -289,8 +289,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			xp = transformer.x(node.getLon());
 			yp = transformer.y(node.getLat());
 			// bounding box test not sufficient for large scales...
-			if (!visible && xp >= r.x && xp <= r.width
-				&& yp >= r.y && yp <= r.height)
+			if (!visible && xp >= r.x && xp <= r.x + r.width
+				&& yp >= r.y && yp <= r.y + r.height)
 				visible = true;
 			xPoints[i]  = xp;
 			yPoints[i]  = yp;
