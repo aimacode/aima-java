@@ -280,23 +280,10 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		//count++;
 		int [] xPoints = new int[nodes.size()];
 		int [] yPoints = new int[nodes.size()];
-		int i = 0;
-		int xp;
-		int yp;
-		boolean visible = asArea;
-		Rectangle r = g2.getClipBounds();
-		Rectangle rext = new Rectangle(r.x-100, r.y-100, r.width+200, r.height+200);
-		for (MapNode node : nodes) {
-			xp = transformer.x(node.getLon());
-			yp = transformer.y(node.getLat());
-			// bounding box test not sufficient for large scales...
-			if (!visible && xp >= rext.x && xp <= rext.x + rext.width
-				&& yp >= rext.y && yp <= rext.y + rext.height)
-				visible = true;
-			xPoints[i]  = xp;
-			yPoints[i]  = yp;
-			++i;
-		}
+		
+		Rectangle clip = !asArea ? g2.getClipBounds() : null;
+		boolean visible = getViewCoords(nodes, clip, xPoints, yPoints);
+		
 		if (visible) {
 			boolean filled = false;
 			if (asArea) {
@@ -328,7 +315,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			}
 			if (debugMode && transformer.getScale()
 					>= 2 * pInfo.minNameScale * displayFactor) {
-				i = 0;
+				int i = 0;
 				for (MapNode node : nodes) {
 					textInfo = new NameInfo(Long.toString(node.getId()),
 							pInfo.nameColor, pInfo.printOrder);
@@ -339,6 +326,49 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Computes the view coordinates for a list of way nodes and checks
+	 * visibility with respect to a clipping rectangle. The check improves
+	 * the viewing performance in large scales in which long invisible ways
+	 * (e.g. coast lines) often pass the bounding box test. 
+	 * @param nodes List of way nodes.
+	 * @param clip Clipping rectangle or null (meaning no check).
+	 * @param xView Array of coordinates for the result.
+	 * @param yView Array of coordinates for the result.
+	 * @return true if at least a part of the line is visible.
+	 */
+	protected boolean getViewCoords(List<MapNode> nodes, Rectangle clip, 
+			int[] xView, int[] yView) {
+		boolean visible = (clip == null);
+		int xv;
+		int yv;
+		int xClipPos;
+		int yClipPos;
+		int xClipPosLast = 0;
+		int yClipPosLast = 0;
+		int i = 0;
+		for (MapNode node : nodes) {
+			xv = transformer.x(node.getLon());
+			yv = transformer.y(node.getLat());
+			// bounding box test not sufficient for large scales...
+			xView[i]  = xv;
+			yView[i]  = yv;
+			if (!visible) {
+				xClipPos = (xv < clip.x) ? 1 : 0;
+				yClipPos = (yv < clip.y) ? 1 : 0;
+				if (xv > clip.x + clip.width) xClipPos+=2;
+				if (yv > clip.y + clip.height) yClipPos+=2;
+				if ((xClipPos|yClipPos) == 0 ||
+						xClipPos != xClipPosLast && yClipPos != yClipPosLast && i > 0)
+					visible = true;
+				xClipPosLast = xClipPos;
+				yClipPosLast = yClipPos;
+			}
+			++i;
+		}
+		return visible;
 	}
 	
 	/**
