@@ -88,7 +88,7 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 		if (way.getNodes().size() < 2) {
 			// way to short, remove it.
 			for (MapNode node : way.getNodes())
-				node.removeWayRef(way.getId());
+				node.removeWayRef(way);
 		} else {
 			way.setAttributes(wayAttributes);
 			getConsumer().addWay(way);
@@ -125,7 +125,7 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	public void addWayNode(long nodeId) {
 		MapNode node = getConsumer().getWayNode(nodeId);
 		if (node != null) {
-			node.addWayRef(way.getId(), way.getNodes().size());
+			node.addWayRef(way, way.getNodes().size());
 			way.addNode(node);
 		}
 	}

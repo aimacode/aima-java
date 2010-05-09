@@ -1,6 +1,5 @@
 package aimax.osm.data.entities;
 
-import java.util.Iterator;
 
 /**
  * Represents a reference to a way. The node index indicates,
@@ -10,17 +9,17 @@ import java.util.Iterator;
  * we need thousands of in a map).
  */
 public class WayRef {
-	private long wayId;
+	private MapWay way;
 	private short nodeIdx;
 	private WayRef next;
 	
-	public WayRef(long wayId, short nodeIdx) {
-		this.wayId = wayId;
+	public WayRef(MapWay way, short nodeIdx) {
+		this.way = way;
 		this.nodeIdx = nodeIdx;
 	}
 	
 	
-	public long getWayId() { return wayId; }
+	public MapWay getWay() { return way; }
 	public short getNodeIdx() { return nodeIdx; }
 	public WayRef getNext() { return next; }
 	public void setNext(WayRef next) { this.next = next; }

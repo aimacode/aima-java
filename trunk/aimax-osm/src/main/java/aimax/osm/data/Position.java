@@ -61,7 +61,7 @@ public class Position {
 			if (found && filter != null) {
 				found = false;
 				for (WayRef ref : node.getWayRefs()) {
-					if (filter.isAccepted(ref.getWayId()))
+					if (filter.isAccepted(ref.getWay().getId()))
 						found = true;
 				}
 			}

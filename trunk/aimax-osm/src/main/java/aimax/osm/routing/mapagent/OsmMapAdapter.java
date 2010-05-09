@@ -70,7 +70,7 @@ public class OsmMapAdapter implements Map {
 		for (MapNode node : mapData.getWayNodes()) {
 			boolean relevant = false;
 			for (WayRef wref : node.getWayRefs()) {
-				if (filter == null || filter.isAccepted(wref.getWayId())) {
+				if (filter == null || filter.isAccepted(wref.getWay().getId())) {
 					relevant = true;
 					break;
 				}
@@ -88,8 +88,8 @@ public class OsmMapAdapter implements Map {
 		MapNode node = getWayNode(fromLocation);
 		if (node != null) {
 			for (WayRef wref : node.getWayRefs()) {
-				if (filter == null || filter.isAccepted(wref.getWayId())) {
-					MapWay way = mapData.getWay(wref.getWayId());
+				if (filter == null || filter.isAccepted(wref.getWay().getId())) {
+					MapWay way = wref.getWay();
 					int nodeIdx = wref.getNodeIdx();
 					List<MapNode> wayNodes = way.getNodes();
 					MapNode next;
