@@ -18,7 +18,7 @@ import aimax.osm.data.entities.MapEntity;
  */
 public class KDTree {
 	private BoundingBox bb;
-	private KDTree[] children;
+	private KDTree[] children; // null or array of length 2
 	private int depth;
 	private int maxEntities;
 	private int maxDepth;
@@ -50,6 +50,15 @@ public class KDTree {
 	/** Returns the depth of the tree (longest path length from root to leaf). */
 	public int depth() {
 		return children == null ? 1 : 1+Math.max(children[0].depth(), children[1].depth());
+	}
+	
+	/** Must be called after classification of entities has been changed. */
+	public void setUnsorted() {
+		isSorted = false;
+		if (children != null) {
+			children[0].setUnsorted();
+			children[1].setUnsorted();
+		}
 	}
 	
 	/**

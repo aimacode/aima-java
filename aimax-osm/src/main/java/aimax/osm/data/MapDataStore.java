@@ -169,8 +169,10 @@ public class MapDataStore implements MapDataConsumer {
 	 */
 	public void setEntityClassifier(EntityClassifier<EntityViewInfo> classifier) {
 		entityClassifier = classifier;
-		if (entityTree != null)
+		if (entityTree != null) {
 			applyClassifierAndUpdateTree();
+			fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MAP_MODIFIED));
+		}
 	}
 	
 	/**
@@ -198,6 +200,7 @@ public class MapDataStore implements MapDataConsumer {
 		boundingBox.adjust(nodes.values());
 		boundingBox.adjust(pois);
 		applyClassifierAndUpdateTree();
+		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MAP_NEW));
 	}
 	
 	/**
@@ -215,8 +218,6 @@ public class MapDataStore implements MapDataConsumer {
 			updateEntityViewInfo(mark, false);
 		for (Track track : tracks)
 			updateEntityViewInfo(track, false);
-		fireMapDataEvent(new MapDataEvent
-				(this, MapDataEvent.Type.MAP_NEW));
 	}
 	
 	/**

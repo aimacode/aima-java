@@ -9,7 +9,7 @@ import aimax.osm.data.entities.EntityViewInfo;
  * entity type. It is used by {@link aimax.osm.viewer.DefaultEntityRenderer}.
  * @author R. Lunde
  */
-public class DefaultEntityViewInfo implements EntityViewInfo {
+public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	/**
 	 * Specifies the minimal scale, in which the entity should
 	 * appear on the screen.
@@ -69,5 +69,9 @@ public class DefaultEntityViewInfo implements EntityViewInfo {
 	
 	public float getMinVisibleScale() {
 		return minVisibleScale;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

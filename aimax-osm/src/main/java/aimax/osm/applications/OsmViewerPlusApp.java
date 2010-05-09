@@ -97,13 +97,15 @@ public class OsmViewerPlusApp implements ActionListener {
 			view.adjust(0, (int) (-0.3 * view.getHeight()));
 		} else if (e.getSource() == nightButton) {
 			if (nightButton.isSelected()) {
-				EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createNightViewClassifier();
-				frame.getMapData().setEntityClassifier(eClassifier);
+				EntityClassifier<EntityViewInfo> eClassifier = 
+					new MapStyleFactory().createNightViewClassifier();
 				frame.getView().getRenderer().setBackgroundColor(Color.BLACK);
-			} else {
-				EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createDefaultClassifier();
 				frame.getMapData().setEntityClassifier(eClassifier);
+			} else {
+				EntityClassifier<EntityViewInfo> eClassifier =
+					new MapStyleFactory().createDefaultClassifier();
 				frame.getView().getRenderer().setBackgroundColor(Color.WHITE);
+				frame.getMapData().setEntityClassifier(eClassifier);
 			}		
 		}
 	}
