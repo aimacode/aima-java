@@ -142,16 +142,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			pane.fireMapViewEvent(new MapViewEvent
 					(pane, MapViewEvent.Type.TMP_NODES_REMOVED));
 		} else if (ae.getSource() == removeMarkMenuItem) {
-			List<MapNode> marks = pane.getModel().getMarks();
-			float lat = pane.getTransformer().lat(y);
-			float lon = pane.getTransformer().lon(x);
-			MapNode mark = new Position(lat, lon).selectNearest(marks, null);
-			if (mark != null)
-				marks.remove(mark);
-			pane.getModel().fireMapDataEvent(new MapDataEvent
-					(pane.getModel(), MapDataEvent.Type.MAP_MODIFIED));
-			pane.fireMapViewEvent(new MapViewEvent
-					(pane, MapViewEvent.Type.TMP_NODES_REMOVED));
+			pane.removeNearestMark(x, y);
 		} else if (ae.getSource() == loadMarksMenuItem) {
 			XMLDecoder decoder = null;
 		    try {

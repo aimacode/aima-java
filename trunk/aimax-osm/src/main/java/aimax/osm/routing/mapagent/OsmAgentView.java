@@ -36,10 +36,11 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * <code>mapData</code> instance only one agent view is created.
 	 */ 
 	public OsmAgentView(MapDataStore mapData) {
-		EntityClassifier<EntityViewInfo> eClassifier = MapStyleFactory.createDefaultClassifier();
-		eClassifier.addRule("track_type", TRACK_NAME+0, MapStyleFactory.createTrackInfo(Color.RED));
-		eClassifier.addRule("track_type", TRACK_NAME+1, MapStyleFactory.createTrackInfo(Color.GREEN));
-		eClassifier.addRule("track_type", TRACK_NAME+2, MapStyleFactory.createTrackInfo(Color.BLUE));
+		MapStyleFactory msf = new MapStyleFactory();
+		EntityClassifier<EntityViewInfo> eClassifier = msf.createDefaultClassifier();
+		eClassifier.addRule("track_type", TRACK_NAME+0, msf.createTrackInfo(Color.RED));
+		eClassifier.addRule("track_type", TRACK_NAME+1, msf.createTrackInfo(Color.GREEN));
+		eClassifier.addRule("track_type", TRACK_NAME+2, msf.createTrackInfo(Color.BLUE));
 		mapData.setEntityClassifier(eClassifier);
 		
 		mapViewPane = new MapViewPane();

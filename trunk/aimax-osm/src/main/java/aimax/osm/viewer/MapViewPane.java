@@ -23,6 +23,7 @@ import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
+import aimax.osm.data.entities.MapNode;
 
 /**
  * Provides a panel which shows map data. As model, a
@@ -144,6 +145,23 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	}
 	
 	/**
+	 * Removes the mark which is the nearest with respect to the given view
+	 * coordinates.
+	 */
+	public void removeNearestMark(int x, int y) {
+		List<MapNode> marks = mapData.getMarks();
+		float lat = getTransformer().lat(y);
+		float lon = getTransformer().lon(x);
+		MapNode mark = new Position(lat, lon).selectNearest(marks, null);
+		if (mark != null)
+			marks.remove(mark);
+		mapData.fireMapDataEvent(new MapDataEvent
+				(mapData, MapDataEvent.Type.MAP_MODIFIED));
+		fireMapViewEvent(new MapViewEvent
+				(this, MapViewEvent.Type.TMP_NODES_REMOVED));
+	}
+	
+	/**
 	 * Shows a graphical representation of the provided map data.
 	 */
 	public void paint(Graphics g) {
@@ -247,16 +265,19 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 				} else {
 					float lat = transformer.lat(yr);
 					float lon = transformer.lon(xr);
-					if ((e.getModifiers() & MouseEvent.CTRL_MASK) == 0) {
-						// mouse left button -> add mark
-						mapData.addMark(lat, lon);
-						fireMapViewEvent
-						(new MapViewEvent(MapViewPane.this, MapViewEvent.Type.MARK_ADDED));
-					} else {
+					if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
+						// mouse left button + ctrl -> add track point
+                        mapData.addToTrack("Mouse Track", new Position(lat, lon));
+                        fireMapViewEvent
+                        (new MapViewEvent(MapViewPane.this, MapViewEvent.Type.TRK_PT_ADDED));
+					} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
 						// mouse left button + shift -> add track point
-						mapData.addToTrack("Mouse Track", new Position(lat, lon));
-						fireMapViewEvent
-						(new MapViewEvent(MapViewPane.this, MapViewEvent.Type.TRK_PT_ADDED));
+						removeNearestMark(e.getX(), e.getY());
+					} else {
+							// mouse left button -> add mark
+							mapData.addMark(lat, lon);
+							fireMapViewEvent
+							(new MapViewEvent(MapViewPane.this, MapViewEvent.Type.MARK_ADDED));
 					}
 				}
 			} else if (popup != null) {

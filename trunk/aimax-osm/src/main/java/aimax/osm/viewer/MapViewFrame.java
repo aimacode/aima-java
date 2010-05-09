@@ -101,7 +101,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 	
 	protected void setDefaultEntityClassifier() {
-		mapData.setEntityClassifier(MapStyleFactory.createDefaultClassifier());
+		mapData.setEntityClassifier(new MapStyleFactory().createDefaultClassifier());
 	}
 	
 	public void setVisible(boolean b) {
