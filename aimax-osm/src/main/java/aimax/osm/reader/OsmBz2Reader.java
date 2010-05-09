@@ -68,9 +68,9 @@ public class OsmBz2Reader implements MapReader {
 	
 	public String[] fileFormatDescriptions() {
 		if (compressorClass != null)
-			return new String[] {"OSM BZip2", "OSM File"};
+			return new String[] {"OSM BZip2 (osm.bz2)", "OSM File (osm)"};
 		else
-			return new String[] {"OSM File"};
+			return new String[] {"OSM File (osm)"};
 	}
 	
 	public String[] fileFormatExtensions() {

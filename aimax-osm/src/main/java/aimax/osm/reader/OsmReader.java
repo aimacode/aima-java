@@ -75,7 +75,7 @@ public class OsmReader implements MapReader {
 	
 
 	public String[] fileFormatDescriptions() {
-		return new String[] {"OSM File"};
+		return new String[] {"OSM File (osm)"};
 	}
 	
 	public String[] fileFormatExtensions() {

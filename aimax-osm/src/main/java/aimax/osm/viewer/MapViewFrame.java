@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
@@ -29,6 +30,7 @@ import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
 import aimax.osm.data.entities.WayRef;
 import aimax.osm.reader.MapReader;
+import aimax.osm.writer.OsmBz2Writer;
 
 /**
  * Implements a simple frame with a toolbar and a map view. The
@@ -45,6 +47,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	
 	private JFileChooser fileChooser;
 	private JButton loadButton;
+	private JButton saveButton;
 	private JButton findButton;
 	private JTextField findField;
 	protected JTextField infoField;
@@ -56,6 +59,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		loadButton = new JButton("Load");
 		loadButton.addActionListener(this);
 		toolbar.add(loadButton);
+		saveButton = new JButton("Save");
+		saveButton.addActionListener(this);
+		toolbar.add(saveButton);
 		toolbar.addSeparator();
 		findField = new JTextField();
 		toolbar.add(findField);
@@ -163,7 +169,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			if (name == null) {
 				name = "";
 				for (WayRef wr : node.getWayRefs()) {
-					MapWay way = mapData.getWay(wr.getWayId());
+					MapWay way = wr.getWay();
 					String wayName = way.getName();
 					if (wayName != null && !name.contains(wayName)) {
 						if (!name.isEmpty())
@@ -189,6 +195,18 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
 			    }
 			}    
+		} else if (e.getSource() == saveButton) {
+			fileChooser.setSelectedFile(new File(""));
+			int returnVal = fileChooser.showSaveDialog(this);
+		    if(returnVal == JFileChooser.APPROVE_OPTION &&
+		    		(!fileChooser.getSelectedFile().exists() ||
+		    				JOptionPane.showConfirmDialog(this,
+		    						"File exists, overwrite?", "Confirm",
+		    						JOptionPane.OK_CANCEL_OPTION)
+		    						== JOptionPane.OK_OPTION)) {
+			    	OsmBz2Writer writer = new OsmBz2Writer();
+			    	writer.writeMap(fileChooser.getSelectedFile(), mapData);
+		    }
 		} else if (e.getSource() == findButton) {
 			find(findField.getText());
 		}

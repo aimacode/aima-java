@@ -40,21 +40,21 @@ public class MapNode extends MapEntity {
 		return new WayRefList(ways);
 	}
 	
-	public void addWayRef(long wayId, int nodeIdx) {
+	public void addWayRef(MapWay way, int nodeIdx) {
 		// be careful with closed ways (begin == end)
-		if (ways == null || ways.getWayId() != wayId) {
-			WayRef ref = new WayRef(wayId, (short) nodeIdx);
+		if (ways == null || ways.getWay() != way) {
+			WayRef ref = new WayRef(way, (short) nodeIdx);
 			ref.setNext(ways);
 			ways = ref;
 		}
 	}
 	
-	public void removeWayRef(long wayId) {
-		if (ways.getWayId() == wayId)
+	public void removeWayRef(MapWay way) {
+		if (ways.getWay() == way)
 			ways = ways.getNext();
 		else {
 			WayRef ref = ways;
-			while (ref.getNext().getWayId() != wayId)
+			while (ref.getNext().getWay() != way)
 				ref = ref.getNext();
 			ref.setNext(ref.getNext().getNext());
 		}

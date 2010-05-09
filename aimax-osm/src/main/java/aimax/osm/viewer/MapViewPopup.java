@@ -99,7 +99,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					|| debugMenuItem.isSelected())
 				entities.add(mNode);
 			for (WayRef ref : mNode.getWayRefs()) {
-				MapEntity me = pane.getModel().getWay(ref.getWayId());
+				MapEntity me = ref.getWay();
 				if (me.getName() != null || me.getAttributes().length>0
 						|| debugMenuItem.isSelected())
 					entities.add(me);		

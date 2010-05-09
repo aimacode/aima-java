@@ -102,9 +102,13 @@ public class MapDataStore implements MapDataConsumer {
 	 * to the container.
 	 */
 	public void addNode(MapNode node) {
-		nodes.put(node.getId(), node);
-		if (nodes.size() % 500000 == 0)
-			LOG.fine("Nodes: " + nodes.size());
+		if (node.getAttributeValue("mark") != null) {
+			addMark(node.getLat(), node.getLon());
+		} else {
+			nodes.put(node.getId(), node);
+			if (nodes.size() % 500000 == 0)
+				LOG.fine("Nodes: " + nodes.size());
+		}
 	}
 
 	/** Adds a new map way to the container. */
@@ -330,8 +334,8 @@ public class MapDataStore implements MapDataConsumer {
 	public MapWay getWay(MapNode node1, MapNode node2) {
 		for (WayRef wr1 : node1.getWayRefs()) {
 			for (WayRef wr2 : node2.getWayRefs()) {
-				if (wr1.getWayId() == wr2.getWayId()) {
-					return getWay(wr1.getWayId());
+				if (wr1.getWay() == wr2.getWay()) {
+					return wr1.getWay();
 				}
 			}
 		}
