@@ -19,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
@@ -34,8 +35,8 @@ import aimax.osm.writer.OsmBz2Writer;
 
 /**
  * Implements a simple frame with a toolbar and a map view. The
- * toolbar provides buttons for map selection and navigation. Additionally,
- * a text field is included which shows informations like positions,
+ * toolbar provides buttons for map loading, map saving, and entity finding.
+ * Additionally, a text field is included which shows informations like positions,
  * track length, and POI names. 
  * @author R. Lunde
  */
@@ -58,9 +59,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		fileChooser = new JFileChooser();
 		toolbar = new JToolBar();
 		loadButton = new JButton("Load");
+		loadButton.setToolTipText("Load Map (<ctrl> with Bounding Box)");
 		loadButton.addActionListener(this);
 		toolbar.add(loadButton);
 		saveButton = new JButton("Save");
+		saveButton.setToolTipText("Save Map with Markers");
 		saveButton.addActionListener(this);
 		toolbar.add(saveButton);
 		toolbar.addSeparator();
@@ -74,6 +77,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			public void keyReleased(KeyEvent e) {}
 			public void keyTyped(KeyEvent e) {}});
 		findButton = new JButton("Find");
+		findButton.setToolTipText("Find Entity by Name or Attribute");
 		findButton.addActionListener(this);
 		toolbar.add(findButton);
 		toolbar.addSeparator();
@@ -185,12 +189,15 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == loadButton) {
-			if (mapReader != null) {
-				int returnVal = fileChooser.showOpenDialog(this);
-			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
-			    }
-			}    
+			int returnVal = fileChooser.showOpenDialog(this);
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    	if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+		    		//ctrl+load -> ask the user for a bounding box.
+		    		BoundingBox bb = askForBoundingBox();
+		    		mapReader.setBoundingBox(bb);
+		    	}
+		    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
+		    }    
 		} else if (e.getSource() == saveButton) {
 			JFileChooser fc = new JFileChooser();
 			String[] exts = mapReader.fileFormatDescriptions();
@@ -214,6 +221,36 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		}
 	}
 	
+	protected BoundingBox askForBoundingBox() {
+		BoundingBox result = null;
+		JTextField minLat = new JTextField("-90");
+		JTextField minLon = new JTextField("-180");
+		JTextField maxLat = new JTextField("90");
+		JTextField maxLon = new JTextField("180");
+		Object[] content = new Object[] {
+				"Min Latitude:", minLat, "Min Longitude:", minLon,
+				"Max Latitude:", maxLat, "Max Longitude:", maxLon,
+		};
+		boolean done;
+		do {
+			done = true;
+			if (JOptionPane.showConfirmDialog(this,
+			    						content, "Specify Bounding Box",
+			    						JOptionPane.OK_CANCEL_OPTION)
+			    						== JOptionPane.OK_OPTION) {
+				try {
+					result = new BoundingBox(
+							Float.parseFloat(minLat.getText()),
+							Float.parseFloat(minLon.getText()),
+							Float.parseFloat(maxLat.getText()),
+							Float.parseFloat(maxLon.getText()));
+				} catch (NumberFormatException e) {
+					done = false;
+				}
+			}
+		} while (!done);
+		return result;
+	}
 	
 	/**
 	 * Updates the info field based on events sent by the MapViewPane. 

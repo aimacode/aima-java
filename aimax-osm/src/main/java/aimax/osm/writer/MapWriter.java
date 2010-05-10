@@ -10,8 +10,12 @@ import aimax.osm.data.MapDataStore;
  * @author R. Lunde
  */
 public interface MapWriter {
+	/** Writes a map to file. */
 	public void writeMap(File file, MapDataStore mapData);
+	/** Writes a map to an output stream writer. */
 	public void writeMap(OutputStreamWriter writer, MapDataStore mapData);
+	/** Describes the supported file formats. */
 	public String[] fileFormatDescriptions();
+	/** Contains the file extensions of all supported formats. */
 	public String[] fileFormatExtensions();
 }
