@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Constructor;
@@ -21,7 +20,7 @@ import aimax.osm.data.MapDataStore;
  * pack functionality will not be available.
  * @author R. Lunde
  */
-public class OsmBz2Writer {
+public class OsmBz2Writer implements MapWriter {
 
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private OsmWriter osmReader = new OsmWriter();

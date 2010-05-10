@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -30,6 +28,8 @@ import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
 import aimax.osm.data.entities.WayRef;
 import aimax.osm.reader.MapReader;
+import aimax.osm.reader.OsmBz2Reader;
+import aimax.osm.writer.MapWriter;
 import aimax.osm.writer.OsmBz2Writer;
 
 /**
@@ -43,6 +43,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected MapViewPane view;
 	protected MapDataStore mapData;
 	protected MapReader mapReader;
+	protected MapWriter mapWriter;
 	protected JToolBar toolbar;
 	
 	private JFileChooser fileChooser;
@@ -83,27 +84,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		
 		mapData = new MapDataStore();
 		setDefaultEntityClassifier();
+		setMapReader(new OsmBz2Reader());
+		setMapWriter(new OsmBz2Writer());
 		view = new MapViewPane();
 		view.setModel(mapData);
 		getContentPane().add(view, BorderLayout.CENTER);
 		MapEventHandler eventHandler = new MapEventHandler();
 		mapData.addMapDataEventListener(eventHandler);
 		view.addMapViewEventListener(eventHandler);
-	}
-		
-	public MapViewFrame(MapReader mapReader) {
-		this();
-		setMapReader(mapReader);
-	}
-	
-	private static FileInputStream createStream(File file) {
-		FileInputStream result = null;
-		try {
-			result = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			// just return null...
-		}
-		return result;
 	}
 	
 	protected void setDefaultEntityClassifier() {
@@ -124,6 +112,18 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		return mapData;
 	}
 	
+	public JToolBar getToolbar() {
+		return toolbar;
+	}
+	
+	public JButton getLoadButton() {
+		return loadButton;
+	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
 	public void setMapReader(MapReader mapReader) {
 		this.mapReader = mapReader;
 		for (int i = fileChooser.getChoosableFileFilters().length-1; i>0; i--)
@@ -135,7 +135,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			(exts[i], mapReader.fileFormatExtensions()[i]);
 			fileChooser.addChoosableFileFilter(filter);
 		}
-		fileChooser.setSelectedFile(null);
+		fileChooser.setSelectedFile(new File(""));
+	}
+	
+	public void setMapWriter(MapWriter mapWriter) {
+		this.mapWriter = mapWriter;
 	}
 	
 	public void readMap(InputStream map) {
@@ -148,14 +152,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	public void readMap(File map) {
 		mapReader.readMap(map, mapData);
 		fileChooser.setSelectedFile(map.getAbsoluteFile());	
-	}
-	
-	public JToolBar getToolbar() {
-		return toolbar;
-	}
-	
-	public JButton getLoadButton() {
-		return loadButton;
 	}
 	
 	public void find(String namepart) {
@@ -196,16 +192,22 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			    }
 			}    
 		} else if (e.getSource() == saveButton) {
-			fileChooser.setSelectedFile(new File(""));
-			int returnVal = fileChooser.showSaveDialog(this);
+			JFileChooser fc = new JFileChooser();
+			String[] exts = mapReader.fileFormatDescriptions();
+			for (int i = 0 ; i < exts.length; i++) {
+				FileFilter filter = new FileNameExtensionFilter
+				(exts[i], mapReader.fileFormatExtensions()[i]);
+				fc.addChoosableFileFilter(filter);
+			}
+			fc.setCurrentDirectory(fileChooser.getCurrentDirectory());
+			int returnVal = fc.showSaveDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION &&
-		    		(!fileChooser.getSelectedFile().exists() ||
+		    		(!fc.getSelectedFile().exists() ||
 		    				JOptionPane.showConfirmDialog(this,
 		    						"File exists, overwrite?", "Confirm",
 		    						JOptionPane.OK_CANCEL_OPTION)
 		    						== JOptionPane.OK_OPTION)) {
-			    	OsmBz2Writer writer = new OsmBz2Writer();
-			    	writer.writeMap(fileChooser.getSelectedFile(), mapData);
+			    	mapWriter.writeMap(fc.getSelectedFile(), mapData);
 		    }
 		} else if (e.getSource() == findButton) {
 			find(findField.getText());
