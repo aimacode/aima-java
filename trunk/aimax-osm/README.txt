@@ -48,6 +48,7 @@ marks must be set.
    * Rendering speed and quality improved
      (text placement, area sorting, one-way streets, icons, default style).
    * osm.gz2 file format support added.
+   * reader extended to read parts of a map, specified by bounding box.
    * writer for writing maps to file added (formats osm and osm.bz2).
    * slow zoom (activated with <shift>) added.
 
@@ -60,33 +61,40 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 
 - Depends on the aima-core and the aima-gui project. 
 
+- The osm.bz2 support is based on the Apache Commons Compress library
+(see http://commons.apache.org/compress/). The corrsponding jar-file
+together with licence information is provided in the lib directory.
+It should be part of the project class path. Otherwise the software will
+still run and compile correctly, but the map file choosers will only offer
+an osm file filter.
+
 - To establish a connection to a GPS, the RXTX serial port library
 (http://www.rxtx.org/) must be installed. See gps package documentation
 for details.
 
-- To enable the osm.bz2 reader, the Apache Commons Compress library
-(see http://commons.apache.org/compress/) is needed. If you want to read
-compressed osm files, download the corresponding jar file and add it to
-your class path.
 
 
-== Example OSM Maps ==
+== OSM Maps ==
 
-Can be downloaded from the AIMA project website, example-osm-maps.zip :
+Example maps can be downloaded from the AIMA project website, example-osm-maps.zip :
 
 http://code.google.com/p/aima-java/downloads/list
 
-All provided example maps have been created based on the data published at:
+All provided example maps have been created based on data published at:
 http://download.geofabrik.de/osm/
 
-Data extraction for specific areas such as german cities has been performed using
-the free Osmosis tool. See e.g. http://wiki.openstreetmap.org/index.php/Osmosis.
+Smaller maps from servers like geofabrik or cloudmade can be loaded into the viewer
+directly, especially, if enough heap space is provided (e.g. VM argument -Xmx1500M).
+Additionally, parts of larger maps can be loaded into the viewer applications by
+holding <ctrl> while pressing the load button and specifying a bounding box.
+The easiest way to obtain the needed latitude and longitude bounds is to select
+the export tab from page http://www.openstreetmap.org/ and then navigate to the
+area which you want to extract. Unfortunately, the XML export typically doesn't
+work, but you find the needed coordinates on the left side. 
 
-If you want to create a map of your home town, the easiest way to get the
-coordinates for the bounding box is to select the export tab from page
-http://www.openstreetmap.org/ and then navigate to the area which
-you want to extract. Unfortunately, the XML export typically doesn't work, but you
-find the needed coordinates on the left side.
+Alternatively, data extraction for specific areas such as german cities can be 
+performed using the free Osmosis tool. See e.g.
+http://wiki.openstreetmap.org/index.php/Osmosis.
 
 The following lines give you an example how Osmosis could be called within a Windows
 cmd file to extract the region of Ulm from the Geofabrik germany.osm.bz2 file:

@@ -15,7 +15,11 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import aimax.osm.data.BoundingBox;
+import aimax.osm.data.MapDataConsumer;
 import aimax.osm.data.MapDataStore;
+import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.entities.MapWay;
 
 /** 
  * Reads a map from file using the standard osm XML format.
@@ -26,6 +30,15 @@ import aimax.osm.data.MapDataStore;
 public class OsmReader implements MapReader {
 
 	private static Logger LOG = Logger.getLogger("aimax.osm");
+	protected BoundingBox boundingBox;
+	
+	/**
+	 * Sets a bounding box for the next read action. Map nodes which are
+	 * not inside will be ignored.
+	 */
+	public void setBoundingBox(BoundingBox bb) {
+		boundingBox = bb;
+	}
 	
 	/**
 	 * Reads all data from the file and send it to the sink.
@@ -36,6 +49,7 @@ public class OsmReader implements MapReader {
 			readMap(inputStream, mapData);
 		} catch (FileNotFoundException fnfe) {
 			LOG.warning("File does not exist "+file);
+			boundingBox = null;
 		}
 	}
 	
@@ -47,7 +61,9 @@ public class OsmReader implements MapReader {
 		try {
 			mapData.clearAll();
 			SAXParser parser = createParser();
-			parser.parse(inputStream, new OsmHandler(mapData));
+			MapDataConsumer consumer = (boundingBox == null)
+			? mapData : new BBMapDataConsumer(mapData, boundingBox);
+			parser.parse(inputStream, new OsmHandler(consumer));
 			mapData.compileData();
 
 		} catch (SAXParseException e) {
@@ -70,6 +86,7 @@ public class OsmReader implements MapReader {
 					LOG.log(Level.SEVERE, "Unable to close input stream.", e);
 				}
 			}
+			boundingBox = null;
 		}
 	}
 	
@@ -99,4 +116,36 @@ public class OsmReader implements MapReader {
 		}
 	}
 	
+	
+	//////////////////////////////////////////////////////////////////////
+	// inner classes
+	
+	private static class BBMapDataConsumer implements MapDataConsumer {
+		MapDataConsumer consumer;
+		BoundingBox bb;
+		
+		protected BBMapDataConsumer(MapDataConsumer consumer, BoundingBox bb) {
+			this.consumer = consumer;
+			this.bb = bb;
+		}
+		
+		@Override
+		public void addNode(MapNode node) {
+			if (node.getLat() >= bb.getLatMin()
+					&& node.getLon() >= bb.getLonMin()
+					&& node.getLat() <= bb.getLatMax()
+					&& node.getLon() <= bb.getLonMax())
+			consumer.addNode(node);
+			
+		}
+		@Override
+		public void addWay(MapWay way) {
+			consumer.addWay(way);
+			
+		}
+		@Override
+		public MapNode getWayNode(long id) {
+			return consumer.getWayNode(id);
+		}
+	}
 }

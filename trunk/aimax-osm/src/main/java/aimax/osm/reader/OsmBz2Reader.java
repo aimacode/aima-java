@@ -9,6 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
+import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataStore;
 
 /** 
@@ -24,6 +25,14 @@ public class OsmBz2Reader implements MapReader {
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private OsmReader osmReader = new OsmReader();
 	private Class compressorClass;
+	
+	/**
+	 * Sets a bounding box for the next read action. Map nodes which are
+	 * not inside will be ignored.
+	 */
+	public void setBoundingBox(BoundingBox bb) {
+		osmReader.setBoundingBox(bb);
+	}
 	
 	/**
 	 * Tries to find the <code>BZip2CompressorInputStream</code> class using
