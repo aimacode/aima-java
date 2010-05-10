@@ -11,8 +11,6 @@ import javax.swing.JToolBar;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
-import aimax.osm.reader.OsmBz2Reader;
-import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewFrame;
@@ -36,8 +34,7 @@ public class OsmViewerPlusApp implements ActionListener {
 	protected JToggleButton nightButton;
 	
 	public OsmViewerPlusApp() {
-		MapReader mapReader = new OsmBz2Reader();
-		frame = new MapViewFrame(mapReader);
+		frame = new MapViewFrame();
 		frame.setTitle("OSM Viewer+");
 		
 		JToolBar toolbar = frame.getToolbar();

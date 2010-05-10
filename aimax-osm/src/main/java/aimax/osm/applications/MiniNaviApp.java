@@ -56,8 +56,7 @@ public class MiniNaviApp implements ActionListener {
 	protected JButton calcButton;
 	
 	public MiniNaviApp() {
-		MapReader mapReader = new OsmBz2Reader();
-		frame = new MapViewFrame(mapReader);
+		frame = new MapViewFrame();
 		locator = new GpsLocator();
 		locator.addGpsPositionListener(new MyGpsPositionListener());
 		routeCalculator = createRouteCalculator();
@@ -160,6 +159,7 @@ public class MiniNaviApp implements ActionListener {
 	
 	protected void updateEnableState() {
 		frame.getLoadButton().setEnabled(routingThread == null);
+		frame.getSaveButton().setEnabled(routingThread == null);
 		calcButton.setText
 		(routingThread == null ? "Calculate Route" : "Cancel Calculation");
 	}

@@ -1,6 +1,5 @@
 package aimax.osm.writer;
 
-import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +20,7 @@ import aimax.osm.reader.OsmRuntimeException;
  * Writes a map to file using the standard osm XML format.
  * @author R. Lunde
  */
-public class OsmWriter {
+public class OsmWriter implements MapWriter {
 
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	
@@ -49,7 +48,7 @@ public class OsmWriter {
 		try {
 			StringBuffer text = new StringBuffer();
 			text.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			text.append("<osm version=\"0.6\" generator=\"aimax-osm\">\n");
+			text.append("<osm version=\"0.6\" generator=\"aimax-osm-writer\">\n");
 			text.append("<bounds minlat=\"");
 			text.append(mapData.getBoundingBox().getLatMin());
 			text.append("\" minlon=\"");
