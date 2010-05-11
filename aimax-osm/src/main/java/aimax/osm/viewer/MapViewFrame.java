@@ -194,7 +194,10 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		    	if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 		    		//ctrl+load -> ask the user for a bounding box.
 		    		BoundingBox bb = askForBoundingBox();
-		    		mapReader.setBoundingBox(bb);
+		    		if (bb != null)
+		    			mapReader.setBoundingBox(bb);
+		    		else
+		    			return;
 		    	}
 		    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
 		    }    
