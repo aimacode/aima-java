@@ -25,8 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
 
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
@@ -37,7 +35,7 @@ import aimax.osm.data.entities.WayRef;
  * @author R. Lunde
  */
 public class MapViewPopup extends JPopupMenu implements ActionListener {
-	private MapViewPane pane;
+	protected MapViewPane pane;
 	private JFileChooser fileChooser;
 	
 	private JMenuItem infoMenuItem;

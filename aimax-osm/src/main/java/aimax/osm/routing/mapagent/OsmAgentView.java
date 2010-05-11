@@ -2,6 +2,12 @@ package aimax.osm.routing.mapagent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
@@ -14,15 +20,17 @@ import aimax.osm.data.MapDataStore;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.reader.MapReader;
+import aimax.osm.reader.OsmBz2Reader;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewPane;
+import aimax.osm.viewer.MapViewPopup;
 
 /**
  * Visualizes agent positions and movements in an OSM map. It is
  * assumed that agents are only added but never removed from
  * an environment.
  * @author R. Lunde
- *
  */
 public class OsmAgentView extends AgentAppEnvironmentView {
 
@@ -42,9 +50,9 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		eClassifier.addRule("track_type", TRACK_NAME+1, msf.createTrackInfo(Color.GREEN));
 		eClassifier.addRule("track_type", TRACK_NAME+2, msf.createTrackInfo(Color.BLUE));
 		mapData.setEntityClassifier(eClassifier);
-		
 		mapViewPane = new MapViewPane();
 		mapViewPane.setModel(mapData);
+		mapViewPane.setPopupMenu(new MapViewPopupWithLoad());
 		setLayout(new BorderLayout());
 		add(mapViewPane, BorderLayout.CENTER);
 	}
@@ -87,6 +95,54 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 			int aIdx = getMapEnv().getAgents().indexOf(agent);
 			map.getMapData().addToTrack
 			(TRACK_NAME+aIdx, new Position(node.getLat(), node.getLon()));
+		}
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////
+	// inner classes
+	
+	/** Extends the <code>MapViewPopup</code> by a load map menu item. */
+	private class MapViewPopupWithLoad extends MapViewPopup {
+		MapReader mapReader;
+		JMenuItem loadMenuItem;
+		JFileChooser loadFileChooser;
+		
+		
+		MapViewPopupWithLoad() {
+			mapReader = new OsmBz2Reader();
+			loadMenuItem = new JMenuItem("Load Map");
+			loadMenuItem.addActionListener(this);
+			add(loadMenuItem, 3);
+		}
+		
+		/**
+		 * Creates a file chooser for map loading if necessary
+		 * (lazy instantiation).
+		 */
+		JFileChooser getLoadFileChooser() {
+			JFileChooser result = loadFileChooser;
+			if (result == null) {
+				result = new JFileChooser();
+				String[] exts = mapReader.fileFormatDescriptions();
+				for (int i = 0 ; i < exts.length; i++) {
+					FileFilter filter = new FileNameExtensionFilter
+					(exts[i], mapReader.fileFormatExtensions()[i]);
+					result.addChoosableFileFilter(filter);
+				}
+			}
+			return result;
+		}
+		
+		public void actionPerformed(ActionEvent ae) {
+			if (ae.getSource() == loadMenuItem) {
+				JFileChooser fc = getLoadFileChooser();
+				int status = fc.showOpenDialog(pane);
+			    if(status == JFileChooser.APPROVE_OPTION)
+			    	mapReader.readMap(fc.getSelectedFile(), pane.getModel());
+			} else {
+				super.actionPerformed(ae);
+			}
 		}
 	}
 }
