@@ -49,7 +49,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		renderer = new DefaultEntityRenderer();
 		eventListeners = new ArrayList<MapViewEventListener>();
 		isAdjusted = false;
-		popup = createPopup();
+		popup = new MapViewPopup();
 		MyMouseListener mouseListener = new MyMouseListener();
 		addMouseListener(mouseListener);
 		addMouseWheelListener(mouseListener);
@@ -57,9 +57,9 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		this.setFocusable(true);
 	}
 	
-	/** Responsible for creating the popup menu. */
-	protected JPopupMenu createPopup() {
-	    return new MapViewPopup();
+	/** Changes the pop-up menu shown for mouse-right. */
+	public void setPopupMenu(JPopupMenu popup) {
+	    this.popup = popup;
 	}
 	
 	public MapDataStore getModel() {
