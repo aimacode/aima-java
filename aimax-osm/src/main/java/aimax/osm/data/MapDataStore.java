@@ -37,31 +37,42 @@ public class MapDataStore implements MapDataConsumer {
 	 * Maintains all map nodes during map loading; after compilation only the
 	 * way nodes remain. IDs are used as keys.
 	 */
-	private Hashtable<Long, MapNode> nodes = new Hashtable<Long, MapNode>();
+	private Hashtable<Long, MapNode> nodes;
 	/** Maintains all way nodes. IDs are used as keys. */
-	private Hashtable<Long, MapWay> ways = new Hashtable<Long, MapWay>();
+	private Hashtable<Long, MapWay> ways;
 	/**
 	 * Maintains after compilation all nodes which have a name or at least one
 	 * attribute.
 	 */
-	private ArrayList<MapNode> pois = new ArrayList<MapNode>();
+	private ArrayList<MapNode> pois;
 	/** Maintains marks (not part of the original map). */
-	private ArrayList<MapNode> marks = new ArrayList<MapNode>();
+	private ArrayList<MapNode> marks;
 	/** Maintains tracks (not part of the original map). */
-	private ArrayList<Track> tracks = new ArrayList<Track>();
-	private long nextTrackId = 0;
+	private ArrayList<Track> tracks;
+	private long nextTrackId;
 	
 	private BoundingBox boundingBox;
 	private EntityClassifier<EntityViewInfo> entityClassifier;
 	private KDTree entityTree;
 
-	private ArrayList<MapDataEventListener> listeners = new ArrayList<MapDataEventListener>();
+	private ArrayList<MapDataEventListener> listeners;
+	
+	public MapDataStore() {
+		nodes = new Hashtable<Long, MapNode>();
+		ways = new Hashtable<Long, MapWay>();
+		pois = new ArrayList<MapNode>();
+		marks = new ArrayList<MapNode>();
+		tracks = new ArrayList<Track>();
+		listeners = new ArrayList<MapDataEventListener>();
+		//EntityAttributeManager.instance().ignoreAttKeys(new String[]{
+		//"created_by", "source", "history", "copyright", "fire_hydrant"}, true);
+		EntityAttributeManager.instance().ignoreAttKeys(new String[]{
+		"created_by", "source", "history", "copyright"}, false);
+	}
 	
 	/** Resets everything. No data available after this reset. */
 	public void clearAll() {
-		EntityAttributeManager.instance().clear();
-		EntityAttributeManager.instance().ignoreAttNames(new String[]{
-		"created_by", "source", "history", "copyright", "fire_hydrant"}, true);
+		EntityAttributeManager.instance().clearHash();
 		nodes.clear();
 		ways.clear();
 		pois.clear();
@@ -475,7 +486,7 @@ public class MapDataStore implements MapDataConsumer {
 			}
 			if (currMatchLevel >= 3) {
 				for (EntityAttribute att : entity.getAttributes())
-					if (att.getName().equals(searchPattern))
+					if (att.getKey().equals(searchPattern))
 						return 3;
 			}
 			if (name != null && currMatchLevel >= 4 && entity.getName().contains(searchPattern))

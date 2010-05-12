@@ -140,7 +140,7 @@ public class OsmWriter implements MapWriter {
 		}
 		for (EntityAttribute att : atts) {
 			text.append("  <tag k=\"");
-			text.append(att.getName());
+			text.append(att.getKey());
 			text.append("\" v=\"");
 			text.append(convertToXML(att.getValue()));
 			text.append("\"/>\n");

@@ -76,7 +76,7 @@ public abstract class MapEntity {
 		int cr;
 		while (min <= max) {
 			curr = (min+max)/2;
-			cr = attName.compareTo(attributes[curr].getName());
+			cr = attName.compareTo(attributes[curr].getKey());
 			if (cr == 0)
 				return attributes[curr].getValue();
 			else if (cr < 0)

@@ -115,7 +115,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					EntityAttribute[] atts = me.getAttributes();
 					String[][] attTexts = new String[atts.length][2];
 					for (int j = 0; j < atts.length; j++) {
-						attTexts[j][0] = atts[j].getName();
+						attTexts[j][0] = atts[j].getKey();
 						attTexts[j][1] = atts[j].getValue();
 					}
 					JTable table = new JTable(attTexts, new String[]{"Name", "Value"});
