@@ -147,6 +147,7 @@ public class MapStyleFactory {
 		addBuildingRules(result, "amenity", null, createPoiInfo(30000, 200000, 89, Color.BLUE, createRectangle(4, Color.BLUE), true));
 		addBuildingRules(result, "shop", null,    createPoiInfo(40000, 200000, 89, Color.CYAN, createRectangle(4, Color.CYAN), true));
 		result.addRule("building", "yes", createWayInfo(60000, 200000, 89, LIGHT_RED, 1, LIGHT_RED, false));
+		result.addRule("addr:housenumber", null, createPoiInfo(200000, 200000, 90, Color.GRAY, createRectangle(4, Color.LIGHT_GRAY), true));
 		
 		result.addRule("mark", "yes", createPoiInfo(0, 0, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false));
 		result.addRule("track_type", "GPS", createTrackInfo(Color.GREEN));
