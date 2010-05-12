@@ -1,28 +1,36 @@
 package aimax.osm.data.entities;
 
 /**
- * An entity attribute consists of a name and a value string.
+ * An entity attribute consists of a key and a value string.
  * @author R. Lunde
  */
 public class EntityAttribute implements Comparable<EntityAttribute> {
-	private String name;
+	private String key;
 	private String value;
 	
-	public EntityAttribute(String name, String value) {
-		this.name = name;
+	public EntityAttribute(String key, String value) {
+		this.key = key;
 		this.value = value;
 	}
 	
-	public String getName() {
-		return name;
+	public String getKey() {
+		return key;
+	}
+	
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	public String getValue() {
 		return value;
 	}
 	
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
 	public int compareTo(EntityAttribute att) {
-		int result = getName().compareTo(att.getName());
+		int result = getKey().compareTo(att.getKey());
 		if (result == 0)
 			result = getValue().compareTo(att.getValue());
 		return result;
@@ -31,17 +39,17 @@ public class EntityAttribute implements Comparable<EntityAttribute> {
 	public boolean equals(Object obj) {
 		if (obj instanceof EntityAttribute) {
 			EntityAttribute e = (EntityAttribute) obj;
-			return name.equals(e.name) && value.equals(e.value);
+			return key.equals(e.key) && value.equals(e.value);
 		} else
 			return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return name.hashCode() + 7 * value.hashCode();
+		return key.hashCode() + 7 * value.hashCode();
 	}
 	
 	public String toString() {
-		return name + "=" + value;
+		return key + "=" + value;
 	}
 }

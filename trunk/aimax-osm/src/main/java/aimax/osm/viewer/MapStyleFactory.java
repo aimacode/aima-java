@@ -38,7 +38,7 @@ public class MapStyleFactory {
 	private static DefaultEntityViewInfo DEFAULT_INFO = new DefaultEntityViewInfo(
 			60000, 		// minVisibleScale
 			200000, 	// minNameScale
-			20,     // printOrder
+			100,     // printOrder
 			Color.LIGHT_GRAY.darker(), // nameColor
 			createRectangle(4, Color.GRAY), // icon
 			false, 		// isWayIcon
