@@ -82,8 +82,8 @@ public class MapStyleFactory {
 		result.addRule("highway", "path",          createWayInfo(3000, 100000, 65, Color.YELLOW, 1));
 		result.addRule("highway", "track",         createWayInfo(6000, 100000, 65, Color.YELLOW, 1));
 		result.addRule("highway", "unclassified",  createWayInfo(10000, 150000, 65, Color.LIGHT_GRAY, 1));
-		result.addRule("highway", "footway",       createWayInfo(6000, 150000, 68, Color.ORANGE, 1));
-		result.addRule("highway", "steps",         createWayInfo(10000, 150000, 68, Color.ORANGE, 1));
+		result.addRule("highway", "footway",       createWayInfo(6000, 150000, 68, Color.ORANGE, 1, Color.ORANGE, true));
+		result.addRule("highway", "steps",         createWayInfo(10000, 150000, 68, Color.ORANGE, 1, Color.ORANGE, true));
 		result.addRule("highway", "speed_camera",  createPoiInfo(6000, 200000, 68, Color.GRAY, createTriangle(6, Color.RED, Color.WHITE), false));
 
 		result.addRule("natural", "land",          createWayInfo(200, 10000, 40, LIGHT_BLUE, 1, Color.WHITE, false));
@@ -131,9 +131,6 @@ public class MapStyleFactory {
 		result.addRule("place", "village", createPoiInfo(0, 3000, 3, Color.DARK_GRAY, null, false));
 		result.addRule("place", null,      createPoiInfo(0, 10000, 30, Color.DARK_GRAY, null, false));
 		
-		addBuildingRules(result, "historic", "castle",createPoiInfo(6000, 60000, 40, Color.GRAY, new EntityIcon.CastleIcon(8, Color.DARK_GRAY, Color.ORANGE), true));
-		result.addRule("historic", "memorial",        createPoiInfo(60000, 200000, 81, Color.GRAY, createCircle(11, "M", Color.ORANGE, Color.WHITE), true));
-		addBuildingRules(result, "historic", null,    createPoiInfo(6000, 200000, 75, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true));
 		result.addRule("tourism", "caravan_site", createPoiInfo(1000, 60000, 75, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true)); 
 		result.addRule("tourism", "camp_site",    createPoiInfo(1000, 60000, 73, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true));
 		addBuildingRules(result, "tourism", "alpine_hut",createPoiInfo(1000, 10000, 74, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.RED), true));
@@ -142,8 +139,11 @@ public class MapStyleFactory {
 		addBuildingRules(result, "tourism", "museum",createPoiInfo(6000, 150000, 75, Color.GRAY, createCircle(11, "M", Color.GREEN.darker(), Color.WHITE), true));
 		addBuildingRules(result, "tourism", "hotel", createPoiInfo(30000, 200000, 76, Color.GRAY, createRectangle(8, "H", Color.GREEN.darker(), Color.WHITE), true));
 		addBuildingRules(result, "tourism", null,    createPoiInfo(30000, 100000, 77, Color.GREEN.darker(), createRectangle(4, Color.GREEN.darker()), false));
-		addBuildingRules(result, "amenity", "place_of_worship", createPoiInfo(20000, 200000, 85, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true));
+		addBuildingRules(result, "historic", "castle",createPoiInfo(6000, 60000, 40, Color.GRAY, new EntityIcon.CastleIcon(8, Color.DARK_GRAY, Color.ORANGE), true));
+		result.addRule("historic", "memorial",        createPoiInfo(60000, 200000, 81, Color.GRAY, createCircle(11, "M", Color.ORANGE, Color.WHITE), true));
+		addBuildingRules(result, "historic", null,    createPoiInfo(6000, 200000, 75, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true));
 		result.addRule("amenity", "parking",      createInfo(30000, 200000, 85, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true));
+		addBuildingRules(result, "amenity", "place_of_worship", createPoiInfo(20000, 200000, 85, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true));
 		addBuildingRules(result, "amenity", null, createPoiInfo(30000, 200000, 89, Color.BLUE, createRectangle(4, Color.BLUE), true));
 		addBuildingRules(result, "shop", null,    createPoiInfo(40000, 200000, 89, Color.CYAN, createRectangle(4, Color.CYAN), true));
 		result.addRule("building", "yes", createWayInfo(60000, 200000, 89, LIGHT_RED, 1, LIGHT_RED, false));
