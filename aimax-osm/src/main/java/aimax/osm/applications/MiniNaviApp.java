@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -55,8 +56,8 @@ public class MiniNaviApp implements ActionListener {
 	protected JComboBox waySelection;
 	protected JButton calcButton;
 	
-	public MiniNaviApp() {
-		frame = new MapViewFrame();
+	public MiniNaviApp(String[] args) {
+		frame = new MapViewFrame(args);
 		locator = new GpsLocator();
 		locator.addGpsPositionListener(new MyGpsPositionListener());
 		routeCalculator = createRouteCalculator();
@@ -228,14 +229,17 @@ public class MiniNaviApp implements ActionListener {
 	/////////////////////////////////////////////////////////////////
 	// application starter
 	
+	/**
+	 * Start application with VM arg <code>-Djava.library.path=lib</code>
+	 * and program arg <code>-screenwidth=xx</code> (with xx the width in cm).
+	 */
 	public static void main(String[] args) {
-		// start with -Djava.library.path=lib
-		
 		// indicates progress when reading large maps (for testing only)
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		MiniNaviApp demo = new MiniNaviApp();
+		Locale.setDefault(Locale.US);
+		MiniNaviApp demo = new MiniNaviApp(args);
 		demo.getFrame().readMap(DataResource.getULMFileResource());
 		demo.showFrame();
 	}

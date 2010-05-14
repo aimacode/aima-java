@@ -3,6 +3,7 @@ package aimax.osm.applications;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,8 +32,8 @@ public class RoutePlannerApp implements ActionListener {
 	protected JButton calcButton;
 	protected RouteCalculator routeCalculator;
 	
-	public RoutePlannerApp() {
-		frame = new MapViewFrame();
+	public RoutePlannerApp(String[] args) {
+		frame = new MapViewFrame(args);
 		frame.setTitle("OSM Route Planner");
 		routeCalculator = createRouteCalculator();
 		JToolBar toolbar = frame.getToolbar();
@@ -86,13 +87,17 @@ public class RoutePlannerApp implements ActionListener {
 		}
 	}
 	
-	
+	/**
+	 * Start application with program arg <code>-screenwidth=xx</code>
+	 * (with xx the width in cm).
+	 */
 	public static void main(String[] args) {
 		// indicates progress when reading large maps (for testing only)
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		RoutePlannerApp demo = new RoutePlannerApp();
+		Locale.setDefault(Locale.US);
+		RoutePlannerApp demo = new RoutePlannerApp(args);
 		demo.getFrame().readMap(DataResource.getULMFileResource());
 		demo.showFrame();
 	}

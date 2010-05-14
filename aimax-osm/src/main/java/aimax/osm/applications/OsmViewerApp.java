@@ -1,5 +1,7 @@
 package aimax.osm.applications;
 
+import java.util.Locale;
+
 import aimax.osm.data.DataResource;
 import aimax.osm.viewer.MapViewFrame;
 
@@ -10,12 +12,17 @@ import aimax.osm.viewer.MapViewFrame;
  * @author R. Lunde
  */
 public class OsmViewerApp {
+	/**
+	 * Start application with program arg <code>-screenwidth=xx</code>
+	 * (with xx the width in cm).
+	 */
 	public static void main(String[] args) {
 		// indicates progress when reading large maps (for testing only)
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		MapViewFrame frame = new MapViewFrame();
+		Locale.setDefault(Locale.US);
+		MapViewFrame frame = new MapViewFrame(args);
 		frame.readMap(DataResource.getULMFileResource());
 		frame.setTitle("OSM Viewer");
 		frame.setSize(800, 600);
