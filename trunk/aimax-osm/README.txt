@@ -51,6 +51,7 @@ marks must be set.
    * reader extended to read parts of a map, specified by bounding box.
    * writer for writing maps to file added (formats osm and osm.bz2).
    * slow zoom (activated with <shift>) added.
+   * scale factor replaced by true scale.
 
 == Keywords ==
 
