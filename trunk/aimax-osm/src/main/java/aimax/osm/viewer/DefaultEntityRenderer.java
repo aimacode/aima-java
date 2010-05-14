@@ -27,12 +27,15 @@ import aimax.osm.data.entities.Track;
 public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	
 	/**
-	 * Size used for fonts. It specifies the number of pixel if
-	 * <code>displayFactor</code> is 1.
+	 * Default size used for fonts (in logical units).
 	 */
-	protected float fontSize = 12f;
-	protected int wayGeneralizationValue;
+	protected float defaultFontSize = 12f;
 	protected Color backgroundColor;
+	
+	protected float scale;
+	protected float displayFactorSym;
+	protected int wayGeneralizationValue;
+	
 	protected List<MapWay> areaBuffer;
 	protected List<MapWay> wayBuffer;
 	protected List<MapEntity> nodeBuffer;
@@ -43,28 +46,30 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	
 	/** Standard constructor. */
 	public DefaultEntityRenderer() {
+		setBackgroundColor(Color.WHITE);
 		areaBuffer = new ArrayList<MapWay>();
 		wayBuffer = new ArrayList<MapWay>();
 		nodeBuffer = new ArrayList<MapEntity>();
 		trackBuffer = new ArrayList<Track>();
 		nameInfoBuffer = new ArrayList<NameInfo>();
 		tmpNodeBuffer = new ArrayList<MapNode>();
-		setBackgroundColor(Color.WHITE);
 	}
 	
 	/** Clears all buffers and prepares rendering. */
 	public void initForRendering(Graphics2D g2, CoordTransformer transformer) {
 		super.initForRendering(g2, transformer);
-		g2.setFont(g2.getFont().deriveFont(fontSize*displayFactor));
-		double scale = transformer.getScale();
-		if (scale <= 500)
+	
+		scale = transformer.computeScale();
+		displayFactorSym = displayFactor * transformer.getDotsPerUnit();
+		if (scale <= 1f/750000)
 			wayGeneralizationValue = 8;
-		else if (scale <= 1000)
+		else if (scale <= 1f/350000)
 			wayGeneralizationValue = 4;
-		else if (scale <= 6000)
+		else if (scale <= 1f/60000)
 			wayGeneralizationValue = 2;
 		else
 			wayGeneralizationValue = 1;
+		g2.setFont(g2.getFont().deriveFont(defaultFontSize*displayFactorSym));
 		standardStroke = new BasicStroke(displayFactor);
 		areaBuffer.clear();
 		wayBuffer.clear();
@@ -134,7 +139,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	@Override
 	public void visitTrack(Track track) {
 		DefaultEntityViewInfo vInfo = (DefaultEntityViewInfo) track.getViewInfo();
-		if (vInfo != null && transformer.getScale() >= vInfo.minVisibleScale * displayFactor) {
+		if (vInfo != null && scale >= vInfo.minVisibleScale * displayFactor) {
 			trackBuffer.add(track);
 		}
 	}
@@ -171,7 +176,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		//System.out.print("NamesOrg: " + nameInfoBuffer.size() + "\n");
 		Collections.sort(nameInfoBuffer);
 		// remove names whose positions are to close to each other
-		int charSize = (int) (fontSize * displayFactor);
+		int charSize = (int) (defaultFontSize * displayFactorSym);
 		for (int i=0; i < nameInfoBuffer.size(); ++i) {
 			NameInfo info = nameInfoBuffer.get(i);
 			for (int j=0; j < i; ++j) {
@@ -206,7 +211,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			//awnodes+=nodes.size();
 			boolean asOneway = false;
 			NameInfo textInfo = null;
-			if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
+			if (scale >= pInfo.minNameScale * displayFactor) {
 				asOneway = way.isOneway();
 				if (way.getName() != null && pInfo.nameColor != null) {
 					textInfo = new NameInfo(way.getName(), pInfo.nameColor,
@@ -224,11 +229,11 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		int width = 0;
 		
 		if (pInfo.icon != null) {
-			width = Math.round(pInfo.icon.size * displayFactor);
-			pInfo.icon.draw(g2, x, y, displayFactor);
+			width = Math.round(pInfo.icon.size * displayFactorSym);
+			pInfo.icon.draw(g2, x, y, displayFactorSym);
 		}
 		
-		if (transformer.getScale() >= pInfo.minNameScale * displayFactor) {
+		if (scale >= pInfo.minNameScale * displayFactor) {
 			String name = node.getName();
 			if (name != null && pInfo.nameColor != null) {
 				NameInfo info = new NameInfo(name, pInfo.nameColor,
@@ -295,10 +300,10 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			if (!filled || pInfo.wayFillColor != null && !pInfo.wayFillColor.equals(pInfo.wayColor)) {
 				float dash[] =  null;
 				if (pInfo.wayDashed) {
-					dash = new float[] { pInfo.wayWidth * 2f * displayFactor };
+					dash = new float[] { pInfo.wayWidth * 2f * displayFactorSym };
 				}
 				g2.setColor(pInfo.wayColor);
-				g2.setStroke(new BasicStroke(pInfo.wayWidth * displayFactor, BasicStroke.CAP_BUTT,
+				g2.setStroke(new BasicStroke(pInfo.wayWidth * displayFactorSym, BasicStroke.CAP_BUTT,
 				        BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f));
 				g2.drawPolyline(xPoints, yPoints, nodes.size());
 			}
@@ -313,7 +318,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				setWayNamePosition(textInfo, xPoints, yPoints, filled);
 				nameInfoBuffer.add(textInfo);
 			}
-			if (debugMode && transformer.getScale()
+			if (debugMode && scale
 					>= 2 * pInfo.minNameScale * displayFactor) {
 				int i = 0;
 				for (MapNode node : nodes) {
@@ -356,13 +361,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			xView[i]  = xv;
 			yView[i]  = yv;
 			if (!visible) {
-				xClipPos = (xv < clip.x) ? 1 : 0;
-				yClipPos = (yv < clip.y) ? 1 : 0;
-				if (xv > clip.x + clip.width) xClipPos+=2;
-				if (yv > clip.y + clip.height) yClipPos+=2;
-				if ((xClipPos|yClipPos) == 0 ||
-						xClipPos != xClipPosLast && yClipPos != yClipPosLast && i > 0)
-					visible = true;
+				xClipPos = 0;
+				if (xv < clip.x) xClipPos = 1;
+				else if (xv > clip.x + clip.width) xClipPos = 2;
+				yClipPos = 0;
+				if (yv < clip.y) yClipPos = 1;
+				else if (yv > clip.y + clip.height) yClipPos = 2;
+				visible = (xClipPos == 0 || xClipPos != xClipPosLast && i > 0)
+				&& (yClipPos == 0 || yClipPos != yClipPosLast && i > 0);
 				xClipPosLast = xClipPos;
 				yClipPosLast = yClipPos;
 			}
@@ -376,13 +382,13 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * specifies the direction, zero means north.
 	 */
 	protected void printOnewayArrow(float x, float y, double angle) {
-		Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactor*10f);
+		Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactorSym*10f);
 		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
 		g2.setColor(Color.GRAY);
-		g2.setStroke(new BasicStroke(displayFactor));
+		g2.setStroke(new BasicStroke(displayFactorSym));
 		at.rotate(angle);
 		g2.draw(at.createTransformedShape(line));
-		line.setLine(0f, 0f, 0f, displayFactor*7f);
+		line.setLine(0f, 0f, 0f, displayFactorSym*7f);
 		at.rotate(-Math.PI/6);
         g2.draw(at.createTransformedShape(line));
         at.rotate(Math.PI/3);
@@ -402,7 +408,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		info.x = x / max;
 		info.y = y / max;
 		if (debugMode)
-			info.y+=displayFactor*fontSize;
+			info.y+=defaultFontSize*displayFactorSym;
 	}
 	
 	/** Prints a point of interest. */
@@ -412,7 +418,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		int width = 0;
 		
 		if (pInfo.icon != null) {
-			width = Math.round(pInfo.icon.size * displayFactor);
+			width = Math.round(pInfo.icon.size*displayFactorSym);
 			pInfo.icon.draw(g2, x, y, displayFactor);
 		}
 		

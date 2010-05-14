@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
@@ -169,7 +170,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		@Override
 		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);
-			if (transformer.getScale() >= highlightProp.minVisibleScale * displayFactor ) {
+			if (scale >= highlightProp.minVisibleScale * displayFactor ) {
 				for (MapNode node : way.getNodes())
 					if (visitedStates.contains(Long.toString(node.getId())))
 						printPoint(g2, node, highlightProp, null);
@@ -197,6 +198,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
+		Locale.setDefault(Locale.US);
 		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp(DataResource.getULMFileResource());
 		demo.startApplication();
 	}

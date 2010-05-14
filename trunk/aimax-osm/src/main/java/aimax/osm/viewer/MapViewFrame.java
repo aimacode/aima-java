@@ -98,6 +98,24 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		view.addMapViewEventListener(eventHandler);
 	}
 	
+	/**
+	 * Tries to find an argument starting with <code>-screenwidth=</code> and passes the
+	 * corresponding number to the view for scale computation.
+	 */
+	public MapViewFrame(String[] args) {
+		this();
+		for (String arg : args) {
+			if (arg.startsWith("-screenwidth=")) {
+				try {
+					view.setScreenWidthInCentimeter(Double.parseDouble(arg.substring(13)));
+					break;
+				} catch (NumberFormatException e) {
+					// ignore the argument...
+				}
+			}	
+		}
+	}
+	
 	protected void setDefaultEntityClassifier() {
 		mapData.setEntityClassifier(new MapStyleFactory().createDefaultClassifier());
 	}
@@ -298,10 +316,19 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		@Override
 		public void eventHappened(MapViewEvent event) {
 			if (event.getType() == MapViewEvent.Type.ZOOM) {
-				if (mapData.getMarks().isEmpty())
-					infoField.setText("Scale Factor: "
-							+ (int) view.getTransformer().getScale()
-							+ " pix -> 1 deg (lat)");
+				if (mapData.getMarks().isEmpty()) {
+					DecimalFormat f = new DecimalFormat("#0.0");
+					double scale = view.getTransformer().computeScale();
+					String text = "Scale: 1 / ";
+					if (scale <= 1e-4)
+						text += (int) (0.001f/scale) + " 000";
+					else
+						text += (int) (1f/scale) + "";
+					text += "  Display Factor: "
+						+ f.format(view.getRenderer().getDisplayFactor());
+					//text += "  (" + (int) view.getTransformer().getDotsPerDeg() + ")";
+					infoField.setText(text);
+				}
 			}
 		}
 	}

@@ -14,6 +14,8 @@ import aimax.osm.data.entities.WayRef;
  */
 public class Position {
 
+	/** Earth's mean radius in km. */
+	public static double EARTH_RADIUS = 6371.0;
 	protected float lat;
 	protected float lon;
 	
@@ -111,7 +113,6 @@ public class Position {
         Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
         Math.sin(dLon/2) * Math.sin(dLon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double radius = 6371; // earth's mean radius 
-        return radius * c;
+        return EARTH_RADIUS * c;
 	}
 }

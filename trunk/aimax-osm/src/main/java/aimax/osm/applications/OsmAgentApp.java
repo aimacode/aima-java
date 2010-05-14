@@ -1,6 +1,7 @@
 package aimax.osm.applications;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
@@ -25,6 +26,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	
 	/** Reads a map from the specified file and stores it in {@link #map}. */
 	public OsmAgentApp(InputStream osmFile) {
+		Locale.setDefault(Locale.US);
 		MapDataStore mapData = new MapDataStore();
 		MapReader mapReader = new OsmBz2Reader();
 		mapReader.readMap(osmFile, mapData);
@@ -52,8 +54,11 @@ public class OsmAgentApp extends SimpleAgentApp {
 	/////////////////////////////////////////////////////////////////
 	// starter method
 
-	/** Application starter. */
+	/**
+	 * Application starter.
+	 */
 	public static void main(String args[]) {
+		// Start with program arg -screenwidth=xx (with xx the width in cm).
 		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		

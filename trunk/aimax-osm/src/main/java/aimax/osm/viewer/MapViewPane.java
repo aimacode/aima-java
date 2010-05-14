@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -46,6 +47,8 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	
 	public MapViewPane() {
 		transformer = new CoordTransformer();
+		transformer.setScreenResolution
+		(Toolkit.getDefaultToolkit().getScreenResolution()); // doesn't work...
 		renderer = new DefaultEntityRenderer();
 		eventListeners = new ArrayList<MapViewEventListener>();
 		isAdjusted = false;
@@ -55,11 +58,6 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		addMouseWheelListener(mouseListener);
 		addKeyListener(new MyKeyListener());
 		this.setFocusable(true);
-	}
-	
-	/** Changes the pop-up menu shown for mouse-right. */
-	public void setPopupMenu(JPopupMenu popup) {
-	    this.popup = popup;
 	}
 	
 	public MapDataStore getModel() {
@@ -93,6 +91,21 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		return transformer;
 	}
 	
+	/** Changes the pop-up menu shown for mouse-right. */
+	public void setPopupMenu(JPopupMenu popup) {
+	    this.popup = popup;
+	}
+	
+	/**
+	 * Provides the true width of the screen to the transformer. This is
+	 * necessary to get correct scale values.
+	 * @param cm Screen width in centimeters.
+	 */
+	public void setScreenWidthInCentimeter(double cm) {
+		double dotsPerCm = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/cm;
+		transformer.setScreenResolution((int) (dotsPerCm * 2.54));
+	}
+	
 	/**
 	 * Multiples the current scale with the specified factor and
 	 * adjusts the view so that the objects shown at the
@@ -100,6 +113,12 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	 */
 	public void zoom(float factor, int focusX, int focusY) {
 		transformer.zoom(factor, focusX, focusY);
+		repaint();
+		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ZOOM));
+	}
+	
+	public void multiplyDisplayFactorWith(float fac) {
+		renderer.setDisplayFactor(renderer.getDisplayFactor()*fac);
 		repaint();
 		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ZOOM));
 	}
@@ -177,7 +196,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	    	float lonMin = transformer.lon(0);
 	    	float latMax = transformer.lat(0);
 	    	float lonMax = transformer.lon(getWidth());
-	    	float scale = transformer.getScale();
+	    	float scale = transformer.computeScale();
 	    	BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
 	    	float viewScale = scale / renderer.getDisplayFactor();
 	    	renderer.initForRendering(g2, transformer);
@@ -296,20 +315,18 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 			int rot = e.getWheelRotation();
 			int x = e.getX();
 			int y = e.getY();
-			float zoom = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
+			float fac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
 					1.1f : 1.5f;
 			if (rot == -1) {
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()*zoom);
-					repaint();
+					multiplyDisplayFactorWith(fac);
 				} else
-					zoom(zoom, x, y);
+					zoom(fac, x, y);
 			} else if (rot == 1) {
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()/zoom);
-					repaint();
+					multiplyDisplayFactorWith(1f/fac);
 				} else
-					zoom(1 / zoom , x, y);
+					zoom(1 / fac , x, y);
 			}
 		}
 	}
@@ -322,34 +339,34 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			float zoom = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
+			float zfac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
 					1.1f : 1.5f;
+			float afac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ?
+					0.1f : 0.3f;
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_PLUS:
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()*zoom);
-					repaint();
-				} else
-					zoom(zoom, getWidth()/2, getHeight()/2); break;
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+					multiplyDisplayFactorWith(zfac);
+				else
+					zoom(zfac, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_MINUS:
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
-					renderer.setDisplayFactor(renderer.getDisplayFactor()/zoom);
-					repaint();
-				} else
-					zoom(1/zoom, getWidth()/2, getHeight()/2); break;
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+					multiplyDisplayFactorWith(1f/zfac);
+				else
+					zoom(1/zfac, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_SPACE:
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) == 0)
-					zoom(zoom, getWidth()/2, getHeight()/2);
+					zoom(zfac, getWidth()/2, getHeight()/2);
 				else
-					zoom(1/zoom, getWidth()/2, getHeight()/2); break;
+					zoom(1/zfac, getWidth()/2, getHeight()/2); break;
 			case KeyEvent.VK_LEFT:
-				adjust((int) (0.3 * getWidth()), 0); break;
+				adjust((int) (afac * getWidth()), 0); break;
 			case KeyEvent.VK_RIGHT:
-				adjust((int) (-0.3 * getWidth()), 0); break;
+				adjust((int) (-afac * getWidth()), 0); break;
 			case KeyEvent.VK_UP:
-				adjust(0, (int) (0.3 * getHeight())); break;
+				adjust(0, (int) (afac * getHeight())); break;
 			case KeyEvent.VK_DOWN:
-				adjust(0, (int) (-0.3 * getHeight())); break;
+				adjust(0, (int) (-afac * getHeight())); break;
 			}
 		}
 
