@@ -110,7 +110,8 @@ public class OsmViewerPlusApp implements ActionListener {
 
 	/**
 	 * Start application with program arg <code>-screenwidth=xx</code>
-	 * (with xx the width in cm).
+	 * (with xx the width in cm)
+	 * or <code>-screensize=yy</code> (with yy measured diagonally in inch).
 	 */
 	public static void main(String[] args) {
 		// indicates progress when reading large maps (for testing only)

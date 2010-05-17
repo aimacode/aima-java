@@ -107,6 +107,18 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	}
 	
 	/**
+	 * Provides the true size of the screen to the transformer. This is
+	 * necessary to get correct scale values.
+	 * @param inch Screen size in inch.
+	 */
+	public void setScreenSizeInInch(double inch) {
+		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+		double dotsPerInch = Math.sqrt(width*width + height*height) / inch;
+		transformer.setScreenResolution((int) dotsPerInch);
+	}
+	
+	/**
 	 * Multiples the current scale with the specified factor and
 	 * adjusts the view so that the objects shown at the
 	 * specified view focus keep at their position.

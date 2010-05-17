@@ -63,8 +63,8 @@ public class OsmWriter implements MapWriter {
 				writeNode(writer, node);
 			for (MapNode node : mapData.getWayNodes())
 				writeNode(writer, node);
-			for (MapNode node : mapData.getMarks())
-				writeNode(writer, node);
+//			for (MapNode node : mapData.getMarks())
+//				writeNode(writer, node);
 			for (MapWay way : mapData.getWays()) 
 				writeWay(writer, way);
 			writer.write("</osm>\n");
