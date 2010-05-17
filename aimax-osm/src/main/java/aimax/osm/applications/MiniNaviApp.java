@@ -22,7 +22,7 @@ import aimax.osm.gps.GpsFix;
 import aimax.osm.gps.GpsLocator;
 import aimax.osm.gps.GpsPositionListener;
 import aimax.osm.gps.NmeaReader.MessageToFileListener;
-import aimax.osm.reader.OsmBz2Reader;
+import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
@@ -231,7 +231,8 @@ public class MiniNaviApp implements ActionListener {
 	
 	/**
 	 * Start application with VM arg <code>-Djava.library.path=lib</code>
-	 * and program arg <code>-screenwidth=xx</code> (with xx the width in cm).
+	 * and program arg <code>-screenwidth=xx</code> (with xx the width in cm)
+	 * or <code>-screensize=yy</code> (with yy measured diagonally in inch).
 	 */
 	public static void main(String[] args) {
 		// indicates progress when reading large maps (for testing only)

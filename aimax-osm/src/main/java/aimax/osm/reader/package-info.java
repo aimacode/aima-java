@@ -1,6 +1,7 @@
 /**
  * This package contains a simple reader for XML files using the
- * OSM syntax. To use it, just take a look at class <code>OsmReader</code>.
+ * OSM syntax. To use it, just take a look at classes <code>OsmReader</code>,
+ * <code>FilteringOsmReader</code>, and <code>Bz2OsmReader</code>.
  * The architecture relies on the application of the state
  * design pattern (GoF). All element processors can be viewed as states
  * in this sense.

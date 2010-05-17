@@ -126,7 +126,7 @@ public class MapStyleFactory {
 		result.addRule("aerialway", null,       createWayInfo(1f/350000, 1f/6000, 60, Color.GRAY, 1));
 		result.addRule("mountain_pass", null,   createPoiInfo(1e-9f, 1f/350000, 10, Color.DARK_GRAY, null, false));
 		
-		result.addRule("place", "city",    createPoiInfo(1e-9f, 1f/3500000, 1, Color.BLACK, null, false));
+		result.addRule("place", "city",    createPoiInfo(0, 0, 1, Color.BLACK, null, false));
 		result.addRule("place", "town",    createPoiInfo(1e-9f, 1f/350000, 2, Color.BLACK, null, false));
 		result.addRule("place", "village", createPoiInfo(1e-9f, 1f/100000, 3, Color.DARK_GRAY, null, false));
 		result.addRule("place", null,      createPoiInfo(1e-9f, 1f/35000, 30, Color.DARK_GRAY, null, false));

@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import aimax.osm.data.BoundingBox;
+import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataStore;
@@ -28,8 +29,8 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
 import aimax.osm.data.entities.WayRef;
+import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
-import aimax.osm.reader.OsmBz2Reader;
 import aimax.osm.writer.MapWriter;
 import aimax.osm.writer.OsmBz2Writer;
 
@@ -59,11 +60,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		fileChooser = new JFileChooser();
 		toolbar = new JToolBar();
 		loadButton = new JButton("Load");
-		loadButton.setToolTipText("Load Map (<ctrl> with Bounding Box)");
+		loadButton.setToolTipText("Load Map (<ctrl> bounding box mode, <shift> overview mode)");
 		loadButton.addActionListener(this);
 		toolbar.add(loadButton);
 		saveButton = new JButton("Save");
-		saveButton.setToolTipText("Save Map with Markers");
+		saveButton.setToolTipText("Save Map");
 		saveButton.addActionListener(this);
 		toolbar.add(saveButton);
 		toolbar.addSeparator();
@@ -88,7 +89,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		
 		mapData = new MapDataStore();
 		setDefaultEntityClassifier();
-		setMapReader(new OsmBz2Reader());
+		setMapReader(new Bz2OsmReader());
 		setMapWriter(new OsmBz2Writer());
 		view = new MapViewPane();
 		view.setModel(mapData);
@@ -99,20 +100,24 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Tries to find an argument starting with <code>-screenwidth=</code> and passes the
-	 * corresponding number to the view for scale computation.
+	 * Tries to find an argument starting with <code>-screenwidth=</code> or
+	 * <code>-screensize=</code> and passes the corresponding number to the
+	 * view for scale computation.
 	 */
 	public MapViewFrame(String[] args) {
 		this();
 		for (String arg : args) {
-			if (arg.startsWith("-screenwidth=")) {
-				try {
-					view.setScreenWidthInCentimeter(Double.parseDouble(arg.substring(13)));
+			try {
+				if (arg.startsWith("-screenwidth=")) {
+						view.setScreenWidthInCentimeter(Double.parseDouble(arg.substring(13)));
+						break;
+				} else if (arg.startsWith("-screensize=")) {
+					view.setScreenSizeInInch(Double.parseDouble(arg.substring(12)));
 					break;
-				} catch (NumberFormatException e) {
-					// ignore the argument...
 				}
-			}	
+			} catch (NumberFormatException e) {
+				// ignore the argument...
+			}
 		}
 	}
 	
@@ -216,6 +221,17 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		    			mapReader.setBoundingBox(bb);
 		    		else
 		    			return;
+		    	}
+		    	if ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) {
+		    		EntityClassifier<Boolean> filter = new EntityClassifier<Boolean>();
+		    		filter.addRule("place", "city", Boolean.TRUE);
+		    		filter.addRule("place", "town", Boolean.TRUE);
+		    		filter.addRule("place", "village", Boolean.TRUE);
+		    		filter.addRule("highway", "motorway", Boolean.TRUE);
+		    		filter.addRule("highway", "motorway_link", Boolean.TRUE);
+		    		filter.addRule("highway", "trunk", Boolean.TRUE);
+		    		filter.addRule("highway", "trunk_link", Boolean.TRUE);
+		    		mapReader.setAttFilter(filter);
 		    	}
 		    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
 		    }    

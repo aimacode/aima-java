@@ -16,10 +16,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import aimax.osm.data.BoundingBox;
+import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapDataConsumer;
-import aimax.osm.data.MapDataStore;
-import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 
 /** 
  * Reads a map from file using the standard osm XML format.
@@ -29,43 +27,46 @@ import aimax.osm.data.entities.MapWay;
  */
 public class OsmReader implements MapReader {
 
-	private static Logger LOG = Logger.getLogger("aimax.osm");
-	protected BoundingBox boundingBox;
+	protected static Logger LOG = Logger.getLogger("aimax.osm");
 	
 	/**
-	 * Sets a bounding box for the next read action. Map nodes which are
-	 * not inside will be ignored.
+	 * This implementation throws an <code>UnsupportedOperationException</code>.
 	 */
 	public void setBoundingBox(BoundingBox bb) {
-		boundingBox = bb;
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
+	 * This implementation throws an <code>UnsupportedOperationException</code>.
+	 */
+	public void setAttFilter(EntityClassifier<Boolean> attFilter) {
+		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapDataStore mapData) {
+	public void readMap(File file, MapDataConsumer consumer) {
 		try  {
-			InputStream inputStream = new FileInputStream(file);
-			readMap(inputStream, mapData);
-		} catch (FileNotFoundException fnfe) {
-			LOG.warning("File does not exist "+file);
-			boundingBox = null;
+			InputStream inputStream = createFileStream(file);
+			readMap(inputStream, consumer);
+		} catch (FileNotFoundException e) {
+			LOG.warning("File does not exist " + file);
+		} catch (Exception e) {
+			LOG.warning("The map could not be read. " + e);
 		}
 	}
 	
 	/**
-	 * Reads all data from the file and send it to the sink.
+	 * Reads all data from the specified stream and sends it to the consumer.
+	 * The consumer is cleared before.
 	 */
-	public void readMap(InputStream inputStream, MapDataStore mapData) {
-
+	public void readMap(InputStream inputStream, MapDataConsumer consumer) {
 		try {
-			mapData.clearAll();
+			consumer.clearAll();
 			SAXParser parser = createParser();
-			MapDataConsumer consumer = (boundingBox == null)
-			? mapData : new BBMapDataConsumer(mapData, boundingBox);
 			parser.parse(inputStream, new OsmHandler(consumer));
-			mapData.compileData();
-
+			consumer.compileData();
 		} catch (SAXParseException e) {
 			throw new OsmRuntimeException(
 					"Unable to parse input stream"
@@ -86,11 +87,9 @@ public class OsmReader implements MapReader {
 					LOG.log(Level.SEVERE, "Unable to close input stream.", e);
 				}
 			}
-			boundingBox = null;
 		}
 	}
 	
-
 	public String[] fileFormatDescriptions() {
 		return new String[] {"OSM File (osm)"};
 	}
@@ -99,53 +98,24 @@ public class OsmReader implements MapReader {
 		return new String[] {"osm"};
 	}
 
-
 	/**
-	 * Creates a new SAX parser.
-	 * 
-	 * @return The newly created SAX parser.
+	 * Factory method, responsible for creating an input stream for a
+	 * specified file. 
 	 */
-	private SAXParser createParser() {
+	protected InputStream createFileStream(File file) throws Exception {
+		return new FileInputStream(file);
+	}
+	
+	/**
+	 * Factory method, responsible for creating a new SAX parser.
+	 */
+	protected SAXParser createParser() {
 		try {
 			return SAXParserFactory.newInstance().newSAXParser();
-			
 		} catch (ParserConfigurationException e) {
 			throw new OsmRuntimeException("Unable to create SAX Parser.", e);
 		} catch (SAXException e) {
 			throw new OsmRuntimeException("Unable to create SAX Parser.", e);
-		}
-	}
-	
-	
-	//////////////////////////////////////////////////////////////////////
-	// inner classes
-	
-	private static class BBMapDataConsumer implements MapDataConsumer {
-		MapDataConsumer consumer;
-		BoundingBox bb;
-		
-		protected BBMapDataConsumer(MapDataConsumer consumer, BoundingBox bb) {
-			this.consumer = consumer;
-			this.bb = bb;
-		}
-		
-		@Override
-		public void addNode(MapNode node) {
-			if (node.getLat() >= bb.getLatMin()
-					&& node.getLon() >= bb.getLonMin()
-					&& node.getLat() <= bb.getLatMax()
-					&& node.getLon() <= bb.getLonMax())
-			consumer.addNode(node);
-			
-		}
-		@Override
-		public void addWay(MapWay way) {
-			consumer.addWay(way);
-			
-		}
-		@Override
-		public MapNode getWayNode(long id) {
-			return consumer.getWayNode(id);
 		}
 	}
 }

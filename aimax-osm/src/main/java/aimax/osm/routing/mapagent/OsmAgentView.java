@@ -21,7 +21,7 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.reader.MapReader;
-import aimax.osm.reader.OsmBz2Reader;
+import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewPane;
 import aimax.osm.viewer.MapViewPopup;
@@ -110,7 +110,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		
 		
 		MapViewPopupWithLoad() {
-			mapReader = new OsmBz2Reader();
+			mapReader = new Bz2OsmReader();
 			loadMenuItem = new JMenuItem("Load Map");
 			loadMenuItem.addActionListener(this);
 			add(loadMenuItem, 3);

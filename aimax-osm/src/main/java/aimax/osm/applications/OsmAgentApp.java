@@ -8,7 +8,7 @@ import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.SimpleAgentApp;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.MapDataStore;
-import aimax.osm.reader.OsmBz2Reader;
+import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.routing.mapagent.OsmAgentController;
 import aimax.osm.routing.mapagent.OsmAgentFrame;
@@ -28,7 +28,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	public OsmAgentApp(InputStream osmFile) {
 		Locale.setDefault(Locale.US);
 		MapDataStore mapData = new MapDataStore();
-		MapReader mapReader = new OsmBz2Reader();
+		MapReader mapReader = new Bz2OsmReader();
 		mapReader.readMap(osmFile, mapData);
 		map = new OsmMapAdapter(mapData);
 	}
