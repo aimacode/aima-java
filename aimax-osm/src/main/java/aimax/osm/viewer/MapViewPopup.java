@@ -39,6 +39,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	private JFileChooser fileChooser;
 	
 	private JMenuItem infoMenuItem;
+	private JMenuItem createMarkMenuItem;
 	private JMenuItem removeMarkMenuItem;
 	private JMenuItem loadMarksMenuItem;
 	private JMenuItem saveMarksMenuItem;
@@ -55,6 +56,9 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	    
 	    JMenu markMenu = new JMenu("Mark");
 	    add(markMenu);
+	    createMarkMenuItem = new JMenuItem("Create");
+	    createMarkMenuItem.addActionListener(this);
+	    markMenu.add(createMarkMenuItem);
 	    removeMarkMenuItem = new JMenuItem("Remove");
 	    removeMarkMenuItem.addActionListener(this);
 	    markMenu.add(removeMarkMenuItem);
@@ -105,12 +109,18 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			boolean done = false;
 			for (int i=0; i < entities.size() && !done; i++) {
 				MapEntity me = entities.get(i);
-				Object[] content = new Object[] {"", ""};
+				Object[] content = new Object[] {"", "", ""};
 				String text = (me.getName() != null) ? me.getName() : "";
 				if (debugMenuItem.isSelected())
 					text += " (" + ((me instanceof MapNode) ? "Node " : "Way ")
 					+ me.getId() + ")";
 				content[0] = text;
+				if (me instanceof MapNode) {
+					PositionPanel pos = new PositionPanel();
+					pos.setPosition(((MapNode) me).getLat(), ((MapNode) me).getLon());
+					pos.setEnabled(false);
+					content[1] = pos;
+				}
 				if (me.getAttributes().length > 0) {
 					EntityAttribute[] atts = me.getAttributes();
 					String[][] attTexts = new String[atts.length][2];
@@ -121,7 +131,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					JTable table = new JTable(attTexts, new String[]{"Name", "Value"});
 					JScrollPane spane = new JScrollPane(table);
 					spane.setPreferredSize(new Dimension(300, 100));
-					content[1] = spane;
+					content[2] = spane;
 				}
 				Object[] options;
 				if (i < entities.size()-1)
@@ -139,6 +149,17 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			pane.getModel().clearMarksAndTracks();
 			pane.fireMapViewEvent(new MapViewEvent
 					(pane, MapViewEvent.Type.TMP_NODES_REMOVED));
+		} else if (ae.getSource() == createMarkMenuItem) {
+			PositionPanel panel = new PositionPanel();
+			int res = JOptionPane.showConfirmDialog(null, panel, "Specify a Position", JOptionPane.OK_CANCEL_OPTION);
+			if (res == JOptionPane.OK_OPTION) {
+				float lat = panel.getLat();
+				float lon = panel.getLon();
+				if (!Float.isNaN(lat) && !Float.isNaN(lon)) {
+					pane.getModel().addMark(lat, lon);
+					pane.adjustToCenter(lat, lon);
+				}
+			}
 		} else if (ae.getSource() == removeMarkMenuItem) {
 			pane.removeNearestMark(x, y);
 		} else if (ae.getSource() == loadMarksMenuItem) {

@@ -53,6 +53,7 @@ marks must be set.
    * writer for writing maps to file added (formats osm and osm.bz2).
    * slow zoom (activated with <shift>) added.
    * scale factor replaced by true scale.
+   * Mark creation at specified gps positions added, info dialog extended by node position.
 
 == Keywords ==
 
