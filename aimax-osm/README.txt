@@ -35,7 +35,7 @@ Getting started: Run one of the applications in the
 <code>aimax.osm.applications</code> package. If no map is displayed
 by default, make sure that the main/resource folder is included 
 in the build path of your project, recompile and start again.
-Then place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
+Then, place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
 mouse-drag, ctrl-mouse-left, plus button, minus button, shift-plus, shift-minus,
 ctrl-plus, ctrl-minus, space, ctrl-space, arrow buttons, and also the mouse-wheel
 for navigation, mark setting, and track definition. For routing, at least two
@@ -48,7 +48,8 @@ marks must be set.
    * Rendering speed and quality improved
      (text placement, area sorting, one-way streets, icons, default style).
    * osm.gz2 file format support added.
-   * reader extended to read parts of a map, specified by bounding box.
+   * reader extended to read parts of a map, specified by bounding box or
+     attribute filter (try <ctrl> and <shift> when using a load map button).
    * writer for writing maps to file added (formats osm and osm.bz2).
    * slow zoom (activated with <shift>) added.
    * scale factor replaced by true scale.
@@ -87,11 +88,13 @@ http://download.geofabrik.de/osm/
 Smaller maps from servers like geofabrik or cloudmade can be loaded into the viewer
 directly, especially, if enough heap space is provided (e.g. VM argument -Xmx1500M).
 Additionally, parts of larger maps can be loaded into the viewer applications by
-holding <ctrl> while pressing the load button and specifying a bounding box.
+holding <ctrl> while pressing the load map button and specifying a bounding box.
 The easiest way to obtain the needed latitude and longitude bounds is to select
 the export tab from page http://www.openstreetmap.org/ and then navigate to the
 area which you want to extract. Unfortunately, the XML export typically doesn't
-work, but you find the needed coordinates on the left side. 
+work, but you find the needed coordinates on the left side. An overview map can
+be generated for large OSM files by pressing load map while holding the <shift>
+button.
 
 Alternatively, data extraction for specific areas such as german cities can be 
 performed using the free Osmosis tool. See e.g.
@@ -127,7 +130,10 @@ Ensure these are on your CLASSPATH, the different GUI programs that can be run u
   * visualizes simulated search space exploration of different search strategies
  * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
   * provides a base for car navigation system development
- 
+
+It is recommended to start the applications with VM argument -Xmx500m (or higher value) and
+program argument -screensize=xx (with xx screen size in inch)
+
   
 = Change History (Update in reverse chronological order) =
 
