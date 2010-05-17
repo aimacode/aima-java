@@ -43,11 +43,11 @@ marks must be set.
 
 
 == Current Release: 0.9.2-AIMAX-OSM Many Improvements ==
-0.9.2-AIMAX-OSM Many Improvements : 10 May 2010 :<br>
+0.9.2-AIMAX-OSM Many Improvements : 17 May 2010 :<br> (in preparation)
    * Storage efficiency of map representation improved (references to ways).
    * Rendering speed and quality improved
      (text placement, area sorting, one-way streets, icons, default style).
-   * osm.gz2 file format support added.
+   * osm.gz2 file format support added (additional file filter in file chooser).
    * reader extended to read parts of a map, specified by bounding box or
      attribute filter (try <ctrl> and <shift> when using a load map button).
    * writer for writing maps to file added (formats osm and osm.bz2).
