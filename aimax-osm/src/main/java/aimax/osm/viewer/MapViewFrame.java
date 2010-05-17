@@ -1,6 +1,7 @@
 package aimax.osm.viewer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -223,14 +224,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		    			return;
 		    	}
 		    	if ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) {
-		    		EntityClassifier<Boolean> filter = new EntityClassifier<Boolean>();
-		    		filter.addRule("place", "city", Boolean.TRUE);
-		    		filter.addRule("place", "town", Boolean.TRUE);
-		    		filter.addRule("place", "village", Boolean.TRUE);
-		    		filter.addRule("highway", "motorway", Boolean.TRUE);
-		    		filter.addRule("highway", "motorway_link", Boolean.TRUE);
-		    		filter.addRule("highway", "trunk", Boolean.TRUE);
-		    		filter.addRule("highway", "trunk_link", Boolean.TRUE);
+		    		EntityClassifier<Boolean> filter = createOverviewFilter();
 		    		mapReader.setAttFilter(filter);
 		    	}
 		    	mapReader.readMap(fileChooser.getSelectedFile(), mapData);
@@ -286,6 +280,22 @@ public class MapViewFrame extends JFrame implements ActionListener {
 				}
 			}
 		} while (!done);
+		return result;
+	}
+	
+	protected EntityClassifier<Boolean> createOverviewFilter() {
+		EntityClassifier<Boolean> result = new EntityClassifier<Boolean>();
+		EntityClassifier<Boolean> sc;
+		result.addRule("highway", "motorway", Boolean.TRUE);
+		result.addRule("highway", "motorway_link", Boolean.TRUE);
+		result.addRule("highway", "trunk", Boolean.TRUE);
+		result.addRule("highway", "trunk_link", Boolean.TRUE);
+		sc=result.addRule("boundary", null, null);
+		sc.addRule("admin_level", "1", Boolean.TRUE);
+		sc.addRule("admin_level", "2", Boolean.TRUE);
+		result.addRule("place", "city", Boolean.TRUE);
+		result.addRule("place", "town", Boolean.TRUE);
+		result.addRule("place", "village", Boolean.TRUE);
 		return result;
 	}
 	
