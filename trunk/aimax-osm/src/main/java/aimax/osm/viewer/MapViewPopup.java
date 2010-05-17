@@ -151,7 +151,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					(pane, MapViewEvent.Type.TMP_NODES_REMOVED));
 		} else if (ae.getSource() == createMarkMenuItem) {
 			PositionPanel panel = new PositionPanel();
-			int res = JOptionPane.showConfirmDialog(null, panel, "Specify a Position", JOptionPane.OK_CANCEL_OPTION);
+			int res = JOptionPane.showConfirmDialog(pane, panel, "Specify a Position", JOptionPane.OK_CANCEL_OPTION);
 			if (res == JOptionPane.OK_OPTION) {
 				float lat = panel.getLat();
 				float lon = panel.getLon();
