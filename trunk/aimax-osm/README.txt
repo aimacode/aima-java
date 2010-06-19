@@ -43,7 +43,7 @@ marks must be set.
 
 
 == Current Release: 0.9.2-AIMAX-OSM Many Improvements ==
-0.9.2-AIMAX-OSM Many Improvements : 17 May 2010 :<br> (in preparation)
+0.9.2-AIMAX-OSM Many Improvements : 19 June 2010 :<br>
    * Storage efficiency of map representation improved (references to ways).
    * Rendering speed and quality improved
      (text placement, area sorting, one-way streets, icons, default style).
