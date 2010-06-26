@@ -43,7 +43,7 @@ public abstract class QueueSearch extends NodeExpander {
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
 		if (isCheckGoalBeforeAddingToFrontier()) {
-			if (problem.isGoalState(root.getState())) {
+			if (SearchUtils.isGoalState(problem, root)) {
 				return SearchUtils.actionsFromNodes(root.getPathFromRoot());
 			}
 		}
@@ -58,7 +58,7 @@ public abstract class QueueSearch extends NodeExpander {
 			if (!isCheckGoalBeforeAddingToFrontier()) {
 				// if the node contains a goal state then return the
 				// corresponding solution
-				if (problem.isGoalState(nodeToExpand.getState())) {
+				if (SearchUtils.isGoalState(problem, nodeToExpand)) {
 					setPathCost(nodeToExpand.getPathCost());
 					return SearchUtils.actionsFromNodes(nodeToExpand
 							.getPathFromRoot());
@@ -69,7 +69,7 @@ public abstract class QueueSearch extends NodeExpander {
 			for (Node fn : getResultingNodesToAddToFrontier(nodeToExpand,
 					problem)) {
 				if (isCheckGoalBeforeAddingToFrontier()) {
-					if (problem.isGoalState(fn.getState())) {
+					if (SearchUtils.isGoalState(problem, fn)) {
 						return SearchUtils.actionsFromNodes(fn
 								.getPathFromRoot());
 					}

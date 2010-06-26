@@ -139,7 +139,7 @@ public class BidirectionalSearch implements Search {
 
 			//
 			// Check if the original problem is at the GOAL state
-			if (null != opNode && op.isGoalState(opNode.getState())) {
+			if (null != opNode && SearchUtils.isGoalState(op, opNode)) {
 				// No need to check return value for null here
 				// as an action path discovered from the goal
 				// is guaranteed to exist
@@ -147,7 +147,7 @@ public class BidirectionalSearch implements Search {
 			}
 			//
 			// Check if the reverse problem is at the GOAL state
-			if (null != rpNode && rp.isGoalState(rpNode.getState())) {
+			if (null != rpNode && SearchUtils.isGoalState(rp, rpNode)) {
 				List<Action> actions = retrieveActions(op, rp, null, rpNode);
 				// It may be the case that it is not in fact possible to
 				// traverse from the original node to the goal node based on
@@ -236,7 +236,7 @@ public class BidirectionalSearch implements Search {
 			// GOAL state from the original problem (if you don't
 			// you could end up appending a partial reverse path
 			// that looks back on its initial state)
-			if (!op.isGoalState(reversePath.getState())) {
+			if (!SearchUtils.isGoalState(op, reversePath)) {
 				List<Node> rpath = reversePath.getPathFromRoot();
 				for (int i = rpath.size() - 1; i >= 0; i--) {
 					// Ensure do not include the node from the reverse path

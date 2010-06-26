@@ -64,7 +64,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
-				if (p.isGoalState(current.getState())) {
+				if (SearchUtils.isGoalState(p, current)) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
 				lastState = current.getState();

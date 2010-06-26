@@ -79,7 +79,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 			timeStep++;
 			// if temperature = 0 then return current
 			if (temperature == 0.0) {
-				if (p.isGoalState(current.getState())) {
+				if (SearchUtils.isGoalState(p, current)) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
 				ret = SearchUtils.actionsFromNodes(current.getPathFromRoot());
