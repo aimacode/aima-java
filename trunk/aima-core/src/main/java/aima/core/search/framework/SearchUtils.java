@@ -28,4 +28,16 @@ public class SearchUtils {
 		}
 		return actions;
 	}
+	
+	public static boolean isGoalState(Problem p, Node n) {
+		boolean isFinalGoal = false;
+		if (p.isGoalState(n.getState())) {
+			if (p instanceof MultiGoalProblem) {
+				isFinalGoal = ((MultiGoalProblem)p).isFinalGoalState(n); 
+			} else {
+				isFinalGoal = true;
+			}
+		}
+		return isFinalGoal;
+	}
 }

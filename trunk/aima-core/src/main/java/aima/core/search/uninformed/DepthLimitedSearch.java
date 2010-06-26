@@ -98,7 +98,7 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	// failure/cutoff
 	private List<Action> recursiveDLS(Node node, Problem problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (problem.isGoalState(node.getState())) {
+		if (SearchUtils.isGoalState(problem, node)) {
 			setPathCost(node.getPathCost());
 			return SearchUtils.actionsFromNodes(node.getPathFromRoot());
 		} else if (0 == limit) {

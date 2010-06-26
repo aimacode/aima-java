@@ -112,7 +112,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		setMaxRecursiveDepth(recursiveDepth);
 
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (p.isGoalState(n.getState())) {
+		if (SearchUtils.isGoalState(p, n)) {
 			return new SearchResult(n, fLimit);
 		}
 
