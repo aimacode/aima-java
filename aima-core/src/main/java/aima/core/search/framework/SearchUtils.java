@@ -31,9 +31,10 @@ public class SearchUtils {
 	
 	public static boolean isGoalState(Problem p, Node n) {
 		boolean isFinalGoal = false;
-		if (p.isGoalState(n.getState())) {
-			if (p instanceof MultiGoalProblem) {
-				isFinalGoal = ((MultiGoalProblem)p).isFinalGoalState(n); 
+		GoalTest gt = p.getGoalTest();
+		if (gt.isGoalState(n.getState())) {
+			if (gt instanceof MultiGoalTest) {
+				isFinalGoal = ((MultiGoalTest)gt).isFinalGoalState(n); 
 			} else {
 				isFinalGoal = true;
 			}
