@@ -10,16 +10,12 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.GraphSearch;
-import aima.core.search.framework.MultiGoalProblem;
+import aima.core.search.framework.MultiGoalTest;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.ResultFunction;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.StepCostFunction;
 import aima.core.search.uninformed.BreadthFirstSearch;
 
 public class MultiGoalProblemTest {
@@ -27,7 +23,7 @@ public class MultiGoalProblemTest {
 	@Test
 	public void testMultiGoalProblem() throws Exception {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem problem = new DualGoalProblem(SimplifiedRoadMapOfPartOfRomania.ARAD,
+		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctionFactory.getActionsFunction(romaniaMap),
 				MapFunctionFactory.getResultFunction(), new DualMapGoalTest(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, 
@@ -50,34 +46,26 @@ public class MultiGoalProblemTest {
 				"maxQueueSize"));
 	}
 	
-	class DualGoalProblem extends Problem implements MultiGoalProblem {
-		private Set<String> goals = new HashSet<String>();
+	class DualMapGoalTest implements MultiGoalTest {
+		public String goalState1 = null;
+		public String goalState2 = null;
 		
-		public DualGoalProblem(Object initialState, ActionsFunction actionsFunction,
-				ResultFunction resultFunction, DualMapGoalTest goalTest,
-				StepCostFunction stepCostFunction) {
-			super(initialState, actionsFunction, resultFunction, goalTest, stepCostFunction);
-			goals.add(goalTest.goalState1);
-			goals.add(goalTest.goalState2);
+		private Set<String> goals = new HashSet<String>();
+
+		public DualMapGoalTest(String goalState1, String goalState2) {
+			this.goalState1 = goalState1;
+			this.goalState2 = goalState2;
+			goals.add(goalState1);
+			goals.add(goalState2);
+		}
+
+		public boolean isGoalState(Object state) {
+			return goalState1.equals(state) || goalState2.equals(state);
 		}
 		
 		public boolean isFinalGoalState(Node n) {
 			goals.remove(n.getState());
 			return goals.isEmpty();
-		}
-	}
-	
-	class DualMapGoalTest implements GoalTest {
-		public String goalState1 = null;
-		public String goalState2 = null;
-
-		public DualMapGoalTest(String goalState1, String goalState2) {
-			this.goalState1 = goalState1;
-			this.goalState2 = goalState2;
-		}
-
-		public boolean isGoalState(Object state) {
-			return goalState1.equals(state) || goalState2.equals(state);
 		}
 	}
 }
