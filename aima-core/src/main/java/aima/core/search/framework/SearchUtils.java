@@ -28,17 +28,19 @@ public class SearchUtils {
 		}
 		return actions;
 	}
-	
+
 	public static boolean isGoalState(Problem p, Node n) {
-		boolean isFinalGoal = false;
+		boolean isGoal = false;
 		GoalTest gt = p.getGoalTest();
 		if (gt.isGoalState(n.getState())) {
-			if (gt instanceof MultiGoalTest) {
-				isFinalGoal = ((MultiGoalTest)gt).isFinalGoalState(n); 
+			if (gt instanceof SolutionChecker) {
+				isGoal = ((SolutionChecker) gt).isAcceptableSolution(
+						SearchUtils.actionsFromNodes(n.getPathFromRoot()), n
+								.getState());
 			} else {
-				isFinalGoal = true;
+				isGoal = true;
 			}
 		}
-		return isFinalGoal;
+		return isGoal;
 	}
 }

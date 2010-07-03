@@ -1,24 +1,25 @@
 package aima.test.core.unit.search.framework;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import aima.core.agent.Action;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.GraphSearch;
-import aima.core.search.framework.MultiGoalTest;
-import aima.core.search.framework.Node;
+import aima.core.search.framework.SolutionChecker;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.uninformed.BreadthFirstSearch;
 
-public class MultiGoalProblemTest {
+public class SolutionCheckerTest {
 	
 	@Test
 	public void testMultiGoalProblem() throws Exception {
@@ -46,7 +47,7 @@ public class MultiGoalProblemTest {
 				"maxQueueSize"));
 	}
 	
-	class DualMapGoalTest implements MultiGoalTest {
+	class DualMapGoalTest implements SolutionChecker {
 		public String goalState1 = null;
 		public String goalState2 = null;
 		
@@ -63,8 +64,8 @@ public class MultiGoalProblemTest {
 			return goalState1.equals(state) || goalState2.equals(state);
 		}
 		
-		public boolean isFinalGoalState(Node n) {
-			goals.remove(n.getState());
+		public boolean isAcceptableSolution(List<Action> actions, Object goal) {
+			goals.remove(goal);
 			return goals.isEmpty();
 		}
 	}
