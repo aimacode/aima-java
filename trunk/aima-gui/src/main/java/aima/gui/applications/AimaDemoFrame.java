@@ -95,7 +95,7 @@ public class AimaDemoFrame extends JFrame {
 					getContentPane().remove(currPanel);
 				Object instance = appClass.newInstance();
 				Method m = appClass.getMethod("constructApplicationFrame", new Class[0]);
-				AgentAppFrame af = (AgentAppFrame) m.invoke(instance, null);
+				JFrame af = (JFrame) m.invoke(instance, null);
 				currPanel = (JComponent) af.getContentPane().getComponent(0);
 				af.getContentPane().remove(currPanel);
 				getContentPane().add(currPanel, BorderLayout.CENTER);
