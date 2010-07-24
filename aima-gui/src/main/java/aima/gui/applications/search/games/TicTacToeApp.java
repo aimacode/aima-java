@@ -54,13 +54,13 @@ public class TicTacToeApp {
 			this.setLayout(new BorderLayout());
 			JToolBar tbar = new JToolBar();
 			tbar.setFloatable(false);
-			strategy = new JComboBox(new String[]{"Mini Max", "Alpha Beta"});
+			strategy = new JComboBox(new String[]{"Minimax", "Alpha-Beta"});
 			tbar.add(strategy);
 			tbar.add(Box.createHorizontalGlue());
 			clear = new JButton("Clear");
 			clear.addActionListener(this);
 			tbar.add(clear);
-			proposal = new JButton("Move Proposal");
+			proposal = new JButton("Propose Move");
 			proposal.addActionListener(this);
 			tbar.add(proposal);
 			
