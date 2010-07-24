@@ -6,7 +6,7 @@ package aima.gui.framework;
  * {@link AgentAppController}. This class demonstrates, how this three parts are
  * plugged together. The easiest way to create a new graphical agent application
  * is to create subclasses of the three parts as needed, and then to create a
- * subclass this class and override the three factory methods.
+ * subclass of this class and override the three factory methods.
  * 
  * @author R. Lunde
  */
