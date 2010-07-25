@@ -61,7 +61,8 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 
 	@Override
 	public boolean offer(E e) {
-		return offerFirst(e);
+		add(0, e);
+		return true;
 	}
 	// End-Override LinkedList methods in order for it to behave like a LIFO.
 	//
