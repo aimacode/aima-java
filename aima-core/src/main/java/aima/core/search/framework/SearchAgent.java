@@ -35,6 +35,10 @@ public class SearchAgent extends AbstractAgent {
 		}
 	}
 
+	public boolean isDone() {
+		return !actionIterator.hasNext();
+	}
+	
 	public List<Action> getActions() {
 		return actionList;
 	}
