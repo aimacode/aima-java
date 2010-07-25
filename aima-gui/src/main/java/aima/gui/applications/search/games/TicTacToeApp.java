@@ -1,10 +1,12 @@
 package aima.gui.applications.search.games;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -55,6 +57,7 @@ public class TicTacToeApp {
 			JToolBar tbar = new JToolBar();
 			tbar.setFloatable(false);
 			strategy = new JComboBox(new String[]{"Minimax", "Alpha-Beta"});
+			strategy.setSelectedIndex(1);
 			tbar.add(strategy);
 			tbar.add(Box.createHorizontalGlue());
 			clear = new JButton("Clear");
@@ -69,13 +72,16 @@ public class TicTacToeApp {
 			spanel.setLayout(new GridLayout(3,3));
 			add(spanel, BorderLayout.CENTER);
 			squares = new JButton[9];
+			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN, 32);
 			for (int i = 0; i < 9; i++) {
 				JButton square = new JButton("");
+				square.setFont(f);
 				square.addActionListener(this);
 				squares[i] = square;
 				spanel.add(square);
 			}
 			status = new JLabel(" ");
+			status.setBorder(BorderFactory.createEtchedBorder());
 			add(status, BorderLayout.SOUTH);
 			actionPerformed(null);
 		}
