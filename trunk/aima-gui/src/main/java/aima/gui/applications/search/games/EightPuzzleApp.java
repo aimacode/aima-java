@@ -116,7 +116,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 					"Extreme" }, 0);
 			setSelectorItems(SEARCH_SEL, SEARCH_NAMES, 0);
 			setTitle("Eight Puzzle Application");
-			setSize(800, 400);
+			setSize(700, 500);
 		}
 	}
 
