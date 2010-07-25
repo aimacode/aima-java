@@ -194,38 +194,7 @@ public class EightPuzzleBoard {
 	//
 
 	private int[] xycoordinatesFromAbsoluteCoordinate(int x) {
-		int[] retVal = null;
-		switch (x) {
-		case 0:
-			retVal = new int[] { 0, 0 };
-			break;
-		case 1:
-			retVal = new int[] { 0, 1 };
-			break;
-		case 2:
-			retVal = new int[] { 0, 2 };
-			break;
-		case 3:
-			retVal = new int[] { 1, 0 };
-			break;
-		case 4:
-			retVal = new int[] { 1, 1 };
-			break;
-		case 5:
-			retVal = new int[] { 1, 2 };
-			break;
-		case 6:
-			retVal = new int[] { 2, 0 };
-			break;
-		case 7:
-			retVal = new int[] { 2, 1 };
-			break;
-		case 8:
-			retVal = new int[] { 2, 2 };
-			break;
-
-		}
-		return retVal;
+		return new int[] { x / 3, x % 3 };
 	}
 
 	private int absoluteCoordinatesFromXYCoordinates(int x, int y) {
