@@ -1,6 +1,7 @@
 package aima.gui.applications.search.games;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -76,6 +77,7 @@ public class TicTacToeApp {
 			for (int i = 0; i < 9; i++) {
 				JButton square = new JButton("");
 				square.setFont(f);
+				square.setBackground(Color.WHITE);
 				square.addActionListener(this);
 				squares[i] = square;
 				spanel.add(square);
