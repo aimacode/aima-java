@@ -7,6 +7,7 @@ import aima.core.util.datastructure.XYLocation;
 
 /**
  * @author Ravi Mohan
+ * @author R. Lunde
  * 
  */
 public class TicTacToeBoard {
