@@ -11,20 +11,19 @@ import aima.core.util.datastructure.XYLocation;
  * 
  */
 public class TicTacToeBoard {
-	private static final String O = "O";
+	public static final String O = "O";
+	public static final String X = "X";
+	public static final String EMPTY = "-";
 
-	private static final String X = "X";
-
-	String[] topRow = { " ", " ", " " };
-
-	String[] midRow = { " ", " ", " " };
-
-	String[] bottomRow = { " ", " ", " " };
+	String[] state = new String[] { EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+			EMPTY, EMPTY, EMPTY };
 
 	public boolean isEmpty(int row, int col) {
-		String[] whichRow = whichRow(row);
-
-		return (whichRow[col] == " ");
+		return state[getAbsPosition(row, col)] == EMPTY;
+	}
+	
+	public boolean isMarked(String string, int i, int j) {
+		return getValue(i, j).equals(string);
 	}
 
 	public void markX(int row, int col) {
@@ -35,99 +34,49 @@ public class TicTacToeBoard {
 		mark(row, col, O);
 	}
 
-	public void mark(int row, int col, String symbol) {
-		String[] whichRow = null;
-		whichRow = whichRow(row);
-		whichRow[col] = symbol;
+	private void mark(int row, int col, String symbol) {
+		state[getAbsPosition(row, col)] = symbol;
 	}
 
 	public boolean isAnyRowComplete() {
-		boolean retVal = false;
 		for (int i = 0; i < 3; i++) {
-			String[] whichRow = whichRow(i);
-			if ((whichRow[0] != " ") && (whichRow[0] == whichRow[1])
-					&& (whichRow[1] == whichRow[2])) {
-				retVal = true;
-				break;
-			}
+			String val = getValue(i, 0);
+			if (val != EMPTY && val == getValue(i, 1) && val == getValue(i, 2))
+				return true;
 		}
-		return retVal;
+		return false;
 	}
 
 	public boolean isAnyColumnComplete() {
-		boolean retVal = false;
-		for (int i = 0; i < 3; i++) {
-
-			if ((topRow[i] != " ") && (topRow[i] == midRow[i])
-					&& (midRow[i] == bottomRow[i])) {
-				retVal = true;
-				break;
-			}
+		for (int j = 0; j < 3; j++) {
+			String val = getValue(0, j);
+			if (val != EMPTY && val == getValue(1, j) && val == getValue(2, j))
+				return true;
 		}
-		return retVal;
+		return false;
 	}
 
 	public boolean isAnyDiagonalComplete() {
 		boolean retVal = false;
-		// check diagonal 1
-		if ((topRow[0] != " ") && (topRow[0] == midRow[1])
-				&& (midRow[1] == bottomRow[2])) {
-			retVal = true;
-		} else if ((topRow[2] != " ") && (topRow[2] == midRow[1])
-				&& (midRow[1] == bottomRow[0])) {
-			retVal = true;
-		}
-
+		String val = getValue(0, 0);
+		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 2))
+			return true;
+		val = getValue(0, 2);
+		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 0))
+			return true;
 		return retVal;
 	}
 
 	public boolean lineThroughBoard() {
-		return ((isAnyRowComplete()) || (isAnyColumnComplete()) || (isAnyDiagonalComplete()));
+		return (isAnyRowComplete() || isAnyColumnComplete() || isAnyDiagonalComplete());
 	}
 
 	public String getValue(int row, int col) {
-		String[] whichRow = whichRow(row);
-		return whichRow[col];
+		return state[getAbsPosition(row, col)];
 	}
 
 	private void setValue(int row, int col, String val) {
-		String[] whichRow = whichRow(row);
-		whichRow[col] = val;
-	}
-
-	public void print() {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				String value = getValue(i, j);
-				String printValue;
-				if (value == " ") {
-					printValue = "-";
-				} else {
-					printValue = value;
-				}
-				System.out.print(printValue + " ");
-			}
-			System.out.println();
-		}
-	}
-
-	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				String value = getValue(i, j);
-				String printValue;
-				if (value == " ") {
-					printValue = "-";
-				} else {
-					printValue = value;
-				}
-				buf.append(printValue + " ");
-			}
-			buf.append("\n");
-		}
-		return buf.toString();
+		state[getAbsPosition(row, col)] = val;
 	}
 
 	public TicTacToeBoard cloneBoard() {
@@ -154,7 +103,6 @@ public class TicTacToeBoard {
 					retVal++;
 				}
 			}
-
 		}
 		return retVal;
 	}
@@ -172,44 +120,47 @@ public class TicTacToeBoard {
 		return retVal;
 	}
 
+	public String[] getState() {
+		return state;
+	}
+	
+	public void setState(String[] state) {
+		this.state = state;
+	}
+	
 	@Override
 	public boolean equals(Object anObj) {
-		boolean retVal = true;
 		TicTacToeBoard anotherBoard = (TicTacToeBoard) anObj;
-		boolean secondBreak = false;
+		for (int i = 0; i < 9; i++)
+			if (state[i] != anotherBoard.state[i])
+				return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
 		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (anotherBoard.getValue(i, j) != getValue(i, j)) {
-					retVal = false;
-					secondBreak = true;
-					break;
-				}
-
-			}
-			if (secondBreak == false) {
-				break;
-			}
-
+			for (int j = 0; j < 3; j++)
+				buf.append(getValue(i, j) + " ");
+			buf.append("\n");
 		}
-		return retVal;
+		return buf.toString();
 	}
-
-	public boolean isMarked(String string, int i, int j) {
-		return getValue(i, j).equals(string);
+	
+	public void print() {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++)
+				System.out.print(getValue(i, j) + " ");
+			System.out.println();
+		}
 	}
-
+	
 	//
 	// PRIVATE METHODS
 	//
-	private String[] whichRow(int rowNumber) {
-		String[] whichRow = null;
-		if (rowNumber == 0) {
-			whichRow = topRow;
-		} else if (rowNumber == 1) {
-			whichRow = midRow;
-		} else if (rowNumber == 2) {
-			whichRow = bottomRow;
-		}
-		return whichRow;
+	
+	private int getAbsPosition(int row, int col) {
+		return row * 3 + col;
 	}
 }

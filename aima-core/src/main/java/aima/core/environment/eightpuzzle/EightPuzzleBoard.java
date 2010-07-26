@@ -98,7 +98,6 @@ public class EightPuzzleBoard {
 			setValue(x, y, valueOnTop);
 			setValue(x - 1, y, 0);
 		}
-
 	}
 
 	public List<XYLocation> getPositions() {
@@ -106,7 +105,7 @@ public class EightPuzzleBoard {
 		for (int i = 0; i < 9; i++) {
 			int absPos = getPositionOf(i);
 			XYLocation loc = new XYLocation(getXCoord(absPos),
-					getXCoord(absPos));
+					getYCoord(absPos));
 			retVal.add(loc);
 
 		}
