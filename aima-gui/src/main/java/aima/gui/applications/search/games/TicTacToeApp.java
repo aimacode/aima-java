@@ -105,8 +105,12 @@ public class TicTacToeApp {
 				}
 			}
 			TicTacToeBoard board = (TicTacToeBoard) game.getState().get("board");
-			for (int i = 0; i < 9; i++)
-				squares[i].setText(board.getValue(i / 3, i % 3));
+			for (int i = 0; i < 9; i++) {
+				String val = board.getValue(i / 3, i % 3);
+				if (val == TicTacToeBoard.EMPTY)
+					val = "";
+				squares[i].setText(val);
+			}
 			GameState state = game.getState();
 			if (game.getUtility(state) == 0 && game.hasEnded())
 				status.setText("No Winner...");
