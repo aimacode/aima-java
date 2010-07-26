@@ -9,7 +9,7 @@ import aima.core.util.datastructure.XYLocation;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author R. Lunde
  */
 public class EightPuzzleBoard {
 
@@ -21,27 +21,27 @@ public class EightPuzzleBoard {
 
 	public static Action DOWN = new DynamicAction("Down");
 
-	private int[] board;
+	private int[] state;
 
 	//
 	// PUBLIC METHODS
 	//
 
 	public EightPuzzleBoard() {
-		board = new int[] { 5, 4, 0, 6, 1, 8, 7, 3, 2 };
+		state = new int[] { 5, 4, 0, 6, 1, 8, 7, 3, 2 };
 	}
 
-	public EightPuzzleBoard(int[] aBoard) {
-		board = new int[aBoard.length];
-		System.arraycopy(aBoard, 0, board, 0, board.length);
+	public EightPuzzleBoard(int[] state) {
+		this.state = new int[state.length];
+		System.arraycopy(state, 0, this.state, 0, state.length);
 	}
 
 	public EightPuzzleBoard(EightPuzzleBoard copyBoard) {
-		this(copyBoard.getBoard());
+		this(copyBoard.getState());
 	}
 
-	public int[] getBoard() {
-		return board;
+	public int[] getState() {
+		return state;
 	}
 
 	public int getValueAt(XYLocation loc) {
@@ -49,56 +49,54 @@ public class EightPuzzleBoard {
 	}
 
 	public XYLocation getLocationOf(int val) {
-		int abspos = getPositionOf(val);
-		int xpos = xycoordinatesFromAbsoluteCoordinate(abspos)[0];
-		int ypos = xycoordinatesFromAbsoluteCoordinate(abspos)[1];
-		return new XYLocation(xpos, ypos);
+		int absPos = getPositionOf(val);
+		return new XYLocation(getXCoord(absPos), getYCoord(absPos));
 	}
 
 	public void moveGapRight() {
-		int gapPosition = getGapPosition();
-		int xpos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[0];
-		int ypos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[1];
+		int gapPos = getGapPosition();
+		int x = getXCoord(gapPos);
+		int ypos = getYCoord(gapPos);
 		if (!(ypos == 2)) {
-			int valueOnRight = getValueAt(xpos, ypos + 1);
-			setValue(xpos, ypos, valueOnRight);
-			setValue(xpos, ypos + 1, 0);
+			int valueOnRight = getValueAt(x, ypos + 1);
+			setValue(x, ypos, valueOnRight);
+			setValue(x, ypos + 1, 0);
 		}
 
 	}
 
 	public void moveGapLeft() {
-		int gapPosition = getGapPosition();
-		int xpos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[0];
-		int ypos = xycoordinatesFromAbsoluteCoordinate(getGapPosition())[1];
+		int gapPos = getGapPosition();
+		int x = getXCoord(gapPos);
+		int ypos = getYCoord(gapPos);
 		if (!(ypos == 0)) {
-			int valueOnLeft = getValueAt(xpos, ypos - 1);
-			setValue(xpos, ypos, valueOnLeft);
-			setValue(xpos, ypos - 1, 0);
+			int valueOnLeft = getValueAt(x, ypos - 1);
+			setValue(x, ypos, valueOnLeft);
+			setValue(x, ypos - 1, 0);
 		}
 
 	}
 
 	public void moveGapDown() {
-		int gapPosition = getGapPosition();
-		int xpos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[0];
-		int ypos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[1];
-		if (!(xpos == 2)) {
-			int valueOnBottom = getValueAt(xpos + 1, ypos);
-			setValue(xpos, ypos, valueOnBottom);
-			setValue(xpos + 1, ypos, 0);
+		int gapPos = getGapPosition();
+		int x = getXCoord(gapPos);
+		int y = getYCoord(gapPos);
+		if (!(x == 2)) {
+			int valueOnBottom = getValueAt(x + 1, y);
+			setValue(x, y, valueOnBottom);
+			setValue(x + 1, y, 0);
 		}
 
 	}
 
 	public void moveGapUp() {
-		int gapPosition = getGapPosition();
-		int xpos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[0];
-		int ypos = xycoordinatesFromAbsoluteCoordinate(gapPosition)[1];
-		if (!(xpos == 0)) {
-			int valueOnTop = getValueAt(xpos - 1, ypos);
-			setValue(xpos, ypos, valueOnTop);
-			setValue(xpos - 1, ypos, 0);
+		int gapPos = getGapPosition();
+		int x = getXCoord(gapPos);
+		int y = getYCoord(gapPos);
+		if (!(x == 0)) {
+			int valueOnTop = getValueAt(x - 1, y);
+			setValue(x, y, valueOnTop);
+			setValue(x - 1, y, 0);
 		}
 
 	}
@@ -106,8 +104,9 @@ public class EightPuzzleBoard {
 	public List<XYLocation> getPositions() {
 		ArrayList<XYLocation> retVal = new ArrayList<XYLocation>();
 		for (int i = 0; i < 9; i++) {
-			int[] res = xycoordinatesFromAbsoluteCoordinate(getPositionOf(i));
-			XYLocation loc = new XYLocation(res[0], res[1]);
+			int absPos = getPositionOf(i);
+			XYLocation loc = new XYLocation(getXCoord(absPos),
+					getXCoord(absPos));
 			retVal.add(loc);
 
 		}
@@ -115,9 +114,7 @@ public class EightPuzzleBoard {
 	}
 
 	public void setBoard(List<XYLocation> locs) {
-
 		int count = 0;
-
 		for (int i = 0; i < locs.size(); i++) {
 			XYLocation loc = locs.get(i);
 			this.setValue(loc.getXCoOrdinate(), loc.getYCoOrdinate(), count);
@@ -128,27 +125,14 @@ public class EightPuzzleBoard {
 	public boolean canMoveGap(Action where) {
 		boolean retVal = true;
 		int absPos = getPositionOf(0);
-		if (where.equals(LEFT)) {
-			if ((absPos == 0) || (absPos == 3) || (absPos == 6)) {
-				retVal = false;
-			}
-		}
-		if (where.equals(RIGHT)) {
-			if ((absPos == 2) || (absPos == 5) || (absPos == 8)) {
-				retVal = false;
-			}
-		}
-		if (where.equals(UP)) {
-			if ((absPos == 0) || (absPos == 1) || (absPos == 2)) {
-				retVal = false;
-			}
-		}
-		if (where.equals(DOWN)) {
-			if ((absPos == 6) || (absPos == 7) || (absPos == 8)) {
-				retVal = false;
-			}
-		}
-
+		if (where.equals(LEFT))
+			retVal = (getYCoord(absPos) != 0);
+		else if (where.equals(RIGHT))
+			retVal = (getYCoord(absPos) != 2);
+		else if (where.equals(UP))
+			retVal = (getXCoord(absPos) != 0);
+		else if (where.equals(DOWN))
+			retVal = (getXCoord(absPos) != 2);
 		return retVal;
 	}
 
@@ -183,9 +167,9 @@ public class EightPuzzleBoard {
 
 	@Override
 	public String toString() {
-		String retVal = board[0] + " " + board[1] + " " + board[2] + "\n"
-				+ board[3] + " " + board[4] + " " + board[5] + " " + "\n"
-				+ board[6] + " " + board[7] + " " + board[8];
+		String retVal = state[0] + " " + state[1] + " " + state[2] + "\n"
+				+ state[3] + " " + state[4] + " " + state[5] + " " + "\n"
+				+ state[6] + " " + state[7] + " " + state[8];
 		return retVal;
 	}
 
@@ -193,37 +177,48 @@ public class EightPuzzleBoard {
 	// PRIVATE METHODS
 	//
 
-	private int[] xycoordinatesFromAbsoluteCoordinate(int x) {
-		return new int[] { x / 3, x % 3 };
+	/**
+	 * Note: The graphic representation maps x values on row numbers
+	 * (x-axis in vertical direction).
+	 */
+	private int getXCoord(int absPos) {
+		return absPos / 3;
 	}
-
-	private int absoluteCoordinatesFromXYCoordinates(int x, int y) {
+	
+	/**
+	 * Note: The graphic representation maps y values on column numbers
+	 * (y-axis in horizontal direction).
+	 */
+	private int getYCoord(int absPos) {
+		return absPos % 3;
+	}
+	
+	private int getAbsPosition(int x, int y) {
 		return x * 3 + y;
 	}
-
+	
 	private int getValueAt(int x, int y) {
 		// refactor this use either case or a div/mod soln
-		return board[absoluteCoordinatesFromXYCoordinates(x, y)];
+		return state[getAbsPosition(x, y)];
 	}
 
 	private int getGapPosition() {
-
 		return getPositionOf(0);
 	}
 
 	private int getPositionOf(int val) {
 		int retVal = -1;
 		for (int i = 0; i < 9; i++) {
-			if (board[i] == val) {
+			if (state[i] == val) {
 				retVal = i;
 			}
 		}
 		return retVal;
 	}
 
-	private void setValue(int xPos, int yPos, int val) {
-		int abscoord = absoluteCoordinatesFromXYCoordinates(xPos, yPos);
-		board[abscoord] = val;
+	private void setValue(int x, int y, int val) {
+		int absPos = getAbsPosition(x, y);
+		state[absPos] = val;
 
 	}
 }

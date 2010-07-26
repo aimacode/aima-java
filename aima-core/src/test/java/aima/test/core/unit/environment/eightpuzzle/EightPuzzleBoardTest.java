@@ -25,7 +25,7 @@ public class EightPuzzleBoardTest {
 	@Test
 	public void testGetBoard() {
 		int[] expected = new int[] { 5, 4, 0, 6, 1, 8, 7, 3, 2 };
-		int[] boardRepr = board.getBoard();
+		int[] boardRepr = board.getState();
 		Assert.assertEquals(expected[0], boardRepr[0]);
 		Assert.assertEquals(expected[1], boardRepr[1]);
 		Assert.assertEquals(expected[2], boardRepr[2]);
