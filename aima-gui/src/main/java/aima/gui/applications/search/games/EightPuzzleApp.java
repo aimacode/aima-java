@@ -161,7 +161,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Displays the board state by labeling and coloring the tile buttons. */
 		void showState() {
-			int[] vals = ((EightPuzzleEnvironment) env).getBoard().getBoard();
+			int[] vals = ((EightPuzzleEnvironment) env).getBoard().getState();
 			for (int i = 0; i < 9; i++) {
 				tileButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY : Color.WHITE);
 				tileButtons[i].setText(vals[i] == 0 ? "" : Integer.toString(vals[i]));

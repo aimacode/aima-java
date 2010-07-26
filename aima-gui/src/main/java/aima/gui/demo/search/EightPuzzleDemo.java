@@ -46,9 +46,9 @@ public class EightPuzzleDemo {
 	}
 
 	private static void eightPuzzleDLSDemo() {
-		System.out.println("\nEightPuzzleDemo recursive DLS -->");
+		System.out.println("\nEightPuzzleDemo recursive DLS (9) -->");
 		try {
-			Problem problem = new Problem(random1, EightPuzzleFunctionFactory
+			Problem problem = new Problem(boardWithThreeMoveSolution, EightPuzzleFunctionFactory
 					.getActionsFunction(), EightPuzzleFunctionFactory
 					.getResultFunction(), new EightPuzzleGoalTest());
 			Search search = new DepthLimitedSearch(9);
