@@ -61,8 +61,10 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	
 		scale = transformer.computeScale();
 		displayFactorSym = displayFactor * transformer.getDotsPerUnit();
-		if (scale <= 1f/750000)
-			wayGeneralizationValue = 8;
+		if (scale <= 1f/10000000)
+			wayGeneralizationValue = 64;
+		else if (scale <= 1f/750000)
+			wayGeneralizationValue = 16;
 		else if (scale <= 1f/350000)
 			wayGeneralizationValue = 4;
 		else if (scale <= 1f/60000)

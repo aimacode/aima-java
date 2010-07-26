@@ -22,8 +22,6 @@ import aimax.osm.gps.GpsFix;
 import aimax.osm.gps.GpsLocator;
 import aimax.osm.gps.GpsPositionListener;
 import aimax.osm.gps.NmeaReader.MessageToFileListener;
-import aimax.osm.reader.Bz2OsmReader;
-import aimax.osm.reader.MapReader;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
 
