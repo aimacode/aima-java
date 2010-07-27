@@ -1,5 +1,7 @@
 = AIMA-GUI =
 
+by Ruediger Lunde
+
 == Requirements ==
 # Depends on the aima-core project. 
 
