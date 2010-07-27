@@ -15,10 +15,7 @@ public abstract class Game {
 
 	protected int level;
 
-	public Game() {
-	}
-
-	public abstract ArrayList getSuccessorStates(GameState state);
+	public abstract ArrayList<GameState> getSuccessorStates(GameState state);
 
 	public abstract GameState makeMove(GameState state, Object o);
 
@@ -55,9 +52,9 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList successorList = getSuccessorStates(state);
+			ArrayList<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
-				GameState successor = (GameState) successorList.get(i);
+				GameState successor = successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor);
 				if (minimumValueOfSuccessor > v) {
 					v = minimumValueOfSuccessor;
@@ -77,9 +74,9 @@ public abstract class Game {
 			return computeUtility(state);
 
 		} else {
-			ArrayList successorList = getSuccessorStates(state);
+			ArrayList<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
-				GameState successor = (GameState) successorList.get(i);
+				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessors = maxValue(successor);
 				if (maximumValueOfSuccessors < v) {
 					v = maximumValueOfSuccessors;
@@ -98,9 +95,9 @@ public abstract class Game {
 			return (computeUtility(state));
 
 		} else {
-			ArrayList successorList = getSuccessorStates(state);
+			ArrayList<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
-				GameState successor = (GameState) successorList.get(i);
+				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessor = maxValue(successor, ab.copy());
 				if (maximumValueOfSuccessor < v) {
 					v = maximumValueOfSuccessor;
@@ -152,7 +149,7 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList successorList = getSuccessorStates(state);
+			ArrayList<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = (GameState) successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor, ab.copy());
@@ -168,6 +165,5 @@ public abstract class Game {
 			}
 			return v;
 		}
-
 	}
 }
