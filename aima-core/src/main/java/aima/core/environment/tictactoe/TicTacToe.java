@@ -34,9 +34,9 @@ public class TicTacToe extends Game {
 	}
 
 	@Override
-	public ArrayList getSuccessorStates(GameState state) {
+	public ArrayList<GameState> getSuccessorStates(GameState state) {
 		GameState temp = presentState;
-		ArrayList<Object> retVal = new ArrayList<Object>();
+		ArrayList<GameState> retVal = new ArrayList<GameState>();
 		int parentLevel = getLevel(state);
 		for (int i = 0; i < getMoves(state).size(); i++) {
 			XYLocation loc = (XYLocation) getMoves(state).get(i);
