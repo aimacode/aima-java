@@ -19,6 +19,11 @@ public abstract class AgentAppEnvironmentView
 extends JComponent implements EnvironmentView {
 	/** The environment providing the data to be visualized. */
 	protected Environment env;
+	/**
+	 * If the view provides interactive means to modify the environment,
+	 * this controller should be responsible to initiate the changes. 
+	 */
+	protected AgentAppController controller;
 	/** Message display is delegated to a separate logger. */
 	protected MessageLogger logger;
 	
@@ -31,6 +36,19 @@ extends JComponent implements EnvironmentView {
 		repaint();
 	}
 	
+	/** Is called by the agent application frame. */
+	protected void setController(AgentAppController controller) {
+		this.controller = controller;
+	}
+	
+	/**
+	 * Provides a controller which is responsible for all
+	 * environment modifications initiated by user interactions.
+	 */
+	protected AgentAppController getController() {
+		return controller;
+	}
+	
 	/** Selects a logger for message display. */
 	public void setMessageLogger(MessageLogger logger) {
 		this.logger = logger;
@@ -40,15 +58,5 @@ extends JComponent implements EnvironmentView {
 	public void notify(String msg) {
 		if (logger != null)
 			logger.log(msg);
-	}
-	
-	public AgentAppController getController() {
-		Component comp = this;
-		while (comp != null) {
-			if (comp instanceof AgentAppFrame)
-				return ((AgentAppFrame) comp).controller;
-			comp = comp.getParent();
-		}
-		return null;
 	}
 }
