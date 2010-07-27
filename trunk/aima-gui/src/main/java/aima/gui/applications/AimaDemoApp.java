@@ -1,6 +1,7 @@
 package aima.gui.applications;
 
 import aima.gui.applications.search.games.EightPuzzleApp;
+import aima.gui.applications.search.games.NQueensApp;
 import aima.gui.applications.search.games.TicTacToeApp;
 import aima.gui.applications.search.map.RouteFindingAgentApp;
 import aima.gui.applications.vacuum.VacuumApp;
@@ -29,6 +30,7 @@ public class AimaDemoApp {
 		frame.addApp(RouteFindingAgentApp.class);
 		frame.addApp(TicTacToeApp.class);
 		frame.addApp(EightPuzzleApp.class);
+		frame.addApp(NQueensApp.class);
 		
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);

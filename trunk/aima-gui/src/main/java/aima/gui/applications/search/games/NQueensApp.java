@@ -3,6 +3,7 @@ package aima.gui.applications.search.games;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,21 +19,26 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.environment.eightpuzzle.EightPuzzleBoard;
-import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
-import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.environment.nqueens.NQueensBoard;
+import aima.core.environment.nqueens.NQueensFunctionFactory;
+import aima.core.environment.nqueens.NQueensGoalTest;
+import aima.core.environment.nqueens.PlaceQueenAction;
+import aima.core.environment.nqueens.QueensToBePlacedHeuristic;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
-import aima.core.search.informed.GreedyBestFirstSearch;
+import aima.core.search.local.HillClimbingSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
+import aima.core.search.uninformed.BreadthFirstSearch;
+import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
+import aima.gui.applications.search.games.EightPuzzleApp.EightPuzzleFrame;
+import aima.gui.applications.search.games.EightPuzzleApp.EightPuzzleView;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppEnvironmentView;
 import aima.gui.framework.AgentAppFrame;
@@ -42,61 +48,58 @@ import aima.gui.framework.SimulationThread;
 
 /**
  * Simple graphical 8-puzzle game application. It demonstrates the performance
- * of different search algorithms.
+ * of different search algorithms. Manual search by the user is also supported.
  * 
  * @author R. Lunde
  */
-public class EightPuzzleApp extends SimpleAgentApp {
+public class NQueensApp extends SimpleAgentApp {
 
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
 	/** List of supported search algorithms. */
 	protected static List<Search> SEARCH_ALGOS = new ArrayList<Search>();
+
 	/** Adds a new item to the list of supported search algorithms. */
 	public static void addSearchAlgorithm(String name, Search algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
-	
+
 	static {
 		addSearchAlgorithm("Depth Limited Search (9)",
 				new DepthLimitedSearch(9));
+		addSearchAlgorithm("Breadth First Search (Tree Search)",
+				new BreadthFirstSearch(new TreeSearch()));
+		addSearchAlgorithm("Depth First Search (Tree Search)",
+				new DepthFirstSearch(new TreeSearch()));
 		addSearchAlgorithm("Iterative Deepening Search",
 				new IterativeDeepeningSearch());
-		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(),
-						new MisplacedTilleHeuristicFunction()));
-		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(),
-						new ManhattanHeuristicFunction()));
-		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
+		addSearchAlgorithm("AStar Search (QueensToBePlacedHeuristic)",
 				new AStarSearch(new GraphSearch(),
-						new MisplacedTilleHeuristicFunction()));
-		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
-				new AStarSearch(new GraphSearch(),
-						new ManhattanHeuristicFunction()));
+						new QueensToBePlacedHeuristic()));
+		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch(
+				new QueensToBePlacedHeuristic()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction()));
-	}
-	
-	/** Returns a <code>EightPuzzleView</code> instance. */
-	public AgentAppEnvironmentView createEnvironmentView() {
-		return new EightPuzzleView();
+				new SimulatedAnnealingSearch(new QueensToBePlacedHeuristic()));
 	}
 
-	/** Returns a <code>EightPuzzleFrame</code> instance. */
+	/** Returns a <code>NQueensView</code> instance. */
+	public AgentAppEnvironmentView createEnvironmentView() {
+		return new NQueensView();
+	}
+
+	/** Returns a <code>NQueensFrame</code> instance. */
 	@Override
 	public AgentAppFrame createFrame() {
-		return new EightPuzzleFrame();
+		return new NQueensFrame();
 	}
 
-	/** Returns a <code>EightPuzzleController</code> instance. */
+	/** Returns a <code>NQueensController</code> instance. */
 	@Override
 	public AgentAppController createController() {
-		return new EightPuzzleController();
+		return new NQueensController();
 	}
 
-	
 	// ///////////////////////////////////////////////////////////////
 	// main method
 
@@ -104,52 +107,44 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	 * Starts the application.
 	 */
 	public static void main(String args[]) {
-		new EightPuzzleApp().startApplication();
+		new NQueensApp().startApplication();
 	}
 
-	
 	// ///////////////////////////////////////////////////////////////
 	// some inner classes
 
 	/**
 	 * Adds some selectors to the base class and adjusts its size.
 	 */
-	protected static class EightPuzzleFrame extends AgentAppFrame {
+	protected static class NQueensFrame extends AgentAppFrame {
 		private static final long serialVersionUID = 1L;
 		public static String ENV_SEL = "EnvSelection";
 		public static String SEARCH_SEL = "SearchSelection";
 
-		public EightPuzzleFrame() {
+		public NQueensFrame() {
 			setEnvView(new EightPuzzleView());
 			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] {
 					"Select Environment", "Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Random 1",
-					"Extreme" }, 0);
-			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[]{}), 0);
-			setTitle("Eight Puzzle Application");
+			setSelectorItems(ENV_SEL, new String[] { "8 Queens", "16 Queens" },
+					0);
+			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
+					.toArray(new String[] {}), 0);
+			setTitle("N-Queens Application");
 			setSize(700, 500);
 		}
 	}
 
 	/**
-	 * Displays the informations provided by a <code>EightPuzzleEnvironment</code> on
-	 * a panel using 2D-graphics.
+	 * Displays the informations provided by a
+	 * <code>NQueensEnvironment</code> on a panel.
 	 */
-	protected static class EightPuzzleView extends AgentAppEnvironmentView implements ActionListener {
+	protected static class NQueensView extends AgentAppEnvironmentView
+			implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
+		protected int currSize = -1;
 
-		protected EightPuzzleView() {
-			setLayout(new GridLayout(3, 3));
-			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN, 32);
-			squareButtons = new JButton[9];
-			for (int i = 0; i < 9; i++) {
-				JButton square = new JButton("");
-				square.setFont(f);
-				square.addActionListener(this);
-				squareButtons[i] = square;
-				add(square);
-			}
+		protected NQueensView() {
 		}
 
 		@Override
@@ -157,7 +152,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			super.setEnvironment(env);
 			showState();
 		}
-		
+
 		/** Agent value null indicates a user initiated action. */
 		@Override
 		public void agentActed(Agent agent, Action action,
@@ -171,49 +166,65 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			showState();
 		}
 
-		/** Displays the board state by labeling and coloring the square buttons. */
+		/**
+		 * Displays the board state by labeling and coloring the square buttons.
+		 */
 		protected void showState() {
-			int[] vals = ((EightPuzzleEnvironment) env).getBoard().getState();
-			for (int i = 0; i < 9; i++) {
-				squareButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY : Color.WHITE);
-				squareButtons[i].setText(vals[i] == 0 ? "" : Integer.toString(vals[i]));
+			NQueensBoard board = ((NQueensEnvironment) env).getBoard();
+			if (currSize != board.getSize()) {
+				currSize = board.getSize();
+				removeAll();
+				setLayout(new GridLayout(currSize, currSize));
+				Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN,
+						260 / currSize);
+				squareButtons = new JButton[currSize * currSize];
+				for (int i = 0; i < currSize * currSize; i++) {
+					JButton square = new JButton("");
+					square.setFont(f);
+					square.setMargin(new Insets(0, 0, 0, 0));
+					square.setBackground((i % currSize) % 2 == (i / currSize) % 2
+							? Color.WHITE : Color.LIGHT_GRAY);
+					square.addActionListener(this);
+					squareButtons[i] = square;
+					add(square);
+				}
 			}
+			for (int i = 0; i < currSize * currSize; i++)
+				squareButtons[i].setText("");
+			for (XYLocation loc : board.getQueenPositions()) {
+				JButton square = squareButtons
+				[loc.getXCoOrdinate() + loc.getYCoOrdinate() * currSize];
+				square.setForeground
+				(board.isSquareUnderAttack(loc) ? Color.RED : Color.BLACK);
+				square.setText("Q");
+			}
+			validate();
 		}
-		
+
 		/**
 		 * When the user presses square buttons the board state is modified
 		 * accordingly.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < currSize*currSize; i++) {
 				if (ae.getSource() == squareButtons[i]) {
-					EightPuzzleController contr = (EightPuzzleController) getController();
-					XYLocation locGap = ((EightPuzzleEnvironment) env)
-							.getBoard().getLocationOf(0);
-					if (locGap.getXCoOrdinate() == i / 3) {
-						if (locGap.getYCoOrdinate() == i % 3 - 1)
-							contr.executeUserAction(EightPuzzleBoard.RIGHT);
-						else if (locGap.getYCoOrdinate() == i % 3 + 1)
-							contr.executeUserAction(EightPuzzleBoard.LEFT);
-					} else if (locGap.getYCoOrdinate() == i % 3) {
-						if (locGap.getXCoOrdinate() == i / 3 - 1)
-							contr.executeUserAction(EightPuzzleBoard.DOWN);
-						else if (locGap.getXCoOrdinate() == i / 3 + 1)
-							contr.executeUserAction(EightPuzzleBoard.UP);
-					}
+					NQueensController contr = (NQueensController) getController();
+					XYLocation loc = new XYLocation(i % currSize, i / currSize);
+					contr.modifySquare(loc);
 				}
 			}
-		}	
+		}
 	}
 
 	/**
 	 * Defines how to react on standard simulation button events.
 	 */
-	protected static class EightPuzzleController extends AgentAppController {
+	protected static class NQueensController extends AgentAppController {
 
-		protected EightPuzzleEnvironment env = null;
+		protected NQueensEnvironment env = null;
 		protected SearchAgent agent = null;
+		protected boolean boardDirty;
 
 		/** Prepares next simulation. */
 		@Override
@@ -222,24 +233,22 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Creates an eight puzzle environment and clears the current search agent.
+		 * Creates an n-queens environment and clears the current search agent.
 		 */
 		@Override
 		public void prepare(String changedSelector) {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
-			EightPuzzleBoard board = null;
+			NQueensBoard board = null;
 			switch (selState.getValue(EightPuzzleFrame.ENV_SEL)) {
 			case 0: // three moves
-				board = new EightPuzzleBoard(new int[]{1, 2, 5, 3, 4, 0, 6, 7, 8});
+				board = new NQueensBoard(8);
 				break;
-			case 1: // random 1
-				board = new EightPuzzleBoard(new int[]{1, 4, 2, 7, 5, 8, 3, 0, 6});
-				break;
-			case 2: // extreme
-				board = new EightPuzzleBoard(new int[]{0, 8, 7, 6, 5, 4, 3, 2, 1});
+			case 1: // three moves
+				board = new NQueensBoard(16);
 				break;
 			}
-			env = new EightPuzzleEnvironment(board);
+			env = new NQueensEnvironment(board);
+			boardDirty = false;
 			agent = null;
 			frame.getEnvView().setEnvironment(env);
 		}
@@ -250,12 +259,13 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		 */
 		protected void addAgent() {
 			if (agent == null) {
-				int sel = frame.getSelection().getValue(EightPuzzleFrame.SEARCH_SEL);
+				int sel = frame.getSelection().getValue(
+						EightPuzzleFrame.SEARCH_SEL);
 				Search search = SEARCH_ALGOS.get(sel);
 				Problem problem = new Problem(env.getBoard(),
-						EightPuzzleFunctionFactory.getActionsFunction(),
-						EightPuzzleFunctionFactory.getResultFunction(),
-						new EightPuzzleGoalTest());
+						NQueensFunctionFactory.getActionsFunction(),
+						NQueensFunctionFactory.getResultFunction(),
+						new NQueensGoalTest());
 				try {
 					agent = new SearchAgent(problem, search);
 				} catch (Exception e) {
@@ -264,11 +274,12 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				env.addAgent(agent);
 			}
 		}
-		
+
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
-			return agent == null || !agent.isDone();
+			return (agent == null || !agent.isDone())
+			&& (!boardDirty || env.getBoard().getNumberOfQueensOnBoard() == 0);
 		}
 
 		/** Starts simulation. */
@@ -304,7 +315,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				frame.setStatus("Task completed.");
 			}
 		}
-		
+
 		/** Provides a text with statistical information about the last run. */
 		private String getStatistics() {
 			StringBuffer result = new StringBuffer();
@@ -317,39 +328,45 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			}
 			return result.toString();
 		}
-		
-		public void executeUserAction(Action action) {
-			env.executeAction(null, action);
+
+		public void modifySquare(XYLocation loc) {
+			boardDirty = true;
+			env.executeAction(null, new PlaceQueenAction
+					(loc.getXCoOrdinate(), loc.getYCoOrdinate()));
 			agent = null;
 			frame.updateEnabledState();
 		}
 	}
 
 	/** Simple environment maintaining just the current board state. */
-	protected static class EightPuzzleEnvironment extends AbstractEnvironment {
-		EightPuzzleBoard board;
+	protected static class NQueensEnvironment extends AbstractEnvironment {
+		NQueensBoard board;
 
-		protected EightPuzzleEnvironment(EightPuzzleBoard board) {
+		protected NQueensEnvironment(NQueensBoard board) {
 			this.board = board;
 		}
-		
-		protected EightPuzzleBoard getBoard() {
+
+		protected NQueensBoard getBoard() {
 			return board;
 		}
 
-		/** Executes the provided action and returns null. */
+		/**
+		 * Executes the provided action and returns null. A place-queen
+		 * action adds a queen at the specified position if the position
+		 * is free, otherwise removes the existing queen at the position.
+		 */
 		@Override
 		public EnvironmentState executeAction(Agent agent, Action action) {
-			if (action == EightPuzzleBoard.UP)
-				board.moveGapUp();
-			else if (action == EightPuzzleBoard.DOWN)
-				board.moveGapDown();
-			else if (action == EightPuzzleBoard.LEFT)
-				board.moveGapLeft();
-			else if (action == EightPuzzleBoard.RIGHT)
-				board.moveGapRight();
-			if (agent == null)
-				updateEnvironmentViewsAgentActed(agent, action, null);
+			if (action instanceof PlaceQueenAction) {
+				PlaceQueenAction act = (PlaceQueenAction) action;
+				XYLocation loc = new XYLocation(act.getX(), act.getY());
+				if (board.queenExistsAt(loc))
+					board.removeQueenFrom(loc);
+				else
+					board.addQueenAt(loc);
+				if (agent == null)
+					updateEnvironmentViewsAgentActed(agent, action, null);
+			}
 			return null;
 		}
 
