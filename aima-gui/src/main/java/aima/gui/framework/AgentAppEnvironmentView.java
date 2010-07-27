@@ -1,5 +1,7 @@
 package aima.gui.framework;
 
+import java.awt.Component;
+
 import javax.swing.JComponent;
 
 import aima.core.agent.Environment;
@@ -38,5 +40,15 @@ extends JComponent implements EnvironmentView {
 	public void notify(String msg) {
 		if (logger != null)
 			logger.log(msg);
+	}
+	
+	public AgentAppController getController() {
+		Component comp = this;
+		while (comp != null) {
+			if (comp instanceof AgentAppFrame)
+				return ((AgentAppFrame) comp).controller;
+			comp = comp.getParent();
+		}
+		return null;
 	}
 }

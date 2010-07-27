@@ -169,34 +169,36 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 		
 		/**
-		 * When the user presses tile buttons the board state is modified accordingly.
+		 * When the user presses tile buttons the board state is modified
+		 * accordingly.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < 9; i++) {
 				if (ae.getSource() == tileButtons[i]) {
-					EightPuzzleEnvironment e = (EightPuzzleEnvironment) env;
-					XYLocation locGap = e.getBoard().getLocationOf(0);
+					EightPuzzleController contr = (EightPuzzleController) getController();
+					XYLocation locGap = ((EightPuzzleEnvironment) env)
+							.getBoard().getLocationOf(0);
 					if (locGap.getXCoOrdinate() == i / 3) {
-						if (locGap.getYCoOrdinate() == i%3-1)
-							e.executeAction(null, EightPuzzleBoard.RIGHT);
-						else if (locGap.getYCoOrdinate() == i%3+1)
-							e.executeAction(null, EightPuzzleBoard.LEFT);
+						if (locGap.getYCoOrdinate() == i % 3 - 1)
+							contr.executeUserAction(EightPuzzleBoard.RIGHT);
+						else if (locGap.getYCoOrdinate() == i % 3 + 1)
+							contr.executeUserAction(EightPuzzleBoard.LEFT);
 					} else if (locGap.getYCoOrdinate() == i % 3) {
-						if (locGap.getXCoOrdinate() == i/3-1)
-							e.executeAction(null, EightPuzzleBoard.DOWN);
-						else if (locGap.getXCoOrdinate() == i/3+1)
-							e.executeAction(null, EightPuzzleBoard.UP);
+						if (locGap.getXCoOrdinate() == i / 3 - 1)
+							contr.executeUserAction(EightPuzzleBoard.DOWN);
+						else if (locGap.getXCoOrdinate() == i / 3 + 1)
+							contr.executeUserAction(EightPuzzleBoard.UP);
 					}
-					showState();
 				}
+			}
 		}	
 	}
 
 	/**
 	 * Defines how to react on standard simulation button events.
 	 */
-	static class EightPuzzleController extends AgentAppController implements EnvironmentView {
+	static class EightPuzzleController extends AgentAppController {
 
 		protected EightPuzzleEnvironment env = null;
 		protected SearchAgent agent = null;
@@ -227,7 +229,6 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			}
 			env = new EightPuzzleEnvironment(board);
 			agent = null;
-			env.addEnvironmentView(this);
 			frame.getEnvView().setEnvironment(env);
 		}
 
@@ -304,28 +305,11 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			}
 			return result.toString();
 		}
-
-		/**
-		 * Clears the current search agent after the user has modified the board state.
-		 * (indicated by parameter agent == null).
-		 */
-		@Override
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState resultingState) {
-			if (agent == null) {
-				this.agent = null;
-				frame.updateEnabledState();
-			}
-		}
-
-		/** Does nothing. */
-		@Override
-		public void agentAdded(Agent agent, EnvironmentState resultingState) {
-		}
-
-		/** Does nothing. */
-		@Override
-		public void notify(String msg) {
+		
+		public void executeUserAction(Action action) {
+			env.executeAction(null, action);
+			agent = null;
+			frame.updateEnabledState();
 		}
 	}
 
