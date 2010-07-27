@@ -136,6 +136,7 @@ public class AgentAppFrame extends JFrame {
 	public void setEnvView(AgentAppEnvironmentView view) {
 		envView = view;
 		centerPane.add(JSplitPane.LEFT, envView);
+		envView.setController(controller);
 	}
 
 	/** Specifies how to distribute extra space when resizing the split pane. */
@@ -146,6 +147,8 @@ public class AgentAppFrame extends JFrame {
 	/** Defines, who should react on button and selection events. */
 	public void setController(AgentAppController controller) {
 		this.controller = controller;
+		if (envView != null)
+			envView.setController(controller);
 	}
 
 	/** Displays a text in the status bar. */
