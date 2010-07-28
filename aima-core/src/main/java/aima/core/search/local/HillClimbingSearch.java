@@ -1,5 +1,6 @@
 package aima.core.search.local;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -9,6 +10,7 @@ import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
+import aima.core.util.CancelableThread;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page 122.
@@ -57,7 +59,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		Node current = new Node(p.getInitialState());
 		Node neighbor = null;
 		// loop do
-		while (true) {
+		while (!CancelableThread.currIsCanceled()) {
 			List<Node> children = expandNode(current, p);
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
@@ -73,6 +75,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 			// current <- neighbor
 			current = neighbor;
 		}
+		return new ArrayList<Action>();
 	}
 
 	public SearchOutcome getOutcome() {

@@ -1,7 +1,6 @@
 package aima.core.environment.nqueens;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
@@ -10,20 +9,43 @@ import aima.core.search.framework.ResultFunction;
 import aima.core.util.datastructure.XYLocation;
 
 /**
+ * Provides useful functions for two versions of the n-queens problem.
+ * The incremental formulation and the complete-state formulation share
+ * the same RESULT function but use different ACTIONS functions.
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author R. Lunde
  */
 public class NQueensFunctionFactory {
-	private static ActionsFunction _actionsFunction = null;
+	private static ActionsFunction _iActionsFunction = null;
+	private static ActionsFunction _cActionsFunction = null;
 	private static ResultFunction _resultFunction = null;
 
-	public static ActionsFunction getActionsFunction() {
-		if (null == _actionsFunction) {
-			_actionsFunction = new NQActionsFunction();
+	/**
+	 * Returns an ACTIONS function for the incremental formulation
+	 * of the n-queens problem.
+	 */
+	public static ActionsFunction getIActionsFunction() {
+		if (null == _iActionsFunction) {
+			_iActionsFunction = new NQIActionsFunction();
 		}
-		return _actionsFunction;
+		return _iActionsFunction;
+	}
+	
+	/**
+	 * Returns an ACTIONS function for the complete-state formulation
+	 * of the n-queens problem.
+	 */
+	public static ActionsFunction getCActionsFunction() {
+		if (null == _cActionsFunction) {
+			_cActionsFunction = new NQCActionsFunction();
+		}
+		return _cActionsFunction;
 	}
 
+	/**
+	 * Returns a RESULT function for the n-queens problem.
+	 */
 	public static ResultFunction getResultFunction() {
 		if (null == _resultFunction) {
 			_resultFunction = new NQResultFunction();
@@ -31,7 +53,7 @@ public class NQueensFunctionFactory {
 		return _resultFunction;
 	}
 
-	private static class NQActionsFunction implements ActionsFunction {
+	private static class NQIActionsFunction implements ActionsFunction {
 		public Set<Action> actions(Object state) {
 			NQueensBoard board = (NQueensBoard) state;
 
@@ -42,37 +64,47 @@ public class NQueensFunctionFactory {
 			for (int i = 0; i < boardSize; i++) {
 				XYLocation newLocation = new XYLocation(numQueens, i);
 				if (!(board.isSquareUnderAttack(newLocation))) {
-					actions.add(new PlaceQueenAction(newLocation
-							.getXCoOrdinate(), newLocation.getYCoOrdinate()));
+					actions.add(new QueenAction(QueenAction.PLACE_QUEEN, newLocation));
 				}
 			}
 
 			return actions;
 		}
 	}
+	
+	private static class NQCActionsFunction implements ActionsFunction {
 
-	private static class NQResultFunction implements ResultFunction {
-		public Object result(Object s, Action a) {
-
-			if (a instanceof PlaceQueenAction) {
-				PlaceQueenAction pqa = (PlaceQueenAction) a;
-
-				return placeQueenAt(pqa.getX(), pqa.getY(), (NQueensBoard) s);
-			}
-			// The Action is not understood or is a NoOp
-			// the result will be the current state.
-			return s;
+		public Set<Action> actions(Object state) {
+			Set<Action> actions = new LinkedHashSet<Action>();
+			NQueensBoard board = (NQueensBoard) state;
+			for (int i = 0; i < board.getSize(); i++)
+				for (int j = 0; j < board.getSize(); j++) {
+					XYLocation loc = new XYLocation(i, j);
+					if (!board.queenExistsAt(loc))
+						actions.add(new QueenAction(QueenAction.MOVE_QUEEN, loc));
+				}
+			return actions;
 		}
 	}
 
-	private static NQueensBoard placeQueenAt(int x, int y,
-			NQueensBoard parentBoard) {
-
-		NQueensBoard newBoard = new NQueensBoard(parentBoard.getSize());
-		List<XYLocation> queenPositionsOnParentBoard = parentBoard
-				.getQueenPositions();
-		queenPositionsOnParentBoard.add(new XYLocation(x, y));
-		newBoard.setBoard(queenPositionsOnParentBoard);
-		return newBoard;
+	private static class NQResultFunction implements ResultFunction {
+		public Object result(Object s, Action a) {
+			if (a instanceof QueenAction) {
+				QueenAction qa = (QueenAction) a;
+				NQueensBoard board = (NQueensBoard) s;
+				NQueensBoard newBoard = new NQueensBoard(board.getSize());
+				newBoard.setBoard(board.getQueenPositions());
+				if (qa.getName() == QueenAction.PLACE_QUEEN)
+					newBoard.addQueenAt(qa.getLocation());
+				else if (qa.getName() == QueenAction.REMOVE_QUEEN)
+					newBoard.removeQueenFrom(qa.getLocation());
+				else if (qa.getName() == QueenAction.MOVE_QUEEN)
+					newBoard.moveQueenTo(qa.getLocation());
+				s = newBoard;
+			}
+			// if action is not understood or is a NoOp
+			// the result will be the current state.
+			return s;
+		}
 	}
 }
