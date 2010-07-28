@@ -20,7 +20,7 @@ public class DepthFirstSearchTest {
 	@Test
 	public void testDepthFirstSuccesfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(8),
-				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getIActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
 		Search search = new DepthFirstSearch(new GraphSearch());
@@ -34,7 +34,7 @@ public class DepthFirstSearchTest {
 	@Test
 	public void testDepthFirstUnSuccessfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(3),
-				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getIActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
 		Search search = new DepthFirstSearch(new GraphSearch());
@@ -50,21 +50,21 @@ public class DepthFirstSearchTest {
 	//
 	private void assertCorrectPlacement(List<Action> actions) {
 		Assert.assertEquals(8, actions.size());
-		Assert.assertEquals("Action[name==placeQueenAt, x==0, y==7]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 0 , 7 ) ]", actions
 				.get(0).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==1, y==3]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 1 , 3 ) ]", actions
 				.get(1).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==2, y==0]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 2 , 0 ) ]", actions
 				.get(2).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==3, y==2]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 3 , 2 ) ]", actions
 				.get(3).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==4, y==5]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 4 , 5 ) ]", actions
 				.get(4).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==5, y==1]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 5 , 1 ) ]", actions
 				.get(5).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==6, y==6]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 6 , 6 ) ]", actions
 				.get(6).toString());
-		Assert.assertEquals("Action[name==placeQueenAt, x==7, y==4]", actions
+		Assert.assertEquals("Action[name==placeQueenAt, location== ( 7 , 4 ) ]", actions
 				.get(7).toString());
 	}
 }

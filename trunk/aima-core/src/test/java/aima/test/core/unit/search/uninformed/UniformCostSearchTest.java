@@ -29,7 +29,7 @@ public class UniformCostSearchTest {
 	@Test
 	public void testUniformCostSuccesfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(8),
-				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getIActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
 		Search search = new UniformCostSearch();
@@ -49,7 +49,7 @@ public class UniformCostSearchTest {
 	@Test
 	public void testUniformCostUnSuccesfulSearch() throws Exception {
 		Problem problem = new Problem(new NQueensBoard(3),
-				NQueensFunctionFactory.getActionsFunction(),
+				NQueensFunctionFactory.getIActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(),
 				new NQueensGoalTest());
 		Search search = new UniformCostSearch();

@@ -28,7 +28,7 @@ public class NQueensFunctionFactoryTest {
 		oneBoard = new NQueensBoard(1);
 		eightBoard = new NQueensBoard(8);
 
-		af = NQueensFunctionFactory.getActionsFunction();
+		af = NQueensFunctionFactory.getIActionsFunction();
 		rf = NQueensFunctionFactory.getResultFunction();
 	}
 

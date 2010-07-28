@@ -11,6 +11,7 @@ import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
+import aima.core.util.CancelableThread;
 import aima.core.util.Util;
 
 /**
@@ -73,7 +74,7 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		List<Action> ret = new ArrayList<Action>();
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
-		while (true) {
+		while (!CancelableThread.currIsCanceled()) {
 			// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;
