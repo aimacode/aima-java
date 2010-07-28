@@ -19,11 +19,12 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.environment.nqueens.PlaceQueenAction;
-import aima.core.environment.nqueens.QueensToBePlacedHeuristic;
+import aima.core.environment.nqueens.QueenAction;
+import aima.core.search.framework.ActionsFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
@@ -31,14 +32,13 @@ import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.local.HillClimbingSearch;
+import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
-import aima.gui.applications.search.games.EightPuzzleApp.EightPuzzleFrame;
-import aima.gui.applications.search.games.EightPuzzleApp.EightPuzzleView;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppEnvironmentView;
 import aima.gui.framework.AgentAppFrame;
@@ -47,8 +47,10 @@ import aima.gui.framework.SimpleAgentApp;
 import aima.gui.framework.SimulationThread;
 
 /**
- * Simple graphical 8-puzzle game application. It demonstrates the performance
- * of different search algorithms. Manual search by the user is also supported.
+ * Graphical n-queens game application. It demonstrates the performance
+ * of different search algorithms. An incremental problem formulation is
+ * supported as well as a complete-state formulation. Additionally, the
+ * user can make experiences with manual search.
  * 
  * @author R. Lunde
  */
@@ -66,21 +68,24 @@ public class NQueensApp extends SimpleAgentApp {
 	}
 
 	static {
-		addSearchAlgorithm("Depth Limited Search (9)",
-				new DepthLimitedSearch(9));
+		addSearchAlgorithm("Depth First Search (Graph Search)",
+				new DepthFirstSearch(new GraphSearch()));
 		addSearchAlgorithm("Breadth First Search (Tree Search)",
 				new BreadthFirstSearch(new TreeSearch()));
-		addSearchAlgorithm("Depth First Search (Tree Search)",
-				new DepthFirstSearch(new TreeSearch()));
+		addSearchAlgorithm("Breadth First Search (Graph Search)",
+				new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Depth Limited Search (8)",
+				new DepthLimitedSearch(8));
 		addSearchAlgorithm("Iterative Deepening Search",
 				new IterativeDeepeningSearch());
-		addSearchAlgorithm("AStar Search (QueensToBePlacedHeuristic)",
+		addSearchAlgorithm("A* search (attacking pair heuristic)",
 				new AStarSearch(new GraphSearch(),
-						new QueensToBePlacedHeuristic()));
+						new AttackingPairsHeuristic()));
 		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch(
-				new QueensToBePlacedHeuristic()));
+				new AttackingPairsHeuristic()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new QueensToBePlacedHeuristic()));
+				new SimulatedAnnealingSearch(new AttackingPairsHeuristic(),
+						new Scheduler(20, 0.045, 1000)));
 	}
 
 	/** Returns a <code>NQueensView</code> instance. */
@@ -119,14 +124,18 @@ public class NQueensApp extends SimpleAgentApp {
 	protected static class NQueensFrame extends AgentAppFrame {
 		private static final long serialVersionUID = 1L;
 		public static String ENV_SEL = "EnvSelection";
+		public static String PROBLEM_SEL = "ProblemSelection";
 		public static String SEARCH_SEL = "SearchSelection";
 
 		public NQueensFrame() {
-			setEnvView(new EightPuzzleView());
-			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] {
-					"Select Environment", "Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "8 Queens", "16 Queens" },
-					0);
+			setEnvView(new NQueensView());
+			setSelectors(new String[] { ENV_SEL, PROBLEM_SEL, SEARCH_SEL },
+					new String[] { "Select Environment",
+							"Select Problem Formulation", "Select Search" });
+			setSelectorItems(ENV_SEL, new String[] { "4 Queens", "8 Queens",
+					"16 Queens", "32 Queens" }, 1);
+			setSelectorItems(PROBLEM_SEL, new String[] { "incremental",
+					"complete-state" }, 0);
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
 			setTitle("N-Queens Application");
@@ -135,8 +144,8 @@ public class NQueensApp extends SimpleAgentApp {
 	}
 
 	/**
-	 * Displays the informations provided by a
-	 * <code>NQueensEnvironment</code> on a panel.
+	 * Displays the informations provided by a <code>NQueensEnvironment</code>
+	 * on a panel.
 	 */
 	protected static class NQueensView extends AgentAppEnvironmentView
 			implements ActionListener {
@@ -175,15 +184,13 @@ public class NQueensApp extends SimpleAgentApp {
 				currSize = board.getSize();
 				removeAll();
 				setLayout(new GridLayout(currSize, currSize));
-				Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN,
-						260 / currSize);
 				squareButtons = new JButton[currSize * currSize];
 				for (int i = 0; i < currSize * currSize; i++) {
 					JButton square = new JButton("");
-					square.setFont(f);
 					square.setMargin(new Insets(0, 0, 0, 0));
-					square.setBackground((i % currSize) % 2 == (i / currSize) % 2
-							? Color.WHITE : Color.LIGHT_GRAY);
+					square
+							.setBackground((i % currSize) % 2 == (i / currSize) % 2 ? Color.WHITE
+									: Color.LIGHT_GRAY);
 					square.addActionListener(this);
 					squareButtons[i] = square;
 					add(square);
@@ -191,11 +198,15 @@ public class NQueensApp extends SimpleAgentApp {
 			}
 			for (int i = 0; i < currSize * currSize; i++)
 				squareButtons[i].setText("");
+			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN, Math.min(
+					getWidth(), getHeight())
+					* 3 / 4 / currSize);
 			for (XYLocation loc : board.getQueenPositions()) {
-				JButton square = squareButtons
-				[loc.getXCoOrdinate() + loc.getYCoOrdinate() * currSize];
-				square.setForeground
-				(board.isSquareUnderAttack(loc) ? Color.RED : Color.BLACK);
+				JButton square = squareButtons[loc.getXCoOrdinate()
+						+ loc.getYCoOrdinate() * currSize];
+				square.setForeground(board.isSquareUnderAttack(loc) ? Color.RED
+						: Color.BLACK);
+				square.setFont(f);
 				square.setText("Q");
 			}
 			validate();
@@ -207,7 +218,7 @@ public class NQueensApp extends SimpleAgentApp {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			for (int i = 0; i < currSize*currSize; i++) {
+			for (int i = 0; i < currSize * currSize; i++) {
 				if (ae.getSource() == squareButtons[i]) {
 					NQueensController contr = (NQueensController) getController();
 					XYLocation loc = new XYLocation(i % currSize, i / currSize);
@@ -239,15 +250,24 @@ public class NQueensApp extends SimpleAgentApp {
 		public void prepare(String changedSelector) {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
 			NQueensBoard board = null;
-			switch (selState.getValue(EightPuzzleFrame.ENV_SEL)) {
-			case 0: // three moves
+			switch (selState.getValue(NQueensFrame.ENV_SEL)) {
+			case 0: // 4 x 4 board
+				board = new NQueensBoard(4);
+				break;
+			case 1: // 8 x 8 board
 				board = new NQueensBoard(8);
 				break;
-			case 1: // three moves
+			case 2: // 8 x 8 board
 				board = new NQueensBoard(16);
+				break;
+			case 3: // 32 x 32 board
+				board = new NQueensBoard(32);
 				break;
 			}
 			env = new NQueensEnvironment(board);
+			if (selState.getValue(NQueensFrame.PROBLEM_SEL) == 1)
+				for (int i = 0; i < board.getSize(); i++)
+					board.addQueenAt(new XYLocation(i, 0));
 			boardDirty = false;
 			agent = null;
 			frame.getEnvView().setEnvironment(env);
@@ -258,14 +278,24 @@ public class NQueensApp extends SimpleAgentApp {
 		 * necessary.
 		 */
 		protected void addAgent() {
+			if (agent != null && agent.isDone()) {
+				env.removeAgent(agent);
+				agent = null;
+			}
 			if (agent == null) {
-				int sel = frame.getSelection().getValue(
-						EightPuzzleFrame.SEARCH_SEL);
-				Search search = SEARCH_ALGOS.get(sel);
-				Problem problem = new Problem(env.getBoard(),
-						NQueensFunctionFactory.getActionsFunction(),
+				int problemSel = frame.getSelection().getValue(
+						NQueensFrame.PROBLEM_SEL);
+				int searchSel = frame.getSelection().getValue(
+						NQueensFrame.SEARCH_SEL);
+				ActionsFunction af;
+				if (problemSel == 0)
+					af = NQueensFunctionFactory.getIActionsFunction();
+				else
+					af = NQueensFunctionFactory.getCActionsFunction();
+				Problem problem = new Problem(env.getBoard(), af,
 						NQueensFunctionFactory.getResultFunction(),
 						new NQueensGoalTest());
+				Search search = SEARCH_ALGOS.get(searchSel);
 				try {
 					agent = new SearchAgent(problem, search);
 				} catch (Exception e) {
@@ -278,8 +308,12 @@ public class NQueensApp extends SimpleAgentApp {
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
-			return (agent == null || !agent.isDone())
-			&& (!boardDirty || env.getBoard().getNumberOfQueensOnBoard() == 0);
+			int problemSel = frame.getSelection().getValue(
+					NQueensFrame.PROBLEM_SEL);
+			return problemSel == 1
+					|| (agent == null || !agent.isDone())
+					&& (!boardDirty || env.getBoard()
+							.getNumberOfQueensOnBoard() == 0);
 		}
 
 		/** Starts simulation. */
@@ -289,7 +323,7 @@ public class NQueensApp extends SimpleAgentApp {
 			addAgent();
 			try {
 				while (!agent.isDone() && !frame.simulationPaused()) {
-					Thread.sleep(500);
+					Thread.sleep(200);
 					env.step();
 				}
 			} catch (InterruptedException e) {
@@ -331,39 +365,43 @@ public class NQueensApp extends SimpleAgentApp {
 
 		public void modifySquare(XYLocation loc) {
 			boardDirty = true;
-			env.executeAction(null, new PlaceQueenAction
-					(loc.getXCoOrdinate(), loc.getYCoOrdinate()));
+			String atype;
+			if (env.getBoard().queenExistsAt(loc))
+				atype = QueenAction.REMOVE_QUEEN;
+			else
+				atype = QueenAction.PLACE_QUEEN;
+			env.executeAction(null, new QueenAction(atype, loc));
 			agent = null;
 			frame.updateEnabledState();
 		}
 	}
 
 	/** Simple environment maintaining just the current board state. */
-	protected static class NQueensEnvironment extends AbstractEnvironment {
+	public static class NQueensEnvironment extends AbstractEnvironment {
 		NQueensBoard board;
 
-		protected NQueensEnvironment(NQueensBoard board) {
+		public NQueensEnvironment(NQueensBoard board) {
 			this.board = board;
 		}
 
-		protected NQueensBoard getBoard() {
+		public NQueensBoard getBoard() {
 			return board;
 		}
 
 		/**
-		 * Executes the provided action and returns null. A place-queen
-		 * action adds a queen at the specified position if the position
-		 * is free, otherwise removes the existing queen at the position.
+		 * Executes the provided action and returns null.
 		 */
 		@Override
 		public EnvironmentState executeAction(Agent agent, Action action) {
-			if (action instanceof PlaceQueenAction) {
-				PlaceQueenAction act = (PlaceQueenAction) action;
+			if (action instanceof QueenAction) {
+				QueenAction act = (QueenAction) action;
 				XYLocation loc = new XYLocation(act.getX(), act.getY());
-				if (board.queenExistsAt(loc))
-					board.removeQueenFrom(loc);
-				else
+				if (act.getName() == QueenAction.PLACE_QUEEN)
 					board.addQueenAt(loc);
+				else if (act.getName() == QueenAction.REMOVE_QUEEN)
+					board.removeQueenFrom(loc);
+				else if (act.getName() == QueenAction.MOVE_QUEEN)
+					board.moveQueenTo(loc);
 				if (agent == null)
 					updateEnvironmentViewsAgentActed(agent, action, null);
 			}
