@@ -164,7 +164,7 @@ public class AgentAppFrame extends JFrame {
 	
 	/**
 	 * Sets the current agent thread and updates the enabled state.
-	 * @param agentThread A thread or null
+	 * @param thread A thread or null.
 	 */
 	protected void setSimulationThread(SimulationThread thread) {
 		simulationThread = thread;
