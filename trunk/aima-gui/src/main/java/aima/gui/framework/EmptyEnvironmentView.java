@@ -15,10 +15,11 @@ import aima.core.util.datastructure.Point2D;
  * subclasses, it should normally be sufficient to override the method
  * {@link #paint(java.awt.Graphics)}.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 	
+	private static final long serialVersionUID = 1L;
 	private int borderTop = 10;
 	private int borderLeft = 10;
 	private int borderBottom = 10;

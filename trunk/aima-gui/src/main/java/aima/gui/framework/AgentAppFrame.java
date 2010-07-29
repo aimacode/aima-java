@@ -28,10 +28,11 @@ import javax.swing.JToolBar;
  * will not always be necessary.
  * </p>
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class AgentAppFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	/** The controller, which executes the domain-level commands. */
 	protected AgentAppController controller;
 	/** Background thread for simulation. */
@@ -264,6 +265,7 @@ public class AgentAppFrame extends JFrame {
 
 	/** Sends commands to the controller. */
 	private class FrameActionListener implements ActionListener {
+		@SuppressWarnings("deprecation")
 		public void actionPerformed(ActionEvent evt) {
 			String err = "";
 			try {

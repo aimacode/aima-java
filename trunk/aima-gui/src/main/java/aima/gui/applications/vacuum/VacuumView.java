@@ -15,9 +15,12 @@ import aima.gui.framework.EmptyEnvironmentView;
 /**
  * Displays the informations provided by a <code>VacuumEnvironment</code> on a
  * panel using 2D-graphics.
+ * 
+ * @author Ruediger Lunde
  */
 public class VacuumView extends EmptyEnvironmentView {
 	
+	private static final long serialVersionUID = 1L;
 	private Hashtable<Agent, Action> lastActions = new Hashtable<Agent, Action>();
 	
 	@Override

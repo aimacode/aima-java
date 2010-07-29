@@ -15,9 +15,12 @@ import javax.swing.SwingUtilities;
 
 /**
  * Implements a simple text panel for message display.
- * @author R. Lunde
+ * 
+ * @author Ruediger Lunde
  */
 public class MessageLoggerPanel extends JPanel implements MessageLogger {
+	
+	private static final long serialVersionUID = 1L;
 	protected JTextArea textArea;
 	
 	public MessageLoggerPanel() {

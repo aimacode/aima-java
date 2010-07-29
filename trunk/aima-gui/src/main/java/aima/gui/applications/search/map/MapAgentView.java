@@ -18,9 +18,12 @@ import aima.gui.framework.EmptyEnvironmentView;
  * applications. This view requires the used environment
  * to be of type {@link MapEnvironment}. All agents are tracked but
  * only the track of the first agent is shown.
+ * 
+ * @author Ruediger Lunde
  */
 public class MapAgentView extends EmptyEnvironmentView {
 
+	private static final long serialVersionUID = 1L;
 	/** Stores for each agent the locations, it has already visited. */
 	private final Hashtable<Agent,List<String>> agentTracks = new Hashtable<Agent,List<String>>();
 

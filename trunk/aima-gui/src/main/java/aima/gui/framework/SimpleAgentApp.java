@@ -8,7 +8,7 @@ package aima.gui.framework;
  * is to create subclasses of the three parts as needed, and then to create a
  * subclass of this class and override the three factory methods.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class SimpleAgentApp {
 	/**

@@ -2,7 +2,8 @@ package aima.gui.framework;
 
 /**
  * Provides the base class for all controller implementations.
- * @author R. Lunde
+ * 
+ * @author Ruediger Lunde
  */
 public abstract class AgentAppController {
 	protected AgentAppFrame frame;

@@ -96,7 +96,7 @@ public class LearningDemo {
 		System.out.println(Util.ntimes("*", 100));
 		try {
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
-			List stumps = DecisionTree.getStumpsFor(ds, "Yes", "No");
+			List<DecisionTree> stumps = DecisionTree.getStumpsFor(ds, "Yes", "No");
 			List<Learner> learners = new ArrayList<Learner>();
 
 			System.out

@@ -27,7 +27,6 @@ import aima.core.probability.reasoning.HMMFactory;
 import aima.core.probability.reasoning.HiddenMarkovModel;
 import aima.core.probability.reasoning.HmmConstants;
 import aima.core.probability.reasoning.ParticleSet;
-import aima.core.util.datastructure.Pair;
 
 /**
  * @author Ravi Mohan
@@ -265,12 +264,12 @@ public class ProbabilityDemo {
 		Randomizer r = new JavaRandomizer();
 
 		// Randomizer r = new JavaRandomizer();
-		Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
+		// Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
 		QTable<CellWorldPosition, String> qTable = null;
 		System.out.println("After 100 trials in the 4 by 3 world");
 		for (int i = 0; i < 100; i++) {
 			qla.executeTrial(r);
-			q = qla.getQ();
+			// q = qla.getQ();
 			qTable = qla.getQTable();
 
 		}
@@ -306,7 +305,7 @@ public class ProbabilityDemo {
 		BayesNet net = createWetGrassNetwork();
 		System.out
 				.println("Using the Bayesian Network from page 510 of AIMA 2nd Edition generates");
-		Hashtable table = net.getPriorSample();
+		Hashtable<?, ?> table = net.getPriorSample();
 		System.out.println(table.toString());
 	}
 

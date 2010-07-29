@@ -9,7 +9,7 @@ import aima.gui.framework.SimpleAgentApp;
  * Simple graphical application for experiments with vacuum cleaner agents. It
  * can be used as a template for creating other graphical agent applications.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class VacuumApp extends SimpleAgentApp {
 

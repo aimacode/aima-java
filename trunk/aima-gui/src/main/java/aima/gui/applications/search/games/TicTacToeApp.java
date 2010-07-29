@@ -21,9 +21,10 @@ import aima.core.environment.tictactoe.TicTacToeBoard;
 import aima.core.search.adversarial.GameState;
 
 /**
- * Simple graphical Tic-Tac-Toe game application. It demonstrates the minimax
+ * Simple graphical Tic-Tac-Toe game application. It demonstrates the Minimax
  * algorithm for move selection as well as alpha-beta pruning.
- * @author R. Lunde
+ * 
+ * @author Ruediger Lunde
  */
 public class TicTacToeApp {
 	
@@ -53,6 +54,7 @@ public class TicTacToeApp {
 		JLabel status;
 		TicTacToe game;
 		
+		/** Standard constructor. */
 		TicTacToePanel() {
 			this.setLayout(new BorderLayout());
 			JToolBar tbar = new JToolBar();
@@ -87,7 +89,8 @@ public class TicTacToeApp {
 			add(status, BorderLayout.SOUTH);
 			actionPerformed(null);
 		}
-			
+		
+		/** Handles all button events and updates the view. */
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			if (ae == null || ae.getSource() == clear) {

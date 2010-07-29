@@ -4,8 +4,11 @@ import aima.gui.framework.AgentAppFrame;
 
 /**
  * Adds some selectors to the base class and adjusts its size.
+ * 
+ * @author Ruediger Lunde
  */
 public class VacuumFrame extends AgentAppFrame {
+	private static final long serialVersionUID = 1L;
 	public static String ENV_SEL = "EnvSelection";
 	public static String AGENT_SEL = "AgentSelection";
 
