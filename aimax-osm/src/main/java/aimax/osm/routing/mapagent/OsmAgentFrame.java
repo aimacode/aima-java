@@ -29,7 +29,7 @@ public class OsmAgentFrame extends MapAgentFrame {
 				SearchFactory.getInstance().getSearchStrategyNames(), 5);
 		setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
 				.getSearchModeNames(), 1); // change the default!
-		setSelectorItems(HEURISTIC_SEL, new String[] { "H1 (=0)",
-				"H2 (sld to goal)" }, 1);
+		setSelectorItems(HEURISTIC_SEL, new String[] { "=0",
+				"SLD" }, 1);
 	}
 }
