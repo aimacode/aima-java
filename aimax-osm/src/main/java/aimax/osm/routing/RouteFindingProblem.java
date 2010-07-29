@@ -1,5 +1,6 @@
 package aimax.osm.routing;
 
+import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.StepCostFunction;
 import aimax.osm.data.MapDataStore;
@@ -27,7 +28,7 @@ public class RouteFindingProblem extends Problem {
 		initialState = from;
 		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
-		goalTest = new SimpleGoalTest(to);
+		goalTest = new DefaultGoalTest(to);
 		stepCostFunction = new OsmDistanceStepCostFunction();
 	}
 	
@@ -45,7 +46,7 @@ public class RouteFindingProblem extends Problem {
 		initialState = from;
 		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
-		goalTest = new SimpleGoalTest(to);
+		goalTest = new DefaultGoalTest(to);
 		stepCostFunction = costs;
 	}
 }

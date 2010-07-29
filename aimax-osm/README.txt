@@ -42,18 +42,11 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 0.9.2-AIMAX-OSM Many Improvements ==
-0.9.2-AIMAX-OSM Many Improvements : 19 June 2010 :<br>
-   * Storage efficiency of map representation improved (references to ways).
-   * Rendering speed and quality improved
-     (text placement, area sorting, one-way streets, icons, default style).
-   * osm.gz2 file format support added (additional file filter in file chooser).
-   * reader extended to read parts of a map, specified by bounding box or
-     attribute filter (try <ctrl> and <shift> when using a load map button).
-   * writer for writing maps to file added (formats osm and osm.bz2).
-   * slow zoom (activated with <shift>) added.
-   * scale factor replaced by true scale.
-   * Mark creation at specified gps positions added, info dialog extended by node position.
+== Current Release: 1.0.0-AIMAX-OSM Consolidated (in preparation) ==
+1.0.0-AIMAX-OSM Consolidated : ??? :<br>
+   * Documentation updated.
+   * Minor clean-ups included.
+
 
 == Keywords ==
 
@@ -62,19 +55,18 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 
 == Requirements ==
 
-- Depends on the aima-core and the aima-gui project. 
+# Depends on the aima-core and the aima-gui project. 
 
-- The osm.bz2 support is based on the Apache Commons Compress library
+# The osm.bz2 support is based on the Apache Commons Compress library
 (see http://commons.apache.org/compress/). The corrsponding jar-file
 together with licence information is provided in the lib directory.
 It should be part of the project class path. Otherwise the software will
 still run and compile correctly, but the map file choosers will only offer
 an osm file filter.
 
-- To establish a connection to a GPS, the RXTX serial port library
+# To establish a connection to a GPS, the RXTX serial port library
 (http://www.rxtx.org/) must be installed. See gps package documentation
 for details.
-
 
 
 == OSM Maps ==
@@ -137,6 +129,17 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+0.9.2-AIMAX-OSM Many Improvements : 19 June 2010 :<br>
+   * Storage efficiency of map representation improved (references to ways).
+   * Rendering speed and quality improved
+     (text placement, area sorting, one-way streets, icons, default style).
+   * osm.gz2 file format support added (additional file filter in file chooser).
+   * reader extended to read parts of a map, specified by bounding box or
+     attribute filter (try <ctrl> and <shift> when using a load map button).
+   * writer for writing maps to file added (formats osm and osm.bz2).
+   * slow zoom (activated with <shift>) added.
+   * scale factor replaced by true scale.
+   * Mark creation at specified gps positions added, info dialog extended by node position.
 
 0.9.1-AIMAX-OSM GUI Updates : 15 Mar 2010 :<br>
    * Code updated to correspond with changes in AIMA-GUI 0.2.0 release.
