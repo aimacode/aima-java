@@ -11,6 +11,7 @@ import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
+import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.online.LRTAStarAgent;
@@ -23,7 +24,6 @@ import aima.gui.framework.MessageLogger;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
-import aimax.osm.routing.SimpleGoalTest;
 import aimax.osm.routing.mapagent.OsmAgentController;
 import aimax.osm.routing.mapagent.OsmAgentFrame;
 import aimax.osm.routing.mapagent.OsmAgentView;
@@ -150,7 +150,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 					problem.getInitialState(),
 					problem.getActionsFunction(),
 					problem.getResultFunction(),
-					new SimpleGoalTest((String) goal) {
+					new DefaultGoalTest((String) goal) {
 						@Override
 						public boolean isGoalState(Object state) {
 							// TODO Auto-generated method stub
