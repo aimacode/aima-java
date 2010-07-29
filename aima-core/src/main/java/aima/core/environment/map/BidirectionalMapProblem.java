@@ -1,6 +1,7 @@
 package aima.core.environment.map;
 
 import aima.core.search.framework.BidirectionalProblem;
+import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.Problem;
 
 /**
@@ -17,14 +18,14 @@ public class BidirectionalMapProblem extends Problem implements
 	public BidirectionalMapProblem(Map aMap, String initialState,
 			String goalState) {
 		super(initialState, MapFunctionFactory.getActionsFunction(aMap),
-				MapFunctionFactory.getResultFunction(), new MapGoalTest(
+				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
 						goalState), new MapStepCostFunction(aMap));
 
 		map = aMap;
 
 		reverseProblem = new Problem(goalState, MapFunctionFactory
 				.getActionsFunction(aMap), MapFunctionFactory
-				.getResultFunction(), new MapGoalTest(initialState),
+				.getResultFunction(), new DefaultGoalTest(initialState),
 				new MapStepCostFunction(aMap));
 	}
 

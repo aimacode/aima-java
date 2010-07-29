@@ -11,8 +11,8 @@ import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
-import aima.core.environment.map.MapGoalTest;
 import aima.core.environment.map.MapStepCostFunction;
+import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -45,7 +45,7 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
@@ -59,7 +59,7 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"F"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
@@ -76,7 +76,7 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
