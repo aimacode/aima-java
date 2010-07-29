@@ -34,7 +34,7 @@ public class CoordTransformer {
 	/**
 	 * Number of pixels per inch on the screen (100 per default). The value
 	 * maintains the actual screen resolution (true size of a pixel) and is
-	 * used for scale computation. Default value is {@link #symbolDotsPerInch}.
+	 * used for scale computation. Default value is {@link #unitsPerInch}.
 	 */
 	private float dotsPerInch = unitsPerInch;
 	
