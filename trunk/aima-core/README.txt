@@ -1,13 +1,19 @@
 = AIMA-CORE =
 
+
 == Requirements ==
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
-== Current Release: 0.9.9-AIMAX-OSM Minor Fixes ==
-0.9.9-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
-  * Java Doc now uses newer package-info.java mechanism.
+
+== Current Release: 1.0.0-AIMAX-OSM Consolidated (in preparation) ==
+1.0.0-AIMAX-OSM Consolidated : ??? :<br>
+  * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
+  * The N-Queens representation now supports incremental as well as complete-state problem formulation.
+  * Minor clean-ups included.
+ 
  
 = Details =
+
 
 == Build Instructions ==
 If you just want to use the classes, all you need to do is put the release/aima-core.jar on your CLASSPATH.
@@ -15,17 +21,18 @@ If you just want to use the classes, all you need to do is put the release/aima-
 If you want to rebuild from the source, run the unit tests etc.., follow these instructions:
 
 To build from the command line:
- # Ensure you have [http://ant.apache.org/ ant] installed.
- # Download the release archive.
- # Unzip
- # Go to the aima-core directory
- # Type 'ant'. This will generate a build directory, which will include the following sub-directories:
-  # bin/ will contain all the main and test Java classes.
-  # doc/ will contain generated JavaDoc for the project.
-  # release/ will contain a jar file of all the core algorithms.
+  # Ensure you have [http://ant.apache.org/ ant] installed.
+  # Download the release archive.
+  # Unzip
+  # Go to the aima-core directory
+  # Type 'ant'. This will generate a build directory, which will include the following sub-directories:
+    # bin/ will contain all the main and test Java classes.
+    # doc/ will contain generated JavaDoc for the project.
+    # release/ will contain a jar file of all the core algorithms.
 
 Note: Many IDE's have built in ant versions. So you may want to try that first. 
 Included in the aima-core directory are .classpath and .project files for the [http://www.eclipse.org Eclipse] IDE.
+
 
 == Index of Implemented Algorithms ==
 || *Fig* || *Page* || *Name (in book)*             || *Code* ||
@@ -121,27 +128,29 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  23.5 ||     894|| CYK-Parse                    ||---||
 ||  25.9 ||     982|| Monte-Carlo-Localization     ||---||
 
+
 = Using the Code =
 
 For examples of how to use the various algorithms and supporting classes, look at the test cases in the parallel directory structure under src/test.
 
+
 == Notes on Search ==
 
 To solve a problem with (non CSP )Search .
-   # you need to write five classes:
-	 # a class that represents the Problem state. This class is independent of the framework and does NOT need to subclass anything. Let us, for the rest of these instruction, assume you are going to solve the NQueens problem. So in this step you need to write something like aima.core.environment.nqueens.NQueensBoard. 
-	 # an implementation of the aima.core.search.framework.GoalTest interface. This implements only a single function ---boolean isGoalState(Object state); The parameter state is an instance of the class you created in  step 1-a above. For the NQueensProblem you would need to write something like aima.core.environment.nqueens.NQueensGoalTest.
-	 # an implementation of the aima.core.search.framework.ActionsFunction interface. This generates the allowable actions from a particular state. An example is aima.core.environment.nqueens.NQueensFunctionFactory.NQActionsFunction.
-	 # an implementation of the aima.core.search.framework.ResultFunction interface. This generates the state that results from doing action a in a state. An example is aima.core.environment.nqueens.NQueensFunctionFactory.NQResultFunction.	 
-	 # if you need to do an informed search, you should create a fourth class which implements the aima.core.search.framework.HeuristicFunction. For the NQueens problem, you need to write something like aima.core.environment.nqueens.QueensToBePlacedHeuristic.
+  # you need to write five classes:
+	# a class that represents the Problem state. This class is independent of the framework and does NOT need to subclass anything. Let us, for the rest of these instruction, assume you are going to solve the NQueens problem. So in this step you need to write something like aima.core.environment.nqueens.NQueensBoard. 
+	# an implementation of the aima.core.search.framework.GoalTest interface. This implements only a single function ---boolean isGoalState(Object state); The parameter state is an instance of the class you created in  step 1-a above. For the NQueensProblem you would need to write something like aima.core.environment.nqueens.NQueensGoalTest.
+	# an implementation of the aima.core.search.framework.ActionsFunction interface. This generates the allowable actions from a particular state. An example is aima.core.environment.nqueens.NQueensFunctionFactory.NQActionsFunction.
+	# an implementation of the aima.core.search.framework.ResultFunction interface. This generates the state that results from doing action a in a state. An example is aima.core.environment.nqueens.NQueensFunctionFactory.NQResultFunction.	 
+	# if you need to do an informed search, you should create a fourth class which implements the aima.core.search.framework.HeuristicFunction. For the NQueens problem, you need to write something like aima.core.environment.nqueens.QueensToBePlacedHeuristic.
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 
 To actually search you need to
-   # configure a problem instance
-   # select a search. Configure this with Tree Search or GraphSearch if applicable.
-   # instantiate a SerachAgent and 
-   # print any actions and metrics 
+  # configure a problem instance
+  # select a search. Configure this with Tree Search or GraphSearch if applicable.
+  # instantiate a SerachAgent and 
+  # print any actions and metrics 
 
 A good example (from the NQueens Demo ) is: 
 {{{
@@ -161,6 +170,7 @@ A good example (from the NQueens Demo ) is:
 		}
 	}
 }}}
+
 
 == Search Inheritance Trees ==
 
@@ -228,8 +238,12 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 1. To import a dataset into a system so that learners can be applied to it , first add a public static DataSet getXDataSet(where "x" is the name of the DataSet you want to import) to the DataSetFactory
 
 2. Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps?) you need to implement this interface.
- 
+
+
 = Change History (Update in reverse chronological order) =
+0.9.9-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
+  * Java Doc now uses newer package-info.java mechanism.
+ 
 0.9.8-AIMAX-OSM Added : 06 Feb 2010 :<br>
  * Minor updates to support addition of aimax-osm project to AIMA3e-Java.
  * Vacuum world locations changed from enum to Strings to better support extensibility.
@@ -239,13 +253,13 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 First full release based on the 3rd edition of AIMA. The following major 
 updates have been included in this release:<br>
   * Re-organized packages to more closely reflect AIMA3e structure:
-   * Renamed basic to agent
-   * Moved general purpose data structures underneath util.
-   * Moved all Environment implementations under environment.    
+  * Renamed basic to agent
+  * Moved general purpose data structures underneath util.
+  * Moved all Environment implementations under environment.    
   * Agent package defined now in terms of interfaces as opposed to
     abstract classes.
-   * Added explicit Action interface.
-   * General improvements/enhancements across all the APIs.
+  * Added explicit Action interface.
+  * General improvements/enhancements across all the APIs.
   * All algorithms from chapters 1-4 have been updated to reflect
     changes in their description in AIMA3e. Primarily this involved
     splitting the Successor function concept from AIMA2e into 

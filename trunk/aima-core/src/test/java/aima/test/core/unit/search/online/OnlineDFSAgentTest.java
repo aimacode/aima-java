@@ -11,8 +11,8 @@ import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
-import aima.core.environment.map.MapGoalTest;
 import aima.core.environment.map.MapStepCostFunction;
+import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.online.OnlineDFSAgent;
 import aima.core.search.online.OnlineSearchProblem;
 
@@ -39,7 +39,7 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -53,7 +53,7 @@ public class OnlineDFSAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -72,7 +72,7 @@ public class OnlineDFSAgentTest {
 		aMap.addBidirectionalLink("A", "B", 1.0);
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"X"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -100,7 +100,7 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new MapGoalTest(
+				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
 						"3,3"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "1,1");

@@ -13,11 +13,7 @@ import aima.core.agent.Action;
  * with a search once an initial goal is found, for example if using a heuristic targeted at a 
  * single goal.
  * 
- */
-
-/**
  * @author Ciaran O'Reilly
- * 
  */
 public interface SolutionChecker extends GoalTest {
 	/**
