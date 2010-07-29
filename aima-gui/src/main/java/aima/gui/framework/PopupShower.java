@@ -9,7 +9,7 @@ import javax.swing.JPopupMenu;
  * Useful helper class for showing popup menus. The idea is taken from the
  * java tutorial "How to Use Menus".
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class PopupShower extends MouseAdapter {
 	JPopupMenu popup;

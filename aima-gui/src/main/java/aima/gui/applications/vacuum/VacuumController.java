@@ -13,6 +13,8 @@ import aima.gui.framework.MessageLogger;
 
 /**
  * Defines how to react on user button events.
+ * 
+ * @author Ruediger Lunde
  */
 public class VacuumController extends AgentAppController {
 	

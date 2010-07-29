@@ -1,7 +1,5 @@
 package aima.gui.framework;
 
-import java.awt.Component;
-
 import javax.swing.JComponent;
 
 import aima.core.agent.Environment;
@@ -13,19 +11,21 @@ import aima.core.agent.EnvironmentView;
  * Typically, 2D graphics will be used for visualization. Environment
  * changes are communicated to the viewer by means of an observer pattern.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public abstract class AgentAppEnvironmentView
 extends JComponent implements EnvironmentView {
+	
+	private static final long serialVersionUID = 1L;
 	/** The environment providing the data to be visualized. */
 	protected Environment env;
 	/**
 	 * If the view provides interactive means to modify the environment,
 	 * this controller should be responsible to initiate the changes. 
 	 */
-	protected AgentAppController controller;
+	private AgentAppController controller;
 	/** Message display is delegated to a separate logger. */
-	protected MessageLogger logger;
+	private MessageLogger logger;
 	
 	/** Sets the data source for the viewer. */
 	public void setEnvironment(Environment env) {
@@ -52,6 +52,13 @@ extends JComponent implements EnvironmentView {
 	/** Selects a logger for message display. */
 	public void setMessageLogger(MessageLogger logger) {
 		this.logger = logger;
+	}
+	
+	/**
+	 * Provides a logger which is responsible for message display.
+	 */
+	protected MessageLogger getLogger() {
+		return logger;
 	}
 	
 	/** Forwards a given message to the selected message logger. */

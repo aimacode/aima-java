@@ -2,14 +2,13 @@ package aima.gui.demo.logic;
 
 import aima.core.logic.propositional.algorithms.KnowledgeBase;
 import aima.core.logic.propositional.algorithms.PLFCEntails;
-import aima.core.logic.propositional.parsing.PEParser;
 
 /**
  * @author Ravi Mohan
  * 
  */
 public class PLFCEntailsDemo {
-	private static PEParser parser = new PEParser();
+	// private static PEParser parser = new PEParser();
 
 	private static PLFCEntails plfce = new PLFCEntails();
 

@@ -11,11 +11,12 @@ import aima.core.util.datastructure.Point2D;
 /**
  * Extends the <code>MapAgentView</code> by visualization of
  * scenario, destination, and agent map information.
- * @author R. Lunde
- *
+ * 
+ * @author Ruediger Lunde
  */
 public class ExtendedMapAgentView extends MapAgentView {
 	
+	private static final long serialVersionUID = 1L;
 	/** A scenario. */
 	protected Scenario scenario;
 	/** A list of location names, possibly null. */

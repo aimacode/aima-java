@@ -27,9 +27,12 @@ import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
+import aima.core.search.uninformed.BreadthFirstSearch;
+import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
@@ -41,10 +44,11 @@ import aima.gui.framework.SimpleAgentApp;
 import aima.gui.framework.SimulationThread;
 
 /**
- * Simple graphical 8-puzzle game application. It demonstrates the performance
- * of different search algorithms.
+ * Graphical 8-puzzle game application. It demonstrates the performance
+ * of different search algorithms. Additionally, users can make experiences with
+ * human problem solving.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class EightPuzzleApp extends SimpleAgentApp {
 
@@ -52,13 +56,16 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
 	/** List of supported search algorithms. */
 	protected static List<Search> SEARCH_ALGOS = new ArrayList<Search>();
+
 	/** Adds a new item to the list of supported search algorithms. */
 	public static void addSearchAlgorithm(String name, Search algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
-	
+
 	static {
+		addSearchAlgorithm("Breadth First Search (Graph Search)",
+				new BreadthFirstSearch(new GraphSearch()));
 		addSearchAlgorithm("Depth Limited Search (9)",
 				new DepthLimitedSearch(9));
 		addSearchAlgorithm("Iterative Deepening Search",
@@ -78,8 +85,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		addSearchAlgorithm("Simulated Annealing Search",
 				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction()));
 	}
-	
-	/** Returns a <code>EightPuzzleView</code> instance. */
+
+	/** Returns an <code>EightPuzzleView</code> instance. */
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new EightPuzzleView();
 	}
@@ -96,7 +103,6 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		return new EightPuzzleController();
 	}
 
-	
 	// ///////////////////////////////////////////////////////////////
 	// main method
 
@@ -107,7 +113,6 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		new EightPuzzleApp().startApplication();
 	}
 
-	
 	// ///////////////////////////////////////////////////////////////
 	// some inner classes
 
@@ -125,17 +130,21 @@ public class EightPuzzleApp extends SimpleAgentApp {
 					"Select Environment", "Select Search" });
 			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Random 1",
 					"Extreme" }, 0);
-			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[]{}), 0);
+			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
+					.toArray(new String[] {}), 0);
 			setTitle("Eight Puzzle Application");
 			setSize(700, 500);
 		}
 	}
 
 	/**
-	 * Displays the informations provided by a <code>EightPuzzleEnvironment</code> on
-	 * a panel using 2D-graphics.
+	 * Displays the informations provided by a
+	 * <code>EightPuzzleEnvironment</code> on a panel using an grid of buttons.
+	 * By pressing a button, the user can move the corresponding tile to the
+	 * adjacent gap.
 	 */
-	protected static class EightPuzzleView extends AgentAppEnvironmentView implements ActionListener {
+	protected static class EightPuzzleView extends AgentAppEnvironmentView
+			implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 
@@ -157,7 +166,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			super.setEnvironment(env);
 			showState();
 		}
-		
+
 		/** Agent value null indicates a user initiated action. */
 		@Override
 		public void agentActed(Agent agent, Action action,
@@ -171,15 +180,19 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			showState();
 		}
 
-		/** Displays the board state by labeling and coloring the square buttons. */
+		/**
+		 * Displays the board state by labeling and coloring the square buttons.
+		 */
 		protected void showState() {
 			int[] vals = ((EightPuzzleEnvironment) env).getBoard().getState();
 			for (int i = 0; i < 9; i++) {
-				squareButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY : Color.WHITE);
-				squareButtons[i].setText(vals[i] == 0 ? "" : Integer.toString(vals[i]));
+				squareButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY
+						: Color.WHITE);
+				squareButtons[i].setText(vals[i] == 0 ? "" : Integer
+						.toString(vals[i]));
 			}
 		}
-		
+
 		/**
 		 * When the user presses square buttons the board state is modified
 		 * accordingly.
@@ -204,7 +217,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 					}
 				}
 			}
-		}	
+		}
 	}
 
 	/**
@@ -222,7 +235,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Creates an eight puzzle environment and clears the current search agent.
+		 * Creates an eight puzzle environment and clears the current search
+		 * agent.
 		 */
 		@Override
 		public void prepare(String changedSelector) {
@@ -230,13 +244,16 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			EightPuzzleBoard board = null;
 			switch (selState.getValue(EightPuzzleFrame.ENV_SEL)) {
 			case 0: // three moves
-				board = new EightPuzzleBoard(new int[]{1, 2, 5, 3, 4, 0, 6, 7, 8});
+				board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6,
+						7, 8 });
 				break;
 			case 1: // random 1
-				board = new EightPuzzleBoard(new int[]{1, 4, 2, 7, 5, 8, 3, 0, 6});
+				board = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3,
+						0, 6 });
 				break;
 			case 2: // extreme
-				board = new EightPuzzleBoard(new int[]{0, 8, 7, 6, 5, 4, 3, 2, 1});
+				board = new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3,
+						2, 1 });
 				break;
 			}
 			env = new EightPuzzleEnvironment(board);
@@ -248,23 +265,20 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		 * Creates a new search agent and adds it to the current environment if
 		 * necessary.
 		 */
-		protected void addAgent() {
+		protected void addAgent() throws Exception {
 			if (agent == null) {
-				int sel = frame.getSelection().getValue(EightPuzzleFrame.SEARCH_SEL);
-				Search search = SEARCH_ALGOS.get(sel);
+				int pSel = frame.getSelection().getValue(
+						EightPuzzleFrame.SEARCH_SEL);
 				Problem problem = new Problem(env.getBoard(),
 						EightPuzzleFunctionFactory.getActionsFunction(),
 						EightPuzzleFunctionFactory.getResultFunction(),
 						new EightPuzzleGoalTest());
-				try {
-					agent = new SearchAgent(problem, search);
-				} catch (Exception e) {
-					e.printStackTrace(); // hack...
-				}
+				Search search = SEARCH_ALGOS.get(pSel);
+				agent = new SearchAgent(problem, search);
 				env.addAgent(agent);
 			}
 		}
-		
+
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
@@ -275,13 +289,16 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		@Override
 		public void run(MessageLogger logger) {
 			logger.log("<simulation-log>");
-			addAgent();
 			try {
+				addAgent();
 				while (!agent.isDone() && !frame.simulationPaused()) {
 					Thread.sleep(500);
 					env.step();
 				}
 			} catch (InterruptedException e) {
+				// nothing to do...
+			} catch (Exception e) {
+				e.printStackTrace(); // probably search has failed...
 			}
 			logger.log(getStatistics());
 			logger.log("</simulation-log>\n");
@@ -290,8 +307,12 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		/** Executes one simulation step. */
 		@Override
 		public void step(MessageLogger logger) {
-			addAgent();
-			env.step();
+			try {
+				addAgent();
+				env.step();
+			} catch (Exception e) {
+				e.printStackTrace(); // probably search has failed...
+			}
 		}
 
 		/** Updates the status of the frame after simulation has finished. */
@@ -304,7 +325,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				frame.setStatus("Task completed.");
 			}
 		}
-		
+
 		/** Provides a text with statistical information about the last run. */
 		private String getStatistics() {
 			StringBuffer result = new StringBuffer();
@@ -317,7 +338,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			}
 			return result.toString();
 		}
-		
+
 		public void executeUserAction(Action action) {
 			env.executeAction(null, action);
 			agent = null;
@@ -332,7 +353,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		protected EightPuzzleEnvironment(EightPuzzleBoard board) {
 			this.board = board;
 		}
-		
+
 		protected EightPuzzleBoard getBoard() {
 			return board;
 		}

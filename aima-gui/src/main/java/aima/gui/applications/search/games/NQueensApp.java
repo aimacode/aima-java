@@ -47,12 +47,12 @@ import aima.gui.framework.SimpleAgentApp;
 import aima.gui.framework.SimulationThread;
 
 /**
- * Graphical n-queens game application. It demonstrates the performance
- * of different search algorithms. An incremental problem formulation is
- * supported as well as a complete-state formulation. Additionally, the
- * user can make experiences with manual search.
+ * Graphical n-queens game application. It demonstrates the performance of
+ * different search algorithms. An incremental problem formulation is supported
+ * as well as a complete-state formulation. Additionally, the user can make
+ * experiences with manual search.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class NQueensApp extends SimpleAgentApp {
 
@@ -277,30 +277,26 @@ public class NQueensApp extends SimpleAgentApp {
 		 * Creates a new search agent and adds it to the current environment if
 		 * necessary.
 		 */
-		protected void addAgent() {
+		protected void addAgent() throws Exception {
 			if (agent != null && agent.isDone()) {
 				env.removeAgent(agent);
 				agent = null;
 			}
 			if (agent == null) {
-				int problemSel = frame.getSelection().getValue(
+				int pSel = frame.getSelection().getValue(
 						NQueensFrame.PROBLEM_SEL);
-				int searchSel = frame.getSelection().getValue(
+				int sSel = frame.getSelection().getValue(
 						NQueensFrame.SEARCH_SEL);
 				ActionsFunction af;
-				if (problemSel == 0)
+				if (pSel == 0)
 					af = NQueensFunctionFactory.getIActionsFunction();
 				else
 					af = NQueensFunctionFactory.getCActionsFunction();
 				Problem problem = new Problem(env.getBoard(), af,
 						NQueensFunctionFactory.getResultFunction(),
 						new NQueensGoalTest());
-				Search search = SEARCH_ALGOS.get(searchSel);
-				try {
-					agent = new SearchAgent(problem, search);
-				} catch (Exception e) {
-					e.printStackTrace(); // hack...
-				}
+				Search search = SEARCH_ALGOS.get(sSel);
+				agent = new SearchAgent(problem, search);
 				env.addAgent(agent);
 			}
 		}
@@ -320,13 +316,16 @@ public class NQueensApp extends SimpleAgentApp {
 		@Override
 		public void run(MessageLogger logger) {
 			logger.log("<simulation-log>");
-			addAgent();
 			try {
+				addAgent();
 				while (!agent.isDone() && !frame.simulationPaused()) {
 					Thread.sleep(200);
 					env.step();
 				}
 			} catch (InterruptedException e) {
+				// nothing to do...
+			} catch (Exception e) {
+				e.printStackTrace(); // probably search has failed...
 			}
 			logger.log(getStatistics());
 			logger.log("</simulation-log>\n");
@@ -335,8 +334,12 @@ public class NQueensApp extends SimpleAgentApp {
 		/** Executes one simulation step. */
 		@Override
 		public void step(MessageLogger logger) {
-			addAgent();
-			env.step();
+			try {
+				addAgent();
+				env.step();
+			} catch (Exception e) {
+				e.printStackTrace(); // probably search has failed...
+			}
 		}
 
 		/** Updates the status of the frame after simulation has finished. */

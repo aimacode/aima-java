@@ -11,9 +11,11 @@ import aima.gui.framework.AgentAppFrame;
  * are application specific, this general implementation provides items only
  * for search strategy and mode selection.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapAgentFrame extends AgentAppFrame {
+	
+	private static final long serialVersionUID = 1L;
 	public static String SCENARIO_SEL = "ScenarioSelection";
 	public static String DESTINATION_SEL = "DestinationSelection";
 	public static String AGENT_SEL = "AgentSelection";

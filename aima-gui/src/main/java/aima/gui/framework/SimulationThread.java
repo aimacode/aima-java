@@ -4,7 +4,11 @@ import javax.swing.SwingUtilities;
 
 import aima.core.util.CancelableThread;
 
-/** Background thread, which is used for simulation. */
+/**
+ * Background thread, which is used for simulation.
+ * 
+ * @author Ruediger Lunde
+ */
 public class SimulationThread extends CancelableThread {
 	private AgentAppFrame frame;
 	private AgentAppController controller;

@@ -18,7 +18,7 @@ import aima.gui.framework.SimulationThread;
  * ready to work, all you need to do is, to provide implementations for the four
  * abstract methods. See {@link RouteFindingAgentApp} for an example.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public abstract class AbstractMapAgentController extends AgentAppController {
 	/** A scenario. */

@@ -17,8 +17,7 @@ import aima.core.search.uninformed.UniformCostSearch;
 
 /**
  * Useful factory for configuring search objects. Implemented as a singleton.
- * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class SearchFactory {
 

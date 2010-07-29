@@ -20,7 +20,8 @@ import aima.gui.demo.search.TicTacToeDemo;
 
 /**
  * The all-in-one demo application. Shows everything within one frame.
- * @author R. Lunde
+ * 
+ * @author Ruediger Lunde
  */
 public class AimaDemoApp {
 
@@ -31,24 +32,24 @@ public class AimaDemoApp {
 		frame.addApp(TicTacToeApp.class);
 		frame.addApp(EightPuzzleApp.class);
 		frame.addApp(NQueensApp.class);
-		
+
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
 		frame.addDemo(CSPDemo.class);
-		
+
 		frame.addDemo(TTEntailsDemo.class);
 		frame.addDemo(PLFCEntailsDemo.class);
 		frame.addDemo(PLResolutionDemo.class);
 		frame.addDemo(DPLLDemo.class);
 		frame.addDemo(WalkSatDemo.class);
 		frame.addDemo(FolDemo.class);
-		
+
 		frame.addDemo(ProbabilityDemo.class);
-		
+
 		frame.addDemo(LearningDemo.class);
 	}
-	
+
 	/** Starts the demo. */
 	public static void main(String[] args) {
 		AimaDemoFrame frame = new AimaDemoFrame();

@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import aima.core.agent.Action;
+import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFitnessFunction;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
@@ -203,7 +204,7 @@ public class NQueensDemo {
 	}
 
 	private static void printInstrumentation(Properties properties) {
-		Iterator keys = properties.keySet().iterator();
+		Iterator<Object> keys = properties.keySet().iterator();
 		while (keys.hasNext()) {
 			String key = (String) keys.next();
 			String property = properties.getProperty(key);
@@ -212,7 +213,7 @@ public class NQueensDemo {
 
 	}
 
-	private static void printActions(List actions) {
+	private static void printActions(List<Action> actions) {
 		for (int i = 0; i < actions.size(); i++) {
 			String action = actions.get(i).toString();
 			System.out.println(action);

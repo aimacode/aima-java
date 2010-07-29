@@ -25,7 +25,7 @@ import aima.gui.framework.SimpleAgentApp;
  * code template for creating new applications with different specialized kinds
  * of agents and environments.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class RouteFindingAgentApp extends SimpleAgentApp {
 
@@ -51,6 +51,8 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 
 	/** Frame for a graphical route finding agent application. */
 	protected static class RouteFindingAgentFrame extends MapAgentFrame {
+		private static final long serialVersionUID = 1L;
+
 		public static enum MapType {
 			ROMANIA, AUSTRALIA
 		};
