@@ -6,7 +6,7 @@ import aimax.osm.data.Position;
 /**
  * Special <code>Point2D</code> implementation which provides correct
  * distance values in kilometer for geographical positions (x=lon and y=lat).
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class PointLatLon extends Point2D {
 	public PointLatLon(double lat, double lon) {

@@ -7,6 +7,7 @@ package aimax.osm.data.entities;
  * Way references can also have a link to a next reference which provides
  * storage efficient means to represent short lists of references (from which
  * we need thousands of in a map).
+ * @author Ruediger Lunde
  */
 public class WayRef {
 	private MapWay way;

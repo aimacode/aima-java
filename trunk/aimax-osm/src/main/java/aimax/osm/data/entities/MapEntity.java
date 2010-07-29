@@ -13,7 +13,7 @@ import aimax.osm.data.EntityVisitor;
  * for which scales the entity is relevant. It can also contain further
  * data for rendering, but those aspects are not visible on application
  * layer.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public abstract class MapEntity {
 	private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];

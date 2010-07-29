@@ -4,6 +4,10 @@ import aima.core.search.framework.HeuristicFunction;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
+/**
+ * Implements the straight-line-distance heuristic.
+ * @author Ruediger Lunde
+ */
 public class OsmSldHeuristicFunction implements HeuristicFunction {
 	MapNode goalState;
 	
@@ -11,6 +15,10 @@ public class OsmSldHeuristicFunction implements HeuristicFunction {
 		this.goalState = goalState;
 	}
 	
+	/**
+	 * Assumes a <code>MapNode</code> as state and returns the
+	 * straight-line-distance to the goal in KM.
+	 */
 	@Override
 	public double h(Object s) {
 		MapNode currState = (MapNode) s;

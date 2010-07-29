@@ -36,7 +36,7 @@ import aimax.osm.viewer.MapViewFrame;
  * to the class path (project properties, add jar), to store the DDL
  * locally (e.g. in project-root/lib), and start the application with
  * VM argument <code>-Djava.library.path=lib -Xmx500M</code>.</p>
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MiniNaviApp implements ActionListener {
 	

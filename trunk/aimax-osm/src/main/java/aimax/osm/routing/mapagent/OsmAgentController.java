@@ -24,7 +24,10 @@ import aimax.osm.data.MapDataStore;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
 
-/** Controller for graphical OSM map agent applications. */
+/**
+ * Controller for graphical OSM map agent applications.
+ * @author Ruediger Lunde
+ */
 public class OsmAgentController extends AgentAppController {
 	
 	protected OsmMapAdapter map;

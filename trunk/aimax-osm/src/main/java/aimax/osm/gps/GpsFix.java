@@ -4,7 +4,7 @@ import aimax.osm.data.Position;
 
 /**
  * Maintains measurement quality and position informations.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class GpsFix extends Position {
 	private boolean posOk;

@@ -7,7 +7,7 @@ import aimax.osm.data.EntityVisitor;
  * can be part of a way, points of interest, or marks.
  * A full java bean interface is provided. So it is
  * easy, to serialize objects using <code>XMLEncoder</code>.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapNode extends MapEntity {
 	private float lat;

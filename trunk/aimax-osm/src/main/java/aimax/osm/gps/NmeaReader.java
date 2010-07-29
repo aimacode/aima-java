@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Abstract class which provides general functionality for reading messages
  * from a NMEA input stream. 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public abstract class NmeaReader {
 	protected InputStream inputStream;

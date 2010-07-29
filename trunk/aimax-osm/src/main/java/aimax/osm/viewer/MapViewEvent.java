@@ -1,5 +1,11 @@
 package aimax.osm.viewer;
 
+/**
+ * Allows map views to inform interested listeners about user interactions
+ * such as zooming or marker setting.
+ * @author Ruediger Lunde
+ *
+ */
 public class MapViewEvent {
 	MapViewPane source;
 	Type type;

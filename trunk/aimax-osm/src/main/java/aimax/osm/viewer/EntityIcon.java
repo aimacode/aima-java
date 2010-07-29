@@ -5,6 +5,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+/**
+ * Defines a base class for scalable vector graphic icons.
+ * @author Ruediger Lunde
+ *
+ */
 public abstract class EntityIcon {
 
 	protected float size;
@@ -32,11 +37,15 @@ public abstract class EntityIcon {
 		return s2 ? currStroke2 : currStroke;
 	}
 	
+	/**
+	 * Implements a universally usable icon, consisting of a primitive shape
+	 * and a character symbol inside.
+	 * @author Ruediger Lunde
+	 */
 	public static class SimpleIcon extends EntityIcon {
 		
 		public static enum Shape {
-			SOLID_LINE, DASHED_LINE, // for lines
-			CIRCLE, RECTANGLE, TRIANGLE, NONE // for points
+			CIRCLE, RECTANGLE, TRIANGLE, NONE
 		}
 		
 		Shape shape;
@@ -99,6 +108,10 @@ public abstract class EntityIcon {
 		}
 	}
 	
+	/**
+	 * Special icon representing a pin (used for markers on the map).
+	 * @author Ruediger Lunde
+	 */
 	public static class PinIcon extends EntityIcon {
 		Color lineColor;
 		Color fillColor;
@@ -122,7 +135,10 @@ public abstract class EntityIcon {
 		}
 	}
 	
-	
+	/**
+	 * Special icon representing a church. 
+	 * @author Ruediger Lunde
+	 */
 	public static class ChurchIcon extends EntityIcon {
 		Color lineColor;
 		Color fillColor;
@@ -148,6 +164,10 @@ public abstract class EntityIcon {
 		}
 	}
 	
+	/**
+	 * Special icon representing a castle. 
+	 * @author Ruediger Lunde
+	 */
 	public static class CastleIcon extends EntityIcon {
 		Color lineColor;
 		Color fillColor;
@@ -176,6 +196,10 @@ public abstract class EntityIcon {
 		}
 	}
 	
+	/**
+	 * Special icon representing a camp site. 
+	 * @author Ruediger Lunde
+	 */
 	public static class TentIcon extends EntityIcon {
 		Color lineColor;
 		Color fillColor;

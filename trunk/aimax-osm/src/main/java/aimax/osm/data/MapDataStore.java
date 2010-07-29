@@ -29,7 +29,7 @@ import aimax.osm.data.entities.WayRef;
  * <p>The second is a kd-tree (see {@link aimax.osm.data.KDTree}).</p>
  * 
  * <p>The map data store is used as model for the viewer.</p>
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapDataStore implements MapDataConsumer {
 	private Logger LOG = Logger.getLogger("aimax.osm");

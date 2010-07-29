@@ -8,7 +8,8 @@ import aimax.osm.data.EntityVisitor;
 /**
  * Represents a way within a map. Ways are defined by lists of nodes.
  * A special dynamic attribute called "oneway" marks ways, which can only
- * be traveled in ascending node index order. 
+ * be traveled in ascending node index order.
+ * @author Ruediger Lunde 
  */
 public class MapWay extends MapEntity {
 	private ArrayList<MapNode> nodes;

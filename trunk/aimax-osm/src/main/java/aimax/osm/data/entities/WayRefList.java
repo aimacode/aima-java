@@ -2,7 +2,10 @@ package aimax.osm.data.entities;
 
 import java.util.Iterator;
 
-/** Provides list-like read access to way references. */ 
+/**
+ * Provides list-like read access to way references.
+ * @author Ruediger Lunde
+ */ 
 public class WayRefList implements Iterable<WayRef> {
 	private WayRef start;
 	

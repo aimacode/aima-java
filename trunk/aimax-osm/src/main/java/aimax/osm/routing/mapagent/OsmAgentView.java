@@ -30,11 +30,12 @@ import aimax.osm.viewer.MapViewPopup;
  * Visualizes agent positions and movements in an OSM map. It is
  * assumed that agents are only added but never removed from
  * an environment.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmAgentView extends AgentAppEnvironmentView {
 
-	public final static String TRACK_NAME = "Track";
+	private static final long serialVersionUID = 1L;
+	public static final String TRACK_NAME = "Track";
 	
 	MapViewPane mapViewPane;
 	
@@ -104,6 +105,8 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	
 	/** Extends the <code>MapViewPopup</code> by a load map menu item. */
 	private class MapViewPopupWithLoad extends MapViewPopup {
+
+		private static final long serialVersionUID = 1L;
 		MapReader mapReader;
 		JMenuItem loadMenuItem;
 		JFileChooser loadFileChooser;

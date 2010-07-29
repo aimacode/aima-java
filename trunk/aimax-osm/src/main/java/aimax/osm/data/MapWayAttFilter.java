@@ -7,6 +7,7 @@ import aimax.osm.data.entities.MapWay;
 /**
  * Way filter, which is based on attribute value checking. It uses
  * a <code>MapDataStore</code> for way data lookup.
+ * @author Ruediger Lunde
  */
 public class MapWayAttFilter implements MapWayFilter {
 	MapDataStore mapData;

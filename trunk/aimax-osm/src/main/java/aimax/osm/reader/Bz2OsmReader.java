@@ -13,11 +13,11 @@ import java.lang.reflect.InvocationTargetException;
  * (see http://commons.apache.org/compress/). Please add the
  * corresponding jar file to your class path, otherwise the
  * unpack functionality will not be available.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class Bz2OsmReader extends FilteringOsmReader {
 
-	private Class compressorClass;
+	private Class<?> compressorClass;
 	
 	/**
 	 * Tries to find the <code>BZip2CompressorInputStream</code> class using
@@ -36,7 +36,7 @@ public class Bz2OsmReader extends FilteringOsmReader {
 		InputStream result = new BufferedInputStream(new FileInputStream(file));
 		try {
 			if (compressorClass != null && file.getName().endsWith(".bz2")) {
-				Constructor c = compressorClass.getConstructor
+				Constructor<?> c = compressorClass.getConstructor
 				(new Class[] {InputStream.class});
 				result = (InputStream) c.newInstance(result);
 			}

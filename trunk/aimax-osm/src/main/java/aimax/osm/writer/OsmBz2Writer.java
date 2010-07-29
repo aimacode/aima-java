@@ -18,13 +18,13 @@ import aimax.osm.data.MapDataStore;
  * (see http://commons.apache.org/compress/). Please add the
  * corresponding jar file to your class path, otherwise the
  * pack functionality will not be available.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmBz2Writer implements MapWriter {
 
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private OsmWriter osmReader = new OsmWriter();
-	private Class compressorClass;
+	private Class<?> compressorClass;
 	
 	/**
 	 * Tries to find the <code>BZip2CompressorInputStream</code> class using
@@ -47,7 +47,7 @@ public class OsmBz2Writer implements MapWriter {
 			OutputStream os = new BufferedOutputStream
 			(new FileOutputStream(file));
 			if (compressorClass != null && file.getName().endsWith(".bz2")) {
-				Constructor c = compressorClass.getConstructor
+				Constructor<?> c = compressorClass.getConstructor
 				(new Class[] {OutputStream.class});
 				os = (OutputStream) c.newInstance(os);
 			}

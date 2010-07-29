@@ -1,7 +1,6 @@
 package aimax.osm.viewer;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -40,9 +39,11 @@ import aimax.osm.writer.OsmBz2Writer;
  * toolbar provides buttons for map loading, map saving, and entity finding.
  * Additionally, a text field is included which shows informations like positions,
  * track length, and POI names. 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapViewFrame extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
 	protected MapViewPane view;
 	protected MapDataStore mapData;
 	protected MapReader mapReader;

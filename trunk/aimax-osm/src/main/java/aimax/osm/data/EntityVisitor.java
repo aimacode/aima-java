@@ -9,7 +9,7 @@ import aimax.osm.data.entities.Track;
  * This interface supports for example the implementation
  * of different renderers, which find the right code for a
  * given entity instance without class checking in if statements.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public interface EntityVisitor {
 	public void visitMapNode(MapNode node);

@@ -8,11 +8,16 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
+/**
+ * Specifies a movement along a way from one way node to another.
+ * @author Ruediger Lunde
+ */
 public class OsmMoveAction implements Action {
 	private MapWay way;
 	private int fromIndex;
 	private int toIndex;
 	
+	/** It is assumed that both nodes are part of the way. */
 	public OsmMoveAction(MapWay way, MapNode fromNode, MapNode toNode) {
 		this.way = way;
 		fromIndex = way.getNodes().indexOf(fromNode);
@@ -40,6 +45,7 @@ public class OsmMoveAction implements Action {
 		return result;
 	}
 	
+	/** Returns the distance in KM. */
 	public float getTravelDistance() {
 		float result = 0f;
 		int size = Math.abs(toIndex-fromIndex)+1;

@@ -2,33 +2,32 @@
 // Modified by Ruediger Lunde, 2009
 package aimax.osm.reader;
 
-import java.util.logging.Logger;
-
 import org.xml.sax.Attributes;
 
 import aimax.osm.data.MapDataConsumer;
 
 /**
  * Provides an element processor implementation for an osm element.
+ * @author R. Lunde
  */
 public class OsmElementProcessor extends ElementProcessor {
 	
-	private static final Logger LOG = Logger.getLogger("rlu.osm");
+	// private static final Logger LOG = Logger.getLogger("rlu.osm");
 	
-	private static final String ELEMENT_NAME_BOUND = "bound";
+	// private static final String ELEMENT_NAME_BOUND = "bound";
 	private static final String ELEMENT_NAME_NODE = "node";
 	private static final String ELEMENT_NAME_WAY = "way";
-	private static final String ELEMENT_NAME_RELATION = "relation";
-	private static final String ATTRIBUTE_NAME_VERSION = "version";
+	// private static final String ELEMENT_NAME_RELATION = "relation";
+	// private static final String ATTRIBUTE_NAME_VERSION = "version";
 	
 	
-//	private BoundElementProcessor boundElementProcessor;
+	// private BoundElementProcessor boundElementProcessor;
 	private NodeElementProcessor nodeElementProcessor;
 	private WayElementProcessor wayElementProcessor;
-//	private RelationElementProcessor relationElementProcessor;
+	// private RelationElementProcessor relationElementProcessor;
 	
-//	private boolean foundBound = false;
-	private boolean foundEntities = false;
+	// private boolean foundBound = false;
+	// private boolean foundEntities = false;
 	
 	/**
 	 * Creates a new instance.
@@ -80,10 +79,10 @@ public class OsmElementProcessor extends ElementProcessor {
 //			return boundElementProcessor;
 //		} else
 		if (ELEMENT_NAME_NODE.equals(qName)) {
-			foundEntities = true;
+			// foundEntities = true;
 			return nodeElementProcessor;
 		} else if (ELEMENT_NAME_WAY.equals(qName)) {
-			foundEntities = true;
+			// foundEntities = true;
 			return wayElementProcessor;
 //		} else if (ELEMENT_NAME_RELATION.equals(qName)) {
 //			foundEntities = true;

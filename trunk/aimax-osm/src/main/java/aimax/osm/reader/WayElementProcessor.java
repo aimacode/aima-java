@@ -21,11 +21,11 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	private static final String ELEMENT_NAME_TAG = "tag";
 	private static final String ELEMENT_NAME_NODE = "nd";
 	private static final String ATTRIBUTE_NAME_ID = "id";
-	private static final String ATTRIBUTE_NAME_TIMESTAMP = "timestamp";
-	private static final String ATTRIBUTE_NAME_USER = "user";
-	private static final String ATTRIBUTE_NAME_USERID = "uid";
-	private static final String ATTRIBUTE_NAME_CHANGESET_ID = "changeset";
-	private static final String ATTRIBUTE_NAME_VERSION = "version";
+	// private static final String ATTRIBUTE_NAME_TIMESTAMP = "timestamp";
+	// private static final String ATTRIBUTE_NAME_USER = "user";
+	// private static final String ATTRIBUTE_NAME_USERID = "uid";
+	// private static final String ATTRIBUTE_NAME_CHANGESET_ID = "changeset";
+	// private static final String ATTRIBUTE_NAME_VERSION = "version";
 	
 	private TagElementProcessor tagElementProcessor;
 	private WayNodeElementProcessor wayNodeElementProcessor;

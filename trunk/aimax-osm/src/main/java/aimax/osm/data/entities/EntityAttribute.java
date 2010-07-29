@@ -2,7 +2,7 @@ package aimax.osm.data.entities;
 
 /**
  * An entity attribute consists of a key and a value string.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class EntityAttribute implements Comparable<EntityAttribute> {
 	private String key;

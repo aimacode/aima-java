@@ -18,7 +18,7 @@ import aimax.osm.routing.mapagent.OsmMapAdapter;
 /**
  * Demonstrates, how the OSM map viewer can be integrated into a graphical
  * agent application.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmAgentApp extends SimpleAgentApp {
 

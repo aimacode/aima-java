@@ -14,7 +14,7 @@ import aimax.osm.data.entities.Track;
  * coordinates. If the order in which the entities are provided shall not be
  * identical to the order of drawing, the renderer should use entity buffers
  * and sort them before printing.
- * @author R. Lunde
+ * @author Ruediger Lunde
  *
  */
 public abstract class AbstractEntityRenderer implements EntityVisitor {

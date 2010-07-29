@@ -16,7 +16,7 @@ import aimax.osm.viewer.EntityIcon.TentIcon;
  * one. Its implementation provides a useful example how to map
  * presentation aspects like colors, line widths, symbols etc on OSM map
  * entities.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapStyleFactory {
 	public static final Color GRAY_TRANS = new Color(0, 0, 0, 40);

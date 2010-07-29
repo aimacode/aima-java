@@ -22,7 +22,7 @@ import aimax.osm.viewer.MapViewPane;
  * Adds a night view mode to the map viewer. This class demonstrates, how
  * additional functionality can be added to the <code>MapViewFrame</code>
  * even without subclassing.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmViewerPlusApp implements ActionListener {
 	protected MapViewFrame frame;

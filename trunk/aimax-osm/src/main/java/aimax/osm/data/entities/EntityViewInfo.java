@@ -5,7 +5,7 @@ package aimax.osm.data.entities;
  * how the entity shall be drawn. This interface hides presentation layer
  * aspects from the application layer. For data organization on application
  * layer, only the minimal visible scale is relevant.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public interface EntityViewInfo {
 	public float getMinVisibleScale();
