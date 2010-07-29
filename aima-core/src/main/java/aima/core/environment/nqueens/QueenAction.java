@@ -4,6 +4,9 @@ import aima.core.agent.impl.DynamicAction;
 import aima.core.util.datastructure.XYLocation;
 
 /**
+ * Queens can be placed, removed, and moved. For movements,
+ * a vertical direction is assumed. Therefore, only the
+ * end point needs to be specified.
  * @author Ravi Mohan
  * @author R. Lunde
  */

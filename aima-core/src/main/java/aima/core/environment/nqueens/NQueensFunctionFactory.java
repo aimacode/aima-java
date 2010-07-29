@@ -12,7 +12,6 @@ import aima.core.util.datastructure.XYLocation;
  * Provides useful functions for two versions of the n-queens problem.
  * The incremental formulation and the complete-state formulation share
  * the same RESULT function but use different ACTIONS functions.
- * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author R. Lunde
  */
@@ -53,6 +52,12 @@ public class NQueensFunctionFactory {
 		return _resultFunction;
 	}
 
+	/**
+	 * Assumes that queens are placed column by column, starting with an
+	 * empty board, and provides queen placing actions for all non-attacked
+	 * positions of the first free column.
+	 * @author R. Lunde
+	 */
 	private static class NQIActionsFunction implements ActionsFunction {
 		public Set<Action> actions(Object state) {
 			NQueensBoard board = (NQueensBoard) state;
@@ -72,6 +77,11 @@ public class NQueensFunctionFactory {
 		}
 	}
 	
+	/**
+	 * Assumes exactly one queen in each column and provides all possible
+	 * queen movements in vertical direction as actions.
+	 * @author R. Lunde
+	 */
 	private static class NQCActionsFunction implements ActionsFunction {
 
 		public Set<Action> actions(Object state) {
@@ -87,6 +97,7 @@ public class NQueensFunctionFactory {
 		}
 	}
 
+	/** Supports queen placing, queen removal, and queen movement actions. */
 	private static class NQResultFunction implements ResultFunction {
 		public Object result(Object s, Action a) {
 			if (a instanceof QueenAction) {
