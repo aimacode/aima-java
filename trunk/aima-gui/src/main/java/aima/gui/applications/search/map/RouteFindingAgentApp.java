@@ -59,24 +59,23 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 
 		private MapType usedMap = null;
 		private static String[] ROMANIA_DESTS = new String[] {
-				"D1 (to Bucharest)", "D2 (to Eforie)", "D3 (to Neamt)",
-				"D4 (to random)" };
+				"to Bucharest", "to Eforie", "to Neamt",
+				"to Random" };
 		private static String[] AUSTRALIA_DESTS = new String[] {
-				"D1 (to Port Hedland)", "D2 (to Albany)", "D3 (to Melbourne)",
-				"D4 (to random)" };
+				"to Port Hedland", "to Albany", "to Melbourne",
+				"to Random" };
 
 		/** Creates a new frame. */
 		public RouteFindingAgentFrame() {
 			setTitle("RFA - the Route Finding Agent");
 			setSelectorItems(SCENARIO_SEL, new String[] {
-					"S1 (Romania, from Arad)", "S2 (Romania, from Lugoj)",
-					"S3 (Romania, from Fagaras)",
-					"S4 (Australia, from Sydney)",
-					"S4 (Australia, from Random)" }, 0);
+					"Romania, from Arad", "Romania, from Lugoj",
+					"Romania, from Fagaras",
+					"Australia, from Sydney",
+					"Australia, from Random" }, 0);
 			setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
 					.getSearchModeNames(), 1); // change the default!
-			setSelectorItems(HEURISTIC_SEL, new String[] { "H1 (=0)",
-					"H2 (sld to goal)" }, 1);
+			setSelectorItems(HEURISTIC_SEL, new String[] { "=0", "SLD" }, 1);
 		}
 
 		/**

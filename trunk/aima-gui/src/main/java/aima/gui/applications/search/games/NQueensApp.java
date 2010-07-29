@@ -139,7 +139,7 @@ public class NQueensApp extends SimpleAgentApp {
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
 			setTitle("N-Queens Application");
-			setSize(700, 500);
+			setSize(800, 600);
 		}
 	}
 

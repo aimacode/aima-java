@@ -131,7 +131,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
 			setTitle("Eight Puzzle Application");
-			setSize(700, 500);
+			setSize(800, 600);
 		}
 	}
 
