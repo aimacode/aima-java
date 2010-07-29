@@ -189,7 +189,7 @@ public class AgentAppFrame extends JFrame {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		toolbar = new JToolBar();
-		// toolbar.setFloatable(false);
+		toolbar.setFloatable(false);
 		selectors = new SelectorContainer();
 		toolbar.add(Box.createHorizontalGlue());
 
@@ -336,6 +336,7 @@ public class AgentAppFrame extends JFrame {
 			for (int i = 0; i < selectorNames.length; i++) {
 				JComboBox combo = new JComboBox();
 				combo.addActionListener(actionListener);
+				combo.setVisible(false);
 				combos.add(combo);
 				toolbar.add(combo, i);
 				if (tooltips != null)
@@ -350,6 +351,7 @@ public class AgentAppFrame extends JFrame {
 			for (String item : items)
 				combo.addItem(item);
 			selectorDefaults[combos.indexOf(combo)] = defaultIdx;
+			combo.setVisible(items.length > 0);
 		}
 
 		public void setDefaults() {
