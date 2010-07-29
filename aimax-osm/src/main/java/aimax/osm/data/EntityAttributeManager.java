@@ -11,6 +11,7 @@ import aimax.osm.data.entities.EntityAttribute;
  * attributes consisting of two such strings, and additionally some filters
  * for attributes to be ignored. This manager tries to reduce storage
  * consumption by storing just one representation for each string.
+ * @author Ruediger Lunde
  */
 public class EntityAttributeManager {
 	private static EntityAttributeManager instance;

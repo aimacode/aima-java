@@ -15,7 +15,7 @@ import java.util.List;
  * to the class path (project properties, add jar), to store the DDL
  * locally (e.g. in project-root/lib), and start the application with
  * VM argument <code>-Djava.library.path=lib</code>.</p>
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class GpsLocator implements NmeaReader.NmeaMessageListener {
 

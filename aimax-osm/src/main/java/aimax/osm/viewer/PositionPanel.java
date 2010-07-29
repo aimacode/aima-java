@@ -12,9 +12,11 @@ import javax.swing.JTextField;
 
 /**
  * Simple panel for editing position information.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class PositionPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	JComboBox latCombo;
 	JTextField latDegField;
 	JTextField latMinField;

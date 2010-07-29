@@ -2,7 +2,7 @@ package aimax.osm.data;
 
 /**
  * Allows to listen to map changes.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public interface MapDataEventListener {
 	void eventHappened(MapDataEvent event);

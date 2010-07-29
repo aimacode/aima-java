@@ -12,7 +12,7 @@ import aimax.osm.data.entities.MapNode;
  * are represented by <code>MapNode</code> objects and actions
  * as references to linked nodes. True path lengths
  * (in kilometers) are used as default cost values.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class RouteFindingProblem extends Problem {
 	/**
@@ -25,8 +25,7 @@ public class RouteFindingProblem extends Problem {
 	public RouteFindingProblem(MapNode from, MapNode to,
 			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays) {
 		initialState = from;
-		actionsFunction = new OsmActionsFunction
-		(mapData, filter, ignoreOneWays, to);
+		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
 		goalTest = new SimpleGoalTest(to);
 		stepCostFunction = new OsmDistanceStepCostFunction();
@@ -44,8 +43,7 @@ public class RouteFindingProblem extends Problem {
 			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays,
 			StepCostFunction costs) {
 		initialState = from;
-		actionsFunction = new OsmActionsFunction
-		(mapData, filter, ignoreOneWays, to);
+		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
 		goalTest = new SimpleGoalTest(to);
 		stepCostFunction = costs;

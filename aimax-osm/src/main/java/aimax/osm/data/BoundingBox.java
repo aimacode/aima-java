@@ -5,7 +5,10 @@ import java.util.Collection;
 import aimax.osm.data.entities.MapNode;
 
 
-/** Simple representation of a bounding box for geo coordinates. */
+/**
+ * Simple representation of a bounding box for geo coordinates.
+ * @author Ruediger Lunde
+ */
 public class BoundingBox {
 	private float latMin;
 	private float lonMin;

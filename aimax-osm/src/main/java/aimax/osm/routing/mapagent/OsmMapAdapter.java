@@ -20,7 +20,7 @@ import aimax.osm.data.entities.WayRef;
  * generated from OSM data. Note that location strings are dynamically
  * generated from map node ids (long values), so always use the equal
  * method for comparison.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmMapAdapter implements Map {
 

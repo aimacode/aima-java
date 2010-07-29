@@ -7,7 +7,7 @@ import aimax.osm.data.entities.EntityViewInfo;
 /**
  * Simple container which maintains informations for rendering a certain map
  * entity type. It is used by {@link aimax.osm.viewer.DefaultEntityRenderer}.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	/**

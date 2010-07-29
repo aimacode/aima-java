@@ -13,7 +13,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -33,10 +32,13 @@ import aimax.osm.data.entities.MapNode;
  * Ctrl-Mouse-Left, Plus, Minus, Ctrl-Plus, Ctrl-Minus, arrow buttons,
  * and also the Mouse-Wheel for navigation, mark setting, and track
  * definition.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapViewPane extends JComponent implements MapDataEventListener {
-	private Logger LOG = Logger.getLogger("aimax.osm");
+
+	private static final long serialVersionUID = 1L;
+	// private Logger LOG = Logger.getLogger("aimax.osm");
+	
 	/** Maintains a reference to the model which provides the data to be displayed. */
 	protected MapDataStore mapData;
 	protected CoordTransformer transformer;
@@ -281,7 +283,6 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		public void mouseExited(MouseEvent arg0) {}
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
 			xp = e.getX();
 			yp = e.getY();
 		}

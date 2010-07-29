@@ -21,7 +21,7 @@ import aimax.osm.viewer.MapViewFrame;
  * Implements a simple route planning tool. It extends the OSM map viewer
  * by a little search engine for shortest paths using the A* algorithm.
  * Set two marks (mouse left) before starting route calculation!
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class RoutePlannerApp implements ActionListener {
 	

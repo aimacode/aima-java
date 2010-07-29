@@ -1,19 +1,15 @@
 package aimax.osm.gps;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Singleton, which creates NMEA reader instances and hides their
  * implementation. Reflection is used, to avoid compilation errors even
  * if the needed serial port reader class does not exist.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class NmeaReaderFactory {
 	
-	private static final int TIMEOUT  = 1000; // 0.5 seconds
 	private static NmeaReaderFactory instance;
 	
 	public static NmeaReaderFactory instance() {
@@ -49,7 +45,7 @@ public class NmeaReaderFactory {
 	public NmeaReader createSerialPortReader() {
 		NmeaReader result = null;
 		try {
-			Class cls = Class.forName("aimax.osm.gps.NmeaSerialPortReader");
+			Class<?> cls = Class.forName("aimax.osm.gps.NmeaSerialPortReader");
 	        result = (NmeaReader) cls.newInstance();
 		} catch (Throwable e) {
 			e.printStackTrace();

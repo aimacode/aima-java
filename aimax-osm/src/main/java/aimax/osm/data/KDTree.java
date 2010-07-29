@@ -14,7 +14,7 @@ import aimax.osm.data.entities.MapEntity;
  * kd-tree node ordered by ascending minimal visible scale. Note, that
  * inner nodes can contain entities, e.g. ways, whose nodes do
  * not completely fit into the bounding box of one of the child nodes.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class KDTree {
 	private BoundingBox bb;

@@ -22,7 +22,7 @@ import aimax.osm.data.entities.MapEntity;
  * <p>For efficiency reasons, rules are grouped by attribute
  * name on implementation level, and within such a group, binary search is
  * used to find a match.</p>
- * @author R. Lunde
+ * @author Ruediger Lunde
  * @param <C> Class of classification results.
  */
 public class EntityClassifier<C> {

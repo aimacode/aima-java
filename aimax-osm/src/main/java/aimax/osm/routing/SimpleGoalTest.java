@@ -5,7 +5,7 @@ import aima.core.search.framework.GoalTest;
 /**
  * Implementation of the GoalTest interface for testing
  * whether a state is equal to an explicitly given goal state.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class SimpleGoalTest implements GoalTest {
 	private Object goalState = null;

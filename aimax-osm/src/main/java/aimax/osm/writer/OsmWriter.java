@@ -18,7 +18,7 @@ import aimax.osm.reader.OsmRuntimeException;
 
 /** 
  * Writes a map to file using the standard osm XML format.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmWriter implements MapWriter {
 

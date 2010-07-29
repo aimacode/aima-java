@@ -22,7 +22,7 @@ import aimax.osm.data.entities.Track;
  * that all entities provided to the renderer have an attached
  * {@link aimax.osm.viewer.DefaultEntityViewInfo} object. The visual appearance
  * of the drawn map strongly depends on those objects.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	

@@ -32,9 +32,11 @@ import aimax.osm.data.entities.WayRef;
 
 /**
  * Useful popup menu for the <code>MapViewPane</code>.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class MapViewPopup extends JPopupMenu implements ActionListener {
+	
+	private static final long serialVersionUID = 1L;
 	protected MapViewPane pane;
 	private JFileChooser fileChooser;
 	

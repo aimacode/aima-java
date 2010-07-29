@@ -10,7 +10,7 @@ import aimax.osm.data.Position;
  * in pixel coordinates (x and y). The actual screen resolution is maintained
  * for scale computation. Additionally, a unit-per-inch factor is maintained
  * for transforming logical symbol size into pixels. 
- * @author R. Lunde
+ * @author Ruediger Lunde
  *
  */
 public class CoordTransformer {

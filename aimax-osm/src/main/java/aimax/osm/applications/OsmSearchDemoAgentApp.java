@@ -38,7 +38,7 @@ import aimax.osm.viewer.MapStyleFactory;
  * explore the state space. All locations which correspond to expanded
  * nodes are highlighted in the map. If you don't see any expanded node,
  * just zoom in!
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	
@@ -76,6 +76,9 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	
 	/** Variant of the <code>OsmAgentFrame</code>. */
 	private class SDFrame extends OsmAgentFrame {
+		
+		private static final long serialVersionUID = 1L;
+
 		SDFrame(OsmMapAdapter map) {
 			super(map);
 			setTitle("OSDA - the OSM Search Demo Agent Application");

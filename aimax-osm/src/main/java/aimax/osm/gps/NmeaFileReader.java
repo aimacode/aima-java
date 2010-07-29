@@ -4,6 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * Reads NMEA data from file.
+ * @author Ruediger Lunde
+ *
+ */
 public class NmeaFileReader extends NmeaReader {
 	private File file;
 	private long delay = 0; //1000l;

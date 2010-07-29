@@ -7,7 +7,7 @@ import aimax.osm.data.MapDataStore;
 
 /**
  * Common interface for writing maps to file.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public interface MapWriter {
 	/** Writes a map to file. */

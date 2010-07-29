@@ -19,7 +19,7 @@ import aimax.osm.data.entities.MapNode;
 
 /**
  * Implements a search engine for shortest path calculations.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class RouteCalculator {
 	
