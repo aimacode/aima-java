@@ -2,32 +2,38 @@
 
 by Ruediger Lunde
 
+This project contains graphical applications and command line demos, which
+demonstrate the use of some of the aima-core project features. Currently, it
+focuses on search algorithms and agent concepts. Application class names end
+with "App" and command line demo class names with "Demo". An all-in-one
+application called aima.gui.applications.AimaDemoApp is provided which is
+a starter for all the other applications and demos.
+
+
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 0.2.0-AIMA-GUI Enhancements ==
-0.2.0-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
-New features added (inspired by course TDDC17)
-  * Added all command line demos and GUI demos to a
-    unified interface for running all of them from one
-    place.
-  * Agent simulator now has step and pause button.
-  * Logic for simulation control buttons improved.
-  * Design of 2d vacuum view updated.
-  * Vacuum symbol now animated.
-  * AgentThread renamed to SimulationThread.
-  * Map agent controller cleaned up.
-  * Documentation updated.
+== Current Release: 1.0.0-AIMA-GUI New Games (in preparation) ==
+1.0.0-AIMA-GUI New Games : ??? :<br>
+  * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
+  * Code consolidated and documentation updated.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
- * java -classpath aima-gui.jar aima.gui.applications.vacuum.VacuumApp
-  * provides a demo of the different agents described in Chapter 2 for tackling the Vacuum World.
- * java -classpath aima-gui.jar aima.gui.applications.search.map.RouteFindingAgentApp
-  * provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
  * java -jar aima-gui.jar
-  * this will run the default AimaDemoApp, this allows you to run the other applications from a central location as well as all of the current command line demos.
-
+   + this will run the default AimaDemoApp, this allows you to run all other applications from a central location as well as all of the current command line demos.
+ 
+ * java -classpath aima-gui.jar aima.gui.applications.vacuum.VacuumApp
+   + provides a demo of the different agents described in Chapter 2 for tackling the Vacuum World.
+  * java -classpath aima-gui.jar aima.gui.applications.search.games.EightPuzzleApp
+   + provides a demo of the different search algorithms described in Chapter 3 and 4.
+ * java -classpath aima-gui.jar aima.gui.applications.search.games.NQueensApp
+   + provides a demo of the different search algorithms described in Chapter 3 and 4.
+ * java -classpath aima-gui.jar aima.gui.applications.search.games.TicTacToeApp
+   + provides a demo of the different search algorithms described in Chapter 5.
+ * java -classpath aima-gui.jar aima.gui.applications.search.map.RouteFindingAgentApp
+   + provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
+ 
 The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.DPLLDemo
@@ -42,7 +48,22 @@ The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.search.NQueensDemo
  * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo
  
+
 = Change History (Update in reverse chronological order) =
+
+0.2.0-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
+New features added (inspired by course TDDC17)
+  * Added all command line demos and GUI demos to a
+    unified interface for running all of them from one
+    place.
+  * Agent simulator now has step and pause button.
+  * Logic for simulation control buttons improved.
+  * Design of 2d vacuum view updated.
+  * Vacuum symbol now animated.
+  * AgentThread renamed to SimulationThread.
+  * Map agent controller cleaned up.
+  * Documentation updated.
+
 0.1.2-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
   * Java Doc now uses newer package-info.java mechanism.
   * Documentation improvements.
