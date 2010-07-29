@@ -82,7 +82,7 @@ public class NmeaSerialPortReader extends NmeaReader {
 	
 	/** Searches for a serial port providing NMEA messages. */
 	private boolean findSerialPort() throws Exception {
-		Enumeration  portList = CommPortIdentifier.getPortIdentifiers();
+		Enumeration<?>  portList = CommPortIdentifier.getPortIdentifiers();
 		while (portList.hasMoreElements()) {
 			CommPortIdentifier pid = (CommPortIdentifier) portList.nextElement();
 			if (pid.getPortType() == CommPortIdentifier.PORT_SERIAL
