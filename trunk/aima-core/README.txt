@@ -7,6 +7,7 @@
 
 == Current Release: 1.0.0-AIMAX-OSM Consolidated (in preparation) ==
 1.0.0-AIMAX-OSM Consolidated : ??? :<br>
+  * CSP package restructured.
   * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
   * The N-Queens representation now supports incremental as well as complete-state problem formulation.
   * Minor clean-ups included.
