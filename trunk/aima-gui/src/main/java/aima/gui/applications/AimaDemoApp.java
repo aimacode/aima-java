@@ -29,9 +29,9 @@ public class AimaDemoApp {
 	public static void registerDemos(AimaDemoFrame frame) {
 		frame.addApp(VacuumApp.class);
 		frame.addApp(RouteFindingAgentApp.class);
-		frame.addApp(TicTacToeApp.class);
 		frame.addApp(EightPuzzleApp.class);
 		frame.addApp(NQueensApp.class);
+		frame.addApp(TicTacToeApp.class);
 
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
