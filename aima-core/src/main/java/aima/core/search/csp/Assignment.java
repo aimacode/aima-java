@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
+ * An assignment assigns values to some or all variables of a CSP.
+ * 
  * @author Ruediger Lunde
  */
 public class Assignment {
@@ -13,6 +15,7 @@ public class Assignment {
 	 * the variables were assigned to values.
 	 */
 	List<Variable> variables;
+	/** Maps variables to their assigned values. */
 	Hashtable<Variable, Object> variableToValue;
 
 	public Assignment() {
@@ -41,6 +44,21 @@ public class Assignment {
 		return variableToValue.get(var) != null;
 	}
 
+	/**
+	 * Returns true if this assignment does not violate any constraints of
+	 * <code>constraints</code>.
+	 */
+	public boolean isConsistent(List<Constraint> constraints) {
+		for (Constraint cons : constraints)
+			if (!cons.isSatisfiedWith(this))
+				return false;
+		return true;
+	}
+
+	/**
+	 * Returns true if this assignment assigns values to every variable of
+	 * <code>vars</code>.
+	 */
 	public boolean isComplete(List<Variable> vars) {
 		for (Variable var : vars) {
 			if (!hasAssignmentFor(var))
@@ -49,16 +67,13 @@ public class Assignment {
 		return true;
 	}
 
-	public boolean isConsistent(List<Constraint> constraints) {
-		for (Constraint cons : constraints)
-			if (!cons.isSatisfiedWith(this))
-				return false;
-		return true;
-	}
-
+	/**
+	 * Returns true if this assignment is consistent as well as complete
+	 * with respect to the given CSP.
+	 */
 	public boolean isSolution(CSP csp) {
-		return isComplete(csp.getVariables())
-				&& isConsistent(csp.getConstraints());
+		return isConsistent(csp.getConstraints())
+				&& isComplete(csp.getVariables());
 	}
 
 	public Assignment copy() {
