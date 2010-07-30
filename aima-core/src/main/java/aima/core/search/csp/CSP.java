@@ -54,7 +54,7 @@ public class CSP {
 	}
 
 	/**
-	 * Returns all constraints in which the specified variable occurs.
+	 * Returns all constraints in which the specified variable participates.
 	 */
 	public List<Constraint> getConstraints(Variable var) {
 		return cnet.get(var);
