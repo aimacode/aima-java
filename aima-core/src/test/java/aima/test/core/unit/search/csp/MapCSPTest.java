@@ -5,8 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.search.csp.Assignment;
+import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.MapCSP;
+import aima.core.search.csp.MinConflictsStrategy;
 
 /**
  * @author Ravi Mohan
@@ -17,24 +19,24 @@ public class MapCSPTest {
 
 	@Before
 	public void setUp() {
-		csp = MapCSP.getMap();
+		csp = new MapCSP();
 	}
 
 	@Test
 	public void testBackTrackingSearch() {
-		Assignment results = csp.backTrackingSearch();
+		Assignment results = new BacktrackingStrategy().solve(csp);
 		Assert.assertNotNull(results);
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.V));
-		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.SA));
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.T));
-		Assert.assertEquals(MapCSP.BLUE, results.getAssignment(MapCSP.NT));
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.Q));
-		Assert.assertEquals(MapCSP.BLUE, results.getAssignment(MapCSP.NSW));
 		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.WA));
+		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.NT));
+		Assert.assertEquals(MapCSP.BLUE, results.getAssignment(MapCSP.SA));
+		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.Q));
+		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.NSW));
+		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.V));
+		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.T));
 	}
 
 	@Test
 	public void testMCSearch() {
-		csp.mcSearch(100);
+		new MinConflictsStrategy(100).solve(csp);
 	}
 }
