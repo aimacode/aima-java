@@ -53,7 +53,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		Assignment assignment = new Assignment();
 		for (Variable var : csp.getVariables()) {
 			Object randomValue = Util
-					.selectRandomlyFromList(csp.getDomain(var));
+					.selectRandomlyFromList(csp.getDomain(var).asList());
 			assignment.setAssignment(var, randomValue);
 		}
 		return assignment;

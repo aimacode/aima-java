@@ -66,6 +66,18 @@ public class Assignment {
 		}
 		return true;
 	}
+	
+	/**
+	 * Returns true if this assignment assigns values to every variable of
+	 * <code>vars</code>.
+	 */
+	public boolean isComplete(Variable[] vars) {
+		for (Variable var : vars) {
+			if (!hasAssignmentFor(var))
+				return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Returns true if this assignment is consistent as well as complete
