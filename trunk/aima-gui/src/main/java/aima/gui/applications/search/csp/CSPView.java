@@ -122,7 +122,7 @@ public class CSPView extends EmptyEnvironmentView {
 		if (pos != null)
 			return new int[]{x(pos[0]), y(pos[1])}; 
 		else {
-			int vIndex = getCSP().getVariables().indexOf(var);
+			int vIndex = getCSP().indexOf(var);
 			int rows = getHeight() / 80;
 			int x = (vIndex / rows) * 160 + 20;
 			int y = (vIndex % rows) * 80 + 20;

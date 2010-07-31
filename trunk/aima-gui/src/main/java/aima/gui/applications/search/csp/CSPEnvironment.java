@@ -17,6 +17,11 @@ public class CSPEnvironment extends AbstractEnvironment {
 	CSP csp;
 	Assignment assignment;
 
+	public void init(CSP csp) {
+		this.csp = csp;
+		assignment = null;
+	}
+	
 	public CSP getCSP() {
 		return csp;
 	}
@@ -30,11 +35,11 @@ public class CSPEnvironment extends AbstractEnvironment {
 	public EnvironmentState executeAction(Agent agent, Action action) {
 		if (action instanceof StateChangeAction) {
 			StateChangeAction a = (StateChangeAction) action;
-			if (a.changeCSP)
+			if (a.updateCSP())
 				csp = a.getCSP();
-			if (a.changeAssignment)
+			if (a.updateAssignment())
 				assignment = a.getAssignment();
-			if (agent == null && a.getAssignment() != null)
+			if (agent == null)
 				updateEnvironmentViewsAgentActed(agent, action, null);
 		}
 		return null;
@@ -54,51 +59,57 @@ public class CSPEnvironment extends AbstractEnvironment {
 
 	/** Action to modify the CSP environment state. */
 	public static class StateChangeAction implements Action {
-		private boolean changeCSP;
-		private boolean changeAssignment;
 		private CSP csp;
 		private Assignment assignment;
 
+		/** Indicate a conflict! */
+		public StateChangeAction() {
+		}
+		
+		/** Update the domains of the CSP. */
 		public StateChangeAction(CSP csp) {
-			changeCSP = true;
 			this.csp = csp;
 		}
 
+		/** Update the current assignment. */
 		public StateChangeAction(Assignment assignment) {
-			changeAssignment = true;
 			this.assignment = assignment;
 		}
 
 		public StateChangeAction(CSP csp, Assignment assignment) {
-			changeCSP = true;
-			changeAssignment = true;
 			this.csp = csp;
 			this.assignment = assignment;
 		}
-
-		public boolean changeCSP() {
-			return changeCSP;
+		
+		public boolean updateCSP() {
+			return csp != null;
 		}
 
 		public CSP getCSP() {
 			return csp;
 		}
 
-		public boolean changeAssignment() {
-			return changeAssignment;
+		public boolean updateAssignment() {
+			return assignment != null;
 		}
 
 		public Assignment getAssignment() {
 			return assignment;
 		}
 
+		public boolean indicateConflict() {
+			return !updateCSP() && !updateAssignment();
+		}
+		
 		@Override
 		public boolean isNoOp() {
 			return false;
 		}
 		
 		public String toString() {
-			return "StateChangeAction " + assignment;
+			return "StateChangeAction "
+			+ (updateAssignment() ? assignment :
+				(updateCSP() ? "(Domain Reduction)" : "(Conflict)"));
 		}
 	}
 }
