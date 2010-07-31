@@ -12,24 +12,24 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class MapCSP extends CSP {
-	public static final Variable WA = new Variable("WA");
-	public static final Variable NT = new Variable("NT");
-	public static final Variable SA = new Variable("SA");
-	public static final Variable Q = new Variable("Q");
 	public static final Variable NSW = new Variable("NSW");
-	public static final Variable V = new Variable("V");
+	public static final Variable NT = new Variable("NT");
+	public static final Variable Q = new Variable("Q");
+	public static final Variable SA = new Variable("SA");
 	public static final Variable T = new Variable("T");
+	public static final Variable V = new Variable("V");
+	public static final Variable WA = new Variable("WA");
 	public static final String RED = "RED";
 	public static final String GREEN = "GREEN";
 	public static final String BLUE = "BLUE";
 
 	private static List<Variable> collectVariables() {
 		List<Variable> variables = new ArrayList<Variable>();
+		variables.add(NSW);
 		variables.add(WA);
 		variables.add(NT);
-		variables.add(SA);
 		variables.add(Q);
-		variables.add(NSW);
+		variables.add(SA);
 		variables.add(V);
 		variables.add(T);
 		return variables;

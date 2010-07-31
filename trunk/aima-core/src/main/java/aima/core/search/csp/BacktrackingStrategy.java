@@ -31,7 +31,7 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 
-public class BacktrackingStrategy implements SolutionStrategy {
+public class BacktrackingStrategy extends SolutionStrategy {
 
 	public Assignment solve(CSP csp) {
 		return recursiveBackTrackingSearch(csp, new Assignment());
@@ -50,6 +50,7 @@ public class BacktrackingStrategy implements SolutionStrategy {
 			Variable var = selectUnassignedVariable(csp, assignment);
 			for (Object value : orderDomainValues(var, assignment, csp)) {
 				assignment.setAssignment(var, value);
+				fireStateChanged(assignment);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
 					CSP savedCSP = csp;
 					csp = inference(var, assignment, csp);
