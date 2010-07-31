@@ -6,6 +6,7 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.CSPStateListener;
+import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.MapCSP;
 import aima.core.search.csp.MinConflictsStrategy;
 import aima.core.search.csp.SolutionStrategy;
@@ -19,10 +20,10 @@ import aima.gui.framework.SimulationThread;
 
 /**
  * Application which demonstrates basic constraint algorithms based on map
- * coloring problems. It shows the constraint graph, lets the user select
- * a solution strategy, and allows then to follow the progress
- * step by step. For pragmatic reasons, the implementation uses the agent
- * framework, even though there is no agent and only a dummy environment.
+ * coloring problems. It shows the constraint graph, lets the user select a
+ * solution strategy, and allows then to follow the progress step by step. For
+ * pragmatic reasons, the implementation uses the agent framework, even though
+ * there is no agent and only a dummy environment.
  * 
  * @author Ruediger Lunde
  */
@@ -45,6 +46,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		return new MapColoringController();
 	}
 
+	
 	// ///////////////////////////////////////////////////////////////
 	// main method
 
@@ -55,6 +57,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		new MapColoringApp().startApplication();
 	}
 
+	
 	// ///////////////////////////////////////////////////////////////
 	// some inner classes
 
@@ -72,7 +75,9 @@ public class MapColoringApp extends SimpleAgentApp {
 					"Select Environment", "Select Solution Strategy" });
 			setSelectorItems(ENV_SEL, new String[] { "Map of Australia" }, 0);
 			setSelectorItems(STRATEGY_SEL, new String[] { "Backtracking",
-					"Minimal Conflicts (50)" }, 0);
+					"Backtracking + Forward Checking",
+					"Backtracking + AC3",
+					"Min-Conflicts (50)" }, 0);
 			setTitle("Map Coloring Application");
 			setSize(800, 600);
 		}
@@ -129,9 +134,8 @@ public class MapColoringApp extends SimpleAgentApp {
 			}
 			actions.clear();
 			actionCount = 0;
+			env.init(csp);
 			view.setEnvironment(env);
-			env.executeAction(null, new CSPEnvironment.StateChangeAction(csp,
-					null));
 		}
 
 		/** Checks whether simulation can be started. */
@@ -173,22 +177,42 @@ public class MapColoringApp extends SimpleAgentApp {
 		}
 
 		/**
-		 * Starts the selected constraint solver and fills the action list
-		 * if necessary.
+		 * Starts the selected constraint solver and fills the action list if
+		 * necessary.
 		 */
 		private void prepareActions() {
 			if (actions.isEmpty()) {
-				SolutionStrategy strategy;
-				if (frame.getSelection()
-						.getValue(MapColoringFrame.STRATEGY_SEL) == 0)
+				SolutionStrategy strategy = null;
+				switch (frame.getSelection().getValue(
+						MapColoringFrame.STRATEGY_SEL)) {
+				case 0:
 					strategy = new BacktrackingStrategy();
-				else
+					break;
+				case 1:
+					strategy = new ImprovedBacktrackingStrategy();
+					((ImprovedBacktrackingStrategy) strategy)
+							.selectInference(ImprovedBacktrackingStrategy
+									.Inference.FORWARD_CHECKING);
+					break;
+				case 2:
+					strategy = new ImprovedBacktrackingStrategy();
+					((ImprovedBacktrackingStrategy) strategy)
+							.selectInference(ImprovedBacktrackingStrategy
+									.Inference.AC3);
+					break;
+				case 3:
 					strategy = new MinConflictsStrategy(50);
+					break;
+				}
+
 				try {
 					strategy.addCSPStateListener(new CSPStateListener() {
 						@Override
 						public void stateChanged(CSP csp) {
+							actions.add(new CSPEnvironment.StateChangeAction(
+									csp));
 						}
+
 						@Override
 						public void stateChanged(Assignment assignment) {
 							actions.add(new CSPEnvironment.StateChangeAction(
