@@ -1,6 +1,5 @@
 package aima.gui.applications.search.map;
 
-import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppFrame;
 
 /**

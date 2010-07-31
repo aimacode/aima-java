@@ -1,4 +1,4 @@
-package aima.gui.applications.search;
+package aima.gui.applications.search.map;
 
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.HeuristicFunction;

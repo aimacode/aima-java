@@ -7,7 +7,6 @@ import aima.core.agent.Agent;
 import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
-import aima.gui.applications.search.SearchFactory;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.MessageLogger;
 import aima.gui.framework.SimulationThread;
