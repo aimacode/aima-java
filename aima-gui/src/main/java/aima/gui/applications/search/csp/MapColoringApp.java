@@ -75,8 +75,12 @@ public class MapColoringApp extends SimpleAgentApp {
 					"Select Environment", "Select Solution Strategy" });
 			setSelectorItems(ENV_SEL, new String[] { "Map of Australia" }, 0);
 			setSelectorItems(STRATEGY_SEL, new String[] { "Backtracking",
+					"Backtracking + MRV & DEG",
 					"Backtracking + Forward Checking",
+					"Backtracking + Forward Checking + MRV",
+					"Backtracking + Forward Checking + LCV",
 					"Backtracking + AC3",
+					"Backtracking + AC3 + MRV & DEG + LCV",
 					"Min-Conflicts (50)" }, 0);
 			setTitle("Map Coloring Application");
 			setSize(800, 600);
@@ -181,6 +185,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		 * necessary.
 		 */
 		private void prepareActions() {
+			ImprovedBacktrackingStrategy iStrategy = null;
 			if (actions.isEmpty()) {
 				SolutionStrategy strategy = null;
 				switch (frame.getSelection().getValue(
@@ -189,22 +194,47 @@ public class MapColoringApp extends SimpleAgentApp {
 					strategy = new BacktrackingStrategy();
 					break;
 				case 1:
-					strategy = new ImprovedBacktrackingStrategy();
-					((ImprovedBacktrackingStrategy) strategy)
-							.selectInference(ImprovedBacktrackingStrategy
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
+							.Selection.MRV_DEG);
+				case 2:
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setInference(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
-				case 2:
-					strategy = new ImprovedBacktrackingStrategy();
-					((ImprovedBacktrackingStrategy) strategy)
-							.selectInference(ImprovedBacktrackingStrategy
-									.Inference.AC3);
-					break;
 				case 3:
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
+							.Selection.MRV);
+					iStrategy.setInference(ImprovedBacktrackingStrategy
+									.Inference.FORWARD_CHECKING);
+					break;
+				case 4:
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setInference(ImprovedBacktrackingStrategy
+									.Inference.FORWARD_CHECKING);
+					iStrategy.enableLCV(true);
+					break;
+				case 5:
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setInference(ImprovedBacktrackingStrategy
+							.Inference.AC3);
+					break;
+				case 6:
+					iStrategy = new ImprovedBacktrackingStrategy();
+					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
+							.Selection.MRV_DEG);
+					iStrategy.setInference(ImprovedBacktrackingStrategy
+							.Inference.AC3);
+					iStrategy.enableLCV(true);
+					break;
+				case 7:
 					strategy = new MinConflictsStrategy(50);
 					break;
 				}
-
+				if (iStrategy != null)
+					strategy = iStrategy;
+				
 				try {
 					strategy.addCSPStateListener(new CSPStateListener() {
 						@Override
@@ -212,7 +242,6 @@ public class MapColoringApp extends SimpleAgentApp {
 							actions.add(new CSPEnvironment.StateChangeAction(
 									csp));
 						}
-
 						@Override
 						public void stateChanged(Assignment assignment) {
 							actions.add(new CSPEnvironment.StateChangeAction(
