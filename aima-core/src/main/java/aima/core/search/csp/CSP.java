@@ -18,21 +18,31 @@ import java.util.List;
 public class CSP {
 
 	private List<Variable> variables;
-	private Domains domains;
+	private List<Domain> domains;
 	private List<Constraint> constraints;
+	
+	/** Lookup, which maps a variable to its index in the list of variables. */
+	private Hashtable<Variable, Integer> varIndexHash;
 	/**
 	 * Constraint network. Maps variables to those constraints in which they
 	 * participate.
 	 */
 	private Hashtable<Variable, List<Constraint>> cnet;
 
+	private CSP() {
+	}
+	
 	public CSP(List<Variable> vars) {
 		variables = new ArrayList<Variable>();
-		domains = new Domains(vars);
+		domains = new ArrayList<Domain>();
 		constraints = new ArrayList<Constraint>();
+		varIndexHash = new Hashtable<Variable, Integer>();
 		cnet = new Hashtable<Variable, List<Constraint>>();
+		int index = 0;
 		for (Variable var : vars) {
 			variables.add(var);
+			domains.add(new Domain());
+			varIndexHash.put(var, index++);
 			cnet.put(var, new ArrayList<Constraint>());
 		}
 	}
@@ -41,12 +51,12 @@ public class CSP {
 		return variables;
 	}
 
-	public List<?> getDomain(Variable var) {
-		return domains.getDomain(var);
+	public Domain getDomain(Variable var) {
+		return domains.get(varIndexHash.get(var));
 	}
 
 	public void setDomain(Variable var, List<?> values) {
-		domains.setDomain(var, values);
+		domains.add(varIndexHash.get(var), new Domain(values));
 	}
 
 	public List<Constraint> getConstraints() {
@@ -64,5 +74,17 @@ public class CSP {
 		constraints.add(constraint);
 		for (Variable var : constraint.getScope())
 			cnet.get(var).add(constraint);
+	}
+	
+	public CSP copyForPropagation() {
+		CSP result = new CSP();
+		result.variables = variables;
+		result.domains = new ArrayList<Domain>(domains.size());
+		for (Domain domain : domains)
+			result.domains.add(new Domain(domain));
+		result.constraints = constraints;
+		result.varIndexHash = varIndexHash;
+		result.cnet = cnet;
+		return result;
 	}
 }

@@ -51,18 +51,14 @@ public class BacktrackingStrategy implements SolutionStrategy {
 			for (Object value : orderDomainValues(var, assignment, csp)) {
 				assignment.setAssignment(var, value);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
-					List<VarValuePair> inferences = inference(var, assignment, csp);
-					if (inferences != null) { // null denotes failure
-						for(VarValuePair vvp : inferences)
-							assignment.setAssignment(vvp.var, vvp.value);
-					
+					CSP savedCSP = csp;
+					csp = inference(var, assignment, csp);
+					if (csp != null) { // null denotes failure
 						result = recursiveBackTrackingSearch(csp, assignment);
 						if (result != null)
 							break;
-						
-						for(VarValuePair vvp : inferences)
-							assignment.removeAssignment(vvp.var);
 					}
+					csp = savedCSP;
 				}
 				assignment.removeAssignment(var);
 			}
@@ -94,15 +90,15 @@ public class BacktrackingStrategy implements SolutionStrategy {
 	}
 	
 	/**
-	 * Primitive operation, which checking whether a solution is still possible
-	 * and provides necessary extensions for the assignment. This default
-	 * implementation just returns an empty extension list.
-	 * @return List of variable value pairs or null denoting failure
-	 *         (no solution possible).
+	 * Primitive operation, which tries to prune out values from the
+	 * CSP which are not possible anymore when extending the given assignment
+	 * to a solution. This default implementation just returns the original CSP.
+	 * @return A reduced copy of the original CSP or null denoting failure
+	 *         (assignment cannot be extended to a solution).
 	 */
-	protected List<VarValuePair> inference(Variable var,
+	protected CSP inference(Variable var,
 			Assignment assignment, CSP csp) {
-		return new ArrayList<VarValuePair>(0);
+		return csp;
 	}
 	
 	
