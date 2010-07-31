@@ -1,8 +1,5 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 220.
  * 
@@ -54,6 +51,8 @@ public class BacktrackingStrategy extends SolutionStrategy {
 				if (assignment.isConsistent(csp.getConstraints(var))) {
 					CSP savedCSP = csp;
 					csp = inference(var, assignment, csp);
+					if (csp != savedCSP)
+						fireStateChanged(csp);
 					if (csp != null) { // null denotes failure
 						result = recursiveBackTrackingSearch(csp, assignment);
 						if (result != null)
@@ -85,7 +84,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	 * variable. This default implementation just takes the default order
 	 * provided by the CSP.
 	 */
-	protected List<?> orderDomainValues(Variable var,
+	protected Iterable<?> orderDomainValues(Variable var,
 			Assignment assignment, CSP csp) {
 		return csp.getDomain(var);
 	}
@@ -100,18 +99,5 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	protected CSP inference(Variable var,
 			Assignment assignment, CSP csp) {
 		return csp;
-	}
-	
-	
-	// //////////////////////////////////////////////////////////////
-	// inner classes
-	
-	protected static class VarValuePair {
-		Variable var;
-		Object value;
-		protected VarValuePair(Variable var, Object value) {
-			this.var = var;
-			this.value = value;
-		}
 	}
 }

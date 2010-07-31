@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class CSP {
 
-	private List<Variable> variables;
-	private List<Domain> domains;
+	private Variable[] variables;
+	private Domain[] domains;
 	private List<Constraint> constraints;
 	
 	/** Lookup, which maps a variable to its index in the list of variables. */
@@ -33,30 +33,45 @@ public class CSP {
 	}
 	
 	public CSP(List<Variable> vars) {
-		variables = new ArrayList<Variable>();
-		domains = new ArrayList<Domain>();
+		variables = new Variable[vars.size()];
+		domains = new Domain[vars.size()];
 		constraints = new ArrayList<Constraint>();
 		varIndexHash = new Hashtable<Variable, Integer>();
 		cnet = new Hashtable<Variable, List<Constraint>>();
+		Domain emptyDomain = new Domain(new ArrayList<Object>(0));
 		int index = 0;
 		for (Variable var : vars) {
-			variables.add(var);
-			domains.add(new Domain());
-			varIndexHash.put(var, index++);
+			variables[index] = var;
+			domains[index] = emptyDomain;
+			varIndexHash.put(var, index);
 			cnet.put(var, new ArrayList<Constraint>());
+			++index;
 		}
 	}
 
-	public List<Variable> getVariables() {
+	public Variable[] getVariables() {
 		return variables;
 	}
 
+	public int indexOf(Variable var) {
+		return varIndexHash.get(var);
+	}
+	
 	public Domain getDomain(Variable var) {
-		return domains.get(varIndexHash.get(var));
+		return domains[varIndexHash.get(var)];
 	}
 
 	public void setDomain(Variable var, List<?> values) {
-		domains.add(varIndexHash.get(var), new Domain(values));
+		domains[varIndexHash.get(var)] = new Domain(values);
+	}
+	
+	public void removeValueFromDomain(Variable var, Object value) {
+		Domain currDomain = getDomain(var);
+		List<Object> values = new ArrayList<Object>(currDomain.size());
+		for (Object v : currDomain)
+			if (!v.equals(value))
+				values.add(v);
+		setDomain(var, values);
 	}
 
 	public List<Constraint> getConstraints() {
@@ -79,9 +94,9 @@ public class CSP {
 	public CSP copyForPropagation() {
 		CSP result = new CSP();
 		result.variables = variables;
-		result.domains = new ArrayList<Domain>(domains.size());
-		for (Domain domain : domains)
-			result.domains.add(new Domain(domain));
+		result.domains = new Domain[domains.length];
+		for (int i = 0; i < domains.length; i++)
+			result.domains[i] = domains[i];
 		result.constraints = constraints;
 		result.varIndexHash = varIndexHash;
 		result.cnet = cnet;

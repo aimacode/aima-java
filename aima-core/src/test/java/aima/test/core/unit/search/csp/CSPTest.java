@@ -81,7 +81,7 @@ public class CSPTest {
 		Assert.assertNotNull(cspCopy.getConstraints(X));
 		Assert.assertEquals(C1, cspCopy.getConstraints(X).get(0));
 		
-		cspCopy.getDomain(X).remove("red");
+		cspCopy.removeValueFromDomain(X, "red");
 		Assert.assertEquals(2, cspCopy.getDomain(X).size());
 		Assert.assertEquals("green", cspCopy.getDomain(X).get(0));
 		Assert.assertEquals(3, csp.getDomain(X).size());
