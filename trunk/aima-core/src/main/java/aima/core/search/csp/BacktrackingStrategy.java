@@ -44,7 +44,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 		if (assignment.isComplete(csp.getVariables())) {
 			result = assignment;
 		} else {
-			Variable var = selectUnassignedVariable(csp, assignment);
+			Variable var = selectUnassignedVariable(assignment, csp);
 			for (Object value : orderDomainValues(var, assignment, csp)) {
 				assignment.setAssignment(var, value);
 				fireStateChanged(assignment);
@@ -71,7 +71,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	 * implementation just selects the first in the ordered list of variables
 	 * provided by the CSP.
 	 */
-	protected Variable selectUnassignedVariable(CSP csp, Assignment assignment) {
+	protected Variable selectUnassignedVariable(Assignment assignment, CSP csp) {
 		for (Variable var : csp.getVariables()) {
 			if (!(assignment.hasAssignmentFor(var)))
 				return var;

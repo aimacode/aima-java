@@ -91,6 +91,17 @@ public class CSP {
 			cnet.get(var).add(constraint);
 	}
 	
+	public Variable getNeighbor(Variable var, Constraint constraint) {
+		List<Variable> scope = constraint.getScope();
+		if (scope.size() == 2) {
+			if (var == scope.get(0))
+				return scope.get(1);
+			else if (var == scope.get(1))
+				return scope.get(0);
+		}
+		return null;
+	}
+	
 	public CSP copyForPropagation() {
 		CSP result = new CSP();
 		result.variables = variables;
