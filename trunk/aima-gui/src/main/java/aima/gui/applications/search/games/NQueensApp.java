@@ -134,8 +134,8 @@ public class NQueensApp extends SimpleAgentApp {
 							"Select Problem Formulation", "Select Search" });
 			setSelectorItems(ENV_SEL, new String[] { "4 Queens", "8 Queens",
 					"16 Queens", "32 Queens" }, 1);
-			setSelectorItems(PROBLEM_SEL, new String[] { "incremental",
-					"complete-state" }, 0);
+			setSelectorItems(PROBLEM_SEL, new String[] { "Incremental",
+					"Complete-State" }, 0);
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
 			setTitle("N-Queens Application");
