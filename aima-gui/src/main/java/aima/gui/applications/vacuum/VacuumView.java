@@ -1,6 +1,8 @@
 package aima.gui.applications.vacuum;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -44,12 +46,12 @@ public class VacuumView extends EmptyEnvironmentView {
 	 * agent as red Pacman.
 	 */
 	@Override
-	public void paint(java.awt.Graphics g) {
+	public void paint(Graphics g) {
 		List<String> locations = getLocations();
 		adjustTransformation(0, 0, 11 * locations.size() - 1, 10);
-		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
-		g2.setColor(Color.white);
-		g2.fillRect(0, 0, getWidth(), getHeight());
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setBackground(Color.white);
+		g2.clearRect(0, 0, getWidth(), getHeight());
 		for (int i = 0; i < locations.size(); i++) {
 			String location = locations.get(i);
 			Agent agent = getAgent(location);
