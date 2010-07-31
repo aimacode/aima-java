@@ -25,7 +25,7 @@ import aima.core.util.Util;
  * 
  * @author Ruediger Lunde
  */
-public class MinConflictsStrategy implements SolutionStrategy {
+public class MinConflictsStrategy extends SolutionStrategy {
 	private int maxSteps;
 
 	public MinConflictsStrategy(int maxSteps) {
@@ -34,6 +34,7 @@ public class MinConflictsStrategy implements SolutionStrategy {
 
 	public Assignment solve(CSP csp) {
 		Assignment assignment = generateRandomAssignment(csp);
+		fireStateChanged(assignment);
 		for (int i = 0; i < maxSteps; i++) {
 			if (assignment.isSolution(csp)) {
 				return assignment;
@@ -42,6 +43,7 @@ public class MinConflictsStrategy implements SolutionStrategy {
 				Variable var = Util.selectRandomlyFromList(vars);
 				Object value = getMinConflictValueFor(var, assignment, csp);
 				assignment.setAssignment(var, value);
+				fireStateChanged(assignment);
 			}
 		}
 		return null;

@@ -26,12 +26,12 @@ public class MapCSPTest {
 	public void testBackTrackingSearch() {
 		Assignment results = new BacktrackingStrategy().solve(csp);
 		Assert.assertNotNull(results);
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.WA));
-		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.NT));
+		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.WA));
+		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.NT));
 		Assert.assertEquals(MapCSP.BLUE, results.getAssignment(MapCSP.SA));
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.Q));
-		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.NSW));
-		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.V));
+		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.Q));
+		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.NSW));
+		Assert.assertEquals(MapCSP.GREEN, results.getAssignment(MapCSP.V));
 		Assert.assertEquals(MapCSP.RED, results.getAssignment(MapCSP.T));
 	}
 
