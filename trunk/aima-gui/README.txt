@@ -16,6 +16,7 @@ a starter for all the other applications and demos.
 == Current Release: 1.0.0-AIMA-GUI New Games (in preparation) ==
 1.0.0-AIMA-GUI New Games : ??? :<br>
   * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
+  * New graphical CSP application added (map coloring).
   * Code consolidated and documentation updated.
 
 == Running the GUIs and Command Line Demos ==

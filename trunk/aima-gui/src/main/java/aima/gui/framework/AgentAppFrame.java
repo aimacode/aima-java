@@ -49,7 +49,7 @@ public class AgentAppFrame extends JFrame {
 	private JButton clearButton;
 	private JButton prepareButton;
 	private JButton runButton;
-	private JButton stepButton;
+	protected JButton stepButton;
 	private JToggleButton pauseButton;
 	private JButton cancelButton;
 	private JLabel statusLabel;
