@@ -12,22 +12,40 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	protected Inference inferenceStrategy = Inference.NONE;
 	protected boolean isLCVHeuristicEnabled;
 
+	/** Selects the algorithm for SELECT-UNASSIGNED-VARIABLE */
 	public void setVariableSelection(Selection sStrategy) {
 		selectionStrategy = sStrategy;
 	}
 
+	/** Selects the algorithm for INFERENCE. */
 	public void setInference(Inference iStrategy) {
 		inferenceStrategy = iStrategy;
 	}
 
+	/** Selects the least constraining value heuristic as implementation
+	 * for ORDER-DOMAIN-VALUES. */
 	public void enableLCV(boolean state) {
 		isLCVHeuristicEnabled = state;
 	}
 
 	/**
-	 * Primitive operation, selecting a not yet assigned variable. This default
-	 * implementation just selects the first in the ordered list of variables
-	 * provided by the CSP.
+	 * Starts with a constraint propagation if AC-3 is enabled and
+	 * then calls the super class implementation.
+	 */
+	public Assignment solve(CSP csp) {
+		if (inferenceStrategy == Inference.AC3) {
+			DomainRestoreInfo info = new AC3Strategy().reduceDomains(csp);
+			if (!info.isEmpty()) {
+				fireStateChanged(csp);
+				if (info.isEmptyDomainFound())
+					return null;
+			}
+		}
+		return super.solve(csp);
+	}
+	
+	/**
+	 * Primitive operation, selecting a not yet assigned variable.
 	 */
 	@Override
 	protected Variable selectUnassignedVariable(Assignment assignment, CSP csp) {
@@ -48,8 +66,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 
 	/**
 	 * Primitive operation, ordering the domain values of the specified
-	 * variable. This default implementation just takes the default order
-	 * provided by the CSP.
+	 * variable.
 	 */
 	@Override
 	protected Iterable<?> orderDomainValues(Variable var,
@@ -64,10 +81,10 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	/**
 	 * Primitive operation, which tries to prune out values from the CSP which
 	 * are not possible anymore when extending the given assignment to a
-	 * solution. This default implementation just returns the original CSP.
-	 * 
-	 * @return A reduced copy of the original CSP or null denoting failure
-	 *         (assignment cannot be extended to a solution).
+	 * solution. 
+	 * @return An object which provides informations about (1) whether changes
+	 * have been performed, (2) possibly inferred empty domains , and (3) how
+	 * to restore the domains.
 	 */
 	@Override
 	protected DomainRestoreInfo inference(Variable var, Assignment assignment, CSP csp) {
@@ -82,6 +99,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		}
 	}
 
+	
 	// //////////////////////////////////////////////////////////////
 	// heuristics for selecting the next unassigned variable and domain ordering
 
@@ -128,6 +146,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		return result;
 	}
 
+	/** Implements the least constraining value heuristic. */
 	private List<Object> applyLeastConstrainingValueHeuristic(Variable var, CSP csp) {
 		List<Pair<Object, Integer>> pairs = new ArrayList<Pair<Object, Integer>>();
 		for (Object value : csp.getDomain(var)) {
@@ -168,6 +187,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	// //////////////////////////////////////////////////////////////
 	// inference algorithms
 
+	/** Implements forward checking. */
 	private DomainRestoreInfo doForwardChecking(Variable var, Assignment assignment, CSP csp) {
 		DomainRestoreInfo result = new DomainRestoreInfo();
 		for (Constraint constraint : csp.getConstraints(var)) {
@@ -204,6 +224,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		return revised;
 	}
 
+	
 	// //////////////////////////////////////////////////////////////
 	// two enumerations
 

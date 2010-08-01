@@ -27,7 +27,6 @@ package aima.core.search.csp;
  * 
  * @author Ruediger Lunde
  */
-
 public class BacktrackingStrategy extends SolutionStrategy {
 
 	public Assignment solve(CSP csp) {
@@ -89,11 +88,14 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	}
 	
 	/**
-	 * Primitive operation, which tries to prune out values from the
-	 * CSP which are not possible anymore when extending the given assignment
-	 * to a solution. This default implementation just leaves the original CSP
+	 * Primitive operation, which tries to prune out values from the CSP which
+	 * are not possible anymore when extending the given assignment to a
+	 * solution. This default implementation just leaves the original CSP
 	 * as it is.
-	 */
+	 * @return An object which provides informations about (1) whether changes
+	 * have been performed, (2) possibly inferred empty domains , and (3) how
+	 * to restore the domains.
+	 */ 
 	protected DomainRestoreInfo inference(Variable var,
 			Assignment assignment, CSP csp) {
 		return new DomainRestoreInfo().compactify();
