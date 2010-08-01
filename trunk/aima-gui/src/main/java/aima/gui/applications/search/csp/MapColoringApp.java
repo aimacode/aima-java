@@ -1,13 +1,14 @@
 package aima.gui.applications.search.csp;
 
 import java.awt.Color;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.CSPStateListener;
+import aima.core.search.csp.Domain;
 import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.MapCSP;
 import aima.core.search.csp.MinConflictsStrategy;
@@ -130,16 +131,11 @@ public class MapColoringApp extends SimpleAgentApp {
 				break;
 			case 1: // three moves
 				csp = new MapCSP();
-				List<Object> vals1 = new ArrayList<Object>();
-				vals1.add(MapCSP.BLUE);
-				csp.setDomain(MapCSP.NSW, vals1);
+				csp.setDomain(MapCSP.NSW, new Domain(new Object[]{MapCSP.BLUE}));
 				break;
 			case 2: // three moves
 				csp = new MapCSP();
-				List<Object> vals2 = new ArrayList<Object>();
-				vals2.add(MapCSP.RED);
-				//csp.setDomain(MapCSP.NSW, vals);
-				csp.setDomain(MapCSP.WA, vals2);
+				csp.setDomain(MapCSP.WA, new Domain(new Object[]{MapCSP.RED}));
 				break;
 			}
 			view.clearMappings();
