@@ -43,11 +43,9 @@ public class AC3Strategy {
 		if (domain.contains(value)) {
 			if (domain.size() > 1) {
 				FIFOQueue<Variable> queue = new FIFOQueue<Variable>();
-				List<Object> newDomain = new ArrayList<Object>(1);
-				newDomain.add(value);
 				queue.add(var);
 				result.storeDomainFor(var, domain);
-				csp.setDomain(var, newDomain);
+				csp.setDomain(var, new Domain(new Object[]{value}));
 				reduceDomains(queue, csp, result);
 			}
 		} else {

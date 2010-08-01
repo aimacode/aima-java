@@ -24,8 +24,8 @@ public class CSPTest {
 	private static final Constraint C1 = new NotEqualConstraint(X, Y);
 	private static final Constraint C2 = new NotEqualConstraint(X, Y);
 	
-	private List<Object> colors;
-	private List<Object> animals;
+	private Domain colors;
+	private Domain animals;
 	
 	private List<Variable> variables;
 
@@ -35,13 +35,8 @@ public class CSPTest {
 		variables.add(X);
 		variables.add(Y);
 		variables.add(Z);
-		colors = new ArrayList<Object>();
-		colors.add("red");
-		colors.add("green");
-		colors.add("blue");
-		animals = new ArrayList<Object>();
-		animals.add("cat");
-		animals.add("dog");
+		colors = new Domain(new Object[]{"red", "green", "blue"});
+		animals = new Domain(new Object[]{"cat", "dog"});
 	}
 
 	@Test
@@ -61,6 +56,9 @@ public class CSPTest {
 	
 	@Test
 	public void testDomainChanges() {
+		Domain colors2 = new Domain(colors.asList());
+		Assert.assertEquals(colors, colors2);
+		
 		CSP csp = new CSP(variables);
 		csp.addConstraint(C1);
 		Assert.assertNotNull(csp.getDomain(X));
@@ -68,7 +66,7 @@ public class CSPTest {
 		Assert.assertNotNull(csp.getConstraints(X));
 		
 		csp.setDomain(X, colors);
-		Assert.assertEquals(new Domain(colors), csp.getDomain(X));
+		Assert.assertEquals(colors, csp.getDomain(X));
 		Assert.assertEquals(3, csp.getDomain(X).size());
 		Assert.assertEquals("red", csp.getDomain(X).get(0));
 		

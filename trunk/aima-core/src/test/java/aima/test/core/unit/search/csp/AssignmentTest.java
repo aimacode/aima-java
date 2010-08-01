@@ -16,7 +16,7 @@ import aima.core.search.csp.Variable;
  */
 public class AssignmentTest {
 	private static final Variable X = new Variable("x");
-	private static final Variable Y = new Variable("x");
+	private static final Variable Y = new Variable("y");
 	
 	private List<Variable> variables;
 	private Assignment assignment;

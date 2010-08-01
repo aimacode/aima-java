@@ -38,10 +38,7 @@ public class MapCSP extends CSP {
 	public MapCSP() {
 		super(collectVariables());
 
-		List<String> colors = new ArrayList<String>();
-		colors.add(RED);
-		colors.add(GREEN);
-		colors.add(BLUE);
+		Domain colors = new Domain(new Object[]{RED, GREEN, BLUE});
 
 		for (Variable var : getVariables())
 			setDomain(var, colors);
