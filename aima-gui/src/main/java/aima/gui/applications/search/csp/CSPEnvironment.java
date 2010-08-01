@@ -95,7 +95,7 @@ public class CSPEnvironment extends AbstractEnvironment {
 		}
 		
 		public String toString() {
-			return "StateChangeAction "
+			return "State Change "
 			+ (updateAssignment() ? assignment : "(Domain Reduction)");
 		}
 	}
