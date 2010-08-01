@@ -61,10 +61,6 @@ public class CSPEnvironment extends AbstractEnvironment {
 	public static class StateChangeAction implements Action {
 		private CSP csp;
 		private Assignment assignment;
-
-		/** Indicate a conflict! */
-		public StateChangeAction() {
-		}
 		
 		/** Update the domains of the CSP. */
 		public StateChangeAction(CSP csp) {
@@ -73,11 +69,6 @@ public class CSPEnvironment extends AbstractEnvironment {
 
 		/** Update the current assignment. */
 		public StateChangeAction(Assignment assignment) {
-			this.assignment = assignment;
-		}
-
-		public StateChangeAction(CSP csp, Assignment assignment) {
-			this.csp = csp;
 			this.assignment = assignment;
 		}
 		
@@ -96,10 +87,6 @@ public class CSPEnvironment extends AbstractEnvironment {
 		public Assignment getAssignment() {
 			return assignment;
 		}
-
-		public boolean indicateConflict() {
-			return !updateCSP() && !updateAssignment();
-		}
 		
 		@Override
 		public boolean isNoOp() {
@@ -108,8 +95,7 @@ public class CSPEnvironment extends AbstractEnvironment {
 		
 		public String toString() {
 			return "StateChangeAction "
-			+ (updateAssignment() ? assignment :
-				(updateCSP() ? "(Domain Reduction)" : "(Conflict)"));
+			+ (updateAssignment() ? assignment : "(Domain Reduction)");
 		}
 	}
 }
