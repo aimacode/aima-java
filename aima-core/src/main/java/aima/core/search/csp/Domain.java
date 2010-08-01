@@ -18,12 +18,18 @@ import aima.core.util.ArrayIterator;
 public class Domain implements Iterable<Object> {
 	private static final long serialVersionUID = 1L;
 
-	Object[] values;
+	private Object[] values;
 	
 	public Domain(List<?> values) {
 		this.values = new Object[values.size()];
 		for (int i = 0; i < values.size(); i++)
 			this.values[i] = values.get(i);
+	}
+	
+	public Domain(Object[] values) {
+		this.values = new Object[values.length];
+		for (int i = 0; i < values.length; i++)
+			this.values[i] = values[i];
 	}
 	
 	public int size() {

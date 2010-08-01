@@ -65,8 +65,8 @@ public class CSP {
 		return domains.get(varIndexHash.get(var));
 	}
 
-	public void setDomain(Variable var, List<?> values) {
-		domains.set(indexOf(var), new Domain(values));
+	public void setDomain(Variable var, Domain domain) {
+		domains.set(indexOf(var), domain);
 	}
 
 	public void removeValueFromDomain(Variable var, Object value) {
@@ -75,12 +75,12 @@ public class CSP {
 		for (Object v : currDomain)
 			if (!v.equals(value))
 				values.add(v);
-		setDomain(var, values);
+		setDomain(var, new Domain(values));
 	}
 
 	public void restoreDomains(DomainRestoreInfo info) {
 		for (Pair<Variable, Domain> pair : info.getSavedDomains())
-			domains.set(indexOf(pair.getFirst()), pair.getSecond());
+			setDomain(pair.getFirst(), pair.getSecond());
 	}
 
 	public List<Constraint> getConstraints() {
