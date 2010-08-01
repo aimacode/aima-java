@@ -27,9 +27,9 @@ public abstract class SolutionStrategy {
 			listener.stateChanged(csp.copyDomains());
 	}
 
-	protected void fireStateChanged(Assignment assignment) {
+	protected void fireStateChanged(Assignment assignment, CSP csp) {
 		for (CSPStateListener listener : listeners)
-			listener.stateChanged(assignment.copy());
+			listener.stateChanged(assignment.copy(), csp.copyDomains());
 	}
 
 	public abstract Assignment solve(CSP csp);
