@@ -68,7 +68,8 @@ public class CSPEnvironment extends AbstractEnvironment {
 		}
 
 		/** Update the current assignment. */
-		public StateChangeAction(Assignment assignment) {
+		public StateChangeAction(Assignment assignment, CSP csp) {
+			this.csp = csp;
 			this.assignment = assignment;
 		}
 		

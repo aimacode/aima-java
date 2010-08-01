@@ -1,6 +1,8 @@
 package aima.gui.applications.search.csp;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.ArrayList;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
@@ -73,7 +75,7 @@ public class MapColoringApp extends SimpleAgentApp {
 			setEnvView(new CSPView());
 			setSelectors(new String[] { ENV_SEL, STRATEGY_SEL }, new String[] {
 					"Select Environment", "Select Solution Strategy" });
-			setSelectorItems(ENV_SEL, new String[] { "Map of Australia" }, 0);
+			setSelectorItems(ENV_SEL, new String[] { "Map of Australia", "Map of Australia (for MCV)" }, 0);
 			setSelectorItems(STRATEGY_SEL, new String[] { "Backtracking",
 					"Backtracking + MRV & DEG",
 					"Backtracking + Forward Checking",
@@ -123,19 +125,26 @@ public class MapColoringApp extends SimpleAgentApp {
 			switch (selState.getValue(MapColoringFrame.ENV_SEL)) {
 			case 0: // three moves
 				csp = new MapCSP();
-				view.clearMappings();
-				view.setPositionMapping(MapCSP.WA, 5, 10);
-				view.setPositionMapping(MapCSP.NT, 15, 3);
-				view.setPositionMapping(MapCSP.SA, 20, 15);
-				view.setPositionMapping(MapCSP.Q, 30, 5);
-				view.setPositionMapping(MapCSP.NSW, 35, 15);
-				view.setPositionMapping(MapCSP.V, 30, 23);
-				view.setPositionMapping(MapCSP.T, 33, 30);
-				view.setColorMapping(MapCSP.RED, Color.RED);
-				view.setColorMapping(MapCSP.GREEN, Color.GREEN);
-				view.setColorMapping(MapCSP.BLUE, Color.BLUE);
+				break;
+			case 1: // three moves
+				csp = new MapCSP();
+				List<Object> vals = new ArrayList<Object>();
+				vals.add(MapCSP.BLUE);
+				csp.setDomain(MapCSP.NSW, vals);
 				break;
 			}
+			view.clearMappings();
+			view.setPositionMapping(MapCSP.WA, 5, 10);
+			view.setPositionMapping(MapCSP.NT, 15, 3);
+			view.setPositionMapping(MapCSP.SA, 20, 15);
+			view.setPositionMapping(MapCSP.Q, 30, 5);
+			view.setPositionMapping(MapCSP.NSW, 35, 15);
+			view.setPositionMapping(MapCSP.V, 30, 23);
+			view.setPositionMapping(MapCSP.T, 33, 30);
+			view.setColorMapping(MapCSP.RED, Color.RED);
+			view.setColorMapping(MapCSP.GREEN, Color.GREEN);
+			view.setColorMapping(MapCSP.BLUE, Color.BLUE);
+			
 			actions.clear();
 			actionCount = 0;
 			env.init(csp);
@@ -244,9 +253,9 @@ public class MapColoringApp extends SimpleAgentApp {
 									csp));
 						}
 						@Override
-						public void stateChanged(Assignment assignment) {
+						public void stateChanged(Assignment assignment, CSP csp) {
 							actions.add(new CSPEnvironment.StateChangeAction(
-									assignment));
+									assignment, csp));
 						}
 					});
 					strategy.solve(env.getCSP().copyDomains());
