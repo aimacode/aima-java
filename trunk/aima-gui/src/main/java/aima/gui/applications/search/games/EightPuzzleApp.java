@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.swing.JButton;
 
@@ -126,8 +127,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			setEnvView(new EightPuzzleView());
 			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] {
 					"Select Environment", "Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Random 1",
-					"Extreme" }, 0);
+			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Medium",
+					"Extreme", "Random" }, 0);
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
 			setTitle("Eight Puzzle Application");
@@ -225,6 +226,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		protected EightPuzzleEnvironment env = null;
 		protected SearchAgent agent = null;
+		protected boolean dirty;
 
 		/** Prepares next simulation. */
 		@Override
@@ -245,7 +247,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6,
 						7, 8 });
 				break;
-			case 1: // random 1
+			case 1: // medium
 				board = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3,
 						0, 6 });
 				break;
@@ -253,9 +255,21 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				board = new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3,
 						2, 1 });
 				break;
+			case 3: // random
+				board = new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8});
+				Random r = new Random(System.currentTimeMillis());
+				for (int i = 0; i < 200 ; i++) {
+					switch (r.nextInt(4)) {
+					case 0: board.moveGapUp(); break;
+					case 1: board.moveGapDown(); break;
+					case 2: board.moveGapLeft(); break;
+					case 3: board.moveGapRight(); break;
+					}
+				}
 			}
 			env = new EightPuzzleEnvironment(board);
 			agent = null;
+			dirty = false;
 			frame.getEnvView().setEnvironment(env);
 		}
 
@@ -280,7 +294,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
-			return agent == null || !agent.isDone();
+			return !dirty && (agent == null || !agent.isDone());
 		}
 
 		/** Starts simulation. */
@@ -340,6 +354,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		public void executeUserAction(Action action) {
 			env.executeAction(null, action);
 			agent = null;
+			dirty = true;
 			frame.updateEnabledState();
 		}
 	}
