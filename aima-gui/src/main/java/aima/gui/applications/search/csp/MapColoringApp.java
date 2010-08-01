@@ -75,7 +75,9 @@ public class MapColoringApp extends SimpleAgentApp {
 			setEnvView(new CSPView());
 			setSelectors(new String[] { ENV_SEL, STRATEGY_SEL }, new String[] {
 					"Select Environment", "Select Solution Strategy" });
-			setSelectorItems(ENV_SEL, new String[] { "Map of Australia", "Map of Australia (for MCV)" }, 0);
+			setSelectorItems(ENV_SEL, new String[] { "Map of Australia",
+					"Map of Australia NSW=BLUE (for MCV)",
+					"Map of Australia WA=RED (for MCV)"}, 0);
 			setSelectorItems(STRATEGY_SEL, new String[] { "Backtracking",
 					"Backtracking + MRV & DEG",
 					"Backtracking + Forward Checking",
@@ -123,14 +125,21 @@ public class MapColoringApp extends SimpleAgentApp {
 			CSP csp = null;
 			CSPView view = getCSPView();
 			switch (selState.getValue(MapColoringFrame.ENV_SEL)) {
-			case 0: // three moves
+			case 0:
 				csp = new MapCSP();
 				break;
 			case 1: // three moves
 				csp = new MapCSP();
-				List<Object> vals = new ArrayList<Object>();
-				vals.add(MapCSP.BLUE);
-				csp.setDomain(MapCSP.NSW, vals);
+				List<Object> vals1 = new ArrayList<Object>();
+				vals1.add(MapCSP.BLUE);
+				csp.setDomain(MapCSP.NSW, vals1);
+				break;
+			case 2: // three moves
+				csp = new MapCSP();
+				List<Object> vals2 = new ArrayList<Object>();
+				vals2.add(MapCSP.RED);
+				//csp.setDomain(MapCSP.NSW, vals);
+				csp.setDomain(MapCSP.WA, vals2);
 				break;
 			}
 			view.clearMappings();
@@ -193,7 +202,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		 * Starts the selected constraint solver and fills the action list if
 		 * necessary.
 		 */
-		private void prepareActions() {
+		protected void prepareActions() {
 			ImprovedBacktrackingStrategy iStrategy = null;
 			if (actions.isEmpty()) {
 				SolutionStrategy strategy = null;
