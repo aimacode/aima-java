@@ -49,16 +49,15 @@ public class BacktrackingStrategy extends SolutionStrategy {
 				assignment.setAssignment(var, value);
 				fireStateChanged(assignment);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
-					CSP savedCSP = csp;
-					csp = inference(var, assignment, csp);
-					if (csp != savedCSP)
+					DomainRestoreInfo info = inference(var, assignment, csp);
+					if (!info.isEmpty())
 						fireStateChanged(csp);
-					if (csp != null) { // null denotes failure
+					if (!info.isEmptyDomainFound()) {
 						result = recursiveBackTrackingSearch(csp, assignment);
 						if (result != null)
 							break;
 					}
-					csp = savedCSP;
+					csp.restoreDomains(info);
 				}
 				assignment.removeAssignment(var);
 			}
@@ -92,12 +91,11 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	/**
 	 * Primitive operation, which tries to prune out values from the
 	 * CSP which are not possible anymore when extending the given assignment
-	 * to a solution. This default implementation just returns the original CSP.
-	 * @return A reduced copy of the original CSP or null denoting failure
-	 *         (assignment cannot be extended to a solution).
+	 * to a solution. This default implementation just leaves the original CSP
+	 * as it is.
 	 */
-	protected CSP inference(Variable var,
+	protected DomainRestoreInfo inference(Variable var,
 			Assignment assignment, CSP csp) {
-		return csp;
+		return new DomainRestoreInfo().compactify();
 	}
 }

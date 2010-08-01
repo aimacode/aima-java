@@ -70,7 +70,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	 *         (assignment cannot be extended to a solution).
 	 */
 	@Override
-	protected CSP inference(Variable var, Assignment assignment, CSP csp) {
+	protected DomainRestoreInfo inference(Variable var, Assignment assignment, CSP csp) {
 		switch (inferenceStrategy) {
 		case FORWARD_CHECKING:
 			return doForwardChecking(var, assignment, csp);
@@ -78,7 +78,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 			return new AC3Strategy().reduceDomains(var, assignment
 					.getAssignment(var), csp);
 		default:
-			return csp;
+			return new DomainRestoreInfo().compactify();
 		}
 	}
 
@@ -164,37 +164,38 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		return result;
 	}
 
+	
 	// //////////////////////////////////////////////////////////////
 	// inference algorithms
 
-	private CSP doForwardChecking(Variable var, Assignment assignment, CSP csp) {
-		boolean revised = false;
-		CSP cspCopy = csp.copyForPropagation();
-		for (Constraint constraint : cspCopy.getConstraints(var)) {
+	private DomainRestoreInfo doForwardChecking(Variable var, Assignment assignment, CSP csp) {
+		DomainRestoreInfo result = new DomainRestoreInfo();
+		for (Constraint constraint : csp.getConstraints(var)) {
 			List<Variable> scope = constraint.getScope();
 			if (scope.size() == 2) {
 				for (Variable neighbor : constraint.getScope()) {
 					if (!assignment.hasAssignmentFor(neighbor)) {
-						if (revise(neighbor, constraint, assignment, cspCopy)) {
-							revised = true;
-							if (cspCopy.getDomain(neighbor).isEmpty())
-								return null;
+						if (revise(neighbor, constraint, assignment, csp, result)) {
+							if (csp.getDomain(neighbor).isEmpty()) {
+								result.setEmptyDomainFound(true);
+								return result;
+							}
 						}
 					}
 				}
 			}
 		}
-		if (revised)
-			csp = cspCopy;
-		return csp;
+		return result;
 	}
 
 	private boolean revise(Variable var, Constraint constraint,
-			Assignment assignment, CSP csp) {
+			Assignment assignment, CSP csp, DomainRestoreInfo info) {
+		
 		boolean revised = false;
 		for (Object value : csp.getDomain(var)) {
 			assignment.setAssignment(var, value);
 			if (!constraint.isSatisfiedWith(assignment)) {
+				info.storeDomainFor(var, csp.getDomain(var));
 				csp.removeValueFromDomain(var, value);
 				revised = true;
 			}

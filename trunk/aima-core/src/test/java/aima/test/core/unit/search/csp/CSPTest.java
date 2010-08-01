@@ -72,7 +72,7 @@ public class CSPTest {
 		Assert.assertEquals(3, csp.getDomain(X).size());
 		Assert.assertEquals("red", csp.getDomain(X).get(0));
 		
-		CSP cspCopy = csp.copyForPropagation();
+		CSP cspCopy = csp.copyDomains();
 		Assert.assertNotNull(cspCopy.getDomain(X));
 		Assert.assertEquals(3, cspCopy.getDomain(X).size());
 		Assert.assertEquals("red", cspCopy.getDomain(X).get(0));
