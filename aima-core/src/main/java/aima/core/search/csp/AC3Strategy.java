@@ -37,7 +37,8 @@ import aima.core.util.datastructure.FIFOQueue;
 
 public class AC3Strategy {
 
-	public CSP reduceDomains(Variable var, Object value, CSP csp) {
+	public DomainRestoreInfo reduceDomains(Variable var, Object value, CSP csp) {
+		DomainRestoreInfo result = new DomainRestoreInfo();
 		Domain domain = csp.getDomain(var);
 		if (domain.contains(value)) {
 			if (domain.size() > 1) {
@@ -45,43 +46,47 @@ public class AC3Strategy {
 				List<Object> newDomain = new ArrayList<Object>(1);
 				newDomain.add(value);
 				queue.add(var);
-				csp = csp.copyForPropagation();
+				result.storeDomainFor(var, domain);
 				csp.setDomain(var, newDomain);
-				csp = reduceDomains(queue, csp);
+				reduceDomains(queue, csp, result);
 			}
 		} else {
-			csp = null;
+			result.setEmptyDomainFound(true);
 		}
-		return csp;
+		return result.compactify();
 	}
 
-	public CSP reduceDomains(CSP csp) {
+	public DomainRestoreInfo reduceDomains(CSP csp) {
+		DomainRestoreInfo result = new DomainRestoreInfo();
 		FIFOQueue<Variable> queue = new FIFOQueue<Variable>();
 		for (Variable var : csp.getVariables())
 			queue.add(var);
-		return reduceDomains(queue, csp.copyForPropagation());
+		reduceDomains(queue, csp, result);
+		return result.compactify();
 	}
 
-	protected CSP reduceDomains(FIFOQueue<Variable> queue, CSP csp) {
-		
+	protected void reduceDomains(FIFOQueue<Variable> queue, CSP csp,
+			DomainRestoreInfo info) {
+
 		while (!queue.isEmpty()) {
 			Variable var = queue.pop();
 			for (Constraint constraint : csp.getConstraints(var)) {
 				if (constraint.getScope().size() == 2) {
 					Variable neighbor = csp.getNeighbor(var, constraint);
-					if (revise(neighbor, var, constraint, csp)) {
-						if (csp.getDomain(neighbor).isEmpty())
-							return null;
+					if (revise(neighbor, var, constraint, csp, info)) {
+						if (csp.getDomain(neighbor).isEmpty()) {
+							info.setEmptyDomainFound(true);
+							return;
+						}
 						queue.push(neighbor);
 					}
 				}
 			}
 		}
-		return csp;
 	}
 
-	private boolean revise(Variable xi, Variable xj,
-			Constraint constraint, CSP csp) {
+	private boolean revise(Variable xi, Variable xj, Constraint constraint,
+			CSP csp, DomainRestoreInfo info) {
 		boolean revised = false;
 		Assignment assignment = new Assignment();
 		for (Object vValue : csp.getDomain(xi)) {
@@ -95,6 +100,7 @@ public class AC3Strategy {
 				}
 			}
 			if (!vValueOK) {
+				info.storeDomainFor(xi, csp.getDomain(xi));
 				csp.removeValueFromDomain(xi, vValue);
 				revised = true;
 			}

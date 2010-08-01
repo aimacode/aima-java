@@ -11,7 +11,7 @@ import aima.core.util.ArrayIterator;
  * the corresponding variable Xi and defines a default order on those values.
  * This implementation guarantees, that domains are never changed after they
  * have been created. Domain reduction is implemented by replacement instead
- * of modification. So previous states can easily be restored.
+ * of modification. So previous states can easily and savely be restored.
  * 
  * @author Ruediger Lunde
  */
