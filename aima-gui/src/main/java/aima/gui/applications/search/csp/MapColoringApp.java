@@ -197,6 +197,7 @@ public class MapColoringApp extends SimpleAgentApp {
 					iStrategy = new ImprovedBacktrackingStrategy();
 					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
 							.Selection.MRV_DEG);
+					break;
 				case 2:
 					iStrategy = new ImprovedBacktrackingStrategy();
 					iStrategy.setInference(ImprovedBacktrackingStrategy
@@ -248,7 +249,7 @@ public class MapColoringApp extends SimpleAgentApp {
 									assignment));
 						}
 					});
-					strategy.solve(env.getCSP());
+					strategy.solve(env.getCSP().copyDomains());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
