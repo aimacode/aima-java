@@ -7,5 +7,5 @@ package aima.core.search.csp;
  */
 public interface CSPStateListener {
 	void stateChanged(CSP csp);
-	void stateChanged(Assignment assignment);
+	void stateChanged(Assignment assignment, CSP csp);
 }

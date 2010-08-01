@@ -34,7 +34,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 
 	public Assignment solve(CSP csp) {
 		Assignment assignment = generateRandomAssignment(csp);
-		fireStateChanged(assignment);
+		fireStateChanged(assignment, csp);
 		for (int i = 0; i < maxSteps; i++) {
 			if (assignment.isSolution(csp)) {
 				return assignment;
@@ -43,7 +43,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 				Variable var = Util.selectRandomlyFromList(vars);
 				Object value = getMinConflictValueFor(var, assignment, csp);
 				assignment.setAssignment(var, value);
-				fireStateChanged(assignment);
+				fireStateChanged(assignment, csp);
 			}
 		}
 		return null;

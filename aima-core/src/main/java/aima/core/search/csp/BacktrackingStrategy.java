@@ -47,7 +47,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 			Variable var = selectUnassignedVariable(assignment, csp);
 			for (Object value : orderDomainValues(var, assignment, csp)) {
 				assignment.setAssignment(var, value);
-				fireStateChanged(assignment);
+				fireStateChanged(assignment, csp);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
 					DomainRestoreInfo info = inference(var, assignment, csp);
 					if (!info.isEmpty())
