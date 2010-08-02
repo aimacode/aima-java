@@ -35,6 +35,10 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 		return poll();
 	}
 
+	public void push(E element) {
+		addFirst(element);
+	}
+	
 	public Queue<E> insert(E element) {
 		if (offer(element)) {
 			return this;
