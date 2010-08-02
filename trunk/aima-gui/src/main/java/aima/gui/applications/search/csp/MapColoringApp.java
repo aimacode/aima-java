@@ -1,8 +1,6 @@
 package aima.gui.applications.search.csp;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;

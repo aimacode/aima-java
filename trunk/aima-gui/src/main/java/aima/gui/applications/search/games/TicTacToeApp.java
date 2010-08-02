@@ -116,9 +116,9 @@ public class TicTacToeApp {
 			}
 			GameState state = game.getState();
 			if (game.getUtility(state) == 0 && game.hasEnded())
-				status.setText("No Winner...");
+				status.setText("No winner...");
 			else
-				status.setText((game.hasEnded() ? "Just Lost: " : "Next Move: ")
+				status.setText((game.hasEnded() ? "Just lost: " : "Next move: ")
 					+ game.getPlayerToMove(game.getState()));
 		}	
 	}
