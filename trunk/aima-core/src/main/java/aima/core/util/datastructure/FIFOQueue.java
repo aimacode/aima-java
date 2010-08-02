@@ -33,6 +33,10 @@ public class FIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	public E pop() {
 		return poll();
 	}
+	
+	public void push(E element) {
+		this.addLast(element);
+	}
 
 	public Queue<E> insert(E element) {
 		if (offer(element)) {
