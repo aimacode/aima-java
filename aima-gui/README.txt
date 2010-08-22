@@ -13,8 +13,8 @@ a starter for all the other applications and demos.
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.0-AIMA-GUI New Games (in preparation) ==
-1.0.0-AIMA-GUI New Games : ??? :<br>
+== Current Release: 1.0.0-AIMA-GUI New Games ==
+1.0.0-AIMA-GUI New Games : 22 Aug 2010 :<br>
   * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
   * New graphical CSP application added (map coloring).
   * Code consolidated and documentation updated.
