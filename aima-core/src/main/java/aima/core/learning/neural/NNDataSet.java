@@ -90,7 +90,7 @@ public abstract class NNDataSet {
 		// normalize raw dataset
 		nds = normalize(rds);
 	}
-	
+
 	/*
 	 * Gets (and removes) a random example from the 'presentlyProcessed'
 	 */
@@ -167,11 +167,11 @@ public abstract class NNDataSet {
 	public List<Double> getStdevs() {
 		return stdevs;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	/*
 	 * create Example instances from a normalized data "table".
 	 */

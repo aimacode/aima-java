@@ -1,9 +1,8 @@
 package aima.core.search.framework;
 
 /**
- * Checks whether a given state equals an explicitly specified
- * goal state.
- *
+ * Checks whether a given state equals an explicitly specified goal state.
+ * 
  * @author Ruediger Lunde
  */
 public class DefaultGoalTest implements GoalTest {

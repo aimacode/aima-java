@@ -20,11 +20,11 @@ public class DomainRestoreInfo {
 		savedDomains.clear();
 		affectedVariables.clear();
 	}
-	
+
 	public boolean isEmpty() {
 		return savedDomains.isEmpty();
 	}
-	
+
 	/**
 	 * Stores the specified domain for the specified variable if a domain has
 	 * not yet been stored for the variable.
@@ -41,6 +41,7 @@ public class DomainRestoreInfo {
 	/**
 	 * Can be called after all domain information has been collected to reduce
 	 * storage consumption.
+	 * 
 	 * @return this object, after removing one hashtable.
 	 */
 	public DomainRestoreInfo compactify() {

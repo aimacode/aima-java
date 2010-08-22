@@ -167,7 +167,7 @@ public class Model implements PLVisitor {
 		// TODO remove this?
 		return null;
 	}
-	
+
 	public Set<Symbol> getAssignedSymbols() {
 		Set<Symbol> set = new HashSet<Symbol>();
 		Iterator i = this.h.keySet().iterator();
@@ -188,7 +188,7 @@ public class Model implements PLVisitor {
 		}
 		return false;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

@@ -17,10 +17,10 @@ import aima.core.search.csp.Variable;
 public class AssignmentTest {
 	private static final Variable X = new Variable("x");
 	private static final Variable Y = new Variable("y");
-	
+
 	private List<Variable> variables;
 	private Assignment assignment;
-	
+
 	@Before
 	public void setUp() {
 		variables = new ArrayList<Variable>();
@@ -40,12 +40,12 @@ public class AssignmentTest {
 		Assert.assertFalse(assignment.isComplete(variables));
 	}
 
-//	@Test
-//	public void testAssignmentDefaultVariableSelection() {
-//		Assert.assertEquals(X, assignment.selectFirstUnassignedVariable(csp));
-//		assignment.setAssignment(X, "Ravi");
-//		Assert.assertEquals(Y, assignment.selectFirstUnassignedVariable(csp));
-//		assignment.setAssignment(Y, "AIMA");
-//		Assert.assertEquals(null, assignment.selectFirstUnassignedVariable(csp));
-//	}
+	// @Test
+	// public void testAssignmentDefaultVariableSelection() {
+	// Assert.assertEquals(X, assignment.selectFirstUnassignedVariable(csp));
+	// assignment.setAssignment(X, "Ravi");
+	// Assert.assertEquals(Y, assignment.selectFirstUnassignedVariable(csp));
+	// assignment.setAssignment(Y, "AIMA");
+	// Assert.assertEquals(null, assignment.selectFirstUnassignedVariable(csp));
+	// }
 }

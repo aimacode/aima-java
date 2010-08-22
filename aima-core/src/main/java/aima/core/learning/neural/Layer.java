@@ -103,7 +103,7 @@ public class Layer {
 	public Vector getLastInducedField() {
 		return lastInducedField;
 	}
-	
+
 	public Matrix getLastWeightUpdateMatrix() {
 		return lastWeightUpdateMatrix;
 	}

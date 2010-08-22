@@ -42,7 +42,7 @@ public class BayesNetNode {
 		}
 
 	}
-	
+
 	public void setProbability(boolean b, boolean c, double d) {
 		distribution.set(b, c, d);
 
@@ -116,7 +116,7 @@ public class BayesNetNode {
 			children.add(node);
 		}
 	}
-	
+
 	private boolean isRoot() {
 		return (parents.size() == 0);
 	}

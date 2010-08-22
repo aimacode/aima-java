@@ -17,8 +17,8 @@ public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
 	protected Map map;
 
 	/**
-	 * Modifies goal and map information and returns the modified
-	 * heuristic function.
+	 * Modifies goal and map information and returns the modified heuristic
+	 * function.
 	 */
 	public AdaptableHeuristicFunction adaptToGoal(Object goal, Map map) {
 		this.goal = goal;

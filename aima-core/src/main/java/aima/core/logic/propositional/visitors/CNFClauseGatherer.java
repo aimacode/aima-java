@@ -43,7 +43,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 		}
 		return set;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

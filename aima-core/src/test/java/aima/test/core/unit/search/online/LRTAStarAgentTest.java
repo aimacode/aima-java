@@ -45,8 +45,8 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"A"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -59,8 +59,8 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"F"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("F"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -76,8 +76,8 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"G"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());

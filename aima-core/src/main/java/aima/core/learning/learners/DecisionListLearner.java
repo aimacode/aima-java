@@ -60,7 +60,7 @@ public class DecisionListLearner implements Learner {
 	public DecisionList getDecisionList() {
 		return decisionList;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

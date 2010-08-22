@@ -11,7 +11,7 @@ public abstract class Parser {
 	protected Token[] lookAheadBuffer;
 
 	protected int lookAhead = 3;
-	
+
 	public abstract ParseTreeNode parse(String input);
 
 	protected void fillLookAheadBuffer() {

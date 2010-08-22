@@ -6,7 +6,7 @@ import java.util.List;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.8, Page 225.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.8, Page 221.
  * 
  * <pre>
  * <code>
@@ -22,6 +22,12 @@ import aima.core.util.Util;
  *    return failure
  * </code>
  * </pre>
+ * 
+ * Figure 6.8 The MIN-CONFLICTS algorithm for solving CSPs by local search. The
+ * initial state may be chosen randomly or by a greedy assignment process that
+ * chooses a minimal-conflict value for each variable in turn. The CONFLICTS
+ * function counts the number of constraints violated by a particular value,
+ * given the rest of the current assignment.
  * 
  * @author Ruediger Lunde
  */
@@ -52,8 +58,8 @@ public class MinConflictsStrategy extends SolutionStrategy {
 	private Assignment generateRandomAssignment(CSP csp) {
 		Assignment assignment = new Assignment();
 		for (Variable var : csp.getVariables()) {
-			Object randomValue = Util
-					.selectRandomlyFromList(csp.getDomain(var).asList());
+			Object randomValue = Util.selectRandomlyFromList(csp.getDomain(var)
+					.asList());
 			assignment.setAssignment(var, randomValue);
 		}
 		return assignment;

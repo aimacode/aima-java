@@ -20,7 +20,7 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
  */
 public class MapAgent extends SimpleProblemSolvingAgent {
 	private Map map = null;
-	
+
 	private NotifyEnvironmentViews notifier = null;
 
 	private DynamicState state = new DynamicState();
@@ -86,9 +86,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected Problem formulateProblem(Object goal) {
-		return new BidirectionalMapProblem(map,
-				(String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
-				(String) goal);
+		return new BidirectionalMapProblem(map, (String) state
+				.getAttribute(DynAttributeNames.AGENT_LOCATION), (String) goal);
 	}
 
 	@Override

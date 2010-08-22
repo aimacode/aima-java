@@ -41,7 +41,7 @@ public class DPLL {
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);
 	}
-	
+
 	public List<Sentence> clausesWithNonTrueValues(List<Sentence> clauseList,
 			Model model) {
 		List<Sentence> clausesWithNonTrueValues = new ArrayList<Sentence>();
@@ -111,7 +111,7 @@ public class DPLL {
 			}
 		}
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

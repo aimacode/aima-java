@@ -52,11 +52,11 @@ public class LayerSensitivity {
 		sensitivityMatrix = calculatedSensitivityMatrix.copy();
 		return sensitivityMatrix;
 	}
-	
+
 	public Layer getLayer() {
 		return layer;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

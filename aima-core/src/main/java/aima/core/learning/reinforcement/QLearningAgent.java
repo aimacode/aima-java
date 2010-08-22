@@ -61,7 +61,7 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 		}
 
 	}
-	
+
 	public Hashtable<Pair<STATE_TYPE, ACTION_TYPE>, Double> getQ() {
 		return Q;
 	}
@@ -69,7 +69,7 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 	public QTable<STATE_TYPE, ACTION_TYPE> getQTable() {
 		return qTable;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

@@ -61,11 +61,11 @@ public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
 		return utilityFunction;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	private MDPUtilityFunction<STATE_TYPE> updateUtilityFunction(double gamma) {
 		MDPUtilityFunction<STATE_TYPE> uf = utilityFunction.copy();
 		double u_s = utilityFunction.getUtility(previousState);

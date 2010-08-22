@@ -8,9 +8,9 @@ import java.util.List;
 import aima.core.util.datastructure.Pair;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 206. A
- * constraint satisfaction problem or CSP consists of three components, X,D, and
- * C:
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202. A
+ * constraint satisfaction problem or CSP consists of three components, X, D,
+ * and C:
  * <ul>
  * <li>X is a set of variables, {X1, ... ,Xn}.</li>
  * <li>D is a set of domains, {D1, ... ,Dn}, one for each variable.</li>
@@ -102,6 +102,7 @@ public class CSP {
 
 	/**
 	 * Returns for binary constraints the other variable from the scope.
+	 * 
 	 * @return a variable or null for non-binary constraints.
 	 */
 	public Variable getNeighbor(Variable var, Constraint constraint) {
@@ -116,8 +117,8 @@ public class CSP {
 	}
 
 	/**
-	 * Returns a copy which contains a copy of the domains
-	 * list and is in all other aspects a flat copy of this.
+	 * Returns a copy which contains a copy of the domains list and is in all
+	 * other aspects a flat copy of this.
 	 */
 	public CSP copyDomains() {
 		CSP result = new CSP();

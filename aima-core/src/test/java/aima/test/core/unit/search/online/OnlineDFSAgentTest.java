@@ -39,8 +39,8 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"A"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -53,8 +53,8 @@ public class OnlineDFSAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"G"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -72,8 +72,8 @@ public class OnlineDFSAgentTest {
 		aMap.addBidirectionalLink("A", "B", 1.0);
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"X"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("X"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -100,8 +100,8 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap), new DefaultGoalTest(
-						"3,3"), new MapStepCostFunction(aMap)),
+				MapFunctionFactory.getActionsFunction(aMap),
+				new DefaultGoalTest("3,3"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "1,1");
 		me.addEnvironmentView(new TestEnvironmentView());

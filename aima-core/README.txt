@@ -5,16 +5,15 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 1.0.0-AIMAX-OSM Consolidated (in preparation) ==
-1.0.0-AIMAX-OSM Consolidated : ??? :<br>
-  * CSP package restructured.
+== Current Release: 0.9.10-CSP+AC-3 ==
+0.9.10-CSP+AC-2 : 22 Aug 2010 :<br>
+  * CSP package significantly restructured, added AC-3 implementation.
   * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
   * The N-Queens representation now supports incremental as well as complete-state problem formulation.
   * Minor clean-ups included.
- 
+  * Now compiles on Android 2.1.
  
 = Details =
-
 
 == Build Instructions ==
 If you just want to use the classes, all you need to do is put the release/aima-core.jar on your CLASSPATH.
@@ -71,9 +70,10 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   5.3 ||     166|| Minimax-Decision             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java (method)-makeMiniMaxMove()]||
 ||   5.7 ||     170|| Alpha-Beta-Search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java (method)-makeAlphaBetaMove()]||
 ||   6   ||     202|| CSP                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/CSP.java CSP]||
-||   6.3 ||     209|| AC-3                         ||---||
-||   6.5 ||     215|| Backtracking-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/CSP.java (method)-backtrackingSearch()]||
-||   6.8 ||     221|| Min-Conflicts                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/CSP.java (method)-mcSearch()]||
+||   6.1 ||     204|| Map CSP                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MapCSP.java MapCSP]||
+||   6.3 ||     209|| AC-3                         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java AC3Strategy]||
+||   6.5 ||     215|| Backtracking-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java BacktrackingStrategy]||
+||   6.8 ||     221|| Min-Conflicts                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java MinConflictsStrategy]||
 ||   6.11||     209|| Tree-CSP-Solver              ||---||
 ||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/KnowledgeBase.java KnowledgeBase]||
 ||   7.1 ||     236|| KB-Agent                     ||---||

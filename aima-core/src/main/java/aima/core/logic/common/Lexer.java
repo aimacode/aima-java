@@ -21,7 +21,7 @@ public abstract class Lexer {
 		this.input = new StringReader(inputString);
 		fillLookAheadBuffer();
 	}
-	
+
 	public void clear() {
 		this.input = null;
 		lookAheadBuffer = null;

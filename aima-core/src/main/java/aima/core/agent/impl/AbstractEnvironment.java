@@ -20,7 +20,8 @@ import aima.core.agent.Percept;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public abstract class AbstractEnvironment implements Environment, NotifyEnvironmentViews {
+public abstract class AbstractEnvironment implements Environment,
+		NotifyEnvironmentViews {
 
 	// Note: Use LinkedHashSet's in order to ensure order is respected as
 	// provide

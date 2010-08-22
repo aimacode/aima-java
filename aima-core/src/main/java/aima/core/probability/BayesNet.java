@@ -105,7 +105,7 @@ public class BayesNet {
 		}
 		return Util.normalize(retval);
 	}
-	
+
 	public double[] likelihoodWeighting(String X,
 			Hashtable<String, Boolean> evidence, int numberOfSamples,
 			Randomizer r) {
@@ -162,7 +162,7 @@ public class BayesNet {
 		}
 		return Util.normalize(retval);
 	}
-	
+
 	public double[] mcmcAsk(String X, Hashtable<String, Boolean> evidence,
 			int numberOfVariables) {
 		return mcmcAsk(X, evidence, numberOfVariables, new JavaRandomizer());
@@ -179,11 +179,11 @@ public class BayesNet {
 		return rejectionSample(X, evidence, numberOfSamples,
 				new JavaRandomizer());
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	private List<BayesNetNode> getVariableNodes() {
 		// TODO dicey initalisation works fine but unclear . clarify
 		if (variableNodes == null) {

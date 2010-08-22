@@ -1,13 +1,10 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
  * 
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.3, Page 213.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.3, Page 209.
  * 
  * <pre>
  * <code>
@@ -32,6 +29,12 @@ import aima.core.util.datastructure.FIFOQueue;
  * </code>
  * </pre>
  * 
+ * Figure 6.3 The arc-consistency algorithm AC-3. After applying AC-3, either
+ * every arc is arc-consistent, or some variable has an empty domain, indicating
+ * that the CSP cannot be solved. The name "AC-3" was used by the algorithm's
+ * inventor (Mackworth, 1977) because it's the third version developed in the
+ * paper.
+ * 
  * @author Ruediger Lunde
  */
 
@@ -45,7 +48,7 @@ public class AC3Strategy {
 				FIFOQueue<Variable> queue = new FIFOQueue<Variable>();
 				queue.add(var);
 				result.storeDomainFor(var, domain);
-				csp.setDomain(var, new Domain(new Object[]{value}));
+				csp.setDomain(var, new Domain(new Object[] { value }));
 				reduceDomains(queue, csp, result);
 			}
 		} else {

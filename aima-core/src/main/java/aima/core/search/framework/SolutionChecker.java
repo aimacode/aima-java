@@ -5,13 +5,14 @@ import java.util.List;
 import aima.core.agent.Action;
 
 /**
- * A specialization of the GoalTest interface so that it is possible to check the solution
- * once a Goal has been identified to determine if it is acceptable. This allows you to 
- * continue searching for alternative solutions without having to restart the search.
- *  
- * However, care needs to be taken when doing this as it does not always make sense to continue 
- * with a search once an initial goal is found, for example if using a heuristic targeted at a 
- * single goal.
+ * A specialization of the GoalTest interface so that it is possible to check
+ * the solution once a Goal has been identified to determine if it is
+ * acceptable. This allows you to continue searching for alternative solutions
+ * without having to restart the search.
+ * 
+ * However, care needs to be taken when doing this as it does not always make
+ * sense to continue with a search once an initial goal is found, for example if
+ * using a heuristic targeted at a single goal.
  * 
  * @author Ciaran O'Reilly
  */

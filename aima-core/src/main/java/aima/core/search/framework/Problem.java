@@ -60,7 +60,7 @@ public class Problem {
 	public boolean isGoalState(Object state) {
 		return goalTest.isGoalState(state);
 	}
-	
+
 	public GoalTest getGoalTest() {
 		return goalTest;
 	}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.1, Page 208.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.1, Page 204.
  * The principal states and territories of Australia. Coloring this map can be
  * viewed as a constraint satisfaction problem (CSP). The goal is to assign
  * colors to each region so that no neighboring regions have the same color.
@@ -38,7 +38,7 @@ public class MapCSP extends CSP {
 	public MapCSP() {
 		super(collectVariables());
 
-		Domain colors = new Domain(new Object[]{RED, GREEN, BLUE});
+		Domain colors = new Domain(new Object[] { RED, GREEN, BLUE });
 
 		for (Variable var : getVariables())
 			setDomain(var, colors);
