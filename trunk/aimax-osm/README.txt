@@ -42,11 +42,10 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 1.0.0-AIMAX-OSM Consolidated (in preparation) ==
-1.0.0-AIMAX-OSM Consolidated : ??? :<br>
+== Current Release: 1.0.0-AIMAX-OSM Consolidated ==
+1.0.0-AIMAX-OSM Consolidated : 22 Aug 2010 :<br>
    * Documentation updated.
    * Minor clean-ups included.
-
 
 == Keywords ==
 
