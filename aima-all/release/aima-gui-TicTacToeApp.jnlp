@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp  spec="6.0+"  codebase="http://aima-java.googlecode.com/svn/trunk/aima-all/release"  href="aima-gui-TicTacToeApp.jnlp">  
+  <information>    
+    <title>Tic-Tac-Toe Demo Application</title>
+    <description>Tic-Tac-Toe Demo Application</description>      
+    <vendor>AIMA3e-Java Open Source Project</vendor>    
+    <homepage href="http://code.google.com/p/aima-java/"/> 
+    <icon href="images/aima3e.jpg"/>
+    <icon kind="splash" href="images/aima3ebig.jpg"/>
+    <offline-allowed/>
+  </information>  
+  <security>      
+    <all-permissions/>
+  </security>  
+  <resources>    
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>     
+    <jar href="jars/aima-core.jar"/>  
+    <jar href="jars/aima-gui.jar"/> 
+  </resources>  
+  <application-desc main-class="aima.gui.applications.search.games.TicTacToeApp" />
+</jnlp> 
