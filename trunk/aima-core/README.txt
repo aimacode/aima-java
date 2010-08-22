@@ -6,7 +6,7 @@
 
 
 == Current Release: 0.9.10-CSP+AC-3 ==
-0.9.10-CSP+AC-2 : 22 Aug 2010 :<br>
+0.9.10-CSP+AC-3 : 22 Aug 2010 :<br>
   * CSP package significantly restructured, added AC-3 implementation.
   * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
   * The N-Queens representation now supports incremental as well as complete-state problem formulation.
