@@ -20,7 +20,7 @@ public class QTableTest {
 	@Before
 	public void setUp() {
 		// simple qlearning example from
-		//http://people.revoledu.com/kardi/tutorial/ReinforcementLearning/index.
+		// http://people.revoledu.com/kardi/tutorial/ReinforcementLearning/index.
 		// html
 		// List<String> states = Arrays.asList(new String[] { "A", "B", "C",
 		// "D",

@@ -21,7 +21,7 @@ public class TicTacToeBoard {
 	public boolean isEmpty(int row, int col) {
 		return state[getAbsPosition(row, col)] == EMPTY;
 	}
-	
+
 	public boolean isMarked(String string, int i, int j) {
 		return getValue(i, j).equals(string);
 	}
@@ -123,11 +123,11 @@ public class TicTacToeBoard {
 	public String[] getState() {
 		return state;
 	}
-	
+
 	public void setState(String[] state) {
 		this.state = state;
 	}
-	
+
 	@Override
 	public boolean equals(Object anObj) {
 		TicTacToeBoard anotherBoard = (TicTacToeBoard) anObj;
@@ -136,7 +136,7 @@ public class TicTacToeBoard {
 				return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
@@ -147,7 +147,7 @@ public class TicTacToeBoard {
 		}
 		return buf.toString();
 	}
-	
+
 	public void print() {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++)
@@ -155,11 +155,11 @@ public class TicTacToeBoard {
 			System.out.println();
 		}
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	private int getAbsPosition(int row, int col) {
 		return row * 3 + col;
 	}

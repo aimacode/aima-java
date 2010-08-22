@@ -85,7 +85,7 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 	public Object getLastSearchState() {
 		return lastState;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

@@ -66,7 +66,7 @@ public class Assignment {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns true if this assignment assigns values to every variable of
 	 * <code>vars</code>.
@@ -80,8 +80,8 @@ public class Assignment {
 	}
 
 	/**
-	 * Returns true if this assignment is consistent as well as complete
-	 * with respect to the given CSP.
+	 * Returns true if this assignment is consistent as well as complete with
+	 * respect to the given CSP.
 	 */
 	public boolean isSolution(CSP csp) {
 		return isConsistent(csp.getConstraints())

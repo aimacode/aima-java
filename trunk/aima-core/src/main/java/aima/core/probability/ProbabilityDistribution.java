@@ -102,7 +102,7 @@ public class ProbabilityDistribution {
 
 		return prob;
 	}
-	
+
 	public double probabilityOf(String variableName, boolean b) {
 		Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
 		h.put(variableName, new Boolean(b));

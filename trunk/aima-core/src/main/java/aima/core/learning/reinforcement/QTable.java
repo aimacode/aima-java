@@ -93,12 +93,12 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 		}
 		return policy;
 	}
-	
+
 	@Override
 	public String toString() {
 		return table.toString();
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//
@@ -119,7 +119,7 @@ public class QTable<STATE_TYPE, ACTION_TYPE> {
 			return 0.0;
 		}
 	}
-	
+
 	private ACTION_TYPE getRecordedActionWithMaximumQValue(STATE_TYPE state) {
 		Double maxValue = Double.NEGATIVE_INFINITY;
 		ACTION_TYPE action = null;

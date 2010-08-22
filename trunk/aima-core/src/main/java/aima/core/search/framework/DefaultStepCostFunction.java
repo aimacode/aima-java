@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 
 /**
  * Returns one for every action.
+ * 
  * @author Ravi Mohan
  */
 public class DefaultStepCostFunction implements StepCostFunction {

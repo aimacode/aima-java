@@ -6,8 +6,9 @@ import java.util.List;
 import aima.core.util.datastructure.XYLocation;
 
 /**
- * Represents a quadratic board with a matrix of squares on which queens
- * can be placed (only one per square) and moved.
+ * Represents a quadratic board with a matrix of squares on which queens can be
+ * placed (only one per square) and moved.
+ * 
  * @author Ravi Mohan
  * @author R. Lunde
  */

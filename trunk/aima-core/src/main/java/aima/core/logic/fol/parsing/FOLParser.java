@@ -126,7 +126,7 @@ public class FOLParser {
 		match("NOT");
 		return new NotSentence(parseSentence());
 	}
-	
+
 	//
 	// PROTECTED METHODS
 	//
@@ -182,7 +182,7 @@ public class FOLParser {
 		}
 
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

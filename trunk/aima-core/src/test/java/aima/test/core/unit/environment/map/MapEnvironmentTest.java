@@ -31,7 +31,8 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
+		ma = new MapAgent(me.getMap(), me, new UniformCostSearch(),
+				new String[] { "A" });
 	}
 
 	@Test

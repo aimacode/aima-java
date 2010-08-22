@@ -177,25 +177,25 @@ public class EightPuzzleBoard {
 	//
 
 	/**
-	 * Note: The graphic representation maps x values on row numbers
-	 * (x-axis in vertical direction).
+	 * Note: The graphic representation maps x values on row numbers (x-axis in
+	 * vertical direction).
 	 */
 	private int getXCoord(int absPos) {
 		return absPos / 3;
 	}
-	
+
 	/**
-	 * Note: The graphic representation maps y values on column numbers
-	 * (y-axis in horizontal direction).
+	 * Note: The graphic representation maps y values on column numbers (y-axis
+	 * in horizontal direction).
 	 */
 	private int getYCoord(int absPos) {
 		return absPos % 3;
 	}
-	
+
 	private int getAbsPosition(int x, int y) {
 		return x * 3 + y;
 	}
-	
+
 	private int getValueAt(int x, int y) {
 		// refactor this use either case or a div/mod soln
 		return state[getAbsPosition(x, y)];

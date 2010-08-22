@@ -96,7 +96,7 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 	public MDPUtilityFunction<STATE_TYPE> getUtilityFunction() {
 		return utilityFunction;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

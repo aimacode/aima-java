@@ -75,7 +75,6 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 		return recursiveDLS(new Node(p.getInitialState()), p, limit);
 	}
 
-
 	@Override
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
@@ -93,7 +92,7 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
 	// failure/cutoff
 	private List<Action> recursiveDLS(Node node, Problem problem, int limit) {
@@ -130,7 +129,7 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 			}
 		}
 	}
-	
+
 	private List<Action> cutoff() {
 		// Only want to created once
 		if (null == cutoffResult) {

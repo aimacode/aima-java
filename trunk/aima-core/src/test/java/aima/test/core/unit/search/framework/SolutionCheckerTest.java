@@ -13,26 +13,26 @@ import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.GraphSearch;
-import aima.core.search.framework.SolutionChecker;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SolutionChecker;
 import aima.core.search.uninformed.BreadthFirstSearch;
 
 public class SolutionCheckerTest {
-	
+
 	@Test
 	public void testMultiGoalProblem() throws Exception {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctionFactory.getActionsFunction(romaniaMap),
 				MapFunctionFactory.getResultFunction(), new DualMapGoalTest(
-						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, 
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST,
 						SimplifiedRoadMapOfPartOfRomania.HIRSOVA),
 				new MapStepCostFunction(romaniaMap));
 
 		Search search = new BreadthFirstSearch(new GraphSearch());
-		
+
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert
 				.assertEquals(
@@ -46,11 +46,11 @@ public class SolutionCheckerTest {
 		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
 				"maxQueueSize"));
 	}
-	
+
 	class DualMapGoalTest implements SolutionChecker {
 		public String goalState1 = null;
 		public String goalState2 = null;
-		
+
 		private Set<String> goals = new HashSet<String>();
 
 		public DualMapGoalTest(String goalState1, String goalState2) {
@@ -63,7 +63,7 @@ public class SolutionCheckerTest {
 		public boolean isGoalState(Object state) {
 			return goalState1.equals(state) || goalState2.equals(state);
 		}
-		
+
 		public boolean isAcceptableSolution(List<Action> actions, Object goal) {
 			goals.remove(goal);
 			return goals.isEmpty();

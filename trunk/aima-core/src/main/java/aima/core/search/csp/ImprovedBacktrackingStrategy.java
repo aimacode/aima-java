@@ -22,15 +22,17 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		inferenceStrategy = iStrategy;
 	}
 
-	/** Selects the least constraining value heuristic as implementation
-	 * for ORDER-DOMAIN-VALUES. */
+	/**
+	 * Selects the least constraining value heuristic as implementation for
+	 * ORDER-DOMAIN-VALUES.
+	 */
 	public void enableLCV(boolean state) {
 		isLCVHeuristicEnabled = state;
 	}
 
 	/**
-	 * Starts with a constraint propagation if AC-3 is enabled and
-	 * then calls the super class implementation.
+	 * Starts with a constraint propagation if AC-3 is enabled and then calls
+	 * the super class implementation.
 	 */
 	public Assignment solve(CSP csp) {
 		if (inferenceStrategy == Inference.AC3) {
@@ -43,7 +45,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		}
 		return super.solve(csp);
 	}
-	
+
 	/**
 	 * Primitive operation, selecting a not yet assigned variable.
 	 */
@@ -81,13 +83,15 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	/**
 	 * Primitive operation, which tries to prune out values from the CSP which
 	 * are not possible anymore when extending the given assignment to a
-	 * solution. 
+	 * solution.
+	 * 
 	 * @return An object which provides informations about (1) whether changes
-	 * have been performed, (2) possibly inferred empty domains , and (3) how
-	 * to restore the domains.
+	 *         have been performed, (2) possibly inferred empty domains , and
+	 *         (3) how to restore the domains.
 	 */
 	@Override
-	protected DomainRestoreInfo inference(Variable var, Assignment assignment, CSP csp) {
+	protected DomainRestoreInfo inference(Variable var, Assignment assignment,
+			CSP csp) {
 		switch (inferenceStrategy) {
 		case FORWARD_CHECKING:
 			return doForwardChecking(var, assignment, csp);
@@ -99,7 +103,6 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		}
 	}
 
-	
 	// //////////////////////////////////////////////////////////////
 	// heuristics for selecting the next unassigned variable and domain ordering
 
@@ -147,7 +150,8 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	}
 
 	/** Implements the least constraining value heuristic. */
-	private List<Object> applyLeastConstrainingValueHeuristic(Variable var, CSP csp) {
+	private List<Object> applyLeastConstrainingValueHeuristic(Variable var,
+			CSP csp) {
 		List<Pair<Object, Integer>> pairs = new ArrayList<Pair<Object, Integer>>();
 		for (Object value : csp.getDomain(var)) {
 			int num = countLostValues(var, value, csp);
@@ -157,8 +161,8 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 			@Override
 			public int compare(Pair<Object, Integer> o1,
 					Pair<Object, Integer> o2) {
-				return o1.getSecond() < o2.getSecond() ? -1 :
-					o1.getSecond() > o2.getSecond() ? 1 : 0;
+				return o1.getSecond() < o2.getSecond() ? -1
+						: o1.getSecond() > o2.getSecond() ? 1 : 0;
 			}
 		});
 		List<Object> result = new ArrayList<Object>();
@@ -183,19 +187,20 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		return result;
 	}
 
-	
 	// //////////////////////////////////////////////////////////////
 	// inference algorithms
 
 	/** Implements forward checking. */
-	private DomainRestoreInfo doForwardChecking(Variable var, Assignment assignment, CSP csp) {
+	private DomainRestoreInfo doForwardChecking(Variable var,
+			Assignment assignment, CSP csp) {
 		DomainRestoreInfo result = new DomainRestoreInfo();
 		for (Constraint constraint : csp.getConstraints(var)) {
 			List<Variable> scope = constraint.getScope();
 			if (scope.size() == 2) {
 				for (Variable neighbor : constraint.getScope()) {
 					if (!assignment.hasAssignmentFor(neighbor)) {
-						if (revise(neighbor, constraint, assignment, csp, result)) {
+						if (revise(neighbor, constraint, assignment, csp,
+								result)) {
 							if (csp.getDomain(neighbor).isEmpty()) {
 								result.setEmptyDomainFound(true);
 								return result;
@@ -210,7 +215,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 
 	private boolean revise(Variable var, Constraint constraint,
 			Assignment assignment, CSP csp, DomainRestoreInfo info) {
-		
+
 		boolean revised = false;
 		for (Object value : csp.getDomain(var)) {
 			assignment.setAssignment(var, value);
@@ -224,7 +229,6 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		return revised;
 	}
 
-	
 	// //////////////////////////////////////////////////////////////
 	// two enumerations
 

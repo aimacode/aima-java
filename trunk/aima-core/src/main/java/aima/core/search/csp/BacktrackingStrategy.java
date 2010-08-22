@@ -1,7 +1,7 @@
 package aima.core.search.csp;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 220.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 215.
  * 
  * <pre>
  * <code>
@@ -25,6 +25,16 @@ package aima.core.search.csp;
  * </code>
  * </pre>
  * 
+ * Figure 6.5 A simple backtracking algorithm for constraint satisfaction
+ * problems. The algorithm is modeled on the recursive depth-first search of
+ * Chapter 3. By varying the functions SELECT-UNASSIGNED-VARIABLE and
+ * ORDER-DOMAIN-VALUES, we can implement the general-purpose heuristic discussed
+ * in the text. The function INFERENCE can optionally be used to impose arc-,
+ * path-, or k-consistency, as desired. If a value choice leads to failure
+ * (noticed wither by INFERENCE or by BACKTRACK), then value assignments
+ * (including those made by INFERENCE) are removed from the current assignment
+ * and a new value is tried.
+ * 
  * @author Ruediger Lunde
  */
 public class BacktrackingStrategy extends SolutionStrategy {
@@ -34,8 +44,8 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	}
 
 	/**
-	 * Template method, which can be configured by overriding the three primitive
-	 * operations below.
+	 * Template method, which can be configured by overriding the three
+	 * primitive operations below.
 	 */
 	private Assignment recursiveBackTrackingSearch(CSP csp,
 			Assignment assignment) {
@@ -86,18 +96,19 @@ public class BacktrackingStrategy extends SolutionStrategy {
 			Assignment assignment, CSP csp) {
 		return csp.getDomain(var);
 	}
-	
+
 	/**
 	 * Primitive operation, which tries to prune out values from the CSP which
 	 * are not possible anymore when extending the given assignment to a
-	 * solution. This default implementation just leaves the original CSP
-	 * as it is.
+	 * solution. This default implementation just leaves the original CSP as it
+	 * is.
+	 * 
 	 * @return An object which provides informations about (1) whether changes
-	 * have been performed, (2) possibly inferred empty domains , and (3) how
-	 * to restore the domains.
-	 */ 
-	protected DomainRestoreInfo inference(Variable var,
-			Assignment assignment, CSP csp) {
+	 *         have been performed, (2) possibly inferred empty domains , and
+	 *         (3) how to restore the domains.
+	 */
+	protected DomainRestoreInfo inference(Variable var, Assignment assignment,
+			CSP csp) {
 		return new DomainRestoreInfo().compactify();
 	}
 }

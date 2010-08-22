@@ -52,7 +52,7 @@ public class DecisionTreeLearner implements Learner {
 		}
 		return results;
 	}
-	
+
 	public DecisionTree getDecisionTree() {
 		return tree;
 	}
@@ -60,7 +60,7 @@ public class DecisionTreeLearner implements Learner {
 	//
 	// PRIVATE METHODS
 	//
-	
+
 	private DecisionTree decisionTreeLearning(DataSet ds,
 			List<String> attributeNames, ConstantDecisonTree defaultTree) {
 		if (ds.size() == 0) {

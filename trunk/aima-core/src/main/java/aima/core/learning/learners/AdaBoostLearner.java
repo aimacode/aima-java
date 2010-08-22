@@ -53,7 +53,7 @@ public class AdaBoostLearner implements Learner {
 	public String predict(Example e) {
 		return weightedMajority(e);
 	}
-	
+
 	public int[] test(DataSet ds) {
 		int[] results = new int[] { 0, 0 };
 
@@ -66,7 +66,7 @@ public class AdaBoostLearner implements Learner {
 		}
 		return results;
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	//

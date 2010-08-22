@@ -251,7 +251,7 @@ public class Unifier {
 	}
 
 	// See:
-	//http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
+	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
 	// for need for this.
 	private void cascadeSubstitution(Map<Variable, Term> theta, Variable var,
 			Term x) {

@@ -8,10 +8,10 @@ import java.util.Iterator;
  * @author Ruediger Lunde
  */
 public class ArrayIterator<T> implements Iterator<T> {
-	
+
 	T[] values;
 	int counter;
-	
+
 	public ArrayIterator(T[] values) {
 		this.values = values;
 		counter = 0;

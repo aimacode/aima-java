@@ -7,11 +7,11 @@ import java.util.List;
 import aima.core.util.ArrayIterator;
 
 /**
- * A domain Di consists of a set of allowable values {v1, ... , vk} for
- * the corresponding variable Xi and defines a default order on those values.
- * This implementation guarantees, that domains are never changed after they
- * have been created. Domain reduction is implemented by replacement instead
- * of modification. So previous states can easily and savely be restored.
+ * A domain Di consists of a set of allowable values {v1, ... , vk} for the
+ * corresponding variable Xi and defines a default order on those values. This
+ * implementation guarantees, that domains are never changed after they have
+ * been created. Domain reduction is implemented by replacement instead of
+ * modification. So previous states can easily and safely be restored.
  * 
  * @author Ruediger Lunde
  */
@@ -19,23 +19,23 @@ public class Domain implements Iterable<Object> {
 	private static final long serialVersionUID = 1L;
 
 	private Object[] values;
-	
+
 	public Domain(List<?> values) {
 		this.values = new Object[values.size()];
 		for (int i = 0; i < values.size(); i++)
 			this.values[i] = values.get(i);
 	}
-	
+
 	public Domain(Object[] values) {
 		this.values = new Object[values.length];
 		for (int i = 0; i < values.length; i++)
 			this.values[i] = values[i];
 	}
-	
+
 	public int size() {
 		return values.length;
 	}
-	
+
 	public Object get(int index) {
 		return values[index];
 	}
@@ -43,20 +43,20 @@ public class Domain implements Iterable<Object> {
 	public boolean isEmpty() {
 		return values.length == 0;
 	}
-	
+
 	public boolean contains(Object value) {
 		for (Object v : values)
 			if (v.equals(value))
 				return true;
 		return false;
 	}
-	
+
 	@Override
 	public Iterator<Object> iterator() {
 		// TODO Auto-generated method stub
 		return new ArrayIterator<Object>(values);
 	}
-	
+
 	/** Not very efficient... */
 	public List<Object> asList() {
 		List<Object> result = new ArrayList<Object>();
@@ -64,7 +64,7 @@ public class Domain implements Iterable<Object> {
 			result.add(value);
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Domain) {
@@ -78,7 +78,7 @@ public class Domain implements Iterable<Object> {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int hash = 9; // arbitrary seed value

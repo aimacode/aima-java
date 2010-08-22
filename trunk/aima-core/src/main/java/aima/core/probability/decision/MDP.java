@@ -230,11 +230,11 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 				+ "\n transitionModel = " + transitionModel.toString()
 				+ "\n states = " + nonFinalstates.toString();
 	}
-	
+
 	//
 	// PRIVATE METHODS
 	// 
-	
+
 	private double valueIterateOnceForGivenState(double gamma,
 			MDPUtilityFunction<STATE_TYPE> presentUtilityFunction,
 			STATE_TYPE state) {

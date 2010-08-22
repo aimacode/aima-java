@@ -2,7 +2,6 @@ package aima.core.util.math;
 
 import java.util.List;
 
-
 /**
  * @author Ravi Mohan
  * 
