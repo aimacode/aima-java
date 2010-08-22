@@ -11,12 +11,24 @@
   </div>
 </h1>
 <p style="text-align:center">
-	Note: To start an application, click on the appropriate link (on the left hand side). Requires <a href="http://java.sun.com/javase/technologies/desktop/javawebstart/index.jsp">Java Web Start</a> to be supported by your browser.
+	Note: To start an application, click on the appropriate link (on the left hand side). Requires <a href="http://www.oracle.com/technetwork/java/javase/overview-137531.html">Java Web Start</a> to be supported by your browser.
 </p>
 <table border="0" width="96%" align="center">
 <tr>
   <th align="left"></th>
   <th align="left"><a href="http://code.google.com/p/aima-java/"><img src="images/aima3e.jpg" align="middle" /></a> AIMA-GUI Applications</th>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-AIMADemoApp.jnlp"><img src="images/aimademoapps.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-AIMADemoApp.jnlp">AIMA Unified Demo Application</a> - A containing application for running all of the other
+  AIMA-GUI applications from within one GUI as well as the existing command line demos, which have their output redirected to a text widget when run.
+  Details of how to use each of the individual applications are detailed below.
+  </td>
 </tr>
 <tr>
   <td></td>
@@ -104,15 +116,10 @@
   	<td valign="top">Destination Selector</td>
   	<td>Drop down widget beside the 'Scenario Selector'. Used to select the location from the map that the Agent is to end its route. 
    	</td>
-   </tr>  
-   <tr>
-  	<td valign="top">Agent Selector</td>
-  	<td>Drop down widget beside the 'Destination Selector'. Currently not used. 
-   	</td>
-   </tr> 
+   </tr>
    <tr>
   	<td valign="top">Search Strategy Selector</td>
-  	<td>Drop down widget beside the 'Agent Selector'. The different types of search strategy available are: 
+  	<td>Drop down widget beside the 'Destination Selector'. The different types of search strategy available are: 
       <ul>
   	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
   	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
@@ -139,7 +146,7 @@
   <tr>
   	<td valign="top">Heuristic Selector</td>
   	<td>Drop down widget beside the 'Search Mode Selector'. To select a <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/HeuristicFunction.java">heuristic function</a>
-  	to be used by the selected search algorithm, if applicable (e.g. A*). 'H1=0' is equivalent to using no heuristic. 'H2=(sld to goal)' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
+  	to be used by the selected search algorithm, if applicable (e.g. A*). '=0' is equivalent to using no heuristic. 'SLD' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
   	</td>
   </tr> 
   <tr>
@@ -176,12 +183,229 @@
   <td><hr /></td>
 </tr>
 <tr>
-  <td width="20%" align="center" valign="top"><a href="aima-gui-AIMADemoApp.jnlp"><img src="images/aimademoapps.png" /></a></td>
-  <td valign="top"><a href="aima-gui-AIMADemoApp.jnlp">AIMA Unified Demo Application</a> - A containing application for running the other
-  AIMA-GUI applications from within one GUI as well as the existing command line demos, which have their output redirected to a text widget when run. 
-  <br />
-  Note: The command line demos will be phased out as we develop more sophisticated GUIs to represent the functionality they
-  demonstrate.<br />
+  <td width="20%" align="center" valign="top"><a href="aima-gui-EightPuzzleApp.jnlp"><img src="images/eightpuzzleapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-EightPuzzleApp.jnlp">8-Puzzle Demo</a> - An example of the 8-puzzle, which consists of a 3x3 board
+  with eight numbered tiles and a blank space. The goal is to reach the specified goal state as detailed in Figure 3.4 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>
+  (depicted left). Provides a demonstration of the different search algorithms described in chapters three and four of 
+  <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. You can choose to solve the problem yourself by selecting tiles next to the empty square to
+  which you want to move the empty square.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Difficulty Selector</td>
+  	<td>Top left drop down widget. Used to select the level of difficulty of the 8-puzzle problem to solve. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Difficulty Selector'. The different types of search strategy available are: 
+      <ul>
+        <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">Depth Limited Search</a></li>    
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">Simulated Annealing</a></li>
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the 8-puzzle problem.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-NQueensApp.jnlp"><img src="images/nqueensapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-NQueensApp.jnlp">N-Queens Problem Demo</a> - The goal of the n-queens problem is to place n queens on a chessboard
+  such that no queen attacks any other (A queen attacks any piece in the same row, column or diagonal). Provides a demonstration of the 
+  different search algorithms described in chapters three and four of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. 
+  You can choose to solve the problem yourself by selecting board positions to where you wish to place Queens.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Difficulty Selector</td>
+  	<td>Top left drop down widget. Used to select the size of the n-queens problem to solve (the larger n, the more difficult). 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Action Strategy Selector</td>
+  	<td>Drop down widget beside the 'Difficulty Selector'. The different types of action strategy available are: 
+      <ul>
+        <li>Incremental - Assumes that queens are placed column by column, starting with an empty board, 
+            and provides queen placing actions for all non-attacked positions of the first free column.</li>
+  	    <li>Complete State -  Assumes exactly one queen in each column and provides all possible queen
+  	        movements in vertical direction as actions.</li>    
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Action Strategy Selector'. The different types of search strategy available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">Depth Limited Search</a></li>    
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">Simulated Annealing</a></li>  	    
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the n-queens problem.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-TicTacToeApp.jnlp"><img src="images/tictactoeapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-TicTacToeApp.jnlp">Tic-Tac-Toe Demo</a> - A demonstration of the Minimax and Alpha-Beta adversarial search 
+  algorithms as described in chapter 5 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, using the tic-tac-toe game as
+  an example. You can choose to play the game yourself by selecting board positions or have the Agent propose moves.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Algorithm Selector</td>
+  	<td>Top left drop down widget. Used to select the adversarial search algorithm to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java">Minimax</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java">Alpha-Beta</a></li>	    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the board.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Propose Move</td>
+  	<td>Top right button widget. Used to request the Agent make a move based on the current board state and selected search algorithm.</td>
+  </tr>
+  </table> 
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-MapColoringApp.jnlp"><img src="images/mapcoloringapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-MapColoringApp.jnlp">Map Coloring CSP Demo</a> - Application which demonstrates basic constraint algorithms based on map
+  coloring problems, as described in chapter 6 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. It shows the constraint graph, lets the 
+  user select a solution strategy, and allows them to follow the progress step by step. 
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+    <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the map and constraints to solve. 
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Solution Strategy Selector</td>
+  	<td>Top left drop down widget beside the 'Scenario Selector'. Used to select the solution strategy to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java">BacktrackingStrategy</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java">MinConflictsStrategy</a></li>	    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear prior solutions and the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the CSP.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table> 
   </td>
 </tr>
 <tr>
