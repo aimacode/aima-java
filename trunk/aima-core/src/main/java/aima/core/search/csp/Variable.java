@@ -19,4 +19,17 @@ public class Variable {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Variable) {
+			return this.name.equals(((Variable)obj).name);
+		}
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
 }
