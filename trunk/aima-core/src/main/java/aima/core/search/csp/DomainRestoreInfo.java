@@ -30,8 +30,10 @@ public class DomainRestoreInfo {
 	 * not yet been stored for the variable.
 	 */
 	public void storeDomainFor(Variable var, Domain domain) {
-		if (!affectedVariables.contains(var))
+		if (!affectedVariables.contains(var)) {
 			savedDomains.add(new Pair<Variable, Domain>(var, domain));
+			affectedVariables.add(var);
+		}
 	}
 
 	public void setEmptyDomainFound(boolean b) {
@@ -55,5 +57,14 @@ public class DomainRestoreInfo {
 
 	public List<Pair<Variable, Domain>> getSavedDomains() {
 		return savedDomains;
+	}
+	
+	public String toString() {
+		StringBuffer result = new StringBuffer();
+		for (Pair<Variable, Domain> pair : savedDomains)
+			result.append(pair.getFirst() + "=" + pair.getSecond() + " ");
+		if (emptyDomainObserved)
+			result.append("!");
+		return result.toString();
 	}
 }

@@ -78,9 +78,8 @@ public class AC3Strategy {
 		return result.compactify();
 	}
 
-	protected void reduceDomains(FIFOQueue<Variable> queue, CSP csp,
+	private void reduceDomains(FIFOQueue<Variable> queue, CSP csp,
 			DomainRestoreInfo info) {
-
 		while (!queue.isEmpty()) {
 			Variable var = queue.pop();
 			for (Constraint constraint : csp.getConstraints(var)) {
