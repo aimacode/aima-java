@@ -26,6 +26,7 @@ This is based on the following sub-project releases:
 == Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
+  * Frederico Araujo, PhD student at the University of Texas at Dallas<br>
   * Ali Tozan<br>
   * Carl Anderson, Senior Scientist, ArchimedesModel.com<br>
   * Don Cochrane, from (?) University<br>
