@@ -29,15 +29,8 @@ public class BreadthFirstSearchTest {
 		assertCorrectPlacement(actions);
 		Assert.assertEquals("1665", agent.getInstrumentation().getProperty(
 				"nodesExpanded"));
-
-		problem = new Problem(new NQueensBoard(3), NQueensFunctionFactory
-				.getIActionsFunction(), NQueensFunctionFactory
-				.getResultFunction(), new NQueensGoalTest());
-		agent = new SearchAgent(problem, search);
-		actions = agent.getActions();
-		Assert.assertEquals(0, actions.size());
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("8.0", agent.getInstrumentation().getProperty(
+				"pathCost"));
 	}
 
 	@Test
@@ -52,6 +45,8 @@ public class BreadthFirstSearchTest {
 		Assert.assertEquals(0, actions.size());
 		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
 				"nodesExpanded"));
+		Assert.assertEquals("0", agent.getInstrumentation().getProperty(
+				"pathCost"));
 	}
 
 	//
