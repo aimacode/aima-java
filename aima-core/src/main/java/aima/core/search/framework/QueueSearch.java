@@ -70,6 +70,7 @@ public abstract class QueueSearch extends NodeExpander {
 					problem)) {
 				if (isCheckGoalBeforeAddingToFrontier()) {
 					if (SearchUtils.isGoalState(problem, fn)) {
+						setPathCost(fn.getPathCost());
 						return SearchUtils.actionsFromNodes(fn
 								.getPathFromRoot());
 					}
