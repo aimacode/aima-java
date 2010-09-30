@@ -233,12 +233,13 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		    }    
 		} else if (e.getSource() == saveButton) {
 			JFileChooser fc = new JFileChooser();
-			String[] exts = mapReader.fileFormatDescriptions();
+			String[] exts = mapWriter.fileFormatDescriptions();
 			for (int i = 0 ; i < exts.length; i++) {
 				FileFilter filter = new FileNameExtensionFilter
-				(exts[i], mapReader.fileFormatExtensions()[i]);
+				(exts[i], mapWriter.fileFormatExtensions()[i]);
 				fc.addChoosableFileFilter(filter);
 			}
+			fc.setFileFilter(fc.getChoosableFileFilters()[0]);
 			fc.setCurrentDirectory(fileChooser.getCurrentDirectory());
 			int returnVal = fc.showSaveDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION &&
