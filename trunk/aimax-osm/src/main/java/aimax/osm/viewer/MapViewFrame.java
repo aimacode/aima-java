@@ -164,6 +164,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			(exts[i], mapReader.fileFormatExtensions()[i]);
 			fileChooser.addChoosableFileFilter(filter);
 		}
+		fileChooser.setFileFilter(fileChooser.getChoosableFileFilters()[0]);
 		fileChooser.setSelectedFile(new File(""));
 	}
 	

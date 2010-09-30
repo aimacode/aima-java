@@ -49,14 +49,14 @@ public class Bz2OsmReader extends FilteringOsmReader {
 	
 	public String[] fileFormatDescriptions() {
 		if (compressorClass != null)
-			return new String[] {"OSM BZip2 (osm.bz2)", "OSM File (osm)"};
+			return new String[] {"OSM File (osm)", "OSM BZip2 (osm.bz2)"};
 		else
 			return new String[] {"OSM File (osm)"};
 	}
 	
 	public String[] fileFormatExtensions() {
 		if (compressorClass != null)
-			return new String[] {"bz2", "osm"};
+			return new String[] {"osm", "bz2"};
 		else
 			return new String[] {"osm"};
 	}
