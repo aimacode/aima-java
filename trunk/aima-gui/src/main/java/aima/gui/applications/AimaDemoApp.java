@@ -6,6 +6,7 @@ import aima.gui.applications.search.games.NQueensApp;
 import aima.gui.applications.search.games.TicTacToeApp;
 import aima.gui.applications.search.map.RouteFindingAgentApp;
 import aima.gui.applications.vacuum.VacuumApp;
+import aima.gui.demo.agent.TrivialVacuumDemo;
 import aima.gui.demo.learning.LearningDemo;
 import aima.gui.demo.logic.DPLLDemo;
 import aima.gui.demo.logic.FolDemo;
@@ -35,6 +36,8 @@ public class AimaDemoApp {
 		frame.addApp(TicTacToeApp.class);
 		frame.addApp(MapColoringApp.class);
 
+		frame.addDemo(TrivialVacuumDemo.class);
+		
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
