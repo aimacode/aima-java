@@ -1,4 +1,4 @@
-package aimax.osm.routing.mapagent;
+package aimax.osm.routing.agent;
 
 import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.applications.search.map.SearchFactory;
