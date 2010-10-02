@@ -42,10 +42,11 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 1.0.0-AIMAX-OSM Consolidated ==
-1.0.0-AIMAX-OSM Consolidated : 22 Aug 2010 :<br>
-   * Documentation updated.
-   * Minor clean-ups included.
+== Current Release: 1.0.1-AIMAX-OSM Map Selection Improvement ==
+1.0.1-AIMAX-OSM Map Selection Improvement : 02 Oct 2010 :<br>
+   * Improved selection of OSM Maps.
+   * Package mapagent renamed to agent.
+   * Documentation improvements.
 
 == Keywords ==
 
@@ -128,6 +129,10 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+1.0.0-AIMAX-OSM Consolidated : 22 Aug 2010 :<br>
+   * Documentation updated.
+   * Minor clean-ups included.
+   
 0.9.2-AIMAX-OSM Many Improvements : 19 June 2010 :<br>
    * Storage efficiency of map representation improved (references to ways).
    * Rendering speed and quality improved

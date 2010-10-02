@@ -5,13 +5,12 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.9.10-CSP+AC-3 ==
-0.9.10-CSP+AC-3 : 22 Aug 2010 :<br>
-  * CSP package significantly restructured, added AC-3 implementation.
-  * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
-  * The N-Queens representation now supports incremental as well as complete-state problem formulation.
-  * Minor clean-ups included.
-  * Now compiles on Android 2.1.
+== Current Release: 0.9.11-CSP+PathCost-Fixes ==
+0.9.11-CSP+PathCost-Fixes : 02 Oct 2010 :<br>
+  * Fixed defect in Breath First Search where the Path Cost metric was not being updated correctly (issue #54).
+  * Fixed CSP issue with respect to domain reconstruction with backtracking search.
+  * Re-introduced SimpleEnvironmentView so its easier for people to setup and play with the code.
+  * Minor documentation improvements.
  
 = Details =
 
@@ -242,6 +241,13 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.9.10-CSP+AC-3 : 22 Aug 2010 :<br>
+  * CSP package significantly restructured, added AC-3 implementation.
+  * Search can now create more than one solution within the same run (see aima.core.search.framework.SolutionChecker).
+  * The N-Queens representation now supports incremental as well as complete-state problem formulation.
+  * Minor clean-ups included.
+  * Now compiles on Android 2.1.
+  
 0.9.9-AIMAX-OSM Minor Fixes : 09 Feb 2010 :<br>
   * Java Doc now uses newer package-info.java mechanism.
  

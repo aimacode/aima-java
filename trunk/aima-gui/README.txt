@@ -13,11 +13,10 @@ a starter for all the other applications and demos.
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.0-AIMA-GUI New Games ==
-1.0.0-AIMA-GUI New Games : 22 Aug 2010 :<br>
-  * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
-  * New graphical CSP application added (map coloring).
-  * Code consolidated and documentation updated.
+== Current Release: 1.0.1-AIMA-GUI Old Demo Re-Added ==
+1.0.1-AIMA-GUI Old Demo Re-Added : 02 Oct 2010 :<br>
+  * Re-added the command line Trivial Vacuum Demo so that its easier 
+    for someone to get up and running with the code.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -51,7 +50,11 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
-
+1.0.0-AIMA-GUI New Games : 22 Aug 2010 :<br>
+  * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
+  * New graphical CSP application added (map coloring).
+  * Code consolidated and documentation updated.
+  
 0.2.0-AIMA-GUI Enhancements : 15 Mar 2010 :<br>
 New features added (inspired by course TDDC17)
   * Added all command line demos and GUI demos to a
