@@ -101,19 +101,19 @@ public class AC3Strategy {
 			CSP csp, DomainRestoreInfo info) {
 		boolean revised = false;
 		Assignment assignment = new Assignment();
-		for (Object vValue : csp.getDomain(xi)) {
-			assignment.setAssignment(xi, vValue);
-			boolean vValueOK = false;
-			for (Object nValue : csp.getDomain(xj)) {
-				assignment.setAssignment(xj, nValue);
+		for (Object iValue : csp.getDomain(xi)) {
+			assignment.setAssignment(xi, iValue);
+			boolean consistentExtensionFound = false;
+			for (Object jValue : csp.getDomain(xj)) {
+				assignment.setAssignment(xj, jValue);
 				if (constraint.isSatisfiedWith(assignment)) {
-					vValueOK = true;
+					consistentExtensionFound = true;
 					break;
 				}
 			}
-			if (!vValueOK) {
+			if (!consistentExtensionFound) {
 				info.storeDomainFor(xi, csp.getDomain(xi));
-				csp.removeValueFromDomain(xi, vValue);
+				csp.removeValueFromDomain(xi, iValue);
 				revised = true;
 			}
 		}
