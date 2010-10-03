@@ -33,8 +33,11 @@ Under the release/ directory you should find two jar files, aima-core.jar and ai
    + provides a demo of the different search algorithms described in Chapter 5.
  * java -classpath aima-gui.jar aima.gui.applications.search.map.RouteFindingAgentApp
    + provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
+ * java -classpath aima-gui.jar aima.gui.applications.search.csp.MapColoringApp
+   + provides a demo of the different csp algorithms described in Chapters 6.
  
 The following command line demos can be run as well:
+ * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo
  * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.DPLLDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.FolDemo
