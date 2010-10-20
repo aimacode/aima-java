@@ -13,7 +13,7 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentObject;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
-import aima.core.agent.NotifyEnvironmentViews;
+import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 
 /**
@@ -21,7 +21,7 @@ import aima.core.agent.Percept;
  * @author Ciaran O'Reilly
  */
 public abstract class AbstractEnvironment implements Environment,
-		NotifyEnvironmentViews {
+		EnvironmentViewNotifier {
 
 	// Note: Use LinkedHashSet's in order to ensure order is respected as
 	// provide
@@ -45,7 +45,13 @@ public abstract class AbstractEnvironment implements Environment,
 	public abstract EnvironmentState executeAction(Agent agent, Action action);
 
 	public abstract Percept getPerceptSeenBy(Agent anAgent);
-
+	/**
+	 * Method for implementing dynamic environments in which not all changes
+	 * are directly caused by agent action execution. The default implementation
+	 * does nothing.
+	 */
+	public void createExogenousChange() {}
+	
 	//
 	// START-Environment
 	public List<Agent> getAgents() {
@@ -82,18 +88,21 @@ public abstract class AbstractEnvironment implements Environment,
 		agents.remove(eo);
 	}
 
+	/**
+	 * Central template method for controlling agent simulation. The
+	 * concrete behavior is determined by the primitive operations
+	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Action)},
+	 * and {@link #createExogenousChange()}.
+	 */
 	public void step() {
-		if (!isDone()) {
-			for (Agent agent : agents) {
-				if (agent.isAlive()) {
-					Action anAction = agent.execute(getPerceptSeenBy(agent));
-
-					EnvironmentState es = executeAction(agent, anAction);
-
-					updateEnvironmentViewsAgentActed(agent, anAction, es);
-				}
+		for (Agent agent : agents) {
+			if (agent.isAlive()) {
+				Action anAction = agent.execute(getPerceptSeenBy(agent));
+				EnvironmentState es = executeAction(agent, anAction);
+				updateEnvironmentViewsAgentActed(agent, anAction, es);
 			}
 		}
+		createExogenousChange();
 	}
 
 	public void step(int n) {

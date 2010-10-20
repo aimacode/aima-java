@@ -4,9 +4,9 @@ package aima.core.agent;
  * @author Ciaran O'Reilly
  * 
  */
-public interface NotifyEnvironmentViews {
+public interface EnvironmentViewNotifier {
 	/**
-	 * A simple notification message, to be forewarded to an Environment's
+	 * A simple notification message, to be forwarded to an Environment's
 	 * registered EnvironmentViews.
 	 * 
 	 * @param msg
