@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.agent.NotifyEnvironmentViews;
+import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
@@ -21,7 +21,7 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
 public class MapAgent extends SimpleProblemSolvingAgent {
 	private Map map = null;
 
-	private NotifyEnvironmentViews notifier = null;
+	private EnvironmentViewNotifier notifier = null;
 
 	private DynamicState state = new DynamicState();
 
@@ -31,13 +31,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	private int goalTestPos = 0;
 
-	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search) {
+	public MapAgent(Map map, EnvironmentViewNotifier notifier, Search search) {
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search,
+	public MapAgent(Map map, EnvironmentViewNotifier notifier, Search search,
 			int maxGoalsToFormulate) {
 		super(maxGoalsToFormulate);
 		this.map = map;
@@ -45,7 +45,7 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 		this.search = search;
 	}
 
-	public MapAgent(Map map, NotifyEnvironmentViews notifier, Search search,
+	public MapAgent(Map map, EnvironmentViewNotifier notifier, Search search,
 			String[] goalTests) {
 		super(goalTests.length);
 		this.map = map;
