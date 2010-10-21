@@ -1,4 +1,4 @@
-#labels Featured
+#labels Deprecated
 = (DEPRECATED) AIMA2e JAVA =
 Note: This README file refers to the old version of this project that was based on the 2nd edition of Artificial Intelligence a Modern Approach (AIMA2e). We do not intend to continue actively developing this but the archived version can be obtained from:
 
