@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.util.datastructure.Pair;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202. A
  * constraint satisfaction problem or CSP consists of three components, X, D,
@@ -69,6 +67,11 @@ public class CSP {
 		domains.set(indexOf(var), domain);
 	}
 
+	/**
+	 * Replaces the domain of the specified variable by new domain,
+	 * which contains all values of the old domain except the specified
+	 * value.
+	 */
 	public void removeValueFromDomain(Variable var, Object value) {
 		Domain currDomain = getDomain(var);
 		List<Object> values = new ArrayList<Object>(currDomain.size());
@@ -76,11 +79,6 @@ public class CSP {
 			if (!v.equals(value))
 				values.add(v);
 		setDomain(var, new Domain(values));
-	}
-
-	public void restoreDomains(DomainRestoreInfo info) {
-		for (Pair<Variable, Domain> pair : info.getSavedDomains())
-			setDomain(pair.getFirst(), pair.getSecond());
 	}
 
 	public List<Constraint> getConstraints() {
