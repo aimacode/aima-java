@@ -51,7 +51,7 @@ public class OsmReader implements MapReader {
 			InputStream inputStream = createFileStream(file);
 			readMap(inputStream, consumer);
 		} catch (FileNotFoundException e) {
-			LOG.warning("File does not exist " + file);
+			LOG.warning("File "  + file + " does not exist.");
 		} catch (Exception e) {
 			LOG.warning("The map could not be read. " + e);
 		}

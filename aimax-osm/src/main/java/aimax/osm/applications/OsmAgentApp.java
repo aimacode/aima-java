@@ -1,7 +1,9 @@
 package aimax.osm.applications;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
@@ -22,29 +24,47 @@ import aimax.osm.routing.agent.OsmMapAdapter;
  */
 public class OsmAgentApp extends SimpleAgentApp {
 
+	protected static Logger LOG = Logger.getLogger("aimax.osm");
+	
 	protected OsmMapAdapter map;
 	
-	/** Reads a map from the specified file and stores it in {@link #map}. */
-	public OsmAgentApp(InputStream osmFile) {
+	/** Sets the default language (for file choosers etc.) to US. */
+	public OsmAgentApp() {
 		Locale.setDefault(Locale.US);
+	}
+	
+	/** Reads a map from the specified stream and stores it in {@link #map}. */
+	public void readMap(InputStream stream) {
+		if (stream != null) {
+			MapDataStore mapData = new MapDataStore();
+			MapReader mapReader = new Bz2OsmReader();
+			mapReader.readMap(stream, mapData);
+			map = new OsmMapAdapter(mapData);
+		}
+		else
+			LOG.warning("Map reading failed because input stream does not exist.");
+	}
+	
+	/** Reads a map from the specified file and stores it in {@link #map}. */
+	public void readMap(File file) {
 		MapDataStore mapData = new MapDataStore();
 		MapReader mapReader = new Bz2OsmReader();
-		mapReader.readMap(osmFile, mapData);
+		mapReader.readMap(file, mapData);
 		map = new OsmMapAdapter(mapData);
 	}
 	
-	/** Creates an <code>OsmAgentView</code>. */
+	/** Factory method, which creates an <code>OsmAgentView</code>. */
 	public OsmAgentView createEnvironmentView() {
 		return new OsmAgentView(map.getMapData());
 	}
 
-	/** Factory method, which creates and configures a <code>OsmMapAgentFrame</code>. */
+	/** Factory method, which creates an <code>OsmAgentFrame</code>. */
 	@Override
 	public AgentAppFrame createFrame() {
-		return new OsmAgentFrame(map);
+		return new OsmAgentFrame();
 	}
 
-	/** Factory method, which creates a <code>OsmMapAgentController</code>. */
+	/** Factory method, which creates an <code>OsmAgentController</code>. */
 	@Override
 	public AgentAppController createController() {
 		return new OsmAgentController(map);
@@ -62,7 +82,8 @@ public class OsmAgentApp extends SimpleAgentApp {
 		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		OsmAgentApp demo = new OsmAgentApp(DataResource.getULMFileResource());
+		OsmAgentApp demo = new OsmAgentApp();
+		demo.readMap(DataResource.getULMFileResource());
 		demo.startApplication();
 	}
 }
