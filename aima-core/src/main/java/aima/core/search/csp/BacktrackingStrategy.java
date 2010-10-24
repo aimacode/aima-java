@@ -66,7 +66,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 						if (result != null)
 							break;
 					}
-					csp.restoreDomains(info);
+					info.restoreDomains(csp);
 				}
 				assignment.removeAssignment(var);
 			}
