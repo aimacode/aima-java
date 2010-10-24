@@ -12,7 +12,7 @@ public class OsmAgentFrame extends MapAgentFrame {
 	private static final long serialVersionUID = 1L;
 
 	/** Creates a new frame. */
-	public OsmAgentFrame(OsmMapAdapter map) {
+	public OsmAgentFrame() {
 		setTitle("OMAS - the Osm Map Agent Simulator");
 		setSelectors(new String[]{
 				SCENARIO_SEL, AGENT_SEL,

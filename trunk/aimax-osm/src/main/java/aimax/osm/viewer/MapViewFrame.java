@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -43,6 +44,8 @@ import aimax.osm.writer.OsmBz2Writer;
  */
 public class MapViewFrame extends JFrame implements ActionListener {
 
+	protected static Logger LOG = Logger.getLogger("aimax.osm");
+	
 	private static final long serialVersionUID = 1L;
 	protected MapViewPane view;
 	protected MapDataStore mapData;
@@ -176,7 +179,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		if (map != null)
 			mapReader.readMap(map, mapData);
 		else
-			System.err.println("Error: Map reading failed because input stream does not exist.");
+			LOG.warning("Map reading failed because input stream does not exist.");
 	}
 	
 	public void readMap(File map) {

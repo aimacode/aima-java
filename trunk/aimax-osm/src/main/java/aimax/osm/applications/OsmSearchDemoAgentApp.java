@@ -1,10 +1,8 @@
 package aimax.osm.applications;
 
 import java.awt.Color;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
@@ -49,10 +47,6 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	 */
 	static final HashSet<Object> visitedStates = new HashSet<Object>();
 	
-	public OsmSearchDemoAgentApp(InputStream osmFile) {
-		super(osmFile);
-	}
-	
 	/** Creates an <code>OsmAgentView</code>. */
 	@Override
 	public OsmAgentView createEnvironmentView() {
@@ -63,7 +57,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	
 	@Override
 	public AgentAppFrame createFrame() {
-		return new SDFrame(map);
+		return new SDFrame();
 	}
 	
 	@Override
@@ -79,8 +73,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		
 		private static final long serialVersionUID = 1L;
 
-		SDFrame(OsmMapAdapter map) {
-			super(map);
+		SDFrame() {
 			setTitle("OSDA - the OSM Search Demo Agent Application");
 			//this.setSelectorItems(AGENT_SEL, new String[]{}, -1);
 		}
@@ -201,8 +194,8 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		Locale.setDefault(Locale.US);
-		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp(DataResource.getULMFileResource());
+		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp();
+		demo.readMap(DataResource.getULMFileResource());
 		demo.startApplication();
 	}
 }
