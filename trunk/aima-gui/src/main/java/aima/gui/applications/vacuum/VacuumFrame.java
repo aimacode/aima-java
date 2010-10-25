@@ -13,7 +13,7 @@ public class VacuumFrame extends AgentAppFrame {
 	public static String AGENT_SEL = "AgentSelection";
 
 	public VacuumFrame() {
-		setEnvView(new VacuumView());
+		setTitle("Vacuum Agent Application");
 		setSelectors(new String[] { ENV_SEL, AGENT_SEL }, new String[] {
 				"Select Environment", "Select Agent" });
 		setSelectorItems(ENV_SEL, new String[] { "A/B Environment" }, 0);
@@ -23,7 +23,7 @@ public class VacuumFrame extends AgentAppFrame {
 				"SimpleReflexVacuumAgent",
 				"ModelBasedReflexVacuumAgent" },
 				0);
-		setTitle("Vacuum Agent Application");
+		setEnvView(new VacuumView());
 		setSize(800, 400);
 	}
 }

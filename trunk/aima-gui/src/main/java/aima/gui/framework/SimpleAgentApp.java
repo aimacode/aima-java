@@ -56,13 +56,13 @@ public class SimpleAgentApp {
 	 */
 	public AgentAppFrame createFrame() {
 		AgentAppFrame result = new AgentAppFrame();
+		result.setTitle("Demo Agent Application");
 		result.setSelectors(new String[] { "XSelect", "YSelect" },
 				new String[] { "Select X", "Select Y" });
 		result.setSelectorItems("XSelect", new String[] { "X1 (Small)",
 				"X2 (Large)" }, 1);
 		result.setSelectorItems("YSelect",
 				new String[] { "Y=1", "Y=2", "Y=3" }, 0);
-		result.setTitle("Demo Agent Application");
 		result.setSplitPaneResizeWeight(0.5); // puts split bar in center
 		result.setSize(600, 400);
 		return result;
