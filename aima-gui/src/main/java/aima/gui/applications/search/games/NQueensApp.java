@@ -128,7 +128,7 @@ public class NQueensApp extends SimpleAgentApp {
 		public static String SEARCH_SEL = "SearchSelection";
 
 		public NQueensFrame() {
-			setEnvView(new NQueensView());
+			setTitle("N-Queens Application");
 			setSelectors(new String[] { ENV_SEL, PROBLEM_SEL, SEARCH_SEL },
 					new String[] { "Select Environment",
 							"Select Problem Formulation", "Select Search" });
@@ -138,7 +138,7 @@ public class NQueensApp extends SimpleAgentApp {
 					"Complete-State" }, 0);
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
 					.toArray(new String[] {}), 0);
-			setTitle("N-Queens Application");
+			setEnvView(new NQueensView());
 			setSize(800, 600);
 		}
 	}

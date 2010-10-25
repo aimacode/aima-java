@@ -71,7 +71,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		public static String STRATEGY_SEL = "SearchSelection";
 
 		public MapColoringFrame() {
-			setEnvView(new CSPView());
+			setTitle("Map Coloring Application");
 			setSelectors(new String[] { ENV_SEL, STRATEGY_SEL }, new String[] {
 					"Select Environment", "Select Solution Strategy" });
 			setSelectorItems(ENV_SEL, new String[] { "Map of Australia",
@@ -85,7 +85,7 @@ public class MapColoringApp extends SimpleAgentApp {
 					"Backtracking + AC3",
 					"Backtracking + AC3 + MRV & DEG + LCV",
 					"Min-Conflicts (50)" }, 0);
-			setTitle("Map Coloring Application");
+			setEnvView(new CSPView());
 			setSize(800, 600);
 		}
 	}
