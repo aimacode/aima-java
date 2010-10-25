@@ -9,6 +9,7 @@ import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
+import aima.core.util.TwoKeyHashMap;
 
 /**
  * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page 152.<br>
@@ -51,7 +52,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	private PerceptToStateFunction ptsFunction;
 	private HeuristicFunction hf;
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final HashMap<StateAction, Object> result = new HashMap<StateAction, Object>();
+	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<Object, Action, Object>();
 	// H, a table of cost estimates indexed by state, initially empty
 	private final HashMap<Object, Double> H = new HashMap<Object, Double>();
 	// s, a, the previous state and action, initially null
@@ -106,14 +107,13 @@ public class LRTAStarAgent extends AbstractAgent {
 			// if s is not null
 			if (null != s) {
 				// result[s, a] <- s'
-				result.put(new StateAction(s, a), sPrime);
+				result.put(s, a, sPrime);
 
 				// H[s] <- min LRTA*-COST(s, b, result[s, b], H)
 				// b (element of) ACTIONS(s)
 				double min = Double.MAX_VALUE;
 				for (Action b : actions(s)) {
-					double cost = lrtaCost(s, b, result.get(new StateAction(s,
-							b)));
+					double cost = lrtaCost(s, b, result.get(s, b));
 					if (cost < min) {
 						min = cost;
 					}
@@ -126,8 +126,7 @@ public class LRTAStarAgent extends AbstractAgent {
 			// Just in case no actions
 			a = NoOpAction.NO_OP;
 			for (Action b : actions(sPrime)) {
-				double cost = lrtaCost(sPrime, b, result.get(new StateAction(
-						sPrime, b)));
+				double cost = lrtaCost(sPrime, b, result.get(sPrime, b));
 				if (cost < min) {
 					min = cost;
 					a = b;

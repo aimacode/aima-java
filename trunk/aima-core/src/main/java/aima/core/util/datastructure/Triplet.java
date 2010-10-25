@@ -31,8 +31,8 @@ public class Triplet<X, Y, Z> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Triplet) {
-			Triplet<X, Y, Z> other = (Triplet<X, Y, Z>) o;
+		if (o instanceof Triplet<?, ?, ?>) {
+			Triplet<?, ?, ?> other = (Triplet<?, ?, ?>) o;
 			return (x.equals(other.x)) && (y.equals(other.y))
 					&& (z.equals(other.z));
 		}

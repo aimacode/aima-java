@@ -7,7 +7,7 @@ import aima.core.util.datastructure.Point2D;
 /**
  * Provides a general interface for maps.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public interface Map {
 
