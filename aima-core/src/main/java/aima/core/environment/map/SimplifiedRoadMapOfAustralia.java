@@ -6,7 +6,7 @@ package aima.core.environment.map;
  * subclasses of {@link ExtendableMap} with road map data from Australia. The
  * data was extracted from a class developed by Felix Knittel.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class SimplifiedRoadMapOfAustralia extends ExtendableMap {
 

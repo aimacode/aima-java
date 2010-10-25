@@ -5,7 +5,7 @@ package aima.core.environment.map;
  * environment, and the agents initial location. It can be used to specify
  * settings for route planning agent applications.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class Scenario {
 	/**

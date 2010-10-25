@@ -7,7 +7,7 @@ import aima.core.search.framework.HeuristicFunction;
  * map to estimate distance to goal for states in route planning problems, and
  * it provides a method to adapt to different goals.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public abstract class AdaptableHeuristicFunction implements HeuristicFunction,
 		Cloneable {

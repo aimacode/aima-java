@@ -9,7 +9,7 @@ package aima.core.environment.map;
  * straight-line distances to Bucharest have been taken from Artificial
  * Intelligence A Modern Approach (2nd Edition), Figure 4.1, page 95.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class SimplifiedRoadMapOfPartOfRomania extends ExtendableMap {
 

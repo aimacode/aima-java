@@ -10,7 +10,7 @@ package aima.core.environment.map;
  * EnvironmentState attributes are attached to the EnvironmentState of the
  * Environment.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class DynAttributeNames {
 	/**

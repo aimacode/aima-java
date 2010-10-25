@@ -16,7 +16,7 @@ import aima.core.util.datastructure.Point2D;
  * enables to read maps from file or to modify them with respect to newly
  * obtained knowledge.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class ExtendableMap implements Map {
 
