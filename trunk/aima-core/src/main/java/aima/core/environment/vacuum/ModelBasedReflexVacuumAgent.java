@@ -33,24 +33,24 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 				setRules(getRuleSet());
 			}
 
-			protected DynamicState updateState(DynamicState envState,
+			protected DynamicState updateState(DynamicState state,
 					Action anAction, Percept percept, Model model) {
 
 				VacuumEnvPercept vep = (VacuumEnvPercept) percept;
 
-				envState.setAttribute(ATTRIBUTE_CURRENT_LOCATION, vep
+				state.setAttribute(ATTRIBUTE_CURRENT_LOCATION, vep
 						.getAgentLocation());
-				envState.setAttribute(ATTRIBUTE_CURRENT_STATE, vep
+				state.setAttribute(ATTRIBUTE_CURRENT_STATE, vep
 						.getLocationState());
 				// Keep track of the state of the different locations
 				if (VacuumEnvironment.LOCATION_A == vep.getAgentLocation()) {
-					envState.setAttribute(ATTRIBUTE_STATE_LOCATION_A, vep
+					state.setAttribute(ATTRIBUTE_STATE_LOCATION_A, vep
 							.getLocationState());
 				} else {
-					envState.setAttribute(ATTRIBUTE_STATE_LOCATION_B, vep
+					state.setAttribute(ATTRIBUTE_STATE_LOCATION_B, vep
 							.getLocationState());
 				}
-				return envState;
+				return state;
 			}
 		});
 	}
