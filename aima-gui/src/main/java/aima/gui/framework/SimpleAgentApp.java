@@ -3,10 +3,18 @@ package aima.gui.framework;
 /**
  * In this framework a graphical agent application consists at least of three
  * parts: An {@link AgentAppEnvironmentView}, an {@link AgentAppFrame}, and an
- * {@link AgentAppController}. This class demonstrates, how this three parts are
- * plugged together. The easiest way to create a new graphical agent application
- * is to create subclasses of the three parts as needed, and then to create a
- * subclass of this class and override the three factory methods.
+ * {@link AgentAppController}. This class plugs the three parts together. Note
+ * that no support for model creation is included here. Environments are used as
+ * models and may depend on current selector settings. So typically, the
+ * controller will be responsible for creating them (in method
+ * {@link AgentAppController#prepare(String)}) and making the view know them
+ * (by calling method
+ * {@link AgentAppEnvironmentView#setEnvironment(aima.core.agent.Environment)}).
+ * <p>
+ * The easiest way to create a new graphical agent application is to create
+ * subclasses of the three parts as needed, and then to create a subclass of
+ * this class and override the three factory methods.
+ * </p>
  * 
  * @author Ruediger Lunde
  */
@@ -35,7 +43,7 @@ public class SimpleAgentApp {
 		frame.setDefaultSelection();
 		return frame;
 	}
-	
+
 	/** Factory method, responsible for creating the environment view. */
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new EmptyEnvironmentView();
@@ -65,7 +73,7 @@ public class SimpleAgentApp {
 		return new DemoController();
 	}
 
-	/////////////////////////////////////////////////////////////////
+	// ///////////////////////////////////////////////////////////////
 	// main method for testing
 
 	/**
