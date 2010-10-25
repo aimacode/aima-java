@@ -14,6 +14,7 @@ import aima.gui.framework.SimpleAgentApp;
 public class VacuumApp extends SimpleAgentApp {
 
 	/** Returns a <code>VacuumView</code> instance. */
+	@Override
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new VacuumView();
 	}
