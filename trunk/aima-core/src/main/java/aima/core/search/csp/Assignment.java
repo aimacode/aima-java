@@ -1,6 +1,7 @@
 package aima.core.search.csp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class Assignment {
 	public Assignment() {
 		variables = new ArrayList<Variable>();
 		variableToValue = new Hashtable<Variable, Object>();
+	}
+	
+	public List<Variable> getVariables() {
+		return Collections.unmodifiableList(variables);
 	}
 
 	public Object getAssignment(Variable var) {
