@@ -12,6 +12,21 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	protected Inference inferenceStrategy = Inference.NONE;
 	protected boolean isLCVHeuristicEnabled;
 
+	/** Creates a strategy which is by default equivalent to plain backtracking. */
+	public ImprovedBacktrackingStrategy() {
+	}
+	
+	/** Creates a backtracking strategy with the specified features. */
+	public ImprovedBacktrackingStrategy(boolean enableMRV, boolean enableDeg,
+			boolean enableAC3, boolean enableLCV) {
+		if (enableMRV)
+			setVariableSelection(enableDeg ? Selection.MRV_DEG : Selection.MRV);
+		if (enableAC3)
+			setInference(Inference.AC3);
+		enableLCV(enableLCV);
+	}
+	
+	
 	/** Selects the algorithm for SELECT-UNASSIGNED-VARIABLE */
 	public void setVariableSelection(Selection sStrategy) {
 		selectionStrategy = sStrategy;
