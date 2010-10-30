@@ -15,7 +15,7 @@ import aima.gui.demo.logic.PLResolutionDemo;
 import aima.gui.demo.logic.TTEntailsDemo;
 import aima.gui.demo.logic.WalkSatDemo;
 import aima.gui.demo.probability.ProbabilityDemo;
-import aima.gui.demo.search.CSPDemo;
+import aima.gui.demo.search.MapColoringCSPDemo;
 import aima.gui.demo.search.EightPuzzleDemo;
 import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
@@ -41,7 +41,7 @@ public class AimaDemoApp {
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
-		frame.addDemo(CSPDemo.class);
+		frame.addDemo(MapColoringCSPDemo.class);
 
 		frame.addDemo(TTEntailsDemo.class);
 		frame.addDemo(PLFCEntailsDemo.class);

@@ -205,41 +205,34 @@ public class MapColoringApp extends SimpleAgentApp {
 				case 0:
 					strategy = new BacktrackingStrategy();
 					break;
-				case 1:
-					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
-							.Selection.MRV_DEG);
+				case 1: // MRV + DEG
+					strategy = new ImprovedBacktrackingStrategy
+					(true, true, false, false);
 					break;
-				case 2:
+				case 2: // FC
 					iStrategy = new ImprovedBacktrackingStrategy();
 					iStrategy.setInference(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
-				case 3:
-					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
-							.Selection.MRV);
+				case 3: // MRV + FC 
+					iStrategy = new ImprovedBacktrackingStrategy
+					(true, false, false, false);
 					iStrategy.setInference(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
-				case 4:
-					iStrategy = new ImprovedBacktrackingStrategy();
+				case 4: // FC + LCV
+					iStrategy = new ImprovedBacktrackingStrategy
+					(false, false, false, true);
 					iStrategy.setInference(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
-					iStrategy.enableLCV(true);
 					break;
-				case 5:
-					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.setInference(ImprovedBacktrackingStrategy
-							.Inference.AC3);
+				case 5: // AC3
+					strategy = new ImprovedBacktrackingStrategy
+					(false, false, true, false);
 					break;
-				case 6:
-					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.setVariableSelection(ImprovedBacktrackingStrategy
-							.Selection.MRV_DEG);
-					iStrategy.setInference(ImprovedBacktrackingStrategy
-							.Inference.AC3);
-					iStrategy.enableLCV(true);
+				case 6: // MRV + DEG + AC3 + LCV
+					strategy = new ImprovedBacktrackingStrategy
+					(true, true, true, true);
 					break;
 				case 7:
 					strategy = new MinConflictsStrategy(50);
@@ -251,14 +244,14 @@ public class MapColoringApp extends SimpleAgentApp {
 				try {
 					strategy.addCSPStateListener(new CSPStateListener() {
 						@Override
-						public void stateChanged(CSP csp) {
-							actions.add(new CSPEnvironment.StateChangeAction(
-									csp));
-						}
-						@Override
 						public void stateChanged(Assignment assignment, CSP csp) {
 							actions.add(new CSPEnvironment.StateChangeAction(
 									assignment, csp));
+						}
+						@Override
+						public void stateChanged(CSP csp) {
+							actions.add(new CSPEnvironment.StateChangeAction(
+									csp));
 						}
 					});
 					strategy.solve(env.getCSP().copyDomains());
