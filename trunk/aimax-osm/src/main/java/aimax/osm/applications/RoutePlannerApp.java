@@ -32,6 +32,10 @@ public class RoutePlannerApp implements ActionListener {
 	protected JButton calcButton;
 	protected RouteCalculator routeCalculator;
 	
+	public RoutePlannerApp() {
+		this(new String[0]);
+	}
+	
 	public RoutePlannerApp(String[] args) {
 		frame = new MapViewFrame(args);
 		frame.setTitle("OSM Route Planner");
@@ -66,6 +70,16 @@ public class RoutePlannerApp implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Loads the default map if necessary and returns the frame
+	 * (useful for integration into an AIMA demo application).
+	 */
+	public MapViewFrame constructApplicationFrame() {
+		if (frame.getMapData().isEmpty())
+			frame.readMap(DataResource.getULMFileResource());
+		return frame;
+	}
+	
 	/** Starts route generation after the calculate button has been pressed. */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == calcButton) {
