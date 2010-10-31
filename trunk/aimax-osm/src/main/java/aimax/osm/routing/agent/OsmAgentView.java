@@ -133,6 +133,8 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 					(exts[i], mapReader.fileFormatExtensions()[i]);
 					result.addChoosableFileFilter(filter);
 				}
+				result.setFileFilter(result.getChoosableFileFilters()[0]);
+				loadFileChooser = result;
 			}
 			return result;
 		}
