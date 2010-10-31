@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
@@ -63,7 +64,13 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	public MapViewFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fileChooser = new JFileChooser();
+		
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BorderLayout());
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
 		toolbar = new JToolBar();
+		toolbar.setFloatable(false);
 		loadButton = new JButton("Load");
 		loadButton.setToolTipText("Load Map (<ctrl> bounding box mode, <shift> overview mode)");
 		loadButton.addActionListener(this);
@@ -90,18 +97,18 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		infoField = new JTextField(20);
 		infoField.setEditable(false);
 		toolbar.add(infoField);
-		getContentPane().add(toolbar, BorderLayout.NORTH);
+		contentPanel.add(toolbar, BorderLayout.NORTH);
 		
+		MapEventHandler eventHandler = new MapEventHandler();
 		mapData = new MapDataStore();
+		mapData.addMapDataEventListener(eventHandler);
 		setDefaultEntityClassifier();
 		setMapReader(new Bz2OsmReader());
 		setMapWriter(new OsmBz2Writer());
 		view = new MapViewPane();
 		view.setModel(mapData);
-		getContentPane().add(view, BorderLayout.CENTER);
-		MapEventHandler eventHandler = new MapEventHandler();
-		mapData.addMapDataEventListener(eventHandler);
 		view.addMapViewEventListener(eventHandler);
+		contentPanel.add(view, BorderLayout.CENTER);
 	}
 	
 	/**
