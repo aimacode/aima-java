@@ -30,7 +30,7 @@ public class AimaDemoFrame extends JFrame {
 	JComponent currPanel;
 
 	/** Standard constructor. */
-	AimaDemoFrame() {
+	public AimaDemoFrame() {
 		setTitle("Artificial Intelligence a Modern Approach 3rd ed. Java Demos (AIMA3e-Java)");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menubar);
@@ -43,7 +43,7 @@ public class AimaDemoFrame extends JFrame {
 	 * part of a package and to provide a <code>constructApplicationFrame</code>
 	 * method.
 	 */
-	void addApp(Class<?> appClass) {
+	public void addApp(Class<?> appClass) {
 		JMenuItem item = addAppToMenu(appMenu, appClass);
 		item.addActionListener(new AppStarter(appClass));
 	}
@@ -52,7 +52,7 @@ public class AimaDemoFrame extends JFrame {
 	 * Adds a new console program demo to the menu. The class is expected to be
 	 * part of a package and to provide a static main method.
 	 */
-	void addDemo(Class<?> demoClass) {
+	public void addDemo(Class<?> demoClass) {
 		JMenuItem item = addAppToMenu(demoMenu, demoClass);
 		item.addActionListener(new DemoStarter(demoClass));
 	}
@@ -64,19 +64,24 @@ public class AimaDemoFrame extends JFrame {
 	private JMenuItem addAppToMenu(JMenu menu, Class<?> demoClass) {
 		JMenuItem item = new JMenuItem(demoClass.getSimpleName());
 		JMenu subMenu = null;
-		String[] pname = demoClass.getPackage().getName().split("\\.");
-		String pn = pname[pname.length - 1];
-		for (Component comp : menu.getMenuComponents()) {
-			if (((JMenu) comp).getText().equals(pn))
-				subMenu = (JMenu) comp;
+		String packageName = demoClass.getPackage().getName();
+		Component[] menuComps = menu.getMenuComponents();
+		int i;
+		for (i = 0; i < menuComps.length; i++) {
+			JMenu comp = (JMenu) menuComps[i];
+			if (comp.getText().equals(packageName))
+				subMenu = comp;
+			else if (comp.getText().compareTo(packageName) > 0)
+				break;
 		}
 		if (subMenu == null) {
-			subMenu = new JMenu(pn);
-			menu.add(subMenu);
+			subMenu = new JMenu(packageName);
+			menu.add(subMenu, i);
 		}
 		subMenu.add(item);
 		return item;
 	}
+
 
 	// ///////////////////////////////////////////////////////////////
 	// inner classes
