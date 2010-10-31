@@ -38,7 +38,7 @@ import aimax.osm.viewer.MapStyleFactory;
  * just zoom in!
  * @author Ruediger Lunde
  */
-public class OsmSearchDemoAgentApp extends OsmAgentApp {
+public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	
 	/**
 	 * Stores those states (Strings with map node ids), whose
@@ -159,7 +159,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 	/**
 	 * Variant of the <code>DefaultMapEntityRenderer</code>
 	 * which highlights way nodes mentioned in
-	 * {@link OsmSearchDemoAgentApp#visitedStates}.
+	 * {@link SearchDemoOsmAgentApp#visitedStates}.
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
 		DefaultEntityViewInfo highlightProp = new MapStyleFactory().createPoiInfo(0, 0, 5, Color.GREEN, MapStyleFactory.createRectangle(4, Color.GREEN), false);
@@ -194,7 +194,7 @@ public class OsmSearchDemoAgentApp extends OsmAgentApp {
 		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
-		OsmSearchDemoAgentApp demo = new OsmSearchDemoAgentApp();
+		SearchDemoOsmAgentApp demo = new SearchDemoOsmAgentApp();
 		demo.readMap(DataResource.getULMFileResource());
 		demo.startApplication();
 	}

@@ -53,7 +53,19 @@ public class OsmAgentApp extends SimpleAgentApp {
 		map = new OsmMapAdapter(mapData);
 	}
 	
+	/**
+	 * Reads the default map showing the city of Ulm if no map
+	 * has been loaded yet and calls the super class implementation.
+	 */
+	@Override
+	public AgentAppFrame constructApplicationFrame() {
+		if (map == null)
+			readMap(DataResource.getULMFileResource());
+		return super.constructApplicationFrame();
+	}
+	
 	/** Factory method, which creates an <code>OsmAgentView</code>. */
+	@Override
 	public OsmAgentView createEnvironmentView() {
 		return new OsmAgentView(map.getMapData());
 	}
@@ -79,11 +91,11 @@ public class OsmAgentApp extends SimpleAgentApp {
 	 */
 	public static void main(String args[]) {
 		// Start with program arg -screenwidth=xx (with xx the width in cm).
-		//Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
-		//Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
+		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
+		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		OsmAgentApp demo = new OsmAgentApp();
-		demo.readMap(DataResource.getULMFileResource());
+		// demo.readMap(new File("maps/Ulm.osm"));
 		demo.startApplication();
 	}
 }
