@@ -299,6 +299,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected EntityClassifier<Boolean> createOverviewFilter() {
 		EntityClassifier<Boolean> result = new EntityClassifier<Boolean>();
 		EntityClassifier<Boolean> sc;
+		result.addRule("natural", "coastline", Boolean.TRUE);
+		result.addRule("waterway", "river", Boolean.TRUE);
 		result.addRule("highway", "motorway", Boolean.TRUE);
 		result.addRule("highway", "motorway_link", Boolean.TRUE);
 		result.addRule("highway", "trunk", Boolean.TRUE);
@@ -306,6 +308,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		sc=result.addRule("boundary", null, null);
 		sc.addRule("admin_level", "1", Boolean.TRUE);
 		sc.addRule("admin_level", "2", Boolean.TRUE);
+		sc.addRule("admin_level", "3", Boolean.TRUE);
+		sc.addRule("admin_level", "4", Boolean.TRUE);
 		result.addRule("place", "city", Boolean.TRUE);
 		result.addRule("place", "town", Boolean.TRUE);
 		result.addRule("place", "village", Boolean.TRUE);
