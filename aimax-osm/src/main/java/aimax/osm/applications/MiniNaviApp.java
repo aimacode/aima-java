@@ -240,6 +240,7 @@ public class MiniNaviApp implements ActionListener {
 		Locale.setDefault(Locale.US);
 		MiniNaviApp demo = new MiniNaviApp(args);
 		demo.getFrame().readMap(DataResource.getULMFileResource());
+		// demo.getFrame().readMap(new File("maps/ulm.osm"));
 		demo.showFrame();
 	}
 }
