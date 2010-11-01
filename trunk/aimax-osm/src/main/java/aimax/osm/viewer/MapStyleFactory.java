@@ -27,6 +27,7 @@ public class MapStyleFactory {
 	public static final Color LIGHT_YELLOW = new Color(255, 255, 200);
 	public static final Color LIGHT_GREEN_TRANS = new Color(114, 254, 86, 30);
 	public static final Color VERY_LIGHT_GREEN = new Color(200, 254, 184);
+	public static final Color VERY_LIGHT_BLUE = new Color(220, 220, 230);
 	public static final Color LIGHT_GREEN = new Color(116, 252, 133);
 	public static final Color GREEN = new Color(91, 210, 95);
 	public static final Color LIGHT_BLUE = new Color(164, 164, 255);
@@ -142,7 +143,7 @@ public class MapStyleFactory {
 		addBuildingRules(result, "historic", "castle",createPoiInfo(1f/60000, 1f/6000, 40, Color.GRAY, new EntityIcon.CastleIcon(8, Color.DARK_GRAY, Color.ORANGE), true));
 		result.addRule("historic", "memorial",        createPoiInfo(1f/6000, 1f/1800, 81, Color.GRAY, createCircle(11, "M", Color.ORANGE, Color.WHITE), true));
 		addBuildingRules(result, "historic", null,    createPoiInfo(1f/60000, 1f/1800, 75, Color.GRAY, createCircle(11, "H", Color.ORANGE, Color.WHITE), true));
-		result.addRule("amenity", "parking",      createInfo(1f/12000, 1f/1800, 85, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, GRAY_TRANS, 1, false, Color.LIGHT_GRAY, true));
+		result.addRule("amenity", "parking",      createInfo(1f/12000, 1f/1800, 85, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.WHITE), true, Color.LIGHT_GRAY, 1, false, VERY_LIGHT_BLUE, false));
 		addBuildingRules(result, "amenity", "place_of_worship", createPoiInfo(1f/20000, 1f/1800, 85, Color.GRAY, new EntityIcon.ChurchIcon(8, Color.DARK_GRAY, Color.BLUE), true));
 		addBuildingRules(result, "amenity", null, createPoiInfo(1f/12000, 1f/1800, 89, Color.BLUE, createRectangle(4, Color.BLUE), true));
 		addBuildingRules(result, "shop", null,    createPoiInfo(40000, 1f/1800, 89, Color.CYAN, createRectangle(4, Color.CYAN), true));
