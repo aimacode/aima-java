@@ -42,11 +42,10 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 1.0.1-AIMAX-OSM Map Selection Improvement ==
-1.0.1-AIMAX-OSM Map Selection Improvement : 02 Oct 2010 :<br>
-   * Improved selection of OSM Maps.
-   * Package mapagent renamed to agent.
-   * Documentation improvements.
+== Current Release: 1.0.2-AIMAX-OSM Minor Improvements (in preparation) == 
+1.0.2-AIMAX-OSM Minor Improvements : ?? :<br>
+   * General application starter added.
+   * Default map updated.
 
 == Keywords ==
 
@@ -111,24 +110,31 @@ http://creativecommons.org/licenses/by-sa/2.0/
 == Applications ==
 Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
 Ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
+ * java -jar aimax-osm.jar
+   + this will run the default OsmAimaDemoApp, this allows you to run applications and demos from the aima-gui project as well as some of the applications provided in this project.
  * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerApp
-  * just the plain viewer (not dependent on AIMA)
+   + just the plain viewer (not dependent on AIMA)
  * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerPlusApp
-  * demonstrates, how to configure and extend the viewer
+   + demonstrates, how to configure and extend the viewer
  * java -classpath aimax-osm.jar aimax.osm.applications.RoutePlannerApp
-  * uses aima-core search functionality for routing in OSM maps
+   + uses aima-core search functionality for routing in OSM maps
  * java -classpath aimax-osm.jar aimax.osm.applications.OsmAgentApp
-  * lets map agents from aima-core act in map environments which are defined by OSM data 
- * java -classpath aimax-osm.jar aimax.osm.applications.OsmSearchDemoAgentApp
-  * visualizes simulated search space exploration of different search strategies
+   + lets map agents from aima-core act in map environments which are defined by OSM data 
+ * java -classpath aimax-osm.jar aimax.osm.applications.SearchDemoOsmAgentApp
+   + visualizes simulated search space exploration of different search strategies
  * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
-  * provides a base for car navigation system development
+   + provides a base for car navigation system development
 
 It is recommended to start the applications with VM argument -Xmx500m (or higher value) and
 program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+1.0.1-AIMAX-OSM Map Selection Improvement : 02 Oct 2010 :<br>
+   * Improved selection of OSM Maps.
+   * Package mapagent renamed to agent.
+   * Documentation improvements.
+
 1.0.0-AIMAX-OSM Consolidated : 22 Aug 2010 :<br>
    * Documentation updated.
    * Minor clean-ups included.
