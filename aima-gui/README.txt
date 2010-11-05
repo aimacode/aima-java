@@ -1,6 +1,6 @@
 = AIMA-GUI =
 
-by Ruediger Lunde (r.lunde@hs-ulm.de)
+by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
 This project contains graphical applications and command line demos, which
 demonstrate the use of some of the aima-core project features. Currently, it
