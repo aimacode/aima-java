@@ -1,6 +1,6 @@
 = AIMAX-OSM =
 
-by Ruediger Lunde
+by Ruediger Lunde (r.lunde@hs-ulm.de)
 
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
@@ -43,7 +43,7 @@ marks must be set.
 
 
 == Current Release: 1.0.2-AIMAX-OSM Minor Improvements (in preparation) == 
-1.0.2-AIMAX-OSM Minor Improvements : ?? :<br>
+1.0.2-AIMAX-OSM Minor Improvements : 05 Nov 2010 :<br>
    * General application starter added.
    * Default map updated.
 
