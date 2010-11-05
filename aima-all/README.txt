@@ -1,5 +1,5 @@
 = AIMA3e-JAVA =
-Notes By Ciaran (ctjoreilly@gmail.com), Ruediger (r.lunde@hs-ulm.de) and Ravi(magesmail@yahoo.com).
+Notes By Ciaran (ctjoreilly@gmail.com), Ruediger (Ruediger.Lunde@gmail.com) and Ravi(magesmail@yahoo.com).
 
 = Introduction =
 The latest (and ever evolving) code can be found at:<br>
