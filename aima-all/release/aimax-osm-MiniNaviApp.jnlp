@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp  spec="6.0+"  codebase="http://aima-java.googlecode.com/svn/trunk/aima-all/release"  href="aimax-osm-OsmViewerPlusApp.jnlp">  
+<jnlp  spec="6.0+"  codebase="http://aima-java.googlecode.com/svn/trunk/aima-all/release"  href="aimax-osm-MiniNaviApp.jnlp">  
   <information>    
     <title>OSM Mini Navigation Application</title>
     <description>OSM Mini Navigation Application</description>      
