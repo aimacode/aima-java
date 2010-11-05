@@ -1,6 +1,6 @@
 = AIMA-GUI =
 
-by Ruediger Lunde
+by Ruediger Lunde (r.lunde@hs-ulm.de)
 
 This project contains graphical applications and command line demos, which
 demonstrate the use of some of the aima-core project features. Currently, it
@@ -9,14 +9,13 @@ with "App" and command line demo class names with "Demo". An all-in-one
 application called aima.gui.applications.AimaDemoApp is provided which is
 a starter for all the other applications and demos.
 
-
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.1-AIMA-GUI Old Demo Re-Added ==
-1.0.1-AIMA-GUI Old Demo Re-Added : 02 Oct 2010 :<br>
-  * Re-added the command line Trivial Vacuum Demo so that its easier 
-    for someone to get up and running with the code.
+== Current Release: 1.0.2-AIMA-GUI Clean Up ==
+1.0.2-AIMA-GUI Clean Up : 05 Nov 2010 :<br>
+  * AimaDemoFrame now shows complete package path names and orders them lexicographically.
+  * CSPDemo renamed to MapColoringCSPDemo.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -53,6 +52,10 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
+1.0.1-AIMA-GUI Old Demo Re-Added : 02 Oct 2010 :<br>
+  * Re-added the command line Trivial Vacuum Demo so that its easier 
+    for someone to get up and running with the code.
+    
 1.0.0-AIMA-GUI New Games : 22 Aug 2010 :<br>
   * New graphical game applications added (8-Puzzle, N-Queens, TicTacToe).
   * New graphical CSP application added (map coloring).
