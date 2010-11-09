@@ -75,8 +75,8 @@ public class MapColoringApp extends SimpleAgentApp {
 			setSelectors(new String[] { ENV_SEL, STRATEGY_SEL }, new String[] {
 					"Select Environment", "Select Solution Strategy" });
 			setSelectorItems(ENV_SEL, new String[] { "Map of Australia",
-					"Map of Australia NSW=BLUE (for MCV)",
-					"Map of Australia WA=RED (for MCV)"}, 0);
+					"Map of Australia NSW=BLUE (for LCV)",
+					"Map of Australia WA=RED (for LCV)"}, 0);
 			setSelectorItems(STRATEGY_SEL, new String[] { "Backtracking",
 					"Backtracking + MRV & DEG",
 					"Backtracking + Forward Checking",
