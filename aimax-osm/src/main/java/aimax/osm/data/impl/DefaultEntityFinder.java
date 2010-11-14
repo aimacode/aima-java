@@ -7,7 +7,6 @@ import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
-import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -21,15 +20,8 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 	}
 
 	/**
-	 * Searches for a node containing <code>namepart</code> in its name and
-	 * returns it. Nodes with name equal to <code>namepart</code> are preferred.
-	 * If a position is given, nodes in the vicinity of position are preferred.
-	 * 
-	 * @param pattern
-	 *            Search pattern.
-	 * @param position
-	 *            Possibly null.
-	 * @return A node or null.
+	 * Searches for entities which comply to the current search specification
+	 * and stores them as results.
 	 */
 	@Override
 	protected void find(boolean findMore) {
@@ -118,8 +110,6 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 		 * contains pattern; 5: no match found.
 		 */
 		int currMatchLevel = 5;
-		/** contains the render data of the reference entity. */
-		EntityViewInfo currViewInfo = null;
 
 		/** Creates a match finder for a given search pattern. */
 		protected BestMatchFinder(String pattern) {
@@ -150,7 +140,6 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 		/** Defines a new reference entity for search pattern match checks. */
 		protected void useAsReference(MapEntity entity) {
 			currMatchLevel = getMatchLevel(entity);
-			currViewInfo = entity.getViewInfo();
 		}
 
 		private int getMatchLevel(MapEntity entity) {

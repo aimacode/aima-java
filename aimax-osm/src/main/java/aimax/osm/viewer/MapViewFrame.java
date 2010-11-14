@@ -32,17 +32,18 @@ import aimax.osm.writer.Bz2OsmWriter;
 import aimax.osm.writer.MapWriter;
 
 /**
- * Implements a simple frame with a toolbar and a map view. The toolbar provides
- * buttons for map loading, map saving, and entity finding. Additionally, a text
- * field is included which shows informations like positions, track length, and
- * POI names.
+ * Implements a simple frame with a toolbar, a sidebar, and a map view. The
+ * toolbar provides buttons for map loading, map saving, and informations
+ * about recent events. The sidebar contains a tab for entity finding.
+ * The frame serves as base class for all non-agent applications of this
+ * library and can be extended in various ways.
  * 
  * @author Ruediger Lunde
  */
 public class MapViewFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	protected static Logger LOG = Logger.getLogger("aimax.osm");
-	
+
 	protected MapViewPane view;
 	protected JSplitPane splitter;
 	protected JToolBar toolbar;
@@ -54,7 +55,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	private JFileChooser fileChooser;
 	private JButton loadButton;
 	private JButton saveButton;
-	
+
 	protected JTextField infoField;
 
 	/**
@@ -80,7 +81,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+
 	public MapViewFrame() {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
@@ -88,7 +89,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 				if (mapData != null)
 					mapData.close();
 				System.exit(0);
-			}			
+			}
 		});
 		mapData = MapDataFactory.instance().createMapDataStorage();
 		setDefaultEntityClassifier();
@@ -102,18 +103,18 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 		toolbar = new JToolBar();
 		contentPanel.add(toolbar, BorderLayout.NORTH);
-		
+
 		splitter = new JSplitPane();
 		splitter.setOneTouchExpandable(true);
 		contentPanel.add(splitter, BorderLayout.CENTER);
-		
+
 		view = new MapViewPane();
 		view.setModel(mapData);
 		splitter.add(view, JSplitPane.RIGHT);
-		
+
 		sidebar = new JTabbedPane();
 		splitter.add(sidebar, JSplitPane.LEFT);
-		
+
 		initToolbar();
 		initSidebar();
 		// hide side bar if no content is available.
@@ -122,7 +123,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			splitter.setDividerSize(0);
 		}
 	}
-	
+
+	/**
+	 * Defines the functionality of the toolbar by adding components to it.
+	 * Override to customize!
+	 */
 	protected void initToolbar() {
 		toolbar.setFloatable(false);
 		loadButton = new JButton("Load");
@@ -140,10 +145,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		mapData.addMapDataEventListener(infoField.getMapDataEventListener());
 		toolbar.add(infoField);
 	}
-	
+
+	/**
+	 * Defines the functionality of the sidebar by adding components to it.
+	 * Override to customize!
+	 */
 	protected void initSidebar() {
-		//sidebar.setMinimumSize(new Dimension(0, 0));
-		
+		// sidebar.setMinimumSize(new Dimension(0, 0));
+
 		// gives an example how to add functionality to the sidebar
 		FindPanel findPane = new FindPanel(view);
 		mapData.addMapDataEventListener(findPane);
@@ -204,7 +213,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		if (map != null)
 			mapReader.readMap(map, mapData.getContentBuilder());
 		else
-			LOG.warning("Map reading failed because input stream does not exist.");
+			LOG
+					.warning("Map reading failed because input stream does not exist.");
 	}
 
 	public void readMap(File map) {
@@ -249,7 +259,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 					&& (!fc.getSelectedFile().exists() || JOptionPane
 							.showConfirmDialog(this, "File exists, overwrite?",
 									"Confirm", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)) {
-				mapWriter.writeMap(fc.getSelectedFile(), mapData, view.getBoundingBox());
+				mapWriter.writeMap(fc.getSelectedFile(), mapData, view
+						.getBoundingBox());
 			}
 		}
 	}

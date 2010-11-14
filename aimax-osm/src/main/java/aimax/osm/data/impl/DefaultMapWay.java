@@ -9,10 +9,8 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
 /**
- * Represents a way within a map. Ways are defined by lists of nodes.
- * A special dynamic attribute called "oneway" marks ways, which can only
- * be traveled in ascending node index order.
- * @author Ruediger Lunde 
+ * Default implementation of a node.
+ * @author Ruediger Lunde
  */
 public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 	private List<MapNode> nodes;
@@ -22,46 +20,44 @@ public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 	private short latMaxIdx;
 	private short lonMaxIdx;
 	
+	/** Creates a way with a specified ID. */
 	public DefaultMapWay(long id) {
 		this.id = id;
 		nodes = Collections.emptyList();
 		latMinIdx = -1;
 	}
 	
+	/** Assigns a way description (as list of nodes) to the way. */
 	public void setNodes(List<MapNode> nodes) {
 		this.nodes = nodes;
 		latMinIdx = -1;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean isOneway() {
 		return "yes".equals(getAttributeValue("oneway"));
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean isArea() {
 		return "yes".equals(getAttributeValue("area"));
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public List<MapNode> getNodes() {
 		return Collections.unmodifiableList(nodes);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public void accept(EntityVisitor visitor) {
 		visitor.visitMapWay(this);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public BoundingBox computeBoundingBox() {
 		updateBoundingBox();
@@ -70,9 +66,7 @@ public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 				nodes.get(lonMaxIdx).getLon());
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public float getBoundingBoxSize() {
 		updateBoundingBox();
@@ -119,6 +113,7 @@ public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 	/////////////////////////////////////////////////////////////////
 	// extensions for KDTree
 
+	/** {@inheritDoc} */
 	@Override
 	public int compareLatitude(float lat) {
 		updateBoundingBox();
@@ -130,6 +125,7 @@ public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 		return result;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public int compareLongitude(float lon) {
 		updateBoundingBox();

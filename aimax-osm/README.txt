@@ -5,19 +5,27 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
 and search concepts from the AIMA library in an interesting, non-trivial
-application area.
+application area. Meanwhile it provides a powerful framework for building complete
+navigation systems.
+
+The framework provides interfaces for central parts of the system and additionally
+example implementations. In the current version, even the fundamental data structures
+for nodes, ways and the data store itself can be replaced. This allows experiments
+with different implementations to optimize rooting and also to integrate a database
+version of the map representation. 
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendible.
-The internal map representation is chosen as close as possible to the
+
+The internal default map representation is chosen as close as possible to the
 original OSM XML file format. A kd-tree is used to improve rendering efficiency.
 Classification and abstraction of map entities as well as their
 visual appearance within the drawn map are controlled by declarative
 rendering rules. They can be replaced or configured at runtime.
 New personal map styles can be created quite easily. See classes
 <code>aimax.osm.viewer.MapStyleFactory</code> and
-<code>aimax.osm.application.OsmViewerPlusApp</code> for ideas how that can be
-achieved.
+<code>aimax.osm.application.OsmViewerPlusApp</code> for ideas how that
+can be achieved.
 
 Routing functionality is based on the AIMA-CORE library.
 All dependencies to the AIMA libraries are encapsulated in the routing
@@ -25,11 +33,11 @@ sub-package and the applications using functionality from that package.
 So the viewer classes can also be used as stand-alone library
 for building general OSM applications.
 
-In the current version, relation entities are ignored and
-the size of the map should be limited to about a million nodes
-to avoid long loading times. For example, detailed maps of cities like Berlin 
-can be loaded and displayed without any problem if enough heap space
-is provided (VM argument -Xmx500M).
+In the current version, relation entities are still ignored and the size
+of the map when using the default representation should be limited to about 
+a million nodes to avoid long loading times. For example, detailed maps of
+cities like Berlin can be loaded and displayed without any problem if enough
+heap space is provided (VM argument -Xmx500M).
 
 Getting started: Run one of the applications in the
 <code>aimax.osm.applications</code> package. If no map is displayed
@@ -42,10 +50,12 @@ for navigation, mark setting, and track definition. For routing, at least two
 marks must be set.
 
 
-== Current Release: 1.0.2-AIMAX-OSM Minor Improvements (in preparation) == 
-1.0.2-AIMAX-OSM Minor Improvements : 05 Nov 2010 :<br>
-   * General application starter added.
-   * Default map updated.
+== Current Release: 2.0.0-AIMAX-OSM Redesign to support DBs (in preparation) == 
+2.0.0-AIMAX-OSM Redesign to support DBs : ? :<br>
+   * Package aima.osm.data is now based on interfaces (implementations selected by factory)
+   * Data access operations now designed to support representations using databases.
+   * Map readers and writers changed so that that parts of the map can be loaded incrementally.
+   * Find functionality improved.
 
 == Keywords ==
 
@@ -130,6 +140,11 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+
+1.0.2-AIMAX-OSM Minor Improvements : 05 Nov 2010 :<br>
+   * General application starter added.
+   * Default map updated.
+
 1.0.1-AIMAX-OSM Map Selection Improvement : 02 Oct 2010 :<br>
    * Improved selection of OSM Maps.
    * Package mapagent renamed to agent.

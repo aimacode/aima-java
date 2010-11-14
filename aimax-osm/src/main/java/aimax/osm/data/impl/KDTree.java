@@ -169,7 +169,7 @@ public class KDTree {
 			}
 			VisibilityTest vtest = new VisibilityTest(bb, vbox);
 			for (DefaultMapEntity entity : entities) {
-				if (entity.getViewInfo().getMinVisibleScale() > scale)
+				if (entity.getViewInfo().getMaxVisibleScale() > scale)
 					break;
 				if (vtest.isVisible(entity))
 					entity.accept(visitor);
@@ -196,8 +196,8 @@ public class KDTree {
 	private static class EntityComparator implements Comparator<MapEntity> {
 		@Override
 		public int compare(MapEntity e1, MapEntity e2) {
-			float vs1 = e1.getViewInfo().getMinVisibleScale();
-			float vs2 = e2.getViewInfo().getMinVisibleScale();
+			float vs1 = e1.getViewInfo().getMaxVisibleScale();
+			float vs2 = e2.getViewInfo().getMaxVisibleScale();
 			if (vs1 < vs2)
 				return -1;
 			else if (vs1 > vs2)
