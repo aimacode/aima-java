@@ -83,7 +83,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 						iResults.remove(99);
 				}
 			}
-			if (getIntermediateResults().size() == 1) {
+			if (getIntermediateResults().size() == 1 && wayName != null) {
 				MapNode place = (MapNode) iResults.get(0);
 				findWay(wayName, new Position(place.getLat(), place.getLon()),
 						null);
@@ -144,7 +144,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 
 		private int getMatchLevel(MapEntity entity) {
 			String name = entity.getName();
-			if (name != null && entity.getName().equals(searchPattern))
+			if (name != null && name.equals(searchPattern))
 				return 1;
 			if (currMatchLevel >= 2) {
 				for (EntityAttribute att : entity.getAttributes())
@@ -156,8 +156,9 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 					if (att.getKey().equals(searchPattern))
 						return 3;
 			}
+			System.out.println(name + ": " + searchPattern);
 			if (name != null && currMatchLevel >= 4
-					&& entity.getName().contains(searchPattern))
+					&& name.contains(searchPattern))
 				return 4;
 			return 5;
 		}
