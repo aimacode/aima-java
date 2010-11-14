@@ -17,7 +17,7 @@ import org.xml.sax.SAXParseException;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilder;
 
 /** 
  * Reads a map from file using the standard osm XML format.
@@ -32,24 +32,25 @@ public class OsmReader implements MapReader {
 	/**
 	 * This implementation throws an <code>UnsupportedOperationException</code>.
 	 */
-	public void setBoundingBox(BoundingBox bb) {
+	public void setFilter(BoundingBox bb) {
 		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * This implementation throws an <code>UnsupportedOperationException</code>.
 	 */
-	public void setAttFilter(EntityClassifier<Boolean> attFilter) {
+	public void setFilter(EntityClassifier<Boolean> attFilter) {
 		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapDataConsumer consumer) {
+	public void readMap(File file, MapContentBuilder consumer) {
 		try  {
-			InputStream inputStream = createFileStream(file);
-			readMap(inputStream, consumer);
+			consumer.prepareForNewData();
+			parseMap(createFileStream(file), consumer);
+			consumer.compileResults();
 		} catch (FileNotFoundException e) {
 			LOG.warning("File "  + file + " does not exist.");
 		} catch (Exception e) {
@@ -61,12 +62,11 @@ public class OsmReader implements MapReader {
 	 * Reads all data from the specified stream and sends it to the consumer.
 	 * The consumer is cleared before.
 	 */
-	public void readMap(InputStream inputStream, MapDataConsumer consumer) {
+	public void readMap(InputStream inputStream, MapContentBuilder consumer) {
 		try {
-			consumer.clearAll();
-			SAXParser parser = createParser();
-			parser.parse(inputStream, new OsmHandler(consumer));
-			consumer.compileData();
+			consumer.prepareForNewData();
+			parseMap(inputStream, consumer);
+			consumer.compileResults();
 		} catch (SAXParseException e) {
 			throw new OsmRuntimeException(
 					"Unable to parse input stream"
@@ -88,6 +88,12 @@ public class OsmReader implements MapReader {
 				}
 			}
 		}
+	}
+	
+	protected void parseMap(InputStream inputStream, MapContentBuilder consumer)
+			throws SAXException, IOException {
+		SAXParser parser = createParser();
+		parser.parse(inputStream, new OsmHandler(consumer));
 	}
 	
 	public String[] fileFormatDescriptions() {

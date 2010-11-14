@@ -10,7 +10,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.BoundingBox;
+import aimax.osm.data.MapDataStorage;
 
 /** 
  * Adds bz2 extraction functionality to the basic OsmWriter. The
@@ -20,7 +21,7 @@ import aimax.osm.data.MapDataStore;
  * pack functionality will not be available.
  * @author Ruediger Lunde
  */
-public class OsmBz2Writer implements MapWriter {
+public class Bz2OsmWriter implements MapWriter {
 
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private OsmWriter osmReader = new OsmWriter();
@@ -30,7 +31,7 @@ public class OsmBz2Writer implements MapWriter {
 	 * Tries to find the <code>BZip2CompressorInputStream</code> class using
 	 * reflection and creates the reader.
 	 */
-	public OsmBz2Writer () {
+	public Bz2OsmWriter () {
 		try {
 			compressorClass = Class.forName
 			("org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream");
@@ -42,7 +43,8 @@ public class OsmBz2Writer implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to file.
 	 */
-	public void writeMap(File file, MapDataStore mapData) {
+	@Override
+	public void writeMap(File file, MapDataStorage mapData, BoundingBox bb) {
 		try  {
 			OutputStream os = new BufferedOutputStream
 			(new FileOutputStream(file));
@@ -52,7 +54,7 @@ public class OsmBz2Writer implements MapWriter {
 				os = (OutputStream) c.newInstance(os);
 			}
 			OutputStreamWriter writer = new OutputStreamWriter(os, "UTF-8");
-			writeMap(writer, mapData);
+			writeMap(writer, mapData, bb);
 		} catch (FileNotFoundException e) {
 			LOG.warning("File does not exist " + file);
 		} catch (InvocationTargetException e) {
@@ -65,10 +67,12 @@ public class OsmBz2Writer implements MapWriter {
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void writeMap(OutputStreamWriter writer, MapDataStore mapData) {
-		osmReader.writeMap(writer, mapData);
+	@Override
+	public void writeMap(OutputStreamWriter writer, MapDataStorage mapData, BoundingBox bb) {
+		osmReader.writeMap(writer, mapData, bb);
 	}
 	
+	@Override
 	public String[] fileFormatDescriptions() {
 		if (compressorClass != null)
 			return new String[] {"OSM File (osm)", "OSM BZip2 (osm.bz2)"};
@@ -76,6 +80,7 @@ public class OsmBz2Writer implements MapWriter {
 			return new String[] {"OSM File (osm)"};
 	}
 	
+	@Override
 	public String[] fileFormatExtensions() {
 		if (compressorClass != null)
 			return new String[] {"osm", "bz2"};

@@ -10,11 +10,11 @@ import aimax.osm.data.entities.MapWay;
  * @author Ruediger Lunde
  */
 public class MapWayAttFilter implements MapWayFilter {
-	MapDataStore mapData;
+	MapDataStorage mapData;
 	String attName;
 	HashSet<String> attValues;
 	
-	public MapWayAttFilter(MapDataStore mapData, String attName) {
+	public MapWayAttFilter(MapDataStorage mapData, String attName) {
 		this.mapData = mapData;
 		this.attName = attName;
 	}
@@ -36,7 +36,7 @@ public class MapWayAttFilter implements MapWayFilter {
 	
 	
 	/** Creates a way filter which passes any way except waterways. */
-	public static MapWayAttFilter createAnyWayFilter(MapDataStore mapData) {
+	public static MapWayAttFilter createAnyWayFilter(MapDataStorage mapData) {
 		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
 		filter.setAccepted("motorway");
 		filter.setAccepted("motorway_link");
@@ -62,7 +62,7 @@ public class MapWayAttFilter implements MapWayFilter {
 	}
 	
 	/** Creates a way filter which passes any way suitable for traveling by car. */
-	public static MapWayAttFilter createCarWayFilter(MapDataStore mapData) {
+	public static MapWayAttFilter createCarWayFilter(MapDataStorage mapData) {
 		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
 		filter.setAccepted("motorway");
 		filter.setAccepted("motorway_link");
@@ -88,7 +88,7 @@ public class MapWayAttFilter implements MapWayFilter {
 	}
 
 	/** Creates a way filter which passes any way suitable for traveling by bike. */
-	public static MapWayAttFilter createBicycleWayFilter(MapDataStore mapData) {
+	public static MapWayAttFilter createBicycleWayFilter(MapDataStorage mapData) {
 		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
 //		filter.setAccepted("motorway");
 //		filter.setAccepted("motorway_link");

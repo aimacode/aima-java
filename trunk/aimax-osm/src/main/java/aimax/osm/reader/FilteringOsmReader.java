@@ -2,14 +2,12 @@ package aimax.osm.reader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilderProxy;
+import aimax.osm.data.MapContentBuilder;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
@@ -21,44 +19,46 @@ public class FilteringOsmReader extends OsmReader {
 	 * Sets a bounding box for the next read action from file. Map nodes which
 	 * are not inside will be ignored.
 	 */
-	public void setBoundingBox(BoundingBox bb) {
+	public void setFilter(BoundingBox bb) {
 		boundingBox = bb;
+		attFilter = null;
 	}
 	
 	/**
 	 * Sets an attribute filter for the next read action from file.
 	 * Map entities for which the classifier returns null will be ignored.
 	 */
-	public void setAttFilter(EntityClassifier<Boolean> attFilter) {
+	public void setFilter(EntityClassifier<Boolean> attFilter) {
 		this.attFilter = attFilter;
+		boundingBox = null;
 	}
 	
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapDataConsumer consumer) {
-		if (boundingBox == null && attFilter == null) {
-			super.readMap(file, consumer);
-		} else {
-			try  {
-				InputStream inputStream = createFileStream(file);
-				FilteringMapDataConsumer fcon = new FilteringMapDataConsumer
-				(consumer, boundingBox, attFilter);
-				if (attFilter != null) {
-					fcon.setPreparationMode(true);
-					readMap(inputStream, fcon);
-					inputStream = createFileStream(file);
-					fcon.setPreparationMode(false);
-				}
-				readMap(inputStream, fcon);
-			} catch (FileNotFoundException e) {
-				LOG.warning("File does not exist " + file);
-			} catch (Exception e) {
-				LOG.warning("The map could not be read. " + e);
-			} finally {
-				boundingBox = null;
-				attFilter = null;
+	public void readMap(File file, MapContentBuilder builder) {
+		try {
+			MapContentBuilderProxy proxy;
+			if (boundingBox != null)
+				proxy = new BBBuilderProxy(builder, boundingBox);
+			else if (attFilter != null)
+				proxy = new FilteringBuilderProxy(builder, attFilter);
+			else
+				proxy = new MapContentBuilderProxy(builder);
+			proxy.prepareForNewData();
+			parseMap(createFileStream(file), proxy);
+			if (proxy.nodesWithoutPositionAdded()) {
+				proxy.incrementCounter();
+				parseMap(createFileStream(file), proxy);
 			}
+			proxy.compileResults();
+		} catch (FileNotFoundException e) {
+			LOG.warning("File does not exist " + file);
+		} catch (Exception e) {
+			LOG.warning("The map could not be read. " + e);
+		} finally {
+			boundingBox = null;
+			attFilter = null;
 		}
 	}
 	
@@ -66,71 +66,66 @@ public class FilteringOsmReader extends OsmReader {
 	//////////////////////////////////////////////////////////////////////
 	// inner classes
 	
-	private static class FilteringMapDataConsumer implements MapDataConsumer {
-		MapDataConsumer consumer;
+	/** Builder proxy used for bounding box filtering. */
+	private static class BBBuilderProxy extends MapContentBuilderProxy {
 		BoundingBox bb;
-		EntityClassifier<Boolean> attFilter;
-		HashSet<Long> wayNodeIds;
-		List<Long> wayNodeIdBuffer;
-		boolean preparationMode;
 		
-		protected FilteringMapDataConsumer(MapDataConsumer consumer, BoundingBox bb, EntityClassifier<Boolean> attFilter) {
-			this.consumer = consumer;
+		protected BBBuilderProxy(MapContentBuilder builder, BoundingBox bb) {
+			super(builder);
 			this.bb = bb;
-			this.attFilter = attFilter;
-			wayNodeIds = new HashSet<Long>();
-			wayNodeIdBuffer = new ArrayList<Long>();
-			preparationMode = false;
-		}
-		
-		public void setPreparationMode(boolean mode) {
-			preparationMode = mode;
 		}
 		
 		@Override
-		public void clearAll() {
-			if (!preparationMode)
-				consumer.clearAll();
+		public void prepareForNewData() {
+			super.prepareForNewData();
+			builder.setBoundingBox(bb);
 		}
 		
 		@Override
-		public void compileData() {
-			if (!preparationMode)
-				consumer.compileData();
+		public void setBoundingBox(BoundingBox bb) {
 		}
 		
 		@Override
 		public void addNode(MapNode node) {
-			if (!preparationMode &&
-					(bb == null ||
-							node.getLat() >= bb.getLatMin()
-							&& node.getLon() >= bb.getLonMin()
-							&& node.getLat() <= bb.getLatMax()
-							&& node.getLon() <= bb.getLonMax()) &&
-					(attFilter == null
-							|| wayNodeIds.contains(node.getId())
-							|| attFilter.classify(node) != null))
-				consumer.addNode(node);
+			if (counter == 0 &&
+					node.getLat() >= bb.getLatMin() &&
+					node.getLat() <= bb.getLatMax() &&
+					node.getLon() >= bb.getLonMin() &&
+					node.getLon() <= bb.getLonMax())
+				super.addNode(node);
 		}
 		
 		@Override
-		public void addWay(MapWay way) {
-			if (attFilter == null || attFilter.classify(way) != null) {
-				if (preparationMode)
-					wayNodeIds.addAll(wayNodeIdBuffer);
-				else
-					consumer.addWay(way);
+		public void addWay(MapWay way, List<MapNode> wayNodes) {
+			if (counter == 0) {
+				for (MapNode node : wayNodes)
+					if (builder.getNode(node.getId()) != null) {
+						super.addWay(way, wayNodes);
+						break;
+					}
 			}
-			wayNodeIdBuffer.clear();
+		}
+	}
+	
+	/** Builder proxy used for attribute filtering. */
+	private static class FilteringBuilderProxy extends aimax.osm.data.MapContentBuilderProxy {
+		EntityClassifier<Boolean> attFilter;
+		
+		protected FilteringBuilderProxy(MapContentBuilder builder, EntityClassifier<Boolean> attFilter) {
+			super(builder);
+			this.attFilter = attFilter;
 		}
 		
 		@Override
-		public MapNode getWayNode(long id) {
-			if (preparationMode) {
-				wayNodeIdBuffer.add(id);
-				return null;
-			} else {
-				return consumer.getWayNode(id);
+		public void addNode(MapNode node) {
+			if (attFilter.classify(node) != null)
+				super.addNode(node);
+		}
+		
+		@Override
+		public void addWay(MapWay way, List<MapNode> wayNodes) {
+			if (attFilter.classify(way) != null) {
+				super.addWay(way, wayNodes);
 			}
 		}
 	}

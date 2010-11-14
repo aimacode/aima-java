@@ -9,7 +9,8 @@ import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.SimpleAgentApp;
 import aimax.osm.data.DataResource;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapDataFactory;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.routing.agent.OsmAgentController;
@@ -36,9 +37,9 @@ public class OsmAgentApp extends SimpleAgentApp {
 	/** Reads a map from the specified stream and stores it in {@link #map}. */
 	public void readMap(InputStream stream) {
 		if (stream != null) {
-			MapDataStore mapData = new MapDataStore();
+			MapDataStorage mapData = MapDataFactory.instance().createMapDataStorage();
 			MapReader mapReader = new Bz2OsmReader();
-			mapReader.readMap(stream, mapData);
+			mapReader.readMap(stream, mapData.getContentBuilder());
 			map = new OsmMapAdapter(mapData);
 		}
 		else
@@ -47,9 +48,9 @@ public class OsmAgentApp extends SimpleAgentApp {
 	
 	/** Reads a map from the specified file and stores it in {@link #map}. */
 	public void readMap(File file) {
-		MapDataStore mapData = new MapDataStore();
+		MapDataStorage mapData = MapDataFactory.instance().createMapDataStorage();
 		MapReader mapReader = new Bz2OsmReader();
-		mapReader.readMap(file, mapData);
+		mapReader.readMap(file, mapData.getContentBuilder());
 		map = new OsmMapAdapter(mapData);
 	}
 	

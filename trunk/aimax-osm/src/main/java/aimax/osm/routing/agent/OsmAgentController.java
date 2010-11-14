@@ -20,7 +20,7 @@ import aima.gui.applications.search.map.SearchFactory;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.SimulationThread;
 import aima.gui.framework.MessageLogger;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
 
@@ -58,7 +58,7 @@ public class OsmAgentController extends AgentAppController {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
-		MapDataStore mapData = map.getMapData();
+		MapDataStorage mapData = map.getMapData();
 		mapData.getTracks().clear();
 		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter

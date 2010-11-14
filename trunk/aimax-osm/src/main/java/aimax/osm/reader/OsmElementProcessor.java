@@ -4,27 +4,26 @@ package aimax.osm.reader;
 
 import org.xml.sax.Attributes;
 
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilder;
 
 /**
  * Provides an element processor implementation for an osm element.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class OsmElementProcessor extends ElementProcessor {
 	
 	// private static final Logger LOG = Logger.getLogger("rlu.osm");
 	
-	// private static final String ELEMENT_NAME_BOUND = "bound";
+	private static final String ELEMENT_NAME_BOUND = "bound";
 	private static final String ELEMENT_NAME_NODE = "node";
 	private static final String ELEMENT_NAME_WAY = "way";
 	// private static final String ELEMENT_NAME_RELATION = "relation";
 	// private static final String ATTRIBUTE_NAME_VERSION = "version";
 	
-	
-	// private BoundElementProcessor boundElementProcessor;
+	private BoundElementProcessor boundElementProcessor;
 	private NodeElementProcessor nodeElementProcessor;
 	private WayElementProcessor wayElementProcessor;
-	// private RelationElementProcessor relationElementProcessor;
+	//private RelationElementProcessor relationElementProcessor;
 	
 	// private boolean foundBound = false;
 	// private boolean foundEntities = false;
@@ -38,13 +37,13 @@ public class OsmElementProcessor extends ElementProcessor {
 	 *            The sink for receiving processed data.
 	 */
 	public OsmElementProcessor(ElementProcessor parentProcessor,
-			MapDataConsumer mdConsumer) {
+			MapContentBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
-//		boundElementProcessor = new BoundElementProcessor(this, getConsumer());
+		boundElementProcessor = new BoundElementProcessor(this, getConsumer());
 		nodeElementProcessor = new NodeElementProcessor(this, getConsumer());
 		wayElementProcessor = new WayElementProcessor(this, getConsumer());
-//		relationElementProcessor = new RelationElementProcessor(this, getConsumer());
+		//relationElementProcessor = new RelationElementProcessor(this, getConsumer());
 	}
 	
 	
@@ -68,17 +67,9 @@ public class OsmElementProcessor extends ElementProcessor {
 	 */
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
-//		if (ELEMENT_NAME_BOUND.equals(qName)) {
-//			if (foundEntities) {
-//				throw new OsmRuntimeException("Bound element must come before any entities.");
-//			}
-//			if (foundBound) {
-//				throw new OsmRuntimeException("Only one bound element allowed.");
-//			}
-//			foundBound = true;
-//			return boundElementProcessor;
-//		} else
-		if (ELEMENT_NAME_NODE.equals(qName)) {
+		if (ELEMENT_NAME_BOUND.equals(qName)) {
+			return boundElementProcessor;
+		} else if (ELEMENT_NAME_NODE.equals(qName)) {
 			// foundEntities = true;
 			return nodeElementProcessor;
 		} else if (ELEMENT_NAME_WAY.equals(qName)) {

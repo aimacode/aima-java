@@ -8,7 +8,8 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import aimax.osm.data.EntityAttributeManager;
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 
@@ -25,7 +26,8 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	private TagElementProcessor tagElementProcessor;
 	private MapNode node;
 	private List<EntityAttribute> nodeAttributes;
-	
+	private boolean hasNoPosition;
+	private boolean isNew;
 	
 	/**
 	 * Creates a new instance.
@@ -36,29 +38,29 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 *            The sink for receiving processed data.
 	 */
 	public NodeElementProcessor(ElementProcessor parentProcessor,
-			MapDataConsumer mdConsumer) {
+			MapContentBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
 		tagElementProcessor = new TagElementProcessor(this, this);
 		nodeAttributes = new ArrayList<EntityAttribute>();
 	}
-	
-	
+		
 	/**
 	 * {@inheritDoc}
 	 */
 	public void begin(Attributes attributes) {
-		long id;
-		float latitude;
-		float longitude;
-		
-		id = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		latitude = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE));
-		longitude = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE));
-		node = new MapNode(id, latitude, longitude);
-		nodeAttributes.clear();
+		long id = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
+		node = getConsumer().getNode(id);
+		isNew = (node == null);
+		if (isNew)
+			node = MapDataFactory.instance().createMapNode(id);
+		hasNoPosition = Float.isNaN(node.getLat()) || Float.isNaN(node.getLon());
+		if (hasNoPosition) {
+			node.setLat(Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE)));
+			node.setLon(Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE)));	
+			nodeAttributes.clear();
+		}
 	}
-	
 	
 	/**
 	 * Retrieves the appropriate child element processor for the newly
@@ -74,22 +76,23 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
-		if (ELEMENT_NAME_TAG.equals(qName)) {
-			return tagElementProcessor;
-		}
+		if (hasNoPosition) 
+			if (ELEMENT_NAME_TAG.equals(qName))
+				return tagElementProcessor;
 		
 		return super.getChild(uri, localName, qName);
 	}
-	
-	
+		
 	/**
 	 * {@inheritDoc}
 	 */
 	public void end() {
-		node.setAttributes(nodeAttributes);
-		getConsumer().addNode(node);
+		if (hasNoPosition) {
+			node.setAttributes(nodeAttributes);
+			if (isNew)
+				getConsumer().addNode(node);
+		}
 	}
-	
 	
 	/**
 	 * This is called by child element processors when a tag object is

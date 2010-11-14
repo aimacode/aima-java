@@ -4,7 +4,7 @@ package aimax.osm.reader;
 
 import org.xml.sax.Attributes;
 
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilder;
 
 /**
  * Provides common functionality shared by element processor implementations.
@@ -13,7 +13,7 @@ public abstract class ElementProcessor {
 	private ElementProcessor parentProcessor;
 	
 	private ElementProcessor dummyChildProcessor;
-	private MapDataConsumer mdConsumer;
+	private MapContentBuilder mdConsumer;
 	
 	/**
 	 * Creates a new instance.
@@ -25,7 +25,7 @@ public abstract class ElementProcessor {
 		this.parentProcessor = parentProcessor;
 	}
 	
-	public ElementProcessor(ElementProcessor parentProcessor, MapDataConsumer mdConsumer) {
+	public ElementProcessor(ElementProcessor parentProcessor, MapContentBuilder mdConsumer) {
 		this(parentProcessor);
 		this.mdConsumer = mdConsumer;
 	}
@@ -61,7 +61,7 @@ public abstract class ElementProcessor {
 	/**
 	 * @return The sink.
 	 */
-	protected MapDataConsumer getConsumer() {
+	protected MapContentBuilder getConsumer() {
 		return mdConsumer;
 	}
 	

@@ -8,14 +8,15 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import aimax.osm.data.EntityAttributeManager;
-import aimax.osm.data.MapDataConsumer;
+import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
 /**
  * Provides an element processor implementation for a way.
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class WayElementProcessor extends ElementProcessor implements TagListener {
 	private static final String ELEMENT_NAME_TAG = "tag";
@@ -30,7 +31,9 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	private TagElementProcessor tagElementProcessor;
 	private WayNodeElementProcessor wayNodeElementProcessor;
 	private List<EntityAttribute> wayAttributes;
+	private List<MapNode> wayNodes;
 	private MapWay way;
+	private boolean skipElement;
 		
 	/**
 	 * Creates a new instance.
@@ -41,22 +44,26 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 *            The sink for receiving processed data.
 	 */
 	public WayElementProcessor(ElementProcessor parentProcessor,
-			MapDataConsumer mdConsumer) {
+			MapContentBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
 		tagElementProcessor = new TagElementProcessor(this, this);
 		wayNodeElementProcessor = new WayNodeElementProcessor(this, this);
 		wayAttributes = new ArrayList<EntityAttribute>();
+		wayNodes = new ArrayList<MapNode>();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public void begin(Attributes attributes) {
-		long id;
-		id = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		way = new MapWay(id); // unclassified!
-		wayAttributes.clear();
+		long id = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
+		skipElement = (getConsumer().getWay(id) != null);
+		if (!skipElement) {
+			way = MapDataFactory.instance().createMapWay(id); // unclassified!
+			wayAttributes.clear();
+			wayNodes.clear();
+		}
 	}
 	
 	/**
@@ -73,10 +80,12 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 */
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
-		if (ELEMENT_NAME_NODE.equals(qName)) {
-			return wayNodeElementProcessor;
-		} else if (ELEMENT_NAME_TAG.equals(qName)) {
-			return tagElementProcessor;
+		if (!skipElement) {
+			if (ELEMENT_NAME_NODE.equals(qName)) {
+				return wayNodeElementProcessor;
+			} else if (ELEMENT_NAME_TAG.equals(qName)) {
+				return tagElementProcessor;
+			}
 		}
 		return super.getChild(uri, localName, qName);
 	}
@@ -85,8 +94,10 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 * {@inheritDoc}
 	 */
 	public void end() {
-		way.setAttributes(wayAttributes);
-		getConsumer().addWay(way);
+		if (!skipElement) {
+			way.setAttributes(wayAttributes);
+			getConsumer().addWay(way, wayNodes);
+		}
 	}
 	
 	/**
@@ -117,10 +128,9 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 *            The id of the way node to be processed.
 	 */
 	public void addWayNode(long nodeId) {
-		MapNode node = getConsumer().getWayNode(nodeId);
-		if (node != null) {
-			node.addWayRef(way, way.getNodes().size());
-			way.addNode(node);
-		}
+		MapNode node = getConsumer().getNode(nodeId);
+		if (node == null)
+			node = MapDataFactory.instance().createMapNode(nodeId);
+		wayNodes.add(node);
 	}
 }

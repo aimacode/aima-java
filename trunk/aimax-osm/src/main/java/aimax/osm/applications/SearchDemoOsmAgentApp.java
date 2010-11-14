@@ -167,7 +167,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);
 			if (scale >= highlightProp.minVisibleScale * displayFactor ) {
-				for (MapNode node : way.getNodes())
+				for (MapNode node : getWayNodes(way))
 					if (visitedStates.contains(Long.toString(node.getId())))
 						printPoint(g2, node, highlightProp, null);
 						//highlight(node);	

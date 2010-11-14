@@ -20,14 +20,15 @@ import javax.swing.JPopupMenu;
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.impl.DefaultMapDataStorage;
 
 /**
  * Provides a panel which shows map data. As model, a
- * {@link aimax.osm.data.MapDataStore} is used.
+ * {@link aimax.osm.data.MapDataStorage} is used.
  * <p>Hint for using the viewer: Try Mouse-Left, Mouse-Right, Mouse-Drag,
  * Ctrl-Mouse-Left, Plus, Minus, Ctrl-Plus, Ctrl-Minus, arrow buttons,
  * and also the Mouse-Wheel for navigation, mark setting, and track
@@ -40,7 +41,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	// private Logger LOG = Logger.getLogger("aimax.osm");
 	
 	/** Maintains a reference to the model which provides the data to be displayed. */
-	protected MapDataStore mapData;
+	protected MapDataStorage mapData;
 	protected CoordTransformer transformer;
 	private AbstractEntityRenderer renderer;
 	private ArrayList<MapViewEventListener> eventListeners;
@@ -62,12 +63,12 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		this.setFocusable(true);
 	}
 	
-	public MapDataStore getModel() {
+	public MapDataStorage getModel() {
 		return mapData;
 	}
 	
 	/** Stores the model and initiates painting. */
-	public void setModel(MapDataStore mapData) {
+	public void setModel(MapDataStorage mapData) {
 		if (this.mapData != null)
 			this.mapData.removeMapDataEventListener(this);
 		this.mapData = mapData;
@@ -177,6 +178,15 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		return new Position(lat, lon);
 	}
 	
+	/** Returns a bounding box describing the currently visible area. */
+	public BoundingBox getBoundingBox() {
+		float latMin = transformer.lat(getHeight());
+		float lonMin = transformer.lon(0);
+		float latMax = transformer.lat(0);
+		float lonMax = transformer.lon(getHeight());
+		return new BoundingBox(latMin, lonMin, latMax, lonMax);
+	}
+	
 	/**
 	 * Removes the mark which is the nearest with respect to the given view
 	 * coordinates.
@@ -213,15 +223,13 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	    	float scale = transformer.computeScale();
 	    	BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
 	    	float viewScale = scale / renderer.getDisplayFactor();
-	    	renderer.initForRendering(g2, transformer);
-    		if (mapData.getEntityTree() != null)
-    			mapData.getEntityTree().visitEntities
-    			(renderer, vbox, viewScale);
+	    	renderer.initForRendering(g2, transformer, mapData);
+    		mapData.visitEntities(renderer, vbox, viewScale);
     		for (MapEntity entity : mapData.getVisibleMarksAndTracks(viewScale))
     			entity.accept(renderer);
     		renderer.printBufferedObjects();
-    		if (renderer.isDebugModeEnabled()) {
-    			List<double[]> splits = mapData.getEntityTree().getSplitCoords();
+    		if (renderer.isDebugModeEnabled() && mapData instanceof DefaultMapDataStorage) {
+    			List<double[]> splits = ((DefaultMapDataStorage) mapData).getEntityTree().getSplitCoords();
     			g2.setColor(Color.LIGHT_GRAY);
     			g2.setStroke(new BasicStroke(1f));
     			for (double[] split : splits)
