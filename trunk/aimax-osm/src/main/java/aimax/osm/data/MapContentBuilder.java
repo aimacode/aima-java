@@ -7,6 +7,10 @@ import aimax.osm.data.entities.MapWay;
 /**
  * Simple interface to aggregate map data. Its purpose is, to keep OSM parsers
  * independent from the concrete structure which is used to store the data.
+ * To be able to read only parts of a given map (e.g. defined by a bounding
+ * box or an entity filter), it is important, that ways can be processed before
+ * everything about the nodes defining the way is known. Hence, implementations
+ * should allow to add nodes without position and accept later refinement.
  * @author Ruediger Lunde
  */
 public interface MapContentBuilder {

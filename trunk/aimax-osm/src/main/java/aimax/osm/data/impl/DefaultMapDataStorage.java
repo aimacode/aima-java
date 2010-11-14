@@ -29,13 +29,14 @@ import aimax.osm.data.entities.Track;
 /**
  * Central container for OSM map data. It is responsible for storing loaded map
  * data and also for data preparation to support efficient routing and map
- * viewing. Data preparation is based on two fundamental tree structures:
+ * viewing. All map data is kept in RAM in this implementation.
+ * Data preparation is based on two fundamental tree structures:
  * 
  * <p>
  * The first is an entity classifier. It is used to attach viewing information
  * to map entities based on attribute value checks. Renderers can store whatever
  * they need in those view information objects. However, the details are not
- * visible to this layer. The data store only sees the minimal scale in which
+ * visible to this layer. The data storage only sees the minimal scale in which
  * the entity shall be visible.
  * </p>
  * 
@@ -44,13 +45,13 @@ import aimax.osm.data.entities.Track;
  * </p>
  * 
  * <p>
- * The map data store is used as model for the viewer.
+ * The map data storage is used as model for the viewer.
  * </p>
  * 
  * @author Ruediger Lunde
  */
 public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder {
-	private Logger LOG = Logger.getLogger("aimax.osm");
+	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private BoundingBox boundingBox;
 	/**
 	 * Maintains all map nodes during map loading; after compilation only the
@@ -291,8 +292,9 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 	/**
 	 * Returns all map ways which intersect the specified bounding box.
 	 */
+	@Override
 	public Collection<MapWay> getWays(BoundingBox bb) {
-		// not really efficient but ok for small maps...
+		// not really efficient but OK for small maps...
 		List<MapWay> result = new ArrayList<MapWay>();
 		for (MapWay way : ways.values())
 			if (way.computeBoundingBox().intersectsWith(bb))
@@ -348,9 +350,6 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @param bb
-	 *            Currently not used!
 	 */
 	@Override
 	public List<MapNode> getPois(BoundingBox bb) {
@@ -391,11 +390,11 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		List<MapEntity> result = new ArrayList<MapEntity>();
 		for (MapNode mark : marks)
 			if (mark.getViewInfo() != null
-					&& mark.getViewInfo().getMinVisibleScale() <= scale)
+					&& mark.getViewInfo().getMaxVisibleScale() <= scale)
 				result.add(mark);
 		for (Track track : tracks)
 			if (track.getViewInfo() != null
-					&& track.getViewInfo().getMinVisibleScale() <= scale)
+					&& track.getViewInfo().getMaxVisibleScale() <= scale)
 				result.add(track);
 		return result;
 	}
@@ -526,63 +525,6 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		return result;
 	}
 
-	/**
-	 * Searches for a node containing <code>namepart</code> in its name and
-	 * returns it. Nodes with name equal to <code>namepart</code> are preferred.
-	 * If a position is given, nodes in the vicinity of position are preferred.
-	 * 
-	 * @param pattern
-	 *            Search pattern.
-	 * @param position
-	 *            Possibly null.
-	 * @return A node or null.
-	 * @deprecated
-	 */
-	public MapNode findNode(String pattern, Position position,
-			boolean includePOIs, boolean includeWayNodes, boolean excludeMarked) {
-		MapNode result = null;
-		ArrayList<MapNode> foundNodes = new ArrayList<MapNode>();
-		BestMatchFinder bmf = new BestMatchFinder(pattern);
-		if (includePOIs) {
-			for (MapNode node : pois) {
-				int match = bmf.checkMatchQuality(node);
-				if (match >= 0) {
-					if (!excludeMarked
-							|| !isMarked(node.getLat(), node.getLon())) {
-						if (match > 0) {
-							foundNodes.clear();
-							bmf.useAsReference(node);
-						}
-						foundNodes.add(node);
-					}
-				}
-			}
-		}
-		if (includeWayNodes) {
-			for (MapWay way : ways.values()) {
-				int match = bmf.checkMatchQuality(way);
-				if (match >= 0) {
-					MapNode node = way.getNodes().get(0);
-					if (!excludeMarked
-							|| !isMarked(node.getLat(), node.getLon())) {
-						if (match > 0) {
-							foundNodes.clear();
-							bmf.useAsReference(way);
-						}
-						foundNodes.add(node);
-					}
-				}
-			}
-		}
-		if (!foundNodes.isEmpty()) {
-			if (position != null)
-				result = position.selectNearest(foundNodes, null);
-			else
-				result = foundNodes.get(0);
-		}
-		return result;
-	}
-
 	/** {@inheritDoc} */
 	@Override
 	public void addMapDataEventListener(MapDataEventListener listener) {
@@ -600,100 +542,5 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 	public void fireMapDataEvent(MapDataEvent event) {
 		for (MapDataEventListener listener : listeners)
 			listener.eventHappened(event);
-	}
-
-	/**
-	 * Helper class which is used to find the best match when searching for
-	 * special entities.
-	 * 
-	 * @author Ruediger Lunde
-	 */
-	private static class BestMatchFinder {
-		/** String, specifying the entity to be searched for. */
-		String searchPattern;
-		/**
-		 * Value between 1 and 5 which classifies the reference match level. 1:
-		 * reference entity name equal to pattern; 2: reference entity has
-		 * attribute value which is identical with the pattern; 3: reference
-		 * entity has attribute name equal to pattern; 4: reference entity name
-		 * contains pattern; 5: no match found.
-		 */
-		int currMatchLevel = 5;
-		/** contains the render data of the reference entity. */
-		EntityViewInfo currViewInfo = null;
-
-		/** Creates a match finder for a given search pattern. */
-		protected BestMatchFinder(String pattern) {
-			searchPattern = pattern;
-		}
-
-		/**
-		 * Compares whether a given entity matches the search pattern better or
-		 * worse than the previously defined reference entity.
-		 * 
-		 * @return Match level (-1: forget new entity, 0: new entity match
-		 *         quality equal to reference entity, 1: new entity matches
-		 *         better then reference entity)
-		 */
-		protected int checkMatchQuality(MapEntity entity) {
-			int matchLevel = getMatchLevel(entity);
-			int result = -1;
-			if (matchLevel < 5) {
-				if (matchLevel < currMatchLevel)
-					result = 1;
-				else if (matchLevel == currMatchLevel) {
-					if (matchLevel == 1 || matchLevel == 4)
-						result = compareRenderData(entity.getViewInfo());
-					else
-						result = 0;
-				}
-			}
-			return result;
-		}
-
-		/** Defines a new reference entity for search pattern match checks. */
-		protected void useAsReference(MapEntity entity) {
-			currMatchLevel = getMatchLevel(entity);
-			currViewInfo = entity.getViewInfo();
-		}
-
-		private int getMatchLevel(MapEntity entity) {
-			String name = entity.getName();
-			if (name != null && entity.getName().equals(searchPattern))
-				return 1;
-			if (currMatchLevel >= 2) {
-				for (EntityAttribute att : entity.getAttributes())
-					if (att.getValue().equals(searchPattern))
-						return 2;
-			}
-			if (currMatchLevel >= 3) {
-				for (EntityAttribute att : entity.getAttributes())
-					if (att.getKey().equals(searchPattern))
-						return 3;
-			}
-			if (name != null && currMatchLevel >= 4
-					&& entity.getName().contains(searchPattern))
-				return 4;
-			return 5;
-		}
-
-		/** Prefers entities which are already visible in small scale. */
-		private int compareRenderData(EntityViewInfo newData) {
-			if (currViewInfo == null)
-				if (newData == null)
-					return 0;
-				else
-					return 1;
-			else if (newData == null)
-				return -1;
-			else if (newData.getMinVisibleScale() < currViewInfo
-					.getMinVisibleScale())
-				return 1;
-			else if (newData.getMinVisibleScale() > currViewInfo
-					.getMinVisibleScale())
-				return -1;
-			else
-				return 0;
-		}
 	}
 }

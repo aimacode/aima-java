@@ -10,10 +10,7 @@ import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.WayRef;
 
 /**
- * Represents a node within the map. Nodes
- * can be part of a way, points of interest, or marks.
- * A full java bean interface is provided. So it is
- * easy, to serialize objects using <code>XMLEncoder</code>.
+ * Default implementation of a node.
  * @author Ruediger Lunde
  */
 public class DefaultMapNode extends DefaultMapEntity implements MapNode {
@@ -27,26 +24,31 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 		this.lon = Float.NaN;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean hasPosition() {
 		return !Float.isNaN(lat) && !Float.isNaN(lon);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public float getLat() {
 		return lat;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void setLat(float lat) {
 		this.lat = lat;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public float getLon() {
 		return lon;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setLon(float lon) {
 		this.lon = lon;
@@ -61,6 +63,7 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 			return Collections.unmodifiableList(ways);
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void addWayRef(MapWay way, int nodeIdx) {
 		if (ways == null)
@@ -70,6 +73,7 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 			ways.add(new DefaultWayRef(way, (short) nodeIdx));
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void removeWayRef(MapWay way) {
 		for (int i = 0; i < ways.size(); i++)
@@ -79,6 +83,7 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 			}
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void accept(EntityVisitor visitor) {
 		visitor.visitMapNode(this);
@@ -92,6 +97,7 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 	/////////////////////////////////////////////////////////////////
 	// extensions for KDTree
 	
+	/** {@inheritDoc} */
 	@Override
 	public int compareLatitude(float lat) {
 		if (this.lat < lat)
@@ -102,6 +108,7 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 			return 0;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public int compareLongitude(float lon) {
 		if (this.lon < lon)

@@ -12,18 +12,20 @@ import aimax.osm.data.BoundingBox;
  * @author Ruediger Lunde 
  */
 public interface MapWay extends MapEntity {
-	
+	/** Indicates that the way can only be traveled in one direction. */
 	public boolean isOneway();
-	
+	/** Indicates, that the way represents an area. */
 	public boolean isArea();
 	
 	/**
-	 * Returns an unmodifiable list of nodes describing the way.
+	 * Returns an unmodifiable list of nodes describing the way. This
+	 * representation should always be complete - no abstraction from
+	 * original data with respect to some zooming level.
 	 */
 	public List<MapNode> getNodes();
 	
 	/**
-	 * Computes the smallest box containing all way nodes (zoom level 0).
+	 * Computes the smallest box containing all way nodes.
 	 */
 	public BoundingBox computeBoundingBox();
 	

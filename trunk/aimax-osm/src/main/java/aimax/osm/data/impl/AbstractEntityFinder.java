@@ -9,8 +9,12 @@ import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 
+/**
+ * Base class suitable to implement different entity finders. Just the
+ * method {@link #find(boolean)} has to be overridden.
+ * @author Ruediger Lunde
+ */
 public abstract class AbstractEntityFinder implements EntityFinder {
 
 	protected static enum Mode {
@@ -29,6 +33,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	private List<MapEntity> intermediateResults;
 	private List<MapEntity> results;
 
+	/** Creates a new entity finder for the given map data storage. */
 	public AbstractEntityFinder(MapDataStorage storage) {
 		this.storage = storage;
 		minRadius = 2;
@@ -37,16 +42,19 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		results = new ArrayList<MapEntity>();
 	}
 	
+	/** {@inheritDoc} */ 
 	@Override
 	public void setMinRadius(int km) {
 		minRadius = km;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setMaxRadius(int km) {
 		maxRadius = km;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void findEntity(String pattern, Position pos) {
 		mode = Mode.ENTITY;
@@ -57,6 +65,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		find(false);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void findNode(String pattern, Position pos) {
 		mode = Mode.NODE;
@@ -66,6 +75,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		find(false);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void findWay(String pattern, Position pos, MapWayFilter filter) {
 		mode = Mode.WAY;
@@ -76,6 +86,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		find(false);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void findAddress(String pattern, Position pos) {
 		mode = Mode.ADDRESS;
@@ -86,27 +97,32 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		find(false);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void findMore() {
 		find(true);
 	}
 
+	/** Abstract operation which makes the interesting work. */
 	protected abstract void find(boolean findMore);
 
 	public Position getRefPosition() {
 		return position;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public List<MapEntity> getIntermediateResults() {
 		return intermediateResults;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public List<MapEntity> getResults() {
 		return results;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void selectIntermediateResult(MapNode node) {
 		intermediateResults.clear();

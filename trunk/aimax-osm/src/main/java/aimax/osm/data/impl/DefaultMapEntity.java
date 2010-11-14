@@ -9,13 +9,8 @@ import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapEntity;
 
 /**
- * Common base class for all map entities. Map entities have id, name, and
- * attributes, must accept a visitor (e.g. for rendering), and
- * can be compared with respect to their position relative
- * to a split plane. The attached view information tells the map data store
- * for which scales the entity is relevant. It can also contain further
- * data for rendering, but those aspects are not visible on application
- * layer.
+ * Base class for all map entities in this default map representation
+ * implementation.
  * @author Ruediger Lunde
  */
 public abstract class DefaultMapEntity implements MapEntity {
@@ -30,10 +25,12 @@ private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];
 		attributes = EMPTY_ATT_LIST;
 	}
 	
+	/** {@inheritDoc} */
 	public long getId() {
 		return id;
 	}
 	
+	/** {@inheritDoc} */
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -43,15 +40,17 @@ private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];
 		return name;
 	}
 
+	/** {@inheritDoc} */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	/** Returns the attributes of the entity. */
+	/** {@inheritDoc} */
 	public EntityAttribute[] getAttributes() {
 		return attributes;
 	}
 	
+	/** {@inheritDoc} */
 	public void setAttributes(List<EntityAttribute> atts) {
 		if (!atts.isEmpty() || attributes.length != 0) {
 			attributes = new EntityAttribute[atts.size()];
@@ -60,10 +59,12 @@ private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];
 		}
 	}
 	
+	/** {@inheritDoc} */
 	public EntityViewInfo getViewInfo() {
 		return viewInfo;
 	}
 
+	/** {@inheritDoc} */
 	public void setViewInfo(EntityViewInfo renderData) {
 		this.viewInfo = renderData;
 	}
@@ -90,11 +91,13 @@ private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];
 		return null;
 	}
 	
-	/** 
-	 * Subclasses must call back the entity class specific method
-	 * of the visitor.
-	 */
+	/** {@inheritDoc} */
 	public abstract void accept(EntityVisitor visitor);
+	
+	
+	/////////////////////////////////////////////////////////////////
+	// extension for kd-tree
+	
 	/**
 	 * Returns -1, if all parts of the entity have
 	 * a lower latitude than <code>lat</code>;

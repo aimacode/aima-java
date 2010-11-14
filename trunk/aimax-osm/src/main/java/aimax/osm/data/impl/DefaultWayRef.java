@@ -16,7 +16,11 @@ public class DefaultWayRef implements WayRef {
 		this.way = way;
 		this.nodeIdx = nodeIdx;
 	}
+	/** {@inheritDoc} */
+	@Override
 	public MapWay getWay() { return way; }
+	/** {@inheritDoc} */
+	@Override
 	public short getNodeIdx() { return nodeIdx; }
 }
 
