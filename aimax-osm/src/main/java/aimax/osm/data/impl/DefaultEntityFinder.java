@@ -156,7 +156,6 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 					if (att.getKey().equals(searchPattern))
 						return 3;
 			}
-			System.out.println(name + ": " + searchPattern);
 			if (name != null && currMatchLevel >= 4
 					&& name.contains(searchPattern))
 				return 4;
