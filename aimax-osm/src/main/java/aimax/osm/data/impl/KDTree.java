@@ -1,10 +1,12 @@
-package aimax.osm.data;
+package aimax.osm.data.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import aimax.osm.data.BoundingBox;
+import aimax.osm.data.EntityVisitor;
 import aimax.osm.data.entities.MapEntity;
 
 
@@ -22,7 +24,7 @@ public class KDTree {
 	private int depth;
 	private int maxEntities;
 	private int maxDepth;
-	private ArrayList<MapEntity> entities;
+	private ArrayList<DefaultMapEntity> entities;
 	private boolean splitAtLat;
 	private float splitValue;
 	private boolean isSorted;
@@ -38,13 +40,17 @@ public class KDTree {
 		depth = 0;
 		this.maxEntities = maxEntities;
 		this.maxDepth = maxDepth;
-		entities = new ArrayList<MapEntity>();
+		entities = new ArrayList<DefaultMapEntity>();
 	}
 	
 	/** Constructor for inner and leaf nodes. */
 	private KDTree(BoundingBox bb, int maxEntities, int maxDepth, int depth) {
 		this(bb, maxEntities, maxDepth);
 		this.depth = depth;
+	}
+	
+	public BoundingBox getBoundingBox() {
+		return bb;
 	}
 	
 	/** Returns the depth of the tree (longest path length from root to leaf). */
@@ -66,7 +72,7 @@ public class KDTree {
 	 * the tree if necessary. It is assumed that the entity contains
 	 * view information.
 	 */
-	void insertEntity(MapEntity entity) {
+	public void insertEntity(DefaultMapEntity entity) {
 		if (children == null) {
 			entities.add(entity);
 			isSorted = false;
@@ -88,9 +94,9 @@ public class KDTree {
 				children = new KDTree[2];
 				children[0] = new KDTree(c1bb, maxEntities, maxDepth, depth+1);
 				children[1] = new KDTree(c2bb, maxEntities, maxDepth, depth+1);
-				List<MapEntity> tmp = entities;
-				entities = new ArrayList<MapEntity>();
-				for (MapEntity ne : tmp)
+				List<DefaultMapEntity> tmp = entities;
+				entities = new ArrayList<DefaultMapEntity>();
+				for (DefaultMapEntity ne : tmp)
 					insertEntity(ne);
 			}
 		} else {
@@ -162,7 +168,7 @@ public class KDTree {
 				isSorted = true;
 			}
 			VisibilityTest vtest = new VisibilityTest(bb, vbox);
-			for (MapEntity entity : entities) {
+			for (DefaultMapEntity entity : entities) {
 				if (entity.getViewInfo().getMinVisibleScale() > scale)
 					break;
 				if (vtest.isVisible(entity))
@@ -204,7 +210,7 @@ public class KDTree {
 	/**
 	 * If a kd-tree node's bounding box is not completely visible,
 	 * this class helps to check which entities are visible and which not.
-	 * @author R. Lunde
+	 * @author Ruediger Lunde
 	 *
 	 */ 
 	private static class VisibilityTest {
@@ -233,7 +239,7 @@ public class KDTree {
 			}
 		}
 		
-		boolean isVisible(MapEntity entity) {
+		boolean isVisible(DefaultMapEntity entity) {
 			if (isTrue)
 				return true;
 			if (testLatMin != Float.NaN && entity.compareLatitude(testLatMin) < 0)

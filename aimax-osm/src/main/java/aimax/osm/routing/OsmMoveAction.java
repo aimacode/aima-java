@@ -19,9 +19,10 @@ public class OsmMoveAction implements Action {
 	
 	/** It is assumed that both nodes are part of the way. */
 	public OsmMoveAction(MapWay way, MapNode fromNode, MapNode toNode) {
+		List<MapNode> nodes = way.getNodes();
 		this.way = way;
-		fromIndex = way.getNodes().indexOf(fromNode);
-		toIndex = way.getNodes().indexOf(toNode);
+		fromIndex = nodes.indexOf(fromNode);
+		toIndex = nodes.indexOf(toNode);
 	}
 	
 	public MapWay getWay() {
@@ -38,10 +39,10 @@ public class OsmMoveAction implements Action {
 	
 	public List<MapNode> getNodes() {
 		int size = Math.abs(toIndex-fromIndex)+1;
+		List<MapNode> nodes = way.getNodes();
 		List<MapNode> result = new ArrayList<MapNode>(size);
 		for (int i = 0; i < size; i++)
-			result.add(way.getNodes().get
-					(fromIndex < toIndex ? fromIndex+i : fromIndex-i));
+			result.add(nodes.get(fromIndex < toIndex ? fromIndex+i : fromIndex-i));
 		return result;
 	}
 	

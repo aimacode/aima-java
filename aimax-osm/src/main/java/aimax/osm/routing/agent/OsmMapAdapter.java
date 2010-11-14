@@ -2,12 +2,14 @@ package aimax.osm.routing.agent;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import aima.core.environment.map.Map;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Point2D;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.BoundingBox;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
@@ -25,7 +27,7 @@ import aimax.osm.data.entities.WayRef;
 public class OsmMapAdapter implements Map {
 
 	/** A map which is generated from OSM data. */
-	MapDataStore mapData;
+	MapDataStorage mapData;
 	/**
 	 * A filter, which hides some of the ways
 	 * (e.g. foot ways are irrelevant when traveling by car.).
@@ -37,7 +39,7 @@ public class OsmMapAdapter implements Map {
 	 */
 	boolean ignoreOneways;
 	
-	public OsmMapAdapter(MapDataStore mapData) {
+	public OsmMapAdapter(MapDataStorage mapData) {
 		this.mapData = mapData;
 	}
 	
@@ -49,7 +51,7 @@ public class OsmMapAdapter implements Map {
 		this.filter = filter;
 	}
 	
-	public MapDataStore getMapData() {
+	public MapDataStorage getMapData() {
 		return mapData;
 	}
 	
@@ -64,19 +66,18 @@ public class OsmMapAdapter implements Map {
 			return null;
 	}
 
+	/** {@inheritDoc} Very expensive for large maps! */
 	@Override
 	public List<String> getLocations() {
 		List<String> result = new ArrayList<String>();
-		for (MapNode node : mapData.getWayNodes()) {
-			boolean relevant = false;
-			for (WayRef wref : node.getWayRefs()) {
-				if (filter == null || filter.isAccepted(wref.getWay().getId())) {
-					relevant = true;
-					break;
-				}
-			}
-			if (relevant) {
-				result.add(Long.toString(node.getId()));
+		HashSet<MapNode> nodeHash = new HashSet<MapNode>();
+		for (MapWay way : mapData.getWays(new BoundingBox(-90, -180, 90, 180))) {
+			if (filter == null || filter.isAccepted(way.getId())) {
+				for (MapNode node : way.getNodes())
+					if (!nodeHash.contains(node)) {
+						result.add(Long.toString(node.getId()));
+						nodeHash.add(node);
+					}
 			}
 		}
 		return result;
@@ -129,8 +130,7 @@ public class OsmMapAdapter implements Map {
 	 */
 	public String getNearestLocation(Point2D pt) {
 		Position pos = new Position((float) pt.getY(), (float) pt.getX());
-		Collection<MapNode> rNodes = mapData.getWayNodes();
-		MapNode node = pos.selectNearest(rNodes, filter);
+		MapNode node = mapData.getNearestWayNode(pos, filter);
 		return (node != null) ? Long.toString(node.getId()) : null;
 	}
 	
@@ -138,7 +138,7 @@ public class OsmMapAdapter implements Map {
 	public MapNode getWayNode(String id) {
 		MapNode result = null;
 		try {
-			result = mapData.getWayNode(Long.parseLong(id));
+			result = mapData.getNode(Long.parseLong(id));
 		} catch (NumberFormatException e) {
 			// node not found, indicated by return value null.
 		}

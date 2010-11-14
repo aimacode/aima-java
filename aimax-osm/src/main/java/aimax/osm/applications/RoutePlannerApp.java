@@ -12,7 +12,7 @@ import javax.swing.JToolBar;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.Position;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
@@ -83,7 +83,7 @@ public class RoutePlannerApp implements ActionListener {
 	/** Starts route generation after the calculate button has been pressed. */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == calcButton) {
-			MapDataStore mapData = frame.getMapData();
+			MapDataStorage mapData = frame.getMapData();
 			List<Position> positions = routeCalculator.calculateRoute
 			(mapData.getMarks(), mapData, waySelection.getSelectedIndex());
 			frame.getMapData().createTrack(ROUTE_TRACK_NAME, positions);

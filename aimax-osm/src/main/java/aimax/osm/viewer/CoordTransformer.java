@@ -62,6 +62,11 @@ public class CoordTransformer {
 	    	originLat = bb.getLatMax();
 	    	originLon += (bb.getLonMax() - lon(viewWidth)) / 2.0;
 	    	originLat += (bb.getLatMin() - lat(viewHeight)) / 2.0;
+		} else {
+			lonCorr = 1.0f;
+			dotsPerDeg = 100;
+	    	originLon = 0;
+	    	originLat = 0;
 		}
 	}
 	

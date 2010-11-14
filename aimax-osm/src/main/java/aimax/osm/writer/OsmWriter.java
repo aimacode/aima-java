@@ -7,10 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.BoundingBox;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -27,12 +30,12 @@ public class OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to file.
 	 */
-	public void writeMap(File file, MapDataStore mapData) {
+	public void writeMap(File file, MapDataStorage mapData, BoundingBox bb) {
 		try  {
 			FileOutputStream fs = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter
 			(new BufferedOutputStream(fs), "UTF-8");
-			writeMap(writer, mapData);
+			writeMap(writer, mapData, bb);
 		} catch (FileNotFoundException fnfe) {
 			LOG.warning("File does not exist "+file);
 		} catch (UnsupportedEncodingException fnfe) {
@@ -41,31 +44,36 @@ public class OsmWriter implements MapWriter {
 	}
 	
 	/**
-	 * Reads all data from the file and send it to the sink.
+	 * Writes all data from <code>mapData</code> to a stream.
 	 */
-	public void writeMap(OutputStreamWriter writer, MapDataStore mapData) {
+	public void writeMap(OutputStreamWriter writer, MapDataStorage mapData, BoundingBox bb) {
 
 		try {
 			StringBuffer text = new StringBuffer();
 			text.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 			text.append("<osm version=\"0.6\" generator=\"aimax-osm-writer\">\n");
-			text.append("<bounds minlat=\"");
-			text.append(mapData.getBoundingBox().getLatMin());
-			text.append("\" minlon=\"");
-			text.append(mapData.getBoundingBox().getLonMin());
-			text.append("\" maxlat=\"");
-			text.append(mapData.getBoundingBox().getLatMax());
-			text.append("\" maxlon=\"");
-			text.append(mapData.getBoundingBox().getLonMax());
-			text.append("\"/>\n");
+			text.append("<bound box=\"");
+			text.append(bb.getLatMin() + ",");
+			text.append(bb.getLonMin() + ",");
+			text.append(bb.getLatMax() + ",");
+			text.append(bb.getLonMax());
+			text.append("\" origin=\"?\"/>\n");
 			writer.write(text.toString());
-			for (MapNode node : mapData.getPOIs())
-				writeNode(writer, node);
-			for (MapNode node : mapData.getWayNodes())
-				writeNode(writer, node);
-//			for (MapNode node : mapData.getMarks())
-//				writeNode(writer, node);
-			for (MapWay way : mapData.getWays()) 
+			
+			HashSet<MapNode> nodeHash = new HashSet<MapNode>();
+			Collection<MapWay> ways = mapData.getWays(bb);
+			for (MapWay way : ways)
+				for (MapNode node : way.getNodes())
+					if (!nodeHash.contains(node)) {
+						writeNode(writer, node);
+						nodeHash.add(node);
+					}
+			for (MapNode poi : mapData.getPois(bb))
+				if (!nodeHash.contains(poi)) {
+					writeNode(writer, poi);
+					nodeHash.add(poi);
+				}
+			for (MapWay way : ways) 
 				writeWay(writer, way);
 			writer.write("</osm>\n");
 		} catch (IOException e) {

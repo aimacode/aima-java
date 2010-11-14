@@ -5,23 +5,23 @@ package aimax.osm.data;
  * @author Ruediger Lunde
  */
 public class MapDataEvent {
-	MapDataStore source;
+	MapDataStorage source;
 	Type type;
 	long objId;
 	
-	public MapDataEvent(MapDataStore source, Type type) {
+	public MapDataEvent(MapDataStorage source, Type type) {
 		this.source = source;
 		this.type = type;
 		objId = -1;
 	}
 	
-	public MapDataEvent(MapDataStore source, Type type, long objId) {
+	public MapDataEvent(MapDataStorage source, Type type, long objId) {
 		this.source = source;
 		this.type = type;
 		this.objId = objId;
 	}
 	
-	public MapDataStore getSource() {
+	public MapDataStorage getSource() {
 		return source;
 	}
 	
@@ -35,6 +35,6 @@ public class MapDataEvent {
 	
 	/** Describes the kind of change. */
 	public enum Type {
-		MAP_NEW, MAP_MODIFIED, MARK_ADDED, TRACK_MODIFIED, MAP_CLEARED;
+		MAP_NEW, MAP_MODIFIED, MARK_ADDED, MARK_REMOVED, TRACK_MODIFIED, MAP_CLEARED;
 	}
 }

@@ -3,7 +3,7 @@ package aimax.osm.routing;
 import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.StepCostFunction;
-import aimax.osm.data.MapDataStore;
+import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
 
@@ -24,7 +24,7 @@ public class RouteFindingProblem extends Problem {
 	 * @param filter A filter for ways constraining routing results.
 	 */
 	public RouteFindingProblem(MapNode from, MapNode to,
-			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays) {
+			MapDataStorage mapData, MapWayFilter filter, boolean ignoreOneWays) {
 		initialState = from;
 		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
 		resultFunction = new OsmResultFunction();
@@ -41,7 +41,7 @@ public class RouteFindingProblem extends Problem {
 	 * @param costs Maps <code>OsmMoveAction</code>s to costs.
 	 */
 	public RouteFindingProblem(MapNode from, MapNode to,
-			MapDataStore mapData, MapWayFilter filter, boolean ignoreOneWays,
+			MapDataStorage mapData, MapWayFilter filter, boolean ignoreOneWays,
 			StepCostFunction costs) {
 		initialState = from;
 		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
