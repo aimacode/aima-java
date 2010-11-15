@@ -66,14 +66,14 @@ public class MapStyleFactory {
 			new EntityClassifier<EntityViewInfo>();
 		EntityClassifier<EntityViewInfo> sc;
 		result.setDefaultEntityClass(createDefaultInfo());
-		result.addRule("highway", "motorway",      createWayInfo(1f/30000000, 1f/20000, 50, Color.BLUE, 3));
-		result.addRule("highway", "motorway_link", createWayInfo(1f/30000000, 1f/20000, 51, Color.BLUE, 1));
-		result.addRule("highway", "trunk",         createWayInfo(1f/30000000, 1f/6000, 52, Color.BLUE, 2));
-		result.addRule("highway", "trunk_link",    createWayInfo(1f/30000000, 1f/6000, 53, Color.BLUE, 1));
-		result.addRule("highway", "primary",       createWayInfo(1f/2000000, 1f/6000, 54, Color.PINK, 4));
-		result.addRule("highway", "primary_link",  createWayInfo(1f/2000000, 1f/6000, 55, Color.PINK, 4));
-		result.addRule("highway", "secondary",     createWayInfo(1f/700000, 1f/6000, 56, Color.PINK, 3));
-		result.addRule("highway", "tertiary",      createWayInfo(1f/350000, 1f/6000, 57, Color.PINK, 2));
+		result.addRule("highway", "motorway",      createWayInfo(1f/2000000, 1f/20000, 50, Color.BLUE, 3));
+		result.addRule("highway", "motorway_link", createWayInfo(1f/200000, 1f/20000, 51, Color.BLUE, 1));
+		result.addRule("highway", "trunk",         createWayInfo(1f/2000000, 1f/6000, 52, Color.BLUE, 2));
+		result.addRule("highway", "trunk_link",    createWayInfo(1f/200000, 1f/6000, 53, Color.BLUE, 1));
+		result.addRule("highway", "primary",       createWayInfo(1f/1000000, 1f/6000, 54, Color.PINK, 4));
+		result.addRule("highway", "primary_link",  createWayInfo(1f/100000, 1f/6000, 55, Color.PINK, 4));
+		result.addRule("highway", "secondary",     createWayInfo(1f/500000, 1f/6000, 56, Color.PINK, 3));
+		result.addRule("highway", "tertiary",      createWayInfo(1f/250000, 1f/6000, 57, Color.PINK, 2));
 		result.addRule("highway", "road",          createWayInfo(1f/190000, 1f/6000, 58, Color.PINK, 1));
 		result.addRule("highway", "residential",   createWayInfo(1f/100000, 1f/3500, 65, Color.LIGHT_GRAY, 1));
 		result.addRule("highway", "living_street", createWayInfo(1f/100000, 1f/3500, 65, Color.LIGHT_GRAY, 1));
@@ -90,20 +90,20 @@ public class MapStyleFactory {
 		result.addRule("natural", "land",          createWayInfo(1f/2000000, 1f/35000, 40, LIGHT_BLUE, 1, Color.WHITE, false));
 		result.addRule("natural", "island",        createWayInfo(1f/2000000, 1f/100000, 40, LIGHT_BLUE, 2));
 		result.addRule("natural", "coastline",     createWayInfo(1e-9f, 1f/5000000, 40, LIGHT_BLUE, 2));
-		result.addRule("natural", "cliff",         createWayInfo(1f/2000000, 1f/12000, 41, Color.GRAY, 1));
+		result.addRule("natural", "cliff",         createWayInfo(1f/1000000, 1f/12000, 41, Color.GRAY, 1));
 		result.addRule("natural", "water",         createInfo(1f/2000000, 1f/35000, 39, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
-		result.addRule("natural", "glacier",       createWayInfo(1f/2000000, 1f/35000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
+		result.addRule("natural", "glacier",       createWayInfo(1f/1000000, 1f/35000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
 		result.addRule("natural", "beach",         createWayInfo(1f/100000, 1f/12000, 80, Color.YELLOW, 1, Color.YELLOW, false));
-		result.addRule("natural", "wood",          createWayInfo(1f/2000000, 1f/12000, 80, GREEN, 1, GREEN, false));
-		result.addRule("natural", "scrub",         createWayInfo(1f/2000000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "wood",          createWayInfo(1f/1000000, 1f/12000, 80, GREEN, 1, GREEN, false));
+		result.addRule("natural", "scrub",         createWayInfo(1f/1000000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
 		result.addRule("natural", "heath",         createWayInfo(1f/750000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
 		result.addRule("natural", "fell",          createWayInfo(1f/750000, 1f/12000, 80, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false));
 		result.addRule("natural", "peak",          createPoiInfo(1f/350000, 1f/35000, 38, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false));
 		result.addRule("natural", null,            createInfo(1f/350000, 1f/12000, 80, Color.DARK_GRAY, createTriangle(8, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false));
 		result.addRule("leisure", "park",          createWayInfo(1f/350000, 1f/6000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
 		result.addRule("leisure", "garden",        createWayInfo(1f/60000, 1f/3500, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
-		result.addRule("landuse", "forest",        createWayInfo(1f/2000000, 1f/12000, 80, GREEN, 1, GREEN, false));
-		result.addRule("landuse", "reservoir",     createWayInfo(1f/2000000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
+		result.addRule("landuse", "forest",        createWayInfo(1f/1000000, 1f/12000, 80, GREEN, 1, GREEN, false));
+		result.addRule("landuse", "reservoir",     createWayInfo(1f/1000000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
 		result.addRule("landuse", "farm",          createWayInfo(1f/750000, 1f/12000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
 		result.addRule("landuse", "farmland",      createWayInfo(1f/750000, 1f/12000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
 		result.addRule("landuse", "residential",   createWayInfo(1f/750000, 1f/12000, 80, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false));
@@ -118,7 +118,7 @@ public class MapStyleFactory {
 		sc.addRule("admin_level", "3", createInfo(1f/750000, 1f/3500, 88, Color.GRAY, null, false, Color.GRAY, 1, true, null, false));
 		sc.addRule("admin_level", "4", createInfo(1f/750000, 1f/3500, 89, Color.GRAY, null, false, Color.GRAY, 1, true, null, false));
 		
-		result.addRule("waterway", "riverbank", createWayInfo(1f/2000000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
+		result.addRule("waterway", "riverbank", createWayInfo(1f/200000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
 		result.addRule("waterway", null,        createWayInfo(1f/100000, 1f/12000, 76, LIGHT_BLUE, 1, LIGHT_BLUE, true));
 		result.addRule("route", "ferry",        createInfo(1f/100000, 1f/12000, 70, Color.GRAY, null, false, Color.BLUE, 1, true, null, false));
 		result.addRule("railway", "rail",       createWayInfo(1f/100000, 1f/3500, 95, Color.GRAY, 1));
@@ -128,9 +128,9 @@ public class MapStyleFactory {
 		result.addRule("mountain_pass", null,   createPoiInfo(1e-9f, 1f/350000, 10, Color.DARK_GRAY, null, false));
 		
 		result.addRule("place", "city",    createPoiInfo(0, 0, 1, Color.BLACK, null, false));
-		result.addRule("place", "town",    createPoiInfo(1e-9f, 1f/350000, 2, Color.BLACK, null, false));
-		result.addRule("place", "village", createPoiInfo(1e-9f, 1f/100000, 3, Color.DARK_GRAY, null, false));
-		result.addRule("place", null,      createPoiInfo(1e-9f, 1f/35000, 30, Color.DARK_GRAY, null, false));
+		result.addRule("place", "town",    createPoiInfo(1f/100000, 1f/350000, 2, Color.BLACK, null, false));
+		result.addRule("place", "village", createPoiInfo(1f/500000, 1f/100000, 3, Color.DARK_GRAY, null, false));
+		result.addRule("place", null,      createPoiInfo(1f/100000, 1f/35000, 30, Color.DARK_GRAY, null, false));
 		
 		result.addRule("tourism", "caravan_site", createPoiInfo(1f/350000, 1f/6000, 75, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true)); 
 		result.addRule("tourism", "camp_site",    createPoiInfo(1f/350000, 1f/6000, 73, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true));

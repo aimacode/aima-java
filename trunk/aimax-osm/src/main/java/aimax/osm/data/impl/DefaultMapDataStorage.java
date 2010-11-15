@@ -510,6 +510,26 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 
 	/** {@inheritDoc} */
 	@Override
+	public EntityFinder getEntityFinder() {
+		EntityFinder result = new DefaultEntityFinder(this);
+		return result;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public Object[][] getStatistics() {
+		Object[][] result = new Object[3][2];
+		result[0][0] = "Nodes";
+		result[0][1] = nodes.size();
+		result[1][0] = "Ways";
+		result[1][1] = ways.size();
+		result[2][0] = "POIs";
+		result[2][1] = pois.size();
+		return result;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
 	public void visitEntities(EntityVisitor visitor, BoundingBox vbox,
 			float scale) {
 		if (entityTree != null)
@@ -519,11 +539,6 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 	/** Returns a kd-tree with all entities. */
 	public KDTree getEntityTree() {
 		return entityTree;
-	}
-
-	public EntityFinder getEntityFinder() {
-		EntityFinder result = new DefaultEntityFinder(this);
-		return result;
 	}
 
 	/** {@inheritDoc} */
