@@ -88,7 +88,7 @@ public class FindPanel extends JPanel implements ActionListener,
 		add(findField, c);
 
 		typeCombo = new JComboBox(new String[] { "Entities", "Nodes", "Ways",
-				"Address (e.g. 'Ulm, Pritt')" });
+				"Address (e.g. 'ulm, pritt')" });
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 3;
