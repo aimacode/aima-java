@@ -113,7 +113,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 
 		/** Creates a match finder for a given search pattern. */
 		protected BestMatchFinder(String pattern) {
-			searchPattern = pattern;
+			searchPattern = pattern.toLowerCase();
 		}
 
 		/**
@@ -144,16 +144,18 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 
 		private int getMatchLevel(MapEntity entity) {
 			String name = entity.getName();
+			if (name != null)
+				name = name.toLowerCase();
 			if (name != null && name.equals(searchPattern))
 				return 1;
 			if (currMatchLevel >= 2) {
 				for (EntityAttribute att : entity.getAttributes())
-					if (att.getValue().equals(searchPattern))
+					if (att.getValue().toLowerCase().equals(searchPattern))
 						return 2;
 			}
 			if (currMatchLevel >= 3) {
 				for (EntityAttribute att : entity.getAttributes())
-					if (att.getKey().equals(searchPattern))
+					if (att.getKey().toLowerCase().equals(searchPattern))
 						return 3;
 			}
 			if (name != null && currMatchLevel >= 4

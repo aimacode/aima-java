@@ -366,11 +366,12 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 	 */
 	@Override
 	public List<MapNode> getPlaces(String name) {
+		String pattern = name.toLowerCase();
 		List<MapNode> results = new ArrayList<MapNode>();
 		for (MapNode node : nodes.values()) {
 			if (node.getAttributeValue("place") != null
 					&& node.getName() != null
-					&& node.getName().startsWith(name))
+					&& node.getName().toLowerCase().startsWith(pattern))
 				results.add(node);
 		}
 		return results;
