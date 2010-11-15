@@ -1,6 +1,7 @@
 package aimax.osm.viewer;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,10 +17,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -35,10 +37,10 @@ import aimax.osm.writer.MapWriter;
 
 /**
  * Implements a simple frame with a toolbar, a sidebar, and a map view. The
- * toolbar provides buttons for map loading, map saving, and informations
- * about recent events. The sidebar contains a tab for entity finding.
- * The frame serves as base class for all non-agent applications of this
- * library and can be extended in various ways.
+ * toolbar provides buttons for map loading, map saving, and informations about
+ * recent events. The sidebar contains a tab for entity finding. The frame
+ * serves as base class for all non-agent applications of this library and can
+ * be extended in various ways.
  * 
  * @author Ruediger Lunde
  */
@@ -55,9 +57,10 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected MapWriter mapWriter;
 
 	private JFileChooser fileChooser;
-	private JCheckBox sidebarCheckBox;
 	private JButton loadButton;
 	private JButton saveButton;
+	private JButton statisticsButton;
+	private JCheckBox sidebarCheckBox;
 
 	protected JTextField infoField;
 
@@ -108,7 +111,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		contentPanel.add(toolbar, BorderLayout.NORTH);
 
 		splitter = new JSplitPane();
-		//splitter.setOneTouchExpandable(true);
+		// splitter.setOneTouchExpandable(true);
 		contentPanel.add(splitter, BorderLayout.CENTER);
 
 		view = new MapViewPane();
@@ -137,6 +140,10 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		saveButton.setToolTipText("Save Map");
 		saveButton.addActionListener(this);
 		toolbar.add(saveButton);
+		statisticsButton = new JButton("Statistics");
+		statisticsButton.setToolTipText("Show Map Statistics");
+		statisticsButton.addActionListener(this);
+		toolbar.add(statisticsButton);
 		sidebarCheckBox = new JCheckBox("Sidebar");
 		sidebarCheckBox.addActionListener(this);
 		sidebarCheckBox.setSelected(false);
@@ -165,13 +172,13 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		mapData.setEntityClassifier(new MapStyleFactory()
 				.createDefaultClassifier());
 	}
-	
+
 	public void showSidebar(boolean b) {
 		if (b) {
 			splitter.setDividerSize(4);
 			sidebar.setVisible(true);
 			splitter.setDividerLocation(splitter.getLastDividerLocation());
-			
+
 		} else {
 			splitter.setLastDividerLocation(splitter.getDividerLocation());
 			splitter.setDividerSize(0);
@@ -277,6 +284,13 @@ public class MapViewFrame extends JFrame implements ActionListener {
 				mapWriter.writeMap(fc.getSelectedFile(), mapData, view
 						.getBoundingBox());
 			}
+		} else if (e.getSource() == statisticsButton) {
+			Object[][] data = mapData.getStatistics();
+			JTable table = new JTable(data, new String[]{"Attribute", "Value"});
+			JScrollPane scroller = new JScrollPane(table);
+			scroller.setPreferredSize(new Dimension(250, 300));
+			JOptionPane.showConfirmDialog(this, scroller, "Map Statistics",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == sidebarCheckBox) {
 			showSidebar(sidebarCheckBox.isSelected());
 		}
