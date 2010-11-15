@@ -32,6 +32,10 @@ import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
+/**
+ * Panel to control search for entities by name and attribute.
+ * @author Ruediger Lunde
+ */
 public class FindPanel extends JPanel implements ActionListener,
 		ListSelectionListener, MapDataEventListener {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +60,7 @@ public class FindPanel extends JPanel implements ActionListener,
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
 
 		JLabel specLabel = new JLabel("Search Specification:");
 		// specLabel.setHorizontalTextPosition(JLabel.LEFT);

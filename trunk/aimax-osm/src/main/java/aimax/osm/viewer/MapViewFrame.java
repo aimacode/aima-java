@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -53,6 +55,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected MapWriter mapWriter;
 
 	private JFileChooser fileChooser;
+	private JCheckBox sidebarCheckBox;
 	private JButton loadButton;
 	private JButton saveButton;
 
@@ -105,7 +108,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		contentPanel.add(toolbar, BorderLayout.NORTH);
 
 		splitter = new JSplitPane();
-		splitter.setOneTouchExpandable(true);
+		//splitter.setOneTouchExpandable(true);
 		contentPanel.add(splitter, BorderLayout.CENTER);
 
 		view = new MapViewPane();
@@ -117,11 +120,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 		initToolbar();
 		initSidebar();
-		// hide side bar if no content is available.
-		if (sidebar.getTabCount() == 0) {
-			sidebar.setVisible(false);
-			splitter.setDividerSize(0);
-		}
 	}
 
 	/**
@@ -139,7 +137,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		saveButton.setToolTipText("Save Map");
 		saveButton.addActionListener(this);
 		toolbar.add(saveButton);
-		toolbar.addSeparator();
+		sidebarCheckBox = new JCheckBox("Sidebar");
+		sidebarCheckBox.addActionListener(this);
+		sidebarCheckBox.setSelected(false);
+		showSidebar(false);
+		toolbar.add(sidebarCheckBox);
 		InfoField infoField = new InfoField(view, mapData);
 		view.addMapViewEventListener(infoField.getMapViewEventListener());
 		mapData.addMapDataEventListener(infoField.getMapDataEventListener());
@@ -162,6 +164,19 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected void setDefaultEntityClassifier() {
 		mapData.setEntityClassifier(new MapStyleFactory()
 				.createDefaultClassifier());
+	}
+	
+	public void showSidebar(boolean b) {
+		if (b) {
+			splitter.setDividerSize(4);
+			sidebar.setVisible(true);
+			splitter.setDividerLocation(splitter.getLastDividerLocation());
+			
+		} else {
+			splitter.setLastDividerLocation(splitter.getDividerLocation());
+			splitter.setDividerSize(0);
+			sidebar.setVisible(false);
+		}
 	}
 
 	public void setVisible(boolean b) {
@@ -262,6 +277,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 				mapWriter.writeMap(fc.getSelectedFile(), mapData, view
 						.getBoundingBox());
 			}
+		} else if (e.getSource() == sidebarCheckBox) {
+			showSidebar(sidebarCheckBox.isSelected());
 		}
 	}
 
