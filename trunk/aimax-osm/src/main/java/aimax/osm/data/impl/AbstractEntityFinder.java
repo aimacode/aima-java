@@ -37,7 +37,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	public AbstractEntityFinder(MapDataStorage storage) {
 		this.storage = storage;
 		minRadius = 2;
-		maxRadius = 100;
+		maxRadius = 25;
 		intermediateResults = new ArrayList<MapEntity>();
 		results = new ArrayList<MapEntity>();
 	}

@@ -273,7 +273,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 				JTable table = new JTable(attTexts, new String[] { "Name",
 						"Value" });
 				JScrollPane spane = new JScrollPane(table);
-				spane.setPreferredSize(new Dimension(300, 100));
+				spane.setPreferredSize(new Dimension(300, 150));
 				content[2] = spane;
 			}
 			Object[] options;
