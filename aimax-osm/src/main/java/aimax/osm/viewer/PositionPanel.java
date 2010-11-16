@@ -31,7 +31,7 @@ public class PositionPanel extends JPanel {
 		add(latCombo);
 		latDegField = new JTextField(3);
 		add(latDegField);
-		add(new JLabel("° "));
+		add(new JLabel("Â° "));
 		latMinField = new JTextField(4);
 		add(latMinField);
 		add(new JLabel("' "));
@@ -40,7 +40,7 @@ public class PositionPanel extends JPanel {
 		add(lonCombo);
 		lonDegField = new JTextField(3);
 		add(lonDegField);
-		add(new JLabel("° "));
+		add(new JLabel('\u00B0' + " "));
 		lonMinField = new JTextField(4);
 		add(lonMinField);
 		add(new JLabel("' "));
