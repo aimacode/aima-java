@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ import aimax.osm.data.entities.MapWay;
 
 /**
  * Panel to control search for entities by name and attribute.
+ * 
  * @author Ruediger Lunde
  */
 public class FindPanel extends JPanel implements ActionListener,
@@ -73,14 +76,19 @@ public class FindPanel extends JPanel implements ActionListener,
 		findField = new JTextField();
 		findField.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// Simulate pressed find button.
 					ActionEvent ae = new ActionEvent(findButton, 0, "");
 					actionPerformed(ae);
 				}
 			}
-			public void keyReleased(KeyEvent e) {}
-			public void keyTyped(KeyEvent e) {}});
+
+			public void keyReleased(KeyEvent e) {
+			}
+
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		c.insets = new Insets(2, 2, 2, 2);
 		c.gridx = 0;
 		c.gridy = 1;
@@ -127,6 +135,16 @@ public class FindPanel extends JPanel implements ActionListener,
 		resultTable = new JTable(tableModel);
 		resultTable.getSelectionModel().addListSelectionListener(this);
 		resultTable.setDefaultRenderer(Object.class, new NodeRenderer());
+		resultTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					int row = resultTable.getSelectedRow();
+					MapEntity entity = (MapEntity) resultTable.getValueAt(row,
+							0);
+					FindPanel.this.view.showMapEntityInfoDialog(entity, false);
+				}
+			}
+		});
 		JScrollPane resultScroller = new JScrollPane(resultTable);
 		resultScroller.setPreferredSize(new Dimension(10, 10));
 		c.insets = new Insets(2, 2, 2, 2);
@@ -149,8 +167,8 @@ public class FindPanel extends JPanel implements ActionListener,
 			if (!entityFinder.getResults().isEmpty()) {
 				tableModel.addEntities(entityFinder.getResults());
 				resultLabel.setText("Search Results:");
-				
-			} else if (!entityFinder.getIntermediateResults().isEmpty()){
+
+			} else if (!entityFinder.getIntermediateResults().isEmpty()) {
 				tableModel.addEntities(entityFinder.getIntermediateResults());
 				resultLabel.setText("Select from Intermediate Results:");
 			} else {

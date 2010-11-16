@@ -137,7 +137,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		loadButton.addActionListener(this);
 		toolbar.add(loadButton);
 		saveButton = new JButton("Save");
-		saveButton.setToolTipText("Save Map");
+		saveButton.setToolTipText("Save Visible Map");
 		saveButton.addActionListener(this);
 		toolbar.add(saveButton);
 		statisticsButton = new JButton("Statistics");

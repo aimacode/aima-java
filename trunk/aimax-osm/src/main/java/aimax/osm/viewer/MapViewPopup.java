@@ -98,55 +98,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == infoMenuItem) {
 			MapNode mNode = pane.getRenderer().getNextNode(x, y);
-			List<MapEntity> entities = new ArrayList<MapEntity>();
-			if (mNode.getName() != null || mNode.getAttributes().length>0
-					|| debugMenuItem.isSelected())
-				entities.add(mNode);
-			for (WayRef ref : mNode.getWayRefs()) {
-				MapEntity me = ref.getWay();
-				if (me.getName() != null || me.getAttributes().length>0
-						|| debugMenuItem.isSelected())
-					entities.add(me);		
-			}
-			boolean done = false;
-			for (int i=0; i < entities.size() && !done; i++) {
-				MapEntity me = entities.get(i);
-				Object[] content = new Object[] {"", "", ""};
-				String text = (me.getName() != null) ? me.getName() : "";
-				if (debugMenuItem.isSelected())
-					text += " (" + ((me instanceof MapNode) ? "Node " : "Way ")
-					+ me.getId() + ")";
-				content[0] = text;
-				if (me instanceof MapNode) {
-					PositionPanel pos = new PositionPanel();
-					pos.setPosition(((MapNode) me).getLat(), ((MapNode) me).getLon());
-					pos.setEnabled(false);
-					content[1] = pos;
-				}
-				if (me.getAttributes().length > 0) {
-					EntityAttribute[] atts = me.getAttributes();
-					String[][] attTexts = new String[atts.length][2];
-					for (int j = 0; j < atts.length; j++) {
-						attTexts[j][0] = atts[j].getKey();
-						attTexts[j][1] = atts[j].getValue();
-					}
-					JTable table = new JTable(attTexts, new String[]{"Name", "Value"});
-					JScrollPane spane = new JScrollPane(table);
-					spane.setPreferredSize(new Dimension(300, 100));
-					content[2] = spane;
-				}
-				Object[] options;
-				if (i < entities.size()-1)
-					options = new String[]{"OK", "Next"};
-				else
-					options = new String[]{"OK"};
-				if (JOptionPane.showOptionDialog(pane, content,
-						"Map Entity Info", 
-						JOptionPane.DEFAULT_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null, options, options[0]) != 1)
-					done = true;
-			}
+			pane.showMapEntityInfoDialog(mNode, debugMenuItem.isSelected());
 		} else if (ae.getSource() == clearMenuItem) {
 			pane.getModel().clearMarksAndTracks();
 			pane.fireMapViewEvent(new MapViewEvent

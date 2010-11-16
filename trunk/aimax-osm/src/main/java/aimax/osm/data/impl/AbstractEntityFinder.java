@@ -44,8 +44,20 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	
 	/** {@inheritDoc} */ 
 	@Override
+	public int getMinRadius() {
+		return minRadius;
+	}
+	
+	/** {@inheritDoc} */ 
+	@Override
 	public void setMinRadius(int km) {
 		minRadius = km;
+	}
+	
+	/** {@inheritDoc} */ 
+	@Override
+	public int getMaxRadius() {
+		return maxRadius;
 	}
 	
 	/** {@inheritDoc} */
@@ -136,13 +148,5 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	
 	protected MapDataStorage getStorage() {
 		return storage;
-	}
-	
-	protected int getMinRadius() {
-		return minRadius;
-	}
-
-	protected int getMaxRadius() {
-		return maxRadius;
 	}
 }

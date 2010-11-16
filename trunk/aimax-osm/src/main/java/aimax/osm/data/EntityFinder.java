@@ -12,9 +12,12 @@ import aimax.osm.data.entities.MapNode;
  * @author Ruediger Lunde
  */
 public interface EntityFinder {
-	
+	/** Returns the radius which defines the search area when starting the search. */
+	int getMinRadius();
 	/** Defines the size of the area which is used when starting the search. */
 	void setMinRadius(int km);
+	/** Returns the radius of the maximal area which can be analyzed during search. */
+	int getMaxRadius();
 	/** Defines the maximum dimension of the area to be analyzed. */
 	void setMaxRadius(int km);
 	/**
