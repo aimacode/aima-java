@@ -90,20 +90,20 @@ public class MapStyleFactory {
 		result.addRule("natural", "land",          createWayInfo(1f/2000000, 1f/35000, 40, LIGHT_BLUE, 1, Color.WHITE, false));
 		result.addRule("natural", "island",        createWayInfo(1f/2000000, 1f/100000, 40, LIGHT_BLUE, 2));
 		result.addRule("natural", "coastline",     createWayInfo(1e-9f, 1f/5000000, 40, LIGHT_BLUE, 2));
-		result.addRule("natural", "cliff",         createWayInfo(1f/1000000, 1f/12000, 41, Color.GRAY, 1));
+		result.addRule("natural", "cliff",         createWayInfo(1f/750000, 1f/12000, 41, Color.GRAY, 1));
 		result.addRule("natural", "water",         createInfo(1f/2000000, 1f/35000, 39, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
-		result.addRule("natural", "glacier",       createWayInfo(1f/1000000, 1f/35000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
+		result.addRule("natural", "glacier",       createWayInfo(1f/750000, 1f/35000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
 		result.addRule("natural", "beach",         createWayInfo(1f/100000, 1f/12000, 80, Color.YELLOW, 1, Color.YELLOW, false));
-		result.addRule("natural", "wood",          createWayInfo(1f/1000000, 1f/12000, 80, GREEN, 1, GREEN, false));
-		result.addRule("natural", "scrub",         createWayInfo(1f/1000000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
-		result.addRule("natural", "heath",         createWayInfo(1f/750000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
-		result.addRule("natural", "fell",          createWayInfo(1f/750000, 1f/12000, 80, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false));
+		result.addRule("natural", "wood",          createWayInfo(1f/7500000, 1f/12000, 80, GREEN, 1, GREEN, false));
+		result.addRule("natural", "scrub",         createWayInfo(1f/7500000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "heath",         createWayInfo(1f/500000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "fell",          createWayInfo(1f/500000, 1f/12000, 80, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false));
 		result.addRule("natural", "peak",          createPoiInfo(1f/350000, 1f/35000, 38, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false));
 		result.addRule("natural", null,            createInfo(1f/350000, 1f/12000, 80, Color.DARK_GRAY, createTriangle(8, Color.GREEN.darker()), false, VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false));
 		result.addRule("leisure", "park",          createWayInfo(1f/350000, 1f/6000, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
 		result.addRule("leisure", "garden",        createWayInfo(1f/60000, 1f/3500, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
-		result.addRule("landuse", "forest",        createWayInfo(1f/1000000, 1f/12000, 80, GREEN, 1, GREEN, false));
-		result.addRule("landuse", "reservoir",     createWayInfo(1f/1000000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
+		result.addRule("landuse", "forest",        createWayInfo(1f/750000, 1f/12000, 80, GREEN, 1, GREEN, false));
+		result.addRule("landuse", "reservoir",     createWayInfo(1f/750000, 1f/12000, 80, LIGHT_BLUE, 1, LIGHT_BLUE, false));
 		result.addRule("landuse", "farm",          createWayInfo(1f/750000, 1f/12000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
 		result.addRule("landuse", "farmland",      createWayInfo(1f/750000, 1f/12000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
 		result.addRule("landuse", "residential",   createWayInfo(1f/750000, 1f/12000, 80, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false));
@@ -128,9 +128,9 @@ public class MapStyleFactory {
 		result.addRule("mountain_pass", null,   createPoiInfo(1e-9f, 1f/350000, 10, Color.DARK_GRAY, null, false));
 		
 		result.addRule("place", "city",    createPoiInfo(0, 0, 1, Color.BLACK, null, false));
-		result.addRule("place", "town",    createPoiInfo(1f/100000, 1f/350000, 2, Color.BLACK, null, false));
-		result.addRule("place", "village", createPoiInfo(1f/500000, 1f/100000, 3, Color.DARK_GRAY, null, false));
-		result.addRule("place", null,      createPoiInfo(1f/100000, 1f/35000, 30, Color.DARK_GRAY, null, false));
+		result.addRule("place", "town",    createPoiInfo(1f/750000, 1f/750000, 2, Color.BLACK, null, false));
+		result.addRule("place", "village", createPoiInfo(1f/200000, 1f/200000, 3, Color.DARK_GRAY, null, false));
+		result.addRule("place", null,      createPoiInfo(1f/50000, 1f/50000, 30, Color.DARK_GRAY, null, false));
 		
 		result.addRule("tourism", "caravan_site", createPoiInfo(1f/350000, 1f/6000, 75, Color.GRAY, createRectangle(8, "P", Color.BLUE, Color.RED), true)); 
 		result.addRule("tourism", "camp_site",    createPoiInfo(1f/350000, 1f/6000, 73, Color.GRAY, new TentIcon(8, Color.DARK_GRAY, Color.GREEN.darker()), true));
