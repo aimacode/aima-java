@@ -367,9 +367,40 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	private class MyMouseListener implements MouseListener, MouseWheelListener {
 		int xp;
 		int yp;
+		MapNode mark;
 
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseClicked(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				float lat = transformer.lat(e.getY());
+				float lon = transformer.lon(e.getX());
+				if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
+					// mouse left button + ctrl -> add track point
+					mapData.addToTrack("Mouse Track",
+							new Position(lat, lon));
+					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
+							MapViewEvent.Type.TRK_PT_ADDED));
+				} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
+					// mouse left button + shift -> add track point
+					removeNearestMark(e.getX(), e.getY());
+				} else if (e.getClickCount() == 1) {
+					// mouse left button -> add mark
+					mark = mapData.addMark(lat, lon);
+					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
+							MapViewEvent.Type.MARK_ADDED));
+				} else { // double click
+					mapData.removeMark(mark);
+					MapNode mNode = getRenderer().getNextNode(e.getX(), e.getY());
+					showMapEntityInfoDialog(mNode, renderer.isDebugModeEnabled());
+				}
+			} else if (popup != null) {
+				popup.show(MapViewPane.this, e.getX(), e.getY());
+			} else {
+				// mouse right button -> clear marks and tracks
+				mapData.clearMarksAndTracks();
+				fireMapViewEvent(new MapViewEvent(MapViewPane.this,
+						MapViewEvent.Type.TMP_NODES_REMOVED));
+			}
 		}
 
 		@Override
@@ -395,34 +426,8 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 				if (xr != xp || yr != yp) {
 					// mouse drag -> adjust view
 					adjust(xr - xp, yr - yp);
-				} else {
-					float lat = transformer.lat(yr);
-					float lon = transformer.lon(xr);
-					if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
-						// mouse left button + ctrl -> add track point
-						mapData.addToTrack("Mouse Track",
-								new Position(lat, lon));
-						fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-								MapViewEvent.Type.TRK_PT_ADDED));
-					} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
-						// mouse left button + shift -> add track point
-						removeNearestMark(e.getX(), e.getY());
-					} else {
-						// mouse left button -> add mark
-						mapData.addMark(lat, lon);
-						fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-								MapViewEvent.Type.MARK_ADDED));
-					}
-				}
-			} else if (popup != null) {
-				popup.show(MapViewPane.this, e.getX(), e.getY());
-			} else {
-				// mouse right button -> clear marks and tracks
-				mapData.clearMarksAndTracks();
-				fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-						MapViewEvent.Type.TMP_NODES_REMOVED));
+				} 
 			}
-
 		}
 
 		@Override
