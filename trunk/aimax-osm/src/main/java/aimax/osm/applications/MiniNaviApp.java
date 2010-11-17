@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -234,8 +236,8 @@ public class MiniNaviApp implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		// indicates progress when reading large maps (for testing only)
-		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
-		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
+		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
+		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		Locale.setDefault(Locale.US);
 		MiniNaviApp demo = new MiniNaviApp(args);
