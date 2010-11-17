@@ -199,6 +199,17 @@ public class FindPanel extends JPanel implements ActionListener,
 		clearButton.setEnabled(hasResults);
 	}
 
+	private Position getPosition(MapEntity entity) {
+		if (entity instanceof MapNode) {
+			MapNode node = (MapNode) entity;
+			return new Position(node.getLat(), node.getLon());
+		} else if (entity instanceof MapWay) {
+			MapNode node = ((MapWay) entity).getNodes().get(0);
+			return new Position(node.getLat(), node.getLon());
+		}
+		return null;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == findButton) {
@@ -237,22 +248,15 @@ public class FindPanel extends JPanel implements ActionListener,
 		int[] selIdxs = resultTable.getSelectedRows();
 		for (int i = 0; i < selIdxs.length; i++) {
 			MapEntity entity = (MapEntity) tableModel.getValueAt(selIdxs[i], 0);
-			float lat, lon;
-			if (entity instanceof MapNode) {
-				MapNode node = (MapNode) entity;
-				lat = node.getLat();
-				lon = node.getLon();
-				if (entityFinder.getIntermediateResults().contains(node)
-						&& selIdxs.length == 1)
-					entityFinder.selectIntermediateResult(node);
-			} else if (entity instanceof MapWay) {
-				MapNode node = ((MapWay) entity).getNodes().get(0);
-				lat = node.getLat();
-				lon = node.getLon();
-			} else
-				break;
-			currMarkers.add(view.getModel().addMark(lat, lon));
-			view.adjustToCenter(lat, lon);
+			Position pos = getPosition(entity);
+			if (entityFinder.getIntermediateResults().contains(entity)
+					&& selIdxs.length == 1)
+				entityFinder.selectIntermediateResult(entity);
+			if (pos != null) {
+				currMarkers.add(view.getModel().addMark(pos.getLat(),
+						pos.getLon()));
+				view.adjustToCenter(pos.getLat(), pos.getLon());
+			}
 		}
 	}
 

@@ -60,7 +60,7 @@ public interface EntityFinder {
 	 * Allows to select one object from the intermediate results to continue
 	 * search.
 	 */
-	void selectIntermediateResult(MapNode entity);
+	void selectIntermediateResult(MapEntity entity);
 	/** Returns all search results. */
 	List<MapEntity> getResults();
 }

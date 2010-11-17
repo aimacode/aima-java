@@ -27,11 +27,10 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 	protected void find(boolean findMore) {
 		BestMatchFinder bmf = new BestMatchFinder(pattern);
 		List<MapEntity> results = getResults();
-		if (!findMore || !getIntermediateResults().isEmpty())
+		if (!findMore || getIntermediateResults().size() == 1)
 			currRadius = getMinRadius();
 		else
 			currRadius *= 2;
-			
 		if (currRadius > getMaxRadius())
 			return;
 		BoundingBox bb = new BoundingBox(position, currRadius);
@@ -83,7 +82,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 						iResults.remove(99);
 				}
 			}
-			if (getIntermediateResults().size() == 1 && wayName != null) {
+			if (iResults.size() == 1 && wayName != null) {
 				MapNode place = (MapNode) iResults.get(0);
 				findWay(wayName, new Position(place.getLat(), place.getLon()),
 						null);
