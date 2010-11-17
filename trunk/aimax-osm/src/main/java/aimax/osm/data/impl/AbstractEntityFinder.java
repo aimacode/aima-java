@@ -30,8 +30,8 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	private int minRadius;
 	private int maxRadius;
 
-	private List<MapEntity> intermediateResults;
-	private List<MapEntity> results;
+	private final List<MapEntity> intermediateResults;
+	private final List<MapEntity> results;
 
 	/** Creates a new entity finder for the given map data storage. */
 	public AbstractEntityFinder(MapDataStorage storage) {
@@ -136,9 +136,9 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 
 	/** {@inheritDoc} */
 	@Override
-	public void selectIntermediateResult(MapNode node) {
+	public void selectIntermediateResult(MapEntity entity) {
 		intermediateResults.clear();
-		intermediateResults.add(node);
+		intermediateResults.add(entity);
 	}
 
 	private void clearResults() {
