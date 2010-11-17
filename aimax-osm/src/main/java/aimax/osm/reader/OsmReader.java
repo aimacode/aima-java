@@ -46,11 +46,11 @@ public class OsmReader implements MapReader {
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapContentBuilder consumer) {
+	public void readMap(File file, MapContentBuilder builder) {
 		try  {
-			consumer.prepareForNewData();
-			parseMap(createFileStream(file), consumer);
-			consumer.compileResults();
+			builder.prepareForNewData();
+			parseMap(createFileStream(file), builder);
+			builder.compileResults();
 		} catch (FileNotFoundException e) {
 			LOG.warning("File "  + file + " does not exist.");
 		} catch (Exception e) {
@@ -62,11 +62,13 @@ public class OsmReader implements MapReader {
 	 * Reads all data from the specified stream and sends it to the consumer.
 	 * The consumer is cleared before.
 	 */
-	public void readMap(InputStream inputStream, MapContentBuilder consumer) {
+	public void readMap(InputStream inputStream, MapContentBuilder builder) {
 		try {
-			consumer.prepareForNewData();
-			parseMap(inputStream, consumer);
-			consumer.compileResults();
+			builder.prepareForNewData();
+			parseMap(inputStream, builder);
+			if (builder.nodesWithoutPositionAdded())
+				LOG.warning("Nodes were referenced in ways but not defined before.");
+			builder.compileResults();
 		} catch (SAXParseException e) {
 			throw new OsmRuntimeException(
 					"Unable to parse input stream"

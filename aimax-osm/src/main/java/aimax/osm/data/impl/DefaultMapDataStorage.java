@@ -29,8 +29,8 @@ import aimax.osm.data.entities.Track;
 /**
  * Central container for OSM map data. It is responsible for storing loaded map
  * data and also for data preparation to support efficient routing and map
- * viewing. All map data is kept in RAM in this implementation.
- * Data preparation is based on two fundamental tree structures:
+ * viewing. All map data is kept in RAM in this implementation. Data preparation
+ * is based on two fundamental tree structures:
  * 
  * <p>
  * The first is an entity classifier. It is used to attach viewing information
@@ -196,9 +196,8 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		for (long id : toDelete) {
 			nodes.remove(id);
 		}
-		LOG.fine("Ways: " + getWayCount());
-		LOG.fine("Nodes: " + getNodeCount());
-		LOG.fine("POIs: " + getPoiCount());
+		LOG.fine("Loading completed. Ways: " + getWayCount() + ", Nodes: " + getNodeCount()
+				+ ", POIs: " + getPoiCount());
 
 		BoundingBox bbAllNodes = new BoundingBox();
 		bbAllNodes.adjust(nodes.values());
@@ -310,7 +309,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		MapNode node = pos.selectNearest(nodes.values(), filter);
 		return node;
 	}
-	
+
 	/** Reduces the level of detail by selecting some of the given nodes. */
 	@Override
 	public List<MapNode> getWayNodes(MapWay way, float scale) {
@@ -514,7 +513,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		EntityFinder result = new DefaultEntityFinder(this);
 		return result;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public Object[][] getStatistics() {
@@ -527,7 +526,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 		result[2][1] = pois.size();
 		return result;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void visitEntities(EntityVisitor visitor, BoundingBox vbox,
