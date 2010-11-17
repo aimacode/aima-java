@@ -141,7 +141,9 @@ public class FindPanel extends JPanel implements ActionListener,
 					int row = resultTable.getSelectedRow();
 					MapEntity entity = (MapEntity) resultTable.getValueAt(row,
 							0);
-					FindPanel.this.view.showMapEntityInfoDialog(entity, false);
+					MapViewPane view = FindPanel.this.view;
+					view.showMapEntityInfoDialog(entity, view.getRenderer()
+							.isDebugModeEnabled());
 				}
 			}
 		});
