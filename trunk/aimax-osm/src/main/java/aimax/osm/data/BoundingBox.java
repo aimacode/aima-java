@@ -88,6 +88,15 @@ public class BoundingBox {
 		}
 	}
 
+	public float getNothSouthDistKM() {
+		return (float) Position.getDistKM(latMax, lonMin, latMin, lonMin);
+	}
+
+	public float getWestEastDistKM() {
+		return (float) Position.getDistKM((latMin + latMax) / 2f, lonMin,
+				(latMin + latMax) / 2f, lonMax);
+	}
+
 	/**
 	 * Checks whether the specified position is inside the box.
 	 */
