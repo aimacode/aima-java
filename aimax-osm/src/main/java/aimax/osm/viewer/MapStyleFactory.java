@@ -94,8 +94,8 @@ public class MapStyleFactory {
 		result.addRule("natural", "water",         createInfo(1f/2000000, 1f/35000, 39, Color.GRAY, null, false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
 		result.addRule("natural", "glacier",       createWayInfo(1f/750000, 1f/35000, 40, LIGHT_BLUE, 1, LIGHT_BLUE.brighter(), false));
 		result.addRule("natural", "beach",         createWayInfo(1f/100000, 1f/12000, 80, Color.YELLOW, 1, Color.YELLOW, false));
-		result.addRule("natural", "wood",          createWayInfo(1f/7500000, 1f/12000, 80, GREEN, 1, GREEN, false));
-		result.addRule("natural", "scrub",         createWayInfo(1f/7500000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
+		result.addRule("natural", "wood",          createWayInfo(1f/750000, 1f/12000, 80, GREEN, 1, GREEN, false));
+		result.addRule("natural", "scrub",         createWayInfo(1f/500000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
 		result.addRule("natural", "heath",         createWayInfo(1f/500000, 1f/12000, 80, LIGHT_GREEN, 1, LIGHT_GREEN, false));
 		result.addRule("natural", "fell",          createWayInfo(1f/500000, 1f/12000, 80, LIGHT_GREEN, 1, Color.LIGHT_GRAY, false));
 		result.addRule("natural", "peak",          createPoiInfo(1f/350000, 1f/35000, 38, Color.DARK_GRAY, createTriangle(10, Color.ORANGE), false));
