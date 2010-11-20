@@ -153,8 +153,6 @@ public interface MapDataStorage extends WayNodeProvider {
 	/**
 	 * Returns a search engine for finding entities with specific attributes and
 	 * names in the map.
-	 * 
-	 * @return
 	 */
 	public EntityFinder getEntityFinder();
 
