@@ -3,7 +3,6 @@ package aimax.osm.data;
 import java.util.List;
 
 import aimax.osm.data.entities.MapEntity;
-import aimax.osm.data.entities.MapNode;
 
 /**
  * Interface for search engines which find entities by name or by
@@ -40,7 +39,7 @@ public interface EntityFinder {
 	void findWay(String pattern, Position pos, MapWayFilter filter);
 	/**
 	 * Initiates a search for addresses.
-	 * @param pattern Something like 'Ulm, Prittwitz'.
+	 * @param address Something like 'Ulm, Prittwitz'.
 	 * @param pos Reference position.
 	 */
 	void findAddress(String address, Position pos);

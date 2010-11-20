@@ -88,10 +88,15 @@ public class BoundingBox {
 		}
 	}
 
+	/** Returns the distance between <code>latMax</code> and <code>latMin</code> in Kilometers. */
 	public float getNothSouthDistKM() {
 		return (float) Position.getDistKM(latMax, lonMin, latMin, lonMin);
 	}
 
+	/**
+	 * Returns the distance between <code>lonMin</code> and <code>lonMax</code> at
+	 * latitude <code>(latMax-latMin)/2</code> in Kilometers.
+	 */
 	public float getWestEastDistKM() {
 		return (float) Position.getDistKM((latMin + latMax) / 2f, lonMin,
 				(latMin + latMax) / 2f, lonMax);
