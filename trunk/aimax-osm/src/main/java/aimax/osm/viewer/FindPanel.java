@@ -212,6 +212,14 @@ public class FindPanel extends JPanel implements ActionListener,
 		return null;
 	}
 
+	private List<MapEntity> getSelectedEntities() {
+		List<MapEntity> result = new ArrayList<MapEntity>();
+		int[] selIdxs = resultTable.getSelectedRows();
+		for (int i = 0; i < selIdxs.length; i++)
+			result.add((MapEntity) tableModel.getValueAt(selIdxs[i], 0));
+		return result;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == findButton) {
@@ -235,6 +243,11 @@ public class FindPanel extends JPanel implements ActionListener,
 			storedMarkers.addAll(currMarkers);
 			currMarkers.clear();
 		} else if (e.getSource() == findMoreButton) {
+			if (!entityFinder.getIntermediateResults().isEmpty()) {
+				List<MapEntity> entities = getSelectedEntities();
+				if (entities.size() == 1)
+					entityFinder.selectIntermediateResult(entities.get(0));
+			}
 			entityFinder.findMore();
 		} else if (e.getSource() == clearButton) {
 			entityFinder = null;
@@ -247,13 +260,8 @@ public class FindPanel extends JPanel implements ActionListener,
 	@Override
 	public void valueChanged(ListSelectionEvent event) {
 		clearMarkers(false);
-		int[] selIdxs = resultTable.getSelectedRows();
-		for (int i = 0; i < selIdxs.length; i++) {
-			MapEntity entity = (MapEntity) tableModel.getValueAt(selIdxs[i], 0);
+		for (MapEntity entity : getSelectedEntities()) {
 			Position pos = getPosition(entity);
-			if (entityFinder.getIntermediateResults().contains(entity)
-					&& selIdxs.length == 1)
-				entityFinder.selectIntermediateResult(entity);
 			if (pos != null) {
 				currMarkers.add(view.getModel().addMark(pos.getLat(),
 						pos.getLon()));
