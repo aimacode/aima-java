@@ -1,6 +1,6 @@
 package aimax.osm.data.impl;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import aimax.osm.data.EntityVisitor;
@@ -55,7 +55,7 @@ private static final EntityAttribute[] EMPTY_ATT_LIST = new EntityAttribute[0];
 		if (!atts.isEmpty() || attributes.length != 0) {
 			attributes = new EntityAttribute[atts.size()];
 			atts.toArray(attributes);
-			Collections.sort(atts);
+			Arrays.sort(attributes);
 		}
 	}
 	
