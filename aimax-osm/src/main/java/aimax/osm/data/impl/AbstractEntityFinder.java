@@ -8,11 +8,11 @@ import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
-import aimax.osm.data.entities.MapNode;
 
 /**
- * Base class suitable to implement different entity finders. Just the
- * method {@link #find(boolean)} has to be overridden.
+ * Base class suitable to implement different entity finders. Just the method
+ * {@link #find(boolean)} has to be overridden.
+ * 
  * @author Ruediger Lunde
  */
 public abstract class AbstractEntityFinder implements EntityFinder {
@@ -41,31 +41,31 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		intermediateResults = new ArrayList<MapEntity>();
 		results = new ArrayList<MapEntity>();
 	}
-	
-	/** {@inheritDoc} */ 
+
+	/** {@inheritDoc} */
 	@Override
 	public int getMinRadius() {
 		return minRadius;
 	}
-	
-	/** {@inheritDoc} */ 
+
+	/** {@inheritDoc} */
 	@Override
 	public void setMinRadius(int km) {
 		minRadius = km;
 	}
-	
-	/** {@inheritDoc} */ 
+
+	/** {@inheritDoc} */
 	@Override
 	public int getMaxRadius() {
 		return maxRadius;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void setMaxRadius(int km) {
 		maxRadius = km;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void findEntity(String pattern, Position pos) {
@@ -121,13 +121,13 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	public Position getRefPosition() {
 		return position;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public List<MapEntity> getIntermediateResults() {
 		return intermediateResults;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public List<MapEntity> getResults() {
@@ -145,7 +145,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		intermediateResults.clear();
 		results.clear();
 	}
-	
+
 	protected MapDataStorage getStorage() {
 		return storage;
 	}
