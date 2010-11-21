@@ -8,7 +8,7 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import aimax.osm.data.EntityAttributeManager;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
@@ -44,7 +44,7 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 *            The sink for receiving processed data.
 	 */
 	public WayElementProcessor(ElementProcessor parentProcessor,
-			MapContentBuilder mdConsumer) {
+			MapBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
 		tagElementProcessor = new TagElementProcessor(this, this);

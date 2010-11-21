@@ -6,14 +6,14 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
 /**
- * Content builder proxy delegating every call to the original builder.
+ * This map builder proxy delegates every call to the original builder.
  * @author Ruediger Lunde
  */
-public class MapContentBuilderProxy implements MapContentBuilder {
-	protected MapContentBuilder builder;
+public class MapBuilderProxy implements MapBuilder {
+	protected MapBuilder builder;
 	protected int counter;
 	
-	public MapContentBuilderProxy(MapContentBuilder consumer) {
+	public MapBuilderProxy(MapBuilder consumer) {
 		this.builder = consumer;
 		counter = 0;
 	}

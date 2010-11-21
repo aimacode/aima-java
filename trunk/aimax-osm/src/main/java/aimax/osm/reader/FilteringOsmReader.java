@@ -6,8 +6,8 @@ import java.util.List;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapContentBuilderProxy;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilderProxy;
+import aimax.osm.data.MapBuilder;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 
@@ -36,15 +36,15 @@ public class FilteringOsmReader extends OsmReader {
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapContentBuilder builder) {
+	public void readMap(File file, MapBuilder builder) {
 		try {
-			MapContentBuilderProxy proxy;
+			MapBuilderProxy proxy;
 			if (boundingBox != null)
 				proxy = new BBBuilderProxy(builder, boundingBox);
 			else if (attFilter != null)
 				proxy = new FilteringBuilderProxy(builder, attFilter);
 			else
-				proxy = new MapContentBuilderProxy(builder);
+				proxy = new MapBuilderProxy(builder);
 			proxy.prepareForNewData();
 			parseMap(createFileStream(file), proxy);
 			if (proxy.nodesWithoutPositionAdded()) {
@@ -71,10 +71,10 @@ public class FilteringOsmReader extends OsmReader {
 	// inner classes
 
 	/** Builder proxy used for bounding box filtering. */
-	private static class BBBuilderProxy extends MapContentBuilderProxy {
+	private static class BBBuilderProxy extends MapBuilderProxy {
 		BoundingBox bb;
 
-		protected BBBuilderProxy(MapContentBuilder builder, BoundingBox bb) {
+		protected BBBuilderProxy(MapBuilder builder, BoundingBox bb) {
 			super(builder);
 			this.bb = bb;
 		}
@@ -112,10 +112,10 @@ public class FilteringOsmReader extends OsmReader {
 
 	/** Builder proxy used for attribute filtering. */
 	private static class FilteringBuilderProxy extends
-			aimax.osm.data.MapContentBuilderProxy {
+			aimax.osm.data.MapBuilderProxy {
 		EntityClassifier<Boolean> attFilter;
 
-		protected FilteringBuilderProxy(MapContentBuilder builder,
+		protected FilteringBuilderProxy(MapBuilder builder,
 				EntityClassifier<Boolean> attFilter) {
 			super(builder);
 			this.attFilter = attFilter;
