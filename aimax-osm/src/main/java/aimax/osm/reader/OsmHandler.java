@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 
 
 /**
@@ -46,7 +46,7 @@ public class OsmHandler extends DefaultHandler {
 	 * @param meConsumer
 	 *            The new sink to write data to.
 	 */
-	public OsmHandler(MapContentBuilder meConsumer) {
+	public OsmHandler(MapBuilder meConsumer) {
 		osmElementProcessor = new OsmElementProcessor(null, meConsumer);
 	}
 	

@@ -13,7 +13,7 @@ import aimax.osm.data.entities.MapWay;
  * should allow to add nodes without position and accept later refinement.
  * @author Ruediger Lunde
  */
-public interface MapContentBuilder {
+public interface MapBuilder {
 	
 	/** Must be called before adding new map data. */
 	public void prepareForNewData();

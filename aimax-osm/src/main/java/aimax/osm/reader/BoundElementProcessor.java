@@ -3,7 +3,7 @@ package aimax.osm.reader;
 import org.xml.sax.Attributes;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 
 public class BoundElementProcessor extends ElementProcessor {
 	private static final String ATTRIBUTE_NAME_BOX = "box";
@@ -12,7 +12,7 @@ public class BoundElementProcessor extends ElementProcessor {
 	private BoundingBox bb;
 	
 	public BoundElementProcessor(ElementProcessor parentProcessor,
-			MapContentBuilder mdConsumer) {
+			MapBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 	}
 

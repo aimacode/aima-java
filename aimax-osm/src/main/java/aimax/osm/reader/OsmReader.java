@@ -17,7 +17,7 @@ import org.xml.sax.SAXParseException;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 
 /** 
  * Reads a map from file using the standard osm XML format.
@@ -46,7 +46,7 @@ public class OsmReader implements MapReader {
 	/**
 	 * Reads all data from the file and send it to the sink.
 	 */
-	public void readMap(File file, MapContentBuilder builder) {
+	public void readMap(File file, MapBuilder builder) {
 		try  {
 			builder.prepareForNewData();
 			parseMap(createFileStream(file), builder);
@@ -62,7 +62,7 @@ public class OsmReader implements MapReader {
 	 * Reads all data from the specified stream and sends it to the consumer.
 	 * The consumer is cleared before.
 	 */
-	public void readMap(InputStream inputStream, MapContentBuilder builder) {
+	public void readMap(InputStream inputStream, MapBuilder builder) {
 		try {
 			builder.prepareForNewData();
 			parseMap(inputStream, builder);
@@ -92,7 +92,7 @@ public class OsmReader implements MapReader {
 		}
 	}
 	
-	protected void parseMap(InputStream inputStream, MapContentBuilder consumer)
+	protected void parseMap(InputStream inputStream, MapBuilder consumer)
 			throws SAXException, IOException {
 		SAXParser parser = createParser();
 		parser.parse(inputStream, new OsmHandler(consumer));

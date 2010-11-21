@@ -4,7 +4,7 @@ package aimax.osm.reader;
 
 import org.xml.sax.Attributes;
 
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 
 /**
  * Provides an element processor implementation for an osm element.
@@ -37,7 +37,7 @@ public class OsmElementProcessor extends ElementProcessor {
 	 *            The sink for receiving processed data.
 	 */
 	public OsmElementProcessor(ElementProcessor parentProcessor,
-			MapContentBuilder mdConsumer) {
+			MapBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
 		boundElementProcessor = new BoundElementProcessor(this, getConsumer());

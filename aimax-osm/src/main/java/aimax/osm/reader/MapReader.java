@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 
 /**
  * Common interface for reading maps from file.
@@ -24,9 +24,9 @@ public interface MapReader {
 	public void setFilter(EntityClassifier<Boolean> attFilter)
 		throws UnsupportedOperationException;
 	/** Reads a map from file. */
-	public void readMap(File file, MapContentBuilder mapData);
+	public void readMap(File file, MapBuilder mapData);
 	/** Reads a map from an input stream (needed for web starter). */
-	public void readMap(InputStream is, MapContentBuilder mapData);
+	public void readMap(InputStream is, MapBuilder mapData);
 	/** Describes the supported file formats. */
 	public String[] fileFormatDescriptions();
 	/** Contains the file extensions of all supported formats. */

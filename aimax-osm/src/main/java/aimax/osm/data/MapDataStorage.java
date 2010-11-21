@@ -42,7 +42,7 @@ public interface MapDataStorage extends WayNodeProvider {
 	 * reader, and builds up needed structures in the map for storing the
 	 * entities (e.g. spatial indices).
 	 */
-	public MapContentBuilder getContentBuilder();
+	public MapBuilder getContentBuilder();
 
 	/**
 	 * Closes all open resources and should be called before the application

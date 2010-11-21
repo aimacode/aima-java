@@ -12,7 +12,7 @@ import aimax.osm.data.EntityAttributeManager;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.EntityFinder;
 import aimax.osm.data.EntityVisitor;
-import aimax.osm.data.MapContentBuilder;
+import aimax.osm.data.MapBuilder;
 import aimax.osm.data.MapDataEvent;
 import aimax.osm.data.MapDataEventListener;
 import aimax.osm.data.MapDataFactory;
@@ -50,7 +50,7 @@ import aimax.osm.data.entities.Track;
  * 
  * @author Ruediger Lunde
  */
-public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder {
+public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private BoundingBox boundingBox;
 	/**
@@ -102,7 +102,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 
 	/** {@inheritDoc} */
 	@Override
-	public MapContentBuilder getContentBuilder() {
+	public MapBuilder getContentBuilder() {
 		return this;
 	}
 
@@ -112,7 +112,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 	}
 
 	// ///////////////////////////////////////////////////////////////
-	// MapContentBuilder interface
+	// MapBuilder interface
 
 	/** {@inheritDoc} No data available after this reset. */
 	@Override
