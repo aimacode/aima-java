@@ -63,24 +63,13 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 			return Collections.unmodifiableList(ways);
 	}
 	
-	/** {@inheritDoc} */
-	@Override
+	/** Adds the information to the node that it is part of the specified way. */
 	public void addWayRef(MapWay way, int nodeIdx) {
 		if (ways == null)
 			ways = new ArrayList<WayRef>(2);
 		// be careful with closed ways (begin == end)
 		if (ways.isEmpty() || ways.get(0) != way)
 			ways.add(new DefaultWayRef(way, (short) nodeIdx));
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public void removeWayRef(MapWay way) {
-		for (int i = 0; i < ways.size(); i++)
-			if (ways.get(i).getWay() == way) {
-				ways.remove(i);
-				i--;
-			}
 	}
 	
 	/** {@inheritDoc} */

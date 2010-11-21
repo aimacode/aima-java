@@ -24,8 +24,4 @@ public interface MapNode extends MapEntity {
 
 	/** Provides read-only access to the maintained list of way references. */
 	public List<WayRef> getWayRefs();
-	/** Adds the information to the node that it is part of the specified way. */
-	public void addWayRef(MapWay way, int nodeIdx);
-	/** Removes the link to the specified way. */
-	public void removeWayRef(MapWay way);
 }

@@ -161,7 +161,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapContentBuilder 
 				else if (existingNode != node)
 					// node occurs twice in the way - use same representation!
 					node = existingNode;
-				node.addWayRef(way, i++);
+				((DefaultMapNode) node).addWayRef(way, i++);
 				newWayNodes.add(node);
 			}
 			((DefaultMapWay) way).setNodes(newWayNodes);
