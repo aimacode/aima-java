@@ -85,6 +85,7 @@ public class OsmAgentController extends AgentAppController {
 	 * Checks whether the current environment is ready to start
 	 * simulation.
 	 */
+	@Override
 	public boolean isPrepared() {
 		return isPrepared && (env.getAgents().isEmpty() || !env.isDone());
 	}
@@ -109,6 +110,7 @@ public class OsmAgentController extends AgentAppController {
 	 * Calls {@link #initAgents(MessageLogger)} if necessary and
 	 * then starts simulation until done.
 	 */
+	@Override
 	public void run(MessageLogger logger) {
 		logger.log("<simulation-protocol>");
 		logger.log("search: " + search.getClass().getName());
@@ -167,6 +169,7 @@ public class OsmAgentController extends AgentAppController {
 	}
 	
 	/** Updates the status of the frame. */
+	@Override
 	public void update(SimulationThread simulationThread) {
 		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
