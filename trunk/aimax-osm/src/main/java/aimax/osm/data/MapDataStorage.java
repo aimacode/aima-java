@@ -129,9 +129,6 @@ public interface MapDataStorage extends WayNodeProvider {
 	/** Returns all maintained marks. */
 	public List<MapNode> getMarks();
 
-	/** Checks whether a mark is set at the specified position. */
-	public boolean isMarked(double lat, double lon);
-
 	/** Removes the specified track. */
 	public void clearTrack(String trackName);
 
