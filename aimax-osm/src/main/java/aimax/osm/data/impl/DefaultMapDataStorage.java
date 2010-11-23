@@ -436,15 +436,6 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean isMarked(double lat, double lon) {
-		for (MapNode node : marks)
-			if (node.getLat() == lat && node.getLon() == lon)
-				return true;
-		return false;
-	}
-
-	/** {@inheritDoc} */
-	@Override
 	public void clearTrack(String trackName) {
 		Track track = getTrack(trackName);
 		if (track != null) {
