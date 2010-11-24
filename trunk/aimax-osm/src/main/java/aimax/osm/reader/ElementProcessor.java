@@ -13,7 +13,7 @@ public abstract class ElementProcessor {
 	private ElementProcessor parentProcessor;
 	
 	private ElementProcessor dummyChildProcessor;
-	private MapBuilder mdConsumer;
+	private MapBuilder mapBuilder;
 	
 	/**
 	 * Creates a new instance.
@@ -25,9 +25,9 @@ public abstract class ElementProcessor {
 		this.parentProcessor = parentProcessor;
 	}
 	
-	public ElementProcessor(ElementProcessor parentProcessor, MapBuilder mdConsumer) {
+	public ElementProcessor(ElementProcessor parentProcessor, MapBuilder builder) {
 		this(parentProcessor);
-		this.mdConsumer = mdConsumer;
+		mapBuilder = builder;
 	}
 	
 	/**
@@ -61,8 +61,8 @@ public abstract class ElementProcessor {
 	/**
 	 * @return The sink.
 	 */
-	protected MapBuilder getConsumer() {
-		return mdConsumer;
+	protected MapBuilder getMapBuilder() {
+		return mapBuilder;
 	}
 	
 	

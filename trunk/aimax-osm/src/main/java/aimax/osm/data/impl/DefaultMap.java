@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityAttributeManager;
@@ -13,11 +12,10 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.EntityFinder;
 import aimax.osm.data.EntityVisitor;
 import aimax.osm.data.MapBuilder;
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataFactory;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapEvent;
+import aimax.osm.data.MapEventListener;
 import aimax.osm.data.MapWayFilter;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.EntityViewInfo;
@@ -50,8 +48,8 @@ import aimax.osm.data.entities.Track;
  * 
  * @author Ruediger Lunde
  */
-public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
-	private static Logger LOG = Logger.getLogger("aimax.osm");
+public class DefaultMap implements OsmMap {
+	// private static Logger LOG = Logger.getLogger("aimax.osm");
 	private BoundingBox boundingBox;
 	/**
 	 * Maintains all map nodes during map loading; after compilation only the
@@ -65,9 +63,8 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 	 * attribute.
 	 */
 	private ArrayList<MapNode> pois;
-	private boolean nodeWithoutPositionAdded;
-	/** Maintains marks (not part of the original map). */
-	private ArrayList<MapNode> marks;
+	/** Maintains markers (not part of the original map). */
+	private ArrayList<MapNode> markers;
 	/** Maintains tracks (not part of the original map). */
 	private ArrayList<Track> tracks;
 	private long nextTrackId;
@@ -75,15 +72,16 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 	private EntityClassifier<EntityViewInfo> entityClassifier;
 	private KDTree entityTree;
 
-	private ArrayList<MapDataEventListener> listeners;
+	private ArrayList<MapEventListener> listeners;
 
-	public DefaultMapDataStorage() {
+	/** Should only be called by the builder! */
+	protected DefaultMap() {
 		nodes = new Hashtable<Long, MapNode>();
 		ways = new Hashtable<Long, MapWay>();
 		pois = new ArrayList<MapNode>();
-		marks = new ArrayList<MapNode>();
+		markers = new ArrayList<MapNode>();
 		tracks = new ArrayList<Track>();
-		listeners = new ArrayList<MapDataEventListener>();
+		listeners = new ArrayList<MapEventListener>();
 		// EntityAttributeManager.instance().ignoreAttKeys(new String[]{
 		// "created_by", "source", "history", "copyright", "fire_hydrant"},
 		// true);
@@ -93,125 +91,36 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 								"copyright" }, false);
 	}
 
-	/** {@inheritDoc} */
-	@Override
-	public boolean isEmpty() {
-		return nodes.isEmpty() && ways.isEmpty() && pois.isEmpty()
-				&& marks.isEmpty() && tracks.isEmpty();
+	/** No data available after this reset. */
+	protected void clear() {
+		EntityAttributeManager.instance().clearHash();
+		nodes.clear();
+		ways.clear();
+		pois.clear();
+		markers.clear();
+		tracks.clear();
+		entityTree = null;
+		boundingBox = null;
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.MAP_CLEARED));
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public MapBuilder getContentBuilder() {
-		return this;
+	public boolean isEmpty() {
+		return nodes.isEmpty() && ways.isEmpty() && pois.isEmpty()
+				&& markers.isEmpty() && tracks.isEmpty();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public MapBuilder getBuilder() {
+		return new DefaultMapBuilder(this);
 	}
 
 	/** Does nothing */
 	@Override
 	public void close() {
 	}
-
-	// ///////////////////////////////////////////////////////////////
-	// MapBuilder interface
-
-	/** {@inheritDoc} No data available after this reset. */
-	@Override
-	public void prepareForNewData() {
-		EntityAttributeManager.instance().clearHash();
-		nodes.clear();
-		ways.clear();
-		pois.clear();
-		marks.clear();
-		tracks.clear();
-		entityTree = null;
-		boundingBox = null;
-		nodeWithoutPositionAdded = false;
-		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MAP_CLEARED));
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void setBoundingBox(BoundingBox bb) {
-		boundingBox = bb;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void addNode(MapNode node) {
-		if (!node.hasPosition())
-			nodeWithoutPositionAdded = true;
-		nodes.put(node.getId(), node);
-		if (nodes.size() % 500000 == 0)
-			LOG.fine("Nodes: " + nodes.size());
-	}
-
-	/**
-	 * {@inheritDoc} <code>DefaultMapWay</code> and <code>DefaultMapNode</code>
-	 * instances are expected. Ways with less than two way nodes are ignored.
-	 */
-	@Override
-	public void addWay(MapWay way, List<MapNode> wayNodes) {
-		if (wayNodes.size() > 1) {
-			List<MapNode> newWayNodes = new ArrayList<MapNode>(wayNodes.size());
-			int i = 0;
-			for (MapNode node : wayNodes) {
-				MapNode existingNode = getNode(node.getId());
-				if (existingNode == null)
-					addNode(node);
-				else if (existingNode != node)
-					// node occurs twice in the way - use same representation!
-					node = existingNode;
-				((DefaultMapNode) node).addWayRef(way, i++);
-				newWayNodes.add(node);
-			}
-			((DefaultMapWay) way).setNodes(newWayNodes);
-			ways.put(way.getId(), way);
-			if (ways.size() % 50000 == 0)
-				LOG.fine("Ways: " + ways.size());
-		}
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public boolean nodesWithoutPositionAdded() {
-		boolean result = nodeWithoutPositionAdded;
-		nodeWithoutPositionAdded = false;
-		return result;
-	}
-
-	/**
-	 * Separates way nodes from points of interests, cleans up useless garbage
-	 * and creates a kd-tree for the remaining entities. Always call this method
-	 * before using using the container for viewing.
-	 */
-	@Override
-	public void compileResults() {
-		ArrayList<Long> toDelete = new ArrayList<Long>();
-		for (MapNode node : nodes.values()) {
-			if (node.getName() != null || node.getAttributes().length > 0)
-				pois.add(node);
-			else if (node.getWayRefs().isEmpty())
-				toDelete.add(node.getId());
-		}
-		for (long id : toDelete) {
-			nodes.remove(id);
-		}
-		LOG.fine("Loading completed. Ways: " + getWayCount() + ", Nodes: " + getNodeCount()
-				+ ", POIs: " + getPoiCount());
-
-		BoundingBox bbAllNodes = new BoundingBox();
-		bbAllNodes.adjust(nodes.values());
-		bbAllNodes.adjust(pois);
-		if (boundingBox == null)
-			boundingBox = bbAllNodes;
-		else
-			boundingBox.intersectWith(bbAllNodes);
-		applyClassifierAndUpdateTree(bbAllNodes);
-		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MAP_NEW));
-	}
-
-	// ///////////////////////////////////////////////////////////////
-	// MapDataStorage interface and other methods
 
 	/**
 	 * Provides the data store with an entity classifier. The classifier
@@ -222,9 +131,93 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 		entityClassifier = classifier;
 		if (entityTree != null) {
 			applyClassifierAndUpdateTree(entityTree.getBoundingBox());
-			fireMapDataEvent(new MapDataEvent(this,
-					MapDataEvent.Type.MAP_MODIFIED));
+			fireMapDataEvent(new MapEvent(this, MapEvent.Type.MAP_MODIFIED));
 		}
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public BoundingBox getBoundingBox() {
+		return boundingBox;
+	}
+
+	/** Defines a bounding box for the map. */
+	protected void setBoundingBox(BoundingBox bb) {
+		boundingBox = bb;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public int getNodeCount() {
+		return nodes.size();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public MapNode getNode(long id) {
+		return nodes.get(id);
+	}
+
+	/** Adds a node to the central node hashtable. */
+	protected void addNode(DefaultMapNode node) {
+		nodes.put(node.getId(), node);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public int getWayCount() {
+		return ways.size();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public MapWay getWay(long id) {
+		return ways.get(id);
+	}
+
+	/** Adds a way to the central way hashtable. */
+	protected void addWay(DefaultMapWay way) {
+		ways.put(way.getId(), way);
+	}
+
+	/**
+	 * Returns all map ways which intersect the specified bounding box.
+	 */
+	@Override
+	public Collection<MapWay> getWays(BoundingBox bb) {
+		// not really efficient but OK for small maps...
+		List<MapWay> result = new ArrayList<MapWay>();
+		for (MapWay way : ways.values())
+			if (way.computeBoundingBox().intersectsWith(bb))
+				result.add(way);
+		return result;
+	}
+
+	/**
+	 * Separates way nodes from points of interests, cleans up useless garbage
+	 * and creates a kd-tree for the remaining entities. Always call this method
+	 * before using using the container for viewing.
+	 */
+	public void compile() {
+		ArrayList<Long> toDelete = new ArrayList<Long>();
+		for (MapNode node : nodes.values()) {
+			if (node.getName() != null || node.getAttributes().length > 0)
+				pois.add(node);
+			else if (node.getWayRefs().isEmpty())
+				toDelete.add(node.getId());
+		}
+		for (long id : toDelete) {
+			nodes.remove(id);
+		}
+		BoundingBox bbAllNodes = new BoundingBox();
+		bbAllNodes.adjust(nodes.values());
+		bbAllNodes.adjust(pois);
+		if (boundingBox == null)
+			boundingBox = bbAllNodes;
+		else
+			boundingBox.intersectWith(bbAllNodes);
+		applyClassifierAndUpdateTree(bbAllNodes);
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.MAP_NEW));
 	}
 
 	/**
@@ -238,7 +231,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 			updateEntityViewInfo(way, true);
 		for (MapNode poi : pois)
 			updateEntityViewInfo(poi, true);
-		for (MapNode mark : marks)
+		for (MapNode mark : markers)
 			updateEntityViewInfo(mark, false);
 		for (Track track : tracks)
 			updateEntityViewInfo(track, false);
@@ -256,49 +249,6 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 		entity.setViewInfo(info);
 		if (addToTree && info != null)
 			entityTree.insertEntity((DefaultMapEntity) entity);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public BoundingBox getBoundingBox() {
-		return boundingBox;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public int getNodeCount() {
-		return nodes.size();
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public MapNode getNode(long id) {
-		return nodes.get(id);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public int getWayCount() {
-		return ways.size();
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public MapWay getWay(long id) {
-		return ways.get(id);
-	}
-
-	/**
-	 * Returns all map ways which intersect the specified bounding box.
-	 */
-	@Override
-	public Collection<MapWay> getWays(BoundingBox bb) {
-		// not really efficient but OK for small maps...
-		List<MapWay> result = new ArrayList<MapWay>();
-		for (MapWay way : ways.values())
-			if (way.computeBoundingBox().intersectsWith(bb))
-				result.add(way);
-		return result;
 	}
 
 	/**
@@ -347,9 +297,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 		return pois.size();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public List<MapNode> getPois(BoundingBox bb) {
 		// not really efficient but ok for small maps...
@@ -360,14 +308,12 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public List<MapNode> getPlaces(String name) {
 		String pattern = name.toLowerCase();
 		List<MapNode> results = new ArrayList<MapNode>();
-		for (MapNode node : nodes.values()) {
+		for (MapNode node : pois) {
 			if (node.getAttributeValue("place") != null
 					&& node.getName() != null
 					&& node.getName().toLowerCase().startsWith(pattern))
@@ -378,20 +324,20 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public void clearMarksAndTracks() {
-		marks.clear();
+	public void clearMarkersAndTracks() {
+		markers.clear();
 		tracks.clear();
-		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MAP_MODIFIED));
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.MAP_MODIFIED));
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public List<MapEntity> getVisibleMarksAndTracks(float scale) {
+	public List<MapEntity> getVisibleMarkersAndTracks(float scale) {
 		List<MapEntity> result = new ArrayList<MapEntity>();
-		for (MapNode mark : marks)
-			if (mark.getViewInfo() != null
-					&& mark.getViewInfo().getMaxVisibleScale() <= scale)
-				result.add(mark);
+		for (MapNode marker : markers)
+			if (marker.getViewInfo() != null
+					&& marker.getViewInfo().getMaxVisibleScale() <= scale)
+				result.add(marker);
 		for (Track track : tracks)
 			if (track.getViewInfo() != null
 					&& track.getViewInfo().getMaxVisibleScale() <= scale)
@@ -401,37 +347,36 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public MapNode addMark(float lat, float lon) {
+	public MapNode addMarker(float lat, float lon) {
 		long id = 1;
-		for (MapNode node : marks)
+		for (MapNode node : markers)
 			if (node.getId() >= id)
 				id = node.getId() + 1;
-		MapNode node = MapDataFactory.instance().createMapNode(id);
-		node.setLat(lat);
-		node.setLon(lon);
-		List<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
-		atts.add(new EntityAttribute("mark", "yes"));
-		node.setAttributes(atts);
+		MapNode node = new DefaultMapNode(id);
 		node.setName(Long.toString(id));
+		List<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
+		atts.add(new EntityAttribute("marker", "yes"));
+		node.setAttributes(atts);
+		node.setPosition(lat, lon);
 		updateEntityViewInfo(node, false);
-		marks.add(node);
-		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MARK_ADDED,
-				node.getId()));
+		markers.add(node);
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.MARKER_ADDED, node
+				.getId()));
 		return node;
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void removeMark(MapNode mark) {
-		marks.remove(mark);
-		fireMapDataEvent(new MapDataEvent(this, MapDataEvent.Type.MARK_REMOVED,
-				mark.getId()));
+	public void removeMarker(MapNode marker) {
+		markers.remove(marker);
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.MARKER_REMOVED,
+				marker.getId()));
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public List<MapNode> getMarks() {
-		return marks;
+	public List<MapNode> getMarkers() {
+		return markers;
 	}
 
 	/** {@inheritDoc} */
@@ -440,8 +385,7 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 		Track track = getTrack(trackName);
 		if (track != null) {
 			tracks.remove(track);
-			fireMapDataEvent(new MapDataEvent(this,
-					MapDataEvent.Type.MAP_MODIFIED));
+			fireMapDataEvent(new MapEvent(this, MapEvent.Type.MAP_MODIFIED));
 		}
 	}
 
@@ -449,14 +393,13 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 	@Override
 	public void createTrack(String trackName, List<Position> positions) {
 		clearTrack(trackName);
-		Track track = MapDataFactory.instance().createTrack(nextTrackId++,
-				trackName, trackName);
+		Track track = new DefaultTrack(nextTrackId++, trackName, trackName);
 		updateEntityViewInfo(track, false);
 		tracks.add(track);
 		for (Position pos : positions)
 			track.addNode(pos);
-		fireMapDataEvent(new MapDataEvent(this,
-				MapDataEvent.Type.TRACK_MODIFIED, track.getId()));
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.TRACK_MODIFIED, track
+				.getId()));
 	}
 
 	/** {@inheritDoc} */
@@ -464,14 +407,13 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 	public void addToTrack(String trackName, Position pos) {
 		Track track = getTrack(trackName);
 		if (track == null) {
-			track = MapDataFactory.instance().createTrack(nextTrackId++,
-					trackName, trackName);
+			track = new DefaultTrack(nextTrackId++, trackName, trackName);
 			updateEntityViewInfo(track, false);
 			tracks.add(track);
 		}
 		track.addNode(pos);
-		fireMapDataEvent(new MapDataEvent(this,
-				MapDataEvent.Type.TRACK_MODIFIED, track.getId()));
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.TRACK_MODIFIED, track
+				.getId()));
 	}
 
 	/** {@inheritDoc} */
@@ -533,20 +475,20 @@ public class DefaultMapDataStorage implements MapDataStorage, MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public void addMapDataEventListener(MapDataEventListener listener) {
+	public void addMapDataEventListener(MapEventListener listener) {
 		listeners.add(listener);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void removeMapDataEventListener(MapDataEventListener listener) {
+	public void removeMapDataEventListener(MapEventListener listener) {
 		listeners.remove(listener);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void fireMapDataEvent(MapDataEvent event) {
-		for (MapDataEventListener listener : listeners)
+	public void fireMapDataEvent(MapEvent event) {
+		for (MapEventListener listener : listeners)
 			listener.eventHappened(event);
 	}
 }

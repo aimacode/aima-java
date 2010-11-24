@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapEntity;
@@ -15,7 +15,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 
 	int currRadius;
 
-	public DefaultEntityFinder(MapDataStorage storage) {
+	public DefaultEntityFinder(OsmMap storage) {
 		super(storage);
 	}
 

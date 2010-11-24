@@ -25,7 +25,7 @@ import aimax.osm.data.entities.MapWay;
 import aimax.osm.routing.agent.OsmAgentController;
 import aimax.osm.routing.agent.OsmAgentFrame;
 import aimax.osm.routing.agent.OsmAgentView;
-import aimax.osm.routing.agent.OsmMapAdapter;
+import aimax.osm.routing.agent.MapAdapter;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.MapStyleFactory;
@@ -84,7 +84,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	 * starts an agent with a slightly modified goal test function.
 	 */
 	private static class SDController extends OsmAgentController {
-		SDController(OsmMapAdapter map) {
+		SDController(MapAdapter map) {
 			super(map);
 		}
 		
@@ -96,7 +96,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	
 		/** Creates new agents and adds them to the current environment. */
 		protected void initAgents(MessageLogger logger) {
-			List<MapNode> marks = map.getMapData().getMarks();
+			List<MapNode> marks = map.getMapData().getMarkers();
 			if (marks.size() < 2) {
 				logger.log("Error: Please set two marks with mouse-left.");
 				return;

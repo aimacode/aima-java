@@ -32,26 +32,21 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 
 	/** {@inheritDoc} */
 	@Override
-	public float getLat() {
-		return lat;
+	public void setPosition(float lat, float lon) {
+		this.lat = lat;
+		this.lon = lon;
 	}
-
+	
 	/** {@inheritDoc} */
 	@Override
-	public void setLat(float lat) {
-		this.lat = lat;
+	public float getLat() {
+		return lat;
 	}
 	
 	/** {@inheritDoc} */
 	@Override
 	public float getLon() {
 		return lon;
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public void setLon(float lon) {
-		this.lon = lon;
 	}
 
 	/** Provides read-only access to the maintained list of way references. */

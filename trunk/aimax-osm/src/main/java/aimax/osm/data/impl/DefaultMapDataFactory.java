@@ -1,6 +1,6 @@
 package aimax.osm.data.impl;
 
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -15,8 +15,8 @@ import aimax.osm.data.entities.Track;
 public class DefaultMapDataFactory extends MapDataFactory {
 	
 	/** {@inheritDoc} */
-	public MapDataStorage createMapDataStorage() {
-		return new DefaultMapDataStorage();
+	public OsmMap createMapDataStorage() {
+		return new DefaultMap();
 	}
 	
 	/** {@inheritDoc} */

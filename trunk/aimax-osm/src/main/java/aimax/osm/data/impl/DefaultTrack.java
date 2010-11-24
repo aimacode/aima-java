@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aimax.osm.data.EntityVisitor;
-import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
@@ -49,9 +48,8 @@ public class DefaultTrack extends DefaultMapEntity implements Track {
 	public void addNode(Position pos) {
 		int idx = trkpts.isEmpty()
 		? 0 : (int) trkpts.get(trkpts.size()-1).getId()+1;
-		MapNode node = MapDataFactory.instance().createMapNode(idx);
-		node.setLat(pos.getLat());
-		node.setLon(pos.getLon());
+		MapNode node = new DefaultMapNode(idx);
+		node.setPosition(pos.getLat(), pos.getLon());
 		addNode(node);
 	}
 

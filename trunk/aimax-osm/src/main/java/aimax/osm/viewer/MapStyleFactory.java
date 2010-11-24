@@ -150,7 +150,7 @@ public class MapStyleFactory {
 		result.addRule("building", "yes", createWayInfo(1f/6000, 1f/1800, 89, LIGHT_RED, 1, LIGHT_RED, false));
 		result.addRule("addr:housenumber", null, createPoiInfo(1f/1800, 1f/1800, 90, Color.GRAY, createRectangle(4, Color.LIGHT_GRAY), true));
 		
-		result.addRule("mark", "yes", createPoiInfo(1e-9f, 1e-9f, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false));
+		result.addRule("marker", "yes", createPoiInfo(1e-9f, 1e-9f, 0, Color.RED, new PinIcon(12, Color.RED, Color.RED), false));
 		result.addRule("track_type", "GPS", createTrackInfo(Color.GREEN));
 		result.addRule("track_type", null, createTrackInfo(Color.RED));
 		

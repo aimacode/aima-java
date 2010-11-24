@@ -12,27 +12,11 @@ import aimax.osm.data.entities.Track;
 /**
  * Central container for OSM map data. It is responsible for storing loaded map
  * data and also for data preparation to support efficient routing and map
- * viewing. Data preparation is based on two fundamental tree structures:
- * 
- * <p>
- * The first is an entity classifier. It is used to attach viewing information
- * to map entities based on attribute value checks. Renderers can store whatever
- * they need in those view information objects. However, the details are not
- * visible to this layer. The data store only sees the minimal scale in which
- * the entity shall be visible.
- * </p>
- * 
- * <p>
- * The second is a kd-tree (see {@link aimax.osm.data.impl.KDTree}).
- * </p>
- * 
- * <p>
- * The map data store is used as model for the viewer.
- * </p>
+ * viewing.
  * 
  * @author Ruediger Lunde
  */
-public interface MapDataStorage extends WayNodeProvider {
+public interface OsmMap extends WayNodeProvider {
 
 	/** Checks whether data is available. */
 	public boolean isEmpty();
@@ -40,9 +24,10 @@ public interface MapDataStorage extends WayNodeProvider {
 	/**
 	 * Returns a builder object, which receives map entities, for example from a
 	 * reader, and builds up needed structures in the map for storing the
-	 * entities (e.g. spatial indices).
+	 * entities (e.g. spatial indices). Normally, implementations will keep the
+	 * current entities and add to them, what is provided by some map reader.
 	 */
-	public MapBuilder getContentBuilder();
+	public MapBuilder getBuilder();
 
 	/**
 	 * Closes all open resources and should be called before the application
@@ -51,24 +36,10 @@ public interface MapDataStorage extends WayNodeProvider {
 	public void close();
 
 	/**
-	 * Returns a node for the given id.
-	 */
-	public MapNode getNode(long id);
-
-	/**
-	 * Returns a way for the given id.
-	 */
-	public MapWay getWay(long id);
-
-	/**
-	 * Adds a new point at the end of a specified track. If a track with the
-	 * specified name does not exist, a new track is created.
-	 */
-	public void addToTrack(String trackName, Position pos);
-
-	/**
-	 * Provides the data store with an entity classifier. The classifier
-	 * strongly influences the generation of the entity tree.
+	 * Provides the map with an entity classifier. The classifier defines the
+	 * scale-dependent visibility of entities and by that strongly influences
+	 * the organization of the data. This operation might not always be
+	 * implemented because large maps are hard to reorganize in reasonable time.
 	 */
 	public void setEntityClassifier(EntityClassifier<EntityViewInfo> classifier);
 
@@ -81,10 +52,23 @@ public interface MapDataStorage extends WayNodeProvider {
 	/** Returns the number of all maintained nodes. */
 	public int getNodeCount();
 
+	/**
+	 * Returns a node for the given id.
+	 */
+	public MapNode getNode(long id);
+
 	/** Returns the number of all maintained ways. */
 	public int getWayCount();
 
-	/** Returns all map ways. */
+	/**
+	 * Returns a way for the given id.
+	 */
+	public MapWay getWay(long id);
+
+	/**
+	 * Returns all map ways whose bounding box intersects the specified bounding
+	 * box.
+	 */
 	public Collection<MapWay> getWays(BoundingBox bb);
 
 	/**
@@ -103,8 +87,9 @@ public interface MapDataStorage extends WayNodeProvider {
 	public int getPoiCount();
 
 	/**
-	 * Returns all points of interest. Nodes are classified as POIs if they have
-	 * a name or other attributes of interest.
+	 * Returns all points of interest within the specified bounding box. Nodes
+	 * are classified as POIs if they have a name or other attributes of
+	 * interest.
 	 */
 	public List<MapNode> getPois(BoundingBox bb);
 
@@ -114,20 +99,22 @@ public interface MapDataStorage extends WayNodeProvider {
 	 */
 	public List<MapNode> getPlaces(String name);
 
-	/** Resets only mark and track information. */
-	public void clearMarksAndTracks();
+	/** Resets only marker and track informations. */
+	public void clearMarkersAndTracks();
 
-	/** Returns all marks and tracks, which are visible in the specified scale. */
-	public List<MapEntity> getVisibleMarksAndTracks(float scale);
+	/**
+	 * Returns all markers and tracks, which are visible in the specified scale.
+	 */
+	public List<MapEntity> getVisibleMarkersAndTracks(float scale);
 
-	/** Adds a new mark at the specified position. */
-	public MapNode addMark(float lat, float lon);
+	/** Adds a new marker at the specified position. */
+	public MapNode addMarker(float lat, float lon);
 
 	/** Removes a previously added marker. */
-	public void removeMark(MapNode mark);
+	public void removeMarker(MapNode marker);
 
-	/** Returns all maintained marks. */
-	public List<MapNode> getMarks();
+	/** Returns all maintained markers. */
+	public List<MapNode> getMarkers();
 
 	/** Removes the specified track. */
 	public void clearTrack(String trackName);
@@ -137,6 +124,12 @@ public interface MapDataStorage extends WayNodeProvider {
 	 * tracks with the same name are removed.
 	 */
 	public void createTrack(String trackName, List<Position> positions);
+
+	/**
+	 * Adds a new point at the end of a specified track. If a track with the
+	 * specified name does not exist, a new track is created.
+	 */
+	public void addToTrack(String trackName, Position pos);
 
 	/** Returns all maintained tracks. */
 	public List<Track> getTracks();
@@ -155,8 +148,8 @@ public interface MapDataStorage extends WayNodeProvider {
 
 	/**
 	 * Provides a table with two columns with statistical information about the
-	 * map. In each row, the first column contains the attribute name and the second
-	 * the corresponding value.
+	 * map. In each row, the first column contains the attribute name and the
+	 * second the corresponding value.
 	 */
 	public Object[][] getStatistics();
 
@@ -167,11 +160,11 @@ public interface MapDataStorage extends WayNodeProvider {
 	public void visitEntities(EntityVisitor visitor, BoundingBox bb, float scale);
 
 	/** Adds a listener for map data events. */
-	public void addMapDataEventListener(MapDataEventListener listener);
+	public void addMapDataEventListener(MapEventListener listener);
 
 	/** Removes a listener for map data events. */
-	public void removeMapDataEventListener(MapDataEventListener listener);
+	public void removeMapDataEventListener(MapEventListener listener);
 
 	/** Informs all interested listeners about map changes. */
-	public void fireMapDataEvent(MapDataEvent event);
+	public void fireMapDataEvent(MapEvent event);
 }

@@ -40,9 +40,9 @@ public class OsmElementProcessor extends ElementProcessor {
 			MapBuilder mdConsumer) {
 		super(parentProcessor, mdConsumer);
 		
-		boundElementProcessor = new BoundElementProcessor(this, getConsumer());
-		nodeElementProcessor = new NodeElementProcessor(this, getConsumer());
-		wayElementProcessor = new WayElementProcessor(this, getConsumer());
+		boundElementProcessor = new BoundElementProcessor(this, getMapBuilder());
+		nodeElementProcessor = new NodeElementProcessor(this, getMapBuilder());
+		wayElementProcessor = new WayElementProcessor(this, getMapBuilder());
 		//relationElementProcessor = new RelationElementProcessor(this, getConsumer());
 	}
 	

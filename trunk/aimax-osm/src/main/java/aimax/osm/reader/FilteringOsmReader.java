@@ -6,10 +6,11 @@ import java.util.List;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapBuilderProxy;
 import aimax.osm.data.MapBuilder;
-import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
+import aimax.osm.data.MapBuilderProxy;
+import aimax.osm.data.entities.EntityAttribute;
+import aimax.osm.data.impl.DefaultMapNode;
+import aimax.osm.data.impl.DefaultMapWay;
 
 public class FilteringOsmReader extends OsmReader {
 	BoundingBox boundingBox;
@@ -45,18 +46,18 @@ public class FilteringOsmReader extends OsmReader {
 				proxy = new FilteringBuilderProxy(builder, attFilter);
 			else
 				proxy = new MapBuilderProxy(builder);
-			proxy.prepareForNewData();
 			parseMap(createFileStream(file), proxy);
-			if (proxy.nodesWithoutPositionAdded()) {
+			if (proxy.nodeRefsWithoutDefsAdded()) {
 				if (boundingBox != null || attFilter != null) {
 					LOG.info("Starting to parse the map file a second time.");
 					proxy.incrementCounter();
 					parseMap(createFileStream(file), proxy);
 				} else {
-					LOG.warning("Nodes were referenced in ways but not defined before.");
+					LOG
+							.warning("Nodes were referenced in ways but not defined before.");
 				}
 			}
-			proxy.compileResults();
+			proxy.buildMap();
 		} catch (FileNotFoundException e) {
 			LOG.warning("File does not exist " + file);
 		} catch (Exception e) {
@@ -77,11 +78,6 @@ public class FilteringOsmReader extends OsmReader {
 		protected BBBuilderProxy(MapBuilder builder, BoundingBox bb) {
 			super(builder);
 			this.bb = bb;
-		}
-
-		@Override
-		public void prepareForNewData() {
-			super.prepareForNewData();
 			builder.setBoundingBox(bb);
 		}
 
@@ -90,20 +86,20 @@ public class FilteringOsmReader extends OsmReader {
 		}
 
 		@Override
-		public void addNode(MapNode node) {
-			if (counter == 0 && node.getLat() >= bb.getLatMin()
-					&& node.getLat() <= bb.getLatMax()
-					&& node.getLon() >= bb.getLonMin()
-					&& node.getLon() <= bb.getLonMax())
-				super.addNode(node);
+		public void addNode(long id, String name, List<EntityAttribute> atts,
+				float lat, float lon) {
+			if (counter == 0 && lat >= bb.getLatMin() && lat <= bb.getLatMax()
+					&& lon >= bb.getLonMin() && lon <= bb.getLonMax())
+				super.addNode(id, name, atts, lat, lon);
 		}
 
 		@Override
-		public void addWay(MapWay way, List<MapNode> wayNodes) {
+		public void addWay(long id, String name, List<EntityAttribute> atts,
+				List<Long> wayNodeIds) {
 			if (counter == 0) {
-				for (MapNode node : wayNodes)
-					if (builder.getNode(node.getId()) != null) {
-						super.addWay(way, wayNodes);
+				for (long nodeId : wayNodeIds)
+					if (builder.getNode(nodeId) != null) {
+						super.addWay(id, name, atts, wayNodeIds);
 						break;
 					}
 			}
@@ -122,15 +118,21 @@ public class FilteringOsmReader extends OsmReader {
 		}
 
 		@Override
-		public void addNode(MapNode node) {
+		public void addNode(long id, String name, List<EntityAttribute> atts,
+				float lat, float lon) {
+			DefaultMapNode node = new DefaultMapNode(id);
+			node.setAttributes(atts);
 			if (attFilter.classify(node) != null)
-				super.addNode(node);
+				super.addNode(id, name, atts, lat, lon);
 		}
 
 		@Override
-		public void addWay(MapWay way, List<MapNode> wayNodes) {
+		public void addWay(long id, String name, List<EntityAttribute> atts,
+				List<Long> wayNodeIds) {
+			DefaultMapWay way = new DefaultMapWay(id);
+			way.setAttributes(atts);
 			if (attFilter.classify(way) != null) {
-				super.addWay(way, wayNodes);
+				super.addWay(id, name, atts, wayNodeIds);
 			}
 		}
 	}

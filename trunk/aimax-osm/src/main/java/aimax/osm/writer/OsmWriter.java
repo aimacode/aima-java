@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -30,7 +30,7 @@ public class OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to file.
 	 */
-	public void writeMap(File file, MapDataStorage mapData, BoundingBox bb) {
+	public void writeMap(File file, OsmMap mapData, BoundingBox bb) {
 		try  {
 			FileOutputStream fs = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter
@@ -46,7 +46,7 @@ public class OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to a stream.
 	 */
-	public void writeMap(OutputStreamWriter writer, MapDataStorage mapData, BoundingBox bb) {
+	public void writeMap(OutputStreamWriter writer, OsmMap mapData, BoundingBox bb) {
 
 		try {
 			StringBuffer text = new StringBuffer();

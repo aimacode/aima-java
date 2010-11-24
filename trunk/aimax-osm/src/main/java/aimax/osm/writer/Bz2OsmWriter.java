@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 
 /** 
  * Adds bz2 extraction functionality to the basic OsmWriter. The
@@ -44,7 +44,7 @@ public class Bz2OsmWriter implements MapWriter {
 	 * Writes all data from <code>mapData</code> to file.
 	 */
 	@Override
-	public void writeMap(File file, MapDataStorage mapData, BoundingBox bb) {
+	public void writeMap(File file, OsmMap mapData, BoundingBox bb) {
 		try  {
 			OutputStream os = new BufferedOutputStream
 			(new FileOutputStream(file));
@@ -68,7 +68,7 @@ public class Bz2OsmWriter implements MapWriter {
 	 * Reads all data from the file and send it to the sink.
 	 */
 	@Override
-	public void writeMap(OutputStreamWriter writer, MapDataStorage mapData, BoundingBox bb) {
+	public void writeMap(OutputStreamWriter writer, OsmMap mapData, BoundingBox bb) {
 		osmReader.writeMap(writer, mapData, bb);
 	}
 	

@@ -10,9 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JToolBar;
 
 import aimax.osm.data.DataResource;
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapEvent;
+import aimax.osm.data.MapEventListener;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.MapViewFrame;
@@ -46,7 +46,7 @@ public class RoutePlannerApp implements ActionListener {
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");
-		calcButton.setEnabled(frame.getMapData().getMarks().size() >= 2);
+		calcButton.setEnabled(frame.getMapData().getMarkers().size() >= 2);
 		calcButton.addActionListener(this);
 		toolbar.add(calcButton);
 		
@@ -83,9 +83,9 @@ public class RoutePlannerApp implements ActionListener {
 	/** Starts route generation after the calculate button has been pressed. */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == calcButton) {
-			MapDataStorage mapData = frame.getMapData();
+			OsmMap mapData = frame.getMapData();
 			List<Position> positions = routeCalculator.calculateRoute
-			(mapData.getMarks(), mapData, waySelection.getSelectedIndex());
+			(mapData.getMarkers(), mapData, waySelection.getSelectedIndex());
 			frame.getMapData().createTrack(ROUTE_TRACK_NAME, positions);
 		}
 	}
@@ -94,10 +94,10 @@ public class RoutePlannerApp implements ActionListener {
 	 * Updates the info field based on events sent by the MapViewPane. 
 	 * @author R. Lunde
 	 */
-	class MapDataEventHandler implements MapDataEventListener {
+	class MapDataEventHandler implements MapEventListener {
 		@Override
-		public void eventHappened(MapDataEvent event) {
-			calcButton.setEnabled(frame.getMapData().getMarks().size() > 1);
+		public void eventHappened(MapEvent event) {
+			calcButton.setEnabled(frame.getMapData().getMarkers().size() > 1);
 		}
 	}
 	

@@ -9,7 +9,6 @@ import org.xml.sax.Attributes;
 
 import aimax.osm.data.EntityAttributeManager;
 import aimax.osm.data.MapBuilder;
-import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 
@@ -24,10 +23,13 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	
 	
 	private TagElementProcessor tagElementProcessor;
-	private MapNode node;
+	private MapNode existingNode;
+	private boolean existingNodeIsComplete;
+	private long nodeId;
+	private String nodeName;
+	private float nodeLat;
+	private float nodeLon;
 	private List<EntityAttribute> nodeAttributes;
-	private boolean hasNoPosition;
-	private boolean isNew;
 	
 	/**
 	 * Creates a new instance.
@@ -49,15 +51,13 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 * {@inheritDoc}
 	 */
 	public void begin(Attributes attributes) {
-		long id = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		node = getConsumer().getNode(id);
-		isNew = (node == null);
-		if (isNew)
-			node = MapDataFactory.instance().createMapNode(id);
-		hasNoPosition = Float.isNaN(node.getLat()) || Float.isNaN(node.getLon());
-		if (hasNoPosition) {
-			node.setLat(Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE)));
-			node.setLon(Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE)));	
+		nodeId = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
+		existingNode = getMapBuilder().getNode(nodeId);
+		existingNodeIsComplete = (existingNode != null && existingNode.hasPosition());
+		if (!existingNodeIsComplete) {
+			nodeLat = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE));
+			nodeLon = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE));	
+			nodeName = null;
 			nodeAttributes.clear();
 		}
 	}
@@ -76,7 +76,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
-		if (hasNoPosition) 
+		if (!existingNodeIsComplete) 
 			if (ELEMENT_NAME_TAG.equals(qName))
 				return tagElementProcessor;
 		
@@ -87,10 +87,14 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 * {@inheritDoc}
 	 */
 	public void end() {
-		if (hasNoPosition) {
-			node.setAttributes(nodeAttributes);
-			if (isNew)
-				getConsumer().addNode(node);
+		if (!existingNodeIsComplete) {
+			if (existingNode != null) {
+				existingNode.setName(nodeName);
+				existingNode.setAttributes(nodeAttributes);
+				existingNode.setPosition(nodeLat, nodeLon);
+			} else {
+				getMapBuilder().addNode(nodeId, nodeName, nodeAttributes, nodeLat, nodeLon);
+			}
 		}
 	}
 	
@@ -105,7 +109,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 		String key = tag.getKey();
 		String value = tag.getValue();
 		if (key.equals("name")) {
-			node.setName(value);
+			nodeName = value;
 		} else {
 			EntityAttribute att = EntityAttributeManager.instance().intern
 			(new EntityAttribute(key, value));

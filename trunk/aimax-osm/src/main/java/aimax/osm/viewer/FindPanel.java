@@ -27,8 +27,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import aimax.osm.data.EntityFinder;
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.MapDataEventListener;
+import aimax.osm.data.MapEvent;
+import aimax.osm.data.MapEventListener;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
@@ -40,7 +40,7 @@ import aimax.osm.data.entities.MapWay;
  * @author Ruediger Lunde
  */
 public class FindPanel extends JPanel implements ActionListener,
-		ListSelectionListener, MapDataEventListener {
+		ListSelectionListener, MapEventListener {
 	private static final long serialVersionUID = 1L;
 
 	MapViewPane view;
@@ -184,11 +184,11 @@ public class FindPanel extends JPanel implements ActionListener,
 
 	private void clearMarkers(boolean includingStored) {
 		for (MapNode marker : currMarkers)
-			view.getModel().removeMark(marker);
+			view.getMap().removeMarker(marker);
 		currMarkers.clear();
 		if (includingStored) {
 			for (MapNode marker : storedMarkers)
-				view.getModel().removeMark(marker);
+				view.getMap().removeMarker(marker);
 			storedMarkers.clear();
 		}
 	}
@@ -223,7 +223,7 @@ public class FindPanel extends JPanel implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == findButton) {
-			entityFinder = view.getModel().getEntityFinder();
+			entityFinder = view.getMap().getEntityFinder();
 			Position pos = view.getCenterPosition();
 			String pattern = findField.getText();
 			switch (typeCombo.getSelectedIndex()) {
@@ -263,7 +263,7 @@ public class FindPanel extends JPanel implements ActionListener,
 		for (MapEntity entity : getSelectedEntities()) {
 			Position pos = getPosition(entity);
 			if (pos != null) {
-				currMarkers.add(view.getModel().addMark(pos.getLat(),
+				currMarkers.add(view.getMap().addMarker(pos.getLat(),
 						pos.getLon()));
 				view.adjustToCenter(pos.getLat(), pos.getLon());
 			}
@@ -272,9 +272,9 @@ public class FindPanel extends JPanel implements ActionListener,
 
 	/** Resets find results after map changes. */
 	@Override
-	public void eventHappened(MapDataEvent event) {
-		if (event.getType() == MapDataEvent.Type.MAP_CLEARED
-				|| event.getType() == MapDataEvent.Type.MAP_NEW) {
+	public void eventHappened(MapEvent event) {
+		if (event.getType() == MapEvent.Type.MAP_CLEARED
+				|| event.getType() == MapEvent.Type.MAP_NEW) {
 			entityFinder = null;
 			updateResults(true);
 		}

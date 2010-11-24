@@ -10,7 +10,7 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.informed.AStarSearch;
 import aima.core.util.CancelableThread;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
@@ -39,7 +39,7 @@ public class RouteCalculator {
 	 * @param mapData The information source.
 	 * @param waySelection Number, indicating which kinds of ways are relevant.
 	 */
-	public List<Position> calculateRoute(List<MapNode> locs, MapDataStorage mapData,
+	public List<Position> calculateRoute(List<MapNode> locs, OsmMap mapData,
 			int waySelection) {
 		List<Position> result = new ArrayList<Position>();
 		try {
@@ -73,7 +73,7 @@ public class RouteCalculator {
 	}
 	
 	/** Factory method, responsible for way filter creation. */
-	protected MapWayFilter createMapWayFilter(MapDataStorage mapData, int waySelection) {
+	protected MapWayFilter createMapWayFilter(OsmMap mapData, int waySelection) {
 		if (waySelection == 1)
 			return MapWayAttFilter.createCarWayFilter(mapData);
 		else if (waySelection == 2)
@@ -89,7 +89,7 @@ public class RouteCalculator {
 	
 	/** Factory method, responsible for problem creation. */
 	protected Problem createProblem(MapNode fromRNode, MapNode toRNode,
-			MapDataStorage mapData, MapWayFilter wayFilter, boolean ignoreOneways,
+			OsmMap mapData, MapWayFilter wayFilter, boolean ignoreOneways,
 			int waySelection) {
 		return new RouteFindingProblem
 		(fromRNode, toRNode, mapData, wayFilter, ignoreOneways);
