@@ -48,9 +48,7 @@ public class OsmReader implements MapReader {
 	 */
 	public void readMap(File file, MapBuilder builder) {
 		try  {
-			builder.prepareForNewData();
 			parseMap(createFileStream(file), builder);
-			builder.compileResults();
 		} catch (FileNotFoundException e) {
 			LOG.warning("File "  + file + " does not exist.");
 		} catch (Exception e) {
@@ -64,11 +62,9 @@ public class OsmReader implements MapReader {
 	 */
 	public void readMap(InputStream inputStream, MapBuilder builder) {
 		try {
-			builder.prepareForNewData();
 			parseMap(inputStream, builder);
-			if (builder.nodesWithoutPositionAdded())
+			if (builder.nodeRefsWithoutDefsAdded())
 				LOG.warning("Nodes were referenced in ways but not defined before.");
-			builder.compileResults();
 		} catch (SAXParseException e) {
 			throw new OsmRuntimeException(
 					"Unable to parse input stream"

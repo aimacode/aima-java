@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 import aima.core.util.CancelableThread;
 import aimax.osm.data.DataResource;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.Track;
@@ -92,7 +92,7 @@ public class MiniNaviApp implements ActionListener {
 		return frame;
 	}
 	
-	public MapDataStorage getMapData() {
+	public OsmMap getMapData() {
 		return frame.getMapData();
 	}
 	
@@ -139,8 +139,8 @@ public class MiniNaviApp implements ActionListener {
 			if (routingThread != null) {
 				routingThread.cancel();
 			} else {
-				MapDataStorage mapData = frame.getMapData();
-				List<MapNode> marks = mapData.getMarks();
+				OsmMap mapData = frame.getMapData();
+				List<MapNode> marks = mapData.getMarkers();
 				if (!marks.isEmpty()) {
 					List<MapNode> routeMarks = new ArrayList<MapNode>();
 					Track gpsTrack = mapData.getTrack(GPS_TRACK_NAME);
@@ -209,7 +209,7 @@ public class MiniNaviApp implements ActionListener {
 		@Override
 		public void positionUpdated(GpsFix pos) {
 			if (pos.isPosOk()) {
-				MapDataStorage mapData = frame.getMapData();
+				OsmMap mapData = frame.getMapData();
 				Track track = mapData.getTrack(GPS_TRACK_NAME);
 				MapNode node = null;
 				if (track != null)

@@ -1,7 +1,6 @@
 package aimax.osm.viewer;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
@@ -12,8 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -21,14 +18,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
 
-import aimax.osm.data.entities.EntityAttribute;
-import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.WayRef;
 
 /**
  * Useful popup menu for the <code>MapViewPane</code>.
@@ -99,10 +91,11 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == infoMenuItem) {
 			MapNode mNode = pane.getRenderer().getNextNode(x, y);
-			pane.showMapEntityInfoDialog(mNode, pane.getRenderer()
-					.isDebugModeEnabled());
+			if (mNode != null)
+				pane.showMapEntityInfoDialog(mNode, pane.getRenderer()
+						.isDebugModeEnabled());
 		} else if (ae.getSource() == clearMenuItem) {
-			pane.getModel().clearMarksAndTracks();
+			pane.getMap().clearMarkersAndTracks();
 			pane.fireMapViewEvent(new MapViewEvent(pane,
 					MapViewEvent.Type.TMP_NODES_REMOVED));
 		} else if (ae.getSource() == createMarkMenuItem) {
@@ -113,7 +106,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 				float lat = panel.getLat();
 				float lon = panel.getLon();
 				if (!Float.isNaN(lat) && !Float.isNaN(lon)) {
-					pane.getModel().addMark(lat, lon);
+					pane.getMap().addMarker(lat, lon);
 					pane.adjustToCenter(lat, lon);
 				}
 			}
@@ -129,13 +122,13 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 						xmlFile = new File(xmlFile.getPath() + ".xml");
 				}
 				if (xmlFile != null && xmlFile.exists()) {
-					pane.getModel().clearMarksAndTracks();
+					pane.getMap().clearMarkersAndTracks();
 					decoder = new XMLDecoder(new BufferedInputStream(
 							new FileInputStream(xmlFile)));
 					int size = (Integer) decoder.readObject();
 					for (int i = 0; i < size; i++) {
 						MapNode node = (MapNode) decoder.readObject();
-						pane.getModel().addMark(node.getLat(), node.getLon());
+						pane.getMap().addMarker(node.getLat(), node.getLon());
 					}
 					pane.fireMapViewEvent(new MapViewEvent(pane,
 							MapViewEvent.Type.MARK_ADDED));
@@ -156,8 +149,8 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 						xmlFile = new File(xmlFile.getPath() + ".xml");
 					encoder = new XMLEncoder(new BufferedOutputStream(
 							new FileOutputStream(xmlFile)));
-					encoder.writeObject(pane.getModel().getMarks().size());
-					for (MapNode node : pane.getModel().getMarks())
+					encoder.writeObject(pane.getMap().getMarkers().size());
+					for (MapNode node : pane.getMap().getMarkers())
 						encoder.writeObject(node);
 				}
 			} catch (IOException e) {

@@ -5,7 +5,7 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
 and search concepts from the AIMA library in an interesting, non-trivial
-application area. Meanwhile it provides a powerful framework for building complete
+application area. Meanwhile, it provides a powerful framework for building complete
 navigation systems.
 
 The framework provides interfaces for central parts of the system and additionally

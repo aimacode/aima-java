@@ -1,7 +1,6 @@
 package aimax.osm.routing.agent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,8 +8,8 @@ import aima.core.environment.map.Map;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Point2D;
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataStorage;
 import aimax.osm.data.MapWayFilter;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -24,10 +23,10 @@ import aimax.osm.data.entities.WayRef;
  * method for comparison.
  * @author Ruediger Lunde
  */
-public class OsmMapAdapter implements Map {
+public class MapAdapter implements Map {
 
 	/** A map which is generated from OSM data. */
-	MapDataStorage mapData;
+	OsmMap mapData;
 	/**
 	 * A filter, which hides some of the ways
 	 * (e.g. foot ways are irrelevant when traveling by car.).
@@ -39,7 +38,7 @@ public class OsmMapAdapter implements Map {
 	 */
 	boolean ignoreOneways;
 	
-	public OsmMapAdapter(MapDataStorage mapData) {
+	public MapAdapter(OsmMap mapData) {
 		this.mapData = mapData;
 	}
 	
@@ -51,7 +50,7 @@ public class OsmMapAdapter implements Map {
 		this.filter = filter;
 	}
 	
-	public MapDataStorage getMapData() {
+	public OsmMap getMapData() {
 		return mapData;
 	}
 	

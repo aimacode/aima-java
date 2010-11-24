@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aimax.osm.data.EntityFinder;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapEntity;
@@ -21,7 +21,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		ENTITY, NODE, WAY, ADDRESS
 	}
 
-	private final MapDataStorage storage;
+	private final OsmMap storage;
 
 	protected Mode mode;
 	protected String pattern;
@@ -34,7 +34,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	private final List<MapEntity> results;
 
 	/** Creates a new entity finder for the given map data storage. */
-	public AbstractEntityFinder(MapDataStorage storage) {
+	public AbstractEntityFinder(OsmMap storage) {
 		this.storage = storage;
 		minRadius = 2;
 		maxRadius = 25;
@@ -146,7 +146,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		results.clear();
 	}
 
-	protected MapDataStorage getStorage() {
+	protected OsmMap getStorage() {
 		return storage;
 	}
 }

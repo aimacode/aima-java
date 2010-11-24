@@ -118,7 +118,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		for (MapEntity node : nodeBuffer) {
 			if (node instanceof MapNode) {
 				tmp = (MapNode) node;
-				if (tmp != null && tmp.getAttributeValue("mark") == null
+				if (tmp != null && tmp.getAttributeValue("marker") == null
 						&& (nextNode == null || pos.getDistKM(tmp) < pos
 								.getDistKM(nextNode))) {
 					nextNode = tmp;

@@ -3,20 +3,21 @@ package aimax.osm.applications;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.SimpleAgentApp;
 import aimax.osm.data.DataResource;
-import aimax.osm.data.MapDataStorage;
-import aimax.osm.data.MapDataFactory;
+import aimax.osm.data.MapBuilder;
+import aimax.osm.data.impl.DefaultMapBuilder;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.routing.agent.OsmAgentController;
 import aimax.osm.routing.agent.OsmAgentFrame;
 import aimax.osm.routing.agent.OsmAgentView;
-import aimax.osm.routing.agent.OsmMapAdapter;
+import aimax.osm.routing.agent.MapAdapter;
 
 /**
  * Demonstrates, how the OSM map viewer can be integrated into a graphical
@@ -27,7 +28,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 
 	protected static Logger LOG = Logger.getLogger("aimax.osm");
 	
-	protected OsmMapAdapter map;
+	protected MapAdapter map;
 	
 	/** Sets the default language (for file choosers etc.) to US. */
 	public OsmAgentApp() {
@@ -37,10 +38,10 @@ public class OsmAgentApp extends SimpleAgentApp {
 	/** Reads a map from the specified stream and stores it in {@link #map}. */
 	public void readMap(InputStream stream) {
 		if (stream != null) {
-			MapDataStorage mapData = MapDataFactory.instance().createMapDataStorage();
 			MapReader mapReader = new Bz2OsmReader();
-			mapReader.readMap(stream, mapData.getContentBuilder());
-			map = new OsmMapAdapter(mapData);
+			MapBuilder mapBuilder = new DefaultMapBuilder();
+			mapReader.readMap(stream, mapBuilder);
+			map = new MapAdapter(mapBuilder.buildMap());
 		}
 		else
 			LOG.warning("Map reading failed because input stream does not exist.");
@@ -48,10 +49,10 @@ public class OsmAgentApp extends SimpleAgentApp {
 	
 	/** Reads a map from the specified file and stores it in {@link #map}. */
 	public void readMap(File file) {
-		MapDataStorage mapData = MapDataFactory.instance().createMapDataStorage();
 		MapReader mapReader = new Bz2OsmReader();
-		mapReader.readMap(file, mapData.getContentBuilder());
-		map = new OsmMapAdapter(mapData);
+		MapBuilder mapBuilder = new DefaultMapBuilder();
+		mapReader.readMap(file, mapBuilder);
+		map = new MapAdapter(mapBuilder.buildMap());
 	}
 	
 	/**
@@ -92,8 +93,8 @@ public class OsmAgentApp extends SimpleAgentApp {
 	 */
 	public static void main(String args[]) {
 		// Start with program arg -screenwidth=xx (with xx the width in cm).
-		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
-		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
+		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
+		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 		
 		OsmAgentApp demo = new OsmAgentApp();
 		// demo.readMap(new File("maps/Ulm.osm"));

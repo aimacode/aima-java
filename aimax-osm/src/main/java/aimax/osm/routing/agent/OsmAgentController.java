@@ -20,7 +20,7 @@ import aima.gui.applications.search.map.SearchFactory;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.SimulationThread;
 import aima.gui.framework.MessageLogger;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
 
@@ -30,7 +30,7 @@ import aimax.osm.data.entities.MapNode;
  */
 public class OsmAgentController extends AgentAppController {
 	
-	protected OsmMapAdapter map;
+	protected MapAdapter map;
 	protected MapEnvironment env;
 	/** Search method to be used. */
 	protected Search search;
@@ -42,14 +42,14 @@ public class OsmAgentController extends AgentAppController {
 	/** Sleep time between two steps during simulation in msec. */
 	protected long sleepTime = 0l;
 	
-	public OsmAgentController(OsmMapAdapter map) {
+	public OsmAgentController(MapAdapter map) {
 		this.map = map;
 		markedLocations = new ArrayList<String>();
 	}
 	
 	@Override
 	public void clear() {
-		map.getMapData().clearMarksAndTracks();
+		map.getMapData().clearMarkersAndTracks();
 		prepare(null);
 	}
 
@@ -58,7 +58,7 @@ public class OsmAgentController extends AgentAppController {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
-		MapDataStorage mapData = map.getMapData();
+		OsmMap mapData = map.getMapData();
 		mapData.getTracks().clear();
 		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter
@@ -139,7 +139,7 @@ public class OsmAgentController extends AgentAppController {
 
 	/** Creates new agents and adds them to the current environment. */
 	protected void initAgents(MessageLogger logger) {
-		List<MapNode> marks = map.getMapData().getMarks();
+		List<MapNode> marks = map.getMapData().getMarkers();
 		if (marks.size() < 2) {
 			logger.log("Error: Please set two marks with mouse-left.");
 			return;

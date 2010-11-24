@@ -60,7 +60,7 @@ public class BoundElementProcessor extends ElementProcessor {
 	 */
 	@Override
 	public void end() {
-		getConsumer().setBoundingBox(bb);
+		getMapBuilder().setBoundingBox(bb);
 		bb = null;
 	}
 

@@ -16,12 +16,13 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.gui.framework.AgentAppEnvironmentView;
 import aimax.osm.data.EntityClassifier;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapBuilder;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.reader.MapReader;
 import aimax.osm.reader.Bz2OsmReader;
+import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.MapViewPane;
 import aimax.osm.viewer.MapViewPopup;
@@ -44,7 +45,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * the given map data. This implementation assumes that for the same
 	 * <code>mapData</code> instance only one agent view is created.
 	 */
-	public OsmAgentView(MapDataStorage mapData) {
+	public OsmAgentView(OsmMap mapData) {
 		MapStyleFactory msf = new MapStyleFactory();
 		EntityClassifier<EntityViewInfo> eClassifier = msf
 				.createDefaultClassifier();
@@ -56,7 +57,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 				.createTrackInfo(Color.BLUE));
 		mapData.setEntityClassifier(eClassifier);
 		mapViewPane = new MapViewPane();
-		mapViewPane.setModel(mapData);
+		mapViewPane.setMap(mapData);
 		mapViewPane.setPopupMenu(new MapViewPopupWithLoad());
 		setLayout(new BorderLayout());
 		add(mapViewPane, BorderLayout.CENTER);
@@ -94,7 +95,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	}
 
 	private void updateTrack(Agent agent, String location) {
-		OsmMapAdapter map = (OsmMapAdapter) getMapEnv().getMap();
+		MapAdapter map = (MapAdapter) getMapEnv().getMap();
 		MapNode node = map.getWayNode(location);
 		if (node != null) {
 			int aIdx = getMapEnv().getAgents().indexOf(agent);
@@ -145,9 +146,11 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 			if (ae.getSource() == loadMenuItem) {
 				JFileChooser fc = getLoadFileChooser();
 				int status = fc.showOpenDialog(pane);
-				if (status == JFileChooser.APPROVE_OPTION)
-					mapReader.readMap(fc.getSelectedFile(), pane.getModel()
-							.getContentBuilder());
+				if (status == JFileChooser.APPROVE_OPTION) {
+					MapBuilder mapBuilder = pane.getMap().getBuilder();
+					mapReader.readMap(fc.getSelectedFile(), mapBuilder);
+					mapBuilder.buildMap();
+				}
 			} else {
 				super.actionPerformed(ae);
 			}

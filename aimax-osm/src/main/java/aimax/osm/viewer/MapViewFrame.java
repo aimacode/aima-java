@@ -28,8 +28,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
+import aimax.osm.data.MapBuilder;
 import aimax.osm.data.MapDataFactory;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.writer.Bz2OsmWriter;
@@ -52,7 +53,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected JSplitPane splitter;
 	protected JToolBar toolbar;
 	protected JTabbedPane sidebar;
-	protected MapDataStorage mapData;
+	protected OsmMap map;
 	protected MapReader mapReader;
 	protected MapWriter mapWriter;
 
@@ -92,13 +93,12 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				if (mapData != null)
-					mapData.close();
+				if (map != null)
+					map.close();
 				System.exit(0);
 			}
 		});
-		mapData = MapDataFactory.instance().createMapDataStorage();
-		setDefaultEntityClassifier();
+		map = createMap();
 		fileChooser = new JFileChooser();
 		setMapReader(new Bz2OsmReader());
 		setMapWriter(new Bz2OsmWriter());
@@ -115,7 +115,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		contentPanel.add(splitter, BorderLayout.CENTER);
 
 		view = new MapViewPane();
-		view.setModel(mapData);
+		view.setMap(map);
 		splitter.add(view, JSplitPane.RIGHT);
 
 		sidebar = new JTabbedPane();
@@ -123,6 +123,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 		initToolbar();
 		initSidebar();
+	}
+	
+	/** Creates the map which is used by default. */
+	protected OsmMap createMap() {
+		MapBuilder builder = MapDataFactory.createMapBuilder();
+		builder.setEntityClassifier(new MapStyleFactory()
+				.createDefaultClassifier());
+		return builder.buildMap();
 	}
 
 	/**
@@ -149,9 +157,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		sidebarCheckBox.setSelected(false);
 		showSidebar(false);
 		toolbar.add(sidebarCheckBox);
-		InfoField infoField = new InfoField(view, mapData);
+		InfoField infoField = new InfoField(view, map);
 		view.addMapViewEventListener(infoField.getMapViewEventListener());
-		mapData.addMapDataEventListener(infoField.getMapDataEventListener());
+		map.addMapDataEventListener(infoField.getMapDataEventListener());
 		toolbar.add(infoField);
 	}
 
@@ -164,13 +172,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 		// gives an example how to add functionality to the sidebar
 		FindPanel findPane = new FindPanel(view);
-		mapData.addMapDataEventListener(findPane);
+		map.addMapDataEventListener(findPane);
 		sidebar.addTab("Find", findPane);
-	}
-
-	protected void setDefaultEntityClassifier() {
-		mapData.setEntityClassifier(new MapStyleFactory()
-				.createDefaultClassifier());
 	}
 
 	public void showSidebar(boolean b) {
@@ -188,7 +191,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		if (b && !mapData.isEmpty())
+		if (b && !map.isEmpty())
 			view.adjustToFit();
 	}
 
@@ -196,8 +199,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		return view;
 	}
 
-	public MapDataStorage getMapData() {
-		return mapData;
+	public OsmMap getMapData() {
+		return map;
 	}
 
 	public JToolBar getToolbar() {
@@ -231,17 +234,22 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		this.mapWriter = mapWriter;
 	}
 
-	public void readMap(InputStream map) {
-		if (map != null)
-			mapReader.readMap(map, mapData.getContentBuilder());
-		else
+	public void readMap(InputStream stream) {
+		if (stream != null) {
+			MapBuilder builder = map.getBuilder();
+			mapReader.readMap(stream, builder);
+			builder.buildMap();
+		} else {
 			LOG
 					.warning("Map reading failed because input stream does not exist.");
+		}
 	}
 
-	public void readMap(File map) {
-		mapReader.readMap(map, mapData.getContentBuilder());
-		fileChooser.setSelectedFile(map.getAbsoluteFile());
+	public void readMap(File file) {
+		MapBuilder builder = map.getBuilder();
+		mapReader.readMap(file, builder);
+		builder.buildMap();
+		fileChooser.setSelectedFile(file.getAbsoluteFile());
 	}
 
 	/**
@@ -263,8 +271,8 @@ public class MapViewFrame extends JFrame implements ActionListener {
 					EntityClassifier<Boolean> filter = createOverviewFilter();
 					mapReader.setFilter(filter);
 				}
-				mapReader.readMap(fileChooser.getSelectedFile(), mapData
-						.getContentBuilder());
+				mapReader.readMap(fileChooser.getSelectedFile(), map
+						.getBuilder());
 			}
 		} else if (e.getSource() == saveButton) {
 			JFileChooser fc = new JFileChooser();
@@ -281,11 +289,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 					&& (!fc.getSelectedFile().exists() || JOptionPane
 							.showConfirmDialog(this, "File exists, overwrite?",
 									"Confirm", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)) {
-				mapWriter.writeMap(fc.getSelectedFile(), mapData, view
+				mapWriter.writeMap(fc.getSelectedFile(), map, view
 						.getBoundingBox());
 			}
 		} else if (e.getSource() == statisticsButton) {
-			Object[][] data = mapData.getStatistics();
+			Object[][] data = map.getStatistics();
 			JTable table = new JTable(data, new String[]{"Attribute", "Value"});
 			JScrollPane scroller = new JScrollPane(table);
 			scroller.setPreferredSize(new Dimension(250, 300));

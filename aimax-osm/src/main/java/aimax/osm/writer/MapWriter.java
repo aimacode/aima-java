@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.OutputStreamWriter;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.OsmMap;
 
 /**
  * Common interface for writing maps to file.
@@ -13,10 +13,10 @@ import aimax.osm.data.MapDataStorage;
  */
 public interface MapWriter {
 	/** Writes a map to file. */
-	public void writeMap(File file, MapDataStorage mapData, BoundingBox bb);
+	public void writeMap(File file, OsmMap mapData, BoundingBox bb);
 
 	/** Writes a map to an output stream writer. */
-	public void writeMap(OutputStreamWriter writer, MapDataStorage mapData,
+	public void writeMap(OutputStreamWriter writer, OsmMap mapData,
 			BoundingBox bb);
 
 	/** Describes the supported file formats. */

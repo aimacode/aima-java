@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapEvent;
+import aimax.osm.data.MapEventListener;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.Track;
@@ -17,14 +17,14 @@ public class InfoField extends JTextField {
 	
 	private MapEventHandler eventHandler;
 	
-	public InfoField(MapViewPane view, MapDataStorage mapData) {
+	public InfoField(MapViewPane view, OsmMap mapData) {
 		super(20);
 		setEditable(false);
 		eventHandler = new MapEventHandler(this, view, mapData);
 	}
 	
 	
-	public MapDataEventListener getMapDataEventListener() {
+	public MapEventListener getMapDataEventListener() {
 		return eventHandler;
 	}
 	
@@ -37,13 +37,13 @@ public class InfoField extends JTextField {
 	 * 
 	 * @author R. Lunde
 	 */
-	static class MapEventHandler implements MapViewEventListener, MapDataEventListener {
+	static class MapEventHandler implements MapViewEventListener, MapEventListener {
 
 		private JTextField infoField;
 		private MapViewPane view;
-		private MapDataStorage mapData;
+		private OsmMap mapData;
 		
-		public MapEventHandler(JTextField infoField, MapViewPane view, MapDataStorage mapData) {
+		public MapEventHandler(JTextField infoField, MapViewPane view, OsmMap mapData) {
 			this.infoField = infoField;
 			this.mapData = mapData;
 			this.view = view;
@@ -52,7 +52,7 @@ public class InfoField extends JTextField {
 		@Override
 		public void eventHappened(MapViewEvent event) {
 			if (event.getType() == MapViewEvent.Type.ZOOM) {
-				if (mapData.getMarks().isEmpty()) {
+				if (mapData.getMarkers().isEmpty()) {
 					DecimalFormat f = new DecimalFormat("#0.0");
 					double scale = view.getTransformer().computeScale();
 					String text = "Scale: 1 / ";
@@ -70,19 +70,19 @@ public class InfoField extends JTextField {
 		}
 		
 		@Override
-		public void eventHappened(MapDataEvent event) {
-			if (event.getType() == MapDataEvent.Type.MAP_NEW) {
+		public void eventHappened(MapEvent event) {
+			if (event.getType() == MapEvent.Type.MAP_NEW) {
 				infoField.setText("Ways: " + mapData.getWayCount()
 						+ ", Nodes: " + mapData.getNodeCount() + ", POIs: "
 						+ mapData.getPoiCount());
-			} else if (event.getType() == MapDataEvent.Type.MARK_ADDED) {
-				List<MapNode> nodes = mapData.getMarks();
+			} else if (event.getType() == MapEvent.Type.MARKER_ADDED) {
+				List<MapNode> nodes = mapData.getMarkers();
 				DecimalFormat f1 = new DecimalFormat("#0.00");
 				MapNode mark = nodes.get(nodes.size() - 1);
-				infoField.setText("Mark " + mark.getName() + ": Lat "
+				infoField.setText("Marker " + mark.getName() + ": Lat "
 						+ f1.format(mark.getLat()) + "; Lon "
 						+ f1.format(mark.getLon()));
-			} else if (event.getType() == MapDataEvent.Type.TRACK_MODIFIED) {
+			} else if (event.getType() == MapEvent.Type.TRACK_MODIFIED) {
 				Track track = mapData.getTrack(event.getObjId());
 				if (track != null) {
 					List<MapNode> nodes = track.getNodes();

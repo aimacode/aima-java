@@ -22,19 +22,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import aimax.osm.data.BoundingBox;
-import aimax.osm.data.MapDataEvent;
-import aimax.osm.data.MapDataEventListener;
-import aimax.osm.data.MapDataStorage;
+import aimax.osm.data.MapEvent;
+import aimax.osm.data.MapEventListener;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.WayRef;
-import aimax.osm.data.impl.DefaultMapDataStorage;
+import aimax.osm.data.impl.DefaultMap;
 
 /**
  * Provides a panel which shows map data. As model, a
- * {@link aimax.osm.data.MapDataStorage} is used.
+ * {@link aimax.osm.data.OsmMap} is used.
  * <p>
  * Hint for using the viewer: Try Mouse-Left, Mouse-Right, Mouse-Drag,
  * Ctrl-Mouse-Left, Plus, Minus, Ctrl-Plus, Ctrl-Minus, arrow buttons, and also
@@ -42,7 +42,7 @@ import aimax.osm.data.impl.DefaultMapDataStorage;
  * 
  * @author Ruediger Lunde
  */
-public class MapViewPane extends JComponent implements MapDataEventListener {
+public class MapViewPane extends JComponent implements MapEventListener {
 
 	private static final long serialVersionUID = 1L;
 	// private Logger LOG = Logger.getLogger("aimax.osm");
@@ -51,7 +51,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	 * Maintains a reference to the model which provides the data to be
 	 * displayed.
 	 */
-	protected MapDataStorage mapData;
+	protected OsmMap map;
 	protected CoordTransformer transformer;
 	private AbstractEntityRenderer renderer;
 	private ArrayList<MapViewEventListener> eventListeners;
@@ -73,17 +73,17 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		this.setFocusable(true);
 	}
 
-	public MapDataStorage getModel() {
-		return mapData;
+	public OsmMap getMap() {
+		return map;
 	}
 
-	/** Stores the model and initiates painting. */
-	public void setModel(MapDataStorage mapData) {
-		if (this.mapData != null)
-			this.mapData.removeMapDataEventListener(this);
-		this.mapData = mapData;
-		if (mapData != null) {
-			mapData.addMapDataEventListener(this);
+	/** Sets the map as model of this pane and initiates painting. */
+	public void setMap(OsmMap map) {
+		if (this.map != null)
+			this.map.removeMapDataEventListener(this);
+		this.map = map;
+		if (map != null) {
+			map.addMapDataEventListener(this);
 			isAdjusted = false;
 		}
 		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.MAP_NEW));
@@ -214,14 +214,14 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	 * coordinates.
 	 */
 	public void removeNearestMark(int x, int y) {
-		List<MapNode> marks = mapData.getMarks();
+		List<MapNode> marks = map.getMarkers();
 		float lat = getTransformer().lat(y);
 		float lon = getTransformer().lon(x);
 		MapNode mark = new Position(lat, lon).selectNearest(marks, null);
 		if (mark != null)
 			marks.remove(mark);
-		mapData.fireMapDataEvent(new MapDataEvent(mapData,
-				MapDataEvent.Type.MAP_MODIFIED));
+		map.fireMapDataEvent(new MapEvent(map,
+				MapEvent.Type.MAP_MODIFIED));
 		fireMapViewEvent(new MapViewEvent(this,
 				MapViewEvent.Type.TMP_NODES_REMOVED));
 	}
@@ -295,9 +295,9 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 		Graphics2D g2 = (java.awt.Graphics2D) g;
 		g2.setBackground(renderer.getBackgroundColor());
 		g2.clearRect(0, 0, getWidth(), getHeight());
-		if (getWidth() > 0 && mapData != null) {
+		if (getWidth() > 0 && map != null) {
 			if (!isAdjusted) {
-				transformer.adjustTransformation(mapData.getBoundingBox(),
+				transformer.adjustTransformation(map.getBoundingBox(),
 						getWidth(), getHeight());
 				isAdjusted = true;
 			}
@@ -308,14 +308,14 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 			float scale = transformer.computeScale();
 			BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
 			float viewScale = scale / renderer.getDisplayFactor();
-			renderer.initForRendering(g2, transformer, mapData);
-			mapData.visitEntities(renderer, vbox, viewScale);
-			for (MapEntity entity : mapData.getVisibleMarksAndTracks(viewScale))
+			renderer.initForRendering(g2, transformer, map);
+			map.visitEntities(renderer, vbox, viewScale);
+			for (MapEntity entity : map.getVisibleMarkersAndTracks(viewScale))
 				entity.accept(renderer);
 			renderer.printBufferedObjects();
 			if (renderer.isDebugModeEnabled()
-					&& mapData instanceof DefaultMapDataStorage) {
-				List<double[]> splits = ((DefaultMapDataStorage) mapData)
+					&& map instanceof DefaultMap) {
+				List<double[]> splits = ((DefaultMap) map)
 						.getEntityTree().getSplitCoords();
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.setStroke(new BasicStroke(1f));
@@ -345,8 +345,8 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 	 * Defines, how to react on model events (new, modifications).
 	 */
 	@Override
-	public void eventHappened(MapDataEvent event) {
-		if (event.getType() == MapDataEvent.Type.MAP_NEW) {
+	public void eventHappened(MapEvent event) {
+		if (event.getType() == MapEvent.Type.MAP_NEW) {
 			adjustToFit();
 			fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.MAP_NEW));
 		} else {
@@ -376,7 +376,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 				float lon = transformer.lon(e.getX());
 				if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
 					// mouse left button + ctrl -> add track point
-					mapData.addToTrack("Mouse Track",
+					map.addToTrack("Mouse Track",
 							new Position(lat, lon));
 					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
 							MapViewEvent.Type.TRK_PT_ADDED));
@@ -385,11 +385,11 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 					removeNearestMark(e.getX(), e.getY());
 				} else if (e.getClickCount() == 1) {
 					// mouse left button -> add mark
-					mark = mapData.addMark(lat, lon);
+					mark = map.addMarker(lat, lon);
 					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
 							MapViewEvent.Type.MARK_ADDED));
 				} else { // double click
-					mapData.removeMark(mark);
+					map.removeMarker(mark);
 					MapNode mNode = getRenderer().getNextNode(e.getX(), e.getY());
 					showMapEntityInfoDialog(mNode, renderer.isDebugModeEnabled());
 				}
@@ -397,7 +397,7 @@ public class MapViewPane extends JComponent implements MapDataEventListener {
 				popup.show(MapViewPane.this, e.getX(), e.getY());
 			} else {
 				// mouse right button -> clear marks and tracks
-				mapData.clearMarksAndTracks();
+				map.clearMarkersAndTracks();
 				fireMapViewEvent(new MapViewEvent(MapViewPane.this,
 						MapViewEvent.Type.TMP_NODES_REMOVED));
 			}
