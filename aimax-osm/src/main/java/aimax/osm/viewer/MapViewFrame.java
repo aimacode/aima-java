@@ -276,8 +276,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 					EntityClassifier<Boolean> filter = createOverviewFilter();
 					mapReader.setFilter(filter);
 				}
-				mapReader.readMap(fileChooser.getSelectedFile(), map
-						.getBuilder());
+				readMap(fileChooser.getSelectedFile());
 			}
 		} else if (e.getSource() == saveButton) {
 			JFileChooser fc = new JFileChooser();
