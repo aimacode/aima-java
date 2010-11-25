@@ -213,7 +213,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * Removes the mark which is the nearest with respect to the given view
 	 * coordinates.
 	 */
-	public void removeNearestMark(int x, int y) {
+	public void removeNearestMarker(int x, int y) {
 		List<MapNode> marks = map.getMarkers();
 		float lat = getTransformer().lat(y);
 		float lon = getTransformer().lon(x);
@@ -382,12 +382,12 @@ public class MapViewPane extends JComponent implements MapEventListener {
 							MapViewEvent.Type.TRK_PT_ADDED));
 				} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
 					// mouse left button + shift -> add track point
-					removeNearestMark(e.getX(), e.getY());
+					removeNearestMarker(e.getX(), e.getY());
 				} else if (e.getClickCount() == 1) {
 					// mouse left button -> add mark
 					mark = map.addMarker(lat, lon);
 					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-							MapViewEvent.Type.MARK_ADDED));
+							MapViewEvent.Type.MARKER_ADDED));
 				} else { // double click
 					map.removeMarker(mark);
 					MapNode mNode = getRenderer().getNextNode(e.getX(), e.getY());
@@ -438,12 +438,12 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			float fac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ? 1.1f
 					: 1.5f;
 			if (rot == -1) {
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
 					multiplyDisplayFactorWith(fac);
 				} else
 					zoom(fac, x, y);
 			} else if (rot == 1) {
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
 					multiplyDisplayFactorWith(1f / fac);
 				} else
 					zoom(1 / fac, x, y);
@@ -466,13 +466,13 @@ public class MapViewPane extends JComponent implements MapEventListener {
 					: 0.3f;
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_PLUS:
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)
 					multiplyDisplayFactorWith(zfac);
 				else
 					zoom(zfac, getWidth() / 2, getHeight() / 2);
 				break;
 			case KeyEvent.VK_MINUS:
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)
 					multiplyDisplayFactorWith(1f / zfac);
 				else
 					zoom(1 / zfac, getWidth() / 2, getHeight() / 2);

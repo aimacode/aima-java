@@ -10,7 +10,7 @@ navigation systems.
 
 The framework provides interfaces for central parts of the system and additionally
 example implementations. In the current version, even the fundamental data structures
-for nodes, ways and the data store itself can be replaced. This allows experiments
+for nodes, ways and the map itself can be replaced. This allows experiments
 with different implementations to optimize rooting and also to integrate a database
 version of the map representation. 
 
@@ -45,9 +45,9 @@ by default, make sure that the main/resource folder is included
 in the build path of your project, recompile and start again.
 Then, place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
 mouse-drag, ctrl-mouse-left, plus button, minus button, shift-plus, shift-minus,
-ctrl-plus, ctrl-minus, space, ctrl-space, arrow buttons, and also the mouse-wheel
+alt-plus, alt-minus, space, ctrl-space, arrow buttons, and also the mouse-wheel
 for navigation, mark setting, and track definition. For routing, at least two
-marks must be set.
+markers must be set.
 
 
 == Current Release: 2.0.0-AIMAX-OSM Redesign to support DBs (in preparation) == 

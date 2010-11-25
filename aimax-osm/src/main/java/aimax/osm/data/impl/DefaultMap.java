@@ -74,8 +74,7 @@ public class DefaultMap implements OsmMap {
 
 	private ArrayList<MapEventListener> listeners;
 
-	/** Should only be called by the builder! */
-	protected DefaultMap() {
+	public DefaultMap() {
 		nodes = new Hashtable<Long, MapNode>();
 		ways = new Hashtable<Long, MapWay>();
 		pois = new ArrayList<MapNode>();

@@ -31,6 +31,7 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.OsmMap;
+import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.writer.Bz2OsmWriter;
@@ -54,6 +55,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected JToolBar toolbar;
 	protected JTabbedPane sidebar;
 	protected OsmMap map;
+	protected EntityClassifier<EntityViewInfo> classifier;
 	protected MapReader mapReader;
 	protected MapWriter mapWriter;
 
@@ -98,7 +100,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
-		map = createMap();
+		initMap();
 		fileChooser = new JFileChooser();
 		setMapReader(new Bz2OsmReader());
 		setMapWriter(new Bz2OsmWriter());
@@ -124,13 +126,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		initToolbar();
 		initSidebar();
 	}
-	
-	/** Creates the map which is used by default. */
-	protected OsmMap createMap() {
-		MapBuilder builder = MapDataFactory.createMapBuilder();
-		builder.setEntityClassifier(new MapStyleFactory()
-				.createDefaultClassifier());
-		return builder.buildMap();
+
+	/**
+	 * Creates the map and a corresponding entity classifier which are used by
+	 * default.
+	 */
+	protected void initMap() {
+		map = MapDataFactory.createMap();
+		classifier = new MapStyleFactory().createDefaultClassifier();
 	}
 
 	/**
@@ -237,6 +240,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	public void readMap(InputStream stream) {
 		if (stream != null) {
 			MapBuilder builder = map.getBuilder();
+			builder.setEntityClassifier(classifier);
 			mapReader.readMap(stream, builder);
 			builder.buildMap();
 		} else {
@@ -247,6 +251,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 	public void readMap(File file) {
 		MapBuilder builder = map.getBuilder();
+		builder.setEntityClassifier(classifier);
 		mapReader.readMap(file, builder);
 		builder.buildMap();
 		fileChooser.setSelectedFile(file.getAbsoluteFile());
@@ -294,11 +299,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 			}
 		} else if (e.getSource() == statisticsButton) {
 			Object[][] data = map.getStatistics();
-			JTable table = new JTable(data, new String[]{"Attribute", "Value"});
+			JTable table = new JTable(data,
+					new String[] { "Attribute", "Value" });
 			JScrollPane scroller = new JScrollPane(table);
 			scroller.setPreferredSize(new Dimension(250, 300));
-			JOptionPane.showConfirmDialog(this, scroller, "Map Statistics",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane
+					.showConfirmDialog(this, scroller, "Map Statistics",
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == sidebarCheckBox) {
 			showSidebar(sidebarCheckBox.isSelected());
 		}
