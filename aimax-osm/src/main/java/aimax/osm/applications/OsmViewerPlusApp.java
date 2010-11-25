@@ -98,12 +98,12 @@ public class OsmViewerPlusApp implements ActionListener {
 				EntityClassifier<EntityViewInfo> eClassifier = 
 					new MapStyleFactory().createNightViewClassifier();
 				frame.getView().getRenderer().setBackgroundColor(Color.BLACK);
-				frame.getMapData().setEntityClassifier(eClassifier);
+				frame.getMap().setEntityClassifier(eClassifier);
 			} else {
 				EntityClassifier<EntityViewInfo> eClassifier =
 					new MapStyleFactory().createDefaultClassifier();
 				frame.getView().getRenderer().setBackgroundColor(Color.WHITE);
-				frame.getMapData().setEntityClassifier(eClassifier);
+				frame.getMap().setEntityClassifier(eClassifier);
 			}		
 		}
 	}

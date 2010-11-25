@@ -26,7 +26,7 @@ import aimax.osm.data.entities.WayRef;
 public class MapAdapter implements Map {
 
 	/** A map which is generated from OSM data. */
-	OsmMap mapData;
+	OsmMap osmMap;
 	/**
 	 * A filter, which hides some of the ways
 	 * (e.g. foot ways are irrelevant when traveling by car.).
@@ -38,8 +38,8 @@ public class MapAdapter implements Map {
 	 */
 	boolean ignoreOneways;
 	
-	public MapAdapter(OsmMap mapData) {
-		this.mapData = mapData;
+	public MapAdapter(OsmMap map) {
+		this.osmMap = map;
 	}
 	
 	public void ignoreOneways(boolean state) {
@@ -51,7 +51,7 @@ public class MapAdapter implements Map {
 	}
 	
 	public OsmMap getMapData() {
-		return mapData;
+		return osmMap;
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class MapAdapter implements Map {
 	public List<String> getLocations() {
 		List<String> result = new ArrayList<String>();
 		HashSet<MapNode> nodeHash = new HashSet<MapNode>();
-		for (MapWay way : mapData.getWays(new BoundingBox(-90, -180, 90, 180))) {
+		for (MapWay way : osmMap.getWays(new BoundingBox(-90, -180, 90, 180))) {
 			if (filter == null || filter.isAccepted(way.getId())) {
 				for (MapNode node : way.getNodes())
 					if (!nodeHash.contains(node)) {
@@ -129,7 +129,7 @@ public class MapAdapter implements Map {
 	 */
 	public String getNearestLocation(Point2D pt) {
 		Position pos = new Position((float) pt.getY(), (float) pt.getX());
-		MapNode node = mapData.getNearestWayNode(pos, filter);
+		MapNode node = osmMap.getNearestWayNode(pos, filter);
 		return (node != null) ? Long.toString(node.getId()) : null;
 	}
 	
@@ -137,7 +137,7 @@ public class MapAdapter implements Map {
 	public MapNode getWayNode(String id) {
 		MapNode result = null;
 		try {
-			result = mapData.getNode(Long.parseLong(id));
+			result = osmMap.getNode(Long.parseLong(id));
 		} catch (NumberFormatException e) {
 			// node not found, indicated by return value null.
 		}

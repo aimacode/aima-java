@@ -17,10 +17,10 @@ public class InfoField extends JTextField {
 	
 	private MapEventHandler eventHandler;
 	
-	public InfoField(MapViewPane view, OsmMap mapData) {
+	public InfoField(MapViewPane view, OsmMap map) {
 		super(20);
 		setEditable(false);
-		eventHandler = new MapEventHandler(this, view, mapData);
+		eventHandler = new MapEventHandler(this, view, map);
 	}
 	
 	
@@ -41,18 +41,18 @@ public class InfoField extends JTextField {
 
 		private JTextField infoField;
 		private MapViewPane view;
-		private OsmMap mapData;
+		private OsmMap map;
 		
-		public MapEventHandler(JTextField infoField, MapViewPane view, OsmMap mapData) {
+		public MapEventHandler(JTextField infoField, MapViewPane view, OsmMap map) {
 			this.infoField = infoField;
-			this.mapData = mapData;
+			this.map = map;
 			this.view = view;
 		}
 		
 		@Override
 		public void eventHappened(MapViewEvent event) {
 			if (event.getType() == MapViewEvent.Type.ZOOM) {
-				if (mapData.getMarkers().isEmpty()) {
+				if (map.getMarkers().isEmpty()) {
 					DecimalFormat f = new DecimalFormat("#0.0");
 					double scale = view.getTransformer().computeScale();
 					String text = "Scale: 1 / ";
@@ -72,18 +72,18 @@ public class InfoField extends JTextField {
 		@Override
 		public void eventHappened(MapEvent event) {
 			if (event.getType() == MapEvent.Type.MAP_NEW) {
-				infoField.setText("Ways: " + mapData.getWayCount()
-						+ ", Nodes: " + mapData.getNodeCount() + ", POIs: "
-						+ mapData.getPoiCount());
+				infoField.setText("Ways: " + map.getWayCount()
+						+ ", Nodes: " + map.getNodeCount() + ", POIs: "
+						+ map.getPoiCount());
 			} else if (event.getType() == MapEvent.Type.MARKER_ADDED) {
-				List<MapNode> nodes = mapData.getMarkers();
+				List<MapNode> nodes = map.getMarkers();
 				DecimalFormat f1 = new DecimalFormat("#0.00");
 				MapNode mark = nodes.get(nodes.size() - 1);
 				infoField.setText("Marker " + mark.getName() + ": Lat "
 						+ f1.format(mark.getLat()) + "; Lon "
 						+ f1.format(mark.getLon()));
 			} else if (event.getType() == MapEvent.Type.TRACK_MODIFIED) {
-				Track track = mapData.getTrack(event.getObjId());
+				Track track = map.getTrack(event.getObjId());
 				if (track != null) {
 					List<MapNode> nodes = track.getNodes();
 					DecimalFormat f1 = new DecimalFormat("#0.00");

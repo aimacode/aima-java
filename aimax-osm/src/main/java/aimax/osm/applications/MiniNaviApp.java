@@ -93,7 +93,7 @@ public class MiniNaviApp implements ActionListener {
 	}
 	
 	public OsmMap getMapData() {
-		return frame.getMapData();
+		return frame.getMap();
 	}
 	
 	public void showFrame() {
@@ -139,7 +139,7 @@ public class MiniNaviApp implements ActionListener {
 			if (routingThread != null) {
 				routingThread.cancel();
 			} else {
-				OsmMap mapData = frame.getMapData();
+				OsmMap mapData = frame.getMap();
 				List<MapNode> marks = mapData.getMarkers();
 				if (!marks.isEmpty()) {
 					List<MapNode> routeMarks = new ArrayList<MapNode>();
@@ -186,14 +186,14 @@ public class MiniNaviApp implements ActionListener {
 		public void run() {
 			try {
 				positions = routeCalculator.calculateRoute
-				(routeMarks, frame.getMapData(), waySelection.getSelectedIndex());
+				(routeMarks, frame.getMap(), waySelection.getSelectedIndex());
 			} catch (Exception e) {
 				e.printStackTrace(); // for debugging
 			}
 			try {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
-						frame.getMapData().createTrack(ROUTE_TRACK_NAME, positions);
+						frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
 						routingThread = null;
 						updateEnableState();
 					}
@@ -209,7 +209,7 @@ public class MiniNaviApp implements ActionListener {
 		@Override
 		public void positionUpdated(GpsFix pos) {
 			if (pos.isPosOk()) {
-				OsmMap mapData = frame.getMapData();
+				OsmMap mapData = frame.getMap();
 				Track track = mapData.getTrack(GPS_TRACK_NAME);
 				MapNode node = null;
 				if (track != null)

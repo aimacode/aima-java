@@ -30,12 +30,12 @@ public class OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to file.
 	 */
-	public void writeMap(File file, OsmMap mapData, BoundingBox bb) {
+	public void writeMap(File file, OsmMap map, BoundingBox bb) {
 		try  {
 			FileOutputStream fs = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter
 			(new BufferedOutputStream(fs), "UTF-8");
-			writeMap(writer, mapData, bb);
+			writeMap(writer, map, bb);
 		} catch (FileNotFoundException fnfe) {
 			LOG.warning("File does not exist "+file);
 		} catch (UnsupportedEncodingException fnfe) {
@@ -46,7 +46,7 @@ public class OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to a stream.
 	 */
-	public void writeMap(OutputStreamWriter writer, OsmMap mapData, BoundingBox bb) {
+	public void writeMap(OutputStreamWriter writer, OsmMap map, BoundingBox bb) {
 
 		try {
 			StringBuffer text = new StringBuffer();
@@ -61,14 +61,14 @@ public class OsmWriter implements MapWriter {
 			writer.write(text.toString());
 			
 			HashSet<MapNode> nodeHash = new HashSet<MapNode>();
-			Collection<MapWay> ways = mapData.getWays(bb);
+			Collection<MapWay> ways = map.getWays(bb);
 			for (MapWay way : ways)
 				for (MapNode node : way.getNodes())
 					if (!nodeHash.contains(node)) {
 						writeNode(writer, node);
 						nodeHash.add(node);
 					}
-			for (MapNode poi : mapData.getPois(bb))
+			for (MapNode poi : map.getPois(bb))
 				if (!nodeHash.contains(poi)) {
 					writeNode(writer, poi);
 					nodeHash.add(poi);
