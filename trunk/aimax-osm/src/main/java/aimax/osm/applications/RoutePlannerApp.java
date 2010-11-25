@@ -46,11 +46,11 @@ public class RoutePlannerApp implements ActionListener {
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");
-		calcButton.setEnabled(frame.getMapData().getMarkers().size() >= 2);
+		calcButton.setEnabled(frame.getMap().getMarkers().size() >= 2);
 		calcButton.addActionListener(this);
 		toolbar.add(calcButton);
 		
-		frame.getMapData().addMapDataEventListener(new MapDataEventHandler());
+		frame.getMap().addMapDataEventListener(new MapDataEventHandler());
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class RoutePlannerApp implements ActionListener {
 	 * (useful for integration into an AIMA demo application).
 	 */
 	public MapViewFrame constructApplicationFrame() {
-		if (frame.getMapData().isEmpty())
+		if (frame.getMap().isEmpty())
 			frame.readMap(DataResource.getULMFileResource());
 		return frame;
 	}
@@ -83,10 +83,10 @@ public class RoutePlannerApp implements ActionListener {
 	/** Starts route generation after the calculate button has been pressed. */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == calcButton) {
-			OsmMap mapData = frame.getMapData();
+			OsmMap mapData = frame.getMap();
 			List<Position> positions = routeCalculator.calculateRoute
 			(mapData.getMarkers(), mapData, waySelection.getSelectedIndex());
-			frame.getMapData().createTrack(ROUTE_TRACK_NAME, positions);
+			frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
 		}
 	}
 	
@@ -97,7 +97,7 @@ public class RoutePlannerApp implements ActionListener {
 	class MapDataEventHandler implements MapEventListener {
 		@Override
 		public void eventHappened(MapEvent event) {
-			calcButton.setEnabled(frame.getMapData().getMarkers().size() > 1);
+			calcButton.setEnabled(frame.getMap().getMarkers().size() > 1);
 		}
 	}
 	

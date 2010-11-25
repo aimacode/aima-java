@@ -202,7 +202,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		return view;
 	}
 
-	public OsmMap getMapData() {
+	public OsmMap getMap() {
 		return map;
 	}
 
