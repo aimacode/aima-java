@@ -92,7 +92,7 @@ public class MiniNaviApp implements ActionListener {
 		return frame;
 	}
 	
-	public OsmMap getMapData() {
+	public OsmMap getMap() {
 		return frame.getMap();
 	}
 	
@@ -104,7 +104,7 @@ public class MiniNaviApp implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == gpsCombo) {
-			getMapData().clearTrack(GPS_TRACK_NAME);
+			getMap().clearTrack(GPS_TRACK_NAME);
 			try {
 				if (fileChooser == null)
 					fileChooser = new JFileChooser();
