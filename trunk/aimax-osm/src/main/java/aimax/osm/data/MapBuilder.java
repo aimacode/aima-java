@@ -10,7 +10,7 @@ import aimax.osm.data.entities.MapWay;
 /**
  * Simple interface to aggregate map data. Its purpose is, to keep OSM parsers
  * independent from the concrete structure which is used to store the data. Osm
- * maps should only be created by implementations of this map builder interface.
+ * maps should only be modified by implementations of this map builder interface.
  * 
  * @author Ruediger Lunde
  */

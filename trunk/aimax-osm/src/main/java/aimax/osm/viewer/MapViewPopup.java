@@ -34,10 +34,10 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	private JFileChooser fileChooser;
 
 	private JMenuItem infoMenuItem;
-	private JMenuItem createMarkMenuItem;
-	private JMenuItem removeMarkMenuItem;
-	private JMenuItem loadMarksMenuItem;
-	private JMenuItem saveMarksMenuItem;
+	private JMenuItem createMarkerMenuItem;
+	private JMenuItem removeMarkerMenuItem;
+	private JMenuItem loadMarkersMenuItem;
+	private JMenuItem saveMarkersMenuItem;
 	private JMenuItem clearMenuItem;
 	private JCheckBoxMenuItem debugMenuItem;
 
@@ -49,20 +49,20 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		infoMenuItem.addActionListener(this);
 		add(infoMenuItem);
 
-		JMenu markMenu = new JMenu("Mark");
+		JMenu markMenu = new JMenu("Marker");
 		add(markMenu);
-		createMarkMenuItem = new JMenuItem("Create");
-		createMarkMenuItem.addActionListener(this);
-		markMenu.add(createMarkMenuItem);
-		removeMarkMenuItem = new JMenuItem("Remove");
-		removeMarkMenuItem.addActionListener(this);
-		markMenu.add(removeMarkMenuItem);
-		loadMarksMenuItem = new JMenuItem("Load All");
-		loadMarksMenuItem.addActionListener(this);
-		markMenu.add(loadMarksMenuItem);
-		saveMarksMenuItem = new JMenuItem("Save All");
-		saveMarksMenuItem.addActionListener(this);
-		markMenu.add(saveMarksMenuItem);
+		createMarkerMenuItem = new JMenuItem("Create");
+		createMarkerMenuItem.addActionListener(this);
+		markMenu.add(createMarkerMenuItem);
+		removeMarkerMenuItem = new JMenuItem("Remove");
+		removeMarkerMenuItem.addActionListener(this);
+		markMenu.add(removeMarkerMenuItem);
+		loadMarkersMenuItem = new JMenuItem("Load All");
+		loadMarkersMenuItem.addActionListener(this);
+		markMenu.add(loadMarkersMenuItem);
+		saveMarkersMenuItem = new JMenuItem("Save All");
+		saveMarkersMenuItem.addActionListener(this);
+		markMenu.add(saveMarkersMenuItem);
 
 		clearMenuItem = new JMenuItem("Clear M&T");
 		clearMenuItem.addActionListener(this);
@@ -98,7 +98,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			pane.getMap().clearMarkersAndTracks();
 			pane.fireMapViewEvent(new MapViewEvent(pane,
 					MapViewEvent.Type.TMP_NODES_REMOVED));
-		} else if (ae.getSource() == createMarkMenuItem) {
+		} else if (ae.getSource() == createMarkerMenuItem) {
 			PositionPanel panel = new PositionPanel();
 			int res = JOptionPane.showConfirmDialog(pane, panel,
 					"Specify a Position", JOptionPane.OK_CANCEL_OPTION);
@@ -110,13 +110,13 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					pane.adjustToCenter(lat, lon);
 				}
 			}
-		} else if (ae.getSource() == removeMarkMenuItem) {
-			pane.removeNearestMark(x, y);
-		} else if (ae.getSource() == loadMarksMenuItem) {
+		} else if (ae.getSource() == removeMarkerMenuItem) {
+			pane.removeNearestMarker(x, y);
+		} else if (ae.getSource() == loadMarkersMenuItem) {
 			XMLDecoder decoder = null;
 			try {
 				File xmlFile = null;
-				if (getFileChooser().showDialog(pane, "Load Marks") == JFileChooser.APPROVE_OPTION) {
+				if (getFileChooser().showDialog(pane, "Load Markers") == JFileChooser.APPROVE_OPTION) {
 					xmlFile = getFileChooser().getSelectedFile();
 					if (!xmlFile.getPath().contains("."))
 						xmlFile = new File(xmlFile.getPath() + ".xml");
@@ -131,7 +131,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 						pane.getMap().addMarker(node.getLat(), node.getLon());
 					}
 					pane.fireMapViewEvent(new MapViewEvent(pane,
-							MapViewEvent.Type.MARK_ADDED));
+							MapViewEvent.Type.MARKER_ADDED));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -139,11 +139,11 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 				if (decoder != null)
 					decoder.close();
 			}
-		} else if (ae.getSource() == saveMarksMenuItem) {
+		} else if (ae.getSource() == saveMarkersMenuItem) {
 			XMLEncoder encoder = null;
 			try {
 				File xmlFile = null;
-				if (getFileChooser().showDialog(pane, "Load Marks") == JFileChooser.APPROVE_OPTION) {
+				if (getFileChooser().showDialog(pane, "Load Markers") == JFileChooser.APPROVE_OPTION) {
 					xmlFile = getFileChooser().getSelectedFile();
 					if (!xmlFile.getPath().contains("."))
 						xmlFile = new File(xmlFile.getPath() + ".xml");
@@ -169,7 +169,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		if (fileChooser == null) {
 			fileChooser = new JFileChooser();
 			FileFilter filter = new javax.swing.filechooser.FileNameExtensionFilter(
-					"Mark Data (xml)", "xml");
+					"Marker Data (xml)", "xml");
 			fileChooser.setFileFilter(filter);
 		}
 		return fileChooser;
