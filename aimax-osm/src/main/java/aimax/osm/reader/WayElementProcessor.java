@@ -78,11 +78,10 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
 		if (!skipElement) {
-			if (ELEMENT_NAME_NODE.equals(qName)) {
+			if (ELEMENT_NAME_NODE.equals(qName))
 				return wayNodeElementProcessor;
-			} else if (ELEMENT_NAME_TAG.equals(qName)) {
+			else if (ELEMENT_NAME_TAG.equals(qName))
 				return tagElementProcessor;
-			}
 		}
 		return super.getChild(uri, localName, qName);
 	}

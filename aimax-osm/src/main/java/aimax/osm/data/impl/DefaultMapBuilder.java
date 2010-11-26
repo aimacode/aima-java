@@ -45,18 +45,24 @@ public class DefaultMapBuilder implements MapBuilder {
 		return result.getNode(id);
 	}
 
-	/** {@inheritDoc} */
+	/**
+	 * {@inheritDoc} If a node with the same ID but without position has already
+	 * been added, it is redefined with the new data.
+	 */
 	@Override
 	public void addNode(long id, String name, List<EntityAttribute> atts,
 			float lat, float lon) {
-		DefaultMapNode node = new DefaultMapNode(id);
-		node.setName(name);
-		node.setAttributes(atts);
-		node.setPosition(lat, lon);
-		result.addNode(node);
-		if (result.getNodeCount() % 500000 == 0)
-			LOG.fine("Nodes: " + result.getNodeCount());
-
+		DefaultMapNode node = (DefaultMapNode) getNode(id);
+		if (node == null || !node.hasPosition()) {
+			if (node == null)
+				node = new DefaultMapNode(id);
+			node.setName(name);
+			node.setAttributes(atts);
+			node.setPosition(lat, lon);
+			result.addNode(node);
+			if (result.getNodeCount() % 500000 == 0)
+				LOG.fine("Nodes: " + result.getNodeCount());
+		}
 	}
 
 	/** {@inheritDoc} */
