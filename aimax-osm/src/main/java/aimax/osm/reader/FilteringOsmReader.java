@@ -81,6 +81,7 @@ public class FilteringOsmReader extends OsmReader {
 			builder.setBoundingBox(bb);
 		}
 
+		/** Does nothing. */
 		@Override
 		public void setBoundingBox(BoundingBox bb) {
 		}
@@ -91,7 +92,7 @@ public class FilteringOsmReader extends OsmReader {
 			if (counter == 0 && lat >= bb.getLatMin() && lat <= bb.getLatMax()
 					&& lon >= bb.getLonMin() && lon <= bb.getLonMax())
 				super.addNode(id, name, atts, lat, lon);
-			else if (counter == 1 && super.getNode(id) != null)
+			else if (counter == 1 && super.isNodeReferenced(id))
 				super.addNode(id, name, atts, lat, lon);
 		}
 
@@ -100,7 +101,7 @@ public class FilteringOsmReader extends OsmReader {
 				List<Long> wayNodeIds) {
 			if (counter == 0) {
 				for (long nodeId : wayNodeIds)
-					if (builder.getNode(nodeId) != null) {
+					if (builder.isNodeDefined(nodeId)) {
 						super.addWay(id, name, atts, wayNodeIds);
 						break;
 					}
@@ -122,24 +123,24 @@ public class FilteringOsmReader extends OsmReader {
 		@Override
 		public void addNode(long id, String name, List<EntityAttribute> atts,
 				float lat, float lon) {
-			if (super.getNode(id) != null) {
-				// redefine node with new data
-				super.addNode(id, name, atts, lat, lon);
-			} else {
+			if (counter == 0) {
 				DefaultMapNode node = new DefaultMapNode(id);
 				node.setAttributes(atts);
 				if (attFilter.classify(node) != null)
 					super.addNode(id, name, atts, lat, lon);
-			}
+			} else if (counter == 1 && super.isNodeReferenced(id))
+				super.addNode(id, name, atts, lat, lon);
 		}
 
 		@Override
 		public void addWay(long id, String name, List<EntityAttribute> atts,
 				List<Long> wayNodeIds) {
-			DefaultMapWay way = new DefaultMapWay(id);
-			way.setAttributes(atts);
-			if (attFilter.classify(way) != null) {
-				super.addWay(id, name, atts, wayNodeIds);
+			if (counter == 0) {
+				DefaultMapWay way = new DefaultMapWay(id);
+				way.setAttributes(atts);
+				if (attFilter.classify(way) != null) {
+					super.addWay(id, name, atts, wayNodeIds);
+				}
 			}
 		}
 	}

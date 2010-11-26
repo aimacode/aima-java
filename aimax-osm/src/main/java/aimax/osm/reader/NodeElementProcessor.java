@@ -10,7 +10,6 @@ import org.xml.sax.Attributes;
 import aimax.osm.data.EntityAttributeManager;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.entities.EntityAttribute;
-import aimax.osm.data.entities.MapNode;
 
 /**
  * Provides an element processor implementation for a node.
@@ -51,8 +50,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	public void begin(Attributes attributes) {
 		nodeId = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		MapNode existingNode = getMapBuilder().getNode(nodeId);
-		skipElement = (existingNode != null && existingNode.hasPosition());
+		skipElement = getMapBuilder().isNodeDefined(nodeId);
 		if (!skipElement) {
 			nodeName = null;
 			nodeAttributes.clear();

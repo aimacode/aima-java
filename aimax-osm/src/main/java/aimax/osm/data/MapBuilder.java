@@ -4,8 +4,6 @@ import java.util.List;
 
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.EntityViewInfo;
-import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 
 /**
  * Simple interface to aggregate map data. Its purpose is, to keep OSM parsers
@@ -27,9 +25,15 @@ public interface MapBuilder {
 	public void setBoundingBox(BoundingBox bb);
 
 	/**
-	 * Returns a node for the given id if such a node was added before.
+	 * Returns true, if a node with the given id has already been added before.
 	 */
-	public MapNode getNode(long id);
+	public boolean isNodeDefined(long id);
+	
+	/**
+	 * Returns true, if a node with the given id is referenced by a way, which was
+	 * added before.
+	 */
+	public boolean isNodeReferenced(long id);
 
 	/**
 	 * Adds a new map node (way node as well as point of interest) to the
@@ -39,9 +43,9 @@ public interface MapBuilder {
 			float lat, float lon);
 
 	/**
-	 * Returns a way for the given id if such a way was added before.
+	 * Returns true, if a way with the given id has already been added before.
 	 */
-	public MapWay getWay(long id);
+	public boolean isWayDefined(long id);
 
 	/**
 	 * Adds a new map way to the container, adds all referenced way nodes to the
