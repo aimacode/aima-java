@@ -194,10 +194,14 @@ public class FindPanel extends JPanel implements ActionListener,
 	}
 
 	public void updateEnabledState() {
+		boolean canFindMore = entityFinder != null
+		&& (entityFinder.canFindMore() || !entityFinder
+				.getIntermediateResults().isEmpty()
+				&& getSelectedEntities().size() == 1);
 		boolean hasResults = entityFinder != null
 				&& (!entityFinder.getResults().isEmpty() || !entityFinder
 						.getIntermediateResults().isEmpty());
-		findMoreButton.setEnabled(hasResults);
+		findMoreButton.setEnabled(canFindMore);
 		clearButton.setEnabled(hasResults);
 	}
 
@@ -219,7 +223,7 @@ public class FindPanel extends JPanel implements ActionListener,
 			result.add((MapEntity) tableModel.getValueAt(selIdxs[i], 0));
 		return result;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == findButton) {
@@ -268,6 +272,7 @@ public class FindPanel extends JPanel implements ActionListener,
 				view.adjustToCenter(pos.getLat(), pos.getLon());
 			}
 		}
+		updateEnabledState();
 	}
 
 	/** Resets find results after map changes. */

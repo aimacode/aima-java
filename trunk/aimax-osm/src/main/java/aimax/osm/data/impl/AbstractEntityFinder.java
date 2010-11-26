@@ -23,12 +23,13 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 
 	private final OsmMap storage;
 
+	private int minRadius;
+	private int maxRadius;
+	protected int nextRadius;
 	protected Mode mode;
 	protected String pattern;
 	protected Position position;
 	protected MapWayFilter wayFilter;
-	private int minRadius;
-	private int maxRadius;
 
 	private final List<MapEntity> intermediateResults;
 	private final List<MapEntity> results;
@@ -37,11 +38,17 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 	public AbstractEntityFinder(OsmMap storage) {
 		this.storage = storage;
 		minRadius = 2;
-		maxRadius = 25;
+		maxRadius = 16;
+		nextRadius = -1;
+		
 		intermediateResults = new ArrayList<MapEntity>();
 		results = new ArrayList<MapEntity>();
 	}
 
+	protected OsmMap getStorage() {
+		return storage;
+	}
+	
 	/** {@inheritDoc} */
 	@Override
 	public int getMinRadius() {
@@ -73,6 +80,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		this.pattern = pattern;
 		position = pos;
 		wayFilter = null;
+		nextRadius = minRadius;
 		clearResults();
 		find(false);
 	}
@@ -83,6 +91,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		mode = Mode.NODE;
 		this.pattern = pattern;
 		position = pos;
+		nextRadius = minRadius;
 		clearResults();
 		find(false);
 	}
@@ -94,6 +103,7 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		this.pattern = pattern;
 		position = pos;
 		wayFilter = filter;
+		nextRadius = minRadius;
 		clearResults();
 		find(false);
 	}
@@ -105,10 +115,17 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		this.pattern = pattern;
 		position = pos;
 		wayFilter = null;
+		nextRadius = minRadius;
 		clearResults();
 		find(false);
 	}
-
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean canFindMore() {
+		return nextRadius != -1 || intermediateResults.size() == 1;
+	}
+	
 	/** {@inheritDoc} */
 	@Override
 	public void findMore() {
@@ -141,12 +158,9 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		intermediateResults.add(entity);
 	}
 
+	/** Clears results and sets the next search radius to the minimum radius. */
 	private void clearResults() {
 		intermediateResults.clear();
 		results.clear();
-	}
-
-	protected OsmMap getStorage() {
-		return storage;
 	}
 }
