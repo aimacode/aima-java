@@ -23,13 +23,12 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	
 	
 	private TagElementProcessor tagElementProcessor;
-	private MapNode existingNode;
-	private boolean existingNodeIsComplete;
 	private long nodeId;
 	private String nodeName;
+	private List<EntityAttribute> nodeAttributes;
 	private float nodeLat;
 	private float nodeLon;
-	private List<EntityAttribute> nodeAttributes;
+	private boolean skipElement;
 	
 	/**
 	 * Creates a new instance.
@@ -52,13 +51,13 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	public void begin(Attributes attributes) {
 		nodeId = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		existingNode = getMapBuilder().getNode(nodeId);
-		existingNodeIsComplete = (existingNode != null && existingNode.hasPosition());
-		if (!existingNodeIsComplete) {
-			nodeLat = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE));
-			nodeLon = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE));	
+		MapNode existingNode = getMapBuilder().getNode(nodeId);
+		skipElement = (existingNode != null && existingNode.hasPosition());
+		if (!skipElement) {
 			nodeName = null;
 			nodeAttributes.clear();
+			nodeLat = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LATITUDE));
+			nodeLon = Float.parseFloat(attributes.getValue(ATTRIBUTE_NAME_LONGITUDE));	
 		}
 	}
 	
@@ -76,7 +75,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	@Override
 	public ElementProcessor getChild(String uri, String localName, String qName) {
-		if (!existingNodeIsComplete) 
+		if (!skipElement) 
 			if (ELEMENT_NAME_TAG.equals(qName))
 				return tagElementProcessor;
 		
@@ -87,15 +86,8 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 * {@inheritDoc}
 	 */
 	public void end() {
-		if (!existingNodeIsComplete) {
-			if (existingNode != null) {
-				existingNode.setName(nodeName);
-				existingNode.setAttributes(nodeAttributes);
-				existingNode.setPosition(nodeLat, nodeLon);
-			} else {
-				getMapBuilder().addNode(nodeId, nodeName, nodeAttributes, nodeLat, nodeLon);
-			}
-		}
+		if (!skipElement)
+			getMapBuilder().addNode(nodeId, nodeName, nodeAttributes, nodeLat, nodeLon);
 	}
 	
 	/**

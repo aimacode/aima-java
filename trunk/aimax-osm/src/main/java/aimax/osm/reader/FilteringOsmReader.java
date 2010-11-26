@@ -91,6 +91,8 @@ public class FilteringOsmReader extends OsmReader {
 			if (counter == 0 && lat >= bb.getLatMin() && lat <= bb.getLatMax()
 					&& lon >= bb.getLonMin() && lon <= bb.getLonMax())
 				super.addNode(id, name, atts, lat, lon);
+			else if (counter == 1 && super.getNode(id) != null)
+				super.addNode(id, name, atts, lat, lon);
 		}
 
 		@Override
@@ -120,10 +122,15 @@ public class FilteringOsmReader extends OsmReader {
 		@Override
 		public void addNode(long id, String name, List<EntityAttribute> atts,
 				float lat, float lon) {
-			DefaultMapNode node = new DefaultMapNode(id);
-			node.setAttributes(atts);
-			if (attFilter.classify(node) != null)
+			if (super.getNode(id) != null) {
+				// redefine node with new data
 				super.addNode(id, name, atts, lat, lon);
+			} else {
+				DefaultMapNode node = new DefaultMapNode(id);
+				node.setAttributes(atts);
+				if (attFilter.classify(node) != null)
+					super.addNode(id, name, atts, lat, lon);
+			}
 		}
 
 		@Override
