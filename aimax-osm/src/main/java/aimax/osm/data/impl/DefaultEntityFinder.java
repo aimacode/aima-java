@@ -13,8 +13,6 @@ import aimax.osm.data.entities.MapWay;
 
 public class DefaultEntityFinder extends AbstractEntityFinder {
 
-	int currRadius;
-
 	public DefaultEntityFinder(OsmMap storage) {
 		super(storage);
 	}
@@ -27,13 +25,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 	protected void find(boolean findMore) {
 		BestMatchFinder bmf = new BestMatchFinder(pattern);
 		List<MapEntity> results = getResults();
-		if (!findMore || getIntermediateResults().size() == 1)
-			currRadius = getMinRadius();
-		else
-			currRadius *= 2;
-		if (currRadius > getMaxRadius())
-			return;
-		BoundingBox bb = new BoundingBox(position, currRadius);
+		BoundingBox bb = new BoundingBox(position, nextRadius);
 		if (!results.isEmpty())
 			bmf.checkMatchQuality(results.get(0));
 		if (mode.equals(Mode.ENTITY) || mode.equals(Mode.NODE)) {
@@ -64,6 +56,7 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 				}
 			}
 		}
+		
 		if (mode.equals(Mode.ADDRESS)) {
 			List<MapEntity> iResults = getIntermediateResults();
 			StringTokenizer tokenizer = new StringTokenizer(pattern, ",");
@@ -74,22 +67,26 @@ public class DefaultEntityFinder extends AbstractEntityFinder {
 			if (tokenizer.hasMoreElements())
 				wayName = tokenizer.nextToken().trim();
 
-			if (placeName != null && (!findMore || iResults.size() != 1)) {
+			if (placeName != null && !findMore) {
 				for (MapNode place : getStorage().getPlaces(placeName)) {
 					position.insertInAscendingDistanceOrder(
 							iResults, place);
 					if (iResults.size() > 100)
 						iResults.remove(99);
 				}
+				nextRadius = -1;
 			}
 			if (iResults.size() == 1 && wayName != null) {
 				MapNode place = (MapNode) iResults.get(0);
 				findWay(wayName, new Position(place.getLat(), place.getLon()),
 						null);
 			}
+			
+		} else {
+			nextRadius *= 2;
+			if (results.isEmpty() && getIntermediateResults().isEmpty() && nextRadius <= getMaxRadius())
+				find(true);
 		}
-		if (results.isEmpty() && getIntermediateResults().isEmpty())
-			find(true);
 	}
 
 	/**

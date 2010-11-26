@@ -44,6 +44,11 @@ public interface EntityFinder {
 	 */
 	void findAddress(String address, Position pos);
 	/**
+	 * Returns true if further results might be obtained by extending the
+	 * search area or by using the previously selected intermediate result.
+	 */
+	boolean canFindMore();
+	/**
 	 * Continues search by extending the search area or inferring new
 	 * results based on a selected intermediate result (address search).
 	 */
