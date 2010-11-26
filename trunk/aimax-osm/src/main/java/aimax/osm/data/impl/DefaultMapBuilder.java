@@ -11,7 +11,6 @@ import aimax.osm.data.OsmMap;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 
 public class DefaultMapBuilder implements MapBuilder {
 	private static Logger LOG = Logger.getLogger("aimax.osm");
@@ -41,8 +40,16 @@ public class DefaultMapBuilder implements MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public MapNode getNode(long id) {
-		return result.getNode(id);
+	public boolean isNodeDefined(long id) {
+		MapNode node = result.getNode(id);
+		return node != null && node.hasPosition();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean isNodeReferenced(long id) {
+		MapNode node = result.getNode(id);
+		return node != null && !node.getWayRefs().isEmpty();
 	}
 
 	/**
@@ -52,7 +59,7 @@ public class DefaultMapBuilder implements MapBuilder {
 	@Override
 	public void addNode(long id, String name, List<EntityAttribute> atts,
 			float lat, float lon) {
-		DefaultMapNode node = (DefaultMapNode) getNode(id);
+		DefaultMapNode node = (DefaultMapNode) result.getNode(id);
 		if (node == null || !node.hasPosition()) {
 			if (node == null)
 				node = new DefaultMapNode(id);
@@ -67,8 +74,8 @@ public class DefaultMapBuilder implements MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public MapWay getWay(long id) {
-		return result.getWay(id);
+	public boolean isWayDefined(long id) {
+		return result.getWay(id) != null;
 	}
 
 	/**
@@ -84,7 +91,7 @@ public class DefaultMapBuilder implements MapBuilder {
 			List<MapNode> wayNodes = new ArrayList<MapNode>(wayNodeIds.size());
 			int i = 0;
 			for (long nodeId : wayNodeIds) {
-				DefaultMapNode node = (DefaultMapNode) getNode(nodeId);
+				DefaultMapNode node = (DefaultMapNode) result.getNode(nodeId);
 				if (node == null) {
 					node = new DefaultMapNode(nodeId);
 					result.addNode(node);

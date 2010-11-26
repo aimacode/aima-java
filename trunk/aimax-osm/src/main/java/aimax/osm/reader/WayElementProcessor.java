@@ -56,7 +56,7 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 	 */
 	public void begin(Attributes attributes) {
 		wayId = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		skipElement = (getMapBuilder().getWay(wayId) != null);
+		skipElement = getMapBuilder().isWayDefined(wayId);
 		if (!skipElement) {
 			wayAttributes.clear();
 			wayNodeIds.clear();

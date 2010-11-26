@@ -113,7 +113,7 @@ public class RoutePlannerApp implements ActionListener {
 		
 		Locale.setDefault(Locale.US);
 		RoutePlannerApp demo = new RoutePlannerApp(args);
-		//demo.getFrame().readMap(DataResource.getULMFileResource());
+		demo.getFrame().readMap(DataResource.getULMFileResource());
 		demo.showFrame();
 	}
 }

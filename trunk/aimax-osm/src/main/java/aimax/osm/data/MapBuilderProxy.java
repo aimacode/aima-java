@@ -4,8 +4,6 @@ import java.util.List;
 
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.EntityViewInfo;
-import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 
 /**
  * This map builder proxy delegates every call to the original builder.
@@ -36,8 +34,13 @@ public class MapBuilderProxy implements MapBuilder {
 	}
 
 	@Override
-	public MapNode getNode(long id) {
-		return builder.getNode(id);
+	public boolean isNodeDefined(long id) {
+		return builder.isNodeDefined(id);
+	}
+	
+	@Override
+	public boolean isNodeReferenced(long id) {
+		return builder.isNodeReferenced(id);
 	}
 
 	@Override
@@ -47,8 +50,8 @@ public class MapBuilderProxy implements MapBuilder {
 	}
 
 	@Override
-	public MapWay getWay(long id) {
-		return builder.getWay(id);
+	public boolean isWayDefined(long id) {
+		return builder.isWayDefined(id);
 	}
 
 	@Override
