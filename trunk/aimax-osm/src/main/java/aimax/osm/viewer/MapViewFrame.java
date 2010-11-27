@@ -29,10 +29,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapBuilder;
-import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.OsmMap;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.writer.Bz2OsmWriter;
@@ -55,7 +55,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected JSplitPane splitter;
 	protected JToolBar toolbar;
 	protected JTabbedPane sidebar;
-	protected OsmMap map;
 	protected EntityClassifier<EntityViewInfo> classifier;
 	protected MapReader mapReader;
 	protected MapWriter mapWriter;
@@ -96,12 +95,10 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				if (map != null)
-					map.close();
+				onExit();
 				System.exit(0);
 			}
 		});
-		initMap();
 		fileChooser = new JFileChooser();
 		setMapReader(new Bz2OsmReader());
 		setMapWriter(new Bz2OsmWriter());
@@ -118,22 +115,28 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		contentPanel.add(splitter, BorderLayout.CENTER);
 
 		view = new MapViewPane();
-		view.setMap(map);
 		splitter.add(view, JSplitPane.RIGHT);
 
 		sidebar = new JTabbedPane();
 		splitter.add(sidebar, JSplitPane.LEFT);
 
+		initMapAndClassifier();
 		initToolbar();
 		initSidebar();
 	}
 
+	/** Closes the map. */
+	protected void onExit() {
+		if (getMap() != null)
+			getMap().close();
+	}
+
 	/**
-	 * Creates the map and a corresponding entity classifier which are used by
-	 * default.
+	 * Creates the map, provides it to the view, and creates a corresponding
+	 * entity classifier which is used by default when reading maps.
 	 */
-	protected void initMap() {
-		map = MapDataFactory.createMap();
+	protected void initMapAndClassifier() {
+		view.setMap(new DefaultMap());
 		classifier = new MapStyleFactory().createDefaultClassifier();
 	}
 
@@ -161,9 +164,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		sidebarCheckBox.setSelected(false);
 		showSidebar(false);
 		toolbar.add(sidebarCheckBox);
-		InfoField infoField = new InfoField(view, map);
+		InfoField infoField = new InfoField(view, getMap());
 		view.addMapViewEventListener(infoField.getMapViewEventListener());
-		map.addMapDataEventListener(infoField.getMapDataEventListener());
+		getMap().addMapDataEventListener(infoField.getMapDataEventListener());
 		toolbar.add(infoField);
 	}
 
@@ -176,7 +179,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 		// gives an example how to add functionality to the sidebar
 		FindPanel findPane = new FindPanel(view);
-		map.addMapDataEventListener(findPane);
+		getMap().addMapDataEventListener(findPane);
 		sidebar.addTab("Find", findPane);
 	}
 
@@ -195,7 +198,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		if (b && !map.isEmpty())
+		if (b && !getMap().isEmpty())
 			view.adjustToFit();
 	}
 
@@ -204,7 +207,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 
 	public OsmMap getMap() {
-		return map;
+		return view.getMap();
 	}
 
 	public JToolBar getToolbar() {
@@ -240,7 +243,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 	public void readMap(InputStream stream) {
 		if (stream != null) {
-			MapBuilder builder = map.getBuilder();
+			MapBuilder builder = getMap().getBuilder();
 			builder.setEntityClassifier(classifier);
 			mapReader.readMap(stream, builder);
 			builder.buildMap();
@@ -251,7 +254,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 
 	public void readMap(File file) {
-		MapBuilder builder = map.getBuilder();
+		MapBuilder builder = getMap().getBuilder();
 		builder.setEntityClassifier(classifier);
 		mapReader.readMap(file, builder);
 		builder.buildMap();
@@ -294,11 +297,11 @@ public class MapViewFrame extends JFrame implements ActionListener {
 					&& (!fc.getSelectedFile().exists() || JOptionPane
 							.showConfirmDialog(this, "File exists, overwrite?",
 									"Confirm", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)) {
-				mapWriter.writeMap(fc.getSelectedFile(), map, view
+				mapWriter.writeMap(fc.getSelectedFile(), getMap(), view
 						.getBoundingBox());
 			}
 		} else if (e.getSource() == statisticsButton) {
-			Object[][] data = map.getStatistics();
+			Object[][] data = getMap().getStatistics();
 			JTable table = new JTable(data,
 					new String[] { "Attribute", "Value" });
 			JScrollPane scroller = new JScrollPane(table);
@@ -318,9 +321,9 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		JTextField minLon = new JTextField("-180");
 		JTextField maxLat = new JTextField("90");
 		JTextField maxLon = new JTextField("180");
-		if (map.getMarkers().size() == 2) {
-			MapNode m1 = map.getMarkers().get(0);
-			MapNode m2 = map.getMarkers().get(1);
+		if (getMap().getMarkers().size() == 2) {
+			MapNode m1 = getMap().getMarkers().get(0);
+			MapNode m2 = getMap().getMarkers().get(1);
 			minLat.setText(Float.toString(Math.min(m1.getLat(), m2.getLat())));
 			minLon.setText(Float.toString(Math.min(m1.getLon(), m2.getLon())));
 			maxLat.setText(Float.toString(Math.max(m1.getLat(), m2.getLat())));
