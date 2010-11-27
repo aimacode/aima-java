@@ -32,6 +32,7 @@ import aimax.osm.data.MapBuilder;
 import aimax.osm.data.MapDataFactory;
 import aimax.osm.data.OsmMap;
 import aimax.osm.data.entities.EntityViewInfo;
+import aimax.osm.data.entities.MapNode;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.writer.Bz2OsmWriter;
@@ -317,6 +318,14 @@ public class MapViewFrame extends JFrame implements ActionListener {
 		JTextField minLon = new JTextField("-180");
 		JTextField maxLat = new JTextField("90");
 		JTextField maxLon = new JTextField("180");
+		if (map.getMarkers().size() == 2) {
+			MapNode m1 = map.getMarkers().get(0);
+			MapNode m2 = map.getMarkers().get(1);
+			minLat.setText(Float.toString(Math.min(m1.getLat(), m2.getLat())));
+			minLon.setText(Float.toString(Math.min(m1.getLon(), m2.getLon())));
+			maxLat.setText(Float.toString(Math.max(m1.getLat(), m2.getLat())));
+			maxLon.setText(Float.toString(Math.max(m1.getLon(), m2.getLon())));
+		}
 		Object[] content = new Object[] { "Min Latitude:", minLat,
 				"Min Longitude:", minLon, "Max Latitude:", maxLat,
 				"Max Longitude:", maxLon, };

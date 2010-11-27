@@ -57,7 +57,6 @@ public class FilteringOsmReader extends OsmReader {
 							.warning("Nodes were referenced in ways but not defined before.");
 				}
 			}
-			proxy.buildMap();
 		} catch (FileNotFoundException e) {
 			LOG.warning("File does not exist " + file);
 		} catch (Exception e) {
