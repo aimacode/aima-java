@@ -10,9 +10,11 @@ navigation systems.
 
 The framework provides interfaces for central parts of the system and additionally
 example implementations. In the current version, even the fundamental data structures
-for nodes, ways and the map itself can be replaced. This allows experiments
+for nodes, ways and the map itself can be replaced. The framework supports experiments
 with different implementations to optimize rooting and also to integrate a database
-version of the map representation. 
+version of the map representation. The application <code>aimax.osm.applications.MiniNaviApp</code>
+demonstrates how to plug the components together and provides means to integrate own versions
+of the needed components.
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendible.

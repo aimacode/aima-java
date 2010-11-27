@@ -172,7 +172,7 @@ public class MapStyleFactory {
 		result.replaceRule("place", "village", createPoiInfo(1e-9f, 1f/100000, 29, Color.GRAY, null, false));
 		result.replaceRule("place", null, createPoiInfo(1e-9f, 1f/35000, 28, Color.GRAY, null, false));
 	     
-		result.replaceRule("mark", "yes", createPoiInfo(1e-9f, 1e-9f, 0, Color.YELLOW, new PinIcon(12, Color.YELLOW, Color.YELLOW), false));
+		result.replaceRule("marker", "yes", createPoiInfo(1e-9f, 1e-9f, 0, Color.YELLOW, new PinIcon(12, Color.YELLOW, Color.YELLOW), false));
 		result.replaceRule("track_type", null, createTrackInfo(Color.WHITE));
 
 		return result;

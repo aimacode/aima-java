@@ -391,7 +391,8 @@ public class MapViewPane extends JComponent implements MapEventListener {
 				} else { // double click
 					map.removeMarker(mark);
 					MapNode mNode = getRenderer().getNextNode(e.getX(), e.getY());
-					showMapEntityInfoDialog(mNode, renderer.isDebugModeEnabled());
+					if (mNode != null)
+						showMapEntityInfoDialog(mNode, renderer.isDebugModeEnabled());
 				}
 			} else if (popup != null) {
 				popup.show(MapViewPane.this, e.getX(), e.getY());
