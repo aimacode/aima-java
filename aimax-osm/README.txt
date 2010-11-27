@@ -5,7 +5,7 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
 and search concepts from the AIMA library in an interesting, non-trivial
-application area. Meanwhile, it provides a powerful framework for building complete
+application area. Meanwhile, it provides a complete framework for building
 navigation systems.
 
 The framework provides interfaces for central parts of the system and additionally
@@ -13,8 +13,8 @@ example implementations. In the current version, even the fundamental data struc
 for nodes, ways and the map itself can be replaced. The framework supports experiments
 with different implementations to optimize rooting and also to integrate a database
 version of the map representation. The application <code>aimax.osm.applications.MiniNaviApp</code>
-demonstrates how to plug the components together and provides means to integrate own versions
-of the needed components.
+demonstrates how to plug the components together and provides means to integrate and test
+own versions of the needed components.
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendible.
@@ -69,11 +69,11 @@ Open Street Map, OSM, Routing, OSM Viewer, Java
 # Depends on the aima-core and the aima-gui project. 
 
 # The osm.bz2 support is based on the Apache Commons Compress library
-(see http://commons.apache.org/compress/). The corrsponding jar-file
+(see http://commons.apache.org/compress/). The corresponding jar-file
 together with licence information is provided in the lib directory.
 It should be part of the project class path. Otherwise the software will
 still run and compile correctly, but the map file choosers will only offer
-an osm file filter.
+an OSM file filter.
 
 # To establish a connection to a GPS, the RXTX serial port library
 (http://www.rxtx.org/) must be installed. See gps package documentation
@@ -93,8 +93,10 @@ Smaller maps from servers like geofabrik or cloudmade can be loaded into the vie
 directly, especially, if enough heap space is provided (e.g. VM argument -Xmx1500M).
 Additionally, parts of larger maps can be loaded into the viewer applications by
 holding <ctrl> while pressing the load map button and specifying a bounding box.
-The easiest way to obtain the needed latitude and longitude bounds is to select
-the export tab from page http://www.openstreetmap.org/ and then navigate to the
+If two markers are set in the currently visible map, their values are used to define
+the bounding box for the next map to load. The coordinates can also be specified in
+text form. The easiest way to obtain the needed latitude and longitude bounds is to
+select the export tab from page http://www.openstreetmap.org/ and then navigate to the
 area which you want to extract. Unfortunately, the XML export typically doesn't
 work, but you find the needed coordinates on the left side. An overview map can
 be generated for large OSM files by pressing load map while holding the <shift>
