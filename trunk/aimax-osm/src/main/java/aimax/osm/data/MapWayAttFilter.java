@@ -10,12 +10,12 @@ import aimax.osm.data.entities.MapWay;
  * @author Ruediger Lunde
  */
 public class MapWayAttFilter implements MapWayFilter {
-	OsmMap mapData;
+	OsmMap map;
 	String attName;
 	HashSet<String> attValues;
 	
-	public MapWayAttFilter(OsmMap mapData, String attName) {
-		this.mapData = mapData;
+	public MapWayAttFilter(OsmMap map, String attName) {
+		this.map = map;
 		this.attName = attName;
 	}
 	
@@ -26,7 +26,7 @@ public class MapWayAttFilter implements MapWayFilter {
 	}
 	
 	public boolean isAccepted(long wayId) {
-		MapWay way = mapData.getWay(wayId);
+		MapWay way = map.getWay(wayId);
 		String val = null;
 		if (way != null) {
 			val = way.getAttributeValue(attName);
@@ -36,8 +36,8 @@ public class MapWayAttFilter implements MapWayFilter {
 	
 	
 	/** Creates a way filter which passes any way except waterways. */
-	public static MapWayAttFilter createAnyWayFilter(OsmMap mapData) {
-		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
+	public static MapWayAttFilter createAnyWayFilter(OsmMap map) {
+		MapWayAttFilter filter = new MapWayAttFilter(map, "highway");
 		filter.setAccepted("motorway");
 		filter.setAccepted("motorway_link");
 		filter.setAccepted("trunk");
@@ -62,8 +62,8 @@ public class MapWayAttFilter implements MapWayFilter {
 	}
 	
 	/** Creates a way filter which passes any way suitable for traveling by car. */
-	public static MapWayAttFilter createCarWayFilter(OsmMap mapData) {
-		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
+	public static MapWayAttFilter createCarWayFilter(OsmMap map) {
+		MapWayAttFilter filter = new MapWayAttFilter(map, "highway");
 		filter.setAccepted("motorway");
 		filter.setAccepted("motorway_link");
 		filter.setAccepted("trunk");
@@ -86,10 +86,36 @@ public class MapWayAttFilter implements MapWayFilter {
 		filter.setAccepted("unclassified");
 		return filter;
 	}
+	
+	/** Creates a way filter which passes any way suitable for traveling by car. */
+	public static MapWayAttFilter createOverlandTrafficWayFilter(OsmMap map) {
+		MapWayAttFilter filter = new MapWayAttFilter(map, "highway");
+		filter.setAccepted("motorway");
+		filter.setAccepted("motorway_link");
+		filter.setAccepted("trunk");
+		filter.setAccepted("trunk_link");
+		filter.setAccepted("primary");
+		filter.setAccepted("primary_link");
+		filter.setAccepted("secondary");
+//		filter.setAccepted("tertiary");
+//		filter.setAccepted("road");
+//		filter.setAccepted("residential");
+//		filter.setAccepted("living_street");
+//		filter.setAccepted("pedestrian");
+//		filter.setAccepted("service");
+//		filter.setAccepted("track");
+//		filter.setAccepted("cycleway");
+//		filter.setAccepted("path");
+//		filter.setAccepted("footway");
+//		filter.setAccepted("steps");
+//		filter.setAccepted("waterway");
+//		filter.setAccepted("unclassified");
+		return filter;
+	}
 
 	/** Creates a way filter which passes any way suitable for traveling by bike. */
-	public static MapWayAttFilter createBicycleWayFilter(OsmMap mapData) {
-		MapWayAttFilter filter = new MapWayAttFilter(mapData, "highway");
+	public static MapWayAttFilter createBicycleWayFilter(OsmMap map) {
+		MapWayAttFilter filter = new MapWayAttFilter(map, "highway");
 //		filter.setAccepted("motorway");
 //		filter.setAccepted("motorway_link");
 //		filter.setAccepted("trunk");
