@@ -18,15 +18,15 @@ import aimax.osm.data.entities.WayRef;
  * specified goal. Otherwise, they lead to directly linked neighbor nodes.
  * @author Ruediger Lunde
  */
-class OsmActionsFunction implements ActionsFunction {
+public class OsmActionsFunction implements ActionsFunction {
 
-	private MapWayFilter filter;
+	protected MapWayFilter filter;
 	private boolean ignoreOneWays;
 	/**
 	 * Goal node, possibly null. If a goal is specified, travel actions will
 	 * include paths with size greater one.
 	 */
-	private MapNode goal;
+	protected MapNode goal;
 
 	public OsmActionsFunction(MapWayFilter filter, boolean ignoreOneWays,
 			MapNode goal) {
