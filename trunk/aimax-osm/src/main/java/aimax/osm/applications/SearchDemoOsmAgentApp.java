@@ -96,7 +96,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	
 		/** Creates new agents and adds them to the current environment. */
 		protected void initAgents(MessageLogger logger) {
-			List<MapNode> marks = map.getMapData().getMarkers();
+			List<MapNode> marks = map.getOsmMap().getMarkers();
 			if (marks.size() < 2) {
 				logger.log("Error: Please set two marks with mouse-left.");
 				return;

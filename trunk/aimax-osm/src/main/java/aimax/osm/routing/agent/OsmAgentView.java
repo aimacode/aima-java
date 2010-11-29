@@ -99,7 +99,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		MapNode node = map.getWayNode(location);
 		if (node != null) {
 			int aIdx = getMapEnv().getAgents().indexOf(agent);
-			map.getMapData().addToTrack(TRACK_NAME + aIdx,
+			map.getOsmMap().addToTrack(TRACK_NAME + aIdx,
 					new Position(node.getLat(), node.getLon()));
 		}
 	}

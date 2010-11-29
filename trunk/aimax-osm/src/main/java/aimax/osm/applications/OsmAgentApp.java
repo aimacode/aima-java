@@ -69,7 +69,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	/** Factory method, which creates an <code>OsmAgentView</code>. */
 	@Override
 	public OsmAgentView createEnvironmentView() {
-		return new OsmAgentView(map.getMapData());
+		return new OsmAgentView(map.getOsmMap());
 	}
 
 	/** Factory method, which creates an <code>OsmAgentFrame</code>. */
