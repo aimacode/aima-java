@@ -90,7 +90,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 			msg = "A" + env.getAgents().indexOf(agent) + ": ";
 		notify(msg + command.toString());
 		if (command instanceof MoveToAction) {
-			updateTrack(agent, ((MoveToAction) command).getToLocation());
+			updateTrack(agent, getMapEnv().getAgentLocation(agent));
 		}
 	}
 
