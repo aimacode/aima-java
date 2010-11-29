@@ -49,7 +49,7 @@ public class OsmAgentController extends AgentAppController {
 	
 	@Override
 	public void clear() {
-		map.getMapData().clearMarkersAndTracks();
+		map.getOsmMap().clearMarkersAndTracks();
 		prepare(null);
 	}
 
@@ -58,7 +58,7 @@ public class OsmAgentController extends AgentAppController {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
-		OsmMap mapData = map.getMapData();
+		OsmMap mapData = map.getOsmMap();
 		mapData.getTracks().clear();
 		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter
@@ -139,7 +139,7 @@ public class OsmAgentController extends AgentAppController {
 
 	/** Creates new agents and adds them to the current environment. */
 	protected void initAgents(MessageLogger logger) {
-		List<MapNode> marks = map.getMapData().getMarkers();
+		List<MapNode> marks = map.getOsmMap().getMarkers();
 		if (marks.size() < 2) {
 			logger.log("Error: Please set two marks with mouse-left.");
 			return;
