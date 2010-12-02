@@ -58,6 +58,7 @@ markers must be set.
    * Data access operations now designed to support representations using databases.
    * Map readers and writers changed so that that parts of the map can be loaded incrementally.
    * Find functionality improved.
+   * Library commmons-compress-1.0.jar replaced by version 1.1 - update your build path!
 
 == Keywords ==
 
