@@ -40,9 +40,12 @@ public class DefaultMapBuilder implements MapBuilder {
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean isNodeDefined(long id) {
+	public boolean isNodeDefined(long id, BoundingBox bb) {
 		MapNode node = result.getNode(id);
-		return node != null && node.hasPosition();
+		boolean result = (node != null && node.hasPosition());
+		if (result && bb != null)
+			result = bb.isInside(node.getLat(), node.getLon());
+		return result;
 	}
 	
 	/** {@inheritDoc} */

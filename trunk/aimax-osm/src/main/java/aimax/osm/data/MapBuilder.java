@@ -8,7 +8,8 @@ import aimax.osm.data.entities.EntityViewInfo;
 /**
  * Simple interface to aggregate map data. Its purpose is, to keep OSM parsers
  * independent from the concrete structure which is used to store the data. Osm
- * maps should only be modified by implementations of this map builder interface.
+ * maps should only be modified by implementations of this map builder
+ * interface.
  * 
  * @author Ruediger Lunde
  */
@@ -26,12 +27,16 @@ public interface MapBuilder {
 
 	/**
 	 * Returns true, if a node with the given id has already been added before.
+	 * 
+	 * @param bb
+	 *            Specifies an optional bounding box. If the value is not null,
+	 *            it is also checked, whether the node is inside the box.
 	 */
-	public boolean isNodeDefined(long id);
-	
+	public boolean isNodeDefined(long id, BoundingBox bb);
+
 	/**
-	 * Returns true, if a node with the given id is referenced by a way, which was
-	 * added before.
+	 * Returns true, if a node with the given id is referenced by a way, which
+	 * was added before.
 	 */
 	public boolean isNodeReferenced(long id);
 

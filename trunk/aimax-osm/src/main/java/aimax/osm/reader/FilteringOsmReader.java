@@ -100,7 +100,7 @@ public class FilteringOsmReader extends OsmReader {
 				List<Long> wayNodeIds) {
 			if (counter == 0) {
 				for (long nodeId : wayNodeIds)
-					if (builder.isNodeDefined(nodeId)) {
+					if (builder.isNodeDefined(nodeId, bb)) {
 						super.addWay(id, name, atts, wayNodeIds);
 						break;
 					}

@@ -34,8 +34,8 @@ public class MapBuilderProxy implements MapBuilder {
 	}
 
 	@Override
-	public boolean isNodeDefined(long id) {
-		return builder.isNodeDefined(id);
+	public boolean isNodeDefined(long id, BoundingBox bb) {
+		return builder.isNodeDefined(id, bb);
 	}
 	
 	@Override
