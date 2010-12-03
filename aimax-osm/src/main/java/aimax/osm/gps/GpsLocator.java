@@ -108,6 +108,7 @@ public class GpsLocator implements NmeaReader.NmeaMessageListener {
 	public void messageReceived(StringBuffer buffer) {
 		if (buffer.length() > 60 && buffer.substring(0, 6).equals("$GPGGA")) {
 		// System.out.println(buffer.toString());
+		// $GPGGA,120007.000,5056.2197,N,02406.0867,W,0,00,99.9,12787.4,M,62.0,M,,0000*7B (NL-402U)
 		// $GPGGA,103131.000,4824.2758,N,00959.9357,E,1,06,1.3,458.5,M,43.9,M,,0000*54
 		//        7     13   18   23     30    36     43
 		// $GPGGA,044944,4824.3044,N,00959.9409,E,1,05,3.1,451.0,M,46.8,M,,*4E

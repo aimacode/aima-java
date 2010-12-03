@@ -50,7 +50,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 	 */
 	public void begin(Attributes attributes) {
 		nodeId = Long.parseLong(attributes.getValue(ATTRIBUTE_NAME_ID));
-		skipElement = getMapBuilder().isNodeDefined(nodeId);
+		skipElement = getMapBuilder().isNodeDefined(nodeId, null);
 		if (!skipElement) {
 			nodeName = null;
 			nodeAttributes.clear();
