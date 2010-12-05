@@ -61,6 +61,7 @@ public class FilteringOsmReader extends OsmReader {
 			LOG.warning("File does not exist " + file);
 		} catch (Exception e) {
 			LOG.warning("The map could not be read. " + e);
+			e.printStackTrace();
 		} finally {
 			boundingBox = null;
 			attFilter = null;
