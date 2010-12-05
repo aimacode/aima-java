@@ -205,7 +205,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		float latMin = transformer.lat(getHeight());
 		float lonMin = transformer.lon(0);
 		float latMax = transformer.lat(0);
-		float lonMax = transformer.lon(getHeight());
+		float lonMax = transformer.lon(getWidth());
 		return new BoundingBox(latMin, lonMin, latMax, lonMax);
 	}
 
