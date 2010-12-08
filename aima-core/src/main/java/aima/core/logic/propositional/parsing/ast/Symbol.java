@@ -27,15 +27,15 @@ public class Symbol extends AtomicSentence {
 
 	}
 
+	public String getValue() {
+		return value;
+	}
+
 	@Override
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + value.hashCode();
 		return result;
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 	@Override
