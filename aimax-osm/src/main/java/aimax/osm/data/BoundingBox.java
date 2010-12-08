@@ -72,10 +72,10 @@ public class BoundingBox {
 	 */
 	public void adjust(Collection<MapNode> nodes) {
 		for (MapNode node : nodes) {
-			if (Double.isNaN(latMin)) {
+			if (Float.isNaN(latMin)) {
 				latMin = latMax = node.getLat();
 				lonMin = lonMax = node.getLon();
-			} else {
+			} else if (node.hasPosition()) {
 				if (node.getLat() < latMin)
 					latMin = node.getLat();
 				else if (node.getLat() > latMax)

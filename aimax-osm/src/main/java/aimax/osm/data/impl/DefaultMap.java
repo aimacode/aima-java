@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Logger;
 
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityAttributeManager;
@@ -49,7 +50,7 @@ import aimax.osm.data.entities.Track;
  * @author Ruediger Lunde
  */
 public class DefaultMap implements OsmMap {
-	// private static Logger LOG = Logger.getLogger("aimax.osm");
+	private static Logger LOG = Logger.getLogger("aimax.osm");
 	private BoundingBox boundingBox;
 	/**
 	 * Maintains all map nodes during map loading; after compilation only the
@@ -200,10 +201,15 @@ public class DefaultMap implements OsmMap {
 	public void compile() {
 		ArrayList<Long> toDelete = new ArrayList<Long>();
 		for (MapNode node : nodes.values()) {
-			if (node.getName() != null || node.getAttributes().length > 0)
-				pois.add(node);
-			else if (node.getWayRefs().isEmpty())
+			if (node.hasPosition()) {
+				if (node.getName() != null || node.getAttributes().length > 0)
+					pois.add(node);
+				else if (node.getWayRefs().isEmpty())
+					toDelete.add(node.getId());
+			} else {
+				LOG.warning("No definition found for referenced node " + node.getId() + ".");
 				toDelete.add(node.getId());
+			}
 		}
 		for (long id : toDelete) {
 			nodes.remove(id);
