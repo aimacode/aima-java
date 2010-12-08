@@ -281,14 +281,14 @@ public class ProbabilityDemo {
 		System.out.println("\nEnumerationJointAsk Demo\n");
 		ProbabilityDistribution jp = new ProbabilityDistribution("ToothAche",
 				"Cavity", "Catch");
-		jp.set(true, true, true, 0.108);
-		jp.set(true, true, false, 0.012);
-		jp.set(false, true, true, 0.072);
-		jp.set(false, true, false, 0.008);
-		jp.set(true, false, true, 0.016);
-		jp.set(true, false, false, 0.064);
-		jp.set(false, false, true, 0.144);
-		jp.set(false, false, false, 0.008);
+		jp.set(0.108, true, true, true);
+		jp.set(0.012, true, true, false);
+		jp.set(0.072, false, true, true);
+		jp.set(0.008, false, true, false);
+		jp.set(0.016, true, false, true);
+		jp.set(0.064, true, false, false);
+		jp.set(0.144, false, false, true);
+		jp.set(0.008, false, false, false);
 
 		Query q = new Query("Cavity", new String[] { "ToothAche" },
 				new boolean[] { true });
