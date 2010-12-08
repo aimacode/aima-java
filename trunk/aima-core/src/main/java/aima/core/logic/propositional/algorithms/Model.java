@@ -1,6 +1,6 @@
 package aima.core.logic.propositional.algorithms;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,28 +20,28 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  */
 public class Model implements PLVisitor {
 
-	private HashMap<String, Boolean> h = new HashMap<String, Boolean>();
+	private HashMap<Symbol, Boolean> h = new HashMap<Symbol, Boolean>();
+	
+	public Model() {
+		
+	}
 
 	public Boolean getStatus(Symbol symbol) {
-		return h.get(symbol.getValue());
+		return h.get(symbol);
 	}
 
 	public boolean isTrue(Symbol symbol) {
-		return Boolean.TRUE.equals(h.get(symbol.getValue()));
+		return Boolean.TRUE.equals(h.get(symbol));
 	}
 
 	public boolean isFalse(Symbol symbol) {
-		return Boolean.FALSE.equals(h.get(symbol.getValue()));
+		return Boolean.FALSE.equals(h.get(symbol));
 	}
 
 	public Model extend(Symbol symbol, boolean b) {
-		return extend(symbol.getValue(), b);
-	}
-
-	public Model extend(String s, boolean b) {
 		Model m = new Model();
 		m.h.putAll(this.h);
-		m.h.put(s, new Boolean(b));
+		m.h.put(symbol, b);
 		return m;
 	}
 
@@ -67,23 +67,12 @@ public class Model implements PLVisitor {
 		return this;
 	}
 
-	public boolean matches(String variable, Boolean value) {
-		if (null == value) {
-			throw new IllegalArgumentException("value argument must be true or false");
-		}
-		return value.equals(h.get(variable));
-	}
-
 	public Set<Symbol> getAssignedSymbols() {
-		Set<Symbol> set = new HashSet<Symbol>();
-		for (String k : h.keySet()) {
-			set.add(new Symbol(k));
-		}
-		return set;
+		return Collections.unmodifiableSet(h.keySet());
 	}
 
 	public void print() {
-		for (Map.Entry<String, Boolean> e : h.entrySet()) {
+		for (Map.Entry<Symbol, Boolean> e : h.entrySet()) {
 			System.out.print(e.getKey() + " = " + e.getValue() + " ");
 		}
 		System.out.println();

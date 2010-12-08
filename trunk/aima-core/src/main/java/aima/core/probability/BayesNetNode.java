@@ -1,8 +1,9 @@
 package aima.core.probability;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ravi Mohan
@@ -36,15 +37,14 @@ public class BayesNetNode {
 	}
 
 	public void setProbability(boolean b, double d) {
-		distribution.set(b, d);
+		distribution.set(d, b);
 		if (isRoot()) {
-			distribution.set(!b, 1.0 - d);
+			distribution.set(1.0 - d, !b);
 		}
-
 	}
 
 	public void setProbability(boolean b, boolean c, double d) {
-		distribution.set(b, c, d);
+		distribution.set(d, b, c);
 
 	}
 
@@ -65,13 +65,13 @@ public class BayesNetNode {
 		return variable;
 	}
 
-	public double probabilityOf(Hashtable conditions) {
+	public double probabilityOf(Map<String, Boolean> conditions) {
 		return distribution.probabilityOf(conditions);
 	}
 
 	public Boolean isTrueFor(double probability,
-			Hashtable<String, Boolean> modelBuiltUpSoFar) {
-		Hashtable<String, Boolean> conditions = new Hashtable<String, Boolean>();
+			Map<String, Boolean> modelBuiltUpSoFar) {
+		HashMap<String, Boolean> conditions = new HashMap<String, Boolean>();
 		if (isRoot()) {
 			conditions.put(getVariable(), Boolean.TRUE);
 		} else {

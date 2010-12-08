@@ -13,6 +13,10 @@ public class Symbol extends AtomicSentence {
 		this.value = value;
 	}
 
+	public String getValue() {
+		return value;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 
@@ -25,10 +29,6 @@ public class Symbol extends AtomicSentence {
 		Symbol sym = (Symbol) o;
 		return (sym.getValue().equals(getValue()));
 
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 	@Override

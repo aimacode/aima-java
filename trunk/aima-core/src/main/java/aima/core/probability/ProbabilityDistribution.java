@@ -1,98 +1,49 @@
 package aima.core.probability;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-
-import aima.core.logic.propositional.algorithms.Model;
+import java.util.Map;
 
 /**
  * @author Ravi Mohan
  * 
  */
 public class ProbabilityDistribution {
-	private List<Row> rows;
+	private List<Row> rows = new ArrayList<Row>();
+	// <VariableName:DistributionIndex>
+	private LinkedHashMap<String, Integer> variableNames = new LinkedHashMap<String, Integer>();
 
-	String[] variableNames;
-
-	public ProbabilityDistribution(String variableNameOne) {
-		this(new String[] { variableNameOne });
-	}
-
-	public ProbabilityDistribution(String variableNameOne,
-			String variableNameTwo) {
-		this(new String[] { variableNameOne, variableNameTwo });
-	}
-
-	public ProbabilityDistribution(String variableNameOne,
-			String variableNameTwo, String variableNameThree) {
-		this(
-				new String[] { variableNameOne, variableNameTwo,
-						variableNameThree });
-	}
-
-	public ProbabilityDistribution(String variableNameOne,
-			String variableNameTwo, String variableNameThree,
-			String variableNameFour) {
-		this(new String[] { variableNameOne, variableNameTwo,
-				variableNameThree, variableNameFour });
-	}
-
-	public ProbabilityDistribution(String[] variableNames) {
-		this.variableNames = variableNames;
-		rows = new ArrayList<Row>();
-	}
-
-	public void set(boolean[] values, double probability) {
-		Model m = new Model();
-		for (int i = 0; i < variableNames.length; i++) {
-			m = m.extend(variableNames[i], values[i]);
+	public ProbabilityDistribution(String... vNames) {
+		for (int i = 0; i < vNames.length; i++) {
+			variableNames.put(vNames[i], i);
 		}
-		rows.add(new Row(m, probability));
 	}
 
-	public void set(boolean value1, double probability) {
-		set(new boolean[] { value1 }, probability);
-	}
-
-	public void set(boolean value1, boolean value2, double probability) {
-		set(new boolean[] { value1, value2 }, probability);
-	}
-
-	public void set(boolean value1, boolean value2, boolean value3,
-			double probability) {
-		set(new boolean[] { value1, value2, value3 }, probability);
-	}
-
-	public void set(boolean value1, boolean value2, boolean value3,
-			boolean value4, double probability) {
-		set(new boolean[] { value1, value2, value3, value4 }, probability);
-	}
-
-	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (Row row : rows) {
-			buf.append(row.toString() + "\n");
+	public void set(double probability, boolean... values) {
+		if (values.length != variableNames.size()) {
+			throw new IllegalArgumentException(
+					"Invalid number of values, must = # of Random Variables in distribution:"
+							+ variableNames.size());
 		}
-		return buf.toString();
-
+		rows.add(new Row(probability, values));
 	}
 
-	public double probabilityOf(Hashtable conditions) {
+	public double probabilityOf(String variableName, boolean b) {
+		HashMap<String, Boolean> h = new HashMap<String, Boolean>();
+		h.put(variableName, b);
+		return probabilityOf(h);
+	}
+
+	public double probabilityOf(Map<String, Boolean> conditions) {
 		double prob = 0.0;
 		for (Row row : rows) {
-			Iterator iter = conditions.keySet().iterator();
 			boolean rowMeetsAllConditions = true;
-			while (iter.hasNext()) {
-				String variable = (String) iter.next();
-				boolean value = ((Boolean) conditions.get(variable))
-						.booleanValue();
-				if (!(row.model.matches(variable, value))) {
+			for (Map.Entry<String, Boolean> c : conditions.entrySet()) {
+				if (!(row.matches(c.getKey(), c.getValue()))) {
 					rowMeetsAllConditions = false;
 					break;
-					// return false;
 				}
 			}
 			if (rowMeetsAllConditions) {
@@ -103,25 +54,59 @@ public class ProbabilityDistribution {
 		return prob;
 	}
 
-	public double probabilityOf(String variableName, boolean b) {
-		Hashtable<String, Boolean> h = new Hashtable<String, Boolean>();
-		h.put(variableName, new Boolean(b));
-		return probabilityOf(h);
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		for (Row row : rows) {
+			b.append(row.toString() + "\n");
+		}
+
+		return b.toString();
 	}
 
+	//
+	// INNER CLASSES
+	//
+
 	class Row {
-		Model model;
+		private double probability;
+		private boolean[] values;
 
-		double probability;
-
-		Row(Model m, double probability) {
-			model = m;
+		Row(double probability, boolean... vals) {
 			this.probability = probability;
+			values = new boolean[vals.length];
+			System.arraycopy(vals, 0, values, 0, vals.length);
+		}
+
+		public boolean matches(String vName, boolean value) {
+			boolean rVal = false;
+			Integer idx = variableNames.get(vName);
+			if (null != idx) {
+				rVal = values[idx] == value;
+			}
+			return rVal;
 		}
 
 		@Override
 		public String toString() {
-			return model.toString() + " => " + probability;
+			StringBuilder b = new StringBuilder();
+			b.append("[");
+			boolean first = true;
+			for (Map.Entry<String, Integer> v : variableNames.entrySet()) {
+				if (first) {
+					first = false;
+				} else {
+					b.append(", ");
+				}
+				b.append(v.getKey());
+				b.append("=");
+				b.append(values[v.getValue()]);
+			}
+			b.append("]");
+			b.append(" => ");
+			b.append(probability);
+
+			return b.toString();
 		}
 	}
 }
