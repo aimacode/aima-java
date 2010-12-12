@@ -266,7 +266,13 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == loadButton) {
-			int returnVal = fileChooser.showOpenDialog(this);
+			String title = "Load OSM Data";
+			if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+				title += " (Bounding Box Mode)";
+			if ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0)
+				title += " (Overview Mode)";
+			fileChooser.setDialogTitle(title);
+			int returnVal = fileChooser.showDialog(this, "Load");
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 					// ctrl+load -> ask the user for a bounding box.
