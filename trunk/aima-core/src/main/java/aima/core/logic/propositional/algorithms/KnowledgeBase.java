@@ -56,7 +56,7 @@ public class KnowledgeBase {
 		Sentence kbPlusQuery = null;
 		if (kbSentence != null) {
 			kbPlusQuery = (Sentence) parser.parse(" ( " + kbSentence.toString()
-					+ " AND " + queryString + " )");
+					+ " AND (NOT " + queryString + " ))");
 		} else {
 			kbPlusQuery = query;
 		}
@@ -68,7 +68,7 @@ public class KnowledgeBase {
 					+ e.getMessage());
 
 		}
-		return new DPLL().dpllSatisfiable(cnfForm);
+		 return !new DPLL().dpllSatisfiable(cnfForm); 
 	}
 
 	public boolean askWithTTEntails(String queryString) {
