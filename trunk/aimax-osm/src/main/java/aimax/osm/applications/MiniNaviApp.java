@@ -47,13 +47,13 @@ import aimax.osm.viewer.MapViewFrame;
  * VM argument (-Dpropertyname=value).
  * </p>
  * <p>
- * To run this class, download the rs232 serial port library from
+ * To enable the GPS interface, download the rs232 serial port library from
  * http://www.rxtx.org, install it correctly, and rename file
  * <code>NmeaSerialPortReader.txt</code> in package <code>aimax.osm.gps</code>
  * to <code>NmeaSerialPortReader.java</code>. One possible choice for
  * installation is, to add the jar-file to the class path (project properties,
  * add jar), to store the DDL locally (e.g. in project-root/lib), and start the
- * application with VM argument <code>-Djava.library.path=lib -Xmx500M</code>.
+ * application with VM argument <code>-Djava.library.path=lib -Xmx1500M</code>.
  * </p>
  * 
  * @author Ruediger Lunde
