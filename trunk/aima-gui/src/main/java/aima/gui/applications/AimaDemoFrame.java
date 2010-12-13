@@ -23,7 +23,7 @@ import aima.gui.framework.MessageLoggerPanel;
 public class AimaDemoFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	JMenuBar menubar = new JMenuBar();
+	protected JMenuBar menubar = new JMenuBar();
 	JMenu appMenu = new JMenu("Applications");
 	JMenu demoMenu = new JMenu("Demos");
 	MessageLoggerPanel textPanel = new MessageLoggerPanel();
@@ -89,9 +89,9 @@ public class AimaDemoFrame extends JFrame {
 	/**
 	 * Implements an action listener which starts an agent application.
 	 * 
-	 * @author R. Lunde
+	 * @author Ruediger Lunde
 	 */
-	class AppStarter implements ActionListener {
+	protected class AppStarter implements ActionListener {
 		Class<?> appClass;
 
 		AppStarter(Class<?> ac) {
@@ -120,9 +120,9 @@ public class AimaDemoFrame extends JFrame {
 	/**
 	 * Implements an action listener which starts a console program demo.
 	 * 
-	 * @author R. Lunde
+	 * @author Ruediger Lunde
 	 */
-	class DemoStarter implements ActionListener {
+	protected class DemoStarter implements ActionListener {
 		Class<?> demoClass;
 
 		DemoStarter(Class<?> dc) {
