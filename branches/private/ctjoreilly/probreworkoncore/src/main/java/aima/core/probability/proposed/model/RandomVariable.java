@@ -6,7 +6,8 @@ import aima.core.probability.proposed.model.domain.Domain;
  * Artificial Intelligence A Modern Approach (3rd Edition): page 486.
  * 
  * Variables in probability theory are called random variables and their names
- * begin with an uppercase letter.
+ * begin with an uppercase letter. Every random variable has a domain - the set
+ * of possible values it can take on.
  * 
  * @author oreilly
  */
@@ -84,7 +85,7 @@ public class RandomVariable {
 	public int hashCode() {
 		return name.hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();

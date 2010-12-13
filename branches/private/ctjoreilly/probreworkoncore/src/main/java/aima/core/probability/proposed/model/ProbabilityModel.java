@@ -2,10 +2,17 @@ package aima.core.probability.proposed.model;
 
 import java.util.Set;
 
-import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
-import aima.core.probability.proposed.model.proposition.ValueProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
+ * 
+ * A fully specified probability model associates a numerical probability
+ * P(&omega) with each possible world. The set of all possible worlds is called
+ * the sample space.
+ * 
+ * @author oreilly
+ */
 public interface ProbabilityModel {
 	/**
 	 * 
@@ -14,35 +21,49 @@ public interface ProbabilityModel {
 	 *         otherwise.
 	 */
 	boolean isValid();
-	
-	/**
-	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the random
-	 *         variables describing the atomic variable/value pairs this
-	 *         probability model can take on.
-	 */
-	Set<RandomVariable> getRepresentation();
 
 	/**
 	 * For any proposition &phi, P(&phi) = SUM(&omega E &phi, P(&omega)). Refer
-	 * to equation 13.2 page 485 of AIMA3e.
+	 * to equation 13.2 page 485 of AIMA3e. Probabilities such as P(Total =11)
+	 * and P(doubles) are called unconditional or prior probabilities (and
+	 * sometimes just "priors" for short); they refer to degrees of belief in
+	 * propositions in the absence of any other information.
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be
 	 *            returned.
 	 * @return the probability of the proposition &phi.
 	 */
-	// TODO-document based on pg. 485
-	double prior(ValueProposition phi);
+	double prior(Proposition phi);
+
+	/**
+	 * Unlike unconditional or prior probabilities, most of the time we have
+	 * some information, usually called evidence, that has already been
+	 * revealed. This is the conditional or posterior probability (or just
+	 * "posterior" for short). Mathematically speaking, conditional
+	 * probabilities are defined in terms of unconditional probabilities as
+	 * follows: for any propositions a and b, we have
+	 * 
+	 * P(a | b) = P(a AND b)/P(b)
+	 * 
+	 * which holds whenever P(b) > 0. Refer to equation 13.3 page 485 of AIMA3e.
+	 * This can be rewritten in a different form called the product rule:
+	 * 
+	 * P(a AND b) = P(a | b)P(b)
+	 * 
+	 * @param phi
+	 *            the proposition for which a probability value is to be
+	 *            returned.
+	 * @param evidence
+	 *            information we already have.
+	 * @return the probability of the proposition &phi given evidence.
+	 */
+	double posterior(Proposition phi, Proposition... evidence);
 	
-	// TODO-document based on pg. 485 - (13.3), +product rule.
-	double posterior(ValueProposition phi, ValueProposition... evidence);
-	
-	// TODO-document based on pg. 486
-	ProbabilityDistribution prior(RandomVariableProposition var);
-	
-	// TODO-document based on pg. 487
-	ProbabilityDistribution posterior(RandomVariableProposition phi, RandomVariableProposition... evidence);
-	
-	// TODO-document based on pg. 487
-	JointProbabilityDistribution jointProbabilityDistribution(Proposition... propositions);
+	/**
+	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the random
+	 *         variables describing the atomic variable/value pairs this
+	 *         probability model can take on. Refer to pg. 486 AIMA3e.
+	 */
+	Set<RandomVariable> getRepresentation();
 }

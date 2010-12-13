@@ -4,14 +4,13 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class ValueProposition extends AbstractProposition {
-
+public class SingleAssignmentProposition extends AssignmentProposition {
 	private RandomVariable forVariable = null;
 	private Object value = null;
 	//
 	private String toString = null;
 	
-	public ValueProposition(RandomVariable forVariable, Object value) {
+	public SingleAssignmentProposition(RandomVariable forVariable, Object value) {
 		if (null == forVariable) {
 			throw new IllegalArgumentException(
 					"The Random Variable for the value must be specified.");
@@ -25,13 +24,11 @@ public class ValueProposition extends AbstractProposition {
 		this.value = value;
 	}
 	
-	//
-	// START-Proposition
+
+	@Override
 	public boolean matches(Map<RandomVariable, Object> possibleWorld) {		
 		return value.equals(possibleWorld.get(forVariable));
 	}
-	// END-Proposition
-	//
 	
 	@Override
 	public String toString() {

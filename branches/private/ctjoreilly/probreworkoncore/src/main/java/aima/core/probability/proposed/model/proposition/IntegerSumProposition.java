@@ -7,7 +7,7 @@ import java.util.Map;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 
-public class IntegerSumProposition extends AbstractProposition {
+public class IntegerSumProposition extends AssignmentProposition {
 
 	private String name = null;
 	private FiniteIntegerDomain sumsDomain = null;

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class RandomVariableProposition extends AbstractProposition {
+public class RandomVariableProposition extends TermProposition {
 	private RandomVariable var = null;
 
 	public RandomVariableProposition(RandomVariable var) {
@@ -17,14 +17,11 @@ public class RandomVariableProposition extends AbstractProposition {
 		this.var = var;
 	}
 
-	//
-	// START-Proposition
+	@Override
 	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
 		return possibleWorld.containsKey(var);
 	}
-	// END-Proposition
-	//
-	
+
 	@Override
 	public String toString() {
 		return var.getName();
