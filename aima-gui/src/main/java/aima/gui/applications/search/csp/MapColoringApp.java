@@ -31,6 +31,7 @@ import aima.gui.framework.SimulationThread;
 public class MapColoringApp extends SimpleAgentApp {
 
 	/** Returns an <code>CSPView</code> instance. */
+	@Override
 	public AgentAppEnvironmentView createEnvironmentView() {
 		return new CSPView();
 	}
