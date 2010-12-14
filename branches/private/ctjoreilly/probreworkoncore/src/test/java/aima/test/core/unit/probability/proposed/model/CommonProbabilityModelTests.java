@@ -14,7 +14,7 @@ import aima.core.probability.proposed.model.proposition.SingleAssignmentProposit
  * 
  */
 public abstract class CommonProbabilityModelTests {
-	public static final double DELTA_THRESHOLD = 0.00000001;
+	public static final double DELTA_THRESHOLD = 0.00000000001;
 	
 	//
 	// PROTECTED METHODS
@@ -27,8 +27,8 @@ public abstract class CommonProbabilityModelTests {
 			SingleAssignmentProposition ad1 = new SingleAssignmentProposition(dice1RV, d);
 			SingleAssignmentProposition ad2 = new SingleAssignmentProposition(dice2RV, d);
 			
-			Assert.assertEquals(1.0/36.0, model.prior(ad1), DELTA_THRESHOLD);
-			Assert.assertEquals(1.0/36.0, model.prior(ad2), DELTA_THRESHOLD);
+			Assert.assertEquals(1.0/6.0, model.prior(ad1), DELTA_THRESHOLD);
+			Assert.assertEquals(1.0/6.0, model.prior(ad2), DELTA_THRESHOLD);
 		}
 		
 		// Ensure each combination is 1/36
@@ -73,6 +73,5 @@ public abstract class CommonProbabilityModelTests {
 		ConjunctiveProposition toothacheAndNotCavity = new ConjunctiveProposition(toothache, notcavity);
 		Assert.assertEquals(0.0, model.posterior(cavity, toothacheAndNotCavity), DELTA_THRESHOLD);
 		Assert.assertEquals(0.0, model.posterior(cavity, toothache, notcavity), DELTA_THRESHOLD);
-		
 	}
 }

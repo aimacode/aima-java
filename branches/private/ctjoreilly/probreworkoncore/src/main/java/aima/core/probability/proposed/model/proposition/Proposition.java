@@ -38,7 +38,7 @@ public abstract class Proposition {
 	 *            all of the random variables under consideration.
 	 * @return
 	 */
-	abstract boolean matches(Map<RandomVariable, Object> possibleWorld);
+	public abstract boolean matches(Map<RandomVariable, Object> possibleWorld);
 
 	//
 	// Protected Methods

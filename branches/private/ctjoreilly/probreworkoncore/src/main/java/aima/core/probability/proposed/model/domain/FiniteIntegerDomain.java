@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class FiniteIntegerDomain {
+public class FiniteIntegerDomain extends AbstractFiniteDiscreteDomain {
 
 	private Set<Integer> possibleValues = null;
 
