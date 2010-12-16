@@ -7,9 +7,8 @@ import java.util.Map;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 
-public class IntegerSumProposition extends AssignmentProposition {
+public class IntegerSumProposition extends ConstraintProposition {
 
-	private String name = null;
 	private FiniteIntegerDomain sumsDomain = null;
 	private List<RandomVariable> sumVars = new ArrayList<RandomVariable>();
 	//
@@ -17,7 +16,8 @@ public class IntegerSumProposition extends AssignmentProposition {
 	
 	public IntegerSumProposition(String name, FiniteIntegerDomain sumsDomain,
 			RandomVariable... sums) {
-		RandomVariable.checkValidRandomVariableName(name);
+		super(name); 
+		
 		if (null == sumsDomain) {
 			throw new IllegalArgumentException("Sum Domain must be specified.");
 		}
@@ -25,7 +25,6 @@ public class IntegerSumProposition extends AssignmentProposition {
 			throw new IllegalArgumentException(
 					"Sum variables must be specified.");
 		}
-		this.name = name;
 		this.sumsDomain = sumsDomain;
 		for (RandomVariable rv : sums) {
 			addScope(rv);
@@ -58,7 +57,7 @@ public class IntegerSumProposition extends AssignmentProposition {
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(name);
+			sb.append(getRandomVariable().getName());
 			sb.append(" = ");
 			sb.append(sumsDomain.toString());
 			toString = sb.toString();

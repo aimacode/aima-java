@@ -5,10 +5,10 @@ import java.util.List;
 
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.BooleanDomain;
-import aima.core.probability.proposed.model.impl.full.FullJointDistribution;
+import aima.core.probability.proposed.model.impl.full.FullJointDistributionModel;
 
 public class FullJointDistributionToothacheCavityCatchModel extends
-		FullJointDistribution {
+		FullJointDistributionModel {
 
 	private RandomVariable toothacheRV = null;
 	private RandomVariable cavityRV = null;
@@ -16,20 +16,20 @@ public class FullJointDistributionToothacheCavityCatchModel extends
 
 	public FullJointDistributionToothacheCavityCatchModel() {
 		super(new double[] {
-				// Toothache = true, Cavity = true, Catch = true
+				// Toothache = true,  Cavity = true,  Catch = true
 				0.108,
-				// Toothache = false, Cavity = true, Catch = true
-				0.072,
-				// Toothache = true, Cavity = false, Catch = true
+				// Toothache = true,  Cavity = true,  Catch = false
+				0.012,
+				// Toothache = true,  Cavity = false, Catch = true
 				0.016,
+				// Toothache = true,  Cavity = false, Catch = false
+				0.064,
+				// Toothache = false, Cavity = true,  Catch = true
+				0.072,
+				// Toothache = false, Cavity = true,  Catch = false
+				0.008,
 				// Toothache = false, Cavity = false, Catch = true
 				0.144,
-				// Toothache = true, Cavity = true, Catch = false
-				0.012,
-				// Toothache = false, Cavity = true, Catch = false
-				0.008,
-				// Toothache = true, Cavity = false, Catch = false
-				0.064,
 				// Toothache = false, Cavity = false, Catch = false
 				0.576
 		}, new RandomVariable("Toothache", new BooleanDomain()),

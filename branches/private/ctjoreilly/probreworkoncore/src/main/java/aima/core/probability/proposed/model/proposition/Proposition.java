@@ -20,17 +20,6 @@ import aima.core.probability.proposed.model.RandomVariable;
  */
 public abstract class Proposition {
 
-	private LinkedHashSet<RandomVariable> scope = new LinkedHashSet<RandomVariable>();
-
-	/**
-	 * 
-	 * @return the Set of RandomVariables in the World (sample space) that this
-	 *         Proposition is applicable to.
-	 */
-	public Set<RandomVariable> getScope() {
-		return Collections.unmodifiableSet(scope);
-	}
-
 	/**
 	 * 
 	 * @param possibleWorld
@@ -39,11 +28,4 @@ public abstract class Proposition {
 	 * @return
 	 */
 	public abstract boolean matches(Map<RandomVariable, Object> possibleWorld);
-
-	//
-	// Protected Methods
-	//
-	protected void addScope(RandomVariable var) {
-		scope.add(var);
-	}
 }

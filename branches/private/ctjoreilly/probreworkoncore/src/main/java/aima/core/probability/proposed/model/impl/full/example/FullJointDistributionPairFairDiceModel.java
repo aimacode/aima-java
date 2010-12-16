@@ -5,10 +5,10 @@ import java.util.List;
 
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
-import aima.core.probability.proposed.model.impl.full.FullJointDistribution;
+import aima.core.probability.proposed.model.impl.full.FullJointDistributionModel;
 
 public class FullJointDistributionPairFairDiceModel extends
-		FullJointDistribution {
+		FullJointDistributionModel {
 
 	private RandomVariable dice1RV = null;
 	private RandomVariable dice2RV = null;

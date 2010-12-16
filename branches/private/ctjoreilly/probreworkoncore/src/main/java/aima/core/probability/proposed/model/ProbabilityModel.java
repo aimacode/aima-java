@@ -11,9 +11,18 @@ import aima.core.probability.proposed.model.proposition.Proposition;
  * P(&omega) with each possible world. The set of all possible worlds is called
  * the sample space.
  * 
- * @author oreilly
+ * @author Ciaran O'Reilly
  */
 public interface ProbabilityModel {
+	/**
+	 * The default threshold for rounding errors. Example, to test if
+	 * probabilities sum to 1:
+	 * 
+	 * Math.abs(1 - probabilitySum) <
+	 * ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD;
+	 */
+	final double DEFAULT_ROUNDING_THRESHOLD = 1e-8;
+
 	/**
 	 * 
 	 * @return true, if 0 <= P(&omega) <= 1 for every &omega and SUM(&omega E
@@ -51,6 +60,15 @@ public interface ProbabilityModel {
 	 * 
 	 * P(a AND b) = P(a | b)P(b)
 	 * 
+	 * and also as:
+	 * 
+	 * P(a AND b) = P(b | a)P(a)
+	 * 
+	 * whereby, equating the two right-hand sides and dividing by P(a) gives
+	 * you Bayes' rule:
+	 * 
+	 * P(b | a) = P(a | b)P(b)/P(a)
+	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be
 	 *            returned.
@@ -59,7 +77,7 @@ public interface ProbabilityModel {
 	 * @return the probability of the proposition &phi given evidence.
 	 */
 	double posterior(Proposition phi, Proposition... evidence);
-	
+
 	/**
 	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the random
 	 *         variables describing the atomic variable/value pairs this

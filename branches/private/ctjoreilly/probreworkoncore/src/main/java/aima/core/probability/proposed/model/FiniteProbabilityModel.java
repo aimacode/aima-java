@@ -9,7 +9,7 @@ import aima.core.probability.proposed.model.proposition.TermProposition;
  * treatment of the continuous case brings in certain complications that are
  * less relevant for most purposes in AI.
  * 
- * @author oreilly
+ * @author Ciaran O'Reilly
  */
 public interface FiniteProbabilityModel extends ProbabilityModel {
 
@@ -50,5 +50,5 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 *            distribution is to be returned.
 	 * @return the joint distribution for P(X, Y, ...).
 	 */
-	Distribution jointProbabilityDistribution(TermProposition... propositions);
+	Distribution jointDistribution(TermProposition... propositions);
 }

@@ -7,14 +7,15 @@ import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.IntegerSumProposition;
-import aima.core.probability.proposed.model.proposition.SingleAssignmentProposition;
+import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
+import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
 public abstract class CommonProbabilityModelTests {
-	public static final double DELTA_THRESHOLD = 0.00000000001;
+	public static final double DELTA_THRESHOLD = ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD;
 	
 	//
 	// PROTECTED METHODS
@@ -24,8 +25,8 @@ public abstract class CommonProbabilityModelTests {
 		
 		// Ensure each dice has 1/6 probability
 		for (int d = 1; d <= 6; d++) {
-			SingleAssignmentProposition ad1 = new SingleAssignmentProposition(dice1RV, d);
-			SingleAssignmentProposition ad2 = new SingleAssignmentProposition(dice2RV, d);
+			AssignmentProposition ad1 = new AssignmentProposition(dice1RV, d);
+			AssignmentProposition ad2 = new AssignmentProposition(dice2RV, d);
 			
 			Assert.assertEquals(1.0/6.0, model.prior(ad1), DELTA_THRESHOLD);
 			Assert.assertEquals(1.0/6.0, model.prior(ad2), DELTA_THRESHOLD);
@@ -34,8 +35,8 @@ public abstract class CommonProbabilityModelTests {
 		// Ensure each combination is 1/36
 		for (int d1 = 1; d1 <= 6; d1++) {
 			for (int d2 = 1; d2 <= 6; d2++) {
-				SingleAssignmentProposition ad1 = new SingleAssignmentProposition(dice1RV, d1);
-				SingleAssignmentProposition ad2 = new SingleAssignmentProposition(dice2RV, d2);
+				AssignmentProposition ad1 = new AssignmentProposition(dice1RV, d1);
+				AssignmentProposition ad2 = new AssignmentProposition(dice2RV, d2);
 				ConjunctiveProposition d1AndD2 = new ConjunctiveProposition(ad1, ad2);
 				
 				Assert.assertEquals(1.0/6.0, model.prior(ad1), DELTA_THRESHOLD);
@@ -56,22 +57,54 @@ public abstract class CommonProbabilityModelTests {
 		Assert.assertEquals(0.5, model.prior(doubles), DELTA_THRESHOLD);
 		
 		// pg. 485 AIMA3e
-		SingleAssignmentProposition dice1Is5 = new SingleAssignmentProposition(dice1RV, 5);
+		AssignmentProposition dice1Is5 = new AssignmentProposition(dice1RV, 5);
 		Assert.assertEquals(0.5, model.posterior(doubles, dice1Is5), DELTA_THRESHOLD);
+		
+		RandomVariableProposition dice1 = new RandomVariableProposition(dice1RV);
+		RandomVariableProposition dice2 = new RandomVariableProposition(dice2RV);
+		Assert.assertEquals(1.0, model.prior(dice1), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.prior(dice2), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice1, dice2), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice2, dice1), DELTA_THRESHOLD);
 	}
 	
 	protected void test_ToothacheCavityCatchModel(ProbabilityModel model, RandomVariable toothacheRV, RandomVariable cavityRV, RandomVariable catchRV) {
 		Assert.assertTrue(model.isValid());
 		
-		SingleAssignmentProposition cavity = new SingleAssignmentProposition(cavityRV, Boolean.TRUE);
-		SingleAssignmentProposition notcavity = new SingleAssignmentProposition(cavityRV, Boolean.FALSE);
-		SingleAssignmentProposition toothache = new SingleAssignmentProposition(toothacheRV, Boolean.TRUE);
+		AssignmentProposition acavity = new AssignmentProposition(cavityRV, Boolean.TRUE);
+		AssignmentProposition anotcavity = new AssignmentProposition(cavityRV, Boolean.FALSE);
+		AssignmentProposition atoothache = new AssignmentProposition(toothacheRV, Boolean.TRUE);
 		
-		// pg. 485
-		Assert.assertEquals(0.2, model.prior(cavity), DELTA_THRESHOLD);
-		Assert.assertEquals(0.6, model.posterior(cavity, toothache), DELTA_THRESHOLD);
-		ConjunctiveProposition toothacheAndNotCavity = new ConjunctiveProposition(toothache, notcavity);
-		Assert.assertEquals(0.0, model.posterior(cavity, toothacheAndNotCavity), DELTA_THRESHOLD);
-		Assert.assertEquals(0.0, model.posterior(cavity, toothache, notcavity), DELTA_THRESHOLD);
+		// AIMA3e pg. 485
+		Assert.assertEquals(0.2, model.prior(acavity), DELTA_THRESHOLD);
+		Assert.assertEquals(0.6, model.posterior(acavity, atoothache), DELTA_THRESHOLD);
+		ConjunctiveProposition toothacheAndNotCavity = new ConjunctiveProposition(atoothache, anotcavity);
+		Assert.assertEquals(0.0, model.posterior(acavity, toothacheAndNotCavity), DELTA_THRESHOLD);
+		Assert.assertEquals(0.0, model.posterior(acavity, atoothache, anotcavity), DELTA_THRESHOLD);
+		
+		// AIMA3e pg. 493
+		Assert.assertEquals(0.4, model.posterior(anotcavity, atoothache), DELTA_THRESHOLD);
+		
+		RandomVariableProposition ptoothache = new RandomVariableProposition(toothacheRV);
+		RandomVariableProposition pcavity = new RandomVariableProposition(cavityRV);
+		RandomVariableProposition pcatch = new RandomVariableProposition(catchRV);
+		
+		Assert.assertEquals(1.0, model.prior(ptoothache), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.prior(pcavity), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.prior(pcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(ptoothache, pcavity), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(ptoothache, pcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(ptoothache, pcavity, pcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcavity, ptoothache), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcavity, pcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcavity, ptoothache, pcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcatch, pcavity), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcatch, ptoothache), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(pcatch, pcavity, ptoothache), DELTA_THRESHOLD);
+	}
+	
+	// AIMA3e pg. 488, 494
+	protected void test_ToothacheCavityCatchWeatherModel(ProbabilityModel model, RandomVariable toothacheRV, RandomVariable cavityRV, RandomVariable catchRV, RandomVariable weatherRV) {
+		Assert.fail("TODO");
 	}
 }

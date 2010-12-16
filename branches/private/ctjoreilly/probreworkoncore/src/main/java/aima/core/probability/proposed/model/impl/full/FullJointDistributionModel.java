@@ -2,7 +2,6 @@ package aima.core.probability.proposed.model.impl.full;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,52 +9,39 @@ import java.util.Set;
 
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.FiniteProbabilityModel;
+import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
-import aima.core.probability.proposed.model.domain.FiniteDiscreteDomain;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
-import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
 import aima.core.probability.proposed.model.proposition.TermProposition;
-import aima.core.util.math.MixedRadixNumber;
 
-public class FullJointDistribution implements FiniteProbabilityModel {
+public class FullJointDistributionModel implements FiniteProbabilityModel {
 	
 	private Distribution distribution = null;
 	private Set<RandomVariable> representation = null;
 	//
 	private List<RandomVariable> randomVars = new ArrayList<RandomVariable>();
-	private List<List<Object>> domains = new ArrayList<List<Object>>();
-	private int[] radixs = null;
 	
-	public FullJointDistribution(double[] values, RandomVariable... vars) {
+	public FullJointDistributionModel(double[] values, RandomVariable... vars) {
 		if (null == vars) {
 			throw new IllegalArgumentException("Random Variables describing the model's representation of the World need to be specified.");
 		}
-		TermProposition[] tvars = new TermProposition[vars.length];
-		for (int i = 0; i < vars.length; i++) {
-			tvars[i] = new RandomVariableProposition(vars[i]);
-		}
-		distribution = new Distribution(values, tvars);
+		
+		distribution = new Distribution(values, vars);
 		
 		representation = new LinkedHashSet<RandomVariable>();
 		for (int i = 0; i < vars.length; i++) {
 			representation.add(vars[i]);
 			randomVars.add(vars[i]);
-			domains.add(new ArrayList<Object>(((FiniteDiscreteDomain)vars[i].getDomain()).getPossibleValues()));
 		}
 		representation = Collections.unmodifiableSet(representation);
-		
-		radixs = new int[domains.size()];
-		for (int i = 0; i < domains.size(); i++) {
-			radixs[i] = domains.get(i).size();
-		}
 	}
 
 	//
 	// START-ProbabilityModel
 	public boolean isValid() {
 		// Handle rounding
-		return Math.abs(1 - distribution.getSum()) < 1e-8;
+		return Math.abs(1 - distribution.getSum()) <= ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD;
 	}
 	
 	public double prior(Proposition phi) {
@@ -85,7 +71,7 @@ public class FullJointDistribution implements FiniteProbabilityModel {
 	//
 	// START-FiniteProbabilityModel
 	public Distribution priorDistribution(TermProposition phi) {
-		return jointProbabilityDistribution(phi);
+		return jointDistribution(phi);
 	}
 	
 	public Distribution posteriorDistribution(TermProposition phi,
@@ -93,7 +79,7 @@ public class FullJointDistribution implements FiniteProbabilityModel {
 		return null; // TODO
 	}
 	
-	public Distribution jointProbabilityDistribution(TermProposition... propositions) {
+	public Distribution jointDistribution(TermProposition... propositions) {
 		return null; // TODO
 	}
 	// END-FiniteProbabilityModel
@@ -102,24 +88,23 @@ public class FullJointDistribution implements FiniteProbabilityModel {
 	//
 	// PRIVATE METHODS
 	//
-	private double probabilityOf(Proposition phi) {
-		double prob = 0;
-		
-		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
-		Object[] values = new Object[randomVars.size()];
-		MixedRadixNumber mrn = new MixedRadixNumber(0, radixs);
-		do {
-			for (int i = 0; i < randomVars.size(); i++) {
-				Object val = domains.get(i).get(mrn.getCurrentNumeralValue(i));
-				possibleWorld.put(randomVars.get(i), val);
-				values[i] = val;
- 			}
-			if (phi.matches(possibleWorld)) {
-				prob += distribution.getValues()[mrn.intValue()];
+	private double probabilityOf(final Proposition phi) {
+		Distribution.Iterator di = new Distribution.Iterator() {
+			private double probSum = 0;
+			public void iterate(Map<RandomVariable, Object> possibleWorld, double probability) {
+				if (phi.matches(possibleWorld)) {
+					probSum += probability;
+				}
 			}
-		} while (mrn.increment());
+			
+			public Object getPostIterateValue() {
+				return probSum;
+			}
+		};
 		
-		return prob;
+		distribution.iterateDistribution(di);
+		
+		return ((Double)di.getPostIterateValue()).doubleValue();
 	}
 	
 	private Proposition constructConjunction(Proposition[] props, int idx) {
