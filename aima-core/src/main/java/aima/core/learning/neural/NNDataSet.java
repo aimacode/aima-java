@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import aima.core.learning.data.DataResource;
 import aima.core.learning.framework.DataSet;
 import aima.core.learning.framework.Example;
 import aima.core.util.Util;
@@ -66,8 +67,8 @@ public abstract class NNDataSet {
 
 		// create raw data set
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(this.getClass().getResourceAsStream(
-						"../data/" + filename + ".csv")));
+				new InputStreamReader(DataResource.class.getResourceAsStream(
+						filename + ".csv")));
 		String line;
 		while ((line = reader.readLine()) != null) {
 			rds.add(exampleFromString(line, ","));

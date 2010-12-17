@@ -589,7 +589,7 @@ public class ClauseTest {
 
 		FOLParser parser = new FOLParser(domain);
 
-		// p(x,y), q(a,b), ¬p(b,a), q(y,x)
+		// p(x,y), q(a,b), p(b,a), q(y,x)
 		Clause c = new Clause();
 		c.addPositiveLiteral((Predicate) parser.parse("P(x,y)"));
 		c.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
@@ -599,7 +599,7 @@ public class ClauseTest {
 		Assert.assertEquals("[[~P(B,A), P(B,A), Q(A,B)]]", c
 				.getNonTrivialFactors().toString());
 
-		// p(x,y), q(a,b), ¬p(b,a), ¬q(y,x)
+		// p(x,y), q(a,b), p(b,a), q(y,x)
 		c = new Clause();
 		c.addPositiveLiteral((Predicate) parser.parse("P(x,y)"));
 		c.addPositiveLiteral((Predicate) parser.parse("Q(A,B)"));
