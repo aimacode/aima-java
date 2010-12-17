@@ -9,6 +9,7 @@ import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.IntegerSumProposition;
 import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
+import aima.core.probability.proposed.model.proposition.SubsetProposition;
 
 /**
  * @author Ciaran O'Reilly
@@ -50,11 +51,15 @@ public abstract class CommonProbabilityModelTests {
 			}
 		}
 		
-		// Test Sets of events
+		// Test Sets of events defined via constraint propositions
 		IntegerSumProposition total11 = new IntegerSumProposition("Total", new FiniteIntegerDomain(11), dice1RV, dice2RV);
 		Assert.assertEquals(2.0/36.0, model.prior(total11), DELTA_THRESHOLD);
 		IntegerSumProposition doubles = new IntegerSumProposition("Doubles", new FiniteIntegerDomain(2, 4, 6, 8, 10, 12), dice1RV, dice2RV);
 		Assert.assertEquals(0.5, model.prior(doubles), DELTA_THRESHOLD);
+		SubsetProposition evenDice1 = new SubsetProposition("EvenDice1", new FiniteIntegerDomain(2, 4, 6), dice1RV);
+		Assert.assertEquals(0.5, model.prior(evenDice1), DELTA_THRESHOLD);
+		SubsetProposition oddDice2 = new SubsetProposition("OddDice2", new FiniteIntegerDomain(1, 3, 5), dice2RV);
+		Assert.assertEquals(0.5, model.prior(oddDice2), DELTA_THRESHOLD);
 		
 		// pg. 485 AIMA3e
 		AssignmentProposition dice1Is5 = new AssignmentProposition(dice1RV, 5);
