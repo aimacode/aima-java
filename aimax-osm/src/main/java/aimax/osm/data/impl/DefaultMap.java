@@ -341,11 +341,11 @@ public class DefaultMap implements OsmMap {
 		List<MapEntity> result = new ArrayList<MapEntity>();
 		for (MapNode marker : markers)
 			if (marker.getViewInfo() != null
-					&& marker.getViewInfo().getMaxVisibleScale() <= scale)
+					&& marker.getViewInfo().getMinVisibleScale() <= scale)
 				result.add(marker);
 		for (Track track : tracks)
 			if (track.getViewInfo() != null
-					&& track.getViewInfo().getMaxVisibleScale() <= scale)
+					&& track.getViewInfo().getMinVisibleScale() <= scale)
 				result.add(track);
 		return result;
 	}
