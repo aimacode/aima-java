@@ -92,7 +92,7 @@ public class MapWayAttFilter implements MapWayFilter {
 		filter.setAccepted("trunk_link");
 		filter.setAccepted("primary");
 		filter.setAccepted("primary_link");
-		filter.setAccepted("secondary");
+//		filter.setAccepted("secondary");
 //		filter.setAccepted("tertiary");
 //		filter.setAccepted("road");
 //		filter.setAccepted("residential");
