@@ -41,7 +41,7 @@ public class OsmActionsFunction implements ActionsFunction {
 		Set<Action> result = new LinkedHashSet<Action>();
 		MapNode from = (MapNode) s;
 		for (WayRef wref : from.getWayRefs()) {
-			if (filter == null || filter.isAccepted(wref.getWay().getId())) {
+			if (filter == null || filter.isAccepted(wref.getWay())) {
 				MapWay way = wref.getWay();
 				int nodeIdx = wref.getNodeIdx();
 				List<MapNode> wayNodes = way.getNodes();

@@ -72,7 +72,7 @@ public class MapAdapter implements Map {
 		List<String> result = new ArrayList<String>();
 		HashSet<MapNode> nodeHash = new HashSet<MapNode>();
 		for (MapWay way : osmMap.getWays(new BoundingBox(-90, -180, 90, 180))) {
-			if (filter == null || filter.isAccepted(way.getId())) {
+			if (filter == null || filter.isAccepted(way)) {
 				for (MapNode node : way.getNodes())
 					if (!nodeHash.contains(node)) {
 						result.add(Long.toString(node.getId()));
@@ -89,7 +89,7 @@ public class MapAdapter implements Map {
 		MapNode node = getWayNode(fromLocation);
 		if (node != null) {
 			for (WayRef wref : node.getWayRefs()) {
-				if (filter == null || filter.isAccepted(wref.getWay().getId())) {
+				if (filter == null || filter.isAccepted(wref.getWay())) {
 					MapWay way = wref.getWay();
 					int nodeIdx = wref.getNodeIdx();
 					List<MapNode> wayNodes = way.getNodes();
