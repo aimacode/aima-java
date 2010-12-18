@@ -10,6 +10,13 @@ import aima.core.probability.proposed.model.RandomVariable;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
+
+// TODO-AIMA3e pg. 518, 519, consider support for deterministic, noisy-OR
+// and noisy-MAX Nodes. In particular deterministic nodes can be 
+// auto-generated for constraint propositions by iterating over their 
+// scope variables in order to construct their CPT - this could be done dynamically
+// by an instance of a model. The noisy nodes could use a dynacmic CPT
+// interface to handle dynamically constructing their values.
 public abstract class Node {
 
 	private RandomVariable variable = null;
@@ -40,7 +47,7 @@ public abstract class Node {
 	public RandomVariable getRandomVariable() {
 		return variable;
 	}
-	
+
 	public boolean isRoot() {
 		return 0 == getParents().size();
 	}
@@ -52,7 +59,12 @@ public abstract class Node {
 	public Set<Node> getChildren() {
 		return children;
 	}
-	
+
+	public Set<Node> getMarkovBlanket() {
+		// TOOD-pg. 517
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return getRandomVariable().getName();
@@ -75,7 +87,7 @@ public abstract class Node {
 
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return variable.hashCode();

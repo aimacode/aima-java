@@ -112,4 +112,9 @@ public abstract class CommonProbabilityModelTests {
 	protected void test_ToothacheCavityCatchWeatherModel(ProbabilityModel model, RandomVariable toothacheRV, RandomVariable cavityRV, RandomVariable catchRV, RandomVariable weatherRV) {
 		Assert.fail("TODO");
 	}
+	
+	// AIMA3e pg. 512
+	protected void test_BurglaryAlarmModel(ProbabilityModel model, RandomVariable burglaryRV, RandomVariable earthQuakeRV, RandomVariable alarmRV, RandomVariable johnCallsRV, RandomVariable maryCallsRV) {
+		Assert.fail("TODO");
+	}
 }

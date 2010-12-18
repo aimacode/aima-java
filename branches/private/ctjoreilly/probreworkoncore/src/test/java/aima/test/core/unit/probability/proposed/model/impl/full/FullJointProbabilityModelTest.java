@@ -31,6 +31,11 @@ public class FullJointProbabilityModelTest extends CommonFiniteProbabilityModelT
 		Assert.fail("TODO");
 	}
 	
+	@Test
+	public void test_BurglaryAlarmModel() {
+		Assert.fail("TODO");
+	}
+	
 	//
 	// FiniteProbabilityModel Tests
 	@Test
@@ -45,5 +50,10 @@ public class FullJointProbabilityModelTest extends CommonFiniteProbabilityModelT
 		FullJointDistributionToothacheCavityCatchModel model = new FullJointDistributionToothacheCavityCatchModel();
 		
 		test_ToothacheCavityCatchModel_Distributions(model, model.getToothache(), model.getCavity(), model.getCatch());
+	}
+	
+	@Test
+	public void test_BurglaryAlarmModel_Distributions() {
+		Assert.fail("TODO");
 	}
 }

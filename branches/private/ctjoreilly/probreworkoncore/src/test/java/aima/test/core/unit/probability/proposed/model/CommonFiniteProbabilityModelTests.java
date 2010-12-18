@@ -3,6 +3,7 @@ package aima.test.core.unit.probability.proposed.model;
 import junit.framework.Assert;
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.FiniteProbabilityModel;
+import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 import aima.core.probability.proposed.model.proposition.IntegerSumProposition;
@@ -74,6 +75,13 @@ public abstract class CommonFiniteProbabilityModelTests extends CommonProbabilit
 		// P(Cavity | toothache) = <0.6, 0.4>
 		
 		// AIMA3e pg. 497
-		// P(Cavity | toothache ^ catch) = <0.871, 0.129>
+		// P(Cavity | toothache AND catch) = <0.871, 0.129>
+	}
+	
+	protected void test_BurglaryAlarmModel_Distributions(ProbabilityModel model, RandomVariable burglaryRV, RandomVariable earthQuakeRV, RandomVariable alarmRV, RandomVariable johnCallsRV, RandomVariable maryCallsRV) {
+		Assert.fail("TODO");
+		
+		// AIMA3e pg.
+		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
 	}
 }
