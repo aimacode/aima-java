@@ -39,7 +39,6 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 	protected float scale;
 	protected float displayFactorSym;
-	protected int zoomLevel;
 
 	protected List<MapWay> areaBuffer;
 	protected List<MapWay> wayBuffer;
@@ -70,14 +69,6 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 		scale = transformer.computeScale();
 		displayFactorSym = displayFactor * transformer.getDotsPerUnit();
-		if (scale <= 1f / 10000000)
-			zoomLevel = 3;
-		else if (scale <= 1f / 750000)
-			zoomLevel = 2;
-		else if (scale <= 1f / 350000)
-			zoomLevel = 1;
-		else
-			zoomLevel = 0;
 		g2.setFont(g2.getFont().deriveFont(defaultFontSize * displayFactorSym));
 		standardStroke = new BasicStroke(displayFactor);
 		areaBuffer.clear();
