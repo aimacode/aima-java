@@ -67,7 +67,7 @@ public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 		this.fillAreasOnly = fillAreasOnly;
 	}
 	
-	public float getMaxVisibleScale() {
+	public float getMinVisibleScale() {
 		return minVisibleScale;
 	}
 	
