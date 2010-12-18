@@ -85,11 +85,11 @@ public class RouteCalculator {
 	/** Factory method, responsible for way filter creation. */
 	protected MapWayFilter createMapWayFilter(OsmMap map, int waySelection) {
 		if (waySelection == 1)
-			return MapWayAttFilter.createCarWayFilter(map);
+			return MapWayAttFilter.createCarWayFilter();
 		else if (waySelection == 2)
-			return MapWayAttFilter.createBicycleWayFilter(map);
+			return MapWayAttFilter.createBicycleWayFilter();
 		else
-			return MapWayAttFilter.createAnyWayFilter(map);
+			return MapWayAttFilter.createAnyWayFilter();
 	}
 
 	/** Factory method, responsible for heuristic function creation. */

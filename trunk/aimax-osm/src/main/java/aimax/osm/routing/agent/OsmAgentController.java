@@ -18,9 +18,8 @@ import aima.core.util.datastructure.Point2D;
 import aima.gui.applications.search.map.MapAgentFrame;
 import aima.gui.applications.search.map.SearchFactory;
 import aima.gui.framework.AgentAppController;
-import aima.gui.framework.SimulationThread;
 import aima.gui.framework.MessageLogger;
-import aimax.osm.data.OsmMap;
+import aima.gui.framework.SimulationThread;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
 
@@ -58,17 +57,16 @@ public class OsmAgentController extends AgentAppController {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
-		OsmMap mapData = map.getOsmMap();
-		mapData.getTracks().clear();
+		map.getOsmMap().getTracks().clear();
 		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter
-		(MapWayAttFilter.createAnyWayFilter(mapData));
+		(MapWayAttFilter.createAnyWayFilter());
 		map.ignoreOneways(true); break;
 		case 1: map.setMapWayFilter
-		(MapWayAttFilter.createCarWayFilter(mapData));
+		(MapWayAttFilter.createCarWayFilter());
 		map.ignoreOneways(false); break;
 		case 2: map.setMapWayFilter
-		(MapWayAttFilter.createBicycleWayFilter(mapData));
+		(MapWayAttFilter.createBicycleWayFilter());
 		map.ignoreOneways(false); break;
 		}
 		
