@@ -18,5 +18,5 @@
     <jar href="jars/aima-gui.jar"/> 
     <jar href="jars/aimax-osm.jar"/> 
   </resources>  
-  <application-desc main-class="aimax.osm.applications.OsmSearchDemoAgentApp" />
+  <application-desc main-class="aimax.osm.applications.SearchDemoOsmAgentApp" />
 </jnlp> 
