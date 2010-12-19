@@ -52,8 +52,8 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-== Current Release: 2.0.0-AIMAX-OSM Redesign to support DBs (in preparation) == 
-2.0.0-AIMAX-OSM Redesign to support DBs : ? :<br>
+== Current Release: 2.0.0-AIMAX-OSM Redesign to support DBs == 
+2.0.0-AIMAX-OSM Redesign to support DBs : 19 Dec 2010 :<br>
    * Package aima.osm.data is now based on interfaces (implementations selected by factory)
    * Data access operations now designed to support representations using databases.
    * Map readers and writers changed so that that parts of the map can be loaded incrementally.

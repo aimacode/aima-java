@@ -4,12 +4,12 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.9.12-Online+CSP-Improvements ==
-0.9.12-Online+CSP-Improvements : 05 Nov 2010 :<br>
-  * StateAction replaced by TwoKeyHashMap (Online Search)
-  * NotifyEnvironmentViews renamed to EnvironmentViewNotifier.
-  * Method createExogenousChange reintroduced (from AIMA2e implementation).
-  * CSP constraint propagation result handling code cleaned up.
+== Current Release: 0.9.13-UBUNTU-Fixes ==
+0.9.13-UBUNTU-Fixes : 19 Dec 2010 :<br>
+  * Resolved Issue 56, related to compilation and test failures on Ubuntu platform.
+  * Propositional ask-tell logic fixed using DPLL.
+  * Map of Australia location corrected.
+  * Minor code clean up/re-factoring
  
 = Details =
 
@@ -96,8 +96,8 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  10.9 ||     383|| Graphplan                    ||---||
 ||  11.5 ||     409|| Hierarchical-Search          ||---||
 ||  11.8 ||     414|| Angelic-Search               ||---||
-||  13.1 ||     484|| DT-Agent                     ||---||
 ||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution]||
+||  13.1 ||     484|| DT-Agent                     ||---||
 ||  14.9 ||     525|| Enumeration-Ask              ||---||
 ||  14.11||     528|| Elimination-Ask              ||---||
 ||  14.13||     531|| Prior-Sample                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/BayesNet.java (method)-getPriorSample()]||
@@ -240,6 +240,12 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.9.12-Online+CSP-Improvements : 05 Nov 2010 :<br>
+  * StateAction replaced by TwoKeyHashMap (Online Search)
+  * NotifyEnvironmentViews renamed to EnvironmentViewNotifier.
+  * Method createExogenousChange reintroduced (from AIMA2e implementation).
+  * CSP constraint propagation result handling code cleaned up.
+  
 0.9.11-CSP+PathCost-Fixes : 02 Oct 2010 :<br>
   * Fixed defect in Breath First Search where the Path Cost metric was not being updated correctly (issue #54).
   * Fixed CSP issue with respect to domain reconstruction with backtracking search.
