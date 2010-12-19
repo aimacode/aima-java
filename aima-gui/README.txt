@@ -12,10 +12,10 @@ a starter for all the other applications and demos.
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.2-AIMA-GUI Clean Up ==
-1.0.2-AIMA-GUI Clean Up : 05 Nov 2010 :<br>
-  * AimaDemoFrame now shows complete package path names and orders them lexicographically.
-  * CSPDemo renamed to MapColoringCSPDemo.
+== Current Release: 1.0.3-AIMA-GUI Updated ==
+1.0.3-AIMA-GUI Updated : 19 Dec 2010 :<br>
+  * Updated to work with the latest version of aima-core.
+  * Menu entry name fixed in MapColoringApp.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -52,6 +52,10 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
+1.0.2-AIMA-GUI Clean Up : 05 Nov 2010 :<br>
+  * AimaDemoFrame now shows complete package path names and orders them lexicographically.
+  * CSPDemo renamed to MapColoringCSPDemo.
+  
 1.0.1-AIMA-GUI Old Demo Re-Added : 02 Oct 2010 :<br>
   * Re-added the command line Trivial Vacuum Demo so that its easier 
     for someone to get up and running with the code.

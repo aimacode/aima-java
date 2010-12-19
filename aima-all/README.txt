@@ -6,13 +6,13 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
-== Current Release: 1.3.2-Online+CSP+GUI-Improvements ==
-1.3.2-Online+CSP+GUI-Improvements : 05 Nov 2010 :<br>
-Improvements to implementations of Online, CSP, and GUI components. 
+== Current Release: 1.4.0-OSM-Redesign ==
+1.4.0-OSM-Redesign : 19 Dec 2010 :<br>
+Redesign of AIMAX-OSM implementation. Fixes for failed compilations and tests on UBUNTU platform. 
 This is based on the following sub-project releases:
-  * aima-core (0.9.12) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (1.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
-  * aimax-osm (1.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+  * aima-core (0.9.13) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.3)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.0)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Project Organization ==
@@ -39,6 +39,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.3.2-Online+CSP+GUI-Improvements : 05 Nov 2010 :<br>
+Improvements to implementations of Online, CSP, and GUI components. 
+This is based on the following sub-project releases:
+  * aima-core (0.9.12) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (1.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License.
+    
 1.3.1-CSP+PathCost-Fixes : 02 Oct 2010 :<br>
 This is a minor bug fix release. 
 This is based on the following sub-project releases:
