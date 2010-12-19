@@ -26,6 +26,9 @@ This is based on the following sub-project releases:
 == Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
+  * arun.nurak, Issue 56 and 57
+  * param.cool2008, Issue 55
+  * Paul T Keyser, IBM Watson Research Center
   * Frederico Araujo, PhD student at the University of Texas at Dallas<br>
   * Ali Tozan<br>
   * Carl Anderson, Senior Scientist, ArchimedesModel.com<br>
