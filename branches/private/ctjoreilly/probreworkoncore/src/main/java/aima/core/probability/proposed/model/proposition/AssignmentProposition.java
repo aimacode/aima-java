@@ -20,6 +20,10 @@ public class AssignmentProposition extends TermProposition {
 		this.value = value;
 	}
 	
+	public Object getValue() {
+		return value;
+	}
+	
 
 	@Override
 	public boolean matches(Map<RandomVariable, Object> possibleWorld) {		

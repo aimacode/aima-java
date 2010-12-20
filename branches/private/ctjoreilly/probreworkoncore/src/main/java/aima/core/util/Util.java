@@ -43,10 +43,6 @@ public class Util {
 				normalized[i] = probDist[i] / total;
 			}
 		}
-		double totalN = 0.0;
-		for (double d : normalized) {
-			totalN = totalN + d;
-		}
 
 		return normalized;
 	}

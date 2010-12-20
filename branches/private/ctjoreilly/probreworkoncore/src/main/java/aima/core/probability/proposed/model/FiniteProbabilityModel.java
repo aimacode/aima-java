@@ -17,7 +17,7 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 * 
 	 * @param phi
 	 *            the propositional term of interest.
-	 * @return all the possible values of the propositional term &phi. This is a
+	 * @return all the possible values of the propositional term &phi;. This is a
 	 *         Vector of numbers, where we assume a predefined ordering of the
 	 *         domain of the relevant random variables.
 	 */
@@ -34,7 +34,7 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 *            to be returned.
 	 * @param evidence
 	 *            information we already have.
-	 * @return the conditional distribution for P(&phi | evidence).
+	 * @return the conditional distribution for P(&phi; | evidence).
 	 */
 	Distribution posteriorDistribution(TermProposition phi,
 			TermProposition... evidence);

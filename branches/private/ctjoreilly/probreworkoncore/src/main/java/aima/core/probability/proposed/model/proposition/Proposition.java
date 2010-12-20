@@ -1,9 +1,6 @@
 package aima.core.probability.proposed.model.proposition;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
@@ -25,7 +22,7 @@ public abstract class Proposition {
 	 * @param possibleWorld
 	 *            A possible world is defined to be an assignment of values to
 	 *            all of the random variables under consideration.
-	 * @return
+	 * @return true if the proposition holds in the given possible world, false otherwise.
 	 */
 	public abstract boolean matches(Map<RandomVariable, Object> possibleWorld);
 }

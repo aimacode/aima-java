@@ -34,12 +34,8 @@ public class Distribution {
 
 		Object getPostIterateValue();
 	}
-
-	public Distribution(double[] values, RandomVariable... vars) {
-		if (null == values) {
-			throw new IllegalArgumentException(
-					"Distribution values must be specified");
-		}
+	
+	public static int expectedSizeOfDistribution(RandomVariable... vars) {
 		// initially 1, as this will represent constant assignments
 		// e.g. Dice1 = 1.
 		int expectedSizeOfDistribution = 1;
@@ -53,17 +49,35 @@ public class Distribution {
 				}
 				FiniteDiscreteDomain d = (FiniteDiscreteDomain) rv.getDomain();
 				expectedSizeOfDistribution *= d.size();
-				randomVars.add(rv);
-				domains.add(new ArrayList<Object>(d.getPossibleValues()));
 			}
 		}
+		
+		return expectedSizeOfDistribution;
+	}
+	
+	public Distribution(RandomVariable... vars) {
+		this(new double[expectedSizeOfDistribution(vars)], vars);
+	}
 
-		if (values.length != expectedSizeOfDistribution) {
+	public Distribution(double[] values, RandomVariable... vars) {
+		if (null == values) {
+			throw new IllegalArgumentException(
+					"Distribution values must be specified");
+		}
+		if (values.length != expectedSizeOfDistribution(vars)) {
 			throw new IllegalArgumentException("Distribution of length "
 					+ distribution.length
 					+ " is not the correct size, should be "
-					+ expectedSizeOfDistribution
+					+ expectedSizeOfDistribution(vars)
 					+ " in order to represent all possible combinations.");
+		}
+		if (null != vars) {
+			for (RandomVariable rv : vars) {
+				// Create ordered domains for each variable
+				FiniteDiscreteDomain d = (FiniteDiscreteDomain) rv.getDomain();
+				randomVars.add(rv);
+				domains.add(new ArrayList<Object>(d.getPossibleValues()));
+			}
 		}
 
 		distribution = new double[values.length];
@@ -95,6 +109,17 @@ public class Distribution {
 			}
 		}
 		return sum;
+	}
+	
+	public Distribution normalize() {
+		double s = getSum();
+		if (s != 0) {
+			for (int i = 0; i < distribution.length; i++) {
+				distribution[i] = distribution[i] / s;
+			}
+			sum = -1; // Re-calculate, so that rounding is included
+		}
+		return this;
 	}
 
 	public void iterateDistribution(Iterator di) {

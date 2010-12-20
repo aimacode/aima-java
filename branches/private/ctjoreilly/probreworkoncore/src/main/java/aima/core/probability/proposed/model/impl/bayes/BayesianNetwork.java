@@ -1,8 +1,13 @@
 package aima.core.probability.proposed.model.impl.bayes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+
+import aima.core.probability.proposed.model.RandomVariable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 510.
@@ -33,6 +38,7 @@ import java.util.Set;
 public class BayesianNetwork {
 
 	private Set<Node> rootNodes = new LinkedHashSet<Node>(); 
+	private List<RandomVariable> variables = new ArrayList<RandomVariable>();
 	
 	public BayesianNetwork(Node... rootNodes) {
 		if (null == rootNodes) {
@@ -47,20 +53,26 @@ public class BayesianNetwork {
 		// Ensure is a DAG
 		HashSet<Node> seenAlready = new HashSet<Node>();
 		for (Node n : this.rootNodes) {
-			checkIsDAG(n, seenAlready);
+			checkIsDAGAndCollectVariables(n, seenAlready);
 		}
+		variables = Collections.unmodifiableList(variables);
+	}
+	
+	public List<RandomVariable> getVariables() {
+		return variables;
 	}
 
 	//
 	// PRIVATE METHODS
 	//
-	private void checkIsDAG(Node n, Set<Node> seenAlready) {
+	private void checkIsDAGAndCollectVariables(Node n, Set<Node> seenAlready) {
 		if (seenAlready.contains(n)) {
 			throw new IllegalArgumentException("Network contains a cycle and is therefore not a DAG:"+n);
 		}
 		seenAlready.add(n);
+		variables.add(n.getRandomVariable());
 		for (Node c : n.getChildren()) {
-			checkIsDAG(c, seenAlready);
+			checkIsDAGAndCollectVariables(c, seenAlready);
 		}
 	}
 }

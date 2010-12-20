@@ -8,7 +8,7 @@ import aima.core.probability.proposed.model.proposition.Proposition;
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
  * 
  * A fully specified probability model associates a numerical probability
- * P(&omega) with each possible world. The set of all possible worlds is called
+ * P(&omega;) with each possible world. The set of all possible worlds is called
  * the sample space.
  * 
  * @author Ciaran O'Reilly
@@ -25,15 +25,15 @@ public interface ProbabilityModel {
 
 	/**
 	 * 
-	 * @return true, if 0 <= P(&omega) <= 1 for every &omega and SUM(&omega E
-	 *         &Omega, P(&omega)) = 1 (Equation 13.1 pg. 484 AIMA3e), false
+	 * @return true, if 0 <= P(&omega;) <= 1 for every &omega; and &sum;<sub>&omega; &isin;
+	 *         &Omega;</sub> P(&omega;) = 1 (Equation 13.1 pg. 484 AIMA3e), false
 	 *         otherwise.
 	 */
 	boolean isValid();
 
 	/**
-	 * For any proposition &phi, P(&phi) = SUM(&omega E &phi, P(&omega)). Refer
-	 * to equation 13.2 page 485 of AIMA3e. Probabilities such as P(Total =11)
+	 * For any proposition &phi;, P(&phi;) = &sum;<sub>&omega; &isin; &phi;</sub> P(&omega;). Refer
+	 * to equation 13.2 page 485 of AIMA3e. Probabilities such as P(Total = 11)
 	 * and P(doubles) are called unconditional or prior probabilities (and
 	 * sometimes just "priors" for short); they refer to degrees of belief in
 	 * propositions in the absence of any other information.
@@ -41,7 +41,7 @@ public interface ProbabilityModel {
 	 * @param phi
 	 *            the proposition for which a probability value is to be
 	 *            returned.
-	 * @return the probability of the proposition &phi.
+	 * @return the probability of the proposition &phi;.
 	 */
 	double prior(Proposition phi);
 
@@ -74,7 +74,7 @@ public interface ProbabilityModel {
 	 *            returned.
 	 * @param evidence
 	 *            information we already have.
-	 * @return the probability of the proposition &phi given evidence.
+	 * @return the probability of the proposition &phi; given evidence.
 	 */
 	double posterior(Proposition phi, Proposition... evidence);
 
