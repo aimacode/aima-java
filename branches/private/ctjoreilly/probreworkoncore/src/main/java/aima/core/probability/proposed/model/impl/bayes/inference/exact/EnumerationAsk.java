@@ -6,8 +6,10 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.RandomVariable;
+import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.probability.proposed.model.impl.bayes.BayesianNetwork;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
+import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 14.9, page
@@ -84,7 +86,7 @@ public class EnumerationAsk {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				for (int i = 0; i < X.length; i++) {
-					e.value[i] = possibleWorld.get(X[i]);
+					e.setExtendedValue(i, possibleWorld.get(X[i]));
 				}
 				Q.setValue(cnt, enumerateAll(bn.getVariablesInTopologicalOrder(), e));
 				cnt++;
@@ -107,38 +109,45 @@ public class EnumerationAsk {
 	protected double enumerateAll(List<RandomVariable> vars, ObservedEvidence e) {
 		// if EMPTY?(vars) then return 1.0
 		if (0 == vars.size()) {
-			e.hiddenIdx--;
 			return 1;
 		}
 		// Y <- FIRST(vars)
-		RandomVariable Y = vars.get(0);
+		RandomVariable Y = Util.first(vars);
 		// if Y has value y in e
 		if (e.containsValue(Y)) {
 			// then return P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e)
-			e.hiddenIdx++;
-			e.hiddenIdx--;
-			return 0; // TODO
-		}
+		 	return e.posteriorForParents(Y) * enumerateAll(Util.rest(vars), e);
+		} 
 		/**
 		 * <pre>
 		 *  else return &sum;<sub>y</sub> P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e<sub>y</sub>)
 		 *       where e<sub>y</sub> is e extended with Y = y
 		 * </pre>
 		 */
-		e.hiddenIdx--;
+		double sum = 0;
+		int extendedIdx = e.incrExtendedIndex();
+		for (Object y : ((FiniteDomain)Y.getDomain()).getPossibleValues()) {
+			e.setExtendedValue(extendedIdx, y);
+			sum += e.posteriorForParents(Y) * enumerateAll(Util.rest(vars), e);
+		}
+		e.decrExtendedIndex();
+		
 		return 0;
 	}
 	
 	protected class ObservedEvidence {
-		public Object[] value = null;
-		public RandomVariable[] var = null;
-		public int hiddenIdx = 0;
-		public Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
-
+		private BayesianNetwork bn = null;
+		private Object[] extendedValue = null;
+		private RandomVariable[] var = null;
+		private Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
+		private int hiddenIdx = 0;
+		
 		public ObservedEvidence(RandomVariable[] queryVariables,
 				AssignmentProposition[] e, BayesianNetwork bn) {
+			this.bn = bn;
+			
 			int maxSize = bn.getVariablesInTopologicalOrder().size();
-			value = new Object[maxSize];
+			extendedValue = new Object[maxSize];
 			var = new RandomVariable[maxSize];
 			// query variables go first
 			int idx = 0;
@@ -151,7 +160,7 @@ public class EnumerationAsk {
 			for (int i = 0; i < e.length; i++) {
 				var[idx] = e[i].getRandomVariable();
 				varIdxs.put(var[idx], idx);
-				value[idx] = e[i].getValue();
+				extendedValue[idx] = e[i].getValue();
 				idx++;
 			}
 			// the remaining slots are left open for the hidden variables
@@ -164,9 +173,27 @@ public class EnumerationAsk {
 				}
 			}
 		}
+		
+		public void setExtendedValue(int idx, Object v) {
+			extendedValue[idx] = v;
+		}
 
 		public boolean containsValue(RandomVariable rv) {
 			return varIdxs.get(rv) < hiddenIdx;
+		}
+		
+		public double posteriorForParents(RandomVariable rv) {
+			return 0; // TODO
+		}
+		
+		public int incrExtendedIndex() {
+			int idx = hiddenIdx;
+			hiddenIdx++;
+			return idx;
+		}
+		
+		public void decrExtendedIndex() {
+			hiddenIdx--;
 		}
 	}
 
