@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.reasoning.exact;
+package aima.core.probability.proposed.model.impl.bayes.inference.exact;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +55,7 @@ public class EnumerationAsk {
 	 * The ENUMERATION-ASK algorithm in Figure 14.9 evaluates expression trees
 	 * (Figure 14.8) using depth-first recursion.
 	 * 
-	 * @param queryVariables
+	 * @param X
 	 *            the query variables.
 	 * @param observedEvidence
 	 *            observed values for variables E.
@@ -64,30 +64,29 @@ public class EnumerationAsk {
 	 *            variables //
 	 * @return a distribution over the query variables.
 	 */
-	public Distribution enumerationAsk(final RandomVariable[] queryVariables,
+	public Distribution enumerationAsk(final RandomVariable[] X,
 			final AssignmentProposition[] observedEvidence,
 			final BayesianNetwork bn) {
 
 		// Q(X) <- a distribution over X, initially empty
-		final Distribution Q = new Distribution(queryVariables);
-		final ObservedEvidence e = new ObservedEvidence(queryVariables,
-				observedEvidence, bn);
+		final Distribution Q = new Distribution(X);
+		final ObservedEvidence e = new ObservedEvidence(X, observedEvidence, bn);
 		// for each value x<sub>i</sub> of X do
 		Distribution.Iterator di = new Distribution.Iterator() {
 			int cnt = 0;
 
+			/**
+			 * <pre>
+			 * Q(x<sub>i</sub>) <- ENUMERATE-ALL(bn.VARS, e<sub>x<sub>i</sub></sub>)
+			 *   where e<sub>x<sub>i</sub></sub> is e extended with X = x<sub>i</sub>
+			 * </pre>
+			 */
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
-				/**
-				 * <pre>
-				 * Q(x<sub>i</sub>) <- ENUMERATE-ALL(bn.VARS, e<sub>x<sub>i</sub></sub>)
-				 *   where e<sub>x<sub>i</sub></sub> is e extended with X = x<sub>i</sub>
-				 * </pre>
-				 */
-				for (int i = 0; i < queryVariables.length; i++) {
-					e.value[i] = possibleWorld.get(queryVariables[i]);
+				for (int i = 0; i < X.length; i++) {
+					e.value[i] = possibleWorld.get(X[i]);
 				}
-				Q.getValues()[cnt] = enumerateAll(bn.getVariables(), e);
+				Q.setValue(cnt, enumerateAll(bn.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
 
@@ -104,47 +103,6 @@ public class EnumerationAsk {
 	//
 	// PROTECTED METHODS
 	//
-	protected class ObservedEvidence {
-		public Object[] value = null;
-		public RandomVariable[] var = null;
-		public int hiddenIdx = 0;
-		public Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
-
-		public ObservedEvidence(RandomVariable[] queryVariables,
-				AssignmentProposition[] e, BayesianNetwork bn) {
-			int maxSize = bn.getVariables().size();
-			value = new Object[maxSize];
-			var = new RandomVariable[maxSize];
-			// query variables go first
-			int idx = 0;
-			for (int i = 0; i < queryVariables.length; i++) {
-				var[idx] = queryVariables[i];
-				varIdxs.put(var[idx], idx);
-				idx++;
-			}
-			// initial evidence variables go next
-			for (int i = 0; i < e.length; i++) {
-				var[idx] = e[i].getRandomVariable();
-				varIdxs.put(var[idx], idx);
-				value[idx] = e[i].getValue();
-				idx++;
-			}
-			// the remaining slots are left open for the hidden variables
-			hiddenIdx = idx;
-			for (RandomVariable rv : bn.getVariables()) {
-				if (!varIdxs.containsKey(rv)) {
-					var[idx] = rv;
-					varIdxs.put(var[idx], idx);
-					idx++;
-				}
-			}
-		}
-
-		public boolean containsValue(RandomVariable rv) {
-			return varIdxs.get(rv) < hiddenIdx;
-		}
-	}
-
 	// function ENUMERATE-ALL(vars, e) returns a real number
 	protected double enumerateAll(List<RandomVariable> vars, ObservedEvidence e) {
 		// if EMPTY?(vars) then return 1.0
@@ -169,6 +127,47 @@ public class EnumerationAsk {
 		 */
 		e.hiddenIdx--;
 		return 0;
+	}
+	
+	protected class ObservedEvidence {
+		public Object[] value = null;
+		public RandomVariable[] var = null;
+		public int hiddenIdx = 0;
+		public Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
+
+		public ObservedEvidence(RandomVariable[] queryVariables,
+				AssignmentProposition[] e, BayesianNetwork bn) {
+			int maxSize = bn.getVariablesInTopologicalOrder().size();
+			value = new Object[maxSize];
+			var = new RandomVariable[maxSize];
+			// query variables go first
+			int idx = 0;
+			for (int i = 0; i < queryVariables.length; i++) {
+				var[idx] = queryVariables[i];
+				varIdxs.put(var[idx], idx);
+				idx++;
+			}
+			// initial evidence variables go next
+			for (int i = 0; i < e.length; i++) {
+				var[idx] = e[i].getRandomVariable();
+				varIdxs.put(var[idx], idx);
+				value[idx] = e[i].getValue();
+				idx++;
+			}
+			// the remaining slots are left open for the hidden variables
+			hiddenIdx = idx;
+			for (RandomVariable rv : bn.getVariablesInTopologicalOrder()) {
+				if (!varIdxs.containsKey(rv)) {
+					var[idx] = rv;
+					varIdxs.put(var[idx], idx);
+					idx++;
+				}
+			}
+		}
+
+		public boolean containsValue(RandomVariable rv) {
+			return varIdxs.get(rv) < hiddenIdx;
+		}
 	}
 
 	//

@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import aima.core.probability.proposed.model.domain.FiniteDiscreteDomain;
+import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.util.math.MixedRadixNumber;
 
 /**
@@ -42,12 +42,12 @@ public class Distribution {
 		if (null != vars) {
 			for (RandomVariable rv : vars) {
 				// Create ordered domains for each variable
-				if (!(rv.getDomain() instanceof FiniteDiscreteDomain)) {
+				if (!(rv.getDomain() instanceof FiniteDomain)) {
 					throw new IllegalArgumentException(
 							"Cannot have an infinite domain for a variable in a Distribution:"
 									+ rv);
 				}
-				FiniteDiscreteDomain d = (FiniteDiscreteDomain) rv.getDomain();
+				FiniteDomain d = (FiniteDomain) rv.getDomain();
 				expectedSizeOfDistribution *= d.size();
 			}
 		}
@@ -74,7 +74,7 @@ public class Distribution {
 		if (null != vars) {
 			for (RandomVariable rv : vars) {
 				// Create ordered domains for each variable
-				FiniteDiscreteDomain d = (FiniteDiscreteDomain) rv.getDomain();
+				FiniteDomain d = (FiniteDomain) rv.getDomain();
 				randomVars.add(rv);
 				domains.add(new ArrayList<Object>(d.getPossibleValues()));
 			}
@@ -92,13 +92,22 @@ public class Distribution {
 		// true  false
 		// false true
 		// false false
+		// which corresponds with how displayed in book.
 		for (int i = domains.size() - 1; i >= 0; i--) {
 			radixs[i] = domains.get(i).size();
 		}
 	}
 
+	// Note: Document that callers of this method should not change
+	// the values of the array returned directly but should
+	// instead use setValue().
 	public double[] getValues() {
 		return distribution;
+	}
+	
+	public void setValue(int idx, double value) {
+		distribution[idx] = value;
+		sum = -1; // Will want to re-calculate.
 	}
 
 	public double getSum() {

@@ -2,7 +2,7 @@ package aima.core.probability.proposed.model.domain;
 
 import java.util.Set;
 
-public interface FiniteDiscreteDomain extends Domain {
+public interface FiniteDomain extends Domain {
 	/**
 	 * 
 	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the possible

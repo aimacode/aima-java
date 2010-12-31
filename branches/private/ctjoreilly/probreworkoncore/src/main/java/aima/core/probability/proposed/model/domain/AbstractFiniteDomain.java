@@ -2,7 +2,7 @@ package aima.core.probability.proposed.model.domain;
 
 import java.util.Set;
 
-public abstract class AbstractFiniteDiscreteDomain implements FiniteDiscreteDomain {
+public abstract class AbstractFiniteDomain implements FiniteDomain {
 
 	private String toString = null;
 	

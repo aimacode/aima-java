@@ -2,15 +2,15 @@ package aima.core.probability.proposed.model.impl.bayes;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class FiniteDiscreteNode extends Node {
+public class FiniteNode extends Node {
 
 	private ConditionalProbabilityTable cpt = null;
 	
-	public FiniteDiscreteNode(RandomVariable var, double[] distribution) {
+	public FiniteNode(RandomVariable var, double[] distribution) {
 		this(var, distribution, (Node[]) null);
 	}
 	
-	public FiniteDiscreteNode(RandomVariable var, double[] values, Node... parents) {
+	public FiniteNode(RandomVariable var, double[] values, Node... parents) {
 		super(var, parents);
 		
 		RandomVariable[] conditionedOn = new RandomVariable[getParents().size()];

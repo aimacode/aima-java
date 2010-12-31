@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class BooleanDomain extends AbstractFiniteDiscreteDomain {
+public class BooleanDomain extends AbstractFiniteDomain {
 
 	private static Set<Boolean> _possibleValues = null;
 	static {

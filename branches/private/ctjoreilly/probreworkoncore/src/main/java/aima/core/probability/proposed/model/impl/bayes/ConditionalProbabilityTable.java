@@ -7,7 +7,7 @@ import java.util.Map;
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
-import aima.core.probability.proposed.model.domain.FiniteDiscreteDomain;
+import aima.core.probability.proposed.model.domain.FiniteDomain;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 512.
@@ -38,7 +38,7 @@ public class ConditionalProbabilityTable {
 		}
 		tableVars[conditionedOn.length] = var;
 		table = new Distribution(values, tableVars);
-		varDomain.addAll(((FiniteDiscreteDomain) var.getDomain())
+		varDomain.addAll(((FiniteDomain) var.getDomain())
 				.getPossibleValues());
 		
 		checkEachRowTotalsOne();

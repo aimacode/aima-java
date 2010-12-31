@@ -17,8 +17,8 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 * 
 	 * @param phi
 	 *            the propositional term of interest.
-	 * @return all the possible values of the propositional term &phi;. This is a
-	 *         Vector of numbers, where we assume a predefined ordering of the
+	 * @return all the possible values of the propositional term &phi;. This is
+	 *         a Vector of numbers, where we assume a predefined ordering of the
 	 *         domain of the relevant random variables.
 	 */
 	Distribution priorDistribution(TermProposition phi);
@@ -26,8 +26,8 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	/**
 	 * Get a conditional distribution. Example:
 	 * 
-	 * P(X | Y) gives the values of P(X = x1 | Y = y1) for each possible i, j
-	 * pair.
+	 * P(X | Y) gives the values of P(X = x<sub>i</sub> | Y = y<sub>j</sub>) for
+	 * each possible i, j pair.
 	 * 
 	 * @param phi
 	 *            the propositional term for which a probability distribution is
@@ -42,8 +42,8 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	/**
 	 * Get a distribution on multiple variables. Example:
 	 * 
-	 * P(X, Y) gives the values of P(X = x1 | Y = y1)P(Y = y1) for each possible
-	 * i, j pair.
+	 * P(X, Y) gives the values of P(X = x<sub>i</sub> | Y = y<sub>j</sub>)P(Y =
+	 * y<sub>j</sub>) for each possible i, j pair.
 	 * 
 	 * @param propositions
 	 *            the propositional terms for which a joint probability

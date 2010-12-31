@@ -21,8 +21,7 @@ public class Util {
 	}
 
 	public static <T> List<T> rest(List<T> l) {
-		List<T> newList = new ArrayList<T>(l.subList(1, l.size()));
-		return newList;
+		return l.subList(1, l.size());
 	}
 
 	public static boolean randomBoolean() {

@@ -3,16 +3,16 @@ package aima.core.probability.proposed.model.proposition;
 import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
-import aima.core.probability.proposed.model.domain.FiniteDiscreteDomain;
+import aima.core.probability.proposed.model.domain.FiniteDomain;
 
 public class SubsetProposition extends ConstraintProposition {
 
-	private FiniteDiscreteDomain subsetDomain = null;
+	private FiniteDomain subsetDomain = null;
 	private RandomVariable varSubsetOf = null;
 	//
 	private String toString = null;
 	
-	public SubsetProposition(String name, FiniteDiscreteDomain subsetDomain,
+	public SubsetProposition(String name, FiniteDomain subsetDomain,
 			RandomVariable ofVar) {
 		super(name); 
 		
