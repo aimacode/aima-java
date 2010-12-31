@@ -8,6 +8,7 @@ import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteDomain;
+import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 512.
@@ -42,6 +43,10 @@ public class ConditionalProbabilityTable {
 				.getPossibleValues());
 		
 		checkEachRowTotalsOne();
+	}
+	
+	public double probabilityFor(AssignmentProposition... values) {
+		return table.getValueFor(values); 
 	}
 
 	//

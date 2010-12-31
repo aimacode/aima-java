@@ -33,6 +33,38 @@ public class MixedRadixNumber extends Number {
 		calculateMaxValue();
 	}
 
+	public MixedRadixNumber(int[] radixValues, int[] radixs) {
+		this(0, radixs);
+		setCurrentValueFor(radixValues);
+	}
+
+	public long getCurrentValueFor(int[] radixValues) {
+		if (radixValues.length != radixs.length) {
+			throw new IllegalArgumentException(
+					"Radix values not same size as Radixs.");
+		}
+
+		long cvalue = 0;
+		long mvalue = 1;
+		for (int i = 0; i < radixValues.length; i++) {
+			if (radixValues[i] < 0 || radixValues[i] > radixs[i]) {
+				throw new IllegalArgumentException("Radix value " + i
+						+ " is out of range for radix at this position");
+			}
+			if (i > 0) {
+				mvalue *= radixs[i - 1];
+			}
+			cvalue += mvalue * radixValues[i];
+		}
+		return cvalue;
+	}
+	
+	public void setCurrentValueFor(int[] radixValues) {
+		this.value = getCurrentValueFor(radixValues);
+		System.arraycopy(radixValues, 0, this.currentNumeralValue, 0, radixValues.length);
+		recalculate = false;
+	}
+
 	public long getMaxAllowedValue() {
 		return maxValue;
 	}

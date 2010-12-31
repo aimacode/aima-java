@@ -1,11 +1,11 @@
 package aima.core.probability.proposed.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import aima.core.probability.proposed.model.domain.FiniteDomain;
+import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.util.math.MixedRadixNumber;
 
 /**
@@ -22,11 +22,11 @@ import aima.core.util.math.MixedRadixNumber;
 public class Distribution {
 	private double[] distribution = null;
 	//
+	private Map<RandomVariable, RVInfo> randomVarInfo = new LinkedHashMap<RandomVariable, RVInfo>();
+	private int[] radixs = null;
+	//
 	private String toString = null;
 	private double sum = -1;
-	private List<RandomVariable> randomVars = new ArrayList<RandomVariable>();
-	private List<List<Object>> domains = new ArrayList<List<Object>>();
-	private int[] radixs = null;
 
 	public interface Iterator {
 		void iterate(Map<RandomVariable, Object> possibleWorld,
@@ -34,7 +34,7 @@ public class Distribution {
 
 		Object getPostIterateValue();
 	}
-	
+
 	public static int expectedSizeOfDistribution(RandomVariable... vars) {
 		// initially 1, as this will represent constant assignments
 		// e.g. Dice1 = 1.
@@ -51,10 +51,10 @@ public class Distribution {
 				expectedSizeOfDistribution *= d.size();
 			}
 		}
-		
+
 		return expectedSizeOfDistribution;
 	}
-	
+
 	public Distribution(RandomVariable... vars) {
 		this(new double[expectedSizeOfDistribution(vars)], vars);
 	}
@@ -73,28 +73,29 @@ public class Distribution {
 		}
 		if (null != vars) {
 			for (RandomVariable rv : vars) {
-				// Create ordered domains for each variable
-				FiniteDomain d = (FiniteDomain) rv.getDomain();
-				randomVars.add(rv);
-				domains.add(new ArrayList<Object>(d.getPossibleValues()));
+				// Track index information relevant to each variable.
+				randomVarInfo.put(rv, new RVInfo(rv));
 			}
 		}
 
 		distribution = new double[values.length];
 		System.arraycopy(values, 0, distribution, 0, values.length);
 
-		radixs = new int[domains.size()];
+		radixs = new int[randomVarInfo.size()];
 		// Read in reverse order so that the enumeration
 		// through the distributions is of the following
 		// order using a MixedRadixNumber, e.g. for two Booleans:
-		// X     Y
-		// true  true
-		// true  false
+		// X Y
+		// true true
+		// true false
 		// false true
 		// false false
 		// which corresponds with how displayed in book.
-		for (int i = domains.size() - 1; i >= 0; i--) {
-			radixs[i] = domains.get(i).size();
+		int x = randomVarInfo.size() - 1;
+		for (RVInfo rvInfo : randomVarInfo.values()) {
+			radixs[x] = rvInfo.getDomainSize();
+			rvInfo.setRadixIdx(x);
+			x--;
 		}
 	}
 
@@ -104,10 +105,30 @@ public class Distribution {
 	public double[] getValues() {
 		return distribution;
 	}
-	
+
 	public void setValue(int idx, double value) {
 		distribution[idx] = value;
-		sum = -1; // Will want to re-calculate.
+		reinitLazyValues();
+	}
+
+	public double getValueFor(AssignmentProposition... values) {
+		if (values.length != randomVarInfo.size()) {
+			throw new IllegalArgumentException(
+					"Values passed in is not the same size as variables making up distribution.");
+		}
+		int[] radixValues = new int[values.length];
+		for (AssignmentProposition ap : values) {
+			RVInfo rvInfo = randomVarInfo.get(ap.getRandomVariable());
+			if (null == rvInfo) {
+				throw new IllegalArgumentException(
+						"Values passed for a variable that is not part of this distribution:"
+								+ ap.getRandomVariable());
+			}
+			radixValues[rvInfo.getRadixIdx()] = rvInfo.getIdxForDomain(ap
+					.getValue());
+		}
+		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
+		return distribution[mrn.intValue()];
 	}
 
 	public double getSum() {
@@ -119,14 +140,14 @@ public class Distribution {
 		}
 		return sum;
 	}
-	
+
 	public Distribution normalize() {
 		double s = getSum();
 		if (s != 0) {
 			for (int i = 0; i < distribution.length; i++) {
 				distribution[i] = distribution[i] / s;
 			}
-			sum = -1; // Re-calculate, so that rounding is included
+			reinitLazyValues();
 		}
 		return this;
 	}
@@ -135,12 +156,10 @@ public class Distribution {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
 		MixedRadixNumber mrn = new MixedRadixNumber(0, radixs);
 		do {
-			// Note: Have to index the MixedRadixNumber in reverse order
-			// in order to comply with the fixed ordering of distributions
-			// with respect to their variables.
-			for (int i = 0, x = randomVars.size() - 1; i < randomVars.size(); i++, x--) {
-				Object val = domains.get(i).get(mrn.getCurrentNumeralValue(x));
-				possibleWorld.put(randomVars.get(i), val);
+			for (RVInfo rvInfo : randomVarInfo.values()) {
+				possibleWorld.put(rvInfo.getVariable(), rvInfo
+						.getDomainValueAt(mrn.getCurrentNumeralValue(rvInfo
+								.getRadixIdx())));
 			}
 			di.iterate(possibleWorld, distribution[mrn.intValue()]);
 
@@ -163,5 +182,55 @@ public class Distribution {
 			toString = sb.toString();
 		}
 		return toString;
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private void reinitLazyValues() {
+		sum = -1;
+		toString = null;
+	}
+
+	private class RVInfo {
+		private RandomVariable variable;
+		private Map<Integer, Object> idxDomainMap = new HashMap<Integer, Object>();
+		private Map<Object, Integer> domainIdxMap = new HashMap<Object, Integer>();
+		private int radixIdx = 0;
+
+		public RVInfo(RandomVariable rv) {
+			variable = rv;
+			int idx = 0;
+			for (Object pv : ((FiniteDomain) variable.getDomain())
+					.getPossibleValues()) {
+				domainIdxMap.put(pv, idx);
+				idxDomainMap.put(idx, pv);
+				idx++;
+			}
+		}
+
+		public RandomVariable getVariable() {
+			return variable;
+		}
+
+		public int getDomainSize() {
+			return domainIdxMap.size();
+		}
+
+		public int getIdxForDomain(Object value) {
+			return domainIdxMap.get(value);
+		}
+
+		public Object getDomainValueAt(int idx) {
+			return idxDomainMap.get(idx);
+		}
+
+		public void setRadixIdx(int idx) {
+			radixIdx = idx;
+		}
+
+		public int getRadixIdx() {
+			return radixIdx;
+		}
 	}
 }

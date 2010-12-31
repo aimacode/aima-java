@@ -2,9 +2,11 @@ package aima.core.probability.proposed.model.impl.bayes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import aima.core.probability.proposed.model.RandomVariable;
@@ -43,6 +45,7 @@ public class BayesianNetwork {
 
 	private Set<Node> rootNodes = new LinkedHashSet<Node>();
 	private List<RandomVariable> variables = new ArrayList<RandomVariable>();
+	private Map<RandomVariable, Node> varToNodeMap = new HashMap<RandomVariable, Node>();
 
 	public BayesianNetwork(Node... rootNodes) {
 		if (null == rootNodes) {
@@ -72,6 +75,10 @@ public class BayesianNetwork {
 		return variables;
 	}
 
+	public Node getNode(RandomVariable rv) {
+		return varToNodeMap.get(rv);
+	}
+
 	//
 	// PRIVATE METHODS
 	//
@@ -82,6 +89,7 @@ public class BayesianNetwork {
 		}
 		seenAlready.add(n);
 		variables.add(n.getRandomVariable());
+		varToNodeMap.put(n.getRandomVariable(), n);
 		for (Node c : n.getChildren()) {
 			checkIsDAGAndCollectVariables(c, seenAlready);
 		}

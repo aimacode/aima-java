@@ -8,6 +8,8 @@ import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.probability.proposed.model.impl.bayes.BayesianNetwork;
+import aima.core.probability.proposed.model.impl.bayes.FiniteNode;
+import aima.core.probability.proposed.model.impl.bayes.Node;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.util.Util;
 
@@ -86,9 +88,10 @@ public class EnumerationAsk {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				for (int i = 0; i < X.length; i++) {
-					e.setExtendedValue(i, possibleWorld.get(X[i]));
+					e.setExtendedValue(X[i], possibleWorld.get(X[i]));
 				}
-				Q.setValue(cnt, enumerateAll(bn.getVariablesInTopologicalOrder(), e));
+				Q.setValue(cnt, enumerateAll(bn
+						.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
 
@@ -116,8 +119,8 @@ public class EnumerationAsk {
 		// if Y has value y in e
 		if (e.containsValue(Y)) {
 			// then return P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e)
-		 	return e.posteriorForParents(Y) * enumerateAll(Util.rest(vars), e);
-		} 
+			return e.posteriorForParents(Y) * enumerateAll(Util.rest(vars), e);
+		}
 		/**
 		 * <pre>
 		 *  else return &sum;<sub>y</sub> P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e<sub>y</sub>)
@@ -125,29 +128,26 @@ public class EnumerationAsk {
 		 * </pre>
 		 */
 		double sum = 0;
-		int extendedIdx = e.incrExtendedIndex();
-		for (Object y : ((FiniteDomain)Y.getDomain()).getPossibleValues()) {
-			e.setExtendedValue(extendedIdx, y);
+		for (Object y : ((FiniteDomain) Y.getDomain()).getPossibleValues()) {
+			e.setExtendedValue(Y, y);
 			sum += e.posteriorForParents(Y) * enumerateAll(Util.rest(vars), e);
 		}
-		e.decrExtendedIndex();
-		
-		return 0;
+
+		return sum;
 	}
-	
+
 	protected class ObservedEvidence {
 		private BayesianNetwork bn = null;
-		private Object[] extendedValue = null;
+		private AssignmentProposition[] extendedValues = null;
 		private RandomVariable[] var = null;
 		private Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
-		private int hiddenIdx = 0;
-		
+
 		public ObservedEvidence(RandomVariable[] queryVariables,
 				AssignmentProposition[] e, BayesianNetwork bn) {
 			this.bn = bn;
-			
+
 			int maxSize = bn.getVariablesInTopologicalOrder().size();
-			extendedValue = new Object[maxSize];
+			extendedValues = new AssignmentProposition[maxSize];
 			var = new RandomVariable[maxSize];
 			// query variables go first
 			int idx = 0;
@@ -160,11 +160,10 @@ public class EnumerationAsk {
 			for (int i = 0; i < e.length; i++) {
 				var[idx] = e[i].getRandomVariable();
 				varIdxs.put(var[idx], idx);
-				extendedValue[idx] = e[i].getValue();
+				extendedValues[idx] = e[i];
 				idx++;
 			}
 			// the remaining slots are left open for the hidden variables
-			hiddenIdx = idx;
 			for (RandomVariable rv : bn.getVariablesInTopologicalOrder()) {
 				if (!varIdxs.containsKey(rv)) {
 					var[idx] = rv;
@@ -173,27 +172,33 @@ public class EnumerationAsk {
 				}
 			}
 		}
-		
-		public void setExtendedValue(int idx, Object v) {
-			extendedValue[idx] = v;
+
+		public void setExtendedValue(RandomVariable rv, Object value) {
+			extendedValues[varIdxs.get(rv)] = new AssignmentProposition(rv,
+					value);
 		}
 
 		public boolean containsValue(RandomVariable rv) {
-			return varIdxs.get(rv) < hiddenIdx;
+			return null != extendedValues[varIdxs.get(rv)];
 		}
-		
+
 		public double posteriorForParents(RandomVariable rv) {
-			return 0; // TODO
-		}
-		
-		public int incrExtendedIndex() {
-			int idx = hiddenIdx;
-			hiddenIdx++;
-			return idx;
-		}
-		
-		public void decrExtendedIndex() {
-			hiddenIdx--;
+			Node n = bn.getNode(rv);
+			if (!(n instanceof FiniteNode)) {
+				throw new IllegalArgumentException(
+						"Enumeration-Ask only works with finite Nodes.");
+			}
+			FiniteNode fn = (FiniteNode) n;
+			AssignmentProposition[] aps = new AssignmentProposition[1+fn
+					.getParents().size()];
+			int idx = 0;
+			for (Node pn : n.getParents()) {
+				aps[idx] = extendedValues[varIdxs.get(pn.getRandomVariable())];
+				idx++;
+			}
+			aps[idx] = extendedValues[varIdxs.get(rv)];
+
+			return fn.getCPT().probabilityFor(aps);
 		}
 	}
 
