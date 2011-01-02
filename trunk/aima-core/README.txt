@@ -96,8 +96,8 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  10.9 ||     383|| Graphplan                    ||---||
 ||  11.5 ||     409|| Hierarchical-Search          ||---||
 ||  11.8 ||     414|| Angelic-Search               ||---||
-||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution]||
 ||  13.1 ||     484|| DT-Agent                     ||---||
+||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution]||
 ||  14.9 ||     525|| Enumeration-Ask              ||---||
 ||  14.11||     528|| Elimination-Ask              ||---||
 ||  14.13||     531|| Prior-Sample                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/BayesNet.java (method)-getPriorSample()]||
