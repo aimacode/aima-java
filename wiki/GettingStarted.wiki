@@ -2,27 +2,28 @@
 #Getting started using the AIMA-Java projects.
 
 = Setting up your workspace =
-The latest release can be downloaded via a single compressed .zip file, from the project's download page: 
+The latest release can be downloaded as a single compressed .zip file, from the project's download page: 
   * http://code.google.com/p/aima-java/downloads/list
   
 Alternatively you can check out from the project's Subversion repository directly. For this you will require a Subversion client, see the following for useful instructions:
   * http://code.google.com/p/aima-java/source/checkout
   * http://subversion.apache.org/packages.html
   
-Your project once downloaded locally should be organized in the following manner:
+Once you've setup your workspace, the directory structure should be organized in the following manner:
 {{{
 <your-workspace-directory>/
     aima-core/
     aima-gui/
     aimax-osm/
-    aima-all/
 }}}
 
-*Note:* You can ignore the _aima-all_ project, as it is intended to only be used by the project's developers for creating releases and Java Web Start applications.
+*Note:* There is also an _aima-all_ project but you may ignore this as it is intended to only be used by the project's developers for creating releases and Java Web Start applications.
 
-The _aima-core_ project is the baseline project that contains all the current implementations for the algorithms described in AIMA3e. It only depends on having a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit(JDK) 1.6</a> installed locally, if you want edit/compile the provided Java files (.jar files are provided with the release). For testing, the _aima-core_ project is also dependent on <a href="http://www.junit.org/">JUnit</a> for running its test suite, the required library .jar file is included in the projects /lib directory. The _aima-gui_ depends on _aima-core_ and contains example GUI and command line demonstrations of the algorithms defined in _aima-core_. The _aimax-osm_ project is an extension project that demonstrates how the core algorithms can be used to create Navigation Applications using map data provided by the <a href="http://www.openstreetmap.org/">Open Street Maps</a> project.
+The _aima-core_ project is the baseline project that contains all the current implementations for the algorithms described in AIMA3e. It only depends on having a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit(JDK) 1.6</a> installed locally, if you want to edit/compile the provided Java files (.jar files including compiled .class files are provided with the releases). For testing, the _aima-core_ project is also dependent on <a href="http://www.junit.org/">JUnit</a> for running its test suite, the required library .jar file is included in the projects /lib directory. The _aima-gui_ depends on _aima-core_ and contains example GUI and command line demonstrations of the algorithms defined in _aima-core_. The _aimax-osm_ project is an extension project that demonstrates how the core algorithms can be used to create Navigation Applications using map data provided by the <a href="http://www.openstreetmap.org/">Open Street Maps</a> project.
 
-== Command Line using <a href="http://ant.apache.org/">Ant</a> ==
+The following instructions detail how to work with the provided projects via the command line using the <a href="http://ant.apache.org/">Ant</a> build system or by using the <a href="http://www.eclipse.org/">Eclipse IDE</a>.
+
+== Using the Command Line and <a href="http://ant.apache.org/">Ant</a> ==
 
 ensure that your Windows PATH
 environment variable contains the directory where your JDK's bin is, e.g.:
@@ -33,11 +34,20 @@ C:\Program Files\Java\jdk1.6.0\bin
 *Note:* You do not need to use the provided <a href="http://ant.apache.org/">Ant</a> build.xml files if you are using the Eclipse IDE.
 
 === Importing a downloaded release ===
+Extract the contents of the downloaded .zip file to a local director, for e.g.: 
+
+C:/Temp/AIMA/
+
+The from within Eclipse, import the extracted projects to your workspace as follows:
+  # Select the menu items 'File->Import...'<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_file_import.png
+  # In the Import 'Select' dialog, select 'General->Existing Projects into Workspace':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_import_existing.png
+  # In the Import 'Import Projects' dialog enter the location where you extracted the projects (e.g. C:/Temp/AIMA):<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_import_projects.png <br> The three projects, _aima-core_, _aima-gui_, and _aimax-osm_ should be listed and be automatically selected.
+  # Hit the 'Finish' button.
  
 === Using the Subversion repository directly ===
 *Note:* The <a href="http://subclipse.tigris.org/">Subclipse</a> Subversion client is a useful plugin for the Eclipse IDE. Refer to http://subclipse.tigris.org/ for details on how to setup your Eclipse IDE to use the plugin. The following instructions detail how to download the AIMA-Java project using this plugin. 
 
-  # Select 'File->New->Other':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other.png
+  # Select the menu items 'File->New->Other':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other.png
   # In the New 'Select a wizard' dialog, select 'SVN->Checkout Projects from SVN':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other_svn.png
   # Hit the 'Next >' button.
   # If this is your first time accessing the AIMA-Java Subversion repository you will want to select 'Create a new repository location' and hit the 'Next >' button otherwise just enter in the pre-existing location from the list provided.
@@ -47,12 +57,15 @@ C:\Program Files\Java\jdk1.6.0\bin
 
 *WARNING* If you have multiple Subversion clients installed locally, do not mix and match their usage within a single workspace, as it can often corrupt your local workspace due to incompatible local meta-data usage between the different clients. 
 
-== Some useful tips ==
+Once you've setup the AIMA-Java projects in your Eclipse workspace, it should look something like this:<br>
+http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_setup.png
+
+=== Some useful Eclipse tips ===
   # Useful views to use in Eclipse.
   # References->Workspace
 
 
-Running Test and Programs
+== Running Test and Programs ==
 
 aima.test.core.unit.AllAIMAUnitTestSuite
 
