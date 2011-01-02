@@ -1,2 +1,58 @@
 #labels Featured
 #Getting started using the AIMA-Java projects.
+
+= Setting up your workspace =
+The latest release can be downloaded via a single compressed .zip file, from the project's download page: 
+  * http://code.google.com/p/aima-java/downloads/list
+  
+Alternatively you can check out from the project's Subversion repository directly. For this you will require a Subversion client, see the following for useful instructions:
+  * http://code.google.com/p/aima-java/source/checkout
+  * http://subversion.apache.org/packages.html
+  
+Your project once downloaded locally should be organized in the following manner:
+{{{
+<workspace-directory>
+    <aima-core>
+    <aima-gui>
+    <aimax-osm>
+    <aima-all>
+}}}
+
+*Note 1:* You can ignore the _aima-all_ project, as it is intended to only be used by the project's developers for creating releases and Java Web Start applications.
+
+The _aima-core_ project is the baseline project that contains all the current implementations for the algorithms described in AIMA3e. It only depends on having <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit(JDK) 1.6</a> installed locally to compile the provided Java files. For testing, the _aima-core_ project is also dependent on <a href="http://www.junit.org/">JUnit</a> for running its test suite, the required library .jar file is included in the projects /lib directory. The _aima-gui_ depends on _aima-core_ and contains example GUI and command line demonstrations of the algorithms defined in _aima-core_. The _aimax-osm_ project is an extension project the demonstrates how the core algorithms can be used to create Navigation Applications using map data provided by the <a href="http://www.openstreetmap.org/">Open Street Maps</a> project.
+
+== Command Line using <a href="http://ant.apache.org/">Ant</a> ==
+
+ensure that your Windows PATH
+environment variable contains the directory where your JDK's bin is, e.g.:
+
+C:\Program Files\Java\jdk1.6.0\bin
+
+== Using the Eclipse IDE ==
+Note: You do not need to use the provided <a href="http://ant.apache.org/">Ant</a> build.xml files if you are using the Eclipse IDE.
+
+=== Importing a downloaded release ===
+ 
+=== Using the Subversion repository directly ===
+
+http://subclipse.tigris.org/
+
+=== Some useful tips ===
+  # Useful views to use in Eclipse.
+  # References->Workspace
+
+
+Running Test and Programs
+
+aima.test.core.unit.AllAIMAUnitTestSuite
+
+
+For programs, you'll need to look in the aima-gui project, which has GUIs
+and command line demos that you can run, e.g.:
+
+aima.gui.demo.search.EightPuzzleDemo
+
+just ensure the .java you open has a:
+
+public static void main(String[] args) {
