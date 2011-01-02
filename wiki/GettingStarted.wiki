@@ -28,12 +28,14 @@ The following instructions detail how to work with the provided projects via the
 
 == Using the Command Line and <a href="http://ant.apache.org/">Ant</a> ==
   * Ensure you have Ant installed on your system, see : http://ant.apache.org/ 
-  * Ensure your environment is set up correctly to see the Ant and JDK installations on your machine. This can be done on Windows by setting up an appropriate .bat file, for example: {{{
+  * Ensure your environment is set up correctly to see the Ant and JDK installations on your machine. This can be done on Windows by setting up an appropriate .bat file, for example: 
+{{{
 set ANT_HOME=C:\Temp\AIMA\apache-ant-1.8.2
 set ANT_OPTS=-Xmx1024m
 set JAVA_HOME=C:\Program Files\Java\jdk1.6.0_20\
 set PATH=C:\Temp\AIMA\apache-ant-1.8.2\bin;C:\Program Files\Java\jdk1.6.0_20\bin;%PATH%
-}}} *Note:* you need to ensure your JDK and Ant bin directories are visible on your OS's path environment variable in order to be able to correctly run the.
+}}} 
+*Note:* you need to ensure your JDK and Ant bin directories are visible on your OS's path environment variable in order to be able to correctly run the.
   * Change directory into the the sub-project of interest, for example: <br> aima-core/ <br> and then type ant at the command line: <br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/ant_build.png <br>
   * For further details on how to use Ant see the project's online documentation: http://ant.apache.org/manual/index.html <br>
 
