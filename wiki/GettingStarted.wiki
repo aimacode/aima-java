@@ -34,14 +34,11 @@ C:\Program Files\Java\jdk1.6.0\bin
 *Note:* You do not need to use the provided <a href="http://ant.apache.org/">Ant</a> build.xml files if you are using the Eclipse IDE.
 
 === Importing a downloaded release ===
-Extract the contents of the downloaded .zip file to a local directory from which you wish to work, for e.g.: 
-
-C:/Temp/AIMA/
-
-Then from within Eclipse, import the extracted projects to your workspace as follows:
+You can import the AIMA-Java projects into your workspace as follows:
   # Select the menu item 'File->Import...'<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_file_import.png
   # In the Import 'Select' dialog, select 'General->Existing Projects into Workspace':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_import_existing.png
-  # In the Import 'Import Projects' dialog enter the location where you extracted the projects (e.g. C:/Temp/AIMA):<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_import_projects.png <br> The three projects, _aima-core_, _aima-gui_, and _aimax-osm_ should be listed and be automatically selected.
+  # Hit the 'Next >' button.
+  # In the Import 'Import Projects' select the 'Select archive file:' radio button and 'Browse...' to the .zip release file you previously downloaed from the project's website :<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_import_projects.png <br> The three projects, _aima-core_, _aima-gui_, and _aimax-osm_ should be listed and be automatically selected.
   # Hit the 'Finish' button.
  
 === Using the Subversion repository directly ===
@@ -61,11 +58,18 @@ Once you've setup the AIMA-Java projects in your Eclipse workspace, it should lo
 http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_setup.png
 
 === Some useful Eclipse tips ===
-  # Useful views to use in Eclipse.
-  # References->Workspace
-
-
-== Running Test and Programs ==
+  * Useful Eclipse views for development can be displayed inside of your Eclipse IDE by selecting the menu item 'Window->Show View' and selecting those of interest:<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_views.png <br> Some useful ones to select are:
+    # Console (Window->Show View->Console).
+    # Search (Window->Show View->Search).
+    # Type Hierarchy (Window->Show View->Type Hierarchy).
+    # JUnit (Window->Show View->Other...->Java->JUnit).
+    # Ant (Window->Show View->Ant).
+    # SVN Repositories (Assuming Subclipse installed, Window->Show View->Other...->SVN->SVN Repositories).
+      # History (Window->Show View->Other...->Team->History). 
+  * If you wish to find out where a particular algorithm is used, e.g. BreadthFirstSearch, open up the corresponding .java file in the Eclipse editor, select the class name and then open the context sensitive menu (right click on Windows) and select the menu item 'References->Workspace': <br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_references_workspace.png <br>
+  * Running a JUnit test from within Eclipse can be done by selecting a test of interest, for e.g.:<br> aima-core/src/test/java/aima/test/core/unit/AllAIMAUnitTestSuite.java<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_run_junit.png <br> A similar approach can be used for running  Java Applications (i.e. the .java file has a 'public static void main(String[] args) {' method in it). These are found in the _aima-gui_ and _aimax-osm_ projects. Example:<br> aima-gui/src/main/java/aima/gui/AimaDemoApp.java<br> 
+  
+== Running Tests and Programs ==
 
 aima.test.core.unit.AllAIMAUnitTestSuite
 
