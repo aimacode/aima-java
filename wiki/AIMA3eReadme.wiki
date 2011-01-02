@@ -7,6 +7,10 @@ The latest (and ever evolving) code can be found at:<br>
 
 http://aima-java.googlecode.com/svn/trunk/
 
+A quick overview on how to get set up and started using the AIMA-Java projects can be found at:<br>
+
+http://code.google.com/p/aima-java/wiki/GettingStarted
+
 == Current Release: 1.4.0-OSM-Redesign ==
 1.4.0-OSM-Redesign : 19 Dec 2010 :<br>
 Redesign of AIMAX-OSM implementation. Fixes for failed compilations and tests on UBUNTU platform. 
