@@ -34,25 +34,25 @@ C:\Program Files\Java\jdk1.6.0\bin
 *Note:* You do not need to use the provided <a href="http://ant.apache.org/">Ant</a> build.xml files if you are using the Eclipse IDE.
 
 === Importing a downloaded release ===
-Extract the contents of the downloaded .zip file to a local director, for e.g.: 
+Extract the contents of the downloaded .zip file to a local directory from which you wish to work, for e.g.: 
 
 C:/Temp/AIMA/
 
-The from within Eclipse, import the extracted projects to your workspace as follows:
-  # Select the menu items 'File->Import...'<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_file_import.png
-  # In the Import 'Select' dialog, select 'General->Existing Projects into Workspace':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_import_existing.png
-  # In the Import 'Import Projects' dialog enter the location where you extracted the projects (e.g. C:/Temp/AIMA):<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eblipse_import_projects.png <br> The three projects, _aima-core_, _aima-gui_, and _aimax-osm_ should be listed and be automatically selected.
+Then from within Eclipse, import the extracted projects to your workspace as follows:
+  # Select the menu item 'File->Import...'<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_file_import.png
+  # In the Import 'Select' dialog, select 'General->Existing Projects into Workspace':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_import_existing.png
+  # In the Import 'Import Projects' dialog enter the location where you extracted the projects (e.g. C:/Temp/AIMA):<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_import_projects.png <br> The three projects, _aima-core_, _aima-gui_, and _aimax-osm_ should be listed and be automatically selected.
   # Hit the 'Finish' button.
  
 === Using the Subversion repository directly ===
 *Note:* The <a href="http://subclipse.tigris.org/">Subclipse</a> Subversion client is a useful plugin for the Eclipse IDE. Refer to http://subclipse.tigris.org/ for details on how to setup your Eclipse IDE to use the plugin. The following instructions detail how to download the AIMA-Java project using this plugin. 
 
-  # Select the menu items 'File->New->Other':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other.png
+  # Select the menu item 'File->New->Other':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other.png
   # In the New 'Select a wizard' dialog, select 'SVN->Checkout Projects from SVN':<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_new_other_svn.png
   # Hit the 'Next >' button.
   # If this is your first time accessing the AIMA-Java Subversion repository you will want to select 'Create a new repository location' and hit the 'Next >' button otherwise just enter in the pre-existing location from the list provided.
     # In the 'Select/Create Location' dialog, enter the following location:<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_svn_create_location.png <br> and then hit the 'Next >' button to complete setting up the location.  
-  # In the 'Select Folder' dialog, select the project you wish to download to your local workspace, starting with _aima-core_, for e.g.:<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/elipse_select_new_project.png
+  # In the 'Select Folder' dialog, select the project you wish to download to your local workspace, starting with _aima-core_, for e.g.:<br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/eclipse_select_new_project.png
   # You may now hit the 'Finish' button and the project should be downloaded to your local Eclipse workspace.
 
 *WARNING* If you have multiple Subversion clients installed locally, do not mix and match their usage within a single workspace, as it can often corrupt your local workspace due to incompatible local meta-data usage between the different clients. 
