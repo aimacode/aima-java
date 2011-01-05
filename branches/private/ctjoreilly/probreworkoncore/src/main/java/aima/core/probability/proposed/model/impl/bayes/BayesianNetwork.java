@@ -60,10 +60,7 @@ public class BayesianNetwork {
 					"Duplicate Root Nodes Passed in.");
 		}
 		// Ensure is a DAG
-		HashSet<Node> seenAlready = new HashSet<Node>();
-		for (Node n : this.rootNodes) {
-			checkIsDAGAndCollectVariables(n, seenAlready);
-		}
+		checkIsDAGAndCollectVariablesInTopologicalOrder();
 		variables = Collections.unmodifiableList(variables);
 	}
 
@@ -82,16 +79,49 @@ public class BayesianNetwork {
 	//
 	// PRIVATE METHODS
 	//
-	private void checkIsDAGAndCollectVariables(Node n, Set<Node> seenAlready) {
-		if (seenAlready.contains(n)) {
-			throw new IllegalArgumentException(
-					"Network contains a cycle and is therefore not a DAG:" + n);
+	private void checkIsDAGAndCollectVariablesInTopologicalOrder() {
+
+		// Topological sort based on logic described at:
+		// http://en.wikipedia.org/wiki/Topoligical_sorting
+		Set<Node> seenAlready = new HashSet<Node>();
+		Map<Node, List<Node>> incomingEdges = new HashMap<Node, List<Node>>();
+		Set<Node> s = new LinkedHashSet<Node>();
+		for (Node n : this.rootNodes) {
+			walkNode(n, seenAlready, incomingEdges, s);
 		}
-		seenAlready.add(n);
-		variables.add(n.getRandomVariable());
-		varToNodeMap.put(n.getRandomVariable(), n);
-		for (Node c : n.getChildren()) {
-			checkIsDAGAndCollectVariables(c, seenAlready);
+		while (!s.isEmpty()) {
+			Node n = s.iterator().next();
+			s.remove(n);
+			variables.add(n.getRandomVariable());
+			varToNodeMap.put(n.getRandomVariable(), n);
+			for (Node m : n.getChildren()) {
+				List<Node> edges = incomingEdges.get(m);
+				edges.remove(n);
+				if (edges.isEmpty()) {
+					s.add(m);
+				}
+			}
+		}
+		
+		for (List<Node> edges : incomingEdges.values()) {
+			if (!edges.isEmpty()) {
+				throw new IllegalArgumentException("Network contains at least one cycle in it, must be a DAG.");
+			}
+		}
+	} 
+
+	private void walkNode(Node n, Set<Node> seenAlready,
+			Map<Node, List<Node>> incomingEdges, Set<Node> rootNodes) {
+		if (!seenAlready.contains(n)) {
+			seenAlready.add(n);
+			// Check if has no incoming edges
+			if (n.isRoot()) {
+				rootNodes.add(n);
+			}
+			incomingEdges.put(n, new ArrayList<Node>(n.getParents()));
+			for (Node c : n.getChildren()) {
+				walkNode(c, seenAlready, incomingEdges, rootNodes);
+			}
 		}
 	}
 }

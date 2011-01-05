@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class ArbitraryTokenDomain {
+public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	private Set<String> possibleValues = null;
 
@@ -33,12 +33,12 @@ public class ArbitraryTokenDomain {
 	//
 
 	//
-	// START-DiscreteDomain
+	// START-FiniteDomain
 	public Set<String> getPossibleValues() {
 		return possibleValues;
 	}
 
-	// END-DiscreteDomain
+	// END-finiteDomain
 	//
 	
 	@Override

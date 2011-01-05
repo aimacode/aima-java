@@ -23,10 +23,10 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	//
 	
 	//
-	// START-DiscreteDomain
+	// START-FiniteDomain
 	public abstract Set<? extends Object> getPossibleValues();
 	
-	// END-DiscreteDomain
+	// END-FiniteDomain
 	//
 	
 	@Override

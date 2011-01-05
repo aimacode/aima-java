@@ -139,6 +139,8 @@ public class EnumerationAsk {
 	protected class ObservedEvidence {
 		private BayesianNetwork bn = null;
 		private AssignmentProposition[] extendedValues = null;
+		private int hiddenStart = 0;
+		private int extendedIdx = 0;
 		private RandomVariable[] var = null;
 		private Map<RandomVariable, Integer> varIdxs = new HashMap<RandomVariable, Integer>();
 
@@ -163,6 +165,8 @@ public class EnumerationAsk {
 				extendedValues[idx] = e[i];
 				idx++;
 			}
+			extendedIdx = idx-1;
+			hiddenStart = idx;
 			// the remaining slots are left open for the hidden variables
 			for (RandomVariable rv : bn.getVariablesInTopologicalOrder()) {
 				if (!varIdxs.containsKey(rv)) {
@@ -174,12 +178,18 @@ public class EnumerationAsk {
 		}
 
 		public void setExtendedValue(RandomVariable rv, Object value) {
-			extendedValues[varIdxs.get(rv)] = new AssignmentProposition(rv,
+			int idx = varIdxs.get(rv);
+			extendedValues[idx] = new AssignmentProposition(rv,
 					value);
+			if (idx >= hiddenStart) {
+				extendedIdx = idx;
+			} else {
+				extendedIdx = hiddenStart-1;
+			}
 		}
 
 		public boolean containsValue(RandomVariable rv) {
-			return null != extendedValues[varIdxs.get(rv)];
+			return varIdxs.get(rv) <= extendedIdx;
 		}
 
 		public double posteriorForParents(RandomVariable rv) {
