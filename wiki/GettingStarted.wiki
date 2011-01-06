@@ -1,5 +1,5 @@
+#summary Getting started using the AIMA-Java projects.
 #labels Featured
-#Getting started using the AIMA-Java projects.
 
 = Setting up your workspace =
 The latest release can be downloaded as a single compressed .zip file, from the project's download page: 
