@@ -12,6 +12,11 @@ import aima.core.probability.proposed.model.impl.bayes.example.BayesNetExampleFa
 import aima.core.probability.proposed.model.impl.bayes.inference.exact.EnumerationAsk;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ */
 public class EnumerationAskTest {
 	//
 	private EnumerationAsk enumerationAsk = new EnumerationAsk();
@@ -68,27 +73,9 @@ public class EnumerationAskTest {
 	public void testInferenceOnBurglaryAlarmNetwork() {
 		BayesianNetwork bn = BayesNetExampleFactory
 				.constructBurglaryAlarmNetwork();
-		
-		// AIMA3e pg.
-		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
+
+		// AIMA3e. pg. 514
 		Distribution d = enumerationAsk.enumerationAsk(
-				new RandomVariable[] { BayesNetExampleFactory.BURGLARY_RV },
-				new AssignmentProposition[] {
-						new AssignmentProposition(
-								BayesNetExampleFactory.JOHN_CALLS_RV, true),
-						new AssignmentProposition(
-								BayesNetExampleFactory.MARY_CALLS_RV, true) },
-				bn);
-
-		// System.out.println("P(Burglary | j, m)=" + d);
-		Assert.assertEquals(2, d.getValues().length);
-		Assert.assertEquals(0.2841718353643929, d.getValues()[0],
-				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
-		Assert.assertEquals(0.7158281646356071, d.getValues()[1],
-				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
-
-		// pg. 514
-		d = enumerationAsk.enumerationAsk(
 				new RandomVariable[] { BayesNetExampleFactory.ALARM_RV },
 				new AssignmentProposition[] {
 						new AssignmentProposition(
@@ -107,5 +94,42 @@ public class EnumerationAskTest {
 				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
 		Assert.assertEquals(0.44223107569721115, d.getValues()[1],
 				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
+
+		// AIMA3e pg. 523
+		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
+		d = enumerationAsk.enumerationAsk(
+				new RandomVariable[] { BayesNetExampleFactory.BURGLARY_RV },
+				new AssignmentProposition[] {
+						new AssignmentProposition(
+								BayesNetExampleFactory.JOHN_CALLS_RV, true),
+						new AssignmentProposition(
+								BayesNetExampleFactory.MARY_CALLS_RV, true) },
+				bn);
+
+		// System.out.println("P(Burglary | j, m)=" + d);
+		Assert.assertEquals(2, d.getValues().length);
+		Assert.assertEquals(0.2841718353643929, d.getValues()[0],
+				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
+		Assert.assertEquals(0.7158281646356071, d.getValues()[1],
+				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
+
+		// AIMA3e pg. 528
+		// P(JohnCalls | Burglary = true)
+		d = enumerationAsk.enumerationAsk(
+				new RandomVariable[] { BayesNetExampleFactory.JOHN_CALLS_RV },
+				new AssignmentProposition[] { new AssignmentProposition(
+						BayesNetExampleFactory.BURGLARY_RV, true) }, bn);
+		// TODO:- ensure correct
+		System.out.println("P(JohnCalls | b)=" + d);
+	}
+	
+	@Test
+	public void testAIMAPg529() {
+		Assert.fail("TODO implement model described in figure A.");
+	}
+	
+	@Test
+	public void testAIMAPg569() {
+		Assert.fail("TODO implement model described in figure 15.2");
 	}
 }

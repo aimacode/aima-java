@@ -81,7 +81,7 @@ public abstract class CommonFiniteProbabilityModelTests extends CommonProbabilit
 	protected void test_BurglaryAlarmModel_Distributions(ProbabilityModel model, RandomVariable burglaryRV, RandomVariable earthQuakeRV, RandomVariable alarmRV, RandomVariable johnCallsRV, RandomVariable maryCallsRV) {
 		Assert.fail("TODO");
 		
-		// AIMA3e pg.
+		// AIMA3e pg. 523
 		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
 	}
 }
