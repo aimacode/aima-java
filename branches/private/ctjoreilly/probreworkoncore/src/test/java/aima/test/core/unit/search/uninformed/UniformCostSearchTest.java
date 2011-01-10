@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.agent.Action;
+import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
@@ -87,5 +88,34 @@ public class UniformCostSearchTest {
 						actions.toString());
 		Assert.assertEquals("278.0", search.getMetrics().get(
 				QueueSearch.METRIC_PATH_COST));
+	}
+	
+	@Test
+	public void testCheckFrontierPathCost() throws Exception {
+		ExtendableMap map = new ExtendableMap();
+		map.addBidirectionalLink("start", "b", 2.5);
+		map.addBidirectionalLink("start", "c", 1.0);
+		map.addBidirectionalLink("b", "d", 2.0);
+		map.addBidirectionalLink("c", "d", 4.0);
+		map.addBidirectionalLink("c", "e", 1.0);
+		map.addBidirectionalLink("d", "goal", 1.0);
+		map.addBidirectionalLink("e", "goal", 5.0);
+		Problem problem = new Problem("start",
+				MapFunctionFactory.getActionsFunction(map),
+				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
+						"goal"),
+				new MapStepCostFunction(map));
+		
+		Search search = new UniformCostSearch();
+		SearchAgent agent = new SearchAgent(problem, search);
+
+		List<Action> actions = agent.getActions();
+
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
+						actions.toString());
+		Assert.assertEquals("5.5", search.getMetrics().get(
+				QueueSearch.METRIC_PATH_COST));	
 	}
 }
