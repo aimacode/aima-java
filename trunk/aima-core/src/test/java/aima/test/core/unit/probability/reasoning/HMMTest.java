@@ -74,10 +74,10 @@ public class HMMTest {
 				.createUnitBelief();
 
 		RandomVariable smoothed = rainmanHmm.calculate_next_backward_message(
-				afterOneStep, postSequence, HmmConstants.SEE_UMBRELLA);
-		Assert.assertEquals(0.883, smoothed
+				postSequence, HmmConstants.SEE_UMBRELLA);
+		Assert.assertEquals(0.627, smoothed
 				.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-		Assert.assertEquals(0.117, smoothed
+		Assert.assertEquals(0.373, smoothed
 				.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 	}
 
@@ -92,9 +92,9 @@ public class HMMTest {
 
 		Assert.assertNull(results.get(0));
 		RandomVariable smoothedDayOne = results.get(1);
-		Assert.assertEquals(0.982, smoothedDayOne
+		Assert.assertEquals(0.883, smoothedDayOne
 				.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-		Assert.assertEquals(0.018, smoothedDayOne
+		Assert.assertEquals(0.117, smoothedDayOne
 				.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 
 		RandomVariable smoothedDayTwo = results.get(2);
@@ -116,15 +116,15 @@ public class HMMTest {
 		Assert.assertNull(results.get(0));
 
 		RandomVariable smoothedDayOne = results.get(1);
-		Assert.assertEquals(0.964, smoothedDayOne
+		Assert.assertEquals(0.861, smoothedDayOne
 				.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-		Assert.assertEquals(0.036, smoothedDayOne
+		Assert.assertEquals(0.138, smoothedDayOne
 				.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 
 		RandomVariable smoothedDayTwo = results.get(2);
-		Assert.assertEquals(0.484, smoothedDayTwo
+		Assert.assertEquals(0.799, smoothedDayTwo
 				.getProbabilityOf(HmmConstants.RAINING), TOLERANCE);
-		Assert.assertEquals(0.516, smoothedDayTwo
+		Assert.assertEquals(0.201, smoothedDayTwo
 				.getProbabilityOf(HmmConstants.NOT_RAINING), TOLERANCE);
 
 		RandomVariable smoothedDayThree = results.get(3);

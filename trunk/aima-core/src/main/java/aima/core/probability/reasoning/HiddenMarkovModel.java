@@ -69,7 +69,6 @@ public class HiddenMarkovModel {
 	}
 
 	public RandomVariable calculate_next_backward_message(
-			RandomVariable forwardBelief,
 			RandomVariable present_backward_message, String perception) {
 		RandomVariable result = present_backward_message.duplicate();
 		// System.out.println("fb :-calculating new backward message");
@@ -86,9 +85,8 @@ public class HiddenMarkovModel {
 		// +present_backward_message);
 		Matrix backwardMatrix = transitionMatrix.times(oMatrix
 				.times(present_backward_message.asMatrix()));
-		Matrix resultMatrix = backwardMatrix.arrayTimes(forwardBelief
-				.asMatrix());
-		result.updateFrom(resultMatrix);
+
+		result.updateFrom(backwardMatrix);
 		result.normalize();
 		// System.out.println("fb :-normalized new backward message = "
 		// +result);
@@ -118,7 +116,7 @@ public class HiddenMarkovModel {
 			smoothed.normalize();
 			smoothedBeliefs[i] = smoothed;
 			backwardMessage = calculate_next_backward_message(
-					forwardMessages[i], backwardMessage, perceptions.get(i - 1));
+					backwardMessage, perceptions.get(i - 1));
 		}
 
 		return Arrays.asList(smoothedBeliefs);
