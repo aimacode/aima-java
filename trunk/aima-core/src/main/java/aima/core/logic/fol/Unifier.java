@@ -1,10 +1,8 @@
 package aima.core.logic.fol;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import aima.core.logic.fol.parsing.ast.FOLNode;
 import aima.core.logic.fol.parsing.ast.Function;
@@ -127,27 +125,26 @@ public class Unifier {
 	// to re-implement the OCCUR-CHECK?() to always
 	// return false if you want that to be the default
 	// behavior, as is the case with Prolog.
+	// Note: Implementation is based on unify-bug.pdf document by Peter Norvig:
+	// http://norvig.com/unify-bug.pdf
 	protected boolean occurCheck(Map<Variable, Term> theta, Variable var,
 			FOLNode x) {
-		if (x instanceof Function) {
-			Set<Variable> varsToCheck = _variableCollector
-					.collectAllVariables((Function) x);
-			if (varsToCheck.contains(var)) {
-				return true;
+		// ((equal var x) t)
+		if (var.equals(x)) {
+			return true;
+		// ((bound? x subst)
+		} else if (theta.containsKey(x)) {
+			//  (occurs-in? var (lookup x subst) subst))
+			return occurCheck(theta, var, theta.get(x));
+		// ((consp x) (or (occurs-in? var (first x) subst) (occurs-in? var (rest x) subst)))
+		} else if (x instanceof Function) {
+			// (or (occurs-in? var (first x) subst) (occurs-in? var (rest x) subst)))
+			Function fx = (Function) x;
+			for (Term fxt : fx.getArgs()) {
+				if (occurCheck(theta, var, fxt)) {
+					return true;
+				}
 			}
-
-			// Now need to check if cascading will cause occurs to happen
-			// e.g.
-			// Loves(SF1(v2),v2)
-			// Loves(v3,SF0(v3))
-			// or
-			// P(v1,SF0(v1),SF0(v1))
-			// P(v2,SF0(v2),v2 )
-			// or
-			// P(v1, F(v2),F(v2),F(v2),v1, F(F(v1)),F(F(F(v1))),v2)
-			// P(F(v3),v4, v5, v6, F(F(v5)),v4, F(v3), F(F(v5)))
-			return cascadeOccurCheck(theta, var, varsToCheck,
-					new HashSet<Variable>(varsToCheck));
 		}
 		return false;
 	}
@@ -208,57 +205,23 @@ public class Unifier {
 		return x.isCompound();
 	}
 
-	private boolean cascadeOccurCheck(Map<Variable, Term> theta, Variable var,
-			Set<Variable> varsToCheck, Set<Variable> varsCheckedAlready) {
-		// Want to check if any of the variable to check end up
-		// looping back around on the new variable.
-		Set<Variable> nextLevelToCheck = new HashSet<Variable>();
-		for (Variable v : varsToCheck) {
-			Term t = theta.get(v);
-			if (null == t) {
-				// Variable may not be a key so skip
-				continue;
-			}
-			if (t.equals(var)) {
-				// e.g.
-				// v1=v2
-				// v2=SFO(v1)
-				return true;
-			} else if (t instanceof Function) {
-				// Need to ensure the function this variable
-				// is to be replaced by does not contain var.
-				Set<Variable> indirectvars = _variableCollector
-						.collectAllVariables(t);
-				if (indirectvars.contains(var)) {
-					return true;
-				} else {
-					// Determine the next cascade/level
-					// of variables to check for looping
-					for (Variable iv : indirectvars) {
-						if (!varsCheckedAlready.contains(iv)) {
-							nextLevelToCheck.add(iv);
-						}
-					}
-				}
-			}
-		}
-		if (nextLevelToCheck.size() > 0) {
-			varsCheckedAlready.addAll(nextLevelToCheck);
-			return cascadeOccurCheck(theta, var, nextLevelToCheck,
-					varsCheckedAlready);
-		}
-		return false;
-	}
-
 	// See:
 	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
 	// for need for this.
-	private void cascadeSubstitution(Map<Variable, Term> theta, Variable var,
+	private Map<Variable, Term> cascadeSubstitution(Map<Variable, Term> theta, Variable var,
 			Term x) {
 		theta.put(var, x);
 		for (Variable v : theta.keySet()) {
-			Term t = theta.get(v);
-			theta.put(v, _substVisitor.subst(theta, t));
+			theta.put(v, _substVisitor.subst(theta, theta.get(v)));
 		}
+		// Ensure Function Terms are correctly updates by passing over them again
+		// Fix for testBadCascadeSubstitution_LCL418_1()
+		for (Variable v : theta.keySet()) {
+			Term t = theta.get(v);
+			if (t instanceof Function) {
+				theta.put(v, _substVisitor.subst(theta, t));
+			}
+		}
+		return theta;
 	}
 }

@@ -270,7 +270,7 @@ public class Clause {
 		return subsumes;
 	}
 
-	// Note: Applies binary resolution rule and factoring
+	// Note: Applies binary resolution rule
 	// Note: returns a set with an empty clause if both clauses
 	// are empty, otherwise returns a set of binary resolvents.
 	public Set<Clause> binaryResolvents(Clause othC) {
@@ -347,7 +347,8 @@ public class Clause {
 										_saIndexical);
 						Clause c = new Clause(copyRPosLits, copyRNegLits);
 						c.setProofStep(new ProofStepClauseBinaryResolvent(c,
-								this, othC, copyRBindings, renameSubstitituon));
+								pl, nl, this, othC, copyRBindings,
+								renameSubstitituon));
 						if (isImmutable()) {
 							c.setImmutable();
 						}
@@ -479,10 +480,12 @@ public class Clause {
 							negLits.add(_substVisitor.subst(substitution, nl));
 						}
 						// Ensure the non trivial factor is standardized apart
-						_standardizeApart.standardizeApart(posLits, negLits,
-								_saIndexical);
+						Map<Variable, Term> renameSubst = _standardizeApart
+								.standardizeApart(posLits, negLits,
+										_saIndexical);
 						Clause c = new Clause(posLits, negLits);
-						c.setProofStep(new ProofStepClauseFactor(c, this));
+						c.setProofStep(new ProofStepClauseFactor(c, this, litX,
+								litY, substitution, renameSubst));
 						if (isImmutable()) {
 							c.setImmutable();
 						}
