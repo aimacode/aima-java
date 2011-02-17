@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileFilter;
 
+import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
 /**
@@ -127,8 +128,8 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 							new FileInputStream(xmlFile)));
 					int size = (Integer) decoder.readObject();
 					for (int i = 0; i < size; i++) {
-						MapNode node = (MapNode) decoder.readObject();
-						pane.getMap().addMarker(node.getLat(), node.getLon());
+						WritablePosition pos = (WritablePosition) decoder.readObject();
+						pane.getMap().addMarker(pos.getLat(), pos.getLon());
 					}
 					pane.fireMapViewEvent(new MapViewEvent(pane,
 							MapViewEvent.Type.MARKER_ADDED));
@@ -143,7 +144,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			XMLEncoder encoder = null;
 			try {
 				File xmlFile = null;
-				if (getFileChooser().showDialog(pane, "Load Markers") == JFileChooser.APPROVE_OPTION) {
+				if (getFileChooser().showDialog(pane, "Save Markers") == JFileChooser.APPROVE_OPTION) {
 					xmlFile = getFileChooser().getSelectedFile();
 					if (!xmlFile.getPath().contains("."))
 						xmlFile = new File(xmlFile.getPath() + ".xml");
@@ -151,7 +152,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 							new FileOutputStream(xmlFile)));
 					encoder.writeObject(pane.getMap().getMarkers().size());
 					for (MapNode node : pane.getMap().getMarkers())
-						encoder.writeObject(node);
+						encoder.writeObject(new WritablePosition(node));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -173,5 +174,28 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 			fileChooser.setFileFilter(filter);
 		}
 		return fileChooser;
+	}
+	
+	/**
+	 * Provides a position implementation with full java bean interface which is suitable
+	 * for xml serialization.
+	 * @author Ruediger Lunde
+	 */
+	public static class WritablePosition extends Position {
+		public WritablePosition() {
+			super(0f, 0f);
+		}
+		
+		public WritablePosition(MapNode node) {
+			super(node);
+		}
+	
+		public void setLat(float lat) {
+			this.lat = lat;
+		}
+		
+		public void setLon(float lon) {
+			this.lon = lon;
+		}
 	}
 }
