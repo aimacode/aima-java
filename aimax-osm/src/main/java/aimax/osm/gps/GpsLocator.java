@@ -105,31 +105,33 @@ public class GpsLocator implements NmeaReader.NmeaMessageListener {
 	 * Parses the position data currently in buffer, updates the
 	 * the current position and informs all interested listeners.
 	 */
-	public void messageReceived(StringBuffer buffer) {
-		if (buffer.length() > 60 && buffer.substring(0, 6).equals("$GPGGA")) {
+	public void messageReceived(String message) {
+		if (message.startsWith("$GPGGA")) {
 		// System.out.println(buffer.toString());
+		// idx:   1          2         3 4          5 6 7  8    9         11   12 14
 		// $GPGGA,120007.000,5056.2197,N,02406.0867,W,0,00,99.9,12787.4,M,62.0,M,,0000*7B (NL-402U)
 		// $GPGGA,103131.000,4824.2758,N,00959.9357,E,1,06,1.3,458.5,M,43.9,M,,0000*54
-		//        7     13   18   23     30    36     43
 		// $GPGGA,044944,4824.3044,N,00959.9409,E,1,05,3.1,451.0,M,46.8,M,,*4E
+			String[] mparts = message.split(",");
+			if (mparts.length != 15)
+				return;
 			boolean posOK = true;
 			float lat;
 			float lon;
-			int x = (buffer.charAt(13) == '.') ? 0 : -4;
 			
-			if (buffer.charAt(43+x) == '0')
+			if (mparts[6].equals("0"))
 				posOK = false;
 			
-			float deg = Float.parseFloat(buffer.substring(18+x, 20+x));
-			float min = Float.parseFloat(buffer.substring(20+x, 27+x));
+			float deg = Float.parseFloat(mparts[2].substring(0, 2));
+			float min = Float.parseFloat(mparts[2].substring(2));
 			lat = deg + min / 60.0f;
-			if (buffer.charAt(28+x) == 'S')
+			if (mparts[3].equals("S"))
 				lat = -lat;
 			
-			deg = Float.parseFloat(buffer.substring(30+x, 33+x));
-			min = Float.parseFloat(buffer.substring(33+x, 40+x));
+			deg = Float.parseFloat(mparts[4].substring(0, 3));
+			min = Float.parseFloat(mparts[4].substring(3));
 			lon = deg + min / 60.0f;
-			if (buffer.charAt(28+x) == 'W')
+			if (mparts[5].equals("W"))
 				lon = -lon;
 			currPosition = new GpsFix(posOK, lat, lon);
 			//System.out.println(currPosition);
