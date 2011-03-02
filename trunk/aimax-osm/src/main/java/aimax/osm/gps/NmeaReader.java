@@ -47,8 +47,9 @@ public abstract class NmeaReader {
 				if(mybyte == '$' && buffer.length() > 5) {
 					if (buffer.charAt(0) == '$') {
 						//System.out.println("Available: " + inputStream.available());
+						String message = buffer.toString();
 						for (NmeaMessageListener listener : listeners)
-							listener.messageReceived(buffer);
+							listener.messageReceived(message);
 					}
 					messageReceived = true;
 					buffer.delete(0, buffer.length());
@@ -72,7 +73,7 @@ public abstract class NmeaReader {
 	}
 
 	public static interface NmeaMessageListener {
-		public void messageReceived(StringBuffer message);
+		public void messageReceived(String message);
 	}
 	
 	
@@ -97,10 +98,10 @@ public abstract class NmeaReader {
 			}
 		}
 		
-		public void messageReceived(StringBuffer message) {
+		public void messageReceived(String message) {
 			try {
 				if (streamWriter != null) {
-					streamWriter.write(message.toString());
+					streamWriter.write(message);
 					if (++count % 20 == 0)
 						streamWriter.flush();
 				}
