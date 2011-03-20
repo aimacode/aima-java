@@ -52,13 +52,11 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-== Current Release: 2.0.0-AIMAX-OSM Redesign to support DBs == 
-2.0.0-AIMAX-OSM Redesign to support DBs : 19 Dec 2010 :<br>
-   * Package aima.osm.data is now based on interfaces (implementations selected by factory)
-   * Data access operations now designed to support representations using databases.
-   * Map readers and writers changed so that that parts of the map can be loaded incrementally.
-   * Find functionality improved.
-   * Library commmons-compress-1.0.jar replaced by version 1.1 - update your build path!
+== Current Release: 2.0.1-AIMAX-OSM Minor Fixes == 
+2.0.1-AIMAX-OSM Minor Fixes : 20 Mar 2011 :<br>
+   * Defect fix, markers can be loaded and saved again without error.
+   * NmeaReader improved. Now supports more GPS devices.
+   * Correctly including commons-compress-1.1.jar in release.
 
 == Keywords ==
 
@@ -145,7 +143,13 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
-
+2.0.0-AIMAX-OSM Redesign to support DBs : 19 Dec 2010 :<br>
+   * Package aima.osm.data is now based on interfaces (implementations selected by factory)
+   * Data access operations now designed to support representations using databases.
+   * Map readers and writers changed so that that parts of the map can be loaded incrementally.
+   * Find functionality improved.
+   * Library commmons-compress-1.0.jar replaced by version 1.1 - update your build path!
+   
 1.0.2-AIMAX-OSM Minor Improvements : 05 Nov 2010 :<br>
    * General application starter added.
    * Default map updated.
