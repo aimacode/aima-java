@@ -1,4 +1,4 @@
-Copyright (c) <2003-2010> 
+Copyright (c) <2003-2011> 
 <Ravi Mohan, Peter Norvig, Stuart Russell, Ciaran O'Reilly, Ruediger Lunde>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
