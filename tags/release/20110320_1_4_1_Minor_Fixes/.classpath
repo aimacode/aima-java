@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="aima-core/src/main/java"/>
+	<classpathentry kind="src" path="aima-core/src/test/java"/>
+	<classpathentry kind="src" path="aima-gui/src/main/java"/>
+	<classpathentry kind="src" path="aimax-osm/src/main/java"/>
+	<classpathentry kind="lib" path="aima-all/release/jars/aima-core.jar"/>
+	<classpathentry kind="lib" path="aima-all/release/jars/aima-gui.jar"/>
+	<classpathentry kind="lib" path="aima-all/release/jars/aimax-osm.jar"/>
+	<classpathentry kind="lib" path="aima-core/lib/junit/junit-4.7.jar"/>
+	<classpathentry kind="lib" path="aimax-osm/lib/commons-compress-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
