@@ -46,6 +46,7 @@
    > jarsigner -keystore c:/temp/aima3e.keystore aima-core.jar aima3e
    > jarsigner -keystore c:/temp/aima3e.keystore aima-gui.jar aima3e
    > jarsigner -keystore c:/temp/aima3e.keystore aimax-osm.jar aima3e
+   > jarsigner -keystore c:/temp/aima3e.keystore commons-compress-1.1.jar aima3e
    
 *. commit the changes to the aima-all project
 
