@@ -51,6 +51,8 @@
 
 --- Publish the Release
 
+*. Create SVN tag for the release.
+
 *. Copy the aima-all/release .html, .jnlp files and images directory to JWS host (currently my SRI public_html folder).
 
 *. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.

@@ -17,6 +17,7 @@
     <jar href="jars/aima-core.jar"/>  
     <jar href="jars/aima-gui.jar"/> 
     <jar href="jars/aimax-osm.jar"/> 
+    <jar href="jars/commons-compress-1.1.jar"/>
   </resources>  
   <application-desc main-class="aimax.osm.applications.MiniNaviApp" />
 </jnlp> 
