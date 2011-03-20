@@ -10,15 +10,15 @@ http://aima-java.googlecode.com/svn/trunk/
 
 A quick overview on how to get set up and started using the AIMA-Java projects can be found at:<br>
 
-[GettingStarted]
+http://code.google.com/p/aima-java/wiki/GettingStarted
 
-== Current Release: 1.4.0-OSM-Redesign ==
-1.4.0-OSM-Redesign : 19 Dec 2010 :<br>
-Redesign of AIMAX-OSM implementation. Fixes for failed compilations and tests on UBUNTU platform. 
+== Current Release: 1.4.1-Minor-Fixes ==
+1.4.1-Minor-Fixes : 20 Mar 2011 :<br>
+Defect fixes for aima-core and aimax-osm. 
 This is based on the following sub-project releases:
-  * aima-core (0.9.13) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-core (0.9.14) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (1.0.3)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
-  * aimax-osm (2.0.0)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+  * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Project Organization ==
@@ -32,9 +32,10 @@ This is based on the following sub-project releases:
 == Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
-  * arun.nurak, Issue 56 and 57
-  * param.cool2008, Issue 55
-  * Paul T Keyser, IBM Watson Research Center
+  * sublogical, Issue 58<br>
+  * arun.nurak, Issue 56 and Issue 57<br>
+  * param.cool2008, Issue 55<br>
+  * Paul T Keyser, IBM Watson Research Center, Issue 61<br>
   * Frederico Araujo, PhD student at the University of Texas at Dallas<br>
   * Ali Tozan<br>
   * Carl Anderson, Senior Scientist, ArchimedesModel.com<br>
@@ -48,6 +49,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.4.0-OSM-Redesign : 19 Dec 2010 :<br>
+Redesign of AIMAX-OSM implementation. Fixes for failed compilations and tests on UBUNTU platform. 
+This is based on the following sub-project releases:
+  * aima-core (0.9.13) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.3)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.0)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License.  
+    
 1.3.2-Online+CSP+GUI-Improvements : 05 Nov 2010 :<br>
 Improvements to implementations of Online, CSP, and GUI components. 
 This is based on the following sub-project releases:
