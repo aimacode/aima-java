@@ -7,10 +7,6 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 // TODO - This is a working, to be removed.
 // TODO - On AIMA (on 13.2.2)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
-//		  P(doubles | Dice = 5) - supported as well?
-// TODO - Doubles proposition in common probability model
-//		  test is incorrectly defined - i.e. both pairs need to 
-//		  be the same not, just that their total is even.
 // TODO	- product rule defined (pg. 486) in java doc?
 
 /**
