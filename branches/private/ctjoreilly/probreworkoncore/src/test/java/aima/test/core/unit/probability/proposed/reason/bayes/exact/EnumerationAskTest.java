@@ -1,4 +1,4 @@
-package aima.test.core.unit.probability.proposed.model.bayes.inference.exact;
+package aima.test.core.unit.probability.proposed.reason.bayes.exact;
 
 import junit.framework.Assert;
 
@@ -9,8 +9,8 @@ import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.bayes.BayesianNetwork;
 import aima.core.probability.proposed.model.bayes.example.BayesNetExampleFactory;
-import aima.core.probability.proposed.model.bayes.inference.exact.EnumerationAsk;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
+import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
 
 /**
  * 
