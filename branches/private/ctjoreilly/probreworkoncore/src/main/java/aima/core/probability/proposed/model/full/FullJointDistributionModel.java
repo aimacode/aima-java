@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.model.impl.full;
+package aima.core.probability.proposed.model.full;
 
 import java.util.ArrayList;
 import java.util.Collections;

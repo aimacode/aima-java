@@ -1,11 +1,11 @@
-package aima.core.probability.proposed.model.impl.full.example;
+package aima.core.probability.proposed.model.full.example;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.BooleanDomain;
-import aima.core.probability.proposed.model.impl.full.FullJointDistributionModel;
+import aima.core.probability.proposed.model.full.FullJointDistributionModel;
 
 public class FullJointDistributionToothacheCavityCatchModel extends
 		FullJointDistributionModel {

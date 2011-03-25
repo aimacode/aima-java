@@ -1,11 +1,11 @@
-package aima.test.core.unit.probability.proposed.model.impl.full;
+package aima.test.core.unit.probability.proposed.model.full;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import aima.core.probability.proposed.model.impl.full.example.FullJointDistributionPairFairDiceModel;
-import aima.core.probability.proposed.model.impl.full.example.FullJointDistributionToothacheCavityCatchModel;
+import aima.core.probability.proposed.model.full.example.FullJointDistributionPairFairDiceModel;
+import aima.core.probability.proposed.model.full.example.FullJointDistributionToothacheCavityCatchModel;
 import aima.test.core.unit.probability.proposed.model.CommonFiniteProbabilityModelTests;
 
 public class FullJointProbabilityModelTest extends CommonFiniteProbabilityModelTests {

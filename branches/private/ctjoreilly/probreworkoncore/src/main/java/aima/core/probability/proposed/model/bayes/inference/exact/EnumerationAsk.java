@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.model.impl.bayes.inference.exact;
+package aima.core.probability.proposed.model.bayes.inference.exact;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.RandomVariable;
+import aima.core.probability.proposed.model.bayes.BayesianNetwork;
+import aima.core.probability.proposed.model.bayes.FiniteNode;
+import aima.core.probability.proposed.model.bayes.Node;
 import aima.core.probability.proposed.model.domain.FiniteDomain;
-import aima.core.probability.proposed.model.impl.bayes.BayesianNetwork;
-import aima.core.probability.proposed.model.impl.bayes.FiniteNode;
-import aima.core.probability.proposed.model.impl.bayes.Node;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.util.Util;
 

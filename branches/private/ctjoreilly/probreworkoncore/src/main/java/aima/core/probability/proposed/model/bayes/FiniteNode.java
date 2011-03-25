@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.model.impl.bayes;
+package aima.core.probability.proposed.model.bayes;
 
 import aima.core.probability.proposed.model.RandomVariable;
 

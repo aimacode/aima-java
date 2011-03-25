@@ -4,7 +4,7 @@ import java.util.Set;
 
 import aima.core.probability.proposed.model.proposition.Proposition;
 
-// TODO - This is a working TODO list, to be removed.
+// TODO - This is a working, to be removed.
 // TODO - On AIMA (on 13.2.2)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 //		  P(doubles | Dice = 5) - supported as well?

@@ -1,10 +1,10 @@
-package aima.core.probability.proposed.model.impl.bayes.example;
+package aima.core.probability.proposed.model.bayes.example;
 
 import aima.core.probability.proposed.model.RandomVariable;
+import aima.core.probability.proposed.model.bayes.BayesianNetwork;
+import aima.core.probability.proposed.model.bayes.FiniteNode;
 import aima.core.probability.proposed.model.domain.ArbitraryTokenDomain;
 import aima.core.probability.proposed.model.domain.BooleanDomain;
-import aima.core.probability.proposed.model.impl.bayes.BayesianNetwork;
-import aima.core.probability.proposed.model.impl.bayes.FiniteNode;
 
 public class BayesNetExampleFactory {
 	//
