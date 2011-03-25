@@ -52,7 +52,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 		
 		Proposition conjEvidence = constructConjunction(evidence, 0);
 		
-		// P(X | Y) = P(A AND B)/P(B)
+		// P(X | Y) = P(A AND B)/P(B)  - (13.3 AIMA3e)
 		Proposition aAndB = new ConjunctiveProposition(phi, conjEvidence);
 		double probabilityAandB = probabilityOf(aAndB);
 		if (0 != probabilityAandB) {
@@ -92,7 +92,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 		Distribution.Iterator di = new Distribution.Iterator() {
 			private double probSum = 0;
 			public void iterate(Map<RandomVariable, Object> possibleWorld, double probability) {
-				if (phi.matches(possibleWorld)) {
+				if (phi.holds(possibleWorld)) {
 					probSum += probability;
 				}
 			}

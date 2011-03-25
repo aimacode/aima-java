@@ -12,7 +12,7 @@ public class RandomVariableProposition extends TermProposition {
 
 
 	@Override
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
 		return possibleWorld.containsKey(getRandomVariable());
 	}
 

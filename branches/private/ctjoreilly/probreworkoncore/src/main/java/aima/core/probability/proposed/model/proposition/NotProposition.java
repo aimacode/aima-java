@@ -18,8 +18,8 @@ public class NotProposition extends UnarySentenceProposition {
 	}
 	
 	@Override
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
-		return !notProp.matches(possibleWorld);
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
+		return !notProp.holds(possibleWorld);
 	}
 	
 	@Override

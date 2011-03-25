@@ -34,7 +34,7 @@ public class IntegerSumProposition extends ConstraintProposition {
 
 	//
 	// START-Proposition
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
 		Integer sum = new Integer(0);
 
 		for (RandomVariable rv : sumVars) {

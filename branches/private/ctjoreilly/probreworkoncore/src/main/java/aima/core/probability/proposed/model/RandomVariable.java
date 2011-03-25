@@ -9,7 +9,7 @@ import aima.core.probability.proposed.model.domain.Domain;
  * begin with an uppercase letter. Every random variable has a domain - the set
  * of possible values it can take on.
  * 
- * @author oreilly
+ * @author Ciaran O'Reilly
  */
 public class RandomVariable {
 

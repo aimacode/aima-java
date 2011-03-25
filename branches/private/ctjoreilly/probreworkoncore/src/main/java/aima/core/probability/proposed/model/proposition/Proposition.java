@@ -13,16 +13,19 @@ import aima.core.probability.proposed.model.RandomVariable;
  * representation, in which a possible world is represented by a set of
  * variable/value pairs.
  * 
- * @author oreilly
+ * @author Ciaran O'Reilly
  */
 public abstract class Proposition {
 
 	/**
+	 * Determine whether or not the proposition holds in a particular possible
+	 * world.
 	 * 
 	 * @param possibleWorld
 	 *            A possible world is defined to be an assignment of values to
 	 *            all of the random variables under consideration.
-	 * @return true if the proposition holds in the given possible world, false otherwise.
+	 * @return true if the proposition holds in the given possible world, false
+	 *         otherwise.
 	 */
-	public abstract boolean matches(Map<RandomVariable, Object> possibleWorld);
+	public abstract boolean holds(Map<RandomVariable, Object> possibleWorld);
 }

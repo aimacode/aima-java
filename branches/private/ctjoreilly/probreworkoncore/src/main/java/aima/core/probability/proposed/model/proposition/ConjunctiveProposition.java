@@ -23,8 +23,8 @@ public class ConjunctiveProposition extends BinarySentenceProposition {
 	}
 	
 	@Override
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
-		return left.matches(possibleWorld) && right.matches(possibleWorld);
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
+		return left.holds(possibleWorld) && right.holds(possibleWorld);
 	}
 	
 	@Override

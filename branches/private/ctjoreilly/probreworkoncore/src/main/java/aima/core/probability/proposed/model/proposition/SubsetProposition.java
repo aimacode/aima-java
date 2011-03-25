@@ -26,7 +26,7 @@ public class SubsetProposition extends ConstraintProposition {
 
 	//
 	// START-Proposition
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
 		return subsetDomain.getPossibleValues().contains(possibleWorld.get(varSubsetOf));
 	}
 	// END-Proposition

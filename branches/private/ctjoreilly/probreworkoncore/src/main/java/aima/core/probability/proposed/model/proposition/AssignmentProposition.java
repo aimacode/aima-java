@@ -26,7 +26,7 @@ public class AssignmentProposition extends TermProposition {
 	
 
 	@Override
-	public boolean matches(Map<RandomVariable, Object> possibleWorld) {		
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {		
 		return value.equals(possibleWorld.get(getRandomVariable()));
 	}
 	

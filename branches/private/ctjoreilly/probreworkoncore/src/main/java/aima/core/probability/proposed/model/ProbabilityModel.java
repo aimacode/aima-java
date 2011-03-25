@@ -4,12 +4,21 @@ import java.util.Set;
 
 import aima.core.probability.proposed.model.proposition.Proposition;
 
+// TODO - This is a working TODO list, to be removed.
+// TODO - On AIMA (on 13.2.2)
+// TODO - P(doubles) = 1/4. How to assert this, pg 485?
+//		  P(doubles | Dice = 5) - supported as well?
+// TODO - Doubles proposition in common probability model
+//		  test is incorrectly defined - i.e. both pairs need to 
+//		  be the same not, just that their total is even.
+// TODO	- product rule defined (pg. 486) in java doc?
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
  * 
  * A fully specified probability model associates a numerical probability
  * P(&omega;) with each possible world. The set of all possible worlds is called
- * the sample space.
+ * the sample space &Omega;.
  * 
  * @author Ciaran O'Reilly
  */
