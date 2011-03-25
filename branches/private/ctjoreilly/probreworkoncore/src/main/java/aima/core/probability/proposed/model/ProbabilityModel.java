@@ -5,7 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working, to be removed.
-// TODO - On AIMA (on 13.2.2)
+// TODO - On AIMA (on 13.2.2 )
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO	- product rule defined (pg. 486) in java doc?
 
