@@ -38,9 +38,10 @@ public class RandomVariable {
 	public static void checkValidRandomVariableName(String name)
 			throws IllegalArgumentException {
 		if (null == name || name.trim().length() == 0
-				|| name.trim().length() != name.length()) {
+				|| name.trim().length() != name.length() 
+				|| name.contains(" ")) {
 			throw new IllegalArgumentException(
-					"Name of RandomVariable must be specified and contain no leading or trailing spaces.");
+					"Name of RandomVariable must be specified and contain no leading, trailing or embedded spaces.");
 		}
 		if (name.substring(0, 1).toLowerCase().equals(name.substring(0, 1))) {
 			throw new IllegalArgumentException(

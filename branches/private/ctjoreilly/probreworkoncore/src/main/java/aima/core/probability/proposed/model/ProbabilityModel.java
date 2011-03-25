@@ -5,9 +5,10 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working, to be removed.
-// TODO - On AIMA (on 13.2.2 )
+// TODO - On AIMA (on 13.2.3)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
-// TODO	- product rule defined (pg. 486) in java doc?
+// TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
+//        and then use its assignment, e.g. Total=11.
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
@@ -30,18 +31,19 @@ public interface ProbabilityModel {
 
 	/**
 	 * 
-	 * @return true, if 0 <= P(&omega;) <= 1 for every &omega; and &sum;<sub>&omega; &isin;
-	 *         &Omega;</sub> P(&omega;) = 1 (Equation 13.1 pg. 484 AIMA3e), false
-	 *         otherwise.
+	 * @return true, if 0 <= P(&omega;) <= 1 for every &omega; and
+	 *         &sum;<sub>&omega; &isin; &Omega;</sub> P(&omega;) = 1 (Equation
+	 *         13.1 pg. 484 AIMA3e), false otherwise.
 	 */
 	boolean isValid();
 
 	/**
-	 * For any proposition &phi;, P(&phi;) = &sum;<sub>&omega; &isin; &phi;</sub> P(&omega;). Refer
-	 * to equation 13.2 page 485 of AIMA3e. Probabilities such as P(Total = 11)
-	 * and P(doubles) are called unconditional or prior probabilities (and
-	 * sometimes just "priors" for short); they refer to degrees of belief in
-	 * propositions in the absence of any other information.
+	 * For any proposition &phi;, P(&phi;) = &sum;<sub>&omega; &isin;
+	 * &phi;</sub> P(&omega;). Refer to equation 13.2 page 485 of AIMA3e.
+	 * Probabilities such as P(Total = 11) and P(doubles) are called
+	 * unconditional or prior probabilities (and sometimes just "priors" for
+	 * short); they refer to degrees of belief in propositions in the absence of
+	 * any other information.
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be
@@ -61,7 +63,7 @@ public interface ProbabilityModel {
 	 * P(a | b) = P(a AND b)/P(b)
 	 * 
 	 * which holds whenever P(b) > 0. Refer to equation 13.3 page 485 of AIMA3e.
-	 * This can be rewritten in a different form called the product rule:
+	 * This can be rewritten in a different form called the <b>product rule</b>:
 	 * 
 	 * P(a AND b) = P(a | b)P(b)
 	 * 
@@ -69,10 +71,10 @@ public interface ProbabilityModel {
 	 * 
 	 * P(a AND b) = P(b | a)P(a)
 	 * 
-	 * whereby, equating the two right-hand sides and dividing by P(a) gives
-	 * you Bayes' rule:
+	 * whereby, equating the two right-hand sides and dividing by P(a) gives you
+	 * Bayes' rule:
 	 * 
-	 * P(b | a) = P(a | b)P(b)/P(a)
+	 * P(b | a) = P(a | b)P(b)/P(a) (i.e. (class likelihood * prior)/evidence)
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be

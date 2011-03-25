@@ -4,6 +4,15 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 486.
+ * 
+ * As in CSPs, domains can be sets of arbitrary tokens; we might choose the
+ * domain of <i>Age</i> to be {<i>juvenile,teen,adult</i>} and the domain of
+ * <i>Weather</i> might be {<i>sunny,rain,cloudy,snow</i>}.
+ * 
+ * @author Ciaran O'Reilly
+ */
 public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	private Set<String> possibleValues = null;
@@ -18,7 +27,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 		possibleValues = Collections.unmodifiableSet(possibleValues);
 	}
 
-	// 
+	//
 	// START-Domain
 
 	public int size() {
@@ -40,7 +49,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	// END-finiteDomain
 	//
-	
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -55,7 +64,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 		return this.possibleValues.equals(other.possibleValues);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return possibleValues.hashCode();

@@ -4,6 +4,13 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 486.
+ * 
+ * A Boolean random variable has the domain {true,false}.
+ * 
+ * @author Ciaran O'Reilly.
+ */
 public class BooleanDomain extends AbstractFiniteDomain {
 
 	private static Set<Boolean> _possibleValues = null;
@@ -20,7 +27,7 @@ public class BooleanDomain extends AbstractFiniteDomain {
 
 	}
 
-	// 
+	//
 	// START-Domain
 
 	public int size() {

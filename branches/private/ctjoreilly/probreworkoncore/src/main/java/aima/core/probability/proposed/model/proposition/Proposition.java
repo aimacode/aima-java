@@ -13,6 +13,9 @@ import aima.core.probability.proposed.model.RandomVariable;
  * representation, in which a possible world is represented by a set of
  * variable/value pairs.
  * 
+ * A possible world is defined to be an assignment of values to all of the
+ * random variables under consideration.
+ * 
  * @author Ciaran O'Reilly
  */
 public abstract class Proposition {

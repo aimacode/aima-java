@@ -62,12 +62,12 @@ public abstract class CommonProbabilityModelTests {
 		}
 
 		// Test Sets of events defined via constraint propositions
-		IntegerSumProposition total11 = new IntegerSumProposition("Total",
+		IntegerSumProposition total11 = new IntegerSumProposition("Total11",
 				new FiniteIntegerDomain(11), dice1RV, dice2RV);
 		Assert.assertEquals(2.0 / 36.0, model.prior(total11), DELTA_THRESHOLD);
 		EquivalentProposition doubles = new EquivalentProposition("Doubles",
 				dice1RV, dice2RV);
-		Assert.assertEquals(1.0/6.0, model.prior(doubles), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0 / 6.0, model.prior(doubles), DELTA_THRESHOLD);
 		SubsetProposition evenDice1 = new SubsetProposition("EvenDice1",
 				new FiniteIntegerDomain(2, 4, 6), dice1RV);
 		Assert.assertEquals(0.5, model.prior(evenDice1), DELTA_THRESHOLD);
@@ -77,19 +77,15 @@ public abstract class CommonProbabilityModelTests {
 
 		// pg. 485 AIMA3e
 		AssignmentProposition dice1Is5 = new AssignmentProposition(dice1RV, 5);
-		Assert.assertEquals(1.0/6.0, model.posterior(doubles, dice1Is5),
+		Assert.assertEquals(1.0 / 6.0, model.posterior(doubles, dice1Is5),
 				DELTA_THRESHOLD);
 
 		RandomVariableProposition dice1 = new RandomVariableProposition(dice1RV);
 		RandomVariableProposition dice2 = new RandomVariableProposition(dice2RV);
 		Assert.assertEquals(1.0, model.prior(dice1), DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.prior(dice2), DELTA_THRESHOLD);
-		Assert
-				.assertEquals(1.0, model.posterior(dice1, dice2),
-						DELTA_THRESHOLD);
-		Assert
-				.assertEquals(1.0, model.posterior(dice2, dice1),
-						DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice1, dice2), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice2, dice1), DELTA_THRESHOLD);
 	}
 
 	protected void test_ToothacheCavityCatchModel(ProbabilityModel model,
@@ -110,10 +106,12 @@ public abstract class CommonProbabilityModelTests {
 				DELTA_THRESHOLD);
 		ConjunctiveProposition toothacheAndNotCavity = new ConjunctiveProposition(
 				atoothache, anotcavity);
-		Assert.assertEquals(0.0, model
-				.posterior(acavity, toothacheAndNotCavity), DELTA_THRESHOLD);
-		Assert.assertEquals(0.0, model.posterior(acavity, atoothache,
-				anotcavity), DELTA_THRESHOLD);
+		Assert.assertEquals(0.0,
+				model.posterior(acavity, toothacheAndNotCavity),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(0.0,
+				model.posterior(acavity, atoothache, anotcavity),
+				DELTA_THRESHOLD);
 
 		// AIMA3e pg. 493
 		Assert.assertEquals(0.4, model.posterior(anotcavity, atoothache),
@@ -155,6 +153,11 @@ public abstract class CommonProbabilityModelTests {
 			RandomVariable cavityRV, RandomVariable catchRV,
 			RandomVariable weatherRV) {
 		Assert.fail("TODO");
+		
+		// AIMA3e pg. 488
+		// P(sunny, cavity)
+		// P(sunny AND cavity)
+		// P(sunny) = 0.6
 	}
 
 	// AIMA3e pg. 512

@@ -53,6 +53,11 @@ public class FullJointProbabilityModelTest extends CommonFiniteProbabilityModelT
 	}
 	
 	@Test
+	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
+		Assert.fail("TODO");
+	}
+	
+	@Test
 	public void test_BurglaryAlarmModel_Distributions() {
 		Assert.fail("TODO");
 	}
