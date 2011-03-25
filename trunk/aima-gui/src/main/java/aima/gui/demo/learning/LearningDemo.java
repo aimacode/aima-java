@@ -144,7 +144,6 @@ public class LearningDemo {
 			int[] result = perc.testOnDataSet(innds);
 			System.out.println(result[0] + " right, " + result[1] + " wrong");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -182,7 +181,6 @@ public class LearningDemo {
 			int[] result = ffnn.testOnDataSet(innds);
 			System.out.println(result[0] + " right, " + result[1] + " wrong");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
