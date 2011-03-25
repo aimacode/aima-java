@@ -146,7 +146,6 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 					new DefaultGoalTest((String) goal) {
 						@Override
 						public boolean isGoalState(Object state) {
-							// TODO Auto-generated method stub
 							visitedStates.add(state);
 							return super.isGoalState(state);
 						}
