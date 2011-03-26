@@ -4,12 +4,14 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.9.12-Online+CSP-Improvements ==
-0.9.12-Online+CSP-Improvements : 05 Nov 2010 :<br>
-  * StateAction replaced by TwoKeyHashMap (Online Search)
-  * NotifyEnvironmentViews renamed to EnvironmentViewNotifier.
-  * Method createExogenousChange reintroduced (from AIMA2e implementation).
-  * CSP constraint propagation result handling code cleaned up.
+== Current Release: 0.9.14-Probability-and-Logic-Fixes ==
+0.9.14-Probability-and-Logic-Fixes : 20 Mar 2011 :<br>
+  * Resolved Issue 58, related to forward-backward algorithm. 
+  * Fixed defect in Unifier that would cause incorrect unifications in particular
+    edge cases (which would cause unsound proofs).
+  * Fixed defect in resolution proof step output, that would show an incorrect
+    unification. In addition, updated proof step information to make easier
+    to read.
  
 = Details =
 
@@ -240,6 +242,18 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.9.13-UBUNTU-Fixes : 19 Dec 2010 :<br>
+  * Resolved Issue 56, related to compilation and test failures on Ubuntu platform.
+  * Propositional ask-tell logic fixed using DPLL.
+  * Map of Australia location corrected.
+  * Minor code clean up/re-factoring
+  
+0.9.12-Online+CSP-Improvements : 05 Nov 2010 :<br>
+  * StateAction replaced by TwoKeyHashMap (Online Search)
+  * NotifyEnvironmentViews renamed to EnvironmentViewNotifier.
+  * Method createExogenousChange reintroduced (from AIMA2e implementation).
+  * CSP constraint propagation result handling code cleaned up.
+  
 0.9.11-CSP+PathCost-Fixes : 02 Oct 2010 :<br>
   * Fixed defect in Breath First Search where the Path Cost metric was not being updated correctly (issue #54).
   * Fixed CSP issue with respect to domain reconstruction with backtracking search.

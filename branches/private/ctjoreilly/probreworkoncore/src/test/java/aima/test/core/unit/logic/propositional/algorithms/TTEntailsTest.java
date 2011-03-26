@@ -94,6 +94,14 @@ public class TTEntailsTest {
 		Assert.assertTrue(kb.askWithTTEntails("(P00)"));
 		Assert.assertFalse(kb.askWithTTEntails("(NOT P00)"));
 	}
+	
+	@Test
+	public void testDoesNotKnow() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("A");
+		Assert.assertFalse(kb.askWithTTEntails("B"));
+		Assert.assertFalse(kb.askWithTTEntails("(NOT B)"));
+	}
 
 	// public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
 	// KnowledgeBase kb = new KnowledgeBase();

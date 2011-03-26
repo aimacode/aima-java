@@ -172,4 +172,13 @@ public class DPLLTest {
 		Assert.assertTrue(kb.askWithDpll("(P00)"));
 		Assert.assertFalse(kb.askWithDpll("(NOT P00)"));
 	}
+	
+	@Test
+	public void testDoesNotKnow() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("A");
+		
+		Assert.assertFalse(kb.askWithDpll("B"));
+		Assert.assertFalse(kb.askWithDpll("(NOT B)"));
+	}
 }
