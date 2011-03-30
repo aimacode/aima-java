@@ -6,6 +6,7 @@ import aima.core.probability.proposed.model.FiniteProbabilityModel;
 import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
+import aima.core.probability.proposed.model.proposition.EquivalentProposition;
 import aima.core.probability.proposed.model.proposition.IntegerSumProposition;
 import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
 
@@ -81,8 +82,8 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertEquals(34.0 / 36.0, dPriorTotal11.getValues()[1],
 				DELTA_THRESHOLD);
 
-		IntegerSumProposition doubles = new IntegerSumProposition("Doubles",
-				new FiniteIntegerDomain(2, 4, 6, 8, 10, 12), dice1RV, dice2RV);
+		EquivalentProposition doubles = new EquivalentProposition("Doubles",
+				dice1RV, dice2RV);
 		// TODO
 	}
 

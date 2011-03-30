@@ -53,11 +53,12 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 		Proposition conjEvidence = constructConjunction(evidence, 0);
 
-		// P(X | Y) = P(A AND B)/P(B) - (13.3 AIMA3e)
+		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
 		Proposition aAndB = new ConjunctiveProposition(phi, conjEvidence);
 		double probabilityAandB = probabilityOf(aAndB);
-		if (0 != probabilityAandB) {
-			return probabilityAandB / probabilityOf(conjEvidence);
+		double probabilityOfEvidence = probabilityOf(conjEvidence);
+		if (0 != probabilityOfEvidence) {
+			return probabilityAandB / probabilityOfEvidence;
 		}
 
 		return 0;
