@@ -16,12 +16,12 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	/**
 	 * 
 	 * @param phi
-	 *            the propositional term of interest.
+	 *            the propositional terms of interest.
 	 * @return all the possible values of the propositional term &phi;. This is
 	 *         a Vector of numbers, where we assume a predefined ordering of the
 	 *         domain of the relevant random variables.
 	 */
-	Distribution priorDistribution(TermProposition phi);
+	Distribution priorDistribution(TermProposition... phi);
 
 	/**
 	 * Get a conditional distribution. Example:

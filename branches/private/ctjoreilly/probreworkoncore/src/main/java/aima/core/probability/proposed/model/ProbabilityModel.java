@@ -4,11 +4,13 @@ import java.util.Set;
 
 import aima.core.probability.proposed.model.proposition.Proposition;
 
-// TODO - This is a working, to be removed.
-// TODO - On AIMA (on 13.2.3)
+// TODO - This is a working set, to be removed.
+// TODO - On AIMA (on 13.5)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
+// TODO - pg 492, doc for marginalization and conditioning.
+// TODO - pg 493, (13.9)
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
@@ -46,11 +48,11 @@ public interface ProbabilityModel {
 	 * any other information.
 	 * 
 	 * @param phi
-	 *            the proposition for which a probability value is to be
+	 *            the propositional terms for which a probability value is to be
 	 *            returned.
 	 * @return the probability of the proposition &phi;.
 	 */
-	double prior(Proposition phi);
+	double prior(Proposition... phi);
 
 	/**
 	 * Unlike unconditional or prior probabilities, most of the time we have
