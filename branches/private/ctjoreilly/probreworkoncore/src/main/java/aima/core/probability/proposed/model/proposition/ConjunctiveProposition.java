@@ -4,7 +4,7 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class ConjunctiveProposition extends BinarySentenceProposition {
+public class ConjunctiveProposition extends AbstractProposition implements BinarySentenceProposition {
 
 	private Proposition left = null;
 	private Proposition right = null;
@@ -18,6 +18,12 @@ public class ConjunctiveProposition extends BinarySentenceProposition {
 		if (null == right) {
 			throw new IllegalArgumentException("Right side of conjunction must be specified.");
 		}
+		// Track nested scope
+		addScope(left.getScope());
+		addScope(right.getScope());
+		addUnboundScope(left.getUnboundScope());
+		addUnboundScope(right.getUnboundScope());
+		
 		this.left = left;
 		this.right = right;
 	}

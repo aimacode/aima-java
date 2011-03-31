@@ -118,11 +118,11 @@ public class Distribution {
 		}
 		int[] radixValues = new int[values.length];
 		for (AssignmentProposition ap : values) {
-			RVInfo rvInfo = randomVarInfo.get(ap.getRandomVariable());
+			RVInfo rvInfo = randomVarInfo.get(ap.getTermVariable());
 			if (null == rvInfo) {
 				throw new IllegalArgumentException(
 						"Values passed for a variable that is not part of this distribution:"
-								+ ap.getRandomVariable());
+								+ ap.getTermVariable());
 			}
 			radixValues[rvInfo.getRadixIdx()] = rvInfo.getIdxForDomain(ap
 					.getValue());

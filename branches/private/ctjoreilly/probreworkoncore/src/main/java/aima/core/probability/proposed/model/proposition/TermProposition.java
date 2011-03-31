@@ -2,19 +2,18 @@ package aima.core.probability.proposed.model.proposition;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public abstract class TermProposition extends Proposition {
-
-	private RandomVariable variable = null;
-	
-	public TermProposition(RandomVariable var) {
-		if (null == var) {
-			throw new IllegalArgumentException(
-					"The Random Variable for the Term must be specified.");
-		}
-		this.variable = var;
-	}
-	
-	public RandomVariable getRandomVariable() {
-		return variable;
-	}
+/**
+ * A proposition on a single variable term.
+ * 
+ * Note: The scope may be greater than a single variable as the term may be a
+ * derived variable (e.g. Total=Dice1+Dice2).
+ * 
+ * @author Ciaran O'Reilly
+ */
+public interface TermProposition extends Proposition {
+	/**
+	 * 
+	 * @return The Term's Variable.
+	 */
+	RandomVariable getTermVariable();
 }

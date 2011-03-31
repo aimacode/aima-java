@@ -36,6 +36,11 @@ public class FullJointProbabilityModelTest extends
 		test_ToothacheCavityCatchWeatherModel(model, model.getToothache(),
 				model.getCavity(), model.getCatch(), model.getWeather());
 	}
+	
+	@Test
+	public void test_MeningitisStiffNeckModel() {
+		Assert.fail("TODO");
+	}
 
 	@Test
 	public void test_BurglaryAlarmModel() {
@@ -62,6 +67,11 @@ public class FullJointProbabilityModelTest extends
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
+		Assert.fail("TODO");
+	}
+	
+	@Test
+	public void test_MeningitisStiffNeckModel_Distributions() {
 		Assert.fail("TODO");
 	}
 

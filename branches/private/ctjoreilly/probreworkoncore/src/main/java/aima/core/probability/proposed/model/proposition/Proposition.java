@@ -1,6 +1,7 @@
 package aima.core.probability.proposed.model.proposition;
 
 import java.util.Map;
+import java.util.Set;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
@@ -18,7 +19,23 @@ import aima.core.probability.proposed.model.RandomVariable;
  * 
  * @author Ciaran O'Reilly
  */
-public abstract class Proposition {
+public interface Proposition {
+	/**
+	 * 
+	 * @return the Set of RandomVariables in the World (sample space) that this
+	 *         Proposition is applicable to.
+	 */
+	Set<RandomVariable> getScope();
+
+	/**
+	 * 
+	 * @return the Set of RandomVariables from this propositions scope that are
+	 *         not constrained to any particular set of values (e.g. bound =
+	 *         P(Total = 11), while unbound = P(Total)). If a variable is
+	 *         unbound it implies the distributions associated with the variable
+	 *         is being sought.
+	 */
+	Set<RandomVariable> getUnboundScope();
 
 	/**
 	 * Determine whether or not the proposition holds in a particular possible
@@ -30,5 +47,5 @@ public abstract class Proposition {
 	 * @return true if the proposition holds in the given possible world, false
 	 *         otherwise.
 	 */
-	public abstract boolean holds(Map<RandomVariable, Object> possibleWorld);
+	boolean holds(Map<RandomVariable, Object> possibleWorld);
 }

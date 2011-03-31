@@ -160,7 +160,7 @@ public class EnumerationAsk {
 			}
 			// initial evidence variables go next
 			for (int i = 0; i < e.length; i++) {
-				var[idx] = e[i].getRandomVariable();
+				var[idx] = e[i].getTermVariable();
 				varIdxs.put(var[idx], idx);
 				extendedValues[idx] = e[i];
 				idx++;

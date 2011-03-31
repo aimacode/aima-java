@@ -113,7 +113,23 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P(sunny, cavity)
 		// P(sunny AND cavity)
 		// P(sunny) = <0.6>
+		
+		
+		// AIMA3e pg. 496
+		// General case of Bayes' Rule
+		// P(Y | X) = P(X | Y)P(Y)/P(X)
+		
+		// General Bayes' Rule conditionalized on background evidence e (13.3)
+		// P(Y | X, e) = P(X | Y, e)P(Y|e)/P(X | e)
 	}
+	
+	// AIMA3e pg. 496
+	protected void test_MeningitisStiffNeckModel_Distributions(
+			ProbabilityModel model, RandomVariable meningitisRV,
+			RandomVariable stiffNeckRV) {
+		Assert.fail("TODO");
+	}
+
 
 	protected void test_BurglaryAlarmModel_Distributions(
 			ProbabilityModel model, RandomVariable burglaryRV,

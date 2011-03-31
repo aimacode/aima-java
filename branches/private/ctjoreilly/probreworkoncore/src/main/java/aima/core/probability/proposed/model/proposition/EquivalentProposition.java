@@ -6,7 +6,7 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class EquivalentProposition extends ConstraintProposition {
+public class EquivalentProposition extends DerivedProposition {
 
 	private List<RandomVariable> equivVars = new ArrayList<RandomVariable>();
 	//
@@ -49,7 +49,7 @@ public class EquivalentProposition extends ConstraintProposition {
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getRandomVariable().getName());
+			sb.append(getTermVariable().getName());
 			for (RandomVariable rv : equivVars) {
 				sb.append(" = ");
 				sb.append(rv);

@@ -4,11 +4,11 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class AssignmentProposition extends TermProposition {
+public class AssignmentProposition extends AbstractTermProposition {
 	private Object value = null;
 	//
 	private String toString = null;
-	
+
 	public AssignmentProposition(RandomVariable forVariable, Object value) {
 		super(forVariable);
 		if (null == value) {
@@ -16,28 +16,26 @@ public class AssignmentProposition extends TermProposition {
 					"The value for the Random Variable must be specified.");
 		}
 
-		
 		this.value = value;
 	}
-	
+
 	public Object getValue() {
 		return value;
 	}
-	
 
 	@Override
-	public boolean holds(Map<RandomVariable, Object> possibleWorld) {		
-		return value.equals(possibleWorld.get(getRandomVariable()));
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
+		return value.equals(possibleWorld.get(getTermVariable()));
 	}
-	
+
 	@Override
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getRandomVariable().getName());
+			sb.append(getTermVariable().getName());
 			sb.append(" = ");
 			sb.append(value);
-			
+
 			toString = sb.toString();
 		}
 		return toString;

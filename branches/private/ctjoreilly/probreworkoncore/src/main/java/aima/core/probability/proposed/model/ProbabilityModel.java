@@ -5,8 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 13.5)
-// TODO - Remove ConstraintProposition and move getScope() to Proposition.
+// TODO - On AIMA (on 13.5.1)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
@@ -77,7 +76,7 @@ public interface ProbabilityModel {
 	 * whereby, equating the two right-hand sides and dividing by P(a) gives you
 	 * Bayes' rule:
 	 * 
-	 * P(b | a) = P(a | b)P(b)/P(a) (i.e. (class likelihood * prior)/evidence)
+	 * P(b | a) = P(a | b)P(b)/P(a) (i.e. (likelihood * prior)/evidence)
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be

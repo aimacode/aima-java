@@ -7,17 +7,17 @@ import java.util.Map;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 
-public class IntegerSumProposition extends ConstraintProposition {
+public class IntegerSumProposition extends DerivedProposition {
 
 	private FiniteIntegerDomain sumsDomain = null;
 	private List<RandomVariable> sumVars = new ArrayList<RandomVariable>();
 	//
 	private String toString = null;
-	
+
 	public IntegerSumProposition(String name, FiniteIntegerDomain sumsDomain,
 			RandomVariable... sums) {
-		super(name); 
-		
+		super(name);
+
 		if (null == sumsDomain) {
 			throw new IllegalArgumentException("Sum Domain must be specified.");
 		}
@@ -50,14 +50,15 @@ public class IntegerSumProposition extends ConstraintProposition {
 
 		return sumsDomain.getPossibleValues().contains(sum);
 	}
+
 	// END-Proposition
 	//
-	
+
 	@Override
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getRandomVariable().getName());
+			sb.append(getTermVariable().getName());
 			sb.append(" = ");
 			sb.append(sumsDomain.toString());
 			toString = sb.toString();

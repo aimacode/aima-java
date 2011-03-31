@@ -1,5 +1,10 @@
 package aima.core.probability.proposed.model.proposition;
 
-public abstract class UnarySentenceProposition extends SentenceProposition {
+/**
+ * Indicator interface used to identify unary sentences.
+ * 
+ * @author Ciaran O'Reilly
+ */
+public interface UnarySentenceProposition extends SentenceProposition {
 
 }
