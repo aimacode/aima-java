@@ -1,6 +1,11 @@
 package aima.core.probability.proposed.model;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import aima.core.probability.proposed.model.domain.Domain;
+import aima.core.probability.proposed.model.proposition.TermProposition;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 486.
@@ -11,10 +16,11 @@ import aima.core.probability.proposed.model.domain.Domain;
  * 
  * @author Ciaran O'Reilly
  */
-public class RandomVariable {
+public class RandomVariable implements TermProposition {
 
 	private String name = null;
 	private Domain domain = null;
+	private Set<RandomVariable> scope = new HashSet<RandomVariable>();
 
 	public RandomVariable(String name, Domain domain) {
 		checkValidRandomVariableName(name);
@@ -25,6 +31,7 @@ public class RandomVariable {
 
 		this.name = name;
 		this.domain = domain;
+		this.scope.add(this);
 	}
 
 	/**
@@ -64,6 +71,32 @@ public class RandomVariable {
 	public Domain getDomain() {
 		return domain;
 	}
+	
+	// Note: Implements this interface so its easy to use RandomVariables
+	// in conjunction with propositions about them in the API.
+	//
+	// START-TermProposition
+	@Override
+	public RandomVariable getTermVariable() {
+		return this;
+	}
+	
+	@Override
+	public Set<RandomVariable> getScope() {
+		return scope;
+	}
+	
+	@Override
+	public Set<RandomVariable> getUnboundScope() {
+		return scope;
+	}
+	
+	@Override
+	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
+		return possibleWorld.containsKey(getTermVariable());
+	}
+	// END-TermProposition
+	//
 
 	@Override
 	public boolean equals(Object o) {

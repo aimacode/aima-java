@@ -3,12 +3,11 @@ package aima.test.core.unit.probability.proposed.model;
 import junit.framework.Assert;
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.FiniteProbabilityModel;
-import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
+import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.probability.proposed.model.proposition.EquivalentProposition;
 import aima.core.probability.proposed.model.proposition.IntegerSumProposition;
-import aima.core.probability.proposed.model.proposition.RandomVariableProposition;
 
 public abstract class CommonFiniteProbabilityModelTests extends
 		CommonProbabilityModelTests {
@@ -19,43 +18,43 @@ public abstract class CommonFiniteProbabilityModelTests extends
 	protected void test_RollingPairFairDiceModel_Distributions(
 			FiniteProbabilityModel model, RandomVariable dice1RV,
 			RandomVariable dice2RV) {
-		RandomVariableProposition dice1 = new RandomVariableProposition(dice1RV);
-		RandomVariableProposition dice2 = new RandomVariableProposition(dice2RV);
 
-		Distribution dPriorDice1 = model.priorDistribution(dice1);
+		Distribution dPriorDice1 = model.priorDistribution(dice1RV);
 		Assert.assertEquals(6, dPriorDice1.getValues().length);
 		Assert.assertEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice1.getValues());
 
-		Distribution dPriorDice2 = model.priorDistribution(dice2);
+		Distribution dPriorDice2 = model.priorDistribution(dice2RV);
 		Assert.assertEquals(6, dPriorDice2.getValues().length);
 		Assert.assertEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice2.getValues());
 
 		Distribution dPosteriorDice1GivenDice2 = model.posteriorDistribution(
-				dice1, dice2);
+				dice1RV, dice2RV);
 		Assert.assertEquals(36, dPosteriorDice1GivenDice2.getValues().length);
 		for (int i = 0; i < dPosteriorDice1GivenDice2.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0,
-					dPosteriorDice1GivenDice2.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0, dPosteriorDice1GivenDice2
+					.getValues()[i], DELTA_THRESHOLD);
 		}
 
 		Distribution dPosteriorDice2GivenDice1 = model.posteriorDistribution(
-				dice2, dice1);
+				dice2RV, dice1RV);
 		Assert.assertEquals(36, dPosteriorDice2GivenDice1.getValues().length);
 		for (int i = 0; i < dPosteriorDice2GivenDice1.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0,
-					dPosteriorDice2GivenDice1.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0, dPosteriorDice2GivenDice1
+					.getValues()[i], DELTA_THRESHOLD);
 		}
 
-		Distribution dJointDice1Dice2 = model.jointDistribution(dice1, dice2);
+		Distribution dJointDice1Dice2 = model.jointDistribution(dice1RV,
+				dice2RV);
 		Assert.assertEquals(36, dJointDice1Dice2.getValues().length);
 		for (int i = 0; i < dJointDice1Dice2.getValues().length; i++) {
 			Assert.assertEquals(1.0 / 36.0, dJointDice1Dice2.getValues()[i],
 					DELTA_THRESHOLD);
 		}
 
-		Distribution dJointDice2Dice1 = model.jointDistribution(dice2, dice1);
+		Distribution dJointDice2Dice1 = model.jointDistribution(dice2RV,
+				dice1RV);
 		Assert.assertEquals(36, dJointDice2Dice1.getValues().length);
 		for (int i = 0; i < dJointDice2Dice1.getValues().length; i++) {
 			Assert.assertEquals(1.0 / 36.0, dJointDice2Dice1.getValues()[i],
@@ -97,6 +96,27 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		// AIMA3e pg. 497
 		// P(Cavity | toothache AND catch) = <0.871, 0.129>
+		
+		// AIMA3e pg. 498 
+		// (13.17)
+		// P(toothache AND catch | Cavity) = P(toothache | Cavity)P(catch | Cavity)
+		
+		// (13.18)
+		// P(Cavity | toothache AND catch) = &alpha;P(toothache | Cavity)P(catch | Cavity)P(Cavity)
+		
+		// (13.19)
+		// P(Toothache, Catch | Cavity) = P(Toothache | Cavity)P(Catch | Cavity)
+		
+		// (product rule)
+		// P(Toothache, Catch, Cavity)
+		// = P(Toothache, Catch | Cavity)P(Cavity)
+		
+		// (using 13.19)
+		// P(Toothache, Catch | Cavity)P(Cavity)
+		// = P(Toothache | Cavity)P(Catch | Cavity)P(Cavity)
+		//
+		// P(Toothache, Catch, Cavity)
+		// = P(Toothache | Cavity)P(Catch | Cavity)P(Cavity)
 	}
 
 	protected void test_ToothacheCavityCatchWeatherModel_Distributions(
@@ -104,35 +124,48 @@ public abstract class CommonFiniteProbabilityModelTests extends
 			RandomVariable cavityRV, RandomVariable catchRV) {
 		Assert.fail("TODO");
 
+		// TODO - call sub-model tests
+		// test_ToothacheCavityCatch
+
 		// AIMA3e pg. 487
 		// P(sunny, Cavity)
 		// Would be a two-element vector giving the probabilities of a sunny day
 		// with a cavity and a sunny day with no cavity.
-		
+
 		// AIMA3e pg. 488 (i.e. one element Vector returned)
 		// P(sunny, cavity)
 		// P(sunny AND cavity)
 		// P(sunny) = <0.6>
-		
-		
+
 		// AIMA3e pg. 496
 		// General case of Bayes' Rule
 		// P(Y | X) = P(X | Y)P(Y)/P(X)
-		
+
 		// General Bayes' Rule conditionalized on background evidence e (13.3)
 		// P(Y | X, e) = P(X | Y, e)P(Y|e)/P(X | e)
 	}
-	
+
 	// AIMA3e pg. 496
 	protected void test_MeningitisStiffNeckModel_Distributions(
-			ProbabilityModel model, RandomVariable meningitisRV,
+			FiniteProbabilityModel model, RandomVariable meningitisRV,
 			RandomVariable stiffNeckRV) {
-		Assert.fail("TODO");
+
+		AssignmentProposition astiffNeck = new AssignmentProposition(
+				stiffNeckRV, true);
+
+		// AIMA3e pg. 497
+		// P(Mengingitis | stiffneck) = &alpha;<P(s | m)P(m), P(s | ~m)P(~m)>
+		Distribution dMeningitisGivenStiffNeck = model.posteriorDistribution(
+				meningitisRV, astiffNeck);
+		Assert.assertEquals(2, dMeningitisGivenStiffNeck.getValues().length);
+		Assert.assertEquals(0.0014, dMeningitisGivenStiffNeck.getValues()[0],
+				DELTA_THRESHOLD);
+		Assert.assertEquals(0.9986, dMeningitisGivenStiffNeck.getValues()[1],
+				DELTA_THRESHOLD);
 	}
 
-
 	protected void test_BurglaryAlarmModel_Distributions(
-			ProbabilityModel model, RandomVariable burglaryRV,
+			FiniteProbabilityModel model, RandomVariable burglaryRV,
 			RandomVariable earthQuakeRV, RandomVariable alarmRV,
 			RandomVariable johnCallsRV, RandomVariable maryCallsRV) {
 		Assert.fail("TODO");

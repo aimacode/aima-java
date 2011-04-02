@@ -5,7 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 13.5.1)
+// TODO - On AIMA (on 13.6)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
