@@ -84,10 +84,19 @@ public abstract class CommonProbabilityModelTests {
 
 		Assert.assertEquals(1.0, model.prior(dice1RV), DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.prior(dice2RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(dice1RV, dice2RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(dice2RV, dice1RV), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice1RV, dice2RV),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(1.0, model.posterior(dice2RV, dice1RV),
+				DELTA_THRESHOLD);
 
-		// TODO - test a disjunctive proposition pg.489
+		// Test a disjunctive proposition pg.489
+		// P(a OR b) = P(a) + P(b) - P(a AND b)
+		// = 1/6 + 1/6 - 1/36
+		AssignmentProposition dice2Is5 = new AssignmentProposition(dice2RV, 5);
+		DisjunctiveProposition dice1Is5OrDice2Is5 = new DisjunctiveProposition(
+				dice1Is5, dice2Is5);
+		Assert.assertEquals(1.0 / 6.0 + 1.0 / 6.0 - 1.0 / 36.0,
+				model.prior(dice1Is5OrDice2Is5), DELTA_THRESHOLD);
 	}
 
 	protected void test_ToothacheCavityCatchModel(ProbabilityModel model,
@@ -132,19 +141,22 @@ public abstract class CommonProbabilityModelTests {
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(toothacheRV, catchRV),
 				DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(toothacheRV, cavityRV, catchRV),
+		Assert.assertEquals(1.0,
+				model.posterior(toothacheRV, cavityRV, catchRV),
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(cavityRV, toothacheRV),
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(cavityRV, catchRV),
 				DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(cavityRV, toothacheRV, catchRV),
+		Assert.assertEquals(1.0,
+				model.posterior(cavityRV, toothacheRV, catchRV),
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(catchRV, cavityRV),
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(catchRV, toothacheRV),
 				DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(catchRV, cavityRV, toothacheRV),
+		Assert.assertEquals(1.0,
+				model.posterior(catchRV, cavityRV, toothacheRV),
 				DELTA_THRESHOLD);
 	}
 
@@ -241,39 +253,50 @@ public abstract class CommonProbabilityModelTests {
 				(model.posterior(atoothache, acavity) * model.prior(acavity))
 						/ model.prior(atoothache), DELTA_THRESHOLD);
 	}
-	
+
 	// AIMA3e pg. 496
-	protected void test_MeningitisStiffNeckModel(
-			ProbabilityModel model, RandomVariable meningitisRV,
-			RandomVariable stiffNeckRV) {
+	protected void test_MeningitisStiffNeckModel(ProbabilityModel model,
+			RandomVariable meningitisRV, RandomVariable stiffNeckRV) {
 		
-		AssignmentProposition ameningitis = new AssignmentProposition(meningitisRV, true);
-		AssignmentProposition anotmeningitis = new AssignmentProposition(meningitisRV, false);
-		AssignmentProposition astiffNeck = new AssignmentProposition(stiffNeckRV, true);
-		AssignmentProposition anotstiffNeck = new AssignmentProposition(stiffNeckRV, false);
-		
+		Assert.assertTrue(model.isValid());
+
+		AssignmentProposition ameningitis = new AssignmentProposition(
+				meningitisRV, true);
+		AssignmentProposition anotmeningitis = new AssignmentProposition(
+				meningitisRV, false);
+		AssignmentProposition astiffNeck = new AssignmentProposition(
+				stiffNeckRV, true);
+		AssignmentProposition anotstiffNeck = new AssignmentProposition(
+				stiffNeckRV, false);
+
 		// P(stiffNeck | meningitis) = 0.7
-		Assert.assertEquals(0.7, model.posterior(astiffNeck, ameningitis), DELTA_THRESHOLD);
+		Assert.assertEquals(0.7, model.posterior(astiffNeck, ameningitis),
+				DELTA_THRESHOLD);
 		// P(meningitis) = 1/50000
 		Assert.assertEquals(0.00002, model.prior(ameningitis), DELTA_THRESHOLD);
 		// P(~meningitis) = 1-1/50000
-		Assert.assertEquals(0.99998, model.prior(anotmeningitis), DELTA_THRESHOLD);
+		Assert.assertEquals(0.99998, model.prior(anotmeningitis),
+				DELTA_THRESHOLD);
+		System.out.println("0.01*0.99998="+(0.01*0.99998));
 		// P(stiffNeck) = 0.01
 		Assert.assertEquals(0.01, model.prior(astiffNeck), DELTA_THRESHOLD);
 		// P(~stiffNeck) = 0.99
 		Assert.assertEquals(0.99, model.prior(anotstiffNeck), DELTA_THRESHOLD);
-		// P(meningitis | stiffneck) 
+		// P(meningitis | stiffneck)
 		// = P(stiffneck | meningitis)P(meningitis)/P(stiffneck)
-		// = (0.7 * 0.00002)/0.01 
+		// = (0.7 * 0.00002)/0.01
 		// = 0.0014 (13.4)
-		Assert.assertEquals(0.0014, model.posterior(ameningitis, astiffNeck), DELTA_THRESHOLD);
-		
-		// Assuming P(~stiffneck | meningitis) = 0.3 (pg. 497)
-		// P(meningitis | ~stiffneck) 
+		Assert.assertEquals(0.0014, model.posterior(ameningitis, astiffNeck),
+				DELTA_THRESHOLD);
+
+		// Assuming P(~stiffneck | meningitis) = 0.3 (pg. 497), i.e. CPT (row must = 1)
+		//
+		// P(meningitis | ~stiffneck)
 		// = P(~stiffneck | meningitis)P(meningitis)/P(~stiffneck)
-		// = (0.3 * 0.00002)/0.99 
-		// = 0.000006
-		Assert.assertEquals(0.000006, model.posterior(ameningitis, anotstiffNeck), DELTA_THRESHOLD);
+		// = (0.3 * 0.00002)/0.99
+		// = 0.000006060606
+		Assert.assertEquals(0.000006060606,
+				model.posterior(ameningitis, anotstiffNeck), DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 512

@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import aima.core.probability.proposed.model.full.example.FullJointDistributionMeningitisStiffNeckModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionPairFairDiceModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionToothacheCavityCatchModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionToothacheCavityCatchWeatherModel;
@@ -25,8 +26,8 @@ public class FullJointProbabilityModelTest extends
 	public void test_ToothacheCavityCatchModel() {
 		FullJointDistributionToothacheCavityCatchModel model = new FullJointDistributionToothacheCavityCatchModel();
 
-		test_ToothacheCavityCatchModel(model, model.getToothache(), model
-				.getCavity(), model.getCatch());
+		test_ToothacheCavityCatchModel(model, model.getToothache(),
+				model.getCavity(), model.getCatch());
 	}
 
 	@Test
@@ -36,10 +37,13 @@ public class FullJointProbabilityModelTest extends
 		test_ToothacheCavityCatchWeatherModel(model, model.getToothache(),
 				model.getCavity(), model.getCatch(), model.getWeather());
 	}
-	
+
 	@Test
 	public void test_MeningitisStiffNeckModel() {
-		Assert.fail("TODO");
+		FullJointDistributionMeningitisStiffNeckModel model = new FullJointDistributionMeningitisStiffNeckModel();
+
+		test_MeningitisStiffNeckModel(model, model.getMeningitis(),
+				model.getStiffNeck());
 	}
 
 	@Test
@@ -61,15 +65,15 @@ public class FullJointProbabilityModelTest extends
 	public void test_ToothacheCavityCatchModel_Distributions() {
 		FullJointDistributionToothacheCavityCatchModel model = new FullJointDistributionToothacheCavityCatchModel();
 
-		test_ToothacheCavityCatchModel_Distributions(model, model
-				.getToothache(), model.getCavity(), model.getCatch());
+		test_ToothacheCavityCatchModel_Distributions(model,
+				model.getToothache(), model.getCavity(), model.getCatch());
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
 		Assert.fail("TODO");
 	}
-	
+
 	@Test
 	public void test_MeningitisStiffNeckModel_Distributions() {
 		Assert.fail("TODO");

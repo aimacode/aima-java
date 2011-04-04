@@ -5,12 +5,13 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 13.6)
+// TODO - On AIMA (on 14.1)
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
 // TODO - pg 492, doc for marginalization and conditioning.
 // TODO - pg 493, (13.9)
+// TODO - pg 499, (add distribution tests for Wumpus World example - just Bayesian, not full).
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
