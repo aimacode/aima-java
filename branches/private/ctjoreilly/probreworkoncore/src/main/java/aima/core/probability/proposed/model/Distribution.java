@@ -1,5 +1,6 @@
 package aima.core.probability.proposed.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -55,6 +56,10 @@ public class Distribution {
 		return expectedSizeOfDistribution;
 	}
 
+	public Distribution(Collection<RandomVariable> vars) {
+		this(vars.toArray(new RandomVariable[vars.size()]));
+	}
+
 	public Distribution(RandomVariable... vars) {
 		this(new double[expectedSizeOfDistribution(vars)], vars);
 	}
@@ -106,6 +111,23 @@ public class Distribution {
 		return distribution;
 	}
 
+	public int getIndex(Object... values) {
+		if (values.length != randomVarInfo.size()) {
+			throw new IllegalArgumentException(
+					"Values passed in is not the same size as variables making up distribution.");
+		}
+		int[] radixValues = new int[values.length];
+		int i = 0;
+		for (RVInfo rvInfo : randomVarInfo.values()) {
+			radixValues[rvInfo.getRadixIdx()] = rvInfo
+					.getIdxForDomain(values[i]);
+			i++;
+		}
+
+		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
+		return mrn.intValue();
+	}
+
 	public void setValue(int idx, double value) {
 		distribution[idx] = value;
 		reinitLazyValues();
@@ -139,6 +161,32 @@ public class Distribution {
 			}
 		}
 		return sum;
+	}
+
+	public Distribution divideBy(Distribution divisor) {
+		Distribution rVal = null;
+
+		if (1 == divisor.getValues().length) {
+			double d = divisor.getValues()[0];
+			rVal = new Distribution(randomVarInfo.keySet());
+			for (int i = 0; i < rVal.getValues().length; i++) {
+				if (0 == d) {
+					rVal.getValues()[i] = 0;
+				} else {
+					rVal.getValues()[i] = getValues()[i] / d;
+				}
+			}
+		} else {
+			if (randomVarInfo.keySet().containsAll(
+					divisor.randomVarInfo.keySet())) {
+				// TODO
+			} else {
+				throw new IllegalArgumentException(
+						"Divisor must be a subset of the dividend.");
+			}
+		}
+
+		return rVal;
 	}
 
 	public Distribution normalize() {

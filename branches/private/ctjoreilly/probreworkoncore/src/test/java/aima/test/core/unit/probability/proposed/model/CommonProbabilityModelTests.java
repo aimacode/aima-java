@@ -277,7 +277,6 @@ public abstract class CommonProbabilityModelTests {
 		// P(~meningitis) = 1-1/50000
 		Assert.assertEquals(0.99998, model.prior(anotmeningitis),
 				DELTA_THRESHOLD);
-		System.out.println("0.01*0.99998="+(0.01*0.99998));
 		// P(stiffNeck) = 0.01
 		Assert.assertEquals(0.01, model.prior(astiffNeck), DELTA_THRESHOLD);
 		// P(~stiffNeck) = 0.99

@@ -13,7 +13,6 @@ import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
-import aima.core.probability.proposed.model.proposition.TermProposition;
 
 public class FullJointDistributionModel implements FiniteProbabilityModel {
 
@@ -73,17 +72,71 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	//
 	// START-FiniteProbabilityModel
-	public Distribution priorDistribution(TermProposition... phi) {
+	public Distribution priorDistribution(Proposition... phi) {
 		return jointDistribution(phi);
 	}
 
-	public Distribution posteriorDistribution(TermProposition phi,
-			TermProposition... evidence) {
-		return null; // TODO
+	public Distribution posteriorDistribution(Proposition phi,
+			Proposition... evidence) {
+		
+		Proposition conjEvidence = constructConjunction(evidence, 0);
+
+		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
+		Distribution dAandB = jointDistribution(phi, conjEvidence);
+		Distribution dEvidence = jointDistribution(conjEvidence);
+		
+		return dAandB.divideBy(dEvidence);
 	}
 
-	public Distribution jointDistribution(TermProposition... propositions) {
-		return null; // TODO
+	public Distribution jointDistribution(Proposition... propositions) {
+		Distribution d = null;
+		final LinkedHashSet<RandomVariable> vars = new LinkedHashSet<RandomVariable>();
+		for (Proposition p : propositions) {
+			vars.addAll(p.getUnboundScope());
+		}
+
+		if (vars.size() > 0) {
+			RandomVariable[] distVars = new RandomVariable[vars.size()];
+			int i = 0;
+			for (RandomVariable rv : vars) {
+				distVars[i] = rv;
+				i++;
+			}
+
+			final Distribution ud = new Distribution(distVars);
+			final Proposition conjProp = constructConjunction(propositions, 0);
+			final Object[] values = new Object[vars.size()];
+
+			Distribution.Iterator di = new Distribution.Iterator() {
+
+				public void iterate(Map<RandomVariable, Object> possibleWorld,
+						double probability) {
+					if (conjProp.holds(possibleWorld)) {
+						int i = 0;
+						for (RandomVariable rv : vars) {
+							values[i] = possibleWorld.get(rv);
+							i++;
+						}
+						int dIdx = ud.getIndex(values);
+						ud.setValue(dIdx, ud.getValues()[dIdx] + probability);
+					}
+				}
+
+				public Object getPostIterateValue() {
+					return null; // N/A
+				}
+			};
+
+			distribution.iterateDistribution(di);
+
+			d = ud;
+		} else {
+			// No Unbound Variables, therefore just return
+			// the singular probability related to the proposition.
+			d = new Distribution();
+			d.setValue(0, prior(propositions));
+		}
+		return d;
 	}
 
 	// END-FiniteProbabilityModel

@@ -7,7 +7,7 @@ import java.util.Map;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 
-public class IntegerSumProposition extends DerivedProposition {
+public class IntegerSumProposition extends AbstractDerivedProposition {
 
 	private FiniteIntegerDomain sumsDomain = null;
 	private List<RandomVariable> sumVars = new ArrayList<RandomVariable>();
@@ -58,7 +58,7 @@ public class IntegerSumProposition extends DerivedProposition {
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getTermVariable().getName());
+			sb.append(getDerivedName());
 			sb.append(" = ");
 			sb.append(sumsDomain.toString());
 			toString = sb.toString();

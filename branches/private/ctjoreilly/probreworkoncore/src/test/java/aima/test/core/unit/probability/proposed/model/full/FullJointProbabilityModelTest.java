@@ -71,12 +71,18 @@ public class FullJointProbabilityModelTest extends
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
-		Assert.fail("TODO");
+		FullJointDistributionToothacheCavityCatchWeatherModel model = new FullJointDistributionToothacheCavityCatchWeatherModel();
+
+		test_ToothacheCavityCatchWeatherModel_Distributions(model, model.getToothache(),
+				model.getCavity(), model.getCatch(), model.getWeather());
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel_Distributions() {
-		Assert.fail("TODO");
+		FullJointDistributionMeningitisStiffNeckModel model = new FullJointDistributionMeningitisStiffNeckModel();
+
+		test_MeningitisStiffNeckModel_Distributions(model, model.getMeningitis(),
+				model.getStiffNeck());
 	}
 
 	@Test

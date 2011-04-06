@@ -5,7 +5,7 @@ import java.util.Map;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteDomain;
 
-public class SubsetProposition extends DerivedProposition {
+public class SubsetProposition extends AbstractDerivedProposition {
 
 	private FiniteDomain subsetDomain = null;
 	private RandomVariable varSubsetOf = null;
@@ -38,7 +38,7 @@ public class SubsetProposition extends DerivedProposition {
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getTermVariable().getName());
+			sb.append(getDerivedName());
 			sb.append(" = ");
 			sb.append(subsetDomain.toString());
 			toString = sb.toString();

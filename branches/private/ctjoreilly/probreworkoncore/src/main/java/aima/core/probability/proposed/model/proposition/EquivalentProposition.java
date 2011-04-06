@@ -1,19 +1,16 @@
 package aima.core.probability.proposed.model.proposition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 import aima.core.probability.proposed.model.RandomVariable;
 
-public class EquivalentProposition extends DerivedProposition {
-
-	private List<RandomVariable> equivVars = new ArrayList<RandomVariable>();
+public class EquivalentProposition extends AbstractDerivedProposition {
 	//
 	private String toString = null;
-	
+
 	public EquivalentProposition(String name, RandomVariable... equivs) {
-		super(name); 
+		super(name);
 
 		if (null == equivs || 1 >= equivs.length) {
 			throw new IllegalArgumentException(
@@ -21,7 +18,6 @@ public class EquivalentProposition extends DerivedProposition {
 		}
 		for (RandomVariable rv : equivs) {
 			addScope(rv);
-			equivVars.add(rv);
 		}
 	}
 
@@ -30,9 +26,10 @@ public class EquivalentProposition extends DerivedProposition {
 	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
 		boolean holds = true;
 
-		RandomVariable rvC, rvL = equivVars.get(0);
-		for (int i = 1; i < equivVars.size(); i++) {
-			rvC = equivVars.get(i);
+		Iterator<RandomVariable> i = getScope().iterator();
+		RandomVariable rvC, rvL = i.next();
+		while (i.hasNext()) {
+			rvC = i.next();
 			if (!possibleWorld.get(rvL).equals(possibleWorld.get(rvC))) {
 				holds = false;
 				break;
@@ -42,15 +39,16 @@ public class EquivalentProposition extends DerivedProposition {
 
 		return holds;
 	}
+
 	// END-Proposition
 	//
-	
+
 	@Override
 	public String toString() {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(getTermVariable().getName());
-			for (RandomVariable rv : equivVars) {
+			sb.append(getDerivedName());
+			for (RandomVariable rv : getScope()) {
 				sb.append(" = ");
 				sb.append(rv);
 			}
