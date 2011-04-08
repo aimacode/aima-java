@@ -7,6 +7,7 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
+import aima.core.util.SetOps;
 import aima.core.util.math.MixedRadixNumber;
 
 /**
@@ -163,7 +164,7 @@ public class Distribution {
 		return sum;
 	}
 
-	public Distribution divideBy(Distribution divisor) {
+	public Distribution divideBy(final Distribution divisor) {
 		Distribution rVal = null;
 
 		if (1 == divisor.getValues().length) {
@@ -179,11 +180,92 @@ public class Distribution {
 		} else {
 			if (randomVarInfo.keySet().containsAll(
 					divisor.randomVarInfo.keySet())) {
-				// TODO
+				final int sizeDivisor = divisor.getValues().length;
+				final int quotient = getValues().length / sizeDivisor;
+				final Distribution qd = new Distribution(randomVarInfo.keySet());
+				Distribution.Iterator di = new Distribution.Iterator() {
+					private int pos = 0;
+
+					public void iterate(
+							Map<RandomVariable, Object> possibleWorld,
+							double probability) {
+						for (int i = 0; i < quotient; i++) {
+							int offset = pos + (sizeDivisor * i);
+							if (0 == probability) {
+								qd.getValues()[offset] = 0;
+							} else {
+								qd.getValues()[offset] += getValues()[offset]
+										/ probability;
+							}
+						}
+						pos++;
+					}
+
+					public Object getPostIterateValue() {
+						return null; // N/A
+					}
+				};
+				divisor.iterateDistribution(di);
+
+				rVal = qd;
 			} else {
 				throw new IllegalArgumentException(
 						"Divisor must be a subset of the dividend.");
 			}
+		}
+
+		return rVal;
+	}
+
+	public Distribution multiplyBy(final Distribution multiplier) {
+		Distribution rVal = null;
+
+		if (1 == multiplier.getValues().length) {
+			double m = multiplier.getValues()[0];
+			rVal = new Distribution(randomVarInfo.keySet());
+			for (int i = 0; i < rVal.getValues().length; i++) {
+				rVal.getValues()[i] = getValues()[i] * m;
+			}
+		} else {
+			final Distribution product = new Distribution(SetOps.union(SetOps
+					.difference(randomVarInfo.keySet(),
+							multiplier.randomVarInfo.keySet()),
+					multiplier.randomVarInfo.keySet()));
+			final Object[] term1Values = new Object[randomVarInfo.size()];
+			final Object[] term2Values = new Object[multiplier.randomVarInfo
+					.size()];
+			Distribution.Iterator di = new Distribution.Iterator() {
+				private int idx = 0;
+
+				public void iterate(Map<RandomVariable, Object> possibleWorld,
+						double probability) {
+					popTermValues(term1Values, Distribution.this, possibleWorld);
+					popTermValues(term2Values, multiplier, possibleWorld);
+
+					product.getValues()[idx] = getValues()[getIndex(term1Values)]
+							* multiplier.getValues()[multiplier
+									.getIndex(term2Values)];
+
+					idx++;
+				}
+
+				public Object getPostIterateValue() {
+					return null; // N/A
+				}
+
+				private void popTermValues(Object[] termValues, Distribution d,
+						Map<RandomVariable, Object> possibleWorld) {
+
+					int i = 0;
+					for (RandomVariable rv : d.randomVarInfo.keySet()) {
+						termValues[i] = possibleWorld.get(rv);
+						i++;
+					}
+				}
+			};
+			product.iterateDistribution(di);
+
+			rVal = product;
 		}
 
 		return rVal;
