@@ -26,13 +26,13 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		Distribution dPriorDice1 = model.priorDistribution(dice1RV);
 		assertEqualDistributions(new double[] { 1.0 / 6.0, 1.0 / 6.0,
-				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice1
-				.getValues());
+				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
+				dPriorDice1.getValues());
 
 		Distribution dPriorDice2 = model.priorDistribution(dice2RV);
 		assertEqualDistributions(new double[] { 1.0 / 6.0, 1.0 / 6.0,
-				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice2
-				.getValues());
+				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
+				dPriorDice2.getValues());
 
 		Distribution dJointDice1Dice2 = model.jointDistribution(dice1RV,
 				dice2RV);
@@ -87,16 +87,16 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				dice1RV, dice2RV);
 		Assert.assertEquals(36, dPosteriorDice1GivenDice2.getValues().length);
 		for (int i = 0; i < dPosteriorDice1GivenDice2.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0, dPosteriorDice1GivenDice2
-					.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0,
+					dPosteriorDice1GivenDice2.getValues()[i], DELTA_THRESHOLD);
 		}
 
 		Distribution dPosteriorDice2GivenDice1 = model.posteriorDistribution(
 				dice2RV, dice1RV);
 		Assert.assertEquals(36, dPosteriorDice2GivenDice1.getValues().length);
 		for (int i = 0; i < dPosteriorDice2GivenDice1.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0, dPosteriorDice2GivenDice1
-					.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0,
+					dPosteriorDice2GivenDice1.getValues()[i], DELTA_THRESHOLD);
 		}
 	}
 
@@ -106,8 +106,12 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		AssignmentProposition atoothache = new AssignmentProposition(
 				toothacheRV, Boolean.TRUE);
+		AssignmentProposition anottoothache = new AssignmentProposition(
+				toothacheRV, Boolean.FALSE);
 		AssignmentProposition acatch = new AssignmentProposition(catchRV,
 				Boolean.TRUE);
+		AssignmentProposition anotcatch = new AssignmentProposition(catchRV,
+				Boolean.FALSE);
 
 		// AIMA3e pg. 493
 		// P<>(Cavity | toothache) = <0.6, 0.4>
@@ -117,8 +121,9 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// AIMA3e pg. 497
 		// P<>(Cavity | toothache AND catch) = <0.871, 0.129>
 		assertEqualDistributions(new double[] { 0.8709677419354839,
-				0.12903225806451615 }, model.posteriorDistribution(cavityRV,
-				atoothache, acatch).getValues());
+				0.12903225806451615 },
+				model.posteriorDistribution(cavityRV, atoothache, acatch)
+						.getValues());
 
 		// AIMA3e pg. 498
 		// (13.17)
@@ -126,62 +131,144 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// = P<>(toothache | Cavity)P<>(catch | Cavity)
 		ConjunctiveProposition toothacheAndCatch = new ConjunctiveProposition(
 				atoothache, acatch);
-		assertEqualDistributions(model.posteriorDistribution(toothacheAndCatch,
-				cavityRV).getValues(), model.posteriorDistribution(atoothache,
-				cavityRV).multiplyBy(
-				model.posteriorDistribution(acatch, cavityRV)).getValues());
+		assertEqualDistributions(
+				model.posteriorDistribution(toothacheAndCatch, cavityRV)
+						.getValues(),
+				model.posteriorDistribution(atoothache, cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(acatch, cavityRV))
+						.getValues());
 
 		// (13.18)
 		// P<>(Cavity | toothache AND catch)
 		// = &alpha;P<>(toothache | Cavity)P<>(catch | Cavity)P(Cavity)
-		assertEqualDistributions(model.posteriorDistribution(cavityRV,
-				toothacheAndCatch).getValues(), model.posteriorDistribution(
-				atoothache, cavityRV).multiplyBy(
-				model.posteriorDistribution(acatch, cavityRV)).multiplyBy(
-				model.priorDistribution(cavityRV)).normalize().getValues());
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, toothacheAndCatch)
+						.getValues(),
+				model.posteriorDistribution(atoothache, cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(acatch, cavityRV))
+						.multiplyBy(model.priorDistribution(cavityRV))
+						.normalize().getValues());
 
 		// (13.19)
 		// P<>(Toothache, Catch | Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)
 		ConjunctiveProposition toothacheAndCatchRV = new ConjunctiveProposition(
 				toothacheRV, catchRV);
-		assertEqualDistributions(model.posteriorDistribution(
-				toothacheAndCatchRV, cavityRV).getValues(), model
-				.posteriorDistribution(toothacheRV, cavityRV).multiplyBy(
-						model.posteriorDistribution(catchRV, cavityRV))
-				.getValues());
+		assertEqualDistributions(
+				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
+						.getValues(),
+				model.posteriorDistribution(toothacheRV, cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV))
+						.getValues());
 
 		// (product rule)
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache, Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(model.priorDistribution(toothacheRV, catchRV,
-				cavityRV).getValues(), model.posteriorDistribution(
-				toothacheAndCatchRV, cavityRV).multiplyBy(
-				model.priorDistribution(cavityRV)).getValues());
+		assertEqualDistributions(
+				model.priorDistribution(toothacheRV, catchRV, cavityRV)
+						.getValues(),
+				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
+						.multiplyBy(model.priorDistribution(cavityRV))
+						.getValues());
 
 		// (using 13.19)
 		// P<>(Toothache, Catch | Cavity)P<>(Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(model.posteriorDistribution(
-				toothacheAndCatchRV, cavityRV).multiplyBy(
-				model.priorDistribution(cavityRV)).getValues(), model
-				.posteriorDistribution(toothacheRV, cavityRV).multiplyBy(
-						model.posteriorDistribution(catchRV, cavityRV)
-								.multiplyBy(model.priorDistribution(cavityRV)))
-				.getValues());
+		assertEqualDistributions(
+				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
+						.multiplyBy(model.priorDistribution(cavityRV))
+						.getValues(),
+				model.posteriorDistribution(toothacheRV, cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV)
+										.multiplyBy(
+												model.priorDistribution(cavityRV)))
+						.getValues());
 		//
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(model.priorDistribution(toothacheRV, catchRV,
-				cavityRV).getValues(), model.posteriorDistribution(toothacheRV,
-				cavityRV).multiplyBy(
-				model.posteriorDistribution(catchRV, cavityRV)).multiplyBy(
-				model.priorDistribution(cavityRV)).getValues());
-		
-		System.out.println("X:"+model.posteriorDistribution(cavityRV, catchRV));	
-		System.out.println("X:"+model.posteriorDistribution(catchRV, cavityRV)
-				.multiplyBy(model.priorDistribution(cavityRV)).divideBy(
-						model.priorDistribution(catchRV)));
+		assertEqualDistributions(
+				model.priorDistribution(toothacheRV, catchRV, cavityRV)
+						.getValues(),
+				model.posteriorDistribution(toothacheRV, cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV))
+						.multiplyBy(model.priorDistribution(cavityRV))
+						.getValues());
+
+		// AIMA3e pg. 496
+		// General case of Bayes' Rule
+		// P<>(Y | X) = P<>(X | Y)P<>(Y)/P<>(X)
+		// Note: Need to perform in this order -
+		// P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
+		// as multiplication of distributions are not commutative.
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, toothacheRV).getValues(),
+				model.priorDistribution(cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(toothacheRV,
+										cavityRV))
+						.divideBy(model.priorDistribution(toothacheRV))
+						.getValues());
+
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, catchRV).getValues(),
+				model.priorDistribution(cavityRV)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV))
+						.divideBy(model.priorDistribution(catchRV)).getValues());
+
+		// General Bayes' Rule conditionalized on background evidence e (13.3)
+		// P<>(Y | X, e) = P<>(X | Y, e)P<>(Y|e)/P<>(X | e)
+		// Note: Need to perform in this order -
+		// P<>(Y | X, e) = (P<>(Y|e)P<>(X | Y, e)))/P<>(X | e)
+		// as multiplication of distributions are not commutative.
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, toothacheRV, acatch)
+						.getValues(),
+				model.posteriorDistribution(cavityRV, acatch)
+						.multiplyBy(
+								model.posteriorDistribution(toothacheRV,
+										cavityRV, acatch))
+						.divideBy(
+								model.posteriorDistribution(toothacheRV, acatch))
+						.getValues());
+		//
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, toothacheRV, anotcatch)
+						.getValues(),
+				model.posteriorDistribution(cavityRV, anotcatch)
+						.multiplyBy(
+								model.posteriorDistribution(toothacheRV,
+										cavityRV, anotcatch))
+						.divideBy(
+								model.posteriorDistribution(toothacheRV,
+										anotcatch)).getValues());
+		//
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, catchRV, atoothache)
+						.getValues(),
+				model.posteriorDistribution(cavityRV, atoothache)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV,
+										atoothache))
+						.divideBy(
+								model.posteriorDistribution(catchRV, atoothache))
+						.getValues());
+
+		assertEqualDistributions(
+				model.posteriorDistribution(cavityRV, catchRV, anottoothache)
+						.getValues(),
+				model.posteriorDistribution(cavityRV, anottoothache)
+						.multiplyBy(
+								model.posteriorDistribution(catchRV, cavityRV,
+										anottoothache))
+						.divideBy(
+								model.posteriorDistribution(catchRV,
+										anottoothache)).getValues());
 	}
 
 	protected void test_ToothacheCavityCatchWeatherModel_Distributions(
@@ -215,28 +302,8 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				.priorDistribution(new ConjunctiveProposition(asunny, acavity))
 				.getValues());
 		// P(sunny) = <0.6>
-		assertEqualDistributions(new double[] { 0.6 }, model.priorDistribution(
-				asunny).getValues());
-
-		// AIMA3e pg. 496
-		// General case of Bayes' Rule
-		// P(Y | X) = P(X | Y)P(Y)/P(X)
-		System.out.println("Y:"+model.posteriorDistribution(cavityRV, toothacheRV));
-		
-		System.out.println(model.posteriorDistribution(catchRV, cavityRV));
-		System.out.println(model.priorDistribution(cavityRV));
-		System.out.println(model.posteriorDistribution(catchRV, cavityRV)
-				.multiplyBy(model.priorDistribution(cavityRV)));
-		System.out.println(model.priorDistribution(catchRV));
-		
-		System.out.println("Y:"+model.posteriorDistribution(toothacheRV, cavityRV)
-				.multiplyBy(model.priorDistribution(cavityRV)).divideBy(
-						model.priorDistribution(toothacheRV)));
-
-		// General Bayes' Rule conditionalized on background evidence e (13.3)
-		// P(Y | X, e) = P(X | Y, e)P(Y|e)/P(X | e)
-
-		Assert.fail("TODO");
+		assertEqualDistributions(new double[] { 0.6 },
+				model.priorDistribution(asunny).getValues());
 	}
 
 	// AIMA3e pg. 496

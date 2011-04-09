@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
@@ -217,6 +218,76 @@ public class Distribution {
 		return rVal;
 	}
 
+	/**
+	 * Multiply this Distribution by a given multiplier, creating a new
+	 * Distribution representing the multiplication of the two.
+	 * 
+	 * Note: Distribution multiplication is not commutative. The reason is
+	 * because the order of the variables comprising a Distribution dictate the
+	 * ordering of the values for that distribution. For example (the General
+	 * case of Baye's rule, AIMA3e pg. 496), using this API method:
+	 * 
+	 * <pre>
+	 * Note: P<> means a probability distribution.
+	 * 
+	 * P<>(Y | X) = (P<>(X | Y)P<>(Y))/<>P(X)
+	 * 
+	 * is NOT true, using this API, due to multiplication of distributions not 
+	 * being commutative. However:
+	 * 
+	 * P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
+	 * 
+	 * is true, using this API.
+	 * </pre>
+	 * 
+	 * In addition, the order of the variable of the Distribution returned is
+	 * dependent on the order of the variables of the two term distributions
+	 * involved in the multiplication. Two main cases hold:
+	 * 
+	 * <pre>
+	 * 1. The left hand term (i.e. this) has no unique variables, i.e.:
+	 * 
+	 * P<>(Y)P<>(X | Y)
+	 * 
+	 * would give a Distribution of the following form:
+	 * 
+	 * Y, X
+	 * 
+	 * i.e. an ordered union of the variables from the two distributions.
+	 * 
+	 * e.g.:
+	 * 
+	 * P<>(Cavity | Toothache) 
+	 * = (P<>(Cavity)P<>(Toothache | Cavity))/P<>(Toothache)
+	 * 
+	 * 2. The left hand term (i.e. this) has unique variables, i.e.:
+	 * 
+	 * P<>(X | Y)P<>(Z | Y)
+	 * 
+	 * would take the distinct variables on the left hand side first unioned 
+	 * with the right hand side, which would give a Distribution of the 
+	 * following form:
+	 * 
+	 * X, Z, Y
+	 * 
+	 * i.e. an ordered set of the difference of the left and right hand terms 
+	 * union the right hand term.
+	 * 
+	 * e.g.:
+	 * P<>(Toothache, Catch, Cavity) 
+	 * = P<>(Toothache | Cavity)P<>(Catch | Cavity)
+	 * 
+	 * e.g.:
+	 * P<>(Toothache, Catch | Cavity)P<>(Cavity) 
+	 * = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
+	 * 
+	 * </pre>
+	 * 
+	 * @param multiplier
+	 * 
+	 * @return a new Distribution representing the multiplication of this and
+	 *         the passed in multiplier.
+	 */
 	public Distribution multiplyBy(final Distribution multiplier) {
 		Distribution rVal = null;
 
@@ -227,10 +298,27 @@ public class Distribution {
 				rVal.getValues()[i] = getValues()[i] * m;
 			}
 		} else {
-			final Distribution product = new Distribution(SetOps.union(SetOps
-					.difference(randomVarInfo.keySet(),
-							multiplier.randomVarInfo.keySet()),
-					multiplier.randomVarInfo.keySet()));
+			Set<RandomVariable> prodVars = SetOps.difference(
+					randomVarInfo.keySet(), multiplier.randomVarInfo.keySet());
+			if (0 == prodVars.size()) {
+				// Supports Multiplication of expressions of the form:
+				// P(Y)P(X | Y)
+				// so the distribution is ordered:
+				// Y, X
+				prodVars = SetOps.union(randomVarInfo.keySet(),
+						multiplier.randomVarInfo.keySet());
+			} else {
+				// Supports Multiplication of expressions of the form:
+				// P(X | Y)P(Z | Y)
+				// so the distribution is ordered:
+				// X, Z, Y
+				// e.g.
+				// P(Toothache, Catch, Cavity)
+				// = P(Toothache | Cavity)*P(Catch | Cavity)
+				prodVars = SetOps.union(prodVars,
+						multiplier.randomVarInfo.keySet());
+			}
+			final Distribution product = new Distribution(prodVars);
 			final Object[] term1Values = new Object[randomVarInfo.size()];
 			final Object[] term2Values = new Object[multiplier.randomVarInfo
 					.size()];
