@@ -14,6 +14,7 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 public interface FiniteProbabilityModel extends ProbabilityModel {
 
 	/**
+	 * <b>P</b>(X,...)<br>
 	 * 
 	 * @param phi
 	 *            the propositions of interest.
@@ -24,30 +25,30 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	Distribution priorDistribution(Proposition... phi);
 
 	/**
-	 * Get a conditional distribution. Example:
-	 * 
-	 * P(X | Y) gives the values of P(X = x<sub>i</sub> | Y = y<sub>j</sub>) for
-	 * each possible i, j pair.
+	 * Get a conditional distribution. Example:<br>
+	 * <br>
+	 * <b>P</b>(X | Y) gives the values of P(X = x<sub>i</sub> | Y =
+	 * y<sub>j</sub>) for each possible i, j pair.
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability distribution is to be
 	 *            returned.
 	 * @param evidence
 	 *            information we already have.
-	 * @return the conditional distribution for P(&phi; | evidence).
+	 * @return the conditional distribution for <b>P</b>(&phi; | evidence).
 	 */
 	Distribution posteriorDistribution(Proposition phi, Proposition... evidence);
 
 	/**
-	 * Get a distribution on multiple variables. Example, the product rule:
-	 * 
-	 * P(X, Y) gives the values of P(X = x<sub>i</sub> | Y = y<sub>j</sub>)P(Y =
-	 * y<sub>j</sub>) for each possible i, j pair.
+	 * Get a distribution on multiple variables. Example, the product rule:<br>
+	 * <br>
+	 * <b>P</b>(X, Y) gives the values of P(X = x<sub>i</sub> | Y =
+	 * y<sub>j</sub>)P(Y = y<sub>j</sub>) for each possible i, j pair.
 	 * 
 	 * @param propositions
 	 *            the propositions for which a joint probability distribution is
 	 *            to be returned.
-	 * @return the joint distribution for P(X, Y, ...).
+	 * @return the joint distribution for <b>P</b>(X, Y, ...).
 	 */
 	Distribution jointDistribution(Proposition... propositions);
 }

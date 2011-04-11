@@ -84,16 +84,16 @@ public class OnlineDFSAgent extends AbstractAgent {
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept psPrime) {
-		Object sPrime = ptsFunction.getState(psPrime);
+	public Action execute(Percept psDelta) {
+		Object sDelta = ptsFunction.getState(psDelta);
 		// if GOAL-TEST(s') then return stop
-		if (goalTest(sPrime)) {
+		if (goalTest(sDelta)) {
 			a = NoOpAction.NO_OP;
 		} else {
 			// if s' is a new state (not in untried) then untried[s'] <-
 			// ACTIONS(s')
-			if (!untried.containsKey(sPrime)) {
-				untried.put(sPrime, actions(sPrime));
+			if (!untried.containsKey(sDelta)) {
+				untried.put(sDelta, actions(sDelta));
 			}
 
 			// if s is not null then do
@@ -102,30 +102,30 @@ public class OnlineDFSAgent extends AbstractAgent {
 				// [s, a] then don't put it back on the unbacktracked
 				// list otherwise you can keep oscillating
 				// between the same states endlessly.
-				if (!(sPrime.equals(result.get(s, a)))) {
+				if (!(sDelta.equals(result.get(s, a)))) {
 					// result[s, a] <- s'
-					result.put(s, a, sPrime);
+					result.put(s, a, sDelta);
 
 					// Ensure the unbacktracked always has a list for s'
-					if (!unbacktracked.containsKey(sPrime)) {
-						unbacktracked.put(sPrime, new ArrayList<Object>());
+					if (!unbacktracked.containsKey(sDelta)) {
+						unbacktracked.put(sDelta, new ArrayList<Object>());
 					}
 
 					// add s to the front of the unbacktracked[s']
-					unbacktracked.get(sPrime).add(0, s);
+					unbacktracked.get(sDelta).add(0, s);
 				}
 			}
 			// if untried[s'] is empty then
-			if (untried.get(sPrime).isEmpty()) {
+			if (untried.get(sDelta).isEmpty()) {
 				// if unbacktracked[s'] is empty then return stop
-				if (unbacktracked.get(sPrime).isEmpty()) {
+				if (unbacktracked.get(sDelta).isEmpty()) {
 					a = NoOpAction.NO_OP;
 				} else {
 					// else a <- an action b such that result[s', b] =
 					// POP(unbacktracked[s'])
-					Object popped = unbacktracked.get(sPrime).remove(0);
+					Object popped = unbacktracked.get(sDelta).remove(0);
 					for (Pair<Object, Action> sa : result.keySet()) {
-						if (sa.getFirst().equals(sPrime)
+						if (sa.getFirst().equals(sDelta)
 								&& result.get(sa).equals(popped)) {
 							a = sa.getSecond();
 							break;
@@ -134,7 +134,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 				}
 			} else {
 				// else a <- POP(untried[s'])
-				a = untried.get(sPrime).remove(0);
+				a = untried.get(sDelta).remove(0);
 			}
 		}
 
@@ -145,7 +145,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 		}
 
 		// s <- s'
-		s = sPrime;
+		s = sDelta;
 		// return a
 		return a;
 	}
