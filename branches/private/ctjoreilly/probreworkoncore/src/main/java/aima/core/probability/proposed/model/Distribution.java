@@ -73,7 +73,7 @@ public class Distribution {
 		}
 		if (values.length != expectedSizeOfDistribution(vars)) {
 			throw new IllegalArgumentException("Distribution of length "
-					+ distribution.length
+					+ values.length
 					+ " is not the correct size, should be "
 					+ expectedSizeOfDistribution(vars)
 					+ " in order to represent all possible combinations.");
@@ -88,22 +88,7 @@ public class Distribution {
 		distribution = new double[values.length];
 		System.arraycopy(values, 0, distribution, 0, values.length);
 
-		radixs = new int[randomVarInfo.size()];
-		// Read in reverse order so that the enumeration
-		// through the distributions is of the following
-		// order using a MixedRadixNumber, e.g. for two Booleans:
-		// X Y
-		// true true
-		// true false
-		// false true
-		// false false
-		// which corresponds with how displayed in book.
-		int x = randomVarInfo.size() - 1;
-		for (RVInfo rvInfo : randomVarInfo.values()) {
-			radixs[x] = rvInfo.getDomainSize();
-			rvInfo.setRadixIdx(x);
-			x--;
-		}
+		radixs = createRadixs(randomVarInfo);
 	}
 
 	// Note: Document that callers of this method should not change
@@ -155,6 +140,10 @@ public class Distribution {
 		return distribution[mrn.intValue()];
 	}
 
+	/**
+	 * 
+	 * @return the summation of all of the elements within the Distribution.
+	 */
 	public double getSum() {
 		if (-1 == sum) {
 			sum = 0;
@@ -165,160 +154,190 @@ public class Distribution {
 		return sum;
 	}
 
+	/**
+	 * Divide the dividend (this) distribution by the divisor to create a new
+	 * distribution representing the quotient. The variables comprising the
+	 * divisor distribution must be a subset of the dividend. However, ordering
+	 * of variables does not matter as the quotient contains the same ordered
+	 * variables as the dividend and the internal logic handles iterating
+	 * through the two distributions correctly, irrespective of the order of
+	 * their variables.
+	 * 
+	 * @param divisor
+	 * @return a new Distribution representing the quotient of the dividend
+	 *         (this) divided by the divisor.
+	 * @throws IllegalArgumentException
+	 *             if the variables of the divisor distribution are not a subset
+	 *             of the dividend.
+	 */
 	public Distribution divideBy(final Distribution divisor) {
-		Distribution rVal = null;
+		if (!randomVarInfo.keySet().containsAll(divisor.randomVarInfo.keySet())) {
+			throw new IllegalArgumentException(
+					"Divisor must be a subset of the dividend.");
+		}
+
+		final Distribution quotient = new Distribution(randomVarInfo.keySet());
 
 		if (1 == divisor.getValues().length) {
 			double d = divisor.getValues()[0];
-			rVal = new Distribution(randomVarInfo.keySet());
-			for (int i = 0; i < rVal.getValues().length; i++) {
+			for (int i = 0; i < quotient.getValues().length; i++) {
 				if (0 == d) {
-					rVal.getValues()[i] = 0;
+					quotient.getValues()[i] = 0;
 				} else {
-					rVal.getValues()[i] = getValues()[i] / d;
+					quotient.getValues()[i] = getValues()[i] / d;
 				}
 			}
 		} else {
-			if (randomVarInfo.keySet().containsAll(
-					divisor.randomVarInfo.keySet())) {
-				final int sizeDivisor = divisor.getValues().length;
-				final int quotient = getValues().length / sizeDivisor;
-				final Distribution qd = new Distribution(randomVarInfo.keySet());
-				Distribution.Iterator di = new Distribution.Iterator() {
-					private int pos = 0;
-
-					public void iterate(
-							Map<RandomVariable, Object> possibleWorld,
-							double probability) {
-						for (int i = 0; i < quotient; i++) {
-							int offset = pos + (sizeDivisor * i);
-							if (0 == probability) {
-								qd.getValues()[offset] = 0;
-							} else {
-								qd.getValues()[offset] += getValues()[offset]
-										/ probability;
-							}
-						}
-						pos++;
-					}
-
-					public Object getPostIterateValue() {
-						return null; // N/A
-					}
-				};
-				divisor.iterateDistribution(di);
-
-				rVal = qd;
-			} else {
-				throw new IllegalArgumentException(
-						"Divisor must be a subset of the dividend.");
+			Set<RandomVariable> dividendDivisorDiff = SetOps
+					.difference(this.randomVarInfo.keySet(),
+							divisor.randomVarInfo.keySet());
+			Map<RandomVariable, RVInfo> tdiff = null;
+			MixedRadixNumber tdMRN = null;
+			if (dividendDivisorDiff.size() > 0) {
+				tdiff = new LinkedHashMap<RandomVariable, RVInfo>();
+				for (RandomVariable rv : dividendDivisorDiff) {
+					tdiff.put(rv, new RVInfo(rv));
+				}
+				tdMRN = new MixedRadixNumber(0, createRadixs(tdiff));
 			}
+			final Map<RandomVariable, RVInfo> diff = tdiff;
+			final MixedRadixNumber dMRN = tdMRN;
+			final int[] qRVs = new int[quotient.radixs.length];
+			final MixedRadixNumber qMRN = new MixedRadixNumber(0,
+					quotient.radixs);
+			Distribution.Iterator divisorIterator = new Distribution.Iterator() {
+				public void iterate(Map<RandomVariable, Object> possibleWorld,
+						double probability) {
+					for (RandomVariable rv : possibleWorld.keySet()) {
+						RVInfo rvInfo = quotient.randomVarInfo.get(rv);
+						qRVs[rvInfo.getRadixIdx()] = rvInfo
+								.getIdxForDomain(possibleWorld.get(rv));
+					}
+					if (null != diff) {
+						// Start from 0 off the diff
+						dMRN.setCurrentValueFor(new int[diff.size()]);
+						do {
+							for (RandomVariable rv : diff.keySet()) {
+								RVInfo drvInfo = diff.get(rv);
+								RVInfo qrvInfo = quotient.randomVarInfo.get(rv);
+								qRVs[qrvInfo.getRadixIdx()] = dMRN
+										.getCurrentNumeralValue(drvInfo
+												.getRadixIdx());
+							}
+							updateQuotient(probability);
+						} while (dMRN.increment());
+					} else {
+						updateQuotient(probability);
+					}
+				}
+
+				public Object getPostIterateValue() {
+					return null; // N/A
+				}
+
+				//
+				//
+				private void updateQuotient(double probability) {
+					int offset = (int) qMRN.getCurrentValueFor(qRVs);
+					if (0 == probability) {
+						quotient.getValues()[offset] = 0;
+					} else {
+						quotient.getValues()[offset] += getValues()[offset]
+								/ probability;
+					}
+				}
+			};
+
+			divisor.iterateDistribution(divisorIterator);
 		}
 
-		return rVal;
+		return quotient;
 	}
 
 	/**
 	 * Multiply this Distribution by a given multiplier, creating a new
-	 * Distribution representing the multiplication of the two.
+	 * Distribution representing the product of the two.
 	 * 
-	 * Note: Distribution multiplication is not commutative. The reason is
-	 * because the order of the variables comprising a Distribution dictate the
-	 * ordering of the values for that distribution. For example (the General
-	 * case of Baye's rule, AIMA3e pg. 496), using this API method:
-	 * 
-	 * <pre>
-	 * Note: P<> means a probability distribution.
-	 * 
-	 * P<>(Y | X) = (P<>(X | Y)P<>(Y))/<>P(X)
-	 * 
-	 * is NOT true, using this API, due to multiplication of distributions not 
-	 * being commutative. However:
-	 * 
-	 * P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
-	 * 
-	 * is true, using this API.
-	 * </pre>
-	 * 
-	 * In addition, the order of the variable of the Distribution returned is
-	 * dependent on the order of the variables of the two term distributions
-	 * involved in the multiplication. Two main cases hold:
-	 * 
-	 * <pre>
-	 * 1. The left hand term (i.e. this) has no unique variables, i.e.:
-	 * 
-	 * P<>(Y)P<>(X | Y)
-	 * 
-	 * would give a Distribution of the following form:
-	 * 
-	 * Y, X
-	 * 
-	 * i.e. an ordered union of the variables from the two distributions.
-	 * 
-	 * e.g.:
-	 * 
-	 * P<>(Cavity | Toothache) 
-	 * = (P<>(Cavity)P<>(Toothache | Cavity))/P<>(Toothache)
-	 * 
-	 * 2. The left hand term (i.e. this) has unique variables, i.e.:
-	 * 
-	 * P<>(X | Y)P<>(Z | Y)
-	 * 
-	 * would take the distinct variables on the left hand side first unioned 
-	 * with the right hand side, which would give a Distribution of the 
-	 * following form:
-	 * 
-	 * X, Z, Y
-	 * 
-	 * i.e. an ordered set of the difference of the left and right hand terms 
-	 * union the right hand term.
-	 * 
-	 * e.g.:
-	 * P<>(Toothache, Catch, Cavity) 
-	 * = P<>(Toothache | Cavity)P<>(Catch | Cavity)
-	 * 
-	 * e.g.:
-	 * P<>(Toothache, Catch | Cavity)P<>(Cavity) 
-	 * = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-	 * 
-	 * </pre>
+	 * Note: Default Distribution multiplication is not commutative. The reason
+	 * is because the order of the variables comprising a Distribution dictate
+	 * the ordering of the values for that distribution. For example (the
+	 * General case of Baye's rule, AIMA3e pg. 496), using this API method:<br>
+	 * <br>
+	 * <b>P</b>(Y | X) = (<b>P</b>(X | Y)<b>P</b>(Y))/<b>P</b>(X)<br>
+	 * <br>
+	 * is NOT true, due to multiplication of distributions not being
+	 * commutative. However:<br>
+	 * <br>
+	 * <b>P</b>(Y | X) = (<b>P</b>(Y)<b>P</b>(X | Y))/<b>P</b>(X)<br>
+	 * <br>
+	 * is true, using this API.<br>
+	 * <br>
+	 * The default order of the variable of the Distribution returned is the
+	 * order of the variables as they are seen, as read from the left to right
+	 * term, for e.g.: <br>
+	 * <br>
+	 * <b>P</b>(Y)<b>P</b>(X | Y)<br>
+	 * <br>
+	 * would give a Distribution of the following form: <br>
+	 * Y, X<br>
+	 * <br>
+	 * i.e. an ordered union of the variables from the two distributions. <br>
+	 * To override the default order of the product use multiplyByPOS().
 	 * 
 	 * @param multiplier
 	 * 
-	 * @return a new Distribution representing the multiplication of this and
-	 *         the passed in multiplier.
+	 * @return a new Distribution representing the product of this and the
+	 *         passed in multiplier. The order of the variables comprising the
+	 *         product distribution is the ordered union of the left term (this)
+	 *         and the right term (multiplier).
+	 * 
+	 * @see Distribution#multiplyByPOS(Distribution, RandomVariable...)
 	 */
 	public Distribution multiplyBy(final Distribution multiplier) {
-		Distribution rVal = null;
+		Set<RandomVariable> prodVars = SetOps.union(randomVarInfo.keySet(),
+				multiplier.randomVarInfo.keySet());
+		return multiplyByPOS(multiplier,
+				prodVars.toArray(new RandomVariable[prodVars.size()]));
+	}
 
-		if (1 == multiplier.getValues().length) {
-			double m = multiplier.getValues()[0];
-			rVal = new Distribution(randomVarInfo.keySet());
-			for (int i = 0; i < rVal.getValues().length; i++) {
-				rVal.getValues()[i] = getValues()[i] * m;
-			}
+	/**
+	 * Multiply By - Product Order Specified (POS).
+	 * 
+	 * Multiply this Distribution by a given multiplier, creating a new
+	 * Distribution representing the product of the two. The order of the
+	 * variables comprising the product will match those specified. For example
+	 * (the General case of Baye's rule, AIMA3e pg. 496), using this API method:<br>
+	 * <br>
+	 * <b>P</b>(Y | X) = (<b>P</b>(X | Y)<b>P</b>(Y), [Y, X])/<b>P</b>(X)<br>
+	 * <br>
+	 * is true when the correct product order is specified.
+	 * 
+	 * @param multiplier
+	 * @param prodVarOrder
+	 *            the order the variables comprising the product are to be in.
+	 * 
+	 * @return a new Distribution representing the product of this and the
+	 *         passed in multiplier. The order of the variables comprising the
+	 *         product distribution is the order specified.
+	 * 
+	 * @see Distribution#multiplyBy(Distribution)
+	 */
+	public Distribution multiplyByPOS(final Distribution multiplier,
+			RandomVariable... prodVarOrder) {
+		final Distribution product = new Distribution(prodVarOrder);
+		if (!product.randomVarInfo.keySet().equals(
+				SetOps.union(randomVarInfo.keySet(),
+						multiplier.randomVarInfo.keySet()))) {
+			throw new IllegalArgumentException(
+					"Specified list deatailing order of mulitplier is inconsistent.");
+		}
+
+		// If no variables in the product
+		if (1 == product.getValues().length) {
+			product.getValues()[0] = getValues()[0] * multiplier.getValues()[0];
 		} else {
-			Set<RandomVariable> prodVars = SetOps.difference(
-					randomVarInfo.keySet(), multiplier.randomVarInfo.keySet());
-			if (0 == prodVars.size()) {
-				// Supports Multiplication of expressions of the form:
-				// P(Y)P(X | Y)
-				// so the distribution is ordered:
-				// Y, X
-				prodVars = SetOps.union(randomVarInfo.keySet(),
-						multiplier.randomVarInfo.keySet());
-			} else {
-				// Supports Multiplication of expressions of the form:
-				// P(X | Y)P(Z | Y)
-				// so the distribution is ordered:
-				// X, Z, Y
-				// e.g.
-				// P(Toothache, Catch, Cavity)
-				// = P(Toothache | Cavity)*P(Catch | Cavity)
-				prodVars = SetOps.union(prodVars,
-						multiplier.randomVarInfo.keySet());
-			}
-			final Distribution product = new Distribution(prodVars);
+			// Otherwise need to iterate through the product
+			// to calculate its values based on the terms.
 			final Object[] term1Values = new Object[randomVarInfo.size()];
 			final Object[] term2Values = new Object[multiplier.randomVarInfo
 					.size()];
@@ -327,12 +346,13 @@ public class Distribution {
 
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 						double probability) {
-					popTermValues(term1Values, Distribution.this, possibleWorld);
-					popTermValues(term2Values, multiplier, possibleWorld);
+					int term1Idx = termIdx(term1Values, Distribution.this,
+							possibleWorld);
+					int term2Idx = termIdx(term2Values, multiplier,
+							possibleWorld);
 
-					product.getValues()[idx] = getValues()[getIndex(term1Values)]
-							* multiplier.getValues()[multiplier
-									.getIndex(term2Values)];
+					product.getValues()[idx] = getValues()[term1Idx]
+							* multiplier.getValues()[term2Idx];
 
 					idx++;
 				}
@@ -341,22 +361,26 @@ public class Distribution {
 					return null; // N/A
 				}
 
-				private void popTermValues(Object[] termValues, Distribution d,
+				private int termIdx(Object[] termValues, Distribution d,
 						Map<RandomVariable, Object> possibleWorld) {
+					if (0 == termValues.length) {
+						// The term has no variables so always position 0.
+						return 0; 
+					}
 
 					int i = 0;
 					for (RandomVariable rv : d.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
 						i++;
 					}
+
+					return d.getIndex(termValues);
 				}
 			};
 			product.iterateDistribution(di);
-
-			rVal = product;
 		}
 
-		return rVal;
+		return product;
 	}
 
 	public Distribution normalize() {
@@ -408,6 +432,26 @@ public class Distribution {
 	private void reinitLazyValues() {
 		sum = -1;
 		toString = null;
+	}
+
+	private int[] createRadixs(Map<RandomVariable, RVInfo> mapRtoInfo) {
+		int[] r = new int[mapRtoInfo.size()];
+		// Read in reverse order so that the enumeration
+		// through the distributions is of the following
+		// order using a MixedRadixNumber, e.g. for two Booleans:
+		// X Y
+		// true true
+		// true false
+		// false true
+		// false false
+		// which corresponds with how displayed in book.
+		int x = mapRtoInfo.size() - 1;
+		for (RVInfo rvInfo : mapRtoInfo.values()) {
+			r[x] = rvInfo.getDomainSize();
+			rvInfo.setRadixIdx(x);
+			x--;
+		}
+		return r;
 	}
 
 	private class RVInfo {

@@ -119,8 +119,12 @@ public class EnumerationAskTest {
 				new RandomVariable[] { BayesNetExampleFactory.JOHN_CALLS_RV },
 				new AssignmentProposition[] { new AssignmentProposition(
 						BayesNetExampleFactory.BURGLARY_RV, true) }, bn);
-		// TODO:- ensure correct
-		System.out.println("P(JohnCalls | b)=" + d);
+		// System.out.println("P(JohnCalls | b)=" + d);
+		Assert.assertEquals(2, d.getValues().length);
+		Assert.assertEquals(0.8490169999999999, d.getValues()[0],
+				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
+		Assert.assertEquals(0.15098299999999998, d.getValues()[1],
+				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
 	}
 	
 	@Test

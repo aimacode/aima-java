@@ -336,10 +336,28 @@ public abstract class CommonProbabilityModelTests {
 
 	// AIMA3e pg. 512
 	protected void test_BurglaryAlarmModel(ProbabilityModel model,
-			RandomVariable burglaryRV, RandomVariable earthQuakeRV,
+			RandomVariable burglaryRV, RandomVariable earthquakeRV,
 			RandomVariable alarmRV, RandomVariable johnCallsRV,
 			RandomVariable maryCallsRV) {
 		Assert.assertTrue(model.isValid());
-		Assert.fail("TODO");
+
+		AssignmentProposition anotburglary = new AssignmentProposition(
+				burglaryRV, Boolean.FALSE);
+		AssignmentProposition anotearthquake = new AssignmentProposition(
+				earthquakeRV, Boolean.FALSE);
+		AssignmentProposition aalarm = new AssignmentProposition(alarmRV,
+				Boolean.TRUE);
+		AssignmentProposition anotalarm = new AssignmentProposition(alarmRV,
+				Boolean.FALSE);
+		AssignmentProposition ajohnCalls = new AssignmentProposition(
+				johnCallsRV, Boolean.TRUE);
+		AssignmentProposition amaryCalls = new AssignmentProposition(
+				maryCallsRV, Boolean.TRUE);
+
+		// AIMA3e pg. 514
+		Assert.assertEquals(model.prior(ajohnCalls, amaryCalls, aalarm,
+				anotburglary, anotearthquake), 0.00062811126, DELTA_THRESHOLD);
+		Assert.assertEquals(model.prior(ajohnCalls, amaryCalls, anotalarm,
+				anotburglary, anotearthquake), 0.00049800249, DELTA_THRESHOLD);
 	}
 }

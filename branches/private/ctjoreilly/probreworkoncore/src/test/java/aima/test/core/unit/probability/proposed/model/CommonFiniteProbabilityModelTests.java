@@ -1,6 +1,6 @@
 package aima.test.core.unit.probability.proposed.model;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.FiniteProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
@@ -22,17 +22,18 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		AssignmentProposition ad1_1 = new AssignmentProposition(dice1RV, 1);
 		Distribution dD1_1 = model.priorDistribution(ad1_1);
-		assertEqualDistributions(new double[] { 1.0 / 6.0 }, dD1_1.getValues());
+		Assert.assertArrayEquals(new double[] { 1.0 / 6.0 }, dD1_1.getValues(),
+				DELTA_THRESHOLD);
 
 		Distribution dPriorDice1 = model.priorDistribution(dice1RV);
-		assertEqualDistributions(new double[] { 1.0 / 6.0, 1.0 / 6.0,
+		Assert.assertArrayEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
-				dPriorDice1.getValues());
+				dPriorDice1.getValues(), DELTA_THRESHOLD);
 
 		Distribution dPriorDice2 = model.priorDistribution(dice2RV);
-		assertEqualDistributions(new double[] { 1.0 / 6.0, 1.0 / 6.0,
+		Assert.assertArrayEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
-				dPriorDice2.getValues());
+				dPriorDice2.getValues(), DELTA_THRESHOLD);
 
 		Distribution dJointDice1Dice2 = model.jointDistribution(dice1RV,
 				dice2RV);
@@ -55,33 +56,35 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		IntegerSumProposition total11 = new IntegerSumProposition("Total",
 				new FiniteIntegerDomain(11), dice1RV, dice2RV);
 		// P<>(Total = 11) = <2.0/36.0>
-		assertEqualDistributions(new double[] { 2.0 / 36.0 }, model
-				.priorDistribution(total11).getValues());
+		Assert.assertArrayEquals(new double[] { 2.0 / 36.0 }, model
+				.priorDistribution(total11).getValues(), DELTA_THRESHOLD);
 
 		// P<>(Dice1, Total = 11)
 		// = <0.0, 0.0, 0.0, 0.0, 1.0/36.0, 1.0/36.0>
-		assertEqualDistributions(new double[] { 0, 0, 0, 0, 1.0 / 36.0,
+		Assert.assertArrayEquals(new double[] { 0, 0, 0, 0, 1.0 / 36.0,
 				1.0 / 36.0 }, model.priorDistribution(dice1RV, total11)
-				.getValues());
+				.getValues(), DELTA_THRESHOLD);
 
 		EquivalentProposition doubles = new EquivalentProposition("Doubles",
 				dice1RV, dice2RV);
 		// P(Doubles) = <1.0/6.0>
-		assertEqualDistributions(new double[] { 1.0 / 6.0 }, model
-				.priorDistribution(doubles).getValues());
+		Assert.assertArrayEquals(new double[] { 1.0 / 6.0 }, model
+				.priorDistribution(doubles).getValues(), DELTA_THRESHOLD);
 
 		//
 		// Test posterior
 		//
 		// P<>(Dice1, Total = 11)
 		// = <0.0, 0.0, 0.0, 0.0, 0.5, 0.5>
-		assertEqualDistributions(new double[] { 0, 0, 0, 0, 0.5, 0.5 }, model
-				.posteriorDistribution(dice1RV, total11).getValues());
+		Assert.assertArrayEquals(new double[] { 0, 0, 0, 0, 0.5, 0.5 }, model
+				.posteriorDistribution(dice1RV, total11).getValues(),
+				DELTA_THRESHOLD);
 
 		// P<>(Dice1 | Doubles) = <1/6, 1/6, 1/6, 1/6, 1/6, 1/6>
-		assertEqualDistributions(new double[] { 1.0 / 6.0, 1.0 / 6.0,
+		Assert.assertArrayEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, model
-				.posteriorDistribution(dice1RV, doubles).getValues());
+				.posteriorDistribution(dice1RV, doubles).getValues(),
+				DELTA_THRESHOLD);
 
 		Distribution dPosteriorDice1GivenDice2 = model.posteriorDistribution(
 				dice1RV, dice2RV);
@@ -115,15 +118,16 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		// AIMA3e pg. 493
 		// P<>(Cavity | toothache) = <0.6, 0.4>
-		assertEqualDistributions(new double[] { 0.6, 0.4 }, model
-				.posteriorDistribution(cavityRV, atoothache).getValues());
+		Assert.assertArrayEquals(new double[] { 0.6, 0.4 }, model
+				.posteriorDistribution(cavityRV, atoothache).getValues(),
+				DELTA_THRESHOLD);
 
 		// AIMA3e pg. 497
 		// P<>(Cavity | toothache AND catch) = <0.871, 0.129>
-		assertEqualDistributions(new double[] { 0.8709677419354839,
+		Assert.assertArrayEquals(new double[] { 0.8709677419354839,
 				0.12903225806451615 },
 				model.posteriorDistribution(cavityRV, atoothache, acatch)
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 498
 		// (13.17)
@@ -131,102 +135,108 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// = P<>(toothache | Cavity)P<>(catch | Cavity)
 		ConjunctiveProposition toothacheAndCatch = new ConjunctiveProposition(
 				atoothache, acatch);
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(toothacheAndCatch, cavityRV)
 						.getValues(),
 				model.posteriorDistribution(atoothache, cavityRV)
 						.multiplyBy(
 								model.posteriorDistribution(acatch, cavityRV))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
 		// (13.18)
 		// P<>(Cavity | toothache AND catch)
 		// = &alpha;P<>(toothache | Cavity)P<>(catch | Cavity)P(Cavity)
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, toothacheAndCatch)
 						.getValues(),
 				model.posteriorDistribution(atoothache, cavityRV)
 						.multiplyBy(
 								model.posteriorDistribution(acatch, cavityRV))
 						.multiplyBy(model.priorDistribution(cavityRV))
-						.normalize().getValues());
+						.normalize().getValues(), DELTA_THRESHOLD);
 
 		// (13.19)
 		// P<>(Toothache, Catch | Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)
 		ConjunctiveProposition toothacheAndCatchRV = new ConjunctiveProposition(
 				toothacheRV, catchRV);
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
 						.getValues(),
 				model.posteriorDistribution(toothacheRV, cavityRV)
-						.multiplyBy(
-								model.posteriorDistribution(catchRV, cavityRV))
-						.getValues());
+						.multiplyByPOS(
+								model.posteriorDistribution(catchRV, cavityRV),
+								toothacheRV, catchRV, cavityRV).getValues(),
+				DELTA_THRESHOLD);
 
 		// (product rule)
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache, Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.priorDistribution(toothacheRV, catchRV, cavityRV)
 						.getValues(),
 				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
 						.multiplyBy(model.priorDistribution(cavityRV))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
 		// (using 13.19)
 		// P<>(Toothache, Catch | Cavity)P<>(Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(toothacheAndCatchRV, cavityRV)
 						.multiplyBy(model.priorDistribution(cavityRV))
 						.getValues(),
 				model.posteriorDistribution(toothacheRV, cavityRV)
-						.multiplyBy(
+						.multiplyByPOS(
 								model.posteriorDistribution(catchRV, cavityRV)
 										.multiplyBy(
-												model.priorDistribution(cavityRV)))
-						.getValues());
+												model.priorDistribution(cavityRV)),
+								toothacheRV, catchRV, cavityRV).getValues(),
+				DELTA_THRESHOLD);
 		//
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.priorDistribution(toothacheRV, catchRV, cavityRV)
 						.getValues(),
 				model.posteriorDistribution(toothacheRV, cavityRV)
-						.multiplyBy(
-								model.posteriorDistribution(catchRV, cavityRV))
+						.multiplyByPOS(
+								model.posteriorDistribution(catchRV, cavityRV),
+								toothacheRV, catchRV, cavityRV)
 						.multiplyBy(model.priorDistribution(cavityRV))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 496
 		// General case of Bayes' Rule
 		// P<>(Y | X) = P<>(X | Y)P<>(Y)/P<>(X)
-		// Note: Need to perform in this order -
+		// Note: Performing in this order -
 		// P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
-		// as multiplication of distributions are not commutative.
-		assertEqualDistributions(
+		// as default multiplication of distributions are not commutative (could
+		// also use multiplyByPOS() to specify the order).
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, toothacheRV).getValues(),
 				model.priorDistribution(cavityRV)
 						.multiplyBy(
 								model.posteriorDistribution(toothacheRV,
 										cavityRV))
 						.divideBy(model.priorDistribution(toothacheRV))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, catchRV).getValues(),
 				model.priorDistribution(cavityRV)
 						.multiplyBy(
 								model.posteriorDistribution(catchRV, cavityRV))
-						.divideBy(model.priorDistribution(catchRV)).getValues());
+						.divideBy(model.priorDistribution(catchRV)).getValues(),
+				DELTA_THRESHOLD);
 
 		// General Bayes' Rule conditionalized on background evidence e (13.3)
 		// P<>(Y | X, e) = P<>(X | Y, e)P<>(Y|e)/P<>(X | e)
-		// Note: Need to perform in this order -
+		// Note: Performing in this order -
 		// P<>(Y | X, e) = (P<>(Y|e)P<>(X | Y, e)))/P<>(X | e)
-		// as multiplication of distributions are not commutative.
-		assertEqualDistributions(
+		// as default multiplication of distributions are not commutative (could
+		// also use multiplyByPOS() to specify the order).
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, toothacheRV, acatch)
 						.getValues(),
 				model.posteriorDistribution(cavityRV, acatch)
@@ -235,9 +245,9 @@ public abstract class CommonFiniteProbabilityModelTests extends
 										cavityRV, acatch))
 						.divideBy(
 								model.posteriorDistribution(toothacheRV, acatch))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 		//
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, toothacheRV, anotcatch)
 						.getValues(),
 				model.posteriorDistribution(cavityRV, anotcatch)
@@ -246,9 +256,10 @@ public abstract class CommonFiniteProbabilityModelTests extends
 										cavityRV, anotcatch))
 						.divideBy(
 								model.posteriorDistribution(toothacheRV,
-										anotcatch)).getValues());
+										anotcatch)).getValues(),
+				DELTA_THRESHOLD);
 		//
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, catchRV, atoothache)
 						.getValues(),
 				model.posteriorDistribution(cavityRV, atoothache)
@@ -257,9 +268,9 @@ public abstract class CommonFiniteProbabilityModelTests extends
 										atoothache))
 						.divideBy(
 								model.posteriorDistribution(catchRV, atoothache))
-						.getValues());
+						.getValues(), DELTA_THRESHOLD);
 
-		assertEqualDistributions(
+		Assert.assertArrayEquals(
 				model.posteriorDistribution(cavityRV, catchRV, anottoothache)
 						.getValues(),
 				model.posteriorDistribution(cavityRV, anottoothache)
@@ -268,7 +279,8 @@ public abstract class CommonFiniteProbabilityModelTests extends
 										anottoothache))
 						.divideBy(
 								model.posteriorDistribution(catchRV,
-										anottoothache)).getValues());
+										anottoothache)).getValues(),
+				DELTA_THRESHOLD);
 	}
 
 	protected void test_ToothacheCavityCatchWeatherModel_Distributions(
@@ -290,20 +302,22 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P(sunny, Cavity)
 		// Would be a two-element vector giving the probabilities of a sunny day
 		// with a cavity and a sunny day with no cavity.
-		assertEqualDistributions(new double[] { 0.12, 0.48 }, model
-				.priorDistribution(asunny, cavityRV).getValues());
+		Assert.assertArrayEquals(new double[] { 0.12, 0.48 }, model
+				.priorDistribution(asunny, cavityRV).getValues(),
+				DELTA_THRESHOLD);
 
 		// AIMA3e pg. 488 (i.e. one element Vector returned)
 		// P(sunny, cavity)
-		assertEqualDistributions(new double[] { 0.12 }, model
-				.priorDistribution(asunny, acavity).getValues());
+		Assert.assertArrayEquals(new double[] { 0.12 }, model
+				.priorDistribution(asunny, acavity).getValues(),
+				DELTA_THRESHOLD);
 		// P(sunny AND cavity)
-		assertEqualDistributions(new double[] { 0.12 }, model
+		Assert.assertArrayEquals(new double[] { 0.12 }, model
 				.priorDistribution(new ConjunctiveProposition(asunny, acavity))
-				.getValues());
+				.getValues(), DELTA_THRESHOLD);
 		// P(sunny) = <0.6>
-		assertEqualDistributions(new double[] { 0.6 },
-				model.priorDistribution(asunny).getValues());
+		Assert.assertArrayEquals(new double[] { 0.6 },
+				model.priorDistribution(asunny).getValues(), DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 496
@@ -327,22 +341,42 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 	protected void test_BurglaryAlarmModel_Distributions(
 			FiniteProbabilityModel model, RandomVariable burglaryRV,
-			RandomVariable earthQuakeRV, RandomVariable alarmRV,
+			RandomVariable earthquakeRV, RandomVariable alarmRV,
 			RandomVariable johnCallsRV, RandomVariable maryCallsRV) {
 
+		AssignmentProposition aburglary = new AssignmentProposition(burglaryRV,
+				Boolean.TRUE);
+		AssignmentProposition anotburglary = new AssignmentProposition(
+				burglaryRV, Boolean.FALSE);
+		AssignmentProposition anotearthquake = new AssignmentProposition(
+				earthquakeRV, Boolean.FALSE);
+		AssignmentProposition ajohnCalls = new AssignmentProposition(
+				johnCallsRV, Boolean.TRUE);
+		AssignmentProposition amaryCalls = new AssignmentProposition(
+				maryCallsRV, Boolean.TRUE);
+
+		// AIMA3e. pg. 514
+		// P<>(Alarm | JohnCalls = true, MaryCalls = true, Burglary = false,
+		// Earthquake = false)
+		// = <0.558, 0.442>
+		Assert.assertArrayEquals(
+				new double[] { 0.5577689243027888, 0.44223107569721115 },
+				model.posteriorDistribution(alarmRV, ajohnCalls, amaryCalls,
+						anotburglary, anotearthquake).getValues(),
+				DELTA_THRESHOLD);
+
 		// AIMA3e pg. 523
-		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
+		// P<>(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
+		Assert.assertArrayEquals(new double[] { 0.2841718353643929,
+				0.7158281646356071 },
+				model.posteriorDistribution(burglaryRV, ajohnCalls, amaryCalls)
+						.getValues(), DELTA_THRESHOLD);
 
-		Assert.fail("TODO");
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-	private void assertEqualDistributions(double[] expected, double[] actual) {
-		Assert.assertEquals(expected.length, actual.length);
-		for (int i = 0; i < expected.length; i++) {
-			Assert.assertEquals(expected[i], actual[i], DELTA_THRESHOLD);
-		}
+		// AIMA3e pg. 528
+		// P<>(JohnCalls | Burglary = true)
+		Assert.assertArrayEquals(
+				new double[] { 0.8490169999999999, 0.15098299999999998 },
+				model.posteriorDistribution(johnCallsRV, aburglary).getValues(),
+				DELTA_THRESHOLD);
 	}
 }

@@ -1,9 +1,8 @@
 package aima.test.core.unit.probability.proposed.model.full;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 
+import aima.core.probability.proposed.model.full.example.FullJointDistributionBurglaryAlarmModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionMeningitisStiffNeckModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionPairFairDiceModel;
 import aima.core.probability.proposed.model.full.example.FullJointDistributionToothacheCavityCatchModel;
@@ -48,7 +47,11 @@ public class FullJointProbabilityModelTest extends
 
 	@Test
 	public void test_BurglaryAlarmModel() {
-		Assert.fail("TODO");
+		FullJointDistributionBurglaryAlarmModel model = new FullJointDistributionBurglaryAlarmModel();
+
+		test_BurglaryAlarmModel(model, model.getBurglary(),
+				model.getEarthquake(), model.getAlarm(), model.getJohnCalls(),
+				model.getMaryCalls());
 	}
 
 	//
@@ -73,20 +76,25 @@ public class FullJointProbabilityModelTest extends
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
 		FullJointDistributionToothacheCavityCatchWeatherModel model = new FullJointDistributionToothacheCavityCatchWeatherModel();
 
-		test_ToothacheCavityCatchWeatherModel_Distributions(model, model.getToothache(),
-				model.getCavity(), model.getCatch(), model.getWeather());
+		test_ToothacheCavityCatchWeatherModel_Distributions(model,
+				model.getToothache(), model.getCavity(), model.getCatch(),
+				model.getWeather());
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel_Distributions() {
 		FullJointDistributionMeningitisStiffNeckModel model = new FullJointDistributionMeningitisStiffNeckModel();
 
-		test_MeningitisStiffNeckModel_Distributions(model, model.getMeningitis(),
-				model.getStiffNeck());
+		test_MeningitisStiffNeckModel_Distributions(model,
+				model.getMeningitis(), model.getStiffNeck());
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel_Distributions() {
-		Assert.fail("TODO");
+		FullJointDistributionBurglaryAlarmModel model = new FullJointDistributionBurglaryAlarmModel();
+
+		test_BurglaryAlarmModel_Distributions(model, model.getBurglary(),
+				model.getEarthquake(), model.getAlarm(), model.getJohnCalls(),
+				model.getMaryCalls());
 	}
 }

@@ -6,13 +6,21 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
 // TODO - On AIMA (on 14.1)
+//  
+// TODO - create BayesModel implementation using EnumerationAsk initially.
+// TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
+//        = P(MaryCalls | Alarm), will require a sub distribution mechanism
+//        to be able to express with API.
+// TODO - Change Distribution.Iterator to more closely reflect standard Iterator protocol?
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
 // TODO - pg 492, doc for marginalization and conditioning.
 // TODO - pg 493, (13.9)
 // TODO - pg 499, (add distribution tests for Wumpus World example - just Bayesian, not full).
-
+// TODO - consider creating general utilities for permutations, combinations and 
+//        table permutations (i.e. Distribution - support freezing values and iterating
+//        over subset as well).
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
  * 
