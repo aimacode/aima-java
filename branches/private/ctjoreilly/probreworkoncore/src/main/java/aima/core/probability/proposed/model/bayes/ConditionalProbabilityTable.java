@@ -11,14 +11,14 @@ import aima.core.probability.proposed.model.domain.FiniteDomain;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 512.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 512.<br>
+ * <br>
  * A Conditional Probability Table, or CPT, can be used for representing
  * conditional probabilities for discrete random variables. Each row in a CPT
- * contains the conditional probability of each node value for a conditioning
- * case. A conditioning case is just a possible combination of values for the
- * parent nodes - a miniature possible world, if you like. Each row must sum to
- * 1, because the entries represent an exhaustive set of cases for the random
+ * contains the conditional probability of each node value for a <b>conditioning
+ * case</b>. A conditioning case is just a possible combination of values for
+ * the parent nodes - a miniature possible world, if you like. Each row must sum
+ * to 1, because the entries represent an exhaustive set of cases for the random
  * variable.
  * 
  * @author Ciaran O'Reilly
@@ -39,14 +39,13 @@ public class ConditionalProbabilityTable {
 		}
 		tableVars[conditionedOn.length] = var;
 		table = new Distribution(values, tableVars);
-		varDomain.addAll(((FiniteDomain) var.getDomain())
-				.getPossibleValues());
-		
+		varDomain.addAll(((FiniteDomain) var.getDomain()).getPossibleValues());
+
 		checkEachRowTotalsOne();
 	}
-	
+
 	public double probabilityFor(AssignmentProposition... values) {
-		return table.getValueFor(values); 
+		return table.getValueFor(values);
 	}
 
 	//

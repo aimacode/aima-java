@@ -15,8 +15,8 @@ import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 14.9, page
- * 525.
- * 
+ * 525.<br>
+ * <br>
  * <pre>
  * function ENUMERATION-ASK(X, e, bn) returns a distribution over X
  *   inputs: X, the query variable
@@ -43,7 +43,7 @@ import aima.core.util.Util;
  * Figure 14.9 The enumeration algorithm for answering queries on Bayesian
  * networks. <br>
  * <br>
- * Note: The implementation has been extended to handle queries with multiple
+ * <b>Note:</b> The implementation has been extended to handle queries with multiple
  * variables. <br>
  * 
  * @author Ciaran O'Reilly

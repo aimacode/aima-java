@@ -3,8 +3,8 @@ package aima.core.probability.proposed.model;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>
+ * <br>
  * A probability model on a discrete, countable set of worlds. The proper
  * treatment of the continuous case brings in certain complications that are
  * less relevant for most purposes in AI.

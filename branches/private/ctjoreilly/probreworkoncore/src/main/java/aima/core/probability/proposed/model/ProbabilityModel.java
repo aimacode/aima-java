@@ -5,7 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 14.1)
+// TODO - On AIMA (on 14.4.1)
 //  
 // TODO - create BayesModel implementation using EnumerationAsk initially.
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
@@ -22,8 +22,8 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 //        table permutations (i.e. Distribution - support freezing values and iterating
 //        over subset as well).
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 484.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>
+ * <br>
  * A fully specified probability model associates a numerical probability
  * P(&omega;) with each possible world. The set of all possible worlds is called
  * the sample space &Omega;.
@@ -33,8 +33,8 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 public interface ProbabilityModel {
 	/**
 	 * The default threshold for rounding errors. Example, to test if
-	 * probabilities sum to 1:
-	 * 
+	 * probabilities sum to 1:<br>
+	 * <br>
 	 * Math.abs(1 - probabilitySum) <
 	 * ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD;
 	 */
@@ -69,23 +69,23 @@ public interface ProbabilityModel {
 	 * revealed. This is the conditional or posterior probability (or just
 	 * "posterior" for short). Mathematically speaking, conditional
 	 * probabilities are defined in terms of unconditional probabilities as
-	 * follows: for any propositions a and b, we have
-	 * 
-	 * P(a | b) = P(a AND b)/P(b)
-	 * 
+	 * follows, for any propositions a and b, we have:<br>
+	 * <br>
+	 * P(a | b) = P(a AND b)/P(b)<br>
+	 * <br>
 	 * which holds whenever P(b) > 0. Refer to equation 13.3 page 485 of AIMA3e.
 	 * This can be rewritten in a different form called the <b>product rule</b>:
-	 * 
-	 * P(a AND b) = P(a | b)P(b)
-	 * 
-	 * and also as:
-	 * 
-	 * P(a AND b) = P(b | a)P(a)
-	 * 
+	 * <br><br>
+	 * P(a AND b) = P(a | b)P(b)<br>
+	 * <br>
+	 * and also as:<br>
+	 * <br>
+	 * P(a AND b) = P(b | a)P(a)<br>
+	 * <br>
 	 * whereby, equating the two right-hand sides and dividing by P(a) gives you
-	 * Bayes' rule:
-	 * 
-	 * P(b | a) = P(a | b)P(b)/P(a) (i.e. (likelihood * prior)/evidence)
+	 * Bayes' rule:<br>
+	 * <br>
+	 * P(b | a) = (P(a | b)P(b))/P(a) - i.e. (likelihood * prior)/evidence
 	 * 
 	 * @param phi
 	 *            the proposition for which a probability value is to be

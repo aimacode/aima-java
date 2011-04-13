@@ -341,6 +341,8 @@ public abstract class CommonProbabilityModelTests {
 			RandomVariable maryCallsRV) {
 		Assert.assertTrue(model.isValid());
 
+		AssignmentProposition aburglary = new AssignmentProposition(
+				burglaryRV, Boolean.TRUE);
 		AssignmentProposition anotburglary = new AssignmentProposition(
 				burglaryRV, Boolean.FALSE);
 		AssignmentProposition anotearthquake = new AssignmentProposition(
@@ -359,5 +361,13 @@ public abstract class CommonProbabilityModelTests {
 				anotburglary, anotearthquake), 0.00062811126, DELTA_THRESHOLD);
 		Assert.assertEquals(model.prior(ajohnCalls, amaryCalls, anotalarm,
 				anotburglary, anotearthquake), 0.00049800249, DELTA_THRESHOLD);
+		
+		// AIMA3e pg. 524
+		// P(Burglary = true | JohnCalls = true, MaryCalls = true) = 0.00059224
+		Assert.assertEquals(0.00059224,
+				model.prior(aburglary, ajohnCalls, amaryCalls), DELTA_THRESHOLD);
+		// P(Burglary = false | JohnCalls = true, MaryCalls = true) = 0.0014919
+		Assert.assertEquals(0.00149185764899,
+				model.prior(anotburglary, ajohnCalls, amaryCalls), DELTA_THRESHOLD);
 	}
 }

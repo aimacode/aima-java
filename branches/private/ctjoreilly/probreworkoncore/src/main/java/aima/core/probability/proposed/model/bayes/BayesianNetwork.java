@@ -12,29 +12,29 @@ import java.util.Set;
 import aima.core.probability.proposed.model.RandomVariable;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 510.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 510.<br>
+ * <br>
  * Bayesian Networks are used to represent the dependencies among Random
  * Variables. They can represent essentially any full joint probability
  * distribution and in many cases can do so very concisely. A Bayesian network
  * is a directed graph in which each node is annotated with quantitative
- * information. The full specification is as follows:
- * 
+ * information. The full specification is as follows:<br>
+ * <br>
  * 1. Each node corresponds to a random variable, which may be discrete or
- * continuous.
- * 
+ * continuous.<br>
+ * <br>
  * 2. A set of directed links or arrows connects pairs of nodes. If there is an
  * arrow from node X to node Y, X is said to be a parent of Y. The graph has no
- * directed cycles (and hence is a directed acyclic graph, or DAG.
- * 
+ * directed cycles (and hence is a directed acyclic graph, or <b>DAG</b>.<br>
+ * <br>
  * 3. Each node X<sub>i</sub> has a conditional probability distribution
  * P(X<sub>i</sub> | Parents(X<sub>i</sub>)) that quantifies the effect of the
- * parents on the node.
- * 
+ * parents on the node.<br>
+ * <br>
  * The topology of the network - the set of nodes and links - specifies the
- * conditional independence relationships that hold in the domain.
- * 
- * Note(1): "Bayesian Network" is the most common name used, but there are many
+ * conditional independence relationships that hold in the domain.<br>
+ * <br>
+ * <b>Note(1)</b>: "Bayesian Network" is the most common name used, but there are many
  * synonyms, including "belief network", "probabilistic network",
  * "causal network", and "knowledge map".
  * 
@@ -72,6 +72,14 @@ public class BayesianNetwork {
 		return variables;
 	}
 
+	/**
+	 * 
+	 * @param rv
+	 *            the RandomVariable whose corresponding Node is to be
+	 *            retrieved.
+	 * @return the Node associated with the random variable in this Bayesian
+	 *         Network.
+	 */
 	public Node getNode(RandomVariable rv) {
 		return varToNodeMap.get(rv);
 	}
@@ -102,13 +110,14 @@ public class BayesianNetwork {
 				}
 			}
 		}
-		
+
 		for (List<Node> edges : incomingEdges.values()) {
 			if (!edges.isEmpty()) {
-				throw new IllegalArgumentException("Network contains at least one cycle in it, must be a DAG.");
+				throw new IllegalArgumentException(
+						"Network contains at least one cycle in it, must be a DAG.");
 			}
 		}
-	} 
+	}
 
 	private void walkNode(Node n, Set<Node> seenAlready,
 			Map<Node, List<Node>> incomingEdges, Set<Node> rootNodes) {

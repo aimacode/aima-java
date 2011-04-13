@@ -13,7 +13,7 @@ import aima.core.probability.proposed.model.RandomVariable;
 
 // TODO-AIMA3e pg. 518, 519, consider support for deterministic, noisy-OR
 // and noisy-MAX Nodes. In particular deterministic nodes can be 
-// auto-generated for constraint propositions by iterating over their 
+// auto-generated for derived propositions by iterating over their 
 // scope variables in order to construct their CPT - this could be done dynamically
 // by an instance of a model. The noisy nodes could use a dynacmic CPT
 // interface to handle dynamically constructing their values.
