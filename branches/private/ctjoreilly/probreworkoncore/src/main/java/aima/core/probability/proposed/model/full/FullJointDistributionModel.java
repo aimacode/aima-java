@@ -13,6 +13,7 @@ import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
+import aima.core.probability.proposed.util.ProbUtil;
 
 public class FullJointDistributionModel implements FiniteProbabilityModel {
 
@@ -45,19 +46,18 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 	}
 
 	public double prior(Proposition... phi) {
-		return probabilityOf(constructConjunction(phi, 0));
+		return probabilityOf(ProbUtil.constructConjunction(phi));
 	}
 
 	public double posterior(Proposition phi, Proposition... evidence) {
 
-		Proposition conjEvidence = constructConjunction(evidence, 0);
+		Proposition conjEvidence = ProbUtil.constructConjunction(evidence);
 
 		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
 		Proposition aAndB = new ConjunctiveProposition(phi, conjEvidence);
-		double probabilityAandB = probabilityOf(aAndB);
 		double probabilityOfEvidence = probabilityOf(conjEvidence);
 		if (0 != probabilityOfEvidence) {
-			return probabilityAandB / probabilityOfEvidence;
+			return probabilityOf(aAndB) / probabilityOfEvidence;
 		}
 
 		return 0;
@@ -78,13 +78,13 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	public Distribution posteriorDistribution(Proposition phi,
 			Proposition... evidence) {
-		
-		Proposition conjEvidence = constructConjunction(evidence, 0);
+
+		Proposition conjEvidence = ProbUtil.constructConjunction(evidence);
 
 		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
 		Distribution dAandB = jointDistribution(phi, conjEvidence);
 		Distribution dEvidence = jointDistribution(conjEvidence);
-		
+
 		return dAandB.divideBy(dEvidence);
 	}
 
@@ -104,7 +104,8 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 			}
 
 			final Distribution ud = new Distribution(distVars);
-			final Proposition conjProp = constructConjunction(propositions, 0);
+			final Proposition conjProp = ProbUtil
+					.constructConjunction(propositions);
 			final Object[] values = new Object[vars.size()];
 
 			Distribution.Iterator di = new Distribution.Iterator() {
@@ -164,14 +165,5 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 		distribution.iterateDistribution(di);
 
 		return ((Double) di.getPostIterateValue()).doubleValue();
-	}
-
-	private Proposition constructConjunction(Proposition[] props, int idx) {
-		if ((idx + 1) == props.length) {
-			return props[idx];
-		}
-
-		return new ConjunctiveProposition(props[idx], constructConjunction(
-				props, idx + 1));
 	}
 }

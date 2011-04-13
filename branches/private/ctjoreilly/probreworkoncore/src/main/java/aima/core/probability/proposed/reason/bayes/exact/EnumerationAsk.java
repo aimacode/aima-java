@@ -6,6 +6,7 @@ import java.util.Map;
 
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.RandomVariable;
+import aima.core.probability.proposed.model.bayes.BayesInference;
 import aima.core.probability.proposed.model.bayes.BayesianNetwork;
 import aima.core.probability.proposed.model.bayes.FiniteNode;
 import aima.core.probability.proposed.model.bayes.Node;
@@ -17,6 +18,7 @@ import aima.core.util.Util;
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 14.9, page
  * 525.<br>
  * <br>
+ * 
  * <pre>
  * function ENUMERATION-ASK(X, e, bn) returns a distribution over X
  *   inputs: X, the query variable
@@ -43,12 +45,12 @@ import aima.core.util.Util;
  * Figure 14.9 The enumeration algorithm for answering queries on Bayesian
  * networks. <br>
  * <br>
- * <b>Note:</b> The implementation has been extended to handle queries with multiple
- * variables. <br>
+ * <b>Note:</b> The implementation has been extended to handle queries with
+ * multiple variables. <br>
  * 
  * @author Ciaran O'Reilly
  */
-public class EnumerationAsk {
+public class EnumerationAsk implements BayesInference {
 
 	public EnumerationAsk() {
 
@@ -104,6 +106,17 @@ public class EnumerationAsk {
 		// return NORMALIZE(Q(X))
 		return Q.normalize();
 	}
+
+	//
+	// START-BayesInference
+	public Distribution ask(final RandomVariable[] X,
+			final AssignmentProposition[] observedEvidence,
+			final BayesianNetwork bn) {
+		return this.enumerationAsk(X, observedEvidence, bn);
+	}
+
+	// END-BayesInference
+	//
 
 	//
 	// PROTECTED METHODS
@@ -165,7 +178,7 @@ public class EnumerationAsk {
 				extendedValues[idx] = e[i];
 				idx++;
 			}
-			extendedIdx = idx-1;
+			extendedIdx = idx - 1;
 			hiddenStart = idx;
 			// the remaining slots are left open for the hidden variables
 			for (RandomVariable rv : bn.getVariablesInTopologicalOrder()) {
@@ -179,12 +192,11 @@ public class EnumerationAsk {
 
 		public void setExtendedValue(RandomVariable rv, Object value) {
 			int idx = varIdxs.get(rv);
-			extendedValues[idx] = new AssignmentProposition(rv,
-					value);
+			extendedValues[idx] = new AssignmentProposition(rv, value);
 			if (idx >= hiddenStart) {
 				extendedIdx = idx;
 			} else {
-				extendedIdx = hiddenStart-1;
+				extendedIdx = hiddenStart - 1;
 			}
 		}
 
@@ -199,7 +211,7 @@ public class EnumerationAsk {
 						"Enumeration-Ask only works with finite Nodes.");
 			}
 			FiniteNode fn = (FiniteNode) n;
-			AssignmentProposition[] aps = new AssignmentProposition[1+fn
+			AssignmentProposition[] aps = new AssignmentProposition[1 + fn
 					.getParents().size()];
 			int idx = 0;
 			for (Node pn : n.getParents()) {
