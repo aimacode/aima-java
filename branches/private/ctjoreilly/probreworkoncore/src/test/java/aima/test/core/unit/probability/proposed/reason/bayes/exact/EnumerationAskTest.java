@@ -4,11 +4,11 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import aima.core.probability.proposed.example.BayesNetExampleFactory;
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.bayes.BayesianNetwork;
-import aima.core.probability.proposed.model.bayes.example.BayesNetExampleFactory;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
 

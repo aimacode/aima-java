@@ -2,8 +2,8 @@ package aima.test.core.unit.probability.proposed.model.bayes;
 
 import org.junit.Test;
 
+import aima.core.probability.proposed.example.BayesNetExampleFactory;
 import aima.core.probability.proposed.model.bayes.FiniteBayesModel;
-import aima.core.probability.proposed.model.bayes.example.BayesNetExampleFactory;
 import aima.test.core.unit.probability.proposed.model.CommonFiniteProbabilityModelTests;
 
 public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
