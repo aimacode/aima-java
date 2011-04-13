@@ -1,20 +1,9 @@
 package aima.core.probability.proposed.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import aima.core.probability.proposed.model.RandomVariable;
-import aima.core.probability.proposed.model.domain.BooleanDomain;
 import aima.core.probability.proposed.model.full.FullJointDistributionModel;
 
 public class FullJointDistributionBurglaryAlarmModel extends
 		FullJointDistributionModel {
-
-	private RandomVariable burglaryRV = null;
-	private RandomVariable earthquakeRV = null;
-	private RandomVariable alarmRV = null;
-	private RandomVariable johnCallsRV = null;
-	private RandomVariable maryCallsRV = null;
 
 	public FullJointDistributionBurglaryAlarmModel() {
 		super(new double[] {
@@ -81,38 +70,10 @@ public class FullJointDistributionBurglaryAlarmModel extends
 				// B = f, E = f, A = f, J = f, M = t
 				0.009462047481,
 				// B = f, E = f, A = f, J = f, M = f
-				0.936742700619 }, new RandomVariable("Burglary", new BooleanDomain()),
-				new RandomVariable("Earthquake", new BooleanDomain()),
-				new RandomVariable("Alarm", new BooleanDomain()),
-				new RandomVariable("JohnCalls", new BooleanDomain()),
-				new RandomVariable("MaryCalls", new BooleanDomain()));
-
-		List<RandomVariable> vars = new ArrayList<RandomVariable>(
-				getRepresentation());
-		burglaryRV = vars.get(0);
-		earthquakeRV = vars.get(1);
-		alarmRV = vars.get(2);
-		johnCallsRV = vars.get(3);
-		maryCallsRV = vars.get(4);
-	}
-
-	public RandomVariable getBurglary() {
-		return burglaryRV;
-	}
-
-	public RandomVariable getEarthquake() {
-		return earthquakeRV;
-	}
-
-	public RandomVariable getAlarm() {
-		return alarmRV;
-	}
-
-	public RandomVariable getJohnCalls() {
-		return johnCallsRV;
-	}
-
-	public RandomVariable getMaryCalls() {
-		return maryCallsRV;
+				0.936742700619 }, ExampleRV.BURGLARY_RV,
+				ExampleRV.EARTHQUAKE_RV,
+				ExampleRV.ALARM_RV,
+				ExampleRV.JOHN_CALLS_RV,
+				ExampleRV.MARY_CALLS_RV);
 	}
 }

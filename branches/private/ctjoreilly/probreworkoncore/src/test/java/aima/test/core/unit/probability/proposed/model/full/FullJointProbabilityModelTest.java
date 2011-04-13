@@ -16,85 +16,53 @@ public class FullJointProbabilityModelTest extends
 	// ProbabilityModel Tests
 	@Test
 	public void test_RollingPairFairDiceModel() {
-		FullJointDistributionPairFairDiceModel model = new FullJointDistributionPairFairDiceModel();
-
-		test_RollingPairFairDiceModel(model, model.getDice1(), model.getDice2());
+		test_RollingPairFairDiceModel(new FullJointDistributionPairFairDiceModel());
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchModel() {
-		FullJointDistributionToothacheCavityCatchModel model = new FullJointDistributionToothacheCavityCatchModel();
-
-		test_ToothacheCavityCatchModel(model, model.getToothache(),
-				model.getCavity(), model.getCatch());
+		test_ToothacheCavityCatchModel(new FullJointDistributionToothacheCavityCatchModel());
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel() {
-		FullJointDistributionToothacheCavityCatchWeatherModel model = new FullJointDistributionToothacheCavityCatchWeatherModel();
-
-		test_ToothacheCavityCatchWeatherModel(model, model.getToothache(),
-				model.getCavity(), model.getCatch(), model.getWeather());
+		test_ToothacheCavityCatchWeatherModel(new FullJointDistributionToothacheCavityCatchWeatherModel());
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel() {
-		FullJointDistributionMeningitisStiffNeckModel model = new FullJointDistributionMeningitisStiffNeckModel();
-
-		test_MeningitisStiffNeckModel(model, model.getMeningitis(),
-				model.getStiffNeck());
+		test_MeningitisStiffNeckModel(new FullJointDistributionMeningitisStiffNeckModel());
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel() {
-		FullJointDistributionBurglaryAlarmModel model = new FullJointDistributionBurglaryAlarmModel();
-
-		test_BurglaryAlarmModel(model, model.getBurglary(),
-				model.getEarthquake(), model.getAlarm(), model.getJohnCalls(),
-				model.getMaryCalls());
+		test_BurglaryAlarmModel(new FullJointDistributionBurglaryAlarmModel());
 	}
 
 	//
 	// FiniteProbabilityModel Tests
 	@Test
 	public void test_RollingPairFairDiceModel_Distributions() {
-		FullJointDistributionPairFairDiceModel model = new FullJointDistributionPairFairDiceModel();
-
-		test_RollingPairFairDiceModel_Distributions(model, model.getDice1(),
-				model.getDice2());
+		test_RollingPairFairDiceModel_Distributions(new FullJointDistributionPairFairDiceModel());
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchModel_Distributions() {
-		FullJointDistributionToothacheCavityCatchModel model = new FullJointDistributionToothacheCavityCatchModel();
-
-		test_ToothacheCavityCatchModel_Distributions(model,
-				model.getToothache(), model.getCavity(), model.getCatch());
+		test_ToothacheCavityCatchModel_Distributions(new FullJointDistributionToothacheCavityCatchModel());
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
-		FullJointDistributionToothacheCavityCatchWeatherModel model = new FullJointDistributionToothacheCavityCatchWeatherModel();
-
-		test_ToothacheCavityCatchWeatherModel_Distributions(model,
-				model.getToothache(), model.getCavity(), model.getCatch(),
-				model.getWeather());
+		test_ToothacheCavityCatchWeatherModel_Distributions(new FullJointDistributionToothacheCavityCatchWeatherModel());
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel_Distributions() {
-		FullJointDistributionMeningitisStiffNeckModel model = new FullJointDistributionMeningitisStiffNeckModel();
-
-		test_MeningitisStiffNeckModel_Distributions(model,
-				model.getMeningitis(), model.getStiffNeck());
+		test_MeningitisStiffNeckModel_Distributions(new FullJointDistributionMeningitisStiffNeckModel());
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel_Distributions() {
-		FullJointDistributionBurglaryAlarmModel model = new FullJointDistributionBurglaryAlarmModel();
-
-		test_BurglaryAlarmModel_Distributions(model, model.getBurglary(),
-				model.getEarthquake(), model.getAlarm(), model.getJohnCalls(),
-				model.getMaryCalls());
+		test_BurglaryAlarmModel_Distributions(new FullJointDistributionBurglaryAlarmModel());
 	}
 }

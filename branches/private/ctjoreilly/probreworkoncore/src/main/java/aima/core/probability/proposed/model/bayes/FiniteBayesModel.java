@@ -1,7 +1,6 @@
 package aima.core.probability.proposed.model.bayes;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import aima.core.probability.proposed.model.Distribution;
