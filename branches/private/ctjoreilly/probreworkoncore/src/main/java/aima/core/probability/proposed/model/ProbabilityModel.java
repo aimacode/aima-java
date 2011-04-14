@@ -7,7 +7,6 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 // TODO - This is a working set, to be removed.
 // TODO - On AIMA (on 14.4.1)
 //  
-// TODO - create BayesModel implementation using EnumerationAsk initially.
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
 //        = P(MaryCalls | Alarm), will require a sub distribution mechanism
 //        to be able to express with API.

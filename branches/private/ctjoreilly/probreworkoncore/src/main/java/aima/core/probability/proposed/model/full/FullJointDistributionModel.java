@@ -15,6 +15,12 @@ import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
 import aima.core.probability.proposed.util.ProbUtil;
 
+/**
+ * An implementation of the FiniteProbabilityModel API using a full joint
+ * distribution as the underlying model.
+ * 
+ * @author Ciaran O'Reilly
+ */
 public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	private Distribution distribution = null;
@@ -55,9 +61,9 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
 		Proposition aAndB = new ConjunctiveProposition(phi, conjEvidence);
-		double probabilityOfEvidence = probabilityOf(conjEvidence);
+		double probabilityOfEvidence = prior(conjEvidence);
 		if (0 != probabilityOfEvidence) {
-			return probabilityOf(aAndB) / probabilityOfEvidence;
+			return prior(aAndB) / probabilityOfEvidence;
 		}
 
 		return 0;
@@ -90,10 +96,10 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	public Distribution jointDistribution(Proposition... propositions) {
 		Distribution d = null;
-		final LinkedHashSet<RandomVariable> vars = new LinkedHashSet<RandomVariable>();
-		for (Proposition p : propositions) {
-			vars.addAll(p.getUnboundScope());
-		}
+		final Proposition conjProp = ProbUtil
+				.constructConjunction(propositions);
+		final LinkedHashSet<RandomVariable> vars = new LinkedHashSet<RandomVariable>(
+				conjProp.getUnboundScope());
 
 		if (vars.size() > 0) {
 			RandomVariable[] distVars = new RandomVariable[vars.size()];
@@ -104,8 +110,6 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 			}
 
 			final Distribution ud = new Distribution(distVars);
-			final Proposition conjProp = ProbUtil
-					.constructConjunction(propositions);
 			final Object[] values = new Object[vars.size()];
 
 			Distribution.Iterator di = new Distribution.Iterator() {

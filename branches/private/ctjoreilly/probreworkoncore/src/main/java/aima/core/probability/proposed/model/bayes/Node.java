@@ -15,7 +15,7 @@ import aima.core.probability.proposed.model.RandomVariable;
 // and noisy-MAX Nodes. In particular deterministic nodes can be 
 // auto-generated for derived propositions by iterating over their 
 // scope variables in order to construct their CPT - this could be done dynamically
-// by an instance of a model. The noisy nodes could use a dynacmic CPT
+// by an instance of a model. The noisy nodes could use a dynamic CPT
 // interface to handle dynamically constructing their values.
 public abstract class Node {
 

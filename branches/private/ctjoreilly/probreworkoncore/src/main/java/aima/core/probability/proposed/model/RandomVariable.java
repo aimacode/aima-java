@@ -8,8 +8,8 @@ import aima.core.probability.proposed.model.domain.Domain;
 import aima.core.probability.proposed.model.proposition.TermProposition;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 486.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 486.<br>
+ * <br>
  * Variables in probability theory are called random variables and their names
  * begin with an uppercase letter. Every random variable has a domain - the set
  * of possible values it can take on.

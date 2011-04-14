@@ -4,7 +4,6 @@ import org.junit.Assert;
 
 import aima.core.probability.proposed.example.ExampleRV;
 import aima.core.probability.proposed.model.ProbabilityModel;
-import aima.core.probability.proposed.model.RandomVariable;
 import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.DisjunctiveProposition;
