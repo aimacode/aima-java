@@ -125,14 +125,4 @@ public class EnumerationAskTest {
 		Assert.assertEquals(0.15098299999999998, d.getValues()[1],
 				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
 	}
-
-	@Test
-	public void testAIMAPg529() {
-		Assert.fail("TODO implement model described in figure A.");
-	}
-
-	@Test
-	public void testAIMAPg569() {
-		Assert.fail("TODO implement model described in figure 15.2");
-	}
 }
