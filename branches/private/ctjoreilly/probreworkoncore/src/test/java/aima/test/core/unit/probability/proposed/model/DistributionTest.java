@@ -74,15 +74,15 @@ public class DistributionTest {
 		// Ensure the order of the dividends
 		// makes no difference to the result
 		Assert.assertArrayEquals(xyzD.divideBy(zD).getValues(),
-				xzyD.divideBy(zD).multiplyByPOS(iD, xRV, yRV, zRV).getValues(),
+				xzyD.divideBy(zD).pointwiseProductPOS(iD, xRV, yRV, zRV).getValues(),
 				DELTA_THRESHOLD);
 		Assert.assertArrayEquals(xzyD.divideBy(zD).getValues(),
-				zxyD.divideBy(zD).multiplyByPOS(iD, xRV, zRV, yRV).getValues(),
+				zxyD.divideBy(zD).pointwiseProductPOS(iD, xRV, zRV, yRV).getValues(),
 				DELTA_THRESHOLD);
 	}
 
 	@Test
-	public void test_multiplyBy() {
+	public void test_pointwiseProduct() {
 		RandomVariable xRV = new RandomVariable("X", new BooleanDomain());
 		RandomVariable yRV = new RandomVariable("Y", new BooleanDomain());
 		RandomVariable zRV = new RandomVariable("Z", new BooleanDomain());
@@ -100,13 +100,13 @@ public class DistributionTest {
 
 		// Not commutative
 		Assert.assertArrayEquals(new double[] { 3.0, 7.0, 6.0, 14.0, 9.0, 21.0,
-				12.0, 28.0 }, xyD.multiplyBy(zD).getValues(), DELTA_THRESHOLD);
+				12.0, 28.0 }, xyD.pointwiseProduct(zD).getValues(), DELTA_THRESHOLD);
 		Assert.assertArrayEquals(new double[] { 3.0, 6.0, 9.0, 12.0, 7.0, 14.0,
-				21.0, 28.0 }, zD.multiplyBy(xyD).getValues(), DELTA_THRESHOLD);
+				21.0, 28.0 }, zD.pointwiseProduct(xyD).getValues(), DELTA_THRESHOLD);
 	}
 
 	@Test
-	public void test_multiplyByPOS() {
+	public void test_pointwiseProductPOS() {
 		RandomVariable xRV = new RandomVariable("X", new BooleanDomain());
 		RandomVariable yRV = new RandomVariable("Y", new BooleanDomain());
 		RandomVariable zRV = new RandomVariable("Z", new BooleanDomain());
@@ -123,7 +123,7 @@ public class DistributionTest {
 		Distribution zD = new Distribution(new double[] { 3.0, 7.0 }, zRV);
 
 		// Make commutative by specifying an order for the product
-		Assert.assertArrayEquals(xyD.multiplyBy(zD).getValues(), zD
-				.multiplyByPOS(xyD, xRV, yRV, zRV).getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(xyD.pointwiseProduct(zD).getValues(), zD
+				.pointwiseProductPOS(xyD, xRV, yRV, zRV).getValues(), DELTA_THRESHOLD);
 	}
 }

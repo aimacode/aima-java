@@ -3,6 +3,7 @@ package aima.core.probability.proposed.model;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,11 +13,11 @@ import aima.core.util.SetOps;
 import aima.core.util.math.MixedRadixNumber;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 487.
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>
+ * <br>
  * A vector of numbers, where we assume a predefined ordering on the domain(s)
- * of the Random Variables used to create the distribution.
- * 
+ * of the Random Variables used to create the distribution.<br>
+ * <br>
  * This class is used to represent both Probability and Joint Probability
  * distributions for finite domains.
  * 
@@ -31,13 +32,46 @@ public class Distribution {
 	private String toString = null;
 	private double sum = -1;
 
+	/**
+	 * Interface to be implemented by an object/algorithm that wishes to iterate
+	 * over the distribution.
+	 * 
+	 * @see Distribution#iterateDistribution(Iterator)
+	 */
 	public interface Iterator {
+		/**
+		 * Called for each possible world represented by the Distribution.
+		 * 
+		 * @param possibleWorld
+		 *            a possible world, &omega;, of variable/value pairs.
+		 * @param probability
+		 *            the probability associated with &omega;
+		 */
 		void iterate(Map<RandomVariable, Object> possibleWorld,
 				double probability);
 
+		/**
+		 * Can be called after iteration.
+		 * 
+		 * @return some value relevant to having iterated over all possible
+		 *         world, for e.g. the sum of possible worlds matching a
+		 *         particular criteria.
+		 */
 		Object getPostIterateValue();
 	}
 
+	/**
+	 * Calculated the expected size of a Distribution for the provided random
+	 * variables.
+	 * 
+	 * @param vars
+	 *            null, 0 or more random variables that are to be used to
+	 *            construct a Distribution.
+	 * @return the size (i.e. getValues().length) that the Distribution will
+	 *         need to be in order to represent the specified random variables.
+	 * 
+	 * @see Distribution#getValues()
+	 */
 	public static int expectedSizeOfDistribution(RandomVariable... vars) {
 		// initially 1, as this will represent constant assignments
 		// e.g. Dice1 = 1.
@@ -73,8 +107,7 @@ public class Distribution {
 		}
 		if (values.length != expectedSizeOfDistribution(vars)) {
 			throw new IllegalArgumentException("Distribution of length "
-					+ values.length
-					+ " is not the correct size, should be "
+					+ values.length + " is not the correct size, should be "
 					+ expectedSizeOfDistribution(vars)
 					+ " in order to represent all possible combinations.");
 		}
@@ -91,13 +124,39 @@ public class Distribution {
 		radixs = createRadixs(randomVarInfo);
 	}
 
-	// Note: Document that callers of this method should not change
-	// the values of the array returned directly but should
-	// instead use setValue().
+	public boolean contains(RandomVariable rv) {
+		return randomVarInfo.keySet().contains(rv);
+	}
+
+	public Set<RandomVariable> getRepresentation() {
+		return randomVarInfo.keySet();
+	}
+
+	/**
+	 * <b>Note:</b> Do not modify the double[] returned by this method directly.
+	 * Instead use setValue() to ensure values and related values are updated
+	 * correctly.
+	 * 
+	 * @return the internal double[] used to represent this Distribution.
+	 * 
+	 * @see Distribution#setValue(int, double)
+	 */
 	public double[] getValues() {
 		return distribution;
 	}
 
+	/**
+	 * Retrieve the index into the Distribution for the provided set of values
+	 * for the random variables comprising the Distribution.
+	 * 
+	 * @param values
+	 *            an ordered set of values for the random variables comprising
+	 *            the Distribution (<b>Node:</b> the order must match the order
+	 *            of the random variables)
+	 * @return the index with the Distribution for the values specified.
+	 * 
+	 * @see Distribution#getValues()
+	 */
 	public int getIndex(Object... values) {
 		if (values.length != randomVarInfo.size()) {
 			throw new IllegalArgumentException(
@@ -115,11 +174,17 @@ public class Distribution {
 		return mrn.intValue();
 	}
 
-	public void setValue(int idx, double value) {
-		distribution[idx] = value;
-		reinitLazyValues();
-	}
-
+	/**
+	 * Get the value for the provided set of AssignmentPropositions for the
+	 * random variables comprising the Distribution (size of each must equal and
+	 * their random variables must match).
+	 * 
+	 * @param values
+	 *            the assignment propositions for the random variables
+	 *            comprising the Distribution
+	 * @return the value for the possible world associated with the assignments
+	 *         for the random variables comprising the Distribution.
+	 */
 	public double getValueFor(AssignmentProposition... values) {
 		if (values.length != randomVarInfo.size()) {
 			throw new IllegalArgumentException(
@@ -141,6 +206,17 @@ public class Distribution {
 	}
 
 	/**
+	 * Set the value at a specified index within the distribution.
+	 * 
+	 * @param idx
+	 * @param value
+	 */
+	public void setValue(int idx, double value) {
+		distribution[idx] = value;
+		reinitLazyValues();
+	}
+
+	/**
 	 * 
 	 * @return the summation of all of the elements within the Distribution.
 	 */
@@ -152,6 +228,56 @@ public class Distribution {
 			}
 		}
 		return sum;
+	}
+
+	/**
+	 * Sum out the provided variables from this Distribution creating a new
+	 * Distribution of the remaining variables with their values updated with
+	 * the summed out random variables.<br>
+	 * <br>
+	 * see: AIMA3e page 527.<br>
+	 * <br>
+	 * 
+	 * @param vars
+	 *            the random variables to sum out.
+	 * @return a new Distribution containing any remaining random variables not
+	 *         summed out and a new set of values updated with the summed out
+	 *         values.
+	 */
+	public Distribution sumOut(RandomVariable... vars) {
+		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
+				this.randomVarInfo.keySet());
+		for (RandomVariable rv : vars) {
+			soutVars.remove(rv);
+		}
+		final Distribution summedOut = new Distribution(soutVars);
+		if (1 == summedOut.getValues().length) {
+			summedOut.getValues()[0] = getSum();
+		} else {
+			// Otherwise need to iterate through this distribution
+			// to calculate the summed out distribution.
+			final Object[] termValues = new Object[summedOut.randomVarInfo
+					.size()];
+			Distribution.Iterator di = new Distribution.Iterator() {
+				public void iterate(Map<RandomVariable, Object> possibleWorld,
+						double probability) {
+
+					int i = 0;
+					for (RandomVariable rv : summedOut.randomVarInfo.keySet()) {
+						termValues[i] = possibleWorld.get(rv);
+						i++;
+					}
+					summedOut.getValues()[summedOut.getIndex(termValues)] += probability;
+				}
+
+				public Object getPostIterateValue() {
+					return null; // N/A
+				}
+			};
+			iterateDistribution(di);
+		}
+
+		return summedOut;
 	}
 
 	/**
@@ -255,9 +381,11 @@ public class Distribution {
 	}
 
 	/**
-	 * Multiply this Distribution by a given multiplier, creating a new
-	 * Distribution representing the product of the two.
-	 * 
+	 * Pointwise multiplication of this Distribution by a given multiplier,
+	 * creating a new Distribution representing the product of the two.<br>
+	 * <br>
+	 * see: AIMA3e Figure 14.10 page 527.<br>
+	 * <br>
 	 * Note: Default Distribution multiplication is not commutative. The reason
 	 * is because the order of the variables comprising a Distribution dictate
 	 * the ordering of the values for that distribution. For example (the
@@ -282,31 +410,34 @@ public class Distribution {
 	 * Y, X<br>
 	 * <br>
 	 * i.e. an ordered union of the variables from the two distributions. <br>
-	 * To override the default order of the product use multiplyByPOS().
+	 * To override the default order of the product use pointwiseProductPOS().
 	 * 
 	 * @param multiplier
 	 * 
-	 * @return a new Distribution representing the product of this and the
-	 *         passed in multiplier. The order of the variables comprising the
-	 *         product distribution is the ordered union of the left term (this)
-	 *         and the right term (multiplier).
+	 * @return a new Distribution representing the pointwise product of this and
+	 *         the passed in multiplier. The order of the variables comprising
+	 *         the product distribution is the ordered union of the left term
+	 *         (this) and the right term (multiplier).
 	 * 
-	 * @see Distribution#multiplyByPOS(Distribution, RandomVariable...)
+	 * @see Distribution#pointwiseProductPOS(Distribution, RandomVariable...)
 	 */
-	public Distribution multiplyBy(final Distribution multiplier) {
+	public Distribution pointwiseProduct(final Distribution multiplier) {
 		Set<RandomVariable> prodVars = SetOps.union(randomVarInfo.keySet(),
 				multiplier.randomVarInfo.keySet());
-		return multiplyByPOS(multiplier,
-				prodVars.toArray(new RandomVariable[prodVars.size()]));
+		return pointwiseProductPOS(multiplier, prodVars
+				.toArray(new RandomVariable[prodVars.size()]));
 	}
 
 	/**
-	 * Multiply By - Product Order Specified (POS).
-	 * 
-	 * Multiply this Distribution by a given multiplier, creating a new
-	 * Distribution representing the product of the two. The order of the
-	 * variables comprising the product will match those specified. For example
-	 * (the General case of Baye's rule, AIMA3e pg. 496), using this API method:<br>
+	 * Pointwise Multiplication - Product Order Specified (POS).<br>
+	 * <br>
+	 * see: AIMA3e Figure 14.10 page 527.<br>
+	 * <br>
+	 * Pointwise multiplication of this Distribution by a given multiplier,
+	 * creating a new Distribution representing the product of the two. The
+	 * order of the variables comprising the product will match those specified.
+	 * For example (the General case of Baye's rule, AIMA3e pg. 496), using this
+	 * API method:<br>
 	 * <br>
 	 * <b>P</b>(Y | X) = (<b>P</b>(X | Y)<b>P</b>(Y), [Y, X])/<b>P</b>(X)<br>
 	 * <br>
@@ -316,18 +447,18 @@ public class Distribution {
 	 * @param prodVarOrder
 	 *            the order the variables comprising the product are to be in.
 	 * 
-	 * @return a new Distribution representing the product of this and the
-	 *         passed in multiplier. The order of the variables comprising the
-	 *         product distribution is the order specified.
+	 * @return a new Distribution representing the pointwise product of this and
+	 *         the passed in multiplier. The order of the variables comprising
+	 *         the product distribution is the order specified.
 	 * 
-	 * @see Distribution#multiplyBy(Distribution)
+	 * @see Distribution#pointwiseProduct(Distribution)
 	 */
-	public Distribution multiplyByPOS(final Distribution multiplier,
+	public Distribution pointwiseProductPOS(final Distribution multiplier,
 			RandomVariable... prodVarOrder) {
 		final Distribution product = new Distribution(prodVarOrder);
 		if (!product.randomVarInfo.keySet().equals(
-				SetOps.union(randomVarInfo.keySet(),
-						multiplier.randomVarInfo.keySet()))) {
+				SetOps.union(randomVarInfo.keySet(), multiplier.randomVarInfo
+						.keySet()))) {
 			throw new IllegalArgumentException(
 					"Specified list deatailing order of mulitplier is inconsistent.");
 		}
@@ -365,7 +496,7 @@ public class Distribution {
 						Map<RandomVariable, Object> possibleWorld) {
 					if (0 == termValues.length) {
 						// The term has no variables so always position 0.
-						return 0; 
+						return 0;
 					}
 
 					int i = 0;
@@ -383,6 +514,11 @@ public class Distribution {
 		return product;
 	}
 
+	/**
+	 * Normalize the values comprising this distribution.
+	 * 
+	 * @return this
+	 */
 	public Distribution normalize() {
 		double s = getSum();
 		if (s != 0) {
@@ -394,6 +530,12 @@ public class Distribution {
 		return this;
 	}
 
+	/**
+	 * Iterate over all the possible worlds describing this Distribution.
+	 * 
+	 * @param di
+	 *            the Distribution Iterator to iterate.
+	 */
 	public void iterateDistribution(Iterator di) {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
 		MixedRadixNumber mrn = new MixedRadixNumber(0, radixs);

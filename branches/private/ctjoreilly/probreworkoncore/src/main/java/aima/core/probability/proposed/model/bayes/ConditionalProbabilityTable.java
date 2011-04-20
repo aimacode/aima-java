@@ -1,8 +1,10 @@
 package aima.core.probability.proposed.model.bayes;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.ProbabilityModel;
@@ -44,8 +46,55 @@ public class ConditionalProbabilityTable {
 		checkEachRowTotalsOne();
 	}
 
-	public double probabilityFor(AssignmentProposition... values) {
+	public boolean contains(RandomVariable rv) {
+		return table.contains(rv);
+	}
+
+	public double probabilityFor(final AssignmentProposition... values) {
 		return table.getValueFor(values);
+	}
+
+	public Distribution valueOf(final AssignmentProposition... values) {
+		Set<RandomVariable> vofVars = new LinkedHashSet<RandomVariable>(table
+				.getRepresentation());
+		for (AssignmentProposition ap : values) {
+			vofVars.remove(ap.getTermVariable());
+		}
+		final Distribution valueOf = new Distribution(vofVars);
+		// Otherwise need to iterate through this distribution
+		// to calculate the summed out distribution.
+		final Object[] termValues = new Object[vofVars.size()];
+		Distribution.Iterator di = new Distribution.Iterator() {
+			public void iterate(Map<RandomVariable, Object> possibleWorld,
+					double probability) {
+				boolean holds = true;
+				for (AssignmentProposition ap : values) {
+					if (!ap.holds(possibleWorld)) {
+						holds = false;
+						break;
+					}
+				}
+				if (holds) {
+					if (0 == termValues.length) {
+						valueOf.getValues()[0] += probability;
+					} else {
+						int i = 0;
+						for (RandomVariable rv : valueOf.getRepresentation()) {
+							termValues[i] = possibleWorld.get(rv);
+							i++;
+						}
+						valueOf.getValues()[valueOf.getIndex(termValues)] += probability;
+					}
+				}
+			}
+
+			public Object getPostIterateValue() {
+				return null; // N/A
+			}
+		};
+		table.iterateDistribution(di);
+
+		return valueOf;
 	}
 
 	//

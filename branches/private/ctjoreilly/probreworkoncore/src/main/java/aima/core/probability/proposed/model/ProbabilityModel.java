@@ -6,7 +6,7 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
 // TODO - On AIMA (on 14.5)
-//  
+// 
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
 //        = P(MaryCalls | Alarm), will require a sub distribution mechanism
 //        to be able to express with API.

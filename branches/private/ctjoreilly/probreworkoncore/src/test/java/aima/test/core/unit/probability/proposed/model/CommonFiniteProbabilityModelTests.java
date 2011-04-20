@@ -138,7 +138,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				atoothache, acatch);
 		Assert.assertArrayEquals(model.posteriorDistribution(toothacheAndCatch,
 				ExampleRV.CAVITY_RV).getValues(), model.posteriorDistribution(
-				atoothache, ExampleRV.CAVITY_RV).multiplyBy(
+				atoothache, ExampleRV.CAVITY_RV).pointwiseProduct(
 				model.posteriorDistribution(acatch, ExampleRV.CAVITY_RV))
 				.getValues(), DELTA_THRESHOLD);
 
@@ -148,10 +148,10 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, toothacheAndCatch).getValues(), model
 				.posteriorDistribution(atoothache, ExampleRV.CAVITY_RV)
-				.multiplyBy(
+				.pointwiseProduct(
 						model
 								.posteriorDistribution(acatch,
-										ExampleRV.CAVITY_RV)).multiplyBy(
+										ExampleRV.CAVITY_RV)).pointwiseProduct(
 						model.priorDistribution(ExampleRV.CAVITY_RV))
 				.normalize().getValues(), DELTA_THRESHOLD);
 
@@ -163,7 +163,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				toothacheAndCatchRV, ExampleRV.CAVITY_RV).getValues(), model
 				.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).multiplyByPOS(
+						ExampleRV.CAVITY_RV).pointwiseProductPOS(
 						model.posteriorDistribution(ExampleRV.CATCH_RV,
 								ExampleRV.CAVITY_RV), ExampleRV.TOOTHACHE_RV,
 						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).getValues(),
@@ -176,7 +176,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				.priorDistribution(ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
 						ExampleRV.CAVITY_RV).getValues(),
 				model.posteriorDistribution(toothacheAndCatchRV,
-						ExampleRV.CAVITY_RV).multiplyBy(
+						ExampleRV.CAVITY_RV).pointwiseProduct(
 						model.priorDistribution(ExampleRV.CAVITY_RV))
 						.getValues(), DELTA_THRESHOLD);
 
@@ -184,12 +184,12 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P<>(Toothache, Catch | Cavity)P<>(Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
 		Assert.assertArrayEquals(model.posteriorDistribution(
-				toothacheAndCatchRV, ExampleRV.CAVITY_RV).multiplyBy(
+				toothacheAndCatchRV, ExampleRV.CAVITY_RV).pointwiseProduct(
 				model.priorDistribution(ExampleRV.CAVITY_RV)).getValues(),
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).multiplyByPOS(
+						ExampleRV.CAVITY_RV).pointwiseProductPOS(
 						model.posteriorDistribution(ExampleRV.CATCH_RV,
-								ExampleRV.CAVITY_RV).multiplyBy(
+								ExampleRV.CAVITY_RV).pointwiseProduct(
 								model.priorDistribution(ExampleRV.CAVITY_RV)),
 						ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
 						ExampleRV.CAVITY_RV).getValues(), DELTA_THRESHOLD);
@@ -200,10 +200,10 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				.priorDistribution(ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
 						ExampleRV.CAVITY_RV).getValues(), model
 				.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).multiplyByPOS(
+						ExampleRV.CAVITY_RV).pointwiseProductPOS(
 						model.posteriorDistribution(ExampleRV.CATCH_RV,
 								ExampleRV.CAVITY_RV), ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).multiplyBy(
+						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).pointwiseProduct(
 						model.priorDistribution(ExampleRV.CAVITY_RV))
 				.getValues(), DELTA_THRESHOLD);
 
@@ -213,10 +213,10 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// Note: Performing in this order -
 		// P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
 		// as default multiplication of distributions are not commutative (could
-		// also use multiplyByPOS() to specify the order).
+		// also use pointwiseProductPOS() to specify the order).
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV).getValues(), model
-				.priorDistribution(ExampleRV.CAVITY_RV).multiplyBy(
+				.priorDistribution(ExampleRV.CAVITY_RV).pointwiseProduct(
 						model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
 								ExampleRV.CAVITY_RV)).divideBy(
 						model.priorDistribution(ExampleRV.TOOTHACHE_RV))
@@ -224,7 +224,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV).getValues(), model
-				.priorDistribution(ExampleRV.CAVITY_RV).multiplyBy(
+				.priorDistribution(ExampleRV.CAVITY_RV).pointwiseProduct(
 						model.posteriorDistribution(ExampleRV.CATCH_RV,
 								ExampleRV.CAVITY_RV)).divideBy(
 						model.priorDistribution(ExampleRV.CATCH_RV))
@@ -235,11 +235,11 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// Note: Performing in this order -
 		// P<>(Y | X, e) = (P<>(Y|e)P<>(X | Y, e)))/P<>(X | e)
 		// as default multiplication of distributions are not commutative (could
-		// also use multiplyByPOS() to specify the order).
+		// also use pointwiseProductPOS() to specify the order).
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV, acatch)
 				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				acatch).multiplyBy(
+				acatch).pointwiseProduct(
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
 						ExampleRV.CAVITY_RV, acatch)).divideBy(
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV, acatch))
@@ -248,7 +248,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV, anotcatch)
 				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				anotcatch).multiplyBy(
+				anotcatch).pointwiseProduct(
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
 						ExampleRV.CAVITY_RV, anotcatch)).divideBy(
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV, anotcatch))
@@ -257,7 +257,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV, atoothache)
 				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				atoothache).multiplyBy(
+				atoothache).pointwiseProduct(
 				model.posteriorDistribution(ExampleRV.CATCH_RV,
 						ExampleRV.CAVITY_RV, atoothache)).divideBy(
 				model.posteriorDistribution(ExampleRV.CATCH_RV, atoothache))
@@ -266,7 +266,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		Assert.assertArrayEquals(model.posteriorDistribution(
 				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV, anottoothache)
 				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				anottoothache).multiplyBy(
+				anottoothache).pointwiseProduct(
 				model.posteriorDistribution(ExampleRV.CATCH_RV,
 						ExampleRV.CAVITY_RV, anottoothache)).divideBy(
 				model.posteriorDistribution(ExampleRV.CATCH_RV, anottoothache))

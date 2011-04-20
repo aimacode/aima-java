@@ -103,11 +103,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 		if (vars.size() > 0) {
 			RandomVariable[] distVars = new RandomVariable[vars.size()];
-			int i = 0;
-			for (RandomVariable rv : vars) {
-				distVars[i] = rv;
-				i++;
-			}
+			vars.toArray(distVars);
 
 			final Distribution ud = new Distribution(distVars);
 			final Object[] values = new Object[vars.size()];

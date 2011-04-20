@@ -3,7 +3,10 @@ package aima.test.core.unit.probability.proposed.model.bayes;
 import org.junit.Test;
 
 import aima.core.probability.proposed.example.BayesNetExampleFactory;
+import aima.core.probability.proposed.model.bayes.BayesInference;
 import aima.core.probability.proposed.model.bayes.FiniteBayesModel;
+import aima.core.probability.proposed.reason.bayes.exact.EliminationAsk;
+import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
 import aima.test.core.unit.probability.proposed.model.CommonFiniteProbabilityModelTests;
 
 public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
@@ -12,65 +15,97 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 	// ProbabilityModel Tests
 	@Test
 	public void test_RollingPairFairDiceModel() {
-		test_RollingPairFairDiceModel(new FiniteBayesModel(
-				BayesNetExampleFactory.construct2FairDiceNetwor()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_RollingPairFairDiceModel(new FiniteBayesModel(
+					BayesNetExampleFactory.construct2FairDiceNetwor(), bi));
+		}
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchModel() {
-		test_ToothacheCavityCatchModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructToothacheCavityCatchNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_ToothacheCavityCatchModel(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructToothacheCavityCatchNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel() {
-		test_ToothacheCavityCatchWeatherModel(new FiniteBayesModel(
-				BayesNetExampleFactory
-						.constructToothacheCavityCatchWeatherNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_ToothacheCavityCatchWeatherModel(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructToothacheCavityCatchWeatherNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel() {
-		test_MeningitisStiffNeckModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructMeningitisStiffNeckNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_MeningitisStiffNeckModel(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructMeningitisStiffNeckNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel() {
-		test_BurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
-				.constructBurglaryAlarmNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_BurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+					.constructBurglaryAlarmNetwork(), bi));
+		}
 	}
 
 	//
 	// FiniteProbabilityModel Tests
 	@Test
 	public void test_RollingPairFairDiceModel_Distributions() {
-		test_RollingPairFairDiceModel_Distributions(new FiniteBayesModel(
-				BayesNetExampleFactory.construct2FairDiceNetwor()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_RollingPairFairDiceModel_Distributions(new FiniteBayesModel(
+					BayesNetExampleFactory.construct2FairDiceNetwor(), bi));
+		}
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchModel_Distributions() {
-		test_ToothacheCavityCatchModel_Distributions(new FiniteBayesModel(
-				BayesNetExampleFactory.constructToothacheCavityCatchNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_ToothacheCavityCatchModel_Distributions(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructToothacheCavityCatchNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_ToothacheCavityCatchWeatherModel_Distributions() {
-		test_ToothacheCavityCatchWeatherModel_Distributions(new FiniteBayesModel(
-				BayesNetExampleFactory
-						.constructToothacheCavityCatchWeatherNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_ToothacheCavityCatchWeatherModel_Distributions(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructToothacheCavityCatchWeatherNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_MeningitisStiffNeckModel_Distributions() {
-		test_MeningitisStiffNeckModel_Distributions(new FiniteBayesModel(
-				BayesNetExampleFactory.constructMeningitisStiffNeckNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_MeningitisStiffNeckModel_Distributions(new FiniteBayesModel(
+					BayesNetExampleFactory
+							.constructMeningitisStiffNeckNetwork(), bi));
+		}
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel_Distributions() {
-		test_BurglaryAlarmModel_Distributions(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork()));
+		for (BayesInference bi : getBayesInferenceImplementations()) {
+			test_BurglaryAlarmModel_Distributions(new FiniteBayesModel(
+					BayesNetExampleFactory.constructBurglaryAlarmNetwork(), bi));
+		}
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private BayesInference[] getBayesInferenceImplementations() {
+		return new BayesInference[] { new EnumerationAsk(),
+				new EliminationAsk() };
 	}
 }
