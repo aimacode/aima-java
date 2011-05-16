@@ -20,6 +20,29 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 // TODO - consider creating general utilities for permutations, combinations and 
 //        table permutations (i.e. Distribution - support freezing values and iterating
 //        over subset as well).
+//
+// TODO - Integrate feedback from Rodrigo :-
+// It might be a good idea to make a BayesianNetwork a type of distribution, 
+// since that is what is specifies. When you answer a query on several random 
+// variables, which must return a distribution on those variables, sometimes it 
+// makes sense to return a Bayesian network on them, which gives a compact 
+// representation of the distribution. It is also the natural representation 
+// you obtain after, say, doing variable elimination on a larger Bayesian network. 
+// It would make the step Distribution product = pointwiseProduct(factors) 
+// in Elimination-Ask unnecessary; you would simply return those factors as a BN.
+// 
+// You eliminate nodes in topological order, but I think a far more efficient heuristic 
+// is eliminating whichever node creates the factor with the least variables, keeping 
+// the connectivity low and therefore things more efficient.
+//
+// ConditionalProbabilityTable is a class; seems like you could use an interface because 
+// there are many possible implementations for a CPT, some dynamic, some static, and so on.
+//
+// Seems like HybridBayesianNetwork and BayesianNetwork should be related somehow 
+// via a super class or to each other?
+//
+// In ArbitraryTokenDomain, why not make the values arbitrary Java objects?
+//
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>
  * <br>
