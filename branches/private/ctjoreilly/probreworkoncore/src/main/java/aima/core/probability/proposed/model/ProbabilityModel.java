@@ -30,18 +30,24 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 // you obtain after, say, doing variable elimination on a larger Bayesian network. 
 // It would make the step Distribution product = pointwiseProduct(factors) 
 // in Elimination-Ask unnecessary; you would simply return those factors as a BN.
+// TODO - extend Distribution to Factor or some other cleaner representation.
 // 
 // You eliminate nodes in topological order, but I think a far more efficient heuristic 
 // is eliminating whichever node creates the factor with the least variables, keeping 
 // the connectivity low and therefore things more efficient.
+// TODO - also consider removal of leaf nodes as described on pg. 528.
+// TODO - clustering described on pg. 529.
 //
 // ConditionalProbabilityTable is a class; seems like you could use an interface because 
 // there are many possible implementations for a CPT, some dynamic, some static, and so on.
+// Note - possibly have CPT interface extends a Conditional Probability Distribution (CPD) 
+// interface, in order to be more general.
 //
 // Seems like HybridBayesianNetwork and BayesianNetwork should be related somehow 
 // via a super class or to each other?
 //
 // In ArbitraryTokenDomain, why not make the values arbitrary Java objects?
+//
 //
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>
