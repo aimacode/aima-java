@@ -1,41 +1,40 @@
 package aima.core.probability.proposed.example;
 
-import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.domain.ArbitraryTokenDomain;
 import aima.core.probability.proposed.domain.BooleanDomain;
 import aima.core.probability.proposed.domain.FiniteIntegerDomain;
+import aima.core.probability.proposed.util.RandVar;
 
 public class ExampleRV {
 	//
-	public static final RandomVariable DICE_1_RV = new RandomVariable("Dice1",
+	public static final RandVar DICE_1_RV = new RandVar("Dice1",
 			new FiniteIntegerDomain(1, 2, 3, 4, 5, 6));
-	public static final RandomVariable DICE_2_RV = new RandomVariable("Dice2",
+	public static final RandVar DICE_2_RV = new RandVar("Dice2",
 			new FiniteIntegerDomain(1, 2, 3, 4, 5, 6));
 	//
-	public static final RandomVariable TOOTHACHE_RV = new RandomVariable(
-			"Toothache", new BooleanDomain());
-	public static final RandomVariable CAVITY_RV = new RandomVariable("Cavity",
+	public static final RandVar TOOTHACHE_RV = new RandVar("Toothache",
 			new BooleanDomain());
-	public static final RandomVariable CATCH_RV = new RandomVariable("Catch",
+	public static final RandVar CAVITY_RV = new RandVar("Cavity",
+			new BooleanDomain());
+	public static final RandVar CATCH_RV = new RandVar("Catch",
 			new BooleanDomain());
 	//
-	public static final RandomVariable WEATHER_RV = new RandomVariable(
-			"Weather", new ArbitraryTokenDomain("sunny", "rain", "cloudy",
-					"snow"));
+	public static final RandVar WEATHER_RV = new RandVar("Weather",
+			new ArbitraryTokenDomain("sunny", "rain", "cloudy", "snow"));
 	//
-	public static final RandomVariable MENINGITIS_RV = new RandomVariable(
-			"Meningitis", new BooleanDomain());
-	public static final RandomVariable STIFF_NECK_RV = new RandomVariable(
-			"StiffNeck", new BooleanDomain());
-	//
-	public static final RandomVariable BURGLARY_RV = new RandomVariable(
-			"Burglary", new BooleanDomain());
-	public static final RandomVariable EARTHQUAKE_RV = new RandomVariable(
-			"Earthquake", new BooleanDomain());
-	public static final RandomVariable ALARM_RV = new RandomVariable("Alarm",
+	public static final RandVar MENINGITIS_RV = new RandVar("Meningitis",
 			new BooleanDomain());
-	public static final RandomVariable JOHN_CALLS_RV = new RandomVariable(
-			"JohnCalls", new BooleanDomain());
-	public static final RandomVariable MARY_CALLS_RV = new RandomVariable(
-			"MaryCalls", new BooleanDomain());
+	public static final RandVar STIFF_NECK_RV = new RandVar("StiffNeck",
+			new BooleanDomain());
+	//
+	public static final RandVar BURGLARY_RV = new RandVar("Burglary",
+			new BooleanDomain());
+	public static final RandVar EARTHQUAKE_RV = new RandVar("Earthquake",
+			new BooleanDomain());
+	public static final RandVar ALARM_RV = new RandVar("Alarm",
+			new BooleanDomain());
+	public static final RandVar JOHN_CALLS_RV = new RandVar("JohnCalls",
+			new BooleanDomain());
+	public static final RandVar MARY_CALLS_RV = new RandVar("MaryCalls",
+			new BooleanDomain());
 }

@@ -6,6 +6,28 @@ import aima.core.probability.proposed.proposition.Proposition;
 public class ProbUtil {
 
 	/**
+	 * Check if name provided is valid for use as the name of a RandomVariable.
+	 * 
+	 * @param name
+	 *            proposed for the RandomVariable.
+	 * @throws IllegalArgumentException
+	 *             if not a valid RandomVariable name.
+	 */
+	public static void checkValidRandomVariableName(String name)
+			throws IllegalArgumentException {
+		if (null == name || name.trim().length() == 0
+				|| name.trim().length() != name.length() 
+				|| name.contains(" ")) {
+			throw new IllegalArgumentException(
+					"Name of RandomVariable must be specified and contain no leading, trailing or embedded spaces.");
+		}
+		if (name.substring(0, 1).toLowerCase().equals(name.substring(0, 1))) {
+			throw new IllegalArgumentException(
+					"Name must start with a leading upper case letter.");
+		}
+	}
+	
+	/**
 	 * Convenience method for ensure a conjunction of probabilistic
 	 * propositions.
 	 * 
