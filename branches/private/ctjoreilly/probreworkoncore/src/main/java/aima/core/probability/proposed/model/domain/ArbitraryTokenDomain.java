@@ -15,12 +15,12 @@ import java.util.Set;
  */
 public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
-	private Set<String> possibleValues = null;
+	private Set<Object> possibleValues = null;
 
-	public ArbitraryTokenDomain(String... pValues) {
+	public ArbitraryTokenDomain(Object... pValues) {
 		// Keep consistent order
-		possibleValues = new LinkedHashSet<String>();
-		for (String v : pValues) {
+		possibleValues = new LinkedHashSet<Object>();
+		for (Object v : pValues) {
 			possibleValues.add(v);
 		}
 		// Ensure cannot be modified
@@ -43,7 +43,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	//
 	// START-FiniteDomain
-	public Set<String> getPossibleValues() {
+	public Set<Object> getPossibleValues() {
 		return possibleValues;
 	}
 

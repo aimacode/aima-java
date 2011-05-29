@@ -20,6 +20,7 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 // TODO - consider creating general utilities for permutations, combinations and 
 //        table permutations (i.e. Distribution - support freezing values and iterating
 //        over subset as well).
+// TODO - pg 530, model an Event explicitly as a set of assignments from a Distribution.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 
@@ -45,9 +46,6 @@ import aima.core.probability.proposed.model.proposition.Proposition;
 //
 // Seems like HybridBayesianNetwork and BayesianNetwork should be related somehow 
 // via a super class or to each other?
-//
-// In ArbitraryTokenDomain, why not make the values arbitrary Java objects?
-//
 //
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>
