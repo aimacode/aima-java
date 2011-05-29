@@ -1,7 +1,7 @@
 package aima.core.probability.proposed.example;
 
-import aima.core.probability.proposed.model.bayes.BayesianNetwork;
-import aima.core.probability.proposed.model.bayes.FiniteNode;
+import aima.core.probability.proposed.bayes.BayesianNetwork;
+import aima.core.probability.proposed.bayes.FiniteNode;
 
 public class BayesNetExampleFactory {
 	public static BayesianNetwork construct2FairDiceNetwor() {

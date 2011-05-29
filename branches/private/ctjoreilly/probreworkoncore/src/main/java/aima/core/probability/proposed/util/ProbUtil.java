@@ -1,7 +1,7 @@
 package aima.core.probability.proposed.util;
 
-import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
-import aima.core.probability.proposed.model.proposition.Proposition;
+import aima.core.probability.proposed.proposition.ConjunctiveProposition;
+import aima.core.probability.proposed.proposition.Proposition;
 
 public class ProbUtil {
 

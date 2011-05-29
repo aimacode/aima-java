@@ -1,0 +1,23 @@
+package aima.core.probability.proposed.domain;
+
+
+public abstract class AbstractContinuousDomain implements ContinuousDomain {
+	
+	//
+	// START-Domain
+	public boolean isFinite() {
+		return false;
+	}
+	
+	public boolean isInfinite() {
+		return true;
+	}
+	
+	public int size() {
+		throw new IllegalStateException("You cannot determine the size of an infinite domain");
+	}
+	
+	public abstract boolean isOrdered();
+	// END-Domain
+	//
+}

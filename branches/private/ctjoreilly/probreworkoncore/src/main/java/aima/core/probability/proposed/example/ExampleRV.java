@@ -1,9 +1,9 @@
 package aima.core.probability.proposed.example;
 
-import aima.core.probability.proposed.model.RandomVariable;
-import aima.core.probability.proposed.model.domain.ArbitraryTokenDomain;
-import aima.core.probability.proposed.model.domain.BooleanDomain;
-import aima.core.probability.proposed.model.domain.FiniteIntegerDomain;
+import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.domain.ArbitraryTokenDomain;
+import aima.core.probability.proposed.domain.BooleanDomain;
+import aima.core.probability.proposed.domain.FiniteIntegerDomain;
 
 public class ExampleRV {
 	//

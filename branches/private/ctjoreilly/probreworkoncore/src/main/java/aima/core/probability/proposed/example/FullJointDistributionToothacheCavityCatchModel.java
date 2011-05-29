@@ -1,6 +1,6 @@
 package aima.core.probability.proposed.example;
 
-import aima.core.probability.proposed.model.full.FullJointDistributionModel;
+import aima.core.probability.proposed.full.FullJointDistributionModel;
 
 public class FullJointDistributionToothacheCavityCatchModel extends
 		FullJointDistributionModel {
