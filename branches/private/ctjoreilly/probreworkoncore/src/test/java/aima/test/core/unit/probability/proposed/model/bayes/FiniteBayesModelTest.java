@@ -5,8 +5,8 @@ import org.junit.Test;
 import aima.core.probability.proposed.example.BayesNetExampleFactory;
 import aima.core.probability.proposed.model.bayes.BayesInference;
 import aima.core.probability.proposed.model.bayes.FiniteBayesModel;
-import aima.core.probability.proposed.reason.bayes.exact.EliminationAsk;
-import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
+import aima.core.probability.proposed.model.bayes.exact.EliminationAsk;
+import aima.core.probability.proposed.model.bayes.exact.EnumerationAsk;
 import aima.test.core.unit.probability.proposed.model.CommonFiniteProbabilityModelTests;
 
 public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {

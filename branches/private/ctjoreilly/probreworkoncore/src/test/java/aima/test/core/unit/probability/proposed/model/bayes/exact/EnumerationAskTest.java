@@ -1,8 +1,8 @@
-package aima.test.core.unit.probability.proposed.reason.bayes.exact;
+package aima.test.core.unit.probability.proposed.model.bayes.exact;
 
 import org.junit.Before;
 
-import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
+import aima.core.probability.proposed.model.bayes.exact.EnumerationAsk;
 
 /**
  * 

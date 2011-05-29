@@ -8,10 +8,10 @@ import aima.core.probability.proposed.model.Distribution;
 import aima.core.probability.proposed.model.FiniteProbabilityModel;
 import aima.core.probability.proposed.model.ProbabilityModel;
 import aima.core.probability.proposed.model.RandomVariable;
+import aima.core.probability.proposed.model.bayes.exact.EnumerationAsk;
 import aima.core.probability.proposed.model.proposition.AssignmentProposition;
 import aima.core.probability.proposed.model.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.model.proposition.Proposition;
-import aima.core.probability.proposed.reason.bayes.exact.EnumerationAsk;
 import aima.core.probability.proposed.util.ProbUtil;
 
 /**

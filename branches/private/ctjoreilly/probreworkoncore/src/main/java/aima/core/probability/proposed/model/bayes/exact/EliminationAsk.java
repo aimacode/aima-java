@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.reason.bayes.exact;
+package aima.core.probability.proposed.model.bayes.exact;
 
 import java.util.ArrayList;
 import java.util.Collection;

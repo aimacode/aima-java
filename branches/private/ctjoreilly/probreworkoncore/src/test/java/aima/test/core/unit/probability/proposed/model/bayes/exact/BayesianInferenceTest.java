@@ -1,4 +1,4 @@
-package aima.test.core.unit.probability.proposed.reason.bayes.exact;
+package aima.test.core.unit.probability.proposed.model.bayes.exact;
 
 import junit.framework.Assert;
 
