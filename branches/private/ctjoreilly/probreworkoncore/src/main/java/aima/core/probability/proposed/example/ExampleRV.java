@@ -5,6 +5,11 @@ import aima.core.probability.proposed.domain.BooleanDomain;
 import aima.core.probability.proposed.domain.FiniteIntegerDomain;
 import aima.core.probability.proposed.util.RandVar;
 
+/**
+ * Predefined example Random Variables from AIMA3e.
+ * 
+ * @author Ciaran O'Reilly
+ */
 public class ExampleRV {
 	//
 	public static final RandVar DICE_1_RV = new RandVar("Dice1",

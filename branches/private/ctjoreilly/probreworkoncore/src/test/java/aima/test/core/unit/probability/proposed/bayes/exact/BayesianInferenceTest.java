@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.ProbabilityModel;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesInference;
@@ -29,7 +29,7 @@ public abstract class BayesianInferenceTest {
 		BayesianNetwork bn = BayesNetExampleFactory
 				.constructToothacheCavityCatchNetwork();
 
-		Distribution d = bayesInference.ask(
+		CategoricalDistribution d = bayesInference.ask(
 				new RandomVariable[] { ExampleRV.CAVITY_RV },
 				new AssignmentProposition[] {}, bn);
 
@@ -77,7 +77,7 @@ public abstract class BayesianInferenceTest {
 				.constructBurglaryAlarmNetwork();
 
 		// AIMA3e. pg. 514
-		Distribution d = bayesInference
+		CategoricalDistribution d = bayesInference
 				.ask(new RandomVariable[] { ExampleRV.ALARM_RV },
 						new AssignmentProposition[] {
 								new AssignmentProposition(

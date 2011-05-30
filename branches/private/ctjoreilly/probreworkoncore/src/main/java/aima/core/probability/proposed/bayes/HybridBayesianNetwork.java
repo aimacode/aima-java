@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.continuous;
+package aima.core.probability.proposed.bayes;
 
 
 // TODO - AIMA3e pg. 520

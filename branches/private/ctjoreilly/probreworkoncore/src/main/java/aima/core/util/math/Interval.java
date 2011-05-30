@@ -1,11 +1,10 @@
 package aima.core.util.math;
 
 /**
- * Basic supports for Intervals, see:
+ * Basic supports for Intervals.
  * 
- * http://en.wikipedia.org/wiki/Interval_%28mathematics%29
- * 
- * for quick overview of notation.
+ * @see <a href="http://en.wikipedia.org/wiki/Interval_%28mathematics%29"
+ *      >Interval</a>
  * 
  * @author Ciaran O'Reilly
  */

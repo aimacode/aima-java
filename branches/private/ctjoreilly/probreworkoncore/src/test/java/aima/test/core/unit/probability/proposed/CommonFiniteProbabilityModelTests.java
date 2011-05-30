@@ -2,7 +2,7 @@ package aima.test.core.unit.probability.proposed;
 
 import org.junit.Assert;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.FiniteProbabilityModel;
 import aima.core.probability.proposed.domain.FiniteIntegerDomain;
 import aima.core.probability.proposed.example.ExampleRV;
@@ -22,21 +22,23 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		AssignmentProposition ad1_1 = new AssignmentProposition(
 				ExampleRV.DICE_1_RV, 1);
-		Distribution dD1_1 = model.priorDistribution(ad1_1);
+		CategoricalDistribution dD1_1 = model.priorDistribution(ad1_1);
 		Assert.assertArrayEquals(new double[] { 1.0 / 6.0 }, dD1_1.getValues(),
 				DELTA_THRESHOLD);
 
-		Distribution dPriorDice1 = model.priorDistribution(ExampleRV.DICE_1_RV);
+		CategoricalDistribution dPriorDice1 = model
+				.priorDistribution(ExampleRV.DICE_1_RV);
 		Assert.assertArrayEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0,
-				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice1
-				.getValues(), DELTA_THRESHOLD);
+				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
+				dPriorDice1.getValues(), DELTA_THRESHOLD);
 
-		Distribution dPriorDice2 = model.priorDistribution(ExampleRV.DICE_2_RV);
+		CategoricalDistribution dPriorDice2 = model
+				.priorDistribution(ExampleRV.DICE_2_RV);
 		Assert.assertArrayEquals(new double[] { 1.0 / 6.0, 1.0 / 6.0,
-				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 }, dPriorDice2
-				.getValues(), DELTA_THRESHOLD);
+				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0 },
+				dPriorDice2.getValues(), DELTA_THRESHOLD);
 
-		Distribution dJointDice1Dice2 = model.jointDistribution(
+		CategoricalDistribution dJointDice1Dice2 = model.jointDistribution(
 				ExampleRV.DICE_1_RV, ExampleRV.DICE_2_RV);
 		Assert.assertEquals(36, dJointDice1Dice2.getValues().length);
 		for (int i = 0; i < dJointDice1Dice2.getValues().length; i++) {
@@ -44,7 +46,7 @@ public abstract class CommonFiniteProbabilityModelTests extends
 					DELTA_THRESHOLD);
 		}
 
-		Distribution dJointDice2Dice1 = model.jointDistribution(
+		CategoricalDistribution dJointDice2Dice1 = model.jointDistribution(
 				ExampleRV.DICE_2_RV, ExampleRV.DICE_1_RV);
 		Assert.assertEquals(36, dJointDice2Dice1.getValues().length);
 		for (int i = 0; i < dJointDice2Dice1.getValues().length; i++) {
@@ -64,8 +66,9 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P<>(Dice1, Total = 11)
 		// = <0.0, 0.0, 0.0, 0.0, 1.0/36.0, 1.0/36.0>
 		Assert.assertArrayEquals(new double[] { 0, 0, 0, 0, 1.0 / 36.0,
-				1.0 / 36.0 }, model.priorDistribution(ExampleRV.DICE_1_RV,
-				total11).getValues(), DELTA_THRESHOLD);
+				1.0 / 36.0 },
+				model.priorDistribution(ExampleRV.DICE_1_RV, total11)
+						.getValues(), DELTA_THRESHOLD);
 
 		EquivalentProposition doubles = new EquivalentProposition("Doubles",
 				ExampleRV.DICE_1_RV, ExampleRV.DICE_2_RV);
@@ -88,20 +91,20 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				.posteriorDistribution(ExampleRV.DICE_1_RV, doubles)
 				.getValues(), DELTA_THRESHOLD);
 
-		Distribution dPosteriorDice1GivenDice2 = model.posteriorDistribution(
-				ExampleRV.DICE_1_RV, ExampleRV.DICE_2_RV);
+		CategoricalDistribution dPosteriorDice1GivenDice2 = model
+				.posteriorDistribution(ExampleRV.DICE_1_RV, ExampleRV.DICE_2_RV);
 		Assert.assertEquals(36, dPosteriorDice1GivenDice2.getValues().length);
 		for (int i = 0; i < dPosteriorDice1GivenDice2.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0, dPosteriorDice1GivenDice2
-					.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0,
+					dPosteriorDice1GivenDice2.getValues()[i], DELTA_THRESHOLD);
 		}
 
-		Distribution dPosteriorDice2GivenDice1 = model.posteriorDistribution(
-				ExampleRV.DICE_2_RV, ExampleRV.DICE_1_RV);
+		CategoricalDistribution dPosteriorDice2GivenDice1 = model
+				.posteriorDistribution(ExampleRV.DICE_2_RV, ExampleRV.DICE_1_RV);
 		Assert.assertEquals(36, dPosteriorDice2GivenDice1.getValues().length);
 		for (int i = 0; i < dPosteriorDice2GivenDice1.getValues().length; i++) {
-			Assert.assertEquals(1.0 / 6.0, dPosteriorDice2GivenDice1
-					.getValues()[i], DELTA_THRESHOLD);
+			Assert.assertEquals(1.0 / 6.0,
+					dPosteriorDice2GivenDice1.getValues()[i], DELTA_THRESHOLD);
 		}
 	}
 
@@ -125,10 +128,10 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		// AIMA3e pg. 497
 		// P<>(Cavity | toothache AND catch) = <0.871, 0.129>
-		Assert.assertArrayEquals(new double[] { 0.8709677419354839,
-				0.12903225806451615 }, model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, atoothache, acatch).getValues(),
-				DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				new double[] { 0.8709677419354839, 0.12903225806451615 },
+				model.posteriorDistribution(ExampleRV.CAVITY_RV, atoothache,
+						acatch).getValues(), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 498
 		// (13.17)
@@ -136,76 +139,93 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// = P<>(toothache | Cavity)P<>(catch | Cavity)
 		ConjunctiveProposition toothacheAndCatch = new ConjunctiveProposition(
 				atoothache, acatch);
-		Assert.assertArrayEquals(model.posteriorDistribution(toothacheAndCatch,
-				ExampleRV.CAVITY_RV).getValues(), model.posteriorDistribution(
-				atoothache, ExampleRV.CAVITY_RV).pointwiseProduct(
-				model.posteriorDistribution(acatch, ExampleRV.CAVITY_RV))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(toothacheAndCatch,
+						ExampleRV.CAVITY_RV).getValues(),
+				model.posteriorDistribution(atoothache, ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.posteriorDistribution(acatch,
+										ExampleRV.CAVITY_RV)).getValues(),
+				DELTA_THRESHOLD);
 
 		// (13.18)
 		// P<>(Cavity | toothache AND catch)
 		// = &alpha;P<>(toothache | Cavity)P<>(catch | Cavity)P(Cavity)
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, toothacheAndCatch).getValues(), model
-				.posteriorDistribution(atoothache, ExampleRV.CAVITY_RV)
-				.pointwiseProduct(
-						model
-								.posteriorDistribution(acatch,
-										ExampleRV.CAVITY_RV)).pointwiseProduct(
-						model.priorDistribution(ExampleRV.CAVITY_RV))
-				.normalize().getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						toothacheAndCatch).getValues(),
+				model.posteriorDistribution(atoothache, ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.posteriorDistribution(acatch,
+										ExampleRV.CAVITY_RV))
+						.multiplyBy(
+								model.priorDistribution(ExampleRV.CAVITY_RV))
+						.normalize().getValues(), DELTA_THRESHOLD);
 
 		// (13.19)
 		// P<>(Toothache, Catch | Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)
 		ConjunctiveProposition toothacheAndCatchRV = new ConjunctiveProposition(
 				ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV);
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				toothacheAndCatchRV, ExampleRV.CAVITY_RV).getValues(), model
-				.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).pointwiseProductPOS(
-						model.posteriorDistribution(ExampleRV.CATCH_RV,
-								ExampleRV.CAVITY_RV), ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).getValues(),
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(toothacheAndCatchRV,
+						ExampleRV.CAVITY_RV).getValues(),
+				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
+						ExampleRV.CAVITY_RV)
+						.multiplyByPOS(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV),
+								ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
+								ExampleRV.CAVITY_RV).getValues(),
 				DELTA_THRESHOLD);
 
 		// (product rule)
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache, Catch | Cavity)P<>(Cavity)
-		Assert.assertArrayEquals(model
-				.priorDistribution(ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
-						ExampleRV.CAVITY_RV).getValues(),
+		Assert.assertArrayEquals(
+				model.priorDistribution(ExampleRV.TOOTHACHE_RV,
+						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).getValues(),
 				model.posteriorDistribution(toothacheAndCatchRV,
-						ExampleRV.CAVITY_RV).pointwiseProduct(
-						model.priorDistribution(ExampleRV.CAVITY_RV))
+						ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.priorDistribution(ExampleRV.CAVITY_RV))
 						.getValues(), DELTA_THRESHOLD);
 
 		// (using 13.19)
 		// P<>(Toothache, Catch | Cavity)P<>(Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				toothacheAndCatchRV, ExampleRV.CAVITY_RV).pointwiseProduct(
-				model.priorDistribution(ExampleRV.CAVITY_RV)).getValues(),
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(toothacheAndCatchRV,
+						ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.priorDistribution(ExampleRV.CAVITY_RV))
+						.getValues(),
 				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).pointwiseProductPOS(
-						model.posteriorDistribution(ExampleRV.CATCH_RV,
-								ExampleRV.CAVITY_RV).pointwiseProduct(
-								model.priorDistribution(ExampleRV.CAVITY_RV)),
-						ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
-						ExampleRV.CAVITY_RV).getValues(), DELTA_THRESHOLD);
+						ExampleRV.CAVITY_RV)
+						.multiplyByPOS(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV)
+										.multiplyBy(
+												model.priorDistribution(ExampleRV.CAVITY_RV)),
+								ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
+								ExampleRV.CAVITY_RV).getValues(),
+				DELTA_THRESHOLD);
 		//
 		// P<>(Toothache, Catch, Cavity)
 		// = P<>(Toothache | Cavity)P<>(Catch | Cavity)P<>(Cavity)
-		Assert.assertArrayEquals(model
-				.priorDistribution(ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
-						ExampleRV.CAVITY_RV).getValues(), model
-				.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV).pointwiseProductPOS(
-						model.posteriorDistribution(ExampleRV.CATCH_RV,
-								ExampleRV.CAVITY_RV), ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).pointwiseProduct(
-						model.priorDistribution(ExampleRV.CAVITY_RV))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.priorDistribution(ExampleRV.TOOTHACHE_RV,
+						ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV).getValues(),
+				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
+						ExampleRV.CAVITY_RV)
+						.multiplyByPOS(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV),
+								ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV,
+								ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.priorDistribution(ExampleRV.CAVITY_RV))
+						.getValues(), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 496
 		// General case of Bayes' Rule
@@ -214,21 +234,27 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P<>(Y | X) = (P<>(Y)P<>(X | Y))/P<>(X)
 		// as default multiplication of distributions are not commutative (could
 		// also use pointwiseProductPOS() to specify the order).
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV).getValues(), model
-				.priorDistribution(ExampleRV.CAVITY_RV).pointwiseProduct(
-						model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-								ExampleRV.CAVITY_RV)).divideBy(
-						model.priorDistribution(ExampleRV.TOOTHACHE_RV))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.TOOTHACHE_RV).getValues(),
+				model.priorDistribution(ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.posteriorDistribution(
+										ExampleRV.TOOTHACHE_RV,
+										ExampleRV.CAVITY_RV))
+						.divideBy(
+								model.priorDistribution(ExampleRV.TOOTHACHE_RV))
+						.getValues(), DELTA_THRESHOLD);
 
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV).getValues(), model
-				.priorDistribution(ExampleRV.CAVITY_RV).pointwiseProduct(
-						model.posteriorDistribution(ExampleRV.CATCH_RV,
-								ExampleRV.CAVITY_RV)).divideBy(
-						model.priorDistribution(ExampleRV.CATCH_RV))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.CATCH_RV).getValues(),
+				model.priorDistribution(ExampleRV.CAVITY_RV)
+						.multiplyBy(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV))
+						.divideBy(model.priorDistribution(ExampleRV.CATCH_RV))
+						.getValues(), DELTA_THRESHOLD);
 
 		// General Bayes' Rule conditionalized on background evidence e (13.3)
 		// P<>(Y | X, e) = P<>(X | Y, e)P<>(Y|e)/P<>(X | e)
@@ -236,41 +262,55 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P<>(Y | X, e) = (P<>(Y|e)P<>(X | Y, e)))/P<>(X | e)
 		// as default multiplication of distributions are not commutative (could
 		// also use pointwiseProductPOS() to specify the order).
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV, acatch)
-				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				acatch).pointwiseProduct(
-				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV, acatch)).divideBy(
-				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV, acatch))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.TOOTHACHE_RV, acatch).getValues(),
+				model.posteriorDistribution(ExampleRV.CAVITY_RV, acatch)
+						.multiplyBy(
+								model.posteriorDistribution(
+										ExampleRV.TOOTHACHE_RV,
+										ExampleRV.CAVITY_RV, acatch))
+						.divideBy(
+								model.posteriorDistribution(
+										ExampleRV.TOOTHACHE_RV, acatch))
+						.getValues(), DELTA_THRESHOLD);
 		//
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV, anotcatch)
-				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				anotcatch).pointwiseProduct(
-				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,
-						ExampleRV.CAVITY_RV, anotcatch)).divideBy(
-				model.posteriorDistribution(ExampleRV.TOOTHACHE_RV, anotcatch))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.TOOTHACHE_RV, anotcatch).getValues(),
+				model.posteriorDistribution(ExampleRV.CAVITY_RV, anotcatch)
+						.multiplyBy(
+								model.posteriorDistribution(
+										ExampleRV.TOOTHACHE_RV,
+										ExampleRV.CAVITY_RV, anotcatch))
+						.divideBy(
+								model.posteriorDistribution(
+										ExampleRV.TOOTHACHE_RV, anotcatch))
+						.getValues(), DELTA_THRESHOLD);
 		//
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV, atoothache)
-				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				atoothache).pointwiseProduct(
-				model.posteriorDistribution(ExampleRV.CATCH_RV,
-						ExampleRV.CAVITY_RV, atoothache)).divideBy(
-				model.posteriorDistribution(ExampleRV.CATCH_RV, atoothache))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.CATCH_RV, atoothache).getValues(),
+				model.posteriorDistribution(ExampleRV.CAVITY_RV, atoothache)
+						.multiplyBy(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV, atoothache))
+						.divideBy(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										atoothache)).getValues(),
+				DELTA_THRESHOLD);
 
-		Assert.assertArrayEquals(model.posteriorDistribution(
-				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV, anottoothache)
-				.getValues(), model.posteriorDistribution(ExampleRV.CAVITY_RV,
-				anottoothache).pointwiseProduct(
-				model.posteriorDistribution(ExampleRV.CATCH_RV,
-						ExampleRV.CAVITY_RV, anottoothache)).divideBy(
-				model.posteriorDistribution(ExampleRV.CATCH_RV, anottoothache))
-				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				model.posteriorDistribution(ExampleRV.CAVITY_RV,
+						ExampleRV.CATCH_RV, anottoothache).getValues(),
+				model.posteriorDistribution(ExampleRV.CAVITY_RV, anottoothache)
+						.multiplyBy(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										ExampleRV.CAVITY_RV, anottoothache))
+						.divideBy(
+								model.posteriorDistribution(ExampleRV.CATCH_RV,
+										anottoothache)).getValues(),
+				DELTA_THRESHOLD);
 	}
 
 	protected void test_ToothacheCavityCatchWeatherModel_Distributions(
@@ -303,8 +343,8 @@ public abstract class CommonFiniteProbabilityModelTests extends
 				.priorDistribution(new ConjunctiveProposition(asunny, acavity))
 				.getValues(), DELTA_THRESHOLD);
 		// P(sunny) = <0.6>
-		Assert.assertArrayEquals(new double[] { 0.6 }, model.priorDistribution(
-				asunny).getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(new double[] { 0.6 },
+				model.priorDistribution(asunny).getValues(), DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 496
@@ -316,8 +356,8 @@ public abstract class CommonFiniteProbabilityModelTests extends
 
 		// AIMA3e pg. 497
 		// P<>(Mengingitis | stiffneck) = &alpha;<P(s | m)P(m), P(s | ~m)P(~m)>
-		Distribution dMeningitisGivenStiffNeck = model.posteriorDistribution(
-				ExampleRV.MENINGITIS_RV, astiffNeck);
+		CategoricalDistribution dMeningitisGivenStiffNeck = model
+				.posteriorDistribution(ExampleRV.MENINGITIS_RV, astiffNeck);
 		Assert.assertEquals(2, dMeningitisGivenStiffNeck.getValues().length);
 		Assert.assertEquals(0.0014, dMeningitisGivenStiffNeck.getValues()[0],
 				DELTA_THRESHOLD);
@@ -343,23 +383,24 @@ public abstract class CommonFiniteProbabilityModelTests extends
 		// P<>(Alarm | JohnCalls = true, MaryCalls = true, Burglary = false,
 		// Earthquake = false)
 		// = <0.558, 0.442>
-		Assert.assertArrayEquals(new double[] { 0.5577689243027888,
-				0.44223107569721115 }, model.posteriorDistribution(
-				ExampleRV.ALARM_RV, ajohnCalls, amaryCalls, anotburglary,
-				anotearthquake).getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				new double[] { 0.5577689243027888, 0.44223107569721115 },
+				model.posteriorDistribution(ExampleRV.ALARM_RV, ajohnCalls,
+						amaryCalls, anotburglary, anotearthquake).getValues(),
+				DELTA_THRESHOLD);
 
 		// AIMA3e pg. 523
 		// P<>(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
-		Assert.assertArrayEquals(new double[] { 0.2841718353643929,
-				0.7158281646356071 }, model.posteriorDistribution(
-				ExampleRV.BURGLARY_RV, ajohnCalls, amaryCalls).getValues(),
-				DELTA_THRESHOLD);
+		Assert.assertArrayEquals(
+				new double[] { 0.2841718353643929, 0.7158281646356071 },
+				model.posteriorDistribution(ExampleRV.BURGLARY_RV, ajohnCalls,
+						amaryCalls).getValues(), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 528
 		// P<>(JohnCalls | Burglary = true)
 		Assert.assertArrayEquals(new double[] { 0.8490169999999999,
-				0.15098299999999998 }, model.posteriorDistribution(
-				ExampleRV.JOHN_CALLS_RV, aburglary).getValues(),
-				DELTA_THRESHOLD);
+				0.15098299999999998 },
+				model.posteriorDistribution(ExampleRV.JOHN_CALLS_RV, aburglary)
+						.getValues(), DELTA_THRESHOLD);
 	}
 }

@@ -1,6 +1,6 @@
 package aima.core.probability.proposed.bayes;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 
@@ -20,7 +20,7 @@ public interface BayesInference {
 	 *            variables
 	 * @return a distribution over the query variables.
 	 */
-	Distribution ask(final RandomVariable[] X,
+	CategoricalDistribution ask(final RandomVariable[] X,
 			final AssignmentProposition[] observedEvidence,
 			final BayesianNetwork bn);
 }

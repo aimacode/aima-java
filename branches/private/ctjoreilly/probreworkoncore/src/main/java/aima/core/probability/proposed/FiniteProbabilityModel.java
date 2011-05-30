@@ -22,7 +22,7 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 *         Vector of numbers, where we assume a predefined ordering of the
 	 *         domain of the relevant random variables.
 	 */
-	Distribution priorDistribution(Proposition... phi);
+	CategoricalDistribution priorDistribution(Proposition... phi);
 
 	/**
 	 * Get a conditional distribution. Example:<br>
@@ -37,7 +37,8 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 *            information we already have.
 	 * @return the conditional distribution for <b>P</b>(&phi; | evidence).
 	 */
-	Distribution posteriorDistribution(Proposition phi, Proposition... evidence);
+	CategoricalDistribution posteriorDistribution(Proposition phi,
+			Proposition... evidence);
 
 	/**
 	 * Get a distribution on multiple variables. Example, the product rule:<br>
@@ -50,5 +51,5 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 *            to be returned.
 	 * @return the joint distribution for <b>P</b>(X, Y, ...).
 	 */
-	Distribution jointDistribution(Proposition... propositions);
+	CategoricalDistribution jointDistribution(Proposition... propositions);
 }

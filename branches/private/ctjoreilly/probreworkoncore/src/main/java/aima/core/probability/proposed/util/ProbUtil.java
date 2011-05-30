@@ -1,5 +1,7 @@
 package aima.core.probability.proposed.util;
 
+import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.proposition.Proposition;
 
@@ -16,8 +18,7 @@ public class ProbUtil {
 	public static void checkValidRandomVariableName(String name)
 			throws IllegalArgumentException {
 		if (null == name || name.trim().length() == 0
-				|| name.trim().length() != name.length() 
-				|| name.contains(" ")) {
+				|| name.trim().length() != name.length() || name.contains(" ")) {
 			throw new IllegalArgumentException(
 					"Name of RandomVariable must be specified and contain no leading, trailing or embedded spaces.");
 		}
@@ -26,7 +27,59 @@ public class ProbUtil {
 					"Name must start with a leading upper case letter.");
 		}
 	}
-	
+
+	/**
+	 * Calculated the expected size of a ProbabilityTable for the provided
+	 * random variables.
+	 * 
+	 * @param vars
+	 *            null, 0 or more random variables that are to be used to
+	 *            construct a CategoricalDistribution.
+	 * @return the size (i.e. getValues().length) that the
+	 *         CategoricalDistribution will need to be in order to represent the
+	 *         specified random variables.
+	 * 
+	 * @see CategoricalDistribution#getValues()
+	 */
+	public static int expectedSizeOfProbabilityTable(RandomVariable... vars) {
+		// initially 1, as this will represent constant assignments
+		// e.g. Dice1 = 1.
+		int expectedSizeOfDistribution = 1;
+		if (null != vars) {
+			for (RandomVariable rv : vars) {
+				// Create ordered domains for each variable
+				if (!(rv.getDomain() instanceof FiniteDomain)) {
+					throw new IllegalArgumentException(
+							"Cannot have an infinite domain for a variable in this calculation:"
+									+ rv);
+				}
+				FiniteDomain d = (FiniteDomain) rv.getDomain();
+				expectedSizeOfDistribution *= d.size();
+			}
+		}
+
+		return expectedSizeOfDistribution;
+	}
+
+	/**
+	 * Calculated the expected size of a CategoricalDistribution for the
+	 * provided random variables.
+	 * 
+	 * @param vars
+	 *            null, 0 or more random variables that are to be used to
+	 *            construct a CategoricalDistribution.
+	 * @return the size (i.e. getValues().length) that the
+	 *         CategoricalDistribution will need to be in order to represent the
+	 *         specified random variables.
+	 * 
+	 * @see CategoricalDistribution#getValues()
+	 */
+	public static int expectedSizeOfCategoricalDistribution(
+			RandomVariable... vars) {
+		// Equivalent calculation
+		return expectedSizeOfProbabilityTable(vars);
+	}
+
 	/**
 	 * Convenience method for ensure a conjunction of probabilistic
 	 * propositions.

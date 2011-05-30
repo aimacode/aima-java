@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesInference;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
@@ -12,6 +12,7 @@ import aima.core.probability.proposed.bayes.FiniteNode;
 import aima.core.probability.proposed.bayes.Node;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
+import aima.core.probability.proposed.util.ProbabilityTable;
 import aima.core.util.Util;
 
 /**
@@ -70,15 +71,15 @@ public class EnumerationAsk implements BayesInference {
 	 *            variables //
 	 * @return a distribution over the query variables.
 	 */
-	public Distribution enumerationAsk(final RandomVariable[] X,
+	public CategoricalDistribution enumerationAsk(final RandomVariable[] X,
 			final AssignmentProposition[] observedEvidence,
 			final BayesianNetwork bn) {
 
 		// Q(X) <- a distribution over X, initially empty
-		final Distribution Q = new Distribution(X);
+		final ProbabilityTable Q = new ProbabilityTable(X);
 		final ObservedEvidence e = new ObservedEvidence(X, observedEvidence, bn);
 		// for each value x<sub>i</sub> of X do
-		Distribution.Iterator di = new Distribution.Iterator() {
+		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 			int cnt = 0;
 
 			/**
@@ -92,8 +93,8 @@ public class EnumerationAsk implements BayesInference {
 				for (int i = 0; i < X.length; i++) {
 					e.setExtendedValue(X[i], possibleWorld.get(X[i]));
 				}
-				Q.setValue(cnt, enumerateAll(bn
-						.getVariablesInTopologicalOrder(), e));
+				Q.setValue(cnt,
+						enumerateAll(bn.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
 
@@ -109,7 +110,7 @@ public class EnumerationAsk implements BayesInference {
 
 	//
 	// START-BayesInference
-	public Distribution ask(final RandomVariable[] X,
+	public CategoricalDistribution ask(final RandomVariable[] X,
 			final AssignmentProposition[] observedEvidence,
 			final BayesianNetwork bn) {
 		return this.enumerationAsk(X, observedEvidence, bn);

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.core.probability.proposed.Distribution;
 import aima.core.probability.proposed.ProbabilityModel;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
+import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 512.<br>
@@ -27,7 +27,7 @@ import aima.core.probability.proposed.proposition.AssignmentProposition;
  */
 public class ConditionalProbabilityTable {
 
-	private Distribution table = null;
+	private ProbabilityTable table = null;
 	private List<Object> varDomain = new ArrayList<Object>();
 
 	public ConditionalProbabilityTable(RandomVariable var, double[] values,
@@ -40,7 +40,7 @@ public class ConditionalProbabilityTable {
 			tableVars[i] = conditionedOn[i];
 		}
 		tableVars[conditionedOn.length] = var;
-		table = new Distribution(values, tableVars);
+		table = new ProbabilityTable(values, tableVars);
 		varDomain.addAll(((FiniteDomain) var.getDomain()).getPossibleValues());
 
 		checkEachRowTotalsOne();
@@ -51,20 +51,20 @@ public class ConditionalProbabilityTable {
 	}
 
 	public double probabilityFor(final AssignmentProposition... values) {
-		return table.getValueFor(values);
+		return table.getValue(values);
 	}
 
-	public Distribution valueOf(final AssignmentProposition... values) {
-		Set<RandomVariable> vofVars = new LinkedHashSet<RandomVariable>(table
-				.getRepresentation());
+	public ProbabilityTable valueOf(final AssignmentProposition... values) {
+		Set<RandomVariable> vofVars = new LinkedHashSet<RandomVariable>(
+				table.getFor());
 		for (AssignmentProposition ap : values) {
 			vofVars.remove(ap.getTermVariable());
 		}
-		final Distribution valueOf = new Distribution(vofVars);
+		final ProbabilityTable valueOf = new ProbabilityTable(vofVars);
 		// Otherwise need to iterate through this distribution
 		// to calculate the summed out distribution.
 		final Object[] termValues = new Object[vofVars.size()];
-		Distribution.Iterator di = new Distribution.Iterator() {
+		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				boolean holds = true;
@@ -79,7 +79,7 @@ public class ConditionalProbabilityTable {
 						valueOf.getValues()[0] += probability;
 					} else {
 						int i = 0;
-						for (RandomVariable rv : valueOf.getRepresentation()) {
+						for (RandomVariable rv : valueOf.getFor()) {
 							termValues[i] = possibleWorld.get(rv);
 							i++;
 						}
@@ -101,7 +101,7 @@ public class ConditionalProbabilityTable {
 	// PRIVATE METHODS
 	//
 	private void checkEachRowTotalsOne() {
-		Distribution.Iterator di = new Distribution.Iterator() {
+		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 			private int rowSize = varDomain.size();
 			private int iterateCnt = 0;
 			private double rowProb = 0;

@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.FiniteProbabilityModel;
 import aima.core.probability.proposed.ProbabilityModel;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.proposition.Proposition;
 import aima.core.probability.proposed.util.ProbUtil;
+import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
  * An implementation of the FiniteProbabilityModel API using a full joint
@@ -23,7 +24,7 @@ import aima.core.probability.proposed.util.ProbUtil;
  */
 public class FullJointDistributionModel implements FiniteProbabilityModel {
 
-	private Distribution distribution = null;
+	private ProbabilityTable distribution = null;
 	private Set<RandomVariable> representation = null;
 	//
 	private List<RandomVariable> randomVars = new ArrayList<RandomVariable>();
@@ -34,7 +35,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 					"Random Variables describing the model's representation of the World need to be specified.");
 		}
 
-		distribution = new Distribution(values, vars);
+		distribution = new ProbabilityTable(values, vars);
 
 		representation = new LinkedHashSet<RandomVariable>();
 		for (int i = 0; i < vars.length; i++) {
@@ -78,24 +79,25 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	//
 	// START-FiniteProbabilityModel
-	public Distribution priorDistribution(Proposition... phi) {
+	public CategoricalDistribution priorDistribution(Proposition... phi) {
 		return jointDistribution(phi);
 	}
 
-	public Distribution posteriorDistribution(Proposition phi,
+	public CategoricalDistribution posteriorDistribution(Proposition phi,
 			Proposition... evidence) {
 
 		Proposition conjEvidence = ProbUtil.constructConjunction(evidence);
 
 		// P(A | B) = P(A AND B)/P(B) - (13.3 AIMA3e)
-		Distribution dAandB = jointDistribution(phi, conjEvidence);
-		Distribution dEvidence = jointDistribution(conjEvidence);
+		CategoricalDistribution dAandB = jointDistribution(phi, conjEvidence);
+		CategoricalDistribution dEvidence = jointDistribution(conjEvidence);
 
 		return dAandB.divideBy(dEvidence);
 	}
 
-	public Distribution jointDistribution(Proposition... propositions) {
-		Distribution d = null;
+	public CategoricalDistribution jointDistribution(
+			Proposition... propositions) {
+		ProbabilityTable d = null;
 		final Proposition conjProp = ProbUtil
 				.constructConjunction(propositions);
 		final LinkedHashSet<RandomVariable> vars = new LinkedHashSet<RandomVariable>(
@@ -105,10 +107,10 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 			RandomVariable[] distVars = new RandomVariable[vars.size()];
 			vars.toArray(distVars);
 
-			final Distribution ud = new Distribution(distVars);
+			final ProbabilityTable ud = new ProbabilityTable(distVars);
 			final Object[] values = new Object[vars.size()];
 
-			Distribution.Iterator di = new Distribution.Iterator() {
+			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 						double probability) {
@@ -134,7 +136,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 		} else {
 			// No Unbound Variables, therefore just return
 			// the singular probability related to the proposition.
-			d = new Distribution();
+			d = new ProbabilityTable();
 			d.setValue(0, prior(propositions));
 		}
 		return d;
@@ -147,7 +149,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 	// PRIVATE METHODS
 	//
 	private double probabilityOf(final Proposition phi) {
-		Distribution.Iterator di = new Distribution.Iterator() {
+		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 			private double probSum = 0;
 
 			public void iterate(Map<RandomVariable, Object> possibleWorld,

@@ -7,13 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.probability.proposed.Distribution;
+import aima.core.probability.proposed.CategoricalDistribution;
+import aima.core.probability.proposed.Factor;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesInference;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.FiniteNode;
 import aima.core.probability.proposed.bayes.Node;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
+import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 14.11, page
@@ -43,7 +45,7 @@ import aima.core.probability.proposed.proposition.AssignmentProposition;
  */
 public class EliminationAsk implements BayesInference {
 	//
-	private static final Distribution _identity = new Distribution(
+	private static final ProbabilityTable _identity = new ProbabilityTable(
 			new double[] { 1.0 });
 
 	public EliminationAsk() {
@@ -63,13 +65,13 @@ public class EliminationAsk implements BayesInference {
 	 *            variables //
 	 * @return a distribution over the query variables.
 	 */
-	public Distribution eliminationAsk(final RandomVariable[] X,
+	public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
 			final AssignmentProposition[] e, final BayesianNetwork bn) {
 
 		Set<RandomVariable> hidden = calculateHiddenVariables(X, e, bn);
 
 		// factors <- []
-		List<Distribution> factors = new ArrayList<Distribution>();
+		List<Factor> factors = new ArrayList<Factor>();
 		// for each var in ORDER(bn.VARS) do
 		for (RandomVariable var : order(bn.getVariablesInTopologicalOrder())) {
 			// factors <- [MAKE-FACTOR(var, e) | factors]
@@ -80,15 +82,16 @@ public class EliminationAsk implements BayesInference {
 			}
 		}
 		// return NORMALIZE(POINTWISE-PRODUCT(factors))
-		Distribution product = pointwiseProduct(factors);
+		Factor product = pointwiseProduct(factors);
 		// Note: Want to ensure the order of the product matches the
 		// query variables
-		return product.pointwiseProductPOS(_identity, X).normalize();
+		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X))
+				.normalize();
 	}
 
 	//
 	// START-BayesInference
-	public Distribution ask(final RandomVariable[] X,
+	public CategoricalDistribution ask(final RandomVariable[] X,
 			final AssignmentProposition[] observedEvidence,
 			final BayesianNetwork bn) {
 		return this.eliminationAsk(X, observedEvidence, bn);
@@ -103,8 +106,8 @@ public class EliminationAsk implements BayesInference {
 	private Set<RandomVariable> calculateHiddenVariables(
 			final RandomVariable[] X, final AssignmentProposition[] e,
 			final BayesianNetwork bn) {
-		Set<RandomVariable> hidden = new HashSet<RandomVariable>(bn
-				.getVariablesInTopologicalOrder());
+		Set<RandomVariable> hidden = new HashSet<RandomVariable>(
+				bn.getVariablesInTopologicalOrder());
 		for (RandomVariable x : X) {
 			hidden.remove(x);
 		}
@@ -128,8 +131,8 @@ public class EliminationAsk implements BayesInference {
 		return order;
 	}
 
-	private Distribution makeFactor(RandomVariable var,
-			AssignmentProposition[] e, BayesianNetwork bn) {
+	private Factor makeFactor(RandomVariable var, AssignmentProposition[] e,
+			BayesianNetwork bn) {
 
 		Node n = bn.getNode(var);
 		if (!(n instanceof FiniteNode)) {
@@ -148,11 +151,11 @@ public class EliminationAsk implements BayesInference {
 				evidence.toArray(new AssignmentProposition[evidence.size()]));
 	}
 
-	private List<Distribution> sumOut(RandomVariable var,
-			List<Distribution> factors, BayesianNetwork bn) {
-		List<Distribution> summedOutFactors = new ArrayList<Distribution>();
-		List<Distribution> toMultiply = new ArrayList<Distribution>();
-		for (Distribution f : factors) {
+	private List<Factor> sumOut(RandomVariable var, List<Factor> factors,
+			BayesianNetwork bn) {
+		List<Factor> summedOutFactors = new ArrayList<Factor>();
+		List<Factor> toMultiply = new ArrayList<Factor>();
+		for (Factor f : factors) {
 			if (f.contains(var)) {
 				toMultiply.add(f);
 			} else {
@@ -167,9 +170,9 @@ public class EliminationAsk implements BayesInference {
 		return summedOutFactors;
 	}
 
-	public Distribution pointwiseProduct(List<Distribution> factors) {
+	public Factor pointwiseProduct(List<Factor> factors) {
 
-		Distribution product = factors.get(0);
+		Factor product = factors.get(0);
 		for (int i = 1; i < factors.size(); i++) {
 			product = product.pointwiseProduct(factors.get(i));
 		}
