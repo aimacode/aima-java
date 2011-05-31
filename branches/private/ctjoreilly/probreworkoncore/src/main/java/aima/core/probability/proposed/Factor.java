@@ -54,7 +54,7 @@ public interface Factor {
 	 * variables of the Factor returned is the order of the variables as they
 	 * are seen, as read from the left to right term, for e.g.: <br>
 	 * <br>
-	 * <b>f1</b>(Y)<b>f2</b>(X, Y)<br>
+	 * f<sub>1</sub>(Y)f<sub>2</sub>(X, Y)<br>
 	 * <br>
 	 * would give a Factor of the following form: <br>
 	 * Y, X<br>

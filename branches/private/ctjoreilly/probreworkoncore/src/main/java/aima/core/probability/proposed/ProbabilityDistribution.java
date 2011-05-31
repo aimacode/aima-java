@@ -6,11 +6,11 @@ import aima.core.probability.proposed.proposition.AssignmentProposition;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>
- * 
+ * <br>
  * A probability distribution is a function that assigns probabilities to events
- * (sets of possible worlds).
- * 
- * Note: This definition is slightly different than that given in AIMA3e pg.
+ * (sets of possible worlds).<br>
+ * <br>
+ * <b>Note:</b> This definition is slightly different than that given in AIMA3e pg.
  * 487, which in this API corresponds to a CategoricalDistribution.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Probability_distribution"

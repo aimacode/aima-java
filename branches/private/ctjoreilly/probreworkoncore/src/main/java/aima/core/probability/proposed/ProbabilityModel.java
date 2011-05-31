@@ -31,7 +31,6 @@ import aima.core.probability.proposed.proposition.Proposition;
 // you obtain after, say, doing variable elimination on a larger Bayesian network. 
 // It would make the step Distribution product = pointwiseProduct(factors) 
 // in Elimination-Ask unnecessary; you would simply return those factors as a BN.
-// TODO - extend Distribution to Factor or some other cleaner representation.
 // 
 // You eliminate nodes in topological order, but I think a far more efficient heuristic 
 // is eliminating whichever node creates the factor with the least variables, keeping 

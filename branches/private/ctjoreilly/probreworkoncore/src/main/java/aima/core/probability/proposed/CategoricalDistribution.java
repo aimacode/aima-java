@@ -2,9 +2,11 @@ package aima.core.probability.proposed;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>
- * 
+ * <br>
  * A probability distribution for discrete random variables with a finite set of
- * values.
+ * values. <br>
+ * <b>Note:</b> This definition corresponds to that given in AIMA3e pg. 487, for
+ * a Probability Distribution.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Probability_distribution"
  *      >Probability Distribution</a>
@@ -15,8 +17,8 @@ public interface CategoricalDistribution extends ProbabilityMass {
 
 	/**
 	 * <b>Note:</b> Do not modify the double[] returned by this method directly.
-	 * Instead use setValue() to ensure values and related values are updated
-	 * correctly.
+	 * Instead use setValue() as this method is intended to be for read only
+	 * purposes.
 	 * 
 	 * @return the double[] used to represent the CategoricalDistribution.
 	 * 
@@ -41,7 +43,7 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	/**
 	 * Normalize the values comprising this distribution.
 	 * 
-	 * @return the this instance with its values normalized.
+	 * @return this instance with its values normalized.
 	 */
 	CategoricalDistribution normalize();
 
@@ -51,11 +53,12 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 * 
 	 * @param values
 	 *            an ordered set of values for the random variables comprising
-	 *            the Distribution (<b>Node:</b> the order must match the order
+	 *            the Distribution (<b>Note:</b> the order must match the order
 	 *            of the random variables describing the distribution)
 	 * @return the index within the Distribution for the values specified.
 	 * 
 	 * @see CategoricalDistribution#getValues()
+	 * @see ProbabilityDistribution#getFor()
 	 */
 	int getIndex(Object... values);
 
@@ -64,9 +67,9 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 * create a new CategoricalDistribution representing the quotient. The
 	 * variables comprising the divisor distribution must be a subset of the
 	 * dividend. However, ordering of variables does not matter as the quotient
-	 * contains the same variables as the dividend and the internal logic
-	 * handles iterating through the two distributions correctly, irrespective
-	 * of the order of their variables.
+	 * contains the same variables as the dividend and the internal
+	 * implementation logic should handle iterating through the two
+	 * distributions correctly, irrespective of the order of their variables.
 	 * 
 	 * @param divisor
 	 * @return a new Distribution representing the quotient of the dividend
@@ -79,8 +82,8 @@ public interface CategoricalDistribution extends ProbabilityMass {
 
 	/**
 	 * Multiplication of this Distribution by a given multiplier, creating a new
-	 * Distribution representing the product of the two. Note: Is identical to
-	 * pointwise product calculation.<br>
+	 * Distribution representing the product of the two. <b>Note:</b> Is
+	 * equivalent to pointwise product calculation on factors.<br>
 	 * <br>
 	 * see: AIMA3e Figure 14.10 page 527.<br>
 	 * <br>
@@ -108,7 +111,7 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 * Y, X<br>
 	 * <br>
 	 * i.e. an ordered union of the variables from the two distributions. <br>
-	 * To override the default order of the product use pointwiseProductPOS().
+	 * To override the default order of the product use multiplyByPOS().
 	 * 
 	 * @param multiplier
 	 * 
@@ -123,9 +126,8 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	CategoricalDistribution multiplyBy(CategoricalDistribution multiplier);
 
 	/**
-	 * Multiplication - Product Order Specified (POS). Note: Is identical to
+	 * Multiplication - Product Order Specified (POS). <b>Note:</b> Is equivalent to
 	 * pointwise product calculation.<br>
-	 * <br>
 	 * <br>
 	 * see: AIMA3e Figure 14.10 page 527.<br>
 	 * <br>
@@ -146,7 +148,7 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 *         passed in multiplier. The order of the variables comprising the
 	 *         product distribution is the order specified.
 	 * 
-	 * @see Distribution#pointwiseProduct(Distribution)
+	 * @see CategoricalDistribution#multiplyBy(CategoricalDistribution)
 	 */
 	CategoricalDistribution multiplyByPOS(CategoricalDistribution multiplier,
 			RandomVariable... prodVarOrder);

@@ -152,7 +152,7 @@ public class EnumerationAsk implements BayesInference {
 
 	protected class ObservedEvidence {
 		private BayesianNetwork bn = null;
-		private AssignmentProposition[] extendedValues = null;
+		private Object[] extendedValues = null;
 		private int hiddenStart = 0;
 		private int extendedIdx = 0;
 		private RandomVariable[] var = null;
@@ -163,7 +163,7 @@ public class EnumerationAsk implements BayesInference {
 			this.bn = bn;
 
 			int maxSize = bn.getVariablesInTopologicalOrder().size();
-			extendedValues = new AssignmentProposition[maxSize];
+			extendedValues = new Object[maxSize];
 			var = new RandomVariable[maxSize];
 			// query variables go first
 			int idx = 0;
@@ -176,7 +176,7 @@ public class EnumerationAsk implements BayesInference {
 			for (int i = 0; i < e.length; i++) {
 				var[idx] = e[i].getTermVariable();
 				varIdxs.put(var[idx], idx);
-				extendedValues[idx] = e[i];
+				extendedValues[idx] = e[i].getValue();
 				idx++;
 			}
 			extendedIdx = idx - 1;
@@ -193,7 +193,7 @@ public class EnumerationAsk implements BayesInference {
 
 		public void setExtendedValue(RandomVariable rv, Object value) {
 			int idx = varIdxs.get(rv);
-			extendedValues[idx] = new AssignmentProposition(rv, value);
+			extendedValues[idx] = value;
 			if (idx >= hiddenStart) {
 				extendedIdx = idx;
 			} else {
@@ -212,16 +212,16 @@ public class EnumerationAsk implements BayesInference {
 						"Enumeration-Ask only works with finite Nodes.");
 			}
 			FiniteNode fn = (FiniteNode) n;
-			AssignmentProposition[] aps = new AssignmentProposition[1 + fn
+			Object[] vals = new Object[1 + fn
 					.getParents().size()];
 			int idx = 0;
 			for (Node pn : n.getParents()) {
-				aps[idx] = extendedValues[varIdxs.get(pn.getRandomVariable())];
+				vals[idx] = extendedValues[varIdxs.get(pn.getRandomVariable())];
 				idx++;
 			}
-			aps[idx] = extendedValues[varIdxs.get(rv)];
+			vals[idx] = extendedValues[varIdxs.get(rv)];
 
-			return fn.getCPT().probabilityFor(aps);
+			return fn.getCPT().probabilityFor(vals);
 		}
 	}
 

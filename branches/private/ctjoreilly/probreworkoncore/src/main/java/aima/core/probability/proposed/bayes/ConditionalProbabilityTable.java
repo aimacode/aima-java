@@ -50,7 +50,7 @@ public class ConditionalProbabilityTable {
 		return table.contains(rv);
 	}
 
-	public double probabilityFor(final AssignmentProposition... values) {
+	public double probabilityFor(final Object... values) {
 		return table.getValue(values);
 	}
 
