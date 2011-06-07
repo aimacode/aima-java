@@ -106,8 +106,8 @@ public class EliminationAsk implements BayesInference {
 	private Set<RandomVariable> calculateHiddenVariables(
 			final RandomVariable[] X, final AssignmentProposition[] e,
 			final BayesianNetwork bn) {
-		Set<RandomVariable> hidden = new HashSet<RandomVariable>(
-				bn.getVariablesInTopologicalOrder());
+		Set<RandomVariable> hidden = new HashSet<RandomVariable>(bn
+				.getVariablesInTopologicalOrder());
 		for (RandomVariable x : X) {
 			hidden.remove(x);
 		}
@@ -147,7 +147,7 @@ public class EliminationAsk implements BayesInference {
 			}
 		}
 
-		return fn.getCPT().valueOf(
+		return fn.getCPT().getFactorFor(
 				evidence.toArray(new AssignmentProposition[evidence.size()]));
 	}
 

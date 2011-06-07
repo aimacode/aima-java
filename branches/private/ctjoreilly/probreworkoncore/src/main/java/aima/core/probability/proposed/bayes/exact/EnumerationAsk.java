@@ -93,8 +93,8 @@ public class EnumerationAsk implements BayesInference {
 				for (int i = 0; i < X.length; i++) {
 					e.setExtendedValue(X[i], possibleWorld.get(X[i]));
 				}
-				Q.setValue(cnt,
-						enumerateAll(bn.getVariablesInTopologicalOrder(), e));
+				Q.setValue(cnt, enumerateAll(bn
+						.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
 
@@ -212,8 +212,7 @@ public class EnumerationAsk implements BayesInference {
 						"Enumeration-Ask only works with finite Nodes.");
 			}
 			FiniteNode fn = (FiniteNode) n;
-			Object[] vals = new Object[1 + fn
-					.getParents().size()];
+			Object[] vals = new Object[1 + fn.getParents().size()];
 			int idx = 0;
 			for (Node pn : n.getParents()) {
 				vals[idx] = extendedValues[varIdxs.get(pn.getRandomVariable())];
@@ -221,7 +220,7 @@ public class EnumerationAsk implements BayesInference {
 			}
 			vals[idx] = extendedValues[varIdxs.get(rv)];
 
-			return fn.getCPT().probabilityFor(vals);
+			return fn.getCPT().getValue(vals);
 		}
 	}
 

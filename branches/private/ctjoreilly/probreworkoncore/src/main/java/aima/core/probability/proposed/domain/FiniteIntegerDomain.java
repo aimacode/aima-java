@@ -20,11 +20,12 @@ public class FiniteIntegerDomain extends AbstractFiniteDomain {
 
 	// 
 	// START-Domain
-
+	@Override
 	public int size() {
 		return possibleValues.size();
 	}
 
+	@Override
 	public boolean isOrdered() {
 		return true;
 	}
@@ -34,13 +35,14 @@ public class FiniteIntegerDomain extends AbstractFiniteDomain {
 
 	//
 	// START-DiscreteDomain
+	@Override
 	public Set<Integer> getPossibleValues() {
 		return possibleValues;
 	}
 
 	// END-DiscreteDomain
 	//
-	
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -55,7 +57,7 @@ public class FiniteIntegerDomain extends AbstractFiniteDomain {
 
 		return this.possibleValues.equals(other.possibleValues);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return possibleValues.hashCode();

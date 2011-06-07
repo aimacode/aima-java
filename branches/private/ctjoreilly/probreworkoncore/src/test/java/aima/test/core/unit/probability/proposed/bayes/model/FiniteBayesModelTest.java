@@ -1,11 +1,11 @@
-package aima.test.core.unit.probability.proposed.bayes;
+package aima.test.core.unit.probability.proposed.bayes.model;
 
 import org.junit.Test;
 
 import aima.core.probability.proposed.bayes.BayesInference;
-import aima.core.probability.proposed.bayes.FiniteBayesModel;
 import aima.core.probability.proposed.bayes.exact.EliminationAsk;
 import aima.core.probability.proposed.bayes.exact.EnumerationAsk;
+import aima.core.probability.proposed.bayes.model.FiniteBayesModel;
 import aima.core.probability.proposed.example.BayesNetExampleFactory;
 import aima.test.core.unit.probability.proposed.CommonFiniteProbabilityModelTests;
 

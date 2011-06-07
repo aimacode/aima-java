@@ -1,106 +1,57 @@
 package aima.core.probability.proposed.bayes;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import aima.core.probability.proposed.RandomVariable;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 511.<br>
+ * <br>
+ * A node is annotated with quantitative probability information. Each node
+ * corresponds to a random variable, which may be discrete or continuous. If
+ * there is an arrow from node X to node Y in a Bayesian Network, X is said to
+ * be a parent of Y and Y is a child of X. Each node X<sub>i</sub> has a
+ * conditional probability distribution P(X<sub>i</sub> |
+ * Parents(X<sub>i</sub>)) that quantifies the effect of the parents on the
+ * node. <br>
+ * 
  * @author Ciaran O'Reilly
- * @author Ravi Mohan
  */
+public interface Node {
 
-// TODO-AIMA3e pg. 518, 519, consider support for deterministic, noisy-OR
-// and noisy-MAX Nodes. In particular deterministic nodes can be 
-// auto-generated for derived propositions by iterating over their 
-// scope variables in order to construct their CPT - this could be done dynamically
-// by an instance of a model. The noisy nodes could use a dynamic CPT
-// interface to handle dynamically constructing their values.
-public abstract class Node {
+	/**
+	 * 
+	 * @return the Random Variable this Node is for/on.
+	 */
+	RandomVariable getRandomVariable();
 
-	private RandomVariable variable = null;
-	private Set<Node> parents = null;
-	private Set<Node> children = null;
+	/**
+	 * 
+	 * @return true if this Node has no parents.
+	 * 
+	 * @see Node#getParents()
+	 */
+	boolean isRoot();
 
-	public Node(RandomVariable var) {
-		this(var, (Node[]) null);
-	}
+	/**
+	 * 
+	 * @return the parent Nodes for this Node.
+	 */
+	Set<Node> getParents();
 
-	public Node(RandomVariable var, Node... parents) {
-		if (null == var) {
-			throw new IllegalArgumentException(
-					"Random Variable for Node must be specified.");
-		}
-		this.variable = var;
-		this.parents = new LinkedHashSet<Node>();
-		if (null != parents) {
-			for (Node p : parents) {
-				p.addChild(this);
-				this.parents.add(p);
-			}
-		}
-		this.parents = Collections.unmodifiableSet(this.parents);
-		this.children = Collections.unmodifiableSet(new LinkedHashSet<Node>());
-	}
+	/**
+	 * 
+	 * @return the children Nodes for this Node.
+	 */
+	Set<Node> getChildren();
 
-	public RandomVariable getRandomVariable() {
-		return variable;
-	}
-
-	public boolean isRoot() {
-		return 0 == getParents().size();
-	}
-
-	public Set<Node> getParents() {
-		return parents;
-	}
-
-	public Set<Node> getChildren() {
-		return children;
-	}
-
-	public Set<Node> getMarkovBlanket() {
-		// TOOD-pg. 517
-		return null;
-	}
-
-	@Override
-	public String toString() {
-		return getRandomVariable().getName();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (null == o) {
-			return false;
-		}
-		if (o == this) {
-			return true;
-		}
-
-		if (o instanceof Node) {
-			Node n = (Node) o;
-
-			return getRandomVariable().equals(n.getRandomVariable());
-		}
-
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return variable.hashCode();
-	}
-
-	//
-	// PROTECTED METHODS
-	//
-	protected void addChild(Node childNode) {
-		children = new LinkedHashSet<Node>(children);
-
-		children.add(childNode);
-
-		children = Collections.unmodifiableSet(children);
-	}
+	/**
+	 * Get this Node's Markov Blanket:<br>
+	 * 'A node is conditionally independent of all other nodes in the network,
+	 * given its parents, children, and children’s parents - that is, given its
+	 * <b>MARKOV BLANKET</b> (AIMA3e pg, 517).
+	 * 
+	 * @return this Node's Markov Blanket.
+	 */
+	Set<Node> getMarkovBlanket();
 }

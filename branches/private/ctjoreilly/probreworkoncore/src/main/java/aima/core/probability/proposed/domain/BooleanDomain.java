@@ -29,11 +29,12 @@ public class BooleanDomain extends AbstractFiniteDomain {
 
 	//
 	// START-Domain
-
+	@Override
 	public int size() {
 		return 2;
 	}
 
+	@Override
 	public boolean isOrdered() {
 		return false;
 	}
@@ -43,6 +44,7 @@ public class BooleanDomain extends AbstractFiniteDomain {
 
 	//
 	// START-DiscreteDomain
+	@Override
 	public Set<Boolean> getPossibleValues() {
 		return _possibleValues;
 	}

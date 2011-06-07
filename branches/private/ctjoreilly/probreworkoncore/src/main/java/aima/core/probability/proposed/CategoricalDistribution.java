@@ -63,6 +63,22 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	int getIndex(Object... values);
 
 	/**
+	 * Get the marginal probability for the provided variables from this
+	 * Distribution creating a new Distribution of the remaining variables with
+	 * their values updated with the summed out random variables.<br>
+	 * <br>
+	 * see: AIMA3e page 492.<br>
+	 * <br>
+	 * 
+	 * @param vars
+	 *            the random variables to marginalize/sum out.
+	 * @return a new Distribution containing any remaining random variables not
+	 *         summed out and a new set of values updated with the summed out
+	 *         values.
+	 */
+	CategoricalDistribution marginal(RandomVariable... vars);
+
+	/**
 	 * Divide the dividend (this) CategoricalDistribution by the divisor to
 	 * create a new CategoricalDistribution representing the quotient. The
 	 * variables comprising the divisor distribution must be a subset of the
@@ -126,8 +142,8 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	CategoricalDistribution multiplyBy(CategoricalDistribution multiplier);
 
 	/**
-	 * Multiplication - Product Order Specified (POS). <b>Note:</b> Is equivalent to
-	 * pointwise product calculation.<br>
+	 * Multiplication - Product Order Specified (POS). <b>Note:</b> Is
+	 * equivalent to pointwise product calculation.<br>
 	 * <br>
 	 * see: AIMA3e Figure 14.10 page 527.<br>
 	 * <br>

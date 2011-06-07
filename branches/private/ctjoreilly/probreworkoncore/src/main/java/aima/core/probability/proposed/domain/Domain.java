@@ -33,7 +33,9 @@ public interface Domain {
 
 	/**
 	 * 
-	 * @return true if the domain is ordered, false otherwise.
+	 * @return true if the domain is ordered, false otherwise. i.e. you can
+	 *         specify 1 object from the domain is < or = another object in the
+	 *         domain.
 	 */
 	boolean isOrdered();
 }

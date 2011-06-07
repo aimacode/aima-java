@@ -16,8 +16,14 @@ import java.util.Set;
 public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	private Set<Object> possibleValues = null;
+	private boolean ordered = false;
 
 	public ArbitraryTokenDomain(Object... pValues) {
+		this(false, pValues);
+	}
+
+	public ArbitraryTokenDomain(boolean ordered, Object... pValues) {
+		this.ordered = ordered;
 		// Keep consistent order
 		possibleValues = new LinkedHashSet<Object>();
 		for (Object v : pValues) {
@@ -30,12 +36,14 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 	//
 	// START-Domain
 
+	@Override
 	public int size() {
 		return possibleValues.size();
 	}
 
+	@Override
 	public boolean isOrdered() {
-		return true;
+		return ordered;
 	}
 
 	// END-Domain
@@ -43,6 +51,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	//
 	// START-FiniteDomain
+	@Override
 	public Set<Object> getPossibleValues() {
 		return possibleValues;
 	}

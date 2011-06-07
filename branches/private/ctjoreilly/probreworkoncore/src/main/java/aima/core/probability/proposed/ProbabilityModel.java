@@ -20,7 +20,18 @@ import aima.core.probability.proposed.proposition.Proposition;
 // TODO - consider creating general utilities for permutations, combinations and 
 //        table permutations (i.e. Distribution - support freezing values and iterating
 //        over subset as well).
-// TODO - pg 530, model an Event explicitly as a set of assignments from a Distribution.
+// TODO - pg 530, model an Event explicitly as a set of assignments from a Distribution?
+//
+// TODO - possibly move Domain interface to parent package.
+//      - this hierarchy in terms of finite and infinite is different than distribution
+//        and possibly planned Node hierarchy, may want to make these all consistent 
+//        (likely change this to match the standard Distribution hierarchy).
+// TODO - possibly move Proposition interface to parent package.
+// TODO - BayesNetExampleFactory split into separate example classes or do the
+//        reverse for the FullJointDistribution examples.
+// TODO - should ConditionalProbabilityDistribution extend ProbabilityDistribution?
+//        (currently don't think so as it is the specification of a collection of distributions).
+//        Note: If do extend just @Override and keep specialized documentation in interface.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 
@@ -42,6 +53,12 @@ import aima.core.probability.proposed.proposition.Proposition;
 // there are many possible implementations for a CPT, some dynamic, some static, and so on.
 // Note - possibly have CPT interface extends a Conditional Probability Distribution (CPD) 
 // interface, in order to be more general.
+// Note: Will need to explicitly specify the order of the variables in the CPT as
+// EliminationAsk assumes this ordering (write tests to ensure this is working).
+// Note: Will want to ensure the Bayes' Node hierarchy is extended correctly (may also want to make as Interfaces) 
+// and relates cleanly changes made to CPT interface.
+// Note: May make sense to make a clean set of Bayes' interfaces and to move implementation
+// details into a sub-package.
 //
 // Seems like HybridBayesianNetwork and BayesianNetwork should be related somehow 
 // via a super class or to each other?
@@ -99,8 +116,8 @@ public interface ProbabilityModel {
 	 * P(a | b) = P(a AND b)/P(b)<br>
 	 * <br>
 	 * which holds whenever P(b) > 0. Refer to equation 13.3 page 485 of AIMA3e.
-	 * This can be rewritten in a different form called the <b>product rule</b>:
-	 * <br><br>
+	 * This can be rewritten in a different form called the <b>product rule</b>: <br>
+	 * <br>
 	 * P(a AND b) = P(a | b)P(b)<br>
 	 * <br>
 	 * and also as:<br>

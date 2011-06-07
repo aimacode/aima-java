@@ -1,4 +1,4 @@
-package aima.core.probability.proposed.bayes;
+package aima.core.probability.proposed.bayes.model;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -8,6 +8,8 @@ import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.FiniteProbabilityModel;
 import aima.core.probability.proposed.ProbabilityModel;
 import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.bayes.BayesInference;
+import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.exact.EnumerationAsk;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.proposition.ConjunctiveProposition;
@@ -17,7 +19,7 @@ import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
  * Very simple implementation of the FiniteProbabilityModel API using a Bayesian
- * Network to represent the underlying model.<br>
+ * Network, consisting of FiniteNodes, to represent the underlying model.<br>
  * <br>
  * <b>Note:</b> The implementation currently doesn't take advantage of the use
  * of evidence values when calculating posterior values using the provided
