@@ -10,28 +10,19 @@ import aima.core.probability.proposed.proposition.Proposition;
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
 //        = P(MaryCalls | Alarm), will require a sub distribution mechanism
 //        to be able to express with API.
-// TODO - Change Distribution.Iterator to more closely reflect standard Iterator protocol?
 // TODO - P(doubles) = 1/4. How to assert this, pg 485?
 // TODO - pg 486, how to more easily represent 'Total' (domain=2-12 for 2 dices)
 //        and then use its assignment, e.g. Total=11.
 // TODO - pg 492, doc for marginalization and conditioning.
 // TODO - pg 493, (13.9)
 // TODO - pg 499, (add distribution tests for Wumpus World example - just Bayesian, not full).
-// TODO - consider creating general utilities for permutations, combinations and 
-//        table permutations (i.e. Distribution - support freezing values and iterating
-//        over subset as well).
-// TODO - pg 530, model an Event explicitly as a set of assignments from a Distribution?
 //
-// TODO - possibly move Domain interface to parent package.
-//      - this hierarchy in terms of finite and infinite is different than distribution
-//        and possibly planned Node hierarchy, may want to make these all consistent 
-//        (likely change this to match the standard Distribution hierarchy).
-// TODO - possibly move Proposition interface to parent package.
-// TODO - BayesNetExampleFactory split into separate example classes or do the
-//        reverse for the FullJointDistribution examples.
 // TODO - should ConditionalProbabilityDistribution extend ProbabilityDistribution?
-//        (currently don't think so as it is the specification of a collection of distributions).
+//        (currently don't think so as it is the specification of a collection of conditioned distributions).
 //        Note: If do extend just @Override and keep specialized documentation in interface.
+// TODO - Consider adding an iterate capability for CategoricalDistributions
+//        to ProbUtil, will avoid needing to cast to a ProbabilityTable
+//        in the FiniteBayesModel implementation.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 
@@ -48,20 +39,6 @@ import aima.core.probability.proposed.proposition.Proposition;
 // the connectivity low and therefore things more efficient.
 // TODO - also consider removal of leaf nodes as described on pg. 528.
 // TODO - clustering described on pg. 529.
-//
-// ConditionalProbabilityTable is a class; seems like you could use an interface because 
-// there are many possible implementations for a CPT, some dynamic, some static, and so on.
-// Note - possibly have CPT interface extends a Conditional Probability Distribution (CPD) 
-// interface, in order to be more general.
-// Note: Will need to explicitly specify the order of the variables in the CPT as
-// EliminationAsk assumes this ordering (write tests to ensure this is working).
-// Note: Will want to ensure the Bayes' Node hierarchy is extended correctly (may also want to make as Interfaces) 
-// and relates cleanly changes made to CPT interface.
-// Note: May make sense to make a clean set of Bayes' interfaces and to move implementation
-// details into a sub-package.
-//
-// Seems like HybridBayesianNetwork and BayesianNetwork should be related somehow 
-// via a super class or to each other?
 //
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>

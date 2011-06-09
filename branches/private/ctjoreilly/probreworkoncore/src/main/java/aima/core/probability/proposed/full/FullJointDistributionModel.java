@@ -130,7 +130,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 				}
 			};
 
-			distribution.iterateDistribution(di);
+			distribution.iterateOverTable(di);
 
 			d = ud;
 		} else {
@@ -164,7 +164,7 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 			}
 		};
 
-		distribution.iterateDistribution(di);
+		distribution.iterateOverTable(di);
 
 		return ((Double) di.getPostIterateValue()).doubleValue();
 	}

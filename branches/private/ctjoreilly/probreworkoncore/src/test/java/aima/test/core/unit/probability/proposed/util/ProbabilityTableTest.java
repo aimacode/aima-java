@@ -1,11 +1,16 @@
 package aima.test.core.unit.probability.proposed.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.proposed.ProbabilityModel;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.domain.BooleanDomain;
+import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.util.ProbabilityTable;
 import aima.core.probability.proposed.util.RandVar;
 
@@ -19,7 +24,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyzD = new ProbabilityTable(new double[] {
-				// X = true, Y = true, Z = true
+		// X = true, Y = true, Z = true
 				1.0,
 				// X = true, Y = true, Z = false
 				2.0,
@@ -36,7 +41,7 @@ public class ProbabilityTableTest {
 				// X = false, Y = false, Z = false
 				8.0, }, xRV, yRV, zRV);
 		ProbabilityTable xzyD = new ProbabilityTable(new double[] {
-				// X = true, Z = true, Y = true
+		// X = true, Z = true, Y = true
 				1.0,
 				// X = true, Z = true, Y = false
 				3.0,
@@ -53,7 +58,7 @@ public class ProbabilityTableTest {
 				// X = false, Z = false, Y = false
 				8.0, }, xRV, zRV, yRV);
 		ProbabilityTable zxyD = new ProbabilityTable(new double[] {
-				// Z = true, X = true, Y = true
+		// Z = true, X = true, Y = true
 				1.0,
 				// Z = true, X = true, Y = false
 				3.0,
@@ -69,17 +74,18 @@ public class ProbabilityTableTest {
 				6.0,
 				// Z = false, X = false, Y = false
 				8.0, }, zRV, xRV, yRV);
-		ProbabilityTable zD = new ProbabilityTable(new double[] { 0.5, 0.2 }, zRV);
+		ProbabilityTable zD = new ProbabilityTable(new double[] { 0.5, 0.2 },
+				zRV);
 		// The identity distribution (to order results for comparison purposes)
 		ProbabilityTable iD = new ProbabilityTable(new double[] { 1.0 });
 		// Ensure the order of the dividends
 		// makes no difference to the result
-		Assert.assertArrayEquals(xyzD.divideBy(zD).getValues(),
-				xzyD.divideBy(zD).pointwiseProductPOS(iD, xRV, yRV, zRV)
-						.getValues(), DELTA_THRESHOLD);
-		Assert.assertArrayEquals(xzyD.divideBy(zD).getValues(),
-				zxyD.divideBy(zD).pointwiseProductPOS(iD, xRV, zRV, yRV)
-						.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(xyzD.divideBy(zD).getValues(), xzyD.divideBy(
+				zD).pointwiseProductPOS(iD, xRV, yRV, zRV).getValues(),
+				DELTA_THRESHOLD);
+		Assert.assertArrayEquals(xzyD.divideBy(zD).getValues(), zxyD.divideBy(
+				zD).pointwiseProductPOS(iD, xRV, zRV, yRV).getValues(),
+				DELTA_THRESHOLD);
 	}
 
 	@Test
@@ -89,7 +95,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyD = new ProbabilityTable(new double[] {
-				// X = true, Y = true
+		// X = true, Y = true
 				1.0,
 				// X = true, Y = false
 				2.0,
@@ -97,7 +103,8 @@ public class ProbabilityTableTest {
 				3.0,
 				// X = false, Y = false
 				4.0 }, xRV, yRV);
-		ProbabilityTable zD = new ProbabilityTable(new double[] { 3.0, 7.0 }, zRV);
+		ProbabilityTable zD = new ProbabilityTable(new double[] { 3.0, 7.0 },
+				zRV);
 
 		// Not commutative
 		Assert.assertArrayEquals(new double[] { 3.0, 7.0, 6.0, 14.0, 9.0, 21.0,
@@ -115,7 +122,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyD = new ProbabilityTable(new double[] {
-				// X = true, Y = true
+		// X = true, Y = true
 				1.0,
 				// X = true, Y = false
 				2.0,
@@ -123,11 +130,91 @@ public class ProbabilityTableTest {
 				3.0,
 				// X = false, Y = false
 				4.0 }, xRV, yRV);
-		ProbabilityTable zD = new ProbabilityTable(new double[] { 3.0, 7.0 }, zRV);
+		ProbabilityTable zD = new ProbabilityTable(new double[] { 3.0, 7.0 },
+				zRV);
 
 		// Make commutative by specifying an order for the product
 		Assert.assertArrayEquals(xyD.pointwiseProduct(zD).getValues(), zD
 				.pointwiseProductPOS(xyD, xRV, yRV, zRV).getValues(),
 				DELTA_THRESHOLD);
+	}
+
+	@Test
+	public void test_iterateOverTable_fixedValues() {
+		RandVar aRV = new RandVar("A", new BooleanDomain());
+		RandVar bRV = new RandVar("B", new BooleanDomain());
+		RandVar cRV = new RandVar("C", new BooleanDomain());
+		ProbabilityTable ptABC = new ProbabilityTable(new double[] {
+		// A = true, B = true, C = true
+				1.0,
+				// A = true, B = true, C = false
+				10.0,
+				// A = true, B = false, C = true
+				100.0,
+				// A = true, B = false, C = false
+				1000.0,
+				// A = false, B = true, C = true
+				10000.0,
+				// A = false, B = true, C = false
+				100000.0,
+				// A = false, B = false, C = true
+				1000000.0,
+				// A = false, B = false, C = false
+				10000000.0 }, aRV, bRV, cRV);
+
+		final List<Double> answer = new ArrayList<Double>();
+		ProbabilityTable.Iterator pti = new ProbabilityTable.Iterator() {
+
+			@Override
+			public void iterate(Map<RandomVariable, Object> possibleAssignment,
+					double probability) {
+				answer.add(probability);
+			}
+
+			@Override
+			public Object getPostIterateValue() {
+				return null; // N/A
+			}
+		};
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(aRV, true));
+		Assert.assertEquals(1111.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(aRV, false));
+		Assert.assertEquals(11110000.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(bRV, true));
+		Assert.assertEquals(110011.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(bRV, false));
+		Assert.assertEquals(11001100.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(cRV, true));
+		Assert.assertEquals(1010101.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(cRV, false));
+		Assert.assertEquals(10101010.0, sumOf(answer), DELTA_THRESHOLD);
+
+		answer.clear();
+		ptABC.iterateOverTable(pti, new AssignmentProposition(bRV, true),
+				new AssignmentProposition(cRV, true));
+		Assert.assertEquals(10001.0, sumOf(answer), DELTA_THRESHOLD);
+	}
+
+	//
+	// PRIVATE METHOD
+	//
+	private double sumOf(List<Double> values) {
+		double sum = 0;
+		for (Double d : values) {
+			sum += d;
+		}
+		return sum;
 	}
 }

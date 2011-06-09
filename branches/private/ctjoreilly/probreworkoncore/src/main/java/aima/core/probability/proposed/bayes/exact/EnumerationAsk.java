@@ -102,7 +102,7 @@ public class EnumerationAsk implements BayesInference {
 				return null; // N/A
 			}
 		};
-		Q.iterateDistribution(di);
+		Q.iterateOverTable(di);
 
 		// return NORMALIZE(Q(X))
 		return Q.normalize();

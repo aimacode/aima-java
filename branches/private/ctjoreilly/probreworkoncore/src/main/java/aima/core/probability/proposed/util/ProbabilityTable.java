@@ -38,7 +38,9 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	 * over the possible assignments for the random variables comprising this
 	 * table.
 	 * 
-	 * @see ProbabilityTable#iterateDistribution(Iterator)
+	 * @see ProbabilityTable#iterateOverTable(Iterator)
+	 * @see ProbabilityTable#iterateOverTable(Iterator,
+	 *      AssignmentProposition...)
 	 */
 	public interface Iterator {
 		/**
@@ -199,7 +201,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
 		return mrn.intValue();
 	}
-	
+
 	@Override
 	public CategoricalDistribution marginal(RandomVariable... vars) {
 		return sumOut(vars);
@@ -257,7 +259,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					return null; // N/A
 				}
 			};
-			iterateDistribution(di);
+			iterateOverTable(di);
 		}
 
 		return summedOut;
@@ -278,12 +280,13 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	//
 
 	/**
-	 * Iterate over all the possible worlds describing this ProbabilityTable.
+	 * Iterate over all the possible value assignments for the Random Variables
+	 * comprising this ProbabilityTable.
 	 * 
 	 * @param pti
 	 *            the ProbabilityTable Iterator to iterate.
 	 */
-	public void iterateDistribution(Iterator pti) {
+	public void iterateOverTable(Iterator pti) {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
 		MixedRadixNumber mrn = new MixedRadixNumber(0, radixs);
 		do {
@@ -295,6 +298,73 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			pti.iterate(possibleWorld, values[mrn.intValue()]);
 
 		} while (mrn.increment());
+	}
+
+	/**
+	 * Iterate over all possible values assignments for the Random Variables
+	 * comprising this ProbabilityTable that are not in the fixed set of values.
+	 * This allows you to iterate over a subset of possible combinations.
+	 * 
+	 * @param pti
+	 *            the ProbabilityTble Iterator to iterate
+	 * @param fixedValues
+	 *            Fixed values for a subset of the Random Variables comprising
+	 *            this Probability Table.
+	 */
+	public void iterateOverTable(Iterator pti,
+			AssignmentProposition... fixedValues) {
+		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
+		MixedRadixNumber tableMRN = new MixedRadixNumber(0, radixs);
+		int[] tableRadixValues = new int[radixs.length];
+
+		// Assert that the Random Variables for the fixed values
+		// are part of this probability table and assign
+		// all the fixed values to the possible world.
+		for (AssignmentProposition ap : fixedValues) {
+			if (!randomVarInfo.containsKey(ap.getTermVariable())) {
+				throw new IllegalArgumentException("Assignment proposition ["
+						+ ap + "] does not belong to this probability table.");
+			}
+			possibleWorld.put(ap.getTermVariable(), ap.getValue());
+			RVInfo fixedRVI = randomVarInfo.get(ap.getTermVariable());
+			tableRadixValues[fixedRVI.getRadixIdx()] = fixedRVI
+					.getIdxForDomain(ap.getValue());
+		}
+		// If have assignments for all the random variables
+		// in this probability table
+		if (fixedValues.length == randomVarInfo.size()) {
+			// Then only 1 iteration call is required.
+			pti.iterate(possibleWorld, getValue(fixedValues));
+		} else {
+			// Else iterate over the non-fixed values
+			Set<RandomVariable> freeVariables = SetOps.difference(
+					this.randomVarInfo.keySet(), possibleWorld.keySet());
+			Map<RandomVariable, RVInfo> freeVarInfo = new LinkedHashMap<RandomVariable, RVInfo>();
+			// Remove the fixed Variables
+			for (RandomVariable fv : freeVariables) {
+				freeVarInfo.put(fv, new RVInfo(fv));
+			}
+			int[] freeRadixValues = createRadixs(freeVarInfo);
+			MixedRadixNumber freeMRN = new MixedRadixNumber(0, freeRadixValues);
+			Object fval = null;
+			// Iterate through all combinations of the free variables
+			do {
+				// Put the current assignments for the free variables
+				// into the possible world and update
+				// the current index in the table MRN
+				for (RVInfo freeRVI : freeVarInfo.values()) {
+					fval = freeRVI.getDomainValueAt(freeMRN
+							.getCurrentNumeralValue(freeRVI.getRadixIdx()));
+					possibleWorld.put(freeRVI.getVariable(), fval);
+
+					tableRadixValues[randomVarInfo.get(freeRVI.getVariable())
+							.getRadixIdx()] = freeRVI.getIdxForDomain(fval);
+				}
+				pti.iterate(possibleWorld, values[(int) tableMRN
+						.getCurrentValueFor(tableRadixValues)]);
+
+			} while (freeMRN.increment());
+		}
 	}
 
 	public ProbabilityTable divideBy(ProbabilityTable divisor) {
@@ -376,7 +446,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 				}
 			};
 
-			divisor.iterateDistribution(divisorIterator);
+			divisor.iterateOverTable(divisorIterator);
 		}
 
 		return quotient;
@@ -444,7 +514,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					return d.getIndex(termValues);
 				}
 			};
-			product.iterateDistribution(di);
+			product.iterateOverTable(di);
 		}
 
 		return product;

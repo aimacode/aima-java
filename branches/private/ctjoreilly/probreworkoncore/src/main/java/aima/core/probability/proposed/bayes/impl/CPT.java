@@ -19,7 +19,7 @@ import aima.core.probability.proposed.util.ProbabilityTable;
  * Default implementation of the ConditionalProbabilityTable interface.
  * 
  * @author Ciaran O'Reilly
- *
+ * 
  */
 public class CPT implements ConditionalProbabilityTable {
 	private RandomVariable on = null;
@@ -89,53 +89,76 @@ public class CPT implements ConditionalProbabilityTable {
 	// START-ConditionalProbabilityTable
 	@Override
 	public CategoricalDistribution getConditioningCase(Object... parentValues) {
-		// TODO
-		throw new UnsupportedOperationException("TODO");
+		if (parentValues.length != parents.size()) {
+			throw new IllegalArgumentException(
+					"The number of parent value arguments ["
+							+ parentValues.length
+							+ "] is not equal to the number of parents ["
+							+ parents.size() + "] for this CPT.");
+		}
+		AssignmentProposition[] aps = new AssignmentProposition[parentValues.length];
+		int idx = 0;
+		for (RandomVariable parentRV : parents) {
+			aps[idx] = new AssignmentProposition(parentRV, parentValues[idx]);
+			idx++;
+		}
+
+		return getConditioningCase(aps);
 	}
 
 	@Override
 	public CategoricalDistribution getConditioningCase(
 			AssignmentProposition... parentValues) {
-		// TODO
-		throw new UnsupportedOperationException("TODO");
+		if (parentValues.length != parents.size()) {
+			throw new IllegalArgumentException(
+					"The number of parent value arguments ["
+							+ parentValues.length
+							+ "] is not equal to the number of parents ["
+							+ parents.size() + "] for this CPT.");
+		}
+		final ProbabilityTable cc = new ProbabilityTable(getOn());
+		ProbabilityTable.Iterator pti = new ProbabilityTable.Iterator() {
+			private int idx = 0;
+
+			@Override
+			public void iterate(Map<RandomVariable, Object> possibleAssignment,
+					double probability) {
+				cc.getValues()[idx] = probability;
+				idx++;
+			}
+
+			@Override
+			public Object getPostIterateValue() {
+				return null; // N/A
+			}
+		};
+		table.iterateOverTable(pti, parentValues);
+
+		return cc;
 	}
 
 	public Factor getFactorFor(final AssignmentProposition... evidence) {
-		// TODO - a more efficient implementation of this
-		// as I should not need to iterate over all the
-		// possible worlds, just those matching the evidence
-		// Note: Could do with an additional itereate(Iterator,
-		// AssignmentProposition...) on ProbabilityTable.
-		Set<RandomVariable> vofVars = new LinkedHashSet<RandomVariable>(table
+		Set<RandomVariable> fofVars = new LinkedHashSet<RandomVariable>(table
 				.getFor());
 		for (AssignmentProposition ap : evidence) {
-			vofVars.remove(ap.getTermVariable());
+			fofVars.remove(ap.getTermVariable());
 		}
-		final ProbabilityTable valueOf = new ProbabilityTable(vofVars);
-		// Otherwise need to iterate through this distribution
-		// to calculate the Factor.
-		final Object[] termValues = new Object[vofVars.size()];
+		final ProbabilityTable fof = new ProbabilityTable(fofVars);
+		// Otherwise need to iterate through the table for the
+		// non evidence variables.
+		final Object[] termValues = new Object[fofVars.size()];
 		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
-				boolean holds = true;
-				for (AssignmentProposition ap : evidence) {
-					if (!ap.holds(possibleWorld)) {
-						holds = false;
-						break;
+				if (0 == termValues.length) {
+					fof.getValues()[0] += probability;
+				} else {
+					int i = 0;
+					for (RandomVariable rv : fof.getFor()) {
+						termValues[i] = possibleWorld.get(rv);
+						i++;
 					}
-				}
-				if (holds) {
-					if (0 == termValues.length) {
-						valueOf.getValues()[0] += probability;
-					} else {
-						int i = 0;
-						for (RandomVariable rv : valueOf.getFor()) {
-							termValues[i] = possibleWorld.get(rv);
-							i++;
-						}
-						valueOf.getValues()[valueOf.getIndex(termValues)] += probability;
-					}
+					fof.getValues()[fof.getIndex(termValues)] += probability;
 				}
 			}
 
@@ -143,9 +166,9 @@ public class CPT implements ConditionalProbabilityTable {
 				return null; // N/A
 			}
 		};
-		table.iterateDistribution(di);
+		table.iterateOverTable(di, evidence);
 
-		return valueOf;
+		return fof;
 	}
 
 	// END-ConditionalProbabilityTable
@@ -179,6 +202,6 @@ public class CPT implements ConditionalProbabilityTable {
 			}
 		};
 
-		table.iterateDistribution(di);
+		table.iterateOverTable(di);
 	}
 }

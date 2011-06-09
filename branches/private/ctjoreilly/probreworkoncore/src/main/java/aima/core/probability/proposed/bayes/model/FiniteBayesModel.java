@@ -96,7 +96,7 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 				return probSum;
 			}
 		};
-		d.iterateDistribution(di);
+		d.iterateOverTable(di);
 
 		return ((Double) di.getPostIterateValue()).doubleValue();
 	}
@@ -183,7 +183,7 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 					new RandomVariable[conjProp.getScope().size()]);
 			((ProbabilityTable) bayesInference.ask(X,
 					new AssignmentProposition[0], bayesNet))
-					.iterateDistribution(di);
+					.iterateOverTable(di);
 
 			d = ud;
 		} else {
