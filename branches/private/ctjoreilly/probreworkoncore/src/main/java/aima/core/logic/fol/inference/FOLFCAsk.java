@@ -48,9 +48,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * step from the implication sentences and the atomic sentences already in KB. The function
  * STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have
  * not been used before.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

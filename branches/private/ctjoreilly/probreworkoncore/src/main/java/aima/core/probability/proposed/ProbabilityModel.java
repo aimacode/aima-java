@@ -23,6 +23,9 @@ import aima.core.probability.proposed.proposition.Proposition;
 // TODO - Consider adding an iterate capability for CategoricalDistributions
 //        to ProbUtil, will avoid needing to cast to a ProbabilityTable
 //        in the FiniteBayesModel implementation.
+// TODO - look into performance of following two tests, as appear to be taking an unrealistic amount of time:
+//        FiniteBayesModelTest.test_RollingPairFairDiceModel() and test_ToothacheCavityCatchWeatherModel().
+//        Note: Appears to be the EnumerationAsk algorithm.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 
@@ -38,7 +41,6 @@ import aima.core.probability.proposed.proposition.Proposition;
 // is eliminating whichever node creates the factor with the least variables, keeping 
 // the connectivity low and therefore things more efficient.
 // TODO - also consider removal of leaf nodes as described on pg. 528.
-// TODO - clustering described on pg. 529.
 //
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>

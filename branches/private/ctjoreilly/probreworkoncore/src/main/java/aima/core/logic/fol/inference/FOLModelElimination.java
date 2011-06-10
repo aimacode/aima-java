@@ -34,12 +34,9 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Based on lecture notes from:
- * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf
+ * Based on lecture notes from:<br>
+ * <a href="http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf">http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf</a>
  * 
- */
-
-/**
  * @author Ciaran O'Reilly
  * 
  */

@@ -16,11 +16,11 @@ import aima.core.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 354.<br>
  * Demodulation: For any terms x, y, and z, where z appears somewhere in literal m<sub>i</sub>
- * and where UNIFY(x,z) = theta:<br>
+ * and where UNIFY(x,z) = &theta;:<br>
  * <pre>
- *                 x=y,    m1 OR ... OR m<sub>n</sub>[z]
+ *                 x=y,    m<sub>1</sub> OR ... OR m<sub>n</sub>[z]
  *     ------------------------------------------------------------
- *     SUB(SUBST(theta,x), SUBST(theta,y), m1 OR ... m<sub>n</sub>)
+ *     SUB(SUBST(&theta;,x), SUBST(&theta;,y), m<sub>1</sub> OR ... OR m<sub>n</sub>)
  * </pre>
  * where SUBST is the usual substitution of a binding list, and SUB(x,y,m) means to
  * replace x with y everywhere that x occurs within m.<br>
@@ -29,9 +29,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf<br>
  * 1. Unit Equations Only.<br>
  * 2. Variables substituted in Equation Only.<br>
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

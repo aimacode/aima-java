@@ -4,7 +4,18 @@ import java.util.Map;
 
 import aima.core.probability.proposed.RandomVariable;
 
-// TODO - page 489 (13.4)
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): Formula 13.4, page
+ * 489.<br>
+ * <br>
+ * 
+ * We can also derive the well-known formula for the probability of a disjunction,
+ * sometimes called the <b>inclusion-exclusion principle:</b><br>
+ * <br>
+ * P(a OR b) = P(a) + P(b) - P(a AND b).<br>
+ * 
+ * @author Ciaran O'Reilly
+ */
 public class DisjunctiveProposition extends AbstractProposition implements
 		BinarySentenceProposition {
 

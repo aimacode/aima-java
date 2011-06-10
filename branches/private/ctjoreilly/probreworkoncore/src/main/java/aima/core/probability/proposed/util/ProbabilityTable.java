@@ -29,6 +29,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	//
 	private Map<RandomVariable, RVInfo> randomVarInfo = new LinkedHashMap<RandomVariable, RVInfo>();
 	private int[] radixs = null;
+	private MixedRadixNumber queryMRN = null;
 	//
 	private String toString = null;
 	private double sum = -1;
@@ -94,6 +95,10 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		System.arraycopy(vals, 0, values, 0, vals.length);
 
 		radixs = createRadixs(randomVarInfo);
+		
+		if (radixs.length > 0) {
+			queryMRN = new MixedRadixNumber(0, radixs);
+		}
 	}
 
 	//
@@ -110,19 +115,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	@Override
 	public double getValue(Object... assignments) {
-		if (assignments.length != randomVarInfo.size()) {
-			throw new IllegalArgumentException(
-					"Assignments passed in is not the same size as variables making up probability table.");
-		}
-		int[] radixValues = new int[assignments.length];
-		int offset = 0;
-		for (RVInfo rvInfo : randomVarInfo.values()) {
-			radixValues[rvInfo.getRadixIdx()] = rvInfo
-					.getIdxForDomain(assignments[offset]);
-			offset++;
-		}
-		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
-		return values[mrn.intValue()];
+		return values[getIndex(assignments)];
 	}
 
 	@Override
@@ -142,8 +135,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			radixValues[rvInfo.getRadixIdx()] = rvInfo.getIdxForDomain(ap
 					.getValue());
 		}
-		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
-		return values[mrn.intValue()];
+		return values[(int)queryMRN.getCurrentValueFor(radixValues)];
 	}
 
 	// END-ProbabilityDistribution
@@ -198,8 +190,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			i++;
 		}
 
-		MixedRadixNumber mrn = new MixedRadixNumber(radixValues, radixs);
-		return mrn.intValue();
+		return (int) queryMRN.getCurrentValueFor(radixValues);
 	}
 
 	@Override

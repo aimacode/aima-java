@@ -27,6 +27,9 @@ import aima.core.probability.proposed.RandomVariable;
  * The topology of the network - the set of nodes and links - specifies the
  * conditional independence relationships that hold in the domain.<br>
  * <br>
+ * A network with both discrete and continuous variables is called a <b>hybrid
+ * Bayesian network</b>.<br> 
+ * <br>
  * <b>Note(1)</b>: "Bayesian Network" is the most common name used, but there
  * are many synonyms, including "belief network", "probabilistic network",
  * "causal network", and "knowledge map".

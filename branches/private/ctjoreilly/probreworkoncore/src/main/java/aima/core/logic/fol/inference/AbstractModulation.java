@@ -22,9 +22,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Abstract base class for Demodulation and Paramodulation algorithms. 
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */
