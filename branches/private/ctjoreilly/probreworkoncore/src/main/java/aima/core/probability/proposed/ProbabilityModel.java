@@ -25,7 +25,6 @@ import aima.core.probability.proposed.proposition.Proposition;
 //        in the FiniteBayesModel implementation.
 // TODO - look into performance of following two tests, as appear to be taking an unrealistic amount of time:
 //        FiniteBayesModelTest.test_RollingPairFairDiceModel() and test_ToothacheCavityCatchWeatherModel().
-//        Note: Appears to be the EnumerationAsk algorithm.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 
@@ -36,11 +35,6 @@ import aima.core.probability.proposed.proposition.Proposition;
 // you obtain after, say, doing variable elimination on a larger Bayesian network. 
 // It would make the step Distribution product = pointwiseProduct(factors) 
 // in Elimination-Ask unnecessary; you would simply return those factors as a BN.
-// 
-// You eliminate nodes in topological order, but I think a far more efficient heuristic 
-// is eliminating whichever node creates the factor with the least variables, keeping 
-// the connectivity low and therefore things more efficient.
-// TODO - also consider removal of leaf nodes as described on pg. 528.
 //
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 484.<br>

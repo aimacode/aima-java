@@ -68,12 +68,14 @@ public class EliminationAsk implements BayesInference {
 	public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
 			final AssignmentProposition[] e, final BayesianNetwork bn) {
 
-		Set<RandomVariable> hidden = calculateHiddenVariables(X, e, bn);
+		Set<RandomVariable> hidden = new HashSet<RandomVariable>();
+		List<RandomVariable> VARS = new ArrayList<RandomVariable>();
+		calculateVariables(X, e, bn, hidden, VARS);
 
 		// factors <- []
 		List<Factor> factors = new ArrayList<Factor>();
 		// for each var in ORDER(bn.VARS) do
-		for (RandomVariable var : order(bn.getVariablesInTopologicalOrder())) {
+		for (RandomVariable var : order(bn, VARS)) {
 			// factors <- [MAKE-FACTOR(var, e) | factors]
 			factors.add(0, makeFactor(var, e, bn));
 			// if var is hidden variable then factors <- SUM-OUT(var, factors)
@@ -101,13 +103,43 @@ public class EliminationAsk implements BayesInference {
 	//
 
 	//
-	// PRIVATE METHODS
+	// PROTECTED METHODS
 	//
-	private Set<RandomVariable> calculateHiddenVariables(
-			final RandomVariable[] X, final AssignmentProposition[] e,
-			final BayesianNetwork bn) {
-		Set<RandomVariable> hidden = new HashSet<RandomVariable>(bn
-				.getVariablesInTopologicalOrder());
+	/**
+	 * <b>Note:</b>Override this method for a more efficient implementation as
+	 * outlined in AIMA3e pgs. 527-28. Calculate the hidden variables from the
+	 * Bayesian Network. The default implementation does not perform any of
+	 * these.<br>
+	 * <br>
+	 * Two calcuations to be performed here in order to optimize iteration over
+	 * the Bayesian Network:<br>
+	 * 1. Calculate the hidden variables to be enumerated over. An optimization
+	 * (AIMA3e pg. 528) is to remove 'every variable that is not an ancestor of
+	 * a query variable or evidence variable as it is irrelevant to the query'
+	 * (i.e. sums to 1). 2. The subset of variables from the Bayesian Network to
+	 * be retained after irrelevant hidden variables have been removed.
+	 * 
+	 * @param X
+	 *            the query variables.
+	 * @param e
+	 *            observed values for variables E.
+	 * @param bn
+	 *            a Bayes net with variables {X} &cup; E &cup; Y /* Y = hidden
+	 *            variables //
+	 * @param hidden
+	 *            to be populated with the relevant hidden variables Y.
+	 * @param bnVARs
+	 *            to be populated with the subset of the random variables
+	 *            comprising the Bayesian Network with any irrelevant hidden
+	 *            variables removed.
+	 */
+	protected void calculateVariables(final RandomVariable[] X,
+			final AssignmentProposition[] e, final BayesianNetwork bn,
+			Set<RandomVariable> hidden, Collection<RandomVariable> bnVARS) {
+
+		bnVARS.addAll(bn.getVariablesInTopologicalOrder());
+		hidden.addAll(bnVARS);
+
 		for (RandomVariable x : X) {
 			hidden.remove(x);
 		}
@@ -115,10 +147,29 @@ public class EliminationAsk implements BayesInference {
 			hidden.removeAll(ap.getScope());
 		}
 
-		return hidden;
+		return;
 	}
 
-	private List<RandomVariable> order(Collection<RandomVariable> vars) {
+	/**
+	 * <b>Note:</b>Override this method for a more efficient implementation as
+	 * outlined in AIMA3e pgs. 527-28. The default implementation does not
+	 * perform any of these.<br>
+	 * 
+	 * @param bn
+	 *            the Bayesian Network over which the query is being made. Note,
+	 *            is necessary to provide this in order to be able to determine
+	 *            the dependencies between variables.
+	 * @param vars
+	 *            a subset of the RandomVariables making up the Bayesian
+	 *            Network, with any irrelevant hidden variables alreay removed.
+	 * @return a possibly opimal ordering for the random variables to be
+	 *         iterated over by the algorithm. For example, one fairly effective
+	 *         ordering is a greedy one: eliminate whichever variable minimizes
+	 *         the size of the next factor to be constructed.
+	 */
+	protected List<RandomVariable> order(BayesianNetwork bn,
+			Collection<RandomVariable> vars) {
+		// Note: Trivial Approach:
 		// For simplicity just return in the reverse order received,
 		// i.e. received will be the default topological order for
 		// the Bayesian Network and we want to ensure the network
@@ -131,6 +182,9 @@ public class EliminationAsk implements BayesInference {
 		return order;
 	}
 
+	//
+	// PRIVATE METHODS
+	//
 	private Factor makeFactor(RandomVariable var, AssignmentProposition[] e,
 			BayesianNetwork bn) {
 
@@ -170,7 +224,7 @@ public class EliminationAsk implements BayesInference {
 		return summedOutFactors;
 	}
 
-	public Factor pointwiseProduct(List<Factor> factors) {
+	private Factor pointwiseProduct(List<Factor> factors) {
 
 		Factor product = factors.get(0);
 		for (int i = 1; i < factors.size(); i++) {
