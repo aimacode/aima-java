@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.probability.RandomVariable;
-import aima.core.probability.Randomizer;
+import aima.core.util.Randomizer;
 
 /**
  * @author Ravi Mohan

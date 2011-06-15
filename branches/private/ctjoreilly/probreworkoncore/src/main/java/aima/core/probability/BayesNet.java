@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import aima.core.util.JavaRandomizer;
+import aima.core.util.Randomizer;
 import aima.core.util.Util;
 
 /**

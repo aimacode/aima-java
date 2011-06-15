@@ -1,6 +1,7 @@
 package aima.core.probability.proposed.bayes.impl;
 
 import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.bayes.ConditionalProbabilityDistribution;
 import aima.core.probability.proposed.bayes.ConditionalProbabilityTable;
 import aima.core.probability.proposed.bayes.FiniteNode;
 import aima.core.probability.proposed.bayes.Node;
@@ -31,6 +32,16 @@ public class FullCPTNode extends AbstractNode implements FiniteNode {
 
 		cpt = new CPT(var, values, conditionedOn);
 	}
+
+	//
+	// START-Node
+	@Override
+	public ConditionalProbabilityDistribution getCPD() {
+		return getCPT();
+	}
+
+	// END-Node
+	//
 
 	//
 	// START-FiniteNode

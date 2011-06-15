@@ -7,6 +7,7 @@ import java.util.List;
 import aima.core.probability.reasoning.HiddenMarkovModel;
 import aima.core.probability.reasoning.Particle;
 import aima.core.probability.reasoning.ParticleSet;
+import aima.core.util.Randomizer;
 import aima.core.util.Util;
 import aima.core.util.math.Matrix;
 

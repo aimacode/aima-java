@@ -54,4 +54,11 @@ public interface Node {
 	 * @return this Node's Markov Blanket.
 	 */
 	Set<Node> getMarkovBlanket();
+
+	/**
+	 * 
+	 * @return the Conditional Probability Distribution associated with this
+	 *         Node.
+	 */
+	ConditionalProbabilityDistribution getCPD();
 }

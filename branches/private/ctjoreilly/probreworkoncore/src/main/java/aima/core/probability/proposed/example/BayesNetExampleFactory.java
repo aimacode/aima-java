@@ -153,4 +153,51 @@ public class BayesNetExampleFactory {
 
 		return new BayesNet(burglary, earthquake);
 	}
+
+	public static BayesianNetwork constructCloudySprinklerRainWetGrassNetwork() {
+		FiniteNode cloudy = new FullCPTNode(ExampleRV.CLOUDY_RV, new double[] {
+				0.5, 0.5 });
+		@SuppressWarnings("unused")
+		FiniteNode sprinkler = new FullCPTNode(ExampleRV.SPRINKLER_RV,
+				new double[] {
+				// Cloudy=true, Sprinkler=true
+						0.1,
+						// Cloudy=true, Sprinkler=false
+						0.9,
+						// Cloudy=false, Sprinkler=true
+						0.5,
+						// Cloudy=false, Sprinkler=false
+						0.5 }, cloudy);
+		@SuppressWarnings("unused")
+		FiniteNode rain = new FullCPTNode(ExampleRV.RAIN_RV, new double[] {
+		// Cloudy=true, Rain=true
+				0.8,
+				// Cloudy=true, Rain=false
+				0.2,
+				// Cloudy=false, Rain=true
+				0.2,
+				// Cloudy=false, Rain=false
+				0.8 }, cloudy);
+		@SuppressWarnings("unused")
+		FiniteNode wetGrass = new FullCPTNode(ExampleRV.WET_GRASS_RV,
+				new double[] {
+				// Sprinkler=true, Rain=true, WetGrass=true
+						.99,
+						// Sprinkler=true, Rain=true, WetGrass=false
+						.01,
+						// Sprinkler=true, Rain=false, WetGrass=true
+						.9,
+						// Sprinkler=true, Rain=false, WetGrass=false
+						.1,
+						// Sprinkler=false, Rain=true, WetGrass=true
+						.9,
+						// Sprinkler=false, Rain=true, WetGrass=false
+						.1,
+						// Sprinkler=false, Rain=false, WetGrass=true
+						0.0,
+						// Sprinkler=false, Rain=false, WetGrass=false
+						1.0 }, sprinkler, rain);
+
+		return new BayesNet(cloudy);
+	}
 }

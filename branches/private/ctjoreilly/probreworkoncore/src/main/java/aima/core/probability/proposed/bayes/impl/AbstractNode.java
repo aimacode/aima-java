@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.bayes.ConditionalProbabilityDistribution;
 import aima.core.probability.proposed.bayes.Node;
 
 /**
@@ -75,6 +76,8 @@ public abstract class AbstractNode implements Node {
 
 		return mb;
 	}
+
+	public abstract ConditionalProbabilityDistribution getCPD();
 
 	// END-Node
 	//

@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.probability.Randomizer;
 import aima.core.probability.decision.MDP;
 import aima.core.probability.decision.MDPPerception;
 import aima.core.probability.decision.MDPRewardFunction;
 import aima.core.probability.decision.MDPSource;
 import aima.core.probability.decision.MDPTransitionModel;
+import aima.core.util.Randomizer;
 import aima.core.util.datastructure.Pair;
 
 /**

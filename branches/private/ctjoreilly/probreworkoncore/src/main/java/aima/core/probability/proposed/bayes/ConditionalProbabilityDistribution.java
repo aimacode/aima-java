@@ -106,4 +106,38 @@ public interface ConditionalProbabilityDistribution {
 	 */
 	ProbabilityDistribution getConditioningCase(
 			AssignmentProposition... parentValues);
+
+	/**
+	 * Retrieve a specific example for the Random Variable this conditional
+	 * distribution is on.
+	 * 
+	 * @param probabilityChoice
+	 *            a double value, from the range [0.0d, 1.0d), i.e. 0.0d
+	 *            (inclusive) to 1.0d (exclusive).
+	 * @param parentValues
+	 *            for the conditioning case. The ordering and size of
+	 *            parentValues must equal getParents() and their domains must
+	 *            match.
+	 * @return a sample value from the domain of the Random Variable this
+	 *         distribution is on, based on the probability argument passed in.
+	 * @see ConditionalProbabilityDistribution#getOn()
+	 */
+	Object getSample(double probabilityChoice, Object... parentValues);
+
+	/**
+	 * Retrieve a specific example for the Random Variable this conditional
+	 * distribution is on.
+	 * 
+	 * @param probabilityChoice
+	 *            a double value, from the range [0.0d, 1.0d), i.e. 0.0d
+	 *            (inclusive) to 1.0d (exclusive).
+	 * @param parentValues
+	 *            for the conditioning case. The size of parentValues must equal
+	 *            getParents() and their Random Variables must match.
+	 * @return a sample value from the domain of the Random Variable this
+	 *         distribution is on, based on the probability argument passed in.
+	 * @see ConditionalProbabilityDistribution#getOn()
+	 */
+	Object getSample(double probabilityChoice,
+			AssignmentProposition... parentValues);
 }

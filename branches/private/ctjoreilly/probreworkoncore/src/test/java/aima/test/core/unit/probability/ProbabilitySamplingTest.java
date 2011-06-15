@@ -9,6 +9,7 @@ import aima.core.probability.BayesNet;
 import aima.core.probability.BayesNetNode;
 import aima.core.probability.EnumerationAsk;
 import aima.core.probability.Query;
+import aima.core.util.MockRandomizer;
 
 /**
  * @author Ravi Mohan

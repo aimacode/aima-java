@@ -82,6 +82,17 @@ public class CPT implements ConditionalProbabilityTable {
 		return table.getValue(eventValues);
 	}
 
+	@Override
+	public Object getSample(double probabilityChoice, Object... parentValues) {
+		return sample(probabilityChoice, getConditioningCase(parentValues));
+	}
+
+	@Override
+	public Object getSample(double probabilityChoice,
+			AssignmentProposition... parentValues) {
+		return sample(probabilityChoice, getConditioningCase(parentValues));
+	}
+
 	// END-ConditionalProbabilityDistribution
 	//
 
@@ -203,5 +214,19 @@ public class CPT implements ConditionalProbabilityTable {
 		};
 
 		table.iterateOverTable(di);
+	}
+
+	private Object sample(double probabilityChoice,
+			CategoricalDistribution conditionedCase) {
+		double[] distribution = conditionedCase.getValues();
+		List<Object> domainValues = new ArrayList<Object>(((FiniteDomain) on
+				.getDomain()).getPossibleValues());
+		int i = 0;
+		double total = distribution[0];
+		while (probabilityChoice > total) {
+			i++;
+			total += distribution[i];
+		}
+		return domainValues.get(i);
 	}
 }

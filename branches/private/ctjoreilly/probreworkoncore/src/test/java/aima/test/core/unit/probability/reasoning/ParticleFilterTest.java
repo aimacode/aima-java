@@ -5,14 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.probability.RandomVariable;
-import aima.core.probability.Randomizer;
 import aima.core.probability.reasoning.HMMFactory;
 import aima.core.probability.reasoning.HiddenMarkovModel;
 import aima.core.probability.reasoning.HmmConstants;
 import aima.core.probability.reasoning.Particle;
 import aima.core.probability.reasoning.ParticleSet;
 import aima.core.probability.reasoning.TransitionModel;
-import aima.test.core.unit.probability.MockRandomizer;
+import aima.core.util.MockRandomizer;
+import aima.core.util.Randomizer;
 
 /**
  * @author Ravi Mohan
