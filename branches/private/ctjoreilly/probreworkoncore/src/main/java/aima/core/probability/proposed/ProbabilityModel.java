@@ -5,7 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 14.5)
+// TODO - On AIMA (on 14.5.2)
 // 
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
 //        = P(MaryCalls | Alarm), will require a sub distribution mechanism

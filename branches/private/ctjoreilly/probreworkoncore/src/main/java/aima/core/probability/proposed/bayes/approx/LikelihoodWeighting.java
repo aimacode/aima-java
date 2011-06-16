@@ -80,7 +80,7 @@ public class LikelihoodWeighting {
 	 *            the total number of samples to be generated
 	 * @return an estimate of <b>P</b>(X|e)
 	 */
-	public CategoricalDistribution rejectionSampling(RandomVariable X,
+	public CategoricalDistribution likelihoodWeighting(RandomVariable X,
 			AssignmentProposition[] e, BayesianNetwork bn, int N) {
 		// local variables: W, a vector of weighted counts for each value of X,
 		// initially zero
@@ -153,8 +153,7 @@ public class LikelihoodWeighting {
 			values[idx] = x.get(pn.getRandomVariable());
 			idx++;
 		}
-
-		values[values.length - 1] = x.get(Xi.getRandomVariable());
+		values[idx] = x.get(Xi.getRandomVariable());
 		return values;
 	}
 }
