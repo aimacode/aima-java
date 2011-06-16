@@ -1,8 +1,7 @@
-package aima.core.util;
+package aima.core.util.datastructure;
 
 import java.util.HashMap;
 
-import aima.core.util.datastructure.Pair;
 
 /**
  * Provides a hash map which is indexed by two keys. In fact this is

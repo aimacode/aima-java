@@ -9,7 +9,7 @@ import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.util.TwoKeyHashMap;
+import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
  * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page 152.<br>

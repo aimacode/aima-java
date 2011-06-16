@@ -559,19 +559,12 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	private class RVInfo {
 		private RandomVariable variable;
-		private Map<Integer, Object> idxDomainMap = new HashMap<Integer, Object>();
-		private Map<Object, Integer> domainIdxMap = new HashMap<Object, Integer>();
+		private FiniteDomain varDomain;
 		private int radixIdx = 0;
 
 		public RVInfo(RandomVariable rv) {
 			variable = rv;
-			int idx = 0;
-			for (Object pv : ((FiniteDomain) variable.getDomain())
-					.getPossibleValues()) {
-				domainIdxMap.put(pv, idx);
-				idxDomainMap.put(idx, pv);
-				idx++;
-			}
+			varDomain = (FiniteDomain) variable.getDomain();
 		}
 
 		public RandomVariable getVariable() {
@@ -579,15 +572,15 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		}
 
 		public int getDomainSize() {
-			return domainIdxMap.size();
+			return varDomain.size();
 		}
 
 		public int getIdxForDomain(Object value) {
-			return domainIdxMap.get(value);
+			return varDomain.getOffset(value);
 		}
 
 		public Object getDomainValueAt(int idx) {
-			return idxDomainMap.get(idx);
+			return varDomain.getValueAt(idx);
 		}
 
 		public void setRadixIdx(int idx) {

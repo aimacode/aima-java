@@ -16,6 +16,8 @@ public class FiniteIntegerDomain extends AbstractFiniteDomain {
 		}
 		// Ensure cannot be modified
 		possibleValues = Collections.unmodifiableSet(possibleValues);
+
+		indexPossibleValues(possibleValues);
 	}
 
 	// 

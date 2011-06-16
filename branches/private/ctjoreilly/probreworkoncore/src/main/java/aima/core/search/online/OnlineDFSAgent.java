@@ -10,8 +10,8 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.util.TwoKeyHashMap;
 import aima.core.util.datastructure.Pair;
+import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page 150.

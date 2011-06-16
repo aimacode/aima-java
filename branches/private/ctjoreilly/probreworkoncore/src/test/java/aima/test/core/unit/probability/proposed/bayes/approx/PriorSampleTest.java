@@ -21,6 +21,7 @@ public class PriorSampleTest {
 
 	@Test
 	public void testPriorSample_basic() {
+		// AIMA3e pg. 530
 		BayesianNetwork bn = BayesNetExampleFactory
 				.constructCloudySprinklerRainWetGrassNetwork();
 		MockRandomizer r = new MockRandomizer(

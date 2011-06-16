@@ -1203,6 +1203,7 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 *            the input stream.
 	 */
 
+	@SuppressWarnings("unchecked")
 	public static Matrix read(BufferedReader input) throws java.io.IOException {
 		StreamTokenizer tokenizer = new StreamTokenizer(input);
 

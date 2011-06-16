@@ -24,7 +24,7 @@ public class BooleanDomain extends AbstractFiniteDomain {
 	}
 
 	public BooleanDomain() {
-
+		indexPossibleValues(_possibleValues);
 	}
 
 	//
