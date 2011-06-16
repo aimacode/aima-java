@@ -157,7 +157,6 @@ public class BayesNetExampleFactory {
 	public static BayesianNetwork constructCloudySprinklerRainWetGrassNetwork() {
 		FiniteNode cloudy = new FullCPTNode(ExampleRV.CLOUDY_RV, new double[] {
 				0.5, 0.5 });
-		@SuppressWarnings("unused")
 		FiniteNode sprinkler = new FullCPTNode(ExampleRV.SPRINKLER_RV,
 				new double[] {
 				// Cloudy=true, Sprinkler=true
@@ -168,7 +167,6 @@ public class BayesNetExampleFactory {
 						0.5,
 						// Cloudy=false, Sprinkler=false
 						0.5 }, cloudy);
-		@SuppressWarnings("unused")
 		FiniteNode rain = new FullCPTNode(ExampleRV.RAIN_RV, new double[] {
 		// Cloudy=true, Rain=true
 				0.8,

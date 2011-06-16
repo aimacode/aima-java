@@ -1,9 +1,13 @@
 package aima.core.probability.proposed.util;
 
+import java.util.Map;
+
 import aima.core.probability.proposed.RandomVariable;
+import aima.core.probability.proposed.bayes.Node;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.proposition.Proposition;
+import aima.core.util.Randomizer;
 
 public class ProbUtil {
 
@@ -92,6 +96,29 @@ public class ProbUtil {
 	 */
 	public static Proposition constructConjunction(Proposition[] props) {
 		return constructConjunction(props, 0);
+	}
+
+	/**
+	 * Get a random sample from <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
+	 * 
+	 * @param Xi
+	 *            a Node from a Bayesian network for the Random Variable
+	 *            X<sub>i</sub>.
+	 * @param event
+	 *            comprising assignments for parents(X<sub>i</sub>)
+	 * @return a random sample from <b>P</b>(X<sub>i</sub> |
+	 *         parents(X<sub>i</sub>))
+	 */
+	public static Object randomSample(Node Xi,
+			Map<RandomVariable, Object> event, Randomizer r) {
+		Object[] parentValues = new Object[Xi.getParents().size()];
+		int i = 0;
+		for (Node pn : Xi.getParents()) {
+			parentValues[i] = event.get(pn.getRandomVariable());
+			i++;
+		}
+
+		return Xi.getCPD().getSample(r.nextDouble(), parentValues);
 	}
 
 	//

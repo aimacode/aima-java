@@ -1,12 +1,9 @@
 package aima.test.core.unit.probability.proposed.bayes.approx;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.proposed.ProbabilityModel;
-import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.approx.PriorSample;
 import aima.core.probability.proposed.bayes.approx.RejectionSampling;

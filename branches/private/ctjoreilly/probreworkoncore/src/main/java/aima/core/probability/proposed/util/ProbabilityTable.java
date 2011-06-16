@@ -1,7 +1,6 @@
 package aima.core.probability.proposed.util;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -95,7 +94,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		System.arraycopy(vals, 0, values, 0, vals.length);
 
 		radixs = createRadixs(randomVarInfo);
-		
+
 		if (radixs.length > 0) {
 			queryMRN = new MixedRadixNumber(0, radixs);
 		}
@@ -135,7 +134,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			radixValues[rvInfo.getRadixIdx()] = rvInfo.getIdxForDomain(ap
 					.getValue());
 		}
-		return values[(int)queryMRN.getCurrentValueFor(radixValues)];
+		return values[(int) queryMRN.getCurrentValueFor(radixValues)];
 	}
 
 	// END-ProbabilityDistribution

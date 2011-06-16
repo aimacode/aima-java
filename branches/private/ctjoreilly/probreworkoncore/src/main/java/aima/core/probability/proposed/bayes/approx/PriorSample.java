@@ -2,10 +2,11 @@ package aima.core.probability.proposed.bayes.approx;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
-import aima.core.probability.proposed.bayes.Node;
+import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.util.JavaRandomizer;
 import aima.core.util.Randomizer;
 
@@ -35,7 +36,7 @@ public class PriorSample {
 	private Randomizer randomizer = null;
 
 	public PriorSample() {
-		this(new JavaRandomizer());
+		this(new JavaRandomizer(new Random()));
 	}
 
 	public PriorSample(Randomizer r) {
@@ -62,25 +63,9 @@ public class PriorSample {
 		for (RandomVariable Xi : bn.getVariablesInTopologicalOrder()) {
 			// x[i] <- a random sample from
 			// <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
-			x.put(Xi, randomSample(Xi, x, bn));
+			x.put(Xi, ProbUtil.randomSample(bn.getNode(Xi), x, randomizer));
 		}
 		// return x
 		return x;
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-	private Object randomSample(RandomVariable Xi,
-			Map<RandomVariable, Object> eventx, BayesianNetwork bn) {
-		Node n = bn.getNode(Xi);
-		Object[] parentValues = new Object[n.getParents().size()];
-		int i = 0;
-		for (Node pn : n.getParents()) {
-			parentValues[i] = eventx.get(pn.getRandomVariable());
-			i++;
-		}
-
-		return n.getCPD().getSample(randomizer.nextDouble(), parentValues);
 	}
 }

@@ -46,6 +46,8 @@ public class RejectionSampling {
 		this.ps = ps;
 	}
 
+	// function REJECTION-SAMPLING(X, e, bn, N) returns an estimate of
+	// <b>P</b>(X|e)
 	/**
 	 * The REJECTION-SAMPLING algorithm in Figure 14.14. For answering queries
 	 * given evidence in a Bayesian Network.
