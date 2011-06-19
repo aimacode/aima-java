@@ -36,12 +36,15 @@ import aima.core.util.Randomizer;
  * 
  * Figure 14.16 The Gibbs sampling algorithm for approximate inference in
  * Bayesian networks; this version cycles through the variables, but choosing
- * variables at random also works.
+ * variables at random also works.<br>
+ * <br>
+ * <b>Note:</b> The implementation has been extended to handle queries with
+ * multiple variables. <br>
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public class GibbsAsk {
+public class GibbsAsk implements BayesSampleInference {
 	private Randomizer randomizer = null;
 
 	public GibbsAsk() {
@@ -58,7 +61,7 @@ public class GibbsAsk {
 	 * evidence in a Bayesian Network.
 	 * 
 	 * @param X
-	 *            the query variable
+	 *            the query variables
 	 * @param e
 	 *            observed values for variables E
 	 * @param bn
@@ -68,11 +71,12 @@ public class GibbsAsk {
 	 *            the total number of samples to be generated
 	 * @return an estimate of <b>P</b>(X|e)
 	 */
-	public CategoricalDistribution gibbsAsk(RandomVariable X,
+	public CategoricalDistribution gibbsAsk(RandomVariable[] X,
 			AssignmentProposition[] e, BayesianNetwork bn, int Nsamples) {
 		// local variables: <b>N</b>, a vector of counts for each value of X,
 		// initially zero
-		double[] N = new double[X.getDomain().size()];
+		double[] N = new double[ProbUtil
+				.expectedSizeOfCategoricalDistribution(X)];
 		// Z, the nonevidence variables in bn
 		Set<RandomVariable> Z = new LinkedHashSet<RandomVariable>(
 				bn.getVariablesInTopologicalOrder());
@@ -100,12 +104,26 @@ public class GibbsAsk {
 						ProbUtil.mbRandomSample(bn.getNode(Zi), x, randomizer));
 				// <b>N</b>[x] <- <b>N</b>[x] + 1
 				// where x is the value of X in <b>x</b>
-				N[indexOf(X, x)] += 1.0;
+				for (int i = 0; i < X.length; i++) {
+					N[indexOf(X[i], x)] += 1.0;
+				}
 			}
 		}
 		// return NORMALIZE(<b>N</b>)
 		return new ProbabilityTable(N, X).normalize();
 	}
+
+	//
+	// START-BayesSampleInference
+	@Override
+	public CategoricalDistribution ask(final RandomVariable[] X,
+			final AssignmentProposition[] observedEvidence,
+			final BayesianNetwork bn, int N) {
+		return gibbsAsk(X, observedEvidence, bn, N);
+	}
+
+	// END-BayesSampleInference
+	//
 
 	//
 	// PRIVATE METHODS

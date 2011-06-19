@@ -7,6 +7,7 @@ import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
+import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
@@ -29,12 +30,15 @@ import aima.core.probability.proposed.util.ProbabilityTable;
  * </pre>
  * 
  * Figure 14.14 The rejection-sampling algorithm for answering queries given
- * evidence in a Bayesian Network.
+ * evidence in a Bayesian Network.<br>
+ * <br>
+ * <b>Note:</b> The implementation has been extended to handle queries with
+ * multiple variables. <br>
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public class RejectionSampling {
+public class RejectionSampling implements BayesSampleInference {
 
 	private PriorSample ps = null;
 
@@ -53,7 +57,7 @@ public class RejectionSampling {
 	 * given evidence in a Bayesian Network.
 	 * 
 	 * @param X
-	 *            the query variable
+	 *            the query variables
 	 * @param e
 	 *            observed values for variables E
 	 * @param bn
@@ -62,11 +66,12 @@ public class RejectionSampling {
 	 *            the total number of samples to be generated
 	 * @return an estimate of <b>P</b>(X|e)
 	 */
-	public CategoricalDistribution rejectionSampling(RandomVariable X,
+	public CategoricalDistribution rejectionSampling(RandomVariable[] X,
 			AssignmentProposition[] e, BayesianNetwork bn, int Nsamples) {
 		// local variables: <b>N</b>, a vector of counts for each value of X,
 		// initially zero
-		double[] N = new double[X.getDomain().size()];
+		double[] N = new double[ProbUtil
+				.expectedSizeOfCategoricalDistribution(X)];
 
 		// for j = 1 to N do
 		for (int j = 0; j < Nsamples; j++) {
@@ -76,12 +81,26 @@ public class RejectionSampling {
 			if (isConsistent(x, e)) {
 				// <b>N</b>[x] <- <b>N</b>[x] + 1
 				// where x is the value of X in <b>x</b>
-				N[indexOf(X, x)] += 1.0;
+				for (int i = 0; i < X.length; i++) {
+					N[indexOf(X[i], x)] += 1.0;
+				}
 			}
 		}
 		// return NORMALIZE(<b>N</b>)
 		return new ProbabilityTable(N, X).normalize();
 	}
+
+	//
+	// START-BayesSampleInference
+	@Override
+	public CategoricalDistribution ask(final RandomVariable[] X,
+			final AssignmentProposition[] observedEvidence,
+			final BayesianNetwork bn, int N) {
+		return rejectionSampling(X, observedEvidence, bn, N);
+	}
+
+	// END-BayesSampleInference
+	//
 
 	//
 	// PRIVATE METHODS

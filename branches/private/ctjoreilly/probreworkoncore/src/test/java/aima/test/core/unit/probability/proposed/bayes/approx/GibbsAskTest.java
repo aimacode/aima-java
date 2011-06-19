@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.proposed.ProbabilityModel;
+import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.approx.GibbsAsk;
 import aima.core.probability.proposed.example.BayesNetExampleFactory;
@@ -30,7 +31,8 @@ public class GibbsAskTest {
 
 		GibbsAsk ga = new GibbsAsk(r);
 
-		double[] estimate = ga.gibbsAsk(ExampleRV.RAIN_RV, e, bn, 1)
+		double[] estimate = ga.gibbsAsk(
+				new RandomVariable[] {ExampleRV.RAIN_RV}, e, bn, 1)
 				.getValues();
 
 		Assert.assertArrayEquals(new double[] { 0.3333333333333333,

@@ -46,12 +46,15 @@ import aima.core.util.datastructure.Pair;
  * networks. In WEIGHTED-SAMPLE, each nonevidence variable is sampled according
  * to the conditional distribution given the values already sampled for the
  * variable's parents, while a weight is accumulated based on the likelihood for
- * each evidence variable.
+ * each evidence variable.<br>
+ * <br>
+ * <b>Note:</b> The implementation has been extended to handle queries with
+ * multiple variables. <br>
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public class LikelihoodWeighting {
+public class LikelihoodWeighting implements BayesSampleInference {
 	private Randomizer randomizer = null;
 
 	public LikelihoodWeighting() {
@@ -69,7 +72,7 @@ public class LikelihoodWeighting {
 	 * given evidence in a Bayesian Network.
 	 * 
 	 * @param X
-	 *            the query variable
+	 *            the query variables
 	 * @param e
 	 *            observed values for variables E
 	 * @param bn
@@ -79,11 +82,12 @@ public class LikelihoodWeighting {
 	 *            the total number of samples to be generated
 	 * @return an estimate of <b>P</b>(X|e)
 	 */
-	public CategoricalDistribution likelihoodWeighting(RandomVariable X,
+	public CategoricalDistribution likelihoodWeighting(RandomVariable[] X,
 			AssignmentProposition[] e, BayesianNetwork bn, int N) {
 		// local variables: W, a vector of weighted counts for each value of X,
 		// initially zero
-		double[] W = new double[X.getDomain().size()];
+		double[] W = new double[ProbUtil
+				.expectedSizeOfCategoricalDistribution(X)];
 
 		// for j = 1 to N do
 		for (int j = 0; j < N; j++) {
@@ -91,7 +95,9 @@ public class LikelihoodWeighting {
 			Pair<Map<RandomVariable, Object>, Double> x_w = weightedSample(bn,
 					e);
 			// W[x] <- W[x] + w where x is the value of X in <b>x</b>
-			W[indexOf(X, x_w.getFirst())] += x_w.getSecond();
+			for (int i = 0; i < X.length; i++) {
+				W[indexOf(X[i], x_w.getFirst())] += x_w.getSecond();
+			}
 		}
 		// return NORMALIZE(W)
 		return new ProbabilityTable(W, X).normalize();
@@ -139,6 +145,18 @@ public class LikelihoodWeighting {
 		// return <b>x</b>, w
 		return new Pair<Map<RandomVariable, Object>, Double>(x, w);
 	}
+
+	//
+	// START-BayesSampleInference
+	@Override
+	public CategoricalDistribution ask(final RandomVariable[] X,
+			final AssignmentProposition[] observedEvidence,
+			final BayesianNetwork bn, int N) {
+		return likelihoodWeighting(X, observedEvidence, bn, N);
+	}
+
+	// END-BayesSampleInference
+	//
 
 	//
 	// PRIVATE METHODS

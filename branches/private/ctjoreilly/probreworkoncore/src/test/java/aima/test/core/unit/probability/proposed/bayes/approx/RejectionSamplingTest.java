@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.proposed.ProbabilityModel;
+import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.approx.PriorSample;
 import aima.core.probability.proposed.bayes.approx.RejectionSampling;
@@ -31,7 +32,8 @@ public class RejectionSamplingTest {
 		MockRandomizer r = new MockRandomizer(new double[] { 0.1 });
 		RejectionSampling rs = new RejectionSampling(new PriorSample(r));
 
-		double[] estimate = rs.rejectionSampling(ExampleRV.RAIN_RV, e, bn, 100)
+		double[] estimate = rs.rejectionSampling(
+				new RandomVariable[] { ExampleRV.RAIN_RV }, e, bn, 100)
 				.getValues();
 
 		Assert.assertArrayEquals(new double[] { 1.0, 0.0 }, estimate,
@@ -75,7 +77,8 @@ public class RejectionSamplingTest {
 		MockRandomizer r = new MockRandomizer(ma);
 		RejectionSampling rs = new RejectionSampling(new PriorSample(r));
 
-		double[] estimate = rs.rejectionSampling(ExampleRV.RAIN_RV, e, bn, 100)
+		double[] estimate = rs.rejectionSampling(
+				new RandomVariable[] { ExampleRV.RAIN_RV }, e, bn, 100)
 				.getValues();
 
 		Assert.assertArrayEquals(new double[] { 0.2962962962962963,

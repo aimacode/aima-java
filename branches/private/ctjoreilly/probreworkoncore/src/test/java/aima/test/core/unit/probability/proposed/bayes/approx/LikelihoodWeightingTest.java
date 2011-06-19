@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.proposed.ProbabilityModel;
+import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
 import aima.core.probability.proposed.bayes.approx.LikelihoodWeighting;
 import aima.core.probability.proposed.example.BayesNetExampleFactory;
@@ -31,8 +32,9 @@ public class LikelihoodWeightingTest {
 
 		LikelihoodWeighting lw = new LikelihoodWeighting(r);
 
-		double[] estimate = lw.likelihoodWeighting(ExampleRV.RAIN_RV, e, bn,
-				1000).getValues();
+		double[] estimate = lw.likelihoodWeighting(
+				new RandomVariable[] { ExampleRV.RAIN_RV }, e, bn, 1000)
+				.getValues();
 
 		Assert.assertArrayEquals(new double[] { 1.0, 0.0 }, estimate,
 				DELTA_THRESHOLD);
@@ -53,7 +55,8 @@ public class LikelihoodWeightingTest {
 		MockRandomizer r = new MockRandomizer(new double[] { 0.5, 0.5 });
 
 		LikelihoodWeighting lw = new LikelihoodWeighting(r);
-		double[] estimate = lw.likelihoodWeighting(ExampleRV.RAIN_RV, e, bn, 1)
+		double[] estimate = lw.likelihoodWeighting(
+				new RandomVariable[] { ExampleRV.RAIN_RV }, e, bn, 1)
 				.getValues();
 
 		// Here the event [true,false,true,true] should have weight 0.45,
