@@ -11,6 +11,11 @@ import aima.core.probability.proposed.example.ExampleRV;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.util.MockRandomizer;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ */
 public class LikelihoodWeightingTest {
 
 	public static final double DELTA_THRESHOLD = ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD;

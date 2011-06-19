@@ -7,7 +7,6 @@ import java.util.Random;
 import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
-import aima.core.probability.proposed.bayes.Node;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.util.ProbUtil;
@@ -126,8 +125,11 @@ public class LikelihoodWeighting {
 			if (x.containsKey(Xi)) {
 				// then w <- w * P(X<sub>i</sub> = x<sub>i</sub> |
 				// parents(X<sub>i</sub>))
-				w *= bn.getNode(Xi).getCPD().getValue(
-						eventValues(bn.getNode(Xi), x));
+				w *= bn.getNode(Xi)
+						.getCPD()
+						.getValue(
+								ProbUtil.getEventValuesForXiGivenParents(
+										bn.getNode(Xi), x));
 			} else {
 				// else <b>x</b>[i] <- a random sample from
 				// <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
@@ -143,17 +145,5 @@ public class LikelihoodWeighting {
 	//
 	private int indexOf(RandomVariable X, Map<RandomVariable, Object> x) {
 		return ((FiniteDomain) X.getDomain()).getOffset(x.get(X));
-	}
-
-	private Object[] eventValues(Node Xi, Map<RandomVariable, Object> x) {
-		Object[] values = new Object[Xi.getParents().size() + 1];
-
-		int idx = 0;
-		for (Node pn : Xi.getParents()) {
-			values[idx] = x.get(pn.getRandomVariable());
-			idx++;
-		}
-		values[idx] = x.get(Xi.getRandomVariable());
-		return values;
 	}
 }

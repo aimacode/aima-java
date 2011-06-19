@@ -13,6 +13,7 @@ import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.ConditionalProbabilityTable;
 import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
+import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.probability.proposed.util.ProbabilityTable;
 
 /**
@@ -84,13 +85,15 @@ public class CPT implements ConditionalProbabilityTable {
 
 	@Override
 	public Object getSample(double probabilityChoice, Object... parentValues) {
-		return sample(probabilityChoice, getConditioningCase(parentValues));
+		return ProbUtil.sample(probabilityChoice, on,
+				getConditioningCase(parentValues).getValues());
 	}
 
 	@Override
 	public Object getSample(double probabilityChoice,
 			AssignmentProposition... parentValues) {
-		return sample(probabilityChoice, getConditioningCase(parentValues));
+		return ProbUtil.sample(probabilityChoice, on,
+				getConditioningCase(parentValues).getValues());
 	}
 
 	// END-ConditionalProbabilityDistribution
@@ -149,8 +152,8 @@ public class CPT implements ConditionalProbabilityTable {
 	}
 
 	public Factor getFactorFor(final AssignmentProposition... evidence) {
-		Set<RandomVariable> fofVars = new LinkedHashSet<RandomVariable>(table
-				.getFor());
+		Set<RandomVariable> fofVars = new LinkedHashSet<RandomVariable>(
+				table.getFor());
 		for (AssignmentProposition ap : evidence) {
 			fofVars.remove(ap.getTermVariable());
 		}
@@ -214,19 +217,5 @@ public class CPT implements ConditionalProbabilityTable {
 		};
 
 		table.iterateOverTable(di);
-	}
-
-	private Object sample(double probabilityChoice,
-			CategoricalDistribution conditionedCase) {
-		double[] distribution = conditionedCase.getValues();
-		List<Object> domainValues = new ArrayList<Object>(((FiniteDomain) on
-				.getDomain()).getPossibleValues());
-		int i = 0;
-		double total = distribution[0];
-		while (probabilityChoice > total) {
-			i++;
-			total += distribution[i];
-		}
-		return domainValues.get(i);
 	}
 }
