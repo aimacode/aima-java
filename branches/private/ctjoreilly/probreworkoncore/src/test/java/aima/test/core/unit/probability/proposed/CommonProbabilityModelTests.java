@@ -89,10 +89,12 @@ public abstract class CommonProbabilityModelTests {
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.prior(ExampleRV.DICE_2_RV),
 				DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.DICE_1_RV,
-				ExampleRV.DICE_2_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.DICE_2_RV,
-				ExampleRV.DICE_1_RV), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.DICE_1_RV, ExampleRV.DICE_2_RV),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.DICE_2_RV, ExampleRV.DICE_1_RV),
+				DELTA_THRESHOLD);
 
 		// Test a disjunctive proposition pg.489
 		// P(a OR b) = P(a) + P(b) - P(a AND b)
@@ -101,8 +103,8 @@ public abstract class CommonProbabilityModelTests {
 				ExampleRV.DICE_2_RV, 5);
 		DisjunctiveProposition dice1Is5OrDice2Is5 = new DisjunctiveProposition(
 				dice1Is5, dice2Is5);
-		Assert.assertEquals(1.0 / 6.0 + 1.0 / 6.0 - 1.0 / 36.0, model
-				.prior(dice1Is5OrDice2Is5), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0 / 6.0 + 1.0 / 6.0 - 1.0 / 36.0,
+				model.prior(dice1Is5OrDice2Is5), DELTA_THRESHOLD);
 	}
 
 	protected void test_ToothacheCavityCatchModel(ProbabilityModel model) {
@@ -127,10 +129,12 @@ public abstract class CommonProbabilityModelTests {
 				DELTA_THRESHOLD);
 		ConjunctiveProposition toothacheAndNotCavity = new ConjunctiveProposition(
 				atoothache, anotcavity);
-		Assert.assertEquals(0.0, model
-				.posterior(acavity, toothacheAndNotCavity), DELTA_THRESHOLD);
-		Assert.assertEquals(0.0, model.posterior(acavity, atoothache,
-				anotcavity), DELTA_THRESHOLD);
+		Assert.assertEquals(0.0,
+				model.posterior(acavity, toothacheAndNotCavity),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(0.0,
+				model.posterior(acavity, atoothache, anotcavity),
+				DELTA_THRESHOLD);
 
 		// AIMA3e pg. 492
 		DisjunctiveProposition cavityOrToothache = new DisjunctiveProposition(
@@ -148,53 +152,65 @@ public abstract class CommonProbabilityModelTests {
 				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.prior(ExampleRV.CATCH_RV),
 				DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.TOOTHACHE_RV,
-				ExampleRV.CAVITY_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.TOOTHACHE_RV,
-				ExampleRV.CATCH_RV), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.TOOTHACHE_RV, ExampleRV.CAVITY_RV),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV),
+				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(ExampleRV.TOOTHACHE_RV,
 				ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.CAVITY_RV,
-				ExampleRV.TOOTHACHE_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.CAVITY_RV,
-				ExampleRV.CATCH_RV), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.CAVITY_RV, ExampleRV.CATCH_RV),
+				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(ExampleRV.CAVITY_RV,
 				ExampleRV.TOOTHACHE_RV, ExampleRV.CATCH_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.CATCH_RV,
-				ExampleRV.CAVITY_RV), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, model.posterior(ExampleRV.CATCH_RV,
-				ExampleRV.TOOTHACHE_RV), DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.CATCH_RV, ExampleRV.CAVITY_RV),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(1.0,
+				model.posterior(ExampleRV.CATCH_RV, ExampleRV.TOOTHACHE_RV),
+				DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, model.posterior(ExampleRV.CATCH_RV,
 				ExampleRV.CAVITY_RV, ExampleRV.TOOTHACHE_RV), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 495 - Bayes' Rule
 		// P(b|a) = P(a|b)P(b)/P(a)
-		Assert.assertEquals(model.posterior(acavity, atoothache), (model
-				.posterior(atoothache, acavity) * model.prior(acavity))
-				/ model.prior(atoothache), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(acavity, anottoothache), (model
-				.posterior(anottoothache, acavity) * model.prior(acavity))
-				/ model.prior(anottoothache), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(anotcavity, atoothache), (model
-				.posterior(atoothache, anotcavity) * model.prior(anotcavity))
-				/ model.prior(atoothache), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(anotcavity, anottoothache),
-				(model.posterior(anottoothache, anotcavity) * model
-						.prior(anotcavity))
+		Assert.assertEquals(model.posterior(acavity, atoothache),
+				(model.posterior(atoothache, acavity) * model.prior(acavity))
+						/ model.prior(atoothache), DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.posterior(acavity, anottoothache),
+				(model.posterior(anottoothache, acavity) * model.prior(acavity))
 						/ model.prior(anottoothache), DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.posterior(anotcavity, atoothache),
+				(model.posterior(atoothache, anotcavity) * model
+						.prior(anotcavity)) / model.prior(atoothache),
+				DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.posterior(anotcavity, anottoothache),
+				(model.posterior(anottoothache, anotcavity) * model
+						.prior(anotcavity)) / model.prior(anottoothache),
+				DELTA_THRESHOLD);
 		//
-		Assert.assertEquals(model.posterior(acavity, acatch), (model.posterior(
-				acatch, acavity) * model.prior(acavity))
-				/ model.prior(acatch), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(acavity, anotcatch), (model
-				.posterior(anotcatch, acavity) * model.prior(acavity))
-				/ model.prior(anotcatch), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(anotcavity, acatch), (model
-				.posterior(acatch, anotcavity) * model.prior(anotcavity))
-				/ model.prior(acatch), DELTA_THRESHOLD);
-		Assert.assertEquals(model.posterior(anotcavity, anotcatch), (model
-				.posterior(anotcatch, anotcavity) * model.prior(anotcavity))
-				/ model.prior(anotcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(model.posterior(acavity, acatch),
+				(model.posterior(acatch, acavity) * model.prior(acavity))
+						/ model.prior(acatch), DELTA_THRESHOLD);
+		Assert.assertEquals(model.posterior(acavity, anotcatch),
+				(model.posterior(anotcatch, acavity) * model.prior(acavity))
+						/ model.prior(anotcatch), DELTA_THRESHOLD);
+		Assert.assertEquals(model.posterior(anotcavity, acatch),
+				(model.posterior(acatch, anotcavity) * model.prior(anotcavity))
+						/ model.prior(acatch), DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.posterior(anotcavity, anotcatch),
+				(model.posterior(anotcatch, anotcavity) * model
+						.prior(anotcavity)) / model.prior(anotcatch),
+				DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 488, 494
@@ -232,15 +248,14 @@ public abstract class CommonProbabilityModelTests {
 				asunny, acavity);
 
 		// 0.6 (sunny) * 0.2 (cavity) = 0.12
-		Assert
-				.assertEquals(0.12, model.prior(asunny, acavity),
-						DELTA_THRESHOLD);
+		Assert.assertEquals(0.12, model.prior(asunny, acavity), DELTA_THRESHOLD);
 		Assert.assertEquals(0.12, model.prior(sunnyAndCavity), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 494
 		// P(toothache, catch, cavity, cloudy) =
 		// P(cloudy | toothache, catch, cavity)P(toothache, catch, cavity)
-		Assert.assertEquals(model.prior(atoothache, acatch, acavity, acloudy),
+		Assert.assertEquals(
+				model.prior(atoothache, acatch, acavity, acloudy),
 				model.posterior(acloudy, atoothache, acatch, acavity)
 						* model.prior(atoothache, acatch, acavity),
 				DELTA_THRESHOLD);
@@ -249,39 +264,38 @@ public abstract class CommonProbabilityModelTests {
 				new ConjunctiveProposition(acavity, acloudy));
 		ConjunctiveProposition toothacheAndCatchAndCavity = new ConjunctiveProposition(
 				new ConjunctiveProposition(atoothache, acatch), acavity);
-		Assert.assertEquals(model.prior(toothacheAndCatchAndCavityAndCloudy),
+		Assert.assertEquals(
+				model.prior(toothacheAndCatchAndCavityAndCloudy),
 				model.posterior(acloudy, atoothache, acatch, acavity)
 						* model.prior(toothacheAndCatchAndCavity),
 				DELTA_THRESHOLD);
 
 		// P(cloudy | toothache, catch, cavity) = P(cloudy)
 		// (13.10)
-		Assert.assertEquals(model.posterior(acloudy, atoothache, acatch,
-				acavity), model.prior(acloudy), DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.posterior(acloudy, atoothache, acatch, acavity),
+				model.prior(acloudy), DELTA_THRESHOLD);
 
 		// P(toothache, catch, cavity, cloudy) =
 		// P(cloudy)P(tootache, catch, cavity)
-		Assert
-				.assertEquals(
-						model.prior(atoothache, acatch, acavity, acloudy),
-						model.prior(acloudy)
-								* model.prior(atoothache, acatch, acavity),
-						DELTA_THRESHOLD);
+		Assert.assertEquals(
+				model.prior(atoothache, acatch, acavity, acloudy),
+				model.prior(acloudy) * model.prior(atoothache, acatch, acavity),
+				DELTA_THRESHOLD);
 
 		// P(a | b) = P(a)
-		Assert.assertEquals(model.posterior(acavity, acloudy), model
-				.prior(acavity), DELTA_THRESHOLD);
+		Assert.assertEquals(model.posterior(acavity, acloudy),
+				model.prior(acavity), DELTA_THRESHOLD);
 		// P(b | a) = P(b)
-		Assert.assertEquals(model.posterior(acloudy, acavity), model
-				.prior(acloudy), DELTA_THRESHOLD);
+		Assert.assertEquals(model.posterior(acloudy, acavity),
+				model.prior(acloudy), DELTA_THRESHOLD);
 		// P(a AND b) = P(a)P(b)
 		Assert.assertEquals(model.prior(acavity, acloudy), model.prior(acavity)
 				* model.prior(acloudy), DELTA_THRESHOLD);
 		ConjunctiveProposition acavityAndacloudy = new ConjunctiveProposition(
 				acavity, acloudy);
-		Assert.assertEquals(model.prior(acavityAndacloudy), model
-				.prior(acavity)
-				* model.prior(acloudy), DELTA_THRESHOLD);
+		Assert.assertEquals(model.prior(acavityAndacloudy),
+				model.prior(acavity) * model.prior(acloudy), DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 496
@@ -324,8 +338,8 @@ public abstract class CommonProbabilityModelTests {
 		// = P(~stiffneck | meningitis)P(meningitis)/P(~stiffneck)
 		// = (0.3 * 0.00002)/0.99
 		// = 0.000006060606
-		Assert.assertEquals(0.000006060606, model.posterior(ameningitis,
-				anotstiffNeck), DELTA_THRESHOLD);
+		Assert.assertEquals(0.000006060606,
+				model.posterior(ameningitis, anotstiffNeck), DELTA_THRESHOLD);
 	}
 
 	// AIMA3e pg. 512
@@ -348,17 +362,19 @@ public abstract class CommonProbabilityModelTests {
 				ExampleRV.MARY_CALLS_RV, Boolean.TRUE);
 
 		// AIMA3e pg. 514
-		Assert.assertEquals(model.prior(ajohnCalls, amaryCalls, aalarm,
-				anotburglary, anotearthquake), 0.00062811126, DELTA_THRESHOLD);
-		Assert.assertEquals(model.prior(ajohnCalls, amaryCalls, anotalarm,
-				anotburglary, anotearthquake), 0.00049800249, DELTA_THRESHOLD);
+		Assert.assertEquals(0.00062811126, model.prior(ajohnCalls, amaryCalls,
+				aalarm, anotburglary, anotearthquake), DELTA_THRESHOLD);
+		Assert.assertEquals(0.00049800249, model.prior(ajohnCalls, amaryCalls,
+				anotalarm, anotburglary, anotearthquake), DELTA_THRESHOLD);
 
 		// AIMA3e pg. 524
 		// P(Burglary = true | JohnCalls = true, MaryCalls = true) = 0.00059224
-		Assert.assertEquals(0.00059224, model.prior(aburglary, ajohnCalls,
-				amaryCalls), DELTA_THRESHOLD);
+		Assert.assertEquals(0.00059224,
+				model.prior(aburglary, ajohnCalls, amaryCalls),
+				DELTA_THRESHOLD);
 		// P(Burglary = false | JohnCalls = true, MaryCalls = true) = 0.0014919
-		Assert.assertEquals(0.00149185764899, model.prior(anotburglary,
-				ajohnCalls, amaryCalls), DELTA_THRESHOLD);
+		Assert.assertEquals(0.00149185764899,
+				model.prior(anotburglary, ajohnCalls, amaryCalls),
+				DELTA_THRESHOLD);
 	}
 }

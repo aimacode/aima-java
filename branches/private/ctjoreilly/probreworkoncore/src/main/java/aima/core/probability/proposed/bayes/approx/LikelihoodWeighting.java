@@ -96,7 +96,7 @@ public class LikelihoodWeighting implements BayesSampleInference {
 					e);
 			// W[x] <- W[x] + w where x is the value of X in <b>x</b>
 			for (int i = 0; i < X.length; i++) {
-				W[indexOf(X[i], x_w.getFirst())] += x_w.getSecond();
+				W[indexOf(X, i, x_w.getFirst())] += x_w.getSecond();
 			}
 		}
 		// return NORMALIZE(W)
@@ -161,7 +161,13 @@ public class LikelihoodWeighting implements BayesSampleInference {
 	//
 	// PRIVATE METHODS
 	//
-	private int indexOf(RandomVariable X, Map<RandomVariable, Object> x) {
-		return ((FiniteDomain) X.getDomain()).getOffset(x.get(X));
+	private int indexOf(RandomVariable[] X, int idx,
+			Map<RandomVariable, Object> x) {
+		int priorOffsets = 0;
+		for (int i = 0; i < idx; i++) {
+			priorOffsets += X[i].getDomain().size();
+		}
+		return priorOffsets
+				+ ((FiniteDomain) X[idx].getDomain()).getOffset(x.get(X[idx]));
 	}
 }
