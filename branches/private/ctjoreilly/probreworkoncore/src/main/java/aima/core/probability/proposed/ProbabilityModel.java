@@ -5,7 +5,7 @@ import java.util.Set;
 import aima.core.probability.proposed.proposition.Proposition;
 
 // TODO - This is a working set, to be removed.
-// TODO - On AIMA (on 14.5.2)
+// TODO - On AIMA (on 15.1)
 // 
 // TODO - pg. 515 P(MaryCalls | JohnCalls, Alarm, Earthquake, Burglary) 
 //        = P(MaryCalls | Alarm), will require a sub distribution mechanism
@@ -25,6 +25,7 @@ import aima.core.probability.proposed.proposition.Proposition;
 //        in the FiniteBayesModel implementation.
 // TODO - look into performance of following two tests, as appear to be taking an unrealistic amount of time:
 //        FiniteBayesModelTest.test_RollingPairFairDiceModel() and test_ToothacheCavityCatchWeatherModel().
+// TODO - look into performance of approximate inference algorithms.
 //
 // TODO - Integrate feedback from Rodrigo :-
 // It might be a good idea to make a BayesianNetwork a type of distribution, 

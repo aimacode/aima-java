@@ -15,7 +15,7 @@ import aima.core.probability.proposed.util.RandVar;
 public class ProbUtilTest {
 
 	@Test
-	public void test_indexesOf() {
+	public void test_indexOf() {
 		RandVar X = new RandVar("X", new BooleanDomain());
 		RandVar Y = new RandVar("Y", new ArbitraryTokenDomain("A", "B", "C"));
 		RandVar Z = new RandVar("Z", new BooleanDomain());
