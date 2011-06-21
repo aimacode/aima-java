@@ -10,6 +10,7 @@ import aima.core.probability.proposed.proposition.ConjunctiveProposition;
 import aima.core.probability.proposed.proposition.Proposition;
 import aima.core.util.Randomizer;
 import aima.core.util.Util;
+import aima.core.util.math.MixedRadixNumber;
 
 public class ProbUtil {
 
@@ -173,8 +174,8 @@ public class ProbUtil {
 	 */
 	public static Object mbRandomSample(Node Xi,
 			Map<RandomVariable, Object> event, Randomizer r) {
-		return sample(r.nextDouble(), Xi.getRandomVariable(),
-				mbDistribution(Xi, event));
+		return sample(r.nextDouble(), Xi.getRandomVariable(), mbDistribution(
+				Xi, event));
 	}
 
 	/**
@@ -217,8 +218,8 @@ public class ProbUtil {
 			}
 			X[i] = Xi.getCPD()
 					.getValue(
-							getEventValuesForXiGivenParents(Xi,
-									fd.getValueAt(i), event))
+							getEventValuesForXiGivenParents(Xi, fd
+									.getValueAt(i), event))
 					* cprob;
 		}
 
@@ -263,8 +264,8 @@ public class ProbUtil {
 	 */
 	public static Object[] getEventValuesForXiGivenParents(Node Xi,
 			Map<RandomVariable, Object> event) {
-		return getEventValuesForXiGivenParents(Xi,
-				event.get(Xi.getRandomVariable()), event);
+		return getEventValuesForXiGivenParents(Xi, event.get(Xi
+				.getRandomVariable()), event);
 	}
 
 	/**
@@ -294,6 +295,132 @@ public class ProbUtil {
 		}
 		values[idx] = xDelta;
 		return values;
+	}
+
+	/**
+	 * Calculate the index into a vector representing the enumeration of the
+	 * value assignments for the variables X and their corresponding assignment
+	 * in x. For example the Random Variables:<br>
+	 * Q::{true, false}, R::{'A', 'B','C'}, and T::{true, false}, would be
+	 * enumerated in a Vector as follows:
+	 * 
+	 * <pre>
+	 * Index  Q      R  T
+	 * -----  -      -  -
+	 * 00:    true,  A, true
+	 * 01:    true,  A, false
+	 * 02:    true,  B, true
+	 * 03:    true,  B, false
+	 * 04:    true,  C, true
+	 * 05:    true,  C, false
+	 * 06:    false, A, true
+	 * 07:    false, A, false
+	 * 08:    false, B, true
+	 * 09:    false, B, false
+	 * 10:    false, C, true
+	 * 11:    false, C, false
+	 * </pre>
+	 * 
+	 * if x = {Q=true, R='C', T=false} the index returned would be 5.
+	 * 
+	 * @param X
+	 *            a list of the Random Variables that would comprise the vector.
+	 * @param x
+	 *            an assignment for the Random Variables in X.
+	 * @return an index into a vector that would represent the enumeration of
+	 *         the values for X.
+	 */
+	public static int indexOf(RandomVariable[] X, Map<RandomVariable, Object> x) {
+		if (0 == X.length) {
+			return ((FiniteDomain) X[0].getDomain()).getOffset(x.get(X[0]));
+		}
+		// X.length > 1 then calculate using a mixed radix number
+		//
+		// Note: Create radixs in reverse order so that the enumeration
+		// through the distributions is of the following
+		// order using a MixedRadixNumber, e.g. for two Booleans:
+		// X Y
+		// true true
+		// true false
+		// false true
+		// false false
+		// which corresponds with how displayed in book.
+		int[] radixValues = new int[X.length];
+		int[] radixs = new int[X.length];
+		int j = X.length - 1;
+		for (int i = 0; i < X.length; i++) {
+			FiniteDomain fd = (FiniteDomain) X[i].getDomain();
+			radixValues[j] = fd.getOffset(x.get(X[i]));
+			radixs[j] = fd.size();
+			j--;
+		}
+
+		return new MixedRadixNumber(radixValues, radixs).intValue();
+	}
+
+	/**
+	 * Calculate the indexes for X[i] into a vector representing the enumeration
+	 * of the value assignments for the variables X and their corresponding
+	 * assignment in x. For example the Random Variables:<br>
+	 * Q::{true, false}, R::{'A', 'B','C'}, and T::{true, false}, would be
+	 * enumerated in a Vector as follows:
+	 * 
+	 * <pre>
+	 * Index  Q      R  T
+	 * -----  -      -  -
+	 * 00:    true,  A, true
+	 * 01:    true,  A, false
+	 * 02:    true,  B, true
+	 * 03:    true,  B, false
+	 * 04:    true,  C, true
+	 * 05:    true,  C, false
+	 * 06:    false, A, true
+	 * 07:    false, A, false
+	 * 08:    false, B, true
+	 * 09:    false, B, false
+	 * 10:    false, C, true
+	 * 11:    false, C, false
+	 * </pre>
+	 * 
+	 * if X[i] = R and x = {..., R='C', ...} then the indexes returned would be
+	 * [4, 5, 10, 11].
+	 * 
+	 * @param X
+	 *            a list of the Random Variables that would comprise the vector.
+	 * @param idx
+	 *            the index into X for the Random Variable whose assignment we
+	 *            wish to retrieve its indexes for.
+	 * @param x
+	 *            an assignment for the Random Variables in X.
+	 * @return the indexes into a vector that would represent the enumeration of
+	 *         the values for X[i] in x.
+	 */
+	public static int[] indexesOfValue(RandomVariable[] X, int idx,
+			Map<RandomVariable, Object> x) {
+		int csize = ProbUtil.expectedSizeOfCategoricalDistribution(X);
+
+		FiniteDomain fd = (FiniteDomain) X[idx].getDomain();
+		int vdoffset = fd.getOffset(x.get(X[idx]));
+		int vdosize = fd.size();
+		int[] indexes = new int[csize / vdosize];
+
+		int blocksize = csize;
+		for (int i = 0; i < X.length; i++) {
+			blocksize = blocksize / X[i].getDomain().size();
+			if (i == idx) {
+				break;
+			}
+		}
+
+		for (int i = 0; i < indexes.length; i += blocksize) {
+			int offset = ((i / blocksize) * vdosize * blocksize)
+					+ (blocksize * vdoffset);
+			for (int b = 0; b < blocksize; b++) {
+				indexes[i + b] = offset + b;
+			}
+		}
+
+		return indexes;
 	}
 
 	//

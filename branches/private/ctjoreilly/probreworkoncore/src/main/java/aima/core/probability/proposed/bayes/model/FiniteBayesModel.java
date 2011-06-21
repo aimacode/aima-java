@@ -137,7 +137,27 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 		CategoricalDistribution dAandB = jointDistribution(phi, conjEvidence);
 		CategoricalDistribution dEvidence = jointDistribution(conjEvidence);
 
-		return dAandB.divideBy(dEvidence);
+		CategoricalDistribution rVal = dAandB.divideBy(dEvidence);
+		// Note: Need to ensure normalize() is called
+		// in order to handle the case where an approximate
+		// algorithm is used (i.e. won't evenly divide
+		// as will have calculated on separate approximate
+		// runs). However, this should only be done
+		// if the all of the evidences scope are bound (if not
+		// you are returning in essence a set of conditional
+		// distributions, which you do not want normalized).
+		boolean unboundEvidence = false;
+		for (Proposition e : evidence) {
+			if (e.getUnboundScope().size() > 0) {
+				unboundEvidence = true;
+				break;
+			}
+		}
+		if (!unboundEvidence) {
+			rVal.normalize();
+		}
+
+		return rVal;
 	}
 
 	public CategoricalDistribution jointDistribution(

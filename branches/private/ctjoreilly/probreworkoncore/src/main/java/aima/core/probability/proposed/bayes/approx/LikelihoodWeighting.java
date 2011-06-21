@@ -7,7 +7,6 @@ import java.util.Random;
 import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
-import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.probability.proposed.util.ProbabilityTable;
@@ -95,9 +94,7 @@ public class LikelihoodWeighting implements BayesSampleInference {
 			Pair<Map<RandomVariable, Object>, Double> x_w = weightedSample(bn,
 					e);
 			// W[x] <- W[x] + w where x is the value of X in <b>x</b>
-			for (int i = 0; i < X.length; i++) {
-				W[indexOf(X, i, x_w.getFirst())] += x_w.getSecond();
-			}
+			W[ProbUtil.indexOf(X, x_w.getFirst())] += x_w.getSecond();
 		}
 		// return NORMALIZE(W)
 		return new ProbabilityTable(W, X).normalize();
@@ -131,11 +128,9 @@ public class LikelihoodWeighting implements BayesSampleInference {
 			if (x.containsKey(Xi)) {
 				// then w <- w * P(X<sub>i</sub> = x<sub>i</sub> |
 				// parents(X<sub>i</sub>))
-				w *= bn.getNode(Xi)
-						.getCPD()
-						.getValue(
-								ProbUtil.getEventValuesForXiGivenParents(
-										bn.getNode(Xi), x));
+				w *= bn.getNode(Xi).getCPD().getValue(
+						ProbUtil.getEventValuesForXiGivenParents(
+								bn.getNode(Xi), x));
 			} else {
 				// else <b>x</b>[i] <- a random sample from
 				// <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
@@ -157,17 +152,4 @@ public class LikelihoodWeighting implements BayesSampleInference {
 
 	// END-BayesSampleInference
 	//
-
-	//
-	// PRIVATE METHODS
-	//
-	private int indexOf(RandomVariable[] X, int idx,
-			Map<RandomVariable, Object> x) {
-		int priorOffsets = 0;
-		for (int i = 0; i < idx; i++) {
-			priorOffsets += X[i].getDomain().size();
-		}
-		return priorOffsets
-				+ ((FiniteDomain) X[idx].getDomain()).getOffset(x.get(X[idx]));
-	}
 }

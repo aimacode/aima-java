@@ -20,16 +20,22 @@ import aima.core.probability.proposed.proposition.DisjunctiveProposition;
  * @author Ciaran O'Reilly
  */
 public class ProbabilityDemo {
+	// Note: You should increase this to 1000000+
+	// in order to get answers from the approximate
+	// algorithms (i.e. Rejection, Likelihood and Gibbs)
+	// that look close to their exact inference
+	// counterparts.
+	public static final int NUM_SAMPLES = 1000;
 
 	public static void main(String[] args) {
 		fullJointDistributionModelDemo();
 
-		//bayesEnumerationAskDemo();
-		//bayesEliminationAskDemo();
+		bayesEnumerationAskDemo();
+		bayesEliminationAskDemo();
 
-		//bayesRejectionSamplingDemo();
+		bayesRejectionSamplingDemo();
 		bayesLikelihoodWeightingDemo();
-		//bayesGibbsAskDemo();
+		bayesGibbsAskDemo();
 	}
 
 	public static void fullJointDistributionModelDemo() {
@@ -46,9 +52,8 @@ public class ProbabilityDemo {
 		demoToothacheCavityCatchModel(new FiniteBayesModel(
 				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
 				new EnumerationAsk()));
-		demoBurglaryAlarmModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
-				new EnumerationAsk()));
+		demoBurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork(), new EnumerationAsk()));
 		System.out.println("===========================");
 	}
 
@@ -58,45 +63,48 @@ public class ProbabilityDemo {
 		demoToothacheCavityCatchModel(new FiniteBayesModel(
 				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
 				new EliminationAsk()));
-		demoBurglaryAlarmModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
-				new EliminationAsk()));
+		demoBurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork(), new EliminationAsk()));
 		System.out.println("===========================");
 	}
 
 	public static void bayesRejectionSamplingDemo() {
-		System.out.println("DEMO: Bayes Rejection Sampling");
+		System.out.println("DEMO: Bayes Rejection Sampling N = "+NUM_SAMPLES);
 		System.out.println("==============================");
 		demoToothacheCavityCatchModel(new FiniteBayesModel(
 				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
-				new BayesInferenceApproxAdapter(new RejectionSampling(), 1000)));
-		demoBurglaryAlarmModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
-				new BayesInferenceApproxAdapter(new RejectionSampling(), 1000)));
+				new BayesInferenceApproxAdapter(new RejectionSampling(),
+						NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new RejectionSampling(),
+						NUM_SAMPLES)));
 		System.out.println("==============================");
 	}
 
 	public static void bayesLikelihoodWeightingDemo() {
-		System.out.println("DEMO: Bayes Likelihood Weighting");
+		System.out.println("DEMO: Bayes Likelihood Weighting N = "+NUM_SAMPLES);
 		System.out.println("================================");
 		demoToothacheCavityCatchModel(new FiniteBayesModel(
 				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
-				new BayesInferenceApproxAdapter(new LikelihoodWeighting(), 1000)));
-		demoBurglaryAlarmModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
-				new BayesInferenceApproxAdapter(new LikelihoodWeighting(), 1000)));
+				new BayesInferenceApproxAdapter(new LikelihoodWeighting(),
+						NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new LikelihoodWeighting(),
+						NUM_SAMPLES)));
 		System.out.println("================================");
 	}
 
 	public static void bayesGibbsAskDemo() {
-		System.out.println("DEMO: Bayes Gibbs Ask");
+		System.out.println("DEMO: Bayes Gibbs Ask N = "+NUM_SAMPLES);
 		System.out.println("=====================");
 		demoToothacheCavityCatchModel(new FiniteBayesModel(
 				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
-				new BayesInferenceApproxAdapter(new GibbsAsk(), 1000)));
-		demoBurglaryAlarmModel(new FiniteBayesModel(
-				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
-				new BayesInferenceApproxAdapter(new GibbsAsk(), 1000)));
+				new BayesInferenceApproxAdapter(new GibbsAsk(), NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new GibbsAsk(), NUM_SAMPLES)));
 		System.out.println("=====================");
 	}
 

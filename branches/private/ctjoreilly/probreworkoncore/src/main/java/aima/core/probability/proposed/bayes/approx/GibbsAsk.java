@@ -9,7 +9,6 @@ import java.util.Set;
 import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
-import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.probability.proposed.util.ProbabilityTable;
@@ -78,8 +77,8 @@ public class GibbsAsk implements BayesSampleInference {
 		double[] N = new double[ProbUtil
 				.expectedSizeOfCategoricalDistribution(X)];
 		// Z, the nonevidence variables in bn
-		Set<RandomVariable> Z = new LinkedHashSet<RandomVariable>(
-				bn.getVariablesInTopologicalOrder());
+		Set<RandomVariable> Z = new LinkedHashSet<RandomVariable>(bn
+				.getVariablesInTopologicalOrder());
 		for (AssignmentProposition ap : e) {
 			Z.remove(ap.getTermVariable());
 		}
@@ -100,14 +99,22 @@ public class GibbsAsk implements BayesSampleInference {
 			for (RandomVariable Zi : Z) {
 				// set the value of Z<sub>i</sub> in <b>x</b> by sampling from
 				// <b>P</b>(Z<sub>i</sub>|mb(Z<sub>i</sub>))
-				x.put(Zi,
-						ProbUtil.mbRandomSample(bn.getNode(Zi), x, randomizer));
-				// <b>N</b>[x] <- <b>N</b>[x] + 1
-				// where x is the value of X in <b>x</b>
-				for (int i = 0; i < X.length; i++) {
-					N[indexOf(X[i], x)] += 1.0;
-				}
+				x.put(Zi, ProbUtil
+						.mbRandomSample(bn.getNode(Zi), x, randomizer));
 			}
+			// Note: moving this outside the previous for loop,
+			// as described in fig 14.6, as will only work
+			// correctly in the case of a single query variable X.
+			// However, when multiple query variables, rare events
+			// will get weighted incorrectly if done above. In case
+			// of single variable this does not happen as each possible
+			// value gets * |Z| above, ending up with the same ratios
+			// when normalized (i.e. its still more efficient to place
+			// outside the loop).
+			//
+			// <b>N</b>[x] <- <b>N</b>[x] + 1
+			// where x is the value of X in <b>x</b>
+			N[ProbUtil.indexOf(X, x)] += 1.0;
 		}
 		// return NORMALIZE(<b>N</b>)
 		return new ProbabilityTable(N, X).normalize();
@@ -124,11 +131,4 @@ public class GibbsAsk implements BayesSampleInference {
 
 	// END-BayesSampleInference
 	//
-
-	//
-	// PRIVATE METHODS
-	//
-	private int indexOf(RandomVariable X, Map<RandomVariable, Object> x) {
-		return ((FiniteDomain) X.getDomain()).getOffset(x.get(X));
-	}
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 import aima.core.probability.proposed.CategoricalDistribution;
 import aima.core.probability.proposed.RandomVariable;
 import aima.core.probability.proposed.bayes.BayesianNetwork;
-import aima.core.probability.proposed.domain.FiniteDomain;
 import aima.core.probability.proposed.proposition.AssignmentProposition;
 import aima.core.probability.proposed.util.ProbUtil;
 import aima.core.probability.proposed.util.ProbabilityTable;
@@ -81,9 +80,7 @@ public class RejectionSampling implements BayesSampleInference {
 			if (isConsistent(x, e)) {
 				// <b>N</b>[x] <- <b>N</b>[x] + 1
 				// where x is the value of X in <b>x</b>
-				for (int i = 0; i < X.length; i++) {
-					N[indexOf(X[i], x)] += 1.0;
-				}
+				N[ProbUtil.indexOf(X, x)] += 1.0;
 			}
 		}
 		// return NORMALIZE(<b>N</b>)
@@ -114,9 +111,5 @@ public class RejectionSampling implements BayesSampleInference {
 			}
 		}
 		return true;
-	}
-
-	private int indexOf(RandomVariable X, Map<RandomVariable, Object> x) {
-		return ((FiniteDomain) X.getDomain()).getOffset(x.get(X));
 	}
 }
