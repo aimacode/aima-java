@@ -1,7 +1,6 @@
 package aima.gui.demo.probability;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import aima.core.environment.cellworld.CellWorld;
@@ -10,38 +9,53 @@ import aima.core.learning.reinforcement.PassiveADPAgent;
 import aima.core.learning.reinforcement.PassiveTDAgent;
 import aima.core.learning.reinforcement.QLearningAgent;
 import aima.core.learning.reinforcement.QTable;
-import aima.core.probability.BayesNet;
-import aima.core.probability.BayesNetNode;
-import aima.core.probability.EnumerateJointAsk;
-import aima.core.probability.EnumerationAsk;
-import aima.core.probability.JavaRandomizer;
-import aima.core.probability.ProbabilityDistribution;
-import aima.core.probability.Query;
-import aima.core.probability.RandomVariable;
-import aima.core.probability.Randomizer;
-import aima.core.probability.decision.MDP;
-import aima.core.probability.decision.MDPFactory;
-import aima.core.probability.decision.MDPPolicy;
-import aima.core.probability.decision.MDPUtilityFunction;
-import aima.core.probability.reasoning.HMMFactory;
-import aima.core.probability.reasoning.HiddenMarkovModel;
-import aima.core.probability.reasoning.HmmConstants;
-import aima.core.probability.reasoning.ParticleSet;
+import aima.core.probability.FiniteProbabilityModel;
+import aima.core.probability.bayes.approx.BayesInferenceApproxAdapter;
+import aima.core.probability.bayes.approx.GibbsAsk;
+import aima.core.probability.bayes.approx.LikelihoodWeighting;
+import aima.core.probability.bayes.approx.RejectionSampling;
+import aima.core.probability.bayes.exact.EliminationAsk;
+import aima.core.probability.bayes.exact.EnumerationAsk;
+import aima.core.probability.bayes.model.FiniteBayesModel;
+import aima.core.probability.example.BayesNetExampleFactory;
+import aima.core.probability.example.ExampleRV;
+import aima.core.probability.example.FullJointDistributionBurglaryAlarmModel;
+import aima.core.probability.example.FullJointDistributionToothacheCavityCatchModel;
+import aima.core.probability.hmm.HMMFactory;
+import aima.core.probability.hmm.HiddenMarkovModel;
+import aima.core.probability.hmm.HmmConstants;
+import aima.core.probability.hmm.ParticleSet;
+import aima.core.probability.hmm.VarDistribution;
+import aima.core.probability.mdp.MDP;
+import aima.core.probability.mdp.MDPFactory;
+import aima.core.probability.mdp.MDPPolicy;
+import aima.core.probability.mdp.MDPUtilityFunction;
+import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.proposition.DisjunctiveProposition;
+import aima.core.util.JavaRandomizer;
+import aima.core.util.Randomizer;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-
 public class ProbabilityDemo {
+	// Note: You should increase this to 1000000+
+	// in order to get answers from the approximate
+	// algorithms (i.e. Rejection, Likelihood and Gibbs)
+	// that look close to their exact inference
+	// counterparts.
+	public static final int NUM_SAMPLES = 1000;
 
 	public static void main(String[] args) {
-		enumerationJointAskDemo();
-		enumerationAskDemo();
-		priorSampleDemo();
-		rejectionSamplingDemo();
-		likelihoodWeightingDemo();
-		mcmcAskDemo();
+		fullJointDistributionModelDemo();
+
+		bayesEnumerationAskDemo();
+		bayesEliminationAskDemo();
+
+		bayesRejectionSamplingDemo();
+		bayesLikelihoodWeightingDemo();
+		bayesGibbsAskDemo();
 
 		forwardBackWardDemo();
 		particleFilterinfDemo();
@@ -54,7 +68,80 @@ public class ProbabilityDemo {
 		qLearningAgentDemo();
 	}
 
-	private static void forwardBackWardDemo() {
+	public static void fullJointDistributionModelDemo() {
+		System.out.println("DEMO: Full Joint Distribution Model");
+		System.out.println("===================================");
+		demoToothacheCavityCatchModel(new FullJointDistributionToothacheCavityCatchModel());
+		demoBurglaryAlarmModel(new FullJointDistributionBurglaryAlarmModel());
+		System.out.println("===================================");
+	}
+
+	public static void bayesEnumerationAskDemo() {
+		System.out.println("DEMO: Bayes Enumeration Ask");
+		System.out.println("===========================");
+		demoToothacheCavityCatchModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
+				new EnumerationAsk()));
+		demoBurglaryAlarmModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
+				new EnumerationAsk()));
+		System.out.println("===========================");
+	}
+
+	public static void bayesEliminationAskDemo() {
+		System.out.println("DEMO: Bayes Elimination Ask");
+		System.out.println("===========================");
+		demoToothacheCavityCatchModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
+				new EliminationAsk()));
+		demoBurglaryAlarmModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
+				new EliminationAsk()));
+		System.out.println("===========================");
+	}
+
+	public static void bayesRejectionSamplingDemo() {
+		System.out.println("DEMO: Bayes Rejection Sampling N = " + NUM_SAMPLES);
+		System.out.println("==============================");
+		demoToothacheCavityCatchModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
+				new BayesInferenceApproxAdapter(new RejectionSampling(),
+						NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new RejectionSampling(),
+						NUM_SAMPLES)));
+		System.out.println("==============================");
+	}
+
+	public static void bayesLikelihoodWeightingDemo() {
+		System.out.println("DEMO: Bayes Likelihood Weighting N = "
+				+ NUM_SAMPLES);
+		System.out.println("================================");
+		demoToothacheCavityCatchModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
+				new BayesInferenceApproxAdapter(new LikelihoodWeighting(),
+						NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new LikelihoodWeighting(),
+						NUM_SAMPLES)));
+		System.out.println("================================");
+	}
+
+	public static void bayesGibbsAskDemo() {
+		System.out.println("DEMO: Bayes Gibbs Ask N = " + NUM_SAMPLES);
+		System.out.println("=====================");
+		demoToothacheCavityCatchModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructToothacheCavityCatchNetwork(),
+				new BayesInferenceApproxAdapter(new GibbsAsk(), NUM_SAMPLES)));
+		demoBurglaryAlarmModel(new FiniteBayesModel(
+				BayesNetExampleFactory.constructBurglaryAlarmNetwork(),
+				new BayesInferenceApproxAdapter(new GibbsAsk(), NUM_SAMPLES)));
+		System.out.println("=====================");
+	}
+
+	public static void forwardBackWardDemo() {
 
 		System.out.println("\nForward BackWard Demo\n");
 
@@ -65,15 +152,16 @@ public class ProbabilityDemo {
 		perceptions.add(HmmConstants.SEE_UMBRELLA);
 		perceptions.add(HmmConstants.SEE_UMBRELLA);
 
-		List<RandomVariable> results = rainmanHmm.forward_backward(perceptions);
+		List<VarDistribution> results = rainmanHmm
+				.forward_backward(perceptions);
 
-		RandomVariable smoothedDayOne = results.get(1);
+		VarDistribution smoothedDayOne = results.get(1);
 		System.out.println("Smoothed Probability Of Raining on Day One = "
 				+ smoothedDayOne.getProbabilityOf(HmmConstants.RAINING));
 		System.out.println("Smoothed Probability Of NOT Raining on Day One ="
 				+ smoothedDayOne.getProbabilityOf(HmmConstants.NOT_RAINING));
 
-		RandomVariable smoothedDayTwo = results.get(2);
+		VarDistribution smoothedDayTwo = results.get(2);
 		System.out.println("Smoothed Probability Of Raining on Day Two = "
 				+ smoothedDayTwo.getProbabilityOf(HmmConstants.RAINING));
 		System.out.println("Smoothed Probability Of NOT Raining on Day Two = "
@@ -81,7 +169,7 @@ public class ProbabilityDemo {
 
 	}
 
-	private static void particleFilterinfDemo() {
+	public static void particleFilterinfDemo() {
 		System.out.println("\nParticle Filtering Demo\n");
 		HiddenMarkovModel rainman = HMMFactory.createRainmanHMM();
 		Randomizer r = new JavaRandomizer();
@@ -108,7 +196,7 @@ public class ProbabilityDemo {
 
 	}
 
-	private static void valueIterationDemo() {
+	public static void valueIterationDemo() {
 
 		System.out.println("\nValue Iteration Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
@@ -130,14 +218,7 @@ public class ProbabilityDemo {
 
 	}
 
-	private static void printUtility(MDPUtilityFunction<CellWorldPosition> uf,
-			int i, int j) {
-		System.out.println("Utility of (" + i + " , " + j + " ) "
-				+ uf.getUtility(new CellWorldPosition(i, j)));
-
-	}
-
-	private static void policyIterationDemo() {
+	public static void policyIterationDemo() {
 
 		System.out.println("\nPolicy Iteration Demo\n");
 		System.out.println("\nValue Iteration Demo\n");
@@ -156,14 +237,7 @@ public class ProbabilityDemo {
 		}
 	}
 
-	private static void printPolicy(int i, int j,
-			MDPPolicy<CellWorldPosition, String> policy) {
-		System.out.println("Reccomended Action for (" + i + " , " + j
-				+ " )  =  " + policy.getAction(new CellWorldPosition(i, j)));
-
-	}
-
-	private static void passiveADPgentDemo() {
+	public static void passiveADPgentDemo() {
 		System.out.println("\nPassive ADP Agent Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
 		MDP<CellWorldPosition, String> fourByThree = MDPFactory
@@ -209,7 +283,7 @@ public class ProbabilityDemo {
 
 	}
 
-	private static void passiveTDAgentDemo() {
+	public static void passiveTDAgentDemo() {
 		System.out.println("\nPassive TD Agent Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
 		MDP<CellWorldPosition, String> fourByThree = MDPFactory
@@ -253,7 +327,7 @@ public class ProbabilityDemo {
 
 	}
 
-	private static void qLearningAgentDemo() {
+	public static void qLearningAgentDemo() {
 		System.out.println("\nQ Learning Agent Demo Demo\n");
 		System.out.println("creating an MDP to represent the 4 X 3 world");
 		MDP<CellWorldPosition, String> fourByThree = MDPFactory
@@ -277,152 +351,111 @@ public class ProbabilityDemo {
 
 	}
 
-	public static void enumerationJointAskDemo() {
-		System.out.println("\nEnumerationJointAsk Demo\n");
-		ProbabilityDistribution jp = new ProbabilityDistribution("ToothAche",
-				"Cavity", "Catch");
-		jp.set(0.108, true, true, true);
-		jp.set(0.012, true, true, false);
-		jp.set(0.072, false, true, true);
-		jp.set(0.008, false, true, false);
-		jp.set(0.016, true, false, true);
-		jp.set(0.064, true, false, false);
-		jp.set(0.144, false, false, true);
-		jp.set(0.008, false, false, false);
+	//
+	// PRIVATE METHODS
+	//
+	private static void demoToothacheCavityCatchModel(
+			FiniteProbabilityModel model) {
+		System.out.println("Toothache, Cavity, and Catch Model");
+		System.out.println("----------------------------------");
+		AssignmentProposition atoothache = new AssignmentProposition(
+				ExampleRV.TOOTHACHE_RV, Boolean.TRUE);
+		AssignmentProposition acavity = new AssignmentProposition(
+				ExampleRV.CAVITY_RV, Boolean.TRUE);
+		AssignmentProposition anotcavity = new AssignmentProposition(
+				ExampleRV.CAVITY_RV, Boolean.FALSE);
+		AssignmentProposition acatch = new AssignmentProposition(
+				ExampleRV.CATCH_RV, Boolean.TRUE);
 
-		Query q = new Query("Cavity", new String[] { "ToothAche" },
-				new boolean[] { true });
-		double[] probs = EnumerateJointAsk.ask(q, jp);
-		System.out
-				.println("Using the full joint distribution of page 475 of Aima 2nd Edition");
-		System.out
-				.println("Probability distribution of ToothAche using Enumeration joint ask is "
-						+ string(probs));
+		// AIMA3e pg. 485
+		System.out.println("P(cavity) = " + model.prior(acavity));
+		System.out.println("P(cavity | toothache) = "
+				+ model.posterior(acavity, atoothache));
+
+		// AIMA3e pg. 492
+		DisjunctiveProposition cavityOrToothache = new DisjunctiveProposition(
+				acavity, atoothache);
+		System.out.println("P(cavity OR toothache) = "
+				+ model.prior(cavityOrToothache));
+
+		// AIMA3e pg. 493
+		System.out.println("P(~cavity | toothache) = "
+				+ model.posterior(anotcavity, atoothache));
+
+		// AIMA3e pg. 493
+		// P<>(Cavity | toothache) = <0.6, 0.4>
+		System.out.println("P<>(Cavity | toothache) = "
+				+ model.posteriorDistribution(ExampleRV.CAVITY_RV, atoothache));
+
+		// AIMA3e pg. 497
+		// P<>(Cavity | toothache AND catch) = <0.871, 0.129>
+		System.out.println("P<>(Cavity | toothache AND catch) = "
+				+ model.posteriorDistribution(ExampleRV.CAVITY_RV, atoothache,
+						acatch));
 	}
 
-	private static void priorSampleDemo() {
-		System.out.println("\nPriorSample Demo\n");
-		BayesNet net = createWetGrassNetwork();
+	private static void demoBurglaryAlarmModel(FiniteProbabilityModel model) {
+		System.out.println("--------------------");
+		System.out.println("Burglary Alarm Model");
+		System.out.println("--------------------");
+
+		AssignmentProposition aburglary = new AssignmentProposition(
+				ExampleRV.BURGLARY_RV, Boolean.TRUE);
+		AssignmentProposition anotburglary = new AssignmentProposition(
+				ExampleRV.BURGLARY_RV, Boolean.FALSE);
+		AssignmentProposition anotearthquake = new AssignmentProposition(
+				ExampleRV.EARTHQUAKE_RV, Boolean.FALSE);
+		AssignmentProposition aalarm = new AssignmentProposition(
+				ExampleRV.ALARM_RV, Boolean.TRUE);
+		AssignmentProposition anotalarm = new AssignmentProposition(
+				ExampleRV.ALARM_RV, Boolean.FALSE);
+		AssignmentProposition ajohnCalls = new AssignmentProposition(
+				ExampleRV.JOHN_CALLS_RV, Boolean.TRUE);
+		AssignmentProposition amaryCalls = new AssignmentProposition(
+				ExampleRV.MARY_CALLS_RV, Boolean.TRUE);
+
+		// AIMA3e pg. 514
+		System.out.println("P(j,m,a,~b,~e) = "
+				+ model.prior(ajohnCalls, amaryCalls, aalarm, anotburglary,
+						anotearthquake));
+		System.out.println("P(j,m,~a,~b,~e) = "
+				+ model.prior(ajohnCalls, amaryCalls, anotalarm, anotburglary,
+						anotearthquake));
+
+		// AIMA3e. pg. 514
+		// P<>(Alarm | JohnCalls = true, MaryCalls = true, Burglary = false,
+		// Earthquake = false)
+		// = <0.558, 0.442>
 		System.out
-				.println("Using the Bayesian Network from page 510 of AIMA 2nd Edition generates");
-		Hashtable<?, ?> table = net.getPriorSample();
-		System.out.println(table.toString());
+				.println("P<>(Alarm | JohnCalls = true, MaryCalls = true, Burglary = false, Earthquake = false) = "
+						+ model.posteriorDistribution(ExampleRV.ALARM_RV,
+								ajohnCalls, amaryCalls, anotburglary,
+								anotearthquake));
+
+		// AIMA3e pg. 523
+		// P<>(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
+		System.out
+				.println("P<>(Burglary | JohnCalls = true, MaryCalls = true) = "
+						+ model.posteriorDistribution(ExampleRV.BURGLARY_RV,
+								ajohnCalls, amaryCalls));
+
+		// AIMA3e pg. 528
+		// P<>(JohnCalls | Burglary = true)
+		System.out.println("P<>(JohnCalls | Burglary = true) = "
+				+ model.posteriorDistribution(ExampleRV.JOHN_CALLS_RV,
+						aburglary));
 	}
 
-	private static void rejectionSamplingDemo() {
-		BayesNet net = createWetGrassNetwork();
-		Hashtable<String, Boolean> evidence = new Hashtable<String, Boolean>();
-		evidence.put("Sprinkler", Boolean.TRUE);
-		double[] results = net.rejectionSample("Rain", evidence, 100);
-		System.out.println("\nRejectionSampling Demo\n");
-		System.out
-				.println("Using the Bayesian Network from page 510 of AIMA 2nd Edition ");
-		System.out
-				.println("and querying for P(Rain|Sprinkler=true) using 100 samples gives");
-		System.out.println(string(results));
-
+	private static void printUtility(MDPUtilityFunction<CellWorldPosition> uf,
+			int i, int j) {
+		System.out.println("Utility of (" + i + " , " + j + " ) "
+				+ uf.getUtility(new CellWorldPosition(i, j)));
 	}
 
-	private static void likelihoodWeightingDemo() {
-		BayesNet net = createWetGrassNetwork();
-		Hashtable<String, Boolean> evidence = new Hashtable<String, Boolean>();
-		evidence.put("Sprinkler", Boolean.TRUE);
-		double[] results = net.likelihoodWeighting("Rain", evidence, 100);
-		System.out.println("\nLikelihoodWeighting Demo\n");
-		System.out
-				.println("Using the Bayesian Network from page 510 of AIMA 2nd Edition ");
-		System.out
-				.println("and querying for P(Rain|Sprinkler=true) using 100 samples gives");
-		System.out.println(string(results));
+	private static void printPolicy(int i, int j,
+			MDPPolicy<CellWorldPosition, String> policy) {
+		System.out.println("Reccomended Action for (" + i + " , " + j
+				+ " )  =  " + policy.getAction(new CellWorldPosition(i, j)));
 
 	}
-
-	private static void mcmcAskDemo() {
-		BayesNet net = createWetGrassNetwork();
-		Hashtable<String, Boolean> evidence = new Hashtable<String, Boolean>();
-		evidence.put("Sprinkler", Boolean.TRUE);
-		double[] results = net.mcmcAsk("Rain", evidence, 100);
-		System.out.println("\nMCMCAsk Demo\n");
-		System.out
-				.println("Using the Bayesian Network from page 510 of AIMA 2nd Edition ");
-		System.out
-				.println("and querying for P(Rain|Sprinkler=true) using 100 samples gives");
-		System.out.println(string(results));
-
-	}
-
-	public static void enumerationAskDemo() {
-		System.out.println("\nEnumerationAsk Demo\n");
-		Query q = new Query("Burglary",
-				new String[] { "JohnCalls", "MaryCalls" }, new boolean[] {
-						true, true });
-		double[] probs = EnumerationAsk.ask(q, createBurglaryNetwork());
-		System.out
-				.println("Using the Burglary BayesNet from page 494 of AIMA 2nd Edition");
-		System.out
-				.println("Querying the probability of Burglary|JohnCalls=true, MaryCalls=true gives "
-						+ string(probs));
-
-	}
-
-	private static BayesNet createBurglaryNetwork() {
-		BayesNetNode burglary = new BayesNetNode("Burglary");
-		BayesNetNode earthquake = new BayesNetNode("EarthQuake");
-		BayesNetNode alarm = new BayesNetNode("Alarm");
-		BayesNetNode johnCalls = new BayesNetNode("JohnCalls");
-		BayesNetNode maryCalls = new BayesNetNode("MaryCalls");
-
-		alarm.influencedBy(burglary, earthquake);
-		johnCalls.influencedBy(alarm);
-		maryCalls.influencedBy(alarm);
-
-		burglary.setProbability(true, 0.001);// TODO behaviour changes if
-		// root node
-		earthquake.setProbability(true, 0.002);
-
-		alarm.setProbability(true, true, 0.95);
-		alarm.setProbability(true, false, 0.94);
-		alarm.setProbability(false, true, 0.29);
-		alarm.setProbability(false, false, 0.001);
-
-		johnCalls.setProbability(true, 0.90);
-		johnCalls.setProbability(false, 0.05);
-
-		maryCalls.setProbability(true, 0.70);
-		maryCalls.setProbability(false, 0.01);
-
-		BayesNet net = new BayesNet(burglary, earthquake);
-		return net;
-	}
-
-	private static BayesNet createWetGrassNetwork() {
-		BayesNetNode cloudy = new BayesNetNode("Cloudy");
-		BayesNetNode sprinkler = new BayesNetNode("Sprinkler");
-		BayesNetNode rain = new BayesNetNode("Rain");
-		BayesNetNode wetGrass = new BayesNetNode("WetGrass");
-
-		sprinkler.influencedBy(cloudy);
-		rain.influencedBy(cloudy);
-		wetGrass.influencedBy(rain, sprinkler);
-
-		cloudy.setProbability(true, 0.5);
-		sprinkler.setProbability(true, 0.10);
-		sprinkler.setProbability(false, 0.50);
-
-		rain.setProbability(true, 0.8);
-		rain.setProbability(false, 0.2);
-
-		wetGrass.setProbability(true, true, 0.99);
-		wetGrass.setProbability(true, false, 0.90);
-		wetGrass.setProbability(false, true, 0.90);
-		wetGrass.setProbability(false, false, 0.00);
-
-		BayesNet net = new BayesNet(cloudy);
-		return net;
-	}
-
-	private static String string(double[] probs) {
-		return " [ " + probs[0] + " , " + probs[1] + " ] ";
-	}
-
 }
