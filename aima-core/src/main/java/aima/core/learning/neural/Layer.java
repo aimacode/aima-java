@@ -32,8 +32,9 @@ public class Layer {
 		this.weightMatrix = weightMatrix;
 		lastWeightUpdateMatrix = new Matrix(weightMatrix.getRowDimension(),
 				weightMatrix.getColumnDimension());
-		penultimateWeightUpdateMatrix = new Matrix(weightMatrix
-				.getRowDimension(), weightMatrix.getColumnDimension());
+		penultimateWeightUpdateMatrix = new Matrix(
+				weightMatrix.getRowDimension(),
+				weightMatrix.getColumnDimension());
 
 		this.biasVector = biasVector;
 		lastBiasUpdateVector = new Vector(biasVector.getRowDimension());
@@ -48,8 +49,9 @@ public class Layer {
 		this.weightMatrix = new Matrix(numberOfNeurons, numberOfInputs);
 		lastWeightUpdateMatrix = new Matrix(weightMatrix.getRowDimension(),
 				weightMatrix.getColumnDimension());
-		penultimateWeightUpdateMatrix = new Matrix(weightMatrix
-				.getRowDimension(), weightMatrix.getColumnDimension());
+		penultimateWeightUpdateMatrix = new Matrix(
+				weightMatrix.getRowDimension(),
+				weightMatrix.getColumnDimension());
 
 		this.biasVector = new Vector(numberOfNeurons);
 		lastBiasUpdateVector = new Vector(biasVector.getRowDimension());

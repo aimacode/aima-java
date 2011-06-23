@@ -93,8 +93,8 @@ public class EnumerationAsk implements BayesInference {
 				for (int i = 0; i < X.length; i++) {
 					e.setExtendedValue(X[i], possibleWorld.get(X[i]));
 				}
-				Q.setValue(cnt, enumerateAll(bn
-						.getVariablesInTopologicalOrder(), e));
+				Q.setValue(cnt,
+						enumerateAll(bn.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
 

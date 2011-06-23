@@ -10,7 +10,7 @@ import aima.core.probability.bayes.exact.EnumerationAsk;
  * @author Ravi Mohan
  */
 public class EnumerationAskTest extends BayesianInferenceTest {
-	
+
 	@Before
 	public void setUp() {
 		bayesInference = new EnumerationAsk();

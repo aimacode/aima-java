@@ -26,7 +26,7 @@ import aima.test.core.unit.environment.vacuum.VacuumEnvironmentTest;
 import aima.test.core.unit.environment.xyenv.XYEnvironmentTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { CellWorldTest.class, EightPuzzleBoardMoveTest.class,
+@Suite.SuiteClasses({ CellWorldTest.class, EightPuzzleBoardMoveTest.class,
 		EightPuzzleBoardTest.class, EightPuzzleFunctionFactoryTest.class,
 		MisplacedTileHeuristicFunctionTest.class, TicTacToeTest.class,
 		MapAgentTest.class, MapEnvironmentTest.class,

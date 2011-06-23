@@ -17,7 +17,7 @@ import aima.test.core.unit.logic.fol.parsing.FOLLexerTest;
 import aima.test.core.unit.logic.fol.parsing.FOLParserTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { DemodulationTest.class, FOLBCAskTest.class,
+@Suite.SuiteClasses({ DemodulationTest.class, FOLBCAskTest.class,
 		FOLFCAskTest.class, FOLModelEliminationTest.class,
 		FOLOTTERLikeTheoremProverTest.class, FOLTFMResolutionTest.class,
 		ParamodulationTest.class, ChainTest.class, ClauseTest.class,

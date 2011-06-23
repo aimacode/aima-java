@@ -4,9 +4,7 @@ package aima.core.agent;
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.1, page 35.<br>
  * 
  * Figure 2.1 Agents interact with environments through sensors and actuators.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

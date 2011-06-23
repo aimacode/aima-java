@@ -15,7 +15,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	/** Creates a strategy which is by default equivalent to plain backtracking. */
 	public ImprovedBacktrackingStrategy() {
 	}
-	
+
 	/** Creates a backtracking strategy with the specified features. */
 	public ImprovedBacktrackingStrategy(boolean enableMRV, boolean enableDeg,
 			boolean enableAC3, boolean enableLCV) {
@@ -25,8 +25,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 			setInference(Inference.AC3);
 		enableLCV(enableLCV);
 	}
-	
-	
+
 	/** Selects the algorithm for SELECT-UNASSIGNED-VARIABLE */
 	public void setVariableSelection(Selection sStrategy) {
 		selectionStrategy = sStrategy;
@@ -111,8 +110,8 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 		case FORWARD_CHECKING:
 			return doForwardChecking(var, assignment, csp);
 		case AC3:
-			return new AC3Strategy().reduceDomains(var, assignment
-					.getAssignment(var), csp);
+			return new AC3Strategy().reduceDomains(var,
+					assignment.getAssignment(var), csp);
 		default:
 			return new DomainRestoreInfo().compactify();
 		}

@@ -24,10 +24,9 @@ public class FOLKnowledgeBaseFactory {
 
 	public static FOLKnowledgeBase createWeaponsKnowledgeBase(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.weaponsDomain(), infp);
-		kb
-				.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(
+				DomainFactory.weaponsDomain(), infp);
+		kb.tell("( (((American(x) AND Weapon(y)) AND Sells(x,y,z)) AND Hostile(z)) => Criminal(x))");
 		kb.tell(" Owns(Nono, M1)");
 		kb.tell(" Missile(M1)");
 		kb.tell("((Missile(x) AND Owns(Nono,x)) => Sells(West,x,Nono))");
@@ -41,13 +40,11 @@ public class FOLKnowledgeBaseFactory {
 
 	public static FOLKnowledgeBase createLovesAnimalKnowledgeBase(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.lovesAnimalDomain(), infp);
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(
+				DomainFactory.lovesAnimalDomain(), infp);
 
-		kb
-				.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
-		kb
-				.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
+		kb.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
+		kb.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
 		kb.tell("FORALL x (Animal(x) => Loves(Jack, x))");
 		kb.tell("(Kills(Jack, Tuna) OR Kills(Curiosity, Tuna))");
 		kb.tell("Cat(Tuna)");
@@ -58,8 +55,8 @@ public class FOLKnowledgeBaseFactory {
 
 	public static FOLKnowledgeBase createRingOfThievesKnowledgeBase(
 			InferenceProcedure infp) {
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.ringOfThievesDomain(), infp);
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(
+				DomainFactory.ringOfThievesDomain(), infp);
 
 		// s(x) => ~c(x) One who skis never gets caught
 		kb.tell("(Skis(x) => NOT(Caught(x)))");

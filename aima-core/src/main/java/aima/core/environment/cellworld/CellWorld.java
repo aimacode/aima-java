@@ -146,8 +146,8 @@ public class CellWorld implements MDPSource<CellWorldPosition, String> {
 
 	private String determineDirectionOfActualMovement(
 			String commandedDirection, Randomizer r) {
-		return determineDirectionOfActualMovement(commandedDirection, r
-				.nextDouble());
+		return determineDirectionOfActualMovement(commandedDirection,
+				r.nextDouble());
 
 	}
 
@@ -211,12 +211,12 @@ public class CellWorld implements MDPSource<CellWorldPosition, String> {
 				actionDesired, 0.95);
 
 		Hashtable<String, CellWorldPosition> actionsToPositions = new Hashtable<String, CellWorldPosition>();
-		actionsToPositions.put(actionDesired, moveFrom(startingPosition,
-				actionDesired));
-		actionsToPositions.put(firstRightAngledAction, moveFrom(
-				startingPosition, firstRightAngledAction));
-		actionsToPositions.put(secondRightAngledAction, moveFrom(
-				startingPosition, secondRightAngledAction));
+		actionsToPositions.put(actionDesired,
+				moveFrom(startingPosition, actionDesired));
+		actionsToPositions.put(firstRightAngledAction,
+				moveFrom(startingPosition, firstRightAngledAction));
+		actionsToPositions.put(secondRightAngledAction,
+				moveFrom(startingPosition, secondRightAngledAction));
 
 		Hashtable<CellWorldPosition, Double> positionsToProbability = new Hashtable<CellWorldPosition, Double>();
 		for (CellWorldPosition p : actionsToPositions.values()) {

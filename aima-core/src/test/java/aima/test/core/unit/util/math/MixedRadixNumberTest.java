@@ -50,9 +50,9 @@ public class MixedRadixNumberTest {
 				6 }).getMaxAllowedValue()));
 		Assert.assertEquals(359, (new MixedRadixNumber(0, new int[] { 6, 5, 4,
 				3 }).getMaxAllowedValue()));
-		Assert.assertEquals(359, (new MixedRadixNumber(
-				new int[] { 6, 5, 4, 3 }, new int[] { 6, 5, 4, 3 })
-				.getMaxAllowedValue()));
+		Assert.assertEquals(359,
+				(new MixedRadixNumber(new int[] { 6, 5, 4, 3 }, new int[] { 6,
+						5, 4, 3 }).getMaxAllowedValue()));
 	}
 
 	@Test
@@ -135,34 +135,30 @@ public class MixedRadixNumberTest {
 		MixedRadixNumber mrn;
 		//
 		mrn = new MixedRadixNumber(0, new int[] { 3, 3, 2, 2 });
-		Assert
-				.assertEquals(0, mrn
-						.getCurrentValueFor(new int[] { 0, 0, 0, 0 }));
+		Assert.assertEquals(0, mrn.getCurrentValueFor(new int[] { 0, 0, 0, 0 }));
 		//
 		mrn = new MixedRadixNumber(35, new int[] { 3, 3, 2, 2 });
-		Assert.assertEquals(35, mrn
-				.getCurrentValueFor(new int[] { 2, 2, 1, 1 }));
+		Assert.assertEquals(35,
+				mrn.getCurrentValueFor(new int[] { 2, 2, 1, 1 }));
 		//
 		mrn = new MixedRadixNumber(25, new int[] { 3, 3, 2, 2 });
-		Assert.assertEquals(25, mrn
-				.getCurrentValueFor(new int[] { 1, 2, 0, 1 }));
+		Assert.assertEquals(25,
+				mrn.getCurrentValueFor(new int[] { 1, 2, 0, 1 }));
 		//
 		mrn = new MixedRadixNumber(17, new int[] { 3, 3, 2, 2 });
-		Assert.assertEquals(17, mrn
-				.getCurrentValueFor(new int[] { 2, 2, 1, 0 }));
+		Assert.assertEquals(17,
+				mrn.getCurrentValueFor(new int[] { 2, 2, 1, 0 }));
 		//
 		mrn = new MixedRadixNumber(8, new int[] { 3, 3, 2, 2 });
-		Assert
-				.assertEquals(8, mrn
-						.getCurrentValueFor(new int[] { 2, 2, 0, 0 }));
+		Assert.assertEquals(8, mrn.getCurrentValueFor(new int[] { 2, 2, 0, 0 }));
 		//
 		mrn = new MixedRadixNumber(359, new int[] { 3, 4, 5, 6 });
-		Assert.assertEquals(359, mrn
-				.getCurrentValueFor(new int[] { 2, 3, 4, 5 }));
+		Assert.assertEquals(359,
+				mrn.getCurrentValueFor(new int[] { 2, 3, 4, 5 }));
 		//
 		mrn = new MixedRadixNumber(359, new int[] { 6, 5, 4, 3 });
-		Assert.assertEquals(359, mrn
-				.getCurrentValueFor(new int[] { 5, 4, 3, 2 }));
+		Assert.assertEquals(359,
+				mrn.getCurrentValueFor(new int[] { 5, 4, 3, 2 }));
 	}
 
 	@Test

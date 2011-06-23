@@ -11,8 +11,8 @@ import aima.core.agent.impl.NoOpAction;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.12, page 51.
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.12, page
+ * 51. <code>
  * function MODEL-BASED-REFLEX-AGENT(percept) returns an action
  *   persistent: state, the agent's current conception of the world state
  *               model, a description of how the next state depends on current state and action
@@ -23,12 +23,10 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  *   rule   <- RULE-MATCH(state, rules)
  *   action <- rule.ACTION
  *   return action
- * </code>
- * Figure 2.12 A model-based reflex agent. It keeps track of the current state of the world
- * using an internal model. It then chooses an action in the same way as the reflex agent.
- */
-
-/**
+ * </code> Figure 2.12 A model-based reflex agent. It keeps track of the current
+ * state of the world using an internal model. It then chooses an action in the
+ * same way as the reflex agent.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

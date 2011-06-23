@@ -162,19 +162,19 @@ public class ReinforcementLearningTest {
 		String action = qla.decideAction(new MDPPerception<CellWorldPosition>(
 				startingPosition, -0.04));
 		Assert.assertEquals(CellWorld.LEFT, action);
-		Assert.assertEquals(0.0, qla.getQTable().getQValue(startingPosition,
-				action), 0.001);
+		Assert.assertEquals(0.0,
+				qla.getQTable().getQValue(startingPosition, action), 0.001);
 
 		qla.execute(action, alwaysLessThanEightyPercent);
 		Assert.assertEquals(new CellWorldPosition(1, 3), qla.getCurrentState());
 		Assert.assertEquals(-0.04, qla.getCurrentReward(), 0.001);
-		Assert.assertEquals(0.0, qla.getQTable().getQValue(startingPosition,
-				action), 0.001);
+		Assert.assertEquals(0.0,
+				qla.getQTable().getQValue(startingPosition, action), 0.001);
 		String action2 = qla.decideAction(new MDPPerception<CellWorldPosition>(
 				new CellWorldPosition(1, 3), -0.04));
 
-		Assert.assertEquals(-0.04, qla.getQTable().getQValue(startingPosition,
-				action), 0.001);
+		Assert.assertEquals(-0.04,
+				qla.getQTable().getQValue(startingPosition, action), 0.001);
 	}
 
 	@Test
@@ -192,12 +192,12 @@ public class ReinforcementLearningTest {
 		qla.execute(action, betweenEightyANdNinetyPercent);
 		Assert.assertEquals(new CellWorldPosition(2, 4), qla.getCurrentState());
 		Assert.assertEquals(-1.0, qla.getCurrentReward(), 0.001);
-		Assert.assertEquals(0.0, qla.getQTable().getQValue(startingPosition,
-				action), 0.001);
+		Assert.assertEquals(0.0,
+				qla.getQTable().getQValue(startingPosition, action), 0.001);
 		String action2 = qla.decideAction(new MDPPerception<CellWorldPosition>(
 				new CellWorldPosition(2, 4), -1));
 		Assert.assertNull(action2);
-		Assert.assertEquals(-1.0, qla.getQTable().getQValue(startingPosition,
-				action), 0.001);
+		Assert.assertEquals(-1.0,
+				qla.getQTable().getQValue(startingPosition, action), 0.001);
 	}
 }

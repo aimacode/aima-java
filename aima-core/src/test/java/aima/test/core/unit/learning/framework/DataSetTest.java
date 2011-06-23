@@ -72,8 +72,8 @@ public class DataSetTest {
 		Example first = ds.getExample(0);
 		Assert.assertEquals(YES, first.getAttributeValueAsString("alternate"));
 		Assert.assertEquals("$$$", first.getAttributeValueAsString("price"));
-		Assert.assertEquals("0-10", first
-				.getAttributeValueAsString("wait_estimate"));
+		Assert.assertEquals("0-10",
+				first.getAttributeValueAsString("wait_estimate"));
 		Assert.assertEquals(YES, first.getAttributeValueAsString("will_wait"));
 		Assert.assertEquals(YES, first.targetValue());
 	}
@@ -88,8 +88,8 @@ public class DataSetTest {
 			throws Exception {
 		DataSet ds = DataSetFactory.getIrisDataSet();
 		Example first = ds.getExample(0);
-		Assert.assertEquals("5.1", first
-				.getAttributeValueAsString("sepal_length"));
+		Assert.assertEquals("5.1",
+				first.getAttributeValueAsString("sepal_length"));
 	}
 
 	@Test

@@ -22,7 +22,7 @@ import aima.test.core.unit.search.uninformed.IterativeDeepeningSearchTest;
 import aima.test.core.unit.search.uninformed.UniformCostSearchTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AssignmentTest.class, CSPTest.class, MapCSPTest.class,
+@Suite.SuiteClasses({ AssignmentTest.class, CSPTest.class, MapCSPTest.class,
 		AStarSearchTest.class, GreedyBestFirstSearchTest.class,
 		RecursiveBestFirstSearchTest.class, SimulatedAnnealingSearchTest.class,
 		LRTAStarAgentTest.class, OnlineDFSAgentTest.class,

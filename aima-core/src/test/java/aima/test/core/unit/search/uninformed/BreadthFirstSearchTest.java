@@ -27,10 +27,10 @@ public class BreadthFirstSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("1665", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("8.0", agent.getInstrumentation().getProperty(
-				"pathCost"));
+		Assert.assertEquals("1665",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("8.0",
+				agent.getInstrumentation().getProperty("pathCost"));
 	}
 
 	@Test
@@ -43,10 +43,10 @@ public class BreadthFirstSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		Assert.assertEquals(0, actions.size());
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("0", agent.getInstrumentation().getProperty(
-				"pathCost"));
+		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("0",
+				agent.getInstrumentation().getProperty("pathCost"));
 	}
 
 	//

@@ -7,7 +7,7 @@ import aima.test.core.unit.logic.fol.FOLTestSuite;
 import aima.test.core.unit.logic.propositional.PropositionalTestSuite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { FOLTestSuite.class, PropositionalTestSuite.class })
+@Suite.SuiteClasses({ FOLTestSuite.class, PropositionalTestSuite.class })
 public class LogicTestSuite {
 
 }

@@ -4,10 +4,7 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
  * Base abstract class for describing conditions.
- *
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

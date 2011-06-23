@@ -71,9 +71,7 @@ public class FullJointDistributionBurglaryAlarmModel extends
 				0.009462047481,
 				// B = f, E = f, A = f, J = f, M = f
 				0.936742700619 }, ExampleRV.BURGLARY_RV,
-				ExampleRV.EARTHQUAKE_RV,
-				ExampleRV.ALARM_RV,
-				ExampleRV.JOHN_CALLS_RV,
-				ExampleRV.MARY_CALLS_RV);
+				ExampleRV.EARTHQUAKE_RV, ExampleRV.ALARM_RV,
+				ExampleRV.JOHN_CALLS_RV, ExampleRV.MARY_CALLS_RV);
 	}
 }

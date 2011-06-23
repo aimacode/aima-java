@@ -7,13 +7,14 @@ import java.util.List;
 import aima.core.util.datastructure.Pair;
 
 /**
- * Provides informations which might be useful for a caller of a
- * constraint propagation algorithm. It maintains old domains for
- * variables and provides means to restore the initial state of the
- * CSP (before domain reduction started). Additionally, a flag indicates
- * whether an empty domain has been found during propagation. 
+ * Provides informations which might be useful for a caller of a constraint
+ * propagation algorithm. It maintains old domains for variables and provides
+ * means to restore the initial state of the CSP (before domain reduction
+ * started). Additionally, a flag indicates whether an empty domain has been
+ * found during propagation.
+ * 
  * @author Ruediger Lunde
- *
+ * 
  */
 public class DomainRestoreInfo {
 	private List<Pair<Variable, Domain>> savedDomains;
@@ -67,12 +68,12 @@ public class DomainRestoreInfo {
 	public List<Pair<Variable, Domain>> getSavedDomains() {
 		return savedDomains;
 	}
-	
+
 	public void restoreDomains(CSP csp) {
 		for (Pair<Variable, Domain> pair : getSavedDomains())
 			csp.setDomain(pair.getFirst(), pair.getSecond());
 	}
-	
+
 	public String toString() {
 		StringBuffer result = new StringBuffer();
 		for (Pair<Variable, Domain> pair : savedDomains)

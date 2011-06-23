@@ -222,8 +222,7 @@ public class FOLParserTest {
 	@Test
 	public void testConnectedImplication() {
 		parser = new FOLParser(DomainFactory.weaponsDomain());
-		parser
-				.parse("((Missile(m) AND Owns(Nono,m)) => Sells(West , m ,Nono))");
+		parser.parse("((Missile(m) AND Owns(Nono,m)) => Sells(West , m ,Nono))");
 	}
 
 	//

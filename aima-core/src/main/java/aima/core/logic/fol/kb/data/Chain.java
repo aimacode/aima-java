@@ -69,8 +69,8 @@ public class Chain {
 		if (0 == literals.size()) {
 			return _emptyLiteralsList;
 		}
-		return Collections.unmodifiableList(literals
-				.subList(1, literals.size()));
+		return Collections
+				.unmodifiableList(literals.subList(1, literals.size()));
 	}
 
 	public int getNumberLiterals() {

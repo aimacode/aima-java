@@ -21,7 +21,7 @@ import aima.core.logic.fol.parsing.ast.TermEquality;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Abstract base class for Demodulation and Paramodulation algorithms. 
+ * Abstract base class for Demodulation and Paramodulation algorithms.
  * 
  * @author Ciaran O'Reilly
  * 

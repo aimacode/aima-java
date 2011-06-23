@@ -4,11 +4,8 @@ import aima.core.agent.Action;
 import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
- *  A simple implementation of a "condition-action rule".
- *
- */
-
-/**
+ * A simple implementation of a "condition-action rule".
+ * 
  * @author Ciaran O'Reilly
  * 
  */

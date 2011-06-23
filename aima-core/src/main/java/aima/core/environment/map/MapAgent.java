@@ -62,8 +62,8 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	protected State updateState(Percept p) {
 		DynamicPercept dp = (DynamicPercept) p;
 
-		state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp
-				.getAttribute(DynAttributeNames.PERCEPT_IN));
+		state.setAttribute(DynAttributeNames.AGENT_LOCATION,
+				dp.getAttribute(DynAttributeNames.PERCEPT_IN));
 
 		return state;
 	}
@@ -86,8 +86,9 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected Problem formulateProblem(Object goal) {
-		return new BidirectionalMapProblem(map, (String) state
-				.getAttribute(DynAttributeNames.AGENT_LOCATION), (String) goal);
+		return new BidirectionalMapProblem(map,
+				(String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
+				(String) goal);
 	}
 
 	@Override

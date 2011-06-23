@@ -7,7 +7,8 @@ public class FullJointDistributionToothacheCavityCatchWeatherModel extends
 
 	public FullJointDistributionToothacheCavityCatchWeatherModel() {
 		super(new double[] {
-		// Toothache = true, Cavity = true, Catch = true, Weather = sunny
+				// Toothache = true, Cavity = true, Catch = true, Weather =
+				// sunny
 				0.0648,
 				// Toothache = true, Cavity = true, Catch = true, Weather = rain
 				0.0108,

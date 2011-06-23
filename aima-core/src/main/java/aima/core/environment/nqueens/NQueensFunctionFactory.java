@@ -95,9 +95,7 @@ public class NQueensFunctionFactory {
 				for (int j = 0; j < board.getSize(); j++) {
 					XYLocation loc = new XYLocation(i, j);
 					if (!board.queenExistsAt(loc))
-						actions
-								.add(new QueenAction(QueenAction.MOVE_QUEEN,
-										loc));
+						actions.add(new QueenAction(QueenAction.MOVE_QUEEN, loc));
 				}
 			return actions;
 		}

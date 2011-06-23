@@ -97,8 +97,10 @@ public class TicTacToe extends Game {
 
 			}
 			retVal.put("board", newBoard);
-			retVal.put("utility", new Integer(computeUtility(newBoard,
-					getPlayerToMove(getState()))));
+			retVal.put(
+					"utility",
+					new Integer(computeUtility(newBoard,
+							getPlayerToMove(getState()))));
 			retVal.put("level", new Integer(getLevel(state) + 1));
 			// presentState = retVal;
 		}

@@ -33,10 +33,9 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert
-				.assertEquals(
-						"Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
-						envChanges.toString());
+		Assert.assertEquals(
+				"Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
+				envChanges.toString());
 	}
 
 	@Test
@@ -50,10 +49,9 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert
-				.assertEquals(
-						"Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
-						envChanges.toString());
+		Assert.assertEquals(
+				"Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
+				envChanges.toString());
 	}
 
 	@Test
@@ -67,10 +65,9 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert
-				.assertEquals(
-						"Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
-						envChanges.toString());
+		Assert.assertEquals(
+				"Action[name==Suck]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]",
+				envChanges.toString());
 	}
 
 	@Test
@@ -84,9 +81,8 @@ public class ReflexVacuumAgentTest {
 
 		tve.step(8);
 
-		Assert
-				.assertEquals(
-						"Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
-						envChanges.toString());
+		Assert.assertEquals(
+				"Action[name==Suck]Action[name==Right]Action[name==Suck]Action[name==Left]Action[name==Right]Action[name==Left]Action[name==Right]Action[name==Left]",
+				envChanges.toString());
 	}
 }

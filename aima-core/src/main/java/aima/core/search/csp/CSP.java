@@ -68,9 +68,8 @@ public class CSP {
 	}
 
 	/**
-	 * Replaces the domain of the specified variable by new domain,
-	 * which contains all values of the old domain except the specified
-	 * value.
+	 * Replaces the domain of the specified variable by new domain, which
+	 * contains all values of the old domain except the specified value.
 	 */
 	public void removeValueFromDomain(Variable var, Object value) {
 		Domain currDomain = getDomain(var);

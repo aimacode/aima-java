@@ -11,7 +11,6 @@ import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.domain.FiniteDomain;
 import aima.core.probability.proposition.AssignmentProposition;
-
 import aima.core.util.SetOps;
 import aima.core.util.math.MixedRadixNumber;
 
@@ -363,8 +362,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					"Divisor must be a subset of the dividend.");
 		}
 
-		final ProbabilityTable quotient = new ProbabilityTable(randomVarInfo
-				.keySet());
+		final ProbabilityTable quotient = new ProbabilityTable(
+				randomVarInfo.keySet());
 
 		if (1 == divisor.getValues().length) {
 			double d = divisor.getValues()[0];
@@ -445,16 +444,16 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public ProbabilityTable pointwiseProduct(final ProbabilityTable multiplier) {
 		Set<RandomVariable> prodVars = SetOps.union(randomVarInfo.keySet(),
 				multiplier.randomVarInfo.keySet());
-		return pointwiseProductPOS(multiplier, prodVars
-				.toArray(new RandomVariable[prodVars.size()]));
+		return pointwiseProductPOS(multiplier,
+				prodVars.toArray(new RandomVariable[prodVars.size()]));
 	}
 
 	public ProbabilityTable pointwiseProductPOS(
 			final ProbabilityTable multiplier, RandomVariable... prodVarOrder) {
 		final ProbabilityTable product = new ProbabilityTable(prodVarOrder);
 		if (!product.randomVarInfo.keySet().equals(
-				SetOps.union(randomVarInfo.keySet(), multiplier.randomVarInfo
-						.keySet()))) {
+				SetOps.union(randomVarInfo.keySet(),
+						multiplier.randomVarInfo.keySet()))) {
 			throw new IllegalArgumentException(
 					"Specified list deatailing order of mulitplier is inconsistent.");
 		}

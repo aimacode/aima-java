@@ -34,10 +34,9 @@ public class RuleTest {
 
 		Assert.assertEquals(ACTION_INITIATE_BRAKING, r.getAction());
 
-		Assert
-				.assertEquals(
-						"if car-in-front-is-braking==true then Action[name==initiate-braking].",
-						r.toString());
+		Assert.assertEquals(
+				"if car-in-front-is-braking==true then Action[name==initiate-braking].",
+				r.toString());
 
 		Assert.assertEquals(true, r.evaluate(new DynamicPercept(
 				ATTRIBUTE_CAR_IN_FRONT_IS_BRAKING, true)));
@@ -57,10 +56,9 @@ public class RuleTest {
 
 		Assert.assertEquals(ACTION_INITIATE_BRAKING, r.getAction());
 
-		Assert
-				.assertEquals(
-						"if ![car-in-front-is-braking==true] then Action[name==initiate-braking].",
-						r.toString());
+		Assert.assertEquals(
+				"if ![car-in-front-is-braking==true] then Action[name==initiate-braking].",
+				r.toString());
 
 		Assert.assertEquals(false, r.evaluate(new DynamicPercept(
 				ATTRIBUTE_CAR_IN_FRONT_IS_BRAKING, true)));
@@ -81,10 +79,9 @@ public class RuleTest {
 
 		Assert.assertEquals(ACTION_EMERGENCY_BRAKING, r.getAction());
 
-		Assert
-				.assertEquals(
-						"if [car-in-front-is-braking==true && car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
-						r.toString());
+		Assert.assertEquals(
+				"if [car-in-front-is-braking==true && car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
+				r.toString());
 
 		Assert.assertEquals(false, r.evaluate(new DynamicPercept(
 				ATTRIBUTE_CAR_IN_FRONT_IS_BRAKING, true)));
@@ -114,10 +111,9 @@ public class RuleTest {
 
 		Assert.assertEquals(ACTION_EMERGENCY_BRAKING, r.getAction());
 
-		Assert
-				.assertEquals(
-						"if [car-in-front-is-braking==true || car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
-						r.toString());
+		Assert.assertEquals(
+				"if [car-in-front-is-braking==true || car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
+				r.toString());
 
 		Assert.assertEquals(true, r.evaluate(new DynamicPercept(
 				ATTRIBUTE_CAR_IN_FRONT_IS_BRAKING, true)));

@@ -72,7 +72,7 @@ public class Example {
 				numerizedExampleData.put(key, attribute);
 			}
 		}
-		return new Example(numerizedExampleData, numerizedExampleData
-				.get(targetAttribute.name()));
+		return new Example(numerizedExampleData,
+				numerizedExampleData.get(targetAttribute.name()));
 	}
 }

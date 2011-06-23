@@ -213,7 +213,7 @@ public class BidirectionalSearch implements Search {
 
 	//
 	// PRIVATE METHODS
-	//	
+	//
 	private List<Action> retrieveActions(Problem op, Problem rp,
 			Node originalPath, Node reversePath) {
 		List<Action> actions = new ArrayList<Action>();

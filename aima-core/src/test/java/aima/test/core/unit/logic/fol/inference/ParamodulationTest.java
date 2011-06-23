@@ -113,26 +113,21 @@ public class ParamodulationTest {
 		Assert.assertEquals(5, paras.size());
 
 		Iterator<Clause> it = paras.iterator();
-		Assert
-				.assertEquals(
-						"[F(B,B) = C, F(C,A) = D, A = D, P(B,A), Q(A), R(A), R(B), R(C)]",
-						it.next().toString());
-		Assert
-				.assertEquals(
-						"[F(A,F(C,x)) = D, F(B,F(C,x)) = C, A = D, P(F(x,B),x), Q(x), R(F(C,x)), R(A), R(C)]",
-						it.next().toString());
-		Assert
-				.assertEquals(
-						"[F(A,B) = B, F(C,B) = D, A = D, P(C,B), Q(B), R(A), R(B), R(C)]",
-						it.next().toString());
-		Assert
-				.assertEquals(
-						"[F(F(B,y),x) = D, F(A,y) = y, A = D, P(F(x,B),x), Q(x), R(y), R(A), R(C)]",
-						it.next().toString());
-		Assert
-				.assertEquals(
-						"[F(B,y) = C, F(C,x) = D, F(D,y) = y, P(F(x,B),x), Q(x), R(y), R(A), R(C)]",
-						it.next().toString());
+		Assert.assertEquals(
+				"[F(B,B) = C, F(C,A) = D, A = D, P(B,A), Q(A), R(A), R(B), R(C)]",
+				it.next().toString());
+		Assert.assertEquals(
+				"[F(A,F(C,x)) = D, F(B,F(C,x)) = C, A = D, P(F(x,B),x), Q(x), R(F(C,x)), R(A), R(C)]",
+				it.next().toString());
+		Assert.assertEquals(
+				"[F(A,B) = B, F(C,B) = D, A = D, P(C,B), Q(B), R(A), R(B), R(C)]",
+				it.next().toString());
+		Assert.assertEquals(
+				"[F(F(B,y),x) = D, F(A,y) = y, A = D, P(F(x,B),x), Q(x), R(y), R(A), R(C)]",
+				it.next().toString());
+		Assert.assertEquals(
+				"[F(B,y) = C, F(C,x) = D, F(D,y) = y, P(F(x,B),x), Q(x), R(y), R(A), R(C)]",
+				it.next().toString());
 	}
 
 	@Test

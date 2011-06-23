@@ -32,19 +32,20 @@ public class GreedyBestFirstSearchTest {
 			EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 7, 1, 8,
 					0, 4, 6, 2, 3, 5 });
 
-			Problem problem = new Problem(board, EightPuzzleFunctionFactory
-					.getActionsFunction(), EightPuzzleFunctionFactory
-					.getResultFunction(), new EightPuzzleGoalTest());
+			Problem problem = new Problem(board,
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
+					new EightPuzzleGoalTest());
 			Search search = new GreedyBestFirstSearch(new GraphSearch(),
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());
-			Assert.assertEquals("197", agent.getInstrumentation().getProperty(
-					"nodesExpanded"));
-			Assert.assertEquals("140", agent.getInstrumentation().getProperty(
-					"queueSize"));
-			Assert.assertEquals("141", agent.getInstrumentation().getProperty(
-					"maxQueueSize"));
+			Assert.assertEquals("197",
+					agent.getInstrumentation().getProperty("nodesExpanded"));
+			Assert.assertEquals("140",
+					agent.getInstrumentation().getProperty("queueSize"));
+			Assert.assertEquals("141",
+					agent.getInstrumentation().getProperty("maxQueueSize"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Exception thrown.");
@@ -64,17 +65,16 @@ public class GreedyBestFirstSearchTest {
 				new StraightLineDistanceHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
-						agent.getActions().toString());
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
+				agent.getActions().toString());
 		Assert.assertEquals(3, agent.getActions().size());
-		Assert.assertEquals("3", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"queueSize"));
-		Assert.assertEquals("7", agent.getInstrumentation().getProperty(
-				"maxQueueSize"));
+		Assert.assertEquals("3",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("7",
+				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 
 	@Test
@@ -90,16 +90,15 @@ public class GreedyBestFirstSearchTest {
 				new StraightLineDistanceHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
-						agent.getActions().toString());
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
+				agent.getActions().toString());
 		Assert.assertEquals(3, agent.getActions().size());
-		Assert.assertEquals("3", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("4", agent.getInstrumentation().getProperty(
-				"queueSize"));
-		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
-				"maxQueueSize"));
+		Assert.assertEquals("3",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("4",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("5",
+				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 }

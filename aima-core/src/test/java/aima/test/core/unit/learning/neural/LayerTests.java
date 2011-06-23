@@ -317,8 +317,8 @@ public class LayerTests {
 		layer1Sensitivity
 				.sensitivityMatrixFromSucceedingLayer(layer2Sensitivity);
 
-		BackPropLearning.calculateWeightUpdates(layer2Sensitivity, layer1
-				.getLastActivationValues(), 0.1);
+		BackPropLearning.calculateWeightUpdates(layer2Sensitivity,
+				layer1.getLastActivationValues(), 0.1);
 
 		BackPropLearning.calculateBiasUpdates(layer2Sensitivity, 0.1);
 

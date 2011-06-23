@@ -31,7 +31,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 		}
 		// Ensure cannot be modified
 		possibleValues = Collections.unmodifiableSet(possibleValues);
-		
+
 		indexPossibleValues(possibleValues);
 	}
 

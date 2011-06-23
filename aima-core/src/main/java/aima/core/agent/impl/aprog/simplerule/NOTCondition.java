@@ -4,10 +4,7 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
  * Implementation of a NOT condition.
- *
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

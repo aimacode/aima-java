@@ -15,9 +15,7 @@ public class DynamicPerceptTest {
 
 		p = new DynamicPercept("key1", "value1", "key2", "value2");
 
-		Assert
-				.assertEquals("Percept[key1==value1, key2==value2]", p
-						.toString());
+		Assert.assertEquals("Percept[key1==value1, key2==value2]", p.toString());
 	}
 
 	@Test

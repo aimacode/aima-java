@@ -25,7 +25,6 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
-import aima.core.search.uninformed.UniformCostSearch;
 
 public class AStarSearchTest {
 
@@ -41,25 +40,26 @@ public class AStarSearchTest {
 			EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 7, 1, 8,
 					0, 4, 6, 2, 3, 5 });
 
-			Problem problem = new Problem(board, EightPuzzleFunctionFactory
-					.getActionsFunction(), EightPuzzleFunctionFactory
-					.getResultFunction(), new EightPuzzleGoalTest());
+			Problem problem = new Problem(board,
+					EightPuzzleFunctionFactory.getActionsFunction(),
+					EightPuzzleFunctionFactory.getResultFunction(),
+					new EightPuzzleGoalTest());
 			Search search = new AStarSearch(new GraphSearch(),
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
-			Assert.assertEquals("926", agent.getInstrumentation().getProperty(
-					"nodesExpanded"));
-			Assert.assertEquals("534", agent.getInstrumentation().getProperty(
-					"queueSize"));
-			Assert.assertEquals("535", agent.getInstrumentation().getProperty(
-					"maxQueueSize"));
+			Assert.assertEquals("926",
+					agent.getInstrumentation().getProperty("nodesExpanded"));
+			Assert.assertEquals("534",
+					agent.getInstrumentation().getProperty("queueSize"));
+			Assert.assertEquals("535",
+					agent.getInstrumentation().getProperty("maxQueueSize"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Exception thrown");
 		}
 	}
-	
+
 	@Test
 	public void testAIMA3eFigure3_15() throws Exception {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
@@ -76,12 +76,11 @@ public class AStarSearchTest {
 
 		List<Action> actions = agent.getActions();
 
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
-						actions.toString());
-		Assert.assertEquals("278.0", search.getMetrics().get(
-				QueueSearch.METRIC_PATH_COST));
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				actions.toString());
+		Assert.assertEquals("278.0",
+				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
 	}
 
 	@Test
@@ -97,17 +96,16 @@ public class AStarSearchTest {
 				new StraightLineDistanceHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
-						agent.getActions().toString());
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				agent.getActions().toString());
 		Assert.assertEquals(4, agent.getActions().size());
-		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("10", agent.getInstrumentation().getProperty(
-				"queueSize"));
-		Assert.assertEquals("11", agent.getInstrumentation().getProperty(
-				"maxQueueSize"));
+		Assert.assertEquals("5",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("10",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("11",
+				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 
 	@Test
@@ -123,19 +121,18 @@ public class AStarSearchTest {
 				new StraightLineDistanceHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
-						agent.getActions().toString());
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				agent.getActions().toString());
 		Assert.assertEquals(4, agent.getActions().size());
-		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("4", agent.getInstrumentation().getProperty(
-				"queueSize"));
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"maxQueueSize"));
+		Assert.assertEquals("5",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("4",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
-	
+
 	@Test
 	public void testCheckFrontierPathCost() throws Exception {
 		ExtendableMap map = new ExtendableMap();
@@ -149,9 +146,8 @@ public class AStarSearchTest {
 		Problem problem = new Problem("start",
 				MapFunctionFactory.getActionsFunction(map),
 				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						"goal"),
-				new MapStepCostFunction(map));
-		
+						"goal"), new MapStepCostFunction(map));
+
 		HeuristicFunction hf = new HeuristicFunction() {
 			public double h(Object state) {
 				return 0; // Don't have one for this test
@@ -162,11 +158,10 @@ public class AStarSearchTest {
 
 		List<Action> actions = agent.getActions();
 
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
-						actions.toString());
-		Assert.assertEquals("5.5", search.getMetrics().get(
-				QueueSearch.METRIC_PATH_COST));	
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
+				actions.toString());
+		Assert.assertEquals("5.5",
+				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
 	}
 }

@@ -184,19 +184,20 @@ public class UnifierTest {
 
 		Assert.assertNull(result);
 	}
-	
+
 	/**
-	 * From: TPTP:LCL418-1
-	 * Am performing an incorrect unification for:
-	 * [is_a_theorem(equivalent(equivalent(c1744,c1743),equivalent(c1742,c1743))), 
-	 *  is_a_theorem(equivalent(equivalent(c1752,c1751),c1752))]
+	 * From: TPTP:LCL418-1 Am performing an incorrect unification for:
+	 * [is_a_theorem
+	 * (equivalent(equivalent(c1744,c1743),equivalent(c1742,c1743))),
+	 * is_a_theorem(equivalent(equivalent(c1752,c1751),c1752))]
 	 * 
 	 * which is giving the following substitution:
 	 * 
-	 * subst={c1744=equivalent(c1742,c1743), c1743=c1751, c1752=equivalent(c1742,c1751)}
+	 * subst={c1744=equivalent(c1742,c1743), c1743=c1751,
+	 * c1752=equivalent(c1742,c1751)}
 	 * 
-	 * which is incorrect as c1743 in the first function term needs to be c1751 as this
-	 * is the second substitution.
+	 * which is incorrect as c1743 in the first function term needs to be c1751
+	 * as this is the second substitution.
 	 */
 	@Test
 	public void testBadCascadeSubstitution_LCL418_1() {
@@ -204,12 +205,16 @@ public class UnifierTest {
 		domain.addPredicate("ISATHEOREM");
 		domain.addFunction("EQUIVALENT");
 		FOLParser parser = new FOLParser(domain);
-		
-		Sentence s1 = parser.parse("ISATHEOREM(EQUIVALENT(EQUIVALENT(c1744,c1743),EQUIVALENT(c1742,c1743)))");
-		Sentence s2 = parser.parse("ISATHEOREM(EQUIVALENT(EQUIVALENT(c1752,c1751),c1752))");
+
+		Sentence s1 = parser
+				.parse("ISATHEOREM(EQUIVALENT(EQUIVALENT(c1744,c1743),EQUIVALENT(c1742,c1743)))");
+		Sentence s2 = parser
+				.parse("ISATHEOREM(EQUIVALENT(EQUIVALENT(c1752,c1751),c1752))");
 		Map<Variable, Term> result = unifier.unify(s1, s2);
-		
-		Assert.assertEquals("{c1744=EQUIVALENT(c1742,c1751), c1743=c1751, c1752=EQUIVALENT(c1742,c1751)}", result.toString());
+
+		Assert.assertEquals(
+				"{c1744=EQUIVALENT(c1742,c1751), c1743=c1751, c1752=EQUIVALENT(c1742,c1751)}",
+				result.toString());
 	}
 
 	@Test

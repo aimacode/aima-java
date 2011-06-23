@@ -61,8 +61,8 @@ public class ProofPrinter {
 		sb.append(String.format(f, "Step", "Proof", "Justification"));
 		sb.append(bar);
 		for (ProofStep step : steps) {
-			sb.append(String.format(f, "" + step.getStepNumber(), step
-					.getProof(), step.getJustification()));
+			sb.append(String.format(f, "" + step.getStepNumber(),
+					step.getProof(), step.getJustification()));
 		}
 		sb.append(bar);
 

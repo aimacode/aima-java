@@ -3,11 +3,9 @@ package aima.core.agent;
 import java.util.List;
 
 /**
- * An abstract description of possible discrete Environments in which Agent(s) 
+ * An abstract description of possible discrete Environments in which Agent(s)
  * can perceive and act.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

@@ -30,7 +30,8 @@ import aima.core.logic.fol.parsing.ast.TermEquality;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.14, page 307.
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.14, page
+ * 307.
  * 
  * <pre>
  * procedure OTTER(sos, usable)
@@ -63,18 +64,20 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *       if clause has one literal then look for unit refutation
  * </pre>
  * 
- * Figure 9.14 Sketch of the OTTER theorem prover. Heuristic control is applied in the
- * selection of the "lightest" clause and in the FILTER function that eliminates uninteresting
- * clauses from consideration.<br>
+ * Figure 9.14 Sketch of the OTTER theorem prover. Heuristic control is applied
+ * in the selection of the "lightest" clause and in the FILTER function that
+ * eliminates uninteresting clauses from consideration.<br>
  * <br>
- * <b>Note:</b> The original implementation of OTTER has been retired but its successor,
- * <b>Prover9</b>, can be found at:<br>
+ * <b>Note:</b> The original implementation of OTTER has been retired but its
+ * successor, <b>Prover9</b>, can be found at:<br>
  * <a href="http://www.prover9.org/">http://www.prover9.org/</a><br>
  * or<br>
- * <a href="http://www.cs.unm.edu/~mccune/mace4/">http://www.cs.unm.edu/~mccune/mace4/</a><br>
+ * <a href="http://www.cs.unm.edu/~mccune/mace4/">http://www.cs.unm.edu/~mccune/
+ * mace4/</a><br>
  * Should you wish to play with a mature implementation of a theorem prover :-)<br>
  * <br>
- * For lots of interesting problems to play with, see <b>The TPTP Problem Library for Automated Theorem Proving</b>:<br>
+ * For lots of interesting problems to play with, see <b>The TPTP Problem
+ * Library for Automated Theorem Proving</b>:<br>
  * <a href="http://www.cs.miami.edu/~tptp/">http://www.cs.miami.edu/~tptp/</a><br>
  * 
  * @author Ciaran O'Reilly
@@ -522,8 +525,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			if (isLookingForAnswerLiteral()) {
 				if (2 == clause.getNumberLiterals()) {
 					for (Literal t : clause.getLiterals()) {
-						if (t.getAtomicSentence().getSymbolicName().equals(
-								answerLiteral.getAtomicSentence()
+						if (t.getAtomicSentence()
+								.getSymbolicName()
+								.equals(answerLiteral.getAtomicSentence()
 										.getSymbolicName())) {
 							return true;
 						}
@@ -558,13 +562,16 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 				if (aClause.isUnitClause()
 						&& aClause.isDefiniteClause()
-						&& aClause.getPositiveLiterals().get(0)
-								.getAtomicSentence().getSymbolicName().equals(
-										answerLiteral.getAtomicSentence()
-												.getSymbolicName())) {
+						&& aClause
+								.getPositiveLiterals()
+								.get(0)
+								.getAtomicSentence()
+								.getSymbolicName()
+								.equals(answerLiteral.getAtomicSentence()
+										.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
-					List<Term> answerTerms = aClause.getPositiveLiterals().get(
-							0).getAtomicSentence().getArgs();
+					List<Term> answerTerms = aClause.getPositiveLiterals()
+							.get(0).getAtomicSentence().getArgs();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
 						answerBindings.put(v, answerTerms.get(idx));

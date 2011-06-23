@@ -35,12 +35,13 @@ public class TableDrivenAgentProgramTest {
 		Map<List<Percept>, Action> perceptSequenceActions = new HashMap<List<Percept>, Action>();
 		perceptSequenceActions.put(createPerceptSequence(new DynamicPercept(
 				"key1", "value1")), ACTION_1);
-		perceptSequenceActions.put(createPerceptSequence(new DynamicPercept(
-				"key1", "value1"), new DynamicPercept("key1", "value2")),
-				ACTION_2);
-		perceptSequenceActions.put(createPerceptSequence(new DynamicPercept(
-				"key1", "value1"), new DynamicPercept("key1", "value2"),
-				new DynamicPercept("key1", "value3")), ACTION_3);
+		perceptSequenceActions.put(
+				createPerceptSequence(new DynamicPercept("key1", "value1"),
+						new DynamicPercept("key1", "value2")), ACTION_2);
+		perceptSequenceActions.put(
+				createPerceptSequence(new DynamicPercept("key1", "value1"),
+						new DynamicPercept("key1", "value2"),
+						new DynamicPercept("key1", "value3")), ACTION_3);
 
 		agent = new MockAgent(new TableDrivenAgentProgram(
 				perceptSequenceActions));
@@ -48,20 +49,20 @@ public class TableDrivenAgentProgramTest {
 
 	@Test
 	public void testExistingSequences() {
-		Assert.assertEquals(ACTION_1, agent.execute(new DynamicPercept("key1",
-				"value1")));
-		Assert.assertEquals(ACTION_2, agent.execute(new DynamicPercept("key1",
-				"value2")));
-		Assert.assertEquals(ACTION_3, agent.execute(new DynamicPercept("key1",
-				"value3")));
+		Assert.assertEquals(ACTION_1,
+				agent.execute(new DynamicPercept("key1", "value1")));
+		Assert.assertEquals(ACTION_2,
+				agent.execute(new DynamicPercept("key1", "value2")));
+		Assert.assertEquals(ACTION_3,
+				agent.execute(new DynamicPercept("key1", "value3")));
 	}
 
 	@Test
 	public void testNonExistingSequence() {
-		Assert.assertEquals(ACTION_1, agent.execute(new DynamicPercept("key1",
-				"value1")));
-		Assert.assertEquals(NoOpAction.NO_OP, agent.execute(new DynamicPercept(
-				"key1", "value3")));
+		Assert.assertEquals(ACTION_1,
+				agent.execute(new DynamicPercept("key1", "value1")));
+		Assert.assertEquals(NoOpAction.NO_OP,
+				agent.execute(new DynamicPercept("key1", "value3")));
 	}
 
 	private static List<Percept> createPerceptSequence(Percept... percepts) {

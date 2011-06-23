@@ -47,9 +47,7 @@ public class KnowledgeBaseTest {
 	public void testKnowledgeBaseWithTwoSentencesToString() {
 		kb.tell("(A AND B)");
 		kb.tell("(C AND D)");
-		Assert
-				.assertEquals(" (  ( A AND B ) AND  ( C AND D ) )", kb
-						.toString());
+		Assert.assertEquals(" (  ( A AND B ) AND  ( C AND D ) )", kb.toString());
 	}
 
 	@Test
@@ -58,7 +56,7 @@ public class KnowledgeBaseTest {
 		kb.tell("(C AND D)");
 		kb.tell("(E AND F)");
 		Assert.assertEquals(
-				" (  (  ( A AND B ) AND  ( C AND D ) ) AND  ( E AND F ) )", kb
-						.toString());
+				" (  (  ( A AND B ) AND  ( C AND D ) ) AND  ( E AND F ) )",
+				kb.toString());
 	}
 }

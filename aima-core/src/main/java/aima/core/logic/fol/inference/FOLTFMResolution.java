@@ -123,8 +123,8 @@ public class FOLTFMResolution implements InferenceProcedure {
 		int noOfPrevClauses = clauses.size();
 		do {
 			if (null != tracer) {
-				tracer.stepStartWhile(clauses, clauses.size(), newClauses
-						.size());
+				tracer.stepStartWhile(clauses, clauses.size(),
+						newClauses.size());
 			}
 
 			newClauses.clear();
@@ -200,7 +200,7 @@ public class FOLTFMResolution implements InferenceProcedure {
 	}
 
 	// END-InferenceProcedure
-	// 
+	//
 
 	//
 	// PRIVATE METHODS
@@ -275,11 +275,13 @@ public class FOLTFMResolution implements InferenceProcedure {
 
 					if (aClause.isUnitClause()
 							&& aClause.isDefiniteClause()
-							&& aClause.getPositiveLiterals().get(0)
-									.getAtomicSentence().getSymbolicName()
-									.equals(
-											answerLiteral.getAtomicSentence()
-													.getSymbolicName())) {
+							&& aClause
+									.getPositiveLiterals()
+									.get(0)
+									.getAtomicSentence()
+									.getSymbolicName()
+									.equals(answerLiteral.getAtomicSentence()
+											.getSymbolicName())) {
 						Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
 						List<Term> answerTerms = aClause.getPositiveLiterals()
 								.get(0).getAtomicSentence().getArgs();

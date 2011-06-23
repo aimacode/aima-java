@@ -9,8 +9,8 @@ import aima.core.probability.RandomVariable;
  * 489.<br>
  * <br>
  * 
- * We can also derive the well-known formula for the probability of a disjunction,
- * sometimes called the <b>inclusion-exclusion principle:</b><br>
+ * We can also derive the well-known formula for the probability of a
+ * disjunction, sometimes called the <b>inclusion-exclusion principle:</b><br>
  * <br>
  * P(a OR b) = P(a) + P(b) - P(a AND b).<br>
  * 

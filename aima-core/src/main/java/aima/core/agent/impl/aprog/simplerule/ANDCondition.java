@@ -4,10 +4,7 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
  * Implementation of an AND condition.
- *
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */
@@ -33,7 +30,7 @@ public class ANDCondition extends Condition {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		return sb.append("[").append(left).append(" && ").append(right).append(
-				"]").toString();
+		return sb.append("[").append(left).append(" && ").append(right)
+				.append("]").toString();
 	}
 }

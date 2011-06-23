@@ -77,8 +77,8 @@ public class Literal {
 		}
 		Literal l = (Literal) o;
 		return l.isPositiveLiteral() == isPositiveLiteral()
-				&& l.getAtomicSentence().getSymbolicName().equals(
-						atom.getSymbolicName())
+				&& l.getAtomicSentence().getSymbolicName()
+						.equals(atom.getSymbolicName())
 				&& l.getAtomicSentence().getArgs().equals(atom.getArgs());
 	}
 

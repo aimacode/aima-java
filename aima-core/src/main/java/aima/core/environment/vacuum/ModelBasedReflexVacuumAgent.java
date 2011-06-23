@@ -38,17 +38,17 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 
 				VacuumEnvPercept vep = (VacuumEnvPercept) percept;
 
-				state.setAttribute(ATTRIBUTE_CURRENT_LOCATION, vep
-						.getAgentLocation());
-				state.setAttribute(ATTRIBUTE_CURRENT_STATE, vep
-						.getLocationState());
+				state.setAttribute(ATTRIBUTE_CURRENT_LOCATION,
+						vep.getAgentLocation());
+				state.setAttribute(ATTRIBUTE_CURRENT_STATE,
+						vep.getLocationState());
 				// Keep track of the state of the different locations
 				if (VacuumEnvironment.LOCATION_A == vep.getAgentLocation()) {
-					state.setAttribute(ATTRIBUTE_STATE_LOCATION_A, vep
-							.getLocationState());
+					state.setAttribute(ATTRIBUTE_STATE_LOCATION_A,
+							vep.getLocationState());
 				} else {
-					state.setAttribute(ATTRIBUTE_STATE_LOCATION_B, vep
-							.getLocationState());
+					state.setAttribute(ATTRIBUTE_STATE_LOCATION_B,
+							vep.getLocationState());
 				}
 				return state;
 			}

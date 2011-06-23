@@ -87,8 +87,7 @@ public class CNFTransformer extends AbstractPLVisitor {
 
 	private Sentence distributeOrOverAnd(BinarySentence bs) {
 		BinarySentence andTerm = bs.firstTermIsAndSentence() ? (BinarySentence) bs
-				.getFirst()
-				: (BinarySentence) bs.getSecond();
+				.getFirst() : (BinarySentence) bs.getSecond();
 		Sentence otherterm = bs.firstTermIsAndSentence() ? bs.getSecond() : bs
 				.getFirst();
 		// (alpha or (beta and gamma) = ((alpha or beta) and (alpha or gamma))

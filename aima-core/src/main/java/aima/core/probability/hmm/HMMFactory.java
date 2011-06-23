@@ -3,7 +3,6 @@ package aima.core.probability.hmm;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * @author Ravi Mohan
  * 

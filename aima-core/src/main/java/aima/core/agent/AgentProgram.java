@@ -2,12 +2,10 @@ package aima.core.agent;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 35.<br>
- * An agent's behavior is described by the 'agent function' that maps any given percept
- * sequence to an action. Internally, the agent function for an artificial agent will be
- * implemented by an agent program.
- */
-
-/**
+ * An agent's behavior is described by the 'agent function' that maps any given
+ * percept sequence to an action. Internally, the agent function for an
+ * artificial agent will be implemented by an agent program.
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

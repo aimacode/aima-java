@@ -94,27 +94,27 @@ public class ProbUtilTest {
 		Map<RandomVariable, Object> event = new LinkedHashMap<RandomVariable, Object>();
 
 		event.put(X, Boolean.TRUE);
-		Assert.assertArrayEquals(new int[] { 0, 1, 2, 3, 4, 5 }, ProbUtil
-				.indexesOfValue(vars, 0, event));
+		Assert.assertArrayEquals(new int[] { 0, 1, 2, 3, 4, 5 },
+				ProbUtil.indexesOfValue(vars, 0, event));
 		event.put(X, Boolean.FALSE);
-		Assert.assertArrayEquals(new int[] { 6, 7, 8, 9, 10, 11 }, ProbUtil
-				.indexesOfValue(vars, 0, event));
+		Assert.assertArrayEquals(new int[] { 6, 7, 8, 9, 10, 11 },
+				ProbUtil.indexesOfValue(vars, 0, event));
 
 		event.put(Y, "A");
-		Assert.assertArrayEquals(new int[] { 0, 1, 6, 7 }, ProbUtil
-				.indexesOfValue(vars, 1, event));
+		Assert.assertArrayEquals(new int[] { 0, 1, 6, 7 },
+				ProbUtil.indexesOfValue(vars, 1, event));
 		event.put(Y, "B");
-		Assert.assertArrayEquals(new int[] { 2, 3, 8, 9 }, ProbUtil
-				.indexesOfValue(vars, 1, event));
+		Assert.assertArrayEquals(new int[] { 2, 3, 8, 9 },
+				ProbUtil.indexesOfValue(vars, 1, event));
 		event.put(Y, "C");
-		Assert.assertArrayEquals(new int[] { 4, 5, 10, 11 }, ProbUtil
-				.indexesOfValue(vars, 1, event));
+		Assert.assertArrayEquals(new int[] { 4, 5, 10, 11 },
+				ProbUtil.indexesOfValue(vars, 1, event));
 
 		event.put(Z, Boolean.TRUE);
-		Assert.assertArrayEquals(new int[] { 0, 2, 4, 6, 8, 10 }, ProbUtil
-				.indexesOfValue(vars, 2, event));
+		Assert.assertArrayEquals(new int[] { 0, 2, 4, 6, 8, 10 },
+				ProbUtil.indexesOfValue(vars, 2, event));
 		event.put(Z, Boolean.FALSE);
-		Assert.assertArrayEquals(new int[] { 1, 3, 5, 7, 9, 11 }, ProbUtil
-				.indexesOfValue(vars, 2, event));
+		Assert.assertArrayEquals(new int[] { 1, 3, 5, 7, 9, 11 },
+				ProbUtil.indexesOfValue(vars, 2, event));
 	}
 }

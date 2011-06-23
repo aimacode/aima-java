@@ -23,7 +23,7 @@ public class Assignment {
 		variables = new ArrayList<Variable>();
 		variableToValue = new Hashtable<Variable, Object>();
 	}
-	
+
 	public List<Variable> getVariables() {
 		return Collections.unmodifiableList(variables);
 	}

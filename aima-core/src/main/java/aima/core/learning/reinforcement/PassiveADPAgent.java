@@ -41,8 +41,8 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 			// perceptionState
 			// is
 			// new
-			utilityFunction.setUtility(perception.getState(), perception
-					.getReward());
+			utilityFunction.setUtility(perception.getState(),
+					perception.getReward());
 			mdp.setReward(perception.getState(), perception.getReward());
 		}
 		if (!(previousState == null)) {
@@ -78,8 +78,8 @@ public class PassiveADPAgent<STATE_TYPE, ACTION_TYPE> extends
 				}
 			}
 			List<MDPTransition<STATE_TYPE, ACTION_TYPE>> validTransitions = mdp
-					.getTransitionsWith(previousState, policy
-							.getAction(previousState));
+					.getTransitionsWith(previousState,
+							policy.getAction(previousState));
 			utilityFunction = valueDetermination(validTransitions, 1);
 		}
 

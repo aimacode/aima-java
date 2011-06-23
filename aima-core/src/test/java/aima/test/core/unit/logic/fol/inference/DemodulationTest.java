@@ -55,16 +55,12 @@ public class DemodulationTest {
 				expression);
 
 		Assert.assertFalse(expression.equals(altExpression));
-		Assert
-				.assertEquals("P(A,F(E,G(A,H(B)),C),D)", altExpression
-						.toString());
+		Assert.assertEquals("P(A,F(E,G(A,H(B)),C),D)", altExpression.toString());
 
 		altExpression = (Predicate) demodulation
 				.apply(assertion, altExpression);
 
-		Assert
-				.assertEquals("P(A,F(E,G(A,H(E)),C),D)", altExpression
-						.toString());
+		Assert.assertEquals("P(A,F(E,G(A,H(E)),C),D)", altExpression.toString());
 
 		assertion = (TermEquality) parser.parse("G(x,y) = J(x)");
 
@@ -138,8 +134,8 @@ public class DemodulationTest {
 
 		altClExpression = demodulation.apply(assertion, altClExpression);
 
-		Assert.assertEquals("[P(x,A), Q(z,D), W(z,x,u,w,y)]", altClExpression
-				.toString());
+		Assert.assertEquals("[P(x,A), Q(z,D), W(z,x,u,w,y)]",
+				altClExpression.toString());
 	}
 
 	@Test

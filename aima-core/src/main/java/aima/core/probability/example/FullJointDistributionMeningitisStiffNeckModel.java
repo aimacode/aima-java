@@ -7,7 +7,7 @@ public class FullJointDistributionMeningitisStiffNeckModel extends
 
 	public FullJointDistributionMeningitisStiffNeckModel() {
 		super(new double[] {
-		// Meningitis * StiffNeck = 4 possible worlds
+				// Meningitis * StiffNeck = 4 possible worlds
 				// Meningitis = true, StiffNeck = true
 				0.000014, // i.e 1/50000 * 0.7
 				// Meningitis = true, StiffNeck = false

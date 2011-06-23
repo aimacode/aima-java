@@ -58,10 +58,9 @@ public class RecursiveBestFirstSearchTest {
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
-		Assert
-				.assertEquals(
-						"CurrentLocation=In(Bucharest), Goal=In(Bucharest):Action[name==NoOp]:METRIC[pathCost]=0.0:METRIC[maxRecursiveDepth]=0:METRIC[nodesExpanded]=0:Action[name==NoOp]:",
-						envChanges.toString());
+		Assert.assertEquals(
+				"CurrentLocation=In(Bucharest), Goal=In(Bucharest):Action[name==NoOp]:METRIC[pathCost]=0.0:METRIC[maxRecursiveDepth]=0:METRIC[nodesExpanded]=0:Action[name==NoOp]:",
+				envChanges.toString());
 	}
 
 	@Test
@@ -74,10 +73,9 @@ public class RecursiveBestFirstSearchTest {
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
-		Assert
-				.assertEquals(
-						"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
-						envChanges.toString());
+		Assert.assertEquals(
+				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+				envChanges.toString());
 	}
 
 	private class TestEnvironmentView implements EnvironmentView {

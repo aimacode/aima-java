@@ -57,7 +57,8 @@ public class ProofStepClauseBinaryResolvent extends AbstractProofStep {
 			highStep = parent1.getProofStep().getStepNumber();
 		}
 
-		return "Resolution: " + lowStep + ", " + highStep + "  [" + posLiteral + ", " + negLiteral + "], subst=" + subst + ", renaming="
+		return "Resolution: " + lowStep + ", " + highStep + "  [" + posLiteral
+				+ ", " + negLiteral + "], subst=" + subst + ", renaming="
 				+ renameSubst;
 	}
 	// END-ProofStep

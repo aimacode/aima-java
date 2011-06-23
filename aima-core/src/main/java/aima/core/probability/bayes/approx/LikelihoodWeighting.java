@@ -128,9 +128,11 @@ public class LikelihoodWeighting implements BayesSampleInference {
 			if (x.containsKey(Xi)) {
 				// then w <- w * P(X<sub>i</sub> = x<sub>i</sub> |
 				// parents(X<sub>i</sub>))
-				w *= bn.getNode(Xi).getCPD().getValue(
-						ProbUtil.getEventValuesForXiGivenParents(
-								bn.getNode(Xi), x));
+				w *= bn.getNode(Xi)
+						.getCPD()
+						.getValue(
+								ProbUtil.getEventValuesForXiGivenParents(
+										bn.getNode(Xi), x));
 			} else {
 				// else <b>x</b>[i] <- a random sample from
 				// <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))

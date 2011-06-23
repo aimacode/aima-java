@@ -91,20 +91,18 @@ public class PEParserTest {
 				.parse("((OR  NORVIG AIMA LISP) AND (((LISP => COOL))))");
 		Assert.assertEquals(BinarySentence.class, sen.getClass());
 		Assert.assertEquals(
-				" ( ( OR NORVIG AIMA LISP  )  AND  ( LISP => COOL ) )", sen
-						.toString());
+				" ( ( OR NORVIG AIMA LISP  )  AND  ( LISP => COOL ) )",
+				sen.toString());
 
 		String s = "((NOT (P AND Q ))  AND ((NOT (R AND S))))";
 		sen = (BinarySentence) parser.parse(s);
 		Assert.assertEquals(
-				" (  ( NOT  ( P AND Q ) )  AND  ( NOT  ( R AND S ) )  )", sen
-						.toString());
+				" (  ( NOT  ( P AND Q ) )  AND  ( NOT  ( R AND S ) )  )",
+				sen.toString());
 
 		s = "((P AND Q) OR (S AND T))";
 		sen = (BinarySentence) parser.parse(s);
-		Assert
-				.assertEquals(" (  ( P AND Q ) OR  ( S AND T ) )", sen
-						.toString());
+		Assert.assertEquals(" (  ( P AND Q ) OR  ( S AND T ) )", sen.toString());
 		Assert.assertEquals("OR", sen.getOperator());
 
 		s = "(NOT ((P AND Q) => (S AND T)))";
@@ -112,8 +110,8 @@ public class PEParserTest {
 		// assertEquals("=>",sen.getOperator());
 		s = "(NOT (P <=> (S AND T)))";
 		nsen = (UnarySentence) parser.parse(s);
-		Assert.assertEquals(" ( NOT  ( P <=>  ( S AND T ) ) ) ", nsen
-				.toString());
+		Assert.assertEquals(" ( NOT  ( P <=>  ( S AND T ) ) ) ",
+				nsen.toString());
 
 		s = "(P <=> (S AND T))";
 		sen = (BinarySentence) parser.parse(s);

@@ -197,8 +197,8 @@ public class FOLKnowledgeBase {
 		List<Literal> matchingFacts = fetchMatchingFacts(l);
 		if (null != matchingFacts) {
 			for (Literal fact : matchingFacts) {
-				Map<Variable, Term> substitution = unifier.unify(l
-						.getAtomicSentence(), fact.getAtomicSentence());
+				Map<Variable, Term> substitution = unifier.unify(
+						l.getAtomicSentence(), fact.getAtomicSentence());
 				if (null != substitution) {
 					allUnifiers.add(substitution);
 				}
@@ -297,8 +297,8 @@ public class FOLKnowledgeBase {
 			if (l.isPositiveLiteral() != q.isPositiveLiteral()) {
 				continue;
 			}
-			Map<Variable, Term> subst = unifier.unify(l.getAtomicSentence(), q
-					.getAtomicSentence());
+			Map<Variable, Term> subst = unifier.unify(l.getAtomicSentence(),
+					q.getAtomicSentence());
 			if (null != subst) {
 				int cntVarTerms = 0;
 				for (Term t : subst.values()) {

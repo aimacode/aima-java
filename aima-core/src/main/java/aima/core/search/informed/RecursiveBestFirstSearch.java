@@ -103,7 +103,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 
 	//
 	// PRIVATE METHODS
-	// 
+	//
 	// function RBFS(problem, node, f_limit) returns a solution, or failure and
 	// a new f-cost limit
 	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit,

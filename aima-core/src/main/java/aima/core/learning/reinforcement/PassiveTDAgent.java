@@ -37,8 +37,8 @@ public class PassiveTDAgent<STATE_TYPE, ACTION_TYPE> extends
 			// perceptionState
 			// is
 			// new
-			utilityFunction.setUtility(perception.getState(), perception
-					.getReward());
+			utilityFunction.setUtility(perception.getState(),
+					perception.getReward());
 			mdp.setReward(perception.getState(), perception.getReward());
 		}
 		if (!(previousState == null)) {

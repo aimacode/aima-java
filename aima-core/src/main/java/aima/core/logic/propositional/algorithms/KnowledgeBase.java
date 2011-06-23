@@ -68,7 +68,7 @@ public class KnowledgeBase {
 					+ e.getMessage());
 
 		}
-		 return !new DPLL().dpllSatisfiable(cnfForm); 
+		return !new DPLL().dpllSatisfiable(cnfForm);
 	}
 
 	public boolean askWithTTEntails(String queryString) {
