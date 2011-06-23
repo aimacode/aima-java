@@ -4,7 +4,8 @@ import aima.core.util.datastructure.FIFOQueue;
 
 /**
  * 
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.3, Page 209.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.3, Page 209.<br>
+ * <br>
  * 
  * <pre>
  * <code>
@@ -37,7 +38,6 @@ import aima.core.util.datastructure.FIFOQueue;
  * 
  * @author Ruediger Lunde
  */
-
 public class AC3Strategy {
 
 	/**

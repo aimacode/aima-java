@@ -1,9 +1,7 @@
 package aima.core.probability.full;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,8 +24,6 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 
 	private ProbabilityTable distribution = null;
 	private Set<RandomVariable> representation = null;
-	//
-	private List<RandomVariable> randomVars = new ArrayList<RandomVariable>();
 
 	public FullJointDistributionModel(double[] values, RandomVariable... vars) {
 		if (null == vars) {
@@ -40,7 +36,6 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 		representation = new LinkedHashSet<RandomVariable>();
 		for (int i = 0; i < vars.length; i++) {
 			representation.add(vars[i]);
-			randomVars.add(vars[i]);
 		}
 		representation = Collections.unmodifiableSet(representation);
 	}

@@ -11,7 +11,8 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.1, page
- * 328.
+ * 328.<br>
+ * <br>
  * 
  * <pre>
  * function UNIFY(x, y, theta) returns a substitution to make x and y identical
@@ -111,8 +112,8 @@ public class Unifier {
 		} else if (x.size() == 1 && y.size() == 1) {
 			return unify(x.get(0), y.get(0), theta);
 		} else {
-			return unify(x.subList(1, x.size()), y.subList(1, y.size()),
-					unify(x.get(0), y.get(0), theta));
+			return unify(x.subList(1, x.size()), y.subList(1, y.size()), unify(
+					x.get(0), y.get(0), theta));
 		}
 	}
 

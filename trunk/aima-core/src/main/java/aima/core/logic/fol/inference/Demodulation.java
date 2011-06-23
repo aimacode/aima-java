@@ -15,6 +15,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 354.<br>
+ * <br>
  * Demodulation: For any terms x, y, and z, where z appears somewhere in literal
  * m<sub>i</sub> and where UNIFY(x,z) = &theta;:<br>
  * 
@@ -28,7 +29,8 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * to replace x with y everywhere that x occurs within m.<br>
  * <br>
  * Some additional restrictions/clarifications highlighted in:<br>
- * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf<br>
+ * <a href="http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf"
+ * >Demodulation Restrictions</a> <br>
  * 1. Unit Equations Only.<br>
  * 2. Variables substituted in Equation Only.<br>
  * 
@@ -43,8 +45,8 @@ public class Demodulation extends AbstractModulation {
 		Clause altClExpression = null;
 
 		for (Literal l1 : clExpression.getLiterals()) {
-			AtomicSentence altExpression = apply(assertion,
-					l1.getAtomicSentence());
+			AtomicSentence altExpression = apply(assertion, l1
+					.getAtomicSentence());
 			if (null != altExpression) {
 				// I have an alternative, create a new clause
 				// with the alternative and return
@@ -78,8 +80,8 @@ public class Demodulation extends AbstractModulation {
 			AtomicSentence expression) {
 		AtomicSentence altExpression = null;
 
-		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(
-				assertion.getTerm1(), expression);
+		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(assertion
+				.getTerm1(), expression);
 
 		if (null != icm) {
 			Term replaceWith = substVisitor.subst(

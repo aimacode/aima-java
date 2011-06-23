@@ -5,9 +5,11 @@ import java.util.List;
 import aima.core.logic.fol.kb.FOLKnowledgeBase;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 19.2, page 771.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 19.2, page
+ * 771.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function CURRENT-BEST-LEARNING(examples, h) returns a hypothesis or fail
  * 
  *   if examples is empty then
@@ -24,15 +26,14 @@ import aima.core.logic.fol.kb.FOLKnowledgeBase;
  *       h'' <- CURRENT-BEST-LEARNING(REST(examples), h')
  *       if h'' != fail then return h''
  *   return fail
- * </code>
+ * </pre>
  * 
- * Figure 19.2 The current-best-hypothesis learning algorithm. It searches for a 
- * consistent hypothesis that fits all the examples and backtracks when no consistent
- * specialization/generalization can be found. To start the algorithm, any hypothesis
- * can be passed in; it will be specialized or generalized as needed. 
- */
-
-/**
+ * Figure 19.2 The current-best-hypothesis learning algorithm. It searches for a
+ * consistent hypothesis that fits all the examples and backtracks when no
+ * consistent specialization/generalization can be found. To start the
+ * algorithm, any hypothesis can be passed in; it will be specialized or
+ * generalized as needed.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

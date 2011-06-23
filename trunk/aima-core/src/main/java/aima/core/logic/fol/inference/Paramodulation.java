@@ -25,7 +25,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * 
  * <pre>
  *                          l<sub>1</sub> OR ... OR l<sub>k</sub> OR x=y,     m<sub>1</sub> OR ... OR m<sub>n</sub>
- *     -------------------------------------------------------------------------------------------------------
+ *     ------------------------------------------------------------------------
  *     SUB(SUBST(&theta;,x), SUBST(&theta;,y), SUBST(&theta;, l<sub>1</sub> OR ... OR l<sub>k</sub> OR m<sub>1</sub> OR ... OR m<sub>n</sub>))
  * </pre>
  * 

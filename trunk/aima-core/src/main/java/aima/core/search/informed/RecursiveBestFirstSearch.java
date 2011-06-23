@@ -12,9 +12,11 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page 99.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page
+ * 99.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure
  *   return RBFS(problem, MAKE-NODE(problem.INITIAL-STATE), infinity)
  *   
@@ -32,11 +34,10 @@ import aima.core.search.framework.SearchUtils;
  *     alternative <- the second-lowest f-value among successors
  *     result, best.f <- RBFS(problem, best, min(f_limit, alternative))
  *     if result != failure then return result
- * </code>
+ * </pre>
+ * 
  * Figure 3.26 The algorithm for recursive best-first search.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

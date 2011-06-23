@@ -12,8 +12,11 @@ import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
- * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page 152.<br>
- * <code>
+ * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page
+ * 152.<br>
+ * <br>
+ * 
+ * <pre>
  * function LRTA*-AGENT(s') returns an action
  *   inputs: s', a percept that identifies the current state
  *   persistent: result, a table, indexed by state and action, initially empty
@@ -33,16 +36,16 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * function LRTA*-COST(s, a, s', H) returns a cost estimate
  *   if s' is undefined then return h(s)
  *   else return c(s, a, s') + H[s']
- * </code>
+ * </pre>
  * 
  * Figure 4.24 LRTA*-AGENT selects an action according to the value of
  * neighboring states, which are updated as the agent moves about the state
  * space.<br>
- * Note: This algorithm fails to exit if the goal does not exist (e.g. A<->B Goal=X),
- * this could be an issue with the implementation. Comments welcome.
- */
-
-/**
+ * <br>
+ * <b>Note:</b> This algorithm fails to exit if the goal does not exist (e.g.
+ * A<->B Goal=X), this could be an issue with the implementation. Comments
+ * welcome.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

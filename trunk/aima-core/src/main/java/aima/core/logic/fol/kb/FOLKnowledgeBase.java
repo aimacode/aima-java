@@ -36,9 +36,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * A First Order Logic (FOL) Knowledge Base.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

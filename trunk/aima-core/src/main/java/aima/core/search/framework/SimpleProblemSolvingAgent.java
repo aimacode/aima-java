@@ -11,8 +11,10 @@ import aima.core.agent.impl.NoOpAction;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.<br>
+ * <br>
+ * 
+ * <pre>
  * function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
  *   persistent: seq, an action sequence, initially empty
  *               state, some description of the current world state
@@ -28,14 +30,13 @@ import aima.core.util.Util;
  *   action <- FIRST(seq)
  *   seq <- REST(seq)
  *   return action
- * </code>
- * Figure 3.1 A simple problem-solving agent. It first formulates a goal and a problem,
- * searches for a sequence of actions that would solve the problem, and then executes the actions
- * one at a time. When this is complete, it formulates another goal and starts over.<br>
+ * </pre>
  * 
- */
-
-/**
+ * Figure 3.1 A simple problem-solving agent. It first formulates a goal and a
+ * problem, searches for a sequence of actions that would solve the problem, and
+ * then executes the actions one at a time. When this is complete, it formulates
+ * another goal and starts over.<br>
+ * 
  * @author Ciaran O'Reilly
  * 
  */

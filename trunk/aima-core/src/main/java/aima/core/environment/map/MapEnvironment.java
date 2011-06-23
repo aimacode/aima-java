@@ -9,9 +9,7 @@ import aima.core.agent.impl.DynamicPercept;
 
 /**
  * Represents the environment a MapAgent can navigate.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

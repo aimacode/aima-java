@@ -13,9 +13,11 @@ import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page 122.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page
+ * 122.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function HILL-CLIMBING(problem) returns a state that is a local maximum
  *                    
  *   current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -23,14 +25,14 @@ import aima.core.util.CancelableThread;
  *     neighbor <- a highest-valued successor of current
  *     if neighbor.VALUE <= current.VALUE then return current.STATE
  *     current <- neighbor
- * </code>
- * Figure 4.2 The hill-climbing search algorithm, which is the most basic local search technique. 
- * At each step the current node is replaced by the best neighbor; in this version, that means 
- * the neighbor with the highest VALUE, but if a heuristic cost estimate h is used, we would find 
- * the neighbor with the lowest h.
- */
-
-/**
+ * </pre>
+ * 
+ * Figure 4.2 The hill-climbing search algorithm, which is the most basic local
+ * search technique. At each step the current node is replaced by the best
+ * neighbor; in this version, that means the neighbor with the highest VALUE,
+ * but if a heuristic cost estimate h is used, we would find the neighbor with
+ * the lowest h.
+ * 
  * @author Ravi Mohan
  * 
  */

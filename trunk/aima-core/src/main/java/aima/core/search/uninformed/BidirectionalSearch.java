@@ -17,17 +17,17 @@ import aima.core.search.framework.SearchUtils;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 90.
- * Bidirectional search.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 90.<br>
+ * <br>
+ * Bidirectional search.<br>
+ * <br>
+ * <b>Note:</b> Based on the description of this algorithm i.e. 'Bidirectional
+ * search is implemented by replacing the goal test with a check to see whether
+ * the frontiers of the two searches intersect;', it is possible for the
+ * searches to pass each other's frontiers by, in particular if the problem is
+ * not fully reversible (i.e. unidirectional links on a graph), and could
+ * instead intersect at the explored set.
  * 
- * Note: Based on the description of this algorithm i.e. 'Bidirectional search
- * is implemented by replacing the goal test with a check to see whether the frontiers
- * of the two searches intersect;', it is possible for the searches to pass each other's frontiers by,
- * in particular if the problem is not fully reversible (i.e. unidirectional links on a graph), and
- * could instead intersect at the explored set.
- */
-
-/**
  * @author Ciaran O'Reilly
  * 
  */

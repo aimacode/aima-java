@@ -1,11 +1,9 @@
 package aima.core.util.datastructure;
 
 /**
- * Note: If looking at a rectangle - the coordinate (x=0, y=0) will be the top left hand corner.
- * This corresponds with Java's AWT coordinate system.
- */
-
-/**
+ * Note: If looking at a rectangle - the coordinate (x=0, y=0) will be the top
+ * left hand corner. This corresponds with Java's AWT coordinate system.
+ * 
  * @author Ravi Mohan
  * 
  */

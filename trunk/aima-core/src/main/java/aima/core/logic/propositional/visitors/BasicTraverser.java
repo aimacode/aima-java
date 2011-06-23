@@ -12,13 +12,11 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
 import aima.core.util.SetOps;
 
 /**
- * @author Ravi Mohan
- * 
- */
-
-/*
  * Super class of Visitors that are "read only" and gather information from an
  * existing parse tree .
+ * 
+ * @author Ravi Mohan
+ * 
  */
 public class BasicTraverser implements PLVisitor {
 

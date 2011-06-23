@@ -8,8 +8,11 @@ import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.QueueSearch;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.14, page 84. 
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.14, page
+ * 84.<br>
+ * <br>
+ * 
+ * <pre>
  * function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
  *   node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
  *   frontier <- a priority queue ordered by PATH-COST, with node as the only element
@@ -25,15 +28,15 @@ import aima.core.search.framework.QueueSearch;
  *             frontier <- INSERT(child, frontier)
  *          else if child.STATE is in frontier with higher PATH-COST then
  *             replace that frontier node with child
- * </code> 
- * Figure 3.14 Uniform-cost search on a graph. The algorithm is identical to the general
- * graph search algorithm in Figure 3.7, except for the use of a priority queue and the addition
- * of an extra check in case a shorter path to a frontier state is discovered. The data structure
- * for frontier needs to support efficient membership testing, so it should combine the capabilities
+ * </pre>
+ * 
+ * Figure 3.14 Uniform-cost search on a graph. The algorithm is identical to the
+ * general graph search algorithm in Figure 3.7, except for the use of a
+ * priority queue and the addition of an extra check in case a shorter path to a
+ * frontier state is discovered. The data structure for frontier needs to
+ * support efficient membership testing, so it should combine the capabilities
  * of a priority queue and a hash table.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

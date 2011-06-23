@@ -10,21 +10,22 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page 89.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
+ * 89.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
  *   for depth = 0 to infinity  do
  *     result <- DEPTH-LIMITED-SEARCH(problem, depth)
  *     if result != cutoff then return result
- * </code>
+ * </pre>
+ * 
  * Figure 3.18 The iterative deepening search algorithm, which repeatedly
  * applies depth-limited search with increasing limits. It terminates when a
  * solution is found or if the depth- limited search returns failure, meaning
  * that no solution exists.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
@@ -52,9 +53,9 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
 			DepthLimitedSearch dls = new DepthLimitedSearch(i);
 			List<Action> result = dls.search(p);
-			iterationMetrics.set(METRIC_NODES_EXPANDED,
-					iterationMetrics.getInt(METRIC_NODES_EXPANDED)
-							+ dls.getMetrics().getInt(METRIC_NODES_EXPANDED));
+			iterationMetrics.set(METRIC_NODES_EXPANDED, iterationMetrics
+					.getInt(METRIC_NODES_EXPANDED)
+					+ dls.getMetrics().getInt(METRIC_NODES_EXPANDED));
 			// if result != cutoff then return result
 			if (!dls.isCutOff(result)) {
 				iterationMetrics.set(PATH_COST, dls.getPathCost());

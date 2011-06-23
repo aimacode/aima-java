@@ -6,17 +6,16 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.PathCostFunction;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 93.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 93.<br>
+ * <br>
+ * The most widely known form of best-first search is called A* search
+ * (pronounced "A-star Search"). It evaluates nodes by combining g(n), the cost
+ * to reach the node, and h(n), the cost to get from the node to the goal:<br>
  * 
- * The most widely known form of best-first search is called A* search (pronounced "A-star
- * Search"). It evaluates nodes by combining g(n), the cost to reach the node, and h(n), the cost
- * to get from the node to the goal:<br>
- * <code>
+ * <pre>
  *        f(n) = g(n) + h(n).
- * </code>
- */
-
-/**
+ * </pre>
+ * 
  * @author Ciaran O'Reilly
  * 
  */

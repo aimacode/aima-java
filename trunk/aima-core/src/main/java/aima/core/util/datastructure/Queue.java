@@ -2,6 +2,7 @@ package aima.core.util.datastructure;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 79.<br>
+ * <br>
  * The operations on a queue are as follows:<br>
  * <ul>
  * <li>EMPTY?(queue) returns true only if there are no elements in the queue</li>
@@ -11,9 +12,7 @@ package aima.core.util.datastructure;
  * Note: This extends the java.util.Queue collections interface in order to take advantage
  * of pre-existing implementations. The intent of this interface is purely to provide an interface
  * to Queues that corresponds to what is described in AIMA3e.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * 

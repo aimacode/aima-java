@@ -4,14 +4,11 @@ import aima.core.logic.fol.parsing.ast.AtomicSentence;
 import aima.core.logic.fol.parsing.ast.Term;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 244.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 244.<br>
+ * <br>
+ * A literal is either an atomic sentence (a positive literal) or a negated
+ * atomic sentence (a negative literal).
  * 
- * A literal is either an atomic sentence (a positive literal) or
- * a negated atomic sentence (a negative literal).
- * 
- */
-
-/**
  * @author Ciaran O'Reilly
  * 
  */
@@ -77,8 +74,8 @@ public class Literal {
 		}
 		Literal l = (Literal) o;
 		return l.isPositiveLiteral() == isPositiveLiteral()
-				&& l.getAtomicSentence().getSymbolicName()
-						.equals(atom.getSymbolicName())
+				&& l.getAtomicSentence().getSymbolicName().equals(
+						atom.getSymbolicName())
 				&& l.getAtomicSentence().getArgs().equals(atom.getArgs());
 	}
 

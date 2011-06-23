@@ -14,8 +14,11 @@ import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page 150.
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.21, page
+ * 150.<br>
+ * <br>
+ * 
+ * <pre>
  * function ONLINE-DFS-AGENT(s') returns an action
  *   inputs: s', a percept that identifies the current state
  *   persistent: result, a table, indexed by state and action, initially empty
@@ -34,12 +37,12 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *   else a <- POP(untried[s'])
  *   s <- s'
  *   return a
- * </code>
- * Figure 4.21 An online search agent that uses depth-first exploration. The agent is
- * applicable only in state spaces in which every action can be "undone" by some other action.<br>
- */
-
-/**
+ * </pre>
+ * 
+ * Figure 4.21 An online search agent that uses depth-first exploration. The
+ * agent is applicable only in state spaces in which every action can be
+ * "undone" by some other action.<br>
+ * 
  * @author Ciaran O'Reilly
  * 
  */

@@ -21,7 +21,8 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.3, page
- * 332.
+ * 332.<br>
+ * <br>
  * 
  * <pre>
  * function FOL-FC-ASK(KB, alpha) returns a substitution or false
@@ -118,8 +119,8 @@ public class FOLFCAsk implements InferenceProcedure {
 						newSentences.add(qDelta);
 						ansHandler.addProofStep(impl, qDelta, theta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta.getAtomicSentence(),
-								alpha.getAtomicSentence());
+						theta = KB.unify(qDelta.getAtomicSentence(), alpha
+								.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {
 							for (Literal l : newSentences) {

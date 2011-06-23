@@ -11,13 +11,11 @@ import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.aprog.TableDrivenAgentProgram;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.3, page 36.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.3, page 36.<br>
+ * <br>
+ * Figure 2.3 Partial tabulation of a simple agent function for the
+ * vacuum-cleaner world shown in Figure 2.2.
  * 
- * Figure 2.3 Partial tabulation of a simple agent function for the vacuum-cleaner world
- * shown in Figure 2.2.
- */
-
-/**
  * @author Ciaran O'Reilly
  * 
  */

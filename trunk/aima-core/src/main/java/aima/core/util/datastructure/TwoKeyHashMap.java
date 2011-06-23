@@ -7,14 +7,14 @@ import java.util.HashMap;
  * map which is indexed by a pair containing the two keys. The provided two-key
  * access methods try to increase code readability.
  * 
- * @author Ruediger Lunde
- * 
  * @param <K1>
  *            First key
  * @param <K2>
  *            Second key
  * @param <V>
  *            Result value
+ * 
+ * @author Ruediger Lunde
  */
 
 public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
