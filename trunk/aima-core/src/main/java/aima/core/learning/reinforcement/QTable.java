@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.probability.decision.MDPPolicy;
+import aima.core.probability.mdp.MDPPolicy;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 

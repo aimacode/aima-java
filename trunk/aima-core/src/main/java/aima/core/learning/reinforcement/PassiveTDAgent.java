@@ -1,9 +1,9 @@
 package aima.core.learning.reinforcement;
 
-import aima.core.probability.decision.MDP;
-import aima.core.probability.decision.MDPPerception;
-import aima.core.probability.decision.MDPPolicy;
-import aima.core.probability.decision.MDPUtilityFunction;
+import aima.core.probability.mdp.MDP;
+import aima.core.probability.mdp.MDPPerception;
+import aima.core.probability.mdp.MDPPolicy;
+import aima.core.probability.mdp.MDPUtilityFunction;
 import aima.core.util.FrequencyCounter;
 
 /**

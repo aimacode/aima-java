@@ -36,9 +36,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * </pre>
  * 
  * Figure 9.6 A simple backward-chaining algorithm.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

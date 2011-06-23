@@ -21,8 +21,7 @@ public class Util {
 	}
 
 	public static <T> List<T> rest(List<T> l) {
-		List<T> newList = new ArrayList<T>(l.subList(1, l.size()));
-		return newList;
+		return l.subList(1, l.size());
 	}
 
 	public static boolean randomBoolean() {
@@ -42,10 +41,6 @@ public class Util {
 			for (int i = 0; i < len; i++) {
 				normalized[i] = probDist[i] / total;
 			}
-		}
-		double totalN = 0.0;
-		for (double d : normalized) {
-			totalN = totalN + d;
 		}
 
 		return normalized;

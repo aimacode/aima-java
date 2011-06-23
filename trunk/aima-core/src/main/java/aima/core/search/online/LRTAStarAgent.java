@@ -9,7 +9,7 @@ import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.util.TwoKeyHashMap;
+import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
  * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page 152.<br>
@@ -94,20 +94,20 @@ public class LRTAStarAgent extends AbstractAgent {
 	// function LRTA*-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept psPrime) {
-		Object sPrime = ptsFunction.getState(psPrime);
+	public Action execute(Percept psDelta) {
+		Object sDelta = ptsFunction.getState(psDelta);
 		// if GOAL-TEST(s') then return stop
-		if (goalTest(sPrime)) {
+		if (goalTest(sDelta)) {
 			a = NoOpAction.NO_OP;
 		} else {
 			// if s' is a new state (not in H) then H[s'] <- h(s')
-			if (!H.containsKey(sPrime)) {
-				H.put(sPrime, getHeuristicFunction().h(sPrime));
+			if (!H.containsKey(sDelta)) {
+				H.put(sDelta, getHeuristicFunction().h(sDelta));
 			}
 			// if s is not null
 			if (null != s) {
 				// result[s, a] <- s'
-				result.put(s, a, sPrime);
+				result.put(s, a, sDelta);
 
 				// H[s] <- min LRTA*-COST(s, b, result[s, b], H)
 				// b (element of) ACTIONS(s)
@@ -125,8 +125,8 @@ public class LRTAStarAgent extends AbstractAgent {
 			double min = Double.MAX_VALUE;
 			// Just in case no actions
 			a = NoOpAction.NO_OP;
-			for (Action b : actions(sPrime)) {
-				double cost = lrtaCost(sPrime, b, result.get(sPrime, b));
+			for (Action b : actions(sDelta)) {
+				double cost = lrtaCost(sDelta, b, result.get(sDelta, b));
 				if (cost < min) {
 					min = cost;
 					a = b;
@@ -135,7 +135,7 @@ public class LRTAStarAgent extends AbstractAgent {
 		}
 
 		// s <- s'
-		s = sPrime;
+		s = sDelta;
 
 		if (a.isNoOp()) {
 			// I'm either at the Goal or can't get to it,
@@ -162,14 +162,14 @@ public class LRTAStarAgent extends AbstractAgent {
 	}
 
 	// function LRTA*-COST(s, a, s', H) returns a cost estimate
-	private double lrtaCost(Object s, Action action, Object sPrime) {
+	private double lrtaCost(Object s, Action action, Object sDelta) {
 		// if s' is undefined then return h(s)
-		if (null == sPrime) {
+		if (null == sDelta) {
 			return getHeuristicFunction().h(s);
 		}
 		// else return c(s, a, s') + H[s']
-		return getProblem().getStepCostFunction().c(s, action, sPrime)
-				+ H.get(sPrime);
+		return getProblem().getStepCostFunction().c(s, action, sDelta)
+				+ H.get(sDelta);
 	}
 
 	private Set<Action> actions(Object state) {

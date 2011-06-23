@@ -12,14 +12,14 @@ import aima.core.learning.reinforcement.PassiveADPAgent;
 import aima.core.learning.reinforcement.PassiveTDAgent;
 import aima.core.learning.reinforcement.QLearningAgent;
 import aima.core.learning.reinforcement.QTable;
-import aima.core.probability.Randomizer;
-import aima.core.probability.decision.MDP;
-import aima.core.probability.decision.MDPFactory;
-import aima.core.probability.decision.MDPPerception;
-import aima.core.probability.decision.MDPPolicy;
-import aima.core.probability.decision.MDPUtilityFunction;
+import aima.core.probability.mdp.MDP;
+import aima.core.probability.mdp.MDPFactory;
+import aima.core.probability.mdp.MDPPerception;
+import aima.core.probability.mdp.MDPPolicy;
+import aima.core.probability.mdp.MDPUtilityFunction;
+import aima.core.util.MockRandomizer;
+import aima.core.util.Randomizer;
 import aima.core.util.datastructure.Pair;
-import aima.test.core.unit.probability.MockRandomizer;
 
 /**
  * @author Ravi Mohan

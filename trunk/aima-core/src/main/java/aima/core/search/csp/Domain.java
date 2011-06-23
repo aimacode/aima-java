@@ -53,7 +53,6 @@ public class Domain implements Iterable<Object> {
 
 	@Override
 	public Iterator<Object> iterator() {
-		// TODO Auto-generated method stub
 		return new ArrayIterator<Object>(values);
 	}
 
