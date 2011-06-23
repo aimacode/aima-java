@@ -6,8 +6,9 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202. A
- * constraint satisfaction problem or CSP consists of three components, X, D,
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202.<br>
+ * <br>
+ * A constraint satisfaction problem or CSP consists of three components, X, D,
  * and C:
  * <ul>
  * <li>X is a set of variables, {X1, ... ,Xn}.</li>

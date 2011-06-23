@@ -12,8 +12,11 @@ import aima.core.search.framework.Search;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page 82.
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page
+ * 82.<br>
+ * <br>
+ * 
+ * <pre>
  * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
  *   node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
@@ -28,16 +31,13 @@ import aima.core.util.datastructure.FIFOQueue;
  *          if child.STATE is not in explored or frontier then
  *              if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
  *              frontier <- INSERT(child, frontier)
- * </code> 
- * Figure 3.11 Breadth-first search on a graph.
- */
-
-/**
- * Note: Supports both Tree and Graph based versions by assigning an instance
- * of TreeSearch or GraphSearch to its constructor.
- */
-
-/**
+ * </pre>
+ * 
+ * Figure 3.11 Breadth-first search on a graph.<br>
+ * <br>
+ * <b>Note:</b> Supports both Tree and Graph based versions by assigning an
+ * instance of TreeSearch or GraphSearch to its constructor.
+ * 
  * @author Ciaran O'Reilly
  */
 public class BreadthFirstSearch implements Search {

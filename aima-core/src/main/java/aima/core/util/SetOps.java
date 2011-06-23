@@ -4,15 +4,16 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Note: This code is based on -<br>
- * http://java.sun.com/docs/books/tutorial/collections/interfaces/set.html<br>
+ * Note: This code is based on - <a href=
+ * "http://download.oracle.com/javase/tutorial/collections/interfaces/set.html"
+ * >Java Tutorial: The Set Interface</a> <br>
  * 
  * Using LinkedHashSet, even though slightly slower than HashSet, in order to
  * ensure order is always respected (i.e. if called with TreeSet or
  * LinkedHashSet implementations).
  * 
- * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
  */
 public class SetOps {
 

@@ -2,12 +2,10 @@ package aima.core.learning.neural;
 
 import java.util.Hashtable;
 
-/*
- * a holder for config data for neural networks and possibly for other
- * learning systems.
- */
-
 /**
+ * A holder for config data for neural networks and possibly for other learning
+ * systems.
+ * 
  * @author Ravi Mohan
  * 
  */

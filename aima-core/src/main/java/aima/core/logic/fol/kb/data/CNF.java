@@ -5,11 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Conjunctive Normal Form (CNF) : a conjunction of clauses, where each 
- * clause is a disjunction of literals.
- */
-
-/**
+ * Conjunctive Normal Form (CNF) : a conjunction of clauses, where each clause
+ * is a disjunction of literals.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

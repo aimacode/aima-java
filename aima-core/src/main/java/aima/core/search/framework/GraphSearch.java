@@ -12,8 +12,10 @@ import aima.core.agent.Action;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77. 
- * <code>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77. <br>
+ * <br>
+ * 
+ * <pre>
  * function GRAPH-SEARCH(problem) returns a solution, or failure
  *   initialize the frontier using the initial state of problem
  *   initialize the explored set to be empty
@@ -24,11 +26,10 @@ import aima.core.util.datastructure.Queue;
  *     add the node to the explored set
  *     expand the chosen node, adding the resulting nodes to the frontier
  *       only if not in the frontier or explored set
- * </code> 
+ * </pre>
+ * 
  * Figure 3.7 An informal description of the general graph-search algorithm.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

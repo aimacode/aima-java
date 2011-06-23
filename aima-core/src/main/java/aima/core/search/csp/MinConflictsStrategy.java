@@ -6,7 +6,8 @@ import java.util.List;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.8, Page 221.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.8, Page 221.<br>
+ * <br>
  * 
  * <pre>
  * <code>

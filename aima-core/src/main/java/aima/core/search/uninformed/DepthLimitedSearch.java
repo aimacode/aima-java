@@ -13,9 +13,11 @@ import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page 88.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page
+ * 88.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
  *   return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem, limit)
  *   
@@ -30,11 +32,10 @@ import aima.core.search.framework.SearchUtils;
  *           if result = cutoff then cutoff_occurred? <- true
  *           else if result != failure then return result
  *       if cutoff_occurred? then return cutoff else return failure
- * </code>
+ * </pre>
+ * 
  * Figure 3.17 A recursive implementation of depth-limited search.
- */
-
-/**
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

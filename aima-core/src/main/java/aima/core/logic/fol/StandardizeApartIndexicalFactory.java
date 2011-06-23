@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class ensures unique standardize apart indexicals are created. 
- */
-
-/**
+ * This class ensures unique standardize apart indexicals are created.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

@@ -15,9 +15,11 @@ import aima.core.util.CancelableThread;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page 126.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page
+ * 126.<br>
+ * <br>
  * 
- * <code>
+ * <pre>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
  *                    
  *   current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -28,15 +30,14 @@ import aima.core.util.Util;
  *     /\E <- next.VALUE - current.value
  *     if /\E > 0 then current <- next
  *     else current <- next only with probability e^(/\E/T)
- * </code>
- * Figure 4.5 The simulated annealing search algorithm, a version of
- * stochastic hill climbing where some downhill moves are allowed. Downhill
- * moves are accepted readily early in the annealing schedule and then less
- * often as time goes on. The schedule input determines the value of
- * the temperature T as a function of time.
- */
-
-/**
+ * </pre>
+ * 
+ * Figure 4.5 The simulated annealing search algorithm, a version of stochastic
+ * hill climbing where some downhill moves are allowed. Downhill moves are
+ * accepted readily early in the annealing schedule and then less often as time
+ * goes on. The schedule input determines the value of the temperature T as a
+ * function of time.
+ * 
  * @author Ravi Mohan
  * 
  */
