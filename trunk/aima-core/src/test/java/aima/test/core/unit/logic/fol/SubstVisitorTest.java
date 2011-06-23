@@ -98,8 +98,8 @@ public class SubstVisitorTest {
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
 		Assert.assertEquals(expectedAfterSubst, afterSubst);
-		Assert.assertEquals(beforeSubst, parser
-				.parse("BrotherOf(x) = EnemyOf(y)"));
+		Assert.assertEquals(beforeSubst,
+				parser.parse("BrotherOf(x) = EnemyOf(y)"));
 	}
 
 	@Test

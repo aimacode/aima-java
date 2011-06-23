@@ -26,8 +26,8 @@ public class DepthLimitedSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("113", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("113",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
 	}
 
 	@Test

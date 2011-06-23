@@ -27,8 +27,8 @@ public class DepthFirstSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("113", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("113",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
 	}
 
 	@Test
@@ -41,8 +41,8 @@ public class DepthFirstSearchTest {
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
 		Assert.assertEquals(0, actions.size());
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
 	}
 
 	//

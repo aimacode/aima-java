@@ -10,7 +10,8 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.1, page 328.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.1, page
+ * 328.
  * 
  * <pre>
  * function UNIFY(x, y, theta) returns a substitution to make x and y identical
@@ -38,22 +39,20 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   else return add {var/x} to theta
  * </pre>
  * 
- * Figure 9.1 The unification algorithm. The algorithm works by comparing the structures
- * of the inputs, elements by element. The substitution theta that is the argument to UNIFY is built
- * up along the way and is used to make sure that later comparisons are consistent with bindings
- * that were established earlier. In a compound expression, such as F(A, B), the OP field picks
- * out the function symbol F and the ARGS field picks out the argument list (A, B).
- */
-
-/**
- * @author Ravi Mohan
+ * Figure 9.1 The unification algorithm. The algorithm works by comparing the
+ * structures of the inputs, elements by element. The substitution theta that is
+ * the argument to UNIFY is built up along the way and is used to make sure that
+ * later comparisons are consistent with bindings that were established earlier.
+ * In a compound expression, such as F(A, B), the OP field picks out the
+ * function symbol F and the ARGS field picks out the argument list (A, B).
+ * 
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
  * 
  */
 public class Unifier {
 	//
 	private static SubstVisitor _substVisitor = new SubstVisitor();
-	private static VariableCollector _variableCollector = new VariableCollector();
 
 	public Unifier() {
 
@@ -112,8 +111,8 @@ public class Unifier {
 		} else if (x.size() == 1 && y.size() == 1) {
 			return unify(x.get(0), y.get(0), theta);
 		} else {
-			return unify(x.subList(1, x.size()), y.subList(1, y.size()), unify(
-					x.get(0), y.get(0), theta));
+			return unify(x.subList(1, x.size()), y.subList(1, y.size()),
+					unify(x.get(0), y.get(0), theta));
 		}
 	}
 
@@ -132,13 +131,15 @@ public class Unifier {
 		// ((equal var x) t)
 		if (var.equals(x)) {
 			return true;
-		// ((bound? x subst)
+			// ((bound? x subst)
 		} else if (theta.containsKey(x)) {
-			//  (occurs-in? var (lookup x subst) subst))
+			// (occurs-in? var (lookup x subst) subst))
 			return occurCheck(theta, var, theta.get(x));
-		// ((consp x) (or (occurs-in? var (first x) subst) (occurs-in? var (rest x) subst)))
+			// ((consp x) (or (occurs-in? var (first x) subst) (occurs-in? var
+			// (rest x) subst)))
 		} else if (x instanceof Function) {
-			// (or (occurs-in? var (first x) subst) (occurs-in? var (rest x) subst)))
+			// (or (occurs-in? var (first x) subst) (occurs-in? var (rest x)
+			// subst)))
 			Function fx = (Function) x;
 			for (Term fxt : fx.getArgs()) {
 				if (occurCheck(theta, var, fxt)) {
@@ -208,14 +209,14 @@ public class Unifier {
 	// See:
 	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
 	// for need for this.
-	private Map<Variable, Term> cascadeSubstitution(Map<Variable, Term> theta, Variable var,
-			Term x) {
+	private Map<Variable, Term> cascadeSubstitution(Map<Variable, Term> theta,
+			Variable var, Term x) {
 		theta.put(var, x);
 		for (Variable v : theta.keySet()) {
 			theta.put(v, _substVisitor.subst(theta, theta.get(v)));
 		}
-		// Ensure Function Terms are correctly updates by passing over them again
-		// Fix for testBadCascadeSubstitution_LCL418_1()
+		// Ensure Function Terms are correctly updates by passing over them
+		// again. Fix for testBadCascadeSubstitution_LCL418_1()
 		for (Variable v : theta.keySet()) {
 			Term t = theta.get(v);
 			if (t instanceof Function) {

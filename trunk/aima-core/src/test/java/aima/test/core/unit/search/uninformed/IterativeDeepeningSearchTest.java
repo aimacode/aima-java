@@ -27,8 +27,8 @@ public class IterativeDeepeningSearchTest {
 			SearchAgent agent = new SearchAgent(problem, search);
 			List<Action> actions = agent.getActions();
 			assertCorrectPlacement(actions);
-			Assert.assertEquals("3656", agent.getInstrumentation().getProperty(
-					"nodesExpanded"));
+			Assert.assertEquals("3656",
+					agent.getInstrumentation().getProperty("nodesExpanded"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

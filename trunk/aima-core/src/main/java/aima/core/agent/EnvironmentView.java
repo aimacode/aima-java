@@ -1,10 +1,9 @@
 package aima.core.agent;
 
 /**
- * Allows external applications/logic to view the interaction of Agent(s) with an Environment. 
- */
-
-/**
+ * Allows external applications/logic to view the interaction of Agent(s) with
+ * an Environment.
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */

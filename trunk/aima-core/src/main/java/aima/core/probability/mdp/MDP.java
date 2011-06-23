@@ -33,8 +33,8 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 		MDP<STATE_TYPE, ACTION_TYPE> mdp = new MDP<STATE_TYPE, ACTION_TYPE>(
 				source);
 		mdp.rewardFunction = new MDPRewardFunction<STATE_TYPE>();
-		mdp.rewardFunction.setReward(initialState, rewardFunction
-				.getRewardFor(initialState));
+		mdp.rewardFunction.setReward(initialState,
+				rewardFunction.getRewardFor(initialState));
 		mdp.transitionModel = new MDPTransitionModel<STATE_TYPE, ACTION_TYPE>(
 				terminalStates);
 		return mdp;
@@ -119,8 +119,8 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 			newUtilityFunction.setUtility(s, utility);
 
 			for (STATE_TYPE state : terminalStates) {
-				newUtilityFunction.setUtility(state, presentUtilityFunction
-						.getUtility(state));
+				newUtilityFunction.setUtility(state,
+						presentUtilityFunction.getUtility(state));
 			}
 		}
 
@@ -199,9 +199,9 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	public double getTransitionProbability(
 			MDPTransition<STATE_TYPE, ACTION_TYPE> transition) {
-		return transitionModel.getTransitionProbability(transition
-				.getInitialState(), transition.getAction(), transition
-				.getDestinationState());
+		return transitionModel.getTransitionProbability(
+				transition.getInitialState(), transition.getAction(),
+				transition.getDestinationState());
 	}
 
 	public MDPPerception<STATE_TYPE> execute(STATE_TYPE state,
@@ -233,7 +233,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	//
 	// PRIVATE METHODS
-	// 
+	//
 
 	private double valueIterateOnceForGivenState(double gamma,
 			MDPUtilityFunction<STATE_TYPE> presentUtilityFunction,

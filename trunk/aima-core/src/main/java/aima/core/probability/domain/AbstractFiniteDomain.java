@@ -44,7 +44,8 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	public int getOffset(Object value) {
 		Integer idx = valueToIdx.get(value);
 		if (null == idx) {
-			throw new IllegalArgumentException("Value ["+value+"] is not a possible value of this domain.");
+			throw new IllegalArgumentException("Value [" + value
+					+ "] is not a possible value of this domain.");
 		}
 		return idx.intValue();
 	}

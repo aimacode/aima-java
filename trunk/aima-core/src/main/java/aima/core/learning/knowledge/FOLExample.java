@@ -99,8 +99,8 @@ public class FOLExample {
 		if (descParts.size() == 1) {
 			description = descParts.get(0);
 		} else if (descParts.size() > 1) {
-			description = new ConnectedSentence(Connectors.AND, descParts
-					.get(0), descParts.get(1));
+			description = new ConnectedSentence(Connectors.AND,
+					descParts.get(0), descParts.get(1));
 			for (int i = 2; i < descParts.size(); i++) {
 				description = new ConnectedSentence(Connectors.AND,
 						description, descParts.get(i));

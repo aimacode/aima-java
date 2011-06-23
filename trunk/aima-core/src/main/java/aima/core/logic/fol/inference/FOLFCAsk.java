@@ -20,7 +20,8 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.3, page 332.
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.3, page
+ * 332.
  * 
  * <pre>
  * function FOL-FC-ASK(KB, alpha) returns a substitution or false
@@ -43,11 +44,12 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   return false
  * </pre>
  * 
- * Figure 9.3 A conceptually straightforward, but very inefficient forward-chaining algo-
- * rithm. On each iteration, it adds to KB all the atomic sentences that can be inferred in one
- * step from the implication sentences and the atomic sentences already in KB. The function
- * STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have
- * not been used before.
+ * Figure 9.3 A conceptually straightforward, but very inefficient
+ * forward-chaining algo- rithm. On each iteration, it adds to KB all the atomic
+ * sentences that can be inferred in one step from the implication sentences and
+ * the atomic sentences already in KB. The function STANDARDIZE-VARIABLES
+ * replaces all variables in its arguments with new ones that have not been used
+ * before.
  * 
  * @author Ciaran O'Reilly
  * 
@@ -116,8 +118,8 @@ public class FOLFCAsk implements InferenceProcedure {
 						newSentences.add(qDelta);
 						ansHandler.addProofStep(impl, qDelta, theta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta.getAtomicSentence(), alpha
-								.getAtomicSentence());
+						theta = KB.unify(qDelta.getAtomicSentence(),
+								alpha.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {
 							for (Literal l : newSentences) {

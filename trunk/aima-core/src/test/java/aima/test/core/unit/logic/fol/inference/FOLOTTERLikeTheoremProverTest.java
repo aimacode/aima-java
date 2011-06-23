@@ -57,8 +57,8 @@ public class FOLOTTERLikeTheoremProverTest extends
 		Clause simplified = simplifier.simplify(cnf.getConjunctionOfClauses()
 				.get(0));
 
-		Assert.assertEquals("[P(y,y), P(y,ONE), P(ONE,y)]", simplified
-				.toString());
+		Assert.assertEquals("[P(y,y), P(y,ONE), P(ONE,y)]",
+				simplified.toString());
 	}
 
 	// This tests to ensure the OTTERLike theorem prover

@@ -40,11 +40,11 @@ public class UniformCostSearchTest {
 
 		Assert.assertEquals(8, actions.size());
 
-		Assert.assertEquals("1965", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("1965",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
 
-		Assert.assertEquals("8.0", agent.getInstrumentation().getProperty(
-				"pathCost"));
+		Assert.assertEquals("8.0",
+				agent.getInstrumentation().getProperty("pathCost"));
 	}
 
 	@Test
@@ -60,12 +60,12 @@ public class UniformCostSearchTest {
 
 		Assert.assertEquals(0, actions.size());
 
-		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
+		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
 
 		// Will be 0 as did not reach goal state.
-		Assert.assertEquals("0", agent.getInstrumentation().getProperty(
-				"pathCost"));
+		Assert.assertEquals("0",
+				agent.getInstrumentation().getProperty("pathCost"));
 	}
 
 	@Test
@@ -82,14 +82,13 @@ public class UniformCostSearchTest {
 
 		List<Action> actions = agent.getActions();
 
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
-						actions.toString());
-		Assert.assertEquals("278.0", search.getMetrics().get(
-				QueueSearch.METRIC_PATH_COST));
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				actions.toString());
+		Assert.assertEquals("278.0",
+				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
 	}
-	
+
 	@Test
 	public void testCheckFrontierPathCost() throws Exception {
 		ExtendableMap map = new ExtendableMap();
@@ -103,19 +102,17 @@ public class UniformCostSearchTest {
 		Problem problem = new Problem("start",
 				MapFunctionFactory.getActionsFunction(map),
 				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						"goal"),
-				new MapStepCostFunction(map));
-		
+						"goal"), new MapStepCostFunction(map));
+
 		Search search = new UniformCostSearch();
 		SearchAgent agent = new SearchAgent(problem, search);
 
 		List<Action> actions = agent.getActions();
 
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
-						actions.toString());
-		Assert.assertEquals("5.5", search.getMetrics().get(
-				QueueSearch.METRIC_PATH_COST));	
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
+				actions.toString());
+		Assert.assertEquals("5.5",
+				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
 	}
 }

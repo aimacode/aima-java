@@ -24,7 +24,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyzD = new ProbabilityTable(new double[] {
-		// X = true, Y = true, Z = true
+				// X = true, Y = true, Z = true
 				1.0,
 				// X = true, Y = true, Z = false
 				2.0,
@@ -41,7 +41,7 @@ public class ProbabilityTableTest {
 				// X = false, Y = false, Z = false
 				8.0, }, xRV, yRV, zRV);
 		ProbabilityTable xzyD = new ProbabilityTable(new double[] {
-		// X = true, Z = true, Y = true
+				// X = true, Z = true, Y = true
 				1.0,
 				// X = true, Z = true, Y = false
 				3.0,
@@ -58,7 +58,7 @@ public class ProbabilityTableTest {
 				// X = false, Z = false, Y = false
 				8.0, }, xRV, zRV, yRV);
 		ProbabilityTable zxyD = new ProbabilityTable(new double[] {
-		// Z = true, X = true, Y = true
+				// Z = true, X = true, Y = true
 				1.0,
 				// Z = true, X = true, Y = false
 				3.0,
@@ -80,12 +80,12 @@ public class ProbabilityTableTest {
 		ProbabilityTable iD = new ProbabilityTable(new double[] { 1.0 });
 		// Ensure the order of the dividends
 		// makes no difference to the result
-		Assert.assertArrayEquals(xyzD.divideBy(zD).getValues(), xzyD.divideBy(
-				zD).pointwiseProductPOS(iD, xRV, yRV, zRV).getValues(),
-				DELTA_THRESHOLD);
-		Assert.assertArrayEquals(xzyD.divideBy(zD).getValues(), zxyD.divideBy(
-				zD).pointwiseProductPOS(iD, xRV, zRV, yRV).getValues(),
-				DELTA_THRESHOLD);
+		Assert.assertArrayEquals(xyzD.divideBy(zD).getValues(),
+				xzyD.divideBy(zD).pointwiseProductPOS(iD, xRV, yRV, zRV)
+						.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(xzyD.divideBy(zD).getValues(),
+				zxyD.divideBy(zD).pointwiseProductPOS(iD, xRV, zRV, yRV)
+						.getValues(), DELTA_THRESHOLD);
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyD = new ProbabilityTable(new double[] {
-		// X = true, Y = true
+				// X = true, Y = true
 				1.0,
 				// X = true, Y = false
 				2.0,
@@ -122,7 +122,7 @@ public class ProbabilityTableTest {
 		RandomVariable zRV = new RandVar("Z", new BooleanDomain());
 
 		ProbabilityTable xyD = new ProbabilityTable(new double[] {
-		// X = true, Y = true
+				// X = true, Y = true
 				1.0,
 				// X = true, Y = false
 				2.0,
@@ -145,7 +145,7 @@ public class ProbabilityTableTest {
 		RandVar bRV = new RandVar("B", new BooleanDomain());
 		RandVar cRV = new RandVar("C", new BooleanDomain());
 		ProbabilityTable ptABC = new ProbabilityTable(new double[] {
-		// A = true, B = true, C = true
+				// A = true, B = true, C = true
 				1.0,
 				// A = true, B = true, C = false
 				10.0,

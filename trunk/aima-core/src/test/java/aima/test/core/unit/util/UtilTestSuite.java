@@ -10,7 +10,7 @@ import aima.test.core.unit.util.datastructure.XYLocationTest;
 import aima.test.core.unit.util.math.MixedRadixNumberTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { FIFOQueueTest.class, LIFOQueueTest.class,
+@Suite.SuiteClasses({ FIFOQueueTest.class, LIFOQueueTest.class,
 		TableTest.class, XYLocationTest.class, MixedRadixNumberTest.class,
 		SetOpsTest.class, UtilTest.class })
 public class UtilTestSuite {

@@ -65,41 +65,35 @@ public class SubsumptionEliminationTest {
 		// Ensure only the 8 correct/expected clauses remain
 		Clause cl1 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(will_wait(v)) OR (patrons(v,Full) OR patrons(v,Some)))"))
+						parser.parse("(NOT(will_wait(v)) OR (patrons(v,Full) OR patrons(v,Some)))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl2 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(will_wait(v)) OR (hungry(v) OR patrons(v,Some)))"))
+						parser.parse("(NOT(will_wait(v)) OR (hungry(v) OR patrons(v,Some)))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl3 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(will_wait(v)) OR (patrons(v,Some) OR (type(v,Burger) OR (type(v,French) OR type(v,Thai)))))"))
+						parser.parse("(NOT(will_wait(v)) OR (patrons(v,Some) OR (type(v,Burger) OR (type(v,French) OR type(v,Thai)))))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl4 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(will_wait(v)) OR (fri_sat(v) OR (patrons(v,Some) OR (type(v,Burger) OR type(v,French)))))"))
+						parser.parse("(NOT(will_wait(v)) OR (fri_sat(v) OR (patrons(v,Some) OR (type(v,Burger) OR type(v,French)))))"))
 				.getConjunctionOfClauses().get(0);
-		Clause cl5 = cnfConv.convertToCNF(
-				parser.parse("(NOT(patrons(v,Some)) OR will_wait(v))"))
+		Clause cl5 = cnfConv
+				.convertToCNF(
+						parser.parse("(NOT(patrons(v,Some)) OR will_wait(v))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl6 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,French)) OR will_wait(v))))"))
+						parser.parse("(NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,French)) OR will_wait(v))))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl7 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(fri_sat(v)) OR (NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,Thai)) OR will_wait(v)))))"))
+						parser.parse("(NOT(fri_sat(v)) OR (NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,Thai)) OR will_wait(v)))))"))
 				.getConjunctionOfClauses().get(0);
 		Clause cl8 = cnfConv
 				.convertToCNF(
-						parser
-								.parse("(NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,Burger)) OR will_wait(v))))"))
+						parser.parse("(NOT(hungry(v)) OR (NOT(patrons(v,Full)) OR (NOT(type(v,Burger)) OR will_wait(v))))"))
 				.getConjunctionOfClauses().get(0);
 
 		Assert.assertTrue(clauses.contains(cl1));

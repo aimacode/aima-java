@@ -33,27 +33,27 @@ public class FOLLexerTest {
 	@Test
 	public void testLexBasicExpression() {
 		lexer.setInput("( P )");
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONSTANT, "P"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.CONSTANT, "P"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"),
+				lexer.nextToken());
 	}
 
 	@Test
 	public void testConnectors() {
 		lexer.setInput(" p  AND q");
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "p"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "AND"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "q"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "p"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "AND"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "q"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"),
+				lexer.nextToken());
 	}
 
 	@Test
@@ -61,14 +61,14 @@ public class FOLLexerTest {
 		lexer.setInput(" LeftLeg(q)");
 		Assert.assertEquals(new Token(LogicTokenTypes.FUNCTION, "LeftLeg"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "q"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "q"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"),
+				lexer.nextToken());
 	}
 
 	@Test
@@ -76,31 +76,31 @@ public class FOLLexerTest {
 		lexer.setInput(" HasColor(r)");
 		Assert.assertEquals(new Token(LogicTokenTypes.PREDICATE, "HasColor"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "r"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "r"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"),
+				lexer.nextToken());
 	}
 
 	@Test
 	public void testMultiArgPredicate() {
 		lexer.setInput(" King(x,y)");
-		Assert.assertEquals(new Token(LogicTokenTypes.PREDICATE, "King"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "x"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.COMMA, ","), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "y"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.PREDICATE, "King"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "x"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.COMMA, ","),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "y"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
 	}
 
 	@Test
@@ -108,14 +108,14 @@ public class FOLLexerTest {
 		lexer.setInput("FORALL x,y");
 		Assert.assertEquals(new Token(LogicTokenTypes.QUANTIFIER, "FORALL"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "x"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.COMMA, ","), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "y"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "x"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.COMMA, ","),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "y"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EOI, "EOI"),
+				lexer.nextToken());
 	}
 
 	@Test
@@ -123,21 +123,21 @@ public class FOLLexerTest {
 		lexer.setInput("BrotherOf(John) = EnemyOf(Saladin)");
 		Assert.assertEquals(new Token(LogicTokenTypes.FUNCTION, "BrotherOf"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONSTANT, "John"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.EQUALS, "="), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.CONSTANT, "John"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.EQUALS, "="),
+				lexer.nextToken());
 		Assert.assertEquals(new Token(LogicTokenTypes.FUNCTION, "EnemyOf"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
+				lexer.nextToken());
 		Assert.assertEquals(new Token(LogicTokenTypes.CONSTANT, "Saladin"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"), lexer
-				.nextToken());
+		Assert.assertEquals(new Token(LogicTokenTypes.RPAREN, ")"),
+				lexer.nextToken());
 	}
 }

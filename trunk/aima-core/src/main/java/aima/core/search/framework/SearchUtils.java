@@ -35,8 +35,8 @@ public class SearchUtils {
 		if (gt.isGoalState(n.getState())) {
 			if (gt instanceof SolutionChecker) {
 				isGoal = ((SolutionChecker) gt).isAcceptableSolution(
-						SearchUtils.actionsFromNodes(n.getPathFromRoot()), n
-								.getState());
+						SearchUtils.actionsFromNodes(n.getPathFromRoot()),
+						n.getState());
 			} else {
 				isGoal = true;
 			}

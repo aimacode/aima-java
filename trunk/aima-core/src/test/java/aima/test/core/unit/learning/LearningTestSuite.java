@@ -16,7 +16,7 @@ import aima.test.core.unit.learning.reinforcement.QTableTest;
 import aima.test.core.unit.learning.reinforcement.ReinforcementLearningTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { DataSetTest.class, InformationAndGainTest.class,
+@Suite.SuiteClasses({ DataSetTest.class, InformationAndGainTest.class,
 		DecisionListTest.class, DLTestTest.class, DecisionTreeTest.class,
 		EnsembleLearningTest.class, LearnerTests.class,
 		BackPropagationTests.class, LayerTests.class, QTableTest.class,

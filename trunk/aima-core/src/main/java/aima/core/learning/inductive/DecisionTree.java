@@ -64,8 +64,8 @@ public class DecisionTree {
 		for (String attribute : attributes) {
 			List<String> values = ds.getPossibleAttributeValues(attribute);
 			for (String value : values) {
-				List<String> unmatchedValues = Util.removeFrom(ds
-						.getPossibleAttributeValues(attribute), value);
+				List<String> unmatchedValues = Util.removeFrom(
+						ds.getPossibleAttributeValues(attribute), value);
 
 				DecisionTree tree = getStumpFor(ds, attribute, value,
 						returnValueIfMatched, unmatchedValues,

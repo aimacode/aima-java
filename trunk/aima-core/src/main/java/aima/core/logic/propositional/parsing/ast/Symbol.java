@@ -16,7 +16,7 @@ public class Symbol extends AtomicSentence {
 	public String getValue() {
 		return value;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 

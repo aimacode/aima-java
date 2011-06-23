@@ -1,6 +1,5 @@
 package aima.core.probability.hmm;
 
-
 /**
  * @author Ravi Mohan
  * 

@@ -1217,6 +1217,7 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		tokenizer.wordChars(0, 255);
 		tokenizer.whitespaceChars(0, ' ');
 		tokenizer.eolIsSignificant(true);
+		@SuppressWarnings("rawtypes")
 		java.util.Vector v = new java.util.Vector();
 
 		// Ignore initial empty lines

@@ -43,10 +43,10 @@ public class ParticleFilterTest {
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
 				0.5, 0.6, 0.7, 0.8, 0.9 });
 		ParticleSet starting = rainman.prior().toParticleSet(rainman, r, 100);
-		Assert.assertEquals(56, starting
-				.numberOfParticlesWithState(HmmConstants.RAINING));
-		Assert.assertEquals(44, starting
-				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
+		Assert.assertEquals(56,
+				starting.numberOfParticlesWithState(HmmConstants.RAINING));
+		Assert.assertEquals(44,
+				starting.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
 
 		ParticleSet afterSeeingUmbrella = starting.filter(
 				HmmConstants.SEE_UMBRELLA, r);
@@ -69,24 +69,24 @@ public class ParticleFilterTest {
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
 				0.5, 0.6, 0.7, 0.8, 0.9 });
 		ParticleSet starting = robot.prior().toParticleSet(robot, r, 100);
-		Assert.assertEquals(56, starting
-				.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
-		Assert.assertEquals(44, starting
-				.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
+		Assert.assertEquals(56,
+				starting.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
+		Assert.assertEquals(44,
+				starting.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
 
 		// step one = robot takes no action but senses open door
 		ParticleSet afterStepOne = starting.filter(HmmConstants.SEE_DOOR_OPEN,
 				r);
-		Assert.assertEquals(66, afterStepOne
-				.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
+		Assert.assertEquals(66,
+				afterStepOne.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
 		Assert.assertEquals(34, afterStepOne
 				.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
 
 		// step two = robot pushes the door and then senses open door
 		ParticleSet afterStepTwo = starting.filter(HmmConstants.PUSH_DOOR,
 				HmmConstants.SEE_DOOR_OPEN, r);
-		Assert.assertEquals(100, afterStepTwo
-				.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
+		Assert.assertEquals(100,
+				afterStepTwo.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
 		Assert.assertEquals(0, afterStepTwo
 				.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
 	}
@@ -95,10 +95,10 @@ public class ParticleFilterTest {
 	public void testRandomVariableConversionToParticleSet() {
 		VarDistribution rv = rainman.prior();
 		ParticleSet ps = rv.toParticleSet(rainman, randomizer, 10);
-		Assert.assertEquals(5, ps
-				.numberOfParticlesWithState(HmmConstants.RAINING));
-		Assert.assertEquals(5, ps
-				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
+		Assert.assertEquals(5,
+				ps.numberOfParticlesWithState(HmmConstants.RAINING));
+		Assert.assertEquals(5,
+				ps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
 	}
 
 	@Test
@@ -117,10 +117,10 @@ public class ParticleFilterTest {
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
 				0.9 });
 		ParticleSet ps2 = rv.toParticleSet(rainman, r, 10);
-		Assert.assertEquals(8, ps2
-				.numberOfParticlesWithState(HmmConstants.RAINING));
-		Assert.assertEquals(2, ps2
-				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
+		Assert.assertEquals(8,
+				ps2.numberOfParticlesWithState(HmmConstants.RAINING));
+		Assert.assertEquals(2,
+				ps2.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
 	}
 
 	@Test
@@ -128,10 +128,10 @@ public class ParticleFilterTest {
 
 		TransitionModel tm = rainman.transitionModel();
 		String oldState = HmmConstants.RAINING;
-		String state1 = tm.getStateForProbability(oldState, randomizer
-				.nextDouble());
-		String state2 = tm.getStateForProbability(oldState, randomizer
-				.nextDouble());
+		String state1 = tm.getStateForProbability(oldState,
+				randomizer.nextDouble());
+		String state2 = tm.getStateForProbability(oldState,
+				randomizer.nextDouble());
 		Assert.assertEquals(state1, HmmConstants.RAINING);
 		Assert.assertEquals(state2, HmmConstants.NOT_RAINING);
 	}
@@ -141,16 +141,16 @@ public class ParticleFilterTest {
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
 				0.5, 0.6, 0.7, 0.8, 0.9 });
 		ParticleSet ps = rainman.prior().toParticleSet(rainman, r, 10);
-		Assert.assertEquals(6, ps
-				.numberOfParticlesWithState(HmmConstants.RAINING));
-		Assert.assertEquals(4, ps
-				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
+		Assert.assertEquals(6,
+				ps.numberOfParticlesWithState(HmmConstants.RAINING));
+		Assert.assertEquals(4,
+				ps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
 
 		ParticleSet nps = ps.generateParticleSetForPredictedState(r);
-		Assert.assertEquals(7, nps
-				.numberOfParticlesWithState(HmmConstants.RAINING));
-		Assert.assertEquals(3, nps
-				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
+		Assert.assertEquals(7,
+				nps.numberOfParticlesWithState(HmmConstants.RAINING));
+		Assert.assertEquals(3,
+				nps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
 	}
 
 	@Test

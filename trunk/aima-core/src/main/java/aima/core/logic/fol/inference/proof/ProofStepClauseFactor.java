@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import aima.core.logic.fol.kb.data.Clause;
 import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Term;
@@ -26,7 +25,8 @@ public class ProofStepClauseFactor extends AbstractProofStep {
 	private Map<Variable, Term> renameSubst = new LinkedHashMap<Variable, Term>();
 
 	public ProofStepClauseFactor(Clause factor, Clause factorOf, Literal lx,
-			Literal ly, Map<Variable, Term> subst, Map<Variable, Term> renameSubst) {
+			Literal ly, Map<Variable, Term> subst,
+			Map<Variable, Term> renameSubst) {
 		this.factor = factor;
 		this.factorOf = factorOf;
 		this.lx = lx;
@@ -47,7 +47,9 @@ public class ProofStepClauseFactor extends AbstractProofStep {
 	}
 
 	public String getJustification() {
-		return "Factor of " + factorOf.getProofStep().getStepNumber() + "  [" + lx + ", " + ly + "], subst=" + subst + ", renaming="+renameSubst;
+		return "Factor of " + factorOf.getProofStep().getStepNumber() + "  ["
+				+ lx + ", " + ly + "], subst=" + subst + ", renaming="
+				+ renameSubst;
 	}
 	// END-ProofStep
 	//

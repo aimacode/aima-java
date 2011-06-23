@@ -93,16 +93,16 @@ public class DPLL {
 			return new SymbolValuePair();// automatically set to null values
 		} else {
 			if (purePositiveSymbols.size() > 0) {
-				Symbol symbol = new Symbol((purePositiveSymbols.get(0))
-						.getValue());
+				Symbol symbol = new Symbol(
+						(purePositiveSymbols.get(0)).getValue());
 				if (pureNegativeSymbols.contains(symbol)) {
 					throw new RuntimeException("Symbol " + symbol.getValue()
 							+ "misclassified");
 				}
 				return new SymbolValuePair(symbol, true);
 			} else {
-				Symbol symbol = new Symbol((pureNegativeSymbols.get(0))
-						.getValue());
+				Symbol symbol = new Symbol(
+						(pureNegativeSymbols.get(0)).getValue());
 				if (purePositiveSymbols.contains(symbol)) {
 					throw new RuntimeException("Symbol " + symbol.getValue()
 							+ "misclassified");
@@ -215,8 +215,8 @@ public class DPLL {
 			if ((clause instanceof Symbol)
 					&& (!(model.getAssignedSymbols().contains(clause)))) {
 				// System.out.println("found unit clause - assigning");
-				return new SymbolValuePair(new Symbol(((Symbol) clause)
-						.getValue()), true);
+				return new SymbolValuePair(new Symbol(
+						((Symbol) clause).getValue()), true);
 			}
 
 			if (clause instanceof UnarySentence) {
@@ -226,8 +226,8 @@ public class DPLL {
 						&& (!(model.getAssignedSymbols().contains(negated)))) {
 					// System.out.println("found unit clause type 2 -
 					// assigning");
-					return new SymbolValuePair(new Symbol(((Symbol) negated)
-							.getValue()), false);
+					return new SymbolValuePair(new Symbol(
+							((Symbol) negated).getValue()), false);
 				}
 			}
 

@@ -26,7 +26,8 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_ToothacheCavityCatchModel(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructToothacheCavityCatchNetwork(), bi));
+							.constructToothacheCavityCatchNetwork(),
+					bi));
 		}
 	}
 
@@ -35,7 +36,8 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_ToothacheCavityCatchWeatherModel(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructToothacheCavityCatchWeatherNetwork(), bi));
+							.constructToothacheCavityCatchWeatherNetwork(),
+					bi));
 		}
 	}
 
@@ -44,15 +46,16 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_MeningitisStiffNeckModel(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructMeningitisStiffNeckNetwork(), bi));
+							.constructMeningitisStiffNeckNetwork(),
+					bi));
 		}
 	}
 
 	@Test
 	public void test_BurglaryAlarmModel() {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
-			test_BurglaryAlarmModel(new FiniteBayesModel(BayesNetExampleFactory
-					.constructBurglaryAlarmNetwork(), bi));
+			test_BurglaryAlarmModel(new FiniteBayesModel(
+					BayesNetExampleFactory.constructBurglaryAlarmNetwork(), bi));
 		}
 	}
 
@@ -71,7 +74,8 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_ToothacheCavityCatchModel_Distributions(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructToothacheCavityCatchNetwork(), bi));
+							.constructToothacheCavityCatchNetwork(),
+					bi));
 		}
 	}
 
@@ -80,7 +84,8 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_ToothacheCavityCatchWeatherModel_Distributions(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructToothacheCavityCatchWeatherNetwork(), bi));
+							.constructToothacheCavityCatchWeatherNetwork(),
+					bi));
 		}
 	}
 
@@ -89,7 +94,8 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_MeningitisStiffNeckModel_Distributions(new FiniteBayesModel(
 					BayesNetExampleFactory
-							.constructMeningitisStiffNeckNetwork(), bi));
+							.constructMeningitisStiffNeckNetwork(),
+					bi));
 		}
 	}
 

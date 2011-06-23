@@ -9,7 +9,7 @@ import aima.test.core.unit.agent.impl.aprog.TableDrivenAgentProgramTest;
 import aima.test.core.unit.agent.impl.aprog.simplerule.RuleTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { RuleTest.class, TableDrivenAgentProgramTest.class,
+@Suite.SuiteClasses({ RuleTest.class, TableDrivenAgentProgramTest.class,
 		DynamicPerceptTest.class, PerceptSequenceTest.class })
 public class AgentTestSuite {
 

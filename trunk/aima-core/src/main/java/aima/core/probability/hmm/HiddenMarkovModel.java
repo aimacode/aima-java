@@ -105,8 +105,8 @@ public class HiddenMarkovModel {
 		// populate forward messages
 		for (int i = 0; i < perceptions.size(); i++) { // N.B i starts at 1,
 			// not zero
-			forwardMessages[i + 1] = forward(forwardMessages[i], perceptions
-					.get(i));
+			forwardMessages[i + 1] = forward(forwardMessages[i],
+					perceptions.get(i));
 		}
 		for (int i = perceptions.size(); i > 0; i--) {
 			VarDistribution smoothed = priorDistribution.duplicate();
@@ -114,8 +114,8 @@ public class HiddenMarkovModel {
 					backwardMessage.asMatrix()));
 			smoothed.normalize();
 			smoothedBeliefs[i] = smoothed;
-			backwardMessage = calculate_next_backward_message(
-					backwardMessage, perceptions.get(i - 1));
+			backwardMessage = calculate_next_backward_message(backwardMessage,
+					perceptions.get(i - 1));
 		}
 
 		return Arrays.asList(smoothedBeliefs);

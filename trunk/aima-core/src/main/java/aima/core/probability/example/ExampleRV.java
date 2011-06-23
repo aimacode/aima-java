@@ -42,7 +42,7 @@ public class ExampleRV {
 			new BooleanDomain());
 	public static final RandVar MARY_CALLS_RV = new RandVar("MaryCalls",
 			new BooleanDomain());
-	// 
+	//
 	public static final RandVar CLOUDY_RV = new RandVar("Cloudy",
 			new BooleanDomain());
 	public static final RandVar SPRINKLER_RV = new RandVar("Sprinkler",

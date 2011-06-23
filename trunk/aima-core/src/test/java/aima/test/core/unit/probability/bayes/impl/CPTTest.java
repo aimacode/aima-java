@@ -18,7 +18,7 @@ public class CPTTest {
 		RandVar cRV = new RandVar("C", new BooleanDomain());
 
 		CPT cpt = new CPT(cRV, new double[] {
-		// A = true, B = true, C = true
+				// A = true, B = true, C = true
 				0.1,
 				// A = true, B = true, C = false
 				0.9,
@@ -44,10 +44,8 @@ public class CPTTest {
 		Assert.assertArrayEquals(new double[] { 0.3, 0.7 }, cpt
 				.getConditioningCase(false, true).getValues(), DELTA_THRESHOLD);
 
-		Assert
-				.assertArrayEquals(new double[] { 0.4, 0.6 }, cpt
-						.getConditioningCase(false, false).getValues(),
-						DELTA_THRESHOLD);
+		Assert.assertArrayEquals(new double[] { 0.4, 0.6 }, cpt
+				.getConditioningCase(false, false).getValues(), DELTA_THRESHOLD);
 
 	}
 }

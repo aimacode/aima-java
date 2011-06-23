@@ -4,10 +4,7 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
  * Implementation of an EQUALity condition.
- *
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */

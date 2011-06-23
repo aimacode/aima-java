@@ -21,9 +21,9 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
 public class Model implements PLVisitor {
 
 	private HashMap<Symbol, Boolean> h = new HashMap<Symbol, Boolean>();
-	
+
 	public Model() {
-		
+
 	}
 
 	public Boolean getStatus(Symbol symbol) {

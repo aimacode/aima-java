@@ -15,15 +15,17 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 354.<br>
- * Demodulation: For any terms x, y, and z, where z appears somewhere in literal m<sub>i</sub>
- * and where UNIFY(x,z) = &theta;:<br>
+ * Demodulation: For any terms x, y, and z, where z appears somewhere in literal
+ * m<sub>i</sub> and where UNIFY(x,z) = &theta;:<br>
+ * 
  * <pre>
  *                 x=y,    m<sub>1</sub> OR ... OR m<sub>n</sub>[z]
  *     ------------------------------------------------------------
  *     SUB(SUBST(&theta;,x), SUBST(&theta;,y), m<sub>1</sub> OR ... OR m<sub>n</sub>)
  * </pre>
- * where SUBST is the usual substitution of a binding list, and SUB(x,y,m) means to
- * replace x with y everywhere that x occurs within m.<br>
+ * 
+ * where SUBST is the usual substitution of a binding list, and SUB(x,y,m) means
+ * to replace x with y everywhere that x occurs within m.<br>
  * <br>
  * Some additional restrictions/clarifications highlighted in:<br>
  * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture15.pdf<br>
@@ -41,8 +43,8 @@ public class Demodulation extends AbstractModulation {
 		Clause altClExpression = null;
 
 		for (Literal l1 : clExpression.getLiterals()) {
-			AtomicSentence altExpression = apply(assertion, l1
-					.getAtomicSentence());
+			AtomicSentence altExpression = apply(assertion,
+					l1.getAtomicSentence());
 			if (null != altExpression) {
 				// I have an alternative, create a new clause
 				// with the alternative and return
@@ -76,8 +78,8 @@ public class Demodulation extends AbstractModulation {
 			AtomicSentence expression) {
 		AtomicSentence altExpression = null;
 
-		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(assertion
-				.getTerm1(), expression);
+		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(
+				assertion.getTerm1(), expression);
 
 		if (null != icm) {
 			Term replaceWith = substVisitor.subst(

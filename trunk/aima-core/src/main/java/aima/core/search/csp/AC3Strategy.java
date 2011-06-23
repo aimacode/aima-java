@@ -40,10 +40,11 @@ import aima.core.util.datastructure.FIFOQueue;
 
 public class AC3Strategy {
 
-	/** 
+	/**
 	 * Makes a CSP consisting of binary constraints arc-consistent.
-	 * @return An object which indicates success/failure and contains
-	 * data to undo the operation.
+	 * 
+	 * @return An object which indicates success/failure and contains data to
+	 *         undo the operation.
 	 */
 	public DomainRestoreInfo reduceDomains(CSP csp) {
 		DomainRestoreInfo result = new DomainRestoreInfo();
@@ -53,13 +54,14 @@ public class AC3Strategy {
 		reduceDomains(queue, csp, result);
 		return result.compactify();
 	}
-	
-	/** 
-	 * Reduces the domain of the specified variable to the specified
-	 * value and reestablishes arc-consistency. It is assumed that the
-	 * provided CSP is arc-consistent before the call.
-	 * @return An object which indicates success/failure and contains
-	 * data to undo the operation.
+
+	/**
+	 * Reduces the domain of the specified variable to the specified value and
+	 * reestablishes arc-consistency. It is assumed that the provided CSP is
+	 * arc-consistent before the call.
+	 * 
+	 * @return An object which indicates success/failure and contains data to
+	 *         undo the operation.
 	 */
 	public DomainRestoreInfo reduceDomains(Variable var, Object value, CSP csp) {
 		DomainRestoreInfo result = new DomainRestoreInfo();

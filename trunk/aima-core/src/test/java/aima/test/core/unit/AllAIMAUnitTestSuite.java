@@ -12,7 +12,7 @@ import aima.test.core.unit.search.SearchTestSuite;
 import aima.test.core.unit.util.UtilTestSuite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AgentTestSuite.class, EnvironmentTestSuite.class,
+@Suite.SuiteClasses({ AgentTestSuite.class, EnvironmentTestSuite.class,
 		LearningTestSuite.class, LogicTestSuite.class,
 		ProbabilityTestSuite.class, SearchTestSuite.class, UtilTestSuite.class })
 public class AllAIMAUnitTestSuite {

@@ -20,14 +20,17 @@ import aima.core.logic.fol.parsing.ast.Variable;
 /**
  * Artificial Intelligence A Modern Approach (3r Edition): page 354.<br>
  * <br>
- * <b>Paramodulation</b>: For any terms x, y, and z, where z appears somewhere in literal m<sub>i</sub>,
- * and where UNIFY(x,z) = &theta;,<br>
+ * <b>Paramodulation</b>: For any terms x, y, and z, where z appears somewhere
+ * in literal m<sub>i</sub>, and where UNIFY(x,z) = &theta;,<br>
+ * 
  * <pre>
  *                          l<sub>1</sub> OR ... OR l<sub>k</sub> OR x=y,     m<sub>1</sub> OR ... OR m<sub>n</sub>
  *     -------------------------------------------------------------------------------------------------------
  *     SUB(SUBST(&theta;,x), SUBST(&theta;,y), SUBST(&theta;, l<sub>1</sub> OR ... OR l<sub>k</sub> OR m<sub>1</sub> OR ... OR m<sub>n</sub>))
  * </pre>
- * Paramodulation yields a complete inference procedure for first-order logic with equality.
+ * 
+ * Paramodulation yields a complete inference procedure for first-order logic
+ * with equality.
  * 
  * @author Ciaran O'Reilly
  * 
@@ -83,8 +86,8 @@ public class Paramodulation extends AbstractModulation {
 									toMatch, l1.getAtomicSentence());
 
 							if (null != icm) {
-								Term replaceWith = substVisitor.subst(icm
-										.getMatchingSubstitution(),
+								Term replaceWith = substVisitor.subst(
+										icm.getMatchingSubstitution(),
 										toReplaceWith);
 
 								// Want to ignore reflexivity axiom situation,
@@ -95,9 +98,9 @@ public class Paramodulation extends AbstractModulation {
 
 								ReplaceMatchingTerm rmt = new ReplaceMatchingTerm();
 
-								AtomicSentence altExpression = rmt.replace(l1
-										.getAtomicSentence(), icm
-										.getMatchingTerm(), replaceWith);
+								AtomicSentence altExpression = rmt.replace(
+										l1.getAtomicSentence(),
+										icm.getMatchingTerm(), replaceWith);
 
 								// I have an alternative, create a new clause
 								// with the alternative and the substitution
@@ -105,20 +108,14 @@ public class Paramodulation extends AbstractModulation {
 								List<Literal> newLits = new ArrayList<Literal>();
 								for (Literal l2 : topClause.getLiterals()) {
 									if (l1.equals(l2)) {
-										newLits
-												.add(l1
-														.newInstance((AtomicSentence) substVisitor
-																.subst(
-																		icm
-																				.getMatchingSubstitution(),
-																		altExpression)));
+										newLits.add(l1
+												.newInstance((AtomicSentence) substVisitor.subst(
+														icm.getMatchingSubstitution(),
+														altExpression)));
 									} else {
-										newLits
-												.add(substVisitor
-														.subst(
-																icm
-																		.getMatchingSubstitution(),
-																l2));
+										newLits.add(substVisitor.subst(
+												icm.getMatchingSubstitution(),
+												l2));
 									}
 								}
 								// Assign the equality clause literals,
@@ -128,8 +125,8 @@ public class Paramodulation extends AbstractModulation {
 									if (possEqLit.equals(l2)) {
 										continue;
 									}
-									newLits.add(substVisitor.subst(icm
-											.getMatchingSubstitution(), l2));
+									newLits.add(substVisitor.subst(
+											icm.getMatchingSubstitution(), l2));
 								}
 
 								// Only apply paramodulation at most once
@@ -143,10 +140,9 @@ public class Paramodulation extends AbstractModulation {
 								} else {
 									nc = new Clause(newLits);
 								}
-								nc
-										.setProofStep(new ProofStepClauseParamodulation(
-												nc, topClause, equalityClause,
-												assertion));
+								nc.setProofStep(new ProofStepClauseParamodulation(
+										nc, topClause, equalityClause,
+										assertion));
 								if (c1.isImmutable()) {
 									nc.setImmutable();
 								}

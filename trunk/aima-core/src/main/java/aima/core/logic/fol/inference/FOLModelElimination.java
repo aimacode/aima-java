@@ -35,7 +35,9 @@ import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
  * Based on lecture notes from:<br>
- * <a href="http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf">http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf</a>
+ * <a
+ * href="http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf">
+ * http://logic.stanford.edu/classes/cs157/2008/lectures/lecture13.pdf</a>
  * 
  * @author Ciaran O'Reilly
  * 
@@ -92,8 +94,8 @@ public class FOLModelElimination implements InferenceProcedure {
 		// an answer (supports use of answer literals).
 		AnswerHandler ansHandler = new AnswerHandler(kb, aQuery, maxQueryTime);
 
-		IndexedFarParents ifps = new IndexedFarParents(ansHandler
-				.getSetOfSupport(), background);
+		IndexedFarParents ifps = new IndexedFarParents(
+				ansHandler.getSetOfSupport(), background);
 
 		// Iterative deepening to be used
 		for (int maxDepth = 1; maxDepth < Integer.MAX_VALUE; maxDepth++) {
@@ -221,8 +223,9 @@ public class FOLModelElimination implements InferenceProcedure {
 				if (l instanceof ReducedLiteral) {
 					// if they can be resolved
 					if (head.isNegativeLiteral() != l.isNegativeLiteral()) {
-						Map<Variable, Term> subst = unifier.unify(head
-								.getAtomicSentence(), l.getAtomicSentence());
+						Map<Variable, Term> subst = unifier
+								.unify(head.getAtomicSentence(),
+										l.getAtomicSentence());
 						if (null != subst) {
 							// I have a cancellation
 							// Need to apply subst to all of the
@@ -367,11 +370,12 @@ public class FOLModelElimination implements InferenceProcedure {
 							"Generated an empty chain while looking for an answer, implies original KB is unsatisfiable");
 				}
 				if (1 == nearParent.getNumberLiterals()
-						&& nearParent.getHead().getAtomicSentence()
-								.getSymbolicName().equals(
-										answerChain.getHead()
-												.getAtomicSentence()
-												.getSymbolicName())) {
+						&& nearParent
+								.getHead()
+								.getAtomicSentence()
+								.getSymbolicName()
+								.equals(answerChain.getHead()
+										.getAtomicSentence().getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
 					List<Term> answerTerms = nearParent.getHead()
 							.getAtomicSentence().getArgs();
@@ -589,7 +593,7 @@ class IndexedFarParents {
 		return sb.toString();
 	}
 
-	// 
+	//
 	// PRIVATE METHODS
 	//
 	private void constructInternalDataStructures(List<Chain> sos,

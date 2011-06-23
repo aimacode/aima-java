@@ -318,8 +318,8 @@ public class TicTacToeTest {
 
 			ArrayList successors2 = new TicTacToe().getSuccessorStates(h);
 			Assert.assertEquals(sizeOfSuccessors, successors2.size());
-			Assert.assertEquals(playerToMove, new TicTacToe()
-					.getPlayerToMove(h));
+			Assert.assertEquals(playerToMove,
+					new TicTacToe().getPlayerToMove(h));
 		}
 	}
 }

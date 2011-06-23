@@ -74,8 +74,8 @@ public class DPLLTest {
 	@Test
 	public void testDPLLFilteringNonTrueClausesGivesNullWhenAllClausesAreKnown() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
-				true).extend(new Symbol("C"), true);
+		model = model.extend(new Symbol("A"), true)
+				.extend(new Symbol("B"), true).extend(new Symbol("C"), true);
 		Sentence sentence = (Sentence) parser
 				.parse("((A AND B) AND (B AND C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
@@ -172,12 +172,12 @@ public class DPLLTest {
 		Assert.assertTrue(kb.askWithDpll("(P00)"));
 		Assert.assertFalse(kb.askWithDpll("(NOT P00)"));
 	}
-	
+
 	@Test
 	public void testDoesNotKnow() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("A");
-		
+
 		Assert.assertFalse(kb.askWithDpll("B"));
 		Assert.assertFalse(kb.askWithDpll("(NOT B)"));
 	}

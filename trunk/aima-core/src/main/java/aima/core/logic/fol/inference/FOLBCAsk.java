@@ -17,7 +17,8 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.6, page 288.
+ * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.6, page
+ * 288.
  * 
  * <pre>
  * function FOL-BC-ASK(KB, goals, theta) returns a set of substitutions
@@ -108,8 +109,8 @@ public class FOLBCAsk implements InferenceProcedure {
 					.get(0).getAtomicSentence(), qDelta.getAtomicSentence());
 			if (null != thetaDelta) {
 				// new_goals <- [p1,...,pn|REST(goals)]
-				List<Literal> newGoals = new ArrayList<Literal>(r
-						.getNegativeLiterals());
+				List<Literal> newGoals = new ArrayList<Literal>(
+						r.getNegativeLiterals());
 				newGoals.addAll(goals.subList(1, goals.size()));
 				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
 				// theta)) U answers

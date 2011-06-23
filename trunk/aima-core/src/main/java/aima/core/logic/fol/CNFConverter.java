@@ -142,9 +142,9 @@ class ImplicationsOut implements FOLVisitor {
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
 
-		return new QuantifiedSentence(sentence.getQuantifier(), sentence
-				.getVariables(), (Sentence) sentence.getQuantified().accept(
-				this, arg));
+		return new QuantifiedSentence(sentence.getQuantifier(),
+				sentence.getVariables(), (Sentence) sentence.getQuantified()
+						.accept(this, arg));
 	}
 }
 
@@ -212,19 +212,19 @@ class NegationsIn implements FOLVisitor {
 		if (negated instanceof QuantifiedSentence) {
 			QuantifiedSentence negQuantified = (QuantifiedSentence) negated;
 			// I need to ensure the ~ is moved in deeper
-			Sentence notP = (Sentence) (new NotSentence(negQuantified
-					.getQuantified())).accept(this, arg);
+			Sentence notP = (Sentence) (new NotSentence(
+					negQuantified.getQuantified())).accept(this, arg);
 
 			// ~FORALL x p becomes EXISTS x ~p
 			if (Quantifiers.isFORALL(negQuantified.getQuantifier())) {
-				return new QuantifiedSentence(Quantifiers.EXISTS, negQuantified
-						.getVariables(), notP);
+				return new QuantifiedSentence(Quantifiers.EXISTS,
+						negQuantified.getVariables(), notP);
 			}
 
 			// ~EXISTS x p becomes FORALL x ~p
 			if (Quantifiers.isEXISTS(negQuantified.getQuantifier())) {
-				return new QuantifiedSentence(Quantifiers.FORALL, negQuantified
-						.getVariables(), notP);
+				return new QuantifiedSentence(Quantifiers.FORALL,
+						negQuantified.getVariables(), notP);
 			}
 		}
 
@@ -240,9 +240,9 @@ class NegationsIn implements FOLVisitor {
 	public Object visitQuantifiedSentence(QuantifiedSentence sentence,
 			Object arg) {
 
-		return new QuantifiedSentence(sentence.getQuantifier(), sentence
-				.getVariables(), (Sentence) sentence.getQuantified().accept(
-				this, arg));
+		return new QuantifiedSentence(sentence.getQuantifier(),
+				sentence.getVariables(), (Sentence) sentence.getQuantified()
+						.accept(this, arg));
 	}
 }
 
@@ -322,8 +322,8 @@ class StandardizeQuantiferVariables implements FOLVisitor {
 		}
 
 		// Apply the local subst
-		Sentence subst = substVisitor.subst(localSubst, sentence
-				.getQuantified());
+		Sentence subst = substVisitor.subst(localSubst,
+				sentence.getQuantified());
 
 		// Ensure all my existing and replaced variable
 		// names are tracked

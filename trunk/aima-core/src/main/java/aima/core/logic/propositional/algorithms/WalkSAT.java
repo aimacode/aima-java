@@ -42,8 +42,9 @@ public class WalkSAT {
 						.transform(s)));
 
 		for (int i = 0; i < numberOfFlips; i++) {
-			if (getNumberOfClausesSatisfiedIn(new Converter<Sentence>()
-					.listToSet(clauses), myModel) == clauses.size()) {
+			if (getNumberOfClausesSatisfiedIn(
+					new Converter<Sentence>().listToSet(clauses), myModel) == clauses
+					.size()) {
 				return myModel;
 			}
 			Sentence clause = clauses.get(random.nextInt(clauses.size()));

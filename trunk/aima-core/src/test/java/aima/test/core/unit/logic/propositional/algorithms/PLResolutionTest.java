@@ -126,7 +126,7 @@ public class PLResolutionTest {
 	// kb.tell("(B01)");
 	// assertTrue(resolution.plResolution(kb.asSentence().toString(), "(P00)"));
 	// //assertFalse(kb.askWithDpll("(NOT P00)"));
-	//		
-	//		
+	//
+	//
 	// }
 }

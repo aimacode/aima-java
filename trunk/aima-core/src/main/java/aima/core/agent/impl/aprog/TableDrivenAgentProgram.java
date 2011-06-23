@@ -20,12 +20,10 @@ import aima.core.util.datastructure.Table;
  *   append percept to end of percepts
  *   action <- LOOKUP(percepts, table)
  *   return action
- * </code>
- * Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new percept and 
- * returns an action each time. It retains the complete percept sequence in memory.
- */
-
-/**
+ * </code> Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new
+ * percept and returns an action each time. It retains the complete percept
+ * sequence in memory.
+ * 
  * @author Ciaran O'Reilly
  * 
  */

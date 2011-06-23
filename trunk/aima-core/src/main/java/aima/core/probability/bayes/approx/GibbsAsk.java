@@ -77,8 +77,8 @@ public class GibbsAsk implements BayesSampleInference {
 		double[] N = new double[ProbUtil
 				.expectedSizeOfCategoricalDistribution(X)];
 		// Z, the nonevidence variables in bn
-		Set<RandomVariable> Z = new LinkedHashSet<RandomVariable>(bn
-				.getVariablesInTopologicalOrder());
+		Set<RandomVariable> Z = new LinkedHashSet<RandomVariable>(
+				bn.getVariablesInTopologicalOrder());
 		for (AssignmentProposition ap : e) {
 			Z.remove(ap.getTermVariable());
 		}
@@ -99,8 +99,8 @@ public class GibbsAsk implements BayesSampleInference {
 			for (RandomVariable Zi : Z) {
 				// set the value of Z<sub>i</sub> in <b>x</b> by sampling from
 				// <b>P</b>(Z<sub>i</sub>|mb(Z<sub>i</sub>))
-				x.put(Zi, ProbUtil
-						.mbRandomSample(bn.getNode(Zi), x, randomizer));
+				x.put(Zi,
+						ProbUtil.mbRandomSample(bn.getNode(Zi), x, randomizer));
 			}
 			// Note: moving this outside the previous for loop,
 			// as described in fig 14.6, as will only work

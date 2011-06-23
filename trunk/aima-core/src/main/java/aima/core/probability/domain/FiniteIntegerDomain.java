@@ -20,7 +20,7 @@ public class FiniteIntegerDomain extends AbstractFiniteDomain {
 		indexPossibleValues(possibleValues);
 	}
 
-	// 
+	//
 	// START-Domain
 	@Override
 	public int size() {

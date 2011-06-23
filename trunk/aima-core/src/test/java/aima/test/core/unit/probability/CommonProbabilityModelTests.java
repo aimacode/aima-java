@@ -370,8 +370,7 @@ public abstract class CommonProbabilityModelTests {
 		// AIMA3e pg. 524
 		// P(Burglary = true | JohnCalls = true, MaryCalls = true) = 0.00059224
 		Assert.assertEquals(0.00059224,
-				model.prior(aburglary, ajohnCalls, amaryCalls),
-				DELTA_THRESHOLD);
+				model.prior(aburglary, ajohnCalls, amaryCalls), DELTA_THRESHOLD);
 		// P(Burglary = false | JohnCalls = true, MaryCalls = true) = 0.0014919
 		Assert.assertEquals(0.00149185764899,
 				model.prior(anotburglary, ajohnCalls, amaryCalls),

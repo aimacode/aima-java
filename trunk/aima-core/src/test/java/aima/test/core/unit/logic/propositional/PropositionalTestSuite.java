@@ -18,12 +18,11 @@ import aima.test.core.unit.logic.propositional.visitors.SymbolClassifierTest;
 import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { DPLLTest.class, KnowledgeBaseTest.class,
-		ModelTest.class, PLFCEntailsTest.class, PLResolutionTest.class,
-		TTEntailsTest.class, ListTest.class, PELexerTest.class,
-		PEParserTest.class, CNFClauseGathererTest.class,
-		CNFTransformerTest.class, SymbolClassifierTest.class,
-		SymbolCollectorTest.class })
+@Suite.SuiteClasses({ DPLLTest.class, KnowledgeBaseTest.class, ModelTest.class,
+		PLFCEntailsTest.class, PLResolutionTest.class, TTEntailsTest.class,
+		ListTest.class, PELexerTest.class, PEParserTest.class,
+		CNFClauseGathererTest.class, CNFTransformerTest.class,
+		SymbolClassifierTest.class, SymbolCollectorTest.class })
 public class PropositionalTestSuite {
 
 }

@@ -174,8 +174,8 @@ public class ProbUtil {
 	 */
 	public static Object mbRandomSample(Node Xi,
 			Map<RandomVariable, Object> event, Randomizer r) {
-		return sample(r.nextDouble(), Xi.getRandomVariable(), mbDistribution(
-				Xi, event));
+		return sample(r.nextDouble(), Xi.getRandomVariable(),
+				mbDistribution(Xi, event));
 	}
 
 	/**
@@ -218,8 +218,8 @@ public class ProbUtil {
 			}
 			X[i] = Xi.getCPD()
 					.getValue(
-							getEventValuesForXiGivenParents(Xi, fd
-									.getValueAt(i), event))
+							getEventValuesForXiGivenParents(Xi,
+									fd.getValueAt(i), event))
 					* cprob;
 		}
 
@@ -264,8 +264,8 @@ public class ProbUtil {
 	 */
 	public static Object[] getEventValuesForXiGivenParents(Node Xi,
 			Map<RandomVariable, Object> event) {
-		return getEventValuesForXiGivenParents(Xi, event.get(Xi
-				.getRandomVariable()), event);
+		return getEventValuesForXiGivenParents(Xi,
+				event.get(Xi.getRandomVariable()), event);
 	}
 
 	/**

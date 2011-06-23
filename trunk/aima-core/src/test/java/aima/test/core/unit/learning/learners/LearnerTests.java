@@ -43,8 +43,8 @@ public class LearnerTests {
 		Assert.assertEquals(0, ds2.size());
 
 		learner.train(ds2);
-		Assert.assertEquals("Unable To Classify", learner.predict(ds
-				.getExample(0)));
+		Assert.assertEquals("Unable To Classify",
+				learner.predict(ds.getExample(0)));
 	}
 
 	@Test
@@ -117,8 +117,8 @@ public class LearnerTests {
 				new MockDLTestFactory(new ArrayList<DLTest>()));
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		learner.train(ds);
-		Assert.assertEquals(DecisionListLearner.FAILURE, learner.predict(ds
-				.getExample(0)));
+		Assert.assertEquals(DecisionListLearner.FAILURE,
+				learner.predict(ds.getExample(0)));
 	}
 
 	@Test

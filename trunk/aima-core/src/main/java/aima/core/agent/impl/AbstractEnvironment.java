@@ -38,20 +38,22 @@ public abstract class AbstractEnvironment implements Environment,
 	// PRUBLIC METHODS
 	//
 
-	// 
+	//
 	// Methods to be implemented by subclasses.
 	public abstract EnvironmentState getCurrentState();
 
 	public abstract EnvironmentState executeAction(Agent agent, Action action);
 
 	public abstract Percept getPerceptSeenBy(Agent anAgent);
+
 	/**
-	 * Method for implementing dynamic environments in which not all changes
-	 * are directly caused by agent action execution. The default implementation
+	 * Method for implementing dynamic environments in which not all changes are
+	 * directly caused by agent action execution. The default implementation
 	 * does nothing.
 	 */
-	public void createExogenousChange() {}
-	
+	public void createExogenousChange() {
+	}
+
 	//
 	// START-Environment
 	public List<Agent> getAgents() {
@@ -89,8 +91,8 @@ public abstract class AbstractEnvironment implements Environment,
 	}
 
 	/**
-	 * Central template method for controlling agent simulation. The
-	 * concrete behavior is determined by the primitive operations
+	 * Central template method for controlling agent simulation. The concrete
+	 * behavior is determined by the primitive operations
 	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Action)},
 	 * and {@link #createExogenousChange()}.
 	 */

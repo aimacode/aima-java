@@ -23,7 +23,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode toothache = new FullCPTNode(ExampleRV.TOOTHACHE_RV,
 				new double[] {
-				// C=true, T=true
+						// C=true, T=true
 						0.6,
 						// C=true, T=false
 						0.4,
@@ -35,7 +35,7 @@ public class BayesNetExampleFactory {
 				}, cavity);
 		@SuppressWarnings("unused")
 		FiniteNode catchN = new FullCPTNode(ExampleRV.CATCH_RV, new double[] {
-		// C=true, Catch=true
+				// C=true, Catch=true
 				0.9,
 				// C=true, Catch=false
 				0.1,
@@ -53,7 +53,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode toothache = new FullCPTNode(ExampleRV.TOOTHACHE_RV,
 				new double[] {
-				// C=true, T=true
+						// C=true, T=true
 						0.6,
 						// C=true, T=false
 						0.4,
@@ -65,7 +65,7 @@ public class BayesNetExampleFactory {
 				}, cavity);
 		@SuppressWarnings("unused")
 		FiniteNode catchN = new FullCPTNode(ExampleRV.CATCH_RV, new double[] {
-		// C=true, Catch=true
+				// C=true, Catch=true
 				0.9,
 				// C=true, Catch=false
 				0.1,
@@ -75,7 +75,7 @@ public class BayesNetExampleFactory {
 				0.8 }, cavity);
 		FiniteNode weather = new FullCPTNode(ExampleRV.WEATHER_RV,
 				new double[] {
-				// sunny
+						// sunny
 						0.6,
 						// rain
 						0.1,
@@ -93,7 +93,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode stiffneck = new FullCPTNode(ExampleRV.STIFF_NECK_RV,
 				new double[] {
-				// M=true, S=true
+						// M=true, S=true
 						0.7,
 						// M=true, S=false
 						0.3,
@@ -112,7 +112,7 @@ public class BayesNetExampleFactory {
 		FiniteNode earthquake = new FullCPTNode(ExampleRV.EARTHQUAKE_RV,
 				new double[] { 0.002, 0.998 });
 		FiniteNode alarm = new FullCPTNode(ExampleRV.ALARM_RV, new double[] {
-		// B=true, E=true, A=true
+				// B=true, E=true, A=true
 				0.95,
 				// B=true, E=true, A=false
 				0.05,
@@ -131,7 +131,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode johnCalls = new FullCPTNode(ExampleRV.JOHN_CALLS_RV,
 				new double[] {
-				// A=true, J=true
+						// A=true, J=true
 						0.90,
 						// A=true, J=false
 						0.10,
@@ -142,7 +142,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode maryCalls = new FullCPTNode(ExampleRV.MARY_CALLS_RV,
 				new double[] {
-				// A=true, M=true
+						// A=true, M=true
 						0.70,
 						// A=true, M=false
 						0.30,
@@ -159,7 +159,7 @@ public class BayesNetExampleFactory {
 				0.5, 0.5 });
 		FiniteNode sprinkler = new FullCPTNode(ExampleRV.SPRINKLER_RV,
 				new double[] {
-				// Cloudy=true, Sprinkler=true
+						// Cloudy=true, Sprinkler=true
 						0.1,
 						// Cloudy=true, Sprinkler=false
 						0.9,
@@ -168,7 +168,7 @@ public class BayesNetExampleFactory {
 						// Cloudy=false, Sprinkler=false
 						0.5 }, cloudy);
 		FiniteNode rain = new FullCPTNode(ExampleRV.RAIN_RV, new double[] {
-		// Cloudy=true, Rain=true
+				// Cloudy=true, Rain=true
 				0.8,
 				// Cloudy=true, Rain=false
 				0.2,
@@ -179,7 +179,7 @@ public class BayesNetExampleFactory {
 		@SuppressWarnings("unused")
 		FiniteNode wetGrass = new FullCPTNode(ExampleRV.WET_GRASS_RV,
 				new double[] {
-				// Sprinkler=true, Rain=true, WetGrass=true
+						// Sprinkler=true, Rain=true, WetGrass=true
 						.99,
 						// Sprinkler=true, Rain=true, WetGrass=false
 						.01,

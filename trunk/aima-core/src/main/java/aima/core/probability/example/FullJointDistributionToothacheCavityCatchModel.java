@@ -7,7 +7,7 @@ public class FullJointDistributionToothacheCavityCatchModel extends
 
 	public FullJointDistributionToothacheCavityCatchModel() {
 		super(new double[] {
-		// Toothache = true, Cavity = true, Catch = true
+				// Toothache = true, Cavity = true, Catch = true
 				0.108,
 				// Toothache = true, Cavity = true, Catch = false
 				0.012,

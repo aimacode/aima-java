@@ -55,8 +55,8 @@ public class MapEnvironment extends AbstractEnvironment {
 			Double distance = aMap.getDistance(currLoc, act.getToLocation());
 			if (distance != null) {
 				double currTD = getAgentTravelDistance(agent);
-				state.setAgentLocationAndTravelDistance(agent, act
-						.getToLocation(), currTD + distance);
+				state.setAgentLocationAndTravelDistance(agent,
+						act.getToLocation(), currTD + distance);
 			}
 		}
 

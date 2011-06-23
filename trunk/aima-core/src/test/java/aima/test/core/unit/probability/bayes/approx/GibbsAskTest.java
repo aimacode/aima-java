@@ -27,14 +27,12 @@ public class GibbsAskTest {
 		AssignmentProposition[] e = new AssignmentProposition[] { new AssignmentProposition(
 				ExampleRV.SPRINKLER_RV, Boolean.TRUE) };
 		MockRandomizer r = new MockRandomizer(new double[] { 0.5, 0.5, 0.5,
-				0.5, 0.5, 0.5,
-				0.6, 0.5, 0.5,
-				0.6, 0.5, 0.5});
+				0.5, 0.5, 0.5, 0.6, 0.5, 0.5, 0.6, 0.5, 0.5 });
 
 		GibbsAsk ga = new GibbsAsk(r);
 
 		double[] estimate = ga.gibbsAsk(
-				new RandomVariable[] {ExampleRV.RAIN_RV}, e, bn, 3)
+				new RandomVariable[] { ExampleRV.RAIN_RV }, e, bn, 3)
 				.getValues();
 
 		Assert.assertArrayEquals(new double[] { 0.3333333333333333,

@@ -34,17 +34,16 @@ public class SolutionCheckerTest {
 		Search search = new BreadthFirstSearch(new GraphSearch());
 
 		SearchAgent agent = new SearchAgent(problem, search);
-		Assert
-				.assertEquals(
-						"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest], Action[name==moveTo, location==Urziceni], Action[name==moveTo, location==Hirsova]]",
-						agent.getActions().toString());
+		Assert.assertEquals(
+				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest], Action[name==moveTo, location==Urziceni], Action[name==moveTo, location==Hirsova]]",
+				agent.getActions().toString());
 		Assert.assertEquals(5, agent.getActions().size());
-		Assert.assertEquals("14", agent.getInstrumentation().getProperty(
-				"nodesExpanded"));
-		Assert.assertEquals("1", agent.getInstrumentation().getProperty(
-				"queueSize"));
-		Assert.assertEquals("5", agent.getInstrumentation().getProperty(
-				"maxQueueSize"));
+		Assert.assertEquals("14",
+				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("1",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("5",
+				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 
 	class DualMapGoalTest implements SolutionChecker {

@@ -22,7 +22,7 @@ import aima.test.core.unit.probability.util.ProbUtilTest;
 import aima.test.core.unit.probability.util.ProbabilityTableTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { GibbsAskTest.class, LikelihoodWeightingTest.class,
+@Suite.SuiteClasses({ GibbsAskTest.class, LikelihoodWeightingTest.class,
 		PriorSampleTest.class, RejectionSamplingTest.class,
 		EliminationAskTest.class, EnumerationAskTest.class, CPTTest.class,
 		FiniteBayesModelTest.class, FullJointProbabilityModelTest.class,

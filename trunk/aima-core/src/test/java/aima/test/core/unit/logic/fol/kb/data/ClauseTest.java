@@ -289,13 +289,11 @@ public class ClauseTest {
 		// loves animal domain as it contains functions
 		// new clauses will always be created (i.e. is an
 		// infinite universe of discourse).
-		FOLKnowledgeBase kb = new FOLKnowledgeBase(DomainFactory
-				.lovesAnimalDomain());
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(
+				DomainFactory.lovesAnimalDomain());
 
-		kb
-				.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
-		kb
-				.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
+		kb.tell("FORALL x (FORALL y (Animal(y) => Loves(x, y)) => EXISTS y Loves(y, x))");
+		kb.tell("FORALL x (EXISTS y (Animal(y) AND Kills(x, y)) => FORALL z NOT(Loves(z, x)))");
 		kb.tell("FORALL x (Animal(x) => Loves(Jack, x))");
 		kb.tell("(Kills(Jack, Tuna) OR Kills(Curiosity, Tuna))");
 		kb.tell("Cat(Tuna)");
@@ -327,8 +325,7 @@ public class ClauseTest {
 						System.err.println("cJ=" + cJ);
 						System.err.println("cIR=" + cIresolvents);
 						System.err.println("cJR=" + cJresolvents);
-						Assert
-								.fail("Ordering of binary resolvents has become important, which should not be the case");
+						Assert.fail("Ordering of binary resolvents has become important, which should not be the case");
 					}
 
 					for (Clause r : cIresolvents) {
