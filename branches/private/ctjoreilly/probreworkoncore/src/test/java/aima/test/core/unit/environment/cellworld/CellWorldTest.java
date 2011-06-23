@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldPosition;
-import aima.core.probability.decision.MDPTransitionModel;
-import aima.core.probability.decision.MDPUtilityFunction;
+import aima.core.probability.mdp.MDPTransitionModel;
+import aima.core.probability.mdp.MDPUtilityFunction;
 import aima.core.util.MockRandomizer;
 import aima.core.util.Randomizer;
 import aima.core.util.datastructure.Pair;
