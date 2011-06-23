@@ -65,19 +65,18 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * 
  * Figure 9.14 Sketch of the OTTER theorem prover. Heuristic control is applied in the
  * selection of the "lightest" clause and in the FILTER function that eliminates uninteresting
- * clauses from consideration.
- */
-
-// Note: The original implementation of OTTER has been retired 
-// but its successor, Prover9, can be found at:
-// http://www.prover9.org/
-// or
-// http://www.cs.unm.edu/~mccune/mace4/
-// Should you wish to play with a mature implementation of a theorem prover :-)
-// For lots of interesting problems to play with, see
-// 'The TPTP Problem Library for Automated Theorem Proving':
-// http://www.cs.miami.edu/~tptp/
-/**
+ * clauses from consideration.<br>
+ * <br>
+ * <b>Note:</b> The original implementation of OTTER has been retired but its successor,
+ * <b>Prover9</b>, can be found at:<br>
+ * <a href="http://www.prover9.org/">http://www.prover9.org/</a><br>
+ * or<br>
+ * <a href="http://www.cs.unm.edu/~mccune/mace4/">http://www.cs.unm.edu/~mccune/mace4/</a><br>
+ * Should you wish to play with a mature implementation of a theorem prover :-)<br>
+ * <br>
+ * For lots of interesting problems to play with, see <b>The TPTP Problem Library for Automated Theorem Proving</b>:<br>
+ * <a href="http://www.cs.miami.edu/~tptp/">http://www.cs.miami.edu/~tptp/</a><br>
+ * 
  * @author Ciaran O'Reilly
  * 
  */

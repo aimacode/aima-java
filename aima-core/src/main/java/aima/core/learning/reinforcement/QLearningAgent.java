@@ -3,8 +3,8 @@ package aima.core.learning.reinforcement;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.probability.decision.MDP;
-import aima.core.probability.decision.MDPPerception;
+import aima.core.probability.mdp.MDP;
+import aima.core.probability.mdp.MDPPerception;
 import aima.core.util.FrequencyCounter;
 import aima.core.util.datastructure.Pair;
 

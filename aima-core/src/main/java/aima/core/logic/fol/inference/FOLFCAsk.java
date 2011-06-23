@@ -48,9 +48,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * step from the implication sentences and the atomic sentences already in KB. The function
  * STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have
  * not been used before.
- */
-
-/**
+ * 
  * @author Ciaran O'Reilly
  * 
  */
@@ -108,17 +106,17 @@ public class FOLFCAsk implements InferenceProcedure {
 				for (Map<Variable, Term> theta : KB.fetch(invert(impl
 						.getNegativeLiterals()))) {
 					// q' <- SUBST(theta, q)
-					Literal qPrime = KB.subst(theta, impl.getPositiveLiterals()
+					Literal qDelta = KB.subst(theta, impl.getPositiveLiterals()
 							.get(0));
 					// if q' does not unify with some sentence already in KB or
 					// new then do
-					if (!KB.isRenaming(qPrime)
-							&& !KB.isRenaming(qPrime, newSentences)) {
+					if (!KB.isRenaming(qDelta)
+							&& !KB.isRenaming(qDelta, newSentences)) {
 						// add q' to new
-						newSentences.add(qPrime);
-						ansHandler.addProofStep(impl, qPrime, theta);
+						newSentences.add(qDelta);
+						ansHandler.addProofStep(impl, qDelta, theta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qPrime.getAtomicSentence(), alpha
+						theta = KB.unify(qDelta.getAtomicSentence(), alpha
 								.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {

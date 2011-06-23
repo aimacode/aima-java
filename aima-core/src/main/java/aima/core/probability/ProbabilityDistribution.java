@@ -1,112 +1,62 @@
 package aima.core.probability;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
+
+import aima.core.probability.proposition.AssignmentProposition;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>
+ * <br>
+ * A probability distribution is a function that assigns probabilities to events
+ * (sets of possible worlds).<br>
+ * <br>
+ * <b>Note:</b> This definition is slightly different than that given in AIMA3e
+ * pg. 487, which in this API corresponds to a CategoricalDistribution.
  * 
+ * @see <a href="http://en.wikipedia.org/wiki/Probability_distribution"
+ *      >Probability Distribution</a>
+ * 
+ * @author Ciaran O'Reilly
  */
-public class ProbabilityDistribution {
-	private List<Row> rows = new ArrayList<Row>();
-	// <VariableName:DistributionIndex>
-	private LinkedHashMap<String, Integer> variableNames = new LinkedHashMap<String, Integer>();
+public interface ProbabilityDistribution {
+	/**
+	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the random
+	 *         variables this probability distribution is for.
+	 */
+	Set<RandomVariable> getFor();
 
-	public ProbabilityDistribution(String... vNames) {
-		for (int i = 0; i < vNames.length; i++) {
-			variableNames.put(vNames[i], i);
-		}
-	}
+	/**
+	 * 
+	 * @param rv
+	 *            the Random Variable to be checked.
+	 * @return true if this Distribution is for the passed in Random Variable,
+	 *         false otherwise.
+	 */
+	boolean contains(RandomVariable rv);
 
-	public void set(double probability, boolean... values) {
-		if (values.length != variableNames.size()) {
-			throw new IllegalArgumentException(
-					"Invalid number of values, must = # of Random Variables in distribution:"
-							+ variableNames.size());
-		}
-		rows.add(new Row(probability, values));
-	}
+	/**
+	 * Get the value for the provided set of values for the random variables
+	 * comprising the Distribution (ordering and size of each must equal and
+	 * their domains must match).
+	 * 
+	 * @param eventValues
+	 *            the values for the random variables comprising the
+	 *            Distribution
+	 * @return the value for the possible worlds associated with the assignments
+	 *         for the random variables comprising the Distribution.
+	 */
+	double getValue(Object... eventValues);
 
-	public double probabilityOf(String variableName, boolean b) {
-		HashMap<String, Boolean> h = new HashMap<String, Boolean>();
-		h.put(variableName, b);
-		return probabilityOf(h);
-	}
-
-	public double probabilityOf(Map<String, Boolean> conditions) {
-		double prob = 0.0;
-		for (Row row : rows) {
-			boolean rowMeetsAllConditions = true;
-			for (Map.Entry<String, Boolean> c : conditions.entrySet()) {
-				if (!(row.matches(c.getKey(), c.getValue()))) {
-					rowMeetsAllConditions = false;
-					break;
-				}
-			}
-			if (rowMeetsAllConditions) {
-				prob += row.probability;
-			}
-		}
-
-		return prob;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder();
-		for (Row row : rows) {
-			b.append(row.toString() + "\n");
-		}
-
-		return b.toString();
-	}
-
-	//
-	// INNER CLASSES
-	//
-
-	class Row {
-		private double probability;
-		private boolean[] values;
-
-		Row(double probability, boolean... vals) {
-			this.probability = probability;
-			values = new boolean[vals.length];
-			System.arraycopy(vals, 0, values, 0, vals.length);
-		}
-
-		public boolean matches(String vName, boolean value) {
-			boolean rVal = false;
-			Integer idx = variableNames.get(vName);
-			if (null != idx) {
-				rVal = values[idx] == value;
-			}
-			return rVal;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder b = new StringBuilder();
-			b.append("[");
-			boolean first = true;
-			for (Map.Entry<String, Integer> v : variableNames.entrySet()) {
-				if (first) {
-					first = false;
-				} else {
-					b.append(", ");
-				}
-				b.append(v.getKey());
-				b.append("=");
-				b.append(values[v.getValue()]);
-			}
-			b.append("]");
-			b.append(" => ");
-			b.append(probability);
-
-			return b.toString();
-		}
-	}
+	/**
+	 * Get the value for the provided set of AssignmentPropositions for the
+	 * random variables comprising the Distribution (size of each must equal and
+	 * their random variables must match).
+	 * 
+	 * @param eventValues
+	 *            the assignment propositions for the random variables
+	 *            comprising the Distribution
+	 * @return the value for the possible worlds associated with the assignments
+	 *         for the random variables comprising the Distribution.
+	 */
+	double getValue(AssignmentProposition... eventValues);
 }

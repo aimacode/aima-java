@@ -1,12 +1,16 @@
 package aima.test.core.unit.search.informed;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
 import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
+import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
@@ -14,11 +18,14 @@ import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.map.StraightLineDistanceHeuristicFunction;
 import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.GraphSearch;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Problem;
+import aima.core.search.framework.QueueSearch;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
+import aima.core.search.uninformed.UniformCostSearch;
 
 public class AStarSearchTest {
 
@@ -51,6 +58,30 @@ public class AStarSearchTest {
 			e.printStackTrace();
 			Assert.fail("Exception thrown");
 		}
+	}
+	
+	@Test
+	public void testAIMA3eFigure3_15() throws Exception {
+		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.SIBIU,
+				MapFunctionFactory.getActionsFunction(romaniaMap),
+				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				new MapStepCostFunction(romaniaMap));
+
+		Search search = new AStarSearch(new GraphSearch(),
+				new StraightLineDistanceHeuristicFunction(
+						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent agent = new SearchAgent(problem, search);
+
+		List<Action> actions = agent.getActions();
+
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+						actions.toString());
+		Assert.assertEquals("278.0", search.getMetrics().get(
+				QueueSearch.METRIC_PATH_COST));
 	}
 
 	@Test
@@ -103,5 +134,39 @@ public class AStarSearchTest {
 				"queueSize"));
 		Assert.assertEquals("6", agent.getInstrumentation().getProperty(
 				"maxQueueSize"));
+	}
+	
+	@Test
+	public void testCheckFrontierPathCost() throws Exception {
+		ExtendableMap map = new ExtendableMap();
+		map.addBidirectionalLink("start", "b", 2.5);
+		map.addBidirectionalLink("start", "c", 1.0);
+		map.addBidirectionalLink("b", "d", 2.0);
+		map.addBidirectionalLink("c", "d", 4.0);
+		map.addBidirectionalLink("c", "e", 1.0);
+		map.addBidirectionalLink("d", "goal", 1.0);
+		map.addBidirectionalLink("e", "goal", 5.0);
+		Problem problem = new Problem("start",
+				MapFunctionFactory.getActionsFunction(map),
+				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
+						"goal"),
+				new MapStepCostFunction(map));
+		
+		HeuristicFunction hf = new HeuristicFunction() {
+			public double h(Object state) {
+				return 0; // Don't have one for this test
+			}
+		};
+		Search search = new AStarSearch(new GraphSearch(), hf);
+		SearchAgent agent = new SearchAgent(problem, search);
+
+		List<Action> actions = agent.getActions();
+
+		Assert
+				.assertEquals(
+						"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
+						actions.toString());
+		Assert.assertEquals("5.5", search.getMetrics().get(
+				QueueSearch.METRIC_PATH_COST));	
 	}
 }
