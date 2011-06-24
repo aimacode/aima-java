@@ -24,9 +24,11 @@ public class CNFClauseGatherer extends BasicTraverser {
 
 		Set<Sentence> soFar = (Set<Sentence>) args;
 
-		Sentence first = bs.getFirst();
-		Sentence second = bs.getSecond();
-		processSubTerm(second, processSubTerm(first, soFar));
+		if (detector.containsEmbeddedAnd(bs)) {
+			processSubTerm(bs.getSecond(), processSubTerm(bs.getFirst(), soFar));
+		} else {
+			soFar.add(bs);
+		}
 
 		return soFar;
 
