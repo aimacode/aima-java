@@ -74,8 +74,8 @@ public class DPLLTest {
 	@Test
 	public void testDPLLFilteringNonTrueClausesGivesNullWhenAllClausesAreKnown() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true)
-				.extend(new Symbol("B"), true).extend(new Symbol("C"), true);
+		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+				true).extend(new Symbol("C"), true);
 		Sentence sentence = (Sentence) parser
 				.parse("((A AND B) AND (B AND C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
@@ -171,6 +171,16 @@ public class DPLLTest {
 		kb.tell("(B01)");
 		Assert.assertTrue(kb.askWithDpll("(P00)"));
 		Assert.assertFalse(kb.askWithDpll("(NOT P00)"));
+	}
+
+	@Test
+	public void testIssue66() {
+		// http://code.google.com/p/aima-java/issues/detail?id=66
+		Model model = new Model();
+		model = model.extend(new Symbol("A"), false).extend(new Symbol("B"),
+				false).extend(new Symbol("C"), true);
+		Sentence sentence = (Sentence) parser.parse("((A OR B) OR C)");
+		Assert.assertTrue(dpll.dpllSatisfiable(sentence, model));
 	}
 
 	@Test
