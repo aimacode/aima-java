@@ -8,6 +8,7 @@ import aima.core.agent.impl.NoOpAction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.8, page 48.<br>
+ * <br>
  * 
  * <pre>
  * function REFLEX-VACUUM-AGENT([location, status]) returns an action
