@@ -54,7 +54,13 @@
 
 *. Create SVN tag for the release.
 
-*. Copy the aima-all/release .html, .jnlp files and images directory to JWS host (currently my SRI public_html folder).
+*. Ensure all of the aima-all/release .html, .css, and .jnlp files have there Subversion svn:mime-type
+   property set correctly
+   .html=text/html
+   .css=text/css
+   .jnlp=application/x-java-jnlp-file
+   
+  otherwise the content will not be served up correctly by the Subversion server.
 
 *. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.
 
