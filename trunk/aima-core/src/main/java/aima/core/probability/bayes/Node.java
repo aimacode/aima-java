@@ -48,7 +48,7 @@ public interface Node {
 	/**
 	 * Get this Node's Markov Blanket:<br>
 	 * 'A node is conditionally independent of all other nodes in the network,
-	 * given its parents, children, and children’s parents - that is, given its
+	 * given its parents, children, and children's parents - that is, given its
 	 * <b>MARKOV BLANKET</b> (AIMA3e pg, 517).
 	 * 
 	 * @return this Node's Markov Blanket.
