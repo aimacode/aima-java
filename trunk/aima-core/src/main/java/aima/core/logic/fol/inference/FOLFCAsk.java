@@ -119,8 +119,8 @@ public class FOLFCAsk implements InferenceProcedure {
 						newSentences.add(qDelta);
 						ansHandler.addProofStep(impl, qDelta, theta);
 						// theta <- UNIFY(q', alpha)
-						theta = KB.unify(qDelta.getAtomicSentence(), alpha
-								.getAtomicSentence());
+						theta = KB.unify(qDelta.getAtomicSentence(),
+								alpha.getAtomicSentence());
 						// if theta is not fail then return theta
 						if (null != theta) {
 							for (Literal l : newSentences) {

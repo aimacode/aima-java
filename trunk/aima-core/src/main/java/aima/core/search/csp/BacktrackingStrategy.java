@@ -3,6 +3,7 @@ package aima.core.search.csp;
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 215.<br>
  * <br>
+ * 
  * <pre>
  * <code>
  * function BACKTRACKING-SEARCH(csp) returns a solution, or failure

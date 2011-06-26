@@ -12,7 +12,7 @@ import aima.core.util.math.MixedRadixNumber;
 public class MixedRadixNumberTest {
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidRadixs() {
+	public void testInvalidRadices() {
 		new MixedRadixNumber(100, new int[] { 1, 0, -1 });
 	}
 

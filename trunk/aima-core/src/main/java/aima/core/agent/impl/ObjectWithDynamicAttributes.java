@@ -8,6 +8,7 @@ import java.util.Set;
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public abstract class ObjectWithDynamicAttributes {
 	private Map<Object, Object> attributes = new LinkedHashMap<Object, Object>();
@@ -15,10 +16,22 @@ public abstract class ObjectWithDynamicAttributes {
 	//
 	// PUBLIC METHODS
 	//
+
+	/**
+	 * By default, returns the simple name of the underlying class as given in
+	 * the source code.
+	 * 
+	 * @return the simple name of the underlying class
+	 */
 	public String describeType() {
 		return getClass().getSimpleName();
 	}
 
+	/**
+	 * Returns a string representation of the object's current attributes
+	 * 
+	 * @return a string representation of the object's current attributes
+	 */
 	public String describeAttributes() {
 		StringBuilder sb = new StringBuilder();
 
@@ -40,22 +53,56 @@ public abstract class ObjectWithDynamicAttributes {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns an unmodifiable view of the object's key set
+	 * 
+	 * @return an unmodifiable view of the object's key set
+	 */
 	public Set<Object> getKeySet() {
 		return Collections.unmodifiableSet(attributes.keySet());
 	}
 
+	/**
+	 * Associates the specified value with the specified attribute key. If the
+	 * ObjectWithDynamicAttributes previously contained a mapping for the
+	 * attribute key, the old value is replaced.
+	 * 
+	 * @param key
+	 *            the attribute key
+	 * @param value
+	 *            the attribute value
+	 */
 	public void setAttribute(Object key, Object value) {
 		attributes.put(key, value);
 	}
 
+	/**
+	 * Returns the value of the specified attribute key, or null if the
+	 * attribute was not found.
+	 * 
+	 * @param key
+	 *            the attribute key
+	 * 
+	 * @return the value of the specified attribute name, or null if not found.
+	 */
 	public Object getAttribute(Object key) {
 		return attributes.get(key);
 	}
 
+	/**
+	 * Removes the attribute with the specified key from this
+	 * ObjectWithDynamicAttributes.
+	 * 
+	 * @param key
+	 *            the attribute key
+	 */
 	public void removeAttribute(Object key) {
 		attributes.remove(key);
 	}
 
+	/**
+	 * Creates and returns a copy of this ObjectWithDynamicAttributes
+	 */
 	public ObjectWithDynamicAttributes copy() {
 		ObjectWithDynamicAttributes copy = null;
 

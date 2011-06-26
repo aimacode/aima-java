@@ -4,9 +4,9 @@ import aima.core.agent.Action;
 import aima.core.search.framework.StepCostFunction;
 
 /**
- * Implementation of StepCostFunction interface that uses the distance between locations
- * to calculate the cost in addition to a constant cost, so that it may be used
- * in conjunction with a Uniform-cost search.
+ * Implementation of StepCostFunction interface that uses the distance between
+ * locations to calculate the cost in addition to a constant cost, so that it
+ * may be used in conjunction with a Uniform-cost search.
  * 
  * @author Ciaran O'Reilly
  * 

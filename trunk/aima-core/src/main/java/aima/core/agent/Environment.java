@@ -8,9 +8,11 @@ import java.util.List;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public interface Environment {
 	/**
+	 * Returns the Agents belonging to this Environment.
 	 * 
 	 * @return The Agents belonging to this Environment.
 	 */
@@ -33,6 +35,7 @@ public interface Environment {
 	void removeAgent(Agent agent);
 
 	/**
+	 * Returns the EnvironmentObjects that exist in this Environment.
 	 * 
 	 * @return the EnvironmentObjects that exist in this Environment.
 	 */
@@ -73,8 +76,11 @@ public interface Environment {
 	void stepUntilDone();
 
 	/**
+	 * Returns <code>true</code> if the Environment is finished with its current
+	 * task(s).
 	 * 
-	 * @return if the Environment is finished with its current task(s).
+	 * @return <code>true</code> if the Environment is finished with its current
+	 *         task(s).
 	 */
 	boolean isDone();
 

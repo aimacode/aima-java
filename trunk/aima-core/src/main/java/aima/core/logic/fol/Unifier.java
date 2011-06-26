@@ -112,8 +112,8 @@ public class Unifier {
 		} else if (x.size() == 1 && y.size() == 1) {
 			return unify(x.get(0), y.get(0), theta);
 		} else {
-			return unify(x.subList(1, x.size()), y.subList(1, y.size()), unify(
-					x.get(0), y.get(0), theta));
+			return unify(x.subList(1, x.size()), y.subList(1, y.size()),
+					unify(x.get(0), y.get(0), theta));
 		}
 	}
 

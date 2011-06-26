@@ -45,8 +45,8 @@ public class Demodulation extends AbstractModulation {
 		Clause altClExpression = null;
 
 		for (Literal l1 : clExpression.getLiterals()) {
-			AtomicSentence altExpression = apply(assertion, l1
-					.getAtomicSentence());
+			AtomicSentence altExpression = apply(assertion,
+					l1.getAtomicSentence());
 			if (null != altExpression) {
 				// I have an alternative, create a new clause
 				// with the alternative and return
@@ -80,8 +80,8 @@ public class Demodulation extends AbstractModulation {
 			AtomicSentence expression) {
 		AtomicSentence altExpression = null;
 
-		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(assertion
-				.getTerm1(), expression);
+		IdentifyCandidateMatchingTerm icm = getMatchingSubstitution(
+				assertion.getTerm1(), expression);
 
 		if (null != icm) {
 			Term replaceWith = substVisitor.subst(

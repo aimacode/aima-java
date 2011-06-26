@@ -26,7 +26,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	private double[] values = null;
 	//
 	private Map<RandomVariable, RVInfo> randomVarInfo = new LinkedHashMap<RandomVariable, RVInfo>();
-	private int[] radixs = null;
+	private int[] radices = null;
 	private MixedRadixNumber queryMRN = null;
 	//
 	private String toString = null;
@@ -92,10 +92,10 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		values = new double[vals.length];
 		System.arraycopy(vals, 0, values, 0, vals.length);
 
-		radixs = createRadixs(randomVarInfo);
+		radices = createRadixs(randomVarInfo);
 
-		if (radixs.length > 0) {
-			queryMRN = new MixedRadixNumber(0, radixs);
+		if (radices.length > 0) {
+			queryMRN = new MixedRadixNumber(0, radices);
 		}
 	}
 
@@ -277,7 +277,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	 */
 	public void iterateOverTable(Iterator pti) {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
-		MixedRadixNumber mrn = new MixedRadixNumber(0, radixs);
+		MixedRadixNumber mrn = new MixedRadixNumber(0, radices);
 		do {
 			for (RVInfo rvInfo : randomVarInfo.values()) {
 				possibleWorld.put(rvInfo.getVariable(), rvInfo
@@ -303,8 +303,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public void iterateOverTable(Iterator pti,
 			AssignmentProposition... fixedValues) {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
-		MixedRadixNumber tableMRN = new MixedRadixNumber(0, radixs);
-		int[] tableRadixValues = new int[radixs.length];
+		MixedRadixNumber tableMRN = new MixedRadixNumber(0, radices);
+		int[] tableRadixValues = new int[radices.length];
 
 		// Assert that the Random Variables for the fixed values
 		// are part of this probability table and assign
@@ -389,9 +389,9 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			}
 			final Map<RandomVariable, RVInfo> diff = tdiff;
 			final MixedRadixNumber dMRN = tdMRN;
-			final int[] qRVs = new int[quotient.radixs.length];
+			final int[] qRVs = new int[quotient.radices.length];
 			final MixedRadixNumber qMRN = new MixedRadixNumber(0,
-					quotient.radixs);
+					quotient.radices);
 			ProbabilityTable.Iterator divisorIterator = new ProbabilityTable.Iterator() {
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 						double probability) {
