@@ -52,8 +52,6 @@ public class Vector extends Matrix {
 	 *            the index of the value to set.
 	 * @param value
 	 *            the value to be placed at the index.
-	 * 
-	 * @return the value at the specified index.
 	 */
 	public void setValue(int index, double value) {
 		super.set(index, 0, value);
@@ -116,7 +114,7 @@ public class Vector extends Matrix {
 	/**
 	 * Returns the index at which the maximum value in this vector is located.
 	 * 
-	 * @returns the index at which the maximum value in this vector is located.
+	 * @return the index at which the maximum value in this vector is located.
 	 * 
 	 * @throws RuntimeException
 	 *             if the vector does not contain any values.

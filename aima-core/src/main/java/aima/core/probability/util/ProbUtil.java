@@ -196,9 +196,6 @@ public class ProbUtil {
 	 *            X<sub>i</sub>.
 	 * @param event
 	 *            comprising assignments for the Markov Blanket X<sub>i</sub>.
-	 * @param r
-	 *            a Randomizer for generating a probability choice for the
-	 *            sample.
 	 * @return a random sample from <b>P</b>(X<sub>i</sub> | mb(X<sub>i</sub>))
 	 */
 	public static double[] mbDistribution(Node Xi,
