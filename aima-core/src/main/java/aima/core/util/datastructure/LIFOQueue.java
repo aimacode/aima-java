@@ -6,7 +6,8 @@ import java.util.LinkedList;
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 80.<br>
  * <br>
- * Last-in, first-out or LIFO queue (also known as a stack), which pops the newest element of the queue;
+ * Last-in, first-out or LIFO queue (also known as a stack), which pops the
+ * newest element of the queue;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly

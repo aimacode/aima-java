@@ -10,8 +10,8 @@ import aima.core.search.local.FitnessFunction;
 import aima.core.util.datastructure.XYLocation;
 
 /**
- * A class whose purpose is to evaluate the fitness of NQueen individuals
- * and to provide utility methods for translating between an NQueensBoard
+ * A class whose purpose is to evaluate the fitness of NQueen individuals and to
+ * provide utility methods for translating between an NQueensBoard
  * representation and the String representation used by the GeneticAlgorithm.
  * 
  * @author Ciaran O'Reilly

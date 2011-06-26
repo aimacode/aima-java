@@ -53,9 +53,9 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
 			DepthLimitedSearch dls = new DepthLimitedSearch(i);
 			List<Action> result = dls.search(p);
-			iterationMetrics.set(METRIC_NODES_EXPANDED, iterationMetrics
-					.getInt(METRIC_NODES_EXPANDED)
-					+ dls.getMetrics().getInt(METRIC_NODES_EXPANDED));
+			iterationMetrics.set(METRIC_NODES_EXPANDED,
+					iterationMetrics.getInt(METRIC_NODES_EXPANDED)
+							+ dls.getMetrics().getInt(METRIC_NODES_EXPANDED));
 			// if result != cutoff then return result
 			if (!dls.isCutOff(result)) {
 				iterationMetrics.set(PATH_COST, dls.getPathCost());

@@ -317,8 +317,8 @@ public class Clause {
 			for (Literal pl : trPosLits) {
 				for (Literal nl : trNegLits) {
 					copyRBindings.clear();
-					if (null != _unifier.unify(pl.getAtomicSentence(), nl
-							.getAtomicSentence(), copyRBindings)) {
+					if (null != _unifier.unify(pl.getAtomicSentence(),
+							nl.getAtomicSentence(), copyRBindings)) {
 						copyRPosLits.clear();
 						copyRNegLits.clear();
 						boolean found = false;
@@ -450,20 +450,16 @@ public class Clause {
 					Literal litY = lits.get(y);
 
 					theta.clear();
-					Map<Variable, Term> substitution = _unifier.unify(litX
-							.getAtomicSentence(), litY.getAtomicSentence(),
+					Map<Variable, Term> substitution = _unifier.unify(
+							litX.getAtomicSentence(), litY.getAtomicSentence(),
 							theta);
 					if (null != substitution) {
 						List<Literal> posLits = new ArrayList<Literal>();
 						List<Literal> negLits = new ArrayList<Literal>();
 						if (i == 0) {
-							posLits
-									.add(_substVisitor
-											.subst(substitution, litX));
+							posLits.add(_substVisitor.subst(substitution, litX));
 						} else {
-							negLits
-									.add(_substVisitor
-											.subst(substitution, litX));
+							negLits.add(_substVisitor.subst(substitution, litX));
 						}
 						for (Literal pl : positiveLiterals) {
 							if (pl == litX || pl == litY) {
@@ -565,7 +561,7 @@ public class Clause {
 		List<Term> othCTerms = new ArrayList<Term>();
 
 		// Want to track possible number of permuations
-		List<Integer> radixs = new ArrayList<Integer>();
+		List<Integer> radices = new ArrayList<Integer>();
 		for (String literalName : thisToTry.keySet()) {
 			int sizeT = thisToTry.get(literalName).size();
 			int sizeO = othCToTry.get(literalName).size();
@@ -581,7 +577,7 @@ public class Clause {
 				for (int i = 0; i < sizeT; i++) {
 					int r = sizeO - i;
 					if (r > 1) {
-						radixs.add(r);
+						radices.add(r);
 					}
 				}
 			}
@@ -593,8 +589,8 @@ public class Clause {
 
 		MixedRadixNumber permutation = null;
 		long numPermutations = 1L;
-		if (radixs.size() > 0) {
-			permutation = new MixedRadixNumber(0, radixs);
+		if (radices.size() > 0) {
+			permutation = new MixedRadixNumber(0, radices);
 			numPermutations = permutation.getMaxAllowedValue() + 1;
 		}
 		// Want to ensure none of the othCVariables are
@@ -688,8 +684,8 @@ class LiteralsSorter implements Comparator<Literal> {
 		}
 
 		// Check their symbolic names for order first
-		rVal = o1.getAtomicSentence().getSymbolicName().compareTo(
-				o2.getAtomicSentence().getSymbolicName());
+		rVal = o1.getAtomicSentence().getSymbolicName()
+				.compareTo(o2.getAtomicSentence().getSymbolicName());
 
 		// If have same symbolic names
 		// then need to compare individual arguments
@@ -732,8 +728,8 @@ class LiteralsSorter implements Comparator<Literal> {
 				// then compare the ordering of the
 				// remaining arguments
 				if (0 == rVal) {
-					rVal = compareArgs(args1.subList(1, args1.size()), args2
-							.subList(1, args2.size()));
+					rVal = compareArgs(args1.subList(1, args1.size()),
+							args2.subList(1, args2.size()));
 				}
 			} else {
 				// Order for different Terms is:

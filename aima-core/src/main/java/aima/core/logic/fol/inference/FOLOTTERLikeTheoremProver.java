@@ -526,8 +526,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			if (isLookingForAnswerLiteral()) {
 				if (2 == clause.getNumberLiterals()) {
 					for (Literal t : clause.getLiterals()) {
-						if (t.getAtomicSentence().getSymbolicName().equals(
-								answerLiteral.getAtomicSentence()
+						if (t.getAtomicSentence()
+								.getSymbolicName()
+								.equals(answerLiteral.getAtomicSentence()
 										.getSymbolicName())) {
 							return true;
 						}
@@ -562,13 +563,16 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 
 				if (aClause.isUnitClause()
 						&& aClause.isDefiniteClause()
-						&& aClause.getPositiveLiterals().get(0)
-								.getAtomicSentence().getSymbolicName().equals(
-										answerLiteral.getAtomicSentence()
-												.getSymbolicName())) {
+						&& aClause
+								.getPositiveLiterals()
+								.get(0)
+								.getAtomicSentence()
+								.getSymbolicName()
+								.equals(answerLiteral.getAtomicSentence()
+										.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
-					List<Term> answerTerms = aClause.getPositiveLiterals().get(
-							0).getAtomicSentence().getArgs();
+					List<Term> answerTerms = aClause.getPositiveLiterals()
+							.get(0).getAtomicSentence().getArgs();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
 						answerBindings.put(v, answerTerms.get(idx));

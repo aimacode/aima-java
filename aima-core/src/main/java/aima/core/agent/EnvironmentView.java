@@ -6,11 +6,11 @@ package aima.core.agent;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public interface EnvironmentView {
 	/**
-	 * A simple notification message from the Environment, from one of its
-	 * objects.
+	 * A simple notification message from an object in the Environment.
 	 * 
 	 * @param msg
 	 *            the message received.

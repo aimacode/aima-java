@@ -11,6 +11,7 @@ import java.util.List;
  * initialization and can add new items whenever needed.
  * 
  * @author R. Lunde
+ * @author Mike Stampone
  */
 public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 
@@ -30,6 +31,9 @@ public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 
 	/**
 	 * Adds a new vertex to the graph if it is not already present.
+	 * 
+	 * @param v
+	 *            the vertex to add
 	 */
 	public void addVertex(VertexLabelType v) {
 		checkForNewVertex(v);
@@ -39,6 +43,13 @@ public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 	 * Adds a directed labeled edge to the graph. The end points of the edge are
 	 * specified by vertex labels. New vertices are automatically identified and
 	 * added to the graph.
+	 * 
+	 * @param from
+	 *            the first vertex of the edge
+	 * @param to
+	 *            the second vertex of the edge
+	 * @param el
+	 *            an edge label
 	 */
 	public void set(VertexLabelType from, VertexLabelType to, EdgeLabelType el) {
 		Hashtable<VertexLabelType, EdgeLabelType> localEdgeLookup = checkForNewVertex(from);
@@ -59,7 +70,14 @@ public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 		return result;
 	}
 
-	/** Removes an edge from the graph. */
+	/**
+	 * Removes an edge from the graph.
+	 * 
+	 * @param from
+	 *            the first vertex of the edge
+	 * @param to
+	 *            the second vertex of the edge
+	 */
 	public void remove(VertexLabelType from, VertexLabelType to) {
 		Hashtable<VertexLabelType, EdgeLabelType> localEdgeLookup = globalEdgeLookup
 				.get(from);
@@ -68,8 +86,16 @@ public class LabeledGraph<VertexLabelType, EdgeLabelType> {
 	}
 
 	/**
-	 * Returns the label of the edge between the specified vertices and null if
+	 * Returns the label of the edge between the specified vertices, or null if
 	 * there is no edge between them.
+	 * 
+	 * @param from
+	 *            the first vertex of the ege
+	 * @param to
+	 *            the second vertex of the edge
+	 * 
+	 * @return the label of the edge between the specified vertices, or null if
+	 *         there is no edge between them.
 	 */
 	public EdgeLabelType get(VertexLabelType from, VertexLabelType to) {
 		Hashtable<VertexLabelType, EdgeLabelType> localEdgeLookup = globalEdgeLookup

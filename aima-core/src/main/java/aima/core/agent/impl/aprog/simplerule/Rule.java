@@ -7,13 +7,19 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
  * A simple implementation of a "condition-action rule".
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class Rule {
 	private Condition con;
 
 	private Action action;
 
+	/**
+	 * Constructs a condition-action rule.
+	 * 
+	 * @aCon a condition
+	 * @anAction an action
+	 */
 	public Rule(Condition aCon, Action anAction) {
 		assert (null != aCon);
 		assert (null != anAction);
@@ -26,6 +32,11 @@ public class Rule {
 		return (con.evaluate(p));
 	}
 
+	/**
+	 * Returns the action of this condition-action rule.
+	 * 
+	 * @return the action of this condition-action rule.
+	 */
 	public Action getAction() {
 		return action;
 	}

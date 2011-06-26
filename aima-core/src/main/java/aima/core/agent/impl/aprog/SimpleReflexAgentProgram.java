@@ -29,6 +29,7 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * condition matches the current state, as defined by the percept.
  * 
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  * 
  */
 public class SimpleReflexAgentProgram implements AgentProgram {
@@ -36,6 +37,13 @@ public class SimpleReflexAgentProgram implements AgentProgram {
 	// persistent: rules, a set of condition-action rules
 	private Set<Rule> rules;
 
+	/**
+	 * Constructs a SimpleReflexAgentProgram with a set of condition-action
+	 * rules.
+	 * 
+	 * @param aRuleSet
+	 *            a set of condition-action rules
+	 */
 	public SimpleReflexAgentProgram(Set<Rule> aRuleSet) {
 		rules = aRuleSet;
 	}

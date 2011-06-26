@@ -33,6 +33,7 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * way as the reflex agent.
  * 
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  * 
  */
 public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
@@ -54,14 +55,34 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 		init();
 	}
 
+	/**
+	 * Set the agent's current conception of the world state.
+	 * 
+	 * @param aState
+	 *            the agent's current conception of the world state.
+	 */
 	public void setState(DynamicState aState) {
 		state = aState;
 	}
 
+	/**
+	 * Set the program's description of how the next state depends on the state
+	 * and action.
+	 * 
+	 * @param aModel
+	 *            a description of how the next state depends on the current
+	 *            state and action.
+	 */
 	public void setModel(Model aModel) {
 		model = aModel;
 	}
 
+	/**
+	 * Set the program's condition-action rules
+	 * 
+	 * @param aRuleSet
+	 *            a set of condition-action rules
+	 */
 	public void setRules(Set<Rule> aRuleSet) {
 		rules = aRuleSet;
 	}
