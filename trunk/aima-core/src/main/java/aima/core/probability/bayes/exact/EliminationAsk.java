@@ -128,7 +128,7 @@ public class EliminationAsk implements BayesInference {
 	 *            variables //
 	 * @param hidden
 	 *            to be populated with the relevant hidden variables Y.
-	 * @param bnVARs
+	 * @param bnVARS
 	 *            to be populated with the subset of the random variables
 	 *            comprising the Bayesian Network with any irrelevant hidden
 	 *            variables removed.

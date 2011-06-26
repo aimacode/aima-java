@@ -85,8 +85,8 @@ public interface ConditionalProbabilityDistribution {
 	 *            match.
 	 * @return the Probability Distribution for the Random Variable the
 	 *         Conditional Probability Distribution is On.
-	 * @see {@link ConditionalProbabilityDistribution#getOn()}
-	 * @see {@link ConditionalProbabilityDistribution#getParents()}
+	 * @see ConditionalProbabilityDistribution#getOn()
+	 * @see ConditionalProbabilityDistribution#getParents()
 	 */
 	ProbabilityDistribution getConditioningCase(Object... parentValues);
 
@@ -101,8 +101,8 @@ public interface ConditionalProbabilityDistribution {
 	 *            getParents() and their Random Variables must match.
 	 * @return the Probability Distribution for the Random Variable the
 	 *         Conditional Probability Distribution is On.
-	 * @see {@link ConditionalProbabilityDistribution#getOn()}
-	 * @see {@link ConditionalProbabilityDistribution#getParents()}
+	 * @see ConditionalProbabilityDistribution#getOn()
+	 * @see ConditionalProbabilityDistribution#getParents()
 	 */
 	ProbabilityDistribution getConditioningCase(
 			AssignmentProposition... parentValues);

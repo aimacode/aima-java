@@ -17,8 +17,10 @@ public class Rule {
 	/**
 	 * Constructs a condition-action rule.
 	 * 
-	 * @aCon a condition
-	 * @anAction an action
+	 * @param aCon
+	 *            a condition
+	 * @param anAction
+	 *            an action
 	 */
 	public Rule(Condition aCon, Action anAction) {
 		assert (null != aCon);

@@ -46,7 +46,8 @@ public class TableDrivenAgentProgram implements AgentProgram {
 	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by
 	 * percept sequences.
 	 * 
-	 * @perceptSequenceActions a table of actions, indexed by percept sequences
+	 * @param perceptSequenceActions
+	 *            a table of actions, indexed by percept sequences
 	 */
 	public TableDrivenAgentProgram(
 			Map<List<Percept>, Action> perceptSequenceActions) {

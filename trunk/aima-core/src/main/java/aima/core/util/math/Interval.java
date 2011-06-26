@@ -22,9 +22,9 @@ public class Interval<C> {
 	/**
 	 * Constructs a closed interval from the two specified end points.
 	 * 
-	 * @param a
+	 * @param lower
 	 *            the lower end point of the interval
-	 * @param b
+	 * @param upper
 	 *            the upper end point of the interval
 	 */
 	public Interval(Comparable<C> lower, Comparable<C> upper) {
@@ -117,7 +117,7 @@ public class Interval<C> {
 	/**
 	 * Sets the interval to lower exclusive or lower inclusive.
 	 * 
-	 * @param inclusive
+	 * @param exclusive
 	 *            <code>true</code> represents lower exclusive and
 	 *            <code>false</code> represents lower inclusive.
 	 */
@@ -176,7 +176,7 @@ public class Interval<C> {
 	/**
 	 * Sets the interval to upper exclusive or upper inclusive.
 	 * 
-	 * @param inclusive
+	 * @param exclusive
 	 *            <code>true</code> represents upper exclusive and
 	 *            <code>false</code> represents upper inclusive.
 	 */
