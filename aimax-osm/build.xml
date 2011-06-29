@@ -6,6 +6,8 @@
 
 	<import file="${path.to.aima-gui.project}/build.xml"/>
 	
+	<property name="aimax-osm.run" value="aimax.osm.applications.OsmAimaDemoApp" />
+	
 	<path id="aimax-osm.classpath">
 		<path refid="aima-gui.classpath" />
 		<pathelement path="${aimax-osm.dir.build.bin}/main" />
@@ -16,7 +18,7 @@
 		<delete dir="${aimax-osm.dir.build}" />
 	</target>
 
-	<target name="aimax-osm.makedirs" depends="aimax-osm.clean">
+	<target name="aimax-osm.makedirs">
 		<mkdir dir="${aimax-osm.dir.build}" />
 		<mkdir dir="${aimax-osm.dir.build.bin}" />
 		<mkdir dir="${aimax-osm.dir.build.bin}/main" />
@@ -47,7 +49,7 @@
 			overview="${aimax-osm.dir.src}/main/javadoc/overview.html" />
 	</target>
 	
-	<target name="aimax-osm.release" depends="aima-gui.release,aimax-osm.compile-all">
+	<target name="aimax-osm.release" depends="aimax-osm.clean,aima-gui.release,aimax-osm.compile-all">
 		<jar destfile="${aimax-osm.dir.build.release}/aimax-osm.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-gui.jar commons-compress-1.1.jar" />
@@ -62,6 +64,15 @@
 		<copy todir="${aimax-osm.dir.build.release}" file="${aimax-osm.dir.lib}/commons-compress-1.1.jar" />
 	</target>
 
+	<target name="aimax-osm.run" depends="aimax-osm.compile-all">
+	    <java fork="true" classname="${aimax-osm.run}">
+	        <classpath refid="aimax-osm.classpath" />
+	           
+	        <jvmarg value="-Xms128m" />
+	        <jvmarg value="-Xmx1024m" />
+	    </java>
+	</target>
+	
 	<target name="aimax-osm.all" depends="aimax-osm.release,aimax-osm.makedocs">
 	</target>
 </project>
