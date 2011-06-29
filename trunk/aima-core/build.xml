@@ -22,7 +22,7 @@
 		<delete dir="${aima-core.dir.build}" />
 	</target>
 
-	<target name="aima-core.makedirs" depends="aima-core.clean">
+	<target name="aima-core.makedirs">
 		<mkdir dir="${aima-core.dir.build}" />
 		<mkdir dir="${aima-core.dir.build.bin}" />
 		<mkdir dir="${aima-core.dir.build.bin}/main" />
@@ -69,7 +69,7 @@
 			sourcepathref="aima-core.javadoc.src" />
 	</target>
 
-	<target name="aima-core.release" depends="aima-core.compile-all">
+	<target name="aima-core.release" depends="aima-core.clean,aima-core.compile-all">
 		<jar destfile="${aima-core.dir.build.release}/aima-core.jar">
 			<manifest>
 		    	<attribute name="Implementation-Title" value="AIMA-CORE" />
