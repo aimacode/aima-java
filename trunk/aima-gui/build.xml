@@ -6,6 +6,8 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 	
+	<property name="aima-gui.run" value="aima.gui.applications.AimaDemoApp" />
+	
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />
 		<pathelement path="${aima-gui.dir.build.bin}/main" />
@@ -16,7 +18,7 @@
 		<delete dir="${aima-gui.dir.build}" />
 	</target>
 
-	<target name="aima-gui.makedirs" depends="aima-gui.clean">
+	<target name="aima-gui.makedirs">
 		<mkdir dir="${aima-gui.dir.build}" />
 		<mkdir dir="${aima-gui.dir.build.bin}" />
 		<mkdir dir="${aima-gui.dir.build.bin}/main" />
@@ -46,7 +48,7 @@
 			sourcepathref="aima-gui.javadoc.src" />
 	</target>
 	
-	<target name="aima-gui.release" depends="aima-core.release,aima-gui.compile-all">
+	<target name="aima-gui.release" depends="aima-gui.clean,aima-core.release,aima-gui.compile-all">
 		<jar destfile="${aima-gui.dir.build.release}/aima-gui.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-core.jar" />
@@ -58,6 +60,15 @@
 			 <fileset dir="${aima-gui.dir.build.bin}/main" />
 			 <fileset dir="${aima-gui.dir.src}/main/resource" excludes="**/*.svn" />
 		</jar>
+	</target>
+	
+	<target name="aima-gui.run" depends="aima-gui.compile-all">
+	    <java fork="true" classname="${aima-gui.run}">
+	        <classpath refid="aima-gui.classpath" />
+	           
+	        <jvmarg value="-Xms128m" />
+	        <jvmarg value="-Xmx1024m" />
+	    </java>
 	</target>
 
 	<target name="aima-gui.all" depends="aima-gui.release,aima-gui.makedocs">
