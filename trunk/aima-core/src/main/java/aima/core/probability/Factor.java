@@ -2,13 +2,21 @@ package aima.core.probability;
 
 import java.util.Set;
 
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 524.<br>
+ * <br>
+ * Each factor is a matrix indexed by its argument variables.
+ * 
+ * @author Ciaran O'Reilly
+ * 
+ */
 public interface Factor {
 
 	/**
-	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the random
-	 *         variables represented by this Factor.
+	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the argument
+	 *         variables for this Factor.
 	 */
-	Set<RandomVariable> getFor();
+	Set<RandomVariable> getArgumentVariables();
 
 	/**
 	 * 

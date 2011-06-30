@@ -3,9 +3,10 @@ package aima.core.util.math;
 import java.util.List;
 
 /**
- * @see <a
- *      href="http://demonstrations.wolfram.com/MixedRadixNumberRepresentations/"
- *      >Mixed Radix Number Representations.</a>
+ * For details on <a
+ * href="http://demonstrations.wolfram.com/MixedRadixNumberRepresentations/"
+ * >Mixed Radix Number Representations.</a>
+ * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */

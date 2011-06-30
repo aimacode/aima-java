@@ -218,6 +218,11 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	//
 	// START-Factor
 	@Override
+	public Set<RandomVariable> getArgumentVariables() {
+		return randomVarInfo.keySet();
+	}
+	
+	@Override
 	public ProbabilityTable sumOut(RandomVariable... vars) {
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
