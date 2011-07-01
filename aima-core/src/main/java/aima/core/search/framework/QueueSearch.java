@@ -10,6 +10,7 @@ import aima.core.util.datastructure.Queue;
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public abstract class QueueSearch extends NodeExpander {
 	public static final String METRIC_QUEUE_SIZE = "queueSize";
@@ -28,13 +29,18 @@ public abstract class QueueSearch extends NodeExpander {
 	}
 
 	/**
+	 * Returns a list of actions to the goal if the goal was found, a list
+	 * containing a single NoOp Action if already at the goal, or an empty list
+	 * if the goal could not be found.
 	 * 
 	 * @param problem
+	 *            the search problem
 	 * @param frontier
-	 * @return if goal found, the list of actions to the Goal. If already at the
-	 *         goal you will receive a List with a single NoOp Action in it. If
-	 *         fail to find the Goal, an empty list will be returned to indicate
-	 *         that the search failed.
+	 *            the collection of nodes that are waiting to be expanded
+	 * 
+	 * @return a list of actions to the goal if the goal was found, a list
+	 *         containing a single NoOp Action if already at the goal, or an
+	 *         empty list if the goal could not be found.
 	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		this.frontier = frontier;
@@ -92,6 +98,11 @@ public abstract class QueueSearch extends NodeExpander {
 		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
 	}
 
+	/**
+	 * Removes and returns the node at the head of the frontier.
+	 * 
+	 * @return the node at the head of the frontier.
+	 */
 	public Node popNodeFromFrontier() {
 		return frontier.pop();
 	}

@@ -27,6 +27,7 @@ import aima.core.agent.Action;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public class Node {
 
@@ -43,11 +44,33 @@ public class Node {
 	// the initial state to the node, as indicated by the parent pointers.
 	private double pathCost;
 
+	/**
+	 * Constructs a node with the specified state.
+	 * 
+	 * @param state
+	 *            the state in the state space to which the node corresponds.
+	 */
 	public Node(Object state) {
 		this.state = state;
 		this.pathCost = 0.0;
 	}
 
+	/**
+	 * Constructs a node with the specified state, parent, action, and step
+	 * cost.
+	 * 
+	 * @param state
+	 *            the state in the state space to which the node corresponds.
+	 * @param parent
+	 *            the node in the search tree that generated the node.
+	 * @param action
+	 *            the action that was applied to the parent to generate the
+	 *            node.
+	 * @param stepCost
+	 *            the cost from the parent node to this node. Used to calculate
+	 *            the full pathCost from the root node to here, based on the parent's
+	 *            path cost.
+	 */
 	public Node(Object state, Node parent, Action action, double stepCost) {
 		this(state);
 		this.parent = parent;
@@ -55,26 +78,58 @@ public class Node {
 		this.pathCost = parent.pathCost + stepCost;
 	}
 
+	/**
+	 * Returns the state in the state space to which the node corresponds.
+	 * 
+	 * @return the state in the state space to which the node corresponds.
+	 */
 	public Object getState() {
 		return state;
 	}
 
+	/**
+	 * Returns this node's parent node, from which this node was generated.
+	 * 
+	 * @return the node's parenet node, from which this node was generated.
+	 */
 	public Node getParent() {
 		return parent;
 	}
 
+	/**
+	 * Returns the action that was applied to the parent to generate the node.
+	 * 
+	 * @return the action that was applied to the parent to generate the node.
+	 */
 	public Action getAction() {
 		return action;
 	}
 
+	/**
+	 * Returns the cost of the path from the initial state to this node as
+	 * indicated by the parent pointers.
+	 * 
+	 * @return the cost of the path from the initial state to this node as
+	 *         indicated by the parent pointers.
+	 */
 	public double getPathCost() {
 		return pathCost;
 	}
 
+	/**
+	 * Returns <code>true</code> if the node has no parent.
+	 * 
+	 * @return <code>true</code> if the node has no parent.
+	 */
 	public boolean isRootNode() {
 		return parent == null;
 	}
 
+	/**
+	 * Returns the path from the root node to this node.
+	 * 
+	 * @return the path from the root node to this node.
+	 */
 	public List<Node> getPathFromRoot() {
 		List<Node> path = new ArrayList<Node>();
 		Node current = this;
