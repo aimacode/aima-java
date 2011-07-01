@@ -25,11 +25,11 @@ import aima.core.search.framework.SearchUtils;
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   else if limit = 0 then return cutoff
  *   else
- *       cutoff_occurred? <- false
+ *       cutoff_occurred? &lt;- false
  *       for each action in problem.ACTIONS(node.STATE) do
- *           child <- CHILD-NODE(problem, node, action)
- *           result <- RECURSIVE-DLS(child, problem, limit - 1)
- *           if result = cutoff then cutoff_occurred? <- true
+ *           child &lt;- CHILD-NODE(problem, node, action)
+ *           result &lt;- RECURSIVE-DLS(child, problem, limit - 1)
+ *           if result = cutoff then cutoff_occurred? &lt;- true
  *           else if result != failure then return result
  *       if cutoff_occurred? then return cutoff else return failure
  * </pre>
@@ -38,6 +38,7 @@ import aima.core.search.framework.SearchUtils;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Mike Stampone
  */
 public class DepthLimitedSearch extends NodeExpander implements Search {
 	private static String PATH_COST = "pathCost";
@@ -48,11 +49,31 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 		this.limit = limit;
 	}
 
+	/**
+	 * Returns <code>true</code> if the specified action list indicates a
+	 * search reached it limit without finding a goal.
+	 * 
+	 * @param result
+	 *            the action list resulting from a previous search
+	 * 
+	 * @return <code>true</code> if the specified action list indicates a
+	 *         search reached it limit without finding a goal.
+	 */
 	public boolean isCutOff(List<Action> result) {
 		return 1 == result.size()
 				&& CutOffIndicatorAction.CUT_OFF.equals(result.get(0));
 	}
 
+	/**
+	 * Returns <code>true</code> if the specified action list indicates a goal
+	 * not found.
+	 * 
+	 * @param result
+	 *            the action list resulting from a previous search
+	 * 
+	 * @return <code>true</code> if the specified action list indicates a goal
+	 *         not found.
+	 */
 	public boolean isFailure(List<Action> result) {
 		return 0 == result.size();
 	}
@@ -60,6 +81,12 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
 	// failure/cutoff
 	/**
+	 * Returns a list of actions to the goal if the goal was found, a list
+	 * containing a single NoOp Action if already at the goal, an empty list if
+	 * the goal could not be found, or a list containing a single
+	 * CutOffIndicatorAction.CUT_OFF if the search reached its limit without
+	 * finding a goal.
+	 * 
 	 * @param p
 	 * @return if goal found, the list of actions to the Goal. If already at the
 	 *         goal you will receive a List with a single NoOp Action in it. If
@@ -77,15 +104,29 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	}
 
 	@Override
+	/**
+	 * Sets the nodes expanded and path cost metrics to zero.
+	 */
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
 		metrics.set(PATH_COST, 0);
 	}
 
+	/**
+	 * Returns the path cost metric.
+	 * 
+	 * @return the path cost metric
+	 */
 	public double getPathCost() {
 		return metrics.getDouble(PATH_COST);
 	}
 
+	/**
+	 * Sets the path cost metric.
+	 * 
+	 * @param pathCost
+	 *            the value of the path cost metric
+	 */
 	public void setPathCost(Double pathCost) {
 		metrics.set(PATH_COST, pathCost);
 	}

@@ -21,14 +21,14 @@ import aima.core.util.Util;
  *               goal, a goal, initially null
  *               problem, a problem formulation
  *           
- *   state <- UPDATE-STATE(state, percept)
+ *   state &lt;- UPDATE-STATE(state, percept)
  *   if seq is empty then
- *     goal    <- FORMULATE-GOAL(state)
- *     problem <- FORMULATE-PROBLEM(state, goal)
- *     seq     <- SEARCH(problem)
+ *     goal    &lt;- FORMULATE-GOAL(state)
+ *     problem &lt;- FORMULATE-PROBLEM(state, goal)
+ *     seq     &lt;- SEARCH(problem)
  *     if seq = failure then return a null action
- *   action <- FIRST(seq)
- *   seq <- REST(seq)
+ *   action &lt;- FIRST(seq)
+ *   seq &lt;- REST(seq)
  *   return action
  * </pre>
  * 
@@ -38,7 +38,7 @@ import aima.core.util.Util;
  * another goal and starts over.<br>
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 
@@ -52,10 +52,21 @@ public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 
 	private int goalsFormulated = 0;
 
+	/**
+	 * Constructs a simple problem solving agent which will formulate goals
+	 * indefinitely.
+	 */
 	public SimpleProblemSolvingAgent() {
 		formulateGoalsIndefinitely = true;
 	}
 
+	/**
+	 * Constructs a simple problem solving agent which will formulate, at
+	 * maximum, the specified number of goals.
+	 * 
+	 * @param maxGoalsToFormulate
+	 *            the maximum number of goals this agent is to formulate.
+	 */
 	public SimpleProblemSolvingAgent(int maxGoalsToFormulate) {
 		formulateGoalsIndefinitely = false;
 		this.maxGoalsToFormulate = maxGoalsToFormulate;
