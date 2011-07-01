@@ -36,7 +36,33 @@ set JAVA_HOME=C:\Program Files\Java\jdk1.6.0_20\
 set PATH=C:\Temp\AIMA\apache-ant-1.8.2\bin;C:\Program Files\Java\jdk1.6.0_20\bin;%PATH%
 }}} 
 *Note:* you need to ensure your JDK and Ant bin directories are visible on your OS's path environment variable in order to be able to correctly run Ant from the command line.
-  * Change directory into the the sub-project of interest, for example _aima-core/_ and then type ant at the command line: <br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/ant_build.png <br>
+  * Change directory into the the sub-project of interest, for example _aima-core/_ and then type ant at the command line: <br> http://aima-java.googlecode.com/svn/trunk/aima-all/release/wiki/ant_build.png <br>This will compile and run all of the project's unit tests by default.
+  * To run a command line or GUI program do the following:<br>
+    Change into _aima-gui/_ and type:<br>
+    <br>
+    ant aima-gui.run<br>
+    <br> 
+    by default this will run aima.gui.applications.AimaDemoApp<br>
+    If you wish to run an alternative program (for example the ProbabilityDemo) you can pass through the program to run to ant:
+    <br><br>
+    ant aima-gui.run -Daima-gui.run=aima.gui.demo.probability.ProbabilityDemo
+    <br>
+    <br>
+    By default the aima-gui.run task will compile the code before running it. Therefore you can make changes to the code and see
+    differences in the output. For example if you changed the default number of samples to generate in the ProbabiltyDemo from:<br>
+    <br>
+    ...
+    	public static final int NUM_SAMPLES = 1000;
+    <br>to:<br>
+    <br>
+    ...
+    	public static final int NUM_SAMPLES = 100000;
+    <br>
+    you should see more accurate results for the approximate inference algorithms (e.g. LikelihoodWeighting), though
+    the program will take longer to run. The _aimax-osm/_ project has also got a run task:<br>
+    <br>
+    ant aimax-osm.run -Daimax-osm.run=...
+    <br><br>
   * For further details on how to use Ant see the project's online documentation: http://ant.apache.org/manual/index.html <br>
 
 == Using the <a href="http://www.eclipse.org/">Eclipse IDE</a> ==
