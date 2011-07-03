@@ -4,9 +4,17 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.0-Chp13-Chp14-Rewrite ==
-0.10.0-Chp13-Chp14-Rewrite : <TODO> :<br>
+== Current Release: 0.10.0-Chp13-and-14-Rewrite ==
+0.10.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
   * All of the algorithms from Chapters 13 and 14 have been rewritten.
+  ** Rewritten:
+  *** 14.9 Enumeration-Ask
+  *** 14.13 Prior-Sample
+  *** 14.14 Rejection-Sampling 
+  *** 14.15 Likelihood-Weighting 
+  *** 14.16 GIBBS-Ask 
+  ** Added:
+  *** 14.11 Elimination-Ask
   * Moved Randomizer interface and related implementation underneath
     aima.core.util.
   * Moved TwoKeyHashMashMap to sub-package datastructure.
