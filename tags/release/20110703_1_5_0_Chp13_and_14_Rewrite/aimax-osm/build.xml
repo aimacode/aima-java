@@ -1,0 +1,78 @@
+
+<project name="aimax-osm" basedir="." default="aimax-osm.all">
+	<dirname property="aimax-osm.basedir" file="${ant.file.aimax-osm}"/>
+	<property file="${aimax-osm.basedir}/build.properties.local"/>
+	<property file="${aimax-osm.basedir}/build.properties"/> 
+
+	<import file="${path.to.aima-gui.project}/build.xml"/>
+	
+	<property name="aimax-osm.run" value="aimax.osm.applications.OsmAimaDemoApp" />
+	
+	<path id="aimax-osm.classpath">
+		<path refid="aima-gui.classpath" />
+		<pathelement path="${aimax-osm.dir.build.bin}/main" />
+		<pathelement path="${aimax-osm.dir.src}/main/resource" />
+	</path>
+
+	<target name="aimax-osm.clean">
+		<delete dir="${aimax-osm.dir.build}" />
+	</target>
+
+	<target name="aimax-osm.makedirs">
+		<mkdir dir="${aimax-osm.dir.build}" />
+		<mkdir dir="${aimax-osm.dir.build.bin}" />
+		<mkdir dir="${aimax-osm.dir.build.bin}/main" />
+		<mkdir dir="${aimax-osm.dir.build.doc}" />
+		<mkdir dir="${aimax-osm.dir.build.doc}/javadoc" />
+		<mkdir dir="${aimax-osm.dir.build.release}" />
+	</target>
+
+	<target name="aimax-osm.compile-all" depends="aima-gui.compile-all,aimax-osm.makedirs">
+		<javac srcdir="${aimax-osm.dir.src}/main" 
+			destdir="${aimax-osm.dir.build.bin}/main" 
+			classpathref="aimax-osm.classpath"
+			debug="${aima-core.compiler.debug}"
+			debuglevel="${aima-core.compiler.debuglevel}"
+			source="${aima-core.compiler.source}"
+		    target="${aima-core.compiler.target}"
+		/>
+	</target>
+
+	<target name="aimax-osm.makedocs" depends="aimax-osm.compile-all">
+		<path id="aimax-osm.javadoc.src">
+			<pathelement path="${aimax-osm.dir.src}/main/java" />
+			<pathelement path="${aimax-osm.dir.src}/main/javadoc" />
+		</path>
+		<javadoc destdir="${aimax-osm.dir.build.doc}/javadoc" 
+			packagenames="aimax.*"
+			sourcepathref="aimax-osm.javadoc.src" 
+			overview="${aimax-osm.dir.src}/main/javadoc/overview.html" />
+	</target>
+	
+	<target name="aimax-osm.release" depends="aimax-osm.clean,aimax-osm.makedirs,aima-gui.release,aimax-osm.compile-all">
+		<jar destfile="${aimax-osm.dir.build.release}/aimax-osm.jar">
+			<manifest>
+				<attribute name="Class-Path" value="aima-gui.jar commons-compress-1.1.jar" />
+				<attribute name="Main-Class" value="aimax.osm.applications.OsmViewerApp" />
+		    	<attribute name="Implementation-Title" value="AIMAX-OSM" />
+		        <attribute name="Implementation-Version" value="${aimax-osm.version}" />
+		        <attribute name="AIMAX-OSM-Version" value="${aimax-osm.version}" />
+		    </manifest>
+			 <fileset dir="${aimax-osm.dir.build.bin}/main" />
+			 <fileset dir="${aimax-osm.dir.src}/main/resource" excludes="**/*.svn" />
+		</jar>
+		<copy todir="${aimax-osm.dir.build.release}" file="${aimax-osm.dir.lib}/commons-compress-1.1.jar" />
+	</target>
+
+	<target name="aimax-osm.run" depends="aimax-osm.compile-all">
+	    <java fork="true" classname="${aimax-osm.run}">
+	        <classpath refid="aimax-osm.classpath" />
+	           
+	        <jvmarg value="-Xms128m" />
+	        <jvmarg value="-Xmx1024m" />
+	    </java>
+	</target>
+	
+	<target name="aimax-osm.all" depends="aimax-osm.release,aimax-osm.makedocs">
+	</target>
+</project>
