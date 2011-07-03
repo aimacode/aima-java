@@ -62,6 +62,33 @@
    
   otherwise the content will not be served up correctly by the Subversion server.
 
+*. Upload the latest version of the aima-core Javadoc \:
+   This can be done by running the aima-core.makedocs ant task and copying
+   the generated docs over to the public Javadoc location in:
+   aima-all\release\javadoc\aima-core
+  
+   for details on ensure the svn:mime-type is correctly set for the generated
+   Javadocs see:
+   http://stuffthathappens.com/blog/2007/11/09/howto-publish-javadoc-on-google-code/
+   for details on how to do this. 
+   
+   Note: Best to use TortoiseSVN and ensure the config file is setup correctly, i.e.:
+   ...
+   ### Section for configuring miscelleneous Subversion options.
+   [miscellany]
+   ...
+   ### Automatic properties are defined in the section 'auto-props'.
+   enable-auto-props = yes
+   ...
+   ### Section for configuring automatic properties.
+   [auto-props]
+   *.txt = svn:mime-type=text/plain
+   *.html = svn:mime-type=text/html
+   *.css = svn:mime-type=text/css
+   *.png = svn:mime-type=image/png
+   *.jpg = svn:mime-type=image/jpeg
+   *.jnlp = svn:mime-type=application/x-java-jnlp-file
+   
 *. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.
 
 *. Update the 'Project Home' page to indicate the latest revision #. 
