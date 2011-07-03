@@ -22,7 +22,7 @@
 		<mkdir dir="${aima-all.dir.build.release}/release" />
 	</target>
 	
-	<target name="aima-all.release" depends="aima-all.makedirs,aima-core.test-all,aima-core.release,aima-gui.release,aimax-osm.release">
+	<target name="aima-all.release" depends="aima-all.makedirs,aima-core.release,aima-gui.release,aimax-osm.release">
 		<copy todir="${aima-all.dir.build.release}" file="README.txt" />
 		<copy todir="${aima-all.dir.build.release}/aima-core">
 			<fileset dir="${path.to.aima-core.project}" excludes="**/*.svn, build/, bin/" />
