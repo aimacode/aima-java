@@ -48,7 +48,7 @@
 			sourcepathref="aima-gui.javadoc.src" />
 	</target>
 	
-	<target name="aima-gui.release" depends="aima-gui.clean,aima-core.release,aima-gui.compile-all">
+	<target name="aima-gui.release" depends="aima-gui.clean,aima-gui.makedirs,aima-core.release,aima-gui.compile-all">
 		<jar destfile="${aima-gui.dir.build.release}/aima-gui.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-core.jar" />

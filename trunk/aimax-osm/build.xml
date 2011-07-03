@@ -49,7 +49,7 @@
 			overview="${aimax-osm.dir.src}/main/javadoc/overview.html" />
 	</target>
 	
-	<target name="aimax-osm.release" depends="aimax-osm.clean,aima-gui.release,aimax-osm.compile-all">
+	<target name="aimax-osm.release" depends="aimax-osm.clean,aimax-osm.makedirs,aima-gui.release,aimax-osm.compile-all">
 		<jar destfile="${aimax-osm.dir.build.release}/aimax-osm.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-gui.jar commons-compress-1.1.jar" />
