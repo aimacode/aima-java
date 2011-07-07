@@ -227,7 +227,7 @@ the basic design of all the logic code is that the parser creates a Composite (D
 
 == Probability Notes ==
 
-Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have been implemented. I have tried to make the code stick very closely to Dr.Norvig's' pseudo-code. Looking at the tests will reveal how to use the code. 
+I have tried to make the code stick very closely to Dr.Norvig's' pseudo-code. Looking at the tests will reveal how to use the code. 
 
 ==LearningNotes==
 
