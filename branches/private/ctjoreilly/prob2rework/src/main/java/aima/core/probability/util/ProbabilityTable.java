@@ -98,6 +98,10 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			queryMRN = new MixedRadixNumber(0, radices);
 		}
 	}
+	
+	public int size() {
+		return values.length;
+	}
 
 	//
 	// START-ProbabilityDistribution
