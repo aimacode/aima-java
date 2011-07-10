@@ -9,7 +9,7 @@ import aima.core.logic.common.Token;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class PELexer extends Lexer {
 
@@ -24,11 +24,24 @@ public class PELexer extends Lexer {
 		connectors.add("<=>");
 	}
 
+	/**
+	 * Constructs a propositional expression lexer with the specified character
+	 * stream.
+	 * 
+	 * @param inputString
+	 *            a sequence of characters to be converted into a sequence of
+	 *            tokens.
+	 */
 	public PELexer(String inputString) {
 		this();
 		setInput(inputString);
 	}
 
+	/**
+	 * Returns the next token from the character stream.
+	 * 
+	 * @return the next token from the character stream.
+	 */
 	@Override
 	public Token nextToken() {
 		Token result = null;

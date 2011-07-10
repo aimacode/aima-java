@@ -24,13 +24,13 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *               s, a, the previous state and action, initially null
  *           
  *   if GOAL-TEST(s') then return stop
- *   if s' is a new state (not in H) then H[s'] <- h(s')
+ *   if s' is a new state (not in H) then H[s'] &lt;- h(s')
  *   if s is not null
- *     result[s, a] <- s'
- *     H[s] <-        min LRTA*-COST(s, b, result[s, b], H)
+ *     result[s, a] &lt;- s'
+ *     H[s] &lt;-        min LRTA*-COST(s, b, result[s, b], H)
  *             b (element of) ACTIONS(s)
- *   a <- an action b in ACTIONS(s') that minimizes LRTA*-COST(s', b, result[s', b], H)
- *   s <- s'
+ *   a &lt;- an action b in ACTIONS(s') that minimizes LRTA*-COST(s', b, result[s', b], H)
+ *   s &lt;- s'
  *   return a
  *   
  * function LRTA*-COST(s, a, s', H) returns a cost estimate
@@ -47,7 +47,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * welcome.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class LRTAStarAgent extends AbstractAgent {
 
@@ -62,6 +62,20 @@ public class LRTAStarAgent extends AbstractAgent {
 	private Object s = null;
 	private Action a = null;
 
+	/**
+	 * Constructs a LRTA* agent with the specified search problem, percept to
+	 * state function, and heuristic function.
+	 * 
+	 * @param problem
+	 *            an online search problem for this agent to solve.
+	 * @param ptsFunction
+	 *            a function which returns the problem state associated with a
+	 *            given Percept.
+	 * @param hf
+	 *            heuristic function <em>h(n)</em>, which estimates the cost of
+	 *            the cheapest path from the state at node <em>n</em> to a goal
+	 *            state.
+	 */
 	public LRTAStarAgent(OnlineSearchProblem problem,
 			PerceptToStateFunction ptsFunction, HeuristicFunction hf) {
 		setProblem(problem);
@@ -69,27 +83,61 @@ public class LRTAStarAgent extends AbstractAgent {
 		setHeuristicFunction(hf);
 	}
 
+	/**
+	 * Returns the search problem of this agent.
+	 * 
+	 * @return the search problem of this agent.
+	 */
 	public OnlineSearchProblem getProblem() {
 		return problem;
 	}
 
+	/**
+	 * Sets the search problem for this agent to solve.
+	 * 
+	 * @param problem
+	 *            the search problem for this agent to solve.
+	 */
 	public void setProblem(OnlineSearchProblem problem) {
 		this.problem = problem;
 		init();
 	}
 
+	/**
+	 * Returns the percept to state function of this agent.
+	 * 
+	 * @return the percept to state function of this agent.
+	 */
 	public PerceptToStateFunction getPerceptToStateFunction() {
 		return ptsFunction;
 	}
 
+	/**
+	 * Sets the percept to state function of this agent.
+	 * 
+	 * @param ptsFunction
+	 *            a function which returns the problem state associated with a
+	 *            given Percept.
+	 */
 	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
 		this.ptsFunction = ptsFunction;
 	}
 
+	/**
+	 * Returns the heuristic function of this agent.
+	 */
 	public HeuristicFunction getHeuristicFunction() {
 		return hf;
 	}
 
+	/**
+	 * Sets the heuristic function of this agent.
+	 * 
+	 * @param hf
+	 *            heuristic function <em>h(n)</em>, which estimates the cost of
+	 *            the cheapest path from the state at node <em>n</em> to a goal
+	 *            state.
+	 */
 	public void setHeuristicFunction(HeuristicFunction hf) {
 		this.hf = hf;
 	}

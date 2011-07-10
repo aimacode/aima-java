@@ -13,9 +13,22 @@ import aima.core.util.Util;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class TTEntails {
+
+	/**
+	 * Returns the answer to the specified question using the TT-Entails
+	 * algorithm.
+	 * 
+	 * @param kb
+	 *            a knowledge base to ASK
+	 * @param alpha
+	 *            a question to ASK the knowledge base
+	 * 
+	 * @return the answer to the specified question using the TT-Entails
+	 *         algorithm.
+	 */
 	public boolean ttEntails(KnowledgeBase kb, String alpha) {
 		Sentence kbSentence = kb.asSentence();
 		Sentence querySentence = (Sentence) new PEParser().parse(alpha);

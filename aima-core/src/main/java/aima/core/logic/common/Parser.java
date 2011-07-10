@@ -14,12 +14,19 @@ public abstract class Parser {
 
 	public abstract ParseTreeNode parse(String input);
 
+	/*
+	 * Stores the next token in the lookahead buffer to make parsing action
+	 * decisions.
+	 */
 	protected void fillLookAheadBuffer() {
 		for (int i = 0; i < lookAhead; i++) {
 			lookAheadBuffer[i] = lexer.nextToken();
 		}
 	}
 
+	/*
+	 * Returns the token at the specified position in the lookahead buffer.
+	 */
 	protected Token lookAhead(int i) {
 		return lookAheadBuffer[i - 1];
 	}
@@ -28,6 +35,10 @@ public abstract class Parser {
 		loadNextTokenFromInput();
 	}
 
+	/*
+	 * Loads the next token into the lookahead buffer if the end of the stream
+	 * has not already been reached.
+	 */
 	protected void loadNextTokenFromInput() {
 
 		boolean eoiEncountered = false;
@@ -49,6 +60,9 @@ public abstract class Parser {
 
 	}
 
+	/*
+	 * Returns true if the end of the stream has been reached.
+	 */
 	protected boolean isEndOfInput(Token t) {
 		return (t.getType() == LogicTokenTypes.EOI);
 	}

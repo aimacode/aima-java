@@ -11,10 +11,21 @@ import aima.core.search.framework.QueueSearch;
  * it evaluates nodes by using just the heuristic function; that is, f(n) = h(n)
  * 
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class GreedyBestFirstSearch extends BestFirstSearch {
 
+	/**
+	 * Constructs a greedy best-first search from the specified search problem
+	 * and heuristic function.
+	 * 
+	 * @param search
+	 *            a search problem
+	 * @param hf
+	 *            a heuristic function <em>h(n)</em>, which estimates the
+	 *            cheapest path from the state at node <em>n</em> to a goal
+	 *            state.
+	 */
 	public GreedyBestFirstSearch(QueueSearch search, HeuristicFunction hf) {
 		super(search, new GreedyBestFirstEvaluationFunction(hf));
 	}
