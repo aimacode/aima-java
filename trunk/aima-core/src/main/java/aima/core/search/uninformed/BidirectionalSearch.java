@@ -29,7 +29,7 @@ import aima.core.util.datastructure.FIFOQueue;
  * instead intersect at the explored set.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class BidirectionalSearch implements Search {
 	public enum SearchOutcome {
@@ -164,14 +164,36 @@ public class BidirectionalSearch implements Search {
 		return new ArrayList<Action>();
 	}
 
+	/**
+	 * Returns PATH_FOUND_FROM_ORIGINAL_PROBLEM if the path was found from the
+	 * initial state, PATH_FOUND_FROM_REVERSE_PROBLEM if the path was found from
+	 * a goal, PATH_FOUND_FROM_BETWEEN_PROBLEMS if a branch from the initial
+	 * state met a branch from a goal state, or PATH_NOT_FOUND if no path from
+	 * the initial state to a goal state was found.
+	 * 
+	 * @return PATH_FOUND_FROM_ORIGINAL_PROBLEM if the path was found from the
+	 *         initial state, PATH_FOUND_FROM_REVERSE_PROBLEM if the path was
+	 *         found from a goal, PATH_FOUND_FROM_BETWEEN_PROBLEMS if a branch
+	 *         from the initial state met a branch from a goal state, or
+	 *         PATH_NOT_FOUND if no path from the initial state to a goal state
+	 *         was found.
+	 */
 	public SearchOutcome getSearchOutcome() {
 		return searchOutcome;
 	}
 
+	/**
+	 * Returns all the metrics of the search.
+	 * 
+	 * @return all the metrics of the search.
+	 */
 	public Metrics getMetrics() {
 		return metrics;
 	}
 
+	/**
+	 * Sets all metrics to zero.
+	 */
 	public void clearInstrumentation() {
 		metrics.set(NODES_EXPANDED, 0);
 		metrics.set(QUEUE_SIZE, 0);
@@ -179,18 +201,41 @@ public class BidirectionalSearch implements Search {
 		metrics.set(PATH_COST, 0.0);
 	}
 
+	/**
+	 * Returns the number of nodes expanded.
+	 * 
+	 * @return the number of nodes expanded.
+	 */
 	public int getNodesExpanded() {
 		return metrics.getInt(NODES_EXPANDED);
 	}
 
+	/**
+	 * Sets the number of nodes expanded.
+	 * 
+	 * @param nodesExpanded
+	 *            the number of nodes expanded
+	 */
 	public void setNodesExpanded(int nodesExpanded) {
 		metrics.set(NODES_EXPANDED, nodesExpanded);
 	}
 
+	/**
+	 * Returns the queue size.
+	 * 
+	 * @return the queue size.
+	 */
 	public int getQueueSize() {
 		return metrics.getInt(QUEUE_SIZE);
 	}
 
+	/**
+	 * Sets the queue size and adjusts the maximum queue size if the specified
+	 * size is greater than the current maximum.
+	 * 
+	 * @param queueSize
+	 *            the number of items in the queue.
+	 */
 	public void setQueueSize(int queueSize) {
 		metrics.set(QUEUE_SIZE, queueSize);
 		int maxQSize = metrics.getInt(MAX_QUEUE_SIZE);
@@ -199,14 +244,30 @@ public class BidirectionalSearch implements Search {
 		}
 	}
 
+	/**
+	 * Returns the maximum queue size.
+	 * 
+	 * @return the maximum queue size.
+	 */
 	public int getMaxQueueSize() {
 		return metrics.getInt(MAX_QUEUE_SIZE);
 	}
 
+	/**
+	 * Returns the cost of the path from the initial state to a goal state.
+	 * 
+	 * @return the cost of the path from the initial state to a goal state.
+	 */
 	public double getPathCost() {
 		return metrics.getDouble(PATH_COST);
 	}
 
+	/**
+	 * Sets the cost of the path from the initial state to a goal state.
+	 * 
+	 * @param pathCost
+	 *            the cost of the path from the initial state to a goal state.
+	 */
 	public void setPathCost(Double pathCost) {
 		metrics.set(PATH_COST, pathCost);
 	}

@@ -16,10 +16,21 @@ import aima.core.search.framework.QueueSearch;
  * f(n) = estimated cost of the cheapest solution through n.
  * 
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class AStarSearch extends BestFirstSearch {
 
+	/**
+	 * Constructs an A* search from the specified search problem and heuristic
+	 * function
+	 * 
+	 * @param search
+	 *            a search problem
+	 * @param hf
+	 *            a heuristic function <em>h(n)</em>, which estimates the
+	 *            cost of the cheapest path from the state at node <em>n</em>
+	 *            to a goal state.
+	 */
 	public AStarSearch(QueueSearch search, HeuristicFunction hf) {
 		super(search, new AStarEvaluationFunction(hf));
 	}

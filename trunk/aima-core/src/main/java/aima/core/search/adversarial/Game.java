@@ -6,7 +6,7 @@ import aima.core.util.Util;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public abstract class Game {
 	protected GameState initialState = new GameState();
@@ -35,14 +35,38 @@ public abstract class Game {
 		return (ArrayList) state.get("moves");
 	}
 
+	/**
+	 * Returns the player to move at the specified game state.
+	 * 
+	 * @param state
+	 *            a game state
+	 * 
+	 * @return the player to move at the specified game state.
+	 */
 	public String getPlayerToMove(GameState state) {
 		return (String) state.get("player");
 	}
 
+	/**
+	 * Returns a numeric value for the outcome of the game. In chess, the
+	 * outcome is a win, loss, or draw, which we can represent by the value +1,
+	 * -1, or 0. Some games have a wider variety of possible outcomes; for
+	 * example, the payoffs in backgammon range from + 192 to -192.
+	 * 
+	 * @param h
+	 *            a game state to evaluate.
+	 * 
+	 * @return a numeric value for the outcome of the game.
+	 */
 	public int getUtility(GameState h) {
 		return ((Integer) h.get("utility")).intValue();
 	}
 
+	/**
+	 * Returns the present state of the game.
+	 * 
+	 * @return the present state of the game.
+	 */
 	public GameState getState() {
 		return presentState;
 	}

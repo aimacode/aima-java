@@ -31,10 +31,18 @@ import aima.core.util.Util;
  * given the rest of the current assignment.
  * 
  * @author Ruediger Lunde
+ * @author Mike Stampone
  */
 public class MinConflictsStrategy extends SolutionStrategy {
 	private int maxSteps;
 
+	/**
+	 * Constructs a min-conflicts strategy with a given number of steps allowed
+	 * before giving up.
+	 * 
+	 * @param maxSteps
+	 *            the number of steps allowed before giving up
+	 */
 	public MinConflictsStrategy(int maxSteps) {
 		this.maxSteps = maxSteps;
 	}

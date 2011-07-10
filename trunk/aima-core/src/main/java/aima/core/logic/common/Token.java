@@ -2,22 +2,40 @@ package aima.core.logic.common;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class Token {
 	private String text;
 
 	private int type;
 
+	/**
+	 * Constructs a token from the specified token-name and attribute-value
+	 * 
+	 * @param type
+	 *            the token-name
+	 * @param text
+	 *            the attribute-value
+	 */
 	public Token(int type, String text) {
 		this.type = type;
 		this.text = text;
 	}
 
+	/**
+	 * Returns the attribute-value of this token.
+	 * 
+	 * @return the attribute-value of this token.
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Returns the token-name of this token.
+	 * 
+	 * @return the token-name of this token.
+	 */
 	public int getType() {
 		return type;
 	}

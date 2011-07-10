@@ -20,11 +20,11 @@ import aima.core.util.CancelableThread;
  * <pre>
  * function HILL-CLIMBING(problem) returns a state that is a local maximum
  *                    
- *   current <- MAKE-NODE(problem.INITIAL-STATE)
+ *   current &lt;- MAKE-NODE(problem.INITIAL-STATE)
  *   loop do
- *     neighbor <- a highest-valued successor of current
- *     if neighbor.VALUE <= current.VALUE then return current.STATE
- *     current <- neighbor
+ *     neighbor &lt;- a highest-valued successor of current
+ *     if neighbor.VALUE &lt;= current.VALUE then return current.STATE
+ *     current &lt;- neighbor
  * </pre>
  * 
  * Figure 4.2 The hill-climbing search algorithm, which is the most basic local
@@ -34,7 +34,7 @@ import aima.core.util.CancelableThread;
  * the lowest h.
  * 
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class HillClimbingSearch extends NodeExpander implements Search {
 
@@ -48,10 +48,29 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 
 	private Object lastState = null;
 
+	/**
+	 * Constructs a hill-climbing search from the specified heuristic function.
+	 * 
+	 * @param hf
+	 *            a heuristic function
+	 */
 	public HillClimbingSearch(HeuristicFunction hf) {
 		this.hf = hf;
 	}
 
+	/**
+	 * Returns a list of actions to the local maximum if the local maximum was
+	 * found, a list containing a single NoOp Action if already at the local
+	 * maximum, or an empty list if the search was canceled by the user.
+	 * 
+	 * @param p
+	 *            the search problem
+	 * 
+	 * @return a list of actions to the local maximum if the local maximum was
+	 *         found, a list containing a single NoOp Action if already at the
+	 *         local maximum, or an empty list if the search was canceled by the
+	 *         user.
+	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	public List<Action> search(Problem p) throws Exception {
 		clearInstrumentation();
@@ -80,10 +99,24 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return new ArrayList<Action>();
 	}
 
+	/**
+	 * Returns SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
+	 * if the local maximum is not a goal state.
+	 * 
+	 * @return SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
+	 *         if the local maximum is not a goal state.
+	 */
 	public SearchOutcome getOutcome() {
 		return outcome;
 	}
 
+	/**
+	 * Returns the last state from which the hill climbing search found the
+	 * local maximum.
+	 * 
+	 * @return the last state from which the hill climbing search found the
+	 *         local maximum.
+	 */
 	public Object getLastSearchState() {
 		return lastState;
 	}

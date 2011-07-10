@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class GameState {
 	private Hashtable<String, Object> state;
@@ -61,10 +61,38 @@ public class GameState {
 		return result;
 	}
 
+	/**
+	 * Returns the value to which the specified key is mapped in this game
+	 * state.
+	 * 
+	 * @param key
+	 *            a key in the game state
+	 * 
+	 * @return the value to which the key is mapped in this game state;
+	 *         <code>null</code> if the key is not mapped to any value in this
+	 *         game state.
+	 * 
+	 * @throws NullPointerException
+	 *             if the key is <code>null</code>.
+	 */
 	public Object get(String key) {
 		return state.get(key);
 	}
 
+	/**
+	 * Maps the specified <code>key</code> to the specified <code>value</code>
+	 * in this game state. Neither the key nor the value can be
+	 * <code>null</code>. The value can be retrieved by calling the
+	 * <code>get</code> method with a key that is equal to the original key.
+	 * 
+	 * @param key
+	 *            the game state key
+	 * @param value
+	 *            the value
+	 * 
+	 * @throws NullPointerException
+	 *             if the key or value is <code>null</code>
+	 */
 	public void put(String key, Object value) {
 		state.put(key, value);
 

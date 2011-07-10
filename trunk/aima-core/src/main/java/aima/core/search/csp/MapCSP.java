@@ -11,6 +11,7 @@ import java.util.List;
  * colors to each region so that no neighboring regions have the same color.
  * 
  * @author Ruediger Lunde
+ * @author Mike Stampone
  */
 public class MapCSP extends CSP {
 	public static final Variable NSW = new Variable("NSW");
@@ -24,6 +25,13 @@ public class MapCSP extends CSP {
 	public static final String GREEN = "GREEN";
 	public static final String BLUE = "BLUE";
 
+	/**
+	 * Returns the principle states and territories of Australia as a list of
+	 * variables.
+	 * 
+	 * @return the principle states and territories of Australia as a list of
+	 *         variables.
+	 */
 	private static List<Variable> collectVariables() {
 		List<Variable> variables = new ArrayList<Variable>();
 		variables.add(NSW);
@@ -36,6 +44,10 @@ public class MapCSP extends CSP {
 		return variables;
 	}
 
+	/**
+	 * Constructs a map CSP for the principal states and territories of
+	 * Australia, with the colors Red, Green, and Blue.
+	 */
 	public MapCSP() {
 		super(collectVariables());
 
