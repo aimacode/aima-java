@@ -53,15 +53,6 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		 */
 		void iterate(Map<RandomVariable, Object> possibleAssignment,
 				double probability);
-
-		/**
-		 * Can be called after iteration.
-		 * 
-		 * @return some value relevant to having iterated over all possible
-		 *         assignments, for e.g. the sum of possible assignments
-		 *         matching a particular criteria.
-		 */
-		Object getPostIterateValue();
 	}
 
 	public ProbabilityTable(Collection<RandomVariable> vars) {
@@ -98,7 +89,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			queryMRN = new MixedRadixNumber(0, radices);
 		}
 	}
-	
+
 	public int size() {
 		return values.length;
 	}
@@ -216,6 +207,18 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		return pointwiseProductPOS((ProbabilityTable) multiplier, prodVarOrder);
 	}
 
+	@Override
+	public void iterateOver(CategoricalDistribution.Iterator cdi) {
+		iterateOverTable(new CategoricalDistributionIteratorAdapter(cdi));
+	}
+
+	@Override
+	public void iterateOver(CategoricalDistribution.Iterator cdi,
+			AssignmentProposition... fixedValues) {
+		iterateOverTable(new CategoricalDistributionIteratorAdapter(cdi),
+				fixedValues);
+	}
+
 	// END-CategoricalDistribution
 	//
 
@@ -225,7 +228,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public Set<RandomVariable> getArgumentVariables() {
 		return randomVarInfo.keySet();
 	}
-	
+
 	@Override
 	public ProbabilityTable sumOut(RandomVariable... vars) {
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
@@ -252,10 +255,6 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					}
 					summedOut.getValues()[summedOut.getIndex(termValues)] += probability;
 				}
-
-				public Object getPostIterateValue() {
-					return null; // N/A
-				}
 			};
 			iterateOverTable(di);
 		}
@@ -272,6 +271,17 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public Factor pointwiseProductPOS(Factor multiplier,
 			RandomVariable... prodVarOrder) {
 		return pointwiseProductPOS((ProbabilityTable) multiplier, prodVarOrder);
+	}
+
+	@Override
+	public void iterateOver(Factor.Iterator fi) {
+		iterateOverTable(new FactorIteratorAdapter(fi));
+	}
+
+	@Override
+	public void iterateOver(Factor.Iterator fi,
+			AssignmentProposition... fixedValues) {
+		iterateOverTable(new FactorIteratorAdapter(fi), fixedValues);
 	}
 
 	// END-Factor
@@ -304,7 +314,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	 * This allows you to iterate over a subset of possible combinations.
 	 * 
 	 * @param pti
-	 *            the ProbabilityTble Iterator to iterate
+	 *            the ProbabilityTable Iterator to iterate
 	 * @param fixedValues
 	 *            Fixed values for a subset of the Random Variables comprising
 	 *            this Probability Table.
@@ -371,8 +381,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					"Divisor must be a subset of the dividend.");
 		}
 
-		final ProbabilityTable quotient = new ProbabilityTable(
-				randomVarInfo.keySet());
+		final ProbabilityTable quotient = new ProbabilityTable(randomVarInfo
+				.keySet());
 
 		if (1 == divisor.getValues().length) {
 			double d = divisor.getValues()[0];
@@ -427,10 +437,6 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					}
 				}
 
-				public Object getPostIterateValue() {
-					return null; // N/A
-				}
-
 				//
 				//
 				private void updateQuotient(double probability) {
@@ -453,16 +459,16 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public ProbabilityTable pointwiseProduct(final ProbabilityTable multiplier) {
 		Set<RandomVariable> prodVars = SetOps.union(randomVarInfo.keySet(),
 				multiplier.randomVarInfo.keySet());
-		return pointwiseProductPOS(multiplier,
-				prodVars.toArray(new RandomVariable[prodVars.size()]));
+		return pointwiseProductPOS(multiplier, prodVars
+				.toArray(new RandomVariable[prodVars.size()]));
 	}
 
 	public ProbabilityTable pointwiseProductPOS(
 			final ProbabilityTable multiplier, RandomVariable... prodVarOrder) {
 		final ProbabilityTable product = new ProbabilityTable(prodVarOrder);
 		if (!product.randomVarInfo.keySet().equals(
-				SetOps.union(randomVarInfo.keySet(),
-						multiplier.randomVarInfo.keySet()))) {
+				SetOps.union(randomVarInfo.keySet(), multiplier.randomVarInfo
+						.keySet()))) {
 			throw new IllegalArgumentException(
 					"Specified list deatailing order of mulitplier is inconsistent.");
 		}
@@ -490,10 +496,6 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 							* multiplier.getValues()[term2Idx];
 
 					idx++;
-				}
-
-				public Object getPostIterateValue() {
-					return null; // N/A
 				}
 
 				private int termIdx(Object[] termValues, ProbabilityTable d,
@@ -596,6 +598,33 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 		public int getRadixIdx() {
 			return radixIdx;
+		}
+	}
+
+	private class CategoricalDistributionIteratorAdapter implements Iterator {
+		private CategoricalDistribution.Iterator cdi = null;
+
+		public CategoricalDistributionIteratorAdapter(
+				CategoricalDistribution.Iterator cdi) {
+			this.cdi = cdi;
+		}
+
+		public void iterate(Map<RandomVariable, Object> possibleAssignment,
+				double probability) {
+			cdi.iterate(possibleAssignment, probability);
+		}
+	}
+
+	private class FactorIteratorAdapter implements Iterator {
+		private Factor.Iterator fi = null;
+
+		public FactorIteratorAdapter(Factor.Iterator fi) {
+			this.fi = fi;
+		}
+
+		public void iterate(Map<RandomVariable, Object> possibleAssignment,
+				double probability) {
+			fi.iterate(possibleAssignment, probability);
 		}
 	}
 }

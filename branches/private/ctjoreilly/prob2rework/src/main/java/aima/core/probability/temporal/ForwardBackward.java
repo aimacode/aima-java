@@ -117,7 +117,7 @@ public class ForwardBackward {
 	 */
 	public CategoricalDistribution forward(CategoricalDistribution f1_t,
 			List<AssignmentProposition> e_tp1) {
-		final ProbabilityTable s1 = new ProbabilityTable(f1_t.getFor());
+		final CategoricalDistribution s1 = new ProbabilityTable(f1_t.getFor());
 		// Set up required working variables
 		Proposition[] props = new Proposition[s1.getFor().size()];
 		int i = 0;
@@ -126,43 +126,45 @@ public class ForwardBackward {
 			i++;
 		}
 		final Proposition Xtp1 = ProbUtil.constructConjunction(props);
+		final AssignmentProposition[] xt = new AssignmentProposition[tToTm1StateVarMap
+				.size()];
+		final Map<RandomVariable, AssignmentProposition> xtVarAssignMap = new HashMap<RandomVariable, AssignmentProposition>();
+		i = 0;
+		for (RandomVariable rv : tToTm1StateVarMap.keySet()) {
+			xt[i] = new AssignmentProposition(tToTm1StateVarMap.get(rv),
+					"<Dummy Value>");
+			xtVarAssignMap.put(rv, xt[i]);
+			i++;
+		}
 
 		// Step 1: Calculate the 1 time step prediction
 		// &sum;<sub>x<sub>t</sub></sub>
-		ProbabilityTable.Iterator if1_t = new ProbabilityTable.Iterator() {
+		CategoricalDistribution.Iterator if1_t = new CategoricalDistribution.Iterator() {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				// <b>P</b>(X<sub>t+1</sub> | x<sub>t</sub>)*
 				// P(x<sub>t</sub> | e<sub>1:t</sub>)
-				AssignmentProposition[] xt = new AssignmentProposition[possibleWorld
-						.size()];
-				int i = 0;
-				for (RandomVariable rv : possibleWorld.keySet()) {
-					xt[i] = new AssignmentProposition(
-							tToTm1StateVarMap.get(rv), possibleWorld.get(rv));
-					i++;
+				for (Map.Entry<RandomVariable, Object> av : possibleWorld
+						.entrySet()) {
+					xtVarAssignMap.get(av.getKey()).setValue(av.getValue());
 				}
-				i = 0;
+				int i = 0;
 				for (double tp : transitionModel
 						.posteriorDistribution(Xtp1, xt).getValues()) {
 					s1.setValue(i, s1.getValues()[i] + (tp * probability));
 					i++;
 				}
 			}
-
-			public Object getPostIterateValue() {
-				return null; // N/A
-			}
 		};
-		((ProbabilityTable) f1_t).iterateOverTable(if1_t);
+		f1_t.iterateOver(if1_t);
 
 		// Step 2: multiply by the probability of the evidence
 		// and normalize
 		// <b>P</b>(e<sub>t+1</sub> | X<sub>t+1</sub>)
 		props = new Proposition[e_tp1.size()];
 		props = e_tp1.toArray(props);
-		CategoricalDistribution s2 = sensorModel.posteriorDistribution(
-				ProbUtil.constructConjunction(props), Xtp1);
+		CategoricalDistribution s2 = sensorModel.posteriorDistribution(ProbUtil
+				.constructConjunction(props), Xtp1);
 
 		return s2.multiplyBy(s1).normalize();
 	}
@@ -193,8 +195,8 @@ public class ForwardBackward {
 	// PRIVATE METHODS
 	//
 	private CategoricalDistribution initBackwardMessage() {
-		ProbabilityTable b = new ProbabilityTable(
-				transitionModel.getRepresentation());
+		ProbabilityTable b = new ProbabilityTable(transitionModel
+				.getRepresentation());
 
 		for (int i = 0; i < b.size(); i++) {
 			b.setValue(0, 1.0);

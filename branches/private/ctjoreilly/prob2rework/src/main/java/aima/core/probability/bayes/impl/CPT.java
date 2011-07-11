@@ -140,11 +140,6 @@ public class CPT implements ConditionalProbabilityTable {
 				cc.getValues()[idx] = probability;
 				idx++;
 			}
-
-			@Override
-			public Object getPostIterateValue() {
-				return null; // N/A
-			}
 		};
 		table.iterateOverTable(pti, parentValues);
 
@@ -174,10 +169,6 @@ public class CPT implements ConditionalProbabilityTable {
 					}
 					fof.getValues()[fof.getIndex(termValues)] += probability;
 				}
-			}
-
-			public Object getPostIterateValue() {
-				return null; // N/A
 			}
 		};
 		table.iterateOverTable(di, evidence);
@@ -209,10 +200,6 @@ public class CPT implements ConditionalProbabilityTable {
 					}
 					rowProb = 0;
 				}
-			}
-
-			public Object getPostIterateValue() {
-				return null; // N/A
 			}
 		};
 
