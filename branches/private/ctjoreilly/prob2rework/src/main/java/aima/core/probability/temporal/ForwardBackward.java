@@ -1,13 +1,18 @@
 package aima.core.probability.temporal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.FiniteProbabilityModel;
 import aima.core.probability.RandomVariable;
+import aima.core.probability.proposition.Proposition;
+import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.util.ProbUtil;
 import aima.core.probability.util.ProbabilityTable;
+import aima.core.probability.util.RandVar;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 576.<br>
@@ -41,11 +46,14 @@ import aima.core.probability.util.ProbabilityTable;
 public class ForwardBackward {
 
 	private FiniteProbabilityModel transitionModel = null;
+	private Map<RandomVariable, RandomVariable> tToTm1StateVarMap = new HashMap<RandomVariable, RandomVariable>();
 	private FiniteProbabilityModel sensorModel = null;
 
 	public ForwardBackward(FiniteProbabilityModel transitionModel,
+			Map<RandomVariable, RandomVariable> tToTm1StateVarMap,
 			FiniteProbabilityModel sensorModel) {
 		this.transitionModel = transitionModel;
+		this.tToTm1StateVarMap.putAll(tToTm1StateVarMap);
 		this.sensorModel = sensorModel;
 	}
 
@@ -63,7 +71,7 @@ public class ForwardBackward {
 	 * @return a vector of smoothed estimates for steps 1,...,t
 	 */
 	public List<CategoricalDistribution> forwardBackward(
-			List<Map<RandomVariable, Object>> ev, CategoricalDistribution prior) {
+			List<List<AssignmentProposition>> ev, CategoricalDistribution prior) {
 		// local variables: fv, a vector of forward messages for steps 0,...,t
 		List<CategoricalDistribution> fv = new ArrayList<CategoricalDistribution>(
 				ev.size() + 1);
@@ -102,14 +110,61 @@ public class ForwardBackward {
 	 * </pre>
 	 * 
 	 * @param f1_t
+	 *            f<sub>1:t</sub>
 	 * @param e_tp1
-	 * @return
+	 *            e<sub>t+1</sub>
+	 * @return f<sub>1:t+1</sub>
 	 */
 	public CategoricalDistribution forward(CategoricalDistribution f1_t,
-			Map<RandomVariable, Object> e_tp1) {
-		CategoricalDistribution f1_tp1 = null;
-		// TODO
-		return f1_tp1;
+			List<AssignmentProposition> e_tp1) {
+		final ProbabilityTable s1 = new ProbabilityTable(f1_t.getFor());
+		// Set up required working variables
+		Proposition[] props = new Proposition[s1.getFor().size()];
+		int i = 0;
+		for (RandomVariable rv : s1.getFor()) {
+			props[i] = new RandVar(rv.getName(), rv.getDomain());
+			i++;
+		}
+		final Proposition Xtp1 = ProbUtil.constructConjunction(props);
+
+		// Step 1: Calculate the 1 time step prediction
+		// &sum;<sub>x<sub>t</sub></sub>
+		ProbabilityTable.Iterator if1_t = new ProbabilityTable.Iterator() {
+			public void iterate(Map<RandomVariable, Object> possibleWorld,
+					double probability) {
+				// <b>P</b>(X<sub>t+1</sub> | x<sub>t</sub>)*
+				// P(x<sub>t</sub> | e<sub>1:t</sub>)
+				AssignmentProposition[] xt = new AssignmentProposition[possibleWorld
+						.size()];
+				int i = 0;
+				for (RandomVariable rv : possibleWorld.keySet()) {
+					xt[i] = new AssignmentProposition(
+							tToTm1StateVarMap.get(rv), possibleWorld.get(rv));
+					i++;
+				}
+				i = 0;
+				for (double tp : transitionModel
+						.posteriorDistribution(Xtp1, xt).getValues()) {
+					s1.setValue(i, s1.getValues()[i] + (tp * probability));
+					i++;
+				}
+			}
+
+			public Object getPostIterateValue() {
+				return null; // N/A
+			}
+		};
+		((ProbabilityTable) f1_t).iterateOverTable(if1_t);
+
+		// Step 2: multiply by the probability of the evidence
+		// and normalize
+		// <b>P</b>(e<sub>t+1</sub> | X<sub>t+1</sub>)
+		props = new Proposition[e_tp1.size()];
+		props = e_tp1.toArray(props);
+		CategoricalDistribution s2 = sensorModel.posteriorDistribution(
+				ProbUtil.constructConjunction(props), Xtp1);
+
+		return s2.multiplyBy(s1).normalize();
 	}
 
 	/**
@@ -128,7 +183,7 @@ public class ForwardBackward {
 	 * @return
 	 */
 	public CategoricalDistribution backward(CategoricalDistribution current,
-			Map<RandomVariable, Object> evidence) {
+			List<AssignmentProposition> evidence) {
 		CategoricalDistribution b = null;
 		// TODO
 		return b;
