@@ -161,10 +161,9 @@ public class ForwardBackward {
 		// Step 2: multiply by the probability of the evidence
 		// and normalize
 		// <b>P</b>(e<sub>t+1</sub> | X<sub>t+1</sub>)
-		props = new Proposition[e_tp1.size()];
-		props = e_tp1.toArray(props);
 		CategoricalDistribution s2 = sensorModel.posteriorDistribution(ProbUtil
-				.constructConjunction(props), Xtp1);
+				.constructConjunction(e_tp1.toArray(new Proposition[e_tp1
+						.size()])), Xtp1);
 
 		return s2.multiplyBy(s1).normalize();
 	}
@@ -175,31 +174,78 @@ public class ForwardBackward {
 	 * <pre>
 	 * <b>P</b>(e<sub>k+1:t</sub> | X<sub>k</sub>) 
 	 * = &sum;<sub>x<sub>k+1</sub></sub><b>P</b>(e<sub>k+1:t</sub> | X<sub>k</sub>, x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>) (conditioning on X<sub>k+1</sub>)
-	 * = &sum;<sub>x<sub>k+1</sub></sub><b>P</b>(e<sub>k+1:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>) (by conditional independence)
-	 * = &sum;<sub>x<sub>k+1</sub></sub><b>P</b>(e<sub>k+1</sub>, e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
-	 * = &sum;<sub>x<sub>k+1</sub></sub><b>P</b>(e<sub>k+1</sub> | x<sub>k+1</sub>)<b>P</b>(e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
+	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>) (by conditional independence)
+	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1</sub>, e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
+	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1</sub> | x<sub>k+1</sub>)P(e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
 	 * </pre>
 	 * 
-	 * @param current
-	 * @param evidence
-	 * @return
+	 * @param b_kp2t
+	 * @param e_kp1
+	 * @return b<sub>k+1:t</sub>
 	 */
-	public CategoricalDistribution backward(CategoricalDistribution current,
-			List<AssignmentProposition> evidence) {
-		CategoricalDistribution b = null;
-		// TODO
-		return b;
+	public CategoricalDistribution backward(CategoricalDistribution b_kp2t,
+			List<AssignmentProposition> e_kp1) {
+		final CategoricalDistribution b_kp1t = new ProbabilityTable(b_kp2t
+				.getFor());
+		// Set up required working variables
+		Proposition[] props = new Proposition[b_kp1t.getFor().size()];
+		int i = 0;
+		for (RandomVariable rv : b_kp1t.getFor()) {
+			RandomVariable prv = tToTm1StateVarMap.get(rv);
+			props[i] = new RandVar(prv.getName(), prv.getDomain());
+			i++;
+		}
+		final Proposition Xk = ProbUtil.constructConjunction(props);
+		final AssignmentProposition[] ax_kp1 = new AssignmentProposition[tToTm1StateVarMap
+				.size()];
+		final Map<RandomVariable, AssignmentProposition> x_kp1VarAssignMap = new HashMap<RandomVariable, AssignmentProposition>();
+		i = 0;
+		for (RandomVariable rv : b_kp1t.getFor()) {
+			ax_kp1[i] = new AssignmentProposition(rv, "<Dummy Value>");
+			x_kp1VarAssignMap.put(rv, ax_kp1[i]);
+			i++;
+		}
+		final Proposition x_kp1 = ProbUtil.constructConjunction(ax_kp1);
+		props = new Proposition[e_kp1.size()];
+		final Proposition pe_kp1 = ProbUtil.constructConjunction(e_kp1
+				.toArray(props));
+
+		// &sum;<sub>x<sub>k+1</sub></sub>
+		CategoricalDistribution.Iterator ib_kp2t = new CategoricalDistribution.Iterator() {
+			public void iterate(Map<RandomVariable, Object> possibleWorld,
+					double probability) {
+				// Assign current values for x<sub>k+1</sub>
+				for (Map.Entry<RandomVariable, Object> av : possibleWorld
+						.entrySet()) {
+					x_kp1VarAssignMap.get(av.getKey()).setValue(av.getValue());
+				}
+
+				// P(e<sub>k+1</sub> | x<sub>k+1</sub>)
+				// P(e<sub>k+2:t</sub> | x<sub>k+1</sub>)
+				double p = sensorModel.posterior(pe_kp1, x_kp1) * probability;
+
+				// <b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
+				int i = 0;
+				for (double tp : transitionModel.posteriorDistribution(x_kp1,
+						Xk).getValues()) {
+					b_kp1t.setValue(i, b_kp1t.getValues()[i] + (tp * p));
+					i++;
+				}
+			}
+		};
+		b_kp2t.iterateOver(ib_kp2t);
+
+		return b_kp1t;
 	}
 
 	//
 	// PRIVATE METHODS
 	//
 	private CategoricalDistribution initBackwardMessage() {
-		ProbabilityTable b = new ProbabilityTable(transitionModel
-				.getRepresentation());
+		ProbabilityTable b = new ProbabilityTable(tToTm1StateVarMap.keySet());
 
 		for (int i = 0; i < b.size(); i++) {
-			b.setValue(0, 1.0);
+			b.setValue(i, 1.0);
 		}
 
 		return b;
