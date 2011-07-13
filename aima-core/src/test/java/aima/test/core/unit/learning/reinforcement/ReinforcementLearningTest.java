@@ -130,9 +130,10 @@ public class ReinforcementLearningTest {
 				0.001);
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testQLearningAgent() {
-		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent(
+		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent<CellWorldPosition, String>(
 				fourByThree);
 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.9, 0.2, 0.8,
 				0.3, 0.7, 0.4, 0.6, 0.5 });
@@ -170,7 +171,7 @@ public class ReinforcementLearningTest {
 		Assert.assertEquals(-0.04, qla.getCurrentReward(), 0.001);
 		Assert.assertEquals(0.0,
 				qla.getQTable().getQValue(startingPosition, action), 0.001);
-		String action2 = qla.decideAction(new MDPPerception<CellWorldPosition>(
+		qla.decideAction(new MDPPerception<CellWorldPosition>(
 				new CellWorldPosition(1, 3), -0.04));
 
 		Assert.assertEquals(-0.04,
