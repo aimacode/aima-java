@@ -38,6 +38,7 @@ import aima.core.logic.fol.kb.FOLKnowledgeBase;
  * 
  */
 public class CurrentBestLearning {
+	@SuppressWarnings("unused")
 	private FOLDataSetDomain folDSDomain = null;
 	private FOLKnowledgeBase kbForLearning = null;
 

@@ -17,7 +17,7 @@ import aima.core.search.framework.PathCostFunction;
  * </pre>
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class AStarEvaluationFunction implements EvaluationFunction {
 
@@ -28,6 +28,14 @@ public class AStarEvaluationFunction implements EvaluationFunction {
 		this.hf = hf;
 	}
 
+	/**
+	 * Returns <em>g(n)</em> the cost to reach the node, plus <em>h(n)</em>
+	 * the heuristic cost to get from the specified node to the goal.
+	 * 
+	 * @param n
+	 *            a node
+	 * @return g(n) + h(n)
+	 */
 	public double f(Node n) {
 		// f(n) = g(n) + h(n)
 		return gf.g(n) + hf.h(n.getState());

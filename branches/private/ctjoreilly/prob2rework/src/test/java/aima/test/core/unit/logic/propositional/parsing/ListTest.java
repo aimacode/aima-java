@@ -20,7 +20,7 @@ public class ListTest {
 		l.add(new Symbol("A"));
 		l.add(new Symbol("B"));
 		l.add(new Symbol("C"));
-		List<Symbol> l2 = (List<Symbol>) l.clone();
+		List<Symbol> l2 = new ArrayList<Symbol>(l);
 		l2.remove(new Symbol("B"));
 		Assert.assertEquals(3, l.size());
 		Assert.assertEquals(2, l2.size());

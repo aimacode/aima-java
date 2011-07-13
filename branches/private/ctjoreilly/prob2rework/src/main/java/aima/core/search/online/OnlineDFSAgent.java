@@ -27,15 +27,15 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *               s, a, the previous state and action, initially null
  *    
  *   if GOAL-TEST(s') then return stop
- *   if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
+ *   if s' is a new state (not in untried) then untried[s'] &lt;- ACTIONS(s')
  *   if s is not null then
- *       result[s, a] <- s'
+ *       result[s, a] &lt;- s'
  *       add s to the front of the unbacktracked[s']
  *   if untried[s'] is empty then
  *       if unbacktracked[s'] is empty then return stop
- *       else a <- an action b such that result[s', b] = POP(unbacktracked[s'])
- *   else a <- POP(untried[s'])
- *   s <- s'
+ *       else a &lt;- an action b such that result[s', b] = POP(unbacktracked[s'])
+ *   else a &lt;- POP(untried[s'])
+ *   s &lt;- s'
  *   return a
  * </pre>
  * 
@@ -61,25 +61,58 @@ public class OnlineDFSAgent extends AbstractAgent {
 	private Object s = null;
 	private Action a = null;
 
+	/**
+	 * Constructs an online DFS agent with the specified search problem and
+	 * percept to state function.
+	 * 
+	 * @param problem
+	 *            an online search problem for this agent to solve
+	 * @param ptsFunction
+	 *            a function which returns the problem state associated with a
+	 *            given Percept.
+	 */
 	public OnlineDFSAgent(OnlineSearchProblem problem,
 			PerceptToStateFunction ptsFunction) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 	}
 
+	/**
+	 * Returns the search problem for this agent.
+	 * 
+	 * @return the search problem for this agent.
+	 */
 	public OnlineSearchProblem getProblem() {
 		return problem;
 	}
 
+	/**
+	 * Sets the search problem for this agent to solve.
+	 * 
+	 * @param problem
+	 *            the search problem for this agent to solve.
+	 */
 	public void setProblem(OnlineSearchProblem problem) {
 		this.problem = problem;
 		init();
 	}
 
+	/**
+	 * Returns the percept to state function of this agent.
+	 * 
+	 * @return the percept to state function of this agent.
+	 */
 	public PerceptToStateFunction getPerceptToStateFunction() {
 		return ptsFunction;
 	}
 
+	/**
+	 * Sets the percept to state functino of this agent.
+	 * 
+	 * @param ptsFunction
+	 *            a function which returns the problem state associated with a
+	 *            given Percept.
+	 */
 	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
 		this.ptsFunction = ptsFunction;
 	}

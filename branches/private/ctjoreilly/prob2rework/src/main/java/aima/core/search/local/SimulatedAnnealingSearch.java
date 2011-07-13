@@ -22,14 +22,14 @@ import aima.core.util.Util;
  * <pre>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
  *                    
- *   current <- MAKE-NODE(problem.INITIAL-STATE)
+ *   current &lt;- MAKE-NODE(problem.INITIAL-STATE)
  *   for t = 1 to INFINITY do
- *     T <- schedule(t)
+ *     T &lt;- schedule(t)
  *     if T = 0 then return current
- *     next <- a randomly selected successor of current
- *     /\E <- next.VALUE - current.value
- *     if /\E > 0 then current <- next
- *     else current <- next only with probability e^(/\E/T)
+ *     next &lt;- a randomly selected successor of current
+ *     /\E &lt;- next.VALUE - current.value
+ *     if /\E &gt; 0 then current &lt;- next
+ *     else current &lt;- next only with probability e&circ;(/\E/T)
  * </pre>
  * 
  * Figure 4.5 The simulated annealing search algorithm, a version of stochastic
@@ -39,7 +39,7 @@ import aima.core.util.Util;
  * function of time.
  * 
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
@@ -54,11 +54,27 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 
 	private Object lastState = null;
 
+	/**
+	 * Constructs a simulated annealing search from the specified heuristic
+	 * function and a default scheduler.
+	 * 
+	 * @param hf
+	 *            a heuristic function
+	 */
 	public SimulatedAnnealingSearch(HeuristicFunction hf) {
 		this.hf = hf;
 		this.scheduler = new Scheduler();
 	}
 
+	/**
+	 * Constructs a simulated annealing search from the specified heuristic
+	 * function and scheduler.
+	 * 
+	 * @param hf
+	 *            a heuristic function
+	 * @param scheduler
+	 *            a mapping from time to "temperature"
+	 */
 	public SimulatedAnnealingSearch(HeuristicFunction hf, Scheduler scheduler) {
 		this.hf = hf;
 		this.scheduler = scheduler;
@@ -105,6 +121,16 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return ret;
 	}
 
+	/**
+	 * Returns <em>e</em><sup>&delta<em>E / T</em></sup>
+	 * 
+	 * @param temperature
+	 *            <em>T</em>, a "temperature" controlling the probability of
+	 *            downward steps
+	 * @param deltaE
+	 *            VALUE[<em>next</em>] - VALUE[<em>current</em>]
+	 * @return <em>e</em><sup>&delta<em>E / T</em></sup>
+	 */
 	public double probabilityOfAcceptance(double temperature, double deltaE) {
 		return Math.exp(deltaE / temperature);
 	}
@@ -113,6 +139,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return outcome;
 	}
 
+	/**
+	 * Returns the last state from which the simulated annealing search found a
+	 * solution state.
+	 * 
+	 * @return the last state from which the simulated annealing search found a
+	 *         solution state.
+	 */
 	public Object getLastSearchState() {
 		return lastState;
 	}

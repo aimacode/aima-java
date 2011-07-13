@@ -1,21 +1,24 @@
 package aima.core.search.adversarial;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import aima.core.util.Util;
 
 /**
- * @author Ravi Mohan
+ * @param <MOVE>
+ *            the type of moves that can be made within the game.
  * 
+ * @author Ravi Mohan
+ * @author Mike Stampone
  */
-public abstract class Game {
+public abstract class Game<MOVE> {
 	protected GameState initialState = new GameState();
 
 	protected GameState presentState = new GameState();
 
 	protected int level;
 
-	public abstract ArrayList<GameState> getSuccessorStates(GameState state);
+	public abstract List<GameState> getSuccessorStates(GameState state);
 
 	public abstract GameState makeMove(GameState state, Object o);
 
@@ -31,18 +34,43 @@ public abstract class Game {
 		return (((Integer) g.get("level")).intValue());
 	}
 
-	public ArrayList getMoves(GameState state) {
-		return (ArrayList) state.get("moves");
+	@SuppressWarnings("unchecked")
+	public List<MOVE> getMoves(GameState state) {
+		return (List<MOVE>) state.get("moves");
 	}
 
+	/**
+	 * Returns the player to move at the specified game state.
+	 * 
+	 * @param state
+	 *            a game state
+	 * 
+	 * @return the player to move at the specified game state.
+	 */
 	public String getPlayerToMove(GameState state) {
 		return (String) state.get("player");
 	}
 
+	/**
+	 * Returns a numeric value for the outcome of the game. In chess, the
+	 * outcome is a win, loss, or draw, which we can represent by the value +1,
+	 * -1, or 0. Some games have a wider variety of possible outcomes; for
+	 * example, the payoffs in backgammon range from + 192 to -192.
+	 * 
+	 * @param h
+	 *            a game state to evaluate.
+	 * 
+	 * @return a numeric value for the outcome of the game.
+	 */
 	public int getUtility(GameState h) {
 		return ((Integer) h.get("utility")).intValue();
 	}
 
+	/**
+	 * Returns the present state of the game.
+	 * 
+	 * @return the present state of the game.
+	 */
 	public GameState getState() {
 		return presentState;
 	}
@@ -52,7 +80,7 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor);
@@ -74,7 +102,7 @@ public abstract class Game {
 			return computeUtility(state);
 
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessors = maxValue(successor);
@@ -95,7 +123,7 @@ public abstract class Game {
 			return (computeUtility(state));
 
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessor = maxValue(successor, ab.copy());
@@ -149,7 +177,7 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = (GameState) successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor, ab.copy());

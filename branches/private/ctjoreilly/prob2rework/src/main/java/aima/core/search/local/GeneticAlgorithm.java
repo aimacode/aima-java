@@ -19,21 +19,21 @@ import aima.core.util.Util;
  *           FITNESS-FN, a function that measures the fitness of an individual
  *           
  *   repeat
- *     new_population <- empty set
+ *     new_population &lt;- empty set
  *     for i = 1 to SIZE(population) do
- *       x <- RANDOM-SELECTION(population, FITNESS-FN)
- *       y <- RANDOM-SELECTION(population, FITNESS-FN)
- *       child <- REPRODUCE(x, y)
- *       if (small random probability) then child <- MUTATE(child)
+ *       x &lt;- RANDOM-SELECTION(population, FITNESS-FN)
+ *       y &lt;- RANDOM-SELECTION(population, FITNESS-FN)
+ *       child &lt;- REPRODUCE(x, y)
+ *       if (small random probability) then child &lt;- MUTATE(child)
  *       add child to new_population
- *     population <- new_population
+ *     population &lt;- new_population
  *   until some individual is fit enough, or enough time has elapsed
  *   return the best individual in population, according to FITNESS-FN
  * --------------------------------------------------------------------------------
  * function REPRODUCE(x, y) returns an individual
  *   inputs: x, y, parent individuals
  *   
- *   n <- LENGTH(x); c <- random number from 1 to n
+ *   n &lt;- LENGTH(x); c &lt;- random number from 1 to n
  *   return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
  * </pre>
  * 
@@ -42,7 +42,7 @@ import aima.core.util.Util;
  * each mating of two parents produces only one offspring, not two.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class GeneticAlgorithm {
 	//
@@ -65,6 +65,21 @@ public class GeneticAlgorithm {
 		assert (this.mutationProbability >= 0.0 && this.mutationProbability <= 1.0);
 	}
 
+	/**
+	 * Returns the best individual in the specified population, according to the
+	 * specified FITNESS-FN and goal test.
+	 * 
+	 * @param population
+	 *            a set of individuals
+	 * @param fitnessFn
+	 *            a function that measures the fitness of an individual
+	 * @param goalTest
+	 *            test determines whether a given individual is fit enough to
+	 *            return.
+	 * 
+	 * @return the best individual in the specified population, according to the
+	 *         specified FITNESS-FN and goal test.
+	 */
 	// function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
 	// inputs: population, a set of individuals
 	// FITNESS-FN, a function that measures the fitness of an individual
@@ -89,6 +104,20 @@ public class GeneticAlgorithm {
 		return bestIndividual;
 	}
 
+	/**
+	 * Returns the best individual in the specified population, according to the
+	 * specified FITNESS-FN and number of iterations.
+	 * 
+	 * @param population
+	 *            a set of individuals
+	 * @param fitnessFn
+	 *            a function that measures the fitness of an individual
+	 * @param iterations
+	 *            the number of iterations of the genetic algorithm
+	 * 
+	 * @return the best individual in the specified population, according to the
+	 *         specified FITNESS-FN and number of iterations.
+	 */
 	// function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
 	// inputs: population, a set of individuals
 	// FITNESS-FN, a function that measures the fitness of an individual
@@ -111,27 +140,57 @@ public class GeneticAlgorithm {
 		return bestIndividual;
 	}
 
+	/**
+	 * Sets the population size and number of iterations to zero.
+	 */
 	public void clearInstrumentation() {
 		setPopulationSize(0);
 		setIterations(0);
 	}
 
+	/**
+	 * Returns all the metrics of the genetic algorithm.
+	 * 
+	 * @return all the metrics of the genetic algorithm.
+	 */
 	public Metrics getMetrics() {
 		return metrics;
 	}
 
+	/**
+	 * Returns the population size.
+	 * 
+	 * @return the population size.
+	 */
 	public int getPopulationSize() {
 		return metrics.getInt(POPULATION_SIZE);
 	}
 
+	/**
+	 * Sets the population size.
+	 * 
+	 * @param size
+	 *            the population size.
+	 */
 	public void setPopulationSize(int size) {
 		metrics.set(POPULATION_SIZE, size);
 	}
 
+	/**
+	 * Returns the number of iterations of the genetic algorithm.
+	 * 
+	 * @return the number of iterations of the genetic algorithm.
+	 */
 	public int getIterations() {
 		return metrics.getInt(ITERATIONS);
 	}
 
+	/**
+	 * Sets the number of iterations of the genetic algorithm.
+	 * 
+	 * @param cnt
+	 *            the number of iterations.
+	 */
 	public void setIterations(int cnt) {
 		metrics.set(ITERATIONS, cnt);
 	}

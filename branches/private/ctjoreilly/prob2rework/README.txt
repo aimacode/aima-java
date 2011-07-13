@@ -20,6 +20,9 @@
   * Moved TwoKeyHashMashMap to sub-package datastructure.
   * Fix for Issue 66
   * Documentation clean up.
+  
+== Future Release Notes ==
+  * Fixed Issue 63 - all compilation warnings have been resolved or suppressed where appropriate for now.
  
 = Details =
 

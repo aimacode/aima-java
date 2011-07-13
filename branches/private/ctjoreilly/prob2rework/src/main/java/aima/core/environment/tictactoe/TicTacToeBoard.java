@@ -107,7 +107,7 @@ public class TicTacToeBoard {
 		return retVal;
 	}
 
-	public List getUnMarkedPositions() {
+	public List<XYLocation> getUnMarkedPositions() {
 		List<XYLocation> retVal = new ArrayList<XYLocation>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {

@@ -19,12 +19,23 @@ import aima.core.search.framework.QueueSearch;
  * 3.14), except for the use of f instead of g to order the priority queue.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class BestFirstSearch extends PrioritySearch {
 
 	private final EvaluationFunction evaluationFunction;
 
+	/**
+	 * Constructs a best first search from a specified search problem and
+	 * evaluation function.
+	 * 
+	 * @param search
+	 *            a search problem
+	 * @param ef
+	 *            an evaluation function, which returns a number purporting to
+	 *            describe the desirability (or lack thereof) of expanding a
+	 *            node
+	 */
 	public BestFirstSearch(QueueSearch search, EvaluationFunction ef) {
 		this.search = search;
 		evaluationFunction = ef;

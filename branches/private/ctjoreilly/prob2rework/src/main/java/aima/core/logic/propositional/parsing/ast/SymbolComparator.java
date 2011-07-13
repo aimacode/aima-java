@@ -6,11 +6,9 @@ import java.util.Comparator;
  * @author Ravi Mohan
  * 
  */
-public class SymbolComparator implements Comparator {
+public class SymbolComparator implements Comparator<Symbol> {
 
-	public int compare(Object symbol1, Object symbol2) {
-		Symbol one = (Symbol) symbol1;
-		Symbol two = (Symbol) symbol2;
+	public int compare(Symbol one, Symbol two) {
 		return one.getValue().compareTo(two.getValue());
 	}
 }

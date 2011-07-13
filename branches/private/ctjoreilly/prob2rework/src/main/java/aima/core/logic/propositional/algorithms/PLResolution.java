@@ -20,15 +20,60 @@ import aima.core.util.Converter;
 import aima.core.util.SetOps;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 255.<br>
+ * <br>
  * 
+ * <pre>
+ * <code>
+ * function PL-RESOLUTION(KB, &alpha;) returns true or false
+ *    inputs: KB, the knowledge base, a sentence in propositional logic
+ *            &alpha;, the query, a sentence in propositional logic
+ *            
+ *    clauses &larr; the set of clauses in the CNF representation of KB &and; &not;&alpha;
+ *    new &larr; {}
+ *    loop do
+ *       for each pair of clauses C<sub>i</sub>, C<sub>j</sub> in clauses do
+ *          resolvents &larr; PL-RESOLVE(C<sub>i</sub>, C<sub>j</sub>)
+ *          if resolvents contains the empty clause then return true
+ *          new &larr; new &cup; resolvents
+ *       if new &sube; clauses then return false
+ *       clauses &larr; clauses &cup; new
+ * </code>
+ * </pre>
+ * 
+ * Figure 7.12 A simple resolution algorithm for propositional logic. The
+ * function PL-RESOLVE returns the set of all possible clauses obtained by
+ * resolving its two inputs.
+ * 
+ * @author Ravi Mohan
+ * @author Mike Stampone
  */
 public class PLResolution {
 
+	/**
+	 * Returns the answer to the specified question using PL-Resolution.
+	 * 
+	 * @param kb
+	 *            the knowledge base, a sentence in propositional logic
+	 * @param alpha
+	 *            the query, a sentence in propositional logic
+	 * 
+	 * @return the answer to the specified question using PL-Resolution.
+	 */
 	public boolean plResolution(KnowledgeBase kb, String alpha) {
 		return plResolution(kb, (Sentence) new PEParser().parse(alpha));
 	}
 
+	/**
+	 * Returns the answer to the specified question using PL-Resolution.
+	 * 
+	 * @param kb
+	 *            the knowledge base, a sentence in propositional logic
+	 * @param alpha
+	 *            the query, a sentence in propositional logic
+	 * 
+	 * @return the answer to the specified question using PL-Resolution.
+	 */
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
 		Sentence kBAndNotAlpha = new BinarySentence("AND", kb.asSentence(),
 				new UnarySentence(alpha));
@@ -66,9 +111,9 @@ public class PLResolution {
 	public Set<Sentence> plResolve(Sentence clause1, Sentence clause2) {
 		Set<Sentence> resolvents = new HashSet<Sentence>();
 		ClauseSymbols cs = new ClauseSymbols(clause1, clause2);
-		Iterator iter = cs.getComplementedSymbols().iterator();
+		Iterator<Symbol> iter = cs.getComplementedSymbols().iterator();
 		while (iter.hasNext()) {
-			Symbol symbol = (Symbol) iter.next();
+			Symbol symbol = iter.next();
 			resolvents.add(createResolventClause(cs, symbol));
 		}
 
@@ -90,9 +135,9 @@ public class PLResolution {
 			Set<Sentence> clauses) {
 		Set<Sentence> filtered = new HashSet<Sentence>();
 		SymbolClassifier classifier = new SymbolClassifier();
-		Iterator iter = clauses.iterator();
+		Iterator<Sentence> iter = clauses.iterator();
 		while (iter.hasNext()) {
-			Sentence clause = (Sentence) iter.next();
+			Sentence clause = iter.next();
 			Set<Symbol> positiveSymbols = classifier
 					.getPositiveSymbolsIn(clause);
 			Set<Symbol> negativeSymbols = classifier
@@ -135,13 +180,13 @@ public class PLResolution {
 	}
 
 	private List<List<Sentence>> getCombinationPairs(List<Sentence> clausesList) {
-		int odd = clausesList.size() % 2;
-		int midpoint = 0;
-		if (odd == 1) {
-			midpoint = (clausesList.size() / 2) + 1;
-		} else {
-			midpoint = (clausesList.size() / 2);
-		}
+		//int odd = clausesList.size() % 2;
+		//int midpoint = 0;
+		//if (odd == 1) {
+		//	midpoint = (clausesList.size() / 2) + 1;
+		//} else {
+		//	midpoint = (clausesList.size() / 2);
+		//}
 
 		List<List<Sentence>> pairs = new ArrayList<List<Sentence>>();
 		for (int i = 0; i < clausesList.size(); i++) {

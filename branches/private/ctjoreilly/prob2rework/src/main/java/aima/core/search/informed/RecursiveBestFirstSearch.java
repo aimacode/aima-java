@@ -22,24 +22,24 @@ import aima.core.search.framework.SearchUtils;
  *   
  * function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   successors <- []
+ *   successors &lt;- []
  *   for each action in problem.ACTION(node.STATE) do
  *       add CHILD-NODE(problem, node, action) into successors
  *   if successors is empty then return failure, infinity
  *   for each s in successors do // update f with value from previous search, if any
- *     s.f <- max(s.g + s.h, node.f)
+ *     s.f &lt;- max(s.g + s.h, node.f)
  *   repeat
- *     best <- the lowest f-value node in successors
- *     if best.f > f_limit then return failure, best.f
- *     alternative <- the second-lowest f-value among successors
- *     result, best.f <- RBFS(problem, best, min(f_limit, alternative))
+ *     best &lt;- the lowest f-value node in successors
+ *     if best.f &gt; f_limit then return failure, best.f
+ *     alternative &lt;- the second-lowest f-value among successors
+ *     result, best.f &lt;- RBFS(problem, best, min(f_limit, alternative))
  *     if result != failure then return result
  * </pre>
  * 
  * Figure 3.26 The algorithm for recursive best-first search.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 
@@ -76,6 +76,9 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		return actions;
 	}
 
+	/**
+	 * Sets all metrics to zero.
+	 */
 	@Override
 	public void clearInstrumentation() {
 		super.clearInstrumentation();
@@ -83,6 +86,13 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		metrics.set(PATH_COST, 0.0);
 	}
 
+	/**
+	 * Increases the maximum recursive depth if the specified depth is greater
+	 * than the current maximum.
+	 * 
+	 * @param recursiveDepth
+	 *            the depth of the current path
+	 */
 	public void setMaxRecursiveDepth(int recursiveDepth) {
 		int maxRdepth = metrics.getInt(MAX_RECURSIVE_DEPTH);
 		if (recursiveDepth > maxRdepth) {
@@ -90,14 +100,30 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		}
 	}
 
+	/**
+	 * Returns the maximum recursive depth.
+	 * 
+	 * @return the maximum recursive depth.
+	 */
 	public int getMaxRecursiveDepth() {
 		return metrics.getInt(MAX_RECURSIVE_DEPTH);
 	}
 
+	/**
+	 * Returns the path cost.
+	 * 
+	 * @return the path cost
+	 */
 	public double getPathCost() {
 		return metrics.getDouble(PATH_COST);
 	}
 
+	/**
+	 * Sets the path cost.
+	 * 
+	 * @param pathCost
+	 *            the cost of the path
+	 */
 	public void setPathCost(Double pathCost) {
 		metrics.set(PATH_COST, pathCost);
 	}
