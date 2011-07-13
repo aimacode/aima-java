@@ -31,8 +31,7 @@ public class WalkSAT {
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
 		SymbolCollector sc = new SymbolCollector();
 
-		List symbols = new Converter<Symbol>().setToList(sc.getSymbolsIn(s));
-		Random r = new Random();
+		List<Symbol> symbols = new Converter<Symbol>().setToList(sc.getSymbolsIn(s));
 		for (int i = 0; i < symbols.size(); i++) {
 			Symbol sym = (Symbol) symbols.get(i);
 			myModel = myModel.extend(sym, Util.randomBoolean());
@@ -86,11 +85,11 @@ public class WalkSAT {
 
 	}
 
-	private int getNumberOfClausesSatisfiedIn(Set clauses, Model model) {
+	private int getNumberOfClausesSatisfiedIn(Set<Sentence> clauses, Model model) {
 		int retVal = 0;
-		Iterator i = clauses.iterator();
+		Iterator<Sentence> i = clauses.iterator();
 		while (i.hasNext()) {
-			Sentence s = (Sentence) i.next();
+			Sentence s = i.next();
 			if (model.isTrue(s)) {
 				retVal += 1;
 			}
