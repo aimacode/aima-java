@@ -27,6 +27,7 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 		return triplet.getThird();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
@@ -35,7 +36,7 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 		if (!(o instanceof MDPTransition)) {
 			return false;
 		}
-		@SuppressWarnings("unchecked")
+		
 		MDPTransition<STATE_TYPE, ACTION_TYPE> other = (MDPTransition<STATE_TYPE, ACTION_TYPE>) (o);// weird
 		// typing
 		// issue

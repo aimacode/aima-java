@@ -26,11 +26,11 @@ public class GameState {
 			return false;
 		}
 		GameState another = (GameState) anotherState;
-		Set keySet1 = state.keySet();
-		Iterator i = keySet1.iterator();
-		Iterator j = another.state.keySet().iterator();
+		Set<String> keySet1 = state.keySet();
+		Iterator<String> i = keySet1.iterator();
+		Iterator<String> j = another.state.keySet().iterator();
 		while (i.hasNext()) {
-			String key = (String) i.next();
+			String key = i.next();
 			boolean keymatched = false;
 			boolean valueMatched = false;
 			while (j.hasNext()) {

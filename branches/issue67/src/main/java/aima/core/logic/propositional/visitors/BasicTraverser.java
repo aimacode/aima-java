@@ -32,11 +32,13 @@ public class BasicTraverser implements PLVisitor {
 		return arg;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set s = (Set) arg;
 		return SetOps.union(s, (Set) ns.getNegated().accept(this, arg));
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object visitBinarySentence(BinarySentence bs, Object arg) {
 		Set s = (Set) arg;
 		Set termunion = SetOps.union((Set) bs.getFirst().accept(this, arg),

@@ -41,7 +41,7 @@ public class TTEntails {
 	}
 
 	public boolean ttCheckAll(Sentence kbSentence, Sentence querySentence,
-			List symbols, Model model) {
+			List<Symbol> symbols, Model model) {
 		if (symbols.isEmpty()) {
 			if (model.isTrue(kbSentence)) {
 				// System.out.println("#");
@@ -51,8 +51,8 @@ public class TTEntails {
 				return true;
 			}
 		} else {
-			Symbol symbol = (Symbol) Util.first(symbols);
-			List rest = Util.rest(symbols);
+			Symbol symbol = Util.first(symbols);
+			List<Symbol> rest = Util.rest(symbols);
 
 			Model trueModel = model.extend(new Symbol(symbol.getValue()), true);
 			Model falseModel = model.extend(new Symbol(symbol.getValue()),

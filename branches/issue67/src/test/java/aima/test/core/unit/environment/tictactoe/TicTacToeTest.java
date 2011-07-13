@@ -1,6 +1,6 @@
 package aima.test.core.unit.environment.tictactoe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -145,13 +145,13 @@ public class TicTacToeTest {
 	@Test
 	public void testGenerateSuccessors() {
 		TicTacToe t3 = new TicTacToe();
-		ArrayList successors = t3.getSuccessorStates(t3.getState());
+		List<GameState> successors = t3.getSuccessorStates(t3.getState());
 		Assert.assertEquals(9, successors.size());
 		checkSuccessorList(successors, "O", 8);
-		ArrayList successors2 = t3.getSuccessorStates((GameState) successors
+		List<GameState> successors2 = t3.getSuccessorStates((GameState) successors
 				.get(0));
 		checkSuccessorList(successors2, "X", 7);
-		ArrayList successors3 = t3.getSuccessorStates((GameState) successors2
+		List<GameState> successors3 = t3.getSuccessorStates((GameState) successors2
 				.get(0));
 		checkSuccessorList(successors3, "O", 6);
 	}
@@ -239,9 +239,9 @@ public class TicTacToeTest {
 		int minimax2 = t2.getMiniMaxValue(t2.getState());
 		TicTacToe t3 = new TicTacToe();
 		t3.makeMove(2, 0);
-		int minimax3 = t3.getMiniMaxValue(t3.getState());
+		t3.getMiniMaxValue(t3.getState());
 		TicTacToe t4 = new TicTacToe();
-		int minimax4 = t4.getMiniMaxValue(t4.getState());
+		t4.getMiniMaxValue(t4.getState());
 		t4.makeMove(2, 2);
 
 		Assert.assertEquals(minimax1, minimax2);
@@ -311,12 +311,12 @@ public class TicTacToeTest {
 	//
 	// PRIVATE METHODS
 	//
-	private void checkSuccessorList(ArrayList successorList,
+	private void checkSuccessorList(List<GameState> successorList,
 			String playerToMove, int sizeOfSuccessors) {
 		for (int i = 0; i < successorList.size(); i++) {
-			GameState h = (GameState) successorList.get(i);
+			GameState h = successorList.get(i);
 
-			ArrayList successors2 = new TicTacToe().getSuccessorStates(h);
+			List<GameState> successors2 = new TicTacToe().getSuccessorStates(h);
 			Assert.assertEquals(sizeOfSuccessors, successors2.size());
 			Assert.assertEquals(playerToMove,
 					new TicTacToe().getPlayerToMove(h));

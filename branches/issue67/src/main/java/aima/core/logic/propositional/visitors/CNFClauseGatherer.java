@@ -19,6 +19,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 		detector = new AndDetector();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object visitBinarySentence(BinarySentence bs, Object args) {
 
@@ -34,6 +35,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<Sentence> getClausesFrom(Sentence sentence) {
 		Set<Sentence> set = new HashSet<Sentence>();
 		if (sentence instanceof Symbol) {
@@ -49,6 +51,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 	//
 	// PRIVATE METHODS
 	//
+	@SuppressWarnings("unchecked")
 	private Set<Sentence> processSubTerm(Sentence s, Set<Sentence> soFar) {
 		if (detector.containsEmbeddedAnd(s)) {
 			return (Set<Sentence>) s.accept(this, soFar);

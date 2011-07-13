@@ -3,11 +3,15 @@ package aima.core.search.adversarial;
 import aima.core.agent.impl.AbstractAgent;
 
 /**
+ * @param <MOVE>
+ *            the type of moves that can be made within the game the agent is
+ *            playing.
+ * 
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class GameAgent extends AbstractAgent {
-	private Game game;
+public class GameAgent<MOVE> extends AbstractAgent {
+	private Game<MOVE> game;
 
 	/**
 	 * Constructs a game agent with the specified game to play.
@@ -15,7 +19,7 @@ public class GameAgent extends AbstractAgent {
 	 * @param g
 	 *            a game for the game agent to play.
 	 */
-	public GameAgent(Game g) {
+	public GameAgent(Game<MOVE> g) {
 		this.game = g;
 	}
 

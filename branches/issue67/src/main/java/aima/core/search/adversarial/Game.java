@@ -1,21 +1,24 @@
 package aima.core.search.adversarial;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import aima.core.util.Util;
 
 /**
+ * @param <MOVE>
+ *            the type of moves that can be made within the game.
+ * 
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public abstract class Game {
+public abstract class Game<MOVE> {
 	protected GameState initialState = new GameState();
 
 	protected GameState presentState = new GameState();
 
 	protected int level;
 
-	public abstract ArrayList<GameState> getSuccessorStates(GameState state);
+	public abstract List<GameState> getSuccessorStates(GameState state);
 
 	public abstract GameState makeMove(GameState state, Object o);
 
@@ -31,8 +34,9 @@ public abstract class Game {
 		return (((Integer) g.get("level")).intValue());
 	}
 
-	public ArrayList getMoves(GameState state) {
-		return (ArrayList) state.get("moves");
+	@SuppressWarnings("unchecked")
+	public List<MOVE> getMoves(GameState state) {
+		return (List<MOVE>) state.get("moves");
 	}
 
 	/**
@@ -76,7 +80,7 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor);
@@ -98,7 +102,7 @@ public abstract class Game {
 			return computeUtility(state);
 
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessors = maxValue(successor);
@@ -119,7 +123,7 @@ public abstract class Game {
 			return (computeUtility(state));
 
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = successorList.get(i);
 				int maximumValueOfSuccessor = maxValue(successor, ab.copy());
@@ -173,7 +177,7 @@ public abstract class Game {
 		if (terminalTest(state)) {
 			return computeUtility(state);
 		} else {
-			ArrayList<GameState> successorList = getSuccessorStates(state);
+			List<GameState> successorList = getSuccessorStates(state);
 			for (int i = 0; i < successorList.size(); i++) {
 				GameState successor = (GameState) successorList.get(i);
 				int minimumValueOfSuccessor = minValue(successor, ab.copy());

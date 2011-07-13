@@ -110,6 +110,7 @@ public class QLearningAgent<STATE_TYPE, ACTION_TYPE> extends
 		return num / den;
 	}
 
+	@SuppressWarnings("unused")
 	private ACTION_TYPE actionMaximizingLearningFunction() {
 		ACTION_TYPE maxAct = null;
 		Double maxValue = Double.NEGATIVE_INFINITY;
