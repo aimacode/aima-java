@@ -52,9 +52,7 @@ public class ForwardBackwardTest {
 		// Day 1, the umbrella appears, so U<sub>1</sub> = true.
 		// &asymp; <0.818, 0.182>
 		List<AssignmentProposition> e1 = new ArrayList<AssignmentProposition>();
-		e1
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.TRUE));
+		e1.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
 		CategoricalDistribution f1 = uw.forward(prior, e1);
 		Assert.assertArrayEquals(new double[] { 0.818, 0.182 }, f1.getValues(),
 				DELTA_THRESHOLD);
@@ -62,9 +60,7 @@ public class ForwardBackwardTest {
 		// Day 2, the umbrella appears, so U<sub>2</sub> = true.
 		// &asymp; <0.883, 0.117>
 		List<AssignmentProposition> e2 = new ArrayList<AssignmentProposition>();
-		e2
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.TRUE));
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
 		CategoricalDistribution f2 = uw.forward(f1, e2);
 		Assert.assertArrayEquals(new double[] { 0.883, 0.117 }, f2.getValues(),
 				DELTA_THRESHOLD);
@@ -72,16 +68,14 @@ public class ForwardBackwardTest {
 
 	@Test
 	public void testBackward() {
-		// 
+		//
 		// Umbrella World
 
 		// AIMA3e pg. 575
 		CategoricalDistribution b_kp2t = new ProbabilityTable(new double[] {
 				1.0, 1.0 }, ExampleRV.RAIN_t_RV);
 		List<AssignmentProposition> e2 = new ArrayList<AssignmentProposition>();
-		e2
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.TRUE));
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
 		CategoricalDistribution b1 = uw.backward(b_kp2t, e2);
 		Assert.assertArrayEquals(new double[] { 0.69, 0.41 }, b1.getValues(),
 				DELTA_THRESHOLD);
@@ -101,39 +95,42 @@ public class ForwardBackwardTest {
 
 		List<List<AssignmentProposition>> evidence = new ArrayList<List<AssignmentProposition>>();
 		List<AssignmentProposition> e1 = new ArrayList<AssignmentProposition>();
-		e1
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.TRUE));
+		e1.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
 		evidence.add(e1);
 
 		List<CategoricalDistribution> smoothed = uw.forwardBackward(evidence,
 				prior);
-		
-		System.out.println("1 smoothed="+smoothed);
-		
+
+		Assert.assertEquals(1, smoothed.size());
+		Assert.assertArrayEquals(new double[] { 0.818, 0.182 }, smoothed.get(0)
+				.getValues(), DELTA_THRESHOLD);
+
 		List<AssignmentProposition> e2 = new ArrayList<AssignmentProposition>();
-		e2
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.TRUE));
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
 		evidence.add(e2);
-		
-		smoothed = uw.forwardBackward(evidence,
-				prior);
-		
-		System.out.println("2 smoothed="+smoothed);
-		
+
+		smoothed = uw.forwardBackward(evidence, prior);
+
+		Assert.assertEquals(2, smoothed.size());
+		Assert.assertArrayEquals(new double[] { 0.883, 0.117 }, smoothed.get(0)
+				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(new double[] { 0.883, 0.117 }, smoothed.get(1)
+				.getValues(), DELTA_THRESHOLD);
+
 		List<AssignmentProposition> e3 = new ArrayList<AssignmentProposition>();
-		e3
-				.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
-						Boolean.FALSE));
+		e3.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
+				Boolean.FALSE));
 		evidence.add(e3);
-		
-		smoothed = uw.forwardBackward(evidence,
-				prior);
-		
-		System.out.println("3 smoothed="+smoothed);
-		
-		Assert.fail("TODO-add tests");
+
+		smoothed = uw.forwardBackward(evidence, prior);
+
+		Assert.assertEquals(3, smoothed.size());
+		Assert.assertArrayEquals(new double[] { 0.861, 0.138 }, smoothed.get(0)
+				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(new double[] { 0.799, 0.201 }, smoothed.get(1)
+				.getValues(), DELTA_THRESHOLD);
+		Assert.assertArrayEquals(new double[] { 0.190, 0.810 }, smoothed.get(2)
+				.getValues(), DELTA_THRESHOLD);
 	}
 
 	//
@@ -153,7 +150,7 @@ public class ForwardBackwardTest {
 				new double[] { 0.5, 0.5 });
 		// Transition Model
 		FiniteNode rain_t = new FullCPTNode(ExampleRV.RAIN_t_RV, new double[] {
-		// R_t-1 = true, R_t = true
+				// R_t-1 = true, R_t = true
 				0.7,
 				// R_t-1 = true, R_t = false
 				0.3,
@@ -165,7 +162,7 @@ public class ForwardBackwardTest {
 		@SuppressWarnings("unused")
 		FiniteNode umbrealla_t = new FullCPTNode(ExampleRV.UMBREALLA_t_RV,
 				new double[] {
-				// R_t = true, U_t = true
+						// R_t = true, U_t = true
 						0.9,
 						// R_t = true, U_t = false
 						0.1,
