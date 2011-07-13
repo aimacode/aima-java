@@ -37,8 +37,6 @@ public class HMMFactory {
 		tm.setTransitionProbability(HmmConstants.DOOR_OPEN,
 				HmmConstants.DO_NOTHING, HmmConstants.DOOR_OPEN, 1.0);
 		tm.setTransitionProbability(HmmConstants.DOOR_OPEN,
-				HmmConstants.DO_NOTHING, HmmConstants.DOOR_OPEN, 1.0);
-		tm.setTransitionProbability(HmmConstants.DOOR_OPEN,
 				HmmConstants.DO_NOTHING, HmmConstants.DOOR_CLOSED, 0.0);
 		tm.setTransitionProbability(HmmConstants.DOOR_CLOSED,
 				HmmConstants.DO_NOTHING, HmmConstants.DOOR_CLOSED, 1.0);

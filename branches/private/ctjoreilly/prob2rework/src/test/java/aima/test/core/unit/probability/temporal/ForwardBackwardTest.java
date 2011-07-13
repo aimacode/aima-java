@@ -21,6 +21,10 @@ import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.temporal.ForwardBackward;
 import aima.core.probability.util.ProbabilityTable;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ */
 public class ForwardBackwardTest {
 	public static final double DELTA_THRESHOLD = 1e-3;
 	//
