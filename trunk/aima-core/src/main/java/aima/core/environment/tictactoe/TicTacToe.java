@@ -1,6 +1,7 @@
 package aima.core.environment.tictactoe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import aima.core.search.adversarial.AlphaBeta;
 import aima.core.search.adversarial.Game;
@@ -11,9 +12,9 @@ import aima.core.util.datastructure.XYLocation;
  * @author Ravi Mohan
  * 
  */
-public class TicTacToe extends Game {
+public class TicTacToe extends Game<XYLocation> {
 	public TicTacToe() {
-		ArrayList<XYLocation> moves = new ArrayList<XYLocation>();
+		List<XYLocation> moves = new ArrayList<XYLocation>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				XYLocation loc = new XYLocation(i, j);
@@ -34,9 +35,9 @@ public class TicTacToe extends Game {
 	}
 
 	@Override
-	public ArrayList<GameState> getSuccessorStates(GameState state) {
+	public List<GameState> getSuccessorStates(GameState state) {
 		GameState temp = presentState;
-		ArrayList<GameState> retVal = new ArrayList<GameState>();
+		List<GameState> retVal = new ArrayList<GameState>();
 		int parentLevel = getLevel(state);
 		for (int i = 0; i < getMoves(state).size(); i++) {
 			XYLocation loc = (XYLocation) getMoves(state).get(i);
@@ -77,8 +78,8 @@ public class TicTacToe extends Game {
 	public GameState getMove(GameState state, int x, int y) {
 		GameState retVal = null;
 		XYLocation loc = new XYLocation(x, y);
-		ArrayList moves = getMoves(state);
-		ArrayList newMoves = (ArrayList) moves.clone();
+		List<XYLocation> moves = getMoves(state);
+		List<XYLocation> newMoves = new ArrayList<XYLocation>(moves);
 		if (moves.contains(loc)) {
 			int index = newMoves.indexOf(loc);
 			newMoves.remove(index);
@@ -125,12 +126,11 @@ public class TicTacToe extends Game {
 	public void printPossibleMoves() {
 		System.out.println("Possible moves");
 
-		ArrayList moves = getMoves(presentState);
+		List<XYLocation> moves = getMoves(presentState);
 		for (int i = 0; i < moves.size(); i++) {
 			XYLocation moveLoc = (XYLocation) moves.get(i);
 			GameState newState = getMove(presentState,
 					moveLoc.getXCoOrdinate(), moveLoc.getYCoOrdinate());
-			TicTacToeBoard board = (TicTacToeBoard) newState.get("board");
 			System.out.println("utility = " + computeUtility(newState));
 			System.out.println("");
 		}
