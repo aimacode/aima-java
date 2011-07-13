@@ -44,10 +44,6 @@ public class PELexer extends Lexer {
 	 */
 	@Override
 	public Token nextToken() {
-		Token result = null;
-		int tokenType;
-		String tokenContent;
-
 		if (lookAhead(1) == '(') {
 			consume();
 			return new Token(LogicTokenTypes.LPAREN, "(");
@@ -68,7 +64,6 @@ public class PELexer extends Lexer {
 			throw new RuntimeException("Lexing error on character "
 					+ lookAhead(1));
 		}
-
 	}
 
 	private boolean identifierDetected() {
@@ -102,6 +97,7 @@ public class PELexer extends Lexer {
 
 	}
 
+	@SuppressWarnings("unused")
 	private Token connector() {
 		StringBuffer sbuf = new StringBuffer();
 		while (Character.isLetterOrDigit(lookAhead(1))) {
@@ -111,6 +107,7 @@ public class PELexer extends Lexer {
 		return new Token(LogicTokenTypes.CONNECTOR, sbuf.toString());
 	}
 
+	@SuppressWarnings("unused")
 	private Token whiteSpace() {
 		StringBuffer sbuf = new StringBuffer();
 		while (Character.isWhitespace(lookAhead(1))) {

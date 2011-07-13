@@ -40,7 +40,7 @@ public class AbstractPLVisitor implements PLVisitor {
 	}
 
 	public Object visitMultiSentence(MultiSentence fs, Object arg) {
-		List terms = fs.getSentences();
+		List<Sentence> terms = fs.getSentences();
 		List<Sentence> newTerms = new ArrayList<Sentence>();
 		for (int i = 0; i < terms.size(); i++) {
 			Sentence s = (Sentence) terms.get(i);

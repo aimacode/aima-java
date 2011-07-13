@@ -13,6 +13,7 @@ import aima.core.util.SetOps;
  * 
  */
 public class NegativeSymbolCollector extends BasicTraverser {
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
@@ -25,7 +26,8 @@ public class NegativeSymbolCollector extends BasicTraverser {
 		return s;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<Symbol> getNegativeSymbolsIn(Sentence s) {
-		return (Set<Symbol>) s.accept(this, new HashSet());
+		return (Set<Symbol>) s.accept(this, new HashSet<Symbol>());
 	}
 }
