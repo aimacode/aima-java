@@ -18,7 +18,7 @@ import aima.test.core.unit.probability.hmm.ParticleFilterTest;
 import aima.test.core.unit.probability.hmm.VarDistributionTest;
 import aima.test.core.unit.probability.mdp.PolicyIterationTest;
 import aima.test.core.unit.probability.mdp.ValueIterationTest;
-import aima.test.core.unit.probability.temporal.ForwardBackwardTest;
+import aima.test.core.unit.probability.temporal.generic.ForwardBackwardTest;
 import aima.test.core.unit.probability.util.ProbUtilTest;
 import aima.test.core.unit.probability.util.ProbabilityTableTest;
 

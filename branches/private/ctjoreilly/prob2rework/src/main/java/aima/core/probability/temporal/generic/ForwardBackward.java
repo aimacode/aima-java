@@ -1,4 +1,4 @@
-package aima.core.probability.temporal;
+package aima.core.probability.temporal.generic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import aima.core.probability.FiniteProbabilityModel;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.proposition.Proposition;
 import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.temporal.ForwardBackwardInference;
 import aima.core.probability.util.ProbUtil;
 import aima.core.probability.util.ProbabilityTable;
 import aima.core.probability.util.RandVar;
@@ -43,7 +44,7 @@ import aima.core.probability.util.RandVar;
  * 
  * @author Ciaran O'Reilly
  */
-public class ForwardBackward {
+public class ForwardBackward implements ForwardBackwardInference {
 
 	private FiniteProbabilityModel transitionModel = null;
 	private Map<RandomVariable, RandomVariable> tToTm1StateVarMap = new HashMap<RandomVariable, RandomVariable>();
@@ -57,19 +58,12 @@ public class ForwardBackward {
 		this.sensorModel = sensorModel;
 	}
 
+	//
+	// START-ForwardBackwardInference
+
 	// function FORWARD-BACKWARD(ev, prior) returns a vector of probability
 	// distributions
-	/**
-	 * The forward-backward algorithm for smoothing: computing posterior
-	 * probabilities of a sequence of states given a sequence of observations.
-	 * 
-	 * @param ev
-	 *            a vector of evidence values for steps 1,...,t
-	 * @param prior
-	 *            the prior distribution on the initial state,
-	 *            <b>P</b>(X<sub>0</sub>)
-	 * @return a vector of smoothed estimates for steps 1,...,t
-	 */
+	@Override
 	public List<CategoricalDistribution> forwardBackward(
 			List<List<AssignmentProposition>> ev, CategoricalDistribution prior) {
 		// local variables: fv, a vector of forward messages for steps 0,...,t
@@ -100,21 +94,7 @@ public class ForwardBackward {
 		return sv;
 	}
 
-	/**
-	 * The FORWARD operator is defined by Equation (15.5).<br>
-	 * 
-	 * <pre>
-	 * <b>P</b>(X<sub>t+1</sub> | e<sub>1:t+1</sub>) 
-	 * = &alpha;<b>P</b>(e<sub>t+1</sub> | X<sub>t+1</sub>)&sum;<sub>x<sub>t</sub></sub><b>P</b>(X<sub>t+1</sub> | x<sub>t</sub>, e<sub>1:t</sub>)P(x<sub>t</sub> | e<sub>1:t</sub>)
-	 * = &alpha;<b>P</b>(e<sub>t+1</sub> | X<sub>t+1</sub>)&sum;<sub>x<sub>t</sub></sub><b>P</b>(X<sub>t+1</sub> | x<sub>t</sub>)P(x<sub>t</sub> | e<sub>1:t</sub>) (Markov Assumption)
-	 * </pre>
-	 * 
-	 * @param f1_t
-	 *            f<sub>1:t</sub>
-	 * @param e_tp1
-	 *            e<sub>t+1</sub>
-	 * @return f<sub>1:t+1</sub>
-	 */
+	@Override
 	public CategoricalDistribution forward(CategoricalDistribution f1_t,
 			List<AssignmentProposition> e_tp1) {
 		final CategoricalDistribution s1 = new ProbabilityTable(f1_t.getFor());
@@ -168,21 +148,7 @@ public class ForwardBackward {
 		return s2.multiplyBy(s1).normalize();
 	}
 
-	/**
-	 * The BACKWARD operator is defined by Equation (15.9).<br>
-	 * 
-	 * <pre>
-	 * <b>P</b>(e<sub>k+1:t</sub> | X<sub>k</sub>) 
-	 * = &sum;<sub>x<sub>k+1</sub></sub><b>P</b>(e<sub>k+1:t</sub> | X<sub>k</sub>, x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>) (conditioning on X<sub>k+1</sub>)
-	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>) (by conditional independence)
-	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1</sub>, e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
-	 * = &sum;<sub>x<sub>k+1</sub></sub>P(e<sub>k+1</sub> | x<sub>k+1</sub>)P(e<sub>k+2:t</sub> | x<sub>k+1</sub>)<b>P</b>(x<sub>k+1</sub> | X<sub>k</sub>)
-	 * </pre>
-	 * 
-	 * @param b_kp2t
-	 * @param e_kp1
-	 * @return b<sub>k+1:t</sub>
-	 */
+	@Override
 	public CategoricalDistribution backward(CategoricalDistribution b_kp2t,
 			List<AssignmentProposition> e_kp1) {
 		final CategoricalDistribution b_kp1t = new ProbabilityTable(b_kp2t
@@ -237,6 +203,9 @@ public class ForwardBackward {
 
 		return b_kp1t;
 	}
+
+	// END-ForwardBackwardInference
+	//
 
 	//
 	// PRIVATE METHODS
