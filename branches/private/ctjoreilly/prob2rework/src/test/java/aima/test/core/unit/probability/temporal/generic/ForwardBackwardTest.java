@@ -30,13 +30,13 @@ public class ForwardBackwardTest extends CommonForwardBackwardTest {
 	}
 	
 	@Test
-	public void testForward_UmbrellaWorld() {
-		super.testForward_UmbrellaWorld(uw);
+	public void testForwardStep_UmbrellaWorld() {
+		super.testForwardStep_UmbrellaWorld(uw);
 	}
 	
 	@Test
-	public void testBackward_UmbrellaWorld() {
-		super.testBackward_UmbrellaWorld(uw);
+	public void testBackwardStep_UmbrellaWorld() {
+		super.testBackwardStep_UmbrellaWorld(uw);
 	}
 	
 	@Test

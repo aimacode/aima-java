@@ -8,7 +8,9 @@ import org.junit.Assert;
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.example.ExampleRV;
 import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.temporal.BackwardStepInference;
 import aima.core.probability.temporal.ForwardBackwardInference;
+import aima.core.probability.temporal.ForwardStepInference;
 import aima.core.probability.util.ProbabilityTable;
 
 /**
@@ -21,7 +23,7 @@ public abstract class CommonForwardBackwardTest {
 	//
 	// PROTECTED METHODS
 	//
-	protected void testForward_UmbrellaWorld(ForwardBackwardInference uw) {
+	protected void testForwardStep_UmbrellaWorld(ForwardStepInference uw) {
 		// AIMA3e pg. 572
 		// Day 0, no observations only the security guards prior beliefs
 		// P(R<sub>0</sub>) = <0.5, 0.5>
@@ -49,7 +51,7 @@ public abstract class CommonForwardBackwardTest {
 				DELTA_THRESHOLD);
 	}
 
-	protected void testBackward_UmbrellaWorld(ForwardBackwardInference uw) {
+	protected void testBackwardStep_UmbrellaWorld(BackwardStepInference uw) {
 		// AIMA3e pg. 575
 		CategoricalDistribution b_kp2t = new ProbabilityTable(new double[] {
 				1.0, 1.0 }, ExampleRV.RAIN_t_RV);
