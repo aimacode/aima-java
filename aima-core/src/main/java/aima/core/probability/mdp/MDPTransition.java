@@ -36,7 +36,7 @@ public class MDPTransition<STATE_TYPE, ACTION_TYPE> {
 		if (!(o instanceof MDPTransition)) {
 			return false;
 		}
-		
+
 		MDPTransition<STATE_TYPE, ACTION_TYPE> other = (MDPTransition<STATE_TYPE, ACTION_TYPE>) (o);// weird
 		// typing
 		// issue

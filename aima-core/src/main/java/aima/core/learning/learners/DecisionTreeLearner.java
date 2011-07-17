@@ -12,7 +12,7 @@ import aima.core.util.Util;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class DecisionTreeLearner implements Learner {
 	private DecisionTree tree;
@@ -30,16 +30,28 @@ public class DecisionTreeLearner implements Learner {
 		this.defaultValue = defaultValue;
 	}
 
+	//
+	// START-Learner
+
+	/**
+	 * Induces the decision tree from the specified set of examples
+	 * 
+	 * @param ds
+	 *            a set of examples for constructing the decision tree
+	 */
+	@Override
 	public void train(DataSet ds) {
 		List<String> attributes = ds.getNonTargetAttributes();
 		this.tree = decisionTreeLearning(ds, attributes,
 				new ConstantDecisonTree(defaultValue));
 	}
 
+	@Override
 	public String predict(Example e) {
 		return (String) tree.predict(e);
 	}
 
+	@Override
 	public int[] test(DataSet ds) {
 		int[] results = new int[] { 0, 0 };
 
@@ -53,6 +65,14 @@ public class DecisionTreeLearner implements Learner {
 		return results;
 	}
 
+	// END-Learner
+	//
+
+	/**
+	 * Returns the decision tree of this decision tree learner
+	 * 
+	 * @return the decision tree of this decision tree learner
+	 */
 	public DecisionTree getDecisionTree() {
 		return tree;
 	}

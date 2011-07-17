@@ -31,15 +31,15 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   local variables: new, the new sentences inferred on each iteration
  *   
  *   repeat until new is empty
- *      new <- {}
+ *      new &lt;- {}
  *      for each rule in KB do
- *          (p1 ^ ... ^ pn => q) <- STANDARDIZE-VARAIBLES(rule)
- *          for each theta such that SUBST(theta, p1 ^ ... ^ pn) = SUBST(theta, p'1 ^ ... ^ p'n)
+ *          (p1 &circ; ... &circ; pn =&gt; q) &lt;- STANDARDIZE-VARAIBLES(rule)
+ *          for each theta such that SUBST(theta, p1 &circ; ... &circ; pn) = SUBST(theta, p'1 &circ; ... &circ; p'n)
  *                         for some p'1,...,p'n in KB
- *              q' <- SUBST(theta, q)
+ *              q' &lt;- SUBST(theta, q)
  *              if q' does not unify with some sentence already in KB or new then
  *                   add q' to new
- *                   theta <- UNIFY(q', alpha)
+ *                   theta &lt;- UNIFY(q', alpha)
  *                   if theta is not fail then return theta
  *      add new to KB
  *   return false
@@ -64,11 +64,14 @@ public class FOLFCAsk implements InferenceProcedure {
 	// START-InferenceProcedure
 
 	/**
-	 * <code>
-	 * function FOL-FC-ASK(KB, alpha) returns a substitution or false
-	 *   inputs: KB, the knowledge base, a set of first order definite clauses
-	 *           alpha, the query, an atomic sentence
-	 * </code>
+	 * FOL-FC-ASK returns a substitution or false.
+	 * 
+	 * @param KB
+	 *            the knowledge base, a set of first order definite clauses
+	 * @param query
+	 *            the query, an atomic sentence
+	 * 
+	 * @return a substitution or false
 	 */
 	public InferenceResult ask(FOLKnowledgeBase KB, Sentence query) {
 		// Assertions on the type of queries this Inference procedure

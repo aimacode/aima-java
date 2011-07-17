@@ -5,8 +5,14 @@ import aima.core.util.math.Matrix;
 import aima.core.util.math.Vector;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 729<br>
+ * <br>
  * 
+ * Feed-forward networks are usually arranged in layers, such that each unit
+ * receives input only from units in the immediately preceding layer.
+ * 
+ * @author Ravi Mohan
+ * @author Mike Stampone
  */
 public class Layer {
 	// vectors are represented by n * 1 matrices;

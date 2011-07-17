@@ -16,13 +16,26 @@ import aima.core.util.Util;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class WalkSAT {
 	private Model myModel;
 
 	private Random random = new Random();
 
+	/**
+	 * Returns a satisfying model or failure (null).
+	 * 
+	 * @param logicalSentence
+	 *            a set of clauses in propositional logic
+	 * @param numberOfFlips
+	 *            number of flips allowed before giving up
+	 * @param probabilityOfRandomWalk
+	 *            the probability of choosing to do a "random walk" move,
+	 *            typically around 0.5
+	 * 
+	 * @return a satisfying model or failure (null).
+	 */
 	public Model findModelFor(String logicalSentence, int numberOfFlips,
 			double probabilityOfRandomWalk) {
 		myModel = new Model();
@@ -31,7 +44,8 @@ public class WalkSAT {
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
 		SymbolCollector sc = new SymbolCollector();
 
-		List<Symbol> symbols = new Converter<Symbol>().setToList(sc.getSymbolsIn(s));
+		List<Symbol> symbols = new Converter<Symbol>().setToList(sc
+				.getSymbolsIn(s));
 		for (int i = 0; i < symbols.size(); i++) {
 			Symbol sym = (Symbol) symbols.get(i);
 			myModel = myModel.extend(sym, Util.randomBoolean());

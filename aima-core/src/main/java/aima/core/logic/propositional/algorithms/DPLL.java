@@ -17,22 +17,51 @@ import aima.core.util.SetOps;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class DPLL {
 
 	private static final Converter<Symbol> SYMBOL_CONVERTER = new Converter<Symbol>();
 
+	/**
+	 * Returns <code>true</code> if the specified sentence is satisfiable. A
+	 * sentence is satisfiable if it is true in, or satisfied by, some model.
+	 * 
+	 * @param s
+	 *            a sentence in propositional logic
+	 * 
+	 * @return <code>true</code> if the specified sentence is satisfiable.
+	 */
 	public boolean dpllSatisfiable(Sentence s) {
 
 		return dpllSatisfiable(s, new Model());
 	}
 
+	/**
+	 * Returns <code>true</code> if the specified sentence is satisfiable. A
+	 * sentence is satisfiable if it is true in, or satisfied by, some model.
+	 * 
+	 * @param string
+	 *            a String representation of a Sentence in propositional logic
+	 * 
+	 * @return <code>true</code> if the specified sentence is satisfiable.
+	 */
 	public boolean dpllSatisfiable(String string) {
 		Sentence sen = (Sentence) new PEParser().parse(string);
 		return dpllSatisfiable(sen, new Model());
 	}
 
+	/**
+	 * Returns <code>true</code> if the specified sentence is satisfiable. A
+	 * sentence is satisfiable if it is true in, or satisfied by, some model.
+	 * 
+	 * @param s
+	 *            a sentence in propositional logic
+	 * @param m
+	 *            a model the sentence must be true in
+	 * 
+	 * @return <code>true</code> if the specified sentence is satisfiable.
+	 */
 	public boolean dpllSatisfiable(Sentence s, Model m) {
 		Set<Sentence> clauses = new CNFClauseGatherer()
 				.getClausesFrom(new CNFTransformer().transform(s));
@@ -60,8 +89,8 @@ public class DPLL {
 
 	public SymbolValuePair findPureSymbolValuePair(List<Sentence> clauseList,
 			Model model, List<Symbol> symbols) {
-		List<Sentence> clausesWithNonTrueValues = clausesWithNonTrueValues(clauseList,
-				model);
+		List<Sentence> clausesWithNonTrueValues = clausesWithNonTrueValues(
+				clauseList, model);
 		Sentence nonTrueClauses = LogicUtils.chainWith("AND",
 				clausesWithNonTrueValues);
 		// System.out.println("Unsatisfied clauses = "
@@ -116,7 +145,8 @@ public class DPLL {
 	// PRIVATE METHODS
 	//
 
-	private boolean dpll(Set<Sentence> clauses, List<Symbol> symbols, Model model) {
+	private boolean dpll(Set<Sentence> clauses, List<Symbol> symbols,
+			Model model) {
 		// List<Sentence> clauseList = asList(clauses);
 		List<Sentence> clauseList = new Converter<Sentence>()
 				.setToList(clauses);
@@ -208,8 +238,8 @@ public class DPLL {
 
 	}
 
-	private SymbolValuePair findUnitClause(List<Sentence> clauseList, Model model,
-			List<Symbol> symbols) {
+	private SymbolValuePair findUnitClause(List<Sentence> clauseList,
+			Model model, List<Symbol> symbols) {
 		for (int i = 0; i < clauseList.size(); i++) {
 			Sentence clause = (Sentence) clauseList.get(i);
 			if ((clause instanceof Symbol)
