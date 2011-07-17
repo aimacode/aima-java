@@ -2,10 +2,8 @@ package aima.core.probability.hmm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import aima.core.probability.CategoricalDistribution;
-import aima.core.probability.RandomVariable;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.util.math.Matrix;
 
@@ -40,9 +38,8 @@ import aima.core.util.math.Matrix;
  */
 public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 
-	public HMMForwardBackwardConstantSpace(RandomVariable stateVariable,
-			Matrix transitionModel, Map<Object, Matrix> sensorModel) {
-		super(stateVariable, transitionModel, sensorModel);
+	public HMMForwardBackwardConstantSpace(HiddenMarkovModel hmm) {
+		super(hmm);
 	}
 
 	//
@@ -51,22 +48,22 @@ public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 	public List<CategoricalDistribution> forwardBackward(
 			List<List<AssignmentProposition>> ev, CategoricalDistribution prior) {
 		// local variables: f, the forward message <- prior
-		Matrix f = convert(prior);
+		Matrix f = hmm.convert(prior);
 		// b, a representation of the backward message, initially all 1s
-		Matrix b = initBackwardMessage();
+		Matrix b = hmm.createUnitMessage();
 		// sv, a vector of smoothed estimates for steps 1,...,t
 		List<Matrix> sv = new ArrayList<Matrix>(ev.size());
 
 		// for i = 1 to t do
 		for (int i = 0; i < ev.size(); i++) {
 			// fv[i] <- FORWARD(fv[i-1], ev[i])
-			f = forward(f, getEvidence(ev.get(i)));
+			f = forward(f, hmm.getEvidence(ev.get(i)));
 		}
 		// for i = t downto 1 do
 		for (int i = ev.size() - 1; i >= 0; i--) {
 			// sv[i] <- NORMALIZE(fv[i] * b)
-			sv.add(0, normalize(f.arrayTimes(b)));
-			Matrix e = getEvidence(ev.get(i));
+			sv.add(0, hmm.normalize(f.arrayTimes(b)));
+			Matrix e = hmm.getEvidence(ev.get(i));
 			// b <- BACKWARD(b, ev[i])
 			b = backward(b, e);
 			// f1:t <-
@@ -75,7 +72,7 @@ public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 		}
 
 		// return sv
-		return convert(sv);
+		return hmm.convert(sv);
 	}
 
 	// END-ForwardBackwardInference
@@ -95,7 +92,7 @@ public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 	 * @return <b>f</b><sub>1:t</sub>
 	 */
 	public Matrix forwardRecover(Matrix O_tp1, Matrix f1_tp1) {
-		return normalize(transitionModel.transpose().inverse()
+		return hmm.normalize(hmm.getTransitionModel().transpose().inverse()
 				.times(O_tp1.inverse()).times(f1_tp1));
 	}
 }

@@ -3,11 +3,15 @@ package aima.test.core.unit.probability.hmm;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.probability.example.ExampleRV;
 import aima.core.probability.example.HMMExampleFactory;
 import aima.core.probability.hmm.HMMForwardBackward;
 import aima.test.core.unit.probability.temporal.CommonForwardBackwardTest;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ *
+ */
 public class HMMForwardBackwardTest extends CommonForwardBackwardTest {
 
 	//
@@ -15,9 +19,7 @@ public class HMMForwardBackwardTest extends CommonForwardBackwardTest {
 
 	@Before
 	public void setUp() {
-		uw = new HMMForwardBackward(ExampleRV.RAIN_t_RV,
-				HMMExampleFactory.getUmbrellaWorldTransitionModel(),
-				HMMExampleFactory.getUmbrellaWorldSensorModel());
+		uw = new HMMForwardBackward(HMMExampleFactory.getUmbrellaWorldModel());
 	}
 
 	@Test

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.util.Randomizer;
 import aima.core.util.Util;
 import aima.core.util.math.Matrix;
 
@@ -109,26 +108,29 @@ public class VarDistribution {
 	public String toString() {
 		return asMatrix().toString();
 	}
-
-	public ParticleSet toParticleSet(HiddenMarkovModel hmm,
-			Randomizer randomizer, int numberOfParticles) {
-		ParticleSet result = new ParticleSet(hmm);
-		for (int i = 0; i < numberOfParticles; i++) {
-			double rvalue = randomizer.nextDouble();
-			String state = getStateForRandomNumber(rvalue);
-			result.add(new Particle(state, 0));
-		}
-		return result;
-	}
-
-	private String getStateForRandomNumber(double rvalue) {
-		double total = 0.0;
-		for (String s : states) {
-			total = total + distribution.get(s);
-			if (total >= rvalue) {
-				return s;
-			}
-		}
-		throw new RuntimeException("cannot handle " + rvalue);
-	}
+	/**
+	 * <pre>
+	 * public ParticleSet toParticleSet(HiddenMarkovModel hmm, Randomizer randomizer,
+	 * 		int numberOfParticles) {
+	 * 	ParticleSet result = new ParticleSet(hmm);
+	 * 	for (int i = 0; i &lt; numberOfParticles; i++) {
+	 * 		double rvalue = randomizer.nextDouble();
+	 * 		String state = getStateForRandomNumber(rvalue);
+	 * 		result.add(new Particle(state, 0));
+	 * 	}
+	 * 	return result;
+	 * }
+	 * 
+	 * private String getStateForRandomNumber(double rvalue) {
+	 * 	double total = 0.0;
+	 * 	for (String s : states) {
+	 * 		total = total + distribution.get(s);
+	 * 		if (total &gt;= rvalue) {
+	 * 			return s;
+	 * 		}
+	 * 	}
+	 * 	throw new RuntimeException(&quot;cannot handle &quot; + rvalue);
+	 * }
+	 * </pre>
+	 */
 }

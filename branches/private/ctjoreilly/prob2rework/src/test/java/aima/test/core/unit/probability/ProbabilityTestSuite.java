@@ -17,7 +17,6 @@ import aima.test.core.unit.probability.hmm.HMMForwardBackwardConstantSpaceTest;
 import aima.test.core.unit.probability.hmm.HMMForwardBackwardTest;
 import aima.test.core.unit.probability.hmm.HMMTest;
 import aima.test.core.unit.probability.hmm.ParticleFilterTest;
-import aima.test.core.unit.probability.hmm.VarDistributionTest;
 import aima.test.core.unit.probability.mdp.PolicyIterationTest;
 import aima.test.core.unit.probability.mdp.ValueIterationTest;
 import aima.test.core.unit.probability.temporal.generic.ForwardBackwardTest;
@@ -31,9 +30,9 @@ import aima.test.core.unit.probability.util.ProbabilityTableTest;
 		FiniteBayesModelTest.class, FullJointProbabilityModelTest.class,
 		HMMAgentTest.class, HMMForwardBackwardConstantSpaceTest.class,
 		HMMForwardBackwardTest.class, HMMTest.class, ParticleFilterTest.class,
-		VarDistributionTest.class, PolicyIterationTest.class,
-		ValueIterationTest.class, ForwardBackwardTest.class,
-		ProbUtilTest.class, ProbabilityTableTest.class })
+		PolicyIterationTest.class, ValueIterationTest.class,
+		ForwardBackwardTest.class, ProbUtilTest.class,
+		ProbabilityTableTest.class })
 public class ProbabilityTestSuite {
 
 }
