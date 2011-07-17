@@ -180,13 +180,13 @@ public class PLResolution {
 	}
 
 	private List<List<Sentence>> getCombinationPairs(List<Sentence> clausesList) {
-		//int odd = clausesList.size() % 2;
-		//int midpoint = 0;
-		//if (odd == 1) {
-		//	midpoint = (clausesList.size() / 2) + 1;
-		//} else {
-		//	midpoint = (clausesList.size() / 2);
-		//}
+		// int odd = clausesList.size() % 2;
+		// int midpoint = 0;
+		// if (odd == 1) {
+		// midpoint = (clausesList.size() / 2) + 1;
+		// } else {
+		// midpoint = (clausesList.size() / 2);
+		// }
 
 		List<List<Sentence>> pairs = new ArrayList<List<Sentence>>();
 		for (int i = 0; i < clausesList.size(); i++) {

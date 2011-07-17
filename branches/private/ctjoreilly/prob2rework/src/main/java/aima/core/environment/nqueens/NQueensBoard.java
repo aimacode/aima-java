@@ -134,7 +134,7 @@ public class NQueensBoard {
 		int y = l.getYCoOrdinate();
 		return (isSquareHorizontallyAttacked(x, y)
 				|| isSquareVerticallyAttacked(x, y) || isSquareDiagonallyAttacked(
-				x, y));
+					x, y));
 	}
 
 	private boolean isSquareHorizontallyAttacked(int x, int y) {

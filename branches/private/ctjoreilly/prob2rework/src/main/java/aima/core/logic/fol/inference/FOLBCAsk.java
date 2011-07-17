@@ -29,18 +29,18 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   local variables: answers, a set of substitutions, initially empty
  *   
  *   if goals is empty then return {theta}
- *   qDelta <- SUBST(theta, FIRST(goals))
- *   for each sentence r in KB where STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
- *          and thetaDelta <- UNIFY(q, qDelta) succeeds
- *       new_goals <- [p1,...,pn|REST(goals)]
- *       answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
+ *   qDelta &lt;- SUBST(theta, FIRST(goals))
+ *   for each sentence r in KB where STANDARDIZE-APART(r) = (p1 &circ; ... &circ; pn =&gt; q)
+ *          and thetaDelta &lt;- UNIFY(q, qDelta) succeeds
+ *       new_goals &lt;- [p1,...,pn|REST(goals)]
+ *       answers &lt;- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
  *   return answers
  * </pre>
  * 
  * Figure 9.6 A simple backward-chaining algorithm.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class FOLBCAsk implements InferenceProcedure {
 
@@ -50,6 +50,16 @@ public class FOLBCAsk implements InferenceProcedure {
 
 	//
 	// START-InferenceProcedure
+	/**
+	 * Returns a set of substitutions
+	 * 
+	 * @param KB
+	 *            a knowledge base
+	 * @param query
+	 *            goals, a list of conjuncts forming a query
+	 * 
+	 * @return a set of substitutions
+	 */
 	public InferenceResult ask(FOLKnowledgeBase KB, Sentence query) {
 		// Assertions on the type queries this Inference procedure
 		// supports

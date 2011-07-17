@@ -50,14 +50,14 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	}
 
 	/**
-	 * Returns <code>true</code> if the specified action list indicates a
-	 * search reached it limit without finding a goal.
+	 * Returns <code>true</code> if the specified action list indicates a search
+	 * reached it limit without finding a goal.
 	 * 
 	 * @param result
 	 *            the action list resulting from a previous search
 	 * 
-	 * @return <code>true</code> if the specified action list indicates a
-	 *         search reached it limit without finding a goal.
+	 * @return <code>true</code> if the specified action list indicates a search
+	 *         reached it limit without finding a goal.
 	 */
 	public boolean isCutOff(List<Action> result) {
 		return 1 == result.size()

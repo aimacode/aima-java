@@ -37,8 +37,8 @@ public class Problem {
 	protected StepCostFunction stepCostFunction;
 
 	/**
-	 * Constructs a problem with the specified components, and a default
-	 * step cost function (i.e. 1 per step).
+	 * Constructs a problem with the specified components, and a default step
+	 * cost function (i.e. 1 per step).
 	 * 
 	 * @param initialState
 	 *            the initial state that the agent starts in.

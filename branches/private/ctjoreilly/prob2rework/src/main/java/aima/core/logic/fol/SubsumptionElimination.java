@@ -27,9 +27,19 @@ import aima.core.logic.fol.kb.data.Clause;
  * that is a subset of &Psi;.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class SubsumptionElimination {
+	/**
+	 * Returns the clauses that are subsumed by (that is, more specific than) an
+	 * existing clause in the specified set of clauses.
+	 * 
+	 * @param clauses
+	 *            a set of clauses in first order logic
+	 * 
+	 * @return the clauses that are subsumed by (that is, more specific than) an
+	 *         existing clause in the specified set of clauses.
+	 */
 	public static Set<Clause> findSubsumedClauses(Set<Clause> clauses) {
 		Set<Clause> subsumed = new HashSet<Clause>();
 
