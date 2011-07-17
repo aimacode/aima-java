@@ -148,11 +148,11 @@ public class TicTacToeTest {
 		List<GameState> successors = t3.getSuccessorStates(t3.getState());
 		Assert.assertEquals(9, successors.size());
 		checkSuccessorList(successors, "O", 8);
-		List<GameState> successors2 = t3.getSuccessorStates((GameState) successors
-				.get(0));
+		List<GameState> successors2 = t3
+				.getSuccessorStates((GameState) successors.get(0));
 		checkSuccessorList(successors2, "X", 7);
-		List<GameState> successors3 = t3.getSuccessorStates((GameState) successors2
-				.get(0));
+		List<GameState> successors3 = t3
+				.getSuccessorStates((GameState) successors2.get(0));
 		checkSuccessorList(successors3, "O", 6);
 	}
 

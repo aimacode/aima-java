@@ -82,7 +82,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 
 	public MDPUtilityFunction<STATE_TYPE> valueIterationTillMAximumUtilityGrowthFallsBelowErrorMargin(
 			double gamma, double errorMargin) {
-		int iterationCounter = 0;
+		// int iterationCounter = 0;
 		double maxUtilityGrowth = 0.0;
 		MDPUtilityFunction<STATE_TYPE> utilityFunction = initialUtilityFunction();
 		do {
@@ -90,7 +90,7 @@ public class MDP<STATE_TYPE, ACTION_TYPE> {
 					gamma, utilityFunction);
 			utilityFunction = result.getFirst();
 			maxUtilityGrowth = result.getSecond();
-			iterationCounter++;
+			// iterationCounter++;
 			// System.out.println("Itration Number" +iterationCounter + " max
 			// utility growth " + maxUtilityGrowth);
 

@@ -15,7 +15,7 @@ import aima.core.util.Converter;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class PLFCEntails {
 
@@ -31,10 +31,34 @@ public class PLFCEntails {
 		agenda = new Stack<Symbol>();
 	}
 
+	/**
+	 * Return the answer to the specified question using the PL-FC-Entails
+	 * algorithm
+	 * 
+	 * @param kb
+	 *            the knowledge base, a set of propositional definite clauses
+	 * @param s
+	 *            the query, a proposition symbol
+	 * 
+	 * @return the answer to the specified question using the PL-FC-Entails
+	 *         algorithm
+	 */
 	public boolean plfcEntails(KnowledgeBase kb, String s) {
 		return plfcEntails(kb, new Symbol(s));
 	}
 
+	/**
+	 * Return the answer to the specified question using the PL-FC-Entails
+	 * algorithm
+	 * 
+	 * @param kb
+	 *            the knowledge base, a set of propositional definite clauses
+	 * @param q
+	 *            the query, a proposition symbol
+	 * 
+	 * @return the answer to the specified question using the PL-FC-Entails
+	 *         algorithm
+	 */
 	public boolean plfcEntails(KnowledgeBase kb, Symbol q) {
 		List<HornClause> hornClauses = asHornClauses(kb.getSentences());
 		while (agenda.size() != 0) {
@@ -91,6 +115,12 @@ public class PLFCEntails {
 
 		Symbol head;
 
+		/**
+		 * Constructs a horn clause from the specified sentence.
+		 * 
+		 * @param sentence
+		 *            a sentence in propositional logic
+		 */
 		public HornClause(Sentence sentence) {
 			if (sentence instanceof Symbol) {
 				head = (Symbol) sentence;
@@ -124,15 +154,36 @@ public class PLFCEntails {
 					.getOperator().equals("=>"));
 		}
 
+		/**
+		 * Returns the conclusion of this horn clause. In horn form, the premise
+		 * is called the body, and the conclusion is called the head.
+		 * 
+		 * @return the conclusion of this horn clause.
+		 */
 		public Symbol head() {
 
 			return head;
 		}
 
+		/**
+		 * Return <code>true</code> if the premise of this horn clause contains
+		 * the specified symbol.
+		 * 
+		 * @param q
+		 *            a symbol in propositional logic
+		 * 
+		 * @return <code>true</code> if the premise of this horn clause contains
+		 *         the specified symbol.
+		 */
 		public boolean premisesContainsSymbol(Symbol q) {
 			return premiseSymbols.contains(q);
 		}
 
+		/**
+		 * Returns a list of all the symbols in the premise of this horn clause
+		 * 
+		 * @return a list of all the symbols in the premise of this horn clause
+		 */
 		public List<Symbol> getPremiseSymbols() {
 			return premiseSymbols;
 		}

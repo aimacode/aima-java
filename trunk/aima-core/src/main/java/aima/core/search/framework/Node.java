@@ -68,8 +68,8 @@ public class Node {
 	 *            node.
 	 * @param stepCost
 	 *            the cost from the parent node to this node. Used to calculate
-	 *            the full pathCost from the root node to here, based on the parent's
-	 *            path cost.
+	 *            the full pathCost from the root node to here, based on the
+	 *            parent's path cost.
 	 */
 	public Node(Object state, Node parent, Action action, double stepCost) {
 		this(state);

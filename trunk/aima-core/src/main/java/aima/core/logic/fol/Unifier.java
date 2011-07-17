@@ -49,6 +49,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
+ * @author Mike Stampone
  * 
  */
 public class Unifier {
@@ -59,17 +60,35 @@ public class Unifier {
 
 	}
 
+	/**
+	 * Returns a Map<Variable, Term> representing the substitution (i.e. a set
+	 * of variable/term pairs) or null which is used to indicate a failure to
+	 * unify.
+	 * 
+	 * @param x
+	 *            a variable, constant, list, or compound
+	 * @param y
+	 *            a variable, constant, list, or compound
+	 * 
+	 * @return a Map<Variable, Term> representing the substitution (i.e. a set
+	 *         of variable/term pairs) or null which is used to indicate a
+	 *         failure to unify.
+	 */
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
 		return unify(x, y, new LinkedHashMap<Variable, Term>());
 	}
 
 	/**
-	 * <code>
-	 * function UNIFY(x, y, theta) returns a substitution to make x and y identical
-	 *   inputs: x, a variable, constant, list, or compound
-	 *           y, a variable, constant, list, or compound
-	 *           theta, the substitution built up so far (optional, defaults to empty)
-	 * </code>
+	 * Returns a Map<Variable, Term> representing the substitution (i.e. a set
+	 * of variable/term pairs) or null which is used to indicate a failure to
+	 * unify.
+	 * 
+	 * @param x
+	 *            a variable, constant, list, or compound
+	 * @param y
+	 *            a variable, constant, list, or compound
+	 * @param theta
+	 *            the substitution built up so far
 	 * 
 	 * @return a Map<Variable, Term> representing the substitution (i.e. a set
 	 *         of variable/term pairs) or null which is used to indicate a
@@ -99,6 +118,22 @@ public class Unifier {
 		}
 	}
 
+	/**
+	 * Returns a Map<Variable, Term> representing the substitution (i.e. a set
+	 * of variable/term pairs) or null which is used to indicate a failure to
+	 * unify.
+	 * 
+	 * @param x
+	 *            a variable, constant, list, or compound
+	 * @param y
+	 *            a variable, constant, list, or compound
+	 * @param theta
+	 *            the substitution built up so far
+	 * 
+	 * @return a Map<Variable, Term> representing the substitution (i.e. a set
+	 *         of variable/term pairs) or null which is used to indicate a
+	 *         failure to unify.
+	 */
 	// else if LIST?(x) and LIST?(y) then
 	// return UNIFY(x.REST, y.REST, UNIFY(x.FIRST, y.FIRST, theta))
 	public Map<Variable, Term> unify(List<? extends FOLNode> x,
