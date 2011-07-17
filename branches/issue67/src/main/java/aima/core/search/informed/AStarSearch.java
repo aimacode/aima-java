@@ -27,9 +27,9 @@ public class AStarSearch extends BestFirstSearch {
 	 * @param search
 	 *            a search problem
 	 * @param hf
-	 *            a heuristic function <em>h(n)</em>, which estimates the
-	 *            cost of the cheapest path from the state at node <em>n</em>
-	 *            to a goal state.
+	 *            a heuristic function <em>h(n)</em>, which estimates the cost
+	 *            of the cheapest path from the state at node <em>n</em> to a
+	 *            goal state.
 	 */
 	public AStarSearch(QueueSearch search, HeuristicFunction hf) {
 		super(search, new AStarEvaluationFunction(hf));

@@ -5,7 +5,7 @@ import aima.core.util.math.Vector;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class Perceptron implements FunctionApproximator {
 
@@ -33,6 +33,15 @@ public class Perceptron implements FunctionApproximator {
 
 	}
 
+	/**
+	 * Induces the layer of this perceptron from the specified set of examples
+	 * 
+	 * @param innds
+	 *            a set of training examples for constructing the layer of this
+	 *            perceptron.
+	 * @param numberofEpochs
+	 *            the number of training epochs to be used.
+	 */
 	public void trainOn(NNDataSet innds, int numberofEpochs) {
 		for (int i = 0; i < numberofEpochs; i++) {
 			innds.refreshDataset();
@@ -45,10 +54,26 @@ public class Perceptron implements FunctionApproximator {
 		}
 	}
 
+	/**
+	 * Returns the outcome predicted for the specified example
+	 * 
+	 * @param nne
+	 *            an example
+	 * 
+	 * @return the outcome predicted for the specified example
+	 */
 	public Vector predict(NNExample nne) {
 		return processInput(nne.getInput());
 	}
 
+	/**
+	 * Returns the accuracy of the hypothesis on the specified set of examples
+	 * 
+	 * @param nnds
+	 *            the neural network data set to be tested on.
+	 * 
+	 * @return the accuracy of the hypothesis on the specified set of examples
+	 */
 	public int[] testOnDataSet(NNDataSet nnds) {
 		int[] result = new int[] { 0, 0 };
 		nnds.refreshDataset();

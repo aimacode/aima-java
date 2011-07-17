@@ -16,7 +16,6 @@ import aima.core.util.ArrayIterator;
  * @author Ruediger Lunde
  */
 public class Domain implements Iterable<Object> {
-	private static final long serialVersionUID = 1L;
 
 	private Object[] values;
 

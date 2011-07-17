@@ -7,7 +7,7 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class CNFTransformer extends AbstractPLVisitor {
 	@Override
@@ -29,6 +29,14 @@ public class CNFTransformer extends AbstractPLVisitor {
 		return transformNotSentence(us);
 	}
 
+	/**
+	 * Returns the specified sentence in conjunctive normal form.
+	 * 
+	 * @param s
+	 *            a sentence of propositional logic
+	 * 
+	 * @return the specified sentence in conjunctive normal form.
+	 */
 	public Sentence transform(Sentence s) {
 		Sentence toTransform = s;
 		while (!(toTransform.equals(step(toTransform)))) {

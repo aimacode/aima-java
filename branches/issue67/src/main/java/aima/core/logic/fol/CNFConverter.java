@@ -34,7 +34,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * >INSEADO Rules</a>
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Mike Stampone
  */
 public class CNFConverter {
 
@@ -47,6 +47,16 @@ public class CNFConverter {
 		this.substVisitor = new SubstVisitor();
 	}
 
+	/**
+	 * Returns the specified sentence as a list of clauses, where each clause is
+	 * a disjunction of literals.
+	 * 
+	 * @param aSentence
+	 *            a sentence in first order logic (predicate calculus)
+	 * 
+	 * @return the specified sentence as a list of clauses, where each clause is
+	 *         a disjunction of literals.
+	 */
 	public CNF convertToCNF(Sentence aSentence) {
 		// I)mplications Out:
 		Sentence implicationsOut = (Sentence) aSentence.accept(

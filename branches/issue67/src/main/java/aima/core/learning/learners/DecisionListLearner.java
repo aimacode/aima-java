@@ -11,7 +11,7 @@ import aima.core.learning.inductive.DecisionList;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public class DecisionListLearner implements Learner {
 	public static final String FAILURE = "Failure";
@@ -29,10 +29,21 @@ public class DecisionListLearner implements Learner {
 		this.testFactory = testFactory;
 	}
 
+	//
+	// START-Learner
+
+	/**
+	 * Induces the decision list from the specified set of examples
+	 * 
+	 * @param ds
+	 *            a set of examples for constructing the decision list
+	 */
+	@Override
 	public void train(DataSet ds) {
 		this.decisionList = decisionListLearning(ds);
 	}
 
+	@Override
 	public String predict(Example e) {
 		if (decisionList == null) {
 			throw new RuntimeException(
@@ -41,6 +52,7 @@ public class DecisionListLearner implements Learner {
 		return decisionList.predict(e);
 	}
 
+	@Override
 	public int[] test(DataSet ds) {
 		int[] results = new int[] { 0, 0 };
 
@@ -54,8 +66,13 @@ public class DecisionListLearner implements Learner {
 		return results;
 	}
 
+	// END-Learner
+	//
+
 	/**
-	 * @return Returns the decisionList.
+	 * Returns the decision list of this decision list learner
+	 * 
+	 * @return the decision list of this decision list learner
 	 */
 	public DecisionList getDecisionList() {
 		return decisionList;

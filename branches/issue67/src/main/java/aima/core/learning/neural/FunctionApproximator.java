@@ -4,16 +4,25 @@ import aima.core.util.math.Vector;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Mike Stampone
  */
 public interface FunctionApproximator {
-	/*
-	 * accepts input pattern and processe it returning an output value
+
+	/**
+	 * Returns the output values for the specified input values
+	 * 
+	 * @param input
+	 *            the input values
+	 * 
+	 * @return the output values for the specified input values
 	 */
 	Vector processInput(Vector input);
 
-	/*
-	 * accept an error and change the parameters to accomodate it
+	/**
+	 * Accept an error and change the parameters to accommodate it
+	 * 
+	 * @param error
+	 *            an error vector
 	 */
 	void processError(Vector error);
 }

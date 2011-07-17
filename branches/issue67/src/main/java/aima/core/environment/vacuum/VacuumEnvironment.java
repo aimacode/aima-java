@@ -16,8 +16,8 @@ import aima.core.agent.impl.DynamicAction;
  * contain dirt, and the agent may be in one location or the other. There are 8
  * possible world states, as shown in Figure 3.2. The agent has three possible
  * actions in this version of the vacuum world: <em>Left</em>, <em>Right</em>,
- * and <em>Suck</em>. Assume for the moment, that sucking is 100% effective.
- * The goal is to clean up all the dirt.
+ * and <em>Suck</em>. Assume for the moment, that sucking is 100% effective. The
+ * goal is to clean up all the dirt.
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
