@@ -41,6 +41,9 @@ import aima.core.probability.util.RandVar;
  * FORWARD and BACKWARD operators are defined by Equations (15.5) and (15.9),
  * respectively.<br>
  * <br>
+ * <b>Note:</b> An implementation of the FORWARD-BACKWARD algorithm using the
+ * general purpose probability APIs, i.e. the underlying model implementation is
+ * abstracted away.
  * 
  * @author Ciaran O'Reilly
  */
@@ -151,8 +154,8 @@ public class ForwardBackward implements ForwardBackwardInference {
 	@Override
 	public CategoricalDistribution backward(CategoricalDistribution b_kp2t,
 			List<AssignmentProposition> e_kp1) {
-		final CategoricalDistribution b_kp1t = new ProbabilityTable(b_kp2t
-				.getFor());
+		final CategoricalDistribution b_kp1t = new ProbabilityTable(
+				b_kp2t.getFor());
 		// Set up required working variables
 		Proposition[] props = new Proposition[b_kp1t.getFor().size()];
 		int i = 0;

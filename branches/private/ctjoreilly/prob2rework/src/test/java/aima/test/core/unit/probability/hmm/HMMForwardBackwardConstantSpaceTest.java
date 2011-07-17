@@ -5,29 +5,19 @@ import org.junit.Test;
 
 import aima.core.probability.example.ExampleRV;
 import aima.core.probability.example.HMMExampleFactory;
-import aima.core.probability.hmm.HMMForwardBackward;
+import aima.core.probability.hmm.HMMForwardBackwardConstantSpace;
 import aima.test.core.unit.probability.temporal.CommonForwardBackwardTest;
 
-public class HMMForwardBackwardTest extends CommonForwardBackwardTest {
+public class HMMForwardBackwardConstantSpaceTest extends CommonForwardBackwardTest {
 
 	//
-	private HMMForwardBackward uw = null;
+	private HMMForwardBackwardConstantSpace uw = null;
 
 	@Before
 	public void setUp() {
-		uw = new HMMForwardBackward(ExampleRV.RAIN_t_RV,
+		uw = new HMMForwardBackwardConstantSpace(ExampleRV.RAIN_t_RV,
 				HMMExampleFactory.getUmbrellaWorldTransitionModel(),
 				HMMExampleFactory.getUmbrellaWorldSensorModel());
-	}
-
-	@Test
-	public void testForwardStep_UmbrellaWorld() {
-		super.testForwardStep_UmbrellaWorld(uw);
-	}
-
-	@Test
-	public void testBackwardStep_UmbrellaWorld() {
-		super.testBackwardStep_UmbrellaWorld(uw);
 	}
 
 	@Test
