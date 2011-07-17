@@ -23,7 +23,7 @@ import aima.core.util.math.Matrix;
  * backward if we manipulate Equation (15.12) to work in the other direction:<br>
  * 
  * <pre>
- * &alpha;<sup>'</sup>(<b>T</b><sup>T</sup>)<sup>-1</sup><b>O</b><sup>-1</sup><sub>t+1</sub><b>f</b><sub>1:t+1</sub>
+ * <b>f</b><sub>1:t</sub> = &alpha;<sup>'</sup>(<b>T</b><sup>T</sup>)<sup>-1</sup><b>O</b><sup>-1</sup><sub>t+1</sub><b>f</b><sub>1:t+1</sub>
  * </pre>
  * 
  * The modified smoothing algorithm works by first running the standard forward
@@ -71,7 +71,7 @@ public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 			b = backward(b, e);
 			// f1:t <-
 			// NORMALIZE((T<sup>T<sup>)<sup>-1</sup>O<sup>-1</sup><sub>t+1</sub>f<sub>1:t+1</sub>)
-			f = forwardRecover(f, e);
+			f = forwardRecover(e, f);
 		}
 
 		// return sv
@@ -85,15 +85,17 @@ public class HMMForwardBackwardConstantSpace extends HMMForwardBackward {
 	 * Calculate:
 	 * 
 	 * <pre>
-	 * &alpha;<sup>'</sup>(<b>T</b><sup>T</sup>)<sup>-1</sup><b>O</b><sup>-1</sup><sub>t+1</sub><b>f</b><sub>1:t+1</sub>
+	 * <b>f</b><sub>1:t</sub> = &alpha;<sup>'</sup>(<b>T</b><sup>T</sup>)<sup>-1</sup><b>O</b><sup>-1</sup><sub>t+1</sub><b>f</b><sub>1:t+1</sub>
 	 * </pre>
 	 * 
+	 * @param O_tp1
+	 *            <b>O</b><sub>t+1</sub>
 	 * @param f1_tp1
-	 * @param e_tp1
-	 * @return
+	 *            <b>f</b><sub>1:t+1</sub>
+	 * @return <b>f</b><sub>1:t</sub>
 	 */
-	public Matrix forwardRecover(Matrix f1_tp1, Matrix e_tp1) {
+	public Matrix forwardRecover(Matrix O_tp1, Matrix f1_tp1) {
 		return normalize(transitionModel.transpose().inverse()
-				.times(e_tp1.inverse()).times(f1_tp1));
+				.times(O_tp1.inverse()).times(f1_tp1));
 	}
 }
