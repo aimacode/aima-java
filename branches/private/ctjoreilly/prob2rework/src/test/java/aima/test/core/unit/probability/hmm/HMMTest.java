@@ -14,33 +14,7 @@ public class HMMTest {
 	 * 
 	 * 	private static final double TOLERANCE = 0.001;
 	 * 
-	 * 	@Before
-	 * 	public void setUp() {
-	 * 		robotHmm = HMMFactory.createRobotHMM();
-	 * 		rainmanHmm = HMMFactory.createRainmanHMM();
-	 * 	}
 	 * 
-	 * 	@Test
-	 * 	public void testRobotHMMInitialization() {
-	 * 
-	 * 		Assert.assertEquals(0.5,
-	 * 				robotHmm.prior().getProbabilityOf(HmmConstants.DOOR_OPEN),
-	 * 				0.001);
-	 * 		Assert.assertEquals(0.5,
-	 * 				robotHmm.prior().getProbabilityOf(HmmConstants.DOOR_CLOSED),
-	 * 				0.001);
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testRainmanHmmInitialization() {
-	 * 
-	 * 		Assert.assertEquals(0.5,
-	 * 				rainmanHmm.prior().getProbabilityOf(HmmConstants.RAINING),
-	 * 				0.001);
-	 * 		Assert.assertEquals(0.5,
-	 * 				rainmanHmm.prior().getProbabilityOf(HmmConstants.NOT_RAINING),
-	 * 				0.001);
-	 * 	}
 	 * 
 	 * 	@Test
 	 * 	public void testForwardMessagingWorksForFiltering() {
