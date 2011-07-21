@@ -1,10 +1,10 @@
-package aima.test.core.unit.probability.hmm;
+package aima.test.core.unit.probability.bayes.approx;
 
 import org.junit.Ignore;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
 @Ignore
 public class ParticleFilterTest {

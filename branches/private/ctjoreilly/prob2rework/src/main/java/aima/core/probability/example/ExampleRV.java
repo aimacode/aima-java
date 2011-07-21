@@ -52,7 +52,7 @@ public class ExampleRV {
 	public static final RandVar WET_GRASS_RV = new RandVar("WetGrass",
 			new BooleanDomain());
 	//
-	public static final RandVar RAIN_tm1_RV = new RandVar("Rain_tm1",
+	public static final RandVar RAIN_tm1_RV = new RandVar("Rain_t-1",
 			new BooleanDomain());
 	public static final RandVar RAIN_t_RV = new RandVar("Rain_t",
 			new BooleanDomain());

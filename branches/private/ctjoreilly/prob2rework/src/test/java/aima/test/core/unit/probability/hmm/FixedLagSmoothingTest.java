@@ -12,6 +12,11 @@ import aima.core.probability.example.HMMExampleFactory;
 import aima.core.probability.hmm.FixedLagSmoothing;
 import aima.core.probability.proposition.AssignmentProposition;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ *
+ */
 public class FixedLagSmoothingTest {
 	public static final double DELTA_THRESHOLD = 1e-3;
 
