@@ -1,171 +1,142 @@
 package aima.test.core.unit.probability.bayes.approx;
 
-import org.junit.Ignore;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Assert;
+
+import org.junit.Test;
+
+import aima.core.probability.RandomVariable;
+import aima.core.probability.bayes.DynamicBayesianNetwork;
+import aima.core.probability.bayes.FiniteNode;
+import aima.core.probability.bayes.approx.ParticleFiltering;
+import aima.core.probability.bayes.impl.BayesNet;
+import aima.core.probability.bayes.impl.DynamicBayesNet;
+import aima.core.probability.bayes.impl.FullCPTNode;
+import aima.core.probability.example.ExampleRV;
+import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.util.MockRandomizer;
 
 /**
- * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
  */
-@Ignore
 public class ParticleFilterTest {
-	/**
-	 * <pre>
-	 * 	private HiddenMarkovModel rainman, robot;
-	 * 
-	 * 	ParticleSet particleSet;
-	 * 
-	 * 	Randomizer randomizer;
-	 * 
-	 * 	@Before
-	 * 	public void setUp() {
-	 * 		rainman = HMMFactory.createRainmanHMM();
-	 * 		robot = HMMFactory.createRobotHMM();
-	 * 
-	 * 		randomizer = new MockRandomizer(new double[] { 0.1, 0.9 });
-	 * 		particleSet = new ParticleSet(rainman);
-	 * 		particleSet.add(new Particle(HmmConstants.RAINING));
-	 * 		particleSet.add(new Particle(HmmConstants.RAINING));
-	 * 		particleSet.add(new Particle(HmmConstants.RAINING));
-	 * 		particleSet.add(new Particle(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testFilteringWithParticleSetsWorksForRainmanHmm() {
-	 * 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
-	 * 				0.5, 0.6, 0.7, 0.8, 0.9 });
-	 * 		ParticleSet starting = rainman.prior().toParticleSet(rainman, r, 100);
-	 * 		Assert.assertEquals(56,
-	 * 				starting.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(44,
-	 * 				starting.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 
-	 * 		ParticleSet afterSeeingUmbrella = starting.filter(
-	 * 				HmmConstants.SEE_UMBRELLA, r);
-	 * 		Assert.assertEquals(84, afterSeeingUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(16, afterSeeingUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 
-	 * 		// or alternatively
-	 * 		ParticleSet afterNotSeeingUmbrella = starting.filter(
-	 * 				HmmConstants.SEE_NO_UMBRELLA, r);
-	 * 		Assert.assertEquals(12, afterNotSeeingUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(88, afterNotSeeingUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testFilteringWithParticleSetsForRobotHmm() {
-	 * 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
-	 * 				0.5, 0.6, 0.7, 0.8, 0.9 });
-	 * 		ParticleSet starting = robot.prior().toParticleSet(robot, r, 100);
-	 * 		Assert.assertEquals(56,
-	 * 				starting.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
-	 * 		Assert.assertEquals(44,
-	 * 				starting.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
-	 * 
-	 * 		// step one = robot takes no action but senses open door
-	 * 		ParticleSet afterStepOne = starting.filter(HmmConstants.SEE_DOOR_OPEN,
-	 * 				r);
-	 * 		Assert.assertEquals(66,
-	 * 				afterStepOne.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
-	 * 		Assert.assertEquals(34, afterStepOne
-	 * 				.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
-	 * 
-	 * 		// step two = robot pushes the door and then senses open door
-	 * 		ParticleSet afterStepTwo = starting.filter(HmmConstants.PUSH_DOOR,
-	 * 				HmmConstants.SEE_DOOR_OPEN, r);
-	 * 		Assert.assertEquals(100,
-	 * 				afterStepTwo.numberOfParticlesWithState(HmmConstants.DOOR_OPEN));
-	 * 		Assert.assertEquals(0, afterStepTwo
-	 * 				.numberOfParticlesWithState(HmmConstants.DOOR_CLOSED));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testRandomVariableConversionToParticleSet() {
-	 * 		VarDistribution rv = rainman.prior();
-	 * 		ParticleSet ps = rv.toParticleSet(rainman, randomizer, 10);
-	 * 		Assert.assertEquals(5,
-	 * 				ps.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(5,
-	 * 				ps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testParticleSetConversionToRandomVariable() {
-	 * 
-	 * 		VarDistribution rv = particleSet.toRandomVariable();
-	 * 		Assert.assertEquals(0.75, rv.getProbabilityOf(HmmConstants.RAINING),
-	 * 				0.001);
-	 * 		Assert.assertEquals(0.25,
-	 * 				rv.getProbabilityOf(HmmConstants.NOT_RAINING), 0.001);
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testRoundTripConversion() {
-	 * 		VarDistribution rv = particleSet.toRandomVariable();
-	 * 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
-	 * 				0.9 });
-	 * 		ParticleSet ps2 = rv.toParticleSet(rainman, r, 10);
-	 * 		Assert.assertEquals(8,
-	 * 				ps2.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(2,
-	 * 				ps2.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testTransitionModelGeneratesNewStateWhenGivenOldStateAndProbability() {
-	 * 
-	 * 		TransitionModel tm = rainman.transitionModel();
-	 * 		String oldState = HmmConstants.RAINING;
-	 * 		String state1 = tm.getStateForProbability(oldState,
-	 * 				randomizer.nextDouble());
-	 * 		String state2 = tm.getStateForProbability(oldState,
-	 * 				randomizer.nextDouble());
-	 * 		Assert.assertEquals(state1, HmmConstants.RAINING);
-	 * 		Assert.assertEquals(state2, HmmConstants.NOT_RAINING);
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testParticleSetForPredictedStateGeneratedFromOldStateParticleSet() {
-	 * 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
-	 * 				0.5, 0.6, 0.7, 0.8, 0.9 });
-	 * 		ParticleSet ps = rainman.prior().toParticleSet(rainman, r, 10);
-	 * 		Assert.assertEquals(6,
-	 * 				ps.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(4,
-	 * 				ps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 
-	 * 		ParticleSet nps = ps.generateParticleSetForPredictedState(r);
-	 * 		Assert.assertEquals(7,
-	 * 				nps.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(3,
-	 * 				nps.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * 
-	 * 	@Test
-	 * 	public void testParticleSetForPerceptionUpdatedStateGeneratedFromPredictedStateParticleSetGivenPerception() {
-	 * 		Randomizer r = new MockRandomizer(new double[] { 0.1, 0.2, 0.3, 0.4,
-	 * 				0.5, 0.6, 0.7, 0.8, 0.9 });
-	 * 		ParticleSet starting = rainman.prior().toParticleSet(rainman, r, 10);
-	 * 		ParticleSet predicted = starting
-	 * 				.generateParticleSetForPredictedState(r);
-	 * 
-	 * 		ParticleSet updatedWithPerceptionOfUmbrella = predicted
-	 * 				.perceptionUpdate(HmmConstants.SEE_UMBRELLA, r);
-	 * 		Assert.assertEquals(9, updatedWithPerceptionOfUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(1, updatedWithPerceptionOfUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 
-	 * 		ParticleSet updatedWithPerceptionOfNoUmbrella = predicted
-	 * 				.perceptionUpdate(HmmConstants.SEE_NO_UMBRELLA, r);
-	 * 		Assert.assertEquals(2, updatedWithPerceptionOfNoUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.RAINING));
-	 * 		Assert.assertEquals(8, updatedWithPerceptionOfNoUmbrella
-	 * 				.numberOfParticlesWithState(HmmConstants.NOT_RAINING));
-	 * 	}
-	 * </pre>
-	 */
+
+	@Test
+	public void test_AIMA3e_Fig15_18() {
+		MockRandomizer mr = new MockRandomizer(new double[] {
+				// Prior Sample:
+				// 8 with Rain_t-1=true from prior distribution
+				0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+				// 2 with Rain_t-1=false from prior distribution
+				0.6, 0.6,
+				// (a) Propagate 6 samples Rain_t=true
+				0.7, 0.7, 0.7, 0.7, 0.7, 0.7,
+				// 4 samples Rain_t=false
+				0.71, 0.71, 0.31, 0.31,
+				// (b) Weight should be for first 6 samples:
+				// Rain_t-1=true, Rain_t=true, Umbrella_t=false = 0.1
+				// Next 2 samples:
+				// Rain_t-1=true, Rain_t=false, Umbrealla_t=false= 0.8
+				// Final 2 samples:
+				// Rain_t-1=false, Rain_t=false, Umbrella_t=false = 0.8
+				// gives W[] =
+				// [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.8, 0.8, 0.8, 0.8]
+				// normalized =
+				// [0.026, ...., 0.211, ....] is approx. 0.156 = true
+				// the remainder is false
+				// (c) Resample 2 Rain_t=true, 8 Rain_t=false
+				0.15, 0.15, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+				//
+				// Next Sample:
+				// (a) Propagate 1 samples Rain_t=true
+				0.7,
+				// 9 samples Rain_t=false
+				0.71, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31,
+				// (c) resample 1 Rain_t=true, 9 Rain_t=false
+				0.0001, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2 });
+
+		int N = 10;
+		ParticleFiltering pf = new ParticleFiltering(N,
+				getUmbrellaWorldNetwork(), mr);
+
+		AssignmentProposition[] e = new AssignmentProposition[] { new AssignmentProposition(
+				ExampleRV.UMBREALLA_t_RV, false) };
+
+		AssignmentProposition[][] S = pf.particleFiltering(e);
+
+		Assert.assertEquals(N, S.length);
+		for (int i = 0; i < N; i++) {
+			Assert.assertEquals(1, S[i].length);
+			AssignmentProposition ap = S[i][0];
+			Assert.assertEquals(ExampleRV.RAIN_t_RV, ap.getTermVariable());
+			if (i < 2) {
+				Assert.assertEquals(true, ap.getValue());
+			} else {
+				Assert.assertEquals(false, ap.getValue());
+			}
+		}
+
+		// Generate next sample to ensure everything roles forward ok
+		// in this case with prefixed probabilities only expect 1 Rain_t=true
+		S = pf.particleFiltering(e);
+		Assert.assertEquals(N, S.length);
+		for (int i = 0; i < N; i++) {
+			Assert.assertEquals(1, S[i].length);
+			AssignmentProposition ap = S[i][0];
+			Assert.assertEquals(ExampleRV.RAIN_t_RV, ap.getTermVariable());
+			if (i < 1) {
+				Assert.assertEquals(true, ap.getValue());
+			} else {
+				Assert.assertEquals(false, ap.getValue());
+			}
+		}
+	}
+
+	//
+	// PRIVATE METHODS
+	//
+	private static DynamicBayesianNetwork getUmbrellaWorldNetwork() {
+		FiniteNode prior_rain_tm1 = new FullCPTNode(ExampleRV.RAIN_tm1_RV,
+				new double[] { 0.5, 0.5 });
+
+		BayesNet priorNetwork = new BayesNet(prior_rain_tm1);
+
+		// Prior belief state
+		FiniteNode rain_tm1 = new FullCPTNode(ExampleRV.RAIN_tm1_RV,
+				new double[] { 0.5, 0.5 });
+		// Transition Model
+		FiniteNode rain_t = new FullCPTNode(ExampleRV.RAIN_t_RV, new double[] {
+				// R_t-1 = true, R_t = true
+				0.7,
+				// R_t-1 = true, R_t = false
+				0.3,
+				// R_t-1 = false, R_t = true
+				0.3,
+				// R_t-1 = false, R_t = false
+				0.7 }, rain_tm1);
+		// Sensor Model
+		@SuppressWarnings("unused")
+		FiniteNode umbrealla_t = new FullCPTNode(ExampleRV.UMBREALLA_t_RV,
+				new double[] {
+						// R_t = true, U_t = true
+						0.9,
+						// R_t = true, U_t = false
+						0.1,
+						// R_t = false, U_t = true
+						0.2,
+						// R_t = false, U_t = false
+						0.8 }, rain_t);
+
+		Map<RandomVariable, RandomVariable> X_0_to_X_1 = new HashMap<RandomVariable, RandomVariable>();
+		X_0_to_X_1.put(ExampleRV.RAIN_tm1_RV, ExampleRV.RAIN_t_RV);
+		Set<RandomVariable> E_1 = new HashSet<RandomVariable>();
+		E_1.add(ExampleRV.UMBREALLA_t_RV);
+
+		return new DynamicBayesNet(priorNetwork, X_0_to_X_1, E_1, rain_tm1);
+	}
 }

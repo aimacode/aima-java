@@ -1,11 +1,14 @@
 package aima.core.probability.bayes.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import aima.core.probability.RandomVariable;
+import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.DynamicBayesianNetwork;
 import aima.core.probability.bayes.Node;
 import aima.core.util.SetOps;
@@ -22,8 +25,11 @@ public class DynamicBayesNet extends BayesNet implements DynamicBayesianNetwork 
 	private Set<RandomVariable> E_1 = new LinkedHashSet<RandomVariable>();
 	private Map<RandomVariable, RandomVariable> X_0_to_X_1 = new LinkedHashMap<RandomVariable, RandomVariable>();
 	private Map<RandomVariable, RandomVariable> X_1_to_X_0 = new LinkedHashMap<RandomVariable, RandomVariable>();
+	private BayesianNetwork priorNetwork = null;
+	private List<RandomVariable> X_1_VariablesInTopologicalOrder = new ArrayList<RandomVariable>();
 
-	public DynamicBayesNet(Map<RandomVariable, RandomVariable> X_0_to_X_1,
+	public DynamicBayesNet(BayesianNetwork priorNetwork,
+			Map<RandomVariable, RandomVariable> X_0_to_X_1,
 			Set<RandomVariable> E_1, Node... rootNodes) {
 		super(rootNodes);
 
@@ -47,10 +53,21 @@ public class DynamicBayesNet extends BayesNet implements DynamicBayesianNetwork 
 			throw new IllegalArgumentException(
 					"X_0, X_1, and E_1 do not map correctly to the Nodes describing this Dynamic Bayesian Network.");
 		}
+		this.priorNetwork = priorNetwork;
+
+		X_1_VariablesInTopologicalOrder
+				.addAll(getVariablesInTopologicalOrder());
+		X_1_VariablesInTopologicalOrder.removeAll(X_0);
+		X_1_VariablesInTopologicalOrder.removeAll(E_1);
 	}
 
 	//
 	// START-DynamicBayesianNetwork
+	@Override
+	public BayesianNetwork getPriorNetwork() {
+		return priorNetwork;
+	}
+
 	@Override
 	public Set<RandomVariable> getX_0() {
 		return X_0;
@@ -59,6 +76,11 @@ public class DynamicBayesNet extends BayesNet implements DynamicBayesianNetwork 
 	@Override
 	public Set<RandomVariable> getX_1() {
 		return X_1;
+	}
+
+	@Override
+	public List<RandomVariable> getX_1_VariablesInTopologicalOrder() {
+		return X_1_VariablesInTopologicalOrder;
 	}
 
 	@Override

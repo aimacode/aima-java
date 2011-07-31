@@ -95,12 +95,38 @@ public class HMMForwardBackward implements ForwardBackwardInference {
 	// END-ForwardBackwardInference
 	//
 
-	public Matrix forward(Matrix f1_t, Matrix e_tp1) {
-		return hmm.normalize(e_tp1.times(hmm.getTransitionModel().transpose()
+	/**
+	 * The forward equation (15.5) in Matrix form becomes (15.12):<br>
+	 * 
+	 * <pre>
+	 * <b>f</b><sub>1:t+1</sub> = &alpha;<b>O</b><sub>t+1</sub><b>T</b><sup>T</sup><b>f</b><sub>1:t</sub>
+	 * </pre>
+	 * 
+	 * @param f1_t
+	 *            <b>f</b><sub>1:t</sub>
+	 * @param O_tp1
+	 *            <b>O</b><sub>t+1</sub>
+	 * @return <b>f</b><sub>1:t+1</sub>
+	 */
+	public Matrix forward(Matrix f1_t, Matrix O_tp1) {
+		return hmm.normalize(O_tp1.times(hmm.getTransitionModel().transpose()
 				.times(f1_t)));
 	}
 
-	public Matrix backward(Matrix b_kp2t, Matrix e_kp1) {
-		return hmm.getTransitionModel().times(e_kp1).times(b_kp2t);
+	/**
+	 * The backward equation (15.9) in Matrix form becomes (15.13):<br>
+	 * 
+	 * <pre>
+	 * <b>b</b><sub>k+1:t</sub> = <b>T</b><b>O</b><sub>k+1</sub><b>b</b><sub>k+2:t</sub>
+	 * </pre>
+	 * 
+	 * @param b_kp2t
+	 *            <b>b</b><sub>k+2:t</sub>
+	 * @param O_kp1
+	 *            <b>O</b><sub>k+1</sub>
+	 * @return <b>b</b><sub>k+1:t</sub>
+	 */
+	public Matrix backward(Matrix b_kp2t, Matrix O_kp1) {
+		return hmm.getTransitionModel().times(O_kp1).times(b_kp2t);
 	}
 }

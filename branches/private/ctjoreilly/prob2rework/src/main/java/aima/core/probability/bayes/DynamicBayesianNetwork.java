@@ -1,5 +1,6 @@
 package aima.core.probability.bayes;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +24,13 @@ public interface DynamicBayesianNetwork extends BayesianNetwork {
 
 	/**
 	 * 
+	 * @return a Bayesian Network containing just the nodes representing the
+	 *         prior distribution (layer 0) of the dynamic bayesian network.
+	 */
+	BayesianNetwork getPriorNetwork();
+
+	/**
+	 * 
 	 * @return the set of state variables representing the prior distribution.
 	 */
 	Set<RandomVariable> getX_0();
@@ -35,6 +43,12 @@ public interface DynamicBayesianNetwork extends BayesianNetwork {
 	 *         <b>X</b><sub>0</sub>).
 	 */
 	Set<RandomVariable> getX_1();
+
+	/**
+	 * 
+	 * @return the X_1 variables in topological order.
+	 */
+	List<RandomVariable> getX_1_VariablesInTopologicalOrder();
 
 	/**
 	 * 

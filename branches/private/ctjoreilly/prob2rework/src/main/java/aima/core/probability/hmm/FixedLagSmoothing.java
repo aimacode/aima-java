@@ -134,16 +134,29 @@ public class FixedLagSmoothing {
 		// if t > d then return NORMALIZE(<b>f</b> * <b>B1</b>) else return null
 		CategoricalDistribution rVal = null;
 		if (t > d) {
-			rVal = hmm.convert(hmm
-					.normalize(f.arrayTimes(B.times(unitMessage))));
+			rVal = hmm
+					.convert(hmm.normalize(f.arrayTimes(B.times(unitMessage))));
 		}
 		// t <- t + 1
 		t = t + 1;
 		return rVal;
 	}
 
-	public Matrix forward(Matrix f1_t, Matrix e_tp1) {
-		return hmm.normalize(e_tp1.times(hmm.getTransitionModel().transpose()
+	/**
+	 * The forward equation (15.5) in Matrix form becomes (15.12):<br>
+	 * 
+	 * <pre>
+	 * <b>f</b><sub>1:t+1</sub> = &alpha;<b>O</b><sub>t+1</sub><b>T</b><sup>T</sup><b>f</b><sub>1:t</sub>
+	 * </pre>
+	 * 
+	 * @param f1_t
+	 *            <b>f</b><sub>1:t</sub>
+	 * @param O_tp1
+	 *            <b>O</b><sub>t+1</sub>
+	 * @return <b>f</b><sub>1:t+1</sub>
+	 */
+	public Matrix forward(Matrix f1_t, Matrix O_tp1) {
+		return hmm.normalize(O_tp1.times(hmm.getTransitionModel().transpose()
 				.times(f1_t)));
 	}
 

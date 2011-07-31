@@ -53,6 +53,17 @@ public class ForwardBackward implements ForwardBackwardInference {
 	private Map<RandomVariable, RandomVariable> tToTm1StateVarMap = new HashMap<RandomVariable, RandomVariable>();
 	private FiniteProbabilityModel sensorModel = null;
 
+	/**
+	 * Instantiate an instance of the Forward Backward algorithm.
+	 * 
+	 * @param transitionModel
+	 *            the transition model.
+	 * @param tToTm1StateVarMap
+	 *            a map from the X<sub>t<sub> random variables in the transition
+	 *            model the to X<sub>t-1</sub> random variables.
+	 * @param sensorModel
+	 *            the sensor model.
+	 */
 	public ForwardBackward(FiniteProbabilityModel transitionModel,
 			Map<RandomVariable, RandomVariable> tToTm1StateVarMap,
 			FiniteProbabilityModel sensorModel) {
