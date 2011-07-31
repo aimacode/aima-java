@@ -20,9 +20,9 @@ import aima.core.probability.bayes.Node;
  * @author Ravi Mohan
  */
 public class BayesNet implements BayesianNetwork {
-	private Set<Node> rootNodes = new LinkedHashSet<Node>();
-	private List<RandomVariable> variables = new ArrayList<RandomVariable>();
-	private Map<RandomVariable, Node> varToNodeMap = new HashMap<RandomVariable, Node>();
+	protected Set<Node> rootNodes = new LinkedHashSet<Node>();
+	protected List<RandomVariable> variables = new ArrayList<RandomVariable>();
+	protected Map<RandomVariable, Node> varToNodeMap = new HashMap<RandomVariable, Node>();
 
 	public BayesNet(Node... rootNodes) {
 		if (null == rootNodes) {

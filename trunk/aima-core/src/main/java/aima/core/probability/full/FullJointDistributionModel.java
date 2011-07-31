@@ -119,10 +119,6 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 						ud.setValue(dIdx, ud.getValues()[dIdx] + probability);
 					}
 				}
-
-				public Object getPostIterateValue() {
-					return null; // N/A
-				}
 			};
 
 			distribution.iterateOverTable(di);
@@ -144,23 +140,18 @@ public class FullJointDistributionModel implements FiniteProbabilityModel {
 	// PRIVATE METHODS
 	//
 	private double probabilityOf(final Proposition phi) {
+		final double[] probSum = new double[1];
 		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
-			private double probSum = 0;
-
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				if (phi.holds(possibleWorld)) {
-					probSum += probability;
+					probSum[0] += probability;
 				}
-			}
-
-			public Object getPostIterateValue() {
-				return probSum;
 			}
 		};
 
 		distribution.iterateOverTable(di);
 
-		return ((Double) di.getPostIterateValue()).doubleValue();
+		return probSum[0];
 	}
 }

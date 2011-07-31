@@ -11,16 +11,19 @@ public class AssignmentProposition extends AbstractTermProposition {
 
 	public AssignmentProposition(RandomVariable forVariable, Object value) {
 		super(forVariable);
-		if (null == value) {
-			throw new IllegalArgumentException(
-					"The value for the Random Variable must be specified.");
-		}
-
-		this.value = value;
+		setValue(value);
 	}
 
 	public Object getValue() {
 		return value;
+	}
+	
+	public void setValue(Object value) {
+		if (null == value) {
+			throw new IllegalArgumentException(
+					"The value for the Random Variable must be specified.");
+		}
+		this.value = value;
 	}
 
 	@Override

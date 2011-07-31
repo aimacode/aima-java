@@ -170,11 +170,6 @@ public class ProbabilityTableTest {
 					double probability) {
 				answer.add(probability);
 			}
-
-			@Override
-			public Object getPostIterateValue() {
-				return null; // N/A
-			}
 		};
 
 		answer.clear();

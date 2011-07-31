@@ -1,6 +1,9 @@
 package aima.core.probability;
 
+import java.util.Map;
 import java.util.Set;
+
+import aima.core.probability.proposition.AssignmentProposition;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 524.<br>
@@ -11,6 +14,28 @@ import java.util.Set;
  * 
  */
 public interface Factor {
+
+	/**
+	 * Interface to be implemented by an object/algorithm that wishes to iterate
+	 * over the possible assignments for the random variables comprising this
+	 * Factor.
+	 * 
+	 * @see Factor#iterateOver(Iterator)
+	 * @see Factor#iterateOver(Iterator, AssignmentProposition...)
+	 */
+	public interface Iterator {
+		/**
+		 * Called for each possible assignment for the Random Variables
+		 * comprising this Factor.
+		 * 
+		 * @param possibleAssignment
+		 *            a possible assignment, &omega;, of variable/value pairs.
+		 * @param value
+		 *            the value associated with &omega;
+		 */
+		void iterate(Map<RandomVariable, Object> possibleAssignment,
+				double value);
+	}
 
 	/**
 	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the argument
@@ -102,4 +127,26 @@ public interface Factor {
 	 */
 	Factor pointwiseProductPOS(Factor multiplier,
 			RandomVariable... prodVarOrder);
+
+	/**
+	 * Iterate over all the possible value assignments for the Random Variables
+	 * comprising this Factor.
+	 * 
+	 * @param fi
+	 *            the Factor Iterator to iterate.
+	 */
+	void iterateOver(Iterator fi);
+
+	/**
+	 * Iterate over all possible values assignments for the Random Variables
+	 * comprising this Factor that are not in the fixed set of values. This
+	 * allows you to iterate over a subset of possible combinations.
+	 * 
+	 * @param fi
+	 *            the Factor Iterator to iterate
+	 * @param fixedValues
+	 *            Fixed values for a subset of the Random Variables comprising
+	 *            this Factor.
+	 */
+	void iterateOver(Iterator fi, AssignmentProposition... fixedValues);
 }

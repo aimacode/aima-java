@@ -97,10 +97,6 @@ public class EnumerationAsk implements BayesInference {
 						enumerateAll(bn.getVariablesInTopologicalOrder(), e));
 				cnt++;
 			}
-
-			public Object getPostIterateValue() {
-				return null; // N/A
-			}
 		};
 		Q.iterateOverTable(di);
 

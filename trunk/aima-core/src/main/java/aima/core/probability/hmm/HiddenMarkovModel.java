@@ -1,132 +1,229 @@
 package aima.core.probability.hmm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import aima.core.probability.CategoricalDistribution;
+import aima.core.probability.RandomVariable;
+import aima.core.probability.domain.FiniteDomain;
+import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.util.ProbabilityTable;
+import aima.core.util.Util;
 import aima.core.util.math.Matrix;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 578.<br>
+ * <br>
+ * 
+ * The hidden Markov model, or HMM. An HMM is a temporal probabilistic model in
+ * which the state of the process is described by a single discrete random
+ * variable. The possible values of the variable are the possible states of the
+ * world.
+ * 
+ * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * 
  */
 public class HiddenMarkovModel {
 
-	SensorModel sensorModel;
+	private RandomVariable stateVariable = null;
+	protected FiniteDomain stateVariableDomain = null;
+	private Matrix transitionModel = null;
+	private Map<Object, Matrix> sensorModel = null;
+	private Matrix prior = null;
 
-	TransitionModel transitionModel;
-
-	private VarDistribution priorDistribution;
-
-	public HiddenMarkovModel(VarDistribution priorDistribution,
-			TransitionModel tm, SensorModel sm) {
-		this.priorDistribution = priorDistribution;
-		this.transitionModel = tm;
-		this.sensorModel = sm;
-	}
-
-	public VarDistribution prior() {
-		return priorDistribution;
-	}
-
-	public VarDistribution predict(VarDistribution aBelief, String action) {
-		VarDistribution newBelief = aBelief.duplicate();
-
-		Matrix beliefMatrix = aBelief.asMatrix();
-		Matrix transitionMatrix = transitionModel.asMatrix(action);
-		Matrix predicted = transitionMatrix.transpose().times(beliefMatrix);
-		newBelief.updateFrom(predicted);
-		return newBelief;
-	}
-
-	public VarDistribution perceptionUpdate(VarDistribution aBelief,
-			String perception) {
-		VarDistribution newBelief = aBelief.duplicate();
-
-		// one way - use matrices
-		Matrix beliefMatrix = aBelief.asMatrix();
-		Matrix o_matrix = sensorModel.asMatrix(perception);
-		Matrix updated = o_matrix.times(beliefMatrix);
-		newBelief.updateFrom(updated);
-		newBelief.normalize();
-		return newBelief;
-
-		// alternate way of doing this. clearer in intent.
-		// for (String state : aBelief.states()){
-		// double probabilityOfPerception= sensorModel.get(state,perception);
-		// newBelief.setProbabilityOf(state,probabilityOfPerception *
-		// aBelief.getProbabilityOf(state));
-		// }
-	}
-
-	public VarDistribution forward(VarDistribution aBelief, String action,
-			String perception) {
-		return perceptionUpdate(predict(aBelief, action), perception);
-	}
-
-	public VarDistribution forward(VarDistribution aBelief, String perception) {
-		return forward(aBelief, HmmConstants.DO_NOTHING, perception);
-	}
-
-	public VarDistribution calculate_next_backward_message(
-			VarDistribution present_backward_message, String perception) {
-		VarDistribution result = present_backward_message.duplicate();
-		// System.out.println("fb :-calculating new backward message");
-		// System.out.println("fb :-diagonal matrix from sens model = ");
-		Matrix oMatrix = sensorModel.asMatrix(perception);
-		// System.out.println(oMatrix);
-		Matrix transitionMatrix = transitionModel.asMatrix();// action
-		// should
-		// be
-		// passed
-		// in
-		// here?
-		// System.out.println("fb :-present backward message = "
-		// +present_backward_message);
-		Matrix backwardMatrix = transitionMatrix.times(oMatrix
-				.times(present_backward_message.asMatrix()));
-
-		result.updateFrom(backwardMatrix);
-		result.normalize();
-		// System.out.println("fb :-normalized new backward message = "
-		// +result);
-		return result;
-	}
-
-	public List<VarDistribution> forward_backward(List<String> perceptions) {
-		VarDistribution forwardMessages[] = new VarDistribution[perceptions
-				.size() + 1];
-		VarDistribution backwardMessage = priorDistribution.createUnitBelief();
-		VarDistribution smoothedBeliefs[] = new VarDistribution[perceptions
-				.size() + 1];
-
-		forwardMessages[0] = priorDistribution;
-		smoothedBeliefs[0] = null;
-
-		// populate forward messages
-		for (int i = 0; i < perceptions.size(); i++) { // N.B i starts at 1,
-			// not zero
-			forwardMessages[i + 1] = forward(forwardMessages[i],
-					perceptions.get(i));
+	/**
+	 * Instantiate a Hidden Markov Model.
+	 * 
+	 * @param stateVariable
+	 *            the single discrete random variable used to describe the
+	 *            process states 1,...,S.
+	 * @param transitionModel
+	 *            the transition model:<br>
+	 *            <b>P</b>(X<sub>t</sub> | X<sub>t-1</sub>)<br>
+	 *            is represented by an S * S matrix <b>T</b> where<br>
+	 *            <b>T</b><sub>ij</sub> = P(X<sub>t</sub> = j | X<sub>t-1</sub>
+	 *            = i).
+	 * @param sensorModel
+	 *            the sensor model in matrix form:<br>
+	 *            P(e<sub>t</sub> | X<sub>t</sub> = i) for each state i. For
+	 *            mathematical convenience we place each of these values into an
+	 *            S * S diagonal matrix.
+	 * @param prior
+	 *            the prior distribution represented as a column vector in
+	 *            Matrix form.
+	 */
+	public HiddenMarkovModel(RandomVariable stateVariable,
+			Matrix transitionModel, Map<Object, Matrix> sensorModel,
+			Matrix prior) {
+		if (!stateVariable.getDomain().isFinite()) {
+			throw new IllegalArgumentException(
+					"State Variable for HHM must be finite.");
 		}
-		for (int i = perceptions.size(); i > 0; i--) {
-			VarDistribution smoothed = priorDistribution.duplicate();
-			smoothed.updateFrom(forwardMessages[i].asMatrix().arrayTimes(
-					backwardMessage.asMatrix()));
-			smoothed.normalize();
-			smoothedBeliefs[i] = smoothed;
-			backwardMessage = calculate_next_backward_message(backwardMessage,
-					perceptions.get(i - 1));
+		this.stateVariable = stateVariable;
+		stateVariableDomain = (FiniteDomain) stateVariable.getDomain();
+		if (transitionModel.getRowDimension() != transitionModel
+				.getColumnDimension()) {
+			throw new IllegalArgumentException(
+					"Transition Model row and column dimensions must match.");
 		}
-
-		return Arrays.asList(smoothedBeliefs);
+		if (stateVariableDomain.size() != transitionModel.getRowDimension()) {
+			throw new IllegalArgumentException(
+					"Transition Model Matrix does not map correctly to the HMM's State Variable.");
+		}
+		this.transitionModel = transitionModel;
+		for (Matrix smVal : sensorModel.values()) {
+			if (smVal.getRowDimension() != smVal.getColumnDimension()) {
+				throw new IllegalArgumentException(
+						"Sensor Model row and column dimensions must match.");
+			}
+			if (stateVariableDomain.size() != smVal.getRowDimension()) {
+				throw new IllegalArgumentException(
+						"Sensor Model Matrix does not map correctly to the HMM's State Variable.");
+			}
+		}
+		this.sensorModel = sensorModel;
+		if (transitionModel.getRowDimension() != prior.getRowDimension()
+				&& prior.getColumnDimension() != 1) {
+			throw new IllegalArgumentException(
+					"Prior is not of the correct dimensions.");
+		}
+		this.prior = prior;
 	}
 
-	public SensorModel sensorModel() {
-		return sensorModel;
+	/**
+	 * Return the single discrete random variable used to describe the process
+	 * state.
+	 * 
+	 * @return the single discrete random variable used to describe the process
+	 *         state.
+	 */
+	public RandomVariable getStateVariable() {
+		return stateVariable;
 	}
 
-	public TransitionModel transitionModel() {
+	/**
+	 * Return the transition model:<br>
+	 * <b>P</b>(X<sub>t</sub> | X<sub>t-1</sub>)<br>
+	 * is represented by an S * S matrix <b>T</b> where<br>
+	 * <b>T</b><sub>ij</sub> = P(X<sub>t</sub> = j | X<sub>t-1</sub> = i).
+	 * 
+	 * @return the transition model in Matrix form.
+	 */
+	public Matrix getTransitionModel() {
 		return transitionModel;
 	}
 
+	/**
+	 * Return the sensor model in matrix form:<br>
+	 * P(e<sub>t</sub> | X<sub>t</sub> = i) for each state i.<br>
+	 * For mathematical convenience we place each of these values into an S * S
+	 * diagonal matrix.
+	 * 
+	 * @return the sensor model in matrix form.
+	 */
+	public Map<Object, Matrix> getSensorModel() {
+		return sensorModel;
+	}
+
+	/**
+	 * Return the prior distribution represented as a column vector in Matrix
+	 * form.
+	 * 
+	 * @return the prior distribution represented as a column vector in Matrix
+	 *         form.
+	 */
+	public Matrix getPrior() {
+		return prior;
+	}
+
+	/**
+	 * Return a new column vector in matrix form with all values set to 1.0.
+	 * 
+	 * @return a new column vector in matrix form with all values set to 1.0.
+	 */
+	public Matrix createUnitMessage() {
+		double[] values = new double[stateVariableDomain.size()];
+		Arrays.fill(values, 1.0);
+		return new Matrix(values, values.length);
+	}
+
+	/**
+	 * Convert a Categorical Distribution into a column vector in Matrix form.
+	 * 
+	 * @param fromCD
+	 *            the categorical distribution to be converted.
+	 * @return a column vector in Matrix form of the passed in categorical
+	 *         distribution.
+	 */
+	public Matrix convert(CategoricalDistribution fromCD) {
+		double[] values = fromCD.getValues();
+		return new Matrix(values, values.length);
+	}
+
+	/**
+	 * Convert a column vector in Matrix form to a Categorical Distribution.
+	 * 
+	 * @param fromMessage
+	 *            the column vector in Matrix form to be converted.
+	 * @return a categorical distribution representation of the passed in column
+	 *         vector.
+	 */
+	public CategoricalDistribution convert(Matrix fromMessage) {
+		return new ProbabilityTable(fromMessage.getRowPackedCopy(),
+				stateVariable);
+	}
+
+	/**
+	 * Convert a list of column vectors in Matrix form into a corresponding list
+	 * of Categorical Distributions.
+	 * 
+	 * @param matrixs
+	 *            the column vectors in matrix form to be converted.
+	 * @return a corresponding list of Categorical Distribution representation
+	 *         of the passed in column vectors.
+	 */
+	public List<CategoricalDistribution> convert(List<Matrix> matrixs) {
+		List<CategoricalDistribution> cds = new ArrayList<CategoricalDistribution>();
+		for (Matrix m : matrixs) {
+			cds.add(convert(m));
+		}
+		return cds;
+	}
+
+	/**
+	 * Create a normalized column vector in matrix form of the passed in column
+	 * vector.
+	 * 
+	 * @param m
+	 *            a column vector representation in matrix form.
+	 * @return a normalized column vector of the passed in column vector.
+	 */
+	public Matrix normalize(Matrix m) {
+		double[] values = m.getRowPackedCopy();
+		return new Matrix(Util.normalize(values), values.length);
+	}
+
+	/**
+	 * Get the specific evidence matrix based on assigned evidence value.
+	 * 
+	 * @param evidence
+	 *            the evidence assignment e.
+	 * @return the Matrix representation of this evidence assignment from the
+	 *         sensor model.
+	 */
+	public Matrix getEvidence(List<AssignmentProposition> evidence) {
+		if (evidence.size() != 1) {
+			throw new IllegalArgumentException(
+					"Only a single evidence observation value should be provided.");
+		}
+		Matrix e = sensorModel.get(evidence.get(0).getValue());
+		if (null == e) {
+			throw new IllegalArgumentException(
+					"Evidence does not map to sensor model.");
+		}
+		return e;
+	}
 }

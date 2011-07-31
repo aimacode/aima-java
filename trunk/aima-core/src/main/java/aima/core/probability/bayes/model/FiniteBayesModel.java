@@ -77,28 +77,23 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 		final Proposition conjunct = ProbUtil.constructConjunction(phi);
 		RandomVariable[] X = conjunct.getScope().toArray(
 				new RandomVariable[conjunct.getScope().size()]);
-		ProbabilityTable d = (ProbabilityTable) bayesInference.ask(X,
+		CategoricalDistribution d = bayesInference.ask(X,
 				new AssignmentProposition[0], bayesNet);
 
 		// Then calculate the probability of the propositions phi
 		// be seeing where they hold.
-		ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
-			private double probSum = 0;
-
+		final double[] probSum = new double[1];
+		CategoricalDistribution.Iterator di = new CategoricalDistribution.Iterator() {
 			public void iterate(Map<RandomVariable, Object> possibleWorld,
 					double probability) {
 				if (conjunct.holds(possibleWorld)) {
-					probSum += probability;
+					probSum[0] += probability;
 				}
 			}
-
-			public Object getPostIterateValue() {
-				return probSum;
-			}
 		};
-		d.iterateOverTable(di);
+		d.iterateOver(di);
 
-		return ((Double) di.getPostIterateValue()).doubleValue();
+		return probSum[0];
 	}
 
 	public double posterior(Proposition phi, Proposition... evidence) {
@@ -179,7 +174,7 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 			final ProbabilityTable ud = new ProbabilityTable(distVars);
 			final Object[] values = new Object[vars.size()];
 
-			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
+			CategoricalDistribution.Iterator di = new CategoricalDistribution.Iterator() {
 
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 						double probability) {
@@ -193,17 +188,12 @@ public class FiniteBayesModel implements FiniteProbabilityModel {
 						ud.setValue(dIdx, ud.getValues()[dIdx] + probability);
 					}
 				}
-
-				public Object getPostIterateValue() {
-					return null; // N/A
-				}
 			};
 
 			RandomVariable[] X = conjProp.getScope().toArray(
 					new RandomVariable[conjProp.getScope().size()]);
-			((ProbabilityTable) bayesInference.ask(X,
-					new AssignmentProposition[0], bayesNet))
-					.iterateOverTable(di);
+			bayesInference.ask(X, new AssignmentProposition[0], bayesNet)
+					.iterateOver(di);
 
 			d = ud;
 		} else {
