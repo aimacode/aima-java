@@ -31,9 +31,7 @@ public class MockRandomizer implements Randomizer {
 			index = 0;
 		}
 
-		double value = values[index];
-		index++;
-		return value;
+		return values[index++];
 	}
 	// END-Randomizer
 	//

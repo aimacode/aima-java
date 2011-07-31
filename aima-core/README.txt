@@ -4,25 +4,16 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.0-Chp13-and-14-Rewrite ==
-0.10.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
-  * All of the algorithms from Chapters 13 and 14 have been rewritten.
-  ** Rewritten:
-  *** 14.9 Enumeration-Ask
-  *** 14.13 Prior-Sample
-  *** 14.14 Rejection-Sampling 
-  *** 14.15 Likelihood-Weighting 
-  *** 14.16 GIBBS-Ask 
-  ** Added:
-  *** 14.11 Elimination-Ask
-  * Moved Randomizer interface and related implementation underneath
-    aima.core.util.
-  * Moved TwoKeyHashMashMap to sub-package datastructure.
-  * Fix for Issue 66
-  * Documentation clean up.
-  
-== Future Release Notes ==
+== Current Release: 0.10.1-Chp15-Rewrite ==
+0.10.1-Chp15-Rewrite : 31 Jul 2011 :<br>
+  * All of the algorithms from Chapter 15 have been rewritten.
+  ** 15.4 Forward-Backward (3 implementations provided)
+  ** 15.6 Fixed-Lag-Smoothing 
+  ** 15.17 Particle-Filtering 
+  * Added an Iterator interface and supporting methods to CategoricalDistribution and Factor.
+  ** ProbabilityTable.Iterator removed getPostIterateValue() method from API due to not being general.
   * Fixed Issue 63 - all compilation warnings have been resolved or suppressed where appropriate for now.
+  * Documentation clean up.
  
 = Details =
 
@@ -113,15 +104,18 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  13   ||     484|| Probability-Model            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java ProbabilityModel], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/FiniteProbabilityModel.java FiniteProbabilityModel]||
 ||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/CategoricalDistribution.java CategoricalDistribution]||
 ||  13   ||     490|| Full-Joint-Distribution      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java FullJointDistributionModel]||
+||  14   ||     510|| Bayesian Network             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java BayesianNetwork]||
 ||  14.9 ||     525|| Enumeration-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java EnumerationAsk]||
 ||  14.11||     528|| Elimination-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java EliminationAsk]||
 ||  14.13||     531|| Prior-Sample                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/PriorSample.java PriorSample]||
 ||  14.14||     533|| Rejection-Sampling           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java RejectionSampling]||
 ||  14.15||     534|| Likelihood-Weighting         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java LikelihoodWeighting]||
 ||  14.16||     537|| GIBBS-Ask                    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java GibbsAsk]||
-||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java (method)-forward_backward()]||
+||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java ForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HMMForwardBackward.java HMMForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HMMForwardBackwardConstantSpace.java HMMForwardBackwardConstantSpace]||
+||  15   ||     578|| Hidden Markov Model          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java HiddenMarkovModel]||
 ||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/FixedLagSmoothing.java FixedLagSmoothing]||
-||  15.17||     598|| Particle-Filtering           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/ParticleSet.java (method)-filter()]||
+||  15   ||     590|| Dynamic Bayesian Network     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java DynamicBayesianNetwork]||
+||  15.17||     598|| Particle-Filtering           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java ParticleFiltering]||
 ||  16.9 ||     632|| Information-Gathering-Agent  ||---||
 ||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MDP.java (method)-valueIteration()]||
 ||  17.7 ||     657|| Policy-Iteration             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MDP.java (method)-policyIteration]||
@@ -230,7 +224,7 @@ the basic design of all the logic code is that the parser creates a Composite (D
 
 == Probability Notes ==
 
-Except elimination-ask, the rest of the algorithms from chapter 13 and 14 have been implemented. I have tried to make the code stick very closely to Dr.Norvig's' pseudo-code. Looking at the tests will reveal how to use the code. 
+I have tried to make the code stick very closely to Dr.Norvig's' pseudo-code. Looking at the tests will reveal how to use the code. 
 
 ==LearningNotes==
 
@@ -255,6 +249,22 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.10.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
+  * All of the algorithms from Chapters 13 and 14 have been rewritten.
+  ** Rewritten:
+  *** 14.9 Enumeration-Ask
+  *** 14.13 Prior-Sample
+  *** 14.14 Rejection-Sampling 
+  *** 14.15 Likelihood-Weighting 
+  *** 14.16 GIBBS-Ask 
+  ** Added:
+  *** 14.11 Elimination-Ask
+  * Moved Randomizer interface and related implementation underneath
+    aima.core.util.
+  * Moved TwoKeyHashMashMap to sub-package datastructure.
+  * Fix for Issue 66
+  * Documentation clean up.
+  
 0.9.14-Probability-and-Logic-Fixes : 20 Mar 2011 :<br>
   * Resolved Issue 58, related to forward-backward algorithm. 
   * Fixed defect in Unifier that would cause incorrect unifications in particular

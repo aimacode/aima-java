@@ -1,5 +1,9 @@
 package aima.core.probability;
 
+import java.util.Map;
+
+import aima.core.probability.proposition.AssignmentProposition;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>
  * <br>
@@ -14,6 +18,29 @@ package aima.core.probability;
  * @author Ciaran O'Reilly
  */
 public interface CategoricalDistribution extends ProbabilityMass {
+
+	/**
+	 * Interface to be implemented by an object/algorithm that wishes to iterate
+	 * over the possible assignments for the random variables comprising this
+	 * categorical distribution.
+	 * 
+	 * @see CategoricalDistribution#iterateOver(Iterator)
+	 * @see CategoricalDistribution#iterateOver(Iterator,
+	 *      AssignmentProposition...)
+	 */
+	public interface Iterator {
+		/**
+		 * Called for each possible assignment for the Random Variables
+		 * comprising this CategoricalDistribution.
+		 * 
+		 * @param possibleAssignment
+		 *            a possible assignment, &omega;, of variable/value pairs.
+		 * @param probability
+		 *            the probability associated with &omega;
+		 */
+		void iterate(Map<RandomVariable, Object> possibleAssignment,
+				double probability);
+	}
 
 	/**
 	 * <b>Note:</b> Do not modify the double[] returned by this method directly.
@@ -168,4 +195,27 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 */
 	CategoricalDistribution multiplyByPOS(CategoricalDistribution multiplier,
 			RandomVariable... prodVarOrder);
+
+	/**
+	 * Iterate over all the possible value assignments for the Random Variables
+	 * comprising this CategoricalDistribution.
+	 * 
+	 * @param cdi
+	 *            the CategoricalDistribution Iterator to iterate.
+	 */
+	void iterateOver(Iterator cdi);
+
+	/**
+	 * Iterate over all possible values assignments for the Random Variables
+	 * comprising this CategoricalDistribution that are not in the fixed set of
+	 * values. This allows you to iterate over a subset of possible
+	 * combinations.
+	 * 
+	 * @param cdi
+	 *            the CategoricalDistribution Iterator to iterate
+	 * @param fixedValues
+	 *            Fixed values for a subset of the Random Variables comprising
+	 *            this CategoricalDistribution.
+	 */
+	void iterateOver(Iterator cdi, AssignmentProposition... fixedValues);
 }
