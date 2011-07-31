@@ -9,30 +9,34 @@ import aima.core.learning.reinforcement.PassiveADPAgent;
 import aima.core.learning.reinforcement.PassiveTDAgent;
 import aima.core.learning.reinforcement.QLearningAgent;
 import aima.core.learning.reinforcement.QTable;
+import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.FiniteProbabilityModel;
 import aima.core.probability.bayes.approx.BayesInferenceApproxAdapter;
 import aima.core.probability.bayes.approx.GibbsAsk;
 import aima.core.probability.bayes.approx.LikelihoodWeighting;
+import aima.core.probability.bayes.approx.ParticleFiltering;
 import aima.core.probability.bayes.approx.RejectionSampling;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.bayes.exact.EnumerationAsk;
 import aima.core.probability.bayes.model.FiniteBayesModel;
 import aima.core.probability.example.BayesNetExampleFactory;
+import aima.core.probability.example.DynamicBayesNetExampleFactory;
 import aima.core.probability.example.ExampleRV;
 import aima.core.probability.example.FullJointDistributionBurglaryAlarmModel;
 import aima.core.probability.example.FullJointDistributionToothacheCavityCatchModel;
-import aima.core.probability.hmm.HMMFactory;
-import aima.core.probability.hmm.HiddenMarkovModel;
-import aima.core.probability.hmm.HmmConstants;
-import aima.core.probability.hmm.ParticleSet;
-import aima.core.probability.hmm.VarDistribution;
+import aima.core.probability.example.GenericTemporalModelFactory;
+import aima.core.probability.example.HMMExampleFactory;
+import aima.core.probability.hmm.FixedLagSmoothing;
 import aima.core.probability.mdp.MDP;
 import aima.core.probability.mdp.MDPFactory;
 import aima.core.probability.mdp.MDPPolicy;
 import aima.core.probability.mdp.MDPUtilityFunction;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.proposition.DisjunctiveProposition;
+import aima.core.probability.temporal.generic.ForwardBackward;
+import aima.core.probability.util.ProbabilityTable;
 import aima.core.util.JavaRandomizer;
+import aima.core.util.MockRandomizer;
 import aima.core.util.Randomizer;
 
 /**
@@ -48,21 +52,27 @@ public class ProbabilityDemo {
 	public static final int NUM_SAMPLES = 1000;
 
 	public static void main(String[] args) {
+		// Chapter 13
 		fullJointDistributionModelDemo();
 
+		// Chapter 14 - Exact
 		bayesEnumerationAskDemo();
 		bayesEliminationAskDemo();
-
+		// Chapter 14 - Approx
 		bayesRejectionSamplingDemo();
 		bayesLikelihoodWeightingDemo();
 		bayesGibbsAskDemo();
 
+		// Chapter 15
 		forwardBackWardDemo();
+		fixedLagSmoothingDemo();
 		particleFilterinfDemo();
 
+		// Chapter 17
 		valueIterationDemo();
 		policyIterationDemo();
 
+		// Chapter 21
 		passiveADPgentDemo();
 		passiveTDAgentDemo();
 		qLearningAgentDemo();
@@ -143,57 +153,186 @@ public class ProbabilityDemo {
 
 	public static void forwardBackWardDemo() {
 
-		System.out.println("\nForward BackWard Demo\n");
+		System.out.println("DEMO: Forward-BackWard");
+		System.out.println("======================");
 
-		HiddenMarkovModel rainmanHmm = HMMFactory.createRainmanHMM();
-		System.out
-				.println("Creating a Hdden Markov Model to represent the model in Fig 15.5 ");
-		List<String> perceptions = new ArrayList<String>();
-		perceptions.add(HmmConstants.SEE_UMBRELLA);
-		perceptions.add(HmmConstants.SEE_UMBRELLA);
+		System.out.println("Umbrella World");
+		System.out.println("--------------");
+		ForwardBackward uw = new ForwardBackward(
+				GenericTemporalModelFactory.getUmbrellaWorldTransitionModel(),
+				GenericTemporalModelFactory.getUmbrellaWorld_Xt_to_Xtm1_Map(),
+				GenericTemporalModelFactory.getUmbrellaWorldSensorModel());
 
-		List<VarDistribution> results = rainmanHmm
-				.forward_backward(perceptions);
+		CategoricalDistribution prior = new ProbabilityTable(new double[] {
+				0.5, 0.5 }, ExampleRV.RAIN_t_RV);
 
-		VarDistribution smoothedDayOne = results.get(1);
-		System.out.println("Smoothed Probability Of Raining on Day One = "
-				+ smoothedDayOne.getProbabilityOf(HmmConstants.RAINING));
-		System.out.println("Smoothed Probability Of NOT Raining on Day One ="
-				+ smoothedDayOne.getProbabilityOf(HmmConstants.NOT_RAINING));
+		// Day 1
+		List<List<AssignmentProposition>> evidence = new ArrayList<List<AssignmentProposition>>();
+		List<AssignmentProposition> e1 = new ArrayList<AssignmentProposition>();
+		e1.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+		evidence.add(e1);
 
-		VarDistribution smoothedDayTwo = results.get(2);
-		System.out.println("Smoothed Probability Of Raining on Day Two = "
-				+ smoothedDayTwo.getProbabilityOf(HmmConstants.RAINING));
-		System.out.println("Smoothed Probability Of NOT Raining on Day Two = "
-				+ smoothedDayTwo.getProbabilityOf(HmmConstants.NOT_RAINING));
+		List<CategoricalDistribution> smoothed = uw.forwardBackward(evidence,
+				prior);
 
+		System.out.println("Day 1 (Umbrealla_t=true) smoothed:\nday 1 = "
+				+ smoothed.get(0));
+
+		// Day 2
+		List<AssignmentProposition> e2 = new ArrayList<AssignmentProposition>();
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+		evidence.add(e2);
+
+		smoothed = uw.forwardBackward(evidence, prior);
+
+		System.out.println("Day 2 (Umbrealla_t=true) smoothed:\nday 1 = "
+				+ smoothed.get(0) + "\nday 2 = " + smoothed.get(1));
+
+		// Day 3
+		List<AssignmentProposition> e3 = new ArrayList<AssignmentProposition>();
+		e3.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
+				Boolean.FALSE));
+		evidence.add(e3);
+
+		smoothed = uw.forwardBackward(evidence, prior);
+
+		System.out.println("Day 3 (Umbrealla_t=false) smoothed:\nday 1 = "
+				+ smoothed.get(0) + "\nday 2 = " + smoothed.get(1)
+				+ "\nday 3 = " + smoothed.get(2));
+
+		System.out.println("======================");
+	}
+
+	public static void fixedLagSmoothingDemo() {
+		System.out.println("DEMO: Fixed-Lag-Smoothing");
+		System.out.println("=========================");
+		System.out.println("Lag = 1");
+		System.out.println("-------");
+		FixedLagSmoothing uw = new FixedLagSmoothing(
+				HMMExampleFactory.getUmbrellaWorldModel(), 1);
+
+		// Day 1 - Lag 1
+		List<AssignmentProposition> e1 = new ArrayList<AssignmentProposition>();
+		e1.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+
+		CategoricalDistribution smoothed = uw.fixedLagSmoothing(e1);
+
+		System.out.println("Day 1 (Umbrella_t=true) smoothed:\nday 1="
+				+ smoothed);
+
+		// Day 2 - Lag 1
+		List<AssignmentProposition> e2 = new ArrayList<AssignmentProposition>();
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+
+		smoothed = uw.fixedLagSmoothing(e2);
+
+		System.out.println("Day 2 (Umbrella_t=true) smoothed:\nday 1="
+				+ smoothed);
+
+		// Day 3 - Lag 1
+		List<AssignmentProposition> e3 = new ArrayList<AssignmentProposition>();
+		e3.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
+				Boolean.FALSE));
+
+		smoothed = uw.fixedLagSmoothing(e3);
+
+		System.out.println("Day 3 (Umbrella_t=false) smoothed:\nday 2="
+				+ smoothed);
+
+		System.out.println("-------");
+		System.out.println("Lag = 2");
+		System.out.println("-------");
+
+		uw = new FixedLagSmoothing(HMMExampleFactory.getUmbrellaWorldModel(), 2);
+
+		// Day 1 - Lag 2
+		e1 = new ArrayList<AssignmentProposition>();
+		e1.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+
+		smoothed = uw.fixedLagSmoothing(e1);
+
+		System.out.println("Day 1 (Umbrella_t=true) smoothed:\nday 1="
+				+ smoothed);
+
+		// Day 2 - Lag 2
+		e2 = new ArrayList<AssignmentProposition>();
+		e2.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, Boolean.TRUE));
+
+		smoothed = uw.fixedLagSmoothing(e2);
+
+		System.out.println("Day 2 (Umbrella_t=true) smoothed:\nday 1="
+				+ smoothed);
+
+		// Day 3 - Lag 2
+		e3 = new ArrayList<AssignmentProposition>();
+		e3.add(new AssignmentProposition(ExampleRV.UMBREALLA_t_RV,
+				Boolean.FALSE));
+
+		smoothed = uw.fixedLagSmoothing(e3);
+		
+		System.out.println("Day 3 (Umbrella_t=false) smoothed:\nday 1="
+				+ smoothed);
+
+		System.out.println("=========================");
 	}
 
 	public static void particleFilterinfDemo() {
-		System.out.println("\nParticle Filtering Demo\n");
-		HiddenMarkovModel rainman = HMMFactory.createRainmanHMM();
-		Randomizer r = new JavaRandomizer();
-		ParticleSet starting = rainman.prior().toParticleSet(rainman, r, 1000);
-		System.out.println("at the beginning, "
-				+ starting.numberOfParticlesWithState(HmmConstants.RAINING)
-				+ " particles 0f 1000 indicate status == 'raining' ");
-		System.out.println("at the beginning, "
-				+ starting.numberOfParticlesWithState(HmmConstants.NOT_RAINING)
-				+ " particles of 1000 indicate status == 'NOT raining' ");
+		System.out.println("DEMO: Particle-Filtering");
+		System.out.println("========================");
+		System.out.println("Figure 15.18");
+		System.out.println("------------");
+		
+		MockRandomizer mr = new MockRandomizer(new double[] {
+				// Prior Sample:
+				// 8 with Rain_t-1=true from prior distribution
+				0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+				// 2 with Rain_t-1=false from prior distribution
+				0.6, 0.6,
+				// (a) Propagate 6 samples Rain_t=true
+				0.7, 0.7, 0.7, 0.7, 0.7, 0.7,
+				// 4 samples Rain_t=false
+				0.71, 0.71, 0.31, 0.31,
+				// (b) Weight should be for first 6 samples:
+				// Rain_t-1=true, Rain_t=true, Umbrella_t=false = 0.1
+				// Next 2 samples:
+				// Rain_t-1=true, Rain_t=false, Umbrealla_t=false= 0.8
+				// Final 2 samples:
+				// Rain_t-1=false, Rain_t=false, Umbrella_t=false = 0.8
+				// gives W[] =
+				// [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.8, 0.8, 0.8, 0.8]
+				// normalized =
+				// [0.026, ...., 0.211, ....] is approx. 0.156 = true
+				// the remainder is false
+				// (c) Resample 2 Rain_t=true, 8 Rain_t=false
+				0.15, 0.15, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+				//
+				// Next Sample:
+				// (a) Propagate 1 samples Rain_t=true
+				0.7,
+				// 9 samples Rain_t=false
+				0.71, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31,
+				// (c) resample 1 Rain_t=true, 9 Rain_t=false
+				0.0001, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2 });
 
-		System.out
-				.println("\n Filtering Particle Set.On perception == 'SEE_UMBRELLA' ..\n");
-		ParticleSet afterSeeingUmbrella = starting.filter(
-				HmmConstants.SEE_UMBRELLA, r);
-		System.out.println("after filtering "
-				+ afterSeeingUmbrella
-						.numberOfParticlesWithState(HmmConstants.RAINING)
-				+ " particles of 1000 indicate status == 'raining' ");
-		System.out.println("after filtering "
-				+ afterSeeingUmbrella
-						.numberOfParticlesWithState(HmmConstants.NOT_RAINING)
-				+ " particles of 1000 indicate status == 'NOT raining' ");
+		int N = 10;
+		ParticleFiltering pf = new ParticleFiltering(N,
+				DynamicBayesNetExampleFactory.getUmbrellaWorldNetwork(), mr);
 
+		AssignmentProposition[] e = new AssignmentProposition[] { new AssignmentProposition(
+				ExampleRV.UMBREALLA_t_RV, false) };
+
+		System.out.println("First Sample Set:");
+		AssignmentProposition[][] S = pf.particleFiltering(e);
+		for (int i = 0; i < N; i++) {
+			System.out.println("Sample "+(i+1)+" = "+S[i][0]);
+		}
+		System.out.println("Second Sample Set:");
+		S = pf.particleFiltering(e);
+		for (int i = 0; i < N; i++) {
+			System.out.println("Sample "+(i+1)+" = "+S[i][0]);
+		}
+		
+		System.out.println("========================");
 	}
 
 	public static void valueIterationDemo() {
