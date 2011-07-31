@@ -20,18 +20,19 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
   * aima-all  : is the master project, used by aima-java developers, for creating releases.
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
-== Current Release: 1.5.0-Chp13-and-14-Rewrite ==
-1.5.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
-Rewrite of logic from Chapters 13 and 14 in aima-core. 
+== Current Release: 1.5.1-Chp15-Rewrite ==
+1.5.1-Chp15-Rewrite : 31 Jul 2011 :<br>
+Rewrite of logic from Chapter 15 in aima-core. 
 This is based on the following sub-project releases:
-  * aima-core (0.10.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (1.0.4)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aima-core (0.10.1) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.5)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
   * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
+  * Asterios, Issue 67<br>
   * Betty Keren, Issue 66<br>
   * codesamu..., Issue 63<br>
   * Jose Samaniego, suggestions for compiling and running from the command line using ant.
@@ -52,6 +53,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.5.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
+Rewrite of logic from Chapters 13 and 14 in aima-core. 
+This is based on the following sub-project releases:
+  * aima-core (0.10.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.4)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License.  
+    
 1.4.1-Minor-Fixes : 20 Mar 2011 :<br>
 Defect fixes for aima-core and aimax-osm. 
 This is based on the following sub-project releases:
