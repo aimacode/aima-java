@@ -6,6 +6,12 @@ import java.util.Map;
 import aima.core.probability.hmm.HiddenMarkovModel;
 import aima.core.util.math.Matrix;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ *
+ */
 public class HMMExampleFactory {
 
 	public static HiddenMarkovModel getUmbrellaWorldModel() {
