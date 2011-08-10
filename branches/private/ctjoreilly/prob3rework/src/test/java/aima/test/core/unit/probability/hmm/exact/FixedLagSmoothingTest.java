@@ -1,4 +1,4 @@
-package aima.test.core.unit.probability.hmm;
+package aima.test.core.unit.probability.hmm.exact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.example.ExampleRV;
 import aima.core.probability.example.HMMExampleFactory;
-import aima.core.probability.hmm.FixedLagSmoothing;
+import aima.core.probability.hmm.exact.FixedLagSmoothing;
 import aima.core.probability.proposition.AssignmentProposition;
 
 /**

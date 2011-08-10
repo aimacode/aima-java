@@ -1,9 +1,10 @@
-package aima.core.probability.hmm;
+package aima.core.probability.hmm.exact;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import aima.core.probability.CategoricalDistribution;
+import aima.core.probability.hmm.HiddenMarkovModel;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.util.math.Matrix;
 
