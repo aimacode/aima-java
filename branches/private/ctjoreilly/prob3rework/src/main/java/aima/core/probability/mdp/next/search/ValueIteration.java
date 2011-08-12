@@ -3,6 +3,7 @@ package aima.core.probability.mdp.next.search;
 import java.util.Map;
 
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
+import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 647.<br>
@@ -42,6 +43,7 @@ import aima.core.probability.mdp.next.MarkovDecisionProcess;
  * 
  */
 public class ValueIteration<S, A> {
+	// discount &gamma; to be used.
 	private double gamma = 0;
 
 	/**
@@ -66,8 +68,49 @@ public class ValueIteration<S, A> {
 	 */
 	public Map<S, Double> valueIteration(MarkovDecisionProcess<S, A> mdp,
 			double epsilon) {
+		//
+		// local variables: U, U', vectors of utilities for states in S,
+		// initially zero
+		Map<S, Double> U = Util.create(mdp.states(), new Double(0));
+		Map<S, Double> Udelta = Util.create(mdp.states(), new Double(0));
+		// &delta; the maximum change in the utility of any state in an
+		// iteration
+		double delta = 0;
+		// Note: Just calculate this once for efficiency purposes:
+		// &epsilon;(1 - &gamma;)/&gamma;
+		double minDelta = epsilon * (1 - gamma) / gamma;
+		// repeat
+		do {
+			// U <- U'; &delta; <- 0
+			U.putAll(Udelta);
+			delta = 0;
+			// for each state s in S do
+			for (S s : mdp.states()) {
+				// U'[s] <- R(s) + &gamma;
+				// max<sub>a &isin; A(s)</sub>
+				double aMax = 0;
+				for (A a : mdp.actions(s)) {
+					// &Sigma;<sub>s'</sub>P(s' | s, a) U[s']
+					double aSum = 0;
+					for (S sDelta : mdp.states()) {
+						aSum += mdp.transitionProbability(sDelta, s, a)
+								* Udelta.get(sDelta);
+					}
+					if (aSum > aMax) {
+						aMax = aSum;
+					}
+				}
+				Udelta.put(s, mdp.reward(s) + (gamma * aMax));
+				// if |U'[s] - U[s]| > &delta; then &delta; <- |U'[s] - U[s]|
+				double aDiff = Math.abs(Udelta.get(s) - U.get(s));
+				if (aDiff > delta) {
+					delta = aDiff;
+				}
+			}
+			// until &delta; < &epsilon;(1 - &gamma;)/&gamma;
+		} while (delta >= minDelta);
 
-		return null; // TODO
+		// return U
+		return U;
 	}
-
 }
