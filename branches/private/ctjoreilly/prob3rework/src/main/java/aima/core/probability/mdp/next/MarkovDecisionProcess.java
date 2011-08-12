@@ -27,6 +27,14 @@ import java.util.Set;
  * 
  */
 public interface MarkovDecisionProcess<S, A> {
+
+	/**
+	 * Get the set of states associated with the Markov decision process.
+	 * 
+	 * @return the set of states associated with the Markov decision process.
+	 */
+	Set<S> states();
+
 	/**
 	 * Get the initial state s<sub>0</sub> for this instance of a Markov
 	 * decision process.
