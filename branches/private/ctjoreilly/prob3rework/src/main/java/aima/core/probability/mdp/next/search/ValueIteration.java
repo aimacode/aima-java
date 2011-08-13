@@ -53,6 +53,9 @@ public class ValueIteration<S, A> {
 	 *            discount &gamma; to be used.
 	 */
 	public ValueIteration(double gamma) {
+		if (gamma > 1.0 || gamma <= 0.0) {
+			throw new IllegalArgumentException("Gamma must be > 0 and <= 1.0");
+		}
 		this.gamma = gamma;
 	}
 
@@ -79,6 +82,7 @@ public class ValueIteration<S, A> {
 		// Note: Just calculate this once for efficiency purposes:
 		// &epsilon;(1 - &gamma;)/&gamma;
 		double minDelta = epsilon * (1 - gamma) / gamma;
+		
 		// repeat
 		do {
 			// U <- U'; &delta; <- 0
@@ -108,7 +112,7 @@ public class ValueIteration<S, A> {
 				}
 			}
 			// until &delta; < &epsilon;(1 - &gamma;)/&gamma;
-		} while (delta >= minDelta);
+		} while (delta > minDelta);
 
 		// return U
 		return U;
