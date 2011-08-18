@@ -4,61 +4,60 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.cellworld.CellWorldPosition;
-import aima.core.probability.mdp.MDP;
-import aima.core.probability.mdp.MDPFactory;
-import aima.core.probability.mdp.MDPPolicy;
-import aima.core.probability.mdp.MDPUtilityFunction;
+import aima.core.environment.cellworld.next.Cell;
+import aima.core.environment.cellworld.next.CellWorld;
+import aima.core.environment.cellworld.next.CellWorldAction;
+import aima.core.environment.cellworld.next.CellWorldFactory;
+import aima.core.probability.example.MDPFactory;
+import aima.core.probability.mdp.next.MarkovDecisionProcess;
+import aima.core.probability.mdp.next.Policy;
+import aima.core.probability.mdp.next.search.ModifiedPolicyIteration;
 
 /**
- * @author Ravi Mohan
  * 
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
  */
 public class PolicyIterationTest {
-	private MDP<CellWorldPosition, String> fourByThreeMDP;
+	private CellWorld<Double> cw = null;
+	private MarkovDecisionProcess<Cell<Double>, CellWorldAction> mdp = null;
+	private ModifiedPolicyIteration<Cell<Double>, CellWorldAction> pi = null;
 
 	@Before
 	public void setUp() {
-		fourByThreeMDP = MDPFactory.createFourByThreeMDP();
+		cw = CellWorldFactory.createCellWorldForFig17_1();
+		mdp = MDPFactory.createMDPForFigure17_3(cw);
+		pi = new ModifiedPolicyIteration<Cell<Double>, CellWorldAction>(50, 1.0);
 	}
 
 	@Test
-	public void testPolicyEvaluation() {
-		MDPPolicy<CellWorldPosition, String> policy = fourByThreeMDP
-				.randomPolicy();
-		MDPUtilityFunction<CellWorldPosition> uf1 = fourByThreeMDP
-				.initialUtilityFunction();
+	public void testPolicyIterationForFig17_2() {
 
-		MDPUtilityFunction<CellWorldPosition> uf2 = fourByThreeMDP
-				.policyEvaluation(policy, uf1, 1, 3);
+		// AIMA3e check with Figure 17.2 (a)
+		Policy<Cell<Double>, CellWorldAction> policy = pi.policyIteration(mdp);
 
-		Assert.assertFalse(uf1.equals(uf2));
-	}
+		Assert.assertEquals(CellWorldAction.Up, policy.action(cw
+				.getCellAt(1, 1)));
+		Assert.assertEquals(CellWorldAction.Up, policy.action(cw
+				.getCellAt(1, 2)));
+		Assert.assertEquals(CellWorldAction.Right, policy.action(cw.getCellAt(
+				1, 3)));
 
-	@Test
-	public void testPolicyIteration() {
+		Assert.assertEquals(CellWorldAction.Left, policy.action(cw.getCellAt(2,
+				1)));
+		Assert.assertEquals(CellWorldAction.Right, policy.action(cw.getCellAt(
+				2, 3)));
 
-		MDPPolicy<CellWorldPosition, String> policy = fourByThreeMDP
-				.policyIteration(1);
-		// AIMA2e check With Figure 17.2 (a)
+		Assert.assertEquals(CellWorldAction.Left, policy.action(cw.getCellAt(3,
+				1)));
+		Assert.assertEquals(CellWorldAction.Up, policy.action(cw
+				.getCellAt(3, 2)));
+		Assert.assertEquals(CellWorldAction.Right, policy.action(cw.getCellAt(
+				3, 3)));
 
-		Assert.assertEquals("up", policy.getAction(new CellWorldPosition(1, 1)));
-		Assert.assertEquals("up", policy.getAction(new CellWorldPosition(2, 1)));
-		Assert.assertEquals("right",
-				policy.getAction(new CellWorldPosition(3, 1)));
-
-		Assert.assertEquals("left",
-				policy.getAction(new CellWorldPosition(1, 2)));
-		Assert.assertEquals("right",
-				policy.getAction(new CellWorldPosition(3, 2)));
-
-		Assert.assertEquals("left",
-				policy.getAction(new CellWorldPosition(1, 3)));
-		Assert.assertEquals("up", policy.getAction(new CellWorldPosition(2, 3)));
-		Assert.assertEquals("right",
-				policy.getAction(new CellWorldPosition(3, 3)));
-
-		Assert.assertEquals("left",
-				policy.getAction(new CellWorldPosition(1, 4)));
+		Assert.assertEquals(CellWorldAction.Left, policy.action(cw.getCellAt(4,
+				1)));
+		Assert.assertNull(policy.action(cw.getCellAt(4, 2)));
+		Assert.assertNull(policy.action(cw.getCellAt(4, 3)));
 	}
 }

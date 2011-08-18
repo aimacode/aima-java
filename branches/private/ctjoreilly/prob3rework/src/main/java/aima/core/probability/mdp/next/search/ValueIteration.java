@@ -59,6 +59,7 @@ public class ValueIteration<S, A> {
 		this.gamma = gamma;
 	}
 
+	// function VALUE-ITERATION(mdp, &epsilon;) returns a utility function
 	/**
 	 * The value iteration algorithm for calculating the utility of states.
 	 * 
@@ -104,7 +105,7 @@ public class ValueIteration<S, A> {
 						aMax = aSum;
 					}
 				}
-				Udelta.put(s, mdp.reward(s) + (gamma * aMax));
+				Udelta.put(s, mdp.reward(s) + gamma * aMax);
 				// if |U'[s] - U[s]| > &delta; then &delta; <- |U'[s] - U[s]|
 				double aDiff = Math.abs(Udelta.get(s) - U.get(s));
 				if (aDiff > delta) {

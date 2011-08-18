@@ -35,7 +35,7 @@ public class ValueIterationTest {
 
 	@Test
 	public void testValueIterationForFig17_3() {
-		Map<Cell<Double>, Double> U = vi.valueIteration(mdp, 0.9674);
+		Map<Cell<Double>, Double> U = vi.valueIteration(mdp, 0.0001);
 
 		Assert.assertEquals(0.705, U.get(cw.getCellAt(1, 1)), DELTA_THRESHOLD);
 		Assert.assertEquals(0.762, U.get(cw.getCellAt(1, 2)), DELTA_THRESHOLD);

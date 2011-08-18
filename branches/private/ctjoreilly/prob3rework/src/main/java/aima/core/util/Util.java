@@ -61,6 +61,20 @@ public class Util {
 		return map;
 	}
 
+	/**
+	 * Randomly select an element from a list.
+	 * 
+	 * @param <T>
+	 *            the type of element to be returned from the list l.
+	 * @param l
+	 *            a list of type T from which an element is to be selected
+	 *            randomly.
+	 * @return a randomly selected element from l.
+	 */
+	public static <T> T selectRandomlyFromList(List<T> l) {
+		return l.get(_r.nextInt(l.size()));
+	}
+
 	public static boolean randomBoolean() {
 		int trueOrFalse = _r.nextInt(2);
 		return (!(trueOrFalse == 0));
@@ -110,10 +124,6 @@ public class Util {
 
 	public static int min(int i, int j, int k) {
 		return min(min(i, j), k);
-	}
-
-	public static <T> T selectRandomlyFromList(List<T> l) {
-		return l.get(_r.nextInt(l.size()));
 	}
 
 	public static <T> T mode(List<T> l) {
