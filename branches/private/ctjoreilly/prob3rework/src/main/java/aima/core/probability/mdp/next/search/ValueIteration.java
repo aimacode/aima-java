@@ -1,6 +1,7 @@
 package aima.core.probability.mdp.next.search;
 
 import java.util.Map;
+import java.util.Set;
 
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.util.Util;
@@ -83,7 +84,7 @@ public class ValueIteration<S, A> {
 		// Note: Just calculate this once for efficiency purposes:
 		// &epsilon;(1 - &gamma;)/&gamma;
 		double minDelta = epsilon * (1 - gamma) / gamma;
-		
+
 		// repeat
 		do {
 			// U <- U'; &delta; <- 0
@@ -91,20 +92,26 @@ public class ValueIteration<S, A> {
 			delta = 0;
 			// for each state s in S do
 			for (S s : mdp.states()) {
-				// U'[s] <- R(s) + &gamma;
 				// max<sub>a &isin; A(s)</sub>
+				Set<A> actions = mdp.actions(s);
+				// Handle terminal states (i.e. no actions).
 				double aMax = 0;
-				for (A a : mdp.actions(s)) {
+				if (actions.size() > 0) {
+					aMax = Double.NEGATIVE_INFINITY;
+				}
+				for (A a : actions) {
 					// &Sigma;<sub>s'</sub>P(s' | s, a) U[s']
 					double aSum = 0;
 					for (S sDelta : mdp.states()) {
 						aSum += mdp.transitionProbability(sDelta, s, a)
-								* Udelta.get(sDelta);
+								* U.get(sDelta);
 					}
 					if (aSum > aMax) {
 						aMax = aSum;
 					}
 				}
+				// U'[s] <- R(s) + &gamma;
+				// max<sub>a &isin; A(s)</sub>
 				Udelta.put(s, mdp.reward(s) + gamma * aMax);
 				// if |U'[s] - U[s]| > &delta; then &delta; <- |U'[s] - U[s]|
 				double aDiff = Math.abs(Udelta.get(s) - U.get(s));
