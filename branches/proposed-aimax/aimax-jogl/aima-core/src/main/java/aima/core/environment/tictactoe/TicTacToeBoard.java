@@ -77,7 +77,7 @@ public class TicTacToeBoard {
 	 * @return a clone of the board flipped horizontally.
 	 */
 	public TicTacToeBoard flipHorizontal() {
-		TicTacToeBoard result = cloneBoard();
+		TicTacToeBoard result = new TicTacToeBoard();
 
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
@@ -93,7 +93,7 @@ public class TicTacToeBoard {
 	 * @return a clone of the board flipped vertically.
 	 */
 	public TicTacToeBoard flipVertical() {
-		TicTacToeBoard result = cloneBoard();
+		TicTacToeBoard result = new TicTacToeBoard();
 
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
@@ -109,7 +109,7 @@ public class TicTacToeBoard {
 	 * @return a clone of the board flipped across its main diagonal.
 	 */
 	public TicTacToeBoard flipMainDiagonal() {
-		TicTacToeBoard result = cloneBoard();
+		TicTacToeBoard result = new TicTacToeBoard();
 
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
@@ -125,7 +125,7 @@ public class TicTacToeBoard {
 	 * @return a clone of the board flipped across its minor diagonal.
 	 */
 	public TicTacToeBoard flipMinorDiagonal() {
-		TicTacToeBoard result = cloneBoard();
+		TicTacToeBoard result = new TicTacToeBoard();
 
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
