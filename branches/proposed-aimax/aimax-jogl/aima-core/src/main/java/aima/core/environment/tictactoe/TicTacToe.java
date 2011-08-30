@@ -14,19 +14,78 @@ import aima.core.util.datastructure.XYLocation;
  */
 public class TicTacToe extends Game<XYLocation> {
 	public TicTacToe() {
-		List<XYLocation> moves = new ArrayList<XYLocation>();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				XYLocation loc = new XYLocation(i, j);
-				moves.add(loc);
-			}
-		}
-		initialState.put("moves", moves);
 		initialState.put("player", "X");
 		initialState.put("utility", new Integer(0));
 		initialState.put("board", new TicTacToeBoard());
+		List<XYLocation> moves = generateMoves(initialState);
+		initialState.put("moves", moves);
 		initialState.put("level", new Integer(0));
 		presentState = initialState;
+	}
+
+	/**
+	 * Returns the list of legal moves for the specified state.
+	 * 
+	 * @param state
+	 *            the current state of the game
+	 * @return the list of legal moves for the specified state.
+	 */
+	private List<XYLocation> generateMoves(GameState state) {
+		TicTacToeBoard position = getBoard(state);
+
+		List<XYLocation> moves = new ArrayList<XYLocation>();
+		List<TicTacToeBoard> newPositions = new ArrayList<TicTacToeBoard>();
+
+		// For each row
+		for (int r = 0; r < 3; r++) {
+			// For each column
+			for (int c = 0; c < 3; c++) {
+				// If space[r][c] is blank
+				if (position.getValue(r, c) == "-") {
+					// Add move if it is unique
+					XYLocation move = new XYLocation(r, c);
+					TicTacToeBoard newPosition = position.cloneBoard();
+					if (getPlayerToMove(state) == "X")
+						newPosition.markX(r, c);
+					else
+						newPosition.markO(r, c);
+					if (isUnique(newPosition, newPositions)) {
+						moves.add(move);
+						newPositions.add(newPosition);
+					}
+				}
+			}
+		}
+
+		return moves;
+	}
+
+	/**
+	 * Returns <code>true</code> if the specified position is unique among the
+	 * specified list of positions. In the case of tic-tac-toe, the board has
+	 * symmetry, and may be flipped horizontally, vertically, or diagonally, to
+	 * determine how many unique positions exist.
+	 * 
+	 * @param position
+	 *            a position
+	 * @param positions
+	 *            a list of positions
+	 * @return <code>true</code> if the specified position is unique among the
+	 *         the specified list of positions.
+	 */
+	private boolean isUnique(TicTacToeBoard position,
+			List<TicTacToeBoard> positions) {
+		for (int i = 0; i < positions.size(); i++) {
+			if (position.flipHorizontal().equals(positions.get(i)))
+				return false;
+			else if (position.flipVertical().equals(positions.get(i)))
+				return false;
+			else if (position.flipMainDiagonal().equals(positions.get(i)))
+				return false;
+			else if (position.flipMinorDiagonal().equals(positions.get(i)))
+				return false;
+		}
+		return true;
 	}
 
 	public TicTacToeBoard getBoard(GameState state) {
@@ -77,33 +136,41 @@ public class TicTacToe extends Game<XYLocation> {
 
 	public GameState getMove(GameState state, int x, int y) {
 		GameState retVal = null;
-		XYLocation loc = new XYLocation(x, y);
-		List<XYLocation> moves = getMoves(state);
-		List<XYLocation> newMoves = new ArrayList<XYLocation>(moves);
-		if (moves.contains(loc)) {
-			int index = newMoves.indexOf(loc);
-			newMoves.remove(index);
-
-			retVal = new GameState();
-
-			retVal.put("moves", newMoves);
-			TicTacToeBoard newBoard = getBoard(state).cloneBoard();
-			if (getPlayerToMove(state) == "X") {
-				newBoard.markX(x, y);
-				retVal.put("player", "O");
-
-			} else {
-				newBoard.markO(x, y);
-				retVal.put("player", "X");
-
+		List<XYLocation> locations = new ArrayList<XYLocation>();
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				if (getBoard(state).isEmpty(r, c))
+					locations.add(new XYLocation(x, y));
 			}
-			retVal.put("board", newBoard);
-			retVal.put(
-					"utility",
-					new Integer(computeUtility(newBoard,
-							getPlayerToMove(getState()))));
-			retVal.put("level", new Integer(getLevel(state) + 1));
-			// presentState = retVal;
+		}
+		List<XYLocation> moves = getMoves(state);
+		for (int i = 0; i < locations.size(); i++) {
+			XYLocation loc = locations.get(i);
+			if (moves.contains(loc)) {
+				retVal = new GameState();
+
+				TicTacToeBoard newBoard = getBoard(state).cloneBoard();
+				if (getPlayerToMove(state) == "X") {
+					newBoard.markX(x, y);
+					retVal.put("player", "O");
+
+				} else {
+					newBoard.markO(x, y);
+					retVal.put("player", "X");
+
+				}
+				retVal.put("board", newBoard);
+
+				List<XYLocation> newMoves = generateMoves(retVal);
+				retVal.put("moves", newMoves);
+
+				retVal.put("utility", new Integer(computeUtility(newBoard,
+						getPlayerToMove(getState()))));
+				retVal.put("level", new Integer(getLevel(state) + 1));
+				// presentState = retVal;
+
+				break;
+			}
 		}
 		return retVal;
 	}

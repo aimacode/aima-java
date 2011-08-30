@@ -71,6 +71,70 @@ public class TicTacToeBoard {
 		return (isAnyRowComplete() || isAnyColumnComplete() || isAnyDiagonalComplete());
 	}
 
+	/**
+	 * Returns a clone of the board flipped horizontally.
+	 * 
+	 * @return a clone of the board flipped horizontally.
+	 */
+	public TicTacToeBoard flipHorizontal() {
+		TicTacToeBoard result = cloneBoard();
+
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				result.setValue(r, 2 - c, getValue(r, c));
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Returns a clone of the board flipped vertically.
+	 * 
+	 * @return a clone of the board flipped vertically.
+	 */
+	public TicTacToeBoard flipVertical() {
+		TicTacToeBoard result = cloneBoard();
+
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				result.setValue(2 - r, c, getValue(r, c));
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Returns a clone of the board flipped across its main diagonal.
+	 * 
+	 * @return a clone of the board flipped across its main diagonal.
+	 */
+	public TicTacToeBoard flipMainDiagonal() {
+		TicTacToeBoard result = cloneBoard();
+
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				result.setValue(c, r, getValue(r, c));
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Returns a clone of the board flipped across its minor diagonal.
+	 * 
+	 * @return a clone of the board flipped across its minor diagonal.
+	 */
+	public TicTacToeBoard flipMinorDiagonal() {
+		TicTacToeBoard result = cloneBoard();
+
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				result.setValue(2 - c, 2 - r, getValue(r, c));
+			}
+		}
+		return result;
+	}
+
 	public String getValue(int row, int col) {
 		return state[getAbsPosition(row, col)];
 	}
