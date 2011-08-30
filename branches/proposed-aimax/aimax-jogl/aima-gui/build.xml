@@ -1,0 +1,76 @@
+
+<project name="aima-gui" basedir="." default="aima-gui.all">
+	<dirname property="aima-gui.basedir" file="${ant.file.aima-gui}"/>
+	<property file="${aima-gui.basedir}/build.properties.local"/>
+	<property file="${aima-gui.basedir}/build.properties"/> 
+
+	<import file="${path.to.aima-core.project}/build.xml"/>
+	
+	<property name="aima-gui.run" value="aima.gui.applications.AimaDemoApp" />
+	
+	<path id="aima-gui.classpath">
+		<path refid="aima-core.classpath" />
+		<pathelement path="${aima-gui.dir.build.bin}/main" />
+		<pathelement path="${aima-gui.dir.src}/main/resource" />
+	</path>
+
+	<target name="aima-gui.clean">
+		<delete dir="${aima-gui.dir.build}" />
+	</target>
+
+	<target name="aima-gui.makedirs">
+		<mkdir dir="${aima-gui.dir.build}" />
+		<mkdir dir="${aima-gui.dir.build.bin}" />
+		<mkdir dir="${aima-gui.dir.build.bin}/main" />
+		<mkdir dir="${aima-gui.dir.build.doc}" />
+		<mkdir dir="${aima-gui.dir.build.doc}/javadoc" />
+		<mkdir dir="${aima-gui.dir.build.release}" />
+	</target>
+
+	<target name="aima-gui.compile-all" depends="aima-core.compile-all,aima-gui.makedirs">
+		<javac srcdir="${aima-gui.dir.src}/main" 
+			destdir="${aima-gui.dir.build.bin}/main" 
+			classpathref="aima-gui.classpath"
+			debug="${aima-core.compiler.debug}"
+			debuglevel="${aima-core.compiler.debuglevel}"
+			source="${aima-core.compiler.source}"
+		    target="${aima-core.compiler.target}"
+		/>
+	</target>
+
+	<target name="aima-gui.makedocs" depends="aima-gui.compile-all">
+		<path id="aima-gui.javadoc.src">
+			<pathelement path="${aima-gui.dir.src}/main/java" />
+			<pathelement path="${aima-gui.dir.src}/main/javadoc" />
+		</path>
+		<javadoc destdir="${aima-gui.dir.build.doc}/javadoc" 
+			packagenames="aima.*"
+			sourcepathref="aima-gui.javadoc.src" />
+	</target>
+	
+	<target name="aima-gui.release" depends="aima-gui.clean,aima-gui.makedirs,aima-core.release,aima-gui.compile-all">
+		<jar destfile="${aima-gui.dir.build.release}/aima-gui.jar">
+			<manifest>
+				<attribute name="Class-Path" value="aima-core.jar" />
+				<attribute name="Main-Class" value="aima.gui.applications.AimaDemoApp" />
+		    	<attribute name="Implementation-Title" value="AIMA-GUI" />
+		        <attribute name="Implementation-Version" value="${aima-gui.version}" />
+		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
+		    </manifest>
+			 <fileset dir="${aima-gui.dir.build.bin}/main" />
+			 <fileset dir="${aima-gui.dir.src}/main/resource" excludes="**/*.svn" />
+		</jar>
+	</target>
+	
+	<target name="aima-gui.run" depends="aima-gui.compile-all">
+	    <java fork="true" classname="${aima-gui.run}">
+	        <classpath refid="aima-gui.classpath" />
+	           
+	        <jvmarg value="-Xms128m" />
+	        <jvmarg value="-Xmx1024m" />
+	    </java>
+	</target>
+
+	<target name="aima-gui.all" depends="aima-gui.release,aima-gui.makedocs">
+	</target>
+</project>

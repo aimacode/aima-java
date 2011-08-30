@@ -1,0 +1,37 @@
+<body>
+<html>
+<p>The <code>aimax.osm</code> package together with its sub-packages contain a
+tool for reading, maintaining, and viewing Open Street Map (OSM) data. The viewer is
+designed as an efficient general purpose viewer which is highly configurable and
+extendible. The internal map representation is chosen as close as possible to the
+original OSM XML file format. A kd-tree is used to improve rendering efficiency.
+Classification and abstraction of map entities as well as their
+visual appearance within the drawn map are controlled by declarative
+rendering rules. They can be replaced or configured at runtime.
+New personal map styles can be created quite easily. See classes
+<code>aimax.osm.viewer.MapStyleFactory</code> and
+<code>aimax.osm.application.OsmViewerPlusApp</code> for ideas how that can be
+achieved.
+
+<p>Routing functionality is based on the AIMA-JAVA core library.
+All dependencies to the core library are encapsulated in the routing
+sub-package and the applications using functionality from that package.
+So the viewer classes can also be used as stand-alone library
+for building general OSM applications.</p>
+
+<p> In the current version, relation entities are ignored and
+the size of the map should be limited to about a million nodes
+to avoid long loading times. The tool Osmosis can be used to generate
+maps complying to this requirement.</p>
+
+<p> Getting started: Compile the project and run one of the applications
+in the <code>aimax.osm.applications</code> package. If no map is displayed
+by default, make sure that the main/resource folder is included in 
+the build path of your project, recompile and start again.
+Then place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
+mouse-drag, ctrl-mouse-left, plus button, minus button, ctrl-plus, ctrl-minus,
+space, ctrl-space, arrow buttons, and also the mouse-wheel for navigation,
+mark setting, and track definition. Before routing, at least two marks
+must be set!</p>
+</html>
+</body>

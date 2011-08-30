@@ -1,0 +1,87 @@
+
+<project name="aima-core" basedir="." default="aima-core.all">
+	<!-- Note: This is required so that this build.xml file can be seamlessly     -->
+    <!-- imported by other dependent build.xml files (e.g. aima-gui)              -->
+	<dirname property="aima-core.basedir" file="${ant.file.aima-core}"/>
+	<property file="${aima-core.basedir}/build.properties.local"/>
+	<property file="${aima-core.basedir}/build.properties"/> 
+
+	<path id="aima-core.classpath">
+		<pathelement path="${aima-core.dir.build.bin}/main" />
+		<pathelement path="${aima-core.dir.src}/main/resource" />
+	</path>
+	
+	<path id="aima-core.test.classpath">
+		<path refid="aima-core.classpath" />
+		<pathelement path="${aima-core.dir.lib}/junit/junit-4.7.jar" />
+		<pathelement path="${aima-core.dir.build.bin}/test" />
+		<pathelement path="${aima-core.dir.src}/test/resource" />
+	</path>
+
+	<target name="aima-core.clean">
+		<delete dir="${aima-core.dir.build}" />
+	</target>
+
+	<target name="aima-core.makedirs">
+		<mkdir dir="${aima-core.dir.build}" />
+		<mkdir dir="${aima-core.dir.build.bin}" />
+		<mkdir dir="${aima-core.dir.build.bin}/main" />
+		<mkdir dir="${aima-core.dir.build.bin}/test" />
+		<mkdir dir="${aima-core.dir.build.doc}" />
+		<mkdir dir="${aima-core.dir.build.doc}/javadoc" />
+		<mkdir dir="${aima-core.dir.build.release}" />
+	</target>
+
+	<target name="aima-core.compile-all" depends="aima-core.makedirs">
+		<javac srcdir="${aima-core.dir.src}/main" 
+			destdir="${aima-core.dir.build.bin}/main" 
+			classpathref="aima-core.classpath"
+			debug="${aima-core.compiler.debug}"
+			debuglevel="${aima-core.compiler.debuglevel}"
+			source="${aima-core.compiler.source}"
+		    target="${aima-core.compiler.target}"
+		/>
+		<javac srcdir="${aima-core.dir.src}/test" 
+			destdir="${aima-core.dir.build.bin}/test" 
+			classpathref="aima-core.test.classpath"
+			debug="${aima-core.compiler.debug}"
+			debuglevel="${aima-core.compiler.debuglevel}"
+			source="${aima-core.compiler.source}"
+		    target="${aima-core.compiler.target}"
+		/>
+	</target>
+
+	<target name="aima-core.test-all" depends="aima-core.compile-all">
+		<junit haltonfailure="true">
+			<formatter type="plain" usefile="no" />
+			<test name="aima.test.core.unit.AllAIMAUnitTestSuite" />
+			<classpath refid="aima-core.test.classpath" />
+		</junit>
+	</target>
+
+	<target name="aima-core.makedocs" depends="aima-core.compile-all">
+		<path id="aima-core.javadoc.src">
+			<pathelement path="${aima-core.dir.src}/main/java" />
+			<pathelement path="${aima-core.dir.src}/main/javadoc" />
+		</path>
+		<javadoc destdir="${aima-core.dir.build.doc}/javadoc" 
+			packagenames="aima.*"
+			sourcepathref="aima-core.javadoc.src"
+		    overview="${aima-core.dir.src}/main/javadoc/overview.html" />
+	</target>
+
+	<target name="aima-core.release" depends="aima-core.clean,aima-core.makedirs,aima-core.test-all">
+		<jar destfile="${aima-core.dir.build.release}/aima-core.jar">
+			<manifest>
+		    	<attribute name="Implementation-Title" value="AIMA-CORE" />
+		        <attribute name="Implementation-Version" value="${aima-core.version}" />
+		        <attribute name="AIMA-CORE-Version" value="${aima-core.version}" />
+		    </manifest>
+			 <fileset dir="${aima-core.dir.build.bin}/main" />
+			 <fileset dir="${aima-core.dir.src}/main/resource" excludes="**/*.svn" />
+		</jar>
+	</target>
+		
+	<target name="aima-core.all" depends="aima-core.release,aima-core.makedocs">
+	</target>
+</project>
