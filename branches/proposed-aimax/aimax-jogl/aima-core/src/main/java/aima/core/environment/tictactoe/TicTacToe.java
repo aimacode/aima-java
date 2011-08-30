@@ -140,7 +140,7 @@ public class TicTacToe extends Game<XYLocation> {
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
 				if (getBoard(state).isEmpty(r, c))
-					locations.add(new XYLocation(x, y));
+					locations.add(new XYLocation(r, c));
 			}
 		}
 		List<XYLocation> moves = getMoves(state);

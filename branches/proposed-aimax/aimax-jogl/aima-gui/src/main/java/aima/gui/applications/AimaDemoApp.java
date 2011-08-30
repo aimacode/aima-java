@@ -1,5 +1,6 @@
 package aima.gui.applications;
 
+import aima.gui.applications.checkers.CheckersApp;
 import aima.gui.applications.search.csp.MapColoringApp;
 import aima.gui.applications.search.games.EightPuzzleApp;
 import aima.gui.applications.search.games.NQueensApp;
@@ -34,6 +35,7 @@ public class AimaDemoApp {
 		frame.addApp(EightPuzzleApp.class);
 		frame.addApp(NQueensApp.class);
 		frame.addApp(TicTacToeApp.class);
+		frame.addApp(CheckersApp.class);
 		frame.addApp(MapColoringApp.class);
 
 		frame.addDemo(TrivialVacuumDemo.class);
