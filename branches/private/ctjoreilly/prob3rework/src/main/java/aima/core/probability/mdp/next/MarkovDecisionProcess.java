@@ -2,6 +2,8 @@ package aima.core.probability.mdp.next;
 
 import java.util.Set;
 
+import aima.core.agent.Action;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 647.<br>
  * <br>
@@ -26,7 +28,7 @@ import java.util.Set;
  * @author Ravi Mohan
  * 
  */
-public interface MarkovDecisionProcess<S, A> {
+public interface MarkovDecisionProcess<S, A extends Action> {
 
 	/**
 	 * Get the set of states associated with the Markov decision process.

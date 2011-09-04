@@ -5,8 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import aima.core.agent.Action;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.probability.mdp.next.Policy;
+import aima.core.probability.mdp.next.PolicyEvaluation;
 import aima.core.probability.mdp.next.impl.LookupPolicy;
 import aima.core.util.Util;
 
@@ -42,13 +44,18 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-public abstract class PolicyIteration<S, A> {
+public class PolicyIteration<S, A extends Action> {
+
+	private PolicyEvaluation<S, A> policyEvaluation = null;
 
 	/**
-	 * Default Constructor.
+	 * Constructor.
+	 * 
+	 * @param policyEvaluation
+	 *            the policy evaluation function to use.
 	 */
-	public PolicyIteration() {
-
+	public PolicyIteration(PolicyEvaluation<S, A> policyEvaluation) {
+		this.policyEvaluation = policyEvaluation;
 	}
 
 	// function POLICY-ITERATION(mdp) returns a policy
@@ -69,7 +76,7 @@ public abstract class PolicyIteration<S, A> {
 		// repeat
 		do {
 			// U <- POLICY-EVALUATION(&pi;, U, mdp)
-			U = policyEvaluation(pi, U, mdp);
+			U = policyEvaluation.evaluate(pi, U, mdp);
 			// unchanged? <- true
 			unchanged = true;
 			// for each state s in S do
@@ -114,30 +121,13 @@ public abstract class PolicyIteration<S, A> {
 	}
 
 	/**
-	 * <b>Policy evaluation:</b> given a policy &pi;<sub>i</sub>, calculate
-	 * U<sub>i</sub>=U<sup>&pi;<sub>i</sub></sup>, the utility of each state if
-	 * &pi;<sub>i</sub> were to be executed.
-	 * 
-	 * @param pi_i
-	 *            a policy vector indexed by state
-	 * @param U
-	 *            a vector of utilities for states in S
-	 * @param mdp
-	 *            an MDP with states S, actions A(s), transition model P(s'|s,a)
-	 * @return U<sub>i</sub>=U<sup>&pi;<sub>i</sub></sup>, the utility of each
-	 *         state if &pi;<sub>i</sub> were to be executed.
-	 */
-	public abstract Map<S, Double> policyEvaluation(Map<S, A> pi_i,
-			Map<S, Double> U, MarkovDecisionProcess<S, A> mdp);
-
-	/**
 	 * Create a policy vector indexed by state, initially random.
 	 * 
 	 * @param mdp
 	 *            an MDP with states S, actions A(s), transition model P(s'|s,a)
 	 * @return a policy vector indexed by state, initially random.
 	 */
-	public static <S, A> Map<S, A> initialPolicyVector(
+	public static <S, A extends Action> Map<S, A> initialPolicyVector(
 			MarkovDecisionProcess<S, A> mdp) {
 		Map<S, A> pi = new LinkedHashMap<S, A>();
 		List<A> actions = new ArrayList<A>();

@@ -3,6 +3,7 @@ package aima.core.probability.mdp.next.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import aima.core.agent.Action;
 import aima.core.probability.mdp.next.Policy;
 
 /**
@@ -16,7 +17,7 @@ import aima.core.probability.mdp.next.Policy;
  * 
  * @author Ciaran O'Reilly
  */
-public class LookupPolicy<S, A> implements Policy<S, A> {
+public class LookupPolicy<S, A extends Action> implements Policy<S, A> {
 	private Map<S, A> policy = new HashMap<S, A>();
 
 	public LookupPolicy(Map<S, A> aPolicy) {

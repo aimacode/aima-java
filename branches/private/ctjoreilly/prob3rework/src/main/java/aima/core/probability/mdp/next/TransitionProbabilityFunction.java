@@ -1,5 +1,7 @@
 package aima.core.probability.mdp.next;
 
+import aima.core.agent.Action;
+
 /**
  * An interface for MDP transition probability functions.
  * 
@@ -11,7 +13,7 @@ package aima.core.probability.mdp.next;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public interface TransitionProbabilityFunction<S, A> {
+public interface TransitionProbabilityFunction<S, A extends Action> {
 
 	/**
 	 * Return the probability of going from state s using action a to s' based

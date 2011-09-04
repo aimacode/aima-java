@@ -1,5 +1,7 @@
 package aima.core.probability.mdp.next;
 
+import aima.core.agent.Action;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 647.<br>
  * <br>
@@ -20,7 +22,7 @@ package aima.core.probability.mdp.next;
  * @author Ravi Mohan
  * 
  */
-public interface Policy<S, A> {
+public interface Policy<S, A extends Action> {
 	/**
 	 * &pi;(s) is the action recommended by the policy &pi; for state s.
 	 * 

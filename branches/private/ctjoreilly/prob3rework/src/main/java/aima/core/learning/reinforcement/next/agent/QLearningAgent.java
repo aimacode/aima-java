@@ -1,4 +1,6 @@
-package aima.core.learning.reinforcement.next;
+package aima.core.learning.reinforcement.next.agent;
+
+import aima.core.agent.Action;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 844.<br>
@@ -34,6 +36,6 @@ package aima.core.learning.reinforcement.next;
  * @author Ravi Mohan
  * 
  */
-public class QLearningAgent<S, A> {
+public class QLearningAgent<S, A extends Action> {
 
 }

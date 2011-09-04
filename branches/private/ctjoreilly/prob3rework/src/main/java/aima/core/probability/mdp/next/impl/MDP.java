@@ -2,13 +2,14 @@ package aima.core.probability.mdp.next.impl;
 
 import java.util.Set;
 
+import aima.core.agent.Action;
 import aima.core.probability.mdp.next.ActionsFunction;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.probability.mdp.next.RewardFunction;
 import aima.core.probability.mdp.next.TransitionProbabilityFunction;
 
 /**
- * Default implementationn of the MarkovDecisionProcess<S, A> interface.
+ * Default implementation of the MarkovDecisionProcess<S, A> interface.
  * 
  * @param <S>
  *            the state type.
@@ -18,7 +19,7 @@ import aima.core.probability.mdp.next.TransitionProbabilityFunction;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public class MDP<S, A> implements MarkovDecisionProcess<S, A> {
+public class MDP<S, A extends Action> implements MarkovDecisionProcess<S, A> {
 	private Set<S> states = null;
 	private S initialState = null;
 	private ActionsFunction<S, A> actionsFunction = null;

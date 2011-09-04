@@ -3,7 +3,9 @@ package aima.core.probability.mdp.next.search;
 import java.util.HashMap;
 import java.util.Map;
 
+import aima.core.agent.Action;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
+import aima.core.probability.mdp.next.PolicyEvaluation;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 657.<br>
@@ -35,7 +37,7 @@ import aima.core.probability.mdp.next.MarkovDecisionProcess;
  * @author Ravi Mohan
  * 
  */
-public class ModifiedPolicyIteration<S, A> extends PolicyIteration<S, A> {
+public class ModifiedPolicyEvaluation<S, A extends Action> implements PolicyEvaluation<S, A> {
 	// # iterations to use to produce the next utility estimate
 	private int k;
 	// discount &gamma; to be used.
@@ -49,16 +51,18 @@ public class ModifiedPolicyIteration<S, A> extends PolicyIteration<S, A> {
 	 * @param gamma
 	 *            discount &gamma; to be used
 	 */
-	public ModifiedPolicyIteration(int k, double gamma) {
+	public ModifiedPolicyEvaluation(int k, double gamma) {
 		if (gamma > 1.0 || gamma <= 0.0) {
 			throw new IllegalArgumentException("Gamma must be > 0 and <= 1.0");
 		}
 		this.k = k;
 		this.gamma = gamma;
 	}
-
+	
+	//
+	// START-PolicyEvaluation
 	@Override
-	public Map<S, Double> policyEvaluation(Map<S, A> pi_i, Map<S, Double> U,
+	public Map<S, Double> evaluate(Map<S, A> pi_i, Map<S, Double> U,
 			MarkovDecisionProcess<S, A> mdp) {
 		Map<S, Double> U_i = new HashMap<S, Double>(U);
 		Map<S, Double> U_ip1 = new HashMap<S, Double>(U);
@@ -83,4 +87,7 @@ public class ModifiedPolicyIteration<S, A> extends PolicyIteration<S, A> {
 		}
 		return U_ip1;
 	}
+	
+	// END-PolicyEvaluation
+	//
 }

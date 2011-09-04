@@ -3,6 +3,7 @@ package aima.core.probability.mdp.next.search;
 import java.util.Map;
 import java.util.Set;
 
+import aima.core.agent.Action;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.util.Util;
 
@@ -43,7 +44,7 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-public class ValueIteration<S, A> {
+public class ValueIteration<S, A extends Action> {
 	// discount &gamma; to be used.
 	private double gamma = 0;
 

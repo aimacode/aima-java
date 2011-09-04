@@ -2,6 +2,8 @@ package aima.core.probability.mdp.next;
 
 import java.util.Set;
 
+import aima.core.agent.Action;
+
 /**
  * An interface for MDP action functions.
  * 
@@ -13,7 +15,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public interface ActionsFunction<S, A> {
+public interface ActionsFunction<S, A extends Action> {
 	/**
 	 * Get the set of actions for state s.
 	 * 

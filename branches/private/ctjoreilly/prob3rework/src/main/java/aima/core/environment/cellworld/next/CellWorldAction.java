@@ -3,6 +3,8 @@ package aima.core.environment.cellworld.next;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import aima.core.agent.Action;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 645.<br>
  * <br>
@@ -16,7 +18,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * 
  */
-public enum CellWorldAction {
+public enum CellWorldAction implements Action {
 	Up, Down, Left, Right;
 
 	private static final Set<CellWorldAction> _actions = new LinkedHashSet<CellWorldAction>();
@@ -30,6 +32,15 @@ public enum CellWorldAction {
 	public static final Set<CellWorldAction> actions() {
 		return _actions;
 	}
+	
+	//
+	// START-Action
+	@Override
+	public boolean isNoOp() {
+		return false;
+	}
+	// END-Action
+	//
 
 	/**
 	 * 
