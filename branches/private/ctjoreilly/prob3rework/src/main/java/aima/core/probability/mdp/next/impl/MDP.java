@@ -12,7 +12,7 @@ import aima.core.probability.mdp.next.TransitionProbabilityFunction;
  * 
  * @param <S>
  *            the state type.
- * @param <T>
+ * @param <A>
  *            the action type.
  * 
  * @author Ciaran O'Reilly

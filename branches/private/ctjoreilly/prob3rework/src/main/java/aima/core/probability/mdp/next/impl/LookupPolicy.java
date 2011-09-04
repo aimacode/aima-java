@@ -11,7 +11,7 @@ import aima.core.probability.mdp.next.Policy;
  * 
  * @param <S>
  *            the state type.
- * @param <T>
+ * @param <A>
  *            the action type.
  * 
  * @author Ciaran O'Reilly

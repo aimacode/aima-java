@@ -28,7 +28,7 @@ import aima.core.probability.mdp.next.MarkovDecisionProcess;
  * 
  * @param <S>
  *            the state type.
- * @param <T>
+ * @param <A>
  *            the action type.
  * 
  * @author Ciaran O'Reilly
