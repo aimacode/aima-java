@@ -1,5 +1,6 @@
 package aima.core.learning.reinforcement.next.agent;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -138,6 +139,15 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 		return a;
 	}
 
+	/**
+	 * Get a vector of the currently calculated utilities for states in S.
+	 * 
+	 * @return a vector of the currently calculated utilities for states in S
+	 */
+	public Map<S, Double> getUtility() {
+		return Collections.unmodifiableMap(U);
+	}
+
 	//
 	// START-AgentProgram
 	@SuppressWarnings("unchecked")
@@ -152,7 +162,7 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 
 	// END-AgentProgram
 	//
-	
+
 	//
 	// PRIVATE METHODS
 	//
