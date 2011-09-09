@@ -29,7 +29,7 @@ public class MDPFactory {
 
 			@Override
 			public Set<CellWorldAction> actions(Cell<Double> s) {
-				// All actions can be performed in each cell 
+				// All actions can be performed in each cell
 				// (except terminal states)
 				if (terminals.contains(s)) {
 					return Collections.emptySet();
@@ -46,7 +46,7 @@ public class MDPFactory {
 					CellWorldAction a) {
 				double prob = 0;
 
-				Cell<Double>[] outcomes = outcomes(sDelta, s, a);
+				Cell<Double>[] outcomes = outcomes(s, a);
 				for (int i = 0; i < outcomes.length; i++) {
 					if (sDelta.equals(outcomes[i])) {
 						// Note: You have to sum the matches to
@@ -64,8 +64,7 @@ public class MDPFactory {
 			}
 
 			@SuppressWarnings("unchecked")
-			private Cell<Double>[] outcomes(Cell<Double> sDelta,
-					Cell<Double> s, CellWorldAction a) {
+			private Cell<Double>[] outcomes(Cell<Double> s, CellWorldAction a) {
 				// There can be three possible outcomes for the planned action
 				Cell<Double>[] outcomes = new Cell[3];
 

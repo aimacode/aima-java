@@ -11,7 +11,7 @@ import aima.core.environment.cellworld.next.CellWorldFactory;
 import aima.core.probability.example.MDPFactory;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.probability.mdp.next.Policy;
-import aima.core.probability.mdp.next.search.ModifiedPolicyEvaluation;
+import aima.core.probability.mdp.next.impl.ModifiedPolicyEvaluation;
 import aima.core.probability.mdp.next.search.PolicyIteration;
 
 /**

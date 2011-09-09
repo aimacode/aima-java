@@ -1,4 +1,4 @@
-package aima.core.probability.mdp.next.search;
+package aima.core.probability.mdp.next.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,12 +70,12 @@ public class ModifiedPolicyEvaluation<S, A extends Action> implements PolicyEval
 		for (int i = 0; i < k; i++) {
 			// U<sub>i+1</sub>(s) <- R(s) +
 			// &gamma;&Sigma;<sub>s'</sub>P(s'|s,&pi;<sub>i</sub>(s))U<sub>i</sub>(s')
-			for (S s : mdp.states()) {
+			for (S s : U.keySet()) {
 				A ap_i = pi_i.get(s);
 				double aSum = 0;
 				// Handle terminal states (i.e. no actions)
 				if (null != ap_i) {
-					for (S sDelta : mdp.states()) {
+					for (S sDelta : U.keySet()) {
 						aSum += mdp.transitionProbability(sDelta, s, ap_i)
 								* U_i.get(sDelta);
 					}

@@ -86,6 +86,13 @@ public class FrequencyCounter<T> {
 		return counter.keySet();
 	}
 
+	/**
+	 * Remove all the currently recorded frequency counts.
+	 */
+	public void clear() {
+		counter.clear();
+	}
+
 	@Override
 	public String toString() {
 		return counter.toString();

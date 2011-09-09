@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.agent.AgentProgram;
-import aima.core.agent.Percept;
 import aima.core.learning.reinforcement.next.PerceptStateReward;
 import aima.core.probability.mdp.next.ActionsFunction;
 import aima.core.probability.mdp.next.PolicyEvaluation;
@@ -54,11 +52,13 @@ import aima.core.util.datastructure.Pair;
  * @author Ravi Mohan
  * 
  */
-public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
+public class PassiveADPAgent<S, A extends Action> extends
+		ReinforcementAgent<S, A> {
 	// persistent: &pi;, a fixed policy
 	private Map<S, A> pi = new HashMap<S, A>();
 	// mdp, an MDP with model P, rewards R, discount &gamma;
 	private MDP<S, A> mdp = null;
+	private Map<Pair<S, Pair<S, A>>, Double> P = new HashMap<Pair<S, Pair<S, A>>, Double>();
 	private Map<S, Double> R = new HashMap<S, Double>();
 	private PolicyEvaluation<S, A> policyEvaluation = null;
 	// U, a table of utilities, initially empty
@@ -72,24 +72,25 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 	// s, a, the previous state and action, initially null
 	private S s = null;
 	private A a = null;
-	//
-	//
-	private Map<Pair<S, Pair<S, A>>, Double> Pt_sa = new HashMap<Pair<S, Pair<S, A>>, Double>();
 
 	public PassiveADPAgent(Map<S, A> fixedPolicy, Set<S> states,
-			S initialState, ActionsFunction<S, A> actionsFunction) {
+			S initialState, ActionsFunction<S, A> actionsFunction,
+			PolicyEvaluation<S, A> policyEvaluation) {
 		this.pi.putAll(fixedPolicy);
 		this.mdp = new MDP<S, A>(states, initialState, actionsFunction,
 				new TransitionProbabilityFunction<S, A>() {
 					public double probability(S sDelta, S s, A a) {
-						return Pt_sa.get(new Pair<S, Pair<S, A>>(sDelta,
+						Double p = P.get(new Pair<S, Pair<S, A>>(sDelta,
 								new Pair<S, A>(s, a)));
+
+						return null == p ? 0.0 : p.doubleValue();
 					}
 				}, new RewardFunction<S>() {
 					public double reward(S s) {
 						return R.get(s);
 					}
 				});
+		this.policyEvaluation = policyEvaluation;
 	}
 
 	/**
@@ -100,7 +101,8 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 	 *            r'.
 	 * @return an action
 	 */
-	public Action execute(PerceptStateReward<S> percept) {
+	@Override
+	public A execute(PerceptStateReward<S> percept) {
 		// if s' is new then U[s'] <- r'; R[s'] <- r'
 		S sDelta = percept.state();
 		double rDelta = percept.reward();
@@ -120,7 +122,7 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 				if (0 != NsDelta_sa.getCount(t_sa)) {
 					// P(t|s,a) <- N<sub>s'|sa</sub>[t,s,a] /
 					// N<sub>sa</sub>[s,a]
-					Pt_sa.put(t_sa, NsDelta_sa.getCount(t_sa).doubleValue()
+					P.put(t_sa, NsDelta_sa.getCount(t_sa).doubleValue()
 							/ Nsa.getCount(sa).doubleValue());
 				}
 			}
@@ -131,12 +133,24 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 		if (isTerminal(sDelta)) {
 			s = null;
 			a = null;
+
 		} else {
 			s = sDelta;
 			a = pi.get(sDelta);
 		}
 		// return a
 		return a;
+	}
+
+	@Override
+	public void reset() {
+		P.clear();
+		R.clear();
+		U = new HashMap<S, Double>();
+		Nsa.clear();
+		NsDelta_sa.clear();
+		s = null;
+		a = null;
 	}
 
 	/**
@@ -147,21 +161,6 @@ public class PassiveADPAgent<S, A extends Action> implements AgentProgram {
 	public Map<S, Double> getUtility() {
 		return Collections.unmodifiableMap(U);
 	}
-
-	//
-	// START-AgentProgram
-	@SuppressWarnings("unchecked")
-	@Override
-	public Action execute(Percept percept) {
-		if (percept instanceof PerceptStateReward<?>) {
-			return execute((PerceptStateReward<S>) percept);
-		}
-		throw new IllegalArgumentException(
-				"Percept passed in must be a PerceptStateReward");
-	}
-
-	// END-AgentProgram
-	//
 
 	//
 	// PRIVATE METHODS
