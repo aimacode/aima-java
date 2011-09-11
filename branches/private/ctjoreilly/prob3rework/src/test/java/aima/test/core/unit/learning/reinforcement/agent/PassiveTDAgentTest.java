@@ -11,17 +11,16 @@ import aima.core.environment.cellworld.next.Cell;
 import aima.core.environment.cellworld.next.CellWorld;
 import aima.core.environment.cellworld.next.CellWorldAction;
 import aima.core.environment.cellworld.next.CellWorldFactory;
-import aima.core.learning.reinforcement.next.agent.PassiveADPAgent;
+import aima.core.learning.reinforcement.next.agent.PassiveTDAgent;
 import aima.core.learning.reinforcement.next.example.CellWorldEnvironment;
 import aima.core.probability.example.MDPFactory;
-import aima.core.probability.mdp.next.impl.ModifiedPolicyEvaluation;
 import aima.core.util.JavaRandomizer;
 
-public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
+public class PassiveTDAgentTest extends ReinforcementLearningAgentTest {
 	//
 	private CellWorld<Double> cw = null;
 	private CellWorldEnvironment cwe = null;
-	private PassiveADPAgent<Cell<Double>, CellWorldAction> padpa = null;
+	private PassiveTDAgent<Cell<Double>, CellWorldAction> ptda = null;
 
 	@Before
 	public void setUp() {
@@ -44,21 +43,18 @@ public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
 		fixedPolicy.put(cw.getCellAt(3, 3), CellWorldAction.Right);
 		fixedPolicy.put(cw.getCellAt(4, 1), CellWorldAction.Left);
 
-		padpa = new PassiveADPAgent<Cell<Double>, CellWorldAction>(fixedPolicy,
-				cw.getCells(), cw.getCellAt(1, 1),
-				MDPFactory.createActionsFunctionForFigure17_1(cw),
-				new ModifiedPolicyEvaluation<Cell<Double>, CellWorldAction>(10,
-						1.0));
-		
-		cwe.addAgent(padpa);
+		ptda = new PassiveTDAgent<Cell<Double>, CellWorldAction>(fixedPolicy,
+				0.4, 1.0);
+	
+		cwe.addAgent(ptda);
 	}
 
 	@Test
-	public void test_ADP_learning_fig21_1() {
+	public void test_TD_learning_fig21_1() {
 		
-		cwe.executeTrials(2000);
+		cwe.executeTrials(10000);
 		
-		Map<Cell<Double>, Double> U = padpa.getUtility();
+		Map<Cell<Double>, Double> U = ptda.getUtility();
 
 		Assert.assertNotNull(U.get(cw.getCellAt(1, 1)));
 		// Note:
@@ -92,7 +88,7 @@ public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
 	}
 
 	@Test
-	public void test_ADP_learning_rate_fig21_3() {
-		test_utility_learning_rates(padpa, 20, 100, 100);
+	public void test_TD_learning_rate_fig21_5() {
+		test_utility_learning_rates(ptda, 20, 500, 100);
 	}
 }

@@ -65,9 +65,23 @@ public class Cell<C> {
 	public void setContent(C content) {
 		this.content = content;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "<x="+x+", y="+y+", content="+content+">";
+		return "<x=" + x + ", y=" + y + ", content=" + content + ">";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Cell<?>) {
+			Cell<?> c = (Cell<?>) o;
+			return x == c.x && y == c.y && content.equals(c.content);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return x + 23 + y + 31 * content.hashCode();
 	}
 }

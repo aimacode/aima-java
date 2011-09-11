@@ -12,16 +12,17 @@ import aima.test.core.unit.learning.learners.EnsembleLearningTest;
 import aima.test.core.unit.learning.learners.LearnerTests;
 import aima.test.core.unit.learning.neural.BackPropagationTests;
 import aima.test.core.unit.learning.neural.LayerTests;
-import aima.test.core.unit.learning.reinforcement.QTableTest;
-import aima.test.core.unit.learning.reinforcement.ReinforcementLearningTest;
 import aima.test.core.unit.learning.reinforcement.agent.PassiveADPAgentTest;
+import aima.test.core.unit.learning.reinforcement.agent.PassiveTDAgentTest;
+import aima.test.core.unit.learning.reinforcement.agent.QLearningAgentTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ DataSetTest.class, InformationAndGainTest.class,
 		DecisionListTest.class, DLTestTest.class, DecisionTreeTest.class,
 		EnsembleLearningTest.class, LearnerTests.class,
-		BackPropagationTests.class, LayerTests.class, QTableTest.class,
-		ReinforcementLearningTest.class, PassiveADPAgentTest.class })
+		BackPropagationTests.class, LayerTests.class,
+		PassiveADPAgentTest.class, PassiveTDAgentTest.class,
+		QLearningAgentTest.class })
 public class LearningTestSuite {
 
 }

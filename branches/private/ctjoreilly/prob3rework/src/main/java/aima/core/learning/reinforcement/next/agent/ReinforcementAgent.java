@@ -1,5 +1,7 @@
 package aima.core.learning.reinforcement.next.agent;
 
+import java.util.Map;
+
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
@@ -11,6 +13,8 @@ import aima.core.learning.reinforcement.next.PerceptStateReward;
  * 
  * @param <S>
  *            the state type.
+ * @param <A>
+ *            the action type.
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
@@ -32,7 +36,17 @@ public abstract class ReinforcementAgent<S, A extends Action> extends
 	 * @return the action to take.
 	 */
 	public abstract A execute(PerceptStateReward<S> percept);
-
+	
+	/**
+	 * Get a vector of the currently calculated utilities for states of type S
+	 * in the world.
+	 * 
+	 * @return a Map of the currently learned utility values for the states in
+	 *         the environment (Note: this map may not contain all of the states
+	 *         in the environment, i.e. the agent has not seen them yet).
+	 */
+	public abstract Map<S, Double> getUtility();
+	
 	/**
 	 * Reset the agent back to its initial state before it has learned anything
 	 * about its environment.
@@ -46,6 +60,9 @@ public abstract class ReinforcementAgent<S, A extends Action> extends
 			Action a = execute((PerceptStateReward<S>) p);
 			if (null == a) {
 				a = NoOpAction.NO_OP;
+			}
+			
+			if (a.isNoOp()) {
 				setAlive(false);
 			}
 			return a;

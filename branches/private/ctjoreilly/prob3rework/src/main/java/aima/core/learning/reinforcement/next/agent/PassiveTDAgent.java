@@ -56,6 +56,16 @@ public class PassiveTDAgent<S, A extends Action> extends
 	private double alpha = 0.0;
 	private double gamma = 0.0;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param fixedPolicy
+	 *            &pi; a fixed policy.
+	 * @param alpha
+	 *            a fixed learning rate.
+	 * @param gamma
+	 *            discount to be used.
+	 */
 	public PassiveTDAgent(Map<S, A> fixedPolicy, double alpha, double gamma) {
 		this.pi.putAll(fixedPolicy);
 		this.alpha = alpha;
@@ -85,8 +95,7 @@ public class PassiveTDAgent<S, A extends Action> extends
 			Ns.incrementFor(s);
 			// U[s] <- U[s] + &alpha;(N<sub>s</sub>[s])(r + &gamma;U[s'] - U[s])
 			double U_s = U.get(s);
-			U.put(s, U_s + alpha * (Ns.getCount(s))
-					* (r + gamma * U.get(sDelta) - U_s));
+			U.put(s, U_s + alpha(Ns, s) * (r + gamma * U.get(sDelta) - U_s));
 		}
 		// if s'.TERMINAL? then s,a,r <- null else s,a,r <- s',&pi;[s'],r'
 		if (isTerminal(sDelta)) {
@@ -104,12 +113,40 @@ public class PassiveTDAgent<S, A extends Action> extends
 	}
 
 	@Override
+	public Map<S, Double> getUtility() {
+		return new HashMap<S, Double>(U);
+	}
+
+	@Override
 	public void reset() {
 		U = new HashMap<S, Double>();
 		Ns.clear();
 		s = null;
 		a = null;
 		r = null;
+	}
+
+	//
+	// PROTECTED METHODS
+	//
+	/**
+	 * AIMA3e pg. 836 'if we change &alpha; from a fixed parameter to a function
+	 * that decreases as the number of times a state has been visited increases,
+	 * then U<sup>&pi;</sup>(s) itself will converge to the correct value.<br>
+	 * <br>
+	 * <b>Note:</b> override this method to obtain the desired behavior.
+	 * 
+	 * @param Ns
+	 *            a frequency counter of observed states.
+	 * @param s
+	 *            the current state.
+	 * @return the learning rate to use based on the frequency of the state
+	 *         passed in.
+	 */
+	protected double alpha(FrequencyCounter<S> Ns, S s) {
+		// Default implementation is just to return a fixed parameter value
+		// irrespective of the # of times a state has been encountered
+		return alpha;
 	}
 
 	//

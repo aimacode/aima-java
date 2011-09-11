@@ -3,12 +3,14 @@ package aima.core.environment.cellworld.next;
 /**
  * 
  * @author Ciaran O'Reilly
- *
+ * 
  */
 public class CellWorldFactory {
 
 	/**
-	 * Create the cell world as defined in Figure 17.1 in AIMA3e.
+	 * Create the cell world as defined in Figure 17.1 in AIMA3e. (a) A simple 4
+	 * x 3 environment that presents the agent with a sequential decision
+	 * problem.
 	 * 
 	 * @return a cell world representation of Fig 17.1 in AIMA3e.
 	 */

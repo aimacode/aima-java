@@ -1,6 +1,5 @@
 package aima.test.core.unit.learning.reinforcement.agent;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -11,17 +10,16 @@ import aima.core.environment.cellworld.next.Cell;
 import aima.core.environment.cellworld.next.CellWorld;
 import aima.core.environment.cellworld.next.CellWorldAction;
 import aima.core.environment.cellworld.next.CellWorldFactory;
-import aima.core.learning.reinforcement.next.agent.PassiveADPAgent;
+import aima.core.learning.reinforcement.next.agent.QLearningAgent;
 import aima.core.learning.reinforcement.next.example.CellWorldEnvironment;
 import aima.core.probability.example.MDPFactory;
-import aima.core.probability.mdp.next.impl.ModifiedPolicyEvaluation;
 import aima.core.util.JavaRandomizer;
 
-public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
+public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 	//
 	private CellWorld<Double> cw = null;
 	private CellWorldEnvironment cwe = null;
-	private PassiveADPAgent<Cell<Double>, CellWorldAction> padpa = null;
+	private QLearningAgent<Cell<Double>, CellWorldAction> qla = null;
 
 	@Before
 	public void setUp() {
@@ -33,40 +31,24 @@ public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
 				MDPFactory.createTransitionProbabilityFunctionForFigure17_1(cw),
 				new JavaRandomizer());
 
-		Map<Cell<Double>, CellWorldAction> fixedPolicy = new HashMap<Cell<Double>, CellWorldAction>();
-		fixedPolicy.put(cw.getCellAt(1, 1), CellWorldAction.Up);
-		fixedPolicy.put(cw.getCellAt(1, 2), CellWorldAction.Up);
-		fixedPolicy.put(cw.getCellAt(1, 3), CellWorldAction.Right);
-		fixedPolicy.put(cw.getCellAt(2, 1), CellWorldAction.Left);
-		fixedPolicy.put(cw.getCellAt(2, 3), CellWorldAction.Right);
-		fixedPolicy.put(cw.getCellAt(3, 1), CellWorldAction.Left);
-		fixedPolicy.put(cw.getCellAt(3, 2), CellWorldAction.Up);
-		fixedPolicy.put(cw.getCellAt(3, 3), CellWorldAction.Right);
-		fixedPolicy.put(cw.getCellAt(4, 1), CellWorldAction.Left);
-
-		padpa = new PassiveADPAgent<Cell<Double>, CellWorldAction>(fixedPolicy,
-				cw.getCells(), cw.getCellAt(1, 1),
+		qla = new QLearningAgent<Cell<Double>, CellWorldAction>(
 				MDPFactory.createActionsFunctionForFigure17_1(cw),
-				new ModifiedPolicyEvaluation<Cell<Double>, CellWorldAction>(10,
-						1.0));
-		
-		cwe.addAgent(padpa);
+				CellWorldAction.actions(),
+				CellWorldAction.None,
+				0.4, 1.0,
+				5, 1.0);
+	
+		cwe.addAgent(qla);
 	}
 
 	@Test
-	public void test_ADP_learning_fig21_1() {
+	public void test_Q_learning() {
 		
-		cwe.executeTrials(2000);
+		cwe.executeTrials(1000000);
 		
-		Map<Cell<Double>, Double> U = padpa.getUtility();
+		Map<Cell<Double>, Double> U = qla.getUtility();
 
-		Assert.assertNotNull(U.get(cw.getCellAt(1, 1)));
-		// Note:
-		// These are not reachable when starting at 1,1 using
-		// the policy and default transition model
-		// (i.e. 80% intended, 10% each right angle from intended).
-		Assert.assertNull(U.get(cw.getCellAt(3, 1)));
-		Assert.assertNull(U.get(cw.getCellAt(4, 1)));
+		System.out.println("U="+U);
 		Assert.assertEquals(9, U.size());
 
 		double DELTA_THRESHOLD = 1e-1;
@@ -92,7 +74,7 @@ public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {
 	}
 
 	@Test
-	public void test_ADP_learning_rate_fig21_3() {
-		test_utility_learning_rates(padpa, 20, 100, 100);
+	public void test_Q_learning_rate() {
+		test_utility_learning_rates(qla, 20, 500, 100);
 	}
 }

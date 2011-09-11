@@ -73,6 +73,20 @@ public class PassiveADPAgent<S, A extends Action> extends
 	private S s = null;
 	private A a = null;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param fixedPolicy
+	 *            &pi; a fixed policy.
+	 * @param states
+	 *            the possible states in the world (i.e. fully observable).
+	 * @param initialState
+	 *            the initial state for the agent.
+	 * @param actionsFunction
+	 *            a function that lists the legal actions from a state.
+	 * @param policyEvaluation
+	 *            a function for evaluating a policy.
+	 */
 	public PassiveADPAgent(Map<S, A> fixedPolicy, Set<S> states,
 			S initialState, ActionsFunction<S, A> actionsFunction,
 			PolicyEvaluation<S, A> policyEvaluation) {
@@ -143,6 +157,11 @@ public class PassiveADPAgent<S, A extends Action> extends
 	}
 
 	@Override
+	public Map<S, Double> getUtility() {
+		return Collections.unmodifiableMap(U);
+	}
+
+	@Override
 	public void reset() {
 		P.clear();
 		R.clear();
@@ -151,15 +170,6 @@ public class PassiveADPAgent<S, A extends Action> extends
 		NsDelta_sa.clear();
 		s = null;
 		a = null;
-	}
-
-	/**
-	 * Get a vector of the currently calculated utilities for states in S.
-	 * 
-	 * @return a vector of the currently calculated utilities for states in S
-	 */
-	public Map<S, Double> getUtility() {
-		return Collections.unmodifiableMap(U);
 	}
 
 	//
