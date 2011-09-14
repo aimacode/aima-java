@@ -14,7 +14,7 @@ import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.learning.reinforcement.agent.PassiveADPAgent;
 import aima.core.learning.reinforcement.example.CellWorldEnvironment;
 import aima.core.probability.example.MDPFactory;
-import aima.core.probability.mdp.next.impl.ModifiedPolicyEvaluation;
+import aima.core.probability.mdp.impl.ModifiedPolicyEvaluation;
 import aima.core.util.JavaRandomizer;
 
 public class PassiveADPAgentTest extends ReinforcementLearningAgentTest {

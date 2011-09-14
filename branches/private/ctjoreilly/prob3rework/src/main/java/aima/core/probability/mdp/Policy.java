@@ -1,4 +1,4 @@
-package aima.core.probability.mdp.next;
+package aima.core.probability.mdp;
 
 import aima.core.agent.Action;
 

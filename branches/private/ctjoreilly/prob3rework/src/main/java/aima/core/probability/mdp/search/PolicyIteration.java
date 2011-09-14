@@ -1,4 +1,4 @@
-package aima.core.probability.mdp.next.search;
+package aima.core.probability.mdp.search;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import aima.core.agent.Action;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
-import aima.core.probability.mdp.next.Policy;
-import aima.core.probability.mdp.next.PolicyEvaluation;
-import aima.core.probability.mdp.next.impl.LookupPolicy;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.Policy;
+import aima.core.probability.mdp.PolicyEvaluation;
+import aima.core.probability.mdp.impl.LookupPolicy;
 import aima.core.util.Util;
 
 /**

@@ -9,10 +9,10 @@ import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
 import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.probability.example.MDPFactory;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
-import aima.core.probability.mdp.next.Policy;
-import aima.core.probability.mdp.next.impl.ModifiedPolicyEvaluation;
-import aima.core.probability.mdp.next.search.PolicyIteration;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.Policy;
+import aima.core.probability.mdp.impl.ModifiedPolicyEvaluation;
+import aima.core.probability.mdp.search.PolicyIteration;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package aima.core.probability.mdp.next;
+package aima.core.probability.mdp;
 
 /**
  * An interface for MDP reward functions.

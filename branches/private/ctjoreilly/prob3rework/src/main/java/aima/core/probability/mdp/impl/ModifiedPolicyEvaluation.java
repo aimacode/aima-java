@@ -1,11 +1,11 @@
-package aima.core.probability.mdp.next.impl;
+package aima.core.probability.mdp.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import aima.core.agent.Action;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
-import aima.core.probability.mdp.next.PolicyEvaluation;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.PolicyEvaluation;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 657.<br>

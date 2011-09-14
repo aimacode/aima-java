@@ -1,10 +1,10 @@
-package aima.core.probability.mdp.next.search;
+package aima.core.probability.mdp.search;
 
 import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
+import aima.core.probability.mdp.MarkovDecisionProcess;
 import aima.core.util.Util;
 
 /**

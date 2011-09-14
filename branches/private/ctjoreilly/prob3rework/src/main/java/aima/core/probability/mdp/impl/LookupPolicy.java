@@ -1,10 +1,10 @@
-package aima.core.probability.mdp.next.impl;
+package aima.core.probability.mdp.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import aima.core.agent.Action;
-import aima.core.probability.mdp.next.Policy;
+import aima.core.probability.mdp.Policy;
 
 /**
  * Default implementation of the Policy interface using an underlying Map to

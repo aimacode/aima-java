@@ -7,7 +7,7 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
-import aima.core.probability.mdp.next.ActionsFunction;
+import aima.core.probability.mdp.ActionsFunction;
 import aima.core.util.FrequencyCounter;
 import aima.core.util.datastructure.Pair;
 

@@ -10,11 +10,11 @@ import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
 import aima.core.environment.cellworld.CellWorldPossibleOutcomesFunction;
-import aima.core.probability.mdp.next.ActionsFunction;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
-import aima.core.probability.mdp.next.RewardFunction;
-import aima.core.probability.mdp.next.TransitionProbabilityFunction;
-import aima.core.probability.mdp.next.impl.MDP;
+import aima.core.probability.mdp.ActionsFunction;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.RewardFunction;
+import aima.core.probability.mdp.TransitionProbabilityFunction;
+import aima.core.probability.mdp.impl.MDP;
 
 /**
  * 

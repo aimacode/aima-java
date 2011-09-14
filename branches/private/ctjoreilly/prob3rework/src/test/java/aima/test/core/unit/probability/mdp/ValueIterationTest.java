@@ -11,8 +11,8 @@ import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
 import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.probability.example.MDPFactory;
-import aima.core.probability.mdp.next.MarkovDecisionProcess;
-import aima.core.probability.mdp.next.search.ValueIteration;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.search.ValueIteration;
 
 /**
  * @author Ravi Mohan

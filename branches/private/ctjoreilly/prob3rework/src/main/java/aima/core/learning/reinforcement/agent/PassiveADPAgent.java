@@ -7,11 +7,11 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
-import aima.core.probability.mdp.next.ActionsFunction;
-import aima.core.probability.mdp.next.PolicyEvaluation;
-import aima.core.probability.mdp.next.RewardFunction;
-import aima.core.probability.mdp.next.TransitionProbabilityFunction;
-import aima.core.probability.mdp.next.impl.MDP;
+import aima.core.probability.mdp.ActionsFunction;
+import aima.core.probability.mdp.PolicyEvaluation;
+import aima.core.probability.mdp.RewardFunction;
+import aima.core.probability.mdp.TransitionProbabilityFunction;
+import aima.core.probability.mdp.impl.MDP;
 import aima.core.util.FrequencyCounter;
 import aima.core.util.datastructure.Pair;
 
