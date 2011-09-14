@@ -34,7 +34,25 @@ import aima.core.util.datastructure.Pair;
  * learns the value Q(s,a) of each action in each situation. It uses the same
  * exploration function f as the exploratory ADP agent, but avoids having to
  * learn the transition model because the Q-value of a state can be related
- * directly to those of its neighbors.
+ * directly to those of its neighbors.<br>
+ * <br>
+ * <b>Note:</b> There appears to be two minor defects in the algorithm outlined
+ * in the book:<br>
+ * if TERMAINAL?(s) then Q[s,None] <- r'<br>
+ * should be:<br>
+ * if TERMAINAL?(s') then Q[s',None] <- r'<br>
+ * so that the correct value for Q[s',a'] is used in the Q[s,a] update rule.<br>
+ * <br>
+ * s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'<br>
+ * should be:
+ * 
+ * <pre>
+ * if s'.TERMINAL? then s,a,r <- null else s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
+ * </pre>
+ * 
+ * otherwise at the beginning of a consecutive trial Q[s,a] where s will be a
+ * terminal state will be what is updated on the initial state of the new trial.
+ * Comments welcome.
  * 
  * @param <S>
  *            the state type.
@@ -115,10 +133,9 @@ public class QLearningAgent<S, A extends Action> extends
 		S sDelta = percept.state();
 		double rDelta = percept.reward();
 
-		// if TERMAINAL?(s) then Q[s,None] <- r'
-		if (isTerminal(s)) {
-			Q.put(new Pair<S, A>(s, noneAction), rDelta);
-			return null;
+		// if TERMAINAL?(s') then Q[s',None] <- r'
+		if (isTerminal(sDelta)) {
+			Q.put(new Pair<S, A>(sDelta, noneAction), rDelta);
 		}
 
 		// if s is not null then
@@ -135,10 +152,17 @@ public class QLearningAgent<S, A extends Action> extends
 			Q.put(sa, Q_sa + alpha(Nsa, s, a)
 					* (r + gamma * maxADelta(sDelta) - Q_sa));
 		}
+		// if s'.TERMINAL? then s,a,r <- null else
 		// s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
-		s = sDelta;
-		a = argmaxADelta(sDelta);
-		r = rDelta;
+		if (isTerminal(sDelta)) {
+			s = null;
+			a = null;
+			r = null;
+		} else {
+			s = sDelta;
+			a = argmaxADelta(sDelta);
+			r = rDelta;
+		}
 
 		// return a
 		return a;
@@ -160,9 +184,6 @@ public class QLearningAgent<S, A extends Action> extends
 		// U(s) = max<sub>a</sub>Q(s,a).
 		Map<S, Double> U = new HashMap<S, Double>();
 		for (Pair<S, A> sa : Q.keySet()) {
-			if (isTerminal(sa.getFirst())) {
-				continue;
-			}
 			Double q = Q.get(sa);
 			Double u = U.get(sa.getFirst());
 			if (null == u || u < q) {
@@ -251,16 +272,13 @@ public class QLearningAgent<S, A extends Action> extends
 	}
 
 	// argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a'])
-	private A argmaxADelta(S sDelta) {		
+	private A argmaxADelta(S sDelta) {
 		A a = null;
 		double max = Double.NEGATIVE_INFINITY;
 		for (A aDelta : allPossibleActions) {
-			if (aDelta == noneAction) {	
-				continue;
-			}
 			Pair<S, A> sDeltaADelta = new Pair<S, A>(sDelta, aDelta);
-			double explorationValue = f(Q.get(sDeltaADelta),
-					Nsa.getCount(sDeltaADelta));
+			double explorationValue = f(Q.get(sDeltaADelta), Nsa
+					.getCount(sDeltaADelta));
 			if (explorationValue > max) {
 				max = explorationValue;
 				a = aDelta;

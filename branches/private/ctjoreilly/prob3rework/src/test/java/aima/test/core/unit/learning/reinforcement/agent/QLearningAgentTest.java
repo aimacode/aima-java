@@ -36,7 +36,7 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 				CellWorldAction.actions(),
 				CellWorldAction.None,
 				0.4, 1.0,
-				5, 1.0);
+				5, 2.0);
 	
 		cwe.addAgent(qla);
 	}
@@ -48,8 +48,7 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 		
 		Map<Cell<Double>, Double> U = qla.getUtility();
 
-		System.out.println("U="+U);
-		Assert.assertEquals(9, U.size());
+		Assert.assertEquals(11, U.size());
 
 		double DELTA_THRESHOLD = 1e-1;
 
@@ -60,21 +59,17 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 		Assert.assertEquals(0.655, U.get(cw.getCellAt(2, 1)), DELTA_THRESHOLD);
 		Assert.assertEquals(0.868, U.get(cw.getCellAt(2, 3)), DELTA_THRESHOLD);
 
-		// Note: Not reachable based on transition model
-		// Assert.assertEquals(0.611, U.get(cw.getCellAt(3, 1)),
-		// DELTA_THRESHOLD);
+		Assert.assertEquals(0.611, U.get(cw.getCellAt(3, 1)), DELTA_THRESHOLD);
 		Assert.assertEquals(0.660, U.get(cw.getCellAt(3, 2)), DELTA_THRESHOLD);
 		Assert.assertEquals(0.918, U.get(cw.getCellAt(3, 3)), DELTA_THRESHOLD);
 
-		// Note: Not reachable based on transition model
-		// Assert.assertEquals(0.388, U.get(cw.getCellAt(4, 1)),
-		// DELTA_THRESHOLD);
+		Assert.assertEquals(0.388, U.get(cw.getCellAt(4, 1)), DELTA_THRESHOLD);
 		Assert.assertEquals(-1.0, U.get(cw.getCellAt(4, 2)), DELTA_THRESHOLD);
 		Assert.assertEquals(1.0, U.get(cw.getCellAt(4, 3)), DELTA_THRESHOLD);
 	}
 
 	@Test
 	public void test_Q_learning_rate() {
-		test_utility_learning_rates(qla, 20, 500, 100);
+		test_utility_learning_rates(qla, 20, 10000, 10000);
 	}
 }
