@@ -1,10 +1,10 @@
-package aima.core.learning.reinforcement.next.agent;
+package aima.core.learning.reinforcement.agent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import aima.core.agent.Action;
-import aima.core.learning.reinforcement.next.PerceptStateReward;
+import aima.core.learning.reinforcement.PerceptStateReward;
 import aima.core.util.FrequencyCounter;
 
 /**

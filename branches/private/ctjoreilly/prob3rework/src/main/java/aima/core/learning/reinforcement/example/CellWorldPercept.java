@@ -1,7 +1,7 @@
-package aima.core.learning.reinforcement.next.example;
+package aima.core.learning.reinforcement.example;
 
 import aima.core.environment.cellworld.Cell;
-import aima.core.learning.reinforcement.next.PerceptStateReward;
+import aima.core.learning.reinforcement.PerceptStateReward;
 
 /**
  * An implementation of the PerceptStateReward interface for the cell world

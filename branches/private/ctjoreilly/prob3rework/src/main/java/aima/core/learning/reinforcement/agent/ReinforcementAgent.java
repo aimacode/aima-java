@@ -1,4 +1,4 @@
-package aima.core.learning.reinforcement.next.agent;
+package aima.core.learning.reinforcement.agent;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.learning.reinforcement.next.PerceptStateReward;
+import aima.core.learning.reinforcement.PerceptStateReward;
 
 /**
  * An abstract base class for creating reinforcement based agents.

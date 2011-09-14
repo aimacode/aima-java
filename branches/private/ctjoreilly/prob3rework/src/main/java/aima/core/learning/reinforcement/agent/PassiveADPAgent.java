@@ -1,4 +1,4 @@
-package aima.core.learning.reinforcement.next.agent;
+package aima.core.learning.reinforcement.agent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.learning.reinforcement.next.PerceptStateReward;
+import aima.core.learning.reinforcement.PerceptStateReward;
 import aima.core.probability.mdp.next.ActionsFunction;
 import aima.core.probability.mdp.next.PolicyEvaluation;
 import aima.core.probability.mdp.next.RewardFunction;

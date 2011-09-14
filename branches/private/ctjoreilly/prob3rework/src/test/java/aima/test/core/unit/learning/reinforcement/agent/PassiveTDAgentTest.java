@@ -11,8 +11,8 @@ import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
 import aima.core.environment.cellworld.CellWorldFactory;
-import aima.core.learning.reinforcement.next.agent.PassiveTDAgent;
-import aima.core.learning.reinforcement.next.example.CellWorldEnvironment;
+import aima.core.learning.reinforcement.agent.PassiveTDAgent;
+import aima.core.learning.reinforcement.example.CellWorldEnvironment;
 import aima.core.probability.example.MDPFactory;
 import aima.core.util.JavaRandomizer;
 

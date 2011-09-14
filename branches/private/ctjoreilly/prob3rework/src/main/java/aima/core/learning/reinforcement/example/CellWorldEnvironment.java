@@ -1,4 +1,4 @@
-package aima.core.learning.reinforcement.next.example;
+package aima.core.learning.reinforcement.example;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;

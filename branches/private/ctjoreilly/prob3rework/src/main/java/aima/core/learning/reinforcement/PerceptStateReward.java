@@ -1,4 +1,4 @@
-package aima.core.learning.reinforcement.next;
+package aima.core.learning.reinforcement;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 832.<br>

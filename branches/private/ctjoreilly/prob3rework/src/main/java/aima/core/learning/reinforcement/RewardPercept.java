@@ -1,4 +1,4 @@
-package aima.core.learning.reinforcement.next;
+package aima.core.learning.reinforcement;
 
 import aima.core.agent.Percept;
 
