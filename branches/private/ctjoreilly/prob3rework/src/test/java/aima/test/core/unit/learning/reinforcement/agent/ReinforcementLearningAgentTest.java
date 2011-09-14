@@ -18,7 +18,8 @@ public abstract class ReinforcementLearningAgentTest {
 
 	public static void test_utility_learning_rates(
 			ReinforcementAgent<Cell<Double>, CellWorldAction> reinforcementAgent,
-			int numRuns, int numTrialsPerRun, int rmseTrialsToReport) {
+			int numRuns, int numTrialsPerRun, int rmseTrialsToReport,
+			int reportEveryN) {
 
 		CellWorld<Double> cw = CellWorldFactory.createCellWorldForFig17_1();
 		CellWorldEnvironment cwe = new CellWorldEnvironment(
@@ -51,17 +52,23 @@ public abstract class ReinforcementLearningAgentTest {
 			// Use the last run
 			Map<Cell<Double>, Double> u = runs.get(numRuns - 1).get(t);
 			v4_3.append((u.containsKey(cw.getCellAt(4, 3)) ? u.get(cw
-					.getCellAt(4, 3)) : 0.0) + "\t");
+					.getCellAt(4, 3)) : 0.0)
+					+ "\t");
 			v3_3.append((u.containsKey(cw.getCellAt(3, 3)) ? u.get(cw
-					.getCellAt(3, 3)) : 0.0) + "\t");
+					.getCellAt(3, 3)) : 0.0)
+					+ "\t");
 			v1_3.append((u.containsKey(cw.getCellAt(1, 3)) ? u.get(cw
-					.getCellAt(1, 3)) : 0.0) + "\t");
+					.getCellAt(1, 3)) : 0.0)
+					+ "\t");
 			v1_1.append((u.containsKey(cw.getCellAt(1, 1)) ? u.get(cw
-					.getCellAt(1, 1)) : 0.0) + "\t");
+					.getCellAt(1, 1)) : 0.0)
+					+ "\t");
 			v3_2.append((u.containsKey(cw.getCellAt(3, 2)) ? u.get(cw
-					.getCellAt(3, 2)) : 0.0) + "\t");
+					.getCellAt(3, 2)) : 0.0)
+					+ "\t");
 			v2_1.append((u.containsKey(cw.getCellAt(2, 1)) ? u.get(cw
-					.getCellAt(2, 1)) : 0.0) + "\t");
+					.getCellAt(2, 1)) : 0.0)
+					+ "\t");
 		}
 		System.out.println("(4,3)" + "\t" + v4_3);
 		System.out.println("(3,3)" + "\t" + v3_3);

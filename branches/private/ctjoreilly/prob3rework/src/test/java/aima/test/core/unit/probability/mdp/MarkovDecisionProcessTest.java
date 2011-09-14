@@ -38,7 +38,7 @@ public class MarkovDecisionProcessTest {
 			if (4 == s.getX() && (3 == s.getY() || 2 == s.getY())) {
 				Assert.assertEquals(0, mdp.actions(s).size());
 			} else {
-				Assert.assertEquals(4, mdp.actions(s).size());
+				Assert.assertEquals(5, mdp.actions(s).size());
 			}
 		}
 	}

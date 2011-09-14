@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.environment.cellworld.Cell;
@@ -68,8 +69,9 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 		Assert.assertEquals(1.0, U.get(cw.getCellAt(4, 3)), DELTA_THRESHOLD);
 	}
 
+	@Ignore
 	@Test
 	public void test_Q_learning_rate() {
-		test_utility_learning_rates(qla, 20, 10000, 10000);
+		test_utility_learning_rates(qla, 20, 10000, 10000, 20);
 	}
 }

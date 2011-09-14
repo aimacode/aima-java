@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.environment.cellworld.Cell;
@@ -87,8 +88,9 @@ public class PassiveTDAgentTest extends ReinforcementLearningAgentTest {
 		Assert.assertEquals(1.0, U.get(cw.getCellAt(4, 3)), DELTA_THRESHOLD);
 	}
 
+	@Ignore
 	@Test
 	public void test_TD_learning_rate_fig21_5() {
-		test_utility_learning_rates(ptda, 20, 500, 100);
+		test_utility_learning_rates(ptda, 20, 500, 100, 1);
 	}
 }

@@ -108,6 +108,9 @@ public enum CellWorldAction implements Action {
 		case Right:
 			a = Down;
 			break;
+		case None:
+			a = None;
+			break;
 		}
 
 		return a;
@@ -128,6 +131,9 @@ public enum CellWorldAction implements Action {
 		case Left:
 		case Right:
 			a = Up;
+			break;
+		case None:
+			a = None;
 			break;
 		}
 
