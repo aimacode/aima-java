@@ -9,7 +9,7 @@ import java.util.Set;
 import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
-import aima.core.learning.reinforcement.example.CellWorldPossibleOutcomesFunction;
+import aima.core.environment.cellworld.CellWorldPossibleOutcomesFunction;
 import aima.core.probability.mdp.next.ActionsFunction;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.probability.mdp.next.RewardFunction;

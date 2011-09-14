@@ -7,6 +7,7 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorldAction;
+import aima.core.environment.cellworld.CellWorldPossibleOutcomesFunction;
 import aima.core.probability.mdp.next.TransitionProbabilityFunction;
 import aima.core.util.Randomizer;
 
