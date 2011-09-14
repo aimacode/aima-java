@@ -1,4 +1,4 @@
-package aima.core.environment.cellworld.next;
+package aima.core.environment.cellworld;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

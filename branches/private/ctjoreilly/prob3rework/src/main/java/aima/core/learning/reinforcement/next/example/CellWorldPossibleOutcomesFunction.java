@@ -2,8 +2,8 @@ package aima.core.learning.reinforcement.next.example;
 
 import java.util.List;
 
-import aima.core.environment.cellworld.next.Cell;
-import aima.core.environment.cellworld.next.CellWorldAction;
+import aima.core.environment.cellworld.Cell;
+import aima.core.environment.cellworld.CellWorldAction;
 
 /**
  * Interface for determining the possible outcomes from performing an action

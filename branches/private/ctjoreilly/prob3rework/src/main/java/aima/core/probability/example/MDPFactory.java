@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.environment.cellworld.next.Cell;
-import aima.core.environment.cellworld.next.CellWorld;
-import aima.core.environment.cellworld.next.CellWorldAction;
+import aima.core.environment.cellworld.Cell;
+import aima.core.environment.cellworld.CellWorld;
+import aima.core.environment.cellworld.CellWorldAction;
 import aima.core.learning.reinforcement.next.example.CellWorldPossibleOutcomesFunction;
 import aima.core.probability.mdp.next.ActionsFunction;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;

@@ -1,6 +1,6 @@
 package aima.core.learning.reinforcement.next.example;
 
-import aima.core.environment.cellworld.next.Cell;
+import aima.core.environment.cellworld.Cell;
 import aima.core.learning.reinforcement.next.PerceptStateReward;
 
 /**

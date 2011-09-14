@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import aima.core.environment.cellworld.next.Cell;
-import aima.core.environment.cellworld.next.CellWorld;
-import aima.core.environment.cellworld.next.CellWorldAction;
-import aima.core.environment.cellworld.next.CellWorldFactory;
+import aima.core.environment.cellworld.Cell;
+import aima.core.environment.cellworld.CellWorld;
+import aima.core.environment.cellworld.CellWorldAction;
+import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.learning.reinforcement.next.agent.ReinforcementAgent;
 import aima.core.learning.reinforcement.next.example.CellWorldEnvironment;
 import aima.core.probability.example.MDPFactory;

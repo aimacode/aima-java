@@ -5,7 +5,7 @@ import java.util.Map;
 
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
-import aima.core.environment.cellworld.next.Cell;
+import aima.core.environment.cellworld.Cell;
 
 /**
  * An implementation of the EnvironmentState interface for a Cell World.

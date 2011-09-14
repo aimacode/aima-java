@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.cellworld.next.Cell;
-import aima.core.environment.cellworld.next.CellWorld;
-import aima.core.environment.cellworld.next.CellWorldAction;
-import aima.core.environment.cellworld.next.CellWorldFactory;
+import aima.core.environment.cellworld.Cell;
+import aima.core.environment.cellworld.CellWorld;
+import aima.core.environment.cellworld.CellWorldAction;
+import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.probability.example.MDPFactory;
 import aima.core.probability.mdp.next.MarkovDecisionProcess;
 import aima.core.probability.mdp.next.search.ValueIteration;
