@@ -4,18 +4,9 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.2-Chp17n21-Rewrite ==
-0.10.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
-  * All of the algorithms from Chapters 17 and 21 have been rewritten.
-  ** 17.4 Value-Iteration
-  ** 17.7 Policy-Iteration 
-  ** 21.2 Passive-ADP-Agent
-  ** 21.4 Passive-TD-Agent
-  ** 21.8 Q-Learning-Agent 
-  * Rewrote Cell World Environment (environment.cellworld) to be independent of use.
-  * Re-organized probability.hmm package.
-  * Minor optimization to FrequencyCounter implementation.
-  * Documentation clean up.
+== Current Release: 0.10.3-Chp17n21-Rewrite-DF1 ==
+0.10.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
+  * Fixed defect in FrequencyCounter when reset.
  
 = Details =
 
@@ -252,6 +243,18 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.10.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
+  * All of the algorithms from Chapters 17 and 21 have been rewritten.
+  ** 17.4 Value-Iteration
+  ** 17.7 Policy-Iteration 
+  ** 21.2 Passive-ADP-Agent
+  ** 21.4 Passive-TD-Agent
+  ** 21.8 Q-Learning-Agent 
+  * Rewrote Cell World Environment (environment.cellworld) to be independent of use.
+  * Re-organized probability.hmm package.
+  * Minor optimization to FrequencyCounter implementation.
+  * Documentation clean up.
+  
 0.10.1-Chp15-Rewrite : 31 Jul 2011 :<br>
   * All of the algorithms from Chapter 15 have been rewritten.
   ** 15.4 Forward-Backward (3 implementations provided)

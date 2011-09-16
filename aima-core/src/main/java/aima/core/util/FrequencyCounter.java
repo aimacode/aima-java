@@ -91,6 +91,7 @@ public class FrequencyCounter<T> {
 	 */
 	public void clear() {
 		counter.clear();
+		total = 0;
 	}
 
 	@Override
