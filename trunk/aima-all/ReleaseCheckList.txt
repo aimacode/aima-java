@@ -52,8 +52,6 @@
 
 --- Publish the Release
 
-*. Create SVN tag for the release.
-
 *. Ensure all of the aima-all/release .html, .css, and .jnlp files have there Subversion svn:mime-type
    property set correctly
    .html=text/html
@@ -88,6 +86,8 @@
    *.png = svn:mime-type=image/png
    *.jpg = svn:mime-type=image/jpeg
    *.jnlp = svn:mime-type=application/x-java-jnlp-file
+   
+*. Create SVN tag for the release.
    
 *. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.
 
