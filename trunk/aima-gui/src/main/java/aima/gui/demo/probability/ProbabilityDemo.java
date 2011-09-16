@@ -2,13 +2,12 @@ package aima.gui.demo.probability;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorld;
-import aima.core.environment.cellworld.CellWorldPosition;
-import aima.core.learning.reinforcement.PassiveADPAgent;
-import aima.core.learning.reinforcement.PassiveTDAgent;
-import aima.core.learning.reinforcement.QLearningAgent;
-import aima.core.learning.reinforcement.QTable;
+import aima.core.environment.cellworld.CellWorldAction;
+import aima.core.environment.cellworld.CellWorldFactory;
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.FiniteProbabilityModel;
 import aima.core.probability.bayes.approx.BayesInferenceApproxAdapter;
@@ -26,18 +25,18 @@ import aima.core.probability.example.FullJointDistributionBurglaryAlarmModel;
 import aima.core.probability.example.FullJointDistributionToothacheCavityCatchModel;
 import aima.core.probability.example.GenericTemporalModelFactory;
 import aima.core.probability.example.HMMExampleFactory;
-import aima.core.probability.hmm.FixedLagSmoothing;
-import aima.core.probability.mdp.MDP;
-import aima.core.probability.mdp.MDPFactory;
-import aima.core.probability.mdp.MDPPolicy;
-import aima.core.probability.mdp.MDPUtilityFunction;
+import aima.core.probability.example.MDPFactory;
+import aima.core.probability.hmm.exact.FixedLagSmoothing;
+import aima.core.probability.mdp.MarkovDecisionProcess;
+import aima.core.probability.mdp.Policy;
+import aima.core.probability.mdp.impl.ModifiedPolicyEvaluation;
+import aima.core.probability.mdp.search.PolicyIteration;
+import aima.core.probability.mdp.search.ValueIteration;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.proposition.DisjunctiveProposition;
 import aima.core.probability.temporal.generic.ForwardBackward;
 import aima.core.probability.util.ProbabilityTable;
-import aima.core.util.JavaRandomizer;
 import aima.core.util.MockRandomizer;
-import aima.core.util.Randomizer;
 
 /**
  * @author Ravi Mohan
@@ -71,11 +70,6 @@ public class ProbabilityDemo {
 		// Chapter 17
 		valueIterationDemo();
 		policyIterationDemo();
-
-		// Chapter 21
-		passiveADPgentDemo();
-		passiveTDAgentDemo();
-		qLearningAgentDemo();
 	}
 
 	public static void fullJointDistributionModelDemo() {
@@ -269,7 +263,7 @@ public class ProbabilityDemo {
 				Boolean.FALSE));
 
 		smoothed = uw.fixedLagSmoothing(e3);
-		
+
 		System.out.println("Day 3 (Umbrella_t=false) smoothed:\nday 1="
 				+ smoothed);
 
@@ -281,7 +275,7 @@ public class ProbabilityDemo {
 		System.out.println("========================");
 		System.out.println("Figure 15.18");
 		System.out.println("------------");
-		
+
 		MockRandomizer mr = new MockRandomizer(new double[] {
 				// Prior Sample:
 				// 8 with Rain_t-1=true from prior distribution
@@ -324,170 +318,82 @@ public class ProbabilityDemo {
 		System.out.println("First Sample Set:");
 		AssignmentProposition[][] S = pf.particleFiltering(e);
 		for (int i = 0; i < N; i++) {
-			System.out.println("Sample "+(i+1)+" = "+S[i][0]);
+			System.out.println("Sample " + (i + 1) + " = " + S[i][0]);
 		}
 		System.out.println("Second Sample Set:");
 		S = pf.particleFiltering(e);
 		for (int i = 0; i < N; i++) {
-			System.out.println("Sample "+(i+1)+" = "+S[i][0]);
+			System.out.println("Sample " + (i + 1) + " = " + S[i][0]);
 		}
-		
+
 		System.out.println("========================");
 	}
 
 	public static void valueIterationDemo() {
 
-		System.out.println("\nValue Iteration Demo\n");
-		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThreeMDP = MDPFactory
-				.createFourByThreeMDP();
+		System.out.println("DEMO: Value Iteration");
+		System.out.println("=====================");
+		System.out.println("Figure 17.3");
+		System.out.println("-----------");
 
-		System.out.println("Beginning Value Iteration");
-		MDPUtilityFunction<CellWorldPosition> uf = fourByThreeMDP
-				.valueIterationTillMAximumUtilityGrowthFallsBelowErrorMargin(1,
-						0.00001);
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 4; j++) {
-				if (!((i == 2) && (j == 2))) {
-					printUtility(uf, i, j);
-				}
+		CellWorld<Double> cw = CellWorldFactory.createCellWorldForFig17_1();
+		MarkovDecisionProcess<Cell<Double>, CellWorldAction> mdp = MDPFactory
+				.createMDPForFigure17_3(cw);
+		ValueIteration<Cell<Double>, CellWorldAction> vi = new ValueIteration<Cell<Double>, CellWorldAction>(
+				1.0);
 
-			}
-		}
+		Map<Cell<Double>, Double> U = vi.valueIteration(mdp, 0.0001);
 
+		System.out.println("(1,1) = " + U.get(cw.getCellAt(1, 1)));
+		System.out.println("(1,2) = " + U.get(cw.getCellAt(1, 2)));
+		System.out.println("(1,3) = " + U.get(cw.getCellAt(1, 3)));
+
+		System.out.println("(2,1) = " + U.get(cw.getCellAt(2, 1)));
+		System.out.println("(2,3) = " + U.get(cw.getCellAt(2, 3)));
+
+		System.out.println("(3,1) = " + U.get(cw.getCellAt(3, 1)));
+		System.out.println("(3,2) = " + U.get(cw.getCellAt(3, 2)));
+		System.out.println("(3,3) = " + U.get(cw.getCellAt(3, 3)));
+
+		System.out.println("(4,1) = " + U.get(cw.getCellAt(4, 1)));
+		System.out.println("(4,2) = " + U.get(cw.getCellAt(4, 2)));
+		System.out.println("(4,3) = " + U.get(cw.getCellAt(4, 3)));
+
+		System.out.println("=========================");
 	}
 
 	public static void policyIterationDemo() {
 
-		System.out.println("\nPolicy Iteration Demo\n");
-		System.out.println("\nValue Iteration Demo\n");
-		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThreeMDP = MDPFactory
-				.createFourByThreeMDP();
-		MDPPolicy<CellWorldPosition, String> policy = fourByThreeMDP
-				.policyIteration(1);
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 4; j++) {
-				if (!((i == 2) && (j == 2))) {
-					printPolicy(i, j, policy);
-				}
-			}
+		System.out.println("DEMO: Policy Iteration");
+		System.out.println("======================");
+		System.out.println("Figure 17.3");
+		System.out.println("-----------");
 
-		}
-	}
+		CellWorld<Double> cw = CellWorldFactory.createCellWorldForFig17_1();
+		MarkovDecisionProcess<Cell<Double>, CellWorldAction> mdp = MDPFactory
+				.createMDPForFigure17_3(cw);
+		PolicyIteration<Cell<Double>, CellWorldAction> pi = new PolicyIteration<Cell<Double>, CellWorldAction>(
+				new ModifiedPolicyEvaluation<Cell<Double>, CellWorldAction>(50,
+						1.0));
 
-	public static void passiveADPgentDemo() {
-		System.out.println("\nPassive ADP Agent Demo\n");
-		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree = MDPFactory
-				.createFourByThreeMDP();
-		;
+		Policy<Cell<Double>, CellWorldAction> policy = pi.policyIteration(mdp);
 
-		MDPPolicy<CellWorldPosition, String> policy = new MDPPolicy<CellWorldPosition, String>();
-		System.out
-				.println("Creating a policy to reflect the policy in Fig 17.3");
-		policy.setAction(new CellWorldPosition(1, 1), CellWorld.UP);
-		policy.setAction(new CellWorldPosition(1, 2), CellWorld.LEFT);
-		policy.setAction(new CellWorldPosition(1, 3), CellWorld.LEFT);
-		policy.setAction(new CellWorldPosition(1, 4), CellWorld.LEFT);
+		System.out.println("(1,1) = " + policy.action(cw.getCellAt(1, 1)));
+		System.out.println("(1,2) = " + policy.action(cw.getCellAt(1, 2)));
+		System.out.println("(1,3) = " + policy.action(cw.getCellAt(1, 3)));
 
-		policy.setAction(new CellWorldPosition(2, 1), CellWorld.UP);
-		policy.setAction(new CellWorldPosition(2, 3), CellWorld.UP);
+		System.out.println("(2,1) = " + policy.action(cw.getCellAt(2, 1)));
+		System.out.println("(2,3) = " + policy.action(cw.getCellAt(2, 3)));
 
-		policy.setAction(new CellWorldPosition(3, 1), CellWorld.RIGHT);
-		policy.setAction(new CellWorldPosition(3, 2), CellWorld.RIGHT);
-		policy.setAction(new CellWorldPosition(3, 3), CellWorld.RIGHT);
+		System.out.println("(3,1) = " + policy.action(cw.getCellAt(3, 1)));
+		System.out.println("(3,2) = " + policy.action(cw.getCellAt(3, 2)));
+		System.out.println("(3,3) = " + policy.action(cw.getCellAt(3, 3)));
 
-		PassiveADPAgent<CellWorldPosition, String> agent = new PassiveADPAgent<CellWorldPosition, String>(
-				fourByThree, policy);
+		System.out.println("(4,1) = " + policy.action(cw.getCellAt(4, 1)));
+		System.out.println("(4,2) = " + policy.action(cw.getCellAt(4, 2)));
+		System.out.println("(4,3) = " + policy.action(cw.getCellAt(4, 3)));
 
-		Randomizer r = new JavaRandomizer();
-		System.out
-				.println("Deriving Utility Function using the Passive ADP Agent  From 100 trials in the 4 by 3 world");
-		MDPUtilityFunction<CellWorldPosition> uf = null;
-		for (int i = 0; i < 100; i++) {
-			agent.executeTrial(r);
-			uf = agent.getUtilityFunction();
-
-		}
-
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 4; j++) {
-				if (!((i == 2) && (j == 2))) {
-					printUtility(uf, i, j);
-				}
-
-			}
-		}
-
-	}
-
-	public static void passiveTDAgentDemo() {
-		System.out.println("\nPassive TD Agent Demo\n");
-		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree = MDPFactory
-				.createFourByThreeMDP();
-		;
-
-		MDPPolicy<CellWorldPosition, String> policy = new MDPPolicy<CellWorldPosition, String>();
-		System.out
-				.println("Creating a policy to reflect the policy in Fig 17.3");
-		policy.setAction(new CellWorldPosition(1, 1), CellWorld.UP);
-		policy.setAction(new CellWorldPosition(1, 2), CellWorld.LEFT);
-		policy.setAction(new CellWorldPosition(1, 3), CellWorld.LEFT);
-		policy.setAction(new CellWorldPosition(1, 4), CellWorld.LEFT);
-
-		policy.setAction(new CellWorldPosition(2, 1), CellWorld.UP);
-		policy.setAction(new CellWorldPosition(2, 3), CellWorld.UP);
-
-		policy.setAction(new CellWorldPosition(3, 1), CellWorld.RIGHT);
-		policy.setAction(new CellWorldPosition(3, 2), CellWorld.RIGHT);
-		policy.setAction(new CellWorldPosition(3, 3), CellWorld.RIGHT);
-		PassiveTDAgent<CellWorldPosition, String> agent = new PassiveTDAgent<CellWorldPosition, String>(
-				fourByThree, policy);
-		Randomizer r = new JavaRandomizer();
-		System.out
-				.println("Deriving Utility Function in the Passive ADP Agent  From 200 trials in the 4 by 3 world");
-		MDPUtilityFunction<CellWorldPosition> uf = null;
-		for (int i = 0; i < 200; i++) {
-			agent.executeTrial(r);
-			uf = agent.getUtilityFunction();
-			// System.out.println(uf);
-
-		}
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 4; j++) {
-				if (!((i == 2) && (j == 2))) {
-					printUtility(uf, i, j);
-				}
-
-			}
-		}
-
-	}
-
-	public static void qLearningAgentDemo() {
-		System.out.println("\nQ Learning Agent Demo Demo\n");
-		System.out.println("creating an MDP to represent the 4 X 3 world");
-		MDP<CellWorldPosition, String> fourByThree = MDPFactory
-				.createFourByThreeMDP();
-		;
-		QLearningAgent<CellWorldPosition, String> qla = new QLearningAgent<CellWorldPosition, String>(
-				fourByThree);
-		Randomizer r = new JavaRandomizer();
-
-		// Randomizer r = new JavaRandomizer();
-		// Hashtable<Pair<CellWorldPosition, String>, Double> q = null;
-		QTable<CellWorldPosition, String> qTable = null;
-		System.out.println("After 100 trials in the 4 by 3 world");
-		for (int i = 0; i < 100; i++) {
-			qla.executeTrial(r);
-			// q = qla.getQ();
-			qTable = qla.getQTable();
-
-		}
-		System.out.println("Final Q table" + qTable);
-
+		System.out.println("=========================");
 	}
 
 	//
@@ -583,18 +489,5 @@ public class ProbabilityDemo {
 		System.out.println("P<>(JohnCalls | Burglary = true) = "
 				+ model.posteriorDistribution(ExampleRV.JOHN_CALLS_RV,
 						aburglary));
-	}
-
-	private static void printUtility(MDPUtilityFunction<CellWorldPosition> uf,
-			int i, int j) {
-		System.out.println("Utility of (" + i + " , " + j + " ) "
-				+ uf.getUtility(new CellWorldPosition(i, j)));
-	}
-
-	private static void printPolicy(int i, int j,
-			MDPPolicy<CellWorldPosition, String> policy) {
-		System.out.println("Reccomended Action for (" + i + " , " + j
-				+ " )  =  " + policy.getAction(new CellWorldPosition(i, j)));
-
 	}
 }
