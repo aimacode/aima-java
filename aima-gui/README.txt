@@ -12,10 +12,11 @@ a starter for all the other applications and demos.
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.5-AIMA-GUI Updated ==
-1.0.5-AIMA-GUI Updated : 31 Jul 2011 :<br>
-  * Updated to work with the latest version of aima-core (0.10.1).
-  ** Added demo of Fixed-Lag-Smoothing to command line probability demo.
+== Current Release: 1.0.6-AIMA-GUI Updated ==
+1.0.6-AIMA-GUI Updated : 16 Sept 2011 :<br>
+  * Updated to work with the latest version of aima-core (0.10.2).
+  ** Moved Chapter 21 Demos on Reinforcement Learning to LearningDemo from ProbabilityDemo.
+  ** Updated Reinforcement Learning Demos to generate data that can be used to create graphs of learning rates and RMS errors in utility.
 
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -52,6 +53,10 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
+1.0.5-AIMA-GUI Updated : 31 Jul 2011 :<br>
+  * Updated to work with the latest version of aima-core (0.10.1).
+  ** Added demo of Fixed-Lag-Smoothing to command line probability demo.
+  
 1.0.4-AIMA-GUI Updated : 03 Jul 2011 :<br>
   * Updated to work with the latest version of aima-core (0.10.0).
   
