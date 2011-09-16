@@ -2,6 +2,11 @@ package aima.core.probability.example;
 
 import aima.core.probability.full.FullJointDistributionModel;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ *
+ */
 public class FullJointDistributionBurglaryAlarmModel extends
 		FullJointDistributionModel {
 

@@ -1,10 +1,10 @@
-package aima.test.core.unit.probability.hmm;
+package aima.test.core.unit.probability.hmm.exact;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.probability.example.HMMExampleFactory;
-import aima.core.probability.hmm.HMMForwardBackward;
+import aima.core.probability.hmm.exact.HMMForwardBackward;
 import aima.test.core.unit.probability.temporal.CommonForwardBackwardTest;
 
 /**

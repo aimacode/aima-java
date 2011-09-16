@@ -5,14 +5,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A utility class for keeping counts of objects. Will return 0 for any object
+ * for which it has not recorded a count against.
+ * 
  * @author Ravi Mohan
  * @author Mike Stampone
  */
 public class FrequencyCounter<T> {
 	private Map<T, Integer> counter;
+	private int total;
 
+	/**
+	 * Default Constructor.
+	 */
 	public FrequencyCounter() {
 		counter = new HashMap<T, Integer>();
+		total = 0;
 	}
 
 	/**
@@ -47,6 +55,8 @@ public class FrequencyCounter<T> {
 		} else {
 			counter.put(key, value + 1);
 		}
+		// Keep track of the total
+		total++;
 	}
 
 	/**
@@ -59,25 +69,32 @@ public class FrequencyCounter<T> {
 	 * @return the count to which this map maps the specified key, divided by
 	 *         the total count.
 	 */
-	public Double probabilityOf(T key) {
+	public double probabilityOf(T key) {
 		Integer value = getCount(key);
-		if (value == 0) {
+		if (0 == total || 0 == value.intValue()) {
 			return 0.0;
 		} else {
-			Double total = 0.0;
-			for (T k : counter.keySet()) {
-				total += getCount(k);
-			}
-			return value / total;
+			return value.doubleValue() / total;
 		}
+	}
+
+	/**
+	 * 
+	 * @return a set of objects for which frequency counts have been recorded.
+	 */
+	public Set<T> getStates() {
+		return counter.keySet();
+	}
+
+	/**
+	 * Remove all the currently recorded frequency counts.
+	 */
+	public void clear() {
+		counter.clear();
 	}
 
 	@Override
 	public String toString() {
 		return counter.toString();
-	}
-
-	public Set<T> getStates() {
-		return counter.keySet();
 	}
 }

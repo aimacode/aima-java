@@ -13,9 +13,10 @@ import aima.test.core.unit.probability.bayes.exact.EnumerationAskTest;
 import aima.test.core.unit.probability.bayes.impl.CPTTest;
 import aima.test.core.unit.probability.bayes.model.FiniteBayesModelTest;
 import aima.test.core.unit.probability.full.FullJointProbabilityModelTest;
-import aima.test.core.unit.probability.hmm.FixedLagSmoothingTest;
-import aima.test.core.unit.probability.hmm.HMMForwardBackwardConstantSpaceTest;
-import aima.test.core.unit.probability.hmm.HMMForwardBackwardTest;
+import aima.test.core.unit.probability.hmm.exact.FixedLagSmoothingTest;
+import aima.test.core.unit.probability.hmm.exact.HMMForwardBackwardConstantSpaceTest;
+import aima.test.core.unit.probability.hmm.exact.HMMForwardBackwardTest;
+import aima.test.core.unit.probability.mdp.MarkovDecisionProcessTest;
 import aima.test.core.unit.probability.mdp.PolicyIterationTest;
 import aima.test.core.unit.probability.mdp.ValueIterationTest;
 import aima.test.core.unit.probability.temporal.generic.ForwardBackwardTest;
@@ -29,9 +30,10 @@ import aima.test.core.unit.probability.util.ProbabilityTableTest;
 		EnumerationAskTest.class, CPTTest.class, FiniteBayesModelTest.class,
 		FullJointProbabilityModelTest.class, FixedLagSmoothingTest.class,
 		HMMForwardBackwardConstantSpaceTest.class,
-		HMMForwardBackwardTest.class, PolicyIterationTest.class,
-		ValueIterationTest.class, ForwardBackwardTest.class,
-		ProbUtilTest.class, ProbabilityTableTest.class })
+		HMMForwardBackwardTest.class, MarkovDecisionProcessTest.class,
+		PolicyIterationTest.class, ValueIterationTest.class,
+		ForwardBackwardTest.class, ProbUtilTest.class,
+		ProbabilityTableTest.class })
 public class ProbabilityTestSuite {
 
 }

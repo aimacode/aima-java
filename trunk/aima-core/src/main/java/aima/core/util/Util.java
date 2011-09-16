@@ -1,8 +1,11 @@
 package aima.core.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -11,21 +14,69 @@ import java.util.Random;
  */
 public class Util {
 	public static final String NO = "No";
-
 	public static final String YES = "Yes";
+	//
+	private static Random _r = new Random();
 
-	private static Random r = new Random();
-
+	/**
+	 * Get the first element from a list.
+	 * 
+	 * @param l
+	 *            the list the first element is to be extracted from.
+	 * @return the first element of the passed in list.
+	 */
 	public static <T> T first(List<T> l) {
 		return l.get(0);
 	}
 
+	/**
+	 * Get a sublist of all of the elements in the list except for first.
+	 * 
+	 * @param l
+	 *            the list the rest of the elements are to be extracted from.
+	 * @return a list of all of the elements in the passed in list except for
+	 *         the first element.
+	 */
 	public static <T> List<T> rest(List<T> l) {
 		return l.subList(1, l.size());
 	}
 
+	/**
+	 * Create a Map<K, V> with the passed in keys having their values
+	 * initialized to the passed in value.
+	 * 
+	 * @param keys
+	 *            the keys for the newly constructed map.
+	 * @param value
+	 *            the value to be associated with each of the maps keys.
+	 * @return a map with the passed in keys initialized to value.
+	 */
+	public static <K, V> Map<K, V> create(Collection<K> keys, V value) {
+		Map<K, V> map = new LinkedHashMap<K, V>();
+
+		for (K k : keys) {
+			map.put(k, value);
+		}
+
+		return map;
+	}
+
+	/**
+	 * Randomly select an element from a list.
+	 * 
+	 * @param <T>
+	 *            the type of element to be returned from the list l.
+	 * @param l
+	 *            a list of type T from which an element is to be selected
+	 *            randomly.
+	 * @return a randomly selected element from l.
+	 */
+	public static <T> T selectRandomlyFromList(List<T> l) {
+		return l.get(_r.nextInt(l.size()));
+	}
+
 	public static boolean randomBoolean() {
-		int trueOrFalse = r.nextInt(2);
+		int trueOrFalse = _r.nextInt(2);
 		return (!(trueOrFalse == 0));
 	}
 
@@ -73,10 +124,6 @@ public class Util {
 
 	public static int min(int i, int j, int k) {
 		return min(min(i, j), k);
-	}
-
-	public static <T> T selectRandomlyFromList(List<T> l) {
-		return l.get(r.nextInt(l.size()));
 	}
 
 	public static <T> T mode(List<T> l) {
@@ -147,7 +194,7 @@ public class Util {
 
 	public static int randomNumberBetween(int i, int j) {
 		/* i,j bothinclusive */
-		return r.nextInt(j - i + 1) + i;
+		return _r.nextInt(j - i + 1) + i;
 	}
 
 	public static double calculateMean(List<Double> lst) {
@@ -188,6 +235,6 @@ public class Util {
 	public static double generateRandomDoubleBetween(double lowerLimit,
 			double upperLimit) {
 
-		return lowerLimit + ((upperLimit - lowerLimit) * r.nextDouble());
+		return lowerLimit + ((upperLimit - lowerLimit) * _r.nextDouble());
 	}
 }
