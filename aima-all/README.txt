@@ -20,7 +20,7 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
 
 == Current Release: 1.5.3-Chp17n21-Rewrite-DF1 ==
 1.5.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
-Rewrite of logic from Chapter 17 and 21 in aima-core. 
+Rewrite of logic from Chapter 17 and 21 in aima-core, defect fix release 1. 
 This is based on the following sub-project releases:
   * aima-core (0.10.3) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (1.0.6)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
@@ -51,6 +51,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.5.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
+Rewrite of logic from Chapter 17 and 21 in aima-core. 
+This is based on the following sub-project releases:
+  * aima-core (0.10.2) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.6)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License. 
+    
 1.5.1-Chp15-Rewrite : 31 Jul 2011 :<br>
 Rewrite of logic from Chapter 15 in aima-core. 
 This is based on the following sub-project releases:
