@@ -28,8 +28,7 @@ public class PassiveTDAgentTest extends ReinforcementLearningAgentTest {
 		cw = CellWorldFactory.createCellWorldForFig17_1();
 		cwe = new CellWorldEnvironment(
 				cw.getCellAt(1, 1),
-				MDPFactory
-						.createCellWorldPossibleOutcomesFunctionForFig17_1(cw),
+				cw.getCells(),
 				MDPFactory.createTransitionProbabilityFunctionForFigure17_1(cw),
 				new JavaRandomizer());
 
@@ -45,19 +44,21 @@ public class PassiveTDAgentTest extends ReinforcementLearningAgentTest {
 		fixedPolicy.put(cw.getCellAt(4, 1), CellWorldAction.Left);
 
 		ptda = new PassiveTDAgent<Cell<Double>, CellWorldAction>(fixedPolicy,
-				0.4, 1.0);
-	
+				0.2, 1.0);
+
 		cwe.addAgent(ptda);
 	}
 
 	@Test
 	public void test_TD_learning_fig21_1() {
-		
+
+		ptda.reset();
 		cwe.executeTrials(10000);
-		
+
 		Map<Cell<Double>, Double> U = ptda.getUtility();
 
 		Assert.assertNotNull(U.get(cw.getCellAt(1, 1)));
+
 		// Note:
 		// These are not reachable when starting at 1,1 using
 		// the policy and default transition model
@@ -66,28 +67,17 @@ public class PassiveTDAgentTest extends ReinforcementLearningAgentTest {
 		Assert.assertNull(U.get(cw.getCellAt(4, 1)));
 		Assert.assertEquals(9, U.size());
 
-		double DELTA_THRESHOLD = 1e-1;
-
-		Assert.assertEquals(0.705, U.get(cw.getCellAt(1, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.762, U.get(cw.getCellAt(1, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.812, U.get(cw.getCellAt(1, 3)), DELTA_THRESHOLD);
-
-		Assert.assertEquals(0.655, U.get(cw.getCellAt(2, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.868, U.get(cw.getCellAt(2, 3)), DELTA_THRESHOLD);
-
-		// Note: Not reachable based on transition model
-		// Assert.assertEquals(0.611, U.get(cw.getCellAt(3, 1)),
-		// DELTA_THRESHOLD);
-		Assert.assertEquals(0.660, U.get(cw.getCellAt(3, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.918, U.get(cw.getCellAt(3, 3)), DELTA_THRESHOLD);
-
-		// Note: Not reachable based on transition model
-		// Assert.assertEquals(0.388, U.get(cw.getCellAt(4, 1)),
-		// DELTA_THRESHOLD);
-		Assert.assertEquals(-1.0, U.get(cw.getCellAt(4, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, U.get(cw.getCellAt(4, 3)), DELTA_THRESHOLD);
+		// Note: Due to stochastic nature of environment,
+		// will not test the individual utilities calculated
+		// as this will take a fair amount of time.
+		// Instead we will check if the RMS error in utility
+		// for 1,1 is below a reasonable threshold.
+		test_RMSeiu_for_1_1(ptda, 20, 1000, 0.07);
 	}
 
+	// Note: Enable this test if you wish to generate tables for
+	// creating figures, in a spreadsheet, of the learning
+	// rate of the agent.
 	@Ignore
 	@Test
 	public void test_TD_learning_rate_fig21_5() {

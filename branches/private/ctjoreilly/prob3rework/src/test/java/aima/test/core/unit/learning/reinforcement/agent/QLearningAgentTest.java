@@ -27,51 +27,48 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 		cw = CellWorldFactory.createCellWorldForFig17_1();
 		cwe = new CellWorldEnvironment(
 				cw.getCellAt(1, 1),
-				MDPFactory
-						.createCellWorldPossibleOutcomesFunctionForFig17_1(cw),
+				cw.getCells(),
 				MDPFactory.createTransitionProbabilityFunctionForFigure17_1(cw),
 				new JavaRandomizer());
 
-		qla = new QLearningAgent<Cell<Double>, CellWorldAction>(
-				MDPFactory.createActionsFunctionForFigure17_1(cw),
-				CellWorldAction.actions(),
-				CellWorldAction.None,
-				0.4, 1.0,
-				5, 2.0);
-	
+		qla = new QLearningAgent<Cell<Double>, CellWorldAction>(MDPFactory
+				.createActionsFunctionForFigure17_1(cw), CellWorldAction
+				.actions(), CellWorldAction.None, 0.2, 1.0, 5, 2.0);
+
 		cwe.addAgent(qla);
 	}
 
 	@Test
 	public void test_Q_learning() {
-		
-		cwe.executeTrials(1000000);
-		
+
+		qla.reset();
+		cwe.executeTrials(100000);
+
 		Map<Cell<Double>, Double> U = qla.getUtility();
 
+		Assert.assertNotNull(U.get(cw.getCellAt(1, 1)));
+
+		// Note:
+		// As the Q-Learning Agent is not using a fixed
+		// policy it should with a reasonable number
+		// of iterations observe and calculate an
+		// approximate utility for all of the states.
 		Assert.assertEquals(11, U.size());
 
-		double DELTA_THRESHOLD = 1e-1;
-
-		Assert.assertEquals(0.705, U.get(cw.getCellAt(1, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.762, U.get(cw.getCellAt(1, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.812, U.get(cw.getCellAt(1, 3)), DELTA_THRESHOLD);
-
-		Assert.assertEquals(0.655, U.get(cw.getCellAt(2, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.868, U.get(cw.getCellAt(2, 3)), DELTA_THRESHOLD);
-
-		Assert.assertEquals(0.611, U.get(cw.getCellAt(3, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.660, U.get(cw.getCellAt(3, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(0.918, U.get(cw.getCellAt(3, 3)), DELTA_THRESHOLD);
-
-		Assert.assertEquals(0.388, U.get(cw.getCellAt(4, 1)), DELTA_THRESHOLD);
-		Assert.assertEquals(-1.0, U.get(cw.getCellAt(4, 2)), DELTA_THRESHOLD);
-		Assert.assertEquals(1.0, U.get(cw.getCellAt(4, 3)), DELTA_THRESHOLD);
+		// Note: Due to stochastic nature of environment,
+		// will not test the individual utilities calculated
+		// as this will take a fair amount of time.
+		// Instead we will check if the RMS error in utility
+		// for 1,1 is below a reasonable threshold.
+		test_RMSeiu_for_1_1(qla, 20, 10000, 0.2);
 	}
 
+	// Note: Enable this test if you wish to generate tables for
+	// creating figures, in a spreadsheet, of the learning
+	// rate of the agent.
 	@Ignore
 	@Test
 	public void test_Q_learning_rate() {
-		test_utility_learning_rates(qla, 20, 10000, 10000, 20);
+		test_utility_learning_rates(qla, 20, 10000, 500, 20);
 	}
 }

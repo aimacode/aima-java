@@ -9,7 +9,6 @@ import java.util.Set;
 import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorld;
 import aima.core.environment.cellworld.CellWorldAction;
-import aima.core.environment.cellworld.CellWorldPossibleOutcomesFunction;
 import aima.core.probability.mdp.ActionsFunction;
 import aima.core.probability.mdp.MarkovDecisionProcess;
 import aima.core.probability.mdp.RewardFunction;
@@ -71,27 +70,6 @@ public class MDPFactory {
 		return af;
 	}
 
-	public static CellWorldPossibleOutcomesFunction<Double> createCellWorldPossibleOutcomesFunctionForFig17_1(
-			final CellWorld<Double> cw) {
-
-		CellWorldPossibleOutcomesFunction<Double> cwpof = new CellWorldPossibleOutcomesFunction<Double>() {
-
-			public List<Cell<Double>> possibleOutcomes(Cell<Double> c,
-					CellWorldAction a) {
-				// There can be three possible outcomes for the planned action
-				List<Cell<Double>> outcomes = new ArrayList<Cell<Double>>();
-
-				outcomes.add(cw.result(c, a));
-				outcomes.add(cw.result(c, a.getFirstRightAngledAction()));
-				outcomes.add(cw.result(c, a.getSecondRightAngledAction()));
-
-				return outcomes;
-			}
-		};
-
-		return cwpof;
-	}
-
 	/**
 	 * Figure 17.1 (b) Illustration of the transition model of the environment:
 	 * the 'intended' outcome occurs with probability 0.8, but with probability
@@ -104,8 +82,6 @@ public class MDPFactory {
 	 */
 	public static TransitionProbabilityFunction<Cell<Double>, CellWorldAction> createTransitionProbabilityFunctionForFigure17_1(
 			final CellWorld<Double> cw) {
-		final CellWorldPossibleOutcomesFunction<Double> cwpof = createCellWorldPossibleOutcomesFunctionForFig17_1(cw);
-
 		TransitionProbabilityFunction<Cell<Double>, CellWorldAction> tf = new TransitionProbabilityFunction<Cell<Double>, CellWorldAction>() {
 			private double[] distribution = new double[] { 0.8, 0.1, 0.1 };
 
@@ -114,7 +90,7 @@ public class MDPFactory {
 					CellWorldAction a) {
 				double prob = 0;
 
-				List<Cell<Double>> outcomes = cwpof.possibleOutcomes(s, a);
+				List<Cell<Double>> outcomes = possibleOutcomes(s, a);
 				for (int i = 0; i < outcomes.size(); i++) {
 					if (sDelta.equals(outcomes.get(i))) {
 						// Note: You have to sum the matches to
@@ -129,6 +105,18 @@ public class MDPFactory {
 				}
 
 				return prob;
+			}
+			
+			private List<Cell<Double>> possibleOutcomes(Cell<Double> c,
+					CellWorldAction a) {
+				// There can be three possible outcomes for the planned action
+				List<Cell<Double>> outcomes = new ArrayList<Cell<Double>>();
+
+				outcomes.add(cw.result(c, a));
+				outcomes.add(cw.result(c, a.getFirstRightAngledAction()));
+				outcomes.add(cw.result(c, a.getSecondRightAngledAction()));
+
+				return outcomes;
 			}
 		};
 

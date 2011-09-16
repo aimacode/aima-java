@@ -1,5 +1,8 @@
 package aima.core.learning.reinforcement.example;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
@@ -7,7 +10,6 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorldAction;
-import aima.core.environment.cellworld.CellWorldPossibleOutcomesFunction;
 import aima.core.probability.mdp.TransitionProbabilityFunction;
 import aima.core.util.Randomizer;
 
@@ -20,7 +22,7 @@ import aima.core.util.Randomizer;
  */
 public class CellWorldEnvironment extends AbstractEnvironment {
 	private Cell<Double> startingCell = null;
-	private CellWorldPossibleOutcomesFunction<Double> cwpof;
+	private Set<Cell<Double>> allStates = new LinkedHashSet<Cell<Double>>();
 	private TransitionProbabilityFunction<Cell<Double>, CellWorldAction> tpf;
 	private Randomizer r = null;
 	private CellWorldEnvironmentState currentState = new CellWorldEnvironmentState();
@@ -31,10 +33,8 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 	 * @param startingCell
 	 *            the cell that agent(s) are to start from at the beginning of
 	 *            each trial within the environment.
-	 * @param cwpof
-	 *            the cell world possible outcomes function, which list possible
-	 *            outcomes for a particular action within a cell. This works in
-	 *            unison with the transition probability function.
+	 * @param allStates
+	 *            all the possible states in this environment.
 	 * @param tpf
 	 *            the transition probability function that simulates how the
 	 *            environment is meant to behave in response to an agent action.
@@ -43,11 +43,11 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 	 *            executed based on the transition probabilities for actions.
 	 */
 	public CellWorldEnvironment(Cell<Double> startingCell,
-			CellWorldPossibleOutcomesFunction<Double> cwpof,
+			Set<Cell<Double>> allStates,
 			TransitionProbabilityFunction<Cell<Double>, CellWorldAction> tpf,
 			Randomizer r) {
 		this.startingCell = startingCell;
-		this.cwpof = cwpof;
+		this.allStates.addAll(allStates);
 		this.tpf = tpf;
 		this.r = r;
 	}
@@ -87,13 +87,20 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 			Cell<Double> s = currentState.getAgentLocation(agent);
 			double probabilityChoice = r.nextDouble();
 			double total = 0;
-			for (Cell<Double> sDelta : cwpof.possibleOutcomes(s,
-					(CellWorldAction) action)) {
+			boolean set = false;
+			for (Cell<Double> sDelta : allStates) {
 				total += tpf.probability(sDelta, s, (CellWorldAction) action);
-				if (probabilityChoice <= total) {
+				if (total > 1.0) {
+					throw new IllegalStateException("Bad probability calculation.");
+				}
+				if (total > probabilityChoice) {
 					currentState.setAgentLocation(agent, sDelta);
+					set = true;
 					break;
 				}
+			}
+			if (!set) {
+				throw new IllegalStateException("Failed to simulate the action="+action+" correctly from s="+s);
 			}
 		}
 

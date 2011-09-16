@@ -41,7 +41,8 @@ import aima.core.util.datastructure.Pair;
  * if TERMAINAL?(s) then Q[s,None] <- r'<br>
  * should be:<br>
  * if TERMAINAL?(s') then Q[s',None] <- r'<br>
- * so that the correct value for Q[s',a'] is used in the Q[s,a] update rule.<br>
+ * so that the correct value for Q[s',a'] is used in the Q[s,a] update rule when
+ * a terminal state is reached.<br>
  * <br>
  * s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'<br>
  * should be:
@@ -50,9 +51,11 @@ import aima.core.util.datastructure.Pair;
  * if s'.TERMINAL? then s,a,r <- null else s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
  * </pre>
  * 
- * otherwise at the beginning of a consecutive trial Q[s,a] where s will be a
- * terminal state will be what is updated on the initial state of the new trial.
- * Comments welcome.
+ * otherwise at the beginning of a consecutive trial, s will be the prior
+ * terminal state and is what will be updated in Q[s,a], which appears not to be
+ * correct as you did not perform an action in the terminal state and the
+ * initial state is not reachable from the prior terminal state. Comments
+ * welcome.
  * 
  * @param <S>
  *            the state type.
@@ -210,7 +213,7 @@ public class QLearningAgent<S, A extends Action> extends
 	 *            a frequency counter of observed state action pairs.
 	 * @param s
 	 *            the current state.
-	 * @paran a the current action.
+	 * @param a the current action.
 	 * @return the learning rate to use based on the frequency of the state
 	 *         passed in.
 	 */

@@ -60,9 +60,6 @@ public abstract class ReinforcementAgent<S, A extends Action> extends
 			Action a = execute((PerceptStateReward<S>) p);
 			if (null == a) {
 				a = NoOpAction.NO_OP;
-			}
-			
-			if (a.isNoOp()) {
 				setAlive(false);
 			}
 			return a;
