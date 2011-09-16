@@ -18,12 +18,12 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
   * aima-all  : is the master project, used by aima-java developers, for creating releases.
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
-== Current Release: 1.5.1-Chp15-Rewrite ==
-1.5.1-Chp15-Rewrite : 31 Jul 2011 :<br>
-Rewrite of logic from Chapter 15 in aima-core. 
+== Current Release: 1.5.2-Chp17n21-Rewrite ==
+1.5.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
+Rewrite of logic from Chapter 17 and 21 in aima-core. 
 This is based on the following sub-project releases:
-  * aima-core (0.10.1) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (1.0.5)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aima-core (0.10.2) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.6)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
   * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
@@ -51,6 +51,14 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.5.1-Chp15-Rewrite : 31 Jul 2011 :<br>
+Rewrite of logic from Chapter 15 in aima-core. 
+This is based on the following sub-project releases:
+  * aima-core (0.10.1) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.5)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.1)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License.  
+    
 1.5.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
 Rewrite of logic from Chapters 13 and 14 in aima-core. 
 This is based on the following sub-project releases:
