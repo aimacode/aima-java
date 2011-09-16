@@ -4,15 +4,17 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.1-Chp15-Rewrite ==
-0.10.1-Chp15-Rewrite : 31 Jul 2011 :<br>
-  * All of the algorithms from Chapter 15 have been rewritten.
-  ** 15.4 Forward-Backward (3 implementations provided)
-  ** 15.6 Fixed-Lag-Smoothing 
-  ** 15.17 Particle-Filtering 
-  * Added an Iterator interface and supporting methods to CategoricalDistribution and Factor.
-  ** ProbabilityTable.Iterator removed getPostIterateValue() method from API due to not being general.
-  * Fixed Issue 63 - all compilation warnings have been resolved or suppressed where appropriate for now.
+== Current Release: 0.10.2-Chp17n21-Rewrite ==
+0.10.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
+  * All of the algorithms from Chapters 17 and 21 have been rewritten.
+  ** 17.4 Value-Iteration
+  ** 17.7 Policy-Iteration 
+  ** 21.2 Passive-ADP-Agent
+  ** 21.4 Passive-TD-Agent
+  ** 21.8 Q-Learning-Agent 
+  * Rewrote Cell World Environment (environment.cellworld) to be independent of use.
+  * Re-organized probability.hmm package.
+  * Minor optimization to FrequencyCounter implementation.
   * Documentation clean up.
  
 = Details =
@@ -111,14 +113,15 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  14.14||     533|| Rejection-Sampling           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java RejectionSampling]||
 ||  14.15||     534|| Likelihood-Weighting         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java LikelihoodWeighting]||
 ||  14.16||     537|| GIBBS-Ask                    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java GibbsAsk]||
-||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java ForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HMMForwardBackward.java HMMForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HMMForwardBackwardConstantSpace.java HMMForwardBackwardConstantSpace]||
+||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java ForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackward.java HMMForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackwardConstantSpace.java HMMForwardBackwardConstantSpace]||
 ||  15   ||     578|| Hidden Markov Model          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java HiddenMarkovModel]||
-||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/FixedLagSmoothing.java FixedLagSmoothing]||
+||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java FixedLagSmoothing]||
 ||  15   ||     590|| Dynamic Bayesian Network     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java DynamicBayesianNetwork]||
 ||  15.17||     598|| Particle-Filtering           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java ParticleFiltering]||
 ||  16.9 ||     632|| Information-Gathering-Agent  ||---||
-||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MDP.java (method)-valueIteration()]||
-||  17.7 ||     657|| Policy-Iteration             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MDP.java (method)-policyIteration]||
+||  17   ||     647|| Markov Decision Process      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java MarkovDecisionProcess]||
+||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java ValueIteration]||
+||  17.7 ||     657|| Policy-Iteration             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java PolicyIteration]||
 ||  17.9 ||     663|| POMDP-Value-Iteration        ||---||
 ||  18.5 ||     702|| Decision-Tree-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java DecisionTreeLearner]||
 ||  18.8 ||     710|| Cross-Validation-Wrapper     ||---||
@@ -129,9 +132,9 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||  19.3 ||     773|| Version-Space-Learning       ||---||
 ||  19.8 ||     786|| Minimal-Consistent-Det       ||---||
 ||  19.12||     793|| FOIL                         ||---||
-||  21.2 ||     834|| Passive-ADP-Agent            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/PassiveADPAgent.java PassiveADPAgent]||
-||  21.4 ||     837|| Passive-TD-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/PassiveTDAgent.java PassiveTDAgent]||
-||  21.8 ||     844|| Q-Learning-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/QLearningAgent.java QLearningAgent]||
+||  21.2 ||     834|| Passive-ADP-Agent            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java PassiveADPAgent]||
+||  21.4 ||     837|| Passive-TD-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java PassiveTDAgent]||
+||  21.8 ||     844|| Q-Learning-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java QLearningAgent]||
 ||  22.1 ||     871|| HITS                         ||---||
 ||  23.5 ||     894|| CYK-Parse                    ||---||
 ||  25.9 ||     982|| Monte-Carlo-Localization     ||---||
@@ -249,6 +252,16 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.10.1-Chp15-Rewrite : 31 Jul 2011 :<br>
+  * All of the algorithms from Chapter 15 have been rewritten.
+  ** 15.4 Forward-Backward (3 implementations provided)
+  ** 15.6 Fixed-Lag-Smoothing 
+  ** 15.17 Particle-Filtering 
+  * Added an Iterator interface and supporting methods to CategoricalDistribution and Factor.
+  ** ProbabilityTable.Iterator removed getPostIterateValue() method from API due to not being general.
+  * Fixed Issue 63 - all compilation warnings have been resolved or suppressed where appropriate for now.
+  * Documentation clean up.
+  
 0.10.0-Chp13-and-14-Rewrite : 03 Jul 2011 :<br>
   * All of the algorithms from Chapters 13 and 14 have been rewritten.
   ** Rewritten:
