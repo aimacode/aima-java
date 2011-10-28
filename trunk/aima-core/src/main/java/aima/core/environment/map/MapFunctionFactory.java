@@ -19,8 +19,8 @@ public class MapFunctionFactory {
 	private static ResultFunction _resultFunction = null;
 	private static PerceptToStateFunction _perceptToStateFunction = null;
 
-	public static ActionsFunction getActionsFunction(Map aMap) {
-		return new MapActionsFunction(aMap);
+	public static ActionsFunction getActionsFunction(Map map) {
+		return new MapActionsFunction(map);
 	}
 
 	public static ResultFunction getResultFunction() {
@@ -33,8 +33,8 @@ public class MapFunctionFactory {
 	private static class MapActionsFunction implements ActionsFunction {
 		private Map map = null;
 
-		public MapActionsFunction(Map aMap) {
-			map = aMap;
+		public MapActionsFunction(Map map) {
+			this.map = map;
 		}
 
 		public Set<Action> actions(Object state) {

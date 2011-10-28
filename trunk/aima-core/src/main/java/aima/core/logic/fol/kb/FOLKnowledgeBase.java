@@ -113,8 +113,8 @@ public class FOLKnowledgeBase {
 		}
 	}
 
-	public Sentence tell(String aSentence) {
-		Sentence s = parser.parse(aSentence);
+	public Sentence tell(String sentence) {
+		Sentence s = parser.parse(sentence);
 		tell(s);
 		return s;
 	}
@@ -125,25 +125,25 @@ public class FOLKnowledgeBase {
 		}
 	}
 
-	public void tell(Sentence aSentence) {
-		store(aSentence);
+	public void tell(Sentence sentence) {
+		store(sentence);
 	}
 
 	/**
 	 * 
-	 * @param aQuerySentence
+	 * @param querySentence
 	 * @return an InferenceResult.
 	 */
-	public InferenceResult ask(String aQuerySentence) {
-		return ask(parser.parse(aQuerySentence));
+	public InferenceResult ask(String querySentence) {
+		return ask(parser.parse(querySentence));
 	}
 
-	public InferenceResult ask(Sentence aQuery) {
+	public InferenceResult ask(Sentence query) {
 		// Want to standardize apart the query to ensure
 		// it does not clash with any of the sentences
 		// in the database
 		StandardizeApartResult saResult = standardizeApart.standardizeApart(
-				aQuery, queryIndexical);
+				query, queryIndexical);
 
 		// Need to map the result variables (as they are standardized apart)
 		// to the original queries variables so that the caller can easily
@@ -233,34 +233,34 @@ public class FOLKnowledgeBase {
 		return substVisitor.subst(theta, l);
 	}
 
-	public Term subst(Map<Variable, Term> theta, Term aTerm) {
-		return substVisitor.subst(theta, aTerm);
+	public Term subst(Map<Variable, Term> theta, Term term) {
+		return substVisitor.subst(theta, term);
 	}
 
 	// Note: see page 277.
-	public Sentence standardizeApart(Sentence aSentence) {
-		return standardizeApart.standardizeApart(aSentence, variableIndexical)
+	public Sentence standardizeApart(Sentence sentence) {
+		return standardizeApart.standardizeApart(sentence, variableIndexical)
 				.getStandardized();
 	}
 
-	public Clause standardizeApart(Clause aClause) {
-		return standardizeApart.standardizeApart(aClause, variableIndexical);
+	public Clause standardizeApart(Clause clause) {
+		return standardizeApart.standardizeApart(clause, variableIndexical);
 	}
 
-	public Chain standardizeApart(Chain aChain) {
-		return standardizeApart.standardizeApart(aChain, variableIndexical);
+	public Chain standardizeApart(Chain chain) {
+		return standardizeApart.standardizeApart(chain, variableIndexical);
 	}
 
-	public Set<Variable> collectAllVariables(Sentence aSentence) {
-		return variableCollector.collectAllVariables(aSentence);
+	public Set<Variable> collectAllVariables(Sentence sentence) {
+		return variableCollector.collectAllVariables(sentence);
 	}
 
-	public CNF convertToCNF(Sentence aSentence) {
-		return cnfConverter.convertToCNF(aSentence);
+	public CNF convertToCNF(Sentence sentence) {
+		return cnfConverter.convertToCNF(sentence);
 	}
 
-	public Set<Clause> convertToClauses(Sentence aSentence) {
-		CNF cnf = cnfConverter.convertToCNF(aSentence);
+	public Set<Clause> convertToClauses(Sentence sentence) {
+		CNF cnf = cnfConverter.convertToCNF(sentence);
 
 		return new LinkedHashSet<Clause>(cnf.getConjunctionOfClauses());
 	}
@@ -338,20 +338,20 @@ public class FOLKnowledgeBase {
 	//
 
 	// Note: pg 278, STORE(s) concept.
-	private synchronized void store(Sentence aSentence) {
-		originalSentences.add(aSentence);
+	private synchronized void store(Sentence sentence) {
+		originalSentences.add(sentence);
 
 		// Convert the sentence to CNF
-		CNF cnfOfOrig = cnfConverter.convertToCNF(aSentence);
+		CNF cnfOfOrig = cnfConverter.convertToCNF(sentence);
 		for (Clause c : cnfOfOrig.getConjunctionOfClauses()) {
-			c.setProofStep(new ProofStepClauseClausifySentence(c, aSentence));
+			c.setProofStep(new ProofStepClauseClausifySentence(c, sentence));
 			if (c.isEmpty()) {
 				// This should not happen, if so the user
 				// is trying to add an unsatisfiable sentence
 				// to the KB.
 				throw new IllegalArgumentException(
 						"Attempted to add unsatisfiable sentence to KB, orig=["
-								+ aSentence + "] CNF=" + cnfOfOrig);
+								+ sentence + "] CNF=" + cnfOfOrig);
 			}
 
 			// Ensure all clauses added to the KB are Standardized Apart.

@@ -36,10 +36,10 @@ public class StandardizeApart {
 	}
 
 	// Note: see page 327.
-	public StandardizeApartResult standardizeApart(Sentence aSentence,
+	public StandardizeApartResult standardizeApart(Sentence sentence,
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = variableCollector
-				.collectAllVariables(aSentence);
+				.collectAllVariables(sentence);
 		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
 		Map<Variable, Term> reverseSubstitution = new HashMap<Variable, Term>();
 
@@ -57,9 +57,9 @@ public class StandardizeApart {
 		}
 
 		Sentence standardized = substVisitor.subst(renameSubstitution,
-				aSentence);
+				sentence);
 
-		return new StandardizeApartResult(aSentence, standardized,
+		return new StandardizeApartResult(sentence, standardized,
 				renameSubstitution, reverseSubstitution);
 	}
 

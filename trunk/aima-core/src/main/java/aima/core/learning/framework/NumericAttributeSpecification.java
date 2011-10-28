@@ -6,7 +6,7 @@ package aima.core.learning.framework;
  */
 public class NumericAttributeSpecification implements AttributeSpecification {
 
-	// a simple attribute representing a number reprsented as a double .
+	// a simple attribute representing a number represented as a double .
 	private String name;
 
 	public NumericAttributeSpecification(String name) {

@@ -37,28 +37,28 @@ public class VariableCollector implements FOLVisitor {
 		return variables;
 	}
 
-	public Set<Variable> collectAllVariables(Term aTerm) {
+	public Set<Variable> collectAllVariables(Term term) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
-		aTerm.accept(this, variables);
+		term.accept(this, variables);
 
 		return variables;
 	}
 
-	public Set<Variable> collectAllVariables(Clause aClause) {
+	public Set<Variable> collectAllVariables(Clause clause) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
-		for (Literal l : aClause.getLiterals()) {
+		for (Literal l : clause.getLiterals()) {
 			l.getAtomicSentence().accept(this, variables);
 		}
 
 		return variables;
 	}
 
-	public Set<Variable> collectAllVariables(Chain aChain) {
+	public Set<Variable> collectAllVariables(Chain chain) {
 		Set<Variable> variables = new LinkedHashSet<Variable>();
 
-		for (Literal l : aChain.getLiterals()) {
+		for (Literal l : chain.getLiterals()) {
 			l.getAtomicSentence().accept(this, variables);
 		}
 

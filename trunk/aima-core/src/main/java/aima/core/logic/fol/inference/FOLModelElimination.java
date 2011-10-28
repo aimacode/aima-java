@@ -81,7 +81,7 @@ public class FOLModelElimination implements InferenceProcedure {
 	//
 	// START-InferenceProcedure
 
-	public InferenceResult ask(FOLKnowledgeBase kb, Sentence aQuery) {
+	public InferenceResult ask(FOLKnowledgeBase kb, Sentence query) {
 		//
 		// Get the background knowledge - are assuming this is satisfiable
 		// as using Set of Support strategy.
@@ -92,7 +92,7 @@ public class FOLModelElimination implements InferenceProcedure {
 
 		// Collect the information necessary for constructing
 		// an answer (supports use of answer literals).
-		AnswerHandler ansHandler = new AnswerHandler(kb, aQuery, maxQueryTime);
+		AnswerHandler ansHandler = new AnswerHandler(kb, query, maxQueryTime);
 
 		IndexedFarParents ifps = new IndexedFarParents(
 				ansHandler.getSetOfSupport(), background);
@@ -271,12 +271,12 @@ public class FOLModelElimination implements InferenceProcedure {
 		private List<Proof> proofs = new ArrayList<Proof>();
 		private boolean timedOut = false;
 
-		public AnswerHandler(FOLKnowledgeBase kb, Sentence aQuery,
+		public AnswerHandler(FOLKnowledgeBase kb, Sentence query,
 				long maxQueryTime) {
 
 			finishTime = System.currentTimeMillis() + maxQueryTime;
 
-			Sentence refutationQuery = new NotSentence(aQuery);
+			Sentence refutationQuery = new NotSentence(query);
 
 			// Want to use an answer literal to pull
 			// query variables where necessary

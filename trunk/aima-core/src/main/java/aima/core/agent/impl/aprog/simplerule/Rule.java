@@ -22,12 +22,12 @@ public class Rule {
 	 * @param anAction
 	 *            an action
 	 */
-	public Rule(Condition aCon, Action anAction) {
-		assert (null != aCon);
-		assert (null != anAction);
+	public Rule(Condition con, Action action) {
+		assert (null != con);
+		assert (null != action);
 
-		con = aCon;
-		action = anAction;
+		this.con = con;
+		this.action = action;
 	}
 
 	public boolean evaluate(ObjectWithDynamicAttributes p) {

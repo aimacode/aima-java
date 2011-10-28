@@ -15,11 +15,11 @@ import aima.core.agent.impl.DynamicPercept;
  */
 public class MapEnvironment extends AbstractEnvironment {
 
-	private Map aMap = null;
+	private Map map = null;
 	private MapEnvironmentState state = new MapEnvironmentState();
 
-	public MapEnvironment(Map aMap) {
-		this.aMap = aMap;
+	public MapEnvironment(Map map) {
+		this.map = map;
 	}
 
 	public void addAgent(Agent a, String startLocation) {
@@ -50,7 +50,7 @@ public class MapEnvironment extends AbstractEnvironment {
 			MoveToAction act = (MoveToAction) a;
 
 			String currLoc = getAgentLocation(agent);
-			Double distance = aMap.getDistance(currLoc, act.getToLocation());
+			Double distance = map.getDistance(currLoc, act.getToLocation());
 			if (distance != null) {
 				double currTD = getAgentTravelDistance(agent);
 				state.setAgentLocationAndTravelDistance(agent,
@@ -68,6 +68,6 @@ public class MapEnvironment extends AbstractEnvironment {
 	}
 
 	public Map getMap() {
-		return aMap;
+		return map;
 	}
 }
