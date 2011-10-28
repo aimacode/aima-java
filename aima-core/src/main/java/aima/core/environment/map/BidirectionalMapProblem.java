@@ -15,18 +15,18 @@ public class BidirectionalMapProblem extends Problem implements
 
 	Problem reverseProblem;
 
-	public BidirectionalMapProblem(Map aMap, String initialState,
+	public BidirectionalMapProblem(Map map, String initialState,
 			String goalState) {
-		super(initialState, MapFunctionFactory.getActionsFunction(aMap),
+		super(initialState, MapFunctionFactory.getActionsFunction(map),
 				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						goalState), new MapStepCostFunction(aMap));
+						goalState), new MapStepCostFunction(map));
 
-		map = aMap;
+		this.map = map;
 
 		reverseProblem = new Problem(goalState,
-				MapFunctionFactory.getActionsFunction(aMap),
+				MapFunctionFactory.getActionsFunction(map),
 				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						initialState), new MapStepCostFunction(aMap));
+						initialState), new MapStepCostFunction(map));
 	}
 
 	//

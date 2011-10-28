@@ -34,20 +34,20 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	 *         substitution theta to aSentence.
 	 * 
 	 */
-	public Sentence subst(Map<Variable, Term> theta, Sentence aSentence) {
-		return (Sentence) aSentence.accept(this, theta);
+	public Sentence subst(Map<Variable, Term> theta, Sentence sentence) {
+		return (Sentence) sentence.accept(this, theta);
 	}
 
 	public Term subst(Map<Variable, Term> theta, Term aTerm) {
 		return (Term) aTerm.accept(this, theta);
 	}
 
-	public Function subst(Map<Variable, Term> theta, Function aFunction) {
-		return (Function) aFunction.accept(this, theta);
+	public Function subst(Map<Variable, Term> theta, Function function) {
+		return (Function) function.accept(this, theta);
 	}
 
-	public Literal subst(Map<Variable, Term> theta, Literal aLiteral) {
-		return aLiteral.newInstance((AtomicSentence) aLiteral
+	public Literal subst(Map<Variable, Term> theta, Literal literal) {
+		return literal.newInstance((AtomicSentence) literal
 				.getAtomicSentence().accept(this, theta));
 	}
 

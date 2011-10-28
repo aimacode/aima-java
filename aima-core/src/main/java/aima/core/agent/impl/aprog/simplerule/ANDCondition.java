@@ -13,12 +13,12 @@ public class ANDCondition extends Condition {
 
 	private Condition right;
 
-	public ANDCondition(Condition aLeftCon, Condition aRightCon) {
-		assert (null != aLeftCon);
-		assert (null != aRightCon);
+	public ANDCondition(Condition leftCon, Condition rightCon) {
+		assert (null != leftCon);
+		assert (null != rightCon);
 
-		left = aLeftCon;
-		right = aRightCon;
+		left = leftCon;
+		right = rightCon;
 	}
 
 	@Override

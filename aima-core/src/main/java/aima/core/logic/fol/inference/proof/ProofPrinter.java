@@ -12,17 +12,17 @@ public class ProofPrinter {
 	 * Utility method for outputting proofs in a formatted textual
 	 * representation.
 	 * 
-	 * @param aProof
+	 * @param proof
 	 * @return a String representation of the Proof.
 	 */
-	public static String printProof(Proof aProof) {
+	public static String printProof(Proof proof) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Proof, Answer Bindings: ");
-		sb.append(aProof.getAnswerBindings());
+		sb.append(proof.getAnswerBindings());
 		sb.append("\n");
 
-		List<ProofStep> steps = aProof.getSteps();
+		List<ProofStep> steps = proof.getSteps();
 
 		int maxStepWidth = "Step".length();
 		int maxProofWidth = "Proof".length();

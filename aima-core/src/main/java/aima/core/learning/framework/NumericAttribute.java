@@ -9,8 +9,8 @@ public class NumericAttribute implements Attribute {
 
 	private NumericAttributeSpecification spec;
 
-	public NumericAttribute(double rawvalue, NumericAttributeSpecification spec) {
-		this.value = rawvalue;
+	public NumericAttribute(double rawValue, NumericAttributeSpecification spec) {
+		this.value = rawValue;
 		this.spec = spec;
 	}
 

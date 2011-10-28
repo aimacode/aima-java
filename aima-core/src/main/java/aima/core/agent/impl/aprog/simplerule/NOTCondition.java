@@ -11,10 +11,10 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
 public class NOTCondition extends Condition {
 	private Condition con;
 
-	public NOTCondition(Condition aCon) {
-		assert (null != aCon);
+	public NOTCondition(Condition con) {
+		assert (null != con);
 
-		con = aCon;
+		this.con = con;
 	}
 
 	@Override

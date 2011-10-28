@@ -19,8 +19,8 @@ public class MapStepCostFunction implements StepCostFunction {
 	// to some small positive constant
 	private static double constantCost = 1.0;
 
-	public MapStepCostFunction(Map aMap) {
-		this.map = aMap;
+	public MapStepCostFunction(Map map) {
+		this.map = map;
 	}
 
 	//

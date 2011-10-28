@@ -541,18 +541,18 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 			return false;
 		}
 
-		public boolean isAnswer(Clause aClause) {
+		public boolean isAnswer(Clause clause) {
 			boolean isAns = false;
 
 			if (answerClause.isEmpty()) {
-				if (aClause.isEmpty()) {
-					proofs.add(new ProofFinal(aClause.getProofStep(),
+				if (clause.isEmpty()) {
+					proofs.add(new ProofFinal(clause.getProofStep(),
 							new HashMap<Variable, Term>()));
 					complete = true;
 					isAns = true;
 				}
 			} else {
-				if (aClause.isEmpty()) {
+				if (clause.isEmpty()) {
 					// This should not happen
 					// as added an answer literal to sos, which
 					// implies the database (i.e. premises) are
@@ -561,9 +561,9 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 							"Generated an empty clause while looking for an answer, implies original KB or usable is unsatisfiable");
 				}
 
-				if (aClause.isUnitClause()
-						&& aClause.isDefiniteClause()
-						&& aClause
+				if (clause.isUnitClause()
+						&& clause.isDefiniteClause()
+						&& clause
 								.getPositiveLiterals()
 								.get(0)
 								.getAtomicSentence()
@@ -571,7 +571,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 								.equals(answerLiteral.getAtomicSentence()
 										.getSymbolicName())) {
 					Map<Variable, Term> answerBindings = new HashMap<Variable, Term>();
-					List<Term> answerTerms = aClause.getPositiveLiterals()
+					List<Term> answerTerms = clause.getPositiveLiterals()
 							.get(0).getAtomicSentence().getArgs();
 					int idx = 0;
 					for (Variable v : answerLiteralVariables) {
@@ -586,7 +586,7 @@ public class FOLOTTERLikeTheoremProver implements InferenceProcedure {
 						}
 					}
 					if (addNewAnswer) {
-						proofs.add(new ProofFinal(aClause.getProofStep(),
+						proofs.add(new ProofFinal(clause.getProofStep(),
 								answerBindings));
 					}
 					isAns = true;
