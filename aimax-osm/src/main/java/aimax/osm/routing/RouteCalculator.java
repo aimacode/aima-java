@@ -32,34 +32,34 @@ public class RouteCalculator {
 	 * Template method, responsible for shortest path generation between two map
 	 * nodes. It searches for way nodes in the vicinity of the given nodes which
 	 * comply with the specified way selection, searches for a suitable paths,
-	 * and adds the paths as tracks to the provided <code>mapData</code>. The
+	 * and adds the paths as tracks to the provided <code>map</code>. The
 	 * three factory methods can be used to override aspects of the default
 	 * behavior in subclasses if needed.
 	 * 
 	 * @param locs
 	 *            Nodes, not necessarily way nodes. The first node is used as
 	 *            start, last node as finish, all others as via nodes.
-	 * @param mapData
+	 * @param map
 	 *            The information source.
 	 * @param waySelection
 	 *            Number, indicating which kinds of ways are relevant.
 	 */
-	public List<Position> calculateRoute(List<MapNode> locs, OsmMap mapData,
+	public List<Position> calculateRoute(List<MapNode> locs, OsmMap map,
 			int waySelection) {
 		List<Position> result = new ArrayList<Position>();
 		try {
-			MapWayFilter wayFilter = createMapWayFilter(mapData, waySelection);
+			MapWayFilter wayFilter = createMapWayFilter(map, waySelection);
 			boolean ignoreOneways = (waySelection == 0);
-			MapNode fromRNode = mapData.getNearestWayNode(new Position(locs
+			MapNode fromNode = map.getNearestWayNode(new Position(locs
 					.get(0)), wayFilter);
-			result.add(new Position(fromRNode.getLat(), fromRNode.getLon()));
+			result.add(new Position(fromNode.getLat(), fromNode.getLon()));
 			for (int i = 1; i < locs.size()
 					&& !CancelableThread.currIsCanceled(); i++) {
-				MapNode toRNode = mapData.getNearestWayNode(new Position(locs
+				MapNode toNode = map.getNearestWayNode(new Position(locs
 						.get(i)), wayFilter);
-				HeuristicFunction hf = createHeuristicFunction(toRNode,
+				HeuristicFunction hf = createHeuristicFunction(toNode,
 						waySelection);
-				Problem problem = createProblem(fromRNode, toRNode, mapData,
+				Problem problem = createProblem(fromNode, toNode, map,
 						wayFilter, ignoreOneways, waySelection);
 				Search search = new AStarSearch(new GraphSearch(), hf);
 				List<Action> actions = search.search(problem);
@@ -74,7 +74,7 @@ public class RouteCalculator {
 										.getLon()));
 					}
 				}
-				fromRNode = toRNode;
+				fromNode = toNode;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,10 +99,10 @@ public class RouteCalculator {
 	}
 
 	/** Factory method, responsible for problem creation. */
-	protected Problem createProblem(MapNode fromRNode, MapNode toRNode,
+	protected Problem createProblem(MapNode fromNode, MapNode toNode,
 			OsmMap map, MapWayFilter wayFilter, boolean ignoreOneways,
 			int waySelection) {
-		return new RouteFindingProblem(fromRNode, toRNode, wayFilter,
+		return new RouteFindingProblem(fromNode, toNode, wayFilter,
 				ignoreOneways);
 	}
 }

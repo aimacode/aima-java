@@ -8,9 +8,9 @@ import aimax.osm.data.entities.MapNode;
 
 /**
  * Implements a route finding problem whose representation is directly based on
- * an <code>MapDataStore</code> object. States are represented by
- * <code>MapNode</code> objects and actions as references to linked nodes. True
- * path lengths (in kilometers) are used as default cost values.
+ * an <code>OsmMap</code>. States are represented by <code>MapNode</code>
+ * objects and actions as references to linked nodes. True path lengths (in
+ * kilometers) are used as default cost values.
  * 
  * @author Ruediger Lunde
  */
