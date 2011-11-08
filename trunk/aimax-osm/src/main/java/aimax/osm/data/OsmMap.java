@@ -10,9 +10,10 @@ import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
 
 /**
- * Central container for OSM map data. It is responsible for storing loaded map
- * data and also for data preparation to support efficient routing and map
- * viewing.
+ * Central container interface for OSM map data. It provides read access to
+ * nodes and ways suitable for routing and map viewing. Additionally, tracks
+ * and markers can be added and accessed. Map generation is delegated to a
+ * <code>MapBuilder</code>. 
  * 
  * @author Ruediger Lunde
  */

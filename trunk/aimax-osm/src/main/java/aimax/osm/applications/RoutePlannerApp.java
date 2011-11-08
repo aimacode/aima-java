@@ -83,16 +83,16 @@ public class RoutePlannerApp implements ActionListener {
 	/** Starts route generation after the calculate button has been pressed. */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == calcButton) {
-			OsmMap mapData = frame.getMap();
+			OsmMap map = frame.getMap();
 			List<Position> positions = routeCalculator.calculateRoute
-			(mapData.getMarkers(), mapData, waySelection.getSelectedIndex());
+			(map.getMarkers(), map, waySelection.getSelectedIndex());
 			frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
 		}
 	}
 	
 	/**
 	 * Updates the info field based on events sent by the MapViewPane. 
-	 * @author R. Lunde
+	 * @author Ruediger Lunde
 	 */
 	class MapDataEventHandler implements MapEventListener {
 		@Override
