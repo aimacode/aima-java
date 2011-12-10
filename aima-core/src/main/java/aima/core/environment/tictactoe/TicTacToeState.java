@@ -1,44 +1,69 @@
 package aima.core.environment.tictactoe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.util.datastructure.XYLocation;
 
 /**
- * @author Ravi Mohan
- * @author R. Lunde
+ * A state of the Tic-tac-toe game is characterized by a board containing
+ * symbols X and O, the next player to move, and an utility information.
+ * 
+ * @author Ruediger Lunde
  * 
  */
-public class TicTacToeBoard {
+public class TicTacToeState implements Cloneable {
 	public static final String O = "O";
 	public static final String X = "X";
 	public static final String EMPTY = "-";
 
-	String[] state = new String[] { EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-			EMPTY, EMPTY, EMPTY };
+	private String[] board = new String[] { EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+			EMPTY, EMPTY, EMPTY, EMPTY };
+
+	private String playerToMove = X;
+	private double utility = -1; // 1: win for X, 0: win for O, 0.5: draw
 
 	public boolean isEmpty(int row, int col) {
-		return state[getAbsPosition(row, col)] == EMPTY;
+		return board[getAbsPosition(row, col)] == EMPTY;
 	}
 
-	public boolean isMarked(String string, int i, int j) {
-		return getValue(i, j).equals(string);
+	public String getPlayerToMove() {
+		return playerToMove;
 	}
 
-	public void markX(int row, int col) {
-		mark(row, col, X);
+	public String getValue(int row, int col) {
+		return board[getAbsPosition(row, col)];
 	}
 
-	public void markO(int row, int col) {
-		mark(row, col, O);
+	public double getUtility() {
+		return utility;
 	}
 
-	private void mark(int row, int col, String symbol) {
-		state[getAbsPosition(row, col)] = symbol;
+	public void mark(XYLocation action) {
+		mark(action.getYCoOrdinate(), action.getXCoOrdinate());
 	}
 
-	public boolean isAnyRowComplete() {
+	public void mark(int row, int col) {
+		if (utility == -1 && getValue(row, col) == EMPTY) {
+			board[getAbsPosition(row, col)] = playerToMove;
+			analyzeUtility();
+			playerToMove = (playerToMove == X ? O : X);
+		}
+	}
+
+	private void analyzeUtility() {
+		if (lineThroughBoard())
+			utility = (playerToMove == X ? 1 : 0);
+		else if (getNumberOfMarkedPositions() == 9)
+			utility = 0.5;
+	}
+
+	public boolean lineThroughBoard() {
+		return (isAnyRowComplete() || isAnyColumnComplete() || isAnyDiagonalComplete());
+	}
+	
+	private boolean isAnyRowComplete() {
 		for (int i = 0; i < 3; i++) {
 			String val = getValue(i, 0);
 			if (val != EMPTY && val == getValue(i, 1) && val == getValue(i, 2))
@@ -47,7 +72,7 @@ public class TicTacToeBoard {
 		return false;
 	}
 
-	public boolean isAnyColumnComplete() {
+	private boolean isAnyColumnComplete() {
 		for (int j = 0; j < 3; j++) {
 			String val = getValue(0, j);
 			if (val != EMPTY && val == getValue(1, j) && val == getValue(2, j))
@@ -56,7 +81,7 @@ public class TicTacToeBoard {
 		return false;
 	}
 
-	public boolean isAnyDiagonalComplete() {
+	private boolean isAnyDiagonalComplete() {
 		boolean retVal = false;
 		String val = getValue(0, 0);
 		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 2))
@@ -65,34 +90,6 @@ public class TicTacToeBoard {
 		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 0))
 			return true;
 		return retVal;
-	}
-
-	public boolean lineThroughBoard() {
-		return (isAnyRowComplete() || isAnyColumnComplete() || isAnyDiagonalComplete());
-	}
-
-	public String getValue(int row, int col) {
-		return state[getAbsPosition(row, col)];
-	}
-
-	private void setValue(int row, int col, String val) {
-		state[getAbsPosition(row, col)] = val;
-	}
-
-	public TicTacToeBoard cloneBoard() {
-		return (TicTacToeBoard) clone();
-	}
-
-	@Override
-	public Object clone() {
-		TicTacToeBoard newBoard = new TicTacToeBoard();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				String s = getValue(i, j);
-				newBoard.setValue(i, j, s);
-			}
-		}
-		return newBoard;
 	}
 
 	public int getNumberOfMarkedPositions() {
@@ -112,7 +109,7 @@ public class TicTacToeBoard {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				if (isEmpty(i, j)) {
-					retVal.add(new XYLocation(i, j));
+					retVal.add(new XYLocation(j, i));
 				}
 			}
 
@@ -120,19 +117,23 @@ public class TicTacToeBoard {
 		return retVal;
 	}
 
-	public String[] getState() {
-		return state;
-	}
-
-	public void setState(String[] state) {
-		this.state = state;
+	@Override
+	public TicTacToeState clone() {
+		TicTacToeState copy = null;
+		try {
+			copy = (TicTacToeState) super.clone();
+			copy.board = Arrays.copyOf(board, board.length);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); // should never happen...
+		}
+		return copy;
 	}
 
 	@Override
 	public boolean equals(Object anObj) {
-		TicTacToeBoard anotherBoard = (TicTacToeBoard) anObj;
+		TicTacToeState anotherState = (TicTacToeState) anObj;
 		for (int i = 0; i < 9; i++)
-			if (state[i] != anotherBoard.state[i])
+			if (board[i] != anotherState.board[i])
 				return false;
 		return true;
 	}
@@ -146,14 +147,6 @@ public class TicTacToeBoard {
 			buf.append("\n");
 		}
 		return buf.toString();
-	}
-
-	public void print() {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++)
-				System.out.print(getValue(i, j) + " ");
-			System.out.println();
-		}
 	}
 
 	//
