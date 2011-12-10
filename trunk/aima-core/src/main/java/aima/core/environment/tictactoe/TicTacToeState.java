@@ -24,16 +24,16 @@ public class TicTacToeState implements Cloneable {
 	private String playerToMove = X;
 	private double utility = -1; // 1: win for X, 0: win for O, 0.5: draw
 
-	public boolean isEmpty(int row, int col) {
-		return board[getAbsPosition(row, col)] == EMPTY;
-	}
-
 	public String getPlayerToMove() {
 		return playerToMove;
 	}
+	
+	public boolean isEmpty(int col, int row) {
+		return board[getAbsPosition(col, row)] == EMPTY;
+	}
 
-	public String getValue(int row, int col) {
-		return board[getAbsPosition(row, col)];
+	public String getValue(int col, int row) {
+		return board[getAbsPosition(col, row)];
 	}
 
 	public double getUtility() {
@@ -41,12 +41,12 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	public void mark(XYLocation action) {
-		mark(action.getYCoOrdinate(), action.getXCoOrdinate());
+		mark(action.getXCoOrdinate(), action.getYCoOrdinate());
 	}
 
-	public void mark(int row, int col) {
-		if (utility == -1 && getValue(row, col) == EMPTY) {
-			board[getAbsPosition(row, col)] = playerToMove;
+	public void mark(int col, int row) {
+		if (utility == -1 && getValue(col, row) == EMPTY) {
+			board[getAbsPosition(col, row)] = playerToMove;
 			analyzeUtility();
 			playerToMove = (playerToMove == X ? O : X);
 		}
@@ -64,18 +64,18 @@ public class TicTacToeState implements Cloneable {
 	}
 	
 	private boolean isAnyRowComplete() {
-		for (int i = 0; i < 3; i++) {
-			String val = getValue(i, 0);
-			if (val != EMPTY && val == getValue(i, 1) && val == getValue(i, 2))
+		for (int row = 0; row < 3; row++) {
+			String val = getValue(0, row);
+			if (val != EMPTY && val == getValue(1, row) && val == getValue(2, row))
 				return true;
 		}
 		return false;
 	}
 
 	private boolean isAnyColumnComplete() {
-		for (int j = 0; j < 3; j++) {
-			String val = getValue(0, j);
-			if (val != EMPTY && val == getValue(1, j) && val == getValue(2, j))
+		for (int col = 0; col < 3; col++) {
+			String val = getValue(col, 0);
+			if (val != EMPTY && val == getValue(col, 1) && val == getValue(col, 2))
 				return true;
 		}
 		return false;
@@ -94,9 +94,9 @@ public class TicTacToeState implements Cloneable {
 
 	public int getNumberOfMarkedPositions() {
 		int retVal = 0;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (!(isEmpty(i, j))) {
+		for (int col = 0; col < 3; col++) {
+			for (int row = 0; row < 3; row++) {
+				if (!(isEmpty(col, row))) {
 					retVal++;
 				}
 			}
@@ -105,16 +105,15 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	public List<XYLocation> getUnMarkedPositions() {
-		List<XYLocation> retVal = new ArrayList<XYLocation>();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (isEmpty(i, j)) {
-					retVal.add(new XYLocation(j, i));
+		List<XYLocation> result = new ArrayList<XYLocation>();
+		for (int col = 0; col < 3; col++) {
+			for (int row = 0; row < 3; row++) {
+				if (isEmpty(col, row)) {
+					result.add(new XYLocation(col, row));
 				}
 			}
-
 		}
-		return retVal;
+		return result;
 	}
 
 	@Override
@@ -131,19 +130,22 @@ public class TicTacToeState implements Cloneable {
 
 	@Override
 	public boolean equals(Object anObj) {
-		TicTacToeState anotherState = (TicTacToeState) anObj;
-		for (int i = 0; i < 9; i++)
-			if (board[i] != anotherState.board[i])
-				return false;
-		return true;
+		if (anObj != null && anObj.getClass() == getClass()) {
+			TicTacToeState anotherState = (TicTacToeState) anObj;
+			for (int i = 0; i < 9; i++)
+				if (board[i] != anotherState.board[i])
+					return false;
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++)
-				buf.append(getValue(i, j) + " ");
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++)
+				buf.append(getValue(col, row) + " ");
 			buf.append("\n");
 		}
 		return buf.toString();
@@ -153,7 +155,7 @@ public class TicTacToeState implements Cloneable {
 	// PRIVATE METHODS
 	//
 
-	private int getAbsPosition(int row, int col) {
+	private int getAbsPosition(int col, int row) {
 		return row * 3 + col;
 	}
 }
