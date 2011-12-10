@@ -35,7 +35,7 @@ import aimax.osm.data.entities.Track;
  * The first is an entity classifier. It is used to attach viewing information
  * to map entities based on attribute value checks. Renderers can store whatever
  * they need in those view information objects. However, the details are not
- * visible to this layer. The data storage only sees the minimal scale in which
+ * visible to this layer. The map only sees the minimal scale in which
  * the entity shall be visible.
  * </p>
  * 
@@ -44,7 +44,7 @@ import aimax.osm.data.entities.Track;
  * </p>
  * 
  * <p>
- * The map data storage is used as model for the viewer.
+ * The map is used as model for the viewer.
  * </p>
  * 
  * @author Ruediger Lunde
