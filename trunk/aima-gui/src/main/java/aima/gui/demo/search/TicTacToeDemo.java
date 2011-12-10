@@ -1,54 +1,53 @@
 package aima.gui.demo.search;
 
-import aima.core.environment.tictactoe.TicTacToe;
-import aima.core.environment.tictactoe.TicTacToeBoard;
-import aima.core.search.adversarial.GameState;
+import aima.core.environment.tictactoe.TicTacToeGame;
+import aima.core.environment.tictactoe.TicTacToeState;
+import aima.core.search.adversarial.AdversarialSearch;
+import aima.core.search.adversarial.AlphaBetaSearch;
+import aima.core.search.adversarial.MinimaxSearch;
+import aima.core.util.datastructure.XYLocation;
 
 /**
- * @author Ravi Mohan
+ * Applies Minimax search and alpha-beta pruning to find optimal moves for the
+ * Tic-tac-toe game.
  * 
+ * @author Ruediger Lunde
  */
 public class TicTacToeDemo {
 	public static void main(String[] args) {
-		System.out.println("TicTacToe Demo");
+		System.out.println("TIC-TAC-TOE DEMO");
 		System.out.println("");
-		minimaxDemo();
-
-		alphaBetaDemo();
-
+		startMinimaxDemo();
+		startAlphaBetaDemo();
 	}
 
-	private static void alphaBetaDemo() {
-		System.out.println("ALPHA BETA ");
-		System.out.println("");
-		TicTacToe t4 = new TicTacToe();
-		while (!(t4.hasEnded())) {
-			System.out.println("\n" + t4.getPlayerToMove(t4.getState())
-					+ "  playing ... ");
+	private static void startMinimaxDemo() {
+		System.out.println("MINI MAX DEMO\n");
+		TicTacToeGame game = new TicTacToeGame();
+		TicTacToeState currState = game.getInitialState();
+		AdversarialSearch<TicTacToeState, XYLocation> search = MinimaxSearch
+				.createFor(game);
+		while (!(game.isTerminal(currState))) {
+			System.out.println(game.getPlayer(currState) + "  playing ... ");
+			XYLocation action = search.makeDecision(currState);
+			currState = game.getResult(currState, action);
+			System.out.println(currState);
+		}
+		System.out.println("MINI MAX DEMO done");
+	}
 
-			t4.makeAlphaBetaMove();
-			GameState presentState = t4.getState();
-			TicTacToeBoard board = t4.getBoard(presentState);
-			board.print();
+	private static void startAlphaBetaDemo() {
+		System.out.println("ALPHA BETA DEMO\n");
+		TicTacToeGame game = new TicTacToeGame();
+		TicTacToeState currState = game.getInitialState();
+		AdversarialSearch<TicTacToeState, XYLocation> search = AlphaBetaSearch
+				.createFor(game);
+		while (!(game.isTerminal(currState))) {
+			System.out.println(game.getPlayer(currState) + "  playing ... ");
+			XYLocation action = search.makeDecision(currState);
+			currState = game.getResult(currState, action);
+			System.out.println(currState);
 		}
 		System.out.println("ALPHA BETA DEMO done");
-	}
-
-	private static void minimaxDemo() {
-		System.out.println("MINI MAX ");
-		System.out.println("");
-		TicTacToe t3 = new TicTacToe();
-		while (!(t3.hasEnded())) {
-			System.out.println("\n" + t3.getPlayerToMove(t3.getState())
-					+ " playing");
-			System.out.println("");
-			t3.makeMiniMaxMove();
-			GameState presentState = t3.getState();
-			TicTacToeBoard board = t3.getBoard(presentState);
-			System.out.println("");
-			board.print();
-
-		}
-		System.out.println("Mini MAX DEMO done");
 	}
 }

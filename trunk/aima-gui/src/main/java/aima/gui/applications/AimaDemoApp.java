@@ -1,6 +1,7 @@
 package aima.gui.applications;
 
 import aima.gui.applications.search.csp.MapColoringApp;
+import aima.gui.applications.search.games.ConnectFourApp;
 import aima.gui.applications.search.games.EightPuzzleApp;
 import aima.gui.applications.search.games.NQueensApp;
 import aima.gui.applications.search.games.TicTacToeApp;
@@ -15,8 +16,8 @@ import aima.gui.demo.logic.PLResolutionDemo;
 import aima.gui.demo.logic.TTEntailsDemo;
 import aima.gui.demo.logic.WalkSatDemo;
 import aima.gui.demo.probability.ProbabilityDemo;
-import aima.gui.demo.search.MapColoringCSPDemo;
 import aima.gui.demo.search.EightPuzzleDemo;
+import aima.gui.demo.search.MapColoringCSPDemo;
 import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
 
@@ -34,6 +35,7 @@ public class AimaDemoApp {
 		frame.addApp(EightPuzzleApp.class);
 		frame.addApp(NQueensApp.class);
 		frame.addApp(TicTacToeApp.class);
+		frame.addApp(ConnectFourApp.class);
 		frame.addApp(MapColoringApp.class);
 
 		frame.addDemo(TrivialVacuumDemo.class);
