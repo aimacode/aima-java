@@ -120,7 +120,7 @@ public class TicTacToeApp {
 				}
 			}
 			for (int i = 0; i < 9; i++) {
-				String val = currState.getValue(i / 3, i % 3);
+				String val = currState.getValue(i % 3, i / 3);
 				if (val == TicTacToeState.EMPTY)
 					val = "";
 				squares[i].setText(val);

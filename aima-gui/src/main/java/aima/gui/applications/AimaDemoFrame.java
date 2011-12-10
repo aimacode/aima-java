@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 
 import javax.swing.JComponent;
@@ -28,6 +29,7 @@ public class AimaDemoFrame extends JFrame {
 	JMenu demoMenu = new JMenu("Demos");
 	MessageLoggerPanel textPanel = new MessageLoggerPanel();
 	JComponent currPanel;
+	PrintStream outStream;
 
 	/** Standard constructor. */
 	public AimaDemoFrame() {
@@ -36,6 +38,7 @@ public class AimaDemoFrame extends JFrame {
 		setJMenuBar(menubar);
 		menubar.add(appMenu);
 		menubar.add(demoMenu);
+		outStream = System.out;
 	}
 
 	/**
@@ -103,6 +106,7 @@ public class AimaDemoFrame extends JFrame {
 			try {
 				if (currPanel != null)
 					getContentPane().remove(currPanel);
+				System.setOut(outStream);
 				Object instance = appClass.newInstance();
 				Method m = appClass.getMethod("constructApplicationFrame",
 						new Class[0]);
