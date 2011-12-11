@@ -55,8 +55,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	}
 
 	/**
-	 * Template method controlling the search. In this implementation, action
-	 * ordering is only performed on top-level.
+	 * Template method controlling the search.
 	 */
 	public ACTION makeDecision(STATE state) {
 		List<ACTION> results = null;
@@ -75,7 +74,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			double secondBestValue = Double.NEGATIVE_INFINITY;
 			if (logEnabled)
 				logText = new StringBuffer("depth " + currDepthLimit + ": ");
-			for (ACTION action : orderActions(state, game.getActions(state))) {
+			for (ACTION action : orderActions(state, game.getActions(state), 0)) {
 				if (results != null
 						&& System.currentTimeMillis() > startTime + maxTime) {
 					exit = true;
@@ -116,9 +115,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			return eval(state, player);
 		} else {
 			double value = Double.NEGATIVE_INFINITY;
-			for (ACTION action : game.getActions(state)) {
-				// for (ACTION action : orderActions(state,
-				// game.getActions(state))) {
+			for (ACTION action : orderActions(state, game.getActions(state),
+					depth)) {
 				value = Math.max(
 						value,
 						minValue(game.getResult(state, action), player, alpha,
@@ -139,9 +137,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			return eval(state, player);
 		} else {
 			double value = Double.POSITIVE_INFINITY;
-			for (ACTION action : game.getActions(state)) {
-				// for (ACTION action : orderActions(state,
-				// game.getActions(state))) {
+			for (ACTION action : orderActions(state, game.getActions(state),
+					depth)) {
 				value = Math.min(
 						value,
 						maxValue(game.getResult(state, action), player, alpha,
@@ -162,11 +159,11 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		result.set("maxDepth", maxDepth);
 		return result;
 	}
-	
+
 	/**
-	 * Primitive operation which is called at the beginning of one
-	 * depth limited search step. This implementation increments the
-	 * current depth limit by one.
+	 * Primitive operation which is called at the beginning of one depth limited
+	 * search step. This implementation increments the current depth limit by
+	 * one.
 	 */
 	protected void incrementDepthLimit() {
 		currDepthLimit++;
@@ -210,7 +207,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	 * Primitive operation for action ordering. This implementation preserves
 	 * the original order (provided by the game).
 	 */
-	public List<ACTION> orderActions(STATE state, List<ACTION> actions) {
+	public List<ACTION> orderActions(STATE state, List<ACTION> actions,
+			int depth) {
 		return actions;
 	}
 }
