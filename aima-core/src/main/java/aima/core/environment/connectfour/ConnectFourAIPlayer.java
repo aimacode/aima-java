@@ -37,15 +37,15 @@ public class ConnectFourAIPlayer extends
 	 * attractive if depth is small.
 	 */
 	@Override
-	protected double eval(ConnectFourState state, String player, int depth) {
-		double value = super.eval(state, player, depth);
+	protected double eval(ConnectFourState state, String player) {
+		double value = super.eval(state, player);
 		if (hasSafeWinner(value)) {
 			if (value > (utilMin + utilMax) / 2)
-				return value - depth / 1000.0;
+				value -= state.getTurns() / 1000.0;
 			else
-				return value + depth / 1000.0;
-		} else
-			return value;
+				value += state.getTurns() / 1000.0;
+		}
+		return value;
 	}
 
 	/**

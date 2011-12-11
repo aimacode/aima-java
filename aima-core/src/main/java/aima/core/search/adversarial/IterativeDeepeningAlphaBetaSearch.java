@@ -68,7 +68,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		long startTime = System.currentTimeMillis();
 		boolean exit = false;
 		do {
-			currDepthLimit++;
+			incrementDepthLimit();
 			maxDepthReached = false;
 			List<ACTION> newResults = new ArrayList<ACTION>();
 			double newResultValue = Double.NEGATIVE_INFINITY;
@@ -113,7 +113,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		expandedNodes++;
 		maxDepth = Math.max(maxDepth, depth);
 		if (game.isTerminal(state) || depth >= currDepthLimit) {
-			return eval(state, player, depth);
+			return eval(state, player);
 		} else {
 			double value = Double.NEGATIVE_INFINITY;
 			for (ACTION action : game.getActions(state)) {
@@ -136,7 +136,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		expandedNodes++;
 		maxDepth = Math.max(maxDepth, depth);
 		if (game.isTerminal(state) || depth >= currDepthLimit) {
-			return eval(state, player, depth);
+			return eval(state, player);
 		} else {
 			double value = Double.POSITIVE_INFINITY;
 			for (ACTION action : game.getActions(state)) {
@@ -161,6 +161,15 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		result.set("expandedNodes", expandedNodes);
 		result.set("maxDepth", maxDepth);
 		return result;
+	}
+	
+	/**
+	 * Primitive operation which is called at the beginning of one
+	 * depth limited search step. This implementation increments the
+	 * current depth limit by one.
+	 */
+	protected void incrementDepthLimit() {
+		currDepthLimit++;
 	}
 
 	/**
@@ -188,7 +197,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	 * terminal states and <code>(utilMin + utilMax) / 2</code> for non-terminal
 	 * states.
 	 */
-	protected double eval(STATE state, PLAYER player, int depth) {
+	protected double eval(STATE state, PLAYER player) {
 		if (game.isTerminal(state)) {
 			return game.getUtility(state, player);
 		} else {

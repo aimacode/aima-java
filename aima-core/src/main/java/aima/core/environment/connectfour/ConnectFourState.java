@@ -52,6 +52,10 @@ public class ConnectFourState implements Cloneable {
 	public int getPlayerToMove() {
 		return turns % 2 + 1;
 	}
+	
+	public int getTurns() {
+		return turns;
+	}
 
 	public void dropDisk(int col) {
 		int playerNum = getPlayerToMove();
