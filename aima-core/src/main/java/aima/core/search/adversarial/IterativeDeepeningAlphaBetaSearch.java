@@ -26,7 +26,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	protected Game<STATE, ACTION, PLAYER> game;
 	protected double utilMax;
 	protected double utilMin;
-	private int currDepthLimit;
+	protected int currDepthLimit;
 	private boolean maxDepthReached;
 	private long maxTime;
 	private boolean logEnabled;
