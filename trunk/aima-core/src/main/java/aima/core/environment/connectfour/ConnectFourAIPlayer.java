@@ -54,16 +54,19 @@ public class ConnectFourAIPlayer extends
 	 */
 	@Override
 	public List<Integer> orderActions(ConnectFourState state,
-			List<Integer> actions) {
-		List<ActionValuePair<Integer>> actionEstimates = new ArrayList<ActionValuePair<Integer>>(
-				actions.size());
-		for (Integer action : actions)
-			actionEstimates.add(ActionValuePair.createFor(action,
-					state.analyzePotentialWinPositions(action)));
-		Collections.sort(actionEstimates);
-		List<Integer> result = new ArrayList<Integer>();
-		for (ActionValuePair<Integer> pair : actionEstimates)
-			result.add(pair.getAction());
+			List<Integer> actions, int depth) {
+		List<Integer> result = actions;
+		if (depth == 0) {
+			List<ActionValuePair<Integer>> actionEstimates = new ArrayList<ActionValuePair<Integer>>(
+					actions.size());
+			for (Integer action : actions)
+				actionEstimates.add(ActionValuePair.createFor(action,
+						state.analyzePotentialWinPositions(action)));
+			Collections.sort(actionEstimates);
+			result = new ArrayList<Integer>();
+			for (ActionValuePair<Integer> pair : actionEstimates)
+				result.add(pair.getAction());
+		}
 		return result;
 	}
 }
