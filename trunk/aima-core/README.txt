@@ -62,8 +62,8 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   4   ||     147|| Online search problem        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java OnlineSearchProblem] ||
 ||   4.21||     150|| Online-DFS-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java OnlineDFSAgent] ||
 ||   4.24||     152|| LRTA`*`-Agent                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java LRTAStarAgent] ||
-||   5.3 ||     166|| Minimax-Decision             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java (method)-makeMiniMaxMove()]||
-||   5.7 ||     170|| Alpha-Beta-Search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java (method)-makeAlphaBetaMove()]||
+||   5.3 ||     166|| Minimax-Decision             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java MinimaxSearch]||
+||   5.7 ||     170|| Alpha-Beta-Search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java AlphaBetaSearch]||
 ||   6   ||     202|| CSP                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/CSP.java CSP]||
 ||   6.1 ||     204|| Map CSP                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MapCSP.java MapCSP]||
 ||   6.3 ||     209|| AC-3                         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java AC3Strategy]||
