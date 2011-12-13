@@ -24,9 +24,9 @@ import aima.core.search.framework.Metrics;
  *   if TERMINAL-TEST(state) then return UTILITY(state)
  *   v = infinity
  *   for each a in ACTIONS(state) do
- *     v = MIN(v, MAX-VALUE(RESULT(s,a) , alpha, beta))
+ *     v = MIN(v, MAX-VALUE(RESULT(s,a), alpha, beta))
  *     if v <= alpha then return v
- *     beta=MIN(beta, v)
+ *     beta = MIN(beta, v)
  *   return v
  * </code>
  * </pre>
@@ -61,6 +61,7 @@ public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 		this.game = game;
 	}
 
+	@Override
 	public ACTION makeDecision(STATE state) {
 		expandedNodes = 0;
 		ACTION result = null;
