@@ -6,10 +6,11 @@ import java.util.List;
 import aima.core.search.adversarial.Game;
 
 /**
- * Provides an implementation of the ConnectFour game which can be used
- * for experiments with the Minimax algorithm.
+ * Provides an implementation of the ConnectFour game which can be used for
+ * experiments with the Minimax algorithm.
+ * 
  * @author Ruediger Lunde
- *
+ * 
  */
 public class ConnectFourGame implements Game<ConnectFourState, Integer, String> {
 
@@ -25,10 +26,25 @@ public class ConnectFourGame implements Game<ConnectFourState, Integer, String> 
 	public String[] getPlayers() {
 		return players;
 	}
-	
+
 	@Override
 	public String getPlayer(ConnectFourState state) {
-		return players[state.getPlayerToMove() - 1];
+		return getPlayer(state.getPlayerToMove());
+	}
+
+	/**
+	 * Returns the player corresponding to the specified player number. For
+	 * efficiency reasons, <code>ConnectFourState</code>s use numbers
+	 * instead of strings to identify players.
+	 */
+	public String getPlayer(int playerNum) {
+		switch (playerNum) {
+		case 1:
+			return players[0];
+		case 2:
+			return players[1];
+		}
+		return null;
 	}
 
 	@Override

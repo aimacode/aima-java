@@ -60,6 +60,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	public ACTION makeDecision(STATE state) {
 		List<ACTION> results = null;
 		double resultValue = Double.NEGATIVE_INFINITY;
+		PLAYER player = game.getPlayer(state);
 		StringBuffer logText = null;
 		expandedNodes = 0;
 		maxDepth = 0;
@@ -74,15 +75,15 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			double secondBestValue = Double.NEGATIVE_INFINITY;
 			if (logEnabled)
 				logText = new StringBuffer("depth " + currDepthLimit + ": ");
-			for (ACTION action : orderActions(state, game.getActions(state), 0)) {
+			for (ACTION action : orderActions(state, game.getActions(state),
+					player, 0)) {
 				if (results != null
 						&& System.currentTimeMillis() > startTime + maxTime) {
 					exit = true;
 					break;
 				}
-				double value = minValue(game.getResult(state, action),
-						game.getPlayer(state), Double.NEGATIVE_INFINITY,
-						Double.POSITIVE_INFINITY, 1);
+				double value = minValue(game.getResult(state, action), player,
+						Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
 				if (logEnabled)
 					logText.append(action + "->" + value + " ");
 				if (value >= newResultValue) {
@@ -92,6 +93,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 						newResults.clear();
 					}
 					newResults.add(action);
+				} else if (value > secondBestValue) {
+					secondBestValue = value;
 				}
 			}
 			if (logEnabled)
@@ -116,7 +119,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		} else {
 			double value = Double.NEGATIVE_INFINITY;
 			for (ACTION action : orderActions(state, game.getActions(state),
-					depth)) {
+					player, depth)) {
 				value = Math.max(
 						value,
 						minValue(game.getResult(state, action), player, alpha,
@@ -138,7 +141,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		} else {
 			double value = Double.POSITIVE_INFINITY;
 			for (ACTION action : orderActions(state, game.getActions(state),
-					depth)) {
+					player, depth)) {
 				value = Math.min(
 						value,
 						maxValue(game.getResult(state, action), player, alpha,
@@ -208,7 +211,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	 * the original order (provided by the game).
 	 */
 	public List<ACTION> orderActions(STATE state, List<ACTION> actions,
-			int depth) {
+			PLAYER player, int depth) {
 		return actions;
 	}
 }
