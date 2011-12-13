@@ -57,6 +57,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	/**
 	 * Template method controlling the search.
 	 */
+	@Override
 	public ACTION makeDecision(STATE state) {
 		List<ACTION> results = null;
 		double resultValue = Double.NEGATIVE_INFINITY;
@@ -120,10 +121,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			double value = Double.NEGATIVE_INFINITY;
 			for (ACTION action : orderActions(state, game.getActions(state),
 					player, depth)) {
-				value = Math.max(
-						value,
-						minValue(game.getResult(state, action), player, alpha,
-								beta, depth + 1));
+				value = Math.max(value, minValue(game.getResult(state, action), //
+						player, alpha, beta, depth + 1));
 				if (value >= beta)
 					return value;
 				alpha = Math.max(alpha, value);
@@ -142,10 +141,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 			double value = Double.POSITIVE_INFINITY;
 			for (ACTION action : orderActions(state, game.getActions(state),
 					player, depth)) {
-				value = Math.min(
-						value,
-						maxValue(game.getResult(state, action), player, alpha,
-								beta, depth + 1));
+				value = Math.min(value, maxValue(game.getResult(state, action), //
+						player, alpha, beta, depth + 1));
 				if (value <= alpha)
 					return value;
 				beta = Math.min(beta, value);
