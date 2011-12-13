@@ -85,6 +85,10 @@ public class ConnectFourState implements Cloneable {
 		return row;
 	}
 
+	public boolean isWinMoveFor(int col, int playerNum) {
+		return isWinPositionFor(getFreeRow(col), col, playerNum);
+	}
+	
 	public boolean isWinPositionFor(int row, int col, int playerNum) {
 		return (board[row * cols + col] & playerNum * 4) > 0;
 	}

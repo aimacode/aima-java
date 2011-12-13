@@ -3,7 +3,6 @@ package aima.core.environment.connectfour;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import aima.core.search.adversarial.Game;
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 
@@ -54,7 +53,7 @@ public class ConnectFourAIPlayer extends
 	 */
 	@Override
 	public List<Integer> orderActions(ConnectFourState state,
-			List<Integer> actions, int depth) {
+			List<Integer> actions, String player, int depth) {
 		List<Integer> result = actions;
 		if (depth == 0) {
 			List<ActionValuePair<Integer>> actionEstimates = new ArrayList<ActionValuePair<Integer>>(
