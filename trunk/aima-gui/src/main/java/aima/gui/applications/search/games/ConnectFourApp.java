@@ -166,7 +166,7 @@ public class ConnectFourApp {
 			String statusText;
 			if (!game.isTerminal(currState)) {
 				String toMove = (String) game.getPlayer(currState);
-				statusText = "Next turn: " + toMove;
+				statusText = "Next move: " + toMove;
 				statusBar.setForeground(toMove.equals("red") ? Color.RED
 						: Color.YELLOW);
 			} else {
