@@ -18,7 +18,7 @@ public class ConnectFourState implements Cloneable {
 	 */
 	private byte[] board;
 
-	private int turns;
+	private int moveCount;
 	/**
 	 * Indicates the utility of the state. 1: win for player 1, 0: win for
 	 * player 2, 0.5: draw, -1 for all non-terminal states.
@@ -50,39 +50,45 @@ public class ConnectFourState implements Cloneable {
 	}
 
 	public int getPlayerToMove() {
-		return turns % 2 + 1;
+		return moveCount % 2 + 1;
 	}
 	
-	public int getTurns() {
-		return turns;
+	public int getMoves() {
+		return moveCount;
 	}
 
 	public void dropDisk(int col) {
 		int playerNum = getPlayerToMove();
 		int row = getFreeRow(col);
-		turns++;
-		if (turns == board.length)
-			utility = 0.5;
-		if (isWinPositionFor(row, col, 1)) {
-			winPositions1--;
-			if (playerNum == 1)
-				utility = 1.0;
+		if (row != -1) {
+			moveCount++;
+			if (moveCount == board.length)
+				utility = 0.5;
+			if (isWinPositionFor(row, col, 1)) {
+				winPositions1--;
+				if (playerNum == 1)
+					utility = 1.0;
+			}
+			if (isWinPositionFor(row, col, 2)) {
+				winPositions2--;
+				if (playerNum == 2)
+					utility = 0.0;
+			}
+			board[row * cols + col] = (byte) playerNum;
+			if (utility == -1)
+				analyzeWinPositions(row, col);
 		}
-		if (isWinPositionFor(row, col, 2)) {
-			winPositions2--;
-			if (playerNum == 2)
-				utility = 0.0;
-		}
-		board[row * cols + col] = (byte) playerNum;
-		if (utility == -1)
-			analyzeWinPositions(row, col);
 	}
 
+	/**
+	 * Returns the row of the first empty space in the specified column and -1
+	 * if the column is full.
+	 */
 	private int getFreeRow(int col) {
-		int row = getRows() - 1;
-		while (getPlayerNum(row, col) > 0)
-			row--;
-		return row;
+		for (int row = getRows() - 1; row >= 0; row--)
+			if (getPlayerNum(row, col) == 0)
+				return row;
+		return -1;
 	}
 
 	public boolean isWinMoveFor(int col, int playerNum) {

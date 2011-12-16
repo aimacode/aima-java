@@ -40,9 +40,9 @@ public class ConnectFourAIPlayer extends
 		double value = super.eval(state, player);
 		if (hasSafeWinner(value)) {
 			if (value > (utilMin + utilMax) / 2)
-				value -= state.getTurns() / 1000.0;
+				value -= state.getMoves() / 1000.0;
 			else
-				value += state.getTurns() / 1000.0;
+				value += state.getMoves() / 1000.0;
 		}
 		return value;
 	}
