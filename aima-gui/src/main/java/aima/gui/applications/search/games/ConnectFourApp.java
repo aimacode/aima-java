@@ -178,7 +178,7 @@ public class ConnectFourApp {
 					statusText = "Color " + winner
 							+ " has won. Congratulations!";
 				else
-					statusText = "No winner...";
+					statusText = "No winner :-(";
 				statusBar.setForeground(Color.WHITE);
 			}
 			if (searchMetrics != null)
