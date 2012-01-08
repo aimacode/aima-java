@@ -31,7 +31,7 @@ import aima.core.search.framework.Metrics;
  * </code>
  * </pre>
  * 
- * Figure 5.7 The alpha–beta search algorithm. Notice that these routines are
+ * Figure 5.7 The alpha-beta search algorithm. Notice that these routines are
  * the same as the MINIMAX functions in Figure 5.3, except for the two lines in
  * each of MIN-VALUE and MAX-VALUE that maintain alpha and beta (and the
  * bookkeeping to pass these parameters along).
