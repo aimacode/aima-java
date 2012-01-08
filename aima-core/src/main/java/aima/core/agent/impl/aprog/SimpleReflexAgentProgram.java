@@ -41,7 +41,7 @@ public class SimpleReflexAgentProgram implements AgentProgram {
 	 * Constructs a SimpleReflexAgentProgram with a set of condition-action
 	 * rules.
 	 * 
-	 * @param aRuleSet
+	 * @param ruleSet
 	 *            a set of condition-action rules
 	 */
 	public SimpleReflexAgentProgram(Set<Rule> ruleSet) {

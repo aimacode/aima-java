@@ -28,7 +28,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 	 * 
 	 * @param theta
 	 *            a substitution.
-	 * @param aSentence
+	 * @param sentence
 	 *            the substitution has been applied to.
 	 * @return a new Sentence representing the result of applying the
 	 *         substitution theta to aSentence.
