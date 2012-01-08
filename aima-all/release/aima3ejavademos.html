@@ -334,14 +334,58 @@
   	<td valign="top">Algorithm Selector</td>
   	<td>Top left drop down widget. Used to select the adversarial search algorithm to use. 
   	  <ul>
-  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java">Minimax</a></li>
-  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/Game.java">Alpha-Beta</a></li>	    
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java">Minimax</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java">Alpha-Beta</a></li>	
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/IterativeDeepeningAlphaBetaSearch.java">Iterative Deepening Alpha-Beta</a></li>    
       </ul>
   	</td>
   </tr> 
   <tr>
   	<td valign="top">Clear</td>
-  	<td>Top right button widget. Used to clear the board.
+  	<td>Top left button widget. Used to clear the board.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Propose Move</td>
+  	<td>Top right button widget. Used to request the Agent make a move based on the current board state and selected search algorithm.</td>
+  </tr>
+  </table> 
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-ConnectFourApp.jnlp"><img src="images/connectfourapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-ConnectFourApp.jnlp">Connect Four Demo</a> - A demonstration of the Minimax and Alpha-Beta adversarial search 
+  algorithms as described in chapter 5 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, using the Connect Four game as
+  an example (much larger search space than Tic-Tac-Toe). You can choose to play the game yourself by selecting board positions or 
+  have the Agent propose moves.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Algorithm Selector</td>
+  	<td>Top left drop down widget. Used to select the adversarial search algorithm to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java">Minimax</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java">Alpha-Beta</a></li>	
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/IterativeDeepeningAlphaBetaSearch.java">Iterative Deepening Alpha-Beta</a></li>    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Search Duration</td>
+  	<td>Top right drop down widget. Sets a limit in seconds (5, 10, 15, or 20) for how long to search for a best proposed move.
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top left button widget. Used to clear the board.
   	</td>
   </tr> 
   <tr>
