@@ -4,9 +4,15 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.3-Chp17n21-Rewrite-DF1 ==
-0.10.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
-  * Fixed defect in FrequencyCounter when reset.
+== Current Release: 0.10.4-Chp5-Rewrite ==
+0.10.4-Chp5-Rewrite : 08 Jan 2012 :<br>
+  * Redesigned and re-implemented adversarial search algorithms from Chapter 5.
+  ** Rewrote Minimax-Decision and Alpha-Beta-Search algorithms.
+  ** Redesigned Game interface to more closely reflect that as described in AIMA3e.
+  ** Added Minimax search with alpha-beta pruning and action ordering (IterativeDeepeningAlphaBetaSearch.java).
+  ** Updated environment definitions/classes for Tic-Tac-Toe game.
+  ** Added environment definitions/classes for Connect 4 game.
+  * Minor documentation cleanup.
  
 = Details =
 
@@ -243,6 +249,9 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+0.10.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
+  * Fixed defect in FrequencyCounter when reset.
+  
 0.10.2-Chp17n21-Rewrite : 16 Sept 2011 :<br>
   * All of the algorithms from Chapters 17 and 21 have been rewritten.
   ** 17.4 Value-Iteration
