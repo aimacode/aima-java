@@ -1,0 +1,141 @@
+package aimax.osm.gps;
+
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+
+/**
+ * Reads GPS data from a NMEA stream via a serial port connection.
+ * To compile and run this class, download the rs232 serial port library
+ * from http://www.rxtx.org/ and install it correctly.
+ * One possibility is, to add the jar-file
+ * to the class path (project properties, add jar), to store the DDL
+ * locally (e.g. in project-root/lib), and start the application with
+ * VM argument <code>-Djava.library.path=lib</code>.
+ * @author Ruediger Lunde
+ */
+public class NmeaSerialPortReader extends NmeaReader {
+
+	public static int TIMEOUT  = 2000; // 2 seconds
+	public static int BAUDRATE = 38400;
+	private SerialPort sPort;
+	private SerialPortEventListener sPortListener;
+	private String portname;
+	
+	public NmeaSerialPortReader() {
+		sPortListener = new SerialPortEventListener() {
+			public void serialEvent(SerialPortEvent event) {
+				if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+					readFromStream(false);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Specifies the name of the serial port to be used for the
+	 * next connection to be opened.
+	 */
+	public void selectPortName(String portname) {
+		this.portname = portname;
+	}
+	
+	/**
+	 * Returns the name of the selected serial port.
+	 */
+	public String getSelectedPortName() {
+		return portname;
+	}
+	
+	/**
+	 * Opens the stream if it is not already open. If no port
+	 * name is selected, all serial ports are scanned. 
+	 */
+	public void openStream() throws Exception {
+		if (sPort != null)
+			return;
+		if (findSerialPort()) {
+			sPort.addEventListener(sPortListener);
+			sPort.notifyOnDataAvailable(true);
+		} else if (portname != null) {
+			throw new IOException("Serial port " + portname + " not found.");
+		} else {
+			throw new IOException("No serial port with NMEA messages found.");
+		}	
+	}
+	
+	/** Closes the stream and also the serial port. */
+	public void closeStream() throws IOException {
+		if (sPort != null) {
+			sPort.removeEventListener();
+			//sPort.notifyOnDataAvailable(false);
+			sPort.close();
+			sPort = null;
+			super.closeStream();
+		}
+	}
+	
+	/** Searches for a serial port providing NMEA messages. */
+	private boolean findSerialPort() throws Exception {
+		Enumeration<?>  portList = CommPortIdentifier.getPortIdentifiers();
+		while (portList.hasMoreElements()) {
+			CommPortIdentifier pid = (CommPortIdentifier) portList.nextElement();
+			if (pid.getPortType() == CommPortIdentifier.PORT_SERIAL
+					&& (portname == null || pid.getName().equals(portname))) {
+				sPort = (SerialPort) pid.open("NmeaSerialPortReader", TIMEOUT);
+				//System.out.println("\n" + pid.getName());
+				sPort.setSerialPortParams(BAUDRATE,
+					SerialPort.DATABITS_8,
+					SerialPort.STOPBITS_1,
+					SerialPort.PARITY_NONE);
+				inputStream = sPort.getInputStream();
+				Thread.sleep(TIMEOUT);
+				int avail = inputStream.available();
+				if (avail > 0) {
+					//Thread.sleep(TIMEOUT);
+					StringBuffer buffer = new StringBuffer();
+					int value;
+					while ((value = inputStream.read()) != -1 && buffer.length() < 500) {
+						buffer.append((char) value);
+					}
+					//System.out.println(sPort.getName() + ": " + buffer.toString() + "\n");
+					if (buffer.toString().contains("$GPGGA")) {
+						portname = pid.getName();
+						return true;
+					}
+				}
+				sPort.close();
+				sPort = null;
+			}
+		}
+		return false;
+	}
+	
+	/////////////////////////////////////////////////////////////////
+	// Simple test program...
+	
+	public static void main(String[] args) {
+		try {
+			NmeaSerialPortReader reader = new NmeaSerialPortReader();
+			reader.openStream();
+			
+			NmeaMessageListener consoleLogger = new NmeaMessageListener() {
+				public void messageReceived(String buffer) {
+					System.out.print(buffer);
+				}
+			};
+			MessageToFileListener fileLogger = new MessageToFileListener();
+			reader.addListener(consoleLogger);
+			reader.addListener(fileLogger);
+			fileLogger.openFile(new File("nmeaout.txt"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

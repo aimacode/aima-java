@@ -1,0 +1,611 @@
+<html>
+<head><title>AIMA3e-Java Web Start Demo Applications</title>
+	<link rel=stylesheet href="aima.css" TYPE="text/css"> 
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon"> 
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<h1 style="text-align:left">
+  <div style="border:1px solid black;background-color: #f0ecd8">
+  <a href="http://aima.cs.berkeley.edu/"><img src="images/aima_logo.png" align="middle" border="0" /></a> <a href="http://code.google.com/p/aima-java/">AIMA3e-Java Demo Applications</a>
+  </div>
+</h1>
+<p style="text-align:center">
+	Note: To start an application, click on the appropriate link (on the left hand side). Requires <a href="http://www.oracle.com/technetwork/java/javase/overview-137531.html">Java Web Start</a> to be supported by your browser.
+</p>
+<table border="0" width="96%" align="center">
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aimax-osm-OSMAndAIMADemoApp.jnlp"><img src="images/aimademoapps.png" /></a></td>
+  <td valign="top">
+  <a href="aimax-osm-OSMAndAIMADemoApp.jnlp">OSM and AIMA Unified Demo Application</a> - A starter for running all applications and command
+  line demos from the AIMA-GUI sub-project and most of the AIMAX-OSM applications. Details of how to use each of the individual applications 
+  are detailed below.
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <th align="left"></th>
+  <th align="left"><a href="http://code.google.com/p/aima-java/"><img src="images/aima3e.jpg" align="middle" /></a> AIMA-GUI Applications</th>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-VacuumApp.jnlp"><img src="images/vacuumapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-VacuumApp.jnlp">Vacuum Demo</a> - A simple graphical application for experiments with vacuum cleaner agents.
+  It demonstrates different agents described in chapter two of <a href="http://aima.cs.berkeley.edu/">Artificial Intelligence a Modern Approach (AIMA3e)</a>.
+  The red - pac man like - character represents an agent playing the role of an intelligent vacuum. The squares (A and B) represent the different tiles in the Agents environment. A clean tile is colored
+  white while a dirty tile is colored gray. The goal for the Agent is to ensure all tiles are clean.  
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Environment Selector</td>
+  	<td>Top left drop down widget. Used to select the environment in which the Agent is to run. 
+  	    Currently this is restricted to the 'A/B Environment' described in the book.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Agent Selector</td>
+  	<td>Drop down widget beside the 'Environment Selector'. Used to select the type of Agent to be used, available Agents are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">Table-Driven-Vacuum-Agent</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">Reflex-Vacuum-Agent</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/SimpleReflexVacuumAgent.java">Simple-Reflex-Vacuum-Agent</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/ModelBasedReflexVacuumAgent.java">Model-Based-Reflex-Vacuum-Agent</a></li>
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application) 
+  	    and reset the agent and its environment if necessary.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to randomly position the Agent and to mark tiles as either clean or dirty.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to clean the environment until it thinks it has reached its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top">
+  <a name="route_finding_agent" />
+  <a href="aima-gui-RouteFindingAgentApp.jnlp"><img src="images/routefindingagentapp.png" /></a></td>
+  <td valign="top"><a href="aima-gui-RouteFindingAgentApp.jnlp">Route Finding Agent</a> - An example of a route finding agent application.
+  It provides a demonstration of the different agents/search algorithms described in chapters three and four of  <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, for tackling route 
+  planning tasks within simplified map based environments.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the map and starting location from which the Agent is to start its route. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Destination Selector</td>
+  	<td>Drop down widget beside the 'Scenario Selector'. Used to select the location from the map that the Agent is to end its route. 
+   	</td>
+   </tr>
+   <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Destination Selector'. The different types of search strategy available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">Uniform Cost</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">Recursive Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+      </ul>
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Search Mode Selector</td>
+  	<td>Drop down widget beside the 'Search Strategy Selector'. The different types of search mode available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">Tree Search</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">Graph Search</a></li>
+      </ul>
+      These are applicable to configuring the general mechanism used by several of the Search Algorithms when traversing their
+      search spaces.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Heuristic Selector</td>
+  	<td>Drop down widget beside the 'Search Mode Selector'. To select a <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/HeuristicFunction.java">heuristic function</a>
+  	to be used by the selected search algorithm, if applicable (e.g. A*). '=0' is equivalent to using no heuristic. 'SLD' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application) 
+  	    and reset the agent and its environment if necessary.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to place the Agent back at its start location and
+  	to select a new random destination depending on destination selection.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to calculate the route between the specified start and end location, and to traverse it.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-EightPuzzleApp.jnlp"><img src="images/eightpuzzleapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-EightPuzzleApp.jnlp">8-Puzzle Demo</a> - An example of the 8-puzzle, which consists of a 3x3 board
+  with eight numbered tiles and a blank space. The goal is to reach the specified goal state as detailed in Figure 3.4 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>
+  (depicted left). Provides a demonstration of the different search algorithms described in chapters three and four of 
+  <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. You can choose to solve the problem yourself by selecting tiles next to the empty square to
+  which you want to move the empty square.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Difficulty Selector</td>
+  	<td>Top left drop down widget. Used to select the level of difficulty of the 8-puzzle problem to solve. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Difficulty Selector'. The different types of search strategy available are: 
+      <ul>
+        <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">Depth Limited Search</a></li>    
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">Simulated Annealing</a></li>
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the 8-puzzle problem.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-NQueensApp.jnlp"><img src="images/nqueensapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-NQueensApp.jnlp">N-Queens Problem Demo</a> - The goal of the n-queens problem is to place n queens on a chessboard
+  such that no queen attacks any other (A queen attacks any piece in the same row, column or diagonal). Provides a demonstration of the 
+  different search algorithms described in chapters three and four of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. 
+  You can choose to solve the problem yourself by selecting board positions to where you wish to place Queens.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Difficulty Selector</td>
+  	<td>Top left drop down widget. Used to select the size of the n-queens problem to solve (the larger n, the more difficult). 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Action Strategy Selector</td>
+  	<td>Drop down widget beside the 'Difficulty Selector'. The different types of action strategy available are: 
+      <ul>
+        <li>Incremental - Assumes that queens are placed column by column, starting with an empty board, 
+            and provides queen placing actions for all non-attacked positions of the first free column.</li>
+  	    <li>Complete State -  Assumes exactly one queen in each column and provides all possible queen
+  	        movements in vertical direction as actions.</li>    
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Action Strategy Selector'. The different types of search strategy available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">Depth Limited Search</a></li>    
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">Simulated Annealing</a></li>  	    
+      </ul>
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the n-queens problem.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-TicTacToeApp.jnlp"><img src="images/tictactoeapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-TicTacToeApp.jnlp">Tic-Tac-Toe Demo</a> - A demonstration of the Minimax and Alpha-Beta adversarial search 
+  algorithms as described in chapter 5 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, using the tic-tac-toe game as
+  an example. You can choose to play the game yourself by selecting board positions or have the Agent propose moves.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Algorithm Selector</td>
+  	<td>Top left drop down widget. Used to select the adversarial search algorithm to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java">Minimax</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java">Alpha-Beta</a></li>	
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/IterativeDeepeningAlphaBetaSearch.java">Iterative Deepening Alpha-Beta</a></li>    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top left button widget. Used to clear the board.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Propose Move</td>
+  	<td>Top right button widget. Used to request the Agent make a move based on the current board state and selected search algorithm.</td>
+  </tr>
+  </table> 
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-ConnectFourApp.jnlp"><img src="images/connectfourapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-ConnectFourApp.jnlp">Connect Four Demo</a> - A demonstration of the Minimax and Alpha-Beta adversarial search 
+  algorithms as described in chapter 5 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>, using the Connect Four game as
+  an example (much larger search space than Tic-Tac-Toe). You can choose to play the game yourself by selecting board positions or 
+  have the Agent propose moves.
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Algorithm Selector</td>
+  	<td>Top left drop down widget. Used to select the adversarial search algorithm to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java">Minimax</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java">Alpha-Beta</a></li>	
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/IterativeDeepeningAlphaBetaSearch.java">Iterative Deepening Alpha-Beta</a></li>    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Search Duration</td>
+  	<td>Top right drop down widget. Sets a limit in seconds (5, 10, 15, or 20) for how long to search for a best proposed move.
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top left button widget. Used to clear the board.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Propose Move</td>
+  	<td>Top right button widget. Used to request the Agent make a move based on the current board state and selected search algorithm.</td>
+  </tr>
+  </table> 
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aima-gui-MapColoringApp.jnlp"><img src="images/mapcoloringapp.png" /></a></td>
+  <td valign="top">
+  <a href="aima-gui-MapColoringApp.jnlp">Map Coloring CSP Demo</a> - Application which demonstrates basic constraint algorithms based on map
+  coloring problems, as described in chapter 6 of <a href="http://aima.cs.berkeley.edu/">AIMA3e</a>. It shows the constraint graph, lets the 
+  user select a solution strategy, and allows them to follow the progress step by step. 
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+    <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the map and constraints to solve. 
+  	</td>
+  </tr>
+  <tr>
+  	<td valign="top">Solution Strategy Selector</td>
+  	<td>Top left drop down widget beside the 'Scenario Selector'. Used to select the solution strategy to use. 
+  	  <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java">BacktrackingStrategy</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java">MinConflictsStrategy</a></li>	    
+      </ul>
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear prior solutions and the output log (text area on the right hand side of the application).
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to reset the problem and to set things up in preparation to be solved.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to solve the CSP.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table> 
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <th align="left"></th>
+  <th align="left"><a href="http://code.google.com/p/aima-java/"><img src="images/osm_logo.jpg" align="middle" /></a> AIMAX-OSM (<a href="http://www.openstreetmap.org/">Open Street Map</a>) Applications</th>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aimax-osm-OsmSearchDemoAgentApp.jnlp"><img src="images/osmsearchdemoagentapp.png" /></a></td>
+  <td valign="top"><a href="aimax-osm-OsmSearchDemoAgentApp.jnlp">OSM Agent Search Demo</a> - This application demonstrates how different search strategies explore a complex search space. This is similar
+  to the AIMA-GUI <a href="#route_finding_agent">'Route Finding Agent'</a> application with the exception that it is using realistic map data to construct its environment, which has been obtained from 
+  the <a href="http://www.openstreetmap.org/">Open Street Map</a> repository. In addition, online as opposed to just offline search is supported. 
+  Clicking anywhere on the map will place a numbered marker/pin on the map indicating a point on the route the agent is to visit.
+  A minimum of two markers are required before the agent can calculate its route (i.e. a start and end location).
+  <a name="osmsearchsemoagentapp_navigation" />The following navigation and map control elements are available:
+  <table border="0">
+  <tr>
+  	<th align="left">Command</th>
+  	<th align="left">How To</th>
+  </tr>
+  <tr>
+  	<td valign="top">Pan Left,Right,Up, and Down</td>
+  	<td>Arrow keys. Mouse left click held down and drag.</td>
+  </tr>
+  <tr>
+  	<td valign="top">Zoom In</td>
+  	<td>Space bar. + key. Mouse scroll wheel.</td>
+  </tr>
+  <tr>
+  	<td valign="top">Zoom Out</td>
+  	<td>Ctrl+Space Bar. - key. Mouse scroll wheel.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Increase Symbol and Font Size</td>
+  	<td>Ctrl+'+ key'.</td>
+  </tr>  
+  <tr>
+  	<td valign="top">Decrease Symbol and Font Size</td>
+  	<td>Ctrl+'- key'.</td>
+  </tr>   
+  <tr>
+  	<td valign="top">Context Sensitive Command Menu</td>
+  	<td>Mouse right click. This will bring up a menu with the following options:
+  	<ul>
+  	  <li>Info: Will provide map entity information for the current mouse location on the map.</li>
+  	  <li>Mark: You may remove the currently selected Mark. Load previously saved marks or Save the current set of Marks on the map.</li>
+  	  <li>Clear M&T: Clear all the mark and track information (i.e. if the Agent has calculated a route) on the map.</li>
+  	  <li>Debug: Provides more visual feedback to help with debugging/tracing calculated routes.</li>
+  	<ul>
+  	</td>
+  </tr> 
+  </table>
+  In addition, the general widget controls are:
+  <table border="0">
+  <tr>
+  	<th align="left">Control</th>
+  	<th align="left">Description</th>
+  </tr>
+  <tr>
+  	<td valign="top">Scenario Selector</td>
+  	<td>Top left drop down widget. Used to select the mode of transportation being used by the Agent. 
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Agent Selector</td>
+  	<td>Drop down widget beside the 'Scenario Selector'. Used to select between an Offline Agent (i.e. it calculates the full route
+  	before moving along it) or an <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java">Online search agent</a>, 
+  	which incrementally calculates its route as it moves through its environment. 
+   	</td>
+   </tr> 
+   <tr>
+  	<td valign="top">Search Strategy Selector</td>
+  	<td>Drop down widget beside the 'Agent Selector'. The different types of search strategy available for offline search are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">Depth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">Breadth First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">Iterative Deepening</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">Uniform Cost</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">Greedy Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">A*</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">Recursive Best First</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">Hill Climbing</a></li>
+      </ul>
+  	</td>
+  </tr> 
+   <tr>
+  	<td valign="top">Search Mode Selector</td>
+  	<td>Drop down widget beside the 'Search Strategy Selector'. The different types of search mode available are: 
+      <ul>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">Tree Search</a></li>
+  	    <li><a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">Graph Search</a></li>
+      </ul>
+      These are applicable to configuring the general mechanism used by several of the Search Algorithms when traversing their
+      search spaces.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Heuristic Selector</td>
+  	<td>Drop down widget beside the 'Search Mode Selector'. To select a <a href="http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/HeuristicFunction.java">heuristic function</a>
+  	to be used by the selected search algorithm, if applicable (e.g. A*). 'H1=0' is equivalent to using no heuristic. 'H2=(sld to goal)' uses the Straight Line Distance (SLD) to the goal as the heuristic function. 
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Clear</td>
+  	<td>Top right button widget. Used to clear the output log (text area on the right hand side of the application) 
+  	    and reset the agent and its environment if necessary.
+  	</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Prepare</td>
+  	<td>Top right button widget. Used to place the Agent back at its start location.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Run</td>
+  	<td>Top right button widget. Used to tell the Agent to calculate the route between the specified start and end location, and to traverse it.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Step</td>
+  	<td>Top right button widget. Allows you to step the Agent one action at a time through achieving its goal.</td>
+  </tr> 
+  <tr>
+  	<td valign="top">Pause</td>
+  	<td>Top right button widget. Allows you to pause the Agent if you selected 'Run' and wish to inspect its current output log.</td>
+  </tr> 
+    <tr>
+  	<td valign="top">Cancel</td>
+  	<td>Bottom right button widget. Will cancel the current Agent's running execution.</td>
+  </tr> 
+  </table>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aimax-osm-MiniNaviApp.jnlp"><img src="images/mininaviapp.png" /></a></td>
+  <td valign="top"><a href="aimax-osm-MiniNaviApp.jnlp">Mini Navigation App</a> - A little demo application which shows map information and provides routing functionality. It uses similar navigation controls as the <a href="#osmsearchsemoagentapp_navigation">OSM Agent Search Demo</a>. Different OSM maps can be loaded from file. By setting several markers, complete tours can be planned. Routing runs in background and can be canceled. Also straight line distances can be obtained by 2x ctrl-mouse-left. The GPS selector supports loading NEMEA data from file. The option to connect to a GPS directly is disabled because an additional (native) serial port libraray is needed for that. See gps sub-package documentation for details.  
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><hr /></td>
+</tr>
+<tr>
+  <td width="20%" align="center" valign="top"><a href="aimax-osm-OsmViewerPlusApp.jnlp"><img src="images/osmviewerplusapp.png" /></a></td>
+  <td valign="top"><a href="aimax-osm-OsmViewerPlusApp.jnlp">OSM Map Viewer Plus</a> - Adds a night view mode to the map viewer. Used to demonstrate how the Map Viewer can be 
+  	  easily extended. Uses similar navigation controls as the <a href="#osmsearchsemoagentapp_navigation">OSM Agent Search Demo</a>.
+  </td>
+</tr>
+</table>
+<div style="border:1px solid black;background-color: #f0ecd8">
+<br />
+<div>
+</body>
+</html> 
