@@ -17,9 +17,9 @@ public class Rule {
 	/**
 	 * Constructs a condition-action rule.
 	 * 
-	 * @param aCon
+	 * @param con
 	 *            a condition
-	 * @param anAction
+	 * @param action
 	 *            an action
 	 */
 	public Rule(Condition con, Action action) {

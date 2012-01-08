@@ -58,7 +58,7 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 	/**
 	 * Set the agent's current conception of the world state.
 	 * 
-	 * @param aState
+	 * @param state
 	 *            the agent's current conception of the world state.
 	 */
 	public void setState(DynamicState state) {
@@ -69,7 +69,7 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 	 * Set the program's description of how the next state depends on the state
 	 * and action.
 	 * 
-	 * @param aModel
+	 * @param model
 	 *            a description of how the next state depends on the current
 	 *            state and action.
 	 */
@@ -80,7 +80,7 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 	/**
 	 * Set the program's condition-action rules
 	 * 
-	 * @param aRuleSet
+	 * @param ruleSet
 	 *            a set of condition-action rules
 	 */
 	public void setRules(Set<Rule> ruleSet) {
