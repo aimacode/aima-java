@@ -1,5 +1,6 @@
 package aima.gui.framework;
 
+
 /**
  * In this framework a graphical agent application consists at least of three
  * parts: An {@link AgentAppEnvironmentView}, an {@link AgentAppFrame}, and an
@@ -7,8 +8,8 @@ package aima.gui.framework;
  * that no support for model creation is included here. Environments are used as
  * models and may depend on current selector settings. So typically, the
  * controller will be responsible for creating them (in method
- * {@link AgentAppController#prepare(String)}) and making the view know them
- * (by calling method
+ * {@link AgentAppController#prepare(String)}) and making the view know them (by
+ * calling method
  * {@link AgentAppEnvironmentView#setEnvironment(aima.core.agent.Environment)}).
  * <p>
  * The easiest way to create a new graphical agent application is to create
