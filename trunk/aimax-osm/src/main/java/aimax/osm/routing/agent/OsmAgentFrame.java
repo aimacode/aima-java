@@ -31,5 +31,6 @@ public class OsmAgentFrame extends MapAgentFrame {
 				.getSearchModeNames(), 1); // change the default!
 		setSelectorItems(HEURISTIC_SEL, new String[] { "=0",
 				"SLD" }, 1);
+		getMessageLogger().setLogLater(true);
 	}
 }

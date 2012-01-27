@@ -5,13 +5,13 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 This project provides a framework for building intelligent Open Street Map
 (OSM) data applications. It was originally designed to validate and test agent
 and search concepts from the AIMA library in an interesting, non-trivial
-application area. Meanwhile, it provides a complete framework for building
+application area. Meanwhile, it provides a framework for building small
 navigation systems.
 
 The framework provides interfaces for central parts of the system and additionally
-example implementations. In the current version, even the fundamental data structures
-for nodes, ways and the map itself can be replaced. The framework supports experiments
-with different implementations to optimize rooting and also to integrate a database
+example implementations. In the current version, the fundamental data structures
+for nodes, ways, and the map itself can be replaced. The framework supports experiments
+with different implementations to optimize routing and also to integrate a database
 version of the map representation. The application <code>aimax.osm.applications.MiniNaviApp</code>
 demonstrates how to plug the components together and provides means to integrate and test
 own versions of the needed components.
