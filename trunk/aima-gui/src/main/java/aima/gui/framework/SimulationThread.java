@@ -1,6 +1,6 @@
 package aima.gui.framework;
 
-import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
 
 import aima.core.util.CancelableThread;
 
@@ -47,7 +47,7 @@ public class SimulationThread extends CancelableThread {
 			e.printStackTrace(); // for debugging
 		}
 		try {
-			SwingUtilities.invokeLater(new Runnable() {
+			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					controller.update(SimulationThread.this);
 					frame.setSimulationThread(null);
