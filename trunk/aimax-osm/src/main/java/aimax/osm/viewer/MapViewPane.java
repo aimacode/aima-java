@@ -291,7 +291,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	/**
 	 * Shows a graphical representation of the provided map data.
 	 */
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (java.awt.Graphics2D) g;
 		g2.setBackground(renderer.getBackgroundColor());
 		g2.clearRect(0, 0, getWidth(), getHeight());
