@@ -71,8 +71,8 @@ public class MapAgentView extends EmptyEnvironmentView {
 	 * and the track of the first agent.
 	 */
 	@Override
-	public void paint(java.awt.Graphics g) {
-		super.paint(g);
+	public void paintComponent(java.awt.Graphics g) {
+		super.paintComponent(g);
 		if (env != null) {
 			Map map = getMapEnv().getMap();
 			if (!map.getLocations().isEmpty()) {
