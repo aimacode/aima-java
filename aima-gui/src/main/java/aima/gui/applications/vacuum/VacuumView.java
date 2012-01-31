@@ -46,7 +46,7 @@ public class VacuumView extends EmptyEnvironmentView {
 	 * agent as red Pacman.
 	 */
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		List<String> locations = getLocations();
 		adjustTransformation(0, 0, 11 * locations.size() - 1, 10);
 		Graphics2D g2 = (Graphics2D) g;

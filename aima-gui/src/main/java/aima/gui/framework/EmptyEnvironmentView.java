@@ -13,7 +13,7 @@ import aima.core.util.datastructure.Point2D;
  * transformation features. The transformation features allow to scale
  * and translate 2D world coordinates into view coordinates. When creating
  * subclasses, it should normally be sufficient to override the method
- * {@link #paint(java.awt.Graphics)}.
+ * {@link #paintComponent(java.awt.Graphics)}.
  * 
  * @author Ruediger Lunde
  */
@@ -109,7 +109,7 @@ public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 	 * Override this dummy implementation to get a useful view of the agent!
 	 */
 	@Override
-	public void paint(java.awt.Graphics g) {
+	public void paintComponent(java.awt.Graphics g) {
 		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 		g2.setBackground(Color.white);
 		g2.clearRect(0, 0, getWidth(), getHeight());

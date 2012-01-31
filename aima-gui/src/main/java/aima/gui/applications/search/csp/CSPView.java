@@ -68,7 +68,7 @@ public class CSPView extends EmptyEnvironmentView {
 	}
 	
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		int maxX = 1;
 		int maxY = 1;
 		for (int[] pos : positionMapping.values()) {
