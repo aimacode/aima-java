@@ -17,9 +17,10 @@ public class PrioritySearch implements Search {
 	public PrioritySearch(QueueSearch search, Comparator<Node> comparator) {
 		this.search = search;
 		this.comparator = comparator;
-		if (search instanceof GraphSearch)
+		if (search instanceof GraphSearch) {
 			((GraphSearch) search)
 					.setReplaceFrontierNodeAtStateCostFunction(comparator);
+		}
 	}
 	
 	public List<Action> search(Problem p) throws Exception {

@@ -87,9 +87,10 @@ public class GraphSearch extends QueueSearch {
 			Node frontierNode = frontierState.get(cfn.getState());
 			boolean yesAddToFrontier = false;
 			if (null == frontierNode) {
-				if (!explored.contains(cfn.getState()))
+				if (!explored.contains(cfn.getState())) {
 					// child.STATE is not in frontier and not yet explored
 					yesAddToFrontier = true;
+				}
 			} else if (null != replaceFrontierNodeAtStateCostFunction
 					&& replaceFrontierNodeAtStateCostFunction.compare(cfn,
 							frontierNode) < 0) {
