@@ -38,33 +38,28 @@ import aima.core.search.framework.QueueSearch;
  * of a priority queue and a hash table.
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
 public class UniformCostSearch extends PrioritySearch {
-	private static final Comparator<Node> _g = new Comparator<Node>() {
-		public int compare(Node node1, Node node2) {
-			return (new Double(node1.getPathCost()).compareTo(new Double(node2
-					.getPathCost())));
-		}
-	};
 
 	public UniformCostSearch() {
 		this(new GraphSearch());
 	}
 
 	public UniformCostSearch(QueueSearch search) {
-		this.search = search;
-		if (search instanceof GraphSearch) {
+		super(search, createPathCostComparator());
+		if (search instanceof GraphSearch)
 			((GraphSearch) search)
-					.setReplaceFrontierNodeAtStateCostFunction(_g);
-		}
+					.setReplaceFrontierNodeAtStateCostFunction(comparator);
 	}
-
-	//
-	// PROTECTED METHODS
-	//
-	@Override
-	protected Comparator<Node> getComparator() {
-		return _g;
+	
+	private static Comparator<Node> createPathCostComparator() {
+		return new Comparator<Node>() {
+			public int compare(Node node1, Node node2) {
+				return (new Double(node1.getPathCost()).compareTo(new Double(node2
+						.getPathCost())));
+			}
+		};
 	}
 }

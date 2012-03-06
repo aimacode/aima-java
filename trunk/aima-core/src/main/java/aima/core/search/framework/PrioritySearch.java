@@ -8,21 +8,22 @@ import aima.core.util.datastructure.PriorityQueue;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ruediger Lunde
  */
 public abstract class PrioritySearch implements Search {
-	protected QueueSearch search;
+	private final QueueSearch search;
+	protected final Comparator<Node> comparator;
 
+	protected PrioritySearch(QueueSearch search, Comparator<Node> comparator) {
+		this.search = search;
+		this.comparator = comparator;
+	}
+	
 	public List<Action> search(Problem p) throws Exception {
-		return search.search(p, new PriorityQueue<Node>(5, getComparator()));
+		return search.search(p, new PriorityQueue<Node>(5, comparator));
 	}
 
 	public Metrics getMetrics() {
 		return search.getMetrics();
 	}
-
-	//
-	// PROTECTED METHODS
-	//
-	protected abstract Comparator<Node> getComparator();
 }
