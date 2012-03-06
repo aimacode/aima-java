@@ -3,7 +3,6 @@ package aima.core.search.informed;
 import java.util.Comparator;
 
 import aima.core.search.framework.EvaluationFunction;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.QueueSearch;
@@ -37,9 +36,6 @@ public class BestFirstSearch extends PrioritySearch {
 	 */
 	public BestFirstSearch(QueueSearch search, EvaluationFunction ef) {
 		super(search, createComparator(ef));
-		if (search instanceof GraphSearch)
-			((GraphSearch) search)
-					.setReplaceFrontierNodeAtStateCostFunction(comparator);
 	}
 
 	private static Comparator<Node> createComparator(final EvaluationFunction ef) {

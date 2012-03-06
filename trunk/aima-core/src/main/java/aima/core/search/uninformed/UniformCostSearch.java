@@ -49,9 +49,6 @@ public class UniformCostSearch extends PrioritySearch {
 
 	public UniformCostSearch(QueueSearch search) {
 		super(search, createPathCostComparator());
-		if (search instanceof GraphSearch)
-			((GraphSearch) search)
-					.setReplaceFrontierNodeAtStateCostFunction(comparator);
 	}
 	
 	private static Comparator<Node> createPathCostComparator() {

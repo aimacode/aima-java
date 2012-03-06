@@ -10,13 +10,16 @@ import aima.core.util.datastructure.PriorityQueue;
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
-public abstract class PrioritySearch implements Search {
+public class PrioritySearch implements Search {
 	private final QueueSearch search;
-	protected final Comparator<Node> comparator;
+	private final Comparator<Node> comparator;
 
-	protected PrioritySearch(QueueSearch search, Comparator<Node> comparator) {
+	public PrioritySearch(QueueSearch search, Comparator<Node> comparator) {
 		this.search = search;
 		this.comparator = comparator;
+		if (search instanceof GraphSearch)
+			((GraphSearch) search)
+					.setReplaceFrontierNodeAtStateCostFunction(comparator);
 	}
 	
 	public List<Action> search(Problem p) throws Exception {
