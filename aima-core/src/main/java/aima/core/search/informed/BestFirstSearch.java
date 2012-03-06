@@ -20,10 +20,9 @@ import aima.core.search.framework.QueueSearch;
  * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class BestFirstSearch extends PrioritySearch {
-
-	private final EvaluationFunction evaluationFunction;
 
 	/**
 	 * Constructs a best first search from a specified search problem and
@@ -37,29 +36,19 @@ public class BestFirstSearch extends PrioritySearch {
 	 *            node
 	 */
 	public BestFirstSearch(QueueSearch search, EvaluationFunction ef) {
-		this.search = search;
-		evaluationFunction = ef;
+		super(search, createComparator(ef));
+		if (search instanceof GraphSearch)
+			((GraphSearch) search)
+					.setReplaceFrontierNodeAtStateCostFunction(comparator);
 	}
 
-	//
-	// PROTECTED METHODS
-	//
-	@Override
-	protected Comparator<Node> getComparator() {
-		Comparator<Node> f = new Comparator<Node>() {
+	private static Comparator<Node> createComparator(final EvaluationFunction ef) {
+		return new Comparator<Node>() {
 			public int compare(Node n1, Node n2) {
-				Double f1 = evaluationFunction.f(n1);
-				Double f2 = evaluationFunction.f(n2);
-
+				Double f1 = ef.f(n1);
+				Double f2 = ef.f(n2);
 				return f1.compareTo(f2);
 			}
 		};
-
-		if (this.search instanceof GraphSearch) {
-			((GraphSearch) this.search)
-					.setReplaceFrontierNodeAtStateCostFunction(f);
-		}
-
-		return f;
 	}
 }
