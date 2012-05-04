@@ -1,0 +1,120 @@
+
+<!-- saved from url=(0036)http://aima.cs.berkeley.edu/CSS.html -->
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD><BODY>
+BODY { background:#fff }
+STRONG {color:#1060f0 font-family:"sans-serif" font-size:80%}
+HR, H1, H2, H3 { color:#1060f0 }
+H1 { font-size:200%; line-height:140% }
+TABLE { valign:top; cellspacing:0; cellpadding:0 }
+
+.bluebox, .bluebox TD, .bluebox TR {color:#1060f0; cellpadding:2; border: solid #1060f0}
+.bluebox TD  { color:#1060f0;	cellpadding:4}
+
+.side, .side TD { color:#1060f0;  white-space:nowrap; font-size:80% 
+	background-color:#ccffcc; border:solid thin #1060f0; cellpadding:4}
+
+.big {font-size:200%;}
+
+.tagcloudbackground { padding: 3px; border: solid 1px #eee; background: #f0ffff; }
+.tagcloud { padding: 3px; text-decoration: none; }
+.tagcloud:link  { color: #1060f0; }
+.tagcloud:visited { color: #1060f0; }
+.tagcloud:hover { color: #f0ffff; background: #1060f0; }
+.tagcloud:active { color: #f0ffff; background: #1060f0; }
+
+#container
+{
+width: 100%;
+margin: 1px auto;
+background-color: #fff;
+color: #333;
+border: 1px solid gray;
+line-height: 130%;
+}
+
+#top
+{
+padding: .2em 0em .2em .5em;
+margin-left: 150px;
+margin-top: .45em;
+margin-right: .45em;
+background-color: #f0ecd8;
+border: 1px solid gray;
+min-width: 20em;
+max-width: 55em;
+}
+
+#top h1
+{
+padding: 0;
+margin: 0;
+}
+
+#leftnav
+{
+float: left;
+width: 140px;
+margin: 0;
+padding: .4em;
+}
+
+#content
+{
+margin-left: 150px;
+margin-right: 0px;
+padding: .5em;
+min-width: 20em;
+max-width: 55em;
+}
+
+
+#footer
+{
+clear: both;
+margin: 0;
+padding: .7em;
+margin: .45em;
+color: #333;
+background-color: #f0ecd8;
+border: 1px solid gray;
+min-width: 29em;
+max-width: 63em;
+}
+
+#leftnav p { margin: 0 0 .1em 0; }
+#content h222 { margin: 0 0 .1em 0; }
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+#blueblock{
+width: 134px;
+border-right: 1px solid #000;
+padding: 0 0 0em 0;
+font-family: 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif;
+font-size: 90%;
+background-color: #1060f0;
+color: #333;
+}
+
+#blueblock ul{list-style: none; margin: 0; padding: 0; border: none; }
+
+#blueblock li {border-bottom: 1px solid #90bade; margin: 0; }
+
+#blueblock li a{display: block; padding: 5px 5px 5px 8px; border-left: 10px solid #1958b7;
+background-color: #2175bc;
+color: #fff;
+text-decoration: none;
+width: 100%;
+}
+
+#blueblock li a{ width: auto; }
+
+#blueblock li a:hover{
+border-left: 10px solid #1c64d1;
+background-color: #2586d7;
+color: #fff;
+}
+
+
+</BODY></HTML>
