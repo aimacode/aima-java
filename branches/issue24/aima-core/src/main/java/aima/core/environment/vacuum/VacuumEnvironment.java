@@ -98,7 +98,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		String agentLocation = envState.getAgentLocation(anAgent);
-		return new VacuumEnvPercept(agentLocation,
+		return new VacuumEnvironmentPercept(agentLocation,
 				envState.getLocationState(agentLocation));
 	}
 
