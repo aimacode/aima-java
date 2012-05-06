@@ -56,7 +56,7 @@ public class AndOrSearch {
     public Plan search(NondeterministicProblem problem) throws Exception {
         this.expandedNodes = 0;
         // OR-SEARCH(problem.INITIAL-STATE, problem, [])
-        return this.or_search(problem.getInitialState(), problem, new Path());
+        return this.orSearch(problem.getInitialState(), problem, new Path());
     }
 
     /**
@@ -78,7 +78,7 @@ public class AndOrSearch {
      * @param path
      * @return
      */
-    public Plan or_search(Object state, NondeterministicProblem problem, Path path) {
+    public Plan orSearch(Object state, NondeterministicProblem problem, Path path) {
         // do metrics
         this.expandedNodes++;
         // if problem.GOAL-TEST(state) then return the empty plan
@@ -92,7 +92,7 @@ public class AndOrSearch {
         // for each action in problem.ACTIONS(state) do
         for (Action action : problem.getActionsFunction().actions(state)) {
             // plan = AND-SEARCH(RESULTS(state, action), problem, [state|path])
-            Plan plan = this.and_search(problem.getResultsFunction().results(state, action), problem, path.prepend(state));
+            Plan plan = this.andSearch(problem.getResultsFunction().results(state, action), problem, path.prepend(state));
             // if plan != failure then return [action|plan]
             if (plan != null) {
                 return plan.prepend(action);
@@ -119,7 +119,7 @@ public class AndOrSearch {
      * @param path
      * @return
      */
-    public Plan and_search(Set<Object> states, NondeterministicProblem problem, Path path) {
+    public Plan andSearch(Set<Object> states, NondeterministicProblem problem, Path path) {
         // do metrics, setup
         this.expandedNodes++;
         Object[] _states = states.toArray();
@@ -127,7 +127,7 @@ public class AndOrSearch {
         // for each s_i in states do
         for (int i = 0; i < _states.length; i++) {
             // plan_i = OR-SEARCH(s_i, problem, path)
-            plans[i] = this.or_search(_states[i], problem, path);
+            plans[i] = this.orSearch(_states[i], problem, path);
             // if plan_i == failure then return failure
             if (plans[i] == null) {
                 return null;
