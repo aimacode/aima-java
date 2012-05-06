@@ -4,8 +4,9 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.nondeterministic.IfThenElse;
+import aima.core.search.nondeterministic.IfThen;
 import aima.core.search.nondeterministic.Plan;
+import java.util.LinkedList;
 
 /**
  * This agent traverses the NondeterministicVacuumEnvironment using a
@@ -17,6 +18,7 @@ public class NondeterministicVacuumAgent implements Agent {
 
     boolean alive = true;
     Plan contingencyPlan;
+    LinkedList<Object> stack = new LinkedList<Object>();
 
     /**
      * Execute an action from the contingency plan
@@ -26,36 +28,47 @@ public class NondeterministicVacuumAgent implements Agent {
      */
     @Override
     public Action execute(Percept percept) {
-        if (this.getContingencyPlan().size() < 1) {
+        // check if goal state
+        NondeterministicVacuumEnvironmentPercept p = (NondeterministicVacuumEnvironmentPercept) percept;
+        VacuumEnvironment.LocationState clean = VacuumEnvironment.LocationState.Clean;
+        if (p.getState().getLocationState(VacuumEnvironment.LOCATION_A) == clean
+                && p.getState().getLocationState(VacuumEnvironment.LOCATION_B) == clean) {
             return NoOpAction.NO_OP;
         }
-        Object currentStep = this.getContingencyPlan().removeFirst();
-        // case: next step is an action
-        if (currentStep instanceof Action) {
-            return (Action) currentStep;
-        } // case: next step is another plan
-        else if (currentStep instanceof Plan) {
-            this.setContingencyPlan((Plan) currentStep);
-            return this.execute(percept);
-        } // case: next step is an if-then-else
-        else if (currentStep instanceof IfThenElse) {
-            VacuumEnvironmentPercept p = (VacuumEnvironmentPercept) percept;
-            IfThenElse s = (IfThenElse) currentStep;
-            Object result;
-            do {
-                result = s.queryWith(p);
-            } while (result instanceof IfThenElse);
-            if (result instanceof Action) {
-                return (Action) result;
-            } else if (result instanceof Plan) {
-                this.setContingencyPlan((Plan) result);
-                return this.execute(percept);
+        // check stack size
+        if (this.stack.size() < 1) {
+            if (this.contingencyPlan.size() < 1) {
+                return NoOpAction.NO_OP;
+            } else {
+                this.stack.push(this.getContingencyPlan().removeFirst());
             }
-        } // case: unknown step
-        else {
+        }
+        // pop...
+        Object currentStep = this.stack.peek();
+        // push...
+        if (currentStep instanceof Action) {
+            return (Action) this.stack.pop();
+        } // case: next step is a plan
+        else if (currentStep instanceof Plan) {
+            Plan newPlan = (Plan) currentStep;
+            if (newPlan.size() > 0) {
+                this.stack.push(newPlan.removeFirst());
+            } else {
+                this.stack.pop();
+            }
+            return this.execute(percept);
+        } // case: next step is an if-then
+        else if (currentStep instanceof IfThen) {
+            IfThen conditional = (IfThen) this.stack.pop();
+            this.stack.push(conditional.queryWith(percept));
+            return this.execute(percept);
+        } // case: ignore next step if null 
+        else if (currentStep == null) {
+            this.stack.pop();
+            return this.execute(percept);
+        } else {
             throw new RuntimeException("Unrecognized contingency plan step.");
         }
-        return NoOpAction.NO_OP;
     }
 
     /**

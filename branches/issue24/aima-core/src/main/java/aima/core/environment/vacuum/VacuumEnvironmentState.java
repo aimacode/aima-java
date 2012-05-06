@@ -96,6 +96,10 @@ public class VacuumEnvironmentState implements EnvironmentState {
             VacuumEnvironment.LocationState b = p.getLocationState();
             return a.equals(b);
         }
+        if (o instanceof NondeterministicVacuumEnvironmentPercept) {
+            NondeterministicVacuumEnvironmentPercept p = (NondeterministicVacuumEnvironmentPercept) o;
+            return this.equals(p.getState());
+        }
         else if( o instanceof VacuumEnvironmentState ){
            VacuumEnvironmentState s = (VacuumEnvironmentState) o;
            if( this.state.equals(s.state) && this.agentLocations.equals(s.agentLocations)){

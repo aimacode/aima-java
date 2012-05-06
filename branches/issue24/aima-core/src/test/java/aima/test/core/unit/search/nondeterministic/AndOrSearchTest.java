@@ -10,6 +10,7 @@ import aima.core.search.framework.ActionsFunction;
 import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.StepCostFunction;
 import aima.core.search.nondeterministic.*;
+import aima.test.core.unit.environment.vacuum.EnvironmentViewActionTracker;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Assert;
@@ -22,7 +23,7 @@ import org.junit.Test;
  * (1) cleans the square, (2) cleans both squares, or (3) dirties the square it
  * meant to clean.
  *
- * @author Andrew Brown Brown
+ * @author Andrew Brown
  */
 public class AndOrSearchTest {
 
@@ -133,11 +134,7 @@ public class AndOrSearchTest {
         }
         // execute plan
         this.agent.setContingencyPlan(plan);
-        // StringBuilder sb = new StringBuilder();
-        // this.world.addEnvironmentView(new EnvironmentViewActionTracker(sb));
         this.world.stepUntilDone();
-        // System.out.println("Plan: "+plan);
-        // System.out.println("Actions Taken: "+sb);
         // test
         VacuumEnvironmentState endState = (VacuumEnvironmentState) this.world.getCurrentState();
         VacuumEnvironment.LocationState a = endState.getLocationState(VacuumEnvironment.LOCATION_A);
@@ -146,6 +143,28 @@ public class AndOrSearchTest {
         Assert.assertEquals(VacuumEnvironment.LocationState.Clean, b);
     }
 
+    /**
+     * Show the steps taken to clean the NondeterministicVacuumWorld
+     */
+    @Test
+    public void showSearchPath() {
+        AndOrSearch s = new AndOrSearch();
+        Plan plan = null;
+        try {
+            plan = s.search(this.problem);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        // execute and show plan
+        this.agent.setContingencyPlan(plan);
+        System.out.println("Initial Plan: " + this.agent.getContingencyPlan());
+        StringBuilder sb = new StringBuilder();
+        this.world.addEnvironmentView(new EnvironmentViewActionTracker(sb));
+        this.world.stepUntilDone();
+        System.out.println("Remaining Plan: " + this.agent.getContingencyPlan());
+        System.out.println("Actions Taken: " + sb);
+        System.out.println("Final State: " + this.world.getCurrentState());
+    }
 }
 
 /**
@@ -177,7 +196,7 @@ class VacuumWorldActions implements ActionsFunction {
 /**
  * Returns possible results
  *
- * @author Andrew Brown Brown
+ * @author Andrew Brown
  */
 class VacuumWorldResults implements ResultsFunction {
 
@@ -206,20 +225,22 @@ class VacuumWorldResults implements ResultsFunction {
         Set<Object> results = new HashSet<Object>();
         String current_location = state.getAgentLocation(agent);
         String adjacent_location = (current_location.equals(VacuumEnvironment.LOCATION_A)) ? VacuumEnvironment.LOCATION_B : VacuumEnvironment.LOCATION_A;
-        //
+        // case: move right
         if (VacuumEnvironment.ACTION_MOVE_RIGHT == action) {
             VacuumEnvironmentState s = new VacuumEnvironmentState();
             s.setLocationState(current_location, state.getLocationState(current_location));
             s.setLocationState(adjacent_location, state.getLocationState(adjacent_location));
             s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
             results.add(s);
-        } else if (VacuumEnvironment.ACTION_MOVE_LEFT == action) {
+        } // case: move left
+        else if (VacuumEnvironment.ACTION_MOVE_LEFT == action) {
             VacuumEnvironmentState s = new VacuumEnvironmentState();
             s.setLocationState(current_location, state.getLocationState(current_location));
             s.setLocationState(adjacent_location, state.getLocationState(adjacent_location));
-            s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
+            s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
             results.add(s);
-        } else if (VacuumEnvironment.ACTION_SUCK == action) {
+        } // case: suck
+        else if (VacuumEnvironment.ACTION_SUCK == action) {
             // case: square is dirty
             if (VacuumEnvironment.LocationState.Dirty == state.getLocationState(state.getAgentLocation(this.agent))) {
                 // always clean current
@@ -252,7 +273,6 @@ class VacuumWorldResults implements ResultsFunction {
         } else if (action.isNoOp()) {
             // do nothing
         }
-
         return results;
     }
 }
@@ -260,7 +280,7 @@ class VacuumWorldResults implements ResultsFunction {
 /**
  * Tests for goals states
  *
- * @author Andrew Brown Brown
+ * @author Andrew Brown
  */
 class VacuumWorldGoalTest implements GoalTest {
 
@@ -301,7 +321,7 @@ class VacuumWorldGoalTest implements GoalTest {
 /**
  * Measures step cost
  *
- * @author Andrew Brown Brown
+ * @author Andrew Brown
  */
 class VacuumWorldStepCost implements StepCostFunction {
 

@@ -1,21 +1,20 @@
 package aima.core.search.nondeterministic;
 
 /**
- * Represents an if-then-else statement for use with AND-OR search; explanation
- * given on page 135.
+ * Represents an if-then statement for use with AND-OR search; explanation given
+ * on page 135.
  *
  * @author Andrew Brown
  */
-public class IfThenElse {
+public class IfThen {
 
     Object antecedent;
-    Object thenConsequent;
-    Object elseConsequent;
+    Object consequent;
 
     /**
      * Empty constructor
      */
-    public IfThenElse() {
+    public IfThen() {
     }
 
     /**
@@ -24,22 +23,9 @@ public class IfThenElse {
      * @param antecedent
      * @param thenConsequent
      */
-    public IfThenElse(Object antecedent, Object thenConsequent) {
+    public IfThen(Object antecedent, Object thenConsequent) {
         this.antecedent = antecedent;
-        this.thenConsequent = thenConsequent;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param antecedent
-     * @param thenConsequent
-     * @param elseConsequent
-     */
-    public IfThenElse(Object antecedent, Object thenConsequent, Object elseConsequent) {
-        this.antecedent = antecedent;
-        this.thenConsequent = thenConsequent;
-        this.elseConsequent = elseConsequent;
+        this.consequent = thenConsequent;
     }
 
     /**
@@ -50,9 +36,9 @@ public class IfThenElse {
      */
     public Object queryWith(Object query) {
         if (this.antecedent.equals(query)) {
-            return this.thenConsequent;
+            return this.consequent;
         } else {
-            return this.elseConsequent;
+            return null;
         }
     }
 
@@ -67,9 +53,7 @@ public class IfThenElse {
         s.append("if ");
         s.append(this.antecedent);
         s.append(" then ");
-        s.append(this.thenConsequent);
-        s.append(" else ");
-        s.append(this.elseConsequent);
+        s.append(this.consequent);
         return s.toString();
     }
 }

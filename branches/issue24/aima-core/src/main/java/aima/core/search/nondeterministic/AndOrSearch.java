@@ -91,7 +91,7 @@ public class AndOrSearch {
         }
         // for each action in problem.ACTIONS(state) do
         for (Action action : problem.getActionsFunction().actions(state)) {
-            // plan = AND-SEARCH(REQSULTS(state, action), problem, [state|path])
+            // plan = AND-SEARCH(RESULTS(state, action), problem, [state|path])
             Plan plan = this.and_search(problem.getResultsFunction().results(state, action), problem, path.prepend(state));
             // if plan != failure then return [action|plan]
             if (plan != null) {
@@ -135,21 +135,11 @@ public class AndOrSearch {
         }
         //return [if s_1 then plan_1 else ... if s_n-1 then plan_n-1 else plan_n]
         Plan plan = new Plan();
-        IfThenElse ifThenElse_i, ifThenElse_j;
         if (plans.length > 0) {
-            // case: first if-then
-            ifThenElse_i = new IfThenElse(_states[0], plans[0], new Plan());
-            plan.add(ifThenElse_i);
-            if (plans.length > 1) {
-                // case: intervening if-thens
-                for (int i = 1; i < plans.length - 1; i++) {
-                    ifThenElse_j = new IfThenElse(_states[i], plans[i]);
-                    ifThenElse_i.elseConsequent = ifThenElse_j;
-                    ifThenElse_i = ifThenElse_j;
-                }
-                // case: last if-then
-                ifThenElse_i.elseConsequent = plans[plans.length - 1];
+            for (int i = 0; i < plans.length - 1; i++) {
+                plan.append(new IfThen(_states[i], plans[i]));
             }
+            plan.append(plans[plans.length - 1]);
         }
         return plan;
     }

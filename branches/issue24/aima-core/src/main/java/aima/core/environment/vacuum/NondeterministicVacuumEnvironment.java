@@ -3,6 +3,7 @@ package aima.core.environment.vacuum;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
+import aima.core.agent.Percept;
 
 /**
  * Create the erratic vacuum world from page 134, AIMAv3. In the erratic vacuum
@@ -73,5 +74,17 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
             isDone = true;
         }
         return envState;
+    }
+
+    /**
+     * The erratic vacuum environment of page 134, AIMAv3 is fully observable so
+     * we return the full environment state.
+     *
+     * @param anAgent
+     * @return
+     */
+    @Override
+    public Percept getPerceptSeenBy(Agent anAgent) {
+        return new NondeterministicVacuumEnvironmentPercept(this.envState);
     }
 }
