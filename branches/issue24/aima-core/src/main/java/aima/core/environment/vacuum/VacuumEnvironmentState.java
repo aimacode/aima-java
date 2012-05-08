@@ -4,7 +4,6 @@ import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Represents a state in the Vacuum World
@@ -80,8 +79,8 @@ public class VacuumEnvironmentState implements EnvironmentState {
 
     /**
      * Tests equality against another VacuumEnvironmentState; necessary for
-     * AND-OR search to work. This also matches percepts, but since a percept 
-     * only describes the agent's current knowledge, this method only compares 
+     * AND-OR search to work. This also matches percepts, but since a percept
+     * only describes the agent's current knowledge, this method only compares
      * what the agent knows with the current environment state.
      *
      * @param o
@@ -99,12 +98,11 @@ public class VacuumEnvironmentState implements EnvironmentState {
         if (o instanceof NondeterministicVacuumEnvironmentPercept) {
             NondeterministicVacuumEnvironmentPercept p = (NondeterministicVacuumEnvironmentPercept) o;
             return this.equals(p.getState());
-        }
-        else if( o instanceof VacuumEnvironmentState ){
-           VacuumEnvironmentState s = (VacuumEnvironmentState) o;
-           if( this.state.equals(s.state) && this.agentLocations.equals(s.agentLocations)){
-               return true;
-           }
+        } else if (o instanceof VacuumEnvironmentState) {
+            VacuumEnvironmentState s = (VacuumEnvironmentState) o;
+            if (this.state.equals(s.state) && this.agentLocations.equals(s.agentLocations)) {
+                return true;
+            }
         }
         return false;
     }
@@ -117,8 +115,8 @@ public class VacuumEnvironmentState implements EnvironmentState {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.state);
-        hash = 41 * hash + Objects.hashCode(this.agentLocations);
+        hash = 53 * hash + (this.state != null ? this.state.hashCode() : 0);
+        hash = 53 * hash + (this.agentLocations != null ? this.agentLocations.hashCode() : 0);
         return hash;
     }
 

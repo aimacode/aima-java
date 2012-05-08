@@ -17,7 +17,7 @@ public class Plan extends LinkedList<Object> {
     /**
      * Each step is an IfThenElse construct or another plan
      */
-    LinkedList<Object> steps = new LinkedList<>();
+    LinkedList<Object> steps = new LinkedList<Object>();
 
     /**
      * Empty constructor
