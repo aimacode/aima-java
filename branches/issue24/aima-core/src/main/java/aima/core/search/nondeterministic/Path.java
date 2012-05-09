@@ -9,8 +9,10 @@ import java.util.LinkedList;
  * @author Andrew Brown
  */
 public class Path extends LinkedList<Object> {
+	
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * Appends multiple steps
      *
      * @param states

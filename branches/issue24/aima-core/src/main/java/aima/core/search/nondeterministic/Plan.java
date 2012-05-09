@@ -13,8 +13,10 @@ import java.util.LinkedList;
  * @author Andrew Brown
  */
 public class Plan extends LinkedList<Object> {
-
-    /**
+	
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * Each step is an IfThenElse construct or another plan
      */
     LinkedList<Object> steps = new LinkedList<Object>();
