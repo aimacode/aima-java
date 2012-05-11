@@ -6,7 +6,7 @@ import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 
 /**
- * Create the erratic vacuum world from page 134, AIMAv3. In the erratic vacuum
+ * Create the erratic vacuum world from page 134, AIMA3e. In the erratic vacuum
  * world, the Suck action works as follows: 1) when applied to a dirty square
  * the action cleans the square and sometimes cleans up dirt in an adjacent
  * square too; 2) when applied to a clean square the action sometimes deposits
@@ -77,7 +77,7 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
     }
 
     /**
-     * The erratic vacuum environment of page 134, AIMAv3 is fully observable so
+     * The erratic vacuum environment of page 134, AIMA3e is fully observable so
      * we return the full environment state.
      *
      * @param anAgent

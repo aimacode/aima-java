@@ -12,6 +12,7 @@ import aima.core.search.framework.StepCostFunction;
 import aima.core.search.nondeterministic.*;
 import aima.test.core.unit.environment.vacuum.EnvironmentViewActionTracker;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import org.junit.Test;
 
 /**
  * Tests the AND-OR search algorithm using the erratic vacuum world of page 133,
- * AIMAv3. In essence, a two-square office is cleaned by a vacuum that randomly
+ * AIMA3e. In essence, a two-square office is cleaned by a vacuum that randomly
  * (1) cleans the square, (2) cleans both squares, or (3) dirties the square it
  * meant to clean.
  *
@@ -77,7 +78,7 @@ public class AndOrSearchTest {
 
     /**
      * Test whether a Path contains() a state; uses state enumeration from page
-     * 134, AIMAv3.
+     * 134, AIMA3e.
      */
     @Test
     public void testPathContains() {
@@ -113,7 +114,7 @@ public class AndOrSearchTest {
         test2.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
         // add to path
         Path path = new Path();
-        path.append(s1, s2, s3, s4);
+        path = path.append(s1, s2, s3, s4);
         // test
         Assert.assertEquals(true, path.contains(test1));
         Assert.assertEquals(false, path.contains(test2));
@@ -222,7 +223,7 @@ class VacuumWorldResults implements ResultsFunction {
     public Set<Object> results(Object _state, Action action) {
         // setup
         VacuumEnvironmentState state = (VacuumEnvironmentState) _state;
-        Set<Object> results = new HashSet<Object>();
+        Set<Object> results = new LinkedHashSet<Object>();
         String current_location = state.getAgentLocation(agent);
         String adjacent_location = (current_location.equals(VacuumEnvironment.LOCATION_A)) ? VacuumEnvironment.LOCATION_B : VacuumEnvironment.LOCATION_A;
         // case: move right

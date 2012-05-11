@@ -115,8 +115,8 @@ public class VacuumEnvironmentState implements EnvironmentState {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + (this.state != null ? this.state.hashCode() : 0);
-        hash = 53 * hash + (this.agentLocations != null ? this.agentLocations.hashCode() : 0);
+        hash += 13 * hash + (this.state != null ? this.state.hashCode() : 0);
+        hash += 53 * hash + (this.agentLocations != null ? this.agentLocations.hashCode() : 0);
         return hash;
     }
 

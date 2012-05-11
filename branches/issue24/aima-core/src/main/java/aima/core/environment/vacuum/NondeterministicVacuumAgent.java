@@ -4,13 +4,13 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.nondeterministic.IfThen;
+import aima.core.search.nondeterministic.IfStateThenPlan;
 import aima.core.search.nondeterministic.Plan;
 import java.util.LinkedList;
 
 /**
  * This agent traverses the NondeterministicVacuumEnvironment using a
- * contingency plan. See page 135, AIMAv3.
+ * contingency plan. See page 135, AIMA3e.
  *
  * @author Andrew Brown
  */
@@ -58,9 +58,9 @@ public class NondeterministicVacuumAgent implements Agent {
             }
             return this.execute(percept);
         } // case: next step is an if-then
-        else if (currentStep instanceof IfThen) {
-            IfThen conditional = (IfThen) this.stack.pop();
-            this.stack.push(conditional.queryWith(percept));
+        else if (currentStep instanceof IfStateThenPlan) {
+            IfStateThenPlan conditional = (IfStateThenPlan) this.stack.pop();
+            this.stack.push(conditional.ifStateMatches(percept));
             return this.execute(percept);
         } // case: ignore next step if null 
         else if (currentStep == null) {
