@@ -19,6 +19,7 @@ import aima.gui.demo.probability.ProbabilityDemo;
 import aima.gui.demo.search.EightPuzzleDemo;
 import aima.gui.demo.search.MapColoringCSPDemo;
 import aima.gui.demo.search.NQueensDemo;
+import aima.gui.demo.search.NondeterministicVacuumEnvironmentDemo;
 import aima.gui.demo.search.TicTacToeDemo;
 
 /**
@@ -44,6 +45,7 @@ public class AimaDemoApp {
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
 		frame.addDemo(MapColoringCSPDemo.class);
+		frame.addDemo(NondeterministicVacuumEnvironmentDemo.class);
 
 		frame.addDemo(TTEntailsDemo.class);
 		frame.addDemo(PLFCEntailsDemo.class);

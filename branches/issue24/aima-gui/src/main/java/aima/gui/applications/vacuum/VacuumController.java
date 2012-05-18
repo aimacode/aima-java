@@ -1,11 +1,19 @@
 package aima.gui.applications.vacuum;
 
 import aima.core.agent.impl.AbstractAgent;
+import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
+import aima.core.environment.vacuum.NondeterministicVacuumAgent;
+import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
 import aima.core.environment.vacuum.ReflexVacuumAgent;
 import aima.core.environment.vacuum.SimpleReflexVacuumAgent;
 import aima.core.environment.vacuum.TableDrivenVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
+import aima.core.environment.vacuum.VacuumWorldActions;
+import aima.core.environment.vacuum.VacuumWorldGoalTest;
+import aima.core.environment.vacuum.VacuumWorldResults;
+import aima.core.search.framework.DefaultStepCostFunction;
+import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppFrame;
 import aima.gui.framework.SimulationThread;
@@ -41,6 +49,9 @@ public class VacuumController extends AgentAppController {
 		case 0:
 			env = new VacuumEnvironment();
 			break;
+		case 1:
+			env = new NondeterministicVacuumEnvironment();
+			break;
 		}
 		agent = null;
 		switch (selState.getValue(VacuumFrame.AGENT_SEL)) {
@@ -56,10 +67,18 @@ public class VacuumController extends AgentAppController {
 		case 3:
 			agent = new ModelBasedReflexVacuumAgent();
 			break;
+		case 4:
+			agent = createNondeterministicVacuumAgent();
+			break;
 		}
 		if (env != null && agent != null) {
 			frame.getEnvView().setEnvironment(env);
 			env.addAgent(agent);
+			if (agent instanceof NondeterministicVacuumAgent) {
+				// Set the problem now for this kind of agent
+		        // set the problem and agent
+		        ((NondeterministicVacuumAgent)agent).setProblem(createNondeterministicProblem());
+			}
 			isPrepared = true;
 		}
 	}
@@ -101,6 +120,28 @@ public class VacuumController extends AgentAppController {
 		} else {
 			frame.setStatus("Task completed.");
 		}
+	}
+	
+	//
+	// PRIVATE METHODS
+	//
+	private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
+		NondeterministicVacuumAgent agent = new NondeterministicVacuumAgent(
+        		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
+        
+        return agent;
+	}
+	
+	private NondeterministicProblem createNondeterministicProblem() {
+		// create problem
+        NondeterministicProblem problem = new NondeterministicProblem(
+                env.getCurrentState(),
+                new VacuumWorldActions(),
+                new VacuumWorldResults(agent),
+                new VacuumWorldGoalTest(agent),
+                new DefaultStepCostFunction());
+        
+        return problem;
 	}
 }
 

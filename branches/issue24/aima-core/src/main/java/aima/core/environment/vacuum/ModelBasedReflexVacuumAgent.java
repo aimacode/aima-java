@@ -36,7 +36,7 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 			protected DynamicState updateState(DynamicState state,
 					Action anAction, Percept percept, Model model) {
 
-				VacuumEnvironmentPercept vep = (VacuumEnvironmentPercept) percept;
+				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
 
 				state.setAttribute(ATTRIBUTE_CURRENT_LOCATION,
 						vep.getAgentLocation());

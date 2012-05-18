@@ -32,7 +32,7 @@ public class ReflexVacuumAgent extends AbstractAgent {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an
 			// action
 			public Action execute(Percept percept) {
-				VacuumEnvironmentPercept vep = (VacuumEnvironmentPercept) percept;
+				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
 
 				// if status = Dirty then return Suck
 				if (VacuumEnvironment.LocationState.Dirty == vep

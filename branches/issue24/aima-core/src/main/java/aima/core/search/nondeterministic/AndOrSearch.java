@@ -66,9 +66,8 @@ public class AndOrSearch {
 	 * 
 	 * @param problem
 	 * @return a conditional plan or null on failure
-	 * @throws Exception
 	 */
-	public Plan search(NondeterministicProblem problem) throws Exception {
+	public Plan search(NondeterministicProblem problem) {
 		this.expandedNodes = 0;
 		// OR-SEARCH(problem.INITIAL-STATE, problem, [])
 		return this.orSearch(problem.getInitialState(), problem, new Path());
