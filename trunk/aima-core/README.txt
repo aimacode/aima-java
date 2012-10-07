@@ -8,8 +8,9 @@
 0.10.5-Chp4-Rewrite : 07 Oct 2012 :<br>
   * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
   * Fixed Issue 73, misplaced tile heuristic function no longer counts the gap.
+  * Fixed Issue 76, QLearning Agent corrected to know which actions are possible in which states.
   * Fixed Issue 77, valid hashCode() method missing on TicTacToeState.
-  * Minor documentation cleanup.
+  * Minor documentation and code cleanup.
  
 = Details =
 
