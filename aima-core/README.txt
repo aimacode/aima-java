@@ -4,14 +4,9 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.4-Chp5-Rewrite ==
-0.10.4-Chp5-Rewrite : 08 Jan 2012 :<br>
-  * Redesigned and re-implemented adversarial search algorithms from Chapter 5.
-  ** Rewrote Minimax-Decision and Alpha-Beta-Search algorithms.
-  ** Redesigned Game interface to more closely reflect that as described in AIMA3e.
-  ** Added Minimax search with alpha-beta pruning and action ordering (IterativeDeepeningAlphaBetaSearch.java).
-  ** Updated environment definitions/classes for Tic-Tac-Toe game.
-  ** Added environment definitions/classes for Connect 4 game.
+== Current Release: 0.10.5-Chp4-Complete ==
+0.10.5-Chp4-Rewrite : 07 Oct 2012 :<br>
+  * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
   * Minor documentation cleanup.
  
 = Details =
@@ -64,7 +59,7 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   4.2 ||     122|| Hill-Climbing                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java HillClimbingSearch]||
 ||   4.5 ||     126|| Simulated-Annealing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
 ||   4.8 ||     129|| Genetic-Algorithm            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java GeneticAlgorithm]||
-||   4.11||     136|| And-Or-Graph-Search          ||---||
+||   4.11||     136|| And-Or-Graph-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java AndOrSearch]||
 ||   4   ||     147|| Online search problem        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java OnlineSearchProblem] ||
 ||   4.21||     150|| Online-DFS-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java OnlineDFSAgent] ||
 ||   4.24||     152|| LRTA`*`-Agent                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java LRTAStarAgent] ||
@@ -249,6 +244,16 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
+
+0.10.4-Chp5-Rewrite : 08 Jan 2012 :<br>
+  * Redesigned and re-implemented adversarial search algorithms from Chapter 5.
+  ** Rewrote Minimax-Decision and Alpha-Beta-Search algorithms.
+  ** Redesigned Game interface to more closely reflect that as described in AIMA3e.
+  ** Added Minimax search with alpha-beta pruning and action ordering (IterativeDeepeningAlphaBetaSearch.java).
+  ** Updated environment definitions/classes for Tic-Tac-Toe game.
+  ** Added environment definitions/classes for Connect 4 game.
+  * Minor documentation cleanup.
+  
 0.10.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
   * Fixed defect in FrequencyCounter when reset.
   

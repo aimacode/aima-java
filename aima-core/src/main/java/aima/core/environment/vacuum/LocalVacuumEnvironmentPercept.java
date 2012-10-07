@@ -1,33 +1,39 @@
 package aima.core.environment.vacuum;
 
+import aima.core.agent.Agent;
 import aima.core.agent.impl.DynamicPercept;
 
 /**
+ * Represents a local percept in the vacuum environment (i.e. details the
+ * agent's location and the state of the square the agent is currently at).
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Andrew Brown
  */
-public class VacuumEnvPercept extends DynamicPercept {
+public class LocalVacuumEnvironmentPercept extends DynamicPercept {
+
 	public static final String ATTRIBUTE_AGENT_LOCATION = "agentLocation";
 	public static final String ATTRIBUTE_STATE = "state";
 
 	/**
-	 * Constructs a vacuum environment percept from the agent's perception of
-	 * the current location and state.
+	 * Construct a vacuum environment percept from the agent's perception of the
+	 * current location and state.
 	 * 
 	 * @param agentLocation
 	 *            the agent's perception of the current location.
 	 * @param state
 	 *            the agent's perception of the current state.
 	 */
-	public VacuumEnvPercept(String agentLocation,
+	public LocalVacuumEnvironmentPercept(String agentLocation,
 			VacuumEnvironment.LocationState state) {
 		setAttribute(ATTRIBUTE_AGENT_LOCATION, agentLocation);
 		setAttribute(ATTRIBUTE_STATE, state);
 	}
 
 	/**
-	 * Returns the agent's perception of the current location, which is either A
+	 * Return the agent's perception of the current location, which is either A
 	 * or B.
 	 * 
 	 * @return the agent's perception of the current location, which is either A
@@ -38,7 +44,7 @@ public class VacuumEnvPercept extends DynamicPercept {
 	}
 
 	/**
-	 * Returns the agent's perception of the current state, which is either
+	 * Return the agent's perception of the current state, which is either
 	 * <em>Clean</em> or <em>Dirty</em>.
 	 * 
 	 * @return the agent's perception of the current state, which is either
@@ -48,15 +54,37 @@ public class VacuumEnvPercept extends DynamicPercept {
 		return (VacuumEnvironment.LocationState) getAttribute(ATTRIBUTE_STATE);
 	}
 
+	/**
+	 * Determine whether this percept matches an environment state
+	 * 
+	 * @param state
+	 * @param agent
+	 * @return
+	 */
+	public boolean matches(VacuumEnvironmentState state, Agent agent) {
+		if (!this.getAgentLocation().equals(state.getAgentLocation(agent))) {
+			return false;
+		}
+		if (!this.getLocationState().equals(
+				state.getLocationState(this.getAgentLocation()))) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Return string representation of this percept.
+	 * 
+	 * @return
+	 */
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-
 		sb.append("[");
 		sb.append(getAgentLocation());
 		sb.append(", ");
 		sb.append(getLocationState());
 		sb.append("]");
-
 		return sb.toString();
 	}
 }

@@ -12,11 +12,9 @@ a starter for all the other applications and demos.
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.7-AIMA-GUI Connect4 Added ==
-1.0.7-AIMA-GUI Connect4 Added : 08 Jan 2012 :<br>
-  * Updated to work with the latest version of aima-core (0.10.4).
-  * Added Connect 4 game, which demonstrates improved adversarial search capabilities of aima-core.
-  * Tic-Tac-Toe command line and gui rewritten to work with improved APIs.
+== Current Release: 1.0.8-AIMA-GUI And Or Search Supported ==
+1.0.8-AIMA-GUI And Or Search Supported : 07 Oct 2012 :<br>
+  * Updated to work with the latest version of aima-core (0.10.5).
   
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -53,6 +51,11 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
+1.0.7-AIMA-GUI Connect4 Added : 08 Jan 2012 :<br>
+  * Updated to work with the latest version of aima-core (0.10.4).
+  * Added Connect 4 game, which demonstrates improved adversarial search capabilities of aima-core.
+  * Tic-Tac-Toe command line and gui rewritten to work with improved APIs.
+  
 1.0.6-AIMA-GUI Updated : 16 Sept 2011 :<br>
   * Updated to work with the latest version of aima-core (0.10.2).
   ** Moved Chapter 21 Demos on Reinforcement Learning to LearningDemo from ProbabilityDemo.
