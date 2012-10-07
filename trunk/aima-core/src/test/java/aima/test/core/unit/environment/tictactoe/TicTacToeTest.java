@@ -34,6 +34,18 @@ public class TicTacToeTest {
 		Assert.assertEquals(9, game.getActions(state).size());
 		Assert.assertEquals(TicTacToeState.X, game.getPlayer(state));
 	}
+	
+	@Test
+	public void testHashCode() {
+		TicTacToeState initialState1 = game.getInitialState();
+		TicTacToeState initialState2 = game.getInitialState();
+		Assert.assertEquals(initialState1.hashCode(), initialState2.hashCode());
+		TicTacToeState state1        = game.getResult(initialState1, new XYLocation(0, 0));
+		Assert.assertNotSame(state1.hashCode(), initialState2.hashCode());
+		TicTacToeState state2        = game.getResult(initialState2, new XYLocation(0, 0));
+		Assert.assertEquals(state1.hashCode(), state2.hashCode());
+		
+	}
 
 	@Test
 	public void testOnCreationBoardIsEmpty() {
