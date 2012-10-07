@@ -32,8 +32,8 @@ public class QLearningAgentTest extends ReinforcementLearningAgentTest {
 				new JavaRandomizer());
 
 		qla = new QLearningAgent<Cell<Double>, CellWorldAction>(MDPFactory
-				.createActionsFunctionForFigure17_1(cw), CellWorldAction
-				.actions(), CellWorldAction.None, 0.2, 1.0, 5, 2.0);
+				.createActionsFunctionForFigure17_1(cw), 
+				CellWorldAction.None, 0.2, 1.0, 5, 2.0);
 
 		cwe.addAgent(qla);
 	}

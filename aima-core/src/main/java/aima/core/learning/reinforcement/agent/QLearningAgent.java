@@ -1,9 +1,7 @@
 package aima.core.learning.reinforcement.agent;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
@@ -80,7 +78,6 @@ public class QLearningAgent<S, A extends Action> extends
 	private Double r = null;
 	//
 	private ActionsFunction<S, A> actionsFunction = null;
-	private Set<A> allPossibleActions = new HashSet<A>();
 	private A noneAction = null;
 	private double alpha = 0.0;
 	private double gamma = 0.0;
@@ -92,8 +89,6 @@ public class QLearningAgent<S, A extends Action> extends
 	 * 
 	 * @param actionsFunction
 	 *            a function that lists the legal actions from a state.
-	 * @param allPossibleActions
-	 *            a set of all the possible actions that can be performed.
 	 * @param noneAction
 	 *            an action representing None, i.e. a NoOp.
 	 * @param alpha
@@ -107,10 +102,9 @@ public class QLearningAgent<S, A extends Action> extends
 	 *            obtainable in any state, which is used in the method f(u, n).
 	 */
 	public QLearningAgent(ActionsFunction<S, A> actionsFunction,
-			Set<A> allPossibleActions, A noneAction, double alpha,
+			A noneAction, double alpha,
 			double gamma, int Ne, double Rplus) {
 		this.actionsFunction = actionsFunction;
-		this.allPossibleActions.addAll(allPossibleActions);
 		this.noneAction = noneAction;
 		this.alpha = alpha;
 		this.gamma = gamma;
@@ -133,12 +127,12 @@ public class QLearningAgent<S, A extends Action> extends
 	@Override
 	public A execute(PerceptStateReward<S> percept) {
 
-		S sDelta = percept.state();
-		double rDelta = percept.reward();
+		S sPrime = percept.state();
+		double rPrime = percept.reward();
 
 		// if TERMAINAL?(s') then Q[s',None] <- r'
-		if (isTerminal(sDelta)) {
-			Q.put(new Pair<S, A>(sDelta, noneAction), rDelta);
+		if (isTerminal(sPrime)) {
+			Q.put(new Pair<S, A>(sPrime, noneAction), rPrime);
 		}
 
 		// if s is not null then
@@ -153,18 +147,18 @@ public class QLearningAgent<S, A extends Action> extends
 				Q_sa = 0.0;
 			}
 			Q.put(sa, Q_sa + alpha(Nsa, s, a)
-					* (r + gamma * maxADelta(sDelta) - Q_sa));
+					* (r + gamma * maxAPrime(sPrime) - Q_sa));
 		}
 		// if s'.TERMINAL? then s,a,r <- null else
 		// s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
-		if (isTerminal(sDelta)) {
+		if (isTerminal(sPrime)) {
 			s = null;
 			a = null;
 			r = null;
 		} else {
-			s = sDelta;
-			a = argmaxADelta(sDelta);
-			r = rDelta;
+			s = sPrime;
+			a = argmaxAPrime(sPrime);
+			r = rPrime;
 		}
 
 		// return a
@@ -259,12 +253,17 @@ public class QLearningAgent<S, A extends Action> extends
 		return terminal;
 	}
 
-	private double maxADelta(S sDelta) {
+	private double maxAPrime(S sPrime) {
 		double max = Double.NEGATIVE_INFINITY;
-		for (A aDelta : allPossibleActions) {
-			Double Q_sDeltaADelta = Q.get(new Pair<S, A>(sDelta, aDelta));
-			if (null != Q_sDeltaADelta && Q_sDeltaADelta > max) {
-				max = Q_sDeltaADelta;
+		if (actionsFunction.actions(sPrime).size() == 0) {
+			// a terminal state
+			max = Q.get(new Pair<S, A>(sPrime, noneAction));
+		} else {
+			for (A aPrime : actionsFunction.actions(sPrime)) {
+				Double Q_sPrimeAPrime = Q.get(new Pair<S, A>(sPrime, aPrime));
+				if (null != Q_sPrimeAPrime && Q_sPrimeAPrime > max) {
+					max = Q_sPrimeAPrime;
+				}
 			}
 		}
 		if (max == Double.NEGATIVE_INFINITY) {
@@ -275,16 +274,16 @@ public class QLearningAgent<S, A extends Action> extends
 	}
 
 	// argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a'])
-	private A argmaxADelta(S sDelta) {
+	private A argmaxAPrime(S sPrime) {
 		A a = null;
 		double max = Double.NEGATIVE_INFINITY;
-		for (A aDelta : allPossibleActions) {
-			Pair<S, A> sDeltaADelta = new Pair<S, A>(sDelta, aDelta);
-			double explorationValue = f(Q.get(sDeltaADelta), Nsa
-					.getCount(sDeltaADelta));
+		for (A aPrime : actionsFunction.actions(sPrime)) {
+			Pair<S, A> sPrimeAPrime = new Pair<S, A>(sPrime, aPrime);
+			double explorationValue = f(Q.get(sPrimeAPrime), Nsa
+					.getCount(sPrimeAPrime));
 			if (explorationValue > max) {
 				max = explorationValue;
-				a = aDelta;
+				a = aPrime;
 			}
 		}
 		return a;
