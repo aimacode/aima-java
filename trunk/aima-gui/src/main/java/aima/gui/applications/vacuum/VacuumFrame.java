@@ -16,12 +16,15 @@ public class VacuumFrame extends AgentAppFrame {
 		setTitle("Vacuum Agent Application");
 		setSelectors(new String[] { ENV_SEL, AGENT_SEL }, new String[] {
 				"Select Environment", "Select Agent" });
-		setSelectorItems(ENV_SEL, new String[] { "A/B Environment" }, 0);
+		setSelectorItems(ENV_SEL, new String[] { "A/B Deterministic Environment",
+				"A/B Non-Deterministic Environment"}, 
+				0);
 		setSelectorItems(AGENT_SEL, new String[] {
 				"TableDrivenVacuumAgent",
 				"ReflexVacuumAgent",
 				"SimpleReflexVacuumAgent",
-				"ModelBasedReflexVacuumAgent" },
+				"ModelBasedReflexVacuumAgent",
+				"NondeterministicVacuumAgent" },
 				0);
 		setEnvView(new VacuumView());
 		setSize(800, 400);

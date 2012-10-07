@@ -18,19 +18,23 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
   * aima-all  : is the master project, used by aima-java developers, for creating releases.
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
-== Current Release: 1.6.0-Chp5-Rewrite ==
-1.6.0-Chp5-Rewrite : 08 Jan 2012 :<br>
-Re-design and re-implementation of the adversarial search algorithms along with the addition of a Connect-4 GUI game
-to demonstrate new capabilities. 
+== Current Release: 1.7.0-Chp4- ==
+1.7.0-Chp4-Complete : 07 Oct 2012 :<br>
+Addition of And-Or-Search-Graph algorithm from chapter 4 and a Nondeterministic Vacuum Environment Demo to the GUI. 
 This is based on the following sub-project releases:
-  * aima-core (0.10.4) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (1.0.7)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aima-core (0.10.5) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.8)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
   * aimax-osm (2.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Bug Report - Acknowledgments ==
 
 The following people sent in excellent comments and bug reports. Thank you!!!!<br>
+  * Kevin O'Connor, PhD student Heriot-Watt University, Issues 76 and 77<br>
+  * Ramiro Varela, Associate Professor University of Oviedo, Issues 74 and 75<br>
+  * mbilgic, Issue 73<br>
+  * Federico Baron and Alessandro Daniele, University of Padua, Hybrid Wumpus Agent suggestions and code.<br>
+  * Ken Stevens, Issue 70<br>
   * Asterios, Issue 67<br>
   * Betty Keren, Issue 66<br>
   * codesamu..., Issue 63<br>
@@ -52,6 +56,15 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.6.0-Chp5-Rewrite : 08 Jan 2012 :<br>
+Re-design and re-implementation of the adversarial search algorithms along with the addition of a Connect-4 GUI game
+to demonstrate new capabilities. 
+This is based on the following sub-project releases:
+  * aima-core (0.10.4) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.7)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License. 
+    
 1.5.3-Chp17n21-Rewrite-DF1 : 16 Sept 2011 :<br>
 Rewrite of logic from Chapter 17 and 21 in aima-core, defect fix release 1. 
 This is based on the following sub-project releases:
