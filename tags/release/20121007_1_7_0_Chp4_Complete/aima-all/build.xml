@@ -1,0 +1,46 @@
+
+<project name="aima-all" basedir="." default="aima-all.release">
+	<dirname property="aima-all.basedir" file="${ant.file.aima-all}"/>
+	<property file="${aima-all.basedir}/build.properties.local"/>
+	<property file="${aima-all.basedir}/build.properties"/> 
+
+	<import file="${path.to.aima-core.project}/build.xml"/>
+	<import file="${path.to.aima-gui.project}/build.xml"/>
+	<import file="${path.to.aimax-osm.project}/build.xml"/>
+	
+
+	<target name="aima-all.clean">
+		<delete dir="${aima-all.dir.build}" />
+	</target>
+
+	<target name="aima-all.makedirs" depends="aima-all.clean">
+		<mkdir dir="${aima-all.dir.build}" />
+		<mkdir dir="${aima-all.dir.build.release}" />
+		<mkdir dir="${aima-all.dir.build.release}/aima-core" />
+		<mkdir dir="${aima-all.dir.build.release}/aima-gui" />
+		<mkdir dir="${aima-all.dir.build.release}/aimax-osm" />
+		<mkdir dir="${aima-all.dir.build.release}/release" />
+	</target>
+	
+	<target name="aima-all.release" depends="aima-all.makedirs,aima-core.release,aima-gui.release,aimax-osm.release">
+		<copy todir="${aima-all.dir.build.release}" file="README.txt" />
+		<copy todir="${aima-all.dir.build.release}/aima-core">
+			<fileset dir="${path.to.aima-core.project}" excludes="**/*.svn, build/, bin/" />
+		</copy>
+		<copy todir="${aima-all.dir.build.release}/aima-gui">
+			<fileset dir="${path.to.aima-gui.project}" excludes="**/*.svn, build/ bin/" />
+		</copy>
+		<copy todir="${aima-all.dir.build.release}/aimax-osm">
+			<fileset dir="${path.to.aimax-osm.project}" excludes="**/*.svn, build/ bin/" />
+		</copy>		
+		<copy todir="${aima-all.dir.build.release}/release">
+			<fileset dir="${aima-core.dir.build.release}" />
+			<fileset dir="${aima-gui.dir.build.release}" />
+			<fileset dir="${aimax-osm.dir.build.release}" />
+		</copy>
+		
+		<zip destfile="${aima-all.dir.build.release}/aima-java-${aima-all.version}.zip" 
+			basedir="${aima-all.dir.build.release}">
+		</zip>
+	</target>
+</project>
