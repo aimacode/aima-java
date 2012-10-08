@@ -84,7 +84,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 * Execute an action from the contingency plan
 	 * 
 	 * @param percept
-	 * @return
+	 * @return an action from the contingency plan.
 	 */
 	@Override
 	public Action execute(Percept percept) {

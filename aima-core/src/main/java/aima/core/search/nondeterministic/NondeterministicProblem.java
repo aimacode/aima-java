@@ -23,7 +23,7 @@ public class NondeterministicProblem {
 	 * 
 	 * @param initialState
 	 * @param actionsFunction
-	 * @param resultFunction
+	 * @param resultsFunction
 	 * @param goalTest
 	 */
 	public NondeterministicProblem(Object initialState,

@@ -39,7 +39,7 @@ public class IfStateThenPlan {
 	/**
 	 * Return string representation of this if-then-else
 	 * 
-	 * @return
+	 * @return a string representation of this if-then-else.
 	 */
 	@Override
 	public String toString() {

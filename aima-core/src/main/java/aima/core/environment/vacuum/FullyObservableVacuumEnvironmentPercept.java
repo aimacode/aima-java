@@ -14,7 +14,7 @@ public interface FullyObservableVacuumEnvironmentPercept extends Percept {
      * Returns the agent location
      *
      * @param a
-     * @return
+     * @return the agents location
      */
     String getAgentLocation(Agent a);
     
@@ -22,7 +22,7 @@ public interface FullyObservableVacuumEnvironmentPercept extends Percept {
      * Returns the location state
      *
      * @param location
-     * @return
+     * @return the location state
      */
     VacuumEnvironment.LocationState getLocationState(String location);
 }
