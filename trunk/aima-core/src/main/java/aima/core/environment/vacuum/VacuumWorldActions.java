@@ -28,7 +28,7 @@ public class VacuumWorldActions implements ActionsFunction {
 	 * Returns possible actions given this state
 	 * 
 	 * @param s
-	 * @return
+	 * @return possible actions given this state.
 	 */
 	@Override
 	public Set<Action> actions(Object s) {

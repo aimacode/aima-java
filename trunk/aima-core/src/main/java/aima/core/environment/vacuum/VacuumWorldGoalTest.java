@@ -25,7 +25,7 @@ public class VacuumWorldGoalTest implements GoalTest {
 	 * Tests whether the search has identified a goal state
 	 * 
 	 * @param state
-	 * @return
+	 * @return true if the state is a goal state, false otherwise.
 	 */
 	@Override
 	public boolean isGoalState(Object state) {

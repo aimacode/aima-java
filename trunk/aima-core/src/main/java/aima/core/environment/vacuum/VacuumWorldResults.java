@@ -30,7 +30,7 @@ public class VacuumWorldResults implements ResultsFunction {
 	 * 
 	 * @param state
 	 * @param action
-	 * @return
+	 * @return a list of possible results for a given state and action.
 	 */
 	@Override
 	public Set<Object> results(Object state, Action action) {

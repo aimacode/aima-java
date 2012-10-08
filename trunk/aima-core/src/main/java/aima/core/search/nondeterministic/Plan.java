@@ -57,7 +57,7 @@ public class Plan extends LinkedList<Object> {
 	/**
 	 * Returns the string representation of this plan
 	 * 
-	 * @return
+	 * @return a string representation of this plan.
 	 */
 	@Override
 	public String toString() {

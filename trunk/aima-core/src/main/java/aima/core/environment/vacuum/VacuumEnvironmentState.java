@@ -96,7 +96,7 @@ public class VacuumEnvironmentState implements EnvironmentState,
 	/**
 	 * Override hashCode()
 	 * 
-	 * @return
+	 * @return the hash code for this object.
 	 */
 	@Override
 	public int hashCode() {
@@ -112,7 +112,7 @@ public class VacuumEnvironmentState implements EnvironmentState,
 	/**
 	 * Returns a string representation of the environment
 	 * 
-	 * @return
+	 * @return a string representation of the environment
 	 */
 	@Override
 	public String toString() {

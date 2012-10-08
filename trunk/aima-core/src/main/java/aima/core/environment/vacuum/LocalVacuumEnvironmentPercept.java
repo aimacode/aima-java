@@ -59,7 +59,7 @@ public class LocalVacuumEnvironmentPercept extends DynamicPercept {
 	 * 
 	 * @param state
 	 * @param agent
-	 * @return
+	 * @return true of the percept matches an environment state, false otherwise.
 	 */
 	public boolean matches(VacuumEnvironmentState state, Agent agent) {
 		if (!this.getAgentLocation().equals(state.getAgentLocation(agent))) {
@@ -75,7 +75,7 @@ public class LocalVacuumEnvironmentPercept extends DynamicPercept {
 	/**
 	 * Return string representation of this percept.
 	 * 
-	 * @return
+	 * @return a string representation of this percept.
 	 */
 	@Override
 	public String toString() {

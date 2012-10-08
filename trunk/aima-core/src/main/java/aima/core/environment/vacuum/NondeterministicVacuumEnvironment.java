@@ -41,7 +41,7 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      *
      * @param a
      * @param agentAction
-     * @return
+     * @return the environment state after the action is executed.
      */
     @Override
     public EnvironmentState executeAction(Agent a, Action agentAction) {
