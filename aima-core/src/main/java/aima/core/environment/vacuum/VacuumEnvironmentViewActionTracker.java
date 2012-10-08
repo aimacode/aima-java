@@ -1,14 +1,14 @@
-package aima.test.core.unit.environment.vacuum;
+package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 
-public class EnvironmentViewActionTracker implements EnvironmentView {
+public class VacuumEnvironmentViewActionTracker implements EnvironmentView {
 	private StringBuilder actions = null;
 
-	public EnvironmentViewActionTracker(StringBuilder envChanges) {
+	public VacuumEnvironmentViewActionTracker(StringBuilder envChanges) {
 		this.actions = envChanges;
 	}
 
