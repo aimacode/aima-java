@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
 import aima.core.environment.vacuum.TableDrivenVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 
@@ -29,7 +30,7 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.stepUntilDone();
 
@@ -45,7 +46,7 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.stepUntilDone();
 
@@ -61,7 +62,7 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.stepUntilDone();
 
@@ -77,7 +78,7 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.stepUntilDone();
 

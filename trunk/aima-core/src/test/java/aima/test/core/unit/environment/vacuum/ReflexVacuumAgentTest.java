@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
 import aima.core.environment.vacuum.ReflexVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 
@@ -29,7 +30,7 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.step(8);
 
@@ -45,7 +46,7 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.step(8);
 
@@ -61,7 +62,7 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.step(8);
 
@@ -77,7 +78,7 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new EnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
 
 		tve.step(8);
 

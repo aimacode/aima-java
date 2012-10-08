@@ -5,12 +5,12 @@ import aima.core.environment.vacuum.NondeterministicVacuumAgent;
 import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironmentState;
+import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
 import aima.core.environment.vacuum.VacuumWorldActions;
 import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
 import aima.core.search.framework.DefaultStepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
-import aima.test.core.unit.environment.vacuum.EnvironmentViewActionTracker;
 
 /**
  * Applies AND-OR-GRAPH-SEARCH to a non-deterministic version of the Vacuum World.
@@ -52,7 +52,7 @@ public class NondeterministicVacuumEnvironmentDemo {
         // execute and show plan
         System.out.println("Initial Plan: " + agent.getContingencyPlan());
         StringBuilder sb = new StringBuilder();
-        world.addEnvironmentView(new EnvironmentViewActionTracker(sb));
+        world.addEnvironmentView(new VacuumEnvironmentViewActionTracker(sb));
         world.stepUntilDone();
         System.out.println("Remaining Plan: " + agent.getContingencyPlan());
         System.out.println("Actions Taken: " + sb);
