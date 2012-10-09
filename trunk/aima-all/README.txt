@@ -21,6 +21,7 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
 == Current Release: 1.7.0-Chp4- ==
 1.7.0-Chp4-Complete : 09 Oct 2012 :<br>
 Addition of And-Or-Search-Graph algorithm from chapter 4 and a Nondeterministic Vacuum Environment to the Vacuum GUI. 
+Also, the Genetic Algorithm was reimplemented in order to make it easier to use/extend.
 This is based on the following sub-project releases:
   * aima-core (0.10.5) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
   * aima-gui  (1.0.8)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
