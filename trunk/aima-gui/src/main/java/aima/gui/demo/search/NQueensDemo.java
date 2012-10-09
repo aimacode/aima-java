@@ -1,5 +1,6 @@
 package aima.gui.demo.search;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.local.GeneticAlgorithm;
 import aima.core.search.local.HillClimbingSearch;
+import aima.core.search.local.Individual;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
@@ -32,6 +34,8 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
 
 public class NQueensDemo {
 
+	private static final int _boardSize = 8;
+	
 	public static void main(String[] args) {
 
 		newNQueensDemo();
@@ -51,11 +55,11 @@ public class NQueensDemo {
 	private static void nQueensWithRecursiveDLS() {
 		System.out.println("\nNQueensDemo recursive DLS -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
-			Search search = new DepthLimitedSearch(8);
+			Search search = new DepthLimitedSearch(_boardSize);
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -68,7 +72,7 @@ public class NQueensDemo {
 	private static void nQueensWithBreadthFirstSearch() {
 		try {
 			System.out.println("\nNQueensDemo BFS -->");
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
@@ -85,7 +89,7 @@ public class NQueensDemo {
 	private static void nQueensWithDepthFirstSearch() {
 		System.out.println("\nNQueensDemo DFS -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
@@ -101,7 +105,7 @@ public class NQueensDemo {
 	private static void nQueensWithIterativeDeepeningSearch() {
 		System.out.println("\nNQueensDemo Iterative DS  -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
@@ -119,7 +123,7 @@ public class NQueensDemo {
 	private static void nQueensSimulatedAnnealingSearch() {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
@@ -140,7 +144,7 @@ public class NQueensDemo {
 	private static void nQueensHillClimbingSearch() {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(8),
+			Problem problem = new Problem(new NQueensBoard(_boardSize),
 					NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(),
 					new NQueensGoalTest());
@@ -161,42 +165,55 @@ public class NQueensDemo {
 	public static void nQueensGeneticAlgorithmSearch() {
 		System.out.println("\nNQueensDemo GeneticAlgorithm  -->");
 		try {
-			int boardSize = 8;
 			NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction();
 			// Generate an initial population
-			Set<String> population = new HashSet<String>();
-			for (int i = 0; i < 20; i++) {
+			Set<Individual<Integer>> population = new HashSet<Individual<Integer>>();
+			for (int i = 0; i < 50; i++) {
 				population.add(fitnessFunction
-						.generateRandomIndividual(boardSize));
+						.generateRandomIndividual(_boardSize));
 			}
 
-			GeneticAlgorithm ga = new GeneticAlgorithm(boardSize,
-					fitnessFunction.getFiniteAlphabetForBoardOfSize(boardSize),
+			GeneticAlgorithm<Integer> ga = new GeneticAlgorithm<Integer>(
+					_boardSize,
+					fitnessFunction.getFiniteAlphabetForBoardOfSize(_boardSize),
 					0.15);
 
-			// Run for a set number of iterations
-			String bestIndividual = ga.geneticAlgorithm(population,
-					fitnessFunction, 100);
+			// Run for a set amount of time
+			Individual<Integer> bestIndividual = ga.geneticAlgorithm(
+					population, fitnessFunction, fitnessFunction, 1000L);
 
-			System.out.println("Iterations Best Individual=\n"
+			System.out.println("Max Time (1 second) Best Individual=\n"
 					+ fitnessFunction.getBoardForIndividual(bestIndividual));
-			System.out.println("Fitness="
+			System.out.println("Board Size      = " + _boardSize);
+			System.out.println("# Board Layouts = "
+					+ (new BigDecimal(_boardSize)).pow(_boardSize));
+			System.out.println("Fitness         = "
 					+ fitnessFunction.getValue(bestIndividual));
-			System.out.println("Is Goal="
+			System.out.println("Is Goal         = "
 					+ fitnessFunction.isGoalState(bestIndividual));
-			System.out.println("Itertions=" + ga.getIterations());
+			System.out.println("Population Size = " + ga.getPopulationSize());
+			System.out.println("Itertions       = " + ga.getIterations());
+			System.out.println("Took            = "
+					+ ga.getTimeInMilliseconds() + "ms.");
 
 			// Run till goal is achieved
 			bestIndividual = ga.geneticAlgorithm(population, fitnessFunction,
-					fitnessFunction);
+					fitnessFunction, 0L);
 
+			System.out.println("");
 			System.out.println("Goal Test Best Individual=\n"
 					+ fitnessFunction.getBoardForIndividual(bestIndividual));
-			System.out.println("Fitness="
+			System.out.println("Board Size      = " + _boardSize);
+			System.out.println("# Board Layouts = "
+					+ (new BigDecimal(_boardSize)).pow(_boardSize));
+			System.out.println("Fitness         = "
 					+ fitnessFunction.getValue(bestIndividual));
-			System.out.println("Is Goal="
+			System.out.println("Is Goal         = "
 					+ fitnessFunction.isGoalState(bestIndividual));
-			System.out.println("Itertions=" + ga.getIterations());
+			System.out.println("Population Size = " + ga.getPopulationSize());
+			System.out.println("Itertions       = " + ga.getIterations());
+			System.out.println("Took            = "
+					+ ga.getTimeInMilliseconds() + "ms.");
 
 		} catch (Exception e) {
 			e.printStackTrace();
