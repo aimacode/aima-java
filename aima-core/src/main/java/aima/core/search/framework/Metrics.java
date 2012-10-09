@@ -22,6 +22,10 @@ public class Metrics {
 	public void set(String name, double d) {
 		hash.put(name, Double.toString(d));
 	}
+	
+	public void set(String name, long l) {
+		hash.put(name, Long.toString(l));
+	}
 
 	public int getInt(String name) {
 		return new Integer(hash.get(name)).intValue();
@@ -29,6 +33,10 @@ public class Metrics {
 
 	public double getDouble(String name) {
 		return new Double(hash.get(name)).doubleValue();
+	}
+	
+	public long getLong(String name) {
+		return new Long(hash.get(name)).longValue();
 	}
 
 	public String get(String name) {

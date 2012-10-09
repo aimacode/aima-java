@@ -19,7 +19,7 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
 == Current Release: 1.7.0-Chp4- ==
-1.7.0-Chp4-Complete : 07 Oct 2012 :<br>
+1.7.0-Chp4-Complete : 09 Oct 2012 :<br>
 Addition of And-Or-Search-Graph algorithm from chapter 4 and a Nondeterministic Vacuum Environment to the Vacuum GUI. 
 This is based on the following sub-project releases:
   * aima-core (0.10.5) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 

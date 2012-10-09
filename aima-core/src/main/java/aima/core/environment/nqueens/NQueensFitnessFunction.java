@@ -1,5 +1,6 @@
 package aima.core.environment.nqueens;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import aima.core.search.framework.GoalTest;
 import aima.core.search.local.FitnessFunction;
+import aima.core.search.local.Individual;
 import aima.core.util.datastructure.XYLocation;
 
 /**
@@ -17,7 +19,7 @@ import aima.core.util.datastructure.XYLocation;
  * @author Ciaran O'Reilly
  * 
  */
-public class NQueensFitnessFunction implements FitnessFunction, GoalTest {
+public class NQueensFitnessFunction implements FitnessFunction<Integer>, GoalTest {
 
 	private final NQueensGoalTest goalTest = new NQueensGoalTest();
 
@@ -27,7 +29,7 @@ public class NQueensFitnessFunction implements FitnessFunction, GoalTest {
 
 	//
 	// START - Interface FitnessFunction
-	public double getValue(String individual) {
+	public double getValue(Individual<Integer> individual) {
 		double fitness = 0;
 
 		NQueensBoard board = getBoardForIndividual(individual);
@@ -74,45 +76,42 @@ public class NQueensFitnessFunction implements FitnessFunction, GoalTest {
 
 	//
 	// START - Interface GoalTest
+	@SuppressWarnings("unchecked")
 	public boolean isGoalState(Object state) {
-		return goalTest.isGoalState(getBoardForIndividual((String) state));
+		return goalTest.isGoalState(getBoardForIndividual((Individual<Integer>) state));
 	}
 
 	// END - Interface GoalTest
 	//
 
-	public NQueensBoard getBoardForIndividual(String individual) {
+	public NQueensBoard getBoardForIndividual(Individual<Integer> individual) {
 		int boardSize = individual.length();
 		NQueensBoard board = new NQueensBoard(boardSize);
 		for (int i = 0; i < boardSize; i++) {
-			int pos = Character
-					.digit(individual.charAt(i), individual.length());
+			int pos = individual.getRepresentation().get(i);
 			board.addQueenAt(new XYLocation(i, pos));
 		}
 
 		return board;
 	}
 
-	public String generateRandomIndividual(int boardSize) {
-		StringBuffer ind = new StringBuffer();
+	public Individual<Integer> generateRandomIndividual(int boardSize) {
 
-		assert (boardSize >= Character.MIN_RADIX && boardSize <= Character.MAX_RADIX);
-
+		List<Integer> individualRepresentation = new ArrayList<Integer>();
 		for (int i = 0; i < boardSize; i++) {
-			ind.append(Character.forDigit(new Random().nextInt(boardSize),
-					boardSize));
+			individualRepresentation.add(new Random().nextInt(boardSize));
 		}
+		
+		Individual<Integer> individual = new Individual<Integer>(individualRepresentation);
 
-		return ind.toString();
+		return individual;
 	}
 
-	public Set<Character> getFiniteAlphabetForBoardOfSize(int size) {
-		Set<Character> fab = new HashSet<Character>();
-
-		assert (size >= Character.MIN_RADIX && size <= Character.MAX_RADIX);
+	public Set<Integer> getFiniteAlphabetForBoardOfSize(int size) {
+		Set<Integer> fab = new HashSet<Integer>();
 
 		for (int i = 0; i < size; i++) {
-			fab.add(Character.forDigit(i, size));
+			fab.add(i);
 		}
 
 		return fab;

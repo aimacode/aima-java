@@ -13,7 +13,7 @@ a starter for all the other applications and demos.
 # Depends on the aima-core project. 
 
 == Current Release: 1.0.8-AIMA-GUI And Or Search Supported ==
-1.0.8-AIMA-GUI And Or Search Supported : 07 Oct 2012 :<br>
+1.0.8-AIMA-GUI And Or Search Supported : 09 Oct 2012 :<br>
   * Updated to work with the latest version of aima-core (0.10.5).
   
 == Running the GUIs and Command Line Demos ==
