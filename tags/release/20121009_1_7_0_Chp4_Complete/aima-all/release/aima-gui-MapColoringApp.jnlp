@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp  spec="6.0+"  codebase="http://aima-java.googlecode.com/svn/trunk/aima-all/release"  href="aima-gui-MapColoringApp.jnlp">  
+  <information>    
+    <title>Map Coloring CSP Demo Application</title>
+    <description>Map Coloring CSP Demo Application</description>      
+    <vendor>AIMA3e-Java Open Source Project</vendor>    
+    <homepage href="http://code.google.com/p/aima-java/"/> 
+    <icon href="images/aima3e.jpg"/>
+    <icon kind="splash" href="images/aima3ebig.jpg"/>
+    <offline-allowed/>
+  </information>  
+  <security>      
+    <all-permissions/>
+  </security>  
+  <resources>    
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>     
+    <jar href="jars/aima-core.jar"/>  
+    <jar href="jars/aima-gui.jar"/> 
+  </resources>  
+  <application-desc main-class="aima.gui.applications.search.csp.MapColoringApp" />
+</jnlp> 
