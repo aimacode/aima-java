@@ -236,8 +236,8 @@ public class DefaultMap implements OsmMap {
 			updateEntityViewInfo(way, true);
 		for (MapNode poi : pois)
 			updateEntityViewInfo(poi, true);
-		for (MapNode mark : markers)
-			updateEntityViewInfo(mark, false);
+		for (MapNode marker : markers)
+			updateEntityViewInfo(marker, false);
 		for (Track track : tracks)
 			updateEntityViewInfo(track, false);
 	}

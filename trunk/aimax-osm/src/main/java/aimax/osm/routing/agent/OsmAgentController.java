@@ -137,14 +137,14 @@ public class OsmAgentController extends AgentAppController {
 
 	/** Creates new agents and adds them to the current environment. */
 	protected void initAgents(MessageLogger logger) {
-		List<MapNode> marks = map.getOsmMap().getMarkers();
-		if (marks.size() < 2) {
-			logger.log("Error: Please set two marks with mouse-left.");
+		List<MapNode> markers = map.getOsmMap().getMarkers();
+		if (markers.size() < 2) {
+			logger.log("Error: Please set two markers with mouse-left.");
 			return;
 		}
-		String[] locs = new String[marks.size()];
-		for (int i = 0; i < marks.size(); i++) {
-			MapNode node = marks.get(i);
+		String[] locs = new String[markers.size()];
+		for (int i = 0; i < markers.size(); i++) {
+			MapNode node = markers.get(i);
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
 			locs[i] = map.getNearestLocation(pt);
 		}

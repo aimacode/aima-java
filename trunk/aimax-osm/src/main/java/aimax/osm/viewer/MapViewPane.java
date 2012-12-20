@@ -38,7 +38,7 @@ import aimax.osm.data.impl.DefaultMap;
  * <p>
  * Hint for using the viewer: Try Mouse-Left, Mouse-Right, Mouse-Drag,
  * Ctrl-Mouse-Left, Plus, Minus, Ctrl-Plus, Ctrl-Minus, arrow buttons, and also
- * the Mouse-Wheel for navigation, mark setting, and track definition.
+ * the Mouse-Wheel for navigation, marking, and track definition.
  * 
  * @author Ruediger Lunde
  */
@@ -427,7 +427,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 					// mouse left button + shift -> add track point
 					removeNearestMarker(e.getX(), e.getY());
 				} else if (e.getClickCount() == 1) {
-					// mouse left button -> add mark
+					// mouse left button -> add marker
 					marker = map.addMarker(lat, lon);
 					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
 							MapViewEvent.Type.MARKER_ADDED));
@@ -442,7 +442,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			} else if (popup != null) {
 				popup.show(MapViewPane.this, e.getX(), e.getY());
 			} else {
-				// mouse right button -> clear marks and tracks
+				// mouse right button -> clear markers and tracks
 				map.clearMarkersAndTracks();
 			}
 		}
