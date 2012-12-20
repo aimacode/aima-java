@@ -282,10 +282,10 @@ public class MiniNaviApp implements ActionListener {
 			if (map == null)
 				map = new DefaultMap();
 			view.setMap(map);
-			classifier = (EntityClassifier<EntityViewInfo>) createComponent(
+			viewInfo = (EntityClassifier<EntityViewInfo>) createComponent(
 					CLASSIFIER_CLASS_PROPERTY, EntityClassifier.class);
-			if (classifier == null)
-				classifier = new MapStyleFactory().createDefaultClassifier();
+			if (viewInfo == null)
+				viewInfo = new MapStyleFactory().createDefaultClassifier();
 			AbstractEntityRenderer renderer = (AbstractEntityRenderer) createComponent(
 					RENDERER_CLASS_PROPERTY, AbstractEntityRenderer.class);
 			if (renderer != null)

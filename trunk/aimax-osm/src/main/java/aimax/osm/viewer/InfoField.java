@@ -88,14 +88,14 @@ public class InfoField extends JTextField {
 					List<MapNode> nodes = track.getNodes();
 					DecimalFormat f1 = new DecimalFormat("#0.00");
 					double km = Position.getTrackLengthKM(nodes);
-					String info = track.getName() + ": Total Length " + f1.format(km)
+					String info = track.getName() + ": Length " + f1.format(km)
 							+ " km";
-					if (nodes.size() > 1) {
+					if (nodes.size() == 2) {
 						DecimalFormat f2 = new DecimalFormat("#000");
 						MapNode m1 = nodes.get(nodes.size() - 2);
 						MapNode m2 = nodes.get(nodes.size() - 1);
 						int course = new Position(m1).getCourseTo(m2);
-						info += "; Course " + f2.format(course);
+						info += "; Direction " + f2.format(course);
 					}
 					infoField.setText(info);
 				}

@@ -97,8 +97,6 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 						.isDebugModeEnabled());
 		} else if (ae.getSource() == clearMenuItem) {
 			pane.getMap().clearMarkersAndTracks();
-			pane.fireMapViewEvent(new MapViewEvent(pane,
-					MapViewEvent.Type.TMP_NODES_REMOVED));
 		} else if (ae.getSource() == createMarkerMenuItem) {
 			PositionPanel panel = new PositionPanel();
 			int res = JOptionPane.showConfirmDialog(pane, panel,

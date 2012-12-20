@@ -55,7 +55,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	protected JSplitPane splitter;
 	protected JToolBar toolbar;
 	protected JTabbedPane sidebar;
-	protected EntityClassifier<EntityViewInfo> classifier;
+	protected EntityClassifier<EntityViewInfo> viewInfo;
 	protected MapReader mapReader;
 	protected MapWriter mapWriter;
 
@@ -137,7 +137,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	 */
 	protected void initMapAndClassifier() {
 		view.setMap(new DefaultMap());
-		classifier = new MapStyleFactory().createDefaultClassifier();
+		viewInfo = new MapStyleFactory().createDefaultClassifier();
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	public void readMap(InputStream stream) {
 		if (stream != null) {
 			MapBuilder builder = getMap().getBuilder();
-			builder.setEntityClassifier(classifier);
+			builder.setEntityClassifier(viewInfo);
 			mapReader.readMap(stream, builder);
 			builder.buildMap();
 		} else {
@@ -255,7 +255,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 
 	public void readMap(File file) {
 		MapBuilder builder = getMap().getBuilder();
-		builder.setEntityClassifier(classifier);
+		builder.setEntityClassifier(viewInfo);
 		mapReader.readMap(file, builder);
 		builder.buildMap();
 		fileChooser.setSelectedFile(file.getAbsoluteFile());
