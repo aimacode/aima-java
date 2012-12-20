@@ -78,10 +78,10 @@ public class InfoField extends JTextField {
 			} else if (event.getType() == MapEvent.Type.MARKER_ADDED) {
 				List<MapNode> nodes = map.getMarkers();
 				DecimalFormat f1 = new DecimalFormat("#0.00");
-				MapNode mark = nodes.get(nodes.size() - 1);
-				infoField.setText("Marker " + mark.getName() + ": Lat "
-						+ f1.format(mark.getLat()) + "; Lon "
-						+ f1.format(mark.getLon()));
+				MapNode marker = nodes.get(nodes.size() - 1);
+				infoField.setText("Marker " + marker.getName() + ": Lat "
+						+ f1.format(marker.getLat()) + "; Lon "
+						+ f1.format(marker.getLon()));
 			} else if (event.getType() == MapEvent.Type.TRACK_MODIFIED) {
 				Track track = map.getTrack(event.getObjId());
 				if (track != null) {

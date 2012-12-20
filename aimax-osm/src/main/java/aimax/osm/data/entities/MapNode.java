@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Represents a node within the map. Nodes
- * can be part of a way, points of interest, or marks.
+ * can be part of a way, points of interest, or markers.
  * A full java bean interface is provided. So it is
  * easy, to serialize objects using <code>XMLEncoder</code>.
  * @author Ruediger Lunde

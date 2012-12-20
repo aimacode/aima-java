@@ -50,20 +50,20 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		infoMenuItem.addActionListener(this);
 		add(infoMenuItem);
 
-		JMenu markMenu = new JMenu("Marker");
-		add(markMenu);
+		JMenu markerMenu = new JMenu("Marker");
+		add(markerMenu);
 		createMarkerMenuItem = new JMenuItem("Create");
 		createMarkerMenuItem.addActionListener(this);
-		markMenu.add(createMarkerMenuItem);
+		markerMenu.add(createMarkerMenuItem);
 		removeMarkerMenuItem = new JMenuItem("Remove");
 		removeMarkerMenuItem.addActionListener(this);
-		markMenu.add(removeMarkerMenuItem);
+		markerMenu.add(removeMarkerMenuItem);
 		loadMarkersMenuItem = new JMenuItem("Load All");
 		loadMarkersMenuItem.addActionListener(this);
-		markMenu.add(loadMarkersMenuItem);
+		markerMenu.add(loadMarkersMenuItem);
 		saveMarkersMenuItem = new JMenuItem("Save All");
 		saveMarkersMenuItem.addActionListener(this);
-		markMenu.add(saveMarkersMenuItem);
+		markerMenu.add(saveMarkersMenuItem);
 
 		clearMenuItem = new JMenuItem("Clear M&T");
 		clearMenuItem.addActionListener(this);
