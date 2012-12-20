@@ -108,6 +108,7 @@ public class MapStyleFactory {
 		result.addRule("landuse", "farmland",      createWayInfo(1f/750000, 1f/12000, 80, LIGHT_YELLOW, 1, LIGHT_YELLOW, false));
 		result.addRule("landuse", "residential",   createWayInfo(1f/750000, 1f/12000, 80, LIGHT_RED_TRANS, 1, LIGHT_RED_TRANS, false));
 		result.addRule("landuse", "village_green", createWayInfo(1f/60000, 1f/3500, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
+		result.addRule("landuse", "recreation_ground", createWayInfo(1f/60000, 1f/3500, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
 		result.addRule("landuse", "grass",         createWayInfo(1f/350000, 1f/3500, 80, VERY_LIGHT_GREEN, 1, VERY_LIGHT_GREEN, false));
 		result.addRule("landuse", null,            createInfo(1f/350000, 1f/1800, 80, Color.GRAY, null, false, LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false));
 		addBuildingRules(result, "leisure", null,  createInfo(1f/60000, 1f/3500, 80, Color.GRAY, null, false, LIGHT_ORANGE, 1, false, LIGHT_ORANGE, false));

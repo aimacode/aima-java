@@ -5,13 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +57,9 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private ArrayList<MapViewEventListener> eventListeners;
 	protected boolean isAdjusted;
 	protected JPopupMenu popup;
+	/** Off-screen image. */
+	private Image image;
+	private boolean isImageUpToDate;
 
 	public MapViewPane() {
 		transformer = new CoordTransformer();
@@ -69,6 +72,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		MyMouseListener mouseListener = new MyMouseListener();
 		addMouseListener(mouseListener);
 		addMouseWheelListener(mouseListener);
+		addMouseMotionListener(mouseListener);
 		addKeyListener(new MyKeyListener());
 		this.setFocusable(true);
 	}
@@ -86,7 +90,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			map.addMapDataEventListener(this);
 			isAdjusted = false;
 		}
-		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.MAP_NEW));
+		viewChanged(MapViewEvent.Type.NEW_MAP);
 	}
 
 	public AbstractEntityRenderer getRenderer() {
@@ -96,7 +100,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	/** Allows to replace the renderer. */
 	public void setRenderer(AbstractEntityRenderer renderer) {
 		this.renderer = renderer;
-		repaint();
+		viewChanged(MapViewEvent.Type.NEW_RENDERER);
 	}
 
 	/** Returns the component responsible for coordinate transformation. */
@@ -121,6 +125,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 				.getWidth()
 				/ cm;
 		transformer.setScreenResolution((int) (dotsPerCm * 2.54));
+		viewChanged(MapViewEvent.Type.ZOOM);
 	}
 
 	/**
@@ -135,6 +140,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		double dotsPerInch = Math.sqrt(width * width + height * height) / inch;
 		transformer.setScreenResolution((int) dotsPerInch);
+		viewChanged(MapViewEvent.Type.ZOOM);
 	}
 
 	/**
@@ -144,14 +150,14 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 */
 	public void zoom(float factor, int focusX, int focusY) {
 		transformer.zoom(factor, focusX, focusY);
-		repaint();
-		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ZOOM));
+		showPreview((int) ((1 - factor) * focusX),
+				(int) ((1 - factor) * focusY), factor);
+		viewChanged(MapViewEvent.Type.ZOOM);
 	}
 
 	public void multiplyDisplayFactorWith(float fac) {
 		renderer.setDisplayFactor(renderer.getDisplayFactor() * fac);
-		repaint();
-		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ZOOM));
+		viewChanged(MapViewEvent.Type.ZOOM);
 	}
 
 	/**
@@ -164,8 +170,8 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 */
 	public void adjust(int dx, int dy) {
 		transformer.adjust(dx, dy);
-		repaint();
-		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ADJUST));
+		showPreview(dx, dy, 1f);
+		viewChanged(MapViewEvent.Type.ADJUST);
 	}
 
 	/**
@@ -173,8 +179,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 */
 	public void adjustToFit() {
 		isAdjusted = false;
-		repaint();
-		fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.ADJUST));
+		viewChanged(MapViewEvent.Type.ADJUST);
 	}
 
 	/**
@@ -189,6 +194,12 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		int dx = getWidth() / 2 - transformer.x(lon);
 		int dy = getHeight() / 2 - transformer.y(lat);
 		adjust(dx, dy);
+	}
+
+	private void viewChanged(MapViewEvent.Type eventType) {
+		isImageUpToDate = false;
+		repaint();
+		fireMapViewEvent(new MapViewEvent(this, eventType));
 	}
 
 	/**
@@ -214,16 +225,13 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * coordinates.
 	 */
 	public void removeNearestMarker(int x, int y) {
-		List<MapNode> marks = map.getMarkers();
+		List<MapNode> markers = map.getMarkers();
 		float lat = getTransformer().lat(y);
 		float lon = getTransformer().lon(x);
-		MapNode mark = new Position(lat, lon).selectNearest(marks, null);
-		if (mark != null)
-			marks.remove(mark);
-		map.fireMapDataEvent(new MapEvent(map,
-				MapEvent.Type.MAP_MODIFIED));
-		fireMapViewEvent(new MapViewEvent(this,
-				MapViewEvent.Type.TMP_NODES_REMOVED));
+		MapNode marker = new Position(lat, lon).selectNearest(markers, null);
+		if (marker != null)
+			markers.remove(marker);
+		map.fireMapDataEvent(new MapEvent(map, MapEvent.Type.MAP_MODIFIED));
 	}
 
 	/**
@@ -258,8 +266,8 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			content[0] = text;
 			if (me instanceof MapNode) {
 				PositionPanel pos = new PositionPanel();
-				pos.setPosition(((MapNode) me).getLat(), ((MapNode) me)
-						.getLon());
+				pos.setPosition(((MapNode) me).getLat(),
+						((MapNode) me).getLon());
 				pos.setEnabled(false);
 				content[1] = pos;
 			}
@@ -292,7 +300,19 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * Shows a graphical representation of the provided map data.
 	 */
 	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (java.awt.Graphics2D) g;
+		if (image == null || image.getWidth(null) != getWidth()
+				|| image.getHeight(null) != getHeight()) {
+			isImageUpToDate = false;
+		}
+		if (!isImageUpToDate)
+			updateOffScreenImage();
+		else
+			g.drawImage(image, 0, 0, this);
+	}
+
+	protected void updateOffScreenImage() {
+		Image newImage = createImage(getWidth(), getHeight());
+		Graphics2D g2 = (Graphics2D) newImage.getGraphics();
 		g2.setBackground(renderer.getBackgroundColor());
 		g2.clearRect(0, 0, getWidth(), getHeight());
 		if (getWidth() > 0 && map != null) {
@@ -313,10 +333,9 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			for (MapEntity entity : map.getVisibleMarkersAndTracks(viewScale))
 				entity.accept(renderer);
 			renderer.printBufferedObjects();
-			if (renderer.isDebugModeEnabled()
-					&& map instanceof DefaultMap) {
-				List<double[]> splits = ((DefaultMap) map)
-						.getEntityTree().getSplitCoords();
+			if (renderer.isDebugModeEnabled() && map instanceof DefaultMap) {
+				List<double[]> splits = ((DefaultMap) map).getEntityTree()
+						.getSplitCoords();
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.setStroke(new BasicStroke(1f));
 				for (double[] split : splits)
@@ -325,6 +344,32 @@ public class MapViewPane extends JComponent implements MapEventListener {
 							renderer.transformer.x(split[3]),
 							renderer.transformer.y(split[2]));
 			}
+		}
+		image = newImage;
+		isImageUpToDate = true;
+		repaint();
+	}
+
+	/**
+	 * Draws the off-screen image if exists at position (dx, dy) scaled by the
+	 * specified factor.
+	 */
+	private void showPreview(int dx, int dy, float zoomfactor) {
+		if (image != null) {
+			Graphics2D g2 = (Graphics2D) getGraphics();
+			g2.setBackground(renderer.getBackgroundColor());
+			int newWidth = Math.round(image.getWidth(null) * zoomfactor);
+			int newHeight = (int) Math
+					.round(image.getHeight(null) * zoomfactor);
+			g2.drawImage(image, dx, dy, newWidth, newHeight, null);
+			if (dx > 0)
+				g2.clearRect(0, 0, dx, getHeight());
+			else
+				g2.clearRect(getWidth() + dx, 0, getWidth(), getHeight());
+			if (dy > 0)
+				g2.clearRect(0, 0, getWidth(), dy);
+			else
+				g2.clearRect(0, getHeight() + dy, getWidth(), getHeight());
 		}
 	}
 
@@ -348,8 +393,9 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	public void eventHappened(MapEvent event) {
 		if (event.getType() == MapEvent.Type.MAP_NEW) {
 			adjustToFit();
-			fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.MAP_NEW));
+			fireMapViewEvent(new MapViewEvent(this, MapViewEvent.Type.NEW_MAP));
 		} else {
+			isImageUpToDate = false;
 			repaint();
 		}
 	}
@@ -364,10 +410,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * @author R. Lunde
 	 * 
 	 */
-	private class MyMouseListener implements MouseListener, MouseWheelListener {
+	private class MyMouseListener extends MouseAdapter {
 		int xp;
 		int yp;
-		MapNode mark;
+		MapNode marker;
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -376,41 +422,34 @@ public class MapViewPane extends JComponent implements MapEventListener {
 				float lon = transformer.lon(e.getX());
 				if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
 					// mouse left button + ctrl -> add track point
-					map.addToTrack("Mouse Track",
-							new Position(lat, lon));
-					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-							MapViewEvent.Type.TRK_PT_ADDED));
+					map.addToTrack("Mouse Track", new Position(lat, lon));
 				} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
 					// mouse left button + shift -> add track point
 					removeNearestMarker(e.getX(), e.getY());
 				} else if (e.getClickCount() == 1) {
 					// mouse left button -> add mark
-					mark = map.addMarker(lat, lon);
+					marker = map.addMarker(lat, lon);
 					fireMapViewEvent(new MapViewEvent(MapViewPane.this,
 							MapViewEvent.Type.MARKER_ADDED));
 				} else { // double click
-					map.removeMarker(mark);
-					MapNode mNode = getRenderer().getNextNode(e.getX(), e.getY());
+					map.removeMarker(marker);
+					MapNode mNode = getRenderer().getNextNode(e.getX(),
+							e.getY());
 					if (mNode != null)
-						showMapEntityInfoDialog(mNode, renderer.isDebugModeEnabled());
+						showMapEntityInfoDialog(mNode,
+								renderer.isDebugModeEnabled());
 				}
 			} else if (popup != null) {
 				popup.show(MapViewPane.this, e.getX(), e.getY());
 			} else {
 				// mouse right button -> clear marks and tracks
 				map.clearMarkersAndTracks();
-				fireMapViewEvent(new MapViewEvent(MapViewPane.this,
-						MapViewEvent.Type.TMP_NODES_REMOVED));
 			}
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			MapViewPane.this.requestFocusInWindow();
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
 		}
 
 		@Override
@@ -427,7 +466,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 				if (xr != xp || yr != yp) {
 					// mouse drag -> adjust view
 					adjust(xr - xp, yr - yp);
-				} 
+				}
 			}
 		}
 
@@ -441,15 +480,23 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			if (rot == -1) {
 				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
 					multiplyDisplayFactorWith(fac);
-				} else
+				} else {
 					zoom(fac, x, y);
+				}
 			} else if (rot == 1) {
 				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
 					multiplyDisplayFactorWith(1f / fac);
-				} else
+				} else {
 					zoom(1 / fac, x, y);
+				}
 			}
 		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			showPreview(e.getX() - xp, e.getY() - yp, 1);
+		}
+
 	}
 
 	/**
