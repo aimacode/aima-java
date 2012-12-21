@@ -103,6 +103,16 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		viewChanged(MapViewEvent.Type.NEW_RENDERER);
 	}
 
+	/** Controls whether kd-tree informations, node identifiers etc. are shown. */
+	public void enableDebugMode(boolean b) {
+		renderer.enableDebugMode(b);
+		viewChanged(MapViewEvent.Type.NEW_RENDERER);
+	}
+	
+	public boolean isDebugModeEnabled() {
+		return renderer.isDebugModeEnabled();
+	}
+	
 	/** Returns the component responsible for coordinate transformation. */
 	public CoordTransformer getTransformer() {
 		return transformer;
@@ -150,7 +160,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 */
 	public void zoom(float factor, int focusX, int focusY) {
 		transformer.zoom(factor, focusX, focusY);
-		showPreview((int) ((1 - factor) * focusX),
+		paintPreview((int) ((1 - factor) * focusX),
 				(int) ((1 - factor) * focusY), factor);
 		viewChanged(MapViewEvent.Type.ZOOM);
 	}
@@ -170,7 +180,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 */
 	public void adjust(int dx, int dy) {
 		transformer.adjust(dx, dy);
-		showPreview(dx, dy, 1f);
+		paintPreview(dx, dy, 1f);
 		viewChanged(MapViewEvent.Type.ADJUST);
 	}
 
@@ -354,7 +364,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * Draws the off-screen image if exists at position (dx, dy) scaled by the
 	 * specified factor.
 	 */
-	private void showPreview(int dx, int dy, float zoomfactor) {
+	private void paintPreview(int dx, int dy, float zoomfactor) {
 		if (image != null) {
 			Graphics2D g2 = (Graphics2D) getGraphics();
 			g2.setBackground(renderer.getBackgroundColor());
@@ -433,7 +443,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 							MapViewEvent.Type.MARKER_ADDED));
 				} else { // double click
 					map.removeMarker(marker);
-					MapNode mNode = getRenderer().getNextNode(e.getX(),
+					MapNode mNode = renderer.getNextNode(e.getX(),
 							e.getY());
 					if (mNode != null)
 						showMapEntityInfoDialog(mNode,
@@ -494,7 +504,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			showPreview(e.getX() - xp, e.getY() - yp, 1);
+			paintPreview(e.getX() - xp, e.getY() - yp, 1);
 		}
 
 	}

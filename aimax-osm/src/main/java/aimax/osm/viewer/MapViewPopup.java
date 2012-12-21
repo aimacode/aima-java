@@ -84,7 +84,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		pane = (MapViewPane) invoker;
 		this.x = x;
 		this.y = y;
-		debugMenuItem.setState(pane.getRenderer().isDebugModeEnabled());
+		debugMenuItem.setState(pane.isDebugModeEnabled());
 		super.show(invoker, x, y);
 	}
 
@@ -93,8 +93,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		if (ae.getSource() == infoMenuItem) {
 			MapNode mNode = pane.getRenderer().getNextNode(x, y);
 			if (mNode != null)
-				pane.showMapEntityInfoDialog(mNode, pane.getRenderer()
-						.isDebugModeEnabled());
+				pane.showMapEntityInfoDialog(mNode, pane.isDebugModeEnabled());
 		} else if (ae.getSource() == clearMenuItem) {
 			pane.getMap().clearMarkersAndTracks();
 		} else if (ae.getSource() == createMarkerMenuItem) {
@@ -159,8 +158,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 					encoder.close();
 			}
 		} else if (ae.getSource() == debugMenuItem) {
-			pane.getRenderer().enableDebugMode(debugMenuItem.isSelected());
-			pane.repaint();
+			pane.enableDebugMode(debugMenuItem.isSelected());
 		}
 	}
 
