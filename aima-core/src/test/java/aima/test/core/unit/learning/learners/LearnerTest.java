@@ -20,7 +20,7 @@ import aima.test.core.unit.learning.inductive.MockDLTestFactory;
  * @author Ravi Mohan
  * 
  */
-public class LearnerTests {
+public class LearnerTest {
 
 	@Test
 	public void testMajorityLearner() throws Exception {

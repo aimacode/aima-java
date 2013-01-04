@@ -11,7 +11,7 @@ import aima.core.learning.neural.PureLinearActivationFunction;
 import aima.core.util.math.Matrix;
 import aima.core.util.math.Vector;
 
-public class LayerTests {
+public class LayerTest {
 
 	@Test
 	public void testFeedForward() {
