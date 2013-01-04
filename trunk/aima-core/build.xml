@@ -8,14 +8,14 @@
 
 	<path id="aima-core.classpath">
 		<pathelement path="${aima-core.dir.build.bin}/main" />
-		<pathelement path="${aima-core.dir.src}/main/resource" />
+		<pathelement path="${aima-core.dir.src}/main/resources" />
 	</path>
 	
 	<path id="aima-core.test.classpath">
 		<path refid="aima-core.classpath" />
 		<pathelement path="${aima-core.dir.lib}/junit/junit-4.7.jar" />
 		<pathelement path="${aima-core.dir.build.bin}/test" />
-		<pathelement path="${aima-core.dir.src}/test/resource" />
+		<pathelement path="${aima-core.dir.src}/test/resources" />
 	</path>
 
 	<target name="aima-core.clean">
@@ -78,7 +78,7 @@
 		        <attribute name="AIMA-CORE-Version" value="${aima-core.version}" />
 		    </manifest>
 			 <fileset dir="${aima-core.dir.build.bin}/main" />
-			 <fileset dir="${aima-core.dir.src}/main/resource" excludes="**/*.svn" />
+			 <fileset dir="${aima-core.dir.src}/main/resources" excludes="**/*.svn" />
 		</jar>
 	</target>
 		

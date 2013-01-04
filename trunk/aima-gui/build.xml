@@ -11,7 +11,7 @@
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />
 		<pathelement path="${aima-gui.dir.build.bin}/main" />
-		<pathelement path="${aima-gui.dir.src}/main/resource" />
+		<pathelement path="${aima-gui.dir.src}/main/resources" />
 	</path>
 
 	<target name="aima-gui.clean">
@@ -58,7 +58,7 @@
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
 		    </manifest>
 			 <fileset dir="${aima-gui.dir.build.bin}/main" />
-			 <fileset dir="${aima-gui.dir.src}/main/resource" excludes="**/*.svn" />
+			 <fileset dir="${aima-gui.dir.src}/main/resources" excludes="**/*.svn" />
 		</jar>
 	</target>
 	
