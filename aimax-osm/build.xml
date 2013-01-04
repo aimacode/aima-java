@@ -11,7 +11,7 @@
 	<path id="aimax-osm.classpath">
 		<path refid="aima-gui.classpath" />
 		<pathelement path="${aimax-osm.dir.build.bin}/main" />
-		<pathelement path="${aimax-osm.dir.src}/main/resource" />
+		<pathelement path="${aimax-osm.dir.src}/main/resources" />
 	</path>
 
 	<target name="aimax-osm.clean">
@@ -59,7 +59,7 @@
 		        <attribute name="AIMAX-OSM-Version" value="${aimax-osm.version}" />
 		    </manifest>
 			 <fileset dir="${aimax-osm.dir.build.bin}/main" />
-			 <fileset dir="${aimax-osm.dir.src}/main/resource" excludes="**/*.svn" />
+			 <fileset dir="${aimax-osm.dir.src}/main/resources" excludes="**/*.svn" />
 		</jar>
 		<copy todir="${aimax-osm.dir.build.release}" file="${aimax-osm.dir.lib}/commons-compress-1.1.jar" />
 	</target>
