@@ -91,12 +91,16 @@
 
 --- Publish the Release to the Maven Central Repository
 RELEVANT BACKGROUND:
-Deploying via Nexus -
+Deploying via Nexus Guide -
 https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+The Sonatype/Nexus Open Source Respository -
+https://oss.sonatype.org/
 The Complete Maven Reference - 
 http://www.sonatype.com/books/mvnref-book/reference/public-book.html
 The Maven Central Repository -
 http://mvnrepository.com/
+Maven Home - 
+http://maven.apache.org/
 
 1. Run this command in the aima-core project (currently only releasing this on Maven):
    mvn clean javadoc:jar source:jar deploy
