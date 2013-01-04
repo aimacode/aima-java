@@ -10,7 +10,7 @@ import aima.core.logic.propositional.algorithms.WalkSAT;
  * @author Ravi Mohan
  * 
  */
-public class WalkSATTest {
+public class WalkSATExperiment {
 
 	// NOT REALLY A JUNIT TESTCASE BUT written as one to allow easy execution
 	@Test

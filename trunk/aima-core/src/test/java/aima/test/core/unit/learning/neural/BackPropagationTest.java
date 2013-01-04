@@ -16,7 +16,7 @@ import aima.core.learning.neural.Perceptron;
 import aima.core.util.math.Matrix;
 import aima.core.util.math.Vector;
 
-public class BackPropagationTests {
+public class BackPropagationTest {
 
 	@Test
 	public void testFeedForwardAndBAckLoopWorks() {
