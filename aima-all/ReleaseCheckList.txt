@@ -5,6 +5,9 @@
 
 *. Ensure the revisions # in the build.properties files of each project are updated.
 
+*. Ensure the revision #s in the pom.xml file in aima-core is set to match the one in 
+   build.properties.
+
 *. Ensure the README.txt file in each project is updated to reflect the release (i.e.
    update the 'Current Release' section at a minimum).
    
@@ -86,13 +89,29 @@
    
 *. commit the changes to the aima-all project
 
---- Publish the Release
+--- Publish the Release to the Maven Central Repository
+RELEVANT BACKGROUND:
+Deploying via Nexus -
+https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+The Complete Maven Reference - 
+http://www.sonatype.com/books/mvnref-book/reference/public-book.html
+The Maven Central Repository -
+http://mvnrepository.com/
+
+1. Run this command in the aima-core project (currently only releasing this on Maven):
+   mvn clean javadoc:jar source:jar deploy
+   
+2. Close and Release: 
+   Follow steps 8 onwards from:
+   https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+   
+--- Publish the Release to the AIMA Website
    
 *. Create SVN tag for the release.
    
 *. Upload the .zip file from aima-all/build/release to the project's download page and mark featured. Deprecate the previous release.
 
-*. Update the 'Project Home' page to indicate the latest revision #. 
+*. Update the 'Project Home' page to indicate the latest revision # (ensure Maven info also updated). 
 
 *. Update the AIMA3eReadme wiki page with the contents of aima-all/README.txt
 
