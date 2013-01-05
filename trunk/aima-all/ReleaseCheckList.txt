@@ -98,7 +98,7 @@ https://oss.sonatype.org/
 The Complete Maven Reference - 
 http://www.sonatype.com/books/mvnref-book/reference/public-book.html
 The Maven Central Repository -
-http://mvnrepository.com/
+http://search.maven.org/
 Maven Home - 
 http://maven.apache.org/
 
