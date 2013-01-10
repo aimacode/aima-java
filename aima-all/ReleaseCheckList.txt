@@ -103,7 +103,8 @@ Maven Home -
 http://maven.apache.org/
 
 1. Run this command in the aima-core project (currently only releasing this on Maven):
-   mvn clean javadoc:jar source:jar deploy
+
+   mvn -P sonatype-oss-release deploy
    
 2. Close and Release: 
    Follow steps 8 onwards from:
