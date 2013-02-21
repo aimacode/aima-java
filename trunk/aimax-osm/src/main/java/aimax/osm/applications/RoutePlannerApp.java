@@ -36,6 +36,7 @@ public class RoutePlannerApp implements ActionListener {
 		this(new String[0]);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public RoutePlannerApp(String[] args) {
 		frame = new MapViewFrame(args);
 		frame.setTitle("OSM Route Planner");

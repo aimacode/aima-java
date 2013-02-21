@@ -24,6 +24,7 @@ public class PositionPanel extends JPanel {
 	JTextField lonDegField;
 	JTextField lonMinField;
 	
+	@SuppressWarnings("unchecked")
 	public PositionPanel() {
 		//setLayout(new GridLayout(2, 3));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

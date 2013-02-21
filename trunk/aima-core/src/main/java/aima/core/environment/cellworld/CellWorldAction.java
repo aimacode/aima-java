@@ -66,6 +66,8 @@ public enum CellWorldAction implements Action {
 		case Right:
 			newX++;
 			break;
+		default:
+			break;
 		}
 
 		return newX;
@@ -86,6 +88,8 @@ public enum CellWorldAction implements Action {
 			break;
 		case Down:
 			newY--;
+			break;
+		default:
 			break;
 		}
 

@@ -66,6 +66,7 @@ public class ConnectFourApp {
 		Metrics searchMetrics;
 
 		/** Standard constructor. */
+		@SuppressWarnings("unchecked")
 		ConnectFourPanel() {
 			game = new ConnectFourGame();
 			currState = game.getInitialState();

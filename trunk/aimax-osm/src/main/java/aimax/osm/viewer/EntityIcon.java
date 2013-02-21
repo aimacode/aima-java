@@ -81,6 +81,8 @@ public abstract class EntityIcon {
 						new int[] {x, x+dsize, x+offset, x},
 						new int[] {y+dsize, y+dsize, y, y+dsize}, 4);
 					break;
+				default:
+					break;
 				}
 			}
 			if (lineColor != null && !lineColor.equals(fillColor)) {
@@ -95,6 +97,8 @@ public abstract class EntityIcon {
 					g2.drawPolygon(
 						new int[] {x, x+dsize, x+offset, x},
 						new int[] {y+dsize, y+dsize, y, y+dsize}, 4);
+					break;
+				default:
 					break;
 				}
 			}

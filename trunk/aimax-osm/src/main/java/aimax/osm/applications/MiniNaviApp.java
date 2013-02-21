@@ -81,6 +81,7 @@ public class MiniNaviApp implements ActionListener {
 	protected JComboBox waySelection;
 	protected JButton calcButton;
 
+	@SuppressWarnings("unchecked")
 	public MiniNaviApp(String[] args) {
 		initFrame(args);
 		locator = new GpsLocator();
