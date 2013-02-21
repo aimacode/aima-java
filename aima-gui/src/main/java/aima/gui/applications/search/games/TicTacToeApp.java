@@ -64,6 +64,7 @@ public class TicTacToeApp {
 		Metrics searchMetrics;
 
 		/** Standard constructor. */
+		@SuppressWarnings("unchecked")
 		TicTacToePanel() {
 			this.setLayout(new BorderLayout());
 			JToolBar tbar = new JToolBar();

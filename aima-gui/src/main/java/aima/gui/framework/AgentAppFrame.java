@@ -344,12 +344,14 @@ public class AgentAppFrame extends JFrame {
 			}
 		}
 
+		@SuppressWarnings("unchecked")
 		public void setSelectorItems(String selectorName, String[] items,
 				int defaultIdx) {
 			JComboBox combo = getCombo(selectorName);
 			combo.removeAllItems();
-			for (String item : items)
+			for (String item : items) {
 				combo.addItem(item);
+			}
 			selectorDefaults[combos.indexOf(combo)] = defaultIdx;
 			combo.setVisible(items.length > 0);
 		}

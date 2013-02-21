@@ -58,6 +58,7 @@ public class FindPanel extends JPanel implements ActionListener,
 	List<MapNode> currMarkers;
 	List<MapNode> storedMarkers;
 
+	@SuppressWarnings("unchecked")
 	public FindPanel(MapViewPane view) {
 		this.view = view;
 		setLayout(new GridBagLayout());

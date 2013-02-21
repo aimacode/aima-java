@@ -43,6 +43,7 @@ public class Bz2OsmWriter implements MapWriter {
 	/**
 	 * Writes all data from <code>mapData</code> to file.
 	 */
+	@SuppressWarnings("resource")
 	@Override
 	public void writeMap(File file, OsmMap mapData, BoundingBox bb) {
 		try  {

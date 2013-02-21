@@ -32,6 +32,7 @@ public class Bz2OsmReader extends FilteringOsmReader {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	protected InputStream createFileStream(File file) throws Exception {
 		InputStream result = new BufferedInputStream(new FileInputStream(file));
 		try {
