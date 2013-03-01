@@ -17,18 +17,17 @@ import javax.swing.JTextField;
 public class PositionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	JComboBox latCombo;
+	JComboBox<String> latCombo;
 	JTextField latDegField;
 	JTextField latMinField;
-	JComboBox lonCombo;
+	JComboBox<String> lonCombo;
 	JTextField lonDegField;
 	JTextField lonMinField;
 	
-	@SuppressWarnings("unchecked")
 	public PositionPanel() {
 		//setLayout(new GridLayout(2, 3));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		latCombo = new JComboBox(new String[] {"N", "S"});
+		latCombo = new JComboBox<String>(new String[] {"N", "S"});
 		add(latCombo);
 		latDegField = new JTextField(3);
 		add(latDegField);
@@ -37,7 +36,7 @@ public class PositionPanel extends JPanel {
 		add(latMinField);
 		add(new JLabel("' "));
 		
-		lonCombo = new JComboBox(new String[] {"E", "W"});
+		lonCombo = new JComboBox<String>(new String[] {"E", "W"});
 		add(lonCombo);
 		lonDegField = new JTextField(3);
 		add(lonDegField);

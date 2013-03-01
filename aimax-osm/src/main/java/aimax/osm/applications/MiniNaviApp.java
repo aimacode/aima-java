@@ -43,8 +43,8 @@ import aimax.osm.viewer.MapViewFrame;
  * <code>RouteCalculator</code> and add in the main method the line
  * <code>System.setProperty(MiniNaviApp.MAP_CLASS_PROPERTY, "x.y.ZRouteCalculator</code>
  * . Analogously, renderer, entity classifier, and even the map representation
- * itself can be replaced. Note, that system properties can also be set by
- * VM argument (-Dpropertyname=value).
+ * itself can be replaced. Note, that system properties can also be set by VM
+ * argument (-Dpropertyname=value).
  * </p>
  * <p>
  * To enable the GPS interface, download the rs232 serial port library from
@@ -76,12 +76,11 @@ public class MiniNaviApp implements ActionListener {
 	protected RouteCalculator routeCalculator;
 	protected RoutingThread routingThread;
 
-	protected JComboBox gpsCombo;
+	protected JComboBox<String> gpsCombo;
 	protected JFileChooser gpsFileChooser;
-	protected JComboBox waySelection;
+	protected JComboBox<String> waySelection;
 	protected JButton calcButton;
 
-	@SuppressWarnings("unchecked")
 	public MiniNaviApp(String[] args) {
 		initFrame(args);
 		locator = new GpsLocator();
@@ -92,13 +91,14 @@ public class MiniNaviApp implements ActionListener {
 			routeCalculator = new RouteCalculator();
 
 		JToolBar toolbar = frame.getToolbar();
-		gpsCombo = new JComboBox(new String[] { "GPS Off", "GPS On",
+		gpsCombo = new JComboBox<String>(new String[] { "GPS Off", "GPS On",
 				"GPS Center", "GPS Cen+Log", "Read Log" });
 		gpsCombo.addActionListener(this);
 		toolbar.addSeparator();
 		toolbar.add(gpsCombo);
 
-		waySelection = new JComboBox(routeCalculator.getWaySelectionOptions());
+		waySelection = new JComboBox<String>(
+				routeCalculator.getWaySelectionOptions());
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");
@@ -153,9 +153,7 @@ public class MiniNaviApp implements ActionListener {
 					}
 				} else if (gpsFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) { // simulate
 					// GPS
-					locator
-							.openFileConnection(gpsFileChooser
-									.getSelectedFile());
+					locator.openFileConnection(gpsFileChooser.getSelectedFile());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -229,8 +227,8 @@ public class MiniNaviApp implements ActionListener {
 		@Override
 		public void run() {
 			try {
-				positions = routeCalculator.calculateRoute(routeMarkers, frame
-						.getMap(), waySelection.getSelectedIndex());
+				positions = routeCalculator.calculateRoute(routeMarkers,
+						frame.getMap(), waySelection.getSelectedIndex());
 			} catch (Exception e) {
 				e.printStackTrace(); // for debugging
 			}
