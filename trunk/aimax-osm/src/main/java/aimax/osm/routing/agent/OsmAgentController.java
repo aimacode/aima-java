@@ -58,7 +58,7 @@ public class OsmAgentController extends AgentAppController {
 		MapAgentFrame.SelectionState state = frame.getSelection();
 		
 		map.getOsmMap().getTracks().clear();
-		switch (state.getValue(MapAgentFrame.SCENARIO_SEL)) {
+		switch (state.getIndex(MapAgentFrame.SCENARIO_SEL)) {
 		case 0: map.setMapWayFilter
 		(MapWayAttFilter.createAnyWayFilter());
 		map.ignoreOneways(true); break;
@@ -70,10 +70,10 @@ public class OsmAgentController extends AgentAppController {
 		map.ignoreOneways(false); break;
 		}
 		
-		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
+		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
-				state.getValue(MapAgentFrame.SEARCH_SEL),
-				state.getValue(MapAgentFrame.SEARCH_MODE_SEL),
+				state.getIndex(MapAgentFrame.SEARCH_SEL),
+				state.getIndex(MapAgentFrame.SEARCH_MODE_SEL),
 				heuristic);
 		frame.getEnvView().setEnvironment(env);
 		isPrepared = true;
@@ -151,7 +151,7 @@ public class OsmAgentController extends AgentAppController {
 		heuristic.adaptToGoal(locs[1], map);
 		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
-		switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
+		switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 		case 0:
 			agent = new MapAgent(map, env, search, new String[] { locs[1] });
 			break;

@@ -111,7 +111,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 			heuristic.adaptToGoal(locs[1], map);
 			Agent agent = null;
 			MapAgentFrame.SelectionState state = frame.getSelection();
-			switch (state.getValue(MapAgentFrame.AGENT_SEL)) {
+			switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 			case 0:
 				agent = new SDMapAgent(env, search, new String[] { locs[1] });
 				break;

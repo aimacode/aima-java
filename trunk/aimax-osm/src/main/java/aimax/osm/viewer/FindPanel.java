@@ -46,7 +46,7 @@ public class FindPanel extends JPanel implements ActionListener,
 	MapViewPane view;
 	EntityFinder entityFinder;
 
-	private JComboBox typeCombo;
+	private JComboBox<String> typeCombo;
 	private JButton findButton;
 	private JButton findMoreButton;
 	private JButton clearButton;
@@ -58,7 +58,6 @@ public class FindPanel extends JPanel implements ActionListener,
 	List<MapNode> currMarkers;
 	List<MapNode> storedMarkers;
 
-	@SuppressWarnings("unchecked")
 	public FindPanel(MapViewPane view) {
 		this.view = view;
 		setLayout(new GridBagLayout());
@@ -96,7 +95,7 @@ public class FindPanel extends JPanel implements ActionListener,
 		c.gridwidth = 3;
 		add(findField, c);
 
-		typeCombo = new JComboBox(new String[] { "Entities", "Nodes", "Ways",
+		typeCombo = new JComboBox<String>(new String[] { "Entities", "Nodes", "Ways",
 				"Address (e.g. 'ulm, pritt')" });
 		c.gridx = 0;
 		c.gridy = 2;
