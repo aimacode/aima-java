@@ -250,7 +250,7 @@ public class NQueensApp extends SimpleAgentApp {
 		public void prepare(String changedSelector) {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
 			NQueensBoard board = null;
-			switch (selState.getValue(NQueensFrame.ENV_SEL)) {
+			switch (selState.getIndex(NQueensFrame.ENV_SEL)) {
 			case 0: // 4 x 4 board
 				board = new NQueensBoard(4);
 				break;
@@ -265,7 +265,7 @@ public class NQueensApp extends SimpleAgentApp {
 				break;
 			}
 			env = new NQueensEnvironment(board);
-			if (selState.getValue(NQueensFrame.PROBLEM_SEL) == 1)
+			if (selState.getIndex(NQueensFrame.PROBLEM_SEL) == 1)
 				for (int i = 0; i < board.getSize(); i++)
 					board.addQueenAt(new XYLocation(i, 0));
 			boardDirty = false;
@@ -283,9 +283,9 @@ public class NQueensApp extends SimpleAgentApp {
 				agent = null;
 			}
 			if (agent == null) {
-				int pSel = frame.getSelection().getValue(
+				int pSel = frame.getSelection().getIndex(
 						NQueensFrame.PROBLEM_SEL);
-				int sSel = frame.getSelection().getValue(
+				int sSel = frame.getSelection().getIndex(
 						NQueensFrame.SEARCH_SEL);
 				ActionsFunction af;
 				if (pSel == 0)
@@ -304,7 +304,7 @@ public class NQueensApp extends SimpleAgentApp {
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
-			int problemSel = frame.getSelection().getValue(
+			int problemSel = frame.getSelection().getIndex(
 					NQueensFrame.PROBLEM_SEL);
 			return problemSel == 1
 					|| (agent == null || !agent.isDone())

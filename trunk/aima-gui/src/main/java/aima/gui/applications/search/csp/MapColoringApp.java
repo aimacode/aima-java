@@ -124,7 +124,7 @@ public class MapColoringApp extends SimpleAgentApp {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
 			CSP csp = null;
 			CSPView view = getCSPView();
-			switch (selState.getValue(MapColoringFrame.ENV_SEL)) {
+			switch (selState.getIndex(MapColoringFrame.ENV_SEL)) {
 			case 0:
 				csp = new MapCSP();
 				break;
@@ -201,7 +201,7 @@ public class MapColoringApp extends SimpleAgentApp {
 			ImprovedBacktrackingStrategy iStrategy = null;
 			if (actions.isEmpty()) {
 				SolutionStrategy strategy = null;
-				switch (frame.getSelection().getValue(
+				switch (frame.getSelection().getIndex(
 						MapColoringFrame.STRATEGY_SEL)) {
 				case 0:
 					strategy = new BacktrackingStrategy();

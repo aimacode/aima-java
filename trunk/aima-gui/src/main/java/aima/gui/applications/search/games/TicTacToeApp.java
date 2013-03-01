@@ -53,7 +53,7 @@ public class TicTacToeApp {
 	private static class TicTacToePanel extends JPanel implements
 			ActionListener {
 		private static final long serialVersionUID = 1L;
-		JComboBox strategyCombo;
+		JComboBox<String> strategyCombo;
 		JButton clearButton;
 		JButton proposeButton;
 		JButton[] squares;
@@ -64,12 +64,11 @@ public class TicTacToeApp {
 		Metrics searchMetrics;
 
 		/** Standard constructor. */
-		@SuppressWarnings("unchecked")
 		TicTacToePanel() {
 			this.setLayout(new BorderLayout());
 			JToolBar tbar = new JToolBar();
 			tbar.setFloatable(false);
-			strategyCombo = new JComboBox(new String[] { "Minimax",
+			strategyCombo = new JComboBox<String>(new String[] { "Minimax",
 					"Alpha-Beta", "Iterative Deepening Alpha-Beta",
 					"Iterative Deepening Alpha-Beta (log)" });
 			strategyCombo.setSelectedIndex(1);

@@ -45,7 +45,7 @@ public class VacuumController extends AgentAppController {
 	public void prepare(String changedSelector) {
 		AgentAppFrame.SelectionState selState = frame.getSelection();
 		env = null;
-		switch (selState.getValue(VacuumFrame.ENV_SEL)) {
+		switch (selState.getIndex(VacuumFrame.ENV_SEL)) {
 		case 0:
 			env = new VacuumEnvironment();
 			break;
@@ -54,7 +54,7 @@ public class VacuumController extends AgentAppController {
 			break;
 		}
 		agent = null;
-		switch (selState.getValue(VacuumFrame.AGENT_SEL)) {
+		switch (selState.getIndex(VacuumFrame.AGENT_SEL)) {
 		case 0:
 			agent = new TableDrivenVacuumAgent();
 			break;

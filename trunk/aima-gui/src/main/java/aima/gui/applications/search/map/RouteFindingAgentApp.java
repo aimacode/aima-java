@@ -85,7 +85,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		@Override
 		protected void selectionChanged(String changedSelector) {
 			SelectionState state = getSelection();
-			int scenarioIdx = state.getValue(MapAgentFrame.SCENARIO_SEL);
+			int scenarioIdx = state.getIndex(MapAgentFrame.SCENARIO_SEL);
 			RouteFindingAgentFrame.MapType mtype = (scenarioIdx < 3) ? MapType.ROMANIA
 					: MapType.AUSTRALIA;
 			if (mtype != usedMap) {

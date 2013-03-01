@@ -55,8 +55,8 @@ public class ConnectFourApp {
 	private static class ConnectFourPanel extends JPanel implements
 			ActionListener {
 		private static final long serialVersionUID = 1L;
-		JComboBox strategyCombo;
-		JComboBox timeCombo;
+		JComboBox<String> strategyCombo;
+		JComboBox<String> timeCombo;
 		JButton clearButton;
 		JButton proposeButton;
 		JLabel statusBar;
@@ -66,7 +66,6 @@ public class ConnectFourApp {
 		Metrics searchMetrics;
 
 		/** Standard constructor. */
-		@SuppressWarnings("unchecked")
 		ConnectFourPanel() {
 			game = new ConnectFourGame();
 			currState = game.getInitialState();
@@ -75,14 +74,14 @@ public class ConnectFourApp {
 
 			JToolBar toolBar = new JToolBar();
 			toolBar.setFloatable(false);
-			strategyCombo = new JComboBox(new String[] {
+			strategyCombo = new JComboBox<String>(new String[] {
 					"Minimax (not recommended)",
 					"Alpha-Beta (not recommended)",
 					"Iterative Deepening Alpha-Beta", "Advanced Alpha-Beta",
 					"Advanced Alpha-Beta (log)" });
 			strategyCombo.setSelectedIndex(3);
 			toolBar.add(strategyCombo);
-			timeCombo = new JComboBox(new String[] { "5sec", "10sec", "15sec",
+			timeCombo = new JComboBox<String>(new String[] { "5sec", "10sec", "15sec",
 					"20sec" });
 			timeCombo.setSelectedIndex(0);
 			toolBar.add(timeCombo);
