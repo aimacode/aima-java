@@ -24,8 +24,8 @@ import javax.swing.JToolBar;
  * </p>
  * <p>
  * To make the frame fit to your needs, you will at least have to add some
- * selectors. The frame is configurable at run-time, so subclassing
- * will not always be necessary.
+ * selectors. The frame is configurable at run-time, so subclassing will not
+ * always be necessary.
  * </p>
  * 
  * @author Ruediger Lunde
@@ -53,7 +53,7 @@ public class AgentAppFrame extends JFrame {
 	private JToggleButton pauseButton;
 	private JButton cancelButton;
 	private JLabel statusLabel;
-	
+
 	protected JSplitPane centerPane;
 	private MessageLoggerPanel messageLogger;
 	private AgentAppEnvironmentView envView;
@@ -73,7 +73,7 @@ public class AgentAppFrame extends JFrame {
 	public MessageLoggerPanel getMessageLogger() {
 		return messageLogger;
 	}
-	
+
 	/**
 	 * Specifies a set of combo boxes to be added to the toolbar. Each combobox
 	 * has a name, which is used to access its selection state on software level
@@ -94,7 +94,7 @@ public class AgentAppFrame extends JFrame {
 	 * Sets the choice items and the default value of a specified selector. The
 	 * first item has index 0.
 	 */
-	public void setSelectorItems(String selectorName, String[] items,
+	public void setSelectorItems(String selectorName, Object[] items,
 			int defaultIdx) {
 		AgentAppController cont = controller;
 		controller = null; // suppress reactions on parameter changes.
@@ -122,17 +122,17 @@ public class AgentAppFrame extends JFrame {
 	}
 
 	/**
-	 * Returns the environment view which is currently used to display
-	 * the agents in their environment.
+	 * Returns the environment view which is currently used to display the
+	 * agents in their environment.
 	 */
 	public AgentAppEnvironmentView getEnvView() {
 		return envView;
 	}
-	
+
 	/**
-	 * Replaces the environment view. The environment view is the 
-	 * panel to the left of the splitbar. It typically implements a
-	 * 2D-visualization of agents in their environment.
+	 * Replaces the environment view. The environment view is the panel to the
+	 * left of the splitbar. It typically implements a 2D-visualization of
+	 * agents in their environment.
 	 */
 	public void setEnvView(AgentAppEnvironmentView view) {
 		envView = view;
@@ -161,21 +161,23 @@ public class AgentAppFrame extends JFrame {
 	protected SimulationThread getSimulationThread() {
 		return simulationThread;
 	}
-	
+
 	/**
 	 * Sets the current agent thread and updates the enabled state.
-	 * @param thread A thread or null.
+	 * 
+	 * @param thread
+	 *            A thread or null.
 	 */
 	protected void setSimulationThread(SimulationThread thread) {
 		simulationThread = thread;
 		updateEnabledState();
 	}
-	
+
 	/** Returns true if simulation pause button was pressed. */
 	public boolean simulationPaused() {
 		return pauseButton.isSelected();
 	}
-	
+
 	/** Assembles the inner structure of the frame. */
 	private void initComponents() {
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -187,7 +189,7 @@ public class AgentAppFrame extends JFrame {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
+
 		toolbar = new JToolBar();
 		toolbar.setFloatable(false);
 		selectors = new SelectorContainer();
@@ -243,11 +245,12 @@ public class AgentAppFrame extends JFrame {
 		clearButton.setEnabled(b);
 		prepareButton.setEnabled(b);
 		runButton.setEnabled(prep);
-		if (b) pauseButton.setSelected(false);
+		if (b)
+			pauseButton.setSelected(false);
 		pauseButton.setEnabled(!b);
 		stepButton.setEnabled(prep);
 		cancelButton.setEnabled(!b);
-		for (JComboBox combo : selectors.combos)
+		for (JComboBox<Object> combo : selectors.combos)
 			combo.setEnabled(b);
 	}
 
@@ -259,13 +262,12 @@ public class AgentAppFrame extends JFrame {
 		}
 	}
 
-	
 	// ////////////////////////////////////////////////////////
 	// inner classes
 
 	/** Sends commands to the controller. */
 	private class FrameActionListener implements ActionListener {
-		@SuppressWarnings("deprecation")
+		@SuppressWarnings({ "deprecation", "unchecked" })
 		public void actionPerformed(ActionEvent evt) {
 			String err = "";
 			try {
@@ -284,14 +286,14 @@ public class AgentAppFrame extends JFrame {
 					} else if (source == runButton) {
 						err = "when running simulation ";
 						setStatus("");
-						setSimulationThread(new SimulationThread
-								(AgentAppFrame.this, controller, false));
+						setSimulationThread(new SimulationThread(
+								AgentAppFrame.this, controller, false));
 						getSimulationThread().start();
 					} else if (source == stepButton) {
 						err = "when executing simulation step ";
 						setStatus("");
-						setSimulationThread(new SimulationThread
-								(AgentAppFrame.this, controller, true));
+						setSimulationThread(new SimulationThread(
+								AgentAppFrame.this, controller, true));
 						getSimulationThread().start();
 					} else if (source == cancelButton) {
 						err = "when canceling simulation ";
@@ -304,16 +306,17 @@ public class AgentAppFrame extends JFrame {
 								at.stop();
 								setStatus("Task stopped.");
 								setSimulationThread(null);
-							}	
+							}
 						}
 					} else if (selectors.combos.contains(source)) {
 						err = "when preparing the agent ";
-						selectionChanged(selectors.getName((JComboBox) source));
+						selectionChanged(selectors
+								.getName((JComboBox<Object>) source));
 					}
 				}
 			} catch (Exception e) {
-				messageLogger.log("Error: Something went wrong " + err + "(" + e
-						+ ").");
+				messageLogger.log("Error: Something went wrong " + err + "("
+						+ e + ").");
 				e.printStackTrace();
 			}
 			updateEnabledState();
@@ -325,16 +328,16 @@ public class AgentAppFrame extends JFrame {
 		String[] selectorNames = new String[] {};
 		int[] selectorDefaults = new int[] {};
 		// JPanel selectorPanel = new JPanel();
-		List<JComboBox> combos = new ArrayList<JComboBox>();
+		List<JComboBox<Object>> combos = new ArrayList<JComboBox<Object>>();
 
 		public void setSelectors(String[] selectorNames, String[] tooltips) {
 			this.selectorNames = selectorNames;
 			this.selectorDefaults = new int[selectorNames.length];
-			for (JComboBox combo : combos)
+			for (JComboBox<Object> combo : combos)
 				toolbar.remove(combo);
 			combos.clear();
 			for (int i = 0; i < selectorNames.length; i++) {
-				JComboBox combo = new JComboBox();
+				JComboBox<Object> combo = new JComboBox<Object>();
 				combo.addActionListener(actionListener);
 				combo.setVisible(false);
 				combos.add(combo);
@@ -344,12 +347,11 @@ public class AgentAppFrame extends JFrame {
 			}
 		}
 
-		@SuppressWarnings("unchecked")
-		public void setSelectorItems(String selectorName, String[] items,
+		public void setSelectorItems(String selectorName, Object[] items,
 				int defaultIdx) {
-			JComboBox combo = getCombo(selectorName);
+			JComboBox<Object> combo = getCombo(selectorName);
 			combo.removeAllItems();
-			for (String item : items) {
+			for (Object item : items) {
 				combo.addItem(item);
 			}
 			selectorDefaults[combos.indexOf(combo)] = defaultIdx;
@@ -366,19 +368,20 @@ public class AgentAppFrame extends JFrame {
 		public SelectionState getSelection() {
 			SelectionState result = new SelectionState(selectorNames);
 			for (int i = 0; i < result.size(); i++) {
-				result.setValue(i, combos.get(i).getSelectedIndex());
+				result.setState(i, combos.get(i).getSelectedIndex(), combos
+						.get(i).getSelectedItem());
 			}
 			return result;
 		}
 
-		JComboBox getCombo(String selectorName) {
+		JComboBox<Object> getCombo(String selectorName) {
 			for (int i = 0; i < selectorNames.length; i++)
 				if (selectorNames[i].equals(selectorName))
 					return combos.get(i);
 			return null;
 		}
-		
-		String getName(JComboBox combo) {
+
+		String getName(JComboBox<Object> combo) {
 			int idx = combos.indexOf(combo);
 			if (idx != -1)
 				return selectorNames[idx];
@@ -386,7 +389,6 @@ public class AgentAppFrame extends JFrame {
 				return null;
 		}
 	}
-	
 
 	// ////////////////////////////////////////////////////////
 	// static inner classes
@@ -399,11 +401,13 @@ public class AgentAppFrame extends JFrame {
 	public static class SelectionState {
 		private final List<String> selectors = new ArrayList<String>();
 		private final List<Integer> selIndices = new ArrayList<Integer>();
+		private final List<Object> selItems = new ArrayList<Object>();
 
 		protected SelectionState(String[] selectors) {
 			for (String sel : selectors) {
 				this.selectors.add(sel);
 				this.selIndices.add(null);
+				this.selItems.add(null);
 			}
 		}
 
@@ -415,25 +419,24 @@ public class AgentAppFrame extends JFrame {
 		/**
 		 * Sets the selection state of a specified selector to a specified item.
 		 */
-		void setValue(int selectorIdx, int valIdx) {
+		void setState(int selectorIdx, int valIdx, Object value) {
 			selIndices.set(selectorIdx, valIdx);
-		}
-
-		/**
-		 * Sets the selection state of a specified selector to a specified item.
-		 */
-		void setValue(String selector, int valIdx) {
-			selIndices.set(selectors.indexOf(selector), valIdx);
+			selItems.set(selectorIdx, value);
 		}
 
 		/** Returns the index of the selected item of a specified selector. */
-		public int getValue(int selectorIdx) {
+		public int getIndex(int selectorIdx) {
 			return selIndices.get(selectorIdx);
 		}
 
 		/** Returns the index of the selected item of a specified selector. */
-		public int getValue(String selector) {
+		public int getIndex(String selector) {
 			return selIndices.get(selectors.indexOf(selector));
+		}
+		
+		/** Returns the selected item of a specified selector. */
+		public Object getValue(String selector) {
+			return selItems.get(selectors.indexOf(selector));
 		}
 
 		/** Returns a readable representation of the selection state. */

@@ -242,7 +242,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		public void prepare(String changedSelector) {
 			AgentAppFrame.SelectionState selState = frame.getSelection();
 			EightPuzzleBoard board = null;
-			switch (selState.getValue(EightPuzzleFrame.ENV_SEL)) {
+			switch (selState.getIndex(EightPuzzleFrame.ENV_SEL)) {
 			case 0: // three moves
 				board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6,
 						7, 8 });
@@ -279,7 +279,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		 */
 		protected void addAgent() throws Exception {
 			if (agent == null) {
-				int pSel = frame.getSelection().getValue(
+				int pSel = frame.getSelection().getIndex(
 						EightPuzzleFrame.SEARCH_SEL);
 				Problem problem = new Problem(env.getBoard(),
 						EightPuzzleFunctionFactory.getActionsFunction(),

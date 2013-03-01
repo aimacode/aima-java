@@ -53,13 +53,13 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	@Override
 	public void prepare(String changedSelectors) {
 		MapAgentFrame.SelectionState state = frame.getSelection();
-		selectScenarioAndDest(state.getValue(MapAgentFrame.SCENARIO_SEL), state
-				.getValue(MapAgentFrame.DESTINATION_SEL));
+		selectScenarioAndDest(state.getIndex(MapAgentFrame.SCENARIO_SEL), state
+				.getIndex(MapAgentFrame.DESTINATION_SEL));
 		prepareView();
-		heuristic = createHeuristic(state.getValue(MapAgentFrame.HEURISTIC_SEL));
+		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
-				state.getValue(MapAgentFrame.SEARCH_SEL),
-				state.getValue(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
+				state.getIndex(MapAgentFrame.SEARCH_SEL),
+				state.getIndex(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
 		isPrepared = true;
 	}
 	
