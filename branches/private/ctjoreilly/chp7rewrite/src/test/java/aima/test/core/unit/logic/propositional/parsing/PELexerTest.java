@@ -31,10 +31,10 @@ public class PELexerTest {
 	@Test
 	public void testLexNotExpression() {
 		PELexer pelexer = new PELexer();
-		pelexer.setInput("(NOT P)");
+		pelexer.setInput("(~ P)");
 		Assert.assertEquals(new Token(LogicTokenTypes.LPAREN, "("),
 				pelexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "NOT"),
+		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTIVE, "~"),
 				pelexer.nextToken());
 
 		Assert.assertEquals(new Token(LogicTokenTypes.SYMBOL, "P"),
@@ -54,7 +54,7 @@ public class PELexerTest {
 				pelexer.nextToken());
 		Assert.assertEquals(new Token(LogicTokenTypes.SYMBOL, "P"),
 				pelexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "=>"),
+		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTIVE, "=>"),
 				pelexer.nextToken());
 	}
 
@@ -66,7 +66,7 @@ public class PELexerTest {
 				pelexer.nextToken());
 		Assert.assertEquals(new Token(LogicTokenTypes.SYMBOL, "B11"),
 				pelexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "<=>"),
+		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTIVE, "<=>"),
 				pelexer.nextToken());
 	}
 }

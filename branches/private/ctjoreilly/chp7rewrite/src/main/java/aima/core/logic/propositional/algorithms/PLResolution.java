@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
@@ -75,8 +76,8 @@ public class PLResolution {
 	 * @return the answer to the specified question using PL-Resolution.
 	 */
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
-		Sentence kBAndNotAlpha = new BinarySentence("AND", kb.asSentence(),
-				new UnarySentence(alpha));
+		Sentence kBAndNotAlpha = new BinarySentence(Connective.AND, kb.asSentence(),
+				new UnarySentence(Connective.NOT, alpha));
 		Set<Sentence> clauses = new CNFClauseGatherer()
 				.getClausesFrom(new CNFTransformer().transform(kBAndNotAlpha));
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
@@ -169,12 +170,12 @@ public class PLResolution {
 			sentences.add(positiveSymbols.get(i));
 		}
 		for (int i = 0; i < negativeSymbols.size(); i++) {
-			sentences.add(new UnarySentence(negativeSymbols.get(i)));
+			sentences.add(new UnarySentence(Connective.NOT, negativeSymbols.get(i)));
 		}
 		if (sentences.size() == 0) {
 			return new Symbol("EMPTY_CLAUSE"); // == empty clause
 		} else {
-			return LogicUtils.chainWith("OR", sentences);
+			return LogicUtils.chainWith(Connective.OR, sentences);
 		}
 
 	}

@@ -1,5 +1,6 @@
 package aima.core.logic.propositional.parsing.ast;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PLVisitor;
 
 /**
@@ -7,14 +8,21 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * 
  */
 public class UnarySentence extends ComplexSentence {
-	private Sentence negated;
+	private Connective connective;
 
-	public Sentence getNegated() {
-		return negated;
+	private Sentence first;
+
+	public UnarySentence(Connective connective, Sentence first) {
+		this.connective = connective;
+		this.first = first;
 	}
 
-	public UnarySentence(Sentence negated) {
-		this.negated = negated;
+	public Sentence getFirst() {
+		return first;
+	}
+
+	public Connective getConnective() {
+		return connective;
 	}
 
 	@Override
@@ -26,25 +34,30 @@ public class UnarySentence extends ComplexSentence {
 		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
-		UnarySentence ns = (UnarySentence) o;
-		return (ns.negated.equals(negated));
+		UnarySentence us = (UnarySentence) o;
+		return (us.getConnective().equals(getConnective()))
+				&& (us.getFirst().equals(first));
 
 	}
 
 	@Override
 	public int hashCode() {
 		int result = 17;
-		result = 37 * result + negated.hashCode();
+		result = 37 * result + first.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return " ( NOT " + negated.toString() + " ) ";
+		return  getConnective() + " " + first.toString();
 	}
 
 	@Override
 	public Object accept(PLVisitor plv, Object arg) {
 		return plv.visitNotSentence(this, arg);
+	}
+
+	public boolean isNot() {
+		return (getConnective().equals(Connective.NOT));
 	}
 }

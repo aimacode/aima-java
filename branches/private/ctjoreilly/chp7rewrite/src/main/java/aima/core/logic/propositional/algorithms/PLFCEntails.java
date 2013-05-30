@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
@@ -151,7 +152,7 @@ public class PLFCEntails {
 
 		private boolean isImpliedSentence(Sentence sentence) {
 			return ((sentence instanceof BinarySentence) && ((BinarySentence) sentence)
-					.getOperator().equals("=>"));
+					.getConnective().equals(Connective.IMPLICATION));
 		}
 
 		/**

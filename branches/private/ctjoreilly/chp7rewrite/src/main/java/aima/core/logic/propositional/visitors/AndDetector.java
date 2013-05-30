@@ -3,7 +3,6 @@ package aima.core.logic.propositional.visitors;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.parsing.ast.TrueSentence;
@@ -29,7 +28,7 @@ public class AndDetector implements PLVisitor {
 	}
 
 	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		return fs.getNegated().accept(this, null);
+		return fs.getFirst().accept(this, null);
 	}
 
 	public Object visitBinarySentence(BinarySentence fs, Object arg) {
@@ -42,10 +41,6 @@ public class AndDetector implements PLVisitor {
 					.booleanValue();
 			return new Boolean((first || second));
 		}
-	}
-
-	public Object visitMultiSentence(MultiSentence fs, Object arg) {
-		throw new RuntimeException("can't handle multisentences");
 	}
 
 	public boolean containsEmbeddedAnd(Sentence s) {

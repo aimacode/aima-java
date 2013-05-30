@@ -13,7 +13,7 @@ public interface LogicTokenTypes {
 
 	static final int COMMA = 4;
 
-	static final int CONNECTOR = 5;
+	static final int CONNECTIVE = 5;
 
 	static final int QUANTIFIER = 6;
 

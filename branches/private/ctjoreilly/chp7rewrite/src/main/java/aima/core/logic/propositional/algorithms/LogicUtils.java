@@ -2,6 +2,7 @@ package aima.core.logic.propositional.algorithms;
 
 import java.util.List;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
@@ -11,7 +12,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  */
 public class LogicUtils {
 
-	public static Sentence chainWith(String connector, List<Sentence> sentences) {
+	public static Sentence chainWith(Connective connective, List<Sentence> sentences) {
 		if (sentences.size() == 0) {
 			return null;
 		} else if (sentences.size() == 1) {
@@ -20,7 +21,7 @@ public class LogicUtils {
 			Sentence soFar = sentences.get(0);
 			for (int i = 1; i < sentences.size(); i++) {
 				Sentence next = sentences.get(i);
-				soFar = new BinarySentence(connector, soFar, next);
+				soFar = new BinarySentence(connective, soFar, next);
 			}
 			return soFar;
 		}

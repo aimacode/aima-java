@@ -1,5 +1,6 @@
 package aima.core.logic.propositional.visitors;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.AbstractPLVisitor;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
@@ -51,40 +52,40 @@ public class CNFTransformer extends AbstractPLVisitor {
 	}
 
 	private Sentence transformBiConditionalSentence(BinarySentence bs) {
-		Sentence first = new BinarySentence("=>", (Sentence) bs.getFirst()
+		Sentence first = new BinarySentence(Connective.IMPLICATION, (Sentence) bs.getFirst()
 				.accept(this, null), (Sentence) bs.getSecond().accept(this,
 				null));
-		Sentence second = new BinarySentence("=>", (Sentence) bs.getSecond()
+		Sentence second = new BinarySentence(Connective.IMPLICATION, (Sentence) bs.getSecond()
 				.accept(this, null), (Sentence) bs.getFirst()
 				.accept(this, null));
-		return new BinarySentence("AND", first, second);
+		return new BinarySentence(Connective.AND, first, second);
 	}
 
 	private Sentence transformImpliedSentence(BinarySentence bs) {
-		Sentence first = new UnarySentence((Sentence) bs.getFirst().accept(
+		Sentence first = new UnarySentence(Connective.NOT, (Sentence) bs.getFirst().accept(
 				this, null));
-		return new BinarySentence("OR", first, (Sentence) bs.getSecond()
+		return new BinarySentence(Connective.OR, first, (Sentence) bs.getSecond()
 				.accept(this, null));
 	}
 
 	private Sentence transformNotSentence(UnarySentence us) {
-		if (us.getNegated() instanceof UnarySentence) {
-			return (Sentence) ((UnarySentence) us.getNegated()).getNegated()
+		if (us.getFirst() instanceof UnarySentence) {
+			return (Sentence) ((UnarySentence) us.getFirst()).getFirst()
 					.accept(this, null);
-		} else if (us.getNegated() instanceof BinarySentence) {
-			BinarySentence bs = (BinarySentence) us.getNegated();
+		} else if (us.getFirst() instanceof BinarySentence) {
+			BinarySentence bs = (BinarySentence) us.getFirst();
 			if (bs.isAndSentence()) {
-				Sentence first = new UnarySentence((Sentence) bs.getFirst()
+				Sentence first = new UnarySentence(Connective.NOT, (Sentence) bs.getFirst()
 						.accept(this, null));
-				Sentence second = new UnarySentence((Sentence) bs.getSecond()
+				Sentence second = new UnarySentence(Connective.NOT, (Sentence) bs.getSecond()
 						.accept(this, null));
-				return new BinarySentence("OR", first, second);
+				return new BinarySentence(Connective.OR, first, second);
 			} else if (bs.isOrSentence()) {
-				Sentence first = new UnarySentence((Sentence) bs.getFirst()
+				Sentence first = new UnarySentence(Connective.NOT, (Sentence) bs.getFirst()
 						.accept(this, null));
-				Sentence second = new UnarySentence((Sentence) bs.getSecond()
+				Sentence second = new UnarySentence(Connective.NOT, (Sentence) bs.getSecond()
 						.accept(this, null));
-				return new BinarySentence("AND", first, second);
+				return new BinarySentence(Connective.AND, first, second);
 			} else {
 				return (Sentence) super.visitNotSentence(us, null);
 			}
@@ -102,8 +103,8 @@ public class CNFTransformer extends AbstractPLVisitor {
 		Sentence alpha = (Sentence) otherterm.accept(this, null);
 		Sentence beta = (Sentence) andTerm.getFirst().accept(this, null);
 		Sentence gamma = (Sentence) andTerm.getSecond().accept(this, null);
-		Sentence distributed = new BinarySentence("AND", new BinarySentence(
-				"OR", alpha, beta), new BinarySentence("OR", alpha, gamma));
+		Sentence distributed = new BinarySentence(Connective.AND, new BinarySentence(
+				Connective.OR, alpha, beta), new BinarySentence(Connective.OR, alpha, gamma));
 		return distributed;
 	}
 }

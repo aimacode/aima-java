@@ -38,7 +38,7 @@ public class DPLLTest {
 		Model model = new Model();
 		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
 				true);
-		Sentence sentence = (Sentence) parser.parse("((A AND B) AND (A OR B))");
+		Sentence sentence = (Sentence) parser.parse("((A & B) & (A | B))");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence, model);
 		Assert.assertEquals(true, satisfiable);
 	}
@@ -77,7 +77,7 @@ public class DPLLTest {
 		model = model.extend(new Symbol("A"), true)
 				.extend(new Symbol("B"), true).extend(new Symbol("C"), true);
 		Sentence sentence = (Sentence) parser
-				.parse("((A AND B) AND (B AND C))");
+				.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
@@ -131,7 +131,7 @@ public class DPLLTest {
 
 	@Test
 	public void testDPLLSucceedsWithAandNotA() {
-		Sentence sentence = (Sentence) parser.parse("(A AND (NOT A))");
+		Sentence sentence = (Sentence) parser.parse("(A & (~ A))");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence);
 		Assert.assertEquals(false, satisfiable);
 	}
@@ -139,38 +139,38 @@ public class DPLLTest {
 	@Test
 	public void testDPLLSucceedsWithChadCarffsBugReport() {
 		KnowledgeBase kb = new KnowledgeBase();
-		kb.tell("(B12 <=> (P11 OR (P13 OR (P22 OR P02))))");
-		kb.tell("(B21 <=> (P20 OR (P22 OR (P31 OR P11))))");
-		kb.tell("(B01 <=> (P00 OR (P02 OR P11)))");
-		kb.tell("(B10 <=> (P11 OR (P20 OR P00)))");
-		kb.tell("(NOT B21)");
-		kb.tell("(NOT B12)");
+		kb.tell("(B12 <=> (P11 | (P13 | (P22 | P02))))");
+		kb.tell("(B21 <=> (P20 | (P22 | (P31 | P11))))");
+		kb.tell("(B01 <=> (P00 | (P02 | P11)))");
+		kb.tell("(B10 <=> (P11 | (P20 | P00)))");
+		kb.tell("(~ B21)");
+		kb.tell("(~ B12)");
 		kb.tell("(B10)");
 		kb.tell("(B01)");
 		Assert.assertTrue(kb.askWithDpll("(P00)"));
-		Assert.assertFalse(kb.askWithDpll("(NOT P00)"));
+		Assert.assertFalse(kb.askWithDpll("(~ P00)"));
 	}
 
 	@Test
 	public void testDPLLSucceedsWithStackOverflowBugReport1() {
 		Sentence sentence = (Sentence) parser
-				.parse("((A OR (NOT A)) AND (A OR B))");
+				.parse("((A | (~ A)) & (A | B))");
 		Assert.assertTrue(dpll.dpllSatisfiable(sentence));
 	}
 
 	@Test
 	public void testDPLLSucceedsWithChadCarffsBugReport2() {
 		KnowledgeBase kb = new KnowledgeBase();
-		kb.tell("(B10 <=> (P11 OR (P20 OR P00)))");
-		kb.tell("(B01 <=> (P00 OR (P02 OR P11)))");
-		kb.tell("(B21 <=> (P20 OR (P22 OR (P31 OR P11))))");
-		kb.tell("(B12 <=> (P11 OR (P13 OR (P22 OR P02))))");
-		kb.tell("(NOT B21)");
-		kb.tell("(NOT B12)");
+		kb.tell("(B10 <=> (P11 | (P20 | P00)))");
+		kb.tell("(B01 <=> (P00 | (P02 | P11)))");
+		kb.tell("(B21 <=> (P20 | (P22 | (P31 | P11))))");
+		kb.tell("(B12 <=> (P11 | (P13 | (P22 | P02))))");
+		kb.tell("(~ B21)");
+		kb.tell("(~ B12)");
 		kb.tell("(B10)");
 		kb.tell("(B01)");
 		Assert.assertTrue(kb.askWithDpll("(P00)"));
-		Assert.assertFalse(kb.askWithDpll("(NOT P00)"));
+		Assert.assertFalse(kb.askWithDpll("(~ P00)"));
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class DPLLTest {
 		Model model = new Model();
 		model = model.extend(new Symbol("A"), false)
 				.extend(new Symbol("B"), false).extend(new Symbol("C"), true);
-		Sentence sentence = (Sentence) parser.parse("((A OR B) OR C)");
+		Sentence sentence = (Sentence) parser.parse("((A | B) | C)");
 		Assert.assertTrue(dpll.dpllSatisfiable(sentence, model));
 	}
 

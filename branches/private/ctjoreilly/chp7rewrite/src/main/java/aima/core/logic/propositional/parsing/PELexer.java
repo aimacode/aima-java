@@ -3,9 +3,12 @@ package aima.core.logic.propositional.parsing;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.lang.model.SourceVersion;
+
 import aima.core.logic.common.Lexer;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
+import aima.core.logic.propositional.Connective;
 
 /**
  * @author Ravi Mohan
@@ -13,15 +16,20 @@ import aima.core.logic.common.Token;
  */
 public class PELexer extends Lexer {
 
-	Set<String> connectors;
-
+	private Set<Character> connectiveLeadingChars = new HashSet<Character>();
+	private Set<Character> connectiveChars        = new HashSet<Character>();
+	
 	public PELexer() {
-		connectors = new HashSet<String>();
-		connectors.add("NOT");
-		connectors.add("AND");
-		connectors.add("OR");
-		connectors.add("=>");
-		connectors.add("<=>");
+		for (Connective connective : Connective.values()) {
+			char[] chars = new char[connective.getSymbol().length()];
+			connective.getSymbol().getChars(0, connective.getSymbol().length(), chars, 0);
+			for (int i = 0; i < chars.length; i++) {
+				if (i == 0) {
+					connectiveLeadingChars.add(chars[i]);
+				}
+				connectiveChars.add(chars[i]);
+			}
+		}
 	}
 
 	/**
@@ -47,17 +55,16 @@ public class PELexer extends Lexer {
 		if (lookAhead(1) == '(') {
 			consume();
 			return new Token(LogicTokenTypes.LPAREN, "(");
-
 		} else if (lookAhead(1) == ')') {
 			consume();
 			return new Token(LogicTokenTypes.RPAREN, ")");
-		} else if (identifierDetected()) {
-			return symbol();
-
 		} else if (Character.isWhitespace(lookAhead(1))) {
 			consume();
 			return nextToken();
-			// return whiteSpace();
+		} else if (connectiveDetected(lookAhead(1))) {
+			return connective();
+		} else if (symbolDetected(lookAhead(1))) {
+			return symbol();
 		} else if (lookAhead(1) == (char) -1) {
 			return new Token(LogicTokenTypes.EOI, "EOI");
 		} else {
@@ -66,59 +73,48 @@ public class PELexer extends Lexer {
 		}
 	}
 
-	private boolean identifierDetected() {
-		return (Character.isJavaIdentifierStart((char) lookAheadBuffer[0]))
-				|| partOfConnector();
+	private boolean connectiveDetected(char leadingChar) {
+		return connectiveLeadingChars.contains(leadingChar);
 	}
-
-	private boolean partOfConnector() {
-		return (lookAhead(1) == '=') || (lookAhead(1) == '<')
-				|| (lookAhead(1) == '>');
+	
+	private boolean symbolDetected(char leadingChar) {
+		return Character.isJavaIdentifierStart(leadingChar);
+	}
+	
+	private Token connective() {
+		StringBuffer sbuf = new StringBuffer();
+		while (connectiveChars.contains(lookAhead(1))) {
+			sbuf.append(lookAhead(1));
+			consume();
+		}
+		
+		String symbol = sbuf.toString();
+		if (isConnective(symbol)) {
+			return new Token(LogicTokenTypes.CONNECTIVE, sbuf.toString());
+		}
+		
+		throw new RuntimeException("Lexing error on connective "+symbol);
 	}
 
 	private Token symbol() {
 		StringBuffer sbuf = new StringBuffer();
-		while ((Character.isLetterOrDigit(lookAhead(1)))
-				|| (lookAhead(1) == '=') || (lookAhead(1) == '<')
-				|| (lookAhead(1) == '>')) {
+		while (Character.isJavaIdentifierStart(lookAhead(1)) || Character.isJavaIdentifierPart(lookAhead(1))) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
 		String symbol = sbuf.toString();
-		if (isConnector(symbol)) {
-			return new Token(LogicTokenTypes.CONNECTOR, sbuf.toString());
-		} else if (symbol.equalsIgnoreCase("true")) {
+		if (symbol.equalsIgnoreCase("true")) {
 			return new Token(LogicTokenTypes.TRUE, "TRUE");
 		} else if (symbol.equalsIgnoreCase("false")) {
 			return new Token(LogicTokenTypes.FALSE, "FALSE");
-		} else {
+		} else if (SourceVersion.isIdentifier(symbol)){
 			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString());
 		}
-
+		
+		throw new RuntimeException("Lexing error on symbol "+symbol);
 	}
 
-	@SuppressWarnings("unused")
-	private Token connector() {
-		StringBuffer sbuf = new StringBuffer();
-		while (Character.isLetterOrDigit(lookAhead(1))) {
-			sbuf.append(lookAhead(1));
-			consume();
-		}
-		return new Token(LogicTokenTypes.CONNECTOR, sbuf.toString());
-	}
-
-	@SuppressWarnings("unused")
-	private Token whiteSpace() {
-		StringBuffer sbuf = new StringBuffer();
-		while (Character.isWhitespace(lookAhead(1))) {
-			sbuf.append(lookAhead(1));
-			consume();
-		}
-		return new Token(LogicTokenTypes.WHITESPACE, sbuf.toString());
-
-	}
-
-	private boolean isConnector(String aSymbol) {
-		return (connectors.contains(aSymbol));
+	private boolean isConnective(String aSymbol) {
+		return Connective.isConnective(aSymbol);
 	}
 }

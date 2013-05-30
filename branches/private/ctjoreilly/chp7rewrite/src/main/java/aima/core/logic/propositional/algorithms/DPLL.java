@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
@@ -91,7 +92,7 @@ public class DPLL {
 			Model model, List<Symbol> symbols) {
 		List<Sentence> clausesWithNonTrueValues = clausesWithNonTrueValues(
 				clauseList, model);
-		Sentence nonTrueClauses = LogicUtils.chainWith("AND",
+		Sentence nonTrueClauses = LogicUtils.chainWith(Connective.AND,
 				clausesWithNonTrueValues);
 		// System.out.println("Unsatisfied clauses = "
 		// + clausesWithNonTrueValues.size());
@@ -251,7 +252,7 @@ public class DPLL {
 
 			if (clause instanceof UnarySentence) {
 				UnarySentence sentence = (UnarySentence) clause;
-				Sentence negated = sentence.getNegated();
+				Sentence negated = sentence.getFirst();
 				if ((negated instanceof Symbol)
 						&& (!(model.getAssignedSymbols().contains(negated)))) {
 					// System.out.println("found unit clause type 2 -

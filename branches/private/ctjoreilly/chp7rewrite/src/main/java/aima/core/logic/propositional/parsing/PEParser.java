@@ -7,10 +7,10 @@ import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.ParseTreeNode;
 import aima.core.logic.common.Parser;
 import aima.core.logic.common.Token;
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.ast.AtomicSentence;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.parsing.ast.TrueSentence;
@@ -30,9 +30,43 @@ public class PEParser extends Parser {
 	public ParseTreeNode parse(String inputString) {
 		lexer = new PELexer(inputString);
 		fillLookAheadBuffer();
-		return parseSentence();
+		return parseSentence(0);
+	}
+	
+	private Sentence parseSentence(int level) {
+		List<Object> levelTokens = parseLevel(level);
+		
+		Sentence result = null;
+
+// TODO - use precedence rules if necessary to construct
+// sentence from tokens
+		
+		return result;
 	}
 
+	private List<Object> parseLevel(int level) {
+		List<Object> tokens = new ArrayList<Object>();
+		while (lookAhead(1).getType() != LogicTokenTypes.EOI && lookAhead(1).getType() != LogicTokenTypes.RPAREN) {
+			if (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE) {
+				tokens.add(Connective.get(lookAhead(1).getText()));
+			}
+			else if () {
+				
+			}
+		}
+		
+		if (detectAtomicSentence()) {
+			
+		} else if (detectBracket()) {
+			return parseBracketedSentence();
+		} else if (detectNOT()) {
+			return parseNotSentence();
+		} else {
+
+			throw new RuntimeException("Parser Error Token = " + lookAhead(1));
+		}
+	}
+	
 	private TrueSentence parseTrue() {
 		consume();
 		return new TrueSentence();
@@ -64,72 +98,32 @@ public class PEParser extends Parser {
 	}
 
 	private UnarySentence parseNotSentence() {
-		match("NOT");
+		match(Connective.NOT.getSymbol());
 		Sentence sen = parseSentence();
-		return new UnarySentence(sen);
-	}
-
-	private MultiSentence parseMultiSentence() {
-		consume();
-		String connector = lookAhead(1).getText();
-		consume();
-		List<Sentence> sentences = new ArrayList<Sentence>();
-		while (lookAhead(1).getType() != LogicTokenTypes.RPAREN) {
-			Sentence sen = parseSentence();
-			// consume();
-			sentences.add(sen);
-		}
-		match(")");
-		return new MultiSentence(connector, sentences);
-	}
-
-	private Sentence parseSentence() {
-		if (detectAtomicSentence()) {
-			return parseAtomicSentence();
-		} else if (detectBracket()) {
-			return parseBracketedSentence();
-		} else if (detectNOT()) {
-			return parseNotSentence();
-		} else {
-
-			throw new RuntimeException("Parser Error Token = " + lookAhead(1));
-		}
+		return new UnarySentence(Connective.NOT, sen);
 	}
 
 	private boolean detectNOT() {
-		return (lookAhead(1).getType() == LogicTokenTypes.CONNECTOR)
-				&& (lookAhead(1).getText().equals("NOT"));
+		return (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE)
+				&& (lookAhead(1).getText().equals(Connective.NOT.getSymbol()));
+	}
+	
+	private boolean detectBinaryConnective() {
+		return (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE)
+				&& !(lookAhead(1).getText().equals(Connective.NOT.getSymbol()));
 	}
 
 	private Sentence parseBracketedSentence() {
-
-		if (detectMultiOperator()) {
-			return parseMultiSentence();
-		} else {
-			match("(");
-			Sentence one = parseSentence();
-			if (lookAhead(1).getType() == LogicTokenTypes.RPAREN) {
-				match(")");
-				return one;
-			} else if ((lookAhead(1).getType() == LogicTokenTypes.CONNECTOR)
-					&& (!(lookAhead(1).getText().equals("Not")))) {
-				String connector = lookAhead(1).getText();
-				consume(); // connector
-				Sentence two = parseSentence();
-				match(")");
-				return new BinarySentence(connector, one, two);
-			}
-
+		match("(");
+		Sentence one = parseSentence();
+		if (lookAhead(1).getType() == LogicTokenTypes.RPAREN) {
+			match(")");
+			return one;
 		}
+		
 		throw new RuntimeException(
 				" Runtime Exception at Bracketed Expression with token "
 						+ lookAhead(1));
-	}
-
-	private boolean detectMultiOperator() {
-		return (lookAhead(1).getType() == LogicTokenTypes.LPAREN)
-				&& ((lookAhead(2).getText().equals("AND")) || (lookAhead(2)
-						.getText().equals("OR")));
 	}
 
 	private boolean detectBracket() {

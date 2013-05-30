@@ -26,11 +26,11 @@ public class PositiveSymbolCollector extends BasicTraverser {
 	@Override
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set<Symbol> s = (Set<Symbol>) arg;
-		if (ns.getNegated() instanceof Symbol) {
+		if (ns.getFirst() instanceof Symbol) {
 			// do nothing .do NOT add a negated Symbol
 		} else {
 			s = SetOps
-					.union(s, (Set<Symbol>) ns.getNegated().accept(this, arg));
+					.union(s, (Set<Symbol>) ns.getFirst().accept(this, arg));
 		}
 		return s;
 	}

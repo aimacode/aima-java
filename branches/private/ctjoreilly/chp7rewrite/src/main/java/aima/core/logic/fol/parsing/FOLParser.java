@@ -235,7 +235,7 @@ public class FOLParser {
 	}
 
 	private boolean binaryConnector(Token t) {
-		if ((t.getType() == LogicTokenTypes.CONNECTOR)
+		if ((t.getType() == LogicTokenTypes.CONNECTIVE)
 				&& (!(t.getText().equals("NOT")))) {
 			return true;
 		} else {
@@ -271,7 +271,7 @@ public class FOLParser {
 	}
 
 	private boolean notToken(Token t) {
-		if ((t.getType() == LogicTokenTypes.CONNECTOR)
+		if ((t.getType() == LogicTokenTypes.CONNECTIVE)
 				&& (t.getText().equals("NOT"))) {
 			return true;
 		} else {

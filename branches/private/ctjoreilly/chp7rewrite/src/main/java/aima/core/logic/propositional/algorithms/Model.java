@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.parsing.ast.TrueSentence;
@@ -102,7 +102,7 @@ public class Model implements PLVisitor {
 
 	@Override
 	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		Object negatedValue = fs.getNegated().accept(this, null);
+		Object negatedValue = fs.getFirst().accept(this, null);
 		if (negatedValue != null) {
 			return new Boolean(!((Boolean) negatedValue).booleanValue());
 		} else {
@@ -119,24 +119,18 @@ public class Model implements PLVisitor {
 			// -FIX later
 			return null;
 		} else {
-			String operator = bs.getOperator();
-			if (operator.equals("AND")) {
+			Connective connective = bs.getConnective();
+			if (connective.equals(Connective.AND)) {
 				return firstValue && secondValue;
-			} else if (operator.equals("OR")) {
+			} else if (connective.equals(Connective.OR)) {
 				return firstValue || secondValue;
-			} else if (operator.equals("=>")) {
+			} else if (connective.equals(Connective.IMPLICATION)) {
 				return !(firstValue && !secondValue);
-			} else if (operator.equals("<=>")) {
+			} else if (connective.equals(Connective.BICONDITIONAL)) {
 				return firstValue.equals(secondValue);
 			}
 			return null;
 		}
-	}
-
-	@Override
-	public Object visitMultiSentence(MultiSentence fs, Object argd) {
-		// TODO remove this?
-		return null;
 	}
 	// END-PLVisitor
 	//

@@ -8,7 +8,6 @@ import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.AtomicSentence;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.parsing.ast.TrueSentence;
 import aima.core.logic.propositional.parsing.ast.UnarySentence;
@@ -49,77 +48,56 @@ public class PEParserTest {
 
 	@Test
 	public void testNotSentenceParse() {
-		UnarySentence sen = (UnarySentence) parser.parse("NOT AIMA");
+		UnarySentence sen = (UnarySentence) parser.parse("~ AIMA");
 		Assert.assertEquals(UnarySentence.class, sen.getClass());
 	}
 
 	@Test
 	public void testBinarySentenceParse() {
 		BinarySentence sen = (BinarySentence) parser
-				.parse("(PETER  AND  NORVIG)");
+				.parse("PETER  &  NORVIG");
 		Assert.assertEquals(BinarySentence.class, sen.getClass());
-	}
-
-	@Test
-	public void testMultiSentenceAndParse() {
-		MultiSentence sen = (MultiSentence) parser
-				.parse("(AND  NORVIG AIMA LISP)");
-		Assert.assertEquals(MultiSentence.class, sen.getClass());
-	}
-
-	@Test
-	public void testMultiSentenceOrParse() {
-		MultiSentence sen = (MultiSentence) parser
-				.parse("(OR  NORVIG AIMA LISP)");
-		Assert.assertEquals(MultiSentence.class, sen.getClass());
-	}
-
-	@Test
-	public void testMultiSentenceBracketedParse() {
-		MultiSentence sen = (MultiSentence) parser
-				.parse("((OR  NORVIG AIMA LISP))");
-		Assert.assertEquals(MultiSentence.class, sen.getClass());
 	}
 
 	@Test
 	public void testComplexSentenceParse() {
 		BinarySentence sen = (BinarySentence) parser
-				.parse("((OR  NORVIG AIMA LISP) AND TRUE)");
+				.parse("((NORVIG | AIMA | LISP) & TRUE)");
 		Assert.assertEquals(BinarySentence.class, sen.getClass());
 
 		sen = (BinarySentence) parser
-				.parse("((OR  NORVIG AIMA LISP) AND (((LISP => COOL))))");
+				.parse("((NORVIG | AIMA | LISP) & (((LISP => COOL))))");
 		Assert.assertEquals(BinarySentence.class, sen.getClass());
 		Assert.assertEquals(
-				" ( ( OR NORVIG AIMA LISP  )  AND  ( LISP => COOL ) )",
+				" ( (NORVIG | AIMA | LISP  ) &  ( LISP => COOL ) )",
 				sen.toString());
 
-		String s = "((NOT (P AND Q ))  AND ((NOT (R AND S))))";
+		String s = "((~ (P & Q ))  & ((~ (R & S))))";
 		sen = (BinarySentence) parser.parse(s);
 		Assert.assertEquals(
-				" (  ( NOT  ( P AND Q ) )  AND  ( NOT  ( R AND S ) )  )",
+				" (  ( ~  ( P & Q ) ) &  ( ~ ( R & S ) )  )",
 				sen.toString());
 
-		s = "((P AND Q) OR (S AND T))";
+		s = "((P & Q) | (S & T))";
 		sen = (BinarySentence) parser.parse(s);
-		Assert.assertEquals(" (  ( P AND Q ) OR  ( S AND T ) )", sen.toString());
-		Assert.assertEquals("OR", sen.getOperator());
+		Assert.assertEquals(" (  ( P & Q ) |  ( S & T ) )", sen.toString());
+		Assert.assertEquals("|", sen.getConnective().getSymbol());
 
-		s = "(NOT ((P AND Q) => (S AND T)))";
+		s = "(~ ((P & Q) => (S & T)))";
 		UnarySentence nsen = (UnarySentence) parser.parse(s);
 		// assertEquals("=>",sen.getOperator());
-		s = "(NOT (P <=> (S AND T)))";
+		s = "(~ (P <=> (S & T)))";
 		nsen = (UnarySentence) parser.parse(s);
-		Assert.assertEquals(" ( NOT  ( P <=>  ( S AND T ) ) ) ",
+		Assert.assertEquals(" ( ~  ( P <=>  ( S & T ) ) ) ",
 				nsen.toString());
 
-		s = "(P <=> (S AND T))";
+		s = "(P <=> (S & T))";
 		sen = (BinarySentence) parser.parse(s);
 
 		s = "(P => Q)";
 		sen = (BinarySentence) parser.parse(s);
 
-		s = "((P AND Q) => R)";
+		s = "((P & Q) => R)";
 		sen = (BinarySentence) parser.parse(s);
 	}
 }

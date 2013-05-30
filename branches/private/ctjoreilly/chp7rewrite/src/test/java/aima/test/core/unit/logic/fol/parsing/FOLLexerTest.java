@@ -48,7 +48,7 @@ public class FOLLexerTest {
 		lexer.setInput(" p  AND q");
 		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "p"),
 				lexer.nextToken());
-		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTOR, "AND"),
+		Assert.assertEquals(new Token(LogicTokenTypes.CONNECTIVE, "AND"),
 				lexer.nextToken());
 		Assert.assertEquals(new Token(LogicTokenTypes.VARIABLE, "q"),
 				lexer.nextToken());

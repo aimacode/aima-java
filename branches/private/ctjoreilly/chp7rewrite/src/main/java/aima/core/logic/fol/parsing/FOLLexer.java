@@ -75,7 +75,7 @@ public class FOLLexer extends Lexer {
 		String readString = new String(sbuf);
 		// System.out.println(readString);
 		if (connectors.contains(readString)) {
-			return new Token(LogicTokenTypes.CONNECTOR, readString);
+			return new Token(LogicTokenTypes.CONNECTIVE, readString);
 		} else if (quantifiers.contains(readString)) {
 			return new Token(LogicTokenTypes.QUANTIFIER, readString);
 		} else if (domain.getPredicates().contains(readString)) {

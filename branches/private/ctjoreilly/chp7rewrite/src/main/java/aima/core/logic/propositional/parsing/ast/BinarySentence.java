@@ -1,5 +1,6 @@
 package aima.core.logic.propositional.parsing.ast;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PLVisitor;
 
 /**
@@ -7,14 +8,14 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * 
  */
 public class BinarySentence extends ComplexSentence {
-	private String operator;
+	private Connective connective;
 
 	private Sentence first;
 
 	private Sentence second;
 
-	public BinarySentence(String operator, Sentence first, Sentence second) {
-		this.operator = operator;
+	public BinarySentence(Connective connective, Sentence first, Sentence second) {
+		this.connective = connective;
 		this.first = first;
 		this.second = second;
 
@@ -24,8 +25,8 @@ public class BinarySentence extends ComplexSentence {
 		return first;
 	}
 
-	public String getOperator() {
-		return operator;
+	public Connective getConnective() {
+		return connective;
 	}
 
 	public Sentence getSecond() {
@@ -42,7 +43,7 @@ public class BinarySentence extends ComplexSentence {
 			return false;
 		}
 		BinarySentence bs = (BinarySentence) o;
-		return ((bs.getOperator().equals(getOperator()))
+		return ((bs.getConnective().equals(getConnective()))
 				&& (bs.getFirst().equals(first)) && (bs.getSecond()
 				.equals(second)));
 
@@ -58,7 +59,7 @@ public class BinarySentence extends ComplexSentence {
 
 	@Override
 	public String toString() {
-		return " ( " + first.toString() + " " + operator + " "
+		return " ( " + first.toString() + " " + getConnective() + " "
 				+ second.toString() + " )";
 	}
 
@@ -68,19 +69,19 @@ public class BinarySentence extends ComplexSentence {
 	}
 
 	public boolean isOrSentence() {
-		return (getOperator().equals("OR"));
+		return (getConnective().equals(Connective.OR));
 	}
 
 	public boolean isAndSentence() {
-		return (getOperator().equals("AND"));
+		return (getConnective().equals(Connective.AND));
 	}
 
 	public boolean isImplication() {
-		return (getOperator().equals("=>"));
+		return (getConnective().equals(Connective.IMPLICATION));
 	}
 
 	public boolean isBiconditional() {
-		return (getOperator().equals("<=>"));
+		return (getConnective().equals(Connective.BICONDITIONAL));
 	}
 
 	public boolean firstTermIsAndSentence() {

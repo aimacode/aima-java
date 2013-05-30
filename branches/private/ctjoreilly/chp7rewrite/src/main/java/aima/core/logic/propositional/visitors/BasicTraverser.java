@@ -5,7 +5,6 @@ import java.util.Set;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.BinarySentence;
 import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
 import aima.core.logic.propositional.parsing.ast.Symbol;
 import aima.core.logic.propositional.parsing.ast.TrueSentence;
 import aima.core.logic.propositional.parsing.ast.UnarySentence;
@@ -35,7 +34,7 @@ public class BasicTraverser implements PLVisitor {
 	@SuppressWarnings("unchecked")
 	public Object visitNotSentence(UnarySentence ns, Object arg) {
 		Set s = (Set) arg;
-		return SetOps.union(s, (Set) ns.getNegated().accept(this, arg));
+		return SetOps.union(s, (Set) ns.getFirst().accept(this, arg));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,9 +43,5 @@ public class BasicTraverser implements PLVisitor {
 		Set termunion = SetOps.union((Set) bs.getFirst().accept(this, arg),
 				(Set) bs.getSecond().accept(this, arg));
 		return SetOps.union(s, termunion);
-	}
-
-	public Object visitMultiSentence(MultiSentence fs, Object arg) {
-		throw new RuntimeException("Can't handle MultiSentence");
 	}
 }

@@ -3,6 +3,7 @@ package aima.core.logic.propositional.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.CNFTransformer;
@@ -65,7 +66,7 @@ public class KnowledgeBase {
 	 *         single sentence.
 	 */
 	public Sentence asSentence() {
-		return LogicUtils.chainWith("AND", sentences);
+		return LogicUtils.chainWith(Connective.AND, sentences);
 	}
 
 	/**
