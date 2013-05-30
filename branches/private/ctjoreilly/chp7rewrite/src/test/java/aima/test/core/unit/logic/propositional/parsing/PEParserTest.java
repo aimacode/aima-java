@@ -62,7 +62,7 @@ public class PEParserTest {
 	@Test
 	public void testComplexSentenceParse() {
 		BinarySentence sen = (BinarySentence) parser
-				.parse("((NORVIG | AIMA | LISP) & TRUE)");
+				.parse("(NORVIG | AIMA | LISP) & TRUE");
 		Assert.assertEquals(BinarySentence.class, sen.getClass());
 
 		sen = (BinarySentence) parser

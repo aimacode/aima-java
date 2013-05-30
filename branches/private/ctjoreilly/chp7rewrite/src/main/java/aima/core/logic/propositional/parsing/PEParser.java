@@ -38,32 +38,132 @@ public class PEParser extends Parser {
 		
 		Sentence result = null;
 
-// TODO - use precedence rules if necessary to construct
-// sentence from tokens
+		levelTokens = constructSentencesForConnective(Connective.NOT,           levelTokens);
+		levelTokens = constructSentencesForConnective(Connective.AND,           levelTokens);
+		levelTokens = constructSentencesForConnective(Connective.OR,            levelTokens);
+		levelTokens = constructSentencesForConnective(Connective.IMPLICATION,   levelTokens);
+		levelTokens = constructSentencesForConnective(Connective.BICONDITIONAL, levelTokens);
+		
+		// At the end there should just be the root formula
+		// for this level.
+		if (levelTokens.size() == 1 && levelTokens.get(0) instanceof Sentence) {
+			result = (Sentence) levelTokens.get(0);
+		}
 		
 		return result;
+	}
+	
+	private List<Object> constructSentencesForConnective(Connective connectiveToConstruct, List<Object> tokens) {
+		List<Object> newTokens = new ArrayList<Object>();
+		int numSentencesMade = 0;
+		for (int i = 0; i < tokens.size(); i++) {
+			Object token = tokens.get(i);
+			if (token instanceof Connective) {
+				Connective tokenConnective = (Connective) token;
+				if (tokenConnective == Connective.NOT) {
+					// A unary connective
+					if (i+1 < tokens.size() && tokens.get(i+1) instanceof Sentence) {
+						if (tokenConnective == connectiveToConstruct) {
+							UnarySentence newSentence = new UnarySentence(connectiveToConstruct, (Sentence) tokens.get(i+1));
+							tokens.set(i,   null);
+							tokens.set(i+1, newSentence);
+							numSentencesMade++;
+						}
+					}
+					else {
+						throw new RuntimeException("Unary connective argurment is not a sentence");
+					}
+				}
+				else {
+					// A Binary connective
+					if ((i-1 >= 0 && tokens.get(i-1) instanceof Sentence) && (i+1 < tokens.size() && tokens.get(i+1) instanceof Sentence)) {
+						// A binary connective
+						if (tokenConnective == connectiveToConstruct) {
+							BinarySentence newSentence = new BinarySentence(connectiveToConstruct,
+																(Sentence)tokens.get(i-1), (Sentence)tokens.get(i+1));
+							tokens.set(i-1, null);
+							tokens.set(i,   null);
+							tokens.set(i+1, newSentence);
+							numSentencesMade++;
+						}
+					}
+					else {
+						throw new RuntimeException("Binary connective argurments are not sentences");
+					}
+				}
+				// Can skip forward one
+				i++;
+			}
+		}
+		
+		for (int i = 0; i < tokens.size(); i++) {
+			Object token = tokens.get(i);
+			if (token != null) {
+				newTokens.add(token);
+			}
+		}
+		
+		// Ensure no tokens left unaccounted for in this pass.
+		int toSubtract = 0;
+		if (connectiveToConstruct == Connective.NOT) {
+			toSubtract = (numSentencesMade*2)-numSentencesMade;
+		}
+		else {
+			toSubtract = (numSentencesMade*3)-numSentencesMade;
+		}
+		
+		if (tokens.size()-toSubtract != newTokens.size()) {
+			throw new RuntimeException("Unable to construct sentence for connective: "+connectiveToConstruct+" from: "+tokens);
+		}
+		
+		return newTokens;
 	}
 
 	private List<Object> parseLevel(int level) {
 		List<Object> tokens = new ArrayList<Object>();
 		while (lookAhead(1).getType() != LogicTokenTypes.EOI && lookAhead(1).getType() != LogicTokenTypes.RPAREN) {
-			if (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE) {
-				tokens.add(Connective.get(lookAhead(1).getText()));
-			}
-			else if () {
-				
+			if (detectConnective()) {
+				tokens.add(parseConnective());
+			} else if (detectAtomicSentence()) {
+				tokens.add(parseAtomicSentence());
+			} else if (detectBracket()) {
+				tokens.add(parseBracketedSentence(level));
 			}
 		}
 		
-		if (detectAtomicSentence()) {
-			
-		} else if (detectBracket()) {
-			return parseBracketedSentence();
-		} else if (detectNOT()) {
-			return parseNotSentence();
-		} else {
+		if (level > 0 && lookAhead(1).getType() == LogicTokenTypes.EOI) {
+			throw new RuntimeException("Parser Error end of input not expected at level " + level);
+		}
+		
+		return tokens;
+	}
+	
+	private boolean detectConnective() {
+		return lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE;
+	}
+	
+	private Connective parseConnective() {
+		Connective connective = Connective.get(lookAhead(1).getText());
+		consume();
+		return connective;
+	}
+	
+	private boolean detectAtomicSentence() {
+		int type = lookAhead(1).getType();
+		return type == LogicTokenTypes.TRUE || type == LogicTokenTypes.FALSE || type == LogicTokenTypes.SYMBOL;
+	}
 
-			throw new RuntimeException("Parser Error Token = " + lookAhead(1));
+	private AtomicSentence parseAtomicSentence() {
+		Token t = lookAhead(1);
+		if (t.getType() == LogicTokenTypes.TRUE) {
+			return parseTrue();
+		} else if (t.getType() == LogicTokenTypes.FALSE) {
+			return parseFalse();
+		} else if (t.getType() == LogicTokenTypes.SYMBOL) {
+			return parseSymbol();
+		} else {
+			throw new RuntimeException(
+					"Error in parseAtomicSentence with Token " + lookAhead(1));
 		}
 	}
 	
@@ -83,57 +183,17 @@ public class PEParser extends Parser {
 		return new Symbol(sym);
 	}
 
-	private AtomicSentence parseAtomicSentence() {
-		Token t = lookAhead(1);
-		if (t.getType() == LogicTokenTypes.TRUE) {
-			return parseTrue();
-		} else if (t.getType() == LogicTokenTypes.FALSE) {
-			return parseFalse();
-		} else if (t.getType() == LogicTokenTypes.SYMBOL) {
-			return parseSymbol();
-		} else {
-			throw new RuntimeException(
-					"Error in parseAtomicSentence with Token " + lookAhead(1));
-		}
-	}
-
-	private UnarySentence parseNotSentence() {
-		match(Connective.NOT.getSymbol());
-		Sentence sen = parseSentence();
-		return new UnarySentence(Connective.NOT, sen);
-	}
-
-	private boolean detectNOT() {
-		return (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE)
-				&& (lookAhead(1).getText().equals(Connective.NOT.getSymbol()));
-	}
-	
-	private boolean detectBinaryConnective() {
-		return (lookAhead(1).getType() == LogicTokenTypes.CONNECTIVE)
-				&& !(lookAhead(1).getText().equals(Connective.NOT.getSymbol()));
-	}
-
-	private Sentence parseBracketedSentence() {
-		match("(");
-		Sentence one = parseSentence();
-		if (lookAhead(1).getType() == LogicTokenTypes.RPAREN) {
-			match(")");
-			return one;
-		}
-		
-		throw new RuntimeException(
-				" Runtime Exception at Bracketed Expression with token "
-						+ lookAhead(1));
-	}
-
 	private boolean detectBracket() {
 		return lookAhead(1).getType() == LogicTokenTypes.LPAREN;
 	}
-
-	private boolean detectAtomicSentence() {
-		int type = lookAhead(1).getType();
-		return (type == LogicTokenTypes.TRUE)
-				|| (type == LogicTokenTypes.FALSE)
-				|| (type == LogicTokenTypes.SYMBOL);
+	
+	private Sentence parseBracketedSentence(int level) {
+		match("(");
+		Sentence bracketedSentence = parseSentence(level+1);
+		if (bracketedSentence == null) {
+			throw new RuntimeException("Empty bracket contents detected.");
+		}
+		match(")");
+		return bracketedSentence;
 	}
 }
