@@ -242,17 +242,17 @@ public class DPLL {
 	private SymbolValuePair findUnitClause(List<Sentence> clauseList,
 			Model model, List<PropositionSymbol> symbols) {
 		for (int i = 0; i < clauseList.size(); i++) {
-			Sentence clause = (Sentence) clauseList.get(i);
-			if ((clause instanceof PropositionSymbol)
+			Sentence clause = clauseList.get(i);
+			if (clause.isPropositionSymbol()
 					&& (!(model.getAssignedSymbols().contains(clause)))) {
 				// System.out.println("found unit clause - assigning");
 				return new SymbolValuePair(new PropositionSymbol(
 						((PropositionSymbol) clause).getSymbol()), true);
 			}
 
-			if (clause instanceof ComplexSentence && ((ComplexSentence)clause).isUnary()) {
+			if (clause.isUnarySentence()) {
 				ComplexSentence sentence = (ComplexSentence) clause;
-				Sentence negated = sentence.get(0);
+				Sentence negated = sentence.getSimplerSentence(0);
 				if ((negated instanceof PropositionSymbol)
 						&& (!(model.getAssignedSymbols().contains(negated)))) {
 					// System.out.println("found unit clause type 2 -

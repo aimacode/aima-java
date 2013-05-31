@@ -5,7 +5,6 @@ import java.util.Set;
 
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -25,7 +24,7 @@ public class CNFClauseGatherer extends BasicTraverser {
 		Set<Sentence> soFar = (Set<Sentence>) args;
 
 		if (detector.containsEmbeddedAnd(bs)) {
-			processSubTerm(bs.get(1), processSubTerm(bs.get(0), soFar));
+			processSubTerm(bs.getSimplerSentence(1), processSubTerm(bs.getSimplerSentence(0), soFar));
 		} else {
 			soFar.add(bs);
 		}
@@ -36,16 +35,10 @@ public class CNFClauseGatherer extends BasicTraverser {
 	@SuppressWarnings("unchecked")
 	public Set<Sentence> getClausesFrom(Sentence sentence) {
 		Set<Sentence> set = new HashSet<Sentence>();
-		if (sentence instanceof PropositionSymbol) {
+		if (sentence.isPropositionSymbol() || sentence.isUnarySentence()) {
 			set.add(sentence);
 		} else {
-			ComplexSentence cs = (ComplexSentence) sentence;
-			if (cs.isUnary()) {
-				set.add(sentence);
-			}
-			else if (cs.isBinary()) {
-				set = (Set<Sentence>) sentence.accept(this, set);
-			}
+			set = (Set<Sentence>) sentence.accept(this, set);
 		}
 		return set;
 	}

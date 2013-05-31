@@ -15,12 +15,12 @@ public class AbstractPLVisitor implements PLVisitor {
 	}
 
 	public Object visitUnarySentence(ComplexSentence s, Object arg) {
-		return new ComplexSentence(s.getConnective(), (Sentence) s.get(0).accept(this, arg));
+		return new ComplexSentence(s.getConnective(), (Sentence) s.getSimplerSentence(0).accept(this, arg));
 	}
 
 	public Object visitBinarySentence(ComplexSentence s, Object arg) {
 		return new ComplexSentence(s.getConnective(), 
-				                  (Sentence) s.get(0).accept(this, arg), 
-				                  (Sentence) s.get(1).accept(this, arg));
+				                  (Sentence) s.getSimplerSentence(0).accept(this, arg), 
+				                  (Sentence) s.getSimplerSentence(1).accept(this, arg));
 	}
 }

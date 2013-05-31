@@ -10,10 +10,169 @@ import aima.core.logic.propositional.parsing.PLVisitor;
  * Note: this class hierarchy defines the abstract syntax representation used
  * for representing propositional logic.
  * 
- * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
  * 
  */
 public abstract class Sentence implements ParseTreeNode {
-	public abstract Object accept(PLVisitor plv, Object arg);
+
+	/**
+	 * 
+	 * @return true if a complex sentence with a Not connective, false
+	 *         otherwise.
+	 */
+	public boolean isNotSentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getConnective() == Connective.NOT;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence with an And connective, false
+	 *         otherwise.
+	 */
+	public boolean isAndSentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getConnective() == Connective.AND;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence with an Or connective, false
+	 *         otherwise.
+	 */
+	public boolean isOrSentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getConnective() == Connective.OR;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence with an Implication connective, false
+	 *         otherwise.
+	 */
+	public boolean isImplicationSentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getConnective() == Connective.IMPLICATION;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence with a Biconditional connective, false
+	 *         otherwise.
+	 */
+	public boolean isBiconditionalSentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getConnective() == Connective.BICONDITIONAL;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a proposition symbol, false otherwise.
+	 */
+	public boolean isPropositionSymbol() {
+		boolean result = false;
+		if (this instanceof PropositionSymbol) {
+			result = true;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence containing a single simpler sentence,
+	 *         false otherwise.
+	 */
+	public boolean isUnarySentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getNumberSimplerSentences() == 1;
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return true if a complex sentence containing two simpler sentences,
+	 *         false otherwise.
+	 */
+	public boolean isBinarySentence() {
+		boolean result = false;
+		if (this instanceof ComplexSentence) {
+			result = ((ComplexSentence) this).getNumberSimplerSentences() == 2;
+		}
+		return result;
+	}
+
+	/**
+	 * All a PLVisitor to walk over the abstract syntax tree represented by this
+	 * Sentence.
+	 * 
+	 * @param plv
+	 *            a Propositional Logic visitor.
+	 * @param arg
+	 *            an optional argument for use by the visior.
+	 * @return a result specific to the visitors behavior.
+	 */
+	public Object accept(PLVisitor plv, Object arg) {
+		Object result = null;
+		if (isPropositionSymbol()) {
+			result = plv.visitPropositionSymbol((PropositionSymbol) this, arg);
+		} else if (isUnarySentence()) {
+			result = plv.visitUnarySentence((ComplexSentence) this, arg);
+		} else if (isBinarySentence()) {
+			result = plv.visitBinarySentence((ComplexSentence) this, arg);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Utility routine that will create a string representation of a given
+	 * Sentence and place it inside brackets if it is a complex sentence that
+	 * has lower precedence than this complex sentence.<br>
+	 * <br>
+	 * Note: this is a form of pretty printing, whereby we only add brackets in
+	 * the concrete syntax representation as needed to ensure it can be parsed
+	 * back again into an equivalent abstract syntax representation used here.
+	 * 
+	 * @param parentConnective
+	 *            the connective of the parent sentence.
+	 * @param childSentence
+	 *            a simpler child sentence.
+	 * @return a String representation of the Sentence, bracketed if the parent
+	 *         based on its connective has higher precedence.
+	 */
+	public String bracketSentenceIfNecessary(Connective parentConnective,
+			Sentence childSentence) {
+		String result = null;
+		if (childSentence instanceof ComplexSentence) {
+			ComplexSentence cs = (ComplexSentence) childSentence;
+			if (cs.getConnective().getPrecedence() < parentConnective
+					.getPrecedence()) {
+				result = "(" + childSentence + ")";
+			}
+		}
+
+		if (result == null) {
+			result = childSentence.toString();
+		}
+
+		return result;
+	}
 }

@@ -135,10 +135,10 @@ public class PLFCEntails {
 
 			} else {
 				ComplexSentence bs = (ComplexSentence) sentence;
-				head = (PropositionSymbol) bs.get(1);
+				head = (PropositionSymbol) bs.getSimplerSentence(1);
 				inferred.put(head, Boolean.FALSE);
 				Set<PropositionSymbol> symbolsInPremise = new SymbolCollector()
-						.getSymbolsIn(bs.get(0));
+						.getSymbolsIn(bs.getSimplerSentence(0));
 				Iterator<PropositionSymbol> iter = symbolsInPremise.iterator();
 				while (iter.hasNext()) {
 					inferred.put(iter.next(), Boolean.FALSE);

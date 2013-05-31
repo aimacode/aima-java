@@ -95,7 +95,7 @@ public class Model implements PLVisitor {
 
 	@Override
 	public Object visitUnarySentence(ComplexSentence fs, Object arg) {
-		Object negatedValue = fs.get(0).accept(this, null);
+		Object negatedValue = fs.getSimplerSentence(0).accept(this, null);
 		if (negatedValue != null) {
 			return new Boolean(!((Boolean) negatedValue).booleanValue());
 		} else {
@@ -105,8 +105,8 @@ public class Model implements PLVisitor {
 
 	@Override
 	public Object visitBinarySentence(ComplexSentence bs, Object arg) {
-		Boolean firstValue = (Boolean) bs.get(0).accept(this, null);
-		Boolean secondValue = (Boolean) bs.get(1).accept(this, null);
+		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this, null);
+		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this, null);
 		if ((firstValue == null) || (secondValue == null)) {
 			// strictly not true for or/and
 			// -FIX later

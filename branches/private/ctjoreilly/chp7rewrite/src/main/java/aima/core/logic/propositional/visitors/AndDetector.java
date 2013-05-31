@@ -18,16 +18,16 @@ public class AndDetector implements PLVisitor {
 	}
 
 	public Object visitUnarySentence(ComplexSentence s, Object arg) {
-		return s.get(0).accept(this, null);
+		return s.getSimplerSentence(0).accept(this, null);
 	}
 
 	public Object visitBinarySentence(ComplexSentence s, Object arg) {
 		if (s.getConnective() == Connective.AND) {
 			return new Boolean(true);
 		} else {
-			boolean first = ((Boolean) s.get(0).accept(this, null))
+			boolean first = ((Boolean) s.getSimplerSentence(0).accept(this, null))
 					.booleanValue();
-			boolean second = ((Boolean) s.get(1).accept(this, null))
+			boolean second = ((Boolean) s.getSimplerSentence(1).accept(this, null))
 					.booleanValue();
 			
 			return new Boolean(first || second);

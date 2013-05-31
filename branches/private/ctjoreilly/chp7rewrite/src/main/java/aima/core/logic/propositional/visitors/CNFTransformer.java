@@ -23,7 +23,7 @@ public class CNFTransformer extends AbstractPLVisitor {
 		} else if (bs.getConnective() == Connective.IMPLICATION) {
 			return transformImpliedSentence(bs);
 		} else if (bs.getConnective() == Connective.OR
-				&& (isAndSentence(bs.get(0)) || isAndSentence(bs.get(1)))) {
+				&& (bs.getSimplerSentence(0).isAndSentence() || bs.getSimplerSentence(1).isAndSentence())) {
 			return distributeOrOverAnd(bs);
 		} else {
 			return super.visitBinarySentence(bs, arg);
@@ -50,73 +50,41 @@ public class CNFTransformer extends AbstractPLVisitor {
 	//
 	// PRIVATE
 	//
-	private boolean isAndSentence(Sentence s) {
-		boolean result = false;
-		if (s instanceof ComplexSentence) {
-			result = ((ComplexSentence)s).getConnective() == Connective.AND;
-		}
-		return result;
-	}
-	
-	private boolean isOrSentence(Sentence s) {
-		boolean result = false;
-		if (s instanceof ComplexSentence) {
-			result = ((ComplexSentence)s).getConnective() == Connective.OR;
-		}
-		return result;
-	}
-	
-	private boolean isUnarySentence(Sentence s) {
-		boolean result = false;
-		if (s instanceof ComplexSentence) {
-			result = ((ComplexSentence)s).isUnary();
-		}
-		return result;
-	}
-	
-	private boolean isBinarySentence(Sentence s) {
-		boolean result = false;
-		if (s instanceof ComplexSentence) {
-			result = ((ComplexSentence)s).isBinary();
-		}
-		return result;
-	}
-
 	private Sentence step(Sentence s) {
 		return (Sentence) s.accept(this, null);
 	}
 
 	private Sentence transformBiConditionalSentence(ComplexSentence bs) {
-		Sentence first = new ComplexSentence(Connective.IMPLICATION, (Sentence) bs.get(0)
-				.accept(this, null), (Sentence) bs.get(1).accept(this,
+		Sentence first = new ComplexSentence(Connective.IMPLICATION, (Sentence) bs.getSimplerSentence(0)
+				.accept(this, null), (Sentence) bs.getSimplerSentence(1).accept(this,
 				null));
-		Sentence second = new ComplexSentence(Connective.IMPLICATION, (Sentence) bs.get(1)
-				.accept(this, null), (Sentence) bs.get(0)
+		Sentence second = new ComplexSentence(Connective.IMPLICATION, (Sentence) bs.getSimplerSentence(1)
+				.accept(this, null), (Sentence) bs.getSimplerSentence(0)
 				.accept(this, null));
 		return new ComplexSentence(Connective.AND, first, second);
 	}
 
 	private Sentence transformImpliedSentence(ComplexSentence bs) {
-		Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.get(0).accept(
+		Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.getSimplerSentence(0).accept(
 				this, null));
-		return new ComplexSentence(Connective.OR, first, (Sentence) bs.get(1).accept(this, null));
+		return new ComplexSentence(Connective.OR, first, (Sentence) bs.getSimplerSentence(1).accept(this, null));
 	}
 
 	private Sentence transformNotSentence(ComplexSentence us) {
-		if (isUnarySentence(us.get(0))) {
-			return (Sentence) ((ComplexSentence) us.get(0)).get(0).accept(this, null);
-		} else if (isBinarySentence(us.get(0))) {
-			ComplexSentence bs = (ComplexSentence) us.get(0);
-			if (isAndSentence(bs)) {
-				Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.get(0)
+		if (us.getSimplerSentence(0).isUnarySentence()) {
+			return (Sentence) ((ComplexSentence) us.getSimplerSentence(0)).getSimplerSentence(0).accept(this, null);
+		} else if (us.getSimplerSentence(0).isBinarySentence()) {
+			ComplexSentence bs = (ComplexSentence) us.getSimplerSentence(0);
+			if (bs.isAndSentence()) {
+				Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.getSimplerSentence(0)
 						.accept(this, null));
-				Sentence second = new ComplexSentence(Connective.NOT, (Sentence) bs.get(1)
+				Sentence second = new ComplexSentence(Connective.NOT, (Sentence) bs.getSimplerSentence(1)
 						.accept(this, null));
 				return new ComplexSentence(Connective.OR, first, second);
-			} else if (isOrSentence(bs)) {
-				Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.get(0)
+			} else if (bs.isOrSentence()) {
+				Sentence first = new ComplexSentence(Connective.NOT, (Sentence) bs.getSimplerSentence(0)
 						.accept(this, null));
-				Sentence second = new ComplexSentence(Connective.NOT, (Sentence) bs.get(1)
+				Sentence second = new ComplexSentence(Connective.NOT, (Sentence) bs.getSimplerSentence(1)
 						.accept(this, null));
 				return new ComplexSentence(Connective.AND, first, second);
 			} else {
@@ -128,14 +96,14 @@ public class CNFTransformer extends AbstractPLVisitor {
 	}
 
 	private Sentence distributeOrOverAnd(ComplexSentence bs) {
-		ComplexSentence andTerm = isAndSentence(bs.get(0)) ? (ComplexSentence) bs
-				.get(0) : (ComplexSentence) bs.get(1);
-		Sentence otherterm = isAndSentence(bs.get(0)) ? bs.get(1) : bs
-				.get(0);
+		ComplexSentence andTerm = bs.getSimplerSentence(0).isAndSentence() ? (ComplexSentence) bs
+				.getSimplerSentence(0) : (ComplexSentence) bs.getSimplerSentence(1);
+		Sentence otherterm = bs.getSimplerSentence(0).isAndSentence() ? bs.getSimplerSentence(1) : bs
+				.getSimplerSentence(0);
 		// (alpha or (beta and gamma) = ((alpha or beta) and (alpha or gamma))
 		Sentence alpha = (Sentence) otherterm.accept(this, null);
-		Sentence beta = (Sentence) andTerm.get(0).accept(this, null);
-		Sentence gamma = (Sentence) andTerm.get(1).accept(this, null);
+		Sentence beta = (Sentence) andTerm.getSimplerSentence(0).accept(this, null);
+		Sentence gamma = (Sentence) andTerm.getSimplerSentence(1).accept(this, null);
 		Sentence distributed = new ComplexSentence(Connective.AND, new ComplexSentence(
 				Connective.OR, alpha, beta), new ComplexSentence(Connective.OR, alpha, gamma));
 		return distributed;

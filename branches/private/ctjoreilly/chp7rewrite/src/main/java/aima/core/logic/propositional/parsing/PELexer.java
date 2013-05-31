@@ -1,10 +1,5 @@
 package aima.core.logic.propositional.parsing;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.lang.model.SourceVersion;
-
 import aima.core.logic.common.Lexer;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
@@ -16,21 +11,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Mike Stampone
  */
 public class PELexer extends Lexer {
-
-	private Set<Character> connectiveLeadingChars = new HashSet<Character>();
-	private Set<Character> connectiveChars        = new HashSet<Character>();
-	
 	public PELexer() {
-		for (Connective connective : Connective.values()) {
-			char[] chars = new char[connective.getSymbol().length()];
-			connective.getSymbol().getChars(0, connective.getSymbol().length(), chars, 0);
-			for (int i = 0; i < chars.length; i++) {
-				if (i == 0) {
-					connectiveLeadingChars.add(chars[i]);
-				}
-				connectiveChars.add(chars[i]);
-			}
-		}
 	}
 
 	/**
@@ -81,11 +62,11 @@ public class PELexer extends Lexer {
 	}
 
 	private boolean connectiveDetected(char leadingChar) {
-		return connectiveLeadingChars.contains(leadingChar);
+		return Connective.isConnectiveIdentifierStart(leadingChar);
 	}
 	
 	private boolean symbolDetected(char leadingChar) {
-		return Character.isJavaIdentifierStart(leadingChar);
+		return PropositionSymbol.isPropositionSymbolIdentifierStart(leadingChar);
 	}
 	
 	private Token connective() {
@@ -93,7 +74,7 @@ public class PELexer extends Lexer {
 		// Ensure pull out just one connective at a time, the isConnective(...)
 		// test ensures we handle chained expressions like the following:
 		// ~~P
-		while (connectiveChars.contains(lookAhead(1)) && !isConnective(sbuf.toString())) {
+		while (Connective.isConnectiveIdentifierPart(lookAhead(1)) && !isConnective(sbuf.toString())) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
@@ -108,16 +89,16 @@ public class PELexer extends Lexer {
 
 	private Token symbol() {
 		StringBuffer sbuf = new StringBuffer();
-		while (Character.isJavaIdentifierStart(lookAhead(1)) || Character.isJavaIdentifierPart(lookAhead(1))) {
+		while (PropositionSymbol.isPropositionSymbolIdentifierPart(lookAhead(1))) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
 		String symbol = sbuf.toString();
-		if (symbol.equalsIgnoreCase("true")) {
+		if (PropositionSymbol.isAlwaysTrueSymbol(symbol)) {
 			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE);
-		} else if (symbol.equalsIgnoreCase("false")) {
+		} else if (PropositionSymbol.isAlwaysFalseSymbol(symbol)) {
 			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE);
-		} else if (SourceVersion.isIdentifier(symbol)){
+		} else if (PropositionSymbol.isPropositionSymbol(symbol)){
 			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString());
 		}
 		

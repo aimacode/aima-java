@@ -23,13 +23,13 @@ public class BasicTraverser implements PLVisitor {
 	@SuppressWarnings("unchecked")
 	public Object visitUnarySentence(ComplexSentence s, Object arg) {
 		Set set = (Set) arg;
-		return SetOps.union(set, (Set) s.get(0).accept(this, arg));
+		return SetOps.union(set, (Set) s.getSimplerSentence(0).accept(this, arg));
 	}
 
 	@SuppressWarnings("unchecked")
 	public Object visitBinarySentence(ComplexSentence s, Object arg) {
 		Set set = (Set) arg;
-		Set termunion = SetOps.union((Set) s.get(0).accept(this, arg), (Set) s.get(1).accept(this, arg));
+		Set termunion = SetOps.union((Set) s.getSimplerSentence(0).accept(this, arg), (Set) s.getSimplerSentence(1).accept(this, arg));
 		return SetOps.union(set, termunion);
 	}
 }

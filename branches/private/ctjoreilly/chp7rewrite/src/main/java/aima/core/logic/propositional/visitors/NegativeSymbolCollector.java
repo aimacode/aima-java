@@ -17,10 +17,10 @@ public class NegativeSymbolCollector extends BasicTraverser {
 	@Override
 	public Object visitUnarySentence(ComplexSentence ns, Object arg) {
 		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
-		if (ns.get(0) instanceof PropositionSymbol) {
-			s.add((PropositionSymbol) ns.get(0));
+		if (ns.getSimplerSentence(0) instanceof PropositionSymbol) {
+			s.add((PropositionSymbol) ns.getSimplerSentence(0));
 		} else {
-			s = SetOps.union(s, (Set<PropositionSymbol>) ns.get(0).accept(this, arg));
+			s = SetOps.union(s, (Set<PropositionSymbol>) ns.getSimplerSentence(0).accept(this, arg));
 		}
 		return s;
 	}

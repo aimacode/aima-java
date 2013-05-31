@@ -26,11 +26,11 @@ public class PositiveSymbolCollector extends BasicTraverser {
 	@Override
 	public Object visitUnarySentence(ComplexSentence ns, Object arg) {
 		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
-		if (ns.get(0) instanceof PropositionSymbol) {
+		if (ns.getSimplerSentence(0) instanceof PropositionSymbol) {
 			// do nothing .do NOT add a negated Symbol
 		} else {
 			s = SetOps
-					.union(s, (Set<PropositionSymbol>) ns.get(0).accept(this, arg));
+					.union(s, (Set<PropositionSymbol>) ns.getSimplerSentence(0).accept(this, arg));
 		}
 		return s;
 	}

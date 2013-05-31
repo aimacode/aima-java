@@ -1,6 +1,8 @@
-package aima.core.logic.propositional.parsing.ast;
+package aima.core.logic.propositional.algorithms;
 
 import java.util.Comparator;
+
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * A utility routine for comparing two propositional symbols.
