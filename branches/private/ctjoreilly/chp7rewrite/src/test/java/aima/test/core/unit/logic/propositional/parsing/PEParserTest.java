@@ -5,19 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PEParser;
-import aima.core.logic.propositional.parsing.ast.AtomicSentence;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
-import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.TrueSentence;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
 public class PEParserTest {
-	private PEParser parser;
+	private PEParser parser   = null;
+	private Sentence sentence = null;
+	private String   expected = null;
 
 	@Before
 	public void setUp() {
@@ -26,78 +25,122 @@ public class PEParserTest {
 
 	@Test
 	public void testAtomicSentenceTrueParse() {
-		AtomicSentence sen = (AtomicSentence) parser.parse("true");
-		Assert.assertEquals(TrueSentence.class, sen.getClass());
-		sen = (AtomicSentence) parser.parse("(true)");
-		Assert.assertEquals(TrueSentence.class, sen.getClass());
-		sen = (AtomicSentence) parser.parse("((true))");
-		Assert.assertEquals(TrueSentence.class, sen.getClass());
+		sentence = parser.parse("true");
+		expected = prettyPrintF("True");
+		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
+		
+		sentence = parser.parse("(true)");
+		expected = prettyPrintF("True");
+		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
+		
+		sentence = parser.parse("((true))");
+		expected = prettyPrintF("True");
+		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 	}
 
 	@Test
 	public void testAtomicSentenceFalseParse() {
-		AtomicSentence sen = (AtomicSentence) parser.parse("faLse");
-		Assert.assertEquals(FalseSentence.class, sen.getClass());
+		sentence = parser.parse("faLse");
+		expected = prettyPrintF("False");
+		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 	}
 
 	@Test
 	public void testAtomicSentenceSymbolParse() {
-		AtomicSentence sen = (AtomicSentence) parser.parse("AIMA");
-		Assert.assertEquals(Symbol.class, sen.getClass());
+		sentence = parser.parse("AIMA");
+		expected = prettyPrintF("AIMA");
+		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 	}
 
 	@Test
 	public void testNotSentenceParse() {
-		UnarySentence sen = (UnarySentence) parser.parse("~ AIMA");
-		Assert.assertEquals(UnarySentence.class, sen.getClass());
+		sentence = parser.parse("~ AIMA");
+		expected = prettyPrintF("~AIMA");
+		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
+	}
+	
+	@Test
+	public void testDoubleNegation() {
+		sentence = parser.parse("~~AIMA");
+		expected = prettyPrintF("~~AIMA");
+		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 	}
 
 	@Test
 	public void testBinarySentenceParse() {
-		BinarySentence sen = (BinarySentence) parser
-				.parse("PETER  &  NORVIG");
-		Assert.assertEquals(BinarySentence.class, sen.getClass());
+		sentence = parser.parse("PETER  &  NORVIG");
+		expected = prettyPrintF("PETER & NORVIG");
+		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 	}
 
 	@Test
-	public void testComplexSentenceParse() {
-		BinarySentence sen = (BinarySentence) parser
-				.parse("(NORVIG | AIMA | LISP) & TRUE");
-		Assert.assertEquals(BinarySentence.class, sen.getClass());
+	public void testComplexSentenceParse() {		
+		sentence = parser.parse("(NORVIG | AIMA | LISP) & TRUE");
+		expected = prettyPrintF("(NORVIG | AIMA | LISP) & True");
+		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 
-		sen = (BinarySentence) parser
-				.parse("((NORVIG | AIMA | LISP) & (((LISP => COOL))))");
-		Assert.assertEquals(BinarySentence.class, sen.getClass());
-		Assert.assertEquals(
-				" ( (NORVIG | AIMA | LISP  ) &  ( LISP => COOL ) )",
-				sen.toString());
+		sentence = parser.parse("((NORVIG | AIMA | LISP) & (((LISP => COOL))))");
+		expected = prettyPrintF("(NORVIG | AIMA | LISP) & (LISP => COOL)");
+		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertEquals(expected, sentence.toString());
 
-		String s = "((~ (P & Q ))  & ((~ (R & S))))";
-		sen = (BinarySentence) parser.parse(s);
-		Assert.assertEquals(
-				" (  ( ~  ( P & Q ) ) &  ( ~ ( R & S ) )  )",
-				sen.toString());
+		sentence = parser.parse("((~ (P & Q ))  & ((~ (R & S))))");
+		expected = prettyPrintF("~(P & Q) & ~(R & S)");
+		Assert.assertEquals(expected, sentence.toString());
 
-		s = "((P & Q) | (S & T))";
-		sen = (BinarySentence) parser.parse(s);
-		Assert.assertEquals(" (  ( P & Q ) |  ( S & T ) )", sen.toString());
-		Assert.assertEquals("|", sen.getConnective().getSymbol());
+		sentence = parser.parse("((P & Q) | (S & T))");
+		expected = prettyPrintF("P & Q | S & T");
+		Assert.assertEquals(expected, sentence.toString());
+		Assert.assertEquals("|", ((ComplexSentence)sentence).getConnective().getSymbol());
 
-		s = "(~ ((P & Q) => (S & T)))";
-		UnarySentence nsen = (UnarySentence) parser.parse(s);
-		// assertEquals("=>",sen.getOperator());
-		s = "(~ (P <=> (S & T)))";
-		nsen = (UnarySentence) parser.parse(s);
-		Assert.assertEquals(" ( ~  ( P <=>  ( S & T ) ) ) ",
-				nsen.toString());
+		sentence = parser.parse("(~ ((P & Q) => (S & T)))");
+		expected = prettyPrintF("~(P & Q => S & T)");
+		Assert.assertEquals(expected, sentence.toString());
 
-		s = "(P <=> (S & T))";
-		sen = (BinarySentence) parser.parse(s);
+		sentence = parser.parse("(~ (P <=> (S & T)))");
+		expected = prettyPrintF("~(P <=> S & T)");
+		Assert.assertEquals(expected, sentence.toString());
 
-		s = "(P => Q)";
-		sen = (BinarySentence) parser.parse(s);
+		sentence = parser.parse("(P <=> (S & T))");
+		expected = prettyPrintF("P <=> S & T");
+		Assert.assertEquals(expected, sentence.toString());
 
-		s = "((P & Q) => R)";
-		sen = (BinarySentence) parser.parse(s);
+		sentence = parser.parse("(P => Q)");
+		expected = prettyPrintF("P => Q");
+		Assert.assertEquals(expected, sentence.toString());
+
+		sentence = parser.parse("((P & Q) => R)");
+		expected = prettyPrintF("P & Q => R");
+		Assert.assertEquals(expected, sentence.toString());
+	}
+	
+	@Test
+	public void testSquareBracketsParse() {
+		// Instead of
+		sentence = parser.parse("[NORVIG | AIMA | LISP] & TRUE");
+		expected = prettyPrintF("(NORVIG | AIMA | LISP) & True");
+		Assert.assertEquals(expected, sentence.toString());
+		
+		// Alternating
+		sentence = parser.parse("[A | B | C] & D & [C | D & (F | G | H & [I | J])]");
+		expected = prettyPrintF("(A | B | C) & D & (C | D & (F | G | H & (I | J)))");
+		Assert.assertEquals(expected, sentence.toString());
+	}
+	
+	private String prettyPrintF(String prettyPrintedFormula) {
+		Sentence s = parser.parse(prettyPrintedFormula);
+		
+		Assert.assertEquals("The pretty print formula should parse and print the same.", prettyPrintedFormula, ""+s);
+		
+		return prettyPrintedFormula;
 	}
 }

@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PLVisitor;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
-import aima.core.logic.propositional.parsing.ast.FalseSentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.TrueSentence;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -20,25 +17,25 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  */
 public class Model implements PLVisitor {
 
-	private HashMap<Symbol, Boolean> h = new HashMap<Symbol, Boolean>();
+	private HashMap<PropositionSymbol, Boolean> h = new HashMap<PropositionSymbol, Boolean>();
 
 	public Model() {
 
 	}
 
-	public Boolean getStatus(Symbol symbol) {
+	public Boolean getStatus(PropositionSymbol symbol) {
 		return h.get(symbol);
 	}
 
-	public boolean isTrue(Symbol symbol) {
+	public boolean isTrue(PropositionSymbol symbol) {
 		return Boolean.TRUE.equals(h.get(symbol));
 	}
 
-	public boolean isFalse(Symbol symbol) {
+	public boolean isFalse(PropositionSymbol symbol) {
 		return Boolean.FALSE.equals(h.get(symbol));
 	}
 
-	public Model extend(Symbol symbol, boolean b) {
+	public Model extend(PropositionSymbol symbol, boolean b) {
 		Model m = new Model();
 		m.h.putAll(this.h);
 		m.h.put(symbol, b);
@@ -57,7 +54,7 @@ public class Model implements PLVisitor {
 		return null == clause.accept(this, null);
 	}
 
-	public Model flip(Symbol s) {
+	public Model flip(PropositionSymbol s) {
 		if (isTrue(s)) {
 			return extend(s, false);
 		}
@@ -67,12 +64,12 @@ public class Model implements PLVisitor {
 		return this;
 	}
 
-	public Set<Symbol> getAssignedSymbols() {
+	public Set<PropositionSymbol> getAssignedSymbols() {
 		return Collections.unmodifiableSet(h.keySet());
 	}
 
 	public void print() {
-		for (Map.Entry<Symbol, Boolean> e : h.entrySet()) {
+		for (Map.Entry<PropositionSymbol, Boolean> e : h.entrySet()) {
 			System.out.print(e.getKey() + " = " + e.getValue() + " ");
 		}
 		System.out.println();
@@ -86,23 +83,19 @@ public class Model implements PLVisitor {
 	//
 	// START-PLVisitor
 	@Override
-	public Object visitSymbol(Symbol s, Object arg) {
+	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
+		if (s.isAlwaysTrue()) {
+			return Boolean.TRUE;
+		}
+		if (s.isAlwaysFalse()) {
+			return Boolean.FALSE;
+		}
 		return getStatus(s);
 	}
 
 	@Override
-	public Object visitTrueSentence(TrueSentence ts, Object arg) {
-		return Boolean.TRUE;
-	}
-
-	@Override
-	public Object visitFalseSentence(FalseSentence fs, Object arg) {
-		return Boolean.FALSE;
-	}
-
-	@Override
-	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		Object negatedValue = fs.getFirst().accept(this, null);
+	public Object visitUnarySentence(ComplexSentence fs, Object arg) {
+		Object negatedValue = fs.get(0).accept(this, null);
 		if (negatedValue != null) {
 			return new Boolean(!((Boolean) negatedValue).booleanValue());
 		} else {
@@ -111,9 +104,9 @@ public class Model implements PLVisitor {
 	}
 
 	@Override
-	public Object visitBinarySentence(BinarySentence bs, Object arg) {
-		Boolean firstValue = (Boolean) bs.getFirst().accept(this, null);
-		Boolean secondValue = (Boolean) bs.getSecond().accept(this, null);
+	public Object visitBinarySentence(ComplexSentence bs, Object arg) {
+		Boolean firstValue = (Boolean) bs.get(0).accept(this, null);
+		Boolean secondValue = (Boolean) bs.get(1).accept(this, null);
 		if ((firstValue == null) || (secondValue == null)) {
 			// strictly not true for or/and
 			// -FIX later

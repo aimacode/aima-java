@@ -20,15 +20,15 @@ public class KnowledgeBaseTest {
 
 	@Test
 	public void testTellInsertsSentence() {
-		kb.tell("(A AND B)");
+		kb.tell("(A & B)");
 		Assert.assertEquals(1, kb.size());
 	}
 
 	@Test
 	public void testTellDoesNotInsertSameSentenceTwice() {
-		kb.tell("(A AND B)");
+		kb.tell("(A & B)");
 		Assert.assertEquals(1, kb.size());
-		kb.tell("(A AND B)");
+		kb.tell("(A & B)");
 		Assert.assertEquals(1, kb.size());
 	}
 
@@ -39,24 +39,24 @@ public class KnowledgeBaseTest {
 
 	@Test
 	public void testKnowledgeBaseWithOneSentenceToString() {
-		kb.tell("(A AND B)");
-		Assert.assertEquals(" ( A AND B )", kb.toString());
+		kb.tell("(A & B)");
+		Assert.assertEquals("A & B", kb.toString());
 	}
 
 	@Test
 	public void testKnowledgeBaseWithTwoSentencesToString() {
-		kb.tell("(A AND B)");
-		kb.tell("(C AND D)");
-		Assert.assertEquals(" (  ( A AND B ) AND  ( C AND D ) )", kb.toString());
+		kb.tell("(A & B)");
+		kb.tell("(C & D)");
+		Assert.assertEquals("A & B & C & D", kb.toString());
 	}
 
 	@Test
 	public void testKnowledgeBaseWithThreeSentencesToString() {
-		kb.tell("(A AND B)");
-		kb.tell("(C AND D)");
-		kb.tell("(E AND F)");
+		kb.tell("(A & B)");
+		kb.tell("(C & D)");
+		kb.tell("(E & F)");
 		Assert.assertEquals(
-				" (  (  ( A AND B ) AND  ( C AND D ) ) AND  ( E AND F ) )",
+				"A & B & C & D & E & F",
 				kb.toString());
 	}
 }

@@ -1,12 +1,10 @@
 package aima.core.logic.propositional.visitors;
 
 import aima.core.logic.propositional.parsing.PLVisitor;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
-import aima.core.logic.propositional.parsing.ast.FalseSentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.TrueSentence;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -14,32 +12,25 @@ import aima.core.logic.propositional.parsing.ast.UnarySentence;
  */
 public class AndDetector implements PLVisitor {
 
-	public Object visitSymbol(Symbol s, Object arg) {
+	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
 
 		return new Boolean(false);
 	}
 
-	public Object visitTrueSentence(TrueSentence ts, Object arg) {
-		return new Boolean(false);
+	public Object visitUnarySentence(ComplexSentence s, Object arg) {
+		return s.get(0).accept(this, null);
 	}
 
-	public Object visitFalseSentence(FalseSentence fs, Object arg) {
-		return new Boolean(false);
-	}
-
-	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		return fs.getFirst().accept(this, null);
-	}
-
-	public Object visitBinarySentence(BinarySentence fs, Object arg) {
-		if (fs.isAndSentence()) {
+	public Object visitBinarySentence(ComplexSentence s, Object arg) {
+		if (s.getConnective() == Connective.AND) {
 			return new Boolean(true);
 		} else {
-			boolean first = ((Boolean) fs.getFirst().accept(this, null))
+			boolean first = ((Boolean) s.get(0).accept(this, null))
 					.booleanValue();
-			boolean second = ((Boolean) fs.getSecond().accept(this, null))
+			boolean second = ((Boolean) s.get(1).accept(this, null))
 					.booleanValue();
-			return new Boolean((first || second));
+			
+			return new Boolean(first || second);
 		}
 	}
 

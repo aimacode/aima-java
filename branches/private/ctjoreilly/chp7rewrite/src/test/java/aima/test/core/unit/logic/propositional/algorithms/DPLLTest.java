@@ -11,7 +11,7 @@ import aima.core.logic.propositional.algorithms.KnowledgeBase;
 import aima.core.logic.propositional.algorithms.Model;
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolCollector;
@@ -36,7 +36,7 @@ public class DPLLTest {
 	@Test
 	public void testDPLLReturnsTrueWhenAllClausesTrueInModel() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+		model = model.extend(new PropositionSymbol("A"), true).extend(new PropositionSymbol("B"),
 				true);
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (A | B))");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence, model);
@@ -46,9 +46,9 @@ public class DPLLTest {
 	@Test
 	public void testDPLLReturnsFalseWhenOneClauseFalseInModel() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+		model = model.extend(new PropositionSymbol("A"), true).extend(new PropositionSymbol("B"),
 				false);
-		Sentence sentence = (Sentence) parser.parse("((A OR B) AND (A => B))");
+		Sentence sentence = (Sentence) parser.parse("((A | B) & (A => B))");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence, model);
 		Assert.assertEquals(false, satisfiable);
 	}
@@ -56,10 +56,10 @@ public class DPLLTest {
 	@Test
 	public void testDPLLFiltersClausesTheStatusOfWhichAreKnown() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+		model = model.extend(new PropositionSymbol("A"), true).extend(new PropositionSymbol("B"),
 				true);
 		Sentence sentence = (Sentence) parser
-				.parse("((A AND B) AND (B AND C))");
+				.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
@@ -67,15 +67,15 @@ public class DPLLTest {
 		List<Sentence> clausesWithNonTrueValues = dpll
 				.clausesWithNonTrueValues(clauseList, model);
 		Assert.assertEquals(1, clausesWithNonTrueValues.size());
-		Sentence nonTrueClause = (Sentence) parser.parse("(B AND C)");
+		Sentence nonTrueClause = (Sentence) parser.parse("(B & C)");
 		clausesWithNonTrueValues.contains(nonTrueClause);
 	}
 
 	@Test
 	public void testDPLLFilteringNonTrueClausesGivesNullWhenAllClausesAreKnown() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true)
-				.extend(new Symbol("B"), true).extend(new Symbol("C"), true);
+		model = model.extend(new PropositionSymbol("A"), true)
+				.extend(new PropositionSymbol("B"), true).extend(new PropositionSymbol("C"), true);
 		Sentence sentence = (Sentence) parser
 				.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
@@ -90,42 +90,42 @@ public class DPLLTest {
 	@Test
 	public void testDPLLFindsPurePositiveSymbolsWhenTheyExist() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+		model = model.extend(new PropositionSymbol("A"), true).extend(new PropositionSymbol("B"),
 				true);
 		Sentence sentence = (Sentence) parser
-				.parse("((A AND B) AND (B AND C))");
+				.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new Converter<Sentence>()
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
 								.transform(sentence)));
-		List<Symbol> symbolList = new Converter<Symbol>()
+		List<PropositionSymbol> symbolList = new Converter<PropositionSymbol>()
 				.setToList(new SymbolCollector().getSymbolsIn(sentence));
 
 		DPLL.SymbolValuePair sv = dpll.findPureSymbolValuePair(clauseList,
 				model, symbolList);
 		Assert.assertNotNull(sv);
-		Assert.assertEquals(new Symbol("C"), sv.symbol);
+		Assert.assertEquals(new PropositionSymbol("C"), sv.symbol);
 		Assert.assertEquals(new Boolean(true), sv.value);
 	}
 
 	@Test
 	public void testDPLLFindsPureNegativeSymbolsWhenTheyExist() {
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), true).extend(new Symbol("B"),
+		model = model.extend(new PropositionSymbol("A"), true).extend(new PropositionSymbol("B"),
 				true);
 		Sentence sentence = (Sentence) parser
-				.parse("((A AND B) AND ( B  AND (NOT C) ))");
+				.parse("((A & B) & ( B  & ~C ))");
 		List<Sentence> clauseList = new Converter<Sentence>()
 				.setToList(new CNFClauseGatherer()
 						.getClausesFrom(new CNFTransformer()
 								.transform(sentence)));
-		List<Symbol> symbolList = new Converter<Symbol>()
+		List<PropositionSymbol> symbolList = new Converter<PropositionSymbol>()
 				.setToList(new SymbolCollector().getSymbolsIn(sentence));
 
 		DPLL.SymbolValuePair sv = dpll.findPureSymbolValuePair(clauseList,
 				model, symbolList);
 		Assert.assertNotNull(sv);
-		Assert.assertEquals(new Symbol("C"), sv.symbol);
+		Assert.assertEquals(new PropositionSymbol("C"), sv.symbol);
 		Assert.assertEquals(new Boolean(false), sv.value);
 	}
 
@@ -177,8 +177,8 @@ public class DPLLTest {
 	public void testIssue66() {
 		// http://code.google.com/p/aima-java/issues/detail?id=66
 		Model model = new Model();
-		model = model.extend(new Symbol("A"), false)
-				.extend(new Symbol("B"), false).extend(new Symbol("C"), true);
+		model = model.extend(new PropositionSymbol("A"), false)
+				.extend(new PropositionSymbol("B"), false).extend(new PropositionSymbol("C"), true);
 		Sentence sentence = (Sentence) parser.parse("((A | B) | C)");
 		Assert.assertTrue(dpll.dpllSatisfiable(sentence, model));
 	}
@@ -189,6 +189,6 @@ public class DPLLTest {
 		kb.tell("A");
 
 		Assert.assertFalse(kb.askWithDpll("B"));
-		Assert.assertFalse(kb.askWithDpll("(NOT B)"));
+		Assert.assertFalse(kb.askWithDpll("~B"));
 	}
 }

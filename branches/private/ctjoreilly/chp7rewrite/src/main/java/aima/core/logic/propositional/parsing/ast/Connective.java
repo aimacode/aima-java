@@ -1,10 +1,10 @@
-package aima.core.logic.propositional;
+package aima.core.logic.propositional.parsing.ast;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 244.<br>
  * <br>
  * <pre>
- * There are five connectives in common use:
+ * <b>Logical Connectives:</b> There are five connectives in common use:
  * 1. ~   (not).
  * 2. &   (and).
  * 3. |   (or).

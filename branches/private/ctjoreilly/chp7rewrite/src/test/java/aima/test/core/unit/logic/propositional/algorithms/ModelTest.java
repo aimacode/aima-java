@@ -7,7 +7,7 @@ import org.junit.Test;
 import aima.core.logic.propositional.algorithms.Model;
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -26,8 +26,8 @@ public class ModelTest {
 		parser = new PEParser();
 		trueSentence = (Sentence) parser.parse("true");
 		falseSentence = (Sentence) parser.parse("false");
-		andSentence = (Sentence) parser.parse("(P  AND  Q)");
-		orSentence = (Sentence) parser.parse("(P  OR  Q)");
+		andSentence = (Sentence) parser.parse("(P  &  Q)");
+		orSentence = (Sentence) parser.parse("(P  |  Q)");
 		impliedSentence = (Sentence) parser.parse("(P  =>  Q)");
 		biConditionalSentence = (Sentence) parser.parse("(P  <=>  Q)");
 		m = new Model();
@@ -35,15 +35,15 @@ public class ModelTest {
 
 	@Test
 	public void testEmptyModel() {
-		Assert.assertEquals(null, m.getStatus(new Symbol("P")));
-		Assert.assertEquals(true, m.isUnknown(new Symbol("P")));
+		Assert.assertEquals(null, m.getStatus(new PropositionSymbol("P")));
+		Assert.assertEquals(true, m.isUnknown(new PropositionSymbol("P")));
 	}
 
 	@Test
 	public void testExtendModel() {
 		String p = "P";
-		m = m.extend(new Symbol(p), true);
-		Assert.assertEquals(Boolean.TRUE, m.getStatus(new Symbol("P")));
+		m = m.extend(new PropositionSymbol(p), true);
+		Assert.assertEquals(Boolean.TRUE, m.getStatus(new PropositionSymbol("P")));
 	}
 
 	@Test
@@ -58,8 +58,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new Symbol(p), true);
-		m = m.extend(new Symbol(q), true);
+		m = m.extend(new PropositionSymbol(p), true);
+		m = m.extend(new PropositionSymbol(q), true);
 		Assert.assertEquals(true, m.isTrue(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -70,8 +70,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new Symbol(p), false);
-		m = m.extend(new Symbol(q), false);
+		m = m.extend(new PropositionSymbol(p), false);
+		m = m.extend(new PropositionSymbol(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isFalse(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -82,8 +82,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new Symbol(p), true);
-		m = m.extend(new Symbol(q), false);
+		m = m.extend(new PropositionSymbol(p), true);
+		m = m.extend(new PropositionSymbol(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isFalse(impliedSentence));
@@ -94,8 +94,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new Symbol(p), false);
-		m = m.extend(new Symbol(q), true);
+		m = m.extend(new PropositionSymbol(p), false);
+		m = m.extend(new PropositionSymbol(q), true);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -106,12 +106,12 @@ public class ModelTest {
 	public void testComplexSentence() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new Symbol(p), true);
-		m = m.extend(new Symbol(q), false);
-		Sentence sent = (Sentence) parser.parse("((P OR Q) AND  (P => Q))");
+		m = m.extend(new PropositionSymbol(p), true);
+		m = m.extend(new PropositionSymbol(q), false);
+		Sentence sent = (Sentence) parser.parse("((P | Q) &  (P => Q))");
 		Assert.assertFalse(m.isTrue(sent));
 		Assert.assertTrue(m.isFalse(sent));
-		Sentence sent2 = (Sentence) parser.parse("((P OR Q) AND  (Q))");
+		Sentence sent2 = (Sentence) parser.parse("((P | Q) & (Q))");
 		Assert.assertFalse(m.isTrue(sent2));
 		Assert.assertTrue(m.isFalse(sent2));
 	}

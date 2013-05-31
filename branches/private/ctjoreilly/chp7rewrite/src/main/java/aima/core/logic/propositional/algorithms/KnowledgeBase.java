@@ -3,8 +3,8 @@ package aima.core.logic.propositional.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 
@@ -90,7 +90,7 @@ public class KnowledgeBase {
 		Sentence kbPlusQuery = null;
 		if (kbSentence != null) {
 			kbPlusQuery = (Sentence) parser.parse(" ( " + kbSentence.toString()
-					+ " AND (NOT " + queryString + " ))");
+					+ " "+Connective.AND+" ("+Connective.NOT+" " + queryString + " ))");
 		} else {
 			kbPlusQuery = query;
 		}

@@ -3,9 +3,9 @@ package aima.core.logic.propositional.visitors;
 import java.util.HashSet;
 import java.util.Set;
 
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.SetOps;
 
 /**
@@ -15,8 +15,8 @@ import aima.core.util.SetOps;
 public class PositiveSymbolCollector extends BasicTraverser {
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visitSymbol(Symbol symbol, Object arg) {
-		Set<Symbol> s = (Set<Symbol>) arg;
+	public Object visitPropositionSymbol(PropositionSymbol symbol, Object arg) {
+		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
 		s.add(symbol);// add ALL symbols not discarded by the visitNotSentence
 		// mathod
 		return arg;
@@ -24,19 +24,19 @@ public class PositiveSymbolCollector extends BasicTraverser {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visitNotSentence(UnarySentence ns, Object arg) {
-		Set<Symbol> s = (Set<Symbol>) arg;
-		if (ns.getFirst() instanceof Symbol) {
+	public Object visitUnarySentence(ComplexSentence ns, Object arg) {
+		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
+		if (ns.get(0) instanceof PropositionSymbol) {
 			// do nothing .do NOT add a negated Symbol
 		} else {
 			s = SetOps
-					.union(s, (Set<Symbol>) ns.getFirst().accept(this, arg));
+					.union(s, (Set<PropositionSymbol>) ns.get(0).accept(this, arg));
 		}
 		return s;
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Symbol> getPositiveSymbolsIn(Sentence sentence) {
-		return (Set<Symbol>) sentence.accept(this, new HashSet<Symbol>());
+	public Set<PropositionSymbol> getPositiveSymbolsIn(Sentence sentence) {
+		return (Set<PropositionSymbol>) sentence.accept(this, new HashSet<PropositionSymbol>());
 	}
 }

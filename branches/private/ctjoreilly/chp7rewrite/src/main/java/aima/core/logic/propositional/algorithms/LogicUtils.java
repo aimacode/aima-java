@@ -2,8 +2,8 @@ package aima.core.logic.propositional.algorithms;
 
 import java.util.List;
 
-import aima.core.logic.propositional.Connective;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
@@ -18,10 +18,12 @@ public class LogicUtils {
 		} else if (sentences.size() == 1) {
 			return sentences.get(0);
 		} else {
-			Sentence soFar = sentences.get(0);
-			for (int i = 1; i < sentences.size(); i++) {
+			// Chaining is done righ associative, 
+			// in the same way parsing works.
+			Sentence soFar = sentences.get(sentences.size()-1);
+			for (int i = sentences.size()-2; i >= 0; i--) {
 				Sentence next = sentences.get(i);
-				soFar = new BinarySentence(connective, soFar, next);
+				soFar = new ComplexSentence(connective, next, soFar);
 			}
 			return soFar;
 		}

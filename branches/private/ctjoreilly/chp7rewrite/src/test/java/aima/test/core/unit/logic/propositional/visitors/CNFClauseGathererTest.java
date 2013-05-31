@@ -38,8 +38,8 @@ public class CNFClauseGathererTest {
 
 	@Test
 	public void testNotSentence() {
-		Sentence simple = (Sentence) parser.parse("(NOT A)");
-		Sentence a = (Sentence) parser.parse("(NOT A)");
+		Sentence simple = (Sentence) parser.parse("~A");
+		Sentence a = (Sentence) parser.parse("~A");
 		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertNotNull(clauses);
 		Assert.assertEquals(1, clauses.size());
@@ -48,7 +48,7 @@ public class CNFClauseGathererTest {
 
 	@Test
 	public void testSimpleAndClause() {
-		Sentence simple = (Sentence) parser.parse("(A AND B)");
+		Sentence simple = (Sentence) parser.parse("A & B");
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");
 		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
@@ -59,7 +59,7 @@ public class CNFClauseGathererTest {
 
 	@Test
 	public void testMultiAndClause() {
-		Sentence simple = (Sentence) parser.parse("((A AND B) AND C)");
+		Sentence simple = (Sentence) parser.parse("A & B & C");
 		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertEquals(3, clauses.size());
 		Sentence a = (Sentence) parser.parse("A");
@@ -72,7 +72,7 @@ public class CNFClauseGathererTest {
 
 	@Test
 	public void testMultiAndClause2() {
-		Sentence simple = (Sentence) parser.parse("(A AND (B AND C))");
+		Sentence simple = (Sentence) parser.parse("A & B & C");
 		Set<Sentence> clauses = gatherer.getClausesFrom(simple);
 		Assert.assertEquals(3, clauses.size());
 		Sentence a = (Sentence) parser.parse("A");
@@ -85,14 +85,14 @@ public class CNFClauseGathererTest {
 
 	@Test
 	public void testAimaExample() {
-		Sentence aimaEg = (Sentence) parser.parse("( B11 <=> (P12 OR P21))");
+		Sentence aimaEg = (Sentence) parser.parse("B11 <=> P12 | P21");
 		CNFTransformer transformer = new CNFTransformer();
 		Sentence transformed = transformer.transform(aimaEg);
 		Set<Sentence> clauses = gatherer.getClausesFrom(transformed);
-		Sentence clause1 = (Sentence) parser.parse("( B11 OR  ( NOT P12 )  )");
-		Sentence clause2 = (Sentence) parser.parse("( B11 OR  ( NOT P21 )  )");
+		Sentence clause1 = (Sentence) parser.parse("B11 | ~P12");
+		Sentence clause2 = (Sentence) parser.parse("B11 | ~P21");
 		Sentence clause3 = (Sentence) parser
-				.parse("(  ( NOT B11 )  OR  ( P12 OR P21 ) )");
+				.parse("~B11 | P12 | P21");
 		Assert.assertEquals(3, clauses.size());
 		Assert.assertTrue(clauses.contains(clause1));
 		Assert.assertTrue(clauses.contains(clause2));

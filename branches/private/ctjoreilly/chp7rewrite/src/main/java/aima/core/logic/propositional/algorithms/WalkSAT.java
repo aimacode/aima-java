@@ -7,7 +7,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolCollector;
@@ -44,10 +44,10 @@ public class WalkSAT {
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
 		SymbolCollector sc = new SymbolCollector();
 
-		List<Symbol> symbols = new Converter<Symbol>().setToList(sc
+		List<PropositionSymbol> symbols = new Converter<PropositionSymbol>().setToList(sc
 				.getSymbolsIn(s));
 		for (int i = 0; i < symbols.size(); i++) {
-			Symbol sym = (Symbol) symbols.get(i);
+			PropositionSymbol sym = (PropositionSymbol) symbols.get(i);
 			myModel = myModel.extend(sym, Util.randomBoolean());
 		}
 		List<Sentence> clauses = new Converter<Sentence>()
@@ -62,14 +62,14 @@ public class WalkSAT {
 			}
 			Sentence clause = clauses.get(random.nextInt(clauses.size()));
 
-			List<Symbol> symbolsInClause = new Converter<Symbol>().setToList(sc
+			List<PropositionSymbol> symbolsInClause = new Converter<PropositionSymbol>().setToList(sc
 					.getSymbolsIn(clause));
 			if (random.nextDouble() >= probabilityOfRandomWalk) {
-				Symbol randomSymbol = symbolsInClause.get(random
+				PropositionSymbol randomSymbol = symbolsInClause.get(random
 						.nextInt(symbolsInClause.size()));
 				myModel = myModel.flip(randomSymbol);
 			} else {
-				Symbol symbolToFlip = getSymbolWhoseFlipMaximisesSatisfiedClauses(
+				PropositionSymbol symbolToFlip = getSymbolWhoseFlipMaximisesSatisfiedClauses(
 						new Converter<Sentence>().listToSet(clauses),
 						symbolsInClause, myModel);
 				myModel = myModel.flip(symbolToFlip);
@@ -79,13 +79,13 @@ public class WalkSAT {
 		return null;
 	}
 
-	private Symbol getSymbolWhoseFlipMaximisesSatisfiedClauses(
-			Set<Sentence> clauses, List<Symbol> symbols, Model model) {
+	private PropositionSymbol getSymbolWhoseFlipMaximisesSatisfiedClauses(
+			Set<Sentence> clauses, List<PropositionSymbol> symbols, Model model) {
 		if (symbols.size() > 0) {
-			Symbol retVal = symbols.get(0);
+			PropositionSymbol retVal = symbols.get(0);
 			int maxClausesSatisfied = 0;
 			for (int i = 0; i < symbols.size(); i++) {
-				Symbol sym = symbols.get(i);
+				PropositionSymbol sym = symbols.get(i);
 				if (getNumberOfClausesSatisfiedIn(clauses, model.flip(sym)) > maxClausesSatisfied) {
 					retVal = sym;
 					maxClausesSatisfied = getNumberOfClausesSatisfiedIn(

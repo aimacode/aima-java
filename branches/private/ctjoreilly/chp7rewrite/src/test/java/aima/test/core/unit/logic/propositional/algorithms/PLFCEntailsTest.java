@@ -26,10 +26,10 @@ public class PLFCEntailsTest {
 	public void testAIMAExample() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell(" (P => Q)");
-		kb.tell("((L AND M) => P)");
-		kb.tell("((B AND L) => M)");
-		kb.tell("( (A AND P) => L)");
-		kb.tell("((A AND B) => L)");
+		kb.tell("((L & M) => P)");
+		kb.tell("((B & L) => M)");
+		kb.tell("( (A & P) => L)");
+		kb.tell("((A & B) => L)");
 		kb.tell("(A)");
 		kb.tell("(B)");
 

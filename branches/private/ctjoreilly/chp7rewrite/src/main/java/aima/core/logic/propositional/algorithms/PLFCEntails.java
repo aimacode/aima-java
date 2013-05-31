@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import aima.core.logic.propositional.Connective;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Converter;
 
@@ -22,14 +22,14 @@ public class PLFCEntails {
 
 	private Hashtable<HornClause, Integer> count;
 
-	private Hashtable<Symbol, Boolean> inferred;
+	private Hashtable<PropositionSymbol, Boolean> inferred;
 
-	private Stack<Symbol> agenda;
+	private Stack<PropositionSymbol> agenda;
 
 	public PLFCEntails() {
 		count = new Hashtable<HornClause, Integer>();
-		inferred = new Hashtable<Symbol, Boolean>();
-		agenda = new Stack<Symbol>();
+		inferred = new Hashtable<PropositionSymbol, Boolean>();
+		agenda = new Stack<PropositionSymbol>();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class PLFCEntails {
 	 *         algorithm
 	 */
 	public boolean plfcEntails(KnowledgeBase kb, String s) {
-		return plfcEntails(kb, new Symbol(s));
+		return plfcEntails(kb, new PropositionSymbol(s));
 	}
 
 	/**
@@ -60,10 +60,10 @@ public class PLFCEntails {
 	 * @return the answer to the specified question using the PL-FC-Entails
 	 *         algorithm
 	 */
-	public boolean plfcEntails(KnowledgeBase kb, Symbol q) {
+	public boolean plfcEntails(KnowledgeBase kb, PropositionSymbol q) {
 		List<HornClause> hornClauses = asHornClauses(kb.getSentences());
 		while (agenda.size() != 0) {
-			Symbol p = agenda.pop();
+			PropositionSymbol p = agenda.pop();
 			while (!inferred(p)) {
 				inferred.put(p, Boolean.TRUE);
 
@@ -106,15 +106,15 @@ public class PLFCEntails {
 
 	}
 
-	private boolean inferred(Symbol p) {
+	private boolean inferred(PropositionSymbol p) {
 		Object value = inferred.get(p);
 		return ((value == null) || value.equals(Boolean.TRUE));
 	}
 
 	public class HornClause {
-		List<Symbol> premiseSymbols;
+		List<PropositionSymbol> premiseSymbols;
 
-		Symbol head;
+		PropositionSymbol head;
 
 		/**
 		 * Constructs a horn clause from the specified sentence.
@@ -123,10 +123,10 @@ public class PLFCEntails {
 		 *            a sentence in propositional logic
 		 */
 		public HornClause(Sentence sentence) {
-			if (sentence instanceof Symbol) {
-				head = (Symbol) sentence;
+			if (sentence instanceof PropositionSymbol) {
+				head = (PropositionSymbol) sentence;
 				agenda.push(head);
-				premiseSymbols = new ArrayList<Symbol>();
+				premiseSymbols = new ArrayList<PropositionSymbol>();
 				count.put(this, new Integer(0));
 				inferred.put(head, Boolean.FALSE);
 			} else if (!isImpliedSentence(sentence)) {
@@ -134,16 +134,16 @@ public class PLFCEntails {
 						+ " is not a horn clause");
 
 			} else {
-				BinarySentence bs = (BinarySentence) sentence;
-				head = (Symbol) bs.getSecond();
+				ComplexSentence bs = (ComplexSentence) sentence;
+				head = (PropositionSymbol) bs.get(1);
 				inferred.put(head, Boolean.FALSE);
-				Set<Symbol> symbolsInPremise = new SymbolCollector()
-						.getSymbolsIn(bs.getFirst());
-				Iterator<Symbol> iter = symbolsInPremise.iterator();
+				Set<PropositionSymbol> symbolsInPremise = new SymbolCollector()
+						.getSymbolsIn(bs.get(0));
+				Iterator<PropositionSymbol> iter = symbolsInPremise.iterator();
 				while (iter.hasNext()) {
 					inferred.put(iter.next(), Boolean.FALSE);
 				}
-				premiseSymbols = new Converter<Symbol>()
+				premiseSymbols = new Converter<PropositionSymbol>()
 						.setToList(symbolsInPremise);
 				count.put(this, new Integer(premiseSymbols.size()));
 			}
@@ -151,7 +151,7 @@ public class PLFCEntails {
 		}
 
 		private boolean isImpliedSentence(Sentence sentence) {
-			return ((sentence instanceof BinarySentence) && ((BinarySentence) sentence)
+			return ((sentence instanceof ComplexSentence) && ((ComplexSentence) sentence)
 					.getConnective().equals(Connective.IMPLICATION));
 		}
 
@@ -161,7 +161,7 @@ public class PLFCEntails {
 		 * 
 		 * @return the conclusion of this horn clause.
 		 */
-		public Symbol head() {
+		public PropositionSymbol head() {
 
 			return head;
 		}
@@ -176,7 +176,7 @@ public class PLFCEntails {
 		 * @return <code>true</code> if the premise of this horn clause contains
 		 *         the specified symbol.
 		 */
-		public boolean premisesContainsSymbol(Symbol q) {
+		public boolean premisesContainsSymbol(PropositionSymbol q) {
 			return premiseSymbols.contains(q);
 		}
 
@@ -185,7 +185,7 @@ public class PLFCEntails {
 		 * 
 		 * @return a list of all the symbols in the premise of this horn clause
 		 */
-		public List<Symbol> getPremiseSymbols() {
+		public List<PropositionSymbol> getPremiseSymbols() {
 			return premiseSymbols;
 		}
 
@@ -202,7 +202,7 @@ public class PLFCEntails {
 			if (premiseSymbols.size() != ohc.premiseSymbols.size()) {
 				return false;
 			}
-			for (Symbol s : premiseSymbols) {
+			for (PropositionSymbol s : premiseSymbols) {
 				if (!ohc.premiseSymbols.contains(s)) {
 					return false;
 				}
@@ -214,7 +214,7 @@ public class PLFCEntails {
 		@Override
 		public int hashCode() {
 			int result = 17;
-			for (Symbol s : premiseSymbols) {
+			for (PropositionSymbol s : premiseSymbols) {
 				result = 37 * result + s.hashCode();
 			}
 			return result;

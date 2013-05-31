@@ -5,7 +5,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Converter;
 import aima.core.util.SetOps;
@@ -33,15 +33,15 @@ public class TTEntails {
 		Sentence kbSentence = kb.asSentence();
 		Sentence querySentence = (Sentence) new PEParser().parse(alpha);
 		SymbolCollector collector = new SymbolCollector();
-		Set<Symbol> kbSymbols = collector.getSymbolsIn(kbSentence);
-		Set<Symbol> querySymbols = collector.getSymbolsIn(querySentence);
-		Set<Symbol> symbols = SetOps.union(kbSymbols, querySymbols);
-		List<Symbol> symbolList = new Converter<Symbol>().setToList(symbols);
+		Set<PropositionSymbol> kbSymbols = collector.getSymbolsIn(kbSentence);
+		Set<PropositionSymbol> querySymbols = collector.getSymbolsIn(querySentence);
+		Set<PropositionSymbol> symbols = SetOps.union(kbSymbols, querySymbols);
+		List<PropositionSymbol> symbolList = new Converter<PropositionSymbol>().setToList(symbols);
 		return ttCheckAll(kbSentence, querySentence, symbolList, new Model());
 	}
 
 	public boolean ttCheckAll(Sentence kbSentence, Sentence querySentence,
-			List<Symbol> symbols, Model model) {
+			List<PropositionSymbol> symbols, Model model) {
 		if (symbols.isEmpty()) {
 			if (model.isTrue(kbSentence)) {
 				// System.out.println("#");
@@ -51,11 +51,11 @@ public class TTEntails {
 				return true;
 			}
 		} else {
-			Symbol symbol = Util.first(symbols);
-			List<Symbol> rest = Util.rest(symbols);
+			PropositionSymbol symbol = Util.first(symbols);
+			List<PropositionSymbol> rest = Util.rest(symbols);
 
-			Model trueModel = model.extend(new Symbol(symbol.getValue()), true);
-			Model falseModel = model.extend(new Symbol(symbol.getValue()),
+			Model trueModel = model.extend(new PropositionSymbol(symbol.getSymbol()), true);
+			Model falseModel = model.extend(new PropositionSymbol(symbol.getSymbol()),
 					false);
 			return (ttCheckAll(kbSentence, querySentence, rest, trueModel) && (ttCheckAll(
 					kbSentence, querySentence, rest, falseModel)));

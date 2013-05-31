@@ -3,10 +3,9 @@ package aima.core.logic.propositional.visitors;
 import java.util.HashSet;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -21,29 +20,32 @@ public class CNFClauseGatherer extends BasicTraverser {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visitBinarySentence(BinarySentence bs, Object args) {
+	public Object visitBinarySentence(ComplexSentence bs, Object args) {
 
 		Set<Sentence> soFar = (Set<Sentence>) args;
 
 		if (detector.containsEmbeddedAnd(bs)) {
-			processSubTerm(bs.getSecond(), processSubTerm(bs.getFirst(), soFar));
+			processSubTerm(bs.get(1), processSubTerm(bs.get(0), soFar));
 		} else {
 			soFar.add(bs);
 		}
 
 		return soFar;
-
 	}
 
 	@SuppressWarnings("unchecked")
 	public Set<Sentence> getClausesFrom(Sentence sentence) {
 		Set<Sentence> set = new HashSet<Sentence>();
-		if (sentence instanceof Symbol) {
-			set.add(sentence);
-		} else if (sentence instanceof UnarySentence) {
+		if (sentence instanceof PropositionSymbol) {
 			set.add(sentence);
 		} else {
-			set = (Set<Sentence>) sentence.accept(this, set);
+			ComplexSentence cs = (ComplexSentence) sentence;
+			if (cs.isUnary()) {
+				set.add(sentence);
+			}
+			else if (cs.isBinary()) {
+				set = (Set<Sentence>) sentence.accept(this, set);
+			}
 		}
 		return set;
 	}

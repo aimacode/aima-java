@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PEParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolClassifier;
 
 /**
@@ -29,16 +29,16 @@ public class SymbolClassifierTest {
 
 	@Test
 	public void testSimpleNegativeSymbol() {
-		Sentence sentence = (Sentence) parser.parse("(NOT B)");
+		Sentence sentence = (Sentence) parser.parse("~B");
 
-		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
-		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
-		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
+		Set<PropositionSymbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<PropositionSymbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence b = (Sentence) parser.parse("B");
 
@@ -61,14 +61,14 @@ public class SymbolClassifierTest {
 	@Test
 	public void testSimplePositiveSymbol() {
 		Sentence sentence = (Sentence) parser.parse("B");
-		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
-		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
-		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
+		Set<PropositionSymbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<PropositionSymbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Assert.assertEquals(0, neg.size());
 
@@ -89,15 +89,15 @@ public class SymbolClassifierTest {
 
 	@Test
 	public void testSingleSymbolPositiveAndNegative() {
-		Sentence sentence = (Sentence) parser.parse("(B AND (NOT B))");
-		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
-		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
+		Sentence sentence = (Sentence) parser.parse("B & ~B");
+		Set<PropositionSymbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
-		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
+		Set<PropositionSymbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<PropositionSymbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence b = (Sentence) parser.parse("B");
 
@@ -116,17 +116,16 @@ public class SymbolClassifierTest {
 	@Test
 	public void testAIMA2eExample() {
 		// 2nd Edition Pg 221
-		Sentence sentence = (Sentence) parser
-				.parse("(((A OR (NOT B)) AND ((NOT B) OR (NOT C))) AND (C OR A))");
+		Sentence sentence = (Sentence) parser.parse("(A | ~B) & (~B | ~C) & (C | A)");
 
-		Set<Symbol> neg = classifier.getNegativeSymbolsIn(sentence);
-		Set<Symbol> pos = classifier.getPositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> neg = classifier.getNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> pos = classifier.getPositiveSymbolsIn(sentence);
 
-		Set<Symbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
-		Set<Symbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
+		Set<PropositionSymbol> pureNeg = classifier.getPureNegativeSymbolsIn(sentence);
+		Set<PropositionSymbol> purePos = classifier.getPurePositiveSymbolsIn(sentence);
 
-		Set<Symbol> pure = classifier.getPureSymbolsIn(sentence);
-		Set<Symbol> impure = classifier.getImpureSymbolsIn(sentence);
+		Set<PropositionSymbol> pure = classifier.getPureSymbolsIn(sentence);
+		Set<PropositionSymbol> impure = classifier.getImpureSymbolsIn(sentence);
 
 		Sentence a = (Sentence) parser.parse("A");
 		Sentence b = (Sentence) parser.parse("B");

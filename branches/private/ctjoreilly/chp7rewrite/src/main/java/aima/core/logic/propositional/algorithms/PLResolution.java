@@ -7,13 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.SymbolComparator;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolComparator;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolClassifier;
@@ -76,8 +75,7 @@ public class PLResolution {
 	 * @return the answer to the specified question using PL-Resolution.
 	 */
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
-		Sentence kBAndNotAlpha = new BinarySentence(Connective.AND, kb.asSentence(),
-				new UnarySentence(Connective.NOT, alpha));
+		Sentence kBAndNotAlpha = new ComplexSentence(Connective.AND, kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		Set<Sentence> clauses = new CNFClauseGatherer()
 				.getClausesFrom(new CNFTransformer().transform(kBAndNotAlpha));
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
@@ -92,7 +90,7 @@ public class PLResolution {
 				Set<Sentence> resolvents = plResolve(pair.get(0), pair.get(1));
 				resolvents = filterOutClausesWithTwoComplementaryLiterals(resolvents);
 
-				if (resolvents.contains(new Symbol("EMPTY_CLAUSE"))) {
+				if (resolvents.contains(new PropositionSymbol("EMPTY_CLAUSE"))) {
 					return true;
 				}
 				newClauses = SetOps.union(newClauses, resolvents);
@@ -112,9 +110,9 @@ public class PLResolution {
 	public Set<Sentence> plResolve(Sentence clause1, Sentence clause2) {
 		Set<Sentence> resolvents = new HashSet<Sentence>();
 		ClauseSymbols cs = new ClauseSymbols(clause1, clause2);
-		Iterator<Symbol> iter = cs.getComplementedSymbols().iterator();
+		Iterator<PropositionSymbol> iter = cs.getComplementedSymbols().iterator();
 		while (iter.hasNext()) {
-			Symbol symbol = iter.next();
+			PropositionSymbol symbol = iter.next();
 			resolvents.add(createResolventClause(cs, symbol));
 		}
 
@@ -139,9 +137,9 @@ public class PLResolution {
 		Iterator<Sentence> iter = clauses.iterator();
 		while (iter.hasNext()) {
 			Sentence clause = iter.next();
-			Set<Symbol> positiveSymbols = classifier
+			Set<PropositionSymbol> positiveSymbols = classifier
 					.getPositiveSymbolsIn(clause);
-			Set<Symbol> negativeSymbols = classifier
+			Set<PropositionSymbol> negativeSymbols = classifier
 					.getNegativeSymbolsIn(clause);
 			if ((SetOps.intersection(positiveSymbols, negativeSymbols).size() == 0)) {
 				filtered.add(clause);
@@ -150,10 +148,10 @@ public class PLResolution {
 		return filtered;
 	}
 
-	private Sentence createResolventClause(ClauseSymbols cs, Symbol toRemove) {
-		List<Symbol> positiveSymbols = new Converter<Symbol>().setToList(SetOps
+	private Sentence createResolventClause(ClauseSymbols cs, PropositionSymbol toRemove) {
+		List<PropositionSymbol> positiveSymbols = new Converter<PropositionSymbol>().setToList(SetOps
 				.union(cs.clause1PositiveSymbols, cs.clause2PositiveSymbols));
-		List<Symbol> negativeSymbols = new Converter<Symbol>().setToList(SetOps
+		List<PropositionSymbol> negativeSymbols = new Converter<PropositionSymbol>().setToList(SetOps
 				.union(cs.clause1NegativeSymbols, cs.clause2NegativeSymbols));
 		if (positiveSymbols.contains(toRemove)) {
 			positiveSymbols.remove(toRemove);
@@ -162,18 +160,18 @@ public class PLResolution {
 			negativeSymbols.remove(toRemove);
 		}
 
-		Collections.sort(positiveSymbols, new SymbolComparator());
-		Collections.sort(negativeSymbols, new SymbolComparator());
+		Collections.sort(positiveSymbols, new PropositionSymbolComparator());
+		Collections.sort(negativeSymbols, new PropositionSymbolComparator());
 
 		List<Sentence> sentences = new ArrayList<Sentence>();
 		for (int i = 0; i < positiveSymbols.size(); i++) {
 			sentences.add(positiveSymbols.get(i));
 		}
 		for (int i = 0; i < negativeSymbols.size(); i++) {
-			sentences.add(new UnarySentence(Connective.NOT, negativeSymbols.get(i)));
+			sentences.add(new ComplexSentence(Connective.NOT, negativeSymbols.get(i)));
 		}
 		if (sentences.size() == 0) {
-			return new Symbol("EMPTY_CLAUSE"); // == empty clause
+			return new PropositionSymbol("EMPTY_CLAUSE"); // == empty clause
 		} else {
 			return LogicUtils.chainWith(Connective.OR, sentences);
 		}
@@ -207,13 +205,13 @@ public class PLResolution {
 	}
 
 	class ClauseSymbols {
-		Set<Symbol> clause1Symbols, clause1PositiveSymbols,
+		Set<PropositionSymbol> clause1Symbols, clause1PositiveSymbols,
 				clause1NegativeSymbols;
 
-		Set<Symbol> clause2Symbols, clause2PositiveSymbols,
+		Set<PropositionSymbol> clause2Symbols, clause2PositiveSymbols,
 				clause2NegativeSymbols;
 
-		Set<Symbol> positiveInClause1NegativeInClause2,
+		Set<PropositionSymbol> positiveInClause1NegativeInClause2,
 				negativeInClause1PositiveInClause2;
 
 		public ClauseSymbols(Sentence clause1, Sentence clause2) {
@@ -235,7 +233,7 @@ public class PLResolution {
 
 		}
 
-		public Set<Symbol> getComplementedSymbols() {
+		public Set<PropositionSymbol> getComplementedSymbols() {
 			return SetOps.union(positiveInClause1NegativeInClause2,
 					negativeInClause1PositiveInClause2);
 		}

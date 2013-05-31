@@ -8,7 +8,8 @@ import javax.lang.model.SourceVersion;
 import aima.core.logic.common.Lexer;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
-import aima.core.logic.propositional.Connective;
+import aima.core.logic.propositional.parsing.ast.Connective;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -55,9 +56,15 @@ public class PELexer extends Lexer {
 		if (lookAhead(1) == '(') {
 			consume();
 			return new Token(LogicTokenTypes.LPAREN, "(");
+		} else if (lookAhead(1) == '[') {
+				consume();
+				return new Token(LogicTokenTypes.LSQRBRACKET, "[");
 		} else if (lookAhead(1) == ')') {
 			consume();
 			return new Token(LogicTokenTypes.RPAREN, ")");
+		} else if (lookAhead(1) == ']') {
+			consume();
+			return new Token(LogicTokenTypes.RSQRBRACKET, "]");
 		} else if (Character.isWhitespace(lookAhead(1))) {
 			consume();
 			return nextToken();
@@ -83,7 +90,10 @@ public class PELexer extends Lexer {
 	
 	private Token connective() {
 		StringBuffer sbuf = new StringBuffer();
-		while (connectiveChars.contains(lookAhead(1))) {
+		// Ensure pull out just one connective at a time, the isConnective(...)
+		// test ensures we handle chained expressions like the following:
+		// ~~P
+		while (connectiveChars.contains(lookAhead(1)) && !isConnective(sbuf.toString())) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
@@ -104,9 +114,9 @@ public class PELexer extends Lexer {
 		}
 		String symbol = sbuf.toString();
 		if (symbol.equalsIgnoreCase("true")) {
-			return new Token(LogicTokenTypes.TRUE, "TRUE");
+			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE);
 		} else if (symbol.equalsIgnoreCase("false")) {
-			return new Token(LogicTokenTypes.FALSE, "FALSE");
+			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE);
 		} else if (SourceVersion.isIdentifier(symbol)){
 			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString());
 		}

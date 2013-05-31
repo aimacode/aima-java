@@ -3,9 +3,9 @@ package aima.core.logic.propositional.visitors;
 import java.util.HashSet;
 import java.util.Set;
 
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.SetOps;
 
 /**
@@ -15,19 +15,18 @@ import aima.core.util.SetOps;
 public class NegativeSymbolCollector extends BasicTraverser {
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visitNotSentence(UnarySentence ns, Object arg) {
-		Set<Symbol> s = (Set<Symbol>) arg;
-		if (ns.getFirst() instanceof Symbol) {
-			s.add((Symbol) ns.getFirst());
+	public Object visitUnarySentence(ComplexSentence ns, Object arg) {
+		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
+		if (ns.get(0) instanceof PropositionSymbol) {
+			s.add((PropositionSymbol) ns.get(0));
 		} else {
-			s = SetOps
-					.union(s, (Set<Symbol>) ns.getFirst().accept(this, arg));
+			s = SetOps.union(s, (Set<PropositionSymbol>) ns.get(0).accept(this, arg));
 		}
 		return s;
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Symbol> getNegativeSymbolsIn(Sentence s) {
-		return (Set<Symbol>) s.accept(this, new HashSet<Symbol>());
+	public Set<PropositionSymbol> getNegativeSymbolsIn(Sentence s) {
+		return (Set<PropositionSymbol>) s.accept(this, new HashSet<PropositionSymbol>());
 	}
 }

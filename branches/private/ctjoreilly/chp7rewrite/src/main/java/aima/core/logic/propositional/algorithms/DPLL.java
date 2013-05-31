@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.Connective;
 import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolClassifier;
@@ -22,7 +22,7 @@ import aima.core.util.SetOps;
  */
 public class DPLL {
 
-	private static final Converter<Symbol> SYMBOL_CONVERTER = new Converter<Symbol>();
+	private static final Converter<PropositionSymbol> SYMBOL_CONVERTER = new Converter<PropositionSymbol>();
 
 	/**
 	 * Returns <code>true</code> if the specified sentence is satisfiable. A
@@ -66,7 +66,7 @@ public class DPLL {
 	public boolean dpllSatisfiable(Sentence s, Model m) {
 		Set<Sentence> clauses = new CNFClauseGatherer()
 				.getClausesFrom(new CNFTransformer().transform(s));
-		List<Symbol> symbols = SYMBOL_CONVERTER.setToList(new SymbolCollector()
+		List<PropositionSymbol> symbols = SYMBOL_CONVERTER.setToList(new SymbolCollector()
 				.getSymbolsIn(s));
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);
@@ -89,14 +89,14 @@ public class DPLL {
 	}
 
 	public SymbolValuePair findPureSymbolValuePair(List<Sentence> clauseList,
-			Model model, List<Symbol> symbols) {
+			Model model, List<PropositionSymbol> symbols) {
 		List<Sentence> clausesWithNonTrueValues = clausesWithNonTrueValues(
 				clauseList, model);
 		Sentence nonTrueClauses = LogicUtils.chainWith(Connective.AND,
 				clausesWithNonTrueValues);
 		// System.out.println("Unsatisfied clauses = "
 		// + clausesWithNonTrueValues.size());
-		Set<Symbol> symbolsAlreadyAssigned = model.getAssignedSymbols();
+		Set<PropositionSymbol> symbolsAlreadyAssigned = model.getAssignedSymbols();
 
 		// debug
 		// List symList = asList(symbolsAlreadyAssigned);
@@ -108,12 +108,12 @@ public class DPLL {
 		// }
 
 		// debug
-		List<Symbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(SetOps
+		List<PropositionSymbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(SetOps
 				.difference(new SymbolClassifier()
 						.getPurePositiveSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
 
-		List<Symbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(SetOps
+		List<PropositionSymbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(SetOps
 				.difference(new SymbolClassifier()
 						.getPureNegativeSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
@@ -123,18 +123,18 @@ public class DPLL {
 			return new SymbolValuePair();// automatically set to null values
 		} else {
 			if (purePositiveSymbols.size() > 0) {
-				Symbol symbol = new Symbol(
-						(purePositiveSymbols.get(0)).getValue());
+				PropositionSymbol symbol = new PropositionSymbol(
+						(purePositiveSymbols.get(0)).getSymbol());
 				if (pureNegativeSymbols.contains(symbol)) {
-					throw new RuntimeException("Symbol " + symbol.getValue()
+					throw new RuntimeException("Symbol " + symbol.getSymbol()
 							+ "misclassified");
 				}
 				return new SymbolValuePair(symbol, true);
 			} else {
-				Symbol symbol = new Symbol(
-						(pureNegativeSymbols.get(0)).getValue());
+				PropositionSymbol symbol = new PropositionSymbol(
+						(pureNegativeSymbols.get(0)).getSymbol());
 				if (purePositiveSymbols.contains(symbol)) {
-					throw new RuntimeException("Symbol " + symbol.getValue()
+					throw new RuntimeException("Symbol " + symbol.getSymbol()
 							+ "misclassified");
 				}
 				return new SymbolValuePair(symbol, false);
@@ -146,7 +146,7 @@ public class DPLL {
 	// PRIVATE METHODS
 	//
 
-	private boolean dpll(Set<Sentence> clauses, List<Symbol> symbols,
+	private boolean dpll(Set<Sentence> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// List<Sentence> clauseList = asList(clauses);
 		List<Sentence> clauseList = new Converter<Sentence>()
@@ -167,25 +167,25 @@ public class DPLL {
 		SymbolValuePair svp = findPureSymbolValuePair(clauseList, model,
 				symbols);
 		if (svp.notNull()) {
-			List<Symbol> newSymbols = new ArrayList<Symbol>(symbols);
-			newSymbols.remove(new Symbol(svp.symbol.getValue()));
-			Model newModel = model.extend(new Symbol(svp.symbol.getValue()),
+			List<PropositionSymbol> newSymbols = new ArrayList<PropositionSymbol>(symbols);
+			newSymbols.remove(new PropositionSymbol(svp.symbol.getSymbol()));
+			Model newModel = model.extend(new PropositionSymbol(svp.symbol.getSymbol()),
 					svp.value.booleanValue());
 			return dpll(clauses, newSymbols, newModel);
 		}
 
 		SymbolValuePair svp2 = findUnitClause(clauseList, model, symbols);
 		if (svp2.notNull()) {
-			List<Symbol> newSymbols = new ArrayList<Symbol>(symbols);
-			newSymbols.remove(new Symbol(svp2.symbol.getValue()));
-			Model newModel = model.extend(new Symbol(svp2.symbol.getValue()),
+			List<PropositionSymbol> newSymbols = new ArrayList<PropositionSymbol>(symbols);
+			newSymbols.remove(new PropositionSymbol(svp2.symbol.getSymbol()));
+			Model newModel = model.extend(new PropositionSymbol(svp2.symbol.getSymbol()),
 					svp2.value.booleanValue());
 			return dpll(clauses, newSymbols, newModel);
 		}
 
-		Symbol symbol = (Symbol) symbols.get(0);
+		PropositionSymbol symbol = (PropositionSymbol) symbols.get(0);
 		// System.out.println("default behaviour selecting " + symbol);
-		List<Symbol> newSymbols = new ArrayList<Symbol>(symbols);
+		List<PropositionSymbol> newSymbols = new ArrayList<PropositionSymbol>(symbols);
 		newSymbols.remove(0);
 		return (dpll(clauses, newSymbols, model.extend(symbol, true)) || dpll(
 				clauses, newSymbols, model.extend(symbol, false)));
@@ -220,17 +220,17 @@ public class DPLL {
 	}
 
 	private boolean isClauseTrueInModel(Sentence clause, Model model) {
-		List<Symbol> positiveSymbols = SYMBOL_CONVERTER
+		List<PropositionSymbol> positiveSymbols = SYMBOL_CONVERTER
 				.setToList(new SymbolClassifier().getPositiveSymbolsIn(clause));
-		List<Symbol> negativeSymbols = SYMBOL_CONVERTER
+		List<PropositionSymbol> negativeSymbols = SYMBOL_CONVERTER
 				.setToList(new SymbolClassifier().getNegativeSymbolsIn(clause));
 
-		for (Symbol symbol : positiveSymbols) {
+		for (PropositionSymbol symbol : positiveSymbols) {
 			if ((model.isTrue(symbol))) {
 				return true;
 			}
 		}
-		for (Symbol symbol : negativeSymbols) {
+		for (PropositionSymbol symbol : negativeSymbols) {
 			if ((model.isFalse(symbol))) {
 				return true;
 			}
@@ -240,25 +240,25 @@ public class DPLL {
 	}
 
 	private SymbolValuePair findUnitClause(List<Sentence> clauseList,
-			Model model, List<Symbol> symbols) {
+			Model model, List<PropositionSymbol> symbols) {
 		for (int i = 0; i < clauseList.size(); i++) {
 			Sentence clause = (Sentence) clauseList.get(i);
-			if ((clause instanceof Symbol)
+			if ((clause instanceof PropositionSymbol)
 					&& (!(model.getAssignedSymbols().contains(clause)))) {
 				// System.out.println("found unit clause - assigning");
-				return new SymbolValuePair(new Symbol(
-						((Symbol) clause).getValue()), true);
+				return new SymbolValuePair(new PropositionSymbol(
+						((PropositionSymbol) clause).getSymbol()), true);
 			}
 
-			if (clause instanceof UnarySentence) {
-				UnarySentence sentence = (UnarySentence) clause;
-				Sentence negated = sentence.getFirst();
-				if ((negated instanceof Symbol)
+			if (clause instanceof ComplexSentence && ((ComplexSentence)clause).isUnary()) {
+				ComplexSentence sentence = (ComplexSentence) clause;
+				Sentence negated = sentence.get(0);
+				if ((negated instanceof PropositionSymbol)
 						&& (!(model.getAssignedSymbols().contains(negated)))) {
 					// System.out.println("found unit clause type 2 -
 					// assigning");
-					return new SymbolValuePair(new Symbol(
-							((Symbol) negated).getValue()), false);
+					return new SymbolValuePair(new PropositionSymbol(
+							((PropositionSymbol) negated).getSymbol()), false);
 				}
 			}
 
@@ -269,7 +269,7 @@ public class DPLL {
 	}
 
 	public class SymbolValuePair {
-		public Symbol symbol;// public to avoid unnecessary get and set
+		public PropositionSymbol symbol;// public to avoid unnecessary get and set
 
 		// accessors
 
@@ -282,7 +282,7 @@ public class DPLL {
 			value = null;
 		}
 
-		public SymbolValuePair(Symbol symbol, boolean bool) {
+		public SymbolValuePair(PropositionSymbol symbol, boolean bool) {
 			// represents "Symbol found with a boolean value that makes all
 			// its literals true
 			this.symbol = symbol;

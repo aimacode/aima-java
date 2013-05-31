@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -14,17 +14,17 @@ public class SymbolCollector extends BasicTraverser {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visitSymbol(Symbol s, Object arg) {
-		Set<Symbol> symbolsCollectedSoFar = (Set<Symbol>) arg;
-		symbolsCollectedSoFar.add(new Symbol(s.getValue()));
+	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
+		Set<PropositionSymbol> symbolsCollectedSoFar = (Set<PropositionSymbol>) arg;
+		symbolsCollectedSoFar.add(new PropositionSymbol(s.getSymbol()));
 		return symbolsCollectedSoFar;
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Symbol> getSymbolsIn(Sentence s) {
+	public Set<PropositionSymbol> getSymbolsIn(Sentence s) {
 		if (s == null) {// empty knowledge bases == null fix this later
-			return new HashSet<Symbol>();
+			return new HashSet<PropositionSymbol>();
 		}
-		return (Set<Symbol>) s.accept(this, new HashSet<Symbol>());
+		return (Set<PropositionSymbol>) s.accept(this, new HashSet<PropositionSymbol>());
 	}
 }
