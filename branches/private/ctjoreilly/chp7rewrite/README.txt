@@ -5,14 +5,17 @@
 
 
 == Current Release: 0.10.5-Chp4-Complete ==
-0.10.5-Chp4-Rewrite : 09 Oct 2012 :<br>
-  * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
-  * Fixed Issue 65, Improve genetic algorithm implementation, rewritten to be easier to use/extend.
-  * Fixed Issue 73, misplaced tile heuristic function no longer counts the gap.
-  * Fixed Issue 74, defect in implementation of genetic algorithm, fixed indirectly due to Issue 65 re-implementation.
-  * Fixed Issue 76, QLearning Agent corrected to know which actions are possible in which states.
-  * Fixed Issue 77, valid hashCode() method missing on TicTacToeState.
-  * Minor documentation and code cleanup.
+0.11.0-Chp7-Rewrite : TBD!!! :<br>
+  * Propositional Parser Improvements:
+    * Takes operator precedence into account (i.e. does not require concrete syntax to be fully bracketed).
+    * Abstract syntax to Concrete syntax (ie. toString) only outputs brackets when necessary (easier to read)
+      so concrete syntax can be parsed back in again unchanged.
+    * Square brackets can be used in addition to parenthesis to explicitly indicate precedence.
+    * Symbols changed for the following logical connectives:
+      * not -> ~
+      * and -> &
+      * or  -> |
+    * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
  
 = Details =
 
@@ -249,7 +252,15 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
-
+0.10.5-Chp4-Rewrite : 09 Oct 2012 :<br>
+  * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
+  * Fixed Issue 65, Improve genetic algorithm implementation, rewritten to be easier to use/extend.
+  * Fixed Issue 73, misplaced tile heuristic function no longer counts the gap.
+  * Fixed Issue 74, defect in implementation of genetic algorithm, fixed indirectly due to Issue 65 re-implementation.
+  * Fixed Issue 76, QLearning Agent corrected to know which actions are possible in which states.
+  * Fixed Issue 77, valid hashCode() method missing on TicTacToeState.
+  * Minor documentation and code cleanup.
+  
 0.10.4-Chp5-Rewrite : 08 Jan 2012 :<br>
   * Redesigned and re-implemented adversarial search algorithms from Chapter 5.
   ** Rewrote Minimax-Decision and Alpha-Beta-Search algorithms.
