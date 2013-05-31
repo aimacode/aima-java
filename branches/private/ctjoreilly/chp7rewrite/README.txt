@@ -214,8 +214,6 @@ Searches like DepthFirstSearch which need to be used as a search (so implementin
 	 public DepthFirstSearch(QueueSearch search).
 
 == Logic Notes ==
-The ONE thing you need to watch out for is that the Parsers are VERY unforgiving. If you get a lexing or parsing error, there is a high probability there is an error in your logic string.
-
 To use First Order Logic, first you need to create an instance of aima.core.logic.fol.domain.FOLDomain which collects the FOL Constants, Prredicates, and Function etc... that you use to solve a particular problem.
 
 A parser (that understands the Grammar in figure 8.3 (page 293 of AIMA3e) needs to be instantiated with this domain, e.g:
