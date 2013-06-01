@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
@@ -14,13 +14,13 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ciaran O'Reilly
  */
 public class PEParserTest {
-	private PEParser parser   = null;
+	private PLParser parser   = null;
 	private Sentence sentence = null;
 	private String   expected = null;
 
 	@Before
 	public void setUp() {
-		parser = new PEParser();
+		parser = new PLParser();
 	}
 
 	@Test

@@ -35,13 +35,16 @@ public class PropositionSymbol extends AtomicSentence {
 	 */
 	public PropositionSymbol(String symbol) {
 		// Ensure differing cases for the 'True' and 'False'
-		// constants are represented in a canonical form.
+		// propositional constants are represented in a canonical form.
 		if (TRUE.equalsIgnoreCase(symbol)) {
 			this.symbol = TRUE;
 		} else if (FALSE.equalsIgnoreCase(symbol)) {
 			this.symbol = FALSE;
-		} else {
+		} else if (isPropositionSymbol(symbol)){
 			this.symbol = symbol;
+		}
+		else {
+			throw new IllegalArgumentException("Not a legal proposition symbol: "+symbol);
 		}
 	}
 

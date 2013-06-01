@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.algorithms.KnowledgeBase;
 import aima.core.logic.propositional.algorithms.PLResolution;
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
@@ -19,12 +19,12 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 public class PLResolutionTest {
 	private PLResolution resolution;
 
-	private PEParser parser;
+	private PLParser parser;
 
 	@Before
 	public void setUp() {
 		resolution = new PLResolution();
-		parser = new PEParser();
+		parser = new PLParser();
 	}
 
 	@Test

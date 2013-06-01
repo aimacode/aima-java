@@ -27,13 +27,8 @@ public class ComplexSentence extends Sentence {
 	 */
 	public ComplexSentence(Connective connective, Sentence... sentences) {
 		// Assertion checks
-		if (connective == null) {
-			throw new IllegalArgumentException("Connective must be specified.");
-		}
-		if (sentences == null) {
-			throw new IllegalArgumentException(
-					"> 0 simpler sentences must be specified.");
-		}
+		assertLegalArguments(connective, sentences);
+		
 		this.connective = connective;
 		simplerSentences = new Sentence[sentences.length];
 		for (int i = 0; i < sentences.length; i++) {
@@ -41,10 +36,7 @@ public class ComplexSentence extends Sentence {
 		}
 	}
 
-	/**
-	 * 
-	 * @return the logical connective associated with this sentence.
-	 */
+	@Override
 	public Connective getConnective() {
 		return connective;
 	}
@@ -105,7 +97,10 @@ public class ComplexSentence extends Sentence {
 	@Override
 	public int hashCode() {
 		if (hashCode == -1) {
-			hashCode = toString().hashCode();
+			hashCode = 17 * getConnective().hashCode();
+			for (Sentence s : simplerSentences) {
+				hashCode = (hashCode * 37) + s.hashCode();
+			}
 		}
 
 		return hashCode;
@@ -126,5 +121,27 @@ public class ComplexSentence extends Sentence {
 			}
 		}
 		return concreteSyntax;
+	}
+	
+	//
+	// PRIVATE
+	//
+	private void assertLegalArguments(Connective connective, Sentence...sentences) {
+		if (connective == null) {
+			throw new IllegalArgumentException("Connective must be specified.");
+		}
+		if (sentences == null) {
+			throw new IllegalArgumentException("> 0 simpler sentences must be specified.");
+		}
+		if (connective == Connective.NOT) {
+			if (sentences.length != 1) {
+				throw new IllegalArgumentException("A not (~) complex sentence only take 1 simpler sentence not "+sentences.length);
+			}
+		}
+		else {
+			if (sentences.length != 2) {
+				throw new IllegalArgumentException("Connective is binary ("+connective+") but only "+sentences.length + " simpler sentences provided");
+			}
+		}
 	}
 }

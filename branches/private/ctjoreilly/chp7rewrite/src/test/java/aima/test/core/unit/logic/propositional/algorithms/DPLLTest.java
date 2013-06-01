@@ -9,7 +9,7 @@ import org.junit.Test;
 import aima.core.logic.propositional.algorithms.DPLL;
 import aima.core.logic.propositional.algorithms.KnowledgeBase;
 import aima.core.logic.propositional.algorithms.Model;
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
@@ -25,11 +25,11 @@ public class DPLLTest {
 
 	private DPLL dpll;
 
-	private PEParser parser;
+	private PLParser parser;
 
 	@Before
 	public void setUp() {
-		parser = new PEParser();
+		parser = new PLParser();
 		dpll = new DPLL();
 	}
 

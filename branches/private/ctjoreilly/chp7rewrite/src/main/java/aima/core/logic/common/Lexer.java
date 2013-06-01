@@ -1,20 +1,22 @@
 package aima.core.logic.common;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
 /**
  * @author Ravi Mohan
+ * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
 public abstract class Lexer {
-	protected abstract Token nextToken();
-
-	protected Reader input;
-
-	protected int lookAhead = 1;
-
-	protected int[] lookAheadBuffer;
+	protected int lookAheadBufferSize = 1;
+	//
+	private static final int END_OF_INPUT = -1;
+	//
+	private Reader input;
+	private int[] lookAheadBuffer;
+	private int currentPositionInInput;
 
 	/**
 	 * Sets the character stream of the lexical analyzer.
@@ -24,30 +26,35 @@ public abstract class Lexer {
 	 *            tokens.
 	 */
 	public void setInput(String inputString) {
-		lookAheadBuffer = new int[lookAhead];
-		this.input = new StringReader(inputString);
-		fillLookAheadBuffer();
+		setInput(new StringReader(inputString));
 	}
 
 	/**
-	 * Sets the character stream and look ahead buffer to <code>null</code>.
+	 * Set the character stream reader of the lexical analyzer.
+	 * 
+	 * @param inputReader
+	 *            a reader on a sequence of characters to be converted into a
+	 *            sequence of tokens.
 	 */
-	public void clear() {
-		this.input = null;
-		lookAheadBuffer = null;
+	public void setInput(Reader inputReader) {
+		input = inputReader;
+		lookAheadBuffer = new int[lookAheadBufferSize];
+		currentPositionInInput = 0;
+		initializeLookAheadBuffer();
 	}
 
-	/*
-	 * Stores the next character in the lookahead buffer to make parsing action
-	 * decisions.
+	/**
+	 * To be implemented by concrete implementations
+	 * 
+	 * @return the next token from the input.
 	 */
-	protected void fillLookAheadBuffer() {
-		try {
-			lookAheadBuffer[0] = (char) input.read();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public abstract Token nextToken();
 
+	//
+	// PROTECTED
+	//
+	protected int getCurrentPositionInInput() {
+		return currentPositionInInput;
 	}
 
 	/*
@@ -57,39 +64,70 @@ public abstract class Lexer {
 		return (char) lookAheadBuffer[position - 1];
 	}
 
-	/*
-	 * Returns true if the end of the stream has been reached.
+	/**
+	 * Consume 1 character from the input.
 	 */
-	protected boolean isEndOfFile(int i) {
-		return (-1 == i);
+	protected void consume() {
+		currentPositionInInput++;
+		loadNextCharacterFromInput();
 	}
 
-	/*
-	 * Loads the next character into the lookahead buffer if the end of the
-	 * stream has not already been reached.
+	//
+	// PRIVATE
+	//
+
+	/**
+	 * Returns true if the end of the stream has been reached.
 	 */
-	protected void loadNextCharacterFromInput() {
+	private boolean isEndOfInput(int i) {
+		return (END_OF_INPUT == i);
+	}
 
-		boolean eofEncountered = false;
-		for (int i = 0; i < lookAhead - 1; i++) {
-
-			lookAheadBuffer[i] = lookAheadBuffer[i + 1];
-			if (isEndOfFile(lookAheadBuffer[i])) {
-				eofEncountered = true;
+	/**
+	 * Initialize the look ahead buffer from the input.
+	 */
+	private void initializeLookAheadBuffer() {
+		for (int i = 0; i < lookAheadBufferSize; i++) {
+			// Mark th entire buffer as being end of input.
+			lookAheadBuffer[i] = END_OF_INPUT;
+		}
+		for (int i = 0; i < lookAheadBufferSize; i++) {
+			// Now fill the buffer (if possible) from the input.
+			lookAheadBuffer[i] = readInput();
+			if (isEndOfInput(lookAheadBuffer[i])) {
+				// The input is smaller than the buffer size
 				break;
 			}
 		}
-		if (!eofEncountered) {
-			try {
-				lookAheadBuffer[lookAhead - 1] = input.read();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
 	}
 
-	protected void consume() {
-		loadNextCharacterFromInput();
+	/**
+	 * Loads the next character into the lookahead buffer if the end of the
+	 * stream has not already been reached.
+	 */
+	private void loadNextCharacterFromInput() {
+		boolean eoiEncountered = false;
+		for (int i = 0; i < lookAheadBufferSize - 1; i++) {
+			lookAheadBuffer[i] = lookAheadBuffer[i + 1];
+			if (isEndOfInput(lookAheadBuffer[i])) {
+				eoiEncountered = true;
+				break;
+			}
+		}
+		if (!eoiEncountered) {
+			lookAheadBuffer[lookAheadBufferSize - 1] = readInput();
+		}
+	}
+
+	private int readInput() {
+		int read = -1;
+
+		try {
+			read = input.read();
+		} catch (IOException ioe) {
+			throw new LexerException("IOException thrown reading input.", currentPositionInInput, ioe);	
+		}
+
+		return read;
 	}
 }

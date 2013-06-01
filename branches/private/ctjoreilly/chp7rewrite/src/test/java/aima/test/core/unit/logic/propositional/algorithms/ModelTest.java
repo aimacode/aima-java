@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.algorithms.Model;
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
@@ -16,14 +16,14 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 public class ModelTest {
 	private Model m;
 
-	private PEParser parser;
+	private PLParser parser;
 
 	Sentence trueSentence, falseSentence, andSentence, orSentence,
 			impliedSentence, biConditionalSentence;
 
 	@Before
 	public void setUp() {
-		parser = new PEParser();
+		parser = new PLParser();
 		trueSentence = (Sentence) parser.parse("true");
 		falseSentence = (Sentence) parser.parse("false");
 		andSentence = (Sentence) parser.parse("(P  &  Q)");

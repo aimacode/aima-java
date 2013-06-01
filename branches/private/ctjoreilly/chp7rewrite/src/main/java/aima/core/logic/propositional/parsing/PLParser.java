@@ -17,15 +17,15 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public class PEParser extends Parser {
+public class PLParser extends Parser {
 
-	public PEParser() {
+	public PLParser() {
 		lookAheadBuffer = new Token[lookAhead];
 	}
 
 	@Override
 	public Sentence parse(String inputString) {
-		lexer = new PELexer(inputString);
+		lexer = new PLLexer(inputString);
 		fillLookAheadBuffer();
 		return parseSentence(0);
 	}

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
@@ -60,7 +60,7 @@ public class PLResolution {
 	 * @return the answer to the specified question using PL-Resolution.
 	 */
 	public boolean plResolution(KnowledgeBase kb, String alpha) {
-		return plResolution(kb, (Sentence) new PEParser().parse(alpha));
+		return plResolution(kb, (Sentence) new PLParser().parse(alpha));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class PLResolution {
 	public boolean plResolution(String kbs, String alphaString) {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell(kbs);
-		Sentence alpha = (Sentence) new PEParser().parse(alphaString);
+		Sentence alpha = (Sentence) new PLParser().parse(alphaString);
 		return plResolution(kb, alpha);
 	}
 

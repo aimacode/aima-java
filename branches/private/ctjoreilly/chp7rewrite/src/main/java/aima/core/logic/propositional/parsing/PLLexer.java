@@ -1,17 +1,19 @@
 package aima.core.logic.propositional.parsing;
 
 import aima.core.logic.common.Lexer;
+import aima.core.logic.common.LexerException;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
+ * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class PELexer extends Lexer {
-	public PELexer() {
+public class PLLexer extends Lexer {
+	public PLLexer() {
 	}
 
 	/**
@@ -22,7 +24,7 @@ public class PELexer extends Lexer {
 	 *            a sequence of characters to be converted into a sequence of
 	 *            tokens.
 	 */
-	public PELexer(String inputString) {
+	public PLLexer(String inputString) {
 		this();
 		setInput(inputString);
 	}
@@ -34,18 +36,19 @@ public class PELexer extends Lexer {
 	 */
 	@Override
 	public Token nextToken() {
+		int startPosition = getCurrentPositionInInput();
 		if (lookAhead(1) == '(') {
 			consume();
-			return new Token(LogicTokenTypes.LPAREN, "(");
+			return new Token(LogicTokenTypes.LPAREN, "(", startPosition);
 		} else if (lookAhead(1) == '[') {
 				consume();
-				return new Token(LogicTokenTypes.LSQRBRACKET, "[");
+				return new Token(LogicTokenTypes.LSQRBRACKET, "[", startPosition);
 		} else if (lookAhead(1) == ')') {
 			consume();
-			return new Token(LogicTokenTypes.RPAREN, ")");
+			return new Token(LogicTokenTypes.RPAREN, ")", startPosition);
 		} else if (lookAhead(1) == ']') {
 			consume();
-			return new Token(LogicTokenTypes.RSQRBRACKET, "]");
+			return new Token(LogicTokenTypes.RSQRBRACKET, "]", startPosition);
 		} else if (Character.isWhitespace(lookAhead(1))) {
 			consume();
 			return nextToken();
@@ -54,10 +57,9 @@ public class PELexer extends Lexer {
 		} else if (symbolDetected(lookAhead(1))) {
 			return symbol();
 		} else if (lookAhead(1) == (char) -1) {
-			return new Token(LogicTokenTypes.EOI, "EOI");
+			return new Token(LogicTokenTypes.EOI, "EOI", startPosition);
 		} else {
-			throw new RuntimeException("Lexing error on character "
-					+ lookAhead(1));
+			throw new LexerException("Lexing error on character " + lookAhead(1) + " at position " + getCurrentPositionInInput(), getCurrentPositionInInput());
 		}
 	}
 
@@ -70,6 +72,7 @@ public class PELexer extends Lexer {
 	}
 	
 	private Token connective() {
+		int startPosition = getCurrentPositionInInput();
 		StringBuffer sbuf = new StringBuffer();
 		// Ensure pull out just one connective at a time, the isConnective(...)
 		// test ensures we handle chained expressions like the following:
@@ -81,13 +84,14 @@ public class PELexer extends Lexer {
 		
 		String symbol = sbuf.toString();
 		if (isConnective(symbol)) {
-			return new Token(LogicTokenTypes.CONNECTIVE, sbuf.toString());
+			return new Token(LogicTokenTypes.CONNECTIVE, sbuf.toString(), startPosition);
 		}
 		
-		throw new RuntimeException("Lexing error on connective "+symbol);
+		throw new LexerException("Lexing error on connective "+symbol + " at position " + getCurrentPositionInInput(), getCurrentPositionInInput());
 	}
 
 	private Token symbol() {
+		int startPosition = getCurrentPositionInInput();
 		StringBuffer sbuf = new StringBuffer();
 		while (PropositionSymbol.isPropositionSymbolIdentifierPart(lookAhead(1))) {
 			sbuf.append(lookAhead(1));
@@ -95,14 +99,14 @@ public class PELexer extends Lexer {
 		}
 		String symbol = sbuf.toString();
 		if (PropositionSymbol.isAlwaysTrueSymbol(symbol)) {
-			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE);
+			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE, startPosition);
 		} else if (PropositionSymbol.isAlwaysFalseSymbol(symbol)) {
-			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE);
+			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE, startPosition);
 		} else if (PropositionSymbol.isPropositionSymbol(symbol)){
-			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString());
+			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString(), startPosition);
 		}
 		
-		throw new RuntimeException("Lexing error on symbol "+symbol);
+		throw new LexerException("Lexing error on symbol "+symbol+ " at position "+ getCurrentPositionInInput(), getCurrentPositionInInput());
 	}
 
 	private boolean isConnective(String aSymbol) {

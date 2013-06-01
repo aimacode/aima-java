@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import aima.core.logic.common.Lexer;
+import aima.core.logic.common.LexerException;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
 import aima.core.logic.fol.Connectors;
@@ -11,6 +12,7 @@ import aima.core.logic.fol.Quantifiers;
 import aima.core.logic.fol.domain.FOLDomain;
 
 /**
+ * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * 
  */
@@ -39,17 +41,18 @@ public class FOLLexer extends Lexer {
 
 	@Override
 	public Token nextToken() {
+		int startPosition = getCurrentPositionInInput();
 		if (lookAhead(1) == '(') {
 			consume();
-			return new Token(LogicTokenTypes.LPAREN, "(");
+			return new Token(LogicTokenTypes.LPAREN, "(", startPosition);
 
 		} else if (lookAhead(1) == ')') {
 			consume();
-			return new Token(LogicTokenTypes.RPAREN, ")");
+			return new Token(LogicTokenTypes.RPAREN, ")", startPosition);
 
 		} else if (lookAhead(1) == ',') {
 			consume();
-			return new Token(LogicTokenTypes.COMMA, ",");
+			return new Token(LogicTokenTypes.COMMA, ",", startPosition);
 
 		} else if (identifierDetected()) {
 			// System.out.println("identifier detected");
@@ -58,14 +61,14 @@ public class FOLLexer extends Lexer {
 			consume();
 			return nextToken();
 		} else if (lookAhead(1) == (char) -1) {
-			return new Token(LogicTokenTypes.EOI, "EOI");
+			return new Token(LogicTokenTypes.EOI, "EOI", startPosition);
 		} else {
-			throw new RuntimeException("Lexing error on character "
-					+ lookAhead(1));
+			throw new LexerException("Lexing error on character " + lookAhead(1)+" at position "+getCurrentPositionInInput(), getCurrentPositionInInput());
 		}
 	}
 
 	private Token identifier() {
+		int startPosition = getCurrentPositionInInput();
 		StringBuffer sbuf = new StringBuffer();
 		while ((Character.isJavaIdentifierPart(lookAhead(1)))
 				|| partOfConnector()) {
@@ -75,24 +78,22 @@ public class FOLLexer extends Lexer {
 		String readString = new String(sbuf);
 		// System.out.println(readString);
 		if (connectors.contains(readString)) {
-			return new Token(LogicTokenTypes.CONNECTIVE, readString);
+			return new Token(LogicTokenTypes.CONNECTIVE, readString, startPosition);
 		} else if (quantifiers.contains(readString)) {
-			return new Token(LogicTokenTypes.QUANTIFIER, readString);
+			return new Token(LogicTokenTypes.QUANTIFIER, readString, startPosition);
 		} else if (domain.getPredicates().contains(readString)) {
-			return new Token(LogicTokenTypes.PREDICATE, readString);
+			return new Token(LogicTokenTypes.PREDICATE, readString, startPosition);
 		} else if (domain.getFunctions().contains(readString)) {
-			return new Token(LogicTokenTypes.FUNCTION, readString);
+			return new Token(LogicTokenTypes.FUNCTION, readString, startPosition);
 		} else if (domain.getConstants().contains(readString)) {
-			return new Token(LogicTokenTypes.CONSTANT, readString);
+			return new Token(LogicTokenTypes.CONSTANT, readString, startPosition);
 		} else if (isVariable(readString)) {
-			return new Token(LogicTokenTypes.VARIABLE, readString);
+			return new Token(LogicTokenTypes.VARIABLE, readString, startPosition);
 		} else if (readString.equals("=")) {
-			return new Token(LogicTokenTypes.EQUALS, readString);
+			return new Token(LogicTokenTypes.EQUALS, readString, startPosition);
 		} else {
-			throw new RuntimeException("Lexing error on character "
-					+ lookAhead(1));
+			throw new LexerException("Lexing error on character " + lookAhead(1) + " at position "+getCurrentPositionInInput(), getCurrentPositionInInput());
 		}
-
 	}
 
 	private boolean isVariable(String s) {
@@ -100,7 +101,7 @@ public class FOLLexer extends Lexer {
 	}
 
 	private boolean identifierDetected() {
-		return (Character.isJavaIdentifierStart((char) lookAheadBuffer[0]))
+		return (Character.isJavaIdentifierStart(lookAhead(1)))
 				|| partOfConnector();
 	}
 

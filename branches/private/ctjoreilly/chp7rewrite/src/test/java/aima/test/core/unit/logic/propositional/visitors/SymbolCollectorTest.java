@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
@@ -16,13 +16,13 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
  * 
  */
 public class SymbolCollectorTest {
-	private PEParser parser;
+	private PLParser parser;
 
 	private SymbolCollector collector;
 
 	@Before
 	public void setUp() {
-		parser = new PEParser();
+		parser = new PLParser();
 		collector = new SymbolCollector();
 	}
 

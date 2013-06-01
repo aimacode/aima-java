@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
@@ -48,7 +48,7 @@ public class DPLL {
 	 * @return <code>true</code> if the specified sentence is satisfiable.
 	 */
 	public boolean dpllSatisfiable(String string) {
-		Sentence sen = (Sentence) new PEParser().parse(string);
+		Sentence sen = (Sentence) new PLParser().parse(string);
 		return dpllSatisfiable(sen, new Model());
 	}
 

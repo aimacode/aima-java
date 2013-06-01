@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
@@ -18,11 +18,11 @@ import aima.core.logic.propositional.visitors.CNFTransformer;
 public class CNFClauseGathererTest {
 	private CNFClauseGatherer gatherer;
 
-	private PEParser parser;
+	private PLParser parser;
 
 	@Before
 	public void setUp() {
-		parser = new PEParser();
+		parser = new PLParser();
 		gatherer = new CNFClauseGatherer();
 	}
 

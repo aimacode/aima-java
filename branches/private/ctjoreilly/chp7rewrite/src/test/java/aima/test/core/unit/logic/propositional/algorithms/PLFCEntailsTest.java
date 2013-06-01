@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.algorithms.KnowledgeBase;
 import aima.core.logic.propositional.algorithms.PLFCEntails;
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 
 /**
  * @author Ravi Mohan
  * 
  */
 public class PLFCEntailsTest {
-	PEParser parser;
+	PLParser parser;
 
 	PLFCEntails plfce;
 

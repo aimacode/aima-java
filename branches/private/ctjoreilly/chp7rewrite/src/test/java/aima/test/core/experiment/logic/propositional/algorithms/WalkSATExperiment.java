@@ -16,7 +16,7 @@ public class WalkSATExperiment {
 	@Test
 	public void testWalkSat() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor("( A AND B )", 1000, 0.5);
+		Model m = walkSAT.findModelFor("A & B", 1000, 0.5);
 		if (m == null) {
 			System.out.println("failure");
 		} else {
@@ -27,7 +27,7 @@ public class WalkSATExperiment {
 	@Test
 	public void testWalkSat2() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor("( A AND (NOT B) )", 1000, 0.5);
+		Model m = walkSAT.findModelFor("A & ~B", 1000, 0.5);
 		if (m == null) {
 			System.out.println("failure");
 		} else {
@@ -38,13 +38,13 @@ public class WalkSATExperiment {
 	@Test
 	public void testAIMAExample() {
 		KnowledgeBase kb = new KnowledgeBase();
-		kb.tell(" (P => Q)");
-		kb.tell("((L AND M) => P)");
-		kb.tell("((B AND L) => M)");
-		kb.tell("( (A AND P) => L)");
-		kb.tell("((A AND B) => L)");
-		kb.tell("(A)");
-		kb.tell("(B)");
+		kb.tell("P => Q");
+		kb.tell("L & M => P");
+		kb.tell("B & L => M");
+		kb.tell("A & P => L");
+		kb.tell("A & B => L");
+		kb.tell("A");
+		kb.tell("B");
 		WalkSAT walkSAT = new WalkSAT();
 		Model m = walkSAT.findModelFor(kb.asSentence().toString(), 1000, 0.5);
 		if (m == null) {

@@ -47,7 +47,6 @@ public class FOLParser {
 	}
 
 	public void setUpToParse(String s) {
-		lexer.clear();
 		lookAheadBuffer = new Token[1];
 		lexer.setInput(s);
 		fillLookAheadBuffer();

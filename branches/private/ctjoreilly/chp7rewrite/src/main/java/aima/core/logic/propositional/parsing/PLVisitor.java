@@ -1,6 +1,5 @@
 package aima.core.logic.propositional.parsing;
 
-import aima.core.logic.common.Visitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
@@ -8,7 +7,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public interface PLVisitor extends Visitor {
+public interface PLVisitor {
 	Object visitPropositionSymbol(PropositionSymbol sentence, Object arg);
 
 	Object visitUnarySentence(ComplexSentence sentence, Object arg);

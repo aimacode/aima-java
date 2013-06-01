@@ -37,5 +37,5 @@ public interface LogicTokenTypes {
 
 	static final int WHITESPACE = 1000;
 
-	static final int EOI = 9999;
+	static final int EOI = 9999; // End of Input.
 }

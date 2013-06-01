@@ -18,15 +18,20 @@ public abstract class Sentence implements ParseTreeNode {
 
 	/**
 	 * 
+	 * @return the logical connective associated with this sentence if it has
+	 *         one (i.e. is a ComplexSentence), null otherwise.
+	 */
+	public Connective getConnective() {
+		return null;
+	}
+
+	/**
+	 * 
 	 * @return true if a complex sentence with a Not connective, false
 	 *         otherwise.
 	 */
 	public boolean isNotSentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getConnective() == Connective.NOT;
-		}
-		return result;
+		return hasConnective(Connective.NOT);
 	}
 
 	/**
@@ -35,11 +40,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         otherwise.
 	 */
 	public boolean isAndSentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getConnective() == Connective.AND;
-		}
-		return result;
+		return hasConnective(Connective.AND);
 	}
 
 	/**
@@ -48,11 +49,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         otherwise.
 	 */
 	public boolean isOrSentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getConnective() == Connective.OR;
-		}
-		return result;
+		return hasConnective(Connective.OR);
 	}
 
 	/**
@@ -61,11 +58,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         otherwise.
 	 */
 	public boolean isImplicationSentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getConnective() == Connective.IMPLICATION;
-		}
-		return result;
+		return hasConnective(Connective.IMPLICATION);
 	}
 
 	/**
@@ -74,11 +67,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         otherwise.
 	 */
 	public boolean isBiconditionalSentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getConnective() == Connective.BICONDITIONAL;
-		}
-		return result;
+		return hasConnective(Connective.BICONDITIONAL);
 	}
 
 	/**
@@ -86,11 +75,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 * @return true if a proposition symbol, false otherwise.
 	 */
 	public boolean isPropositionSymbol() {
-		boolean result = false;
-		if (this instanceof PropositionSymbol) {
-			result = true;
-		}
-		return result;
+		return getConnective() == null;
 	}
 
 	/**
@@ -99,11 +84,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         false otherwise.
 	 */
 	public boolean isUnarySentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getNumberSimplerSentences() == 1;
-		}
-		return result;
+		return hasConnective(Connective.NOT);
 	}
 
 	/**
@@ -112,11 +93,7 @@ public abstract class Sentence implements ParseTreeNode {
 	 *         false otherwise.
 	 */
 	public boolean isBinarySentence() {
-		boolean result = false;
-		if (this instanceof ComplexSentence) {
-			result = ((ComplexSentence) this).getNumberSimplerSentences() == 2;
-		}
-		return result;
+		return getConnective() != null && !hasConnective(Connective.NOT);
 	}
 
 	/**
@@ -174,5 +151,13 @@ public abstract class Sentence implements ParseTreeNode {
 		}
 
 		return result;
+	}
+	
+	//
+	// PROTECTED
+	//
+	protected boolean hasConnective(Connective connective) {
+		// Note: can use '==' as Connective is an enum.
+		return getConnective() == connective;
 	}
 }

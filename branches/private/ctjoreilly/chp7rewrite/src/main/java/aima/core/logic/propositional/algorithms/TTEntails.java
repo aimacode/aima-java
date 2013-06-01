@@ -3,7 +3,7 @@ package aima.core.logic.propositional.algorithms;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
@@ -31,7 +31,7 @@ public class TTEntails {
 	 */
 	public boolean ttEntails(KnowledgeBase kb, String alpha) {
 		Sentence kbSentence = kb.asSentence();
-		Sentence querySentence = (Sentence) new PEParser().parse(alpha);
+		Sentence querySentence = (Sentence) new PLParser().parse(alpha);
 		SymbolCollector collector = new SymbolCollector();
 		Set<PropositionSymbol> kbSymbols = collector.getSymbolsIn(kbSentence);
 		Set<PropositionSymbol> querySymbols = collector.getSymbolsIn(querySentence);

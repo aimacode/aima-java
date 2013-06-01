@@ -3,7 +3,7 @@ package aima.core.logic.propositional.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.CNFTransformer;
@@ -15,11 +15,11 @@ import aima.core.logic.propositional.visitors.CNFTransformer;
 public class KnowledgeBase {
 	private List<Sentence> sentences;
 
-	private PEParser parser;
+	private PLParser parser;
 
 	public KnowledgeBase() {
 		sentences = new ArrayList<Sentence>();
-		parser = new PEParser();
+		parser = new PLParser();
 	}
 
 	/**

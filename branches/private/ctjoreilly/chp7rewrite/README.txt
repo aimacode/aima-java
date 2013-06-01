@@ -6,6 +6,10 @@
 
 == Current Release: 0.10.5-Chp4-Complete ==
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
+  * General Lexer and Parser Improvements:
+    * Tokens now track the position in the input that they started at.
+    * More informative Lexer and Parser exceptions are now generated.
+      Intended to help with identifying in the input where the error occured.
   * Propositional Parser Improvements:
     * Takes operator precedence into account (i.e. does not require concrete syntax to be fully bracketed).
     * Abstract syntax to Concrete syntax (ie. toString) only outputs brackets when necessary (easier to read)

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.PEParser;
+import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
@@ -39,7 +39,7 @@ public class WalkSAT {
 	public Model findModelFor(String logicalSentence, int numberOfFlips,
 			double probabilityOfRandomWalk) {
 		myModel = new Model();
-		Sentence s = (Sentence) new PEParser().parse(logicalSentence);
+		Sentence s = (Sentence) new PLParser().parse(logicalSentence);
 		CNFTransformer transformer = new CNFTransformer();
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
 		SymbolCollector sc = new SymbolCollector();
