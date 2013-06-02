@@ -8,11 +8,17 @@ import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
+ * A concrete implementation of a lexical analyzer for the propositional language.
+ * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * @author Mike Stampone
  */
 public class PLLexer extends Lexer {
+	
+	/**
+	 * Default Constructor.
+	 */
 	public PLLexer() {
 	}
 
@@ -25,14 +31,13 @@ public class PLLexer extends Lexer {
 	 *            tokens.
 	 */
 	public PLLexer(String inputString) {
-		this();
 		setInput(inputString);
 	}
 
 	/**
-	 * Returns the next token from the character stream.
+	 * Returns the next propositional token from the character stream.
 	 * 
-	 * @return the next token from the character stream.
+	 * @return the next propositional token from the character stream.
 	 */
 	@Override
 	public Token nextToken() {

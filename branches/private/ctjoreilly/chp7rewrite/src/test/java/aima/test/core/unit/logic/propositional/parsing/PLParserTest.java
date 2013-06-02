@@ -13,7 +13,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class PEParserTest {
+public class PLParserTest {
 	private PLParser parser   = null;
 	private Sentence sentence = null;
 	private String   expected = null;

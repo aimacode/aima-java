@@ -5,6 +5,11 @@ import java.io.Reader;
 import java.io.StringReader;
 
 /**
+ * An abstract base class for constructing lexical analyzers for knowledge
+ * representation languages. It provides a mechanism for converting a sequence
+ * of characters to a sequence of tokens that are meaningful in the
+ * representation language of interest.
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
@@ -125,7 +130,8 @@ public abstract class Lexer {
 		try {
 			read = input.read();
 		} catch (IOException ioe) {
-			throw new LexerException("IOException thrown reading input.", currentPositionInInput, ioe);	
+			throw new LexerException("IOException thrown reading input.",
+					currentPositionInInput, ioe);
 		}
 
 		return read;
