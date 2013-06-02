@@ -4,7 +4,12 @@
 # JDK 1.6 - is the baseline JDK against which this project is developed. 
 
 
-== Current Release: 0.10.5-Chp4-Complete ==
+== Current Release: 0.11.0-Chp7-Rewrite ==
+CURRENTLY TODO
+--------------
+. Clean up PLParser code an use ParserException. Update related test cases.
+. Clean up PLVistor API and abstract implementaiton.
+
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
   * General Lexer and Parser Improvements:
     * Tokens now track the position in the input that they started at.
