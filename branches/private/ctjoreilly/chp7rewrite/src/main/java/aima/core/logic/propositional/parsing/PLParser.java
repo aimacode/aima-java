@@ -3,6 +3,7 @@ package aima.core.logic.propositional.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.logic.common.Lexer;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Parser;
 import aima.core.logic.common.Token;
@@ -17,60 +18,71 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public class PLParser extends Parser {
+public class PLParser extends Parser<Sentence> {
 
+	private PLLexer lexer = new PLLexer();
+	
+	/**
+	 * Default Constructor.
+	 */
 	public PLParser() {
-		lookAheadBuffer = new Token[lookAhead];
 	}
 
 	@Override
-	public Sentence parse(String inputString) {
-		lexer = new PLLexer(inputString);
-		fillLookAheadBuffer();
+	public Lexer getLexer() {
+		return lexer;
+	}
+	
+	//
+	// PROTECTED
+	//
+	@Override
+	protected Sentence parse() {
 		return parseSentence(0);
 	}
+	
 	
 	//
 	// PRIVATE
 	//	
 	private Sentence parseSentence(int level) {
-		List<Object> levelTokens = parseLevel(level);
+		List<Object> levelParseNodes = parseLevel(level);
 		
 		Sentence result = null;
 
 		// Now group up the tokens based on precedence order from highest to lowest.
-		levelTokens = constructSentencesForConnective(Connective.NOT,           levelTokens);
-		levelTokens = constructSentencesForConnective(Connective.AND,           levelTokens);
-		levelTokens = constructSentencesForConnective(Connective.OR,            levelTokens);
-		levelTokens = constructSentencesForConnective(Connective.IMPLICATION,   levelTokens);
-		levelTokens = constructSentencesForConnective(Connective.BICONDITIONAL, levelTokens);
+		levelParseNodes = constructSentencesForConnective(Connective.NOT,           levelParseNodes);
+		levelParseNodes = constructSentencesForConnective(Connective.AND,           levelParseNodes);
+		levelParseNodes = constructSentencesForConnective(Connective.OR,            levelParseNodes);
+		levelParseNodes = constructSentencesForConnective(Connective.IMPLICATION,   levelParseNodes);
+		levelParseNodes = constructSentencesForConnective(Connective.BICONDITIONAL, levelParseNodes);
 		
 		// At this point there should just be the root formula
 		// for this level, if not 'null' will be returned
 		// and the calling code will deal with.
-		if (levelTokens.size() == 1 && levelTokens.get(0) instanceof Sentence) {
-			result = (Sentence) levelTokens.get(0);
+		if (levelParseNodes.size() == 1 && levelParseNodes.get(0) instanceof Sentence) {
+			result = (Sentence) levelParseNodes.get(0);
 		}
 		
 		return result;
 	}
 	
-	private List<Object> constructSentencesForConnective(Connective connectiveToConstruct, List<Object> tokens) {
-		List<Object> newTokens = new ArrayList<Object>();
+	private List<Object> constructSentencesForConnective(Connective connectiveToConstruct, List<Object> parseNodes) {
+		List<Object> newParseNodes = new ArrayList<Object>();
 		int numSentencesMade = 0;
 		// Go right to left in order to make right associative, 
 		// which is a natural default for propositional logic
-		for (int i = tokens.size()-1; i >= 0; i--) {
-			Object token = tokens.get(i);
-			if (token instanceof Connective) {
-				Connective tokenConnective = (Connective) token;
+		for (int i = parseNodes.size()-1; i >= 0; i--) {
+			Object parseNode = parseNodes.get(i);
+			if (parseNode instanceof Connective) {
+				Connective tokenConnective = (Connective) parseNode;
 				if (tokenConnective == Connective.NOT) {
 					// A unary connective
-					if (i+1 < tokens.size() && tokens.get(i+1) instanceof Sentence) {
+					if (i+1 < parseNodes.size() && parseNodes.get(i+1) instanceof Sentence) {
 						if (tokenConnective == connectiveToConstruct) {
-							ComplexSentence newSentence = new ComplexSentence(connectiveToConstruct, (Sentence) tokens.get(i+1));
-							tokens.set(i,   newSentence);
-							tokens.set(i+1, null);
+							ComplexSentence newSentence = new ComplexSentence(connectiveToConstruct, (Sentence) parseNodes.get(i+1));
+							parseNodes.set(i,   newSentence);
+							parseNodes.set(i+1, null);
 							numSentencesMade++;
 						}
 					}
@@ -80,14 +92,14 @@ public class PLParser extends Parser {
 				}
 				else {
 					// A Binary connective
-					if ((i-1 >= 0 && tokens.get(i-1) instanceof Sentence) && (i+1 < tokens.size() && tokens.get(i+1) instanceof Sentence)) {
+					if ((i-1 >= 0 && parseNodes.get(i-1) instanceof Sentence) && (i+1 < parseNodes.size() && parseNodes.get(i+1) instanceof Sentence)) {
 						// A binary connective
 						if (tokenConnective == connectiveToConstruct) {
 							ComplexSentence newSentence = new ComplexSentence(connectiveToConstruct,
-																(Sentence)tokens.get(i-1), (Sentence)tokens.get(i+1));
-							tokens.set(i-1, newSentence);
-							tokens.set(i,   null);
-							tokens.set(i+1, null);
+																(Sentence)parseNodes.get(i-1), (Sentence)parseNodes.get(i+1));
+							parseNodes.set(i-1, newSentence);
+							parseNodes.set(i,   null);
+							parseNodes.set(i+1, null);
 							numSentencesMade++;
 						}
 					}
@@ -98,10 +110,10 @@ public class PLParser extends Parser {
 			}
 		}
 		
-		for (int i = 0; i < tokens.size(); i++) {
-			Object token = tokens.get(i);
-			if (token != null) {
-				newTokens.add(token);
+		for (int i = 0; i < parseNodes.size(); i++) {
+			Object parseNode = parseNodes.get(i);
+			if (parseNode != null) {
+				newParseNodes.add(parseNode);
 			}
 		}
 		
@@ -114,11 +126,11 @@ public class PLParser extends Parser {
 			toSubtract = (numSentencesMade*3)-numSentencesMade;
 		}
 		
-		if (tokens.size()-toSubtract != newTokens.size()) {
-			throw new RuntimeException("Unable to construct sentence for connective: "+connectiveToConstruct+" from: "+tokens);
+		if (parseNodes.size()-toSubtract != newParseNodes.size()) {
+			throw new RuntimeException("Unable to construct sentence for connective: "+connectiveToConstruct+" from: "+parseNodes);
 		}
 		
-		return newTokens;
+		return newParseNodes;
 	}
 
 	private List<Object> parseLevel(int level) {

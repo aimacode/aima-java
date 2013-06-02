@@ -1,7 +1,7 @@
 package aima.core.logic.common;
 
 /**
- * A runtime exception to be used to describe Lexer exception. In particular it
+ * A runtime exception to be used to describe Lexer exceptions. In particular it
  * provides information to help in identifying where in the input character
  * sequence the exception occurred.
  * 
