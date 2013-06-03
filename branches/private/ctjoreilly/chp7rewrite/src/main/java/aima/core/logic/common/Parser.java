@@ -55,9 +55,8 @@ public abstract class Parser<S> {
 			initializeLookAheadBuffer();
 
 			result = parse();
-		} catch (Throwable t) {
-			throw new ParserException("Exception thrown during parsing.", t,
-					lookAhead(1));
+		} catch (LexerException le) {
+			throw new ParserException("Lexer Exception thrown during parsing at position "+le.getCurrentPositionInInputExceptionThrown(), le);
 		}
 
 		return result;

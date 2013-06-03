@@ -116,7 +116,7 @@ public class PLParser extends Parser<Sentence> {
 		else {
 			// Did not identify a root sentence for this level,
 			// therefore throw an exception indicating the problem.
-			throw new ParserException("Unable to correctly parse sentence", getTokens(levelParseNodes));
+			throw new ParserException("Unable to correctly parse sentence: "+levelParseNodes, getTokens(levelParseNodes));
 		}
 
 		return result;
@@ -146,7 +146,7 @@ public class PLParser extends Parser<Sentence> {
 						}
 					} else {
 						throw new ParserException(
-								"Unary connective argurment is not a sentence", parseNode.token);
+								"Unary connective argurment is not a sentence at input position " +parseNode.token.getStartCharPositionInInput(), parseNode.token);
 					}
 				} else {
 					// A Binary connective
@@ -166,7 +166,7 @@ public class PLParser extends Parser<Sentence> {
 						}
 					} else {
 						throw new ParserException(
-								"Binary connective argurments are not sentences", parseNode.token);
+								"Binary connective argurments are not sentences at input position "+parseNode.token.getStartCharPositionInInput(), parseNode.token);
 					}
 				}
 			}
@@ -245,7 +245,7 @@ public class PLParser extends Parser<Sentence> {
 			return parseSymbol();
 		} else {
 			throw new ParserException(
-					"Error parsing atomic sentence ", t);
+					"Error parsing atomic sentence at position "+t.getStartCharPositionInInput(), t);
 		}
 	}
 
@@ -307,6 +307,10 @@ public class PLParser extends Parser<Sentence> {
 		public ParseNode(Object node, Token token) {
 			this.node = node;
 			this.token = token;
+		}
+		
+		public String toString() {
+			return node.toString() + " at " + token.getStartCharPositionInInput();
 		}
 	}
 }

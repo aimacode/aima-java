@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.logic.common.LexerException;
+import aima.core.logic.common.LogicTokenTypes;
+import aima.core.logic.common.ParserException;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
@@ -141,6 +144,43 @@ public class PLParserTest {
 		sentence = parser.parse("[A | B | C] & D & [C | D & (F | G | H & [I | J])]");
 		expected = prettyPrintF("(A | B | C) & D & (C | D & (F | G | H & (I | J)))");
 		Assert.assertEquals(expected, sentence.toString());
+	}
+	
+	@Test
+	public void testParserException() {
+		try {
+			sentence = parser.parse("");
+			Assert.fail("A Parser Exception should have been thrown.");
+		} catch (ParserException pex) {
+			Assert.assertEquals(0, pex.getProblematicTokens().size());
+		}
+		
+		try {
+			sentence = parser.parse("A A1,2");
+			Assert.fail("A Parser Exception should have been thrown.");
+		} catch (ParserException pex) {
+			Assert.assertEquals(0, pex.getProblematicTokens().size());
+			Assert.assertTrue(pex.getCause() instanceof LexerException);
+			Assert.assertEquals(4, ((LexerException)pex.getCause()).getCurrentPositionInInputExceptionThrown());
+		}
+		
+		try {
+			sentence = parser.parse("A & & B");
+			Assert.fail("A Parser Exception should have been thrown.");		
+		} catch (ParserException pex) {
+			Assert.assertEquals(1, pex.getProblematicTokens().size());			
+			Assert.assertTrue(pex.getProblematicTokens().get(0).getType() == LogicTokenTypes.CONNECTIVE);
+			Assert.assertEquals(4, pex.getProblematicTokens().get(0).getStartCharPositionInInput());
+		}
+		
+		try {
+			sentence = parser.parse("A & (B & C &)");
+			Assert.fail("A Parser Exception should have been thrown.");		
+		} catch (ParserException pex) {
+			Assert.assertEquals(1, pex.getProblematicTokens().size());			
+			Assert.assertTrue(pex.getProblematicTokens().get(0).getType() == LogicTokenTypes.CONNECTIVE);
+			Assert.assertEquals(11, pex.getProblematicTokens().get(0).getStartCharPositionInInput());
+		}
 	}
 	
 	private String prettyPrintF(String prettyPrintedFormula) {
