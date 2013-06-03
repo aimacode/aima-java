@@ -9,6 +9,7 @@ CURRENTLY TODO
 --------------
 . Clean up PLParser code an use ParserException. Update related test cases.
 . Clean up PLVistor API and abstract implementaiton.
+. Add PLParser as implementation of Figure 7.7 to table.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
   * General Lexer and Parser Improvements:

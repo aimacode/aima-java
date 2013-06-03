@@ -27,6 +27,28 @@ public abstract class Sentence implements ParseTreeNode {
 
 	/**
 	 * 
+	 * @return the number of simpler sentences contained in this sentence. Will
+	 *         only be > 0 if a Complex Sentence.
+	 */
+	public int getNumberSimplerSentences() {
+		return 0;
+	}
+
+	/**
+	 * Get the simplified sentence, at the specified offset (starts at 0),
+	 * contained by this Sentence if it is a Complex Sentence, null otherwise.
+	 * 
+	 * @param offset
+	 *            the offset of the contained simplified sentence to retrieve.
+	 * @return the simplified sentence, at the specified offset, contained by
+	 *         this sentence (if a complex sentence), null otherwise.
+	 */
+	public Sentence getSimplerSentence(int offset) {
+		return null;
+	}
+
+	/**
+	 * 
 	 * @return true if a complex sentence with a Not connective, false
 	 *         otherwise.
 	 */
@@ -152,7 +174,7 @@ public abstract class Sentence implements ParseTreeNode {
 
 		return result;
 	}
-	
+
 	//
 	// PROTECTED
 	//

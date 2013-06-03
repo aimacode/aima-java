@@ -5,9 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -27,17 +25,17 @@ public class PLParserTest {
 	public void testAtomicSentenceTrueParse() {
 		sentence = parser.parse("true");
 		expected = prettyPrintF("True");
-		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertTrue(sentence.isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 		
 		sentence = parser.parse("(true)");
 		expected = prettyPrintF("True");
-		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertTrue(sentence.isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 		
 		sentence = parser.parse("((true))");
 		expected = prettyPrintF("True");
-		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertTrue(sentence.isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 
@@ -45,7 +43,7 @@ public class PLParserTest {
 	public void testAtomicSentenceFalseParse() {
 		sentence = parser.parse("faLse");
 		expected = prettyPrintF("False");
-		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertTrue(sentence.isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 
@@ -53,7 +51,7 @@ public class PLParserTest {
 	public void testAtomicSentenceSymbolParse() {
 		sentence = parser.parse("AIMA");
 		expected = prettyPrintF("AIMA");
-		Assert.assertEquals(PropositionSymbol.class, sentence.getClass());
+		Assert.assertTrue(sentence.isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 
@@ -61,7 +59,7 @@ public class PLParserTest {
 	public void testNotSentenceParse() {
 		sentence = parser.parse("~ AIMA");
 		expected = prettyPrintF("~AIMA");
-		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertTrue(sentence.isNotSentence());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 	
@@ -69,7 +67,9 @@ public class PLParserTest {
 	public void testDoubleNegation() {
 		sentence = parser.parse("~~AIMA");
 		expected = prettyPrintF("~~AIMA");
-		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertTrue(sentence.isNotSentence());
+		Assert.assertTrue(sentence.getSimplerSentence(0).isNotSentence());
+		Assert.assertTrue(sentence.getSimplerSentence(0).getSimplerSentence(0).isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 
@@ -77,7 +77,9 @@ public class PLParserTest {
 	public void testBinarySentenceParse() {
 		sentence = parser.parse("PETER  &  NORVIG");
 		expected = prettyPrintF("PETER & NORVIG");
-		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertTrue(sentence.isAndSentence());
+		Assert.assertTrue(sentence.getSimplerSentence(0).isPropositionSymbol());
+		Assert.assertTrue(sentence.getSimplerSentence(1).isPropositionSymbol());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 
@@ -85,12 +87,12 @@ public class PLParserTest {
 	public void testComplexSentenceParse() {		
 		sentence = parser.parse("(NORVIG | AIMA | LISP) & TRUE");
 		expected = prettyPrintF("(NORVIG | AIMA | LISP) & True");
-		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertTrue(sentence.isAndSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("((NORVIG | AIMA | LISP) & (((LISP => COOL))))");
 		expected = prettyPrintF("(NORVIG | AIMA | LISP) & (LISP => COOL)");
-		Assert.assertEquals(ComplexSentence.class, sentence.getClass());
+		Assert.assertTrue(sentence.isAndSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("((~ (P & Q ))  & ((~ (R & S))))");
@@ -99,27 +101,32 @@ public class PLParserTest {
 
 		sentence = parser.parse("((P & Q) | (S & T))");
 		expected = prettyPrintF("P & Q | S & T");
+		Assert.assertTrue(sentence.isOrSentence());
 		Assert.assertEquals(expected, sentence.toString());
-		Assert.assertEquals("|", ((ComplexSentence)sentence).getConnective().getSymbol());
 
 		sentence = parser.parse("(~ ((P & Q) => (S & T)))");
 		expected = prettyPrintF("~(P & Q => S & T)");
+		Assert.assertTrue(sentence.isNotSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("(~ (P <=> (S & T)))");
 		expected = prettyPrintF("~(P <=> S & T)");
+		Assert.assertTrue(sentence.isNotSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("(P <=> (S & T))");
 		expected = prettyPrintF("P <=> S & T");
+		Assert.assertTrue(sentence.isBiconditionalSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("(P => Q)");
 		expected = prettyPrintF("P => Q");
+		Assert.assertTrue(sentence.isImplicationSentence());
 		Assert.assertEquals(expected, sentence.toString());
 
 		sentence = parser.parse("((P & Q) => R)");
 		expected = prettyPrintF("P & Q => R");
+		Assert.assertTrue(sentence.isImplicationSentence());
 		Assert.assertEquals(expected, sentence.toString());
 	}
 	

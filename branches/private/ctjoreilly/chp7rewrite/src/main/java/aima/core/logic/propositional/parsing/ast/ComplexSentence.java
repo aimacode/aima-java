@@ -41,24 +41,12 @@ public class ComplexSentence extends Sentence {
 		return connective;
 	}
 
-	/**
-	 * 
-	 * @return the number of simpler sentences contained in this complex
-	 *         sentence.
-	 */
+	@Override
 	public int getNumberSimplerSentences() {
 		return simplerSentences.length;
 	}
 
-	/**
-	 * Get the simplified sentence, at the specified offset (starts at 0),
-	 * contained by this complex sentence.
-	 * 
-	 * @param offset
-	 *            the offset of the contained simplified sentence to retrieve.
-	 * @return the simplified sentence, at the specified offset, contained by
-	 *         this complex sentence.
-	 */
+	@Override
 	public Sentence getSimplerSentence(int offset) {
 		return simplerSentences[offset];
 	}
