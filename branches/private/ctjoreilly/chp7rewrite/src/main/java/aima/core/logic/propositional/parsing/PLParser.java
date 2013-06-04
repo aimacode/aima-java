@@ -41,7 +41,8 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * letter and may contain other letters or subscripts' in this implementation we
  * allow any legal java identifier to stand in for a proposition symbol.<br>
  * <br>
- * Note (2): This implementation is right associative, for example:<br>
+ * Note (2): This implementation is right associative (tends to be more
+ * intuitive for this language), for example:<br>
  * 
  * <pre>
  * A & B & C & D 
@@ -78,12 +79,12 @@ public class PLParser extends Parser<Sentence> {
 	@Override
 	protected Sentence parse() {
 		Sentence result = null;
-		
+
 		ParseNode root = parseSentence(0);
 		if (root != null && root.node instanceof Sentence) {
 			result = (Sentence) root.node;
 		}
-		
+
 		return result;
 	}
 
@@ -110,13 +111,14 @@ public class PLParser extends Parser<Sentence> {
 
 		// At this point there should just be the root formula
 		// for this level.
-		if (levelParseNodes.size() == 1 && levelParseNodes.get(0).node instanceof Sentence) {
+		if (levelParseNodes.size() == 1
+				&& levelParseNodes.get(0).node instanceof Sentence) {
 			result = levelParseNodes.get(0);
-		}
-		else {
+		} else {
 			// Did not identify a root sentence for this level,
 			// therefore throw an exception indicating the problem.
-			throw new ParserException("Unable to correctly parse sentence: "+levelParseNodes, getTokens(levelParseNodes));
+			throw new ParserException("Unable to correctly parse sentence: "
+					+ levelParseNodes, getTokens(levelParseNodes));
 		}
 
 		return result;
@@ -140,13 +142,17 @@ public class PLParser extends Parser<Sentence> {
 							ComplexSentence newSentence = new ComplexSentence(
 									connectiveToConstruct,
 									(Sentence) parseNodes.get(i + 1).node);
-							parseNodes.set(i, new ParseNode(newSentence, parseNode.token));
+							parseNodes.set(i, new ParseNode(newSentence,
+									parseNode.token));
 							parseNodes.set(i + 1, null);
 							numSentencesMade++;
 						}
 					} else {
 						throw new ParserException(
-								"Unary connective argurment is not a sentence at input position " +parseNode.token.getStartCharPositionInInput(), parseNode.token);
+								"Unary connective argurment is not a sentence at input position "
+										+ parseNode.token
+												.getStartCharPositionInInput(),
+								parseNode.token);
 					}
 				} else {
 					// A Binary connective
@@ -159,14 +165,18 @@ public class PLParser extends Parser<Sentence> {
 									connectiveToConstruct,
 									(Sentence) parseNodes.get(i - 1).node,
 									(Sentence) parseNodes.get(i + 1).node);
-							parseNodes.set(i - 1, new ParseNode(newSentence, parseNode.token));
-							parseNodes.set(i,     null);
+							parseNodes.set(i - 1, new ParseNode(newSentence,
+									parseNode.token));
+							parseNodes.set(i, null);
 							parseNodes.set(i + 1, null);
 							numSentencesMade++;
 						}
 					} else {
 						throw new ParserException(
-								"Binary connective argurments are not sentences at input position "+parseNode.token.getStartCharPositionInInput(), parseNode.token);
+								"Binary connective argurments are not sentences at input position "
+										+ parseNode.token
+												.getStartCharPositionInInput(),
+								parseNode.token);
 					}
 				}
 			}
@@ -190,7 +200,8 @@ public class PLParser extends Parser<Sentence> {
 		if (parseNodes.size() - toSubtract != newParseNodes.size()) {
 			throw new ParserException(
 					"Unable to construct sentence for connective: "
-							+ connectiveToConstruct + " from: " + parseNodes, getTokens(parseNodes));
+							+ connectiveToConstruct + " from: " + parseNodes,
+					getTokens(parseNodes));
 		}
 
 		return newParseNodes;
@@ -212,7 +223,8 @@ public class PLParser extends Parser<Sentence> {
 
 		if (level > 0 && lookAhead(1).getType() == LogicTokenTypes.EOI) {
 			throw new ParserException(
-					"Parser Error: end of input not expected at level " + level, lookAhead(1));
+					"Parser Error: end of input not expected at level " + level,
+					lookAhead(1));
 		}
 
 		return tokens;
@@ -245,20 +257,23 @@ public class PLParser extends Parser<Sentence> {
 			return parseSymbol();
 		} else {
 			throw new ParserException(
-					"Error parsing atomic sentence at position "+t.getStartCharPositionInInput(), t);
+					"Error parsing atomic sentence at position "
+							+ t.getStartCharPositionInInput(), t);
 		}
 	}
 
 	private ParseNode parseTrue() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.TRUE), token);
+		return new ParseNode(new PropositionSymbol(PropositionSymbol.TRUE),
+				token);
 	}
 
 	private ParseNode parseFalse() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.FALSE), token);
+		return new ParseNode(new PropositionSymbol(PropositionSymbol.FALSE),
+				token);
 	}
 
 	private ParseNode parseSymbol() {
@@ -275,42 +290,43 @@ public class PLParser extends Parser<Sentence> {
 
 	private ParseNode parseBracketedSentence(int level) {
 		Token startToken = lookAhead(1);
-		
+
 		String start = "(";
 		String end = ")";
 		if (startToken.getType() == LogicTokenTypes.LSQRBRACKET) {
 			start = "[";
 			end = "]";
 		}
-			
+
 		match(start);
 		ParseNode bracketedSentence = parseSentence(level + 1);
 		match(end);
-		
+
 		return bracketedSentence;
 	}
-	
+
 	private Token[] getTokens(List<ParseNode> parseNodes) {
 		Token[] result = new Token[parseNodes.size()];
-		
+
 		for (int i = 0; i < parseNodes.size(); i++) {
 			result[i] = parseNodes.get(i).token;
 		}
-		
+
 		return result;
 	}
-	
+
 	private class ParseNode {
 		public Object node = null;
 		public Token token = null;
-		
+
 		public ParseNode(Object node, Token token) {
 			this.node = node;
 			this.token = token;
 		}
-		
+
 		public String toString() {
-			return node.toString() + " at " + token.getStartCharPositionInInput();
+			return node.toString() + " at "
+					+ token.getStartCharPositionInInput();
 		}
 	}
 }
