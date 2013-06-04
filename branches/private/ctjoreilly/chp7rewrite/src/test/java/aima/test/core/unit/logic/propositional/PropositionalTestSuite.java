@@ -3,12 +3,11 @@ package aima.test.core.unit.logic.propositional;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import aima.test.core.unit.logic.propositional.algorithms.DPLLTest;
-import aima.test.core.unit.logic.propositional.algorithms.KnowledgeBaseTest;
-import aima.test.core.unit.logic.propositional.algorithms.ModelTest;
-import aima.test.core.unit.logic.propositional.algorithms.PLFCEntailsTest;
-import aima.test.core.unit.logic.propositional.algorithms.PLResolutionTest;
-import aima.test.core.unit.logic.propositional.algorithms.TTEntailsTest;
+import aima.test.core.unit.logic.propositional.inference.DPLLTest;
+import aima.test.core.unit.logic.propositional.inference.PLFCEntailsTest;
+import aima.test.core.unit.logic.propositional.inference.PLResolutionTest;
+import aima.test.core.unit.logic.propositional.inference.TTEntailsTest;
+import aima.test.core.unit.logic.propositional.kb.KnowledgeBaseTest;
 import aima.test.core.unit.logic.propositional.parsing.ComplexSentenceTest;
 import aima.test.core.unit.logic.propositional.parsing.ListTest;
 import aima.test.core.unit.logic.propositional.parsing.PLLexerTest;

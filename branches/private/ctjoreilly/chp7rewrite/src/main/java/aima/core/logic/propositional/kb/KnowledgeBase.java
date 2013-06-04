@@ -1,8 +1,11 @@
-package aima.core.logic.propositional.algorithms;
+package aima.core.logic.propositional.kb;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.logic.propositional.LogicUtils;
+import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;

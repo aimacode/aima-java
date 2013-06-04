@@ -1,10 +1,10 @@
-package aima.test.core.unit.logic.propositional.algorithms;
+package aima.test.core.unit.logic.propositional.kb;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.algorithms.KnowledgeBase;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 
 /**
  * @author Ravi Mohan

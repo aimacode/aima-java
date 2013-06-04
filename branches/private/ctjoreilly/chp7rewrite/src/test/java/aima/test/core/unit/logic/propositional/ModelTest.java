@@ -1,10 +1,10 @@
-package aima.test.core.unit.logic.propositional.algorithms;
+package aima.test.core.unit.logic.propositional;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.algorithms.Model;
+import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;

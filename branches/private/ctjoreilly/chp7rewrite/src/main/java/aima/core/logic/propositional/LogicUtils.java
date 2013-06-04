@@ -1,4 +1,4 @@
-package aima.core.logic.propositional.algorithms;
+package aima.core.logic.propositional;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package aima.test.core.experiment.logic.propositional.algorithms;
 
 import org.junit.Test;
 
-import aima.core.logic.propositional.algorithms.KnowledgeBase;
-import aima.core.logic.propositional.algorithms.Model;
-import aima.core.logic.propositional.algorithms.WalkSAT;
+import aima.core.logic.propositional.Model;
+import aima.core.logic.propositional.inference.WalkSAT;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 
 /**
  * @author Ravi Mohan

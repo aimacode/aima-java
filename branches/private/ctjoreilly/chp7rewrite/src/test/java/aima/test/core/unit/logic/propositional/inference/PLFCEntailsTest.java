@@ -1,11 +1,11 @@
-package aima.test.core.unit.logic.propositional.algorithms;
+package aima.test.core.unit.logic.propositional.inference;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.algorithms.KnowledgeBase;
-import aima.core.logic.propositional.algorithms.PLFCEntails;
+import aima.core.logic.propositional.inference.PLFCEntails;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.PLParser;
 
 /**

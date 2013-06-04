@@ -1,4 +1,4 @@
-package aima.core.logic.propositional.algorithms;
+package aima.core.logic.propositional.inference;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;

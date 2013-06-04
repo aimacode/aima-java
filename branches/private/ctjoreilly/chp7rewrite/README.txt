@@ -1,13 +1,13 @@
 = AIMA-CORE =
 
 == Requirements ==
-# JDK 1.6 - is the baseline JDK against which this project is developed. 
-
+# JDK 1.7 - is the baseline JDK against which this project is developed. 
 
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
 . Re-implement TT-Entails.
+. Ensuer all package paths are updated in table of algorithms.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
   * General Lexer and Parser Improvements:

@@ -1,4 +1,4 @@
-package aima.test.core.unit.logic.propositional.algorithms;
+package aima.test.core.unit.logic.propositional.inference;
 
 import java.util.Set;
 
@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.algorithms.KnowledgeBase;
-import aima.core.logic.propositional.algorithms.PLResolution;
+import aima.core.logic.propositional.inference.PLResolution;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;

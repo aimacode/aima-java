@@ -1,10 +1,11 @@
-package aima.core.logic.propositional.algorithms;
+package aima.core.logic.propositional.inference;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
