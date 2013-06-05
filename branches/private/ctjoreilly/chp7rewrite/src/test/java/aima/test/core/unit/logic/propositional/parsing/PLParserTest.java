@@ -183,6 +183,24 @@ public class PLParserTest {
 		}
 	}
 	
+	@Test
+	public void testIssue72() {
+		// filter1 AND filter2 AND filter3 AND filter4
+		sentence = parser.parse("filter1 & filter2 & filter3 & filter4");
+		expected = prettyPrintF("filter1 & filter2 & filter3 & filter4");
+		Assert.assertEquals(expected, sentence.toString());
+		
+		// (filter1 AND filter2) AND (filter3 AND filter4)
+		sentence = parser.parse("(filter1 & filter2) & (filter3 & filter4)");
+		expected = prettyPrintF("filter1 & filter2 & filter3 & filter4");
+		Assert.assertEquals(expected, sentence.toString());
+
+		// ((filter1 AND filter2) AND (filter3 AND filter4))
+		sentence = parser.parse("((filter1 & filter2) & (filter3 & filter4))");
+		expected = prettyPrintF("filter1 & filter2 & filter3 & filter4");
+		Assert.assertEquals(expected, sentence.toString());
+	}
+	
 	private String prettyPrintF(String prettyPrintedFormula) {
 		Sentence s = parser.parse(prettyPrintedFormula);
 		

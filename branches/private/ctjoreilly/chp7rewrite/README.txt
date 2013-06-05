@@ -24,6 +24,7 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
+  * Fixed Issue 78, Propositional CNF parsing issue
  
 = Details =
 

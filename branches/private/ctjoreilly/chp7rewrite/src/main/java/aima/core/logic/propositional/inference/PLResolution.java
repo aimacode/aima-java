@@ -18,7 +18,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
-import aima.core.util.Converter;
+import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.SetOps;
 
 /**
@@ -83,8 +83,7 @@ public class PLResolution {
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
 		Set<Sentence> newClauses = new HashSet<Sentence>();
 		while (true) {
-			List<List<Sentence>> pairs = getCombinationPairs(new Converter<Sentence>()
-					.setToList(clauses));
+			List<List<Sentence>> pairs = getCombinationPairs(new ArrayList<Sentence>(clauses));
 
 			for (int i = 0; i < pairs.size(); i++) {
 				List<Sentence> pair = pairs.get(i);
@@ -151,9 +150,9 @@ public class PLResolution {
 	}
 
 	private Sentence createResolventClause(ClauseSymbols cs, PropositionSymbol toRemove) {
-		List<PropositionSymbol> positiveSymbols = new Converter<PropositionSymbol>().setToList(SetOps
+		List<PropositionSymbol> positiveSymbols = new ArrayList<PropositionSymbol>(SetOps
 				.union(cs.clause1PositiveSymbols, cs.clause2PositiveSymbols));
-		List<PropositionSymbol> negativeSymbols = new Converter<PropositionSymbol>().setToList(SetOps
+		List<PropositionSymbol> negativeSymbols = new ArrayList<PropositionSymbol>(SetOps
 				.union(cs.clause1NegativeSymbols, cs.clause2NegativeSymbols));
 		if (positiveSymbols.contains(toRemove)) {
 			positiveSymbols.remove(toRemove);
@@ -220,11 +219,11 @@ public class PLResolution {
 
 			SymbolClassifier classifier = new SymbolClassifier();
 
-			clause1Symbols = classifier.getSymbolsIn(clause1);
+			clause1Symbols = SymbolCollector.getSymbolsFrom(clause1);
 			clause1PositiveSymbols = classifier.getPositiveSymbolsIn(clause1);
 			clause1NegativeSymbols = classifier.getNegativeSymbolsIn(clause1);
 
-			clause2Symbols = classifier.getSymbolsIn(clause2);
+			clause2Symbols = SymbolCollector.getSymbolsFrom(clause2);
 			clause2PositiveSymbols = classifier.getPositiveSymbolsIn(clause2);
 			clause2NegativeSymbols = classifier.getNegativeSymbolsIn(clause2);
 

@@ -6,7 +6,6 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.NegativeSymbolCollector;
 import aima.core.logic.propositional.visitors.PositiveSymbolCollector;
-import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.SetOps;
 
 /**
@@ -45,9 +44,5 @@ public class SymbolClassifier {
 		Set<PropositionSymbol> allNegatives = getNegativeSymbolsIn(sentence);
 		Set<PropositionSymbol> allPositives = getPositiveSymbolsIn(sentence);
 		return SetOps.intersection(allPositives, allNegatives);
-	}
-
-	public Set<PropositionSymbol> getSymbolsIn(Sentence sentence) {
-		return new SymbolCollector().getSymbolsIn(sentence);
 	}
 }

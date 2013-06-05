@@ -119,8 +119,11 @@ public class KnowledgeBase {
 	 *         algorithm.
 	 */
 	public boolean askWithTTEntails(String queryString) {
+		PLParser parser = new PLParser();
+		
+		Sentence alpha = parser.parse(queryString);
 
-		return new TTEntails().ttEntails(this, queryString);
+		return new TTEntails().ttEntails(this, alpha);
 	}
 
 	@Override

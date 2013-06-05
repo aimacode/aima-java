@@ -1,6 +1,8 @@
 package aima.core.logic.propositional.inference;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -12,7 +14,6 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.Converter;
 import aima.core.util.Util;
 
 /**
@@ -43,35 +44,32 @@ public class WalkSAT {
 		Sentence s = (Sentence) new PLParser().parse(logicalSentence);
 		CNFTransformer transformer = new CNFTransformer();
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
-		SymbolCollector sc = new SymbolCollector();
 
-		List<PropositionSymbol> symbols = new Converter<PropositionSymbol>().setToList(sc
-				.getSymbolsIn(s));
+		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(s));
 		for (int i = 0; i < symbols.size(); i++) {
 			PropositionSymbol sym = (PropositionSymbol) symbols.get(i);
 			myModel = myModel.extend(sym, Util.randomBoolean());
 		}
-		List<Sentence> clauses = new Converter<Sentence>()
-				.setToList(clauseGatherer.getClausesFrom(transformer
+		List<Sentence> clauses = new ArrayList<Sentence>(clauseGatherer.getClausesFrom(transformer
 						.transform(s)));
 
 		for (int i = 0; i < numberOfFlips; i++) {
 			if (getNumberOfClausesSatisfiedIn(
-					new Converter<Sentence>().listToSet(clauses), myModel) == clauses
+					new LinkedHashSet<Sentence>(clauses), myModel) == clauses
 					.size()) {
 				return myModel;
 			}
 			Sentence clause = clauses.get(random.nextInt(clauses.size()));
 
-			List<PropositionSymbol> symbolsInClause = new Converter<PropositionSymbol>().setToList(sc
-					.getSymbolsIn(clause));
+			List<PropositionSymbol> symbolsInClause = new ArrayList<PropositionSymbol>(SymbolCollector
+					.getSymbolsFrom(clause));
 			if (random.nextDouble() >= probabilityOfRandomWalk) {
 				PropositionSymbol randomSymbol = symbolsInClause.get(random
 						.nextInt(symbolsInClause.size()));
 				myModel = myModel.flip(randomSymbol);
 			} else {
 				PropositionSymbol symbolToFlip = getSymbolWhoseFlipMaximisesSatisfiedClauses(
-						new Converter<Sentence>().listToSet(clauses),
+						new LinkedHashSet<Sentence>(clauses),
 						symbolsInClause, myModel);
 				myModel = myModel.flip(symbolToFlip);
 			}

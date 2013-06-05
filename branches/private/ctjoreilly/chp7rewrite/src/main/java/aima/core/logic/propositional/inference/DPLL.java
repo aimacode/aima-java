@@ -15,7 +15,6 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.Converter;
 import aima.core.util.SetOps;
 
 /**
@@ -23,8 +22,6 @@ import aima.core.util.SetOps;
  * @author Mike Stampone
  */
 public class DPLL {
-
-	private static final Converter<PropositionSymbol> SYMBOL_CONVERTER = new Converter<PropositionSymbol>();
 
 	/**
 	 * Returns <code>true</code> if the specified sentence is satisfiable. A
@@ -68,8 +65,7 @@ public class DPLL {
 	public boolean dpllSatisfiable(Sentence s, Model m) {
 		Set<Sentence> clauses = new CNFClauseGatherer()
 				.getClausesFrom(new CNFTransformer().transform(s));
-		List<PropositionSymbol> symbols = SYMBOL_CONVERTER.setToList(new SymbolCollector()
-				.getSymbolsIn(s));
+		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(s));
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);
 	}
@@ -110,12 +106,12 @@ public class DPLL {
 		// }
 
 		// debug
-		List<PropositionSymbol> purePositiveSymbols = SYMBOL_CONVERTER.setToList(SetOps
+		List<PropositionSymbol> purePositiveSymbols = new ArrayList<PropositionSymbol>(SetOps
 				.difference(new SymbolClassifier()
 						.getPurePositiveSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
 
-		List<PropositionSymbol> pureNegativeSymbols = SYMBOL_CONVERTER.setToList(SetOps
+		List<PropositionSymbol> pureNegativeSymbols = new ArrayList<PropositionSymbol>(SetOps
 				.difference(new SymbolClassifier()
 						.getPureNegativeSymbolsIn(nonTrueClauses),
 						symbolsAlreadyAssigned));
@@ -151,8 +147,7 @@ public class DPLL {
 	private boolean dpll(Set<Sentence> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// List<Sentence> clauseList = asList(clauses);
-		List<Sentence> clauseList = new Converter<Sentence>()
-				.setToList(clauses);
+		List<Sentence> clauseList = new ArrayList<Sentence>(clauses);
 		// System.out.println("clauses are " + clauses.toString());
 		// if all clauses are true return true;
 		if (areAllClausesTrue(model, clauseList)) {
@@ -222,10 +217,8 @@ public class DPLL {
 	}
 
 	private boolean isClauseTrueInModel(Sentence clause, Model model) {
-		List<PropositionSymbol> positiveSymbols = SYMBOL_CONVERTER
-				.setToList(new SymbolClassifier().getPositiveSymbolsIn(clause));
-		List<PropositionSymbol> negativeSymbols = SYMBOL_CONVERTER
-				.setToList(new SymbolClassifier().getNegativeSymbolsIn(clause));
+		List<PropositionSymbol> positiveSymbols = new ArrayList<PropositionSymbol>(new SymbolClassifier().getPositiveSymbolsIn(clause));
+		List<PropositionSymbol> negativeSymbols = new ArrayList<PropositionSymbol>(new SymbolClassifier().getNegativeSymbolsIn(clause));
 
 		for (PropositionSymbol symbol : positiveSymbols) {
 			if ((model.isTrue(symbol))) {

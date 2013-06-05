@@ -13,7 +13,6 @@ import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.Converter;
 
 /**
  * @author Ravi Mohan
@@ -138,14 +137,13 @@ public class PLFCEntails {
 				ComplexSentence bs = (ComplexSentence) sentence;
 				head = (PropositionSymbol) bs.getSimplerSentence(1);
 				inferred.put(head, Boolean.FALSE);
-				Set<PropositionSymbol> symbolsInPremise = new SymbolCollector()
-						.getSymbolsIn(bs.getSimplerSentence(0));
+				Set<PropositionSymbol> symbolsInPremise = SymbolCollector
+						.getSymbolsFrom(bs.getSimplerSentence(0));
 				Iterator<PropositionSymbol> iter = symbolsInPremise.iterator();
 				while (iter.hasNext()) {
 					inferred.put(iter.next(), Boolean.FALSE);
 				}
-				premiseSymbols = new Converter<PropositionSymbol>()
-						.setToList(symbolsInPremise);
+				premiseSymbols = new ArrayList<PropositionSymbol>(symbolsInPremise);
 				count.put(this, new Integer(premiseSymbols.size()));
 			}
 

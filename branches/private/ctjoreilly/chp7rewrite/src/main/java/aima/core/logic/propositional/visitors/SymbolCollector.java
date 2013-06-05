@@ -11,6 +11,17 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * 
  */
 public class SymbolCollector extends BasicGatherer<PropositionSymbol> {
+	
+	public static Set<PropositionSymbol> getSymbolsFrom(Sentence... sentences) {
+		Set<PropositionSymbol> result = new LinkedHashSet<PropositionSymbol>();
+		
+		SymbolCollector symbolCollector = new SymbolCollector();
+		for (Sentence s : sentences) {
+			result = s.accept(symbolCollector, result);
+		}
+		
+		return result;
+	}
 
 	@Override
 	public Set<PropositionSymbol> visitPropositionSymbol(PropositionSymbol s, Set<PropositionSymbol> arg) {
@@ -19,10 +30,5 @@ public class SymbolCollector extends BasicGatherer<PropositionSymbol> {
 			arg.add(s);
 		}
 		return arg;
-	}
-
-	public Set<PropositionSymbol> getSymbolsIn(Sentence s) {
-		Set<PropositionSymbol> result = new LinkedHashSet<PropositionSymbol>();
-		return s.accept(this, result);
 	}
 }

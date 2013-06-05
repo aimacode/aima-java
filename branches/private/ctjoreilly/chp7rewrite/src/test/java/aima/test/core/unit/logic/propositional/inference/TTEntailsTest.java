@@ -103,11 +103,11 @@ public class TTEntailsTest {
 		Assert.assertFalse(kb.askWithTTEntails("~B"));
 	}
 
-	// public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
-	// KnowledgeBase kb = new KnowledgeBase();
-	//
-	// assertTrue(kb.askWithTTEntails("((A OR (NOT A)) AND (A OR B))"));
-	// }
+	public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
+		KnowledgeBase kb = new KnowledgeBase();
+
+		Assert.assertTrue(kb.askWithTTEntails("((A | (~ A)) & (A | B))"));
+	}
 
 	@Test
 	public void testModelEvaluation() {

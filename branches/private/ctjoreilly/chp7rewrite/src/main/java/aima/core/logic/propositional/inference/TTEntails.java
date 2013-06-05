@@ -1,16 +1,13 @@
 package aima.core.logic.propositional.inference;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.kb.KnowledgeBase;
-import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.Converter;
-import aima.core.util.SetOps;
 import aima.core.util.Util;
 
 /**
@@ -30,7 +27,7 @@ import aima.core.util.Util;
  * 
  * function TT-CHECK-ALL(KB, &alpha; symbols, model) returns true or false
  *   if EMPTY?(symbols) then
- *     if PL-TRUE>(KB, model) then return PL-TRUE?(&alpha;, model)
+ *     if PL-TRUE?(KB, model) then return PL-TRUE?(&alpha;, model)
  *     else return true // when KB is false, always return true
  *   else do
  *     P <- FIRST(symbols)
@@ -45,58 +42,70 @@ import aima.core.util.Util;
  * holds within a model. The variable model represents a partional model - an
  * assignment to some of the symbols. The keyword <b>"and"</b> is used here as a
  * logical operation on its two arguments, returning true or false.
- * 
- * @author Ravi Mohan
+ *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
  * @author Mike Stampone
  */
 public class TTEntails {
 
 	/**
-	 * Returns the answer to the specified question using the TT-Entails
-	 * algorithm.
+	 * function TT-ENTAILS?(KB, &alpha;) returns true or false.
 	 * 
 	 * @param kb
-	 *            a knowledge base to ASK
+	 *            KB, the knowledge base, a sentence in propositional logic
 	 * @param alpha
-	 *            a question to ASK the knowledge base
+	 *            &alpha;, the query, a sentence in propositional logic
 	 * 
-	 * @return the answer to the specified question using the TT-Entails
-	 *         algorithm.
+	 * @return true if KB entails &alpha;, false otherwise.
 	 */
-	public boolean ttEntails(KnowledgeBase kb, String alpha) {
-		Sentence kbSentence = kb.asSentence();
-		Sentence querySentence = (Sentence) new PLParser().parse(alpha);
-		SymbolCollector collector = new SymbolCollector();
-		Set<PropositionSymbol> kbSymbols = collector.getSymbolsIn(kbSentence);
-		Set<PropositionSymbol> querySymbols = collector
-				.getSymbolsIn(querySentence);
-		Set<PropositionSymbol> symbols = SetOps.union(kbSymbols, querySymbols);
-		List<PropositionSymbol> symbolList = new Converter<PropositionSymbol>()
-				.setToList(symbols);
-		return ttCheckAll(kbSentence, querySentence, symbolList, new Model());
+	public boolean ttEntails(KnowledgeBase kb, Sentence alpha) {
+		// symbols <- a list of proposition symbols in KB and &alpha
+		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
+				SymbolCollector.getSymbolsFrom(kb.asSentence(), alpha));
+
+		// return TT-CHECK-ALL(KB, &alpha; symbols, {})
+		return ttCheckAll(kb, alpha, symbols, new Model());
 	}
 
-	public boolean ttCheckAll(Sentence kbSentence, Sentence querySentence,
+	//
+	/**
+	 * function TT-CHECK-ALL(KB, &alpha; symbols, model) returns true or false
+	 * 
+	 * @param kb
+	 *            KB, the knowledge base, a sentence in propositional logic
+	 * @param alpha
+	 *            &alpha;, the query, a sentence in propositional logic
+	 * @param symbols
+	 *            a list of currently unassigned propositional symbols in the
+	 *            model.
+	 * @param model
+	 *            a partially or fully assigned model for the given KB and
+	 *            query.
+	 * @return true if KB entails &alpha;, false otherwise.
+	 */
+	public boolean ttCheckAll(KnowledgeBase kb, Sentence alpha,
 			List<PropositionSymbol> symbols, Model model) {
+		// if EMPTY?(symbols) then
 		if (symbols.isEmpty()) {
-			if (model.isTrue(kbSentence)) {
-				// System.out.println("#");
-				return model.isTrue(querySentence);
+			// if PL-TRUE?(KB, model) then return PL-TRUE?(&alpha;, model)
+			if (model.isTrue(kb.asSentence())) {
+				return model.isTrue(alpha);
 			} else {
-				// System.out.println("0");
+				// else return true // when KB is false, always return true
 				return true;
 			}
-		} else {
-			PropositionSymbol symbol = Util.first(symbols);
-			List<PropositionSymbol> rest = Util.rest(symbols);
-
-			Model trueModel = model.extend(
-					new PropositionSymbol(symbol.getSymbol()), true);
-			Model falseModel = model.extend(
-					new PropositionSymbol(symbol.getSymbol()), false);
-			return (ttCheckAll(kbSentence, querySentence, rest, trueModel) && (ttCheckAll(
-					kbSentence, querySentence, rest, falseModel)));
 		}
+
+		// else do
+		// P <- FIRST(symbols)
+		PropositionSymbol p = Util.first(symbols);
+		// rest <- REST(symbols)
+		List<PropositionSymbol> rest = Util.rest(symbols);
+		// return (TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = true })
+		// and
+		// TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = false }))
+		return ttCheckAll(kb, alpha, rest, model.extend(p, true))
+				&& ttCheckAll(kb, alpha, rest, model.extend(p, false));
 	}
 }
