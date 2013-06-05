@@ -14,7 +14,10 @@ public class SymbolCollector extends BasicGatherer<PropositionSymbol> {
 
 	@Override
 	public Set<PropositionSymbol> visitPropositionSymbol(PropositionSymbol s, Set<PropositionSymbol> arg) {
-		arg.add(s);
+		// Do not add the always true or false symbols
+		if (!s.isAlwaysTrue() && !s.isAlwaysFalse()) {
+			arg.add(s);
+		}
 		return arg;
 	}
 
