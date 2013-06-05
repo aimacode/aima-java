@@ -1,6 +1,6 @@
 package aima.core.logic.propositional.visitors;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
@@ -12,21 +12,20 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * 
  */
-public class NegativeSymbolCollector extends BasicTraverser {
-	@SuppressWarnings("unchecked")
+public class NegativeSymbolCollector extends BasicGatherer<PropositionSymbol> {
+
 	@Override
-	public Object visitUnarySentence(ComplexSentence ns, Object arg) {
-		Set<PropositionSymbol> s = (Set<PropositionSymbol>) arg;
-		if (ns.getSimplerSentence(0) instanceof PropositionSymbol) {
-			s.add((PropositionSymbol) ns.getSimplerSentence(0));
+	public Set<PropositionSymbol> visitUnarySentence(ComplexSentence ns, Set<PropositionSymbol> arg) {
+		if (ns.getSimplerSentence(0).isPropositionSymbol()) {
+			arg.add((PropositionSymbol) ns.getSimplerSentence(0));
 		} else {
-			s = SetOps.union(s, (Set<PropositionSymbol>) ns.getSimplerSentence(0).accept(this, arg));
+			arg = SetOps.union(arg, ns.getSimplerSentence(0).accept(this, arg));
 		}
-		return s;
+		return arg;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Set<PropositionSymbol> getNegativeSymbolsIn(Sentence s) {
-		return (Set<PropositionSymbol>) s.accept(this, new HashSet<PropositionSymbol>());
+		Set<PropositionSymbol> result = new LinkedHashSet<PropositionSymbol>();
+		return s.accept(this, result);
 	}
 }

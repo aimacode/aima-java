@@ -1,9 +1,12 @@
-package aima.core.logic.propositional.visitors;
+package aima.core.logic.propositional;
 
 import java.util.Set;
 
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.visitors.NegativeSymbolCollector;
+import aima.core.logic.propositional.visitors.PositiveSymbolCollector;
+import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.SetOps;
 
 /**

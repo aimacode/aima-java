@@ -128,8 +128,8 @@ public abstract class Sentence implements ParseTreeNode {
 	 *            an optional argument for use by the visior.
 	 * @return a result specific to the visitors behavior.
 	 */
-	public Object accept(PLVisitor plv, Object arg) {
-		Object result = null;
+	public <A, R> R accept(PLVisitor<A, R> plv, A arg) {
+		R result = null;
 		if (isPropositionSymbol()) {
 			result = plv.visitPropositionSymbol((PropositionSymbol) this, arg);
 		} else if (isUnarySentence()) {

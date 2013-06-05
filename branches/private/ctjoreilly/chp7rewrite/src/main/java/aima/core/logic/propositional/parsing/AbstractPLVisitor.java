@@ -10,30 +10,32 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * 
+ * @param <A>
+ *            the argument type to be passed to the visitor methods.
  */
-public class AbstractPLVisitor implements PLVisitor {
+public abstract class AbstractPLVisitor<A> implements PLVisitor<A, Sentence> {
 
 	@Override
-	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
+	public Sentence visitPropositionSymbol(PropositionSymbol s, A arg) {
 		// default behavior is to treat propositional symbols as atomic
 		// and leave unchanged.
 		return s;
 	}
 
 	@Override
-	public Object visitUnarySentence(ComplexSentence s, Object arg) {
+	public Sentence visitUnarySentence(ComplexSentence s, A arg) {
 		// a new Complex Sentence with the same connective but possibly
 		// with its simpler sentence replaced by the visitor.
-		return new ComplexSentence(s.getConnective(), (Sentence) s
-				.getSimplerSentence(0).accept(this, arg));
+		return new ComplexSentence(s.getConnective(), s.getSimplerSentence(0)
+				.accept(this, arg));
 	}
 
 	@Override
-	public Object visitBinarySentence(ComplexSentence s, Object arg) {
+	public Sentence visitBinarySentence(ComplexSentence s, A arg) {
 		// a new Complex Sentence with the same connective but possibly
 		// with its simpler sentences replaced by the visitor.
-		return new ComplexSentence(s.getConnective(), (Sentence) s
-				.getSimplerSentence(0).accept(this, arg), (Sentence) s
-				.getSimplerSentence(1).accept(this, arg));
+		return new ComplexSentence(s.getConnective(), s.getSimplerSentence(0)
+				.accept(this, arg), s.getSimplerSentence(1).accept(this, arg));
 	}
 }

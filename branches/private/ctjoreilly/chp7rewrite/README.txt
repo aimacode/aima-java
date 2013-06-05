@@ -7,8 +7,7 @@
 CURRENTLY TODO
 --------------
 . Re-implement TT-Entails.
-. Consider adding generic signature to PLVisitor API.
-. Ensuer all package paths are updated in table of algorithms.
+. Ensure all package paths are updated in table of algorithms.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
   * General Lexer and Parser Improvements:

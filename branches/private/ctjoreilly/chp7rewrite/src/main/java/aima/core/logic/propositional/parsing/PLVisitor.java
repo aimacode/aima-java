@@ -15,8 +15,13 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * 
+ * @param <A>
+ *            the argument type to be passed to the visitor methods.
+ * @param <R>
+ *            the return type to be returned from the visitor methods.
  */
-public interface PLVisitor {
+public interface PLVisitor<A, R> {
 	/**
 	 * Visit a proposition symbol (e.g A).
 	 * 
@@ -26,7 +31,7 @@ public interface PLVisitor {
 	 *            optional argument to be used by the visitor.
 	 * @return optional return value to be used by the visitor.
 	 */
-	Object visitPropositionSymbol(PropositionSymbol sentence, Object arg);
+	R visitPropositionSymbol(PropositionSymbol sentence, A arg);
 
 	/**
 	 * Visit a unary complex sentence (e.g. ~A).
@@ -37,7 +42,7 @@ public interface PLVisitor {
 	 *            optional argument to be used by the visitor.
 	 * @return optional return value to be used by the visitor.
 	 */
-	Object visitUnarySentence(ComplexSentence sentence, Object arg);
+	R visitUnarySentence(ComplexSentence sentence, A arg);
 
 	/**
 	 * Visit a binary complex sentence (e.g. A & B).
@@ -48,5 +53,5 @@ public interface PLVisitor {
 	 *            optional argument to be used by the visitor.
 	 * @return optional return value to be used by the visitor.
 	 */
-	Object visitBinarySentence(ComplexSentence sentence, Object arg);
+	R visitBinarySentence(ComplexSentence sentence, A arg);
 }

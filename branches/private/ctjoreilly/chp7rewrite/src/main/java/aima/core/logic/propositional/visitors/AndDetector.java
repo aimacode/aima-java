@@ -10,31 +10,31 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public class AndDetector implements PLVisitor {
+public class AndDetector implements PLVisitor<Boolean, Boolean> {
 
-	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
-
+	@Override
+	public Boolean visitPropositionSymbol(PropositionSymbol s, Boolean arg) {
 		return new Boolean(false);
 	}
 
-	public Object visitUnarySentence(ComplexSentence s, Object arg) {
+	@Override
+	public Boolean visitUnarySentence(ComplexSentence s, Boolean arg) {
 		return s.getSimplerSentence(0).accept(this, null);
 	}
 
-	public Object visitBinarySentence(ComplexSentence s, Object arg) {
+	@Override
+	public Boolean visitBinarySentence(ComplexSentence s, Boolean arg) {
 		if (s.getConnective() == Connective.AND) {
 			return new Boolean(true);
 		} else {
-			boolean first = ((Boolean) s.getSimplerSentence(0).accept(this, null))
-					.booleanValue();
-			boolean second = ((Boolean) s.getSimplerSentence(1).accept(this, null))
-					.booleanValue();
+			boolean first  = s.getSimplerSentence(0).accept(this, null);
+			boolean second = s.getSimplerSentence(1).accept(this, null);
 			
 			return new Boolean(first || second);
 		}
 	}
 
 	public boolean containsEmbeddedAnd(Sentence s) {
-		return ((Boolean) s.accept(this, null)).booleanValue();
+		return s.accept(this, null).booleanValue();
 	}
 }

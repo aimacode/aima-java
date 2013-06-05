@@ -6,6 +6,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.LogicUtils;
 import aima.core.logic.propositional.Model;
+import aima.core.logic.propositional.SymbolClassifier;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
@@ -13,7 +14,6 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
 import aima.core.logic.propositional.visitors.CNFTransformer;
-import aima.core.logic.propositional.visitors.SymbolClassifier;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Converter;
 import aima.core.util.SetOps;
