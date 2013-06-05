@@ -6,7 +6,7 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. Re-implement TT-Entails.
+. Re-implement ConvertToCNF.
 . Ensure all package paths are updated in table of algorithms.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
@@ -24,7 +24,7 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
-  * Fixed Issue 78, Propositional CNF parsing issue
+  * Fixed Issue 78, Propositional CNF parsing issue.
  
 = Details =
 
@@ -90,9 +90,9 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   6.11||     209|| Tree-CSP-Solver              ||---||
 ||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java KnowledgeBase]||
 ||   7.1 ||     236|| KB-Agent                     ||---||
-||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/PLParser.java Parser]||
+||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/PLParser.java PLParser]||
 ||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java TTEntails]||
-||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/CNFTransformer.java CNFTransformer]||
+||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java ConvertToCNF]||
 ||   7.12||     255|| PL-Resolution                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java PLResolution]||
 ||   7.15||     258|| PL-FC-Entails?               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java PLFCEntails]||
 ||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLL.java (method)-dpllSatisfiable(String)]||

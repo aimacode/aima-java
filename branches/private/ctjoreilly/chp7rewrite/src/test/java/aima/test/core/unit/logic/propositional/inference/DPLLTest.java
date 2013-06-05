@@ -14,7 +14,7 @@ import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 
 /**
@@ -60,7 +60,7 @@ public class DPLLTest {
 				new PropositionSymbol("B"), true);
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
-				new CNFClauseGatherer().getClausesFrom(new CNFTransformer()
+				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
 						.transform(sentence)));
 		List<Sentence> clausesWithNonTrueValues = dpll
 				.clausesWithNonTrueValues(clauseList, model);
@@ -77,7 +77,7 @@ public class DPLLTest {
 				.extend(new PropositionSymbol("C"), true);
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
-				new CNFClauseGatherer().getClausesFrom(new CNFTransformer()
+				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
 						.transform(sentence)));
 		List<Sentence> clausesWithNonTrueValues = dpll
 				.clausesWithNonTrueValues(clauseList, model);
@@ -91,7 +91,7 @@ public class DPLLTest {
 				new PropositionSymbol("B"), true);
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
-				new CNFClauseGatherer().getClausesFrom(new CNFTransformer()
+				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
 						.transform(sentence)));
 		List<PropositionSymbol> symbolList = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));
@@ -110,7 +110,7 @@ public class DPLLTest {
 				new PropositionSymbol("B"), true);
 		Sentence sentence = (Sentence) parser.parse("((A & B) & ( B  & ~C ))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
-				new CNFClauseGatherer().getClausesFrom(new CNFTransformer()
+				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
 						.transform(sentence)));
 		List<PropositionSymbol> symbolList = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));

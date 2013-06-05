@@ -14,7 +14,7 @@ import aima.test.core.unit.logic.propositional.parsing.PLLexerTest;
 import aima.test.core.unit.logic.propositional.parsing.PLParserTest;
 import aima.test.core.unit.logic.propositional.parsing.PropositionSymbolTest;
 import aima.test.core.unit.logic.propositional.visitors.CNFClauseGathererTest;
-import aima.test.core.unit.logic.propositional.visitors.CNFTransformerTest;
+import aima.test.core.unit.logic.propositional.visitors.ConvertToCNFTest;
 import aima.test.core.unit.logic.propositional.visitors.SymbolClassifierTest;
 import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 
@@ -22,7 +22,7 @@ import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 @Suite.SuiteClasses({ DPLLTest.class, KnowledgeBaseTest.class, ModelTest.class,
 		PLFCEntailsTest.class, PLResolutionTest.class, TTEntailsTest.class,
 		ComplexSentenceTest.class, ListTest.class, PLLexerTest.class, PLParserTest.class, PropositionSymbolTest.class,
-		CNFClauseGathererTest.class, CNFTransformerTest.class,
+		CNFClauseGathererTest.class, ConvertToCNFTest.class,
 		SymbolClassifierTest.class, SymbolCollectorTest.class })
 public class PropositionalTestSuite {
 

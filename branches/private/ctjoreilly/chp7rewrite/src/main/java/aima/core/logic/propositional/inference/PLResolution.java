@@ -17,7 +17,7 @@ import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.SetOps;
 
@@ -79,7 +79,7 @@ public class PLResolution {
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
 		Sentence kBAndNotAlpha = new ComplexSentence(Connective.AND, kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		Set<Sentence> clauses = new CNFClauseGatherer()
-				.getClausesFrom(new CNFTransformer().transform(kBAndNotAlpha));
+				.getClausesFrom(new ConvertToCNF().transform(kBAndNotAlpha));
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
 		Set<Sentence> newClauses = new HashSet<Sentence>();
 		while (true) {

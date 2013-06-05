@@ -12,7 +12,7 @@ import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Util;
 
@@ -42,7 +42,7 @@ public class WalkSAT {
 			double probabilityOfRandomWalk) {
 		myModel = new Model();
 		Sentence s = (Sentence) new PLParser().parse(logicalSentence);
-		CNFTransformer transformer = new CNFTransformer();
+		ConvertToCNF transformer = new ConvertToCNF();
 		CNFClauseGatherer clauseGatherer = new CNFClauseGatherer();
 
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(s));

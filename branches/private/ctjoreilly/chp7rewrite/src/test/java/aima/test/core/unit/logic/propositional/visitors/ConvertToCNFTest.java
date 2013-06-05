@@ -6,20 +6,20 @@ import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 
 /**
  * @author Ravi Mohan
  * 
  */
-public class CNFTransformerTest {
+public class ConvertToCNFTest {
 	private PLParser parser = new PLParser();
 
-	private CNFTransformer transformer;
+	private ConvertToCNF transformer;
 
 	@Before
 	public void setUp() {
-		transformer = new CNFTransformer();
+		transformer = new ConvertToCNF();
 	}
 
 	@Test

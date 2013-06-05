@@ -13,7 +13,7 @@ import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.SetOps;
 
@@ -64,7 +64,7 @@ public class DPLL {
 	 */
 	public boolean dpllSatisfiable(Sentence s, Model m) {
 		Set<Sentence> clauses = new CNFClauseGatherer()
-				.getClausesFrom(new CNFTransformer().transform(s));
+				.getClausesFrom(new ConvertToCNF().transform(s));
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(s));
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);

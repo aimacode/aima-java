@@ -9,7 +9,7 @@ import org.junit.Test;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.CNFClauseGatherer;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 
 /**
  * @author Ravi Mohan
@@ -86,7 +86,7 @@ public class CNFClauseGathererTest {
 	@Test
 	public void testAimaExample() {
 		Sentence aimaEg = (Sentence) parser.parse("B11 <=> P12 | P21");
-		CNFTransformer transformer = new CNFTransformer();
+		ConvertToCNF transformer = new ConvertToCNF();
 		Sentence transformed = transformer.transform(aimaEg);
 		Set<Sentence> clauses = gatherer.getClausesFrom(transformed);
 		Sentence clause1 = (Sentence) parser.parse("B11 | ~P12");

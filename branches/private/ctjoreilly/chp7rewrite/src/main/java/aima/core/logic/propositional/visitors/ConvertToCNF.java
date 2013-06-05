@@ -9,7 +9,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class CNFTransformer extends AbstractPLVisitor<Sentence> {
+public class ConvertToCNF extends AbstractPLVisitor<Sentence> {
 	
 	@Override
 	public Sentence visitUnarySentence(ComplexSentence us, Sentence arg) {

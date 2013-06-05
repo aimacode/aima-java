@@ -9,7 +9,7 @@ import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.CNFTransformer;
+import aima.core.logic.propositional.visitors.ConvertToCNF;
 
 /**
  * @author Ravi Mohan
@@ -98,7 +98,7 @@ public class KnowledgeBase {
 			kbPlusQuery = query;
 		}
 		try {
-			cnfForm = new CNFTransformer().transform(kbPlusQuery);
+			cnfForm = new ConvertToCNF().transform(kbPlusQuery);
 			// System.out.println(cnfForm.toString());
 		} catch (Exception e) {
 			System.out.println("error converting kb +  query to CNF"
