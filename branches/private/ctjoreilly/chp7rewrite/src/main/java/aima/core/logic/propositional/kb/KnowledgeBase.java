@@ -98,7 +98,7 @@ public class KnowledgeBase {
 			kbPlusQuery = query;
 		}
 		try {
-			cnfForm = new ConvertToCNF().transform(kbPlusQuery);
+			cnfForm = new ConvertToCNF().convert(kbPlusQuery);
 			// System.out.println(cnfForm.toString());
 		} catch (Exception e) {
 			System.out.println("error converting kb +  query to CNF"

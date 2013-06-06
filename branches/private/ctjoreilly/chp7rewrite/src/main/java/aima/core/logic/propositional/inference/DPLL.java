@@ -64,7 +64,7 @@ public class DPLL {
 	 */
 	public boolean dpllSatisfiable(Sentence s, Model m) {
 		Set<Sentence> clauses = new CNFClauseGatherer()
-				.getClausesFrom(new ConvertToCNF().transform(s));
+				.getClausesFrom(new ConvertToCNF().convert(s));
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(s));
 		// System.out.println(" numberOfSymbols = " + symbols.size());
 		return dpll(clauses, symbols, m);

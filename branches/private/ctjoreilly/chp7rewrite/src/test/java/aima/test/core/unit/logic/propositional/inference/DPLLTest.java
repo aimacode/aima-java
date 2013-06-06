@@ -61,7 +61,7 @@ public class DPLLTest {
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
 				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
-						.transform(sentence)));
+						.convert(sentence)));
 		List<Sentence> clausesWithNonTrueValues = dpll
 				.clausesWithNonTrueValues(clauseList, model);
 		Assert.assertEquals(1, clausesWithNonTrueValues.size());
@@ -78,7 +78,7 @@ public class DPLLTest {
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
 				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
-						.transform(sentence)));
+						.convert(sentence)));
 		List<Sentence> clausesWithNonTrueValues = dpll
 				.clausesWithNonTrueValues(clauseList, model);
 		Assert.assertEquals(0, clausesWithNonTrueValues.size());
@@ -92,7 +92,7 @@ public class DPLLTest {
 		Sentence sentence = (Sentence) parser.parse("((A & B) & (B & C))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
 				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
-						.transform(sentence)));
+						.convert(sentence)));
 		List<PropositionSymbol> symbolList = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));
 
@@ -111,7 +111,7 @@ public class DPLLTest {
 		Sentence sentence = (Sentence) parser.parse("((A & B) & ( B  & ~C ))");
 		List<Sentence> clauseList = new ArrayList<Sentence>(
 				new CNFClauseGatherer().getClausesFrom(new ConvertToCNF()
-						.transform(sentence)));
+						.convert(sentence)));
 		List<PropositionSymbol> symbolList = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));
 

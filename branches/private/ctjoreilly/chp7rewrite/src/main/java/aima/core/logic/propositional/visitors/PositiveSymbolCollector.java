@@ -30,7 +30,6 @@ public class PositiveSymbolCollector extends BasicGatherer<PropositionSymbol> {
 		return arg;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Set<PropositionSymbol> getPositiveSymbolsIn(Sentence sentence) {
 		Set<PropositionSymbol> result = new LinkedHashSet<PropositionSymbol>();
 		return sentence.accept(this, result);

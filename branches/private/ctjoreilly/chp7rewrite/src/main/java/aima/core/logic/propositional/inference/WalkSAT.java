@@ -51,7 +51,7 @@ public class WalkSAT {
 			myModel = myModel.extend(sym, Util.randomBoolean());
 		}
 		List<Sentence> clauses = new ArrayList<Sentence>(clauseGatherer.getClausesFrom(transformer
-						.transform(s)));
+						.convert(s)));
 
 		for (int i = 0; i < numberOfFlips; i++) {
 			if (getNumberOfClausesSatisfiedIn(

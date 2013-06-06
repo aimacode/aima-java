@@ -87,10 +87,10 @@ public class CNFClauseGathererTest {
 	public void testAimaExample() {
 		Sentence aimaEg = (Sentence) parser.parse("B11 <=> P12 | P21");
 		ConvertToCNF transformer = new ConvertToCNF();
-		Sentence transformed = transformer.transform(aimaEg);
+		Sentence transformed = transformer.convert(aimaEg);
 		Set<Sentence> clauses = gatherer.getClausesFrom(transformed);
-		Sentence clause1 = (Sentence) parser.parse("B11 | ~P12");
-		Sentence clause2 = (Sentence) parser.parse("B11 | ~P21");
+		Sentence clause1 = (Sentence) parser.parse("~P12 | B11");
+		Sentence clause2 = (Sentence) parser.parse("~P21 | B11");
 		Sentence clause3 = (Sentence) parser
 				.parse("~B11 | P12 | P21");
 		Assert.assertEquals(3, clauses.size());

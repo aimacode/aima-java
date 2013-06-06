@@ -79,7 +79,7 @@ public class PLResolution {
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
 		Sentence kBAndNotAlpha = new ComplexSentence(Connective.AND, kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		Set<Sentence> clauses = new CNFClauseGatherer()
-				.getClausesFrom(new ConvertToCNF().transform(kBAndNotAlpha));
+				.getClausesFrom(new ConvertToCNF().convert(kBAndNotAlpha));
 		clauses = filterOutClausesWithTwoComplementaryLiterals(clauses);
 		Set<Sentence> newClauses = new HashSet<Sentence>();
 		while (true) {

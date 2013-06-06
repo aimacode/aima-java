@@ -6,7 +6,10 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. Re-implement ConvertToCNF.
+. Ensure new ConvertToCNF logic:
+  - introduce explicit Literal and Clause classes.
+    - drop CNFClauseGatherer, AndDetector, PositiveSymbolCollector and NegativeSymbolCollector.
+  - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
@@ -24,7 +27,8 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
-  * Fixed Issue 78, Propositional CNF parsing issue.
+  * Fixed Issue 72, Propositional CNF parsing issue.
+  * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
  
 = Details =
 

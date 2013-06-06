@@ -15,7 +15,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public class Model implements PLVisitor {
+public class Model implements PLVisitor<Boolean, Boolean> {
 
 	private HashMap<PropositionSymbol, Boolean> h = new HashMap<PropositionSymbol, Boolean>();
 
@@ -83,7 +83,7 @@ public class Model implements PLVisitor {
 	//
 	// START-PLVisitor
 	@Override
-	public Object visitPropositionSymbol(PropositionSymbol s, Object arg) {
+	public Boolean visitPropositionSymbol(PropositionSymbol s, Boolean arg) {
 		if (s.isAlwaysTrue()) {
 			return Boolean.TRUE;
 		}
@@ -94,7 +94,7 @@ public class Model implements PLVisitor {
 	}
 
 	@Override
-	public Object visitUnarySentence(ComplexSentence fs, Object arg) {
+	public Boolean visitUnarySentence(ComplexSentence fs, Boolean arg) {
 		Object negatedValue = fs.getSimplerSentence(0).accept(this, null);
 		if (negatedValue != null) {
 			return new Boolean(!((Boolean) negatedValue).booleanValue());
@@ -104,7 +104,7 @@ public class Model implements PLVisitor {
 	}
 
 	@Override
-	public Object visitBinarySentence(ComplexSentence bs, Object arg) {
+	public Boolean visitBinarySentence(ComplexSentence bs, Boolean arg) {
 		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this, null);
 		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this, null);
 		if ((firstValue == null) || (secondValue == null)) {

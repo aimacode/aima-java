@@ -1,111 +1,50 @@
 package aima.core.logic.propositional.visitors;
 
-import aima.core.logic.propositional.parsing.AbstractPLVisitor;
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
+ * <br>
+ * A sentence expression as a conjunction of clauses is said to be in
+ * <b>conjunctive normal form</b> or <b>CNF</b>.<br>
+ * 
+ * <pre>
+ * CNFSentence -> Clause_1 & ... & Clause_n
+ *      Clause -> Literal_1 | ... | Literal_m
+ *     Literal -> Symbol : ~Symbol
+ *      Symbol -> P : Q : R : ... // (1)
+ * </pre>
+ * 
+ * Figure 7.14 A grammar for conjunctive normal form.<br>
+ * <br>
+ * Note (1): While the book states 'We use symbols that start with an upper case
+ * letter and may contain other letters or subscripts' in this implementation we
+ * allow any legal java identifier to stand in for a proposition symbol.<br>
+ * 
+ * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class ConvertToCNF extends AbstractPLVisitor<Sentence> {
-	
-	@Override
-	public Sentence visitUnarySentence(ComplexSentence us, Sentence arg) {
-		return transformNotSentence(us);
-	}
-	
-	@Override
-	public Sentence visitBinarySentence(ComplexSentence bs, Sentence arg) {
-		if (bs.getConnective() == Connective.BICONDITIONAL) {
-			return transformBiConditionalSentence(bs);
-		} else if (bs.getConnective() == Connective.IMPLICATION) {
-			return transformImpliedSentence(bs);
-		} else if (bs.getConnective() == Connective.OR
-				&& (bs.getSimplerSentence(0).isAndSentence() || bs.getSimplerSentence(1).isAndSentence())) {
-			return distributeOrOverAnd(bs);
-		} else {
-			return super.visitBinarySentence(bs, arg);
-		}
-	}
+public class ConvertToCNF {
 
 	/**
-	 * Returns the specified sentence in conjunctive normal form.
+	 * Returns the specified sentence in its logically equivalent conjunction of
+	 * clauses.
 	 * 
 	 * @param s
-	 *            a sentence of propositional logic
+	 *            a propositional logic sentence
 	 * 
-	 * @return the specified sentence in conjunctive normal form.
+	 * @return the input sentence converted to it logically equivalent
+	 *         conjunction of clauses.
 	 */
-	public Sentence transform(Sentence s) {
-		Sentence toTransform = s;
-		while (!(toTransform.equals(step(toTransform)))) {
-			toTransform = step(toTransform);
-		}
+	public Sentence convert(Sentence s) {
+		Sentence result = s;
 
-		return toTransform;
-	}
-	
-	//
-	// PRIVATE
-	//
-	private Sentence step(Sentence s) {
-		return s.accept(this, null);
-	}
+		result = BiconditionalElimination.eliminate(result);
+		result = ImplicationElimination.eliminate(result);
+		result = MoveNotInwards.moveNotsInward(result);
+		result = DistributeOrOverAnd.distribute(result);
 
-	private Sentence transformBiConditionalSentence(ComplexSentence bs) {
-		Sentence first = new ComplexSentence(Connective.IMPLICATION, bs.getSimplerSentence(0)
-				.accept(this, null), bs.getSimplerSentence(1).accept(this,
-				null));
-		Sentence second = new ComplexSentence(Connective.IMPLICATION, bs.getSimplerSentence(1)
-				.accept(this, null), bs.getSimplerSentence(0)
-				.accept(this, null));
-		return new ComplexSentence(Connective.AND, first, second);
-	}
-
-	private Sentence transformImpliedSentence(ComplexSentence bs) {
-		Sentence first = new ComplexSentence(Connective.NOT, bs.getSimplerSentence(0).accept(
-				this, null));
-		return new ComplexSentence(Connective.OR, first, bs.getSimplerSentence(1).accept(this, null));
-	}
-
-	private Sentence transformNotSentence(ComplexSentence us) {
-		if (us.getSimplerSentence(0).isUnarySentence()) {
-			return us.getSimplerSentence(0).getSimplerSentence(0).accept(this, null);
-		} else if (us.getSimplerSentence(0).isBinarySentence()) {
-			Sentence bs = us.getSimplerSentence(0);
-			if (bs.isAndSentence()) {
-				Sentence first = new ComplexSentence(Connective.NOT, bs.getSimplerSentence(0)
-						.accept(this, null));
-				Sentence second = new ComplexSentence(Connective.NOT, bs.getSimplerSentence(1)
-						.accept(this, null));
-				return new ComplexSentence(Connective.OR, first, second);
-			} else if (bs.isOrSentence()) {
-				Sentence first = new ComplexSentence(Connective.NOT, bs.getSimplerSentence(0)
-						.accept(this, null));
-				Sentence second = new ComplexSentence(Connective.NOT, bs.getSimplerSentence(1)
-						.accept(this, null));
-				return new ComplexSentence(Connective.AND, first, second);
-			} else {
-				return super.visitUnarySentence(us, null);
-			}
-		} else {
-			return super.visitUnarySentence(us, null);
-		}
-	}
-
-	private Sentence distributeOrOverAnd(ComplexSentence bs) {
-		ComplexSentence andTerm = bs.getSimplerSentence(0).isAndSentence() ? (ComplexSentence) bs
-				.getSimplerSentence(0) : (ComplexSentence) bs.getSimplerSentence(1);
-		Sentence otherterm = bs.getSimplerSentence(0).isAndSentence() ? bs.getSimplerSentence(1) : bs
-				.getSimplerSentence(0);
-		// (alpha or (beta and gamma) = ((alpha or beta) and (alpha or gamma))
-		Sentence alpha =  otherterm.accept(this, null);
-		Sentence beta =  andTerm.getSimplerSentence(0).accept(this, null);
-		Sentence gamma = andTerm.getSimplerSentence(1).accept(this, null);
-		Sentence distributed = new ComplexSentence(Connective.AND, new ComplexSentence(
-				Connective.OR, alpha, beta), new ComplexSentence(Connective.OR, alpha, gamma));
-		return distributed;
+		return result;
 	}
 }
