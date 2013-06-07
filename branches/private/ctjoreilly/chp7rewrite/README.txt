@@ -7,8 +7,6 @@
 CURRENTLY TODO
 --------------
 . Ensure new ConvertToCNF logic:
-  - introduce explicit Literal and Clause classes.
-    - drop CNFClauseGatherer, AndDetector, PositiveSymbolCollector and NegativeSymbolCollector.
   - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 

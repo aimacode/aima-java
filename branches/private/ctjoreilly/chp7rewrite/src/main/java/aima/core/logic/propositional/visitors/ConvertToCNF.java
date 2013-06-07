@@ -1,5 +1,10 @@
 package aima.core.logic.propositional.visitors;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
@@ -37,13 +42,18 @@ public class ConvertToCNF {
 	 * @return the input sentence converted to it logically equivalent
 	 *         conjunction of clauses.
 	 */
-	public Sentence convert(Sentence s) {
-		Sentence result = s;
+	public static ConjunctionOfClauses convert(Sentence s) {
+		ConjunctionOfClauses result = null;
 
-		result = BiconditionalElimination.eliminate(result);
-		result = ImplicationElimination.eliminate(result);
-		result = MoveNotInwards.moveNotsInward(result);
-		result = DistributeOrOverAnd.distribute(result);
+		Sentence biconditionalsRemoved = BiconditionalElimination.eliminate(s);
+		Sentence implicationsRemoved   = ImplicationElimination.eliminate(biconditionalsRemoved);
+		Sentence notsMovedIn           = MoveNotInwards.moveNotsInward(implicationsRemoved);
+		Sentence cnfSentence           = DistributeOrOverAnd.distribute(notsMovedIn);
+		
+		List<Clause> clauses = new ArrayList<Clause>();
+		clauses.addAll(ClauseCollector.getClausesFrom(cnfSentence));
+		
+		result = new ConjunctionOfClauses(clauses);
 
 		return result;
 	}

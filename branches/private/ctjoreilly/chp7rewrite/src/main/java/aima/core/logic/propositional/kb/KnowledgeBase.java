@@ -3,9 +3,10 @@ package aima.core.logic.propositional.kb;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.core.logic.propositional.LogicUtils;
+import aima.core.logic.propositional.PLLogicUtils;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.TTEntails;
+import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
@@ -69,7 +70,7 @@ public class KnowledgeBase {
 	 *         single sentence.
 	 */
 	public Sentence asSentence() {
-		return LogicUtils.chainWith(Connective.AND, sentences);
+		return PLLogicUtils.chainWith(Connective.AND, sentences);
 	}
 
 	/**
@@ -81,7 +82,8 @@ public class KnowledgeBase {
 	 * @return the answer to the specified question using the DPLL algorithm.
 	 */
 	public boolean askWithDpll(String queryString) {
-		Sentence query = null, cnfForm = null;
+		Sentence query = null;
+		ConjunctionOfClauses cnfForm = null;
 		try {
 			// just a check to see that the query is well formed
 			query = (Sentence) parser.parse(queryString);
@@ -98,7 +100,7 @@ public class KnowledgeBase {
 			kbPlusQuery = query;
 		}
 		try {
-			cnfForm = new ConvertToCNF().convert(kbPlusQuery);
+			cnfForm = ConvertToCNF.convert(kbPlusQuery);
 			// System.out.println(cnfForm.toString());
 		} catch (Exception e) {
 			System.out.println("error converting kb +  query to CNF"

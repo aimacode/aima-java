@@ -10,7 +10,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ravi Mohan
  * 
  */
-public class LogicUtils {
+public class PLLogicUtils {
 
 	public static Sentence chainWith(Connective connective, List<Sentence> sentences) {
 		if (sentences.size() == 0) {

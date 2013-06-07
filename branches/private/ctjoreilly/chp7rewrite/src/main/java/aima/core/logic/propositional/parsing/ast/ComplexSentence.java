@@ -14,8 +14,8 @@ public class ComplexSentence extends Sentence {
 	private Connective connective;
 	private Sentence[] simplerSentences;
 	// Lazy initialize these values.
-	private int hashCode = -1;
-	private String concreteSyntax = null;
+	private int cachedHashCode = -1;
+	private String cachedConcreteSyntax = null;
 
 	/**
 	 * Constructor.
@@ -84,31 +84,31 @@ public class ComplexSentence extends Sentence {
 
 	@Override
 	public int hashCode() {
-		if (hashCode == -1) {
-			hashCode = 17 * getConnective().hashCode();
+		if (cachedHashCode == -1) {
+			cachedHashCode = 17 * getConnective().hashCode();
 			for (Sentence s : simplerSentences) {
-				hashCode = (hashCode * 37) + s.hashCode();
+				cachedHashCode = (cachedHashCode * 37) + s.hashCode();
 			}
 		}
 
-		return hashCode;
+		return cachedHashCode;
 	}
 
 	@Override
 	public String toString() {
-		if (concreteSyntax == null) {
+		if (cachedConcreteSyntax == null) {
 			if (isUnarySentence()) {
-				concreteSyntax = getConnective()
+				cachedConcreteSyntax = getConnective()
 						+ bracketSentenceIfNecessary(getConnective(), getSimplerSentence(0));
 			} else if (isBinarySentence()) {
-				concreteSyntax = bracketSentenceIfNecessary(getConnective(), getSimplerSentence(0))
+				cachedConcreteSyntax = bracketSentenceIfNecessary(getConnective(), getSimplerSentence(0))
 						+ " "
 						+ getConnective()
 						+ " "
 						+ bracketSentenceIfNecessary(getConnective(), getSimplerSentence(1));
 			}
 		}
-		return concreteSyntax;
+		return cachedConcreteSyntax;
 	}
 	
 	//
