@@ -10,7 +10,7 @@ import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToCNF;
+import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 
 /**
  * @author Ravi Mohan
@@ -100,7 +100,7 @@ public class KnowledgeBase {
 			kbPlusQuery = query;
 		}
 		try {
-			cnfForm = ConvertToCNF.convert(kbPlusQuery);
+			cnfForm = ConvertToConjunctionOfClauses.convert(kbPlusQuery);
 			// System.out.println(cnfForm.toString());
 		} catch (Exception e) {
 			System.out.println("error converting kb +  query to CNF"

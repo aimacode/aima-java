@@ -30,7 +30,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class ConvertToCNF {
+public class ConvertToConjunctionOfClauses {
 
 	/**
 	 * Returns the specified sentence in its logically equivalent conjunction of
@@ -45,10 +45,8 @@ public class ConvertToCNF {
 	public static ConjunctionOfClauses convert(Sentence s) {
 		ConjunctionOfClauses result = null;
 
-		Sentence biconditionalsRemoved = BiconditionalElimination.eliminate(s);
-		Sentence implicationsRemoved   = ImplicationElimination.eliminate(biconditionalsRemoved);
-		Sentence notsMovedIn           = MoveNotInwards.moveNotsInward(implicationsRemoved);
-		Sentence cnfSentence           = DistributeOrOverAnd.distribute(notsMovedIn);
+		Sentence nnfSentence = ConvertToNNF.convert(s);
+		Sentence cnfSentence = DistributeOrOverAnd.distribute(nnfSentence);
 		
 		List<Clause> clauses = new ArrayList<Clause>();
 		clauses.addAll(ClauseCollector.getClausesFrom(cnfSentence));
