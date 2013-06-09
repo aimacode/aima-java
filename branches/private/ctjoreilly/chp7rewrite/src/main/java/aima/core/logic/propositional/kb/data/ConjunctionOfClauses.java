@@ -1,47 +1,48 @@
 package aima.core.logic.propositional.kb.data;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-
-import aima.core.logic.propositional.parsing.ast.Connective;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
  * <br>
  * A conjunction of clauses, where each clause is a disjunction of literals.
+ * Here we represent a conjunction of clauses as a set of clauses, where each
+ * clause is a set of literals.
  * 
  * @author Ciaran O'Reilly
  * 
  */
 public class ConjunctionOfClauses {
-	private List<Clause> conjunctionOfClauses = new ArrayList<Clause>();
+	private Set<Clause> clauses = new LinkedHashSet<Clause>();
 	//
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
 
-	public ConjunctionOfClauses(List<Clause> conjunctionOfClauses) {
-		this.conjunctionOfClauses.addAll(conjunctionOfClauses);
+	public ConjunctionOfClauses(Collection<Clause> conjunctionOfClauses) {
+		this.clauses.addAll(conjunctionOfClauses);
 		// Make immutable
-		conjunctionOfClauses = Collections
-				.unmodifiableList(conjunctionOfClauses);
+		this.clauses = Collections
+				.unmodifiableSet(this.clauses);
 	}
 
 	public int getNumberOfClauses() {
-		return conjunctionOfClauses.size();
+		return clauses.size();
 	}
 
-	public List<Clause> getConjunctionOfClauses() {
-		return conjunctionOfClauses;
+	public Set<Clause> getClauses() {
+		return clauses;
 	}
-	
-	public ConjunctionOfClauses extend(List<Clause> additionalClauses) {
-		List<Clause> clauses = new ArrayList<Clause>();
-		clauses.addAll(conjunctionOfClauses);
-		clauses.addAll(additionalClauses);
-		
-		ConjunctionOfClauses result = new ConjunctionOfClauses(clauses);
-		
+
+	public ConjunctionOfClauses extend(Collection<Clause> additionalClauses) {
+		Set<Clause> extendedClauses = new LinkedHashSet<Clause>();
+		extendedClauses.addAll(clauses);
+		extendedClauses.addAll(additionalClauses);
+
+		ConjunctionOfClauses result = new ConjunctionOfClauses(extendedClauses);
+
 		return result;
 	}
 
@@ -49,15 +50,17 @@ public class ConjunctionOfClauses {
 	public String toString() {
 		if (cachedStringRep == null) {
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < conjunctionOfClauses.size(); i++) {
-				if (i > 0) {
-					sb.append(" ");
-					sb.append(Connective.AND);
-					sb.append(" ");
+			boolean first = true;
+			sb.append("{");
+			for (Clause c : clauses) {
+				if (first) {
+					first = false;
+				} else {
+					sb.append(", ");
 				}
-				sb.append(conjunctionOfClauses.get(i).toString());
+				sb.append(c);
 			}
-
+			sb.append("}");
 			cachedStringRep = sb.toString();
 		}
 
@@ -67,7 +70,7 @@ public class ConjunctionOfClauses {
 	@Override
 	public int hashCode() {
 		if (cachedHashCode == -1) {
-			cachedHashCode = conjunctionOfClauses.hashCode();
+			cachedHashCode = clauses.hashCode();
 		}
 		return cachedHashCode;
 	}
@@ -85,7 +88,7 @@ public class ConjunctionOfClauses {
 		}
 		ConjunctionOfClauses othConjunctionOfClauses = (ConjunctionOfClauses) othObj;
 
-		return othConjunctionOfClauses.conjunctionOfClauses
-				.equals(this.conjunctionOfClauses);
+		return othConjunctionOfClauses.clauses
+				.equals(this.clauses);
 	}
 }

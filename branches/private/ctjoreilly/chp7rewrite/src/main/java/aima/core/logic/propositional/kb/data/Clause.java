@@ -7,10 +7,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.ast.Connective;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.util.SetOps;
 
 /**
- * A Clause: A disjunction of literals.
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
+ * <br>
+ * A Clause: A disjunction of literals. Here we view a Clause as a set of
+ * literals. This respects the restriction, under resolution, that a resulting
+ * clause should contain only 1 copy of a resulting literal.
  * 
  * 
  * @author Ciaran O'Reilly
@@ -19,9 +24,9 @@ import aima.core.logic.propositional.parsing.ast.Connective;
 public class Clause {
 	//
 	private Set<Literal> literals = new LinkedHashSet<Literal>();
-	private List<Literal> positiveLiterals = new ArrayList<Literal>();
-	private List<Literal> negativeLiterals = new ArrayList<Literal>();
 	//
+	private Set<PropositionSymbol> cachedPositiveSymbols = new LinkedHashSet<PropositionSymbol>();
+	private Set<PropositionSymbol> cachedNegativeSymbols = new LinkedHashSet<PropositionSymbol>();
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
 
@@ -29,7 +34,7 @@ public class Clause {
 		// i.e. the empty clause
 		this(new ArrayList<Literal>());
 	}
-	
+
 	public Clause(Literal... lits) {
 		this(Arrays.asList(lits));
 	}
@@ -41,21 +46,26 @@ public class Clause {
 				// False | ~True
 				continue;
 			}
-			this.literals.add(l);
-			if (l.isPositiveLiteral()) {
-				this.positiveLiterals.add(l);
-			} else {
-				this.negativeLiterals.add(l);
+			if (this.literals.add(l)) {
+				// Only add to caches if not already added
+				if (l.isPositiveLiteral()) {
+					this.cachedPositiveSymbols.add(l.getAtomicSentence());
+				} else {
+					this.cachedNegativeSymbols.add(l.getAtomicSentence());
+				}
 			}
 		}
-		
+
 		// Make immutable
 		literals = Collections.unmodifiableSet(literals);
-		positiveLiterals = Collections.unmodifiableList(positiveLiterals);
-		negativeLiterals = Collections.unmodifiableList(negativeLiterals);
+		cachedPositiveSymbols = Collections
+				.unmodifiableSet(cachedPositiveSymbols);
+		cachedNegativeSymbols = Collections
+				.unmodifiableSet(cachedNegativeSymbols);
 	}
-	
-	// The empty clause - a disjunction of no disjuncts - is equivalent to False because
+
+	// The empty clause - a disjunction of no disjuncts - is equivalent to False
+	// because
 	// a disjunction is true only if at least one of its disjuncts is true.
 	public boolean isFalse() {
 		return isEmpty();
@@ -72,24 +82,24 @@ public class Clause {
 	public boolean isDefiniteClause() {
 		// A Definite Clause is a disjunction of literals of which exactly 1 is
 		// positive.
-		return !isEmpty() && positiveLiterals.size() == 1;
+		return !isEmpty() && cachedPositiveSymbols.size() == 1;
 	}
 
 	public boolean isImplicationDefiniteClause() {
 		// An Implication Definite Clause is a disjunction of literals of
 		// which exactly 1 is positive and there is 1 or more negative
 		// literals.
-		return isDefiniteClause() && negativeLiterals.size() >= 1;
+		return isDefiniteClause() && cachedNegativeSymbols.size() >= 1;
 	}
 
 	public boolean isHornClause() {
 		// A Horn clause is a disjunction of literals of which at most one is
 		// positive.
-		return !isEmpty() && positiveLiterals.size() <= 1;
+		return !isEmpty() && cachedPositiveSymbols.size() <= 1;
 	}
 
 	public boolean isTautology() {
-		
+
 		for (Literal l : literals) {
 			if (l.isAlwaysTrue()) {
 				// (... | True | ...) is a tautology.
@@ -98,13 +108,12 @@ public class Clause {
 			}
 		}
 
-		for (Literal pl : positiveLiterals) {
-			for (Literal nl : negativeLiterals) {
-				// (... | P | ~P | ...) is a tautology
-				if (pl.getAtomicSentence().equals(nl.getAtomicSentence())) {
-					return true;
-				}
-			}
+		if (SetOps.intersection(cachedPositiveSymbols, cachedNegativeSymbols)
+				.size() > 0) {
+			// We have:
+			// P | ~P
+			// which is always true.
+			return true;
 		}
 
 		return false;
@@ -114,24 +123,24 @@ public class Clause {
 		return literals.size();
 	}
 
-	public int getNumberPositiveLiterals() {
-		return positiveLiterals.size();
+	public int getNumberPositiveSymbols() {
+		return cachedPositiveSymbols.size();
 	}
 
-	public int getNumberNegativeLiterals() {
-		return negativeLiterals.size();
+	public int getNumberNegativeSymbols() {
+		return cachedNegativeSymbols.size();
 	}
 
 	public Set<Literal> getLiterals() {
 		return literals;
 	}
 
-	public List<Literal> getPositiveLiterals() {
-		return positiveLiterals;
+	public Set<PropositionSymbol> getPositiveSymbols() {
+		return cachedPositiveSymbols;
 	}
 
-	public List<Literal> getNegativeLiterals() {
-		return negativeLiterals;
+	public Set<PropositionSymbol> getNegativeSymbols() {
+		return cachedNegativeSymbols;
 	}
 
 	@Override
@@ -139,18 +148,16 @@ public class Clause {
 		if (cachedStringRep == null) {
 			StringBuilder sb = new StringBuilder();
 			boolean first = true;
-			sb.append("(");
+			sb.append("{");
 			for (Literal l : literals) {
 				if (first) {
 					first = false;
 				} else {
-					sb.append(" ");
-					sb.append(Connective.OR);
-					sb.append(" ");
+					sb.append(", ");
 				}
-				sb.append(l.toString());
+				sb.append(l);
 			}
-			sb.append(")");
+			sb.append("}");
 			cachedStringRep = sb.toString();
 		}
 		return cachedStringRep;
