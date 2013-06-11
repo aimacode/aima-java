@@ -8,7 +8,8 @@ import aima.core.logic.propositional.parsing.ast.Connective;
  * <br>
  * A literal is either an atomic sentence (a positive literal) or a negated
  * atomic sentence (a negative literal). In propositional logic the atomic
- * sentences consist of a single proposition symbol.
+ * sentences consist of a single proposition symbol. In addition, a literal is
+ * immutable.
  * 
  * @author Ciaran O'Reilly
  * 
@@ -20,43 +21,78 @@ public class Literal {
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
 
+	/**
+	 * Constructor for a positive literal.
+	 * 
+	 * @param atom
+	 *            the atomic sentence comprising the literal.
+	 */
 	public Literal(PropositionSymbol atom) {
-		this.atom = atom;
+		this(atom, false);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param atom
+	 *            the atomic sentence comprising the literal.
+	 * @param negated
+	 *            true if to be an negative literal, false to be a positive
+	 *            literal.
+	 */
 	public Literal(PropositionSymbol atom, boolean negated) {
 		this.atom = atom;
 		this.negative = negated;
 	}
 
+	/**
+	 * 
+	 * @return true if a positive literal, false otherwise.
+	 */
 	public boolean isPositiveLiteral() {
 		return !negative;
 	}
 
+	/**
+	 * 
+	 * @return true if a negative literal, false otherwise.
+	 */
 	public boolean isNegativeLiteral() {
 		return negative;
 	}
 
+	/**
+	 * 
+	 * @return the atomic sentence comprising the literal.
+	 */
 	public PropositionSymbol getAtomicSentence() {
 		return atom;
 	}
-	
+
+	/**
+	 * 
+	 * @return true if the literal is representative of an always true
+	 *         proposition (i.e. True or ~False), false otherwise.
+	 */
 	public boolean isAlwaysTrue() {
 		// True | ~False
 		if (isPositiveLiteral()) {
 			return getAtomicSentence().isAlwaysTrue();
-		}
-		else {
+		} else {
 			return getAtomicSentence().isAlwaysFalse();
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @return true if the literal is representative of an always false
+	 *         proposition (i.e. False or ~True), false othwerwise.
+	 */
 	public boolean isAlwaysFalse() {
 		// False | ~True
 		if (isPositiveLiteral()) {
 			return getAtomicSentence().isAlwaysFalse();
-		}
-		else {
+		} else {
 			return getAtomicSentence().isAlwaysTrue();
 		}
 	}

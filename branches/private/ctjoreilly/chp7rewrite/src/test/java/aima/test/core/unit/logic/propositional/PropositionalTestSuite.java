@@ -8,13 +8,13 @@ import aima.test.core.unit.logic.propositional.inference.PLFCEntailsTest;
 import aima.test.core.unit.logic.propositional.inference.PLResolutionTest;
 import aima.test.core.unit.logic.propositional.inference.TTEntailsTest;
 import aima.test.core.unit.logic.propositional.kb.KnowledgeBaseTest;
+import aima.test.core.unit.logic.propositional.kb.data.ConvertToConjunctionOfClausesTest;
 import aima.test.core.unit.logic.propositional.parsing.ComplexSentenceTest;
 import aima.test.core.unit.logic.propositional.parsing.ListTest;
 import aima.test.core.unit.logic.propositional.parsing.PLLexerTest;
 import aima.test.core.unit.logic.propositional.parsing.PLParserTest;
 import aima.test.core.unit.logic.propositional.parsing.PropositionSymbolTest;
 import aima.test.core.unit.logic.propositional.visitors.ConvertToCNFTest;
-import aima.test.core.unit.logic.propositional.visitors.ConvertToConjunctionOfClausesTest;
 import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 
 @RunWith(Suite.class)

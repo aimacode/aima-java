@@ -15,7 +15,8 @@ import aima.core.util.SetOps;
  * <br>
  * A Clause: A disjunction of literals. Here we view a Clause as a set of
  * literals. This respects the restriction, under resolution, that a resulting
- * clause should contain only 1 copy of a resulting literal.
+ * clause should contain only 1 copy of a resulting literal. In addition,
+ * clauses are immutable.
  * 
  * 
  * @author Ciaran O'Reilly
@@ -30,17 +31,33 @@ public class Clause {
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
 
+	/**
+	 * Default constructor - i.e. the empty clause, which is 'False'.
+	 */
 	public Clause() {
 		// i.e. the empty clause
 		this(new ArrayList<Literal>());
 	}
 
-	public Clause(Literal... lits) {
-		this(Arrays.asList(lits));
+	/**
+	 * Construct a clause from the given literals. Note: literals the are always
+	 * 'False' (i.e. False or ~True) are not added to the instantiated clause.
+	 * 
+	 * @param literals
+	 *            the literals to be added to the clause.
+	 */
+	public Clause(Literal... literals) {
+		this(Arrays.asList(literals));
 	}
 
-	public Clause(List<Literal> lits) {
-		for (Literal l : lits) {
+	/**
+	 * Construct a clause from the given literals. Note: literals the are always
+	 * 'False' (i.e. False or ~True) are not added to the instantiated clause.
+	 * 
+	 * @param literals
+	 */
+	public Clause(List<Literal> literals) {
+		for (Literal l : literals) {
 			if (l.isAlwaysFalse()) {
 				// Don't add literals of the form
 				// False | ~True
@@ -57,53 +74,90 @@ public class Clause {
 		}
 
 		// Make immutable
-		literals = Collections.unmodifiableSet(literals);
+		this.literals = Collections.unmodifiableSet(this.literals);
 		cachedPositiveSymbols = Collections
 				.unmodifiableSet(cachedPositiveSymbols);
 		cachedNegativeSymbols = Collections
 				.unmodifiableSet(cachedNegativeSymbols);
 	}
 
-	// The empty clause - a disjunction of no disjuncts - is equivalent to False
-	// because
-	// a disjunction is true only if at least one of its disjuncts is true.
+	/**
+	 * If a clause is empty - a disjunction of no disjuncts - it is equivalent
+	 * to 'False' because a disjunction is true only if at least one of its
+	 * disjuncts is true.
+	 * 
+	 * @return true if an empty clause, false otherwise.
+	 */
 	public boolean isFalse() {
 		return isEmpty();
 	}
 
+	/**
+	 * 
+	 * @return true if the clause is empty (i.e. 'False'), false otherwise.
+	 */
 	public boolean isEmpty() {
 		return literals.size() == 0;
 	}
 
+	/**
+	 * Determine if a clause is unit, i.e. contains a single literal.
+	 * 
+	 * @return true if the clause is unit, false otherwise.
+	 */
 	public boolean isUnitClause() {
 		return literals.size() == 1;
 	}
 
+	/**
+	 * Determine if a definite clause. A definite clause is a disjunction of
+	 * literals of which exactly 1 is positive.
+	 * 
+	 * @return true if a definite clause, false otherwise.
+	 */
 	public boolean isDefiniteClause() {
-		// A Definite Clause is a disjunction of literals of which exactly 1 is
-		// positive.
-		return !isEmpty() && cachedPositiveSymbols.size() == 1;
+		return cachedPositiveSymbols.size() == 1;
 	}
 
+	/**
+	 * Determine if an implication definite clause. An implication definite
+	 * clause is disjunction of literals of which exactly 1 is positive and
+	 * there is 1 or more negative literals.
+	 * 
+	 * @return true if an implication definite clause, false otherwise.
+	 */
 	public boolean isImplicationDefiniteClause() {
-		// An Implication Definite Clause is a disjunction of literals of
-		// which exactly 1 is positive and there is 1 or more negative
-		// literals.
 		return isDefiniteClause() && cachedNegativeSymbols.size() >= 1;
 	}
 
+	/**
+	 * Determine if a horn clause. A horn clause is a disjunction of literals of
+	 * which at most one is positive.
+	 * 
+	 * @return
+	 */
 	public boolean isHornClause() {
-		// A Horn clause is a disjunction of literals of which at most one is
-		// positive.
-		return !isEmpty() && cachedPositiveSymbols.size() <= 1;
+		return cachedPositiveSymbols.size() <= 1;
 	}
 
+	/**
+	 * Determine if the clause represents a tautology, of which the following
+	 * are examples:<br>
+	 * 
+	 * <pre>
+	 * {..., True, ...}
+	 * {...,False, ...} 
+	 * {..., P, ..., ~P, ...}
+	 * </pre>
+	 * 
+	 * @return true if the clause represents a tautology, false otherwise.
+	 */
 	public boolean isTautology() {
 
 		for (Literal l : literals) {
 			if (l.isAlwaysTrue()) {
-				// (... | True | ...) is a tautology.
-				// (... | ~False | ...) is a tautology
+				// {..., True, ...} is a tautology.
+				// {...,False, ...} is a tautology
 				return true;
 			}
 		}
@@ -119,26 +173,50 @@ public class Clause {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return the number of literals contained by the clause.
+	 */
 	public int getNumberLiterals() {
 		return literals.size();
 	}
 
-	public int getNumberPositiveSymbols() {
+	/**
+	 * 
+	 * @return the number of positive literals contained by the clause.
+	 */
+	public int getNumberPositiveLiterals() {
 		return cachedPositiveSymbols.size();
 	}
 
-	public int getNumberNegativeSymbols() {
+	/**
+	 * 
+	 * @return the number of negative literals contained by the clause.
+	 */
+	public int getNumberNegativeLiterals() {
 		return cachedNegativeSymbols.size();
 	}
 
+	/**
+	 * 
+	 * @return the set of literals making up the clause.
+	 */
 	public Set<Literal> getLiterals() {
 		return literals;
 	}
 
+	/**
+	 * 
+	 * @return the set of symbols from the clause's positive literals.
+	 */
 	public Set<PropositionSymbol> getPositiveSymbols() {
 		return cachedPositiveSymbols;
 	}
 
+	/**
+	 * 
+	 * @return the set of symbols from the clause's negative literals.
+	 */
 	public Set<PropositionSymbol> getNegativeSymbols() {
 		return cachedNegativeSymbols;
 	}

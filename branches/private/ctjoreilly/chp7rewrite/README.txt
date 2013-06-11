@@ -6,7 +6,8 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. Ensure new ConvertToCNF logic:
+. Create ClauseTest, LiteralTest.
+. Ensure new CNF logic:
   - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 

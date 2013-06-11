@@ -1,4 +1,4 @@
-package aima.test.core.unit.logic.propositional.visitors;
+package aima.test.core.unit.logic.propositional.kb.data;
 
 import org.junit.Assert;
 import org.junit.Before;
