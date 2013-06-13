@@ -22,8 +22,10 @@ import javax.lang.model.SourceVersion;
  */
 public class PropositionSymbol extends AtomicSentence {
 	//
-	public static final String TRUE = "True";
-	public static final String FALSE = "False";
+	public static final String TRUE_SYMBOL = "True";
+	public static final String FALSE_SYMBOL = "False";
+	public static final PropositionSymbol TRUE = new PropositionSymbol(TRUE_SYMBOL);
+	public static final PropositionSymbol FALSE = new PropositionSymbol(FALSE_SYMBOL);
 	//
 	private String symbol;
 
@@ -36,10 +38,10 @@ public class PropositionSymbol extends AtomicSentence {
 	public PropositionSymbol(String symbol) {
 		// Ensure differing cases for the 'True' and 'False'
 		// propositional constants are represented in a canonical form.
-		if (TRUE.equalsIgnoreCase(symbol)) {
-			this.symbol = TRUE;
-		} else if (FALSE.equalsIgnoreCase(symbol)) {
-			this.symbol = FALSE;
+		if (TRUE_SYMBOL.equalsIgnoreCase(symbol)) {
+			this.symbol = TRUE_SYMBOL;
+		} else if (FALSE_SYMBOL.equalsIgnoreCase(symbol)) {
+			this.symbol = FALSE_SYMBOL;
 		} else if (isPropositionSymbol(symbol)){
 			this.symbol = symbol;
 		}
@@ -54,7 +56,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 *         otherwise.
 	 */
 	public boolean isAlwaysTrue() {
-		return TRUE.equals(symbol);
+		return TRUE_SYMBOL.equals(symbol);
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 *         symbol, false otherwise.
 	 */
 	public static boolean isAlwaysTrueSymbol(String symbol) {
-		return TRUE.equalsIgnoreCase(symbol);
+		return TRUE_SYMBOL.equalsIgnoreCase(symbol);
 	}
 
 	/**
@@ -72,7 +74,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 *         other.
 	 */
 	public boolean isAlwaysFalse() {
-		return FALSE.equals(symbol);
+		return FALSE_SYMBOL.equals(symbol);
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 *         symbol, false other.
 	 */
 	public static boolean isAlwaysFalseSymbol(String symbol) {
-		return FALSE.equalsIgnoreCase(symbol);
+		return FALSE_SYMBOL.equalsIgnoreCase(symbol);
 	}
 
 	/**

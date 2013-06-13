@@ -16,7 +16,7 @@ import aima.core.util.SetOps;
  * A Clause: A disjunction of literals. Here we view a Clause as a set of
  * literals. This respects the restriction, under resolution, that a resulting
  * clause should contain only 1 copy of a resulting literal. In addition,
- * clauses are immutable.
+ * clauses, as implemented, are immutable.
  * 
  * 
  * @author Ciaran O'Reilly
@@ -137,7 +137,7 @@ public class Clause {
 	 * @return
 	 */
 	public boolean isHornClause() {
-		return cachedPositiveSymbols.size() <= 1;
+		return !isEmpty() && cachedPositiveSymbols.size() <= 1;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class Clause {
 	 * 
 	 * <pre>
 	 * {..., True, ...}
-	 * {...,False, ...} 
+	 * {..., ~False, ...} 
 	 * {..., P, ..., ~P, ...}
 	 * </pre>
 	 * 
@@ -157,7 +157,7 @@ public class Clause {
 		for (Literal l : literals) {
 			if (l.isAlwaysTrue()) {
 				// {..., True, ...} is a tautology.
-				// {...,False, ...} is a tautology
+				// {..., ~False, ...} is a tautology
 				return true;
 			}
 		}
@@ -242,14 +242,6 @@ public class Clause {
 	}
 
 	@Override
-	public int hashCode() {
-		if (cachedHashCode == -1) {
-			cachedHashCode = literals.hashCode();
-		}
-		return cachedHashCode;
-	}
-
-	@Override
 	public boolean equals(Object othObj) {
 		if (null == othObj) {
 			return false;
@@ -263,5 +255,13 @@ public class Clause {
 		Clause othClause = (Clause) othObj;
 
 		return othClause.literals.equals(this.literals);
+	}
+	
+	@Override
+	public int hashCode() {
+		if (cachedHashCode == -1) {
+			cachedHashCode = literals.hashCode();
+		}
+		return cachedHashCode;
 	}
 }

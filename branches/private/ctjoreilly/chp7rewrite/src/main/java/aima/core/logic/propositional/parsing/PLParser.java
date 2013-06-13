@@ -265,14 +265,14 @@ public class PLParser extends Parser<Sentence> {
 	private ParseNode parseTrue() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.TRUE),
+		return new ParseNode(new PropositionSymbol(PropositionSymbol.TRUE_SYMBOL),
 				token);
 	}
 
 	private ParseNode parseFalse() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.FALSE),
+		return new ParseNode(new PropositionSymbol(PropositionSymbol.FALSE_SYMBOL),
 				token);
 	}
 

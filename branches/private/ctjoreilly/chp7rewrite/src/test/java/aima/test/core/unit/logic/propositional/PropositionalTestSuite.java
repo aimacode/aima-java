@@ -8,7 +8,9 @@ import aima.test.core.unit.logic.propositional.inference.PLFCEntailsTest;
 import aima.test.core.unit.logic.propositional.inference.PLResolutionTest;
 import aima.test.core.unit.logic.propositional.inference.TTEntailsTest;
 import aima.test.core.unit.logic.propositional.kb.KnowledgeBaseTest;
+import aima.test.core.unit.logic.propositional.kb.data.ClauseTest;
 import aima.test.core.unit.logic.propositional.kb.data.ConvertToConjunctionOfClausesTest;
+import aima.test.core.unit.logic.propositional.kb.data.LiteralTest;
 import aima.test.core.unit.logic.propositional.parsing.ComplexSentenceTest;
 import aima.test.core.unit.logic.propositional.parsing.ListTest;
 import aima.test.core.unit.logic.propositional.parsing.PLLexerTest;
@@ -22,7 +24,8 @@ import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 		PLFCEntailsTest.class, PLResolutionTest.class, TTEntailsTest.class,
 		ComplexSentenceTest.class, ListTest.class, PLLexerTest.class,
 		PLParserTest.class, PropositionSymbolTest.class,
-		ConvertToCNFTest.class, ConvertToConjunctionOfClausesTest.class,
+		ConvertToCNFTest.class, ClauseTest.class,
+		ConvertToConjunctionOfClausesTest.class, LiteralTest.class,
 		SymbolCollectorTest.class })
 public class PropositionalTestSuite {
 

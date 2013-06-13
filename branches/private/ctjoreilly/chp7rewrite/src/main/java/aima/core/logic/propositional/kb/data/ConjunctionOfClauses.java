@@ -10,8 +10,8 @@ import java.util.Set;
  * <br>
  * A conjunction of clauses, where each clause is a disjunction of literals.
  * Here we represent a conjunction of clauses as a set of clauses, where each
- * clause is a set of literals. In addition, a conjunction of clauses is
- * immutable.
+ * clause is a set of literals. In addition, a conjunction of clauses, as
+ * implemented, are immutable.
  * 
  * @author Ciaran O'Reilly
  * 

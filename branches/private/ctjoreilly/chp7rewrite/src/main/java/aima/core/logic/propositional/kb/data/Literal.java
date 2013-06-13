@@ -8,15 +8,15 @@ import aima.core.logic.propositional.parsing.ast.Connective;
  * <br>
  * A literal is either an atomic sentence (a positive literal) or a negated
  * atomic sentence (a negative literal). In propositional logic the atomic
- * sentences consist of a single proposition symbol. In addition, a literal is
- * immutable.
+ * sentences consist of a single proposition symbol. In addition, a literal as
+ * implemented is immutable.
  * 
  * @author Ciaran O'Reilly
  * 
  */
 public class Literal {
 	private PropositionSymbol atom = null;
-	private boolean negative = false; // Assume positive by default.
+	private boolean positive = true; // Assume positive by default.
 	//
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
@@ -28,7 +28,7 @@ public class Literal {
 	 *            the atomic sentence comprising the literal.
 	 */
 	public Literal(PropositionSymbol atom) {
-		this(atom, false);
+		this(atom, true);
 	}
 
 	/**
@@ -36,13 +36,13 @@ public class Literal {
 	 * 
 	 * @param atom
 	 *            the atomic sentence comprising the literal.
-	 * @param negated
-	 *            true if to be an negative literal, false to be a positive
+	 * @param positive
+	 *            true if to be a positive literal, false to be a negative
 	 *            literal.
 	 */
-	public Literal(PropositionSymbol atom, boolean negated) {
+	public Literal(PropositionSymbol atom, boolean positive) {
 		this.atom = atom;
-		this.negative = negated;
+		this.positive = positive;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Literal {
 	 * @return true if a positive literal, false otherwise.
 	 */
 	public boolean isPositiveLiteral() {
-		return !negative;
+		return positive;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Literal {
 	 * @return true if a negative literal, false otherwise.
 	 */
 	public boolean isNegativeLiteral() {
-		return negative;
+		return !positive;
 	}
 
 	/**

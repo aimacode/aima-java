@@ -104,9 +104,9 @@ public class PLLexer extends Lexer {
 		}
 		String symbol = sbuf.toString();
 		if (PropositionSymbol.isAlwaysTrueSymbol(symbol)) {
-			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE, startPosition);
+			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE_SYMBOL, startPosition);
 		} else if (PropositionSymbol.isAlwaysFalseSymbol(symbol)) {
-			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE, startPosition);
+			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE_SYMBOL, startPosition);
 		} else if (PropositionSymbol.isPropositionSymbol(symbol)){
 			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString(), startPosition);
 		}

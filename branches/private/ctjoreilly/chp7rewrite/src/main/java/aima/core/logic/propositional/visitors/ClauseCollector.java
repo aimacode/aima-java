@@ -56,7 +56,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		}
 		
 		// a negative unit clause
-		Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), true);
+		Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
 		arg.add(new Clause(negativeLiteral));
 		
 		return arg;
@@ -109,7 +109,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 			}
 			
 			// a negative literal
-			Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), true);
+			Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
 
 			arg.add(negativeLiteral);
 			
