@@ -2,9 +2,9 @@ package aima.core.logic.propositional.kb.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
@@ -56,7 +56,7 @@ public class Clause {
 	 * 
 	 * @param literals
 	 */
-	public Clause(List<Literal> literals) {
+	public Clause(Collection<Literal> literals) {
 		for (Literal l : literals) {
 			if (l.isAlwaysFalse()) {
 				// Don't add literals of the form
