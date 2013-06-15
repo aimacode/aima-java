@@ -10,6 +10,11 @@ import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.Util;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ *
+ */
 public class ClauseTest {
 
 	private final Literal LITERAL_P     = new Literal(new PropositionSymbol("P"));

@@ -6,6 +6,11 @@ import org.junit.Test;
 import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
+/**
+ * 
+ * @author Ciaran O'Reilly
+ *
+ */
 public class LiteralTest {
 	private final PropositionSymbol SYMBOL_P = new PropositionSymbol("P");
 	private final PropositionSymbol SYMBOL_Q = new PropositionSymbol("Q");

@@ -45,8 +45,7 @@ public class ConvertToConjunctionOfClauses {
 	public static ConjunctionOfClauses convert(Sentence s) {
 		ConjunctionOfClauses result = null;
 
-		Sentence nnfSentence = ConvertToNNF.convert(s);
-		Sentence cnfSentence = DistributeOrOverAnd.distribute(nnfSentence);
+		Sentence cnfSentence = ConvertToCNF.convert(s);
 		
 		List<Clause> clauses = new ArrayList<Clause>();
 		clauses.addAll(ClauseCollector.getClausesFrom(cnfSentence));

@@ -8,9 +8,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.logic.propositional.inference.PLResolution;
+import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.util.SetOps;
 
 /**
  * @author Ravi Mohan
@@ -29,45 +30,45 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolveWithOneLiteralMatching() {
-		Sentence one = (Sentence) parser.parse("(A | B)");
-		Sentence two = (Sentence) parser.parse("~B | C");
-		Sentence expected = (Sentence) parser.parse("A | C");
-		Set<Sentence> resolvents = resolution.plResolve(one, two);
+		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A | B")).getClauses().iterator().next();
+		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~B | C")).getClauses().iterator().next();
+		Clause expected =  ConvertToConjunctionOfClauses.convert(parser.parse("A | C")).getClauses().iterator().next();
+		
+		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
 		Assert.assertTrue(resolvents.contains(expected));
 	}
 
 	@Test
 	public void testPLResolveWithNoLiteralMatching() {
-		Sentence one = (Sentence) parser.parse("A | B");
-		Sentence two = (Sentence) parser.parse("C | D");
-		Set<Sentence> resolvents = resolution.plResolve(one, two);
+		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A | B")).getClauses().iterator().next();
+		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("C | D")).getClauses().iterator().next();
+
+		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(0, resolvents.size());
 	}
 
 	@Test
 	public void testPLResolveWithOneLiteralSentencesMatching() {
-		Sentence one = (Sentence) parser.parse("A");
-		Sentence two = (Sentence) parser.parse("~A");
-		// Sentence expected =(Sentence) parser.parse("(A OR C)");
-		Set<Sentence> resolvents = resolution.plResolve(one, two);
+		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A")).getClauses().iterator().next();
+		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~A")).getClauses().iterator().next();
+
+		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
-		Assert.assertTrue(resolvents.contains(new PropositionSymbol("EMPTY_CLAUSE")));
+		Assert.assertTrue(resolvents.iterator().next().isEmpty());
+		Assert.assertTrue(resolvents.iterator().next().isFalse());
 	}
 
 	@Test
 	public void testPLResolveWithTwoLiteralsMatching() {
-		Sentence one = (Sentence) parser.parse("~P21 | B11");
-		Sentence two = (Sentence) parser.parse("~B11 | P21 | P12");
-		Sentence expected1 = (Sentence) parser
-				.parse("P12 | P21 | ~P21");
-		Sentence expected2 = (Sentence) parser
-				.parse("B11 | P12 | ~B11");
-		Set<Sentence> resolvents = resolution.plResolve(one, two);
+		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("~P21 | B11")).getClauses().iterator().next();
+		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~B11 | P21 | P12")).getClauses().iterator().next();
+		Set<Clause> expected = ConvertToConjunctionOfClauses.convert(parser.parse("(P12 | P21 | ~P21) & (B11 | P12 | ~B11)")).getClauses();
+
+		Set<Clause> resolvents = resolution.plResolve(one, two);
 
 		Assert.assertEquals(2, resolvents.size());
-		Assert.assertTrue(resolvents.contains(expected1));
-		Assert.assertTrue(resolvents.contains(expected2));
+		Assert.assertEquals(2, SetOps.intersection(expected, resolvents).size());
 	}
 
 	@Ignore("TODO")
