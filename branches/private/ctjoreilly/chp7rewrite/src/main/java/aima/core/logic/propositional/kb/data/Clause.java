@@ -23,6 +23,7 @@ import aima.core.util.SetOps;
  * 
  */
 public class Clause {
+	public static final Clause EMPTY = new Clause();
 	//
 	private Set<Literal> literals = new LinkedHashSet<Literal>();
 	//

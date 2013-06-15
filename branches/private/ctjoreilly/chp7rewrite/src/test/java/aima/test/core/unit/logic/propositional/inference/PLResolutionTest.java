@@ -1,39 +1,55 @@
 package aima.test.core.unit.logic.propositional.inference;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import aima.core.logic.propositional.inference.PLResolution;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLParser;
+import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
 
 /**
  * @author Ravi Mohan
+ * @author Ciaran O'Reilly
  * 
  */
+@RunWith(Parameterized.class)
 public class PLResolutionTest {
 	private PLResolution resolution;
-
 	private PLParser parser;
+	
+	@Parameters(name = "{index}: discardTautologies={0}")
+    public static Collection<Object[]> inferenceAlgorithmSettings() {
+        return Arrays.asList(new Object[][] {
+        		{false}, // will not discard tautological clauses - slower!
+        		{true}   // will discard tautological clauses - faster!
+        });
+    }
 
-	@Before
-	public void setUp() {
-		resolution = new PLResolution();
+	public PLResolutionTest(boolean discardTautologies) {
+		this.resolution = new PLResolution(discardTautologies);
 		parser = new PLParser();
 	}
 
 	@Test
 	public void testPLResolveWithOneLiteralMatching() {
-		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A | B")).getClauses().iterator().next();
-		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~B | C")).getClauses().iterator().next();
-		Clause expected =  ConvertToConjunctionOfClauses.convert(parser.parse("A | C")).getClauses().iterator().next();
-		
+		Clause one = ConvertToConjunctionOfClauses
+				.convert(parser.parse("A | B")).getClauses().iterator().next();
+		Clause two = ConvertToConjunctionOfClauses
+				.convert(parser.parse("~B | C")).getClauses().iterator().next();
+		Clause expected = ConvertToConjunctionOfClauses
+				.convert(parser.parse("A | C")).getClauses().iterator().next();
+
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
 		Assert.assertTrue(resolvents.contains(expected));
@@ -41,8 +57,10 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolveWithNoLiteralMatching() {
-		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A | B")).getClauses().iterator().next();
-		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("C | D")).getClauses().iterator().next();
+		Clause one = ConvertToConjunctionOfClauses
+				.convert(parser.parse("A | B")).getClauses().iterator().next();
+		Clause two = ConvertToConjunctionOfClauses
+				.convert(parser.parse("C | D")).getClauses().iterator().next();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(0, resolvents.size());
@@ -50,8 +68,10 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolveWithOneLiteralSentencesMatching() {
-		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("A")).getClauses().iterator().next();
-		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~A")).getClauses().iterator().next();
+		Clause one = ConvertToConjunctionOfClauses.convert(parser.parse("A"))
+				.getClauses().iterator().next();
+		Clause two = ConvertToConjunctionOfClauses.convert(parser.parse("~A"))
+				.getClauses().iterator().next();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
@@ -61,9 +81,15 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolveWithTwoLiteralsMatching() {
-		Clause one =  ConvertToConjunctionOfClauses.convert(parser.parse("~P21 | B11")).getClauses().iterator().next();
-		Clause two =  ConvertToConjunctionOfClauses.convert(parser.parse("~B11 | P21 | P12")).getClauses().iterator().next();
-		Set<Clause> expected = ConvertToConjunctionOfClauses.convert(parser.parse("(P12 | P21 | ~P21) & (B11 | P12 | ~B11)")).getClauses();
+		Clause one = ConvertToConjunctionOfClauses
+				.convert(parser.parse("~P21 | B11")).getClauses().iterator()
+				.next();
+		Clause two = ConvertToConjunctionOfClauses
+				.convert(parser.parse("~B11 | P21 | P12")).getClauses()
+				.iterator().next();
+		Set<Clause> expected = ConvertToConjunctionOfClauses.convert(
+				parser.parse("(P12 | P21 | ~P21) & (B11 | P12 | ~B11)"))
+				.getClauses();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 
@@ -71,67 +97,92 @@ public class PLResolutionTest {
 		Assert.assertEquals(2, SetOps.intersection(expected, resolvents).size());
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testPLResolve1() {
-//		boolean b = resolution.plResolution("((B11 =>  ~P11) & B11)", "P11");
-//		Assert.assertEquals(false, b);
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("(B11 => ~P11) & B11");
+		Sentence alpha = parser.parse("P11");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(false, b);
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testPLResolve2() {
-//		boolean b = resolution.plResolution("A & B", "B");
-//		Assert.assertEquals(true, b);
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("A & B");
+		Sentence alpha = parser.parse("B");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(true, b);
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testPLResolve3() {
-//		boolean b = resolution.plResolution("(B11 =>  ~P11) & B11", "~P11");
-//		Assert.assertEquals(true, b);
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("(B11 => ~P11) & B11");
+		Sentence alpha = parser.parse("~P11");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(true, b);
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testPLResolve4() {
-//		boolean b = resolution.plResolution("A | B", "B");
-//		Assert.assertEquals(false, b);
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("A | B");
+		Sentence alpha = parser.parse("B");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(false, b);
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testPLResolve5() {
-//		boolean b = resolution.plResolution("(B11 =>  ~P11) & B11", "~B11");
-//		Assert.assertEquals(false, b);
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("(B11 => ~P11) & B11");
+		Sentence alpha = parser.parse("~B11");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(false, b);
+	}
+	
+	@Test
+	public void testPLResolve6() {
+		KnowledgeBase kb = new KnowledgeBase();
+		// e.g. from AIMA3e pg. 254
+		kb.tell("(B11 <=> P12 | P21) & ~B11");
+		Sentence alpha = parser.parse("~P21");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(true, b);
 	}
 
-	@Ignore("TODO")
 	@Test
 	public void testMultipleClauseResolution() {
-//		// test (and fix) suggested by Huy Dinh. Thanks Huy!
-//		PLResolution plr = new PLResolution();
-//		KnowledgeBase kb = new KnowledgeBase();
-//		String fact = "(B11 <=> P12 | P21) & ~B11";
-//		kb.tell(fact);
-//		plr.plResolution(kb, "B");
+		// test (and fix) suggested by Huy Dinh. Thanks Huy!
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("(B11 <=> P12 | P21) & ~B11");
+		Sentence alpha = parser.parse("B");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(false, b); // false as KB says nothing about B
 	}
 
-	// TODO
-	// public void testPLResolutionWithChadCarfBugReportData() {
-	// commented out coz this needs a major fix wait for a rewrite
-	// KnowledgeBase kb = new KnowledgeBase();
-	// kb.tell("(B12 <=> (P11 OR (P13 OR (P22 OR P02))))");
-	// kb.tell("(B21 <=> (P20 OR (P22 OR (P31 OR P11))))");
-	// kb.tell("(B01 <=> (P00 OR (P02 OR P11)))");
-	// kb.tell("(B10 <=> (P11 OR (P20 OR P00)))");
-	// kb.tell("(NOT B21)");
-	// kb.tell("(NOT B12)");
-	// kb.tell("(B10)");
-	// kb.tell("(B01)");
-	// assertTrue(resolution.plResolution(kb.asSentence().toString(), "(P00)"));
-	// //assertFalse(kb.askWithDpll("(NOT P00)"));
-	//
-	//
-	// }
+	@Test
+	public void testPLResolutionWithChadCarfBugReportData() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.tell("B12 <=> P11 | P13 | P22 | P02");
+		kb.tell("B21 <=> P20 | P22 | P31 | P11");
+		kb.tell("B01 <=> P00 | P02 | P11");
+		kb.tell("B10 <=> P11 | P20 | P00");
+		kb.tell("~B21");
+		kb.tell("~B12");
+		kb.tell("B10");
+		kb.tell("B01");
+		Sentence alpha = parser.parse("P00");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(true, b);
+	}
 }

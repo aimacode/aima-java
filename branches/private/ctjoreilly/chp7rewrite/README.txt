@@ -6,12 +6,12 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. Create ClauseTest, LiteralTest.
 . Ensure new CNF logic:
   - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 
 0.11.0-Chp7-Rewrite : TBD!!! :<br>
+  * Baseline JDK supported by this library has been moved up from 1.6 to 1.7.
   * General Lexer and Parser Improvements:
     * Tokens now track the position in the input that they started at.
     * More informative Lexer and Parser exceptions are now generated.
@@ -26,6 +26,7 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
+  * Upgraded Junit from 4.7 to 4.11.
   * Fixed Issue 72, Propositional CNF parsing issue.
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
  
