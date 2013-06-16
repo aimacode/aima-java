@@ -142,6 +142,30 @@ public class ClauseTest {
 	}
 	
 	@Test
+	public void testIsGoalClause() {
+		Clause clause = new Clause();
+		Assert.assertFalse(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_P);
+		Assert.assertFalse(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_NOT_P);
+		Assert.assertTrue(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_P, LITERAL_Q);
+		Assert.assertFalse(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_P, LITERAL_NOT_Q);
+		Assert.assertFalse(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_P, LITERAL_NOT_P, LITERAL_NOT_Q);
+		Assert.assertFalse(clause.isGoalClause());
+		
+		clause = new Clause(LITERAL_NOT_P, LITERAL_NOT_Q);
+		Assert.assertTrue(clause.isGoalClause());
+	}
+	
+	@Test
 	public void testIsTautology() {
 		Clause clause = new Clause();
 		Assert.assertFalse(clause.isTautology());

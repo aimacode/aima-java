@@ -136,13 +136,22 @@ public class Clause {
 	}
 
 	/**
-	 * Determine if a horn clause. A horn clause is a disjunction of literals of
-	 * which at most one is positive.
+	 * Determine if a Horn clause. A horn clause is a disjunction of literals of
+	 * which <i>at most one is positive</i>.
 	 * 
-	 * @return
+	 * @return true if a Horn clause, false otherwise.
 	 */
 	public boolean isHornClause() {
 		return !isEmpty() && cachedPositiveSymbols.size() <= 1;
+	}
+
+	/**
+	 * Clauses with no positive literals are called <b>goal clauses</b>.
+	 * 
+	 * @return true if a Goal clause, false otherwise.
+	 */
+	public boolean isGoalClause() {
+		return !isEmpty() && cachedPositiveSymbols.size() == 0;
 	}
 
 	/**
