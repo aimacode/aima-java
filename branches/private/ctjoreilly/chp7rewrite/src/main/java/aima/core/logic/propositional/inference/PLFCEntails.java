@@ -1,7 +1,17 @@
 package aima.core.logic.propositional.inference;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.util.datastructure.FIFOQueue;
+import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 258.<br>
@@ -13,7 +23,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  *   inputs: KB, the knowledge base, a set of propositional definite clauses
  *           q, the query, a proposition symbol
  *   count &larr; a table, where count[c] is the number of symbols in c's premise
- *   inferred &larr; a table, where inferred[s] is initally false for all symbols
+ *   inferred &larr; a table, where inferred[s] is initially false for all symbols
  *   agenda &larr; a queue of symbols, initially symbols known to be true in KB
  *   
  *   while agenda is not empty do
@@ -56,8 +66,133 @@ public class PLFCEntails {
 	 * @param q
 	 *            q, the query, a proposition symbol
 	 * @return true if KB |= q, false otherwise.
+	 * @throws IllegalArgumentException
+	 *             if KB contains any non-definite clauses.
 	 */
 	public boolean plfcEntails(KnowledgeBase kb, PropositionSymbol q) {
-		throw new UnsupportedOperationException("TODO");
+		// count <- a table, where count[c] is the number of symbols in c's
+		// premise
+		Map<Clause, Integer> count = initializeCount(kb);
+		// inferred <- a table, where inferred[s] is initially false for all
+		// symbols
+		Map<PropositionSymbol, Boolean> inferred = initializeInferred(kb);
+		// agenda <- a queue of symbols, initially symbols known to be true in
+		// KB
+		Queue<PropositionSymbol> agenda = initializeAgenda(count);
+		// Note: an index for p to the clauses where p appears in the premise
+		Map<PropositionSymbol, Set<Clause>> pToClausesWithPInPremise = initializeIndex(
+				count, inferred);
+
+		// while agenda is not empty do
+		while (!agenda.isEmpty()) {
+			// p <- Pop(agenda)
+			PropositionSymbol p = agenda.pop();
+			// if p = q then return true
+			if (p.equals(q)) {
+				return true;
+			}
+			// if inferred[p] = false then
+			if (inferred.get(p) == Boolean.FALSE) {
+				// inferred[p] <- true
+				inferred.put(p, true);
+				// for each clause c in KB where p is in c.PREMISE do
+				for (Clause c : pToClausesWithPInPremise.get(p)) {
+					// decrement count[c]
+					decrement(count, c);
+					// if count[c] = 0 then add c.CONCLUSION to agenda
+					if (count.get(c) == 0) {
+						agenda.add(conclusion(c));
+					}
+				}
+			}
+		}
+
+		// return false
+		return false;
+	}
+
+	//
+	// SUPPORTING CODE
+	//
+
+	//
+	// PRIVATE
+	//
+	private Map<Clause, Integer> initializeCount(KnowledgeBase kb) {
+		// count <- a table, where count[c] is the number of symbols in c's
+		// premise
+		Map<Clause, Integer> count = new HashMap<Clause, Integer>();
+
+		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(
+				kb.asSentence()).getClauses();
+		for (Clause c : clauses) {
+			if (!c.isDefiniteClause()) {
+				throw new IllegalArgumentException(
+						"Knowledge Base contains non-definite clauses:" + c);
+			}
+			// Note: # of negative literals is equivalent to the number of
+			// symbols in c's premise
+			count.put(c, c.getNumberNegativeLiterals());
+		}
+
+		return count;
+	}
+
+	private Map<PropositionSymbol, Boolean> initializeInferred(KnowledgeBase kb) {
+		// inferred <- a table, where inferred[s] is initially false for all
+		// symbols
+		Map<PropositionSymbol, Boolean> inferred = new HashMap<PropositionSymbol, Boolean>();
+		for (PropositionSymbol p : SymbolCollector.getSymbolsFrom(kb
+				.asSentence())) {
+			inferred.put(p, false);
+		}
+		return inferred;
+	}
+
+	// Note: at the point of calling this routine, count will contain all the
+	// clauses in KB.
+	private Queue<PropositionSymbol> initializeAgenda(Map<Clause, Integer> count) {
+		// agenda <- a queue of symbols, initially symbols known to be true in
+		// KB
+		Queue<PropositionSymbol> agenda = new FIFOQueue<PropositionSymbol>();
+		for (Clause c : count.keySet()) {
+			// No premise just a conclusion, then we know its true
+			if (c.getNumberNegativeLiterals() == 0) {
+				agenda.add(conclusion(c));
+			}
+		}
+		return agenda;
+	}
+
+	// Note: at the point of calling this routine, count will contain all the
+	// clauses in KB while inferred will contain all the proposition symbols.
+	private Map<PropositionSymbol, Set<Clause>> initializeIndex(
+			Map<Clause, Integer> count, Map<PropositionSymbol, Boolean> inferred) {
+		Map<PropositionSymbol, Set<Clause>> pToClausesWithPInPremise = new HashMap<PropositionSymbol, Set<Clause>>();
+		for (PropositionSymbol p : inferred.keySet()) {
+			Set<Clause> clausesWithPInPremise = new HashSet<Clause>();
+			for (Clause c : count.keySet()) {
+				// Note: The negative symbols comprise the premise
+				if (c.getNegativeSymbols().contains(p)) {
+					clausesWithPInPremise.add(c);
+				}
+			}
+			pToClausesWithPInPremise.put(p, clausesWithPInPremise);
+		}
+		return pToClausesWithPInPremise;
+	}
+
+	private void decrement(Map<Clause, Integer> count, Clause c) {
+		int currentCount = count.get(c);
+		if (currentCount > 0) {
+			count.put(c, currentCount - 1);
+		}
+	}
+
+	private PropositionSymbol conclusion(Clause c) {
+		// Note: the conclusion is from the single positive
+		// literal in the definite clause (which we are
+		// restricted to).
+		return c.getPositiveSymbols().iterator().next();
 	}
 }
