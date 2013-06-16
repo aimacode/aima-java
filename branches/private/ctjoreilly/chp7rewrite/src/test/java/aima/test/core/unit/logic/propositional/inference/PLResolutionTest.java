@@ -93,8 +93,12 @@ public class PLResolutionTest {
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 
-		Assert.assertEquals(2, resolvents.size());
-		Assert.assertEquals(2, SetOps.intersection(expected, resolvents).size());
+		int numberExpectedResolvents = 2;
+		if (resolution.isDiscardTautologies()) {
+			numberExpectedResolvents = 0; // due to being tautologies
+		}
+		Assert.assertEquals(numberExpectedResolvents, resolvents.size());
+		Assert.assertEquals(numberExpectedResolvents, SetOps.intersection(expected, resolvents).size());
 	}
 
 	@Test

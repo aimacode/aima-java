@@ -40,10 +40,19 @@ import aima.core.util.SetOps;
  * 
  * Figure 7.12 A simple resolution algorithm for propositional logic. The
  * function PL-RESOLVE returns the set of all possible clauses obtained by
- * resolving its two inputs.
- * 
+ * resolving its two inputs.<br>
+ * <br>
  * Note: Optional optimization added to implementation whereby tautological
- * clauses can be removed during processing of the algorithm.
+ * clauses can be removed during processing of the algorithm - see pg. 254 of
+ * AIMA3e:<br>
+ * <blockquote> Inspection of Figure 7.13 reveals that many resolution steps are
+ * pointless. For example, the clause B<sub>1,1</sub> &or; &not;B<sub>1,1</sub>
+ * &or; P<sub>1,2</sub> is equivalent to <i>True</i> &or; P<sub>1,2</sub> which
+ * is equivalent to <i>True</i>. Deducing that <i>True</i> is true is not very
+ * helpful. Therefore, any clauses in which two complementary literals appear
+ * can be discarded. </blockquote>
+ * 
+ * @see Clause#isTautology()
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
@@ -52,7 +61,7 @@ import aima.core.util.SetOps;
 public class PLResolution {
 	/**
 	 * PL-RESOLUTION(KB, &alpha;)<br>
-	 * A simple resolution algorthm for propositional logic.
+	 * A simple resolution algorithm for propositional logic.
 	 * 
 	 * @param kb
 	 *            the knowledge base, a sentence in propositional logic.
@@ -61,8 +70,8 @@ public class PLResolution {
 	 * @return true if KB |= &alpha;, false otherwise.
 	 */
 	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
-		// clauses <- the set of clauses in the CNF representation of KB &
-		// ~alpha
+		// clauses <- the set of clauses in the CNF representation
+		// of KB & ~alpha
 		Set<Clause> clauses = setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
 				kb, alpha);
 		// new <- {}
@@ -77,7 +86,6 @@ public class PLResolution {
 					Clause cj = clausesAsList.get(j);
 					// resolvents <- PL-RESOLVE(C_i, C_j)
 					Set<Clause> resolvents = plResolve(ci, cj);
-					discardTautologies(resolvents);
 					// if resolvents contains the empty clause then return true
 					if (resolvents.contains(Clause.EMPTY)) {
 						return true;
@@ -95,6 +103,28 @@ public class PLResolution {
 			clauses.addAll(newClauses);
 
 		} while (true);
+	}
+
+	/**
+	 * PL-RESOLVE(C<sub>i</sub>, C<sub>j</sub>)<br>
+	 * Calculate the set of all possible clauses by resolving its two inputs.
+	 * 
+	 * @param ci
+	 *            clause 1
+	 * @param cj
+	 *            clause 2
+	 * @return the set of all possible clauses obtained by resolving its two
+	 *         inputs.
+	 */
+	public Set<Clause> plResolve(Clause ci, Clause cj) {
+		Set<Clause> resolvents = new LinkedHashSet<Clause>();
+
+		// The complementary positive literals from Ci
+		resolvePositiveWithNegative(ci, cj, resolvents);
+		// The complementary negative literals from Ci
+		resolvePositiveWithNegative(cj, ci, resolvents);
+
+		return resolvents;
 	}
 
 	//
@@ -115,6 +145,8 @@ public class PLResolution {
 	 * Constructor.
 	 * 
 	 * @param discardTautologies
+	 *            true if the algorithm is to discard tautological clauses
+	 *            during processing, false otherwise.
 	 */
 	public PLResolution(boolean discardTautologies) {
 		setDiscardTautologies(discardTautologies);
@@ -130,7 +162,7 @@ public class PLResolution {
 
 	/**
 	 * Determine whether or not the algorithm should discard tautological
-	 * clauses during processing. See end of pg. 253 of AIMA3e.
+	 * clauses during processing.
 	 * 
 	 * @param discardTautologies
 	 */
@@ -138,44 +170,9 @@ public class PLResolution {
 		this.discardTautologies = discardTautologies;
 	}
 
-	/**
-	 * PL-RESOLVE(C<sub>i</sub>, C<sub>j</sub>)<br>
-	 * Calculate the set of all possible clauses by resolving its two inputs.
-	 * 
-	 * @param ci
-	 *            clause 1
-	 * @param cj
-	 *            clause 2
-	 * @return the set of all possible clauses obtained by resolving its two
-	 *         inputs.
-	 */
-	public Set<Clause> plResolve(Clause ci, Clause cj) {
-		Set<Clause> resolvents = new LinkedHashSet<Clause>();
-
-		resolvePositiveWithNegative(ci, cj, resolvents);
-		resolvePositiveWithNegative(cj, ci, resolvents);
-
-		return resolvents;
-	}
-
 	//
 	// PRIVATE
 	//
-
-	// Note: This is an optimization, refer to pg. 254 of AIMA3e
-	//
-	private void discardTautologies(Set<Clause> clauses) {
-		if (isDiscardTautologies()) {
-			Set<Clause> toDiscard = new HashSet<Clause>();
-			for (Clause c : clauses) {
-				if (c.isTautology()) {
-					toDiscard.add(c);
-				}
-			}
-			clauses.removeAll(toDiscard);
-		}
-	}
-
 	private Set<Clause> setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
 			KnowledgeBase kb, Sentence alpha) {
 
@@ -194,23 +191,47 @@ public class PLResolution {
 
 	private void resolvePositiveWithNegative(Clause c1, Clause c2,
 			Set<Clause> resolvents) {
+		// Calculate the complementary positive literals from c1 with
+		// the negative literals from c2
 		Set<PropositionSymbol> complementary = SetOps.intersection(
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
+		// Construct a resolvent clause for each complement found
 		for (PropositionSymbol complement : complementary) {
 			List<Literal> resolventLiterals = new ArrayList<Literal>();
+			// Retrieve the literals from c1 that are not the complement
 			for (Literal c1l : c1.getLiterals()) {
 				if (c1l.isNegativeLiteral()
 						|| !c1l.getAtomicSentence().equals(complement)) {
 					resolventLiterals.add(c1l);
 				}
 			}
+			// Retrieve the literals from c2 that are not the complement
 			for (Literal c2l : c2.getLiterals()) {
 				if (c2l.isPositiveLiteral()
 						|| !c2l.getAtomicSentence().equals(complement)) {
 					resolventLiterals.add(c2l);
 				}
 			}
-			resolvents.add(new Clause(resolventLiterals));
+			// Construct the resolvent clause
+			Clause resolvent = new Clause(resolventLiterals);
+			// Discard tautological clauses if this optimization is turned on.
+			if (!(isDiscardTautologies() && resolvent.isTautology())) {
+				resolvents.add(resolvent);
+			}
+		}
+	}
+
+	// Utility routine for removing the tautological clauses from a set (in
+	// place).
+	private void discardTautologies(Set<Clause> clauses) {
+		if (isDiscardTautologies()) {
+			Set<Clause> toDiscard = new HashSet<Clause>();
+			for (Clause c : clauses) {
+				if (c.isTautology()) {
+					toDiscard.add(c);
+				}
+			}
+			clauses.removeAll(toDiscard);
 		}
 	}
 }
