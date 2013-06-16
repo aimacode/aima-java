@@ -112,7 +112,11 @@ public class Clause {
 
 	/**
 	 * Determine if a definite clause. A definite clause is a disjunction of
-	 * literals of which exactly 1 is positive.
+	 * literals of which <i>exactly one is positive</i>. <q>For example, the
+	 * clause (&not;L<sub>1,1</sub> &or; &not;Breeze &or; B<sub>1,1</sub>) is a
+	 * definite clause, whereas (&not;B<sub>1,1</sub> &or; P<sub>1,2</sub> &or;
+	 * P<sub>2,1</sub>) is not.</q>
+	 * 
 	 * 
 	 * @return true if a definite clause, false otherwise.
 	 */
@@ -257,7 +261,7 @@ public class Clause {
 
 		return othClause.literals.equals(this.literals);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		if (cachedHashCode == -1) {
