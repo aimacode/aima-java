@@ -118,13 +118,13 @@ public class TTEntailsTest {
 		kb.tell("B21");
 
 		Model model = new Model();
-		model = model.extend(new PropositionSymbol("B11"), false);
-		model = model.extend(new PropositionSymbol("B21"), true);
-		model = model.extend(new PropositionSymbol("P11"), false);
-		model = model.extend(new PropositionSymbol("P12"), false);
-		model = model.extend(new PropositionSymbol("P21"), false);
-		model = model.extend(new PropositionSymbol("P22"), false);
-		model = model.extend(new PropositionSymbol("P31"), true);
+		model = model.union(new PropositionSymbol("B11"), false);
+		model = model.union(new PropositionSymbol("B21"), true);
+		model = model.union(new PropositionSymbol("P11"), false);
+		model = model.union(new PropositionSymbol("P12"), false);
+		model = model.union(new PropositionSymbol("P21"), false);
+		model = model.union(new PropositionSymbol("P22"), false);
+		model = model.union(new PropositionSymbol("P31"), true);
 
 		Sentence kbs = kb.asSentence();
 		Assert.assertEquals(true, model.isTrue(kbs));

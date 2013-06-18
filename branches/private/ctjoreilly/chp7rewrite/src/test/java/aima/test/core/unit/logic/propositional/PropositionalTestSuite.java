@@ -3,7 +3,7 @@ package aima.test.core.unit.logic.propositional;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import aima.test.core.unit.logic.propositional.inference.DPLLTest;
+import aima.test.core.unit.logic.propositional.inference.DPLLSatisfiableTest;
 import aima.test.core.unit.logic.propositional.inference.PLFCEntailsTest;
 import aima.test.core.unit.logic.propositional.inference.PLResolutionTest;
 import aima.test.core.unit.logic.propositional.inference.TTEntailsTest;
@@ -20,7 +20,7 @@ import aima.test.core.unit.logic.propositional.visitors.ConvertToCNFTest;
 import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ DPLLTest.class, KnowledgeBaseTest.class, ModelTest.class,
+@Suite.SuiteClasses({ DPLLSatisfiableTest.class, KnowledgeBaseTest.class, ModelTest.class,
 		PLFCEntailsTest.class, PLResolutionTest.class, TTEntailsTest.class,
 		ComplexSentenceTest.class, ListTest.class, PLLexerTest.class,
 		PLParserTest.class, PropositionSymbolTest.class,

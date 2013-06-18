@@ -42,7 +42,7 @@ public class ModelTest {
 	@Test
 	public void testExtendModel() {
 		String p = "P";
-		m = m.extend(new PropositionSymbol(p), true);
+		m = m.union(new PropositionSymbol(p), true);
 		Assert.assertEquals(Boolean.TRUE, m.getStatus(new PropositionSymbol("P")));
 	}
 
@@ -58,8 +58,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new PropositionSymbol(p), true);
-		m = m.extend(new PropositionSymbol(q), true);
+		m = m.union(new PropositionSymbol(p), true);
+		m = m.union(new PropositionSymbol(q), true);
 		Assert.assertEquals(true, m.isTrue(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -70,8 +70,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new PropositionSymbol(p), false);
-		m = m.extend(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbol(p), false);
+		m = m.union(new PropositionSymbol(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isFalse(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -82,8 +82,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new PropositionSymbol(p), true);
-		m = m.extend(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbol(p), true);
+		m = m.union(new PropositionSymbol(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isFalse(impliedSentence));
@@ -94,8 +94,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new PropositionSymbol(p), false);
-		m = m.extend(new PropositionSymbol(q), true);
+		m = m.union(new PropositionSymbol(p), false);
+		m = m.union(new PropositionSymbol(q), true);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -106,8 +106,8 @@ public class ModelTest {
 	public void testComplexSentence() {
 		String p = "P";
 		String q = "Q";
-		m = m.extend(new PropositionSymbol(p), true);
-		m = m.extend(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbol(p), true);
+		m = m.union(new PropositionSymbol(q), false);
 		Sentence sent = (Sentence) parser.parse("((P | Q) &  (P => Q))");
 		Assert.assertFalse(m.isTrue(sent));
 		Assert.assertTrue(m.isFalse(sent));

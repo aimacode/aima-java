@@ -92,7 +92,7 @@ public class PLFCEntails {
 				return true;
 			}
 			// if inferred[p] = false then
-			if (inferred.get(p) == Boolean.FALSE) {
+			if (inferred.get(p).equals(Boolean.FALSE)) {
 				// inferred[p] <- true
 				inferred.put(p, true);
 				// for each clause c in KB where p is in c.PREMISE do
@@ -116,9 +116,9 @@ public class PLFCEntails {
 	//
 
 	//
-	// PRIVATE
+	// PROTECTED
 	//
-	private Map<Clause, Integer> initializeCount(KnowledgeBase kb) {
+	protected Map<Clause, Integer> initializeCount(KnowledgeBase kb) {
 		// count <- a table, where count[c] is the number of symbols in c's
 		// premise
 		Map<Clause, Integer> count = new HashMap<Clause, Integer>();
@@ -138,7 +138,7 @@ public class PLFCEntails {
 		return count;
 	}
 
-	private Map<PropositionSymbol, Boolean> initializeInferred(KnowledgeBase kb) {
+	protected Map<PropositionSymbol, Boolean> initializeInferred(KnowledgeBase kb) {
 		// inferred <- a table, where inferred[s] is initially false for all
 		// symbols
 		Map<PropositionSymbol, Boolean> inferred = new HashMap<PropositionSymbol, Boolean>();
@@ -151,7 +151,7 @@ public class PLFCEntails {
 
 	// Note: at the point of calling this routine, count will contain all the
 	// clauses in KB.
-	private Queue<PropositionSymbol> initializeAgenda(Map<Clause, Integer> count) {
+	protected Queue<PropositionSymbol> initializeAgenda(Map<Clause, Integer> count) {
 		// agenda <- a queue of symbols, initially symbols known to be true in
 		// KB
 		Queue<PropositionSymbol> agenda = new FIFOQueue<PropositionSymbol>();
@@ -166,7 +166,7 @@ public class PLFCEntails {
 
 	// Note: at the point of calling this routine, count will contain all the
 	// clauses in KB while inferred will contain all the proposition symbols.
-	private Map<PropositionSymbol, Set<Clause>> initializeIndex(
+	protected Map<PropositionSymbol, Set<Clause>> initializeIndex(
 			Map<Clause, Integer> count, Map<PropositionSymbol, Boolean> inferred) {
 		Map<PropositionSymbol, Set<Clause>> pToClausesWithPInPremise = new HashMap<PropositionSymbol, Set<Clause>>();
 		for (PropositionSymbol p : inferred.keySet()) {
@@ -182,14 +182,15 @@ public class PLFCEntails {
 		return pToClausesWithPInPremise;
 	}
 
-	private void decrement(Map<Clause, Integer> count, Clause c) {
+	protected void decrement(Map<Clause, Integer> count, Clause c) {
 		int currentCount = count.get(c);
-		if (currentCount > 0) {
-			count.put(c, currentCount - 1);
-		}
+		// Note: a definite clause can just be a fact (i.e. 1 positive literal)
+		// However, we only decrement those where the symbol is in the premise
+		// so we don't need to worry about going < 0.
+		count.put(c, currentCount - 1);
 	}
 
-	private PropositionSymbol conclusion(Clause c) {
+	protected PropositionSymbol conclusion(Clause c) {
 		// Note: the conclusion is from the single positive
 		// literal in the definite clause (which we are
 		// restricted to).

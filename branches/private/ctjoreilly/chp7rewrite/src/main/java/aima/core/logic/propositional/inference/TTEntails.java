@@ -104,8 +104,8 @@ public class TTEntails {
 		List<PropositionSymbol> rest = Util.rest(symbols);
 		// return (TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = true })
 		// and
-		// TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = false }))
-		return ttCheckAll(kb, alpha, rest, model.extend(p, true))
-				&& ttCheckAll(kb, alpha, rest, model.extend(p, false));
+		// TT-CHECK-ALL(KB, &alpha;, rest, model U { P = false }))
+		return ttCheckAll(kb, alpha, rest, model.union(p, true))
+				&& ttCheckAll(kb, alpha, rest, model.union(p, false));
 	}
 }

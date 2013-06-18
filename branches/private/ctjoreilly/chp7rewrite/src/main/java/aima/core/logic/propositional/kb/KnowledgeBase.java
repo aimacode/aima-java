@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.logic.propositional.PLLogicUtils;
-import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.propositional.inference.TTEntails;
-import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 
 /**
  * @author Ravi Mohan
@@ -83,7 +81,6 @@ public class KnowledgeBase {
 	 */
 	public boolean askWithDpll(String queryString) {
 		Sentence query = null;
-		ConjunctionOfClauses cnfForm = null;
 		try {
 			// just a check to see that the query is well formed
 			query = (Sentence) parser.parse(queryString);
@@ -99,15 +96,8 @@ public class KnowledgeBase {
 		} else {
 			kbPlusQuery = query;
 		}
-		try {
-			cnfForm = ConvertToConjunctionOfClauses.convert(kbPlusQuery);
-			// System.out.println(cnfForm.toString());
-		} catch (Exception e) {
-			System.out.println("error converting kb +  query to CNF"
-					+ e.getMessage());
-
-		}
-		return !new DPLL().dpllSatisfiable(cnfForm);
+		
+		return !new DPLLSatisfiable().dpllSatisfiable(kbPlusQuery);
 	}
 
 	/**

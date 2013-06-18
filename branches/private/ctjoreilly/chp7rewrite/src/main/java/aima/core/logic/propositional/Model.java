@@ -35,7 +35,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		return Boolean.FALSE.equals(h.get(symbol));
 	}
 
-	public Model extend(PropositionSymbol symbol, boolean b) {
+	public Model union(PropositionSymbol symbol, boolean b) {
 		Model m = new Model();
 		m.h.putAll(this.h);
 		m.h.put(symbol, b);
@@ -56,10 +56,10 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	public Model flip(PropositionSymbol s) {
 		if (isTrue(s)) {
-			return extend(s, false);
+			return union(s, false);
 		}
 		if (isFalse(s)) {
-			return extend(s, true);
+			return union(s, true);
 		}
 		return this;
 	}

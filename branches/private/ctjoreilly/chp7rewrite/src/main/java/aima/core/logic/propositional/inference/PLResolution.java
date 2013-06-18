@@ -90,7 +90,7 @@ public class PLResolution {
 					if (resolvents.contains(Clause.EMPTY)) {
 						return true;
 					}
-					// new <- new union resolvents
+					// new <- new U resolvents
 					newClauses.addAll(resolvents);
 				}
 			}
@@ -99,7 +99,7 @@ public class PLResolution {
 				return false;
 			}
 
-			// clauses <- clauses union new
+			// clauses <- clauses U new
 			clauses.addAll(newClauses);
 
 		} while (true);
@@ -119,9 +119,9 @@ public class PLResolution {
 	public Set<Clause> plResolve(Clause ci, Clause cj) {
 		Set<Clause> resolvents = new LinkedHashSet<Clause>();
 
-		// The complementary positive literals from Ci
+		// The complementary positive literals from C_i
 		resolvePositiveWithNegative(ci, cj, resolvents);
-		// The complementary negative literals from Ci
+		// The complementary negative literals from C_i
 		resolvePositiveWithNegative(cj, ci, resolvents);
 
 		return resolvents;
@@ -171,9 +171,9 @@ public class PLResolution {
 	}
 
 	//
-	// PRIVATE
+	// PROTECTED
 	//
-	private Set<Clause> setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
+	protected Set<Clause> setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
 			KnowledgeBase kb, Sentence alpha) {
 
 		// KB & ~alpha;
@@ -189,7 +189,7 @@ public class PLResolution {
 		return clauses;
 	}
 
-	private void resolvePositiveWithNegative(Clause c1, Clause c2,
+	protected void resolvePositiveWithNegative(Clause c1, Clause c2,
 			Set<Clause> resolvents) {
 		// Calculate the complementary positive literals from c1 with
 		// the negative literals from c2
@@ -223,7 +223,7 @@ public class PLResolution {
 
 	// Utility routine for removing the tautological clauses from a set (in
 	// place).
-	private void discardTautologies(Set<Clause> clauses) {
+	protected void discardTautologies(Set<Clause> clauses) {
 		if (isDiscardTautologies()) {
 			Set<Clause> toDiscard = new HashSet<Clause>();
 			for (Clause c : clauses) {
