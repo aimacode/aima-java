@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.logic.propositional.PLLogicUtils;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Connective;
@@ -69,35 +68,6 @@ public class KnowledgeBase {
 	 */
 	public Sentence asSentence() {
 		return PLLogicUtils.chainWith(Connective.AND, sentences);
-	}
-
-	/**
-	 * Returns the answer to the specified question using the DPLL algorithm.
-	 * 
-	 * @param queryString
-	 *            a question to ASK the knowledge base
-	 * 
-	 * @return the answer to the specified question using the DPLL algorithm.
-	 */
-	public boolean askWithDpll(String queryString) {
-		Sentence query = null;
-		try {
-			// just a check to see that the query is well formed
-			query = (Sentence) parser.parse(queryString);
-		} catch (Exception e) {
-			System.out.println("error parsing query" + e.getMessage());
-		}
-
-		Sentence kbSentence = asSentence();
-		Sentence kbPlusQuery = null;
-		if (kbSentence != null) {
-			kbPlusQuery = (Sentence) parser.parse(" ( " + kbSentence.toString()
-					+ " "+Connective.AND+" ("+Connective.NOT+" " + queryString + " ))");
-		} else {
-			kbPlusQuery = query;
-		}
-		
-		return !new DPLLSatisfiable().dpllSatisfiable(kbPlusQuery);
 	}
 
 	/**

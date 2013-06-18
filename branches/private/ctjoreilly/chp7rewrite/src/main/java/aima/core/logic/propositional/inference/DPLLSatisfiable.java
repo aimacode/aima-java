@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.logic.propositional.Model;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
@@ -109,6 +112,13 @@ public class DPLLSatisfiable {
 	//
 	// SUPPORTING CODE
 	//
+	
+	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
+		Sentence isContradiction = new ComplexSentence(Connective.AND,
+				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
+		
+		return !dpllSatisfiable(isContradiction);
+	}
 
 	//
 	// PROTECTED 
