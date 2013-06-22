@@ -65,7 +65,7 @@ public class DPLLSatisfiableTest {
 
 	@Test
 	public void testDPLLSucceedsWithAandNotA() {
-		Sentence sentence = (Sentence) parser.parse("A & ~A");
+		Sentence sentence = parser.parse("A & ~A");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence);
 		Assert.assertEquals(false, satisfiable);
 	}

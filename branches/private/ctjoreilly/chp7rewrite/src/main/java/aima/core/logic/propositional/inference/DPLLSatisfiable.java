@@ -14,6 +14,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Util;
+import aima.core.util.datastructure.Pair;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 261.<br>
@@ -69,8 +70,8 @@ public class DPLLSatisfiable {
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(s)
 				.getClauses();
 		// symbols <- a list of the proposition symbols in s
-		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
-				SymbolCollector.getSymbolsFrom(s));
+		List<PropositionSymbol> symbols = getPropositionSymbolsInSentence(s);
+
 		// return DPLL(clauses, symbols, {})
 		return dpll(clauses, symbols, new Model());
 	}
@@ -90,16 +91,24 @@ public class DPLLSatisfiable {
 	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// if every clause in clauses is true in model then return true
+		if (everyClauseTrue(clauses, model)) {
+			return true;
+		}
 		// if some clause in clauses is false in model then return false
-// TODO		
+		if (someClauseFalse(clauses, model)) {
+			return false;
+		}
+
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
-		// if P is non-null then 
+		// if P is non-null then
 		// .. return DPLL(clauses, symbols - P, model U {P = value})
-// TODO		
+// TODO
+
 		// P, value <- FIND-UNIT-CLAUSE(clauses, model)
-		// if P is non-null then 
+		// if P is non-null then
 		// .. return DPLL(clauses, symbols - P, model U {P = value})
-// TODO		
+// TODO
+
 		// P <- FIRST(symbols); rest <- REST(symbols)
 		PropositionSymbol p = Util.first(symbols);
 		List<PropositionSymbol> rest = Util.rest(symbols);
@@ -112,16 +121,112 @@ public class DPLLSatisfiable {
 	//
 	// SUPPORTING CODE
 	//
-	
+
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		Sentence isContradiction = new ComplexSentence(Connective.AND,
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
-		
+
 		return !dpllSatisfiable(isContradiction);
 	}
 
 	//
-	// PROTECTED 
+	// PROTECTED
 	//
+	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
+		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
+				SymbolCollector.getSymbolsFrom(s));
+
+		return result;
+	}
 	
+	protected Pair<PropositionSymbol, Boolean> findPureSymbol(
+			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
+// TODO		
+		return null;
+	}
+
+	protected Pair<PropositionSymbol, Boolean> findUnitClause(
+			Set<Clause> clauses, Model model) {
+// TODO
+		return null;
+	}
+
+	protected boolean everyClauseTrue(Set<Clause> clauses, Model model) {
+		Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
+		for (Clause c : clauses) {
+			if (c.isFalse()) {
+				return false;
+			}
+			if (c.isTautology()) {
+				continue;
+			}
+			boolean isTrue = false;
+			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+				if (assignedSymbols.contains(positive)) {
+					if (model.isTrue(positive)) {
+						isTrue = true;
+						break;
+					}
+				}
+			}
+			if (isTrue) {
+				continue;
+			}
+			for (PropositionSymbol negative : c.getNegativeSymbols()) {
+				if (assignedSymbols.contains(negative)) {
+					if (model.isFalse(negative)) {
+						isTrue = true;
+						break;
+					}
+				}
+			}
+			
+			if (!isTrue) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected boolean someClauseFalse(Set<Clause> clauses, Model model) {
+		Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
+		for (Clause c : clauses) {
+			if (c.isFalse()) {
+				return true;
+			}
+			if (c.isTautology()) {
+				continue;
+			}
+			boolean isFalse = true;
+			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+				if (assignedSymbols.contains(positive)) {
+					if (model.isTrue(positive)) {
+						isFalse = false;
+						break;
+					}
+				} else {
+					isFalse = false;
+					break;
+				}
+			}
+			if (isFalse) {
+				for (PropositionSymbol negative : c.getNegativeSymbols()) {
+					if (assignedSymbols.contains(negative)) {
+						if (model.isFalse(negative)) {
+							isFalse = false;
+							break;
+						}
+					} else {
+						isFalse = false;
+						break;
+					}
+				}
+
+				if (isFalse) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

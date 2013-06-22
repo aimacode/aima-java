@@ -42,16 +42,16 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		return m;
 	}
 
-	public boolean isTrue(Sentence clause) {
-		return Boolean.TRUE.equals(clause.accept(this, null));
+	public boolean isTrue(Sentence s) {
+		return Boolean.TRUE.equals(s.accept(this, null));
 	}
 
-	public boolean isFalse(Sentence clause) {
-		return Boolean.FALSE.equals(clause.accept(this, null));
+	public boolean isFalse(Sentence s) {
+		return Boolean.FALSE.equals(s.accept(this, null));
 	}
 
-	public boolean isUnknown(Sentence clause) {
-		return null == clause.accept(this, null);
+	public boolean isUnknown(Sentence s) {
+		return null == s.accept(this, null);
 	}
 
 	public Model flip(PropositionSymbol s) {
