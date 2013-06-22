@@ -100,20 +100,29 @@ public class DPLLSatisfiable {
 		}
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
+		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
+				clauses, model);
 		// if P is non-null then
-		// .. return DPLL(clauses, symbols - P, model U {P = value})
-// TODO
+		if (pAndValue != null) {
+			// return DPLL(clauses, symbols - P, model U {P = value})
+			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
+					model.union(pAndValue.getFirst(), pAndValue.getSecond()));
+		}
 
 		// P, value <- FIND-UNIT-CLAUSE(clauses, model)
+		pAndValue = findUnitClause(clauses, model);
 		// if P is non-null then
-		// .. return DPLL(clauses, symbols - P, model U {P = value})
-// TODO
+		if (pAndValue != null) {
+			// return DPLL(clauses, symbols - P, model U {P = value})
+			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
+					model.union(pAndValue.getFirst(), pAndValue.getSecond()));
+		}
 
 		// P <- FIRST(symbols); rest <- REST(symbols)
 		PropositionSymbol p = Util.first(symbols);
 		List<PropositionSymbol> rest = Util.rest(symbols);
-		// return DPLL(clauses, rest, model &cup; {P = true}) or
-		// ...... DPLL(clauses, rest, model &cup; {P = false})
+		// return DPLL(clauses, rest, model U {P = true}) or
+		// ...... DPLL(clauses, rest, model U {P = false})
 		return dpll(clauses, rest, model.union(p, true))
 				|| dpll(clauses, rest, model.union(p, false));
 	}
@@ -122,7 +131,18 @@ public class DPLLSatisfiable {
 	// SUPPORTING CODE
 	//
 
+	/**
+	 * Determine if KB |= &alpha;, i.e. alpha is entailed by KB.
+	 * 
+	 * @param kb
+	 *            a Knowledge Base in propositional logic.
+	 * @param alpha
+	 *            a propositional sentence.
+	 * @return true, if &alpha; is entailed by KB, false otherwise.
+	 */
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
+		// AIMA3e pg. 260: kb |= alpha, can be done by testing
+		// unsatisfiability of kb & ~alpha.
 		Sentence isContradiction = new ComplexSentence(Connective.AND,
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 
@@ -130,58 +150,94 @@ public class DPLLSatisfiable {
 	}
 
 	//
-	// PROTECTED
+	// PROTECTED:
+	// <b>NOTE:</b> You can extend this class and override these naive
+	// implementations of the corresponding DPLL heuristics in order to help
+	// optimize performance of the algorithm as described on p.g.s 261-262 of
+	// AIMA3e (i.e. 1. component analysis, 2. variable and value ordering,
+	// 3. intelligent backtracking, 4. random restarts, and 5. clever indexing).
 	//
+
+	// Note: Override this method if you wish to change the initial variable
+	// ordering.
 	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
 		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(s));
 
 		return result;
 	}
-	
+
+	/**
+	 * AIMA3e p.g. 260:<br>
+	 * <quote><i>Pure symbol heuristic:</i> A <b>pure symbol</b> is a symbol
+	 * that always appears with the same "sign" in all clauses. For example, in
+	 * the three clauses (A | ~B), (~B | ~C), and (C | A), the symbol A is pure
+	 * because only the positive literal appears, B is pure because only the
+	 * negative literal appears, and C is impure. It is easy to see that if a
+	 * sentence has a model, then it has a model with the pure symbols assigned
+	 * so as to make their literals true, because doing so can never make a
+	 * clause false. Note that, in determining the purity of a symbol, the
+	 * algorithm can ignore clauses that are already known to be true in the
+	 * model constructed so far. For example, if the model contains B=false,
+	 * then the clause (~B | ~C) is already true, and in the remaining clauses C
+	 * appears only as a positive literal; therefore C becomes pure.</quote>
+	 * 
+	 * @param symbols
+	 *            a list of currently unassigned symbols in the model (to be
+	 *            checked if pure or not).
+	 * @param clauses
+	 * @param model
+	 * @return a proposition symbol and value pair identifying a pure symbol and
+	 *         a value to be assigned to it, otherwise null if no pure symbol
+	 *         can be identified.
+	 */
 	protected Pair<PropositionSymbol, Boolean> findPureSymbol(
 			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
+		Pair<PropositionSymbol, Boolean> result = null;
+		
 // TODO		
-		return null;
+		
+		return result;
 	}
 
+	/**
+	 * AIMA3e p.g. 260:<br>
+	 * <quote<i>Unit clause heuristic:</i> A <b>unit clause</b> was defined
+	 * earlier as a clause with just one literal. In the context of DPLL, it
+	 * also means clauses in which all literals but one are already assigned
+	 * false by the model. For example, if the model contains B = true, then (~B
+	 * | ~C) simplifies to ~C, which is a unit clause. Obviously, for this
+	 * clause to be true, C must be set to false. The unit clause heuristic
+	 * assigns all such symbols before branching on the remainder. One important
+	 * consequence of the heuristic is that any attempt to prove (by refutation)
+	 * a literal that is already in the knowledge base will succeed immediately.
+	 * Notice also that assigning one unit clause can create another unit clause
+	 * - for example, when C is set to false, (C | A) becomes a unit clause,
+	 * causing true to be assigned to A. This "cascade" of forced assignments is
+	 * called <b>unit propagation</b>. It resembles the process of forward
+	 * chaining with definite clauses, and indeed, if the CNF expression
+	 * contains only definite clauses then DPLL essentially replicates forward
+	 * chaining.</quote>
+	 * 
+	 * @param clauses
+	 * @param model
+	 * @return a proposition symbol and value pair identifying a unit clause and
+	 *         a value to be assigned to it, otherwise null if no unit clause
+	 *         can be identified.
+	 */
 	protected Pair<PropositionSymbol, Boolean> findUnitClause(
 			Set<Clause> clauses, Model model) {
+		Pair<PropositionSymbol, Boolean> result = null;
+		
 // TODO
-		return null;
+				
+		return result;
 	}
 
 	protected boolean everyClauseTrue(Set<Clause> clauses, Model model) {
-		Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
 		for (Clause c : clauses) {
-			if (c.isFalse()) {
-				return false;
-			}
-			if (c.isTautology()) {
-				continue;
-			}
-			boolean isTrue = false;
-			for (PropositionSymbol positive : c.getPositiveSymbols()) {
-				if (assignedSymbols.contains(positive)) {
-					if (model.isTrue(positive)) {
-						isTrue = true;
-						break;
-					}
-				}
-			}
-			if (isTrue) {
-				continue;
-			}
-			for (PropositionSymbol negative : c.getNegativeSymbols()) {
-				if (assignedSymbols.contains(negative)) {
-					if (model.isFalse(negative)) {
-						isTrue = true;
-						break;
-					}
-				}
-			}
-			
-			if (!isTrue) {
+			// All must to be true
+			if (!Boolean.TRUE.equals(determineValue(c, model))) {
 				return false;
 			}
 		}
@@ -189,44 +245,86 @@ public class DPLLSatisfiable {
 	}
 
 	protected boolean someClauseFalse(Set<Clause> clauses, Model model) {
-		Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
 		for (Clause c : clauses) {
-			if (c.isFalse()) {
+			// Only 1 needs to be false
+			if (Boolean.FALSE.equals(determineValue(c, model))) {
 				return true;
-			}
-			if (c.isTautology()) {
-				continue;
-			}
-			boolean isFalse = true;
-			for (PropositionSymbol positive : c.getPositiveSymbols()) {
-				if (assignedSymbols.contains(positive)) {
-					if (model.isTrue(positive)) {
-						isFalse = false;
-						break;
-					}
-				} else {
-					isFalse = false;
-					break;
-				}
-			}
-			if (isFalse) {
-				for (PropositionSymbol negative : c.getNegativeSymbols()) {
-					if (assignedSymbols.contains(negative)) {
-						if (model.isFalse(negative)) {
-							isFalse = false;
-							break;
-						}
-					} else {
-						isFalse = false;
-						break;
-					}
-				}
-
-				if (isFalse) {
-					return true;
-				}
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Determine based on the current assignments within a model, whether a
+	 * clause is known to be true, false, or unknown.
+	 * 
+	 * @param c
+	 * @param model
+	 * @return true, if the clause is known to be true under the model's
+	 *         assignments. false, if the clause is known to be false under the
+	 *         model's assignments. null, if it is unknown whether the clause is
+	 *         true or false under the model's current assignments.
+	 */
+	protected Boolean determineValue(Clause c, Model model) {
+		Boolean result = null; // i.e. unknown
+
+		if (c.isTautology()) { // Test independent of the model's assignments.
+			result = Boolean.TRUE;
+		} else if (c.isFalse()) { // Test independent of the model's
+									// assignments.
+			result = Boolean.FALSE;
+		} else {
+			Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
+			boolean unassignedSymbols = false;
+			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+				if (assignedSymbols.contains(positive)) {
+					if (model.isTrue(positive)) {
+						result = Boolean.TRUE;
+						break;
+					}
+				} else {
+					unassignedSymbols = true;
+				}
+			}
+			// If truth not determined, continue checking negative symbols
+			if (result == null) {
+				for (PropositionSymbol negative : c.getNegativeSymbols()) {
+					if (assignedSymbols.contains(negative)) {
+						if (model.isFalse(negative)) {
+							result = Boolean.TRUE;
+							break;
+						}
+					} else {
+						unassignedSymbols = true;
+					}
+				}
+
+				if (result == null) {
+					// If truth not determined and there are no
+					// unassigned symbols then we can determine falsehood
+					// (i.e. all of its literals are assigned false under the
+					// model)
+					if (!unassignedSymbols) {
+						result = Boolean.FALSE;
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	// symbols - P
+	protected List<PropositionSymbol> minus(List<PropositionSymbol> symbols,
+			PropositionSymbol p) {
+		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
+				symbols.size());
+		for (PropositionSymbol s : symbols) {
+			// symbols - P
+			if (!p.equals(s)) {
+				result.add(s);
+			}
+		}
+		return result;
 	}
 }
