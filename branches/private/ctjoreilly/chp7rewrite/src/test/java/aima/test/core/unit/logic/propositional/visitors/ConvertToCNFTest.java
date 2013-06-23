@@ -145,4 +145,11 @@ public class ConvertToCNFTest {
 		Sentence transformed = ConvertToCNF.convert(issue78Eg);
 		Assert.assertEquals("(~J1007 | ~J1008) & (~J1007 | ~J1009) & (~J1007 | ~J1010) & (~J1007 | ~J1011) & (~J1007 | ~J1012) & (~J1007 | ~J1013) & (~J1007 | ~J1014) & (~J1007 | ~J1015)", transformed.toString());
 	}
+	
+	@Test
+	public void testDistributingOrCorrectly() {
+		Sentence s = parser.parse("A & B & C & D & (E | (F & G)) & H & I & J & K");
+		Sentence transformed = ConvertToCNF.convert(s);
+		Assert.assertEquals("A & B & C & D & (E | F) & (E | G) & H & I & J & K", transformed.toString());
+	}
 }

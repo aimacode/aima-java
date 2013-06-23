@@ -12,6 +12,7 @@ CURRENTLY TODO
   - WumpusKnowledgeBase
   - WumpusFunctionFactoryTest
 . Ensure new propositional logic:
+  - CNF conversion logic is correctly distributing or over and (i.e. not over doing it).
   - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 
