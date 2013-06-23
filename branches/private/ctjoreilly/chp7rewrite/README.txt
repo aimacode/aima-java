@@ -29,6 +29,7 @@ CURRENTLY TODO
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book. 
   * Fixed Issue 72, Propositional CNF parsing issue.
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
+  * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
  
 = Details =
 

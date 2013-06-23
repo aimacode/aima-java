@@ -5,18 +5,23 @@ import org.junit.Test;
 import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.inference.WalkSAT;
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.parsing.PLParser;
+import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 
 /**
  * @author Ravi Mohan
  * 
  */
 public class WalkSATExperiment {
+	
+	private PLParser parser = new PLParser();
 
 	// NOT REALLY A JUNIT TESTCASE BUT written as one to allow easy execution
 	@Test
 	public void testWalkSat() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor("A & B", 1000, 0.5);
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(parser.parse("A & B"))
+				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");
 		} else {
@@ -27,7 +32,8 @@ public class WalkSATExperiment {
 	@Test
 	public void testWalkSat2() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor("A & ~B", 1000, 0.5);
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(parser.parse("A & ~B"))
+				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");
 		} else {
@@ -46,7 +52,8 @@ public class WalkSATExperiment {
 		kb.tell("A");
 		kb.tell("B");
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.findModelFor(kb.asSentence().toString(), 1000, 0.5);
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(kb.asSentence())
+				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");
 		} else {
