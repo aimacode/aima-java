@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
@@ -21,6 +22,10 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	public Model() {
 
+	}
+
+	public Model(Map<PropositionSymbol, Boolean> values) {
+		h.putAll(values);
 	}
 
 	public Boolean getValue(PropositionSymbol symbol) {
@@ -68,6 +73,83 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		return Collections.unmodifiableSet(h.keySet());
 	}
 
+	/**
+	 * Determine if the model satisfies a set of clauses.
+	 * 
+	 * @param clauses
+	 *            a set of propositional clauses.
+	 * @return if the model satisfies the clauses, false otherwise.
+	 */
+	public boolean satisfies(Set<Clause> clauses) {
+		for (Clause c : clauses) {
+			// All must to be true
+			if (!Boolean.TRUE.equals(determineValue(c))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Determine based on the current assignments within the model, whether a
+	 * clause is known to be true, false, or unknown.
+	 * 
+	 * @param c
+	 *            a propositional clause.
+	 * @return true, if the clause is known to be true under the model's
+	 *         assignments. false, if the clause is known to be false under the
+	 *         model's assignments. null, if it is unknown whether the clause is
+	 *         true or false under the model's current assignments.
+	 */
+	public Boolean determineValue(Clause c) {
+		Boolean result = null; // i.e. unknown
+
+		if (c.isTautology()) { // Test independent of the model's assignments.
+			result = Boolean.TRUE;
+		} else if (c.isFalse()) { // Test independent of the model's
+									// assignments.
+			result = Boolean.FALSE;
+		} else {
+			Set<PropositionSymbol> assignedSymbols = getAssignedSymbols();
+			boolean unassignedSymbols = false;
+			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+				if (assignedSymbols.contains(positive)) {
+					if (isTrue(positive)) {
+						result = Boolean.TRUE;
+						break;
+					}
+				} else {
+					unassignedSymbols = true;
+				}
+			}
+			// If truth not determined, continue checking negative symbols
+			if (result == null) {
+				for (PropositionSymbol negative : c.getNegativeSymbols()) {
+					if (assignedSymbols.contains(negative)) {
+						if (isFalse(negative)) {
+							result = Boolean.TRUE;
+							break;
+						}
+					} else {
+						unassignedSymbols = true;
+					}
+				}
+
+				if (result == null) {
+					// If truth not determined and there are no
+					// unassigned symbols then we can determine falsehood
+					// (i.e. all of its literals are assigned false under the
+					// model)
+					if (!unassignedSymbols) {
+						result = Boolean.FALSE;
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	public void print() {
 		for (Map.Entry<PropositionSymbol, Boolean> e : h.entrySet()) {
 			System.out.print(e.getKey() + " = " + e.getValue() + " ");
@@ -105,8 +187,10 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	@Override
 	public Boolean visitBinarySentence(ComplexSentence bs, Boolean arg) {
-		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this, null);
-		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this, null);
+		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this,
+				null);
+		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this,
+				null);
 		if ((firstValue == null) || (secondValue == null)) {
 			// strictly not true for or/and
 			// -FIX later

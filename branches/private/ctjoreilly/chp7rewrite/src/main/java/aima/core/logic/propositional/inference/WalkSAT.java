@@ -1,9 +1,17 @@
 package aima.core.logic.propositional.inference;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.util.SetOps;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 263.<br>
@@ -44,15 +52,136 @@ public class WalkSAT {
 	 *            the probability of choosing to do a "random walk" move,
 	 *            typically around 0.5
 	 * @param maxFlips
-	 *            number of flips allowed before giving up
+	 *            number of flips allowed before giving up. Note: a value < 0 is
+	 *            interpreted as infinity.
 	 * 
 	 * @return a satisfying model or failure (null).
 	 */
 	public Model walkSAT(Set<Clause> clauses, double p, int maxFlips) {
-		throw new UnsupportedOperationException("TODO");
+		// model <- a random assignment of true/false to the symbols in clauses
+		Model model = randomAssignmentToSymbolsInClauses(clauses);
+		// for i = 1 to max_flips do
+		for (int i = 0; i < maxFlips || maxFlips < 0; i++) {
+			// if model satisfies clauses then return model
+			if (model.satisfies(clauses)) {
+				return model;
+			}
+
+			// clause <- a randomly selected clause from clauses that is false
+			// in model
+			Clause clause = randomlySelectFalseClause(clauses, model);
+
+			// with probability p flip the value in model of a randomly selected
+			// symbol from clause
+			if (random.nextDouble() < p) {
+				model = model.flip(randomlySelectSymbolFromClause(clause));
+			} else {
+				// else flip whichever symbol in clause maximizes the number of
+				// satisfied clauses
+				model = flipSymbolInClausesMaximizesNumberSatisfiedClauses(
+						clause, clauses, model);
+			}
+		}
+
+		// return failure
+		return null;
 	}
-	
+
 	//
 	// SUPPORTING CODE
 	//
+	private Random random = new Random();
+
+	/**
+	 * Default Constructor.
+	 */
+	public WalkSAT() {
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param random
+	 *            the random generator to be used by the algorithm.
+	 */
+	public WalkSAT(Random random) {
+		this.random = random;
+	}
+
+	//
+	// PROTECTED
+	//
+	protected Model randomAssignmentToSymbolsInClauses(Set<Clause> clauses) {
+		// Collect the symbols in clauses
+		Set<PropositionSymbol> symbols = new LinkedHashSet<PropositionSymbol>();
+		for (Clause c : clauses) {
+			symbols.addAll(c.getPositiveSymbols());
+			symbols.addAll(c.getNegativeSymbols());
+		}
+
+		// Make initial set of assignments
+		Map<PropositionSymbol, Boolean> values = new HashMap<PropositionSymbol, Boolean>();
+		for (PropositionSymbol symbol : symbols) {
+			// a random assignment of true/false to the symbols in clauses
+			values.put(symbol, random.nextBoolean());
+		}
+
+		Model result = new Model(values);
+
+		return result;
+	}
+
+	protected Clause randomlySelectFalseClause(Set<Clause> clauses, Model model) {
+		// Collect the clauses that are false in the model
+		List<Clause> falseClauses = new ArrayList<Clause>();
+		for (Clause c : clauses) {
+			if (Boolean.FALSE.equals(model.determineValue(c))) {
+				falseClauses.add(c);
+			}
+		}
+
+		// a randomly selected clause from clauses that is false
+		Clause result = falseClauses.get(random.nextInt(falseClauses.size()));
+		return result;
+	}
+
+	protected PropositionSymbol randomlySelectSymbolFromClause(Clause clause) {
+		// all the symbols in clause
+		Set<PropositionSymbol> symbols = SetOps.union(
+				clause.getPositiveSymbols(), clause.getNegativeSymbols());
+
+		// a randomly selected symbol from clause
+		PropositionSymbol result = (new ArrayList<PropositionSymbol>(symbols))
+				.get(random.nextInt(symbols.size()));
+		return result;
+	}
+
+	protected Model flipSymbolInClausesMaximizesNumberSatisfiedClauses(
+			Clause clause, Set<Clause> clauses, Model model) {
+		Model result = model;
+
+		// all the symbols in clause
+		Set<PropositionSymbol> symbols = SetOps.union(
+				clause.getPositiveSymbols(), clause.getNegativeSymbols());
+		int maxClausesSatisfied = -1;
+		for (PropositionSymbol symbol : symbols) {
+			Model flippedModel = result.flip(symbol);
+			int numberClausesSatisfied = 0;
+			for (Clause c : clauses) {
+				if (flippedModel.determineValue(c)) {
+					numberClausesSatisfied++;
+				}
+			}
+			// test if this symbol flip is the new maximum
+			if (numberClausesSatisfied > maxClausesSatisfied) {
+				result = flippedModel;
+				if (numberClausesSatisfied == clauses.size()) {
+					// i.e. satisfies all clauses
+					break; // this is our goal.
+				}
+			}
+		}
+
+		return model;
+	}
 }

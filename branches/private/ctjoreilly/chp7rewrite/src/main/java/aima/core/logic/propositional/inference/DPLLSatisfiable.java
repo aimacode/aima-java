@@ -204,7 +204,7 @@ public class DPLLSatisfiable {
 		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
-			if (Boolean.TRUE.equals(determineValue(c, model))) {
+			if (Boolean.TRUE.equals(model.determineValue(c))) {
 				continue;
 			}
 			// Collect possible candidates
@@ -270,7 +270,7 @@ public class DPLLSatisfiable {
 		for (Clause c : clauses) {
 			// if clauses value is currently unknown
 			// (i.e. means known literals are false)
-			if (determineValue(c, model) == null) {
+			if (model.determineValue(c) == null) {
 				Literal unassigned = null;
 				// Default definition of a unit clause is a clause
 				// with just one literal
@@ -316,83 +316,17 @@ public class DPLLSatisfiable {
 	}
 
 	protected boolean everyClauseTrue(Set<Clause> clauses, Model model) {
-		for (Clause c : clauses) {
-			// All must to be true
-			if (!Boolean.TRUE.equals(determineValue(c, model))) {
-				return false;
-			}
-		}
-		return true;
+		return model.satisfies(clauses);
 	}
 
 	protected boolean someClauseFalse(Set<Clause> clauses, Model model) {
 		for (Clause c : clauses) {
 			// Only 1 needs to be false
-			if (Boolean.FALSE.equals(determineValue(c, model))) {
+			if (Boolean.FALSE.equals(model.determineValue(c))) {
 				return true;
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Determine based on the current assignments within a model, whether a
-	 * clause is known to be true, false, or unknown.
-	 * 
-	 * @param c
-	 * @param model
-	 * @return true, if the clause is known to be true under the model's
-	 *         assignments. false, if the clause is known to be false under the
-	 *         model's assignments. null, if it is unknown whether the clause is
-	 *         true or false under the model's current assignments.
-	 */
-	protected Boolean determineValue(Clause c, Model model) {
-		Boolean result = null; // i.e. unknown
-
-		if (c.isTautology()) { // Test independent of the model's assignments.
-			result = Boolean.TRUE;
-		} else if (c.isFalse()) { // Test independent of the model's
-									// assignments.
-			result = Boolean.FALSE;
-		} else {
-			Set<PropositionSymbol> assignedSymbols = model.getAssignedSymbols();
-			boolean unassignedSymbols = false;
-			for (PropositionSymbol positive : c.getPositiveSymbols()) {
-				if (assignedSymbols.contains(positive)) {
-					if (model.isTrue(positive)) {
-						result = Boolean.TRUE;
-						break;
-					}
-				} else {
-					unassignedSymbols = true;
-				}
-			}
-			// If truth not determined, continue checking negative symbols
-			if (result == null) {
-				for (PropositionSymbol negative : c.getNegativeSymbols()) {
-					if (assignedSymbols.contains(negative)) {
-						if (model.isFalse(negative)) {
-							result = Boolean.TRUE;
-							break;
-						}
-					} else {
-						unassignedSymbols = true;
-					}
-				}
-
-				if (result == null) {
-					// If truth not determined and there are no
-					// unassigned symbols then we can determine falsehood
-					// (i.e. all of its literals are assigned false under the
-					// model)
-					if (!unassignedSymbols) {
-						result = Boolean.FALSE;
-					}
-				}
-			}
-		}
-
-		return result;
 	}
 
 	// symbols - P
