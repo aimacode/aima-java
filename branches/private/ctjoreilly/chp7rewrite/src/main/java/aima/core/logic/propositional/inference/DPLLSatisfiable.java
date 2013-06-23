@@ -1,6 +1,7 @@
 package aima.core.logic.propositional.inference;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.util.SetOps;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
@@ -194,9 +196,44 @@ public class DPLLSatisfiable {
 	protected Pair<PropositionSymbol, Boolean> findPureSymbol(
 			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
 		Pair<PropositionSymbol, Boolean> result = null;
-		
-// TODO		
-		
+
+		// Collect up possible positive and negative candidate sets of pure
+		// symbols
+		Set<PropositionSymbol> candidatePurePositiveSymbols = new HashSet<PropositionSymbol>();
+		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
+		for (Clause c : clauses) {
+			// Algorithm can ignore clauses that are already known to be true
+			if (Boolean.TRUE.equals(determineValue(c, model))) {
+				continue;
+			}
+			// Collect possible candidates
+			candidatePurePositiveSymbols.addAll(c.getPositiveSymbols());
+			candidatePureNegativeSymbols.addAll(c.getNegativeSymbols());
+		}
+		// Remove all candidates that are not part of the input list of symbols
+		// to be considered
+		candidatePurePositiveSymbols.retainAll(symbols);
+		candidatePureNegativeSymbols.retainAll(symbols);
+
+		// Determine the overlap/intersection between the positive and negative
+		// candidates
+		Set<PropositionSymbol> nonPureSymbols = SetOps.intersection(
+				candidatePurePositiveSymbols, candidatePureNegativeSymbols);
+
+		// Remove the non-pure symbols
+		candidatePurePositiveSymbols.removeAll(nonPureSymbols);
+		candidatePureNegativeSymbols.removeAll(nonPureSymbols);
+
+		// We have an implicit preference for positive pure symbols
+		if (candidatePurePositiveSymbols.size() > 0) {
+			result = new Pair<PropositionSymbol, Boolean>(
+					candidatePurePositiveSymbols.iterator().next(), true);
+		} // We have a negative pure symbol
+		else if (candidatePureNegativeSymbols.size() > 0) {
+			result = new Pair<PropositionSymbol, Boolean>(
+					candidatePureNegativeSymbols.iterator().next(), false);
+		}
+
 		return result;
 	}
 
@@ -228,9 +265,9 @@ public class DPLLSatisfiable {
 	protected Pair<PropositionSymbol, Boolean> findUnitClause(
 			Set<Clause> clauses, Model model) {
 		Pair<PropositionSymbol, Boolean> result = null;
-		
-// TODO
-				
+
+		// TODO
+
 		return result;
 	}
 
