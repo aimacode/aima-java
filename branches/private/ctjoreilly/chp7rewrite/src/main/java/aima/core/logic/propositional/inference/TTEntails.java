@@ -3,8 +3,8 @@ package aima.core.logic.propositional.inference;
 import java.util.ArrayList;
 import java.util.List;
 
-import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.SymbolCollector;

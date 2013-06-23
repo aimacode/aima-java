@@ -2,9 +2,9 @@ package aima.test.core.experiment.logic.propositional.algorithms;
 
 import org.junit.Test;
 
-import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.inference.WalkSAT;
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 

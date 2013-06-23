@@ -11,6 +11,7 @@ import aima.test.core.unit.logic.propositional.kb.KnowledgeBaseTest;
 import aima.test.core.unit.logic.propositional.kb.data.ClauseTest;
 import aima.test.core.unit.logic.propositional.kb.data.ConvertToConjunctionOfClausesTest;
 import aima.test.core.unit.logic.propositional.kb.data.LiteralTest;
+import aima.test.core.unit.logic.propositional.kb.data.ModelTest;
 import aima.test.core.unit.logic.propositional.parsing.ComplexSentenceTest;
 import aima.test.core.unit.logic.propositional.parsing.ListTest;
 import aima.test.core.unit.logic.propositional.parsing.PLLexerTest;

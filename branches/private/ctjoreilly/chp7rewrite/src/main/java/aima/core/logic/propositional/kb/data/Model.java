@@ -1,11 +1,10 @@
-package aima.core.logic.propositional;
+package aima.core.logic.propositional.kb.data;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;

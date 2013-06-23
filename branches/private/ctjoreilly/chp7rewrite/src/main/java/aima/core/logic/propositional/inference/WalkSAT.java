@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.SetOps;
 

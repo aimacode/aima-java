@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
