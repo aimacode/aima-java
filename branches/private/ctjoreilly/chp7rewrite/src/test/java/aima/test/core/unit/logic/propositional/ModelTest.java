@@ -35,7 +35,7 @@ public class ModelTest {
 
 	@Test
 	public void testEmptyModel() {
-		Assert.assertEquals(null, m.getStatus(new PropositionSymbol("P")));
+		Assert.assertEquals(null, m.getValue(new PropositionSymbol("P")));
 		Assert.assertEquals(true, m.isUnknown(new PropositionSymbol("P")));
 	}
 
@@ -43,7 +43,7 @@ public class ModelTest {
 	public void testExtendModel() {
 		String p = "P";
 		m = m.union(new PropositionSymbol(p), true);
-		Assert.assertEquals(Boolean.TRUE, m.getStatus(new PropositionSymbol("P")));
+		Assert.assertEquals(Boolean.TRUE, m.getValue(new PropositionSymbol("P")));
 	}
 
 	@Test

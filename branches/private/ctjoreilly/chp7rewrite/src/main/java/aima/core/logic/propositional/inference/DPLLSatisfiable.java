@@ -8,6 +8,7 @@ import java.util.Set;
 import aima.core.logic.propositional.Model;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
@@ -143,7 +144,7 @@ public class DPLLSatisfiable {
 	 * @return true, if &alpha; is entailed by KB, false otherwise.
 	 */
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
-		// AIMA3e pg. 260: kb |= alpha, can be done by testing
+		// AIMA3e p.g. 260: kb |= alpha, can be done by testing
 		// unsatisfiability of kb & ~alpha.
 		Sentence isContradiction = new ComplexSentence(Connective.AND,
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
@@ -266,7 +267,50 @@ public class DPLLSatisfiable {
 			Set<Clause> clauses, Model model) {
 		Pair<PropositionSymbol, Boolean> result = null;
 
-		// TODO
+		for (Clause c : clauses) {
+			// if clauses value is currently unknown
+			// (i.e. means known literals are false)
+			if (determineValue(c, model) == null) {
+				Literal unassigned = null;
+				// Default definition of a unit clause is a clause
+				// with just one literal
+				if (c.isUnitClause()) {
+					unassigned = c.getLiterals().iterator().next();
+				} else {
+					// Also, a unit clause in the context of DPLL, also means a
+					// clauseF in which all literals but one are already
+					// assigned false by the model.
+					// Note: at this point we already know the clause is not
+					// true, so just need to determine if the clause has a
+					// single unassigned literal
+					for (Literal l : c.getLiterals()) {
+						Boolean value = model.getValue(l.getAtomicSentence());
+						if (value == null) {
+							// The first unassigned literal encountered.
+							if (unassigned == null) {
+								unassigned = l;
+							} else {
+								// This means we have more than 1 unassigned
+								// literal so lets skip
+								unassigned = null;
+								break;
+							}
+						}
+					}
+				}
+
+				// if a value assigned it means we have a single
+				// unassigned literal and all the assigned literals
+				// are not true under the current model as we were
+				// unable to determine a value.
+				if (unassigned != null) {
+					result = new Pair<PropositionSymbol, Boolean>(
+							unassigned.getAtomicSentence(),
+							unassigned.isPositiveLiteral());
+					break;
+				}
+			}
+		}
 
 		return result;
 	}

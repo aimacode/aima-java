@@ -191,7 +191,7 @@ public class PLResolutionTest {
 	}
 	
 	@Test
-	public void testDPLLSucceedsWithChadCarffsBugReport2() {
+	public void testPLResolutionSucceedsWithChadCarffsBugReport2() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("B10 <=> P11 | P20 | P00");
 		kb.tell("B01 <=> P00 | P02 | P11");

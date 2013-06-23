@@ -23,7 +23,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	}
 
-	public Boolean getStatus(PropositionSymbol symbol) {
+	public Boolean getValue(PropositionSymbol symbol) {
 		return h.get(symbol);
 	}
 
@@ -90,7 +90,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		if (s.isAlwaysFalse()) {
 			return Boolean.FALSE;
 		}
-		return getStatus(s);
+		return getValue(s);
 	}
 
 	@Override
