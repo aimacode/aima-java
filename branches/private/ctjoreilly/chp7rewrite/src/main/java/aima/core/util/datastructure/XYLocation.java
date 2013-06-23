@@ -156,7 +156,7 @@ public class XYLocation {
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result + xCoOrdinate;
-		result = result + yCoOrdinate;
+		result = 43 * result + yCoOrdinate;
 		return result;
 	}
 }

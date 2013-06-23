@@ -35,6 +35,7 @@ CURRENTLY TODO
   * Fixed Issue 72, Propositional CNF parsing issue.
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
   * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
+  * Fixed Issue 80, small bug in XYLocation.hashCode()
  
 = Details =
 
