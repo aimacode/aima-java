@@ -58,9 +58,11 @@ public class WalkSAT {
 	 * @return a satisfying model or failure (null).
 	 */
 	public Model walkSAT(Set<Clause> clauses, double p, int maxFlips) {
+		assertLegalProbability(p);
+		
 		// model <- a random assignment of true/false to the symbols in clauses
 		Model model = randomAssignmentToSymbolsInClauses(clauses);
-		// for i = 1 to max_flips do
+		// for i = 1 to max_flips do (Note: maxFlips < 0 means infinity)
 		for (int i = 0; i < maxFlips || maxFlips < 0; i++) {
 			// if model satisfies clauses then return model
 			if (model.satisfies(clauses)) {
@@ -111,6 +113,12 @@ public class WalkSAT {
 	//
 	// PROTECTED
 	//
+	protected void assertLegalProbability(double p) {
+		if (p < 0 || p > 1) {
+			throw new IllegalArgumentException("p is not a legal propbability value [0-1]: "+p);
+		}
+	}
+	
 	protected Model randomAssignmentToSymbolsInClauses(Set<Clause> clauses) {
 		// Collect the symbols in clauses
 		Set<PropositionSymbol> symbols = new LinkedHashSet<PropositionSymbol>();

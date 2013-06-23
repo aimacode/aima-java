@@ -6,7 +6,7 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. Ensure new CNF logic:
+. Ensure new propositional logic:
   - can handle always false and true proposition symbols.
 . Ensure all package paths are updated in table of algorithms.
 
