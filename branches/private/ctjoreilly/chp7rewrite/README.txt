@@ -8,7 +8,9 @@ CURRENTLY TODO
 --------------
 . Review/Clean up contributed source in:
   - aima\core\environment\wumpusworld\
+    . make code more closely follow description at beginning of chapter.
   - HybridWumpusAgent
+    . Make extend KB-AGENT from figure 7.1.
   - WumpusKnowledgeBase
   - WumpusFunctionFactoryTest
 . Ensure new propositional logic:
