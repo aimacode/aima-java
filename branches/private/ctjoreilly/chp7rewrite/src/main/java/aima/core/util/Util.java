@@ -69,6 +69,7 @@ public class Util {
 	 *        the sets initial values.
 	 * @return a Set of the provided values.
 	 */
+	@SafeVarargs
 	public static <V> Set<V> createSet(V... values) {
 		Set<V> set = new LinkedHashSet<V>();
 		
