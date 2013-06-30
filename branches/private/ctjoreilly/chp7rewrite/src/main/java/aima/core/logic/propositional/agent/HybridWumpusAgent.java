@@ -25,7 +25,9 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.informed.AStarSearch;
+import aima.core.util.datastructure.FIFOQueue;
 import aima.core.util.datastructure.Point2D;
+import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 270.<br>
@@ -54,7 +56,7 @@ import aima.core.util.datastructure.Point2D;
  *      not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
  *      plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
  *   if plan is empty then
- *      plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+ *      plan <- PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
  *   action <- POP(plan)
  *   TELL(KB, MAKE-ACTION-SENTENCE(action, t))
  *   t <- t+1
@@ -79,6 +81,7 @@ import aima.core.util.datastructure.Point2D;
  * 
  * @author Federico Baron
  * @author Alessandro Daniele
+ * @author Ciaran O'Reilly
  */
 public class HybridWumpusAgent extends AbstractAgent {
 
@@ -89,119 +92,149 @@ public class HybridWumpusAgent extends AbstractAgent {
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 	// plan, an action sequence, initially empty
-	private ArrayList<Action> plan = new ArrayList<Action>();
+	private Queue<Action> plan = new FIFOQueue<Action>();
 	// the agents current location (default to same as figure 7.2)
 	private WumpusPosition current = new WumpusPosition(1, 1,
 			WumpusPosition.ORIENTATION_RIGHT);
 
 	/**
+	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
 	 * 
+	 * @param percept
+	 *            a list, [stench, breeze, glitter, bump, scream]
 	 * 
-	 * @param current
-	 *            the agent’s current position
-	 * @param goals
-	 *            a set of squares; try to plan a route to one of them
-	 * @param allowed
-	 *            a set of squares that can form part of the route
-	 * @param dimRow
-	 *            dimension of a row of the field
-	 * 
-	 * @return the best sequence of actions that the agent have to do to reach a
-	 *         goal from the current position.
-	 * 
-	 * 
-	 * @author Federico Baron
-	 * @author Alessandro Daniele
+	 * @return an action the agent should take.
 	 */
 	@Override
-	public Action execute(Percept p) {
-		throw new UnsupportedOperationException("TODO");
-		// kb.makePerceptSentence((WumpusPercept) p, t);
-		// kb.addTemporalSentences(t);
-		//
-		// Point2D tmp = null;
-		// for (int i = 1; i <= DIM_ROW; i++)
-		// for (int j = 1; tmp == null && j <= DIM_ROW; j++)
-		// if (kb.askWithDpll("L" + i + "s" + j + "s" + t) == true)
-		// tmp = new Point2D(i, j);
-		// if (kb.askWithDpll("FacingNorth" + t))
-		// current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-		// WumpusPosition.ORIENTATION_UP);
-		// else if (kb.askWithDpll("FacingEast" + t))
-		// current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-		// WumpusPosition.ORIENTATION_RIGHT);
-		// else if (kb.askWithDpll("FacingSouth" + t))
-		// current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-		// WumpusPosition.ORIENTATION_DOWN);
-		// else if (kb.askWithDpll("FacingWest" + t))
-		// current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-		// WumpusPosition.ORIENTATION_LEFT);
-		//
-		// ArrayList<Point2D> safe = new ArrayList<Point2D>();
-		// for (int i = 1; i <= DIM_ROW; i++)
-		// for (int j = 1; j <= DIM_ROW; j++)
-		// if (kb.askWithDpll("OK" + i + "s" + j + "s" + t))
-		// safe.add(new Point2D(i, j));
-		//
-		// if (kb.askWithDpll("Glitter" + t)) {
-		// Action grab = new DynamicAction("grab");
-		// Action climb = new DynamicAction("climb");
-		// ArrayList<Point2D> goals = new ArrayList<Point2D>();
-		// goals.add(new Point2D(1, 1));
-		//
-		// plan.add(grab);
-		// plan.addAll(planRoute(current, goals, safe, DIM_ROW));
-		// plan.add(climb);
-		// }
-		//
-		// if (plan.isEmpty()) {
-		// ArrayList<Point2D> unvisited = new ArrayList<Point2D>();
-		// for (int i = 1; i <= DIM_ROW; i++)
-		// for (int j = 1; j <= DIM_ROW; j++)
-		// for (int k = 0; k < t; k++)
-		// if (kb.askWithDpll("L" + i + "s" + j + "s" + k))
-		// unvisited.add(new Point2D(i, j));
-		//
-		// ArrayList<Point2D> unvisitedAndSafe = new ArrayList<Point2D>();
-		// for (Point2D u : unvisited)
-		// for (Point2D s : safe)
-		// if (!unvisitedAndSafe.contains(u) && (s.getX() == u.getX())
-		// && (s.getY() == u.getY()))
-		// unvisitedAndSafe.add(u);
-		//
-		// plan.addAll(planRoute(current, unvisitedAndSafe, safe, DIM_ROW));
-		// }
-		//
-		// if (plan.isEmpty() && kb.askWithDpll("HaveArrow" + t)) {
-		// ArrayList<Point2D> possibleWumpus = new ArrayList<Point2D>();
-		// for (int i = 1; i <= DIM_ROW; i++)
-		// for (int j = 1; j <= DIM_ROW; j++)
-		// if (kb.askWithDpll("W" + i + "s" + j) == false)
-		// possibleWumpus.add(new Point2D(i, j));
-		// plan.addAll(planShot(current, possibleWumpus, safe, DIM_ROW));
-		// }
-		//
-		// if (plan.isEmpty()) {
-		// ArrayList<Point2D> notUnsafe = new ArrayList<Point2D>();
-		// for (int i = 1; i <= DIM_ROW; i++)
-		// for (int j = 1; j <= DIM_ROW; j++)
-		// if (kb.askWithDpll("OK" + i + "s" + j + "s" + t) == false)
-		// notUnsafe.add(new Point2D(i, j));
-		// plan.addAll(planRoute(current, notUnsafe, safe, DIM_ROW));
-		// }
-		//
-		// if (plan.isEmpty()) {
-		// ArrayList<Point2D> start = new ArrayList<Point2D>();
-		// start.add(new Point2D(1, 1));
-		// plan.addAll(planRoute(current, start, safe, DIM_ROW));
-		// plan.add(new DynamicAction("climb"));
-		// }
-		//
-		// Action action = plan.remove(0);
-		// kb.makeActionSentence(action, t);
-		// t++;
-		//
-		// return action;
+	public Action execute(Percept percept) {
+
+		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
+		kb.makePerceptSentence((WumpusPercept) percept, t);
+		// TELL the KB the temporal "physics" sentences for time t
+		kb.addTemporalSentences(t);
+
+		// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+		Point2D tmp = null;
+		for (int x = 1; x <= kb.getCaveXDimension(); x++) {
+			for (int y = 1; tmp == null && y <= kb.getCaveYDimension(); y++) {
+				if (kb.ask("L" + t + "_" + x + "_" + y) == true) {
+					tmp = new Point2D(x, y);
+				}
+			}
+		}
+
+		if (kb.ask("FacingNorth" + t)) {
+			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
+					WumpusPosition.ORIENTATION_UP);
+		} else if (kb.ask("FacingEast" + t)) {
+			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
+					WumpusPosition.ORIENTATION_RIGHT);
+		} else if (kb.ask("FacingSouth" + t)) {
+			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
+					WumpusPosition.ORIENTATION_DOWN);
+		} else if (kb.ask("FacingWest" + t)) {
+			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
+					WumpusPosition.ORIENTATION_LEFT);
+		}
+
+		ArrayList<Point2D> safe = new ArrayList<Point2D>();
+		for (int x = 1; x <= kb.getCaveXDimension(); x++) {
+			for (int y = 1; y <= kb.getCaveYDimension(); y++) {
+				if (kb.ask("OK" + t + "_" + x + "_" + y)) {
+					safe.add(new Point2D(x, y));
+				}
+			}
+		}
+
+		// if ASK(KB, Glitter<sup>t</sup>) = true then
+		// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+		if (kb.ask("Glitter" + t)) {
+			Action grab = new DynamicAction("grab");
+			Action climb = new DynamicAction("climb");
+			ArrayList<Point2D> goals = new ArrayList<Point2D>();
+			goals.add(new Point2D(1, 1));
+
+			plan.add(grab);
+			plan.addAll(planRoute(current, goals, safe));
+			plan.add(climb);
+		}
+
+		// if plan is empty then
+		// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false
+		// for all t' < t}
+		// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
+		if (plan.isEmpty()) {
+			ArrayList<Point2D> unvisited = new ArrayList<Point2D>();
+			for (int x = 1; x <= kb.getCaveXDimension(); x++) {
+				for (int y = 1; y <= kb.getCaveYDimension(); y++) {
+					for (int k = 0; k < t; k++) {
+						if (kb.ask("L" + k + "_" + x + "_" + y)) {
+							unvisited.add(new Point2D(x, y));
+						}
+					}
+				}
+			}
+
+			ArrayList<Point2D> unvisitedAndSafe = new ArrayList<Point2D>();
+			for (Point2D u : unvisited) {
+				for (Point2D s : safe) {
+					if (!unvisitedAndSafe.contains(u) && (s.getX() == u.getX())
+							&& (s.getY() == u.getY())) {
+						unvisitedAndSafe.add(u);
+					}
+				}
+			}
+
+			plan.addAll(planRoute(current, unvisitedAndSafe, safe));
+		}
+
+		// if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
+		// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
+		// plan <- PLAN-SHOT(current, possible_wumpus, safe)
+		if (plan.isEmpty() && kb.ask("HaveArrow" + t)) {
+			ArrayList<Point2D> possibleWumpus = new ArrayList<Point2D>();
+			for (int x = 1; x <= kb.getCaveXDimension(); x++) {
+				for (int y = 1; y <= kb.getCaveYDimension(); y++) {
+					if (kb.ask("W_" + x + "_" + y) == false) {
+						possibleWumpus.add(new Point2D(x, y));
+					}
+				}
+			}
+			plan.addAll(planShot(current, possibleWumpus, safe));
+		}
+
+		// if plan is empty then //no choice but to take a risk
+		// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) =
+		// false}
+		// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
+		if (plan.isEmpty()) {
+			ArrayList<Point2D> notUnsafe = new ArrayList<Point2D>();
+			for (int x = 1; x <= kb.getCaveXDimension(); x++) {
+				for (int y = 1; y <= kb.getCaveYDimension(); y++) {
+					if (kb.ask("OK" + t + "_" + x + "_" + y) == false) {
+						notUnsafe.add(new Point2D(x, y));
+					}
+				}
+			}
+			plan.addAll(planRoute(current, notUnsafe, safe));
+		}
+
+		// if plan is empty then
+		// plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+		if (plan.isEmpty()) {
+			ArrayList<Point2D> start = new ArrayList<Point2D>();
+			start.add(new Point2D(1, 1));
+			plan.addAll(planRoute(current, start, safe));
+			plan.add(new DynamicAction("climb"));
+		}
+		// action <- POP(plan)
+		Action action = plan.pop();
+		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
+		kb.makeActionSentence(action, t);
+		// t <- t+1
+		t = t + 1;
+		// return action
+		return action;
 	}
 
 	/**
@@ -213,8 +246,6 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 *            a set of squares; try to plan a route to one of them
 	 * @param allowed
 	 *            a set of squares that can form part of the route
-	 * @param dimRow
-	 *            dimension of a row of the field
 	 * 
 	 * @return the best sequence of actions that the agent have to do to reach a
 	 *         goal from the current position.
@@ -224,7 +255,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 * @author Alessandro Daniele
 	 */
 	private List<Action> planRoute(WumpusPosition current,
-			ArrayList<Point2D> goals, ArrayList<Point2D> allowed, int dimRow) {
+			ArrayList<Point2D> goals, ArrayList<Point2D> allowed) {
 
 		// Every square represent 4 possible positions for the agent, it could
 		// be in different orientations. For every square in allowed and goals
@@ -266,7 +297,9 @@ public class HybridWumpusAgent extends AbstractAgent {
 					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_DOWN));
 		}
 
-		WumpusField field = new WumpusField(dimRow, allowedMap);
+		// TODO - should take X and Y dimensions separately and be called a
+		// WumpusCave
+		WumpusField field = new WumpusField(kb.getCaveXDimension(), allowedMap);
 
 		GoalTest goalTest = new GoalTest() {
 
@@ -323,8 +356,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 * @author Alessandro Daniele
 	 */
 	private List<Action> planShot(WumpusPosition current,
-			ArrayList<Point2D> possibleWumpus, ArrayList<Point2D> allowed,
-			int dimRow) {
+			ArrayList<Point2D> possibleWumpus, ArrayList<Point2D> allowed) {
 
 		HashMap<String, WumpusPosition> shootingPositions = new HashMap<String, WumpusPosition>();
 
@@ -332,7 +364,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 			int x = (int) p.getX();
 			int y = (int) p.getY();
 
-			for (int i = 1; i <= dimRow; i++) {
+			for (int i = 1; i <= kb.getCaveXDimension(); i++) {
 				if (i < x) {
 					WumpusPosition tmp = new WumpusPosition(i, y,
 							WumpusPosition.ORIENTATION_RIGHT);
@@ -371,7 +403,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		}
 
 		List<Action> actions = planRoute(current, shootingPositionsArray,
-				allowed, dimRow);
+				allowed);
 
 		WumpusPosition newPos;
 		if (actions.get(actions.size() - 1).isNoOp()) {
