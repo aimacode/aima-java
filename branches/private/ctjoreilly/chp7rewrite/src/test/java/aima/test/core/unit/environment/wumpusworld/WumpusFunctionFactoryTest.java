@@ -9,7 +9,7 @@ import org.junit.Test;
 import aima.core.agent.Action;
 import aima.core.environment.wumpusworld.ForwardAction;
 import aima.core.environment.wumpusworld.TurnAction;
-import aima.core.environment.wumpusworld.WumpusField;
+import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusFunctionFactory;
 import aima.core.environment.wumpusworld.WumpusPosition;
 import aima.core.search.framework.ActionsFunction;
@@ -27,7 +27,7 @@ public class WumpusFunctionFactoryTest {
 
 	@Before
 	public void setUp() {
-		WumpusField completeField = new WumpusField(4);
+		WumpusCave completeField = new WumpusCave(4, 4);
 
 		af = WumpusFunctionFactory.getActionsFunction(completeField);
 		rf = WumpusFunctionFactory.getResultFunction();
@@ -42,10 +42,10 @@ public class WumpusFunctionFactoryTest {
 		//    - Turn right (change orientation, not position)
 		//    - Turn left (change orientation, not position)
 		//    - Forward (change position, not orientation)
-		WumpusPosition P11U = new WumpusPosition(1, 1, WumpusPosition.ORIENTATION_UP);
-		succPositions.add(new WumpusPosition(1, 2, WumpusPosition.ORIENTATION_UP));
-		succOrientation.add(WumpusPosition.ORIENTATION_RIGHT);
-		succOrientation.add(WumpusPosition.ORIENTATION_LEFT);
+		WumpusPosition P11U = new WumpusPosition(1, 1, WumpusPosition.ORIENTATION_NORTH);
+		succPositions.add(new WumpusPosition(1, 2, WumpusPosition.ORIENTATION_NORTH));
+		succOrientation.add(WumpusPosition.ORIENTATION_EAST);
+		succOrientation.add(WumpusPosition.ORIENTATION_WEST);
 		for (Action a : af.actions(P11U)) {
 			if (a instanceof ForwardAction) {
 				Assert.assertTrue(succPositions.contains(((ForwardAction)a).getToPosition()));
@@ -59,8 +59,8 @@ public class WumpusFunctionFactoryTest {
 		
 		
 		//If you are in front of a wall forward action is not possible
-		WumpusPosition P31D = new WumpusPosition(3, 1, WumpusPosition.ORIENTATION_DOWN);
-		WumpusPosition P41R = new WumpusPosition(4, 1, WumpusPosition.ORIENTATION_RIGHT);
+		WumpusPosition P31D = new WumpusPosition(3, 1, WumpusPosition.ORIENTATION_SOUTH);
+		WumpusPosition P41R = new WumpusPosition(4, 1, WumpusPosition.ORIENTATION_EAST);
 		for (Action a : af.actions(P31D))
 			Assert.assertFalse(a instanceof ForwardAction);
 		

@@ -9,10 +9,10 @@ import aima.core.util.datastructure.Point2D;
  */
 public class WumpusPosition {
 
-	public static final int ORIENTATION_LEFT = 0;
-	public static final int ORIENTATION_RIGHT = 1;
-	public static final int ORIENTATION_UP = 2;
-	public static final int ORIENTATION_DOWN = 3;
+	public static final int ORIENTATION_WEST = 0;
+	public static final int ORIENTATION_EAST = 1;
+	public static final int ORIENTATION_NORTH = 2;
+	public static final int ORIENTATION_SOUTH = 3;
 	
 	private Point2D location;
 	private int orientation;
@@ -38,10 +38,11 @@ public class WumpusPosition {
 	@Override
 	public boolean equals(Object obj) {
 		WumpusPosition location2 = (WumpusPosition) obj;
-		if (((int)location.getX() == (int)location2.getLocation().getX()) && ((int)location.getY() == (int)location2.getLocation().getY()) && (orientation == location2.getOrientation()) )
+		if (((int)location.getX() == (int)location2.getLocation().getX()) && ((int)location.getY() == (int)location2.getLocation().getY()) && (orientation == location2.getOrientation()) ) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 	
 }

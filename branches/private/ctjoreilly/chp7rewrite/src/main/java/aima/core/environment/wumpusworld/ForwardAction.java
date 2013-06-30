@@ -18,19 +18,19 @@ public class ForwardAction extends DynamicAction {
 		
 		int orientation = pos.getOrientation();
 		switch(orientation) {
-		case WumpusPosition.ORIENTATION_DOWN:
+		case WumpusPosition.ORIENTATION_SOUTH:
 			toPosition = new WumpusPosition((int)pos.getLocation().getX(), (int)pos.getLocation().getY()-1, orientation);
 			setAttribute(ATTRIBUTE_LOCATION, toPosition);
 			break;
-		case WumpusPosition.ORIENTATION_LEFT:
+		case WumpusPosition.ORIENTATION_WEST:
 			toPosition = new WumpusPosition((int)pos.getLocation().getX()-1, (int)pos.getLocation().getY(), orientation);
 			setAttribute(ATTRIBUTE_LOCATION, toPosition);
 			break;
-		case WumpusPosition.ORIENTATION_RIGHT:
+		case WumpusPosition.ORIENTATION_EAST:
 			toPosition = new WumpusPosition((int)pos.getLocation().getX()+1, (int)pos.getLocation().getY(), orientation);
 			setAttribute(ATTRIBUTE_LOCATION, toPosition);
 			break;
-		case WumpusPosition.ORIENTATION_UP:
+		case WumpusPosition.ORIENTATION_NORTH:
 			toPosition = new WumpusPosition((int)pos.getLocation().getX(), (int)pos.getLocation().getY()+1, orientation);
 			setAttribute(ATTRIBUTE_LOCATION, toPosition);
 			break;

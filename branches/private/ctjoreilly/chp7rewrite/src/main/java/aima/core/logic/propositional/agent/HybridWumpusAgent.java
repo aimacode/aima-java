@@ -13,7 +13,7 @@ import aima.core.environment.wumpusworld.ForwardAction;
 import aima.core.environment.wumpusworld.ManhattanHeuristicFunction;
 import aima.core.environment.wumpusworld.ShotAction;
 import aima.core.environment.wumpusworld.TurnAction;
-import aima.core.environment.wumpusworld.WumpusField;
+import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusFunctionFactory;
 import aima.core.environment.wumpusworld.WumpusPosition;
 import aima.core.environment.wumpusworld.WumpusPercept;
@@ -95,7 +95,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	private Queue<Action> plan = new FIFOQueue<Action>();
 	// the agents current location (default to same as figure 7.2)
 	private WumpusPosition current = new WumpusPosition(1, 1,
-			WumpusPosition.ORIENTATION_RIGHT);
+			WumpusPosition.ORIENTATION_EAST);
 
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
@@ -125,16 +125,16 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		if (kb.ask("FacingNorth" + t)) {
 			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-					WumpusPosition.ORIENTATION_UP);
+					WumpusPosition.ORIENTATION_NORTH);
 		} else if (kb.ask("FacingEast" + t)) {
 			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-					WumpusPosition.ORIENTATION_RIGHT);
+					WumpusPosition.ORIENTATION_EAST);
 		} else if (kb.ask("FacingSouth" + t)) {
 			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-					WumpusPosition.ORIENTATION_DOWN);
+					WumpusPosition.ORIENTATION_SOUTH);
 		} else if (kb.ask("FacingWest" + t)) {
 			current = new WumpusPosition((int) tmp.getX(), (int) tmp.getY(),
-					WumpusPosition.ORIENTATION_LEFT);
+					WumpusPosition.ORIENTATION_WEST);
 		}
 
 		ArrayList<Point2D> safe = new ArrayList<Point2D>();
@@ -267,16 +267,16 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 			allowedMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(0),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_LEFT));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_WEST));
 			allowedMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(1),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_RIGHT));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_EAST));
 			allowedMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(2),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_UP));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_NORTH));
 			allowedMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(3),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_DOWN));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_SOUTH));
 		}
 		final HashMap<String, WumpusPosition> goalsMap = new HashMap<String, WumpusPosition>();
 		for (int i = 0; i < goals.size(); i++) {
@@ -285,21 +285,19 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 			goalsMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(0),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_LEFT));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_WEST));
 			goalsMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(1),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_RIGHT));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_EAST));
 			goalsMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(2),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_UP));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_NORTH));
 			goalsMap.put(
 					String.valueOf(x) + String.valueOf(y) + String.valueOf(3),
-					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_DOWN));
+					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_SOUTH));
 		}
 
-		// TODO - should take X and Y dimensions separately and be called a
-		// WumpusCave
-		WumpusField field = new WumpusField(kb.getCaveXDimension(), allowedMap);
+		WumpusCave field = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedMap);
 
 		GoalTest goalTest = new GoalTest() {
 
@@ -367,22 +365,22 @@ public class HybridWumpusAgent extends AbstractAgent {
 			for (int i = 1; i <= kb.getCaveXDimension(); i++) {
 				if (i < x) {
 					WumpusPosition tmp = new WumpusPosition(i, y,
-							WumpusPosition.ORIENTATION_RIGHT);
+							WumpusPosition.ORIENTATION_EAST);
 					shootingPositions.put(tmp.toString(), tmp);
 				}
 				if (i > x) {
 					WumpusPosition tmp = new WumpusPosition(i, y,
-							WumpusPosition.ORIENTATION_LEFT);
+							WumpusPosition.ORIENTATION_WEST);
 					shootingPositions.put(tmp.toString(), tmp);
 				}
 				if (i < y) {
 					WumpusPosition tmp = new WumpusPosition(x, i,
-							WumpusPosition.ORIENTATION_UP);
+							WumpusPosition.ORIENTATION_NORTH);
 					shootingPositions.put(tmp.toString(), tmp);
 				}
 				if (i > y) {
 					WumpusPosition tmp = new WumpusPosition(x, i,
-							WumpusPosition.ORIENTATION_DOWN);
+							WumpusPosition.ORIENTATION_SOUTH);
 					shootingPositions.put(tmp.toString(), tmp);
 				}
 			}

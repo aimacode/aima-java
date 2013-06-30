@@ -16,7 +16,7 @@ import aima.core.search.framework.ResultFunction;
 public class WumpusFunctionFactory {
 	private static ResultFunction resultFunction = null;
 
-	public static ActionsFunction getActionsFunction(WumpusField field) {
+	public static ActionsFunction getActionsFunction(WumpusCave field) {
 		return new WumpusActionsFunction(field);
 	}
 
@@ -28,9 +28,9 @@ public class WumpusFunctionFactory {
 	}
 
 	private static class WumpusActionsFunction implements ActionsFunction {
-		private WumpusField field;
+		private WumpusCave field;
 
-		public WumpusActionsFunction(WumpusField field) {
+		public WumpusActionsFunction(WumpusCave field) {
 			this.field = field;
 		}
 

@@ -29,19 +29,19 @@ public class ShotAction extends DynamicAction {
 		ArrayList<Point2D> result = new ArrayList<Point2D>();
 		
 		switch (current.getOrientation()) {
-		case WumpusPosition.ORIENTATION_DOWN:
+		case WumpusPosition.ORIENTATION_SOUTH:
 			for (int i=y-1; i>=1; i--)
 				result.add(new Point2D(x,i));
 			break;
-		case WumpusPosition.ORIENTATION_UP:
+		case WumpusPosition.ORIENTATION_NORTH:
 			for (int i=y+1; i<=dimRow; i++)
 				result.add(new Point2D(x,i));
 			break;
-		case WumpusPosition.ORIENTATION_RIGHT:
+		case WumpusPosition.ORIENTATION_EAST:
 			for (int i=x+1; i<=dimRow; i++)
 				result.add(new Point2D(i,y));
 			break;
-		case WumpusPosition.ORIENTATION_LEFT:
+		case WumpusPosition.ORIENTATION_WEST:
 			for (int i=x-1; i>=1; i--)
 				result.add(new Point2D(i,y));
 			break;

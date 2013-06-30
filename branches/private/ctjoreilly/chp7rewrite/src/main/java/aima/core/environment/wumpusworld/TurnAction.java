@@ -23,29 +23,29 @@ public class TurnAction extends DynamicAction {
 			setAttribute(ATTRIBUTE_DIRECTION, "Right");
 		
 		switch(orientation) {
-		case WumpusPosition.ORIENTATION_DOWN:
+		case WumpusPosition.ORIENTATION_SOUTH:
 			if (direction == DIRECTION_LEFT)
-				toOrientation = WumpusPosition.ORIENTATION_RIGHT;
+				toOrientation = WumpusPosition.ORIENTATION_EAST;
 			else
-				toOrientation = WumpusPosition.ORIENTATION_LEFT;
+				toOrientation = WumpusPosition.ORIENTATION_WEST;
 			break;
-		case WumpusPosition.ORIENTATION_LEFT:
+		case WumpusPosition.ORIENTATION_WEST:
 			if (direction == DIRECTION_LEFT)
-				toOrientation = WumpusPosition.ORIENTATION_DOWN;
+				toOrientation = WumpusPosition.ORIENTATION_SOUTH;
 			else
-				toOrientation = WumpusPosition.ORIENTATION_UP;
+				toOrientation = WumpusPosition.ORIENTATION_NORTH;
 			break;
-		case WumpusPosition.ORIENTATION_RIGHT:
+		case WumpusPosition.ORIENTATION_EAST:
 			if (direction == DIRECTION_LEFT)
-				toOrientation = WumpusPosition.ORIENTATION_UP;
+				toOrientation = WumpusPosition.ORIENTATION_NORTH;
 			else
-				toOrientation = WumpusPosition.ORIENTATION_DOWN;
+				toOrientation = WumpusPosition.ORIENTATION_SOUTH;
 			break;
-		case WumpusPosition.ORIENTATION_UP:
+		case WumpusPosition.ORIENTATION_NORTH:
 			if (direction == DIRECTION_LEFT)
-				toOrientation = WumpusPosition.ORIENTATION_LEFT;
+				toOrientation = WumpusPosition.ORIENTATION_WEST;
 			else
-				toOrientation = WumpusPosition.ORIENTATION_RIGHT;
+				toOrientation = WumpusPosition.ORIENTATION_EAST;
 			break;
 		default:
 			break;
