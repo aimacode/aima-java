@@ -297,7 +297,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 					new WumpusPosition(x, y, WumpusPosition.ORIENTATION_SOUTH));
 		}
 
-		WumpusCave field = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedMap);
+		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedMap);
 
 		GoalTest goalTest = new GoalTest() {
 
@@ -311,7 +311,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		};
 
 		Problem problem = new Problem(current,
-				WumpusFunctionFactory.getActionsFunction(field),
+				WumpusFunctionFactory.getActionsFunction(cave),
 				WumpusFunctionFactory.getResultFunction(), goalTest);
 
 		HeuristicFunction hf = new ManhattanHeuristicFunction(goals);
@@ -343,8 +343,6 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 *            wumpus.
 	 * @param allowed
 	 *            a set of squares that can form part of the route
-	 * @param dimRow
-	 *            dimension of a row of the field
 	 * 
 	 * @return the sequence of actions to reach the nearest square that is in
 	 *         line with a possible wumpus position. The last action is a shot.

@@ -16,8 +16,8 @@ import aima.core.search.framework.ResultFunction;
 public class WumpusFunctionFactory {
 	private static ResultFunction resultFunction = null;
 
-	public static ActionsFunction getActionsFunction(WumpusCave field) {
-		return new WumpusActionsFunction(field);
+	public static ActionsFunction getActionsFunction(WumpusCave cave) {
+		return new WumpusActionsFunction(cave);
 	}
 
 	public static ResultFunction getResultFunction() {
@@ -28,10 +28,10 @@ public class WumpusFunctionFactory {
 	}
 
 	private static class WumpusActionsFunction implements ActionsFunction {
-		private WumpusCave field;
+		private WumpusCave cave;
 
-		public WumpusActionsFunction(WumpusCave field) {
-			this.field = field;
+		public WumpusActionsFunction(WumpusCave cave) {
+			this.cave = cave;
 		}
 
 		@Override
@@ -44,7 +44,7 @@ public class WumpusFunctionFactory {
 				e.printStackTrace();
 			}
 			
-			List<WumpusPosition> linkedPositions = field.getLocationsLinkedTo(position);
+			List<WumpusPosition> linkedPositions = cave.getLocationsLinkedTo(position);
 			for (WumpusPosition linkPos : linkedPositions) {
 				if (linkPos.getLocation().getX() != position.getLocation().getX() || linkPos.getLocation().getY() != position.getLocation().getY())
 					actions.add(new ForwardAction(position));

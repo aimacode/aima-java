@@ -27,9 +27,9 @@ public class WumpusFunctionFactoryTest {
 
 	@Before
 	public void setUp() {
-		WumpusCave completeField = new WumpusCave(4, 4);
+		WumpusCave completeCave = new WumpusCave(4, 4);
 
-		af = WumpusFunctionFactory.getActionsFunction(completeField);
+		af = WumpusFunctionFactory.getActionsFunction(completeCave);
 		rf = WumpusFunctionFactory.getResultFunction();
 	}
 
