@@ -316,8 +316,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		}
 		if (!isImageUpToDate)
 			updateOffScreenImage();
-		else
-			g.drawImage(image, 0, 0, this);
+		g.drawImage(image, 0, 0, this);
 	}
 
 	protected void updateOffScreenImage() {
@@ -357,7 +356,6 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		}
 		image = newImage;
 		isImageUpToDate = true;
-		repaint();
 	}
 
 	/**

@@ -25,27 +25,28 @@ import aimax.osm.data.entities.MapNode;
 
 /**
  * Controller for graphical OSM map agent applications.
+ * 
  * @author Ruediger Lunde
  */
 public class OsmAgentController extends AgentAppController {
-	
+
 	protected MapAdapter map;
 	protected MapEnvironment env;
 	/** Search method to be used. */
 	protected Search search;
 	/** Heuristic function to be used when performing informed search. */
 	protected AdaptableHeuristicFunction heuristic;
-	
+
 	protected List<String> markedLocations;
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
 	protected long sleepTime = 0l;
-	
+
 	public OsmAgentController(MapAdapter map) {
 		this.map = map;
 		markedLocations = new ArrayList<String>();
 	}
-	
+
 	@Override
 	public void clear() {
 		map.getOsmMap().clearMarkersAndTracks();
@@ -56,32 +57,33 @@ public class OsmAgentController extends AgentAppController {
 	public void prepare(String changedSelector) {
 		env = new MapEnvironment(map);
 		MapAgentFrame.SelectionState state = frame.getSelection();
-		
+
 		map.getOsmMap().getTracks().clear();
 		switch (state.getIndex(MapAgentFrame.SCENARIO_SEL)) {
-		case 0: map.setMapWayFilter
-		(MapWayAttFilter.createAnyWayFilter());
-		map.ignoreOneways(true); break;
-		case 1: map.setMapWayFilter
-		(MapWayAttFilter.createCarWayFilter());
-		map.ignoreOneways(false); break;
-		case 2: map.setMapWayFilter
-		(MapWayAttFilter.createBicycleWayFilter());
-		map.ignoreOneways(false); break;
+		case 0:
+			map.setMapWayFilter(MapWayAttFilter.createAnyWayFilter());
+			map.ignoreOneways(true);
+			break;
+		case 1:
+			map.setMapWayFilter(MapWayAttFilter.createCarWayFilter());
+			map.ignoreOneways(false);
+			break;
+		case 2:
+			map.setMapWayFilter(MapWayAttFilter.createBicycleWayFilter());
+			map.ignoreOneways(false);
+			break;
 		}
-		
+
 		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
 				state.getIndex(MapAgentFrame.SEARCH_SEL),
-				state.getIndex(MapAgentFrame.SEARCH_MODE_SEL),
-				heuristic);
+				state.getIndex(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
 		frame.getEnvView().setEnvironment(env);
 		isPrepared = true;
 	}
-	
+
 	/**
-	 * Checks whether the current environment is ready to start
-	 * simulation.
+	 * Checks whether the current environment is ready to start simulation.
 	 */
 	@Override
 	public boolean isPrepared() {
@@ -89,8 +91,8 @@ public class OsmAgentController extends AgentAppController {
 	}
 
 	/**
-	 * Returns the trivial zero function or a simple heuristic which is
-	 * based on straight-line distance computation.
+	 * Returns the trivial zero function or a simple heuristic which is based on
+	 * straight-line distance computation.
 	 */
 	protected AdaptableHeuristicFunction createHeuristic(int heuIdx) {
 		AdaptableHeuristicFunction ahf = null;
@@ -103,10 +105,10 @@ public class OsmAgentController extends AgentAppController {
 		}
 		return ahf;
 	}
-	
+
 	/**
-	 * Calls {@link #initAgents(MessageLogger)} if necessary and
-	 * then starts simulation until done.
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and then starts
+	 * simulation until done.
 	 */
 	@Override
 	public void run(MessageLogger logger) {
@@ -120,13 +122,14 @@ public class OsmAgentController extends AgentAppController {
 				Thread.sleep(sleepTime);
 				env.step();
 			}
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+		}
 		logger.log("</simulation-protocol>\n");
 	}
-	
+
 	/**
-	 * Calls {@link #initAgents(MessageLogger)} if necessary and
-	 * then executes one simulation step.
+	 * Calls {@link #initAgents(MessageLogger)} if necessary and then executes
+	 * one simulation step.
 	 */
 	@Override
 	public void step(MessageLogger logger) {
@@ -157,30 +160,31 @@ public class OsmAgentController extends AgentAppController {
 			break;
 		case 1:
 			Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-			OnlineSearchProblem osp = new OnlineSearchProblem
-			(p.getActionsFunction(), p.getGoalTest(), p.getStepCostFunction());
-			agent = new LRTAStarAgent
-			(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+			OnlineSearchProblem osp = new OnlineSearchProblem(
+					p.getActionsFunction(), p.getGoalTest(),
+					p.getStepCostFunction());
+			agent = new LRTAStarAgent(osp,
+					MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 			break;
 		}
 		env.addAgent(agent, locs[0]);
 	}
-	
+
 	/** Updates the status of the frame. */
 	@Override
 	public void update(SimulationThread simulationThread) {
 		if (simulationThread.isCanceled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
-		} else if (frame.simulationPaused()){
+		} else if (frame.simulationPaused()) {
 			frame.setStatus("Task paused.");
 		} else {
 			StringBuffer statusMsg = new StringBuffer();
 			statusMsg.append("Task completed");
 			List<Agent> agents = env.getAgents();
 			if (agents.size() == 1) {
-				Double travelDistance = env.getAgentTravelDistance(
-						agents.get(0));
+				Double travelDistance = env.getAgentTravelDistance(agents
+						.get(0));
 				if (travelDistance != null) {
 					DecimalFormat f = new DecimalFormat("#0.0");
 					statusMsg.append("; travel distance: "
@@ -191,11 +195,10 @@ public class OsmAgentController extends AgentAppController {
 			frame.setStatus(statusMsg.toString());
 		}
 	}
-	
 
-	////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////
 	// local classes
-	
+
 	/**
 	 * Returns always the heuristic value 0.
 	 */
@@ -207,9 +210,9 @@ public class OsmAgentController extends AgentAppController {
 	}
 
 	/**
-	 * A simple heuristic which interprets <code>state</code> and
-	 * {@link #goal} as location names and uses the straight-line distance
-	 * between them as heuristic value.
+	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
+	 * as location names and uses the straight-line distance between them as
+	 * heuristic value.
 	 */
 	static class H2 extends AdaptableHeuristicFunction {
 
@@ -219,7 +222,7 @@ public class OsmAgentController extends AgentAppController {
 			Point2D pt2 = map.getPosition((String) goal);
 			if (pt1 != null && pt2 != null)
 				result = pt1.distance(pt2);
-			//System.out.println(state + ": " + result);
+			// System.out.println(state + ": " + result);
 			return result;
 		}
 	}
