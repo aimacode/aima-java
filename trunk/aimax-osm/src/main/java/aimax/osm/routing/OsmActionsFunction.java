@@ -51,7 +51,7 @@ public class OsmActionsFunction implements ActionsFunction {
 					if (goal == null || goal == to
 							|| to.getWayRefs().size() > 1
 							|| idx == wayNodes.size() - 1) {
-						result.add(new OsmMoveAction(way, from, to));
+						result.add(new OsmMoveAction(way, nodeIdx, idx));
 						break;
 					}
 				}
@@ -60,7 +60,7 @@ public class OsmActionsFunction implements ActionsFunction {
 						to = wayNodes.get(idx);
 						if (goal == null || goal == to
 								|| to.getWayRefs().size() > 1 || idx == 0) {
-							result.add(new OsmMoveAction(way, from, to));
+							result.add(new OsmMoveAction(way, nodeIdx, idx));
 							break;
 						}
 					}

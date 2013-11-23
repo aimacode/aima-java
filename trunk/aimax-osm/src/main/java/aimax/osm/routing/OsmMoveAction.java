@@ -17,12 +17,11 @@ public class OsmMoveAction implements Action {
 	private int fromIndex;
 	private int toIndex;
 	
-	/** It is assumed that both nodes are part of the way. */
-	public OsmMoveAction(MapWay way, MapNode fromNode, MapNode toNode) {
-		List<MapNode> nodes = way.getNodes();
+	/** The indices correspond to the list of nodes stored with the way. */
+	public OsmMoveAction(MapWay way, int fromNodeIdx, int toNodeIdx) {
 		this.way = way;
-		fromIndex = nodes.indexOf(fromNode);
-		toIndex = nodes.indexOf(toNode);
+		fromIndex = fromNodeIdx;
+		toIndex = toNodeIdx;
 	}
 	
 	public MapWay getWay() {
