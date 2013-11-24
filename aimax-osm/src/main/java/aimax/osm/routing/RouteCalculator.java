@@ -17,7 +17,8 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
 /**
- * Implements a search engine for shortest path calculations.
+ * Implements a search engine for shortest path calculations. Modified versions
+ * can be implemented quite easily by overriding the various factory methods.
  * 
  * @author Ruediger Lunde
  */
@@ -32,11 +33,11 @@ public class RouteCalculator {
 	 * Template method, responsible for shortest path generation between two map
 	 * nodes. It searches for way nodes in the vicinity of the given nodes which
 	 * comply with the specified way selection, searches for a suitable paths,
-	 * and adds the paths as tracks to the provided <code>map</code>. The
-	 * three factory methods can be used to override aspects of the default
-	 * behavior in subclasses if needed.
+	 * and adds the paths as tracks to the provided <code>map</code>. Various
+	 * factory methods can be used to override aspects of the default behavior
+	 * in subclasses if needed.
 	 * 
-	 * @param locs
+	 * @param markers
 	 *            Nodes, not necessarily way nodes. The first node is used as
 	 *            start, last node as finish, all others as via nodes.
 	 * @param map
@@ -44,24 +45,20 @@ public class RouteCalculator {
 	 * @param waySelection
 	 *            Number, indicating which kinds of ways are relevant.
 	 */
-	public List<Position> calculateRoute(List<MapNode> locs, OsmMap map,
+	public List<Position> calculateRoute(List<MapNode> markers, OsmMap map,
 			int waySelection) {
 		List<Position> result = new ArrayList<Position>();
 		try {
 			MapWayFilter wayFilter = createMapWayFilter(map, waySelection);
 			boolean ignoreOneways = (waySelection == 0);
-			MapNode fromNode = map.getNearestWayNode(new Position(locs
-					.get(0)), wayFilter);
-			result.add(new Position(fromNode.getLat(), fromNode.getLon()));
-			for (int i = 1; i < locs.size()
+			List<MapNode[]> pNodeList = subdivideProblem(markers, map, wayFilter);
+			for (int i = 0; i < pNodeList.size()
 					&& !CancelableThread.currIsCanceled(); i++) {
-				MapNode toNode = map.getNearestWayNode(new Position(locs
-						.get(i)), wayFilter);
-				HeuristicFunction hf = createHeuristicFunction(toNode,
+				Problem problem = createProblem(pNodeList.get(i), map, wayFilter,
+						ignoreOneways, waySelection);
+				HeuristicFunction hf = createHeuristicFunction(pNodeList.get(i),
 						waySelection);
-				Problem problem = createProblem(fromNode, toNode, map,
-						wayFilter, ignoreOneways, waySelection);
-				Search search = new AStarSearch(new GraphSearch(), hf);
+				Search search = createSearch(hf, waySelection);
 				List<Action> actions = search.search(problem);
 				if (actions.isEmpty())
 					break;
@@ -69,12 +66,12 @@ public class RouteCalculator {
 					if (action instanceof OsmMoveAction) {
 						OsmMoveAction a = (OsmMoveAction) action;
 						for (MapNode node : a.getNodes())
-							if (!node.equals(a.getFrom()))
+							if (result.isEmpty()
+									|| result.get(result.size() - 1) != node)
 								result.add(new Position(node.getLat(), node
 										.getLon()));
 					}
 				}
-				fromNode = toNode;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,17 +89,41 @@ public class RouteCalculator {
 			return MapWayAttFilter.createAnyWayFilter();
 	}
 
-	/** Factory method, responsible for heuristic function creation. */
-	protected HeuristicFunction createHeuristicFunction(MapNode toRNode,
-			int waySelection) {
-		return new OsmSldHeuristicFunction(toRNode);
+	/**
+	 * Factory method, responsible for subdividing the overall problem which is
+	 * specified by a list of marker nodes. It returns arrays of way nodes.
+	 * The arrays will be used to define problems to be solved one after
+	 * another. This implementation returns pairs of from and to way nodes.
+	 */
+	protected List<MapNode[]> subdivideProblem(List<MapNode> markers,
+			OsmMap map, MapWayFilter wayFilter) {
+		List<MapNode[]> result = new ArrayList<MapNode[]>();
+		MapNode fromNode = map.getNearestWayNode(new Position(markers.get(0)),
+				wayFilter);
+		for (int i = 1; i < markers.size(); i++) {
+			MapNode toNode = map.getNearestWayNode(
+					new Position(markers.get(i)), wayFilter);
+			result.add(new MapNode[] { fromNode, toNode });
+			fromNode = toNode;
+		}
+		return result;
 	}
 
 	/** Factory method, responsible for problem creation. */
-	protected Problem createProblem(MapNode fromNode, MapNode toNode,
-			OsmMap map, MapWayFilter wayFilter, boolean ignoreOneways,
-			int waySelection) {
-		return new RouteFindingProblem(fromNode, toNode, wayFilter,
+	protected Problem createProblem(MapNode[] pNodes, OsmMap map,
+			MapWayFilter wayFilter, boolean ignoreOneways, int waySelection) {
+		return new RouteFindingProblem(pNodes[0], pNodes[1], wayFilter,
 				ignoreOneways);
+	}
+
+	/** Factory method, responsible for heuristic function creation. */
+	protected HeuristicFunction createHeuristicFunction(MapNode[] pNodes,
+			int waySelection) {
+		return new OsmSldHeuristicFunction(pNodes[1]);
+	}
+	
+	/** Factory method, responsible for search creation. */
+	protected Search createSearch(HeuristicFunction hf, int waySelection) {
+		return new AStarSearch(new GraphSearch(), hf);
 	}
 }

@@ -48,11 +48,11 @@ public class RoutePlannerApp implements ActionListener {
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");
-		calcButton.setEnabled(frame.getMap().getMarkers().size() >= 2);
 		calcButton.addActionListener(this);
 		toolbar.add(calcButton);
 
 		frame.getMap().addMapDataEventListener(new MapDataEventHandler());
+		updateEnabledState();
 	}
 
 	/**
@@ -93,14 +93,21 @@ public class RoutePlannerApp implements ActionListener {
 	}
 
 	/**
-	 * Updates the info field based on events sent by the MapViewPane.
+	 * Enables the Calculate button if at least two markers are set.
+	 */
+	protected void updateEnabledState() {
+		calcButton.setEnabled(frame.getMap().getMarkers().size() > 1);
+	}
+	
+	/**
+	 * Updates the enabled state of the GUI.
 	 * 
 	 * @author Ruediger Lunde
 	 */
 	class MapDataEventHandler implements MapEventListener {
 		@Override
 		public void eventHappened(MapEvent event) {
-			calcButton.setEnabled(frame.getMap().getMarkers().size() > 1);
+			updateEnabledState();
 		}
 	}
 
