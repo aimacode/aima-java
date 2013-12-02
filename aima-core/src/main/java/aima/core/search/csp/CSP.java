@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
+import javax.swing.event.ListSelectionListener;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202.<br>
  * <br>
@@ -32,26 +34,29 @@ public class CSP {
 	 */
 	private Hashtable<Variable, List<Constraint>> cnet;
 
-	private CSP() {
-	}
-
-	/** Creates a new CSP for a fixed set of variables. */
-	public CSP(List<Variable> vars) {
-		variables = new ArrayList<Variable>(vars.size());
-		domains = new ArrayList<Domain>(vars.size());
+	/** Creates a new CSP. */
+	public CSP() {
+		variables = new ArrayList<Variable>();
+		domains = new ArrayList<Domain>();
 		constraints = new ArrayList<Constraint>();
 		varIndexHash = new Hashtable<Variable, Integer>();
 		cnet = new Hashtable<Variable, List<Constraint>>();
-		Domain emptyDomain = new Domain(new ArrayList<Object>(0));
-		int index = 0;
-		for (Variable var : vars) {
-			variables.add(var);
-			domains.add(emptyDomain);
-			varIndexHash.put(var, index++);
-			cnet.put(var, new ArrayList<Constraint>());
-		}
+	}
+	
+	/** Creates a new CSP. */
+	public CSP(List<Variable> vars) {
+		for (Variable v : vars)
+			addVariable(v);
 	}
 
+	protected void addVariable(Variable var) {
+		Domain emptyDomain = new Domain(Collections.emptyList());
+		variables.add(var);
+		domains.add(emptyDomain);
+		varIndexHash.put(var, variables.size()-1);
+		cnet.put(var, new ArrayList<Constraint>());
+	}
+	
 	public List<Variable> getVariables() {
 		return Collections.unmodifiableList(variables);
 	}
@@ -81,6 +86,12 @@ public class CSP {
 		setDomain(var, new Domain(values));
 	}
 
+	public void addConstraint(Constraint constraint) {
+		constraints.add(constraint);
+		for (Variable var : constraint.getScope())
+			cnet.get(var).add(constraint);
+	}
+	
 	public List<Constraint> getConstraints() {
 		return constraints;
 	}
@@ -90,12 +101,6 @@ public class CSP {
 	 */
 	public List<Constraint> getConstraints(Variable var) {
 		return cnet.get(var);
-	}
-
-	public void addConstraint(Constraint constraint) {
-		constraints.add(constraint);
-		for (Variable var : constraint.getScope())
-			cnet.get(var).add(constraint);
 	}
 
 	/**
