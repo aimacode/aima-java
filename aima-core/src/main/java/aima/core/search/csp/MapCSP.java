@@ -1,7 +1,5 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.1, Page 204.<br>

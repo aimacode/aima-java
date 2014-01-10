@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.event.ListSelectionListener;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.1, Page 202.<br>
  * <br>
