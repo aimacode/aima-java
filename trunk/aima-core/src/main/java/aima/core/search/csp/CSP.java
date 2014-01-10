@@ -45,6 +45,7 @@ public class CSP {
 	
 	/** Creates a new CSP. */
 	public CSP(List<Variable> vars) {
+		this();
 		for (Variable v : vars)
 			addVariable(v);
 	}
