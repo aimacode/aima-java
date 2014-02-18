@@ -39,6 +39,7 @@ CURRENTLY TODO
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
   * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
   * Fixed Issue 80, small bug in XYLocation.hashCode()
+  * Fixed Issue 83, Wrong time variable used in WumpusWorldKnowledgeBase,java
  
 = Details =
 

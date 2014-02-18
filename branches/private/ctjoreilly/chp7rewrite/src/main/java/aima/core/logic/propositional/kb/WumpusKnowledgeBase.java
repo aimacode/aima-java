@@ -257,7 +257,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 						+ " ) )");
 
 				String s = "( L" + time + "_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ( ( L" + time + "_" + x
+						+ Connective.BICONDITIONAL + " ( ( L" + t + "_" + x
 						+ "_" + y + " " + Connective.AND + " ( ( "
 						+ Connective.NOT + " Forward" + t + " ) "
 						+ Connective.OR + " Bump" + time + " ) )";
