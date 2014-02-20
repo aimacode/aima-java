@@ -1,4 +1,4 @@
-package aima.core.logic.propositional.agent;
+package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,15 +9,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.DynamicAction;
-import aima.core.environment.wumpusworld.ForwardAction;
-import aima.core.environment.wumpusworld.ManhattanHeuristicFunction;
-import aima.core.environment.wumpusworld.ShotAction;
-import aima.core.environment.wumpusworld.TurnAction;
-import aima.core.environment.wumpusworld.WumpusCave;
-import aima.core.environment.wumpusworld.WumpusFunctionFactory;
-import aima.core.environment.wumpusworld.WumpusPosition;
-import aima.core.environment.wumpusworld.WumpusPercept;
-import aima.core.logic.propositional.kb.WumpusKnowledgeBase;
 import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.HeuristicFunction;

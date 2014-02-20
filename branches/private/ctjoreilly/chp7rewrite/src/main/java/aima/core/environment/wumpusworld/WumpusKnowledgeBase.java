@@ -1,9 +1,8 @@
-package aima.core.logic.propositional.kb;
+package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicAction;
-import aima.core.environment.wumpusworld.TurnAction;
-import aima.core.environment.wumpusworld.WumpusPercept;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.Connective;
 
 /**
