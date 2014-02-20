@@ -23,7 +23,7 @@ public class WumpusCave {
 
 		for (int x = 1; x <= caveXDimension; x++) {
 			for (int y = 1; y <= caveYDimension; y++) {
-				for (int k = 0; k < 3; k++) {
+				for (int k = 0; k <= 3; k++) { // orientation
 					allowedPositions.put(String.valueOf(x) + String.valueOf(y)
 							+ String.valueOf(k), new WumpusPosition(x, y, k));
 				}
