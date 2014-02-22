@@ -6,11 +6,12 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
+. @ 7.3
 . Review/Clean up contributed source in:
   - aima\core\environment\wumpusworld\
     . make code more closely follow description at beginning of chapter.
   - HybridWumpusAgent
-    . Make extend KB-AGENT from figure 7.1.
+    . Make extend KB-AGENT from figure 7.1.?
   - WumpusKnowledgeBase
   - WumpusFunctionFactoryTest
 . Ensure new propositional logic:
@@ -35,6 +36,8 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book.
+// TODO correct issue # and comment
+  * Fixed Issue ??, Add implementation of - Fig 7.1 KB-Agent
   * Fixed Issue 32, Add implementation of - Fig 7.20 Hybrid-Wumpus-Agent 
   * Fixed Issue 72, Propositional CNF parsing issue.
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
@@ -105,7 +108,7 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   6.8 ||     221|| Min-Conflicts                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java MinConflictsStrategy]||
 ||   6.11||     209|| Tree-CSP-Solver              ||---||
 ||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java KnowledgeBase]||
-||   7.1 ||     236|| KB-Agent                     ||---||
+||   7.1 ||     236|| KB-Agent                     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java KBAgent]||
 ||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/PLParser.java PLParser]||
 ||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java TTEntails]||
 ||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java ConvertToCNF]||

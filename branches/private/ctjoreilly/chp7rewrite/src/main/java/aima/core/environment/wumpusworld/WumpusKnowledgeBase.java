@@ -174,14 +174,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 */
 	public void makeActionSentence(Action a, int time) {
 		String actionName = ((DynamicAction) a).getName();
-		if (actionName.equals("Turn")) {
-			this.tell(actionName
-					+ ((DynamicAction) a)
-							.getAttribute(TurnAction.ATTRIBUTE_DIRECTION)
-					+ time);
-		} else {
-			this.tell(actionName + time);
-		}
+		this.tell(actionName + time);
 	}
 
 	/**
@@ -192,7 +185,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 * @param time
 	 *            current time
 	 */
-	public void makePerceptSentence(WumpusPercept p, int time) {
+	public void makePerceptSentence(AgentPercept p, int time) {
 		if (p.isStench()) {
 			this.tell("Stench" + time);
 		} else {

@@ -1,147 +1,67 @@
 package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 236.<br>
+ * <br>
+ * The <b>wumpus world</b> is a cave consisting of rooms connected by
+ * passageways. The rooms are always organized into a grid. See Figure 7.2 for
+ * an example.
+ * 
  * @author Federico Baron
  * @author Alessandro Daniele
- * 
+ * @author Ciaran O'Reilly
  */
 public class WumpusCave {
 
 	private int caveXDimension;
 	private int caveYDimension;
 
-	private HashMap<String, WumpusPosition> allowedPositions;
+	private Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
 
+	/**
+	 * Create a grid of rooms of dimensions x and y, representing the wumpus's
+	 * cave.
+	 * 
+	 * @param caveXDimension
+	 *            the cave's x dimension.
+	 * @param caveYDimension
+	 *            the cave's y dimension.
+	 */
 	public WumpusCave(int caveXDimension, int caveYDimension) {
-		this.caveXDimension = caveXDimension;
-		this.caveYDimension = caveYDimension;
-		allowedPositions = new HashMap<String, WumpusPosition>();
-
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
-				for (int k = 0; k <= 3; k++) { // orientation
-					allowedPositions.put(String.valueOf(x) + String.valueOf(y)
-							+ String.valueOf(k), new WumpusPosition(x, y, k));
-				}
-
-			}
-		}
+		this(caveXDimension, caveYDimension, defaultAllowedPositions(
+				caveXDimension, caveYDimension));
 	}
 
+	/**
+	 * Create a grid of rooms of dimensions x and y, representing the wumpus's
+	 * cave.
+	 * 
+	 * @param caveXDimension
+	 *            the cave's x dimension.
+	 * @param caveYDimension
+	 *            the cave's y dimension.
+	 * @param allowedPositions
+	 *            the set of legal agent positions that can be reached within
+	 *            the cave.
+	 */
 	public WumpusCave(int caveXDimension, int caveYDimension,
-			HashMap<String, WumpusPosition> allowedPositions) {
+			Set<AgentPosition> allowedPositions) {
+		if (caveXDimension < 1) {
+			throw new IllegalArgumentException(
+					"Cave must have x dimension >= 1");
+		}
+		if (caveYDimension < 1) {
+			throw new IllegalArgumentException(
+					"Case must have y dimension >= 1");
+		}
 		this.caveXDimension = caveXDimension;
 		this.caveYDimension = caveYDimension;
-		this.allowedPositions = allowedPositions;
-	}
-
-	public List<WumpusPosition> getLocationsLinkedTo(WumpusPosition fromLocation) {
-
-		int x = (int) fromLocation.getLocation().getX();
-		int y = (int) fromLocation.getLocation().getY();
-		int orientation = fromLocation.getOrientation();
-
-		List<WumpusPosition> result = new ArrayList<WumpusPosition>();
-
-		switch (orientation) {
-		case WumpusPosition.ORIENTATION_SOUTH:
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_WEST))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_WEST));
-			}
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_EAST))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_EAST));
-			}
-
-			if (y > 1) {
-				if (allowedPositions.containsKey(String.valueOf(x)
-						+ String.valueOf(y - 1)
-						+ String.valueOf(WumpusPosition.ORIENTATION_SOUTH))) {
-					result.add(new WumpusPosition(x, y - 1,
-							WumpusPosition.ORIENTATION_SOUTH));
-				}
-			}
-			break;
-		case WumpusPosition.ORIENTATION_NORTH:
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_WEST))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_WEST));
-			}
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_EAST))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_EAST));
-			}
-			if (y < caveYDimension) {
-				if (allowedPositions.containsKey(String.valueOf(x)
-						+ String.valueOf(y + 1)
-						+ String.valueOf(WumpusPosition.ORIENTATION_NORTH))) {
-					result.add(new WumpusPosition(x, y + 1,
-							WumpusPosition.ORIENTATION_NORTH));
-				}
-			}
-			break;
-		case WumpusPosition.ORIENTATION_WEST:
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_NORTH))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_NORTH));
-			}
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_SOUTH))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_SOUTH));
-			}
-			if (x > 1) {
-				if (allowedPositions.containsKey(String.valueOf(x - 1)
-						+ String.valueOf(y)
-						+ String.valueOf(WumpusPosition.ORIENTATION_WEST))) {
-					result.add(new WumpusPosition(x - 1, y,
-							WumpusPosition.ORIENTATION_WEST));
-				}
-			}
-			break;
-		case WumpusPosition.ORIENTATION_EAST:
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_NORTH))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_NORTH));
-			}
-			if (allowedPositions.containsKey(String.valueOf(x)
-					+ String.valueOf(y)
-					+ String.valueOf(WumpusPosition.ORIENTATION_SOUTH))) {
-				result.add(new WumpusPosition(x, y,
-						WumpusPosition.ORIENTATION_SOUTH));
-			}
-			if (x < caveXDimension) {
-				if (allowedPositions.containsKey(String.valueOf(x + 1)
-						+ String.valueOf(y)
-						+ String.valueOf(WumpusPosition.ORIENTATION_EAST))) {
-					result.add(new WumpusPosition(x + 1, y,
-							WumpusPosition.ORIENTATION_EAST));
-				}
-			}
-			break;
-		default:
-			break;
-		}
-
-		return result;
+		this.allowedPositions.addAll(allowedPositions);
 	}
 
 	public int getCaveXDimension() {
@@ -152,8 +72,82 @@ public class WumpusCave {
 		return caveYDimension;
 	}
 
-	public void addAllowedPosition(WumpusPosition pos) {
-		allowedPositions.put(pos.toString(), pos);
+	public List<AgentPosition> getLocationsLinkedTo(AgentPosition fromLocation) {
+
+		int x = fromLocation.getX();
+		int y = fromLocation.getY();
+		AgentPosition.Orientation orientation = fromLocation.getOrientation();
+
+		List<AgentPosition> result = new ArrayList<AgentPosition>();
+
+		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1,
+				AgentPosition.Orientation.FACING_UP);
+		AgentPosition currentForwardSouth = new AgentPosition(x, y - 1,
+				AgentPosition.Orientation.FACING_DOWN);
+		AgentPosition currentForwardEast = new AgentPosition(x + 1, y,
+				AgentPosition.Orientation.FACING_RIGHT);
+		AgentPosition currentForwardWest = new AgentPosition(x - 1, y,
+				AgentPosition.Orientation.FACING_LEFT);
+		AgentPosition currentNorth = new AgentPosition(x, y,
+				AgentPosition.Orientation.FACING_UP);
+		AgentPosition currentSouth = new AgentPosition(x, y,
+				AgentPosition.Orientation.FACING_DOWN);
+		AgentPosition currentEast = new AgentPosition(x, y,
+				AgentPosition.Orientation.FACING_RIGHT);
+		AgentPosition currentWest = new AgentPosition(x, y,
+				AgentPosition.Orientation.FACING_LEFT);
+
+		switch (orientation) {
+		case FACING_UP:
+			addIfAllowed(currentForwardNorth, result);
+			addIfAllowed(currentEast, result);
+			addIfAllowed(currentWest, result);
+			break;
+		case FACING_DOWN:
+			addIfAllowed(currentForwardSouth, result);
+			addIfAllowed(currentEast, result);
+			addIfAllowed(currentWest, result);
+			break;
+		case FACING_RIGHT:
+			addIfAllowed(currentNorth, result);
+			addIfAllowed(currentSouth, result);
+			addIfAllowed(currentForwardEast, result);
+			break;
+		case FACING_LEFT:
+			addIfAllowed(currentNorth, result);
+			addIfAllowed(currentSouth, result);
+			addIfAllowed(currentForwardWest, result);
+			break;
+		}
+
+		return result;
+	}
+
+	//
+	// PRIVATE
+	//
+	private static Set<AgentPosition> defaultAllowedPositions(
+			int caveXDimension, int caveYDimension) {
+		Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
+		// Create the default set of allowed positions within the cave that
+		// an agent may occupy.
+		for (int x = 1; x <= caveXDimension; x++) {
+			for (int y = 1; y <= caveYDimension; y++) {
+				for (AgentPosition.Orientation orientation : AgentPosition.Orientation
+						.values()) {
+					allowedPositions.add(new AgentPosition(x, y, orientation));
+				}
+
+			}
+		}
+		return allowedPositions;
+	}
+
+	private void addIfAllowed(AgentPosition position,
+			List<AgentPosition> positions) {
+		if (allowedPositions.contains(position)) {
+			positions.add(position);
+		}
 	}
 
 }

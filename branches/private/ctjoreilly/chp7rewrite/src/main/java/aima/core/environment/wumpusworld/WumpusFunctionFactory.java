@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.search.framework.ActionsFunction;
 import aima.core.search.framework.ResultFunction;
 
 /**
  * @author Federico Baron
  * @author Alessandro Daniele
- * 
+ * @author Ciaran O'Reilly
  */
 public class WumpusFunctionFactory {
 	private static ResultFunction resultFunction = null;
@@ -37,20 +40,20 @@ public class WumpusFunctionFactory {
 		@Override
 		public Set<Action> actions(Object state) {
 			Set<Action> actions = new LinkedHashSet<Action>();
-			WumpusPosition position = null;
+			AgentPosition position = null;
 			try {
-				position = (WumpusPosition) state;
+				position = (AgentPosition) state;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			List<WumpusPosition> linkedPositions = cave.getLocationsLinkedTo(position);
-			for (WumpusPosition linkPos : linkedPositions) {
-				if (linkPos.getLocation().getX() != position.getLocation().getX() || linkPos.getLocation().getY() != position.getLocation().getY())
-					actions.add(new ForwardAction(position));
+			List<AgentPosition> linkedPositions = cave.getLocationsLinkedTo(position);
+			for (AgentPosition linkPos : linkedPositions) {
+				if (linkPos.getX() != position.getX() || linkPos.getY() != position.getY())
+					actions.add(new Forward(position));
 			}
-			actions.add(new TurnAction(position.getOrientation(),TurnAction.DIRECTION_LEFT));
-			actions.add(new TurnAction(position.getOrientation(),TurnAction.DIRECTION_RIGHT));
+			actions.add(new TurnLeft(position.getOrientation()));
+			actions.add(new TurnRight(position.getOrientation()));
 
 			return actions;
 		}
@@ -63,17 +66,22 @@ public class WumpusFunctionFactory {
 		@Override
 		public Object result(Object s, Action a) {
 
-			if (a instanceof ForwardAction) {
-				ForwardAction fa = (ForwardAction) a;
+			if (a instanceof Forward) {
+				Forward fa = (Forward) a;
 				
 				return fa.getToPosition();
 			}
-			
-			if (a instanceof TurnAction) {
-				TurnAction ta = (TurnAction) a;
-				WumpusPosition res = (WumpusPosition) s;
+			else if (a instanceof TurnLeft) {
+				TurnLeft tLeft = (TurnLeft) a;
+				AgentPosition res = (AgentPosition) s;
 
-				return new WumpusPosition((int)res.getLocation().getX(), (int)res.getLocation().getY(), ta.getToOrientation());
+				return new AgentPosition(res.getX(), res.getY(), tLeft.getToOrientation());
+			}
+			else if (a instanceof TurnRight) {
+				TurnRight tRight = (TurnRight) a;
+				AgentPosition res = (AgentPosition) s;
+
+				return new AgentPosition(res.getX(), res.getY(), tRight.getToOrientation());
 			}
 
 			// The Action is not understood or is a NoOp

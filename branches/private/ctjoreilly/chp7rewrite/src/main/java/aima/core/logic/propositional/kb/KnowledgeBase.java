@@ -30,9 +30,19 @@ public class KnowledgeBase {
 	 *            a fact to be added to the knowledge base.
 	 */
 	public void tell(String aSentence) {
-		Sentence sentence = (Sentence) parser.parse(aSentence);
-		if (!(sentences.contains(sentence))) {
-			sentences.add(sentence);
+		tell((Sentence) parser.parse(aSentence));
+		
+	}
+	
+	/**
+	 * Adds the specified sentence to the knowledge base.
+	 * 
+	 * @param aSentence
+	 *            a fact to be added to the knowledge base.
+	 */
+	public void tell(Sentence aSentence) {
+		if (!(sentences.contains(aSentence))) {
+			sentences.add(aSentence);
 		}
 	}
 
@@ -92,8 +102,9 @@ public class KnowledgeBase {
 	public String toString() {
 		if (sentences.size() == 0) {
 			return "";
-		} else
+		} else {
 			return asSentence().toString();
+		}
 	}
 
 	/**

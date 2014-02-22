@@ -1,43 +1,42 @@
 package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.util.datastructure.Point2D;
 
 /**
  * @author Federico Baron
  * @author Alessandro Daniele
- * 
+ * @author Ciaran O'Reilly
  */
 public class ManhattanHeuristicFunction implements HeuristicFunction {
 	
-	ArrayList<Point2D> goals;
+	List<Room> goals = new ArrayList<Room>();
 	
-	public ManhattanHeuristicFunction(ArrayList<Point2D> goals) {
-		this.goals = goals;
+	public ManhattanHeuristicFunction(List<Room> goals) {
+		this.goals.addAll(goals);
 	}
 	
 	@Override
 	public double h(Object state) {
-		WumpusPosition pos = (WumpusPosition) state;
+		AgentPosition pos = (AgentPosition) state;
 		int nearestGoalDist = Integer.MAX_VALUE;
-		for (Point2D g : goals) {
-			int tmp = evaluateManhattanDistanceOf(pos.getLocation(), g);
+		for (Room g : goals) {
+			int tmp = evaluateManhattanDistanceOf(pos.getX(), pos.getY(), g.getX(), g.getY());
 			
-			if (tmp < nearestGoalDist)
+			if (tmp < nearestGoalDist) {
 				nearestGoalDist = tmp;
+			}
 		}
 		
 		return nearestGoalDist;
 	}
 
-	public int evaluateManhattanDistanceOf(Point2D p1, Point2D p2) {
-		int x1 = (int)p1.getX(); 
-		int y1 = (int)p1.getY();
-		int x2 = (int)p2.getX();
-		int y2 = (int)p2.getY();
-		
+	//
+	// PRIVATE
+	//
+	private int evaluateManhattanDistanceOf(int x1, int y1, int x2, int y2) {		
 		return Math.abs(x1-x2) + Math.abs(y1-y2); 
 	}
 }
