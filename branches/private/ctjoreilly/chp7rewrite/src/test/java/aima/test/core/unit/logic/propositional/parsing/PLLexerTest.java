@@ -91,7 +91,7 @@ public class PLLexerTest {
 	@Test
 	public void testLexerException() {
 		try {
-			pllexer.setInput("A & B,1 & C");
+			pllexer.setInput("A & B.1 & C");
 			pllexer.nextToken();
 			pllexer.nextToken();
 			pllexer.nextToken();

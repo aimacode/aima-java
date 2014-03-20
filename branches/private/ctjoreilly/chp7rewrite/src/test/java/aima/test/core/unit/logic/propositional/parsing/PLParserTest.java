@@ -156,7 +156,7 @@ public class PLParserTest {
 		}
 		
 		try {
-			sentence = parser.parse("A A1,2");
+			sentence = parser.parse("A A1.2");
 			Assert.fail("A Parser Exception should have been thrown.");
 		} catch (ParserException pex) {
 			Assert.assertEquals(0, pex.getProblematicTokens().size());

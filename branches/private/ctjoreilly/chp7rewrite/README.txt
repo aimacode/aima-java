@@ -6,7 +6,7 @@
 == Current Release: 0.11.0-Chp7-Rewrite ==
 CURRENTLY TODO
 --------------
-. @ 7.3
+. @ 7.4.2
 . Review/Clean up contributed source in:
   - aima\core\environment\wumpusworld\
     . make code more closely follow description at beginning of chapter.
