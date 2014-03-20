@@ -22,6 +22,13 @@ public class WumpusCave {
 	private int caveYDimension;
 
 	private Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
+	
+	/**
+	 * Default Constructor. Create a Wumpus Case of default dimensions 4x4.
+	 */
+	public WumpusCave() {
+		this(4,4);
+	}
 
 	/**
 	 * Create a grid of rooms of dimensions x and y, representing the wumpus's

@@ -55,11 +55,11 @@ public class WumpusFunctionFactoryTest {
 			}
 			else if (a instanceof TurnLeft) { 
 				Assert.assertTrue(succOrientation.contains(((TurnLeft)a).getToOrientation()));
-				Assert.assertEquals("[1,1]->WEST", resultFunction.result(P11U, a).toString());
+				Assert.assertEquals("[1,1]->FACING_LEFT", resultFunction.result(P11U, a).toString());
 			}
 			else if (a instanceof TurnRight) {
 				Assert.assertTrue(succOrientation.contains(((TurnRight)a).getToOrientation()));
-				Assert.assertEquals("[1,1]->EAST", resultFunction.result(P11U, a).toString());
+				Assert.assertEquals("[1,1]->FACING_RIGHT", resultFunction.result(P11U, a).toString());
 			}
 		}
 		
