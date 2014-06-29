@@ -1,6 +1,7 @@
 package aima.core.environment.wumpusworld;
 
 /**
+ * Representation of an Agent's [x,y] position and orientation [up, down, right, or left] within a Wumpus World cave.
  * 
  * @author Federico Baron
  * @author Alessandro Daniele

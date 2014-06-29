@@ -6,6 +6,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.Connective;
 
 /**
+ * A Knowledge base tailored to the Wumpus World environment.
  * 
  * @author Federico Baron
  * @author Alessandro Daniele

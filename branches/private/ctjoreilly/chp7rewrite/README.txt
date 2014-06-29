@@ -36,8 +36,7 @@ CURRENTLY TODO
       * and -> &
       * or  -> |
     * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book.
-// TODO correct issue # and comment
-  * Fixed Issue ??, Add implementation of - Fig 7.1 KB-Agent
+  * Fixed Issue 31, Add implementation of - Fig 7.1 KB-Agent
   * Fixed Issue 32, Add implementation of - Fig 7.20 Hybrid-Wumpus-Agent 
   * Fixed Issue 72, Propositional CNF parsing issue.
   * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.

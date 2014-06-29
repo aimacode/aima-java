@@ -6,6 +6,8 @@ import java.util.List;
 import aima.core.search.framework.HeuristicFunction;
 
 /**
+ * Heuristic for calculating the Manhattan distance between two rooms within a Wumpus World cave.
+ * 
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly

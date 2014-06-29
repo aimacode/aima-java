@@ -18,8 +18,8 @@ import java.util.Set;
  */
 public class WumpusCave {
 
-	private int caveXDimension;
-	private int caveYDimension;
+	private int caveXDimension; // starts bottom left -> right
+	private int caveYDimension; // starts bottom left ^ up
 
 	private Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
 	

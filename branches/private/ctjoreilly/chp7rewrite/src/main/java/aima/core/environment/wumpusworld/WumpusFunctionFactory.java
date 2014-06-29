@@ -12,6 +12,8 @@ import aima.core.search.framework.ActionsFunction;
 import aima.core.search.framework.ResultFunction;
 
 /**
+ * Factory class for constructing functions for use in the Wumpus World environment.
+ * 
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
