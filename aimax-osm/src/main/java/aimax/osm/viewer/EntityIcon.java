@@ -91,6 +91,7 @@ public abstract class EntityIcon {
 			if (lineColor != null && !lineColor.equals(fillColor)) {
 				imageBdr.setColor(lineColor);
 				imageBdr.setLineStyle(false, displayFactor);
+				imageBdr.setAreaFilled(false);
 				switch (shape) {
 				case CIRCLE:
 					imageBdr.drawOval(x, y, dsize, dsize);
