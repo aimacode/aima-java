@@ -3,7 +3,7 @@ package aimax.osm.applications;
 import java.util.Locale;
 
 import aimax.osm.data.DataResource;
-import aimax.osm.viewer.MapViewFrame;
+import aimax.osm.viewer.swing.MapViewFrame;
 
 /**
  * Opens a <code>MapViewFrame</code> and initializes it with a

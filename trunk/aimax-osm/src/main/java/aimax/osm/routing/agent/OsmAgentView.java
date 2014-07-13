@@ -1,7 +1,6 @@
 package aimax.osm.routing.agent;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
@@ -24,8 +23,9 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.MapViewPane;
-import aimax.osm.viewer.MapViewPopup;
+import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.swing.MapViewPane;
+import aimax.osm.viewer.swing.MapViewPopup;
 
 /**
  * Visualizes agent positions and movements in an OSM map. It is assumed that
@@ -50,11 +50,11 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		EntityClassifier<EntityViewInfo> eClassifier = msf
 				.createDefaultClassifier();
 		eClassifier.addRule("track_type", TRACK_NAME + 0, msf
-				.createTrackInfo(Color.RED));
+				.createTrackInfo(UnifiedColor.RED));
 		eClassifier.addRule("track_type", TRACK_NAME + 1, msf
-				.createTrackInfo(Color.GREEN));
+				.createTrackInfo(UnifiedColor.GREEN));
 		eClassifier.addRule("track_type", TRACK_NAME + 2, msf
-				.createTrackInfo(Color.BLUE));
+				.createTrackInfo(UnifiedColor.BLUE));
 		mapData.setEntityClassifier(eClassifier);
 		mapViewPane = new MapViewPane();
 		mapViewPane.setMap(mapData);

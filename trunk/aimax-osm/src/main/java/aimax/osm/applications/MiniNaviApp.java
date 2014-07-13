@@ -30,7 +30,7 @@ import aimax.osm.gps.NmeaReader.MessageToFileListener;
 import aimax.osm.routing.RouteCalculator;
 import aimax.osm.viewer.AbstractEntityRenderer;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.MapViewFrame;
+import aimax.osm.viewer.swing.MapViewFrame;
 
 /**
  * Configurable application which shows a map and location information from a

@@ -1,6 +1,5 @@
 package aimax.osm.applications;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
@@ -14,8 +13,9 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.MapViewFrame;
-import aimax.osm.viewer.MapViewPane;
+import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.swing.MapViewFrame;
+import aimax.osm.viewer.swing.MapViewPane;
 
 
 /**
@@ -97,12 +97,12 @@ public class OsmViewerPlusApp implements ActionListener {
 			if (nightButton.isSelected()) {
 				EntityClassifier<EntityViewInfo> eClassifier = 
 					new MapStyleFactory().createNightViewClassifier();
-				frame.getView().getRenderer().setBackgroundColor(Color.BLACK);
+				frame.getView().getRenderer().setBackgroundColor(UnifiedColor.BLACK);
 				frame.getMap().setEntityClassifier(eClassifier);
 			} else {
 				EntityClassifier<EntityViewInfo> eClassifier =
 					new MapStyleFactory().createDefaultClassifier();
-				frame.getView().getRenderer().setBackgroundColor(Color.WHITE);
+				frame.getView().getRenderer().setBackgroundColor(UnifiedColor.WHITE);
 				frame.getMap().setEntityClassifier(eClassifier);
 			}		
 		}

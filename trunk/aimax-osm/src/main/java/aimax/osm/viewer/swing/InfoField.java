@@ -1,4 +1,4 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -11,44 +11,47 @@ import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.Track;
+import aimax.osm.viewer.MapViewEvent;
+import aimax.osm.viewer.MapViewEventListener;
 
 public class InfoField extends JTextField {
 	private static final long serialVersionUID = 1L;
-	
+
 	private MapEventHandler eventHandler;
-	
+
 	public InfoField(MapViewPane view, OsmMap map) {
 		super(20);
 		setEditable(false);
 		eventHandler = new MapEventHandler(this, view, map);
 	}
-	
-	
+
 	public MapEventListener getMapDataEventListener() {
 		return eventHandler;
 	}
-	
+
 	public MapViewEventListener getMapViewEventListener() {
 		return eventHandler;
 	}
-	
+
 	/**
 	 * Updates the info field based on events sent by the MapViewPane.
 	 * 
 	 * @author R. Lunde
 	 */
-	static class MapEventHandler implements MapViewEventListener, MapEventListener {
+	static class MapEventHandler implements MapViewEventListener,
+			MapEventListener {
 
 		private JTextField infoField;
 		private MapViewPane view;
 		private OsmMap map;
-		
-		public MapEventHandler(JTextField infoField, MapViewPane view, OsmMap map) {
+
+		public MapEventHandler(JTextField infoField, MapViewPane view,
+				OsmMap map) {
 			this.infoField = infoField;
 			this.map = map;
 			this.view = view;
 		}
-		
+
 		@Override
 		public void eventHappened(MapViewEvent event) {
 			if (event.getType() == MapViewEvent.Type.ZOOM) {
@@ -68,13 +71,12 @@ public class InfoField extends JTextField {
 				}
 			}
 		}
-		
+
 		@Override
 		public void eventHappened(MapEvent event) {
 			if (event.getType() == MapEvent.Type.MAP_NEW) {
-				infoField.setText("Ways: " + map.getWayCount()
-						+ ", Nodes: " + map.getNodeCount() + ", POIs: "
-						+ map.getPoiCount());
+				infoField.setText("Ways: " + map.getWayCount() + ", Nodes: "
+						+ map.getNodeCount() + ", POIs: " + map.getPoiCount());
 			} else if (event.getType() == MapEvent.Type.MARKER_ADDED) {
 				List<MapNode> nodes = map.getMarkers();
 				DecimalFormat f1 = new DecimalFormat("#0.00");

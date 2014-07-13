@@ -1,11 +1,6 @@
 package aimax.osm.viewer;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,12 +41,11 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	protected List<Track> trackBuffer;
 	protected List<NameInfo> nameInfoBuffer;
 	private List<MapNode> tmpNodeBuffer; // to improve thread-safety
-	private BasicStroke standardStroke;
 
 	/** Standard constructor. */
 	public DefaultEntityRenderer() {
 		wayNodeHash = new Hashtable<Long, List<MapNode>>();
-		setBackgroundColor(Color.WHITE);
+		setBackgroundColor(UnifiedColor.WHITE);
 		areaBuffer = new ArrayList<MapWay>();
 		wayBuffer = new ArrayList<MapWay>();
 		nodeBuffer = new ArrayList<MapEntity>();
@@ -62,15 +56,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 	/** Clears all buffers and prepares rendering. */
 	@Override
-	public void initForRendering(Graphics2D g2, CoordTransformer transformer,
-			WayNodeProvider wnProvider) {
-		super.initForRendering(g2, transformer, wnProvider);
+	public void initForRendering(UnifiedImageBuilder imageBdr,
+			CoordTransformer transformer, WayNodeProvider wnProvider) {
+		super.initForRendering(imageBdr, transformer, wnProvider);
 		wayNodeHash.clear();
 
 		scale = transformer.computeScale();
 		displayFactorSym = displayFactor * transformer.getDotsPerUnit();
-		g2.setFont(g2.getFont().deriveFont(defaultFontSize * displayFactorSym));
-		standardStroke = new BasicStroke(displayFactor);
+		imageBdr.setFontSize(defaultFontSize * displayFactorSym);
 		areaBuffer.clear();
 		wayBuffer.clear();
 		nodeBuffer.clear();
@@ -87,7 +80,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the map node which is the nearest with respect to the specified
 	 * view coordinates among the currently displayed nodes.
@@ -109,7 +102,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		for (MapEntity node : nodeBuffer) {
 			if (node instanceof MapNode) {
 				tmp = (MapNode) node;
-				if (tmp != null && tmp.getAttributeValue("marker") == null
+				if (tmp != null
+						&& tmp.getAttributeValue("marker") == null
 						&& (nextNode == null || pos.getDistKM(tmp) < pos
 								.getDistKM(nextNode))) {
 					nextNode = tmp;
@@ -204,8 +198,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			}
 		}
 		for (NameInfo textInfo : nameInfoBuffer) {
-			g2.setColor(textInfo.color);
-			g2.drawString(textInfo.name, textInfo.x, textInfo.y);
+			imageBdr.setColor(textInfo.color);
+			imageBdr.drawString(textInfo.name, textInfo.x, textInfo.y);
 		}
 		// System.out.print("Areas: " + areaBuffer.size() + "  ");
 		// System.out.print("Ways: " + wayBuffer.size() + "  ");
@@ -228,7 +222,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 							pInfo.printOrder);
 				}
 			}
-			printLine(g2, nodes, pInfo, asArea, asOneway, textInfo);
+			printLine(imageBdr, nodes, pInfo, asArea, asOneway, textInfo);
 		}
 	}
 
@@ -240,7 +234,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 		if (pInfo.icon != null) {
 			width = Math.round(pInfo.icon.size * displayFactorSym);
-			pInfo.icon.draw(g2, x, y, displayFactorSym);
+			pInfo.icon.draw(imageBdr, x, y, displayFactorSym);
 		}
 
 		if (scale >= pInfo.minNameScale * displayFactor) {
@@ -262,43 +256,41 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		tmpNodeBuffer.clear();
 		tmpNodeBuffer.addAll(track.getNodes());
 		if (!tmpNodeBuffer.isEmpty()) {
-			printLine(g2, tmpNodeBuffer, vInfo, false, false, null);
-			printPoint(g2, tmpNodeBuffer.get(tmpNodeBuffer.size() - 1), vInfo,
-					null);
+			printLine(imageBdr, tmpNodeBuffer, vInfo, false, false, null);
+			printPoint(imageBdr, tmpNodeBuffer.get(tmpNodeBuffer.size() - 1),
+					vInfo, null);
 		}
 	}
 
 	/** Prints a line or fills an area. */
-	protected void printLine(Graphics2D g2, List<MapNode> nodes,
+	protected void printLine(UnifiedImageBuilder iBuilder, List<MapNode> nodes,
 			DefaultEntityViewInfo pInfo, boolean asArea, boolean asOneway,
 			NameInfo textInfo) {
 		// count++;
 		int[] xPoints = new int[nodes.size()];
 		int[] yPoints = new int[nodes.size()];
 
-		Rectangle clip = !asArea ? g2.getClipBounds() : null;
-		boolean visible = getViewCoords(nodes, clip, xPoints, yPoints);
+		int viewWidth = !asArea ? iBuilder.getWidth() : -1;
+		int viewHeight = !asArea ? iBuilder.getHeight() : -1;
+		boolean visible = getViewCoords(nodes, viewWidth, viewHeight, xPoints,
+				yPoints);
 
 		if (visible) {
 			boolean filled = false;
 			if (asArea) {
-				g2.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor
+				iBuilder.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor
 						: pInfo.wayColor);
-				g2.setStroke(standardStroke);
-				g2.fillPolygon(xPoints, yPoints, nodes.size());
+				iBuilder.setLineStyle(false, displayFactor);
+				iBuilder.setAreaFilled(true);
+				iBuilder.drawPolygon(xPoints, yPoints, nodes.size());
 				filled = true;
 			}
 			if (!filled || pInfo.wayFillColor != null
 					&& !pInfo.wayFillColor.equals(pInfo.wayColor)) {
-				float dash[] = null;
-				if (pInfo.wayDashed) {
-					dash = new float[] { pInfo.wayWidth * 2f * displayFactorSym };
-				}
-				g2.setColor(pInfo.wayColor);
-				g2.setStroke(new BasicStroke(pInfo.wayWidth * displayFactorSym,
-						BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f,
-						dash, 0.0f));
-				g2.drawPolyline(xPoints, yPoints, nodes.size());
+				iBuilder.setColor(pInfo.wayColor);
+				iBuilder.setLineStyle(pInfo.wayDashed, pInfo.wayWidth
+						* displayFactorSym);
+				iBuilder.drawPolyline(xPoints, yPoints, nodes.size());
 			}
 			if (asOneway) {
 				float x = xPoints[xPoints.length - 1];
@@ -341,9 +333,9 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 *            Array of coordinates for the result.
 	 * @return true if at least a part of the line is visible.
 	 */
-	protected boolean getViewCoords(List<MapNode> nodes, Rectangle clip,
-			int[] xView, int[] yView) {
-		boolean visible = (clip == null);
+	protected boolean getViewCoords(List<MapNode> nodes, int viewWidth,
+			int viewHeight, int[] xView, int[] yView) {
+		boolean visible = (viewWidth <= 0 || viewHeight <= 0);
 		int xv;
 		int yv;
 		int xClipPos;
@@ -359,14 +351,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 			yView[i] = yv;
 			if (!visible) {
 				xClipPos = 0;
-				if (xv < clip.x)
+				if (xv < 0)
 					xClipPos = 1;
-				else if (xv > clip.x + clip.width)
+				else if (xv > viewWidth)
 					xClipPos = 2;
 				yClipPos = 0;
-				if (yv < clip.y)
+				if (yv < 0)
 					yClipPos = 1;
-				else if (yv > clip.y + clip.height)
+				else if (yv > viewHeight)
 					yClipPos = 2;
 				visible = (xClipPos == 0 || xClipPos != xClipPosLast && i > 0)
 						&& (yClipPos == 0 || yClipPos != yClipPosLast && i > 0);
@@ -383,17 +375,19 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * direction, zero means north.
 	 */
 	protected void printOnewayArrow(float x, float y, double angle) {
-		Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactorSym * 10f);
-		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-		g2.setColor(Color.GRAY);
-		g2.setStroke(new BasicStroke(displayFactorSym));
-		at.rotate(angle);
-		g2.draw(at.createTransformedShape(line));
-		line.setLine(0f, 0f, 0f, displayFactorSym * 7f);
-		at.rotate(-Math.PI / 6);
-		g2.draw(at.createTransformedShape(line));
-		at.rotate(Math.PI / 3);
-		g2.draw(at.createTransformedShape(line));
+		// Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactorSym *
+		// 10f);
+		// AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+		// iBuilder.setColor(UnifiedColor.GRAY);
+		// iBuilder.setLineStyle(false, displayFactorSym);
+		// at.rotate(angle);
+		// iBuilder.draw(at.createTransformedShape(line));
+		// line.setLine(0f, 0f, 0f, displayFactorSym * 7f);
+		// at.rotate(-Math.PI / 6);
+		// iBuilder.draw(at.createTransformedShape(line));
+		// at.rotate(Math.PI / 3);
+		// iBuilder.draw(at.createTransformedShape(line));
+		// TODO
 	}
 
 	/** Finds a good place for printing the name of a way entity. */
@@ -413,15 +407,15 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	}
 
 	/** Prints a point of interest. */
-	protected void printPoint(Graphics2D g2, MapNode node,
-			DefaultEntityViewInfo pInfo, Color nameColor) {
+	protected void printPoint(UnifiedImageBuilder iBuilder, MapNode node,
+			DefaultEntityViewInfo pInfo, UnifiedColor nameColor) {
 		int x = transformer.x(node.getLon());
 		int y = transformer.y(node.getLat());
 		int width = 0;
 
 		if (pInfo.icon != null) {
 			width = Math.round(pInfo.icon.size * displayFactorSym);
-			pInfo.icon.draw(g2, x, y, displayFactor);
+			pInfo.icon.draw(iBuilder, x, y, displayFactor);
 		}
 
 		if (nameColor != null) {
@@ -444,13 +438,13 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 */
 	protected static class NameInfo implements Comparable<NameInfo> {
 		public String name;
-		public Color color;
+		public UnifiedColor color;
 		public int x;
 		public int y;
 		/** Print order value of the corresponding entity. */
 		public int printOrder;
 
-		protected NameInfo(String name, Color color, int printOrder) {
+		protected NameInfo(String name, UnifiedColor color, int printOrder) {
 			this.name = name;
 			this.color = color;
 			this.printOrder = printOrder;
@@ -488,8 +482,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	protected static class MapAreaComparator implements Comparator<MapWay> {
 		@Override
 		public int compare(MapWay arg0, MapWay arg1) {
-			return -Float.compare(arg0.getBoundingBoxSize(), arg1
-					.getBoundingBoxSize());
+			return -Float.compare(arg0.getBoundingBoxSize(),
+					arg1.getBoundingBoxSize());
 		}
 	}
 }
