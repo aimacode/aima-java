@@ -21,7 +21,7 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 	/** Is responsible for world to view coordinate transformations. */
 	protected CoordTransformer transformer;
 	protected WayNodeProvider wnProvider;
-	private UnifiedColor backgroundColor = UnifiedColor.WHITE;
+	private UColor backgroundColor = UColor.WHITE;
 	protected boolean debugMode;
 	/**
 	 * Controls the size of symbols, line widths, and texts. Value two doubles
@@ -33,11 +33,11 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 		return transformer;
 	}
 	
-	public UnifiedColor getBackgroundColor() {
+	public UColor getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(UnifiedColor color) {
+	public void setBackgroundColor(UColor color) {
 		backgroundColor = color;
 	}
 

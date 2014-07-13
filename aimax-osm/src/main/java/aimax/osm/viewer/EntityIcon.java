@@ -49,12 +49,12 @@ public abstract class EntityIcon {
 
 		Shape shape;
 		String symbol;
-		UnifiedColor lineColor;
-		UnifiedColor fillColor;
-		UnifiedColor symColor;
+		UColor lineColor;
+		UColor fillColor;
+		UColor symColor;
 
 		public SimpleIcon(Shape shape, float size, String symbol,
-				UnifiedColor line, UnifiedColor fill, UnifiedColor sym) {
+				UColor line, UColor fill, UColor sym) {
 			this.shape = shape;
 			this.size = size;
 			this.symbol = symbol;
@@ -123,10 +123,10 @@ public abstract class EntityIcon {
 	 * @author Ruediger Lunde
 	 */
 	public static class PinIcon extends EntityIcon {
-		UnifiedColor lineColor;
-		UnifiedColor fillColor;
+		UColor lineColor;
+		UColor fillColor;
 
-		public PinIcon(float size, UnifiedColor line, UnifiedColor fill) {
+		public PinIcon(float size, UColor line, UColor fill) {
 			this.size = size;
 			this.lineColor = line;
 			this.fillColor = fill;
@@ -153,10 +153,10 @@ public abstract class EntityIcon {
 	 * @author Ruediger Lunde
 	 */
 	public static class ChurchIcon extends EntityIcon {
-		UnifiedColor lineColor;
-		UnifiedColor fillColor;
+		UColor lineColor;
+		UColor fillColor;
 
-		public ChurchIcon(float size, UnifiedColor line, UnifiedColor fill) {
+		public ChurchIcon(float size, UColor line, UColor fill) {
 			this.size = size;
 			this.lineColor = line;
 			this.fillColor = fill;
@@ -187,10 +187,10 @@ public abstract class EntityIcon {
 	 * @author Ruediger Lunde
 	 */
 	public static class CastleIcon extends EntityIcon {
-		UnifiedColor lineColor;
-		UnifiedColor fillColor;
+		UColor lineColor;
+		UColor fillColor;
 
-		public CastleIcon(float size, UnifiedColor line, UnifiedColor fill) {
+		public CastleIcon(float size, UColor line, UColor fill) {
 			this.size = size;
 			this.lineColor = line;
 			this.fillColor = fill;
@@ -226,10 +226,10 @@ public abstract class EntityIcon {
 	 * @author Ruediger Lunde
 	 */
 	public static class TentIcon extends EntityIcon {
-		UnifiedColor lineColor;
-		UnifiedColor fillColor;
+		UColor lineColor;
+		UColor fillColor;
 
-		public TentIcon(float size, UnifiedColor line, UnifiedColor fill) {
+		public TentIcon(float size, UColor line, UColor fill) {
 			this.size = size;
 			lineColor = line;
 			fillColor = fill;

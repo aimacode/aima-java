@@ -17,26 +17,26 @@ import aimax.osm.viewer.EntityIcon.TentIcon;
  * @author Ruediger Lunde
  */
 public class MapStyleFactory {
-	public static final UnifiedColor GRAY_TRANS = new UnifiedColor(0, 0, 0, 40);
-	public static final UnifiedColor LIGHT_GRAY_TRANS = new UnifiedColor(0, 0,
+	public static final UColor GRAY_TRANS = new UColor(0, 0, 0, 40);
+	public static final UColor LIGHT_GRAY_TRANS = new UColor(0, 0,
 			0, 20);
-	public static final UnifiedColor LIGHT_RED_TRANS = new UnifiedColor(255, 0,
+	public static final UColor LIGHT_RED_TRANS = new UColor(255, 0,
 			0, 30);
-	public static final UnifiedColor LIGHT_RED = new UnifiedColor(230, 130, 130);
-	public static final UnifiedColor LIGHT_ORANGE = new UnifiedColor(255, 240,
+	public static final UColor LIGHT_RED = new UColor(230, 130, 130);
+	public static final UColor LIGHT_ORANGE = new UColor(255, 240,
 			120);
-	public static final UnifiedColor LIGHT_YELLOW = new UnifiedColor(255, 255,
+	public static final UColor LIGHT_YELLOW = new UColor(255, 255,
 			200);
-	public static final UnifiedColor LIGHT_GREEN_TRANS = new UnifiedColor(114,
+	public static final UColor LIGHT_GREEN_TRANS = new UColor(114,
 			254, 86, 30);
-	public static final UnifiedColor VERY_LIGHT_GREEN = new UnifiedColor(200,
+	public static final UColor VERY_LIGHT_GREEN = new UColor(200,
 			254, 184);
-	public static final UnifiedColor VERY_LIGHT_BLUE = new UnifiedColor(220,
+	public static final UColor VERY_LIGHT_BLUE = new UColor(220,
 			220, 230);
-	public static final UnifiedColor LIGHT_GREEN = new UnifiedColor(116, 252,
+	public static final UColor LIGHT_GREEN = new UColor(116, 252,
 			133);
-	public static final UnifiedColor GREEN = new UnifiedColor(91, 210, 95);
-	public static final UnifiedColor LIGHT_BLUE = new UnifiedColor(164, 164,
+	public static final UColor GREEN = new UColor(91, 210, 95);
+	public static final UColor LIGHT_BLUE = new UColor(164, 164,
 			255);
 
 	/**
@@ -47,10 +47,10 @@ public class MapStyleFactory {
 			1f / 6000, // minVisibleScale
 			1f / 1800, // minNameScale
 			100, // printOrder
-			UnifiedColor.LIGHT_GRAY.darker(), // nameColor
-			createRectangle(4, UnifiedColor.GRAY), // icon
+			UColor.LIGHT_GRAY.darker(), // nameColor
+			createRectangle(4, UColor.GRAY), // icon
 			false, // isWayIcon
-			UnifiedColor.GRAY, // wayColor
+			UColor.GRAY, // wayColor
 			0.5f, // wayWidth
 			false, // wayDashed
 			LIGHT_GRAY_TRANS, // wayFillColor
@@ -75,92 +75,92 @@ public class MapStyleFactory {
 		result.addRule(
 				"highway",
 				"motorway",
-				createWayInfo(1f / 2000000, 1f / 20000, 50, UnifiedColor.BLUE,
+				createWayInfo(1f / 2000000, 1f / 20000, 50, UColor.BLUE,
 						3));
 		result.addRule(
 				"highway",
 				"motorway_link",
-				createWayInfo(1f / 200000, 1f / 20000, 51, UnifiedColor.BLUE, 1));
+				createWayInfo(1f / 200000, 1f / 20000, 51, UColor.BLUE, 1));
 		result.addRule(
 				"highway",
 				"trunk",
-				createWayInfo(1f / 2000000, 1f / 6000, 52, UnifiedColor.BLUE, 2));
+				createWayInfo(1f / 2000000, 1f / 6000, 52, UColor.BLUE, 2));
 		result.addRule("highway", "trunk_link",
-				createWayInfo(1f / 200000, 1f / 6000, 53, UnifiedColor.BLUE, 1));
+				createWayInfo(1f / 200000, 1f / 6000, 53, UColor.BLUE, 1));
 		result.addRule(
 				"highway",
 				"primary",
-				createWayInfo(1f / 1000000, 1f / 6000, 54, UnifiedColor.PINK, 4));
+				createWayInfo(1f / 1000000, 1f / 6000, 54, UColor.PINK, 4));
 		result.addRule("highway", "primary_link",
-				createWayInfo(1f / 100000, 1f / 6000, 55, UnifiedColor.PINK, 4));
+				createWayInfo(1f / 100000, 1f / 6000, 55, UColor.PINK, 4));
 		result.addRule("highway", "secondary",
-				createWayInfo(1f / 500000, 1f / 6000, 56, UnifiedColor.PINK, 3));
+				createWayInfo(1f / 500000, 1f / 6000, 56, UColor.PINK, 3));
 		result.addRule("highway", "tertiary",
-				createWayInfo(1f / 250000, 1f / 6000, 57, UnifiedColor.PINK, 2));
+				createWayInfo(1f / 250000, 1f / 6000, 57, UColor.PINK, 2));
 		result.addRule("highway", "road",
-				createWayInfo(1f / 190000, 1f / 6000, 58, UnifiedColor.PINK, 1));
+				createWayInfo(1f / 190000, 1f / 6000, 58, UColor.PINK, 1));
 		result.addRule(
 				"highway",
 				"residential",
 				createWayInfo(1f / 100000, 1f / 3500, 65,
-						UnifiedColor.LIGHT_GRAY, 1));
+						UColor.LIGHT_GRAY, 1));
 		result.addRule(
 				"highway",
 				"living_street",
 				createWayInfo(1f / 100000, 1f / 3500, 65,
-						UnifiedColor.LIGHT_GRAY, 1));
+						UColor.LIGHT_GRAY, 1));
 		result.addRule(
 				"highway",
 				"pedestrian",
-				createWayInfo(1f / 190000, 1f / 3500, 65, UnifiedColor.ORANGE,
-						2, UnifiedColor.ORANGE, true));
+				createWayInfo(1f / 190000, 1f / 3500, 65, UColor.ORANGE,
+						2, UColor.ORANGE, true));
 		result.addRule(
 				"highway",
 				"cycleway",
 				createWayInfo(1f / 100000, 1f / 3500, 65,
-						UnifiedColor.GREEN.darker(), 1));
+						UColor.GREEN.darker(), 1));
 		result.addRule(
 				"highway",
 				"service",
-				createWayInfo(1f / 100000, 1f / 3500, 65, UnifiedColor.LIGHT_GRAY, 1,
-						UnifiedColor.LIGHT_GRAY, true));
+				createWayInfo(1f / 100000, 1f / 3500, 65, UColor.LIGHT_GRAY, 1,
+						UColor.LIGHT_GRAY, true));
 		result.addRule("highway", "path",
-				createWayInfo(1f / 100000, 1f / 3500, 65, UnifiedColor.YELLOW, 1));
+				createWayInfo(1f / 100000, 1f / 3500, 65, UColor.YELLOW, 1));
 		result.addRule("highway", "track",
-				createWayInfo(1f / 60000, 1f / 3500, 65, UnifiedColor.YELLOW, 1));
+				createWayInfo(1f / 60000, 1f / 3500, 65, UColor.YELLOW, 1));
 		result.addRule("highway", "unclassified",
-				createWayInfo(1f / 35000, 1f / 2500, 65, UnifiedColor.LIGHT_GRAY, 1));
+				createWayInfo(1f / 35000, 1f / 2500, 65, UColor.LIGHT_GRAY, 1));
 		result.addRule(
 				"highway",
 				"footway",
-				createWayInfo(1f / 60000, 1f / 2500, 68, UnifiedColor.ORANGE, 1,
-						UnifiedColor.ORANGE, true));
+				createWayInfo(1f / 60000, 1f / 2500, 68, UColor.ORANGE, 1,
+						UColor.ORANGE, true));
 		result.addRule(
 				"highway",
 				"steps",
-				createWayInfo(1f / 35000, 1f / 2500, 68, UnifiedColor.ORANGE, 1,
-						UnifiedColor.ORANGE, true));
+				createWayInfo(1f / 35000, 1f / 2500, 68, UColor.ORANGE, 1,
+						UColor.ORANGE, true));
 		result.addRule(
 				"highway",
 				"speed_camera",
-				createPoiInfo(1f / 60000, 1f / 1800, 68, UnifiedColor.GRAY,
-						createTriangle(6, UnifiedColor.RED, UnifiedColor.WHITE), false));
+				createPoiInfo(1f / 60000, 1f / 1800, 68, UColor.GRAY,
+						createTriangle(6, UColor.RED, UColor.WHITE), false));
 
 		result.addRule(
 				"natural",
 				"land",
 				createWayInfo(1f / 2000000, 1f / 35000, 40, LIGHT_BLUE, 1,
-						UnifiedColor.WHITE, false));
+						UColor.WHITE, false));
 		result.addRule("natural", "island",
 				createWayInfo(1f / 2000000, 1f / 100000, 40, LIGHT_BLUE, 2));
 		result.addRule("natural", "coastline",
 				createWayInfo(1e-9f, 1f / 5000000, 40, LIGHT_BLUE, 2));
 		result.addRule("natural", "cliff",
-				createWayInfo(1f / 750000, 1f / 12000, 41, UnifiedColor.GRAY, 1));
+				createWayInfo(1f / 750000, 1f / 12000, 41, UColor.GRAY, 1));
 		result.addRule(
 				"natural",
 				"water",
-				createInfo(1f / 2000000, 1f / 35000, 39, UnifiedColor.GRAY, null,
+				createInfo(1f / 2000000, 1f / 35000, 39, UColor.GRAY, null,
 						false, LIGHT_BLUE, 1, false, LIGHT_BLUE, false));
 		result.addRule(
 				"natural",
@@ -170,8 +170,8 @@ public class MapStyleFactory {
 		result.addRule(
 				"natural",
 				"beach",
-				createWayInfo(1f / 100000, 1f / 12000, 80, UnifiedColor.YELLOW, 1,
-						UnifiedColor.YELLOW, false));
+				createWayInfo(1f / 100000, 1f / 12000, 80, UColor.YELLOW, 1,
+						UColor.YELLOW, false));
 		result.addRule(
 				"natural",
 				"wood",
@@ -191,17 +191,17 @@ public class MapStyleFactory {
 				"natural",
 				"fell",
 				createWayInfo(1f / 500000, 1f / 12000, 80, LIGHT_GREEN, 1,
-						UnifiedColor.LIGHT_GRAY, false));
+						UColor.LIGHT_GRAY, false));
 		result.addRule(
 				"natural",
 				"peak",
-				createPoiInfo(1f / 350000, 1f / 35000, 38, UnifiedColor.DARK_GRAY,
-						createTriangle(10, UnifiedColor.ORANGE), false));
+				createPoiInfo(1f / 350000, 1f / 35000, 38, UColor.DARK_GRAY,
+						createTriangle(10, UColor.ORANGE), false));
 		result.addRule(
 				"natural",
 				null,
-				createInfo(1f / 350000, 1f / 12000, 80, UnifiedColor.DARK_GRAY,
-						createTriangle(8, UnifiedColor.GREEN.darker()), false,
+				createInfo(1f / 350000, 1f / 12000, 80, UColor.DARK_GRAY,
+						createTriangle(8, UColor.GREEN.darker()), false,
 						VERY_LIGHT_GREEN, 1, false, LIGHT_GREEN_TRANS, false));
 		result.addRule(
 				"leisure",
@@ -256,40 +256,40 @@ public class MapStyleFactory {
 		result.addRule(
 				"landuse",
 				null,
-				createInfo(1f / 350000, 1f / 1800, 80, UnifiedColor.GRAY, null, false,
+				createInfo(1f / 350000, 1f / 1800, 80, UColor.GRAY, null, false,
 						LIGHT_GRAY_TRANS, 1, false, LIGHT_GRAY_TRANS, false));
 		addBuildingRules(
 				result,
 				"leisure",
 				null,
-				createInfo(1f / 60000, 1f / 3500, 80, UnifiedColor.GRAY, null, false,
+				createInfo(1f / 60000, 1f / 3500, 80, UColor.GRAY, null, false,
 						LIGHT_ORANGE, 1, false, LIGHT_ORANGE, false));
 
 		sc = result.addRule(
 				"boundary",
 				null,
-				createInfo(1f / 60000, 1f / 3500, 90, UnifiedColor.GRAY, null, false,
-						UnifiedColor.GRAY, 1, true, null, false));
+				createInfo(1f / 60000, 1f / 3500, 90, UColor.GRAY, null, false,
+						UColor.GRAY, 1, true, null, false));
 		sc.addRule(
 				"admin_level",
 				"1",
-				createInfo(1e-9f, 1f / 12000, 86, UnifiedColor.GRAY, null, false,
-						UnifiedColor.GRAY, 2, true, null, false));
+				createInfo(1e-9f, 1f / 12000, 86, UColor.GRAY, null, false,
+						UColor.GRAY, 2, true, null, false));
 		sc.addRule(
 				"admin_level",
 				"2",
-				createInfo(1e-9f, 1f / 12000, 87, UnifiedColor.GRAY, null, false,
-						UnifiedColor.GRAY, 2, true, null, false));
+				createInfo(1e-9f, 1f / 12000, 87, UColor.GRAY, null, false,
+						UColor.GRAY, 2, true, null, false));
 		sc.addRule(
 				"admin_level",
 				"3",
-				createInfo(1f / 750000, 1f / 3500, 88, UnifiedColor.GRAY, null, false,
-						UnifiedColor.GRAY, 1, true, null, false));
+				createInfo(1f / 750000, 1f / 3500, 88, UColor.GRAY, null, false,
+						UColor.GRAY, 1, true, null, false));
 		sc.addRule(
 				"admin_level",
 				"4",
-				createInfo(1f / 750000, 1f / 3500, 89, UnifiedColor.GRAY, null, false,
-						UnifiedColor.GRAY, 1, true, null, false));
+				createInfo(1f / 750000, 1f / 3500, 89, UColor.GRAY, null, false,
+						UColor.GRAY, 1, true, null, false));
 
 		result.addRule(
 				"waterway",
@@ -304,54 +304,54 @@ public class MapStyleFactory {
 		result.addRule(
 				"route",
 				"ferry",
-				createInfo(1f / 100000, 1f / 12000, 70, UnifiedColor.GRAY, null,
-						false, UnifiedColor.BLUE, 1, true, null, false));
+				createInfo(1f / 100000, 1f / 12000, 70, UColor.GRAY, null,
+						false, UColor.BLUE, 1, true, null, false));
 		result.addRule("railway", "rail",
-				createWayInfo(1f / 100000, 1f / 3500, 95, UnifiedColor.GRAY, 1));
+				createWayInfo(1f / 100000, 1f / 3500, 95, UColor.GRAY, 1));
 		addBuildingRules(
 				result,
 				"railway",
 				"station",
-				createPoiInfo(1f / 35000, 1f / 6000, 60, UnifiedColor.DARK_GRAY,
-						createRectangle(4, UnifiedColor.DARK_GRAY), false));
+				createPoiInfo(1f / 35000, 1f / 6000, 60, UColor.DARK_GRAY,
+						createRectangle(4, UColor.DARK_GRAY), false));
 		result.addRule("aeroway", null,
-				createWayInfo(1f / 350000, 1f / 12000, 60, UnifiedColor.LIGHT_GRAY, 1));
+				createWayInfo(1f / 350000, 1f / 12000, 60, UColor.LIGHT_GRAY, 1));
 		result.addRule("aerialway", null,
-				createWayInfo(1f / 350000, 1f / 6000, 60, UnifiedColor.GRAY, 1));
+				createWayInfo(1f / 350000, 1f / 6000, 60, UColor.GRAY, 1));
 		result.addRule(
 				"mountain_pass",
 				null,
-				createPoiInfo(1e-9f, 1f / 350000, 10, UnifiedColor.DARK_GRAY, null,
+				createPoiInfo(1e-9f, 1f / 350000, 10, UColor.DARK_GRAY, null,
 						false));
 
 		result.addRule("place", "city",
-				createPoiInfo(0, 0, 1, UnifiedColor.BLACK, null, false));
+				createPoiInfo(0, 0, 1, UColor.BLACK, null, false));
 		result.addRule(
 				"place",
 				"town",
-				createPoiInfo(1f / 750000, 1f / 750000, 2, UnifiedColor.BLACK, null,
+				createPoiInfo(1f / 750000, 1f / 750000, 2, UColor.BLACK, null,
 						false));
 		result.addRule(
 				"place",
 				"village",
-				createPoiInfo(1f / 200000, 1f / 200000, 3, UnifiedColor.DARK_GRAY,
+				createPoiInfo(1f / 200000, 1f / 200000, 3, UColor.DARK_GRAY,
 						null, false));
 		result.addRule(
 				"place",
 				null,
-				createPoiInfo(1f / 50000, 1f / 50000, 30, UnifiedColor.DARK_GRAY,
+				createPoiInfo(1f / 50000, 1f / 50000, 30, UColor.DARK_GRAY,
 						null, false));
 
 		result.addRule(
 				"tourism",
 				"caravan_site",
-				createPoiInfo(1f / 350000, 1f / 6000, 75, UnifiedColor.GRAY,
-						createRectangle(8, "P", UnifiedColor.BLUE, UnifiedColor.RED), true));
+				createPoiInfo(1f / 350000, 1f / 6000, 75, UColor.GRAY,
+						createRectangle(8, "P", UColor.BLUE, UColor.RED), true));
 		result.addRule(
 				"tourism",
 				"camp_site",
-				createPoiInfo(1f / 350000, 1f / 6000, 73, UnifiedColor.GRAY,
-						new TentIcon(8, UnifiedColor.DARK_GRAY, UnifiedColor.GREEN.darker()),
+				createPoiInfo(1f / 350000, 1f / 6000, 73, UColor.GRAY,
+						new TentIcon(8, UColor.DARK_GRAY, UColor.GREEN.darker()),
 						true));
 		addBuildingRules(
 				result,
@@ -361,8 +361,8 @@ public class MapStyleFactory {
 						1f / 350000,
 						1f / 35000,
 						74,
-						UnifiedColor.GRAY,
-						createRectangle(8, "H", UnifiedColor.GREEN.darker(), UnifiedColor.RED),
+						UColor.GRAY,
+						createRectangle(8, "H", UColor.GREEN.darker(), UColor.RED),
 						true));
 		addBuildingRules(
 				result,
@@ -372,9 +372,9 @@ public class MapStyleFactory {
 						1f / 60000,
 						1f / 6000,
 						74,
-						UnifiedColor.GRAY,
-						createCircle(11, "A", UnifiedColor.GREEN.darker(), UnifiedColor.WHITE),
-						true, UnifiedColor.GRAY, 1, false, null, false));
+						UColor.GRAY,
+						createCircle(11, "A", UColor.GREEN.darker(), UColor.WHITE),
+						true, UColor.GRAY, 1, false, null, false));
 		result.addRule(
 				"tourism",
 				"viewpoint",
@@ -382,8 +382,8 @@ public class MapStyleFactory {
 						1f / 60000,
 						1f / 1800,
 						75,
-						UnifiedColor.GRAY,
-						createCircle(11, "V", UnifiedColor.GREEN.darker(), UnifiedColor.WHITE),
+						UColor.GRAY,
+						createCircle(11, "V", UColor.GREEN.darker(), UColor.WHITE),
 						true));
 		addBuildingRules(
 				result,
@@ -393,8 +393,8 @@ public class MapStyleFactory {
 						1f / 60000,
 						1f / 2500,
 						75,
-						UnifiedColor.GRAY,
-						createCircle(11, "M", UnifiedColor.GREEN.darker(), UnifiedColor.WHITE),
+						UColor.GRAY,
+						createCircle(11, "M", UColor.GREEN.darker(), UColor.WHITE),
 						true));
 		addBuildingRules(
 				result,
@@ -404,58 +404,58 @@ public class MapStyleFactory {
 						1f / 12000,
 						1f / 1800,
 						76,
-						UnifiedColor.GRAY,
-						createRectangle(8, "H", UnifiedColor.GREEN.darker(),
-								UnifiedColor.WHITE), true));
+						UColor.GRAY,
+						createRectangle(8, "H", UColor.GREEN.darker(),
+								UColor.WHITE), true));
 		addBuildingRules(
 				result,
 				"tourism",
 				null,
-				createPoiInfo(1f / 12000, 1f / 3500, 77, UnifiedColor.GREEN.darker(),
-						createRectangle(4, UnifiedColor.GREEN.darker()), false));
+				createPoiInfo(1f / 12000, 1f / 3500, 77, UColor.GREEN.darker(),
+						createRectangle(4, UColor.GREEN.darker()), false));
 		addBuildingRules(
 				result,
 				"historic",
 				"castle",
-				createPoiInfo(1f / 60000, 1f / 6000, 40, UnifiedColor.GRAY,
-						new EntityIcon.CastleIcon(8, UnifiedColor.DARK_GRAY,
-								UnifiedColor.ORANGE), true));
+				createPoiInfo(1f / 60000, 1f / 6000, 40, UColor.GRAY,
+						new EntityIcon.CastleIcon(8, UColor.DARK_GRAY,
+								UColor.ORANGE), true));
 		result.addRule(
 				"historic",
 				"memorial",
-				createPoiInfo(1f / 6000, 1f / 1800, 81, UnifiedColor.GRAY,
-						createCircle(11, "M", UnifiedColor.ORANGE, UnifiedColor.WHITE), true));
+				createPoiInfo(1f / 6000, 1f / 1800, 81, UColor.GRAY,
+						createCircle(11, "M", UColor.ORANGE, UColor.WHITE), true));
 		addBuildingRules(
 				result,
 				"historic",
 				null,
-				createPoiInfo(1f / 60000, 1f / 1800, 75, UnifiedColor.GRAY,
-						createCircle(11, "H", UnifiedColor.ORANGE, UnifiedColor.WHITE), true));
+				createPoiInfo(1f / 60000, 1f / 1800, 75, UColor.GRAY,
+						createCircle(11, "H", UColor.ORANGE, UColor.WHITE), true));
 		result.addRule(
 				"amenity",
 				"parking",
-				createInfo(1f / 12000, 1f / 1800, 85, UnifiedColor.GRAY,
-						createRectangle(8, "P", UnifiedColor.BLUE, UnifiedColor.WHITE), true,
-						UnifiedColor.LIGHT_GRAY, 1, false, VERY_LIGHT_BLUE, false));
+				createInfo(1f / 12000, 1f / 1800, 85, UColor.GRAY,
+						createRectangle(8, "P", UColor.BLUE, UColor.WHITE), true,
+						UColor.LIGHT_GRAY, 1, false, VERY_LIGHT_BLUE, false));
 		addBuildingRules(
 				result,
 				"amenity",
 				"place_of_worship",
-				createPoiInfo(1f / 20000, 1f / 1800, 85, UnifiedColor.GRAY,
-						new EntityIcon.ChurchIcon(8, UnifiedColor.DARK_GRAY,
-								UnifiedColor.BLUE), true));
+				createPoiInfo(1f / 20000, 1f / 1800, 85, UColor.GRAY,
+						new EntityIcon.ChurchIcon(8, UColor.DARK_GRAY,
+								UColor.BLUE), true));
 		addBuildingRules(
 				result,
 				"amenity",
 				null,
-				createPoiInfo(1f / 12000, 1f / 1800, 89, UnifiedColor.BLUE,
-						createRectangle(4, UnifiedColor.BLUE), true));
+				createPoiInfo(1f / 12000, 1f / 1800, 89, UColor.BLUE,
+						createRectangle(4, UColor.BLUE), true));
 		addBuildingRules(
 				result,
 				"shop",
 				null,
-				createPoiInfo(40000, 1f / 1800, 89, UnifiedColor.CYAN,
-						createRectangle(4, UnifiedColor.CYAN), true));
+				createPoiInfo(40000, 1f / 1800, 89, UColor.CYAN,
+						createRectangle(4, UColor.CYAN), true));
 		result.addRule(
 				"building",
 				"yes",
@@ -464,16 +464,16 @@ public class MapStyleFactory {
 		result.addRule(
 				"addr:housenumber",
 				null,
-				createPoiInfo(1f / 1800, 1f / 1800, 90, UnifiedColor.GRAY,
-						createRectangle(4, UnifiedColor.LIGHT_GRAY), true));
+				createPoiInfo(1f / 1800, 1f / 1800, 90, UColor.GRAY,
+						createRectangle(4, UColor.LIGHT_GRAY), true));
 
 		result.addRule(
 				"marker",
 				"yes",
-				createPoiInfo(1e-9f, 1e-9f, 0, UnifiedColor.RED, new PinIcon(12,
-						UnifiedColor.RED, UnifiedColor.RED), false));
-		result.addRule("track_type", "GPS", createTrackInfo(UnifiedColor.GREEN));
-		result.addRule("track_type", null, createTrackInfo(UnifiedColor.RED));
+				createPoiInfo(1e-9f, 1e-9f, 0, UColor.RED, new PinIcon(12,
+						UColor.RED, UColor.RED), false));
+		result.addRule("track_type", "GPS", createTrackInfo(UColor.GREEN));
+		result.addRule("track_type", null, createTrackInfo(UColor.RED));
 
 		return result;
 	}
@@ -489,30 +489,30 @@ public class MapStyleFactory {
 				"highway",
 				"path",
 				createWayInfo(1f / 100000, 1f / 3500, 38,
-						UnifiedColor.YELLOW.darker(), 1));
+						UColor.YELLOW.darker(), 1));
 		result.replaceRule(
 				"highway",
 				"track",
-				createWayInfo(1f / 60000, 1f / 3500, 37, UnifiedColor.YELLOW.darker(),
+				createWayInfo(1f / 60000, 1f / 3500, 37, UColor.YELLOW.darker(),
 						1));
 
 		result.replaceRule(
 				"place",
 				"city",
-				createPoiInfo(1e-9f, 1f / 3500000, 30, UnifiedColor.WHITE, null, false));
+				createPoiInfo(1e-9f, 1f / 3500000, 30, UColor.WHITE, null, false));
 		result.replaceRule("place", "town",
-				createPoiInfo(1e-9f, 1f / 350000, 29, UnifiedColor.WHITE, null, false));
+				createPoiInfo(1e-9f, 1f / 350000, 29, UColor.WHITE, null, false));
 		result.replaceRule("place", "village",
-				createPoiInfo(1e-9f, 1f / 100000, 29, UnifiedColor.GRAY, null, false));
+				createPoiInfo(1e-9f, 1f / 100000, 29, UColor.GRAY, null, false));
 		result.replaceRule("place", null,
-				createPoiInfo(1e-9f, 1f / 35000, 28, UnifiedColor.GRAY, null, false));
+				createPoiInfo(1e-9f, 1f / 35000, 28, UColor.GRAY, null, false));
 
 		result.replaceRule(
 				"marker",
 				"yes",
-				createPoiInfo(1e-9f, 1e-9f, 0, UnifiedColor.YELLOW, new PinIcon(12,
-						UnifiedColor.YELLOW, UnifiedColor.YELLOW), false));
-		result.replaceRule("track_type", null, createTrackInfo(UnifiedColor.WHITE));
+				createPoiInfo(1e-9f, 1e-9f, 0, UColor.YELLOW, new PinIcon(12,
+						UColor.YELLOW, UColor.YELLOW), false));
+		result.replaceRule("track_type", null, createTrackInfo(UColor.WHITE));
 
 		return result;
 	}
@@ -555,7 +555,7 @@ public class MapStyleFactory {
 
 	/** Creates an entity view info for points of interest. */
 	public DefaultEntityViewInfo createPoiInfo(float minScale,
-			float minNameScale, int printOrder, UnifiedColor nameColor,
+			float minNameScale, int printOrder, UColor nameColor,
 			EntityIcon icon, boolean isWayIcon) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
@@ -569,7 +569,7 @@ public class MapStyleFactory {
 
 	/** Creates an entity view info for ways (simple version). */
 	public DefaultEntityViewInfo createWayInfo(float minScale,
-			float minNameScale, int printOrder, UnifiedColor wayColor,
+			float minNameScale, int printOrder, UColor wayColor,
 			float wayWidth) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
@@ -582,8 +582,8 @@ public class MapStyleFactory {
 
 	/** Creates an entity view info for ways. */
 	public DefaultEntityViewInfo createWayInfo(float minScale,
-			float minNameScale, int printOrder, UnifiedColor wayColor, float wayWidth,
-			UnifiedColor wayFillColor, boolean fillAreasOnly) {
+			float minNameScale, int printOrder, UColor wayColor, float wayWidth,
+			UColor wayFillColor, boolean fillAreasOnly) {
 		DefaultEntityViewInfo result = createDefaultInfo();
 		result.minVisibleScale = minScale;
 		result.minNameScale = minNameScale;
@@ -596,16 +596,16 @@ public class MapStyleFactory {
 	}
 
 	/** Creates an entity view info for tracks. */
-	public DefaultEntityViewInfo createTrackInfo(UnifiedColor color) {
+	public DefaultEntityViewInfo createTrackInfo(UColor color) {
 		return new DefaultEntityViewInfo(1e-9f, 0, 0, color, createCircle(12,
 				color, GRAY_TRANS), true, color, 2f, true, null, false);
 	}
 
 	/** Creates an entity view info (equivalent to general constructor call). */
 	public DefaultEntityViewInfo createInfo(float minScale, float minNameScale,
-			int printOrder, UnifiedColor nameColor, EntityIcon icon,
-			boolean isWayIcon, UnifiedColor wayColor, float wayWidth,
-			boolean wayDashed, UnifiedColor wayFillColor, boolean fillAreasOnly) {
+			int printOrder, UColor nameColor, EntityIcon icon,
+			boolean isWayIcon, UColor wayColor, float wayWidth,
+			boolean wayDashed, UColor wayFillColor, boolean fillAreasOnly) {
 		return new DefaultEntityViewInfo(minScale, minNameScale, printOrder,
 				nameColor, icon, isWayIcon, wayColor, wayWidth, wayDashed,
 				wayFillColor, fillAreasOnly);
@@ -614,53 +614,53 @@ public class MapStyleFactory {
 	// ///////////////////////////////////////////////////////////////
 	// useful icon creators
 
-	public static EntityIcon createCircle(float size, UnifiedColor color) {
+	public static EntityIcon createCircle(float size, UColor color) {
 		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, null, color,
 				color, null);
 	}
 
-	public static EntityIcon createCircle(float size, UnifiedColor line,
-			UnifiedColor fill) {
+	public static EntityIcon createCircle(float size, UColor line,
+			UColor fill) {
 		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, null, line, fill,
 				null);
 	}
 
 	public static EntityIcon createCircle(float size, String symbol,
-			UnifiedColor color, UnifiedColor sym) {
+			UColor color, UColor sym) {
 		return new SimpleIcon(SimpleIcon.Shape.CIRCLE, size, symbol, color,
 				color, sym);
 	}
 
-	public static EntityIcon createRectangle(float size, UnifiedColor color) {
+	public static EntityIcon createRectangle(float size, UColor color) {
 		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, null, color,
 				color, null);
 	}
 
-	public static EntityIcon createRectangle(float size, UnifiedColor line,
-			UnifiedColor fill) {
+	public static EntityIcon createRectangle(float size, UColor line,
+			UColor fill) {
 		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, null, line,
 				fill, null);
 	}
 
 	public static EntityIcon createRectangle(float size, String symbol,
-			UnifiedColor color, UnifiedColor sym) {
+			UColor color, UColor sym) {
 		return new SimpleIcon(SimpleIcon.Shape.RECTANGLE, size, symbol, color,
 				color, sym);
 	}
 
-	public static EntityIcon createTriangle(float size, UnifiedColor color) {
+	public static EntityIcon createTriangle(float size, UColor color) {
 		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, null, color,
 				color, null);
 	}
 
-	public static EntityIcon createTriangle(float size, UnifiedColor line,
-			UnifiedColor fill) {
+	public static EntityIcon createTriangle(float size, UColor line,
+			UColor fill) {
 		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, null, line,
 				fill, null);
 	}
 
 	public static EntityIcon createTriangle(float size, String symbol,
-			UnifiedColor color, UnifiedColor sym) {
+			UColor color, UColor sym) {
 		return new SimpleIcon(SimpleIcon.Shape.TRIANGLE, size, symbol, color,
 				color, sym);
 	}

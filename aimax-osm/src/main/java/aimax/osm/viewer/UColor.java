@@ -2,28 +2,28 @@ package aimax.osm.viewer;
 
 /**
  * A platform independent implementation for colors. Can be used with Android
- * and AWT.
+ * and AWT. Letter U stands for unified.
  * 
  * @author Daniel Wonnenberg
  */
 
-public class UnifiedColor {
+public class UColor {
 
-	public static final UnifiedColor RED = new UnifiedColor(255, 0, 0);
-	public static final UnifiedColor GREEN = new UnifiedColor(0, 255, 0);
-	public static final UnifiedColor BLUE = new UnifiedColor(0, 0, 255);
+	public static final UColor RED = new UColor(255, 0, 0);
+	public static final UColor GREEN = new UColor(0, 255, 0);
+	public static final UColor BLUE = new UColor(0, 0, 255);
 	
-	public static final UnifiedColor PINK = new UnifiedColor(255, 175, 175);
-	public static final UnifiedColor ORANGE = new UnifiedColor(255, 200, 0);
-	public static final UnifiedColor YELLOW = new UnifiedColor(255, 255, 0);
-	public static final UnifiedColor CYAN = new UnifiedColor(0, 255, 255);
+	public static final UColor PINK = new UColor(255, 175, 175);
+	public static final UColor ORANGE = new UColor(255, 200, 0);
+	public static final UColor YELLOW = new UColor(255, 255, 0);
+	public static final UColor CYAN = new UColor(0, 255, 255);
 
-	public static final UnifiedColor WHITE = new UnifiedColor(255, 255, 255);
-	public static final UnifiedColor LIGHT_GRAY = new UnifiedColor(192, 192,
+	public static final UColor WHITE = new UColor(255, 255, 255);
+	public static final UColor LIGHT_GRAY = new UColor(192, 192,
 			192);
-	public static final UnifiedColor GRAY = new UnifiedColor(128, 128, 128);
-	public static final UnifiedColor DARK_GRAY = new UnifiedColor(64, 64, 64);
-	public static final UnifiedColor BLACK = new UnifiedColor(0, 0, 0);
+	public static final UColor GRAY = new UColor(128, 128, 128);
+	public static final UColor DARK_GRAY = new UColor(64, 64, 64);
+	public static final UColor BLACK = new UColor(0, 0, 0);
 	
 
 	// //////////////////////////////////////////////////////////////////////////
@@ -33,14 +33,14 @@ public class UnifiedColor {
 	private int blue;
 	private int alpha;
 
-	public UnifiedColor(int red, int green, int blue) {
+	public UColor(int red, int green, int blue) {
 		this(red, green, blue, 255);
 	}
 
 	/**
 	 * For the parameters use values between 0 and 255.
 	 */
-	public UnifiedColor(int red, int green, int blue, int alpha) {
+	public UColor(int red, int green, int blue, int alpha) {
 
 		if (!isInRange(red) || !isInRange(green) || !isInRange(blue)
 				|| !isInRange(alpha)) {
@@ -63,16 +63,16 @@ public class UnifiedColor {
 		return res;
 	}
 
-	public UnifiedColor brighter() {
+	public UColor brighter() {
 		float fac = (float) Math.sqrt(2.0);
-		return new UnifiedColor(round(red * fac), round(green * fac),
+		return new UColor(round(red * fac), round(green * fac),
 				round(blue * fac), alpha);
 
 	}
 
-	public UnifiedColor darker() {
+	public UColor darker() {
 		float fac = (float) Math.sqrt(0.5);
-		return new UnifiedColor(round(red * fac), round(green * fac),
+		return new UColor(round(red * fac), round(green * fac),
 				round(blue * fac), alpha);
 	}
 
@@ -109,7 +109,7 @@ public class UnifiedColor {
 			return false;
 		}
 
-		final UnifiedColor other = (UnifiedColor) otherObject;
+		final UColor other = (UColor) otherObject;
 		if (other.red == red && other.green == green && other.blue == blue
 				&& other.alpha == alpha) {
 			return true;
@@ -126,11 +126,11 @@ public class UnifiedColor {
 	@Override
 	public String toString() {
 
-		String res = "";
+		String res = "UColor(";
 		res += red + ",";
 		res += green + ",";
 		res += blue + ",";
-		res += alpha;
+		res += alpha + ")";
 		return res;
 	}
 }

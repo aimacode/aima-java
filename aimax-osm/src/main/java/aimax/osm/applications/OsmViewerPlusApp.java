@@ -13,7 +13,7 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.UColor;
 import aimax.osm.viewer.swing.MapViewFrame;
 import aimax.osm.viewer.swing.MapViewPane;
 
@@ -97,12 +97,12 @@ public class OsmViewerPlusApp implements ActionListener {
 			if (nightButton.isSelected()) {
 				EntityClassifier<EntityViewInfo> eClassifier = 
 					new MapStyleFactory().createNightViewClassifier();
-				frame.getView().getRenderer().setBackgroundColor(UnifiedColor.BLACK);
+				frame.getView().getRenderer().setBackgroundColor(UColor.BLACK);
 				frame.getMap().setEntityClassifier(eClassifier);
 			} else {
 				EntityClassifier<EntityViewInfo> eClassifier =
 					new MapStyleFactory().createDefaultClassifier();
-				frame.getView().getRenderer().setBackgroundColor(UnifiedColor.WHITE);
+				frame.getView().getRenderer().setBackgroundColor(UColor.WHITE);
 				frame.getMap().setEntityClassifier(eClassifier);
 			}		
 		}

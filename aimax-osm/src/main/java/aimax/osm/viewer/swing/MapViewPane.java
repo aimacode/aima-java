@@ -35,7 +35,7 @@ import aimax.osm.viewer.CoordTransformer;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.MapViewEvent;
 import aimax.osm.viewer.MapViewEventListener;
-import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.UColor;
 
 /**
  * Provides a panel which shows map data. As model, a
@@ -352,7 +352,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			if (renderer.isDebugModeEnabled() && map instanceof DefaultMap) {
 				List<double[]> splits = ((DefaultMap) map).getEntityTree()
 						.getSplitCoords();
-				imageBdr.setColor(UnifiedColor.LIGHT_GRAY);
+				imageBdr.setColor(UColor.LIGHT_GRAY);
 				imageBdr.setLineStyle(false, 1f);
 				CoordTransformer trans = renderer.getTransformer();
 				for (double[] split : splits)
@@ -373,7 +373,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private void paintPreview(int dx, int dy, float zoomfactor) {
 		if (image != null) {
 			Graphics2D g2 = (Graphics2D) getGraphics();
-			UnifiedColor bg = renderer.getBackgroundColor();
+			UColor bg = renderer.getBackgroundColor();
 			g2.setBackground(new Color(bg.getRed(), bg.getGreen(),
 					bg.getBlue(), bg.getAlpha()));
 			int newWidth = Math.round(image.getWidth(null) * zoomfactor);

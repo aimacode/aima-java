@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.UColor;
 import aimax.osm.viewer.UnifiedImageBuilder;
 
 public class ImageBuilder implements UnifiedImageBuilder {
@@ -81,7 +81,7 @@ public class ImageBuilder implements UnifiedImageBuilder {
 	}
 
 	@Override
-	public void setColor(UnifiedColor color) {
+	public void setColor(UColor color) {
 		g2.setColor(new Color(color.getRed(), color.getGreen(),
 				color.getBlue(), color.getAlpha()));
 
