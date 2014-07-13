@@ -28,7 +28,7 @@ import aimax.osm.routing.agent.OsmAgentView;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.UColor;
 
 /**
  * This application demonstrates, how different search strategies explore the
@@ -158,8 +158,8 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
 		DefaultEntityViewInfo highlightProp = new MapStyleFactory()
-				.createPoiInfo(0, 0, 5, UnifiedColor.GREEN,
-						MapStyleFactory.createRectangle(4, UnifiedColor.GREEN),
+				.createPoiInfo(0, 0, 5, UColor.GREEN,
+						MapStyleFactory.createRectangle(4, UColor.GREEN),
 						false);
 
 		@Override

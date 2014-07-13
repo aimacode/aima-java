@@ -59,7 +59,7 @@ public interface UnifiedImageBuilder {
 	/**
 	 * Sets the color for the following drawing action.
 	 */
-	public abstract void setColor(UnifiedColor color);
+	public abstract void setColor(UColor color);
 	
 	/**
 	 * @param dashed 

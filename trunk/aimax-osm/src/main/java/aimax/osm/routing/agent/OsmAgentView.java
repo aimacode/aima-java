@@ -23,7 +23,7 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.UnifiedColor;
+import aimax.osm.viewer.UColor;
 import aimax.osm.viewer.swing.MapViewPane;
 import aimax.osm.viewer.swing.MapViewPopup;
 
@@ -50,11 +50,11 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 		EntityClassifier<EntityViewInfo> eClassifier = msf
 				.createDefaultClassifier();
 		eClassifier.addRule("track_type", TRACK_NAME + 0, msf
-				.createTrackInfo(UnifiedColor.RED));
+				.createTrackInfo(UColor.RED));
 		eClassifier.addRule("track_type", TRACK_NAME + 1, msf
-				.createTrackInfo(UnifiedColor.GREEN));
+				.createTrackInfo(UColor.GREEN));
 		eClassifier.addRule("track_type", TRACK_NAME + 2, msf
-				.createTrackInfo(UnifiedColor.BLUE));
+				.createTrackInfo(UColor.BLUE));
 		mapData.setEntityClassifier(eClassifier);
 		mapViewPane = new MapViewPane();
 		mapViewPane.setMap(mapData);

@@ -45,7 +45,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	/** Standard constructor. */
 	public DefaultEntityRenderer() {
 		wayNodeHash = new Hashtable<Long, List<MapNode>>();
-		setBackgroundColor(UnifiedColor.WHITE);
+		setBackgroundColor(UColor.WHITE);
 		areaBuffer = new ArrayList<MapWay>();
 		wayBuffer = new ArrayList<MapWay>();
 		nodeBuffer = new ArrayList<MapEntity>();
@@ -408,7 +408,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 	/** Prints a point of interest. */
 	protected void printPoint(UnifiedImageBuilder iBuilder, MapNode node,
-			DefaultEntityViewInfo pInfo, UnifiedColor nameColor) {
+			DefaultEntityViewInfo pInfo, UColor nameColor) {
 		int x = transformer.x(node.getLon());
 		int y = transformer.y(node.getLat());
 		int width = 0;
@@ -438,13 +438,13 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 */
 	protected static class NameInfo implements Comparable<NameInfo> {
 		public String name;
-		public UnifiedColor color;
+		public UColor color;
 		public int x;
 		public int y;
 		/** Print order value of the corresponding entity. */
 		public int printOrder;
 
-		protected NameInfo(String name, UnifiedColor color, int printOrder) {
+		protected NameInfo(String name, UColor color, int printOrder) {
 			this.name = name;
 			this.color = color;
 			this.printOrder = printOrder;
