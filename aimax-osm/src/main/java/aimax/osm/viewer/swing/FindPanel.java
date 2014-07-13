@@ -1,4 +1,4 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

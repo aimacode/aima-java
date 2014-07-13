@@ -1,5 +1,7 @@
 package aimax.osm.viewer;
 
+import aimax.osm.viewer.swing.MapViewPane;
+
 /**
  * Allows map views to inform interested listeners about user interactions such
  * as zooming or marker setting.

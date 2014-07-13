@@ -1,4 +1,4 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -35,6 +35,7 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
+import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.writer.Bz2OsmWriter;
 import aimax.osm.writer.MapWriter;
 

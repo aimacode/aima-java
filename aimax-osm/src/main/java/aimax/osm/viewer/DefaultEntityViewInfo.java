@@ -1,7 +1,5 @@
 package aimax.osm.viewer;
 
-import java.awt.Color;
-
 import aimax.osm.data.entities.EntityViewInfo;
 
 /**
@@ -23,7 +21,7 @@ public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	 */
 	public int printOrder;
 	/** The color to print the entity name, null indicates no name display. */
-	public Color nameColor;
+	public UnifiedColor nameColor;
 	/** The icon to be used to represent the entity or null (no icon). */
 	public EntityIcon icon;
 	/**
@@ -32,7 +30,7 @@ public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	 */
 	public boolean isWayIcon;
 	/** Polygon color, used to display way entities (not used for nodes). */
-	public Color wayColor;
+	public UnifiedColor wayColor;
 	/** Specifies the width of ways (not used for nodes). */
 	public float wayWidth;
 	/** Specifies the line type of ways (not used for nodes). */
@@ -41,7 +39,7 @@ public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	 * Used for ways to indicate, whether the area within a circular way
 	 * should be filled, and if, in which color.
 	 */
-	public Color wayFillColor;
+	public UnifiedColor wayFillColor;
 	/**
 	 * Restricts polygon filling to those way entities which are explicitly
 	 * marked as areas by attribute.
@@ -51,9 +49,9 @@ public class DefaultEntityViewInfo implements EntityViewInfo, Cloneable {
 	
 	/** Constructor for general use. */
 	public DefaultEntityViewInfo(float minScale, float minNameScale, int printOrder,
-			Color nameColor, EntityIcon icon, boolean isWayIcon,
-			Color wayColor, float wayWidth, boolean wayDashed,
-			Color wayFillColor, boolean fillAreasOnly) {
+			UnifiedColor nameColor, EntityIcon icon, boolean isWayIcon,
+			UnifiedColor wayColor, float wayWidth, boolean wayDashed,
+			UnifiedColor wayFillColor, boolean fillAreasOnly) {
 		this.printOrder = printOrder;
 		this.minVisibleScale = minScale;
 		this.minNameScale = minNameScale;

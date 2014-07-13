@@ -15,7 +15,7 @@ import aimax.osm.data.MapEventListener;
 import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.routing.RouteCalculator;
-import aimax.osm.viewer.MapViewFrame;
+import aimax.osm.viewer.swing.MapViewFrame;
 
 /**
  * Implements a simple route planning tool. It extends the OSM map viewer by a

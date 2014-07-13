@@ -1,6 +1,5 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,6 +30,12 @@ import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.WayRef;
 import aimax.osm.data.impl.DefaultMap;
+import aimax.osm.viewer.AbstractEntityRenderer;
+import aimax.osm.viewer.CoordTransformer;
+import aimax.osm.viewer.DefaultEntityRenderer;
+import aimax.osm.viewer.MapViewEvent;
+import aimax.osm.viewer.MapViewEventListener;
+import aimax.osm.viewer.UnifiedColor;
 
 /**
  * Provides a panel which shows map data. As model, a
@@ -57,6 +62,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private ArrayList<MapViewEventListener> eventListeners;
 	protected boolean isAdjusted;
 	protected JPopupMenu popup;
+	protected ImageBuilder imageBdr;
 	/** Off-screen image. */
 	private Image image;
 	private boolean isImageUpToDate;
@@ -69,6 +75,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		eventListeners = new ArrayList<MapViewEventListener>();
 		isAdjusted = false;
 		popup = new MapViewPopup();
+		imageBdr = new ImageBuilder();
 		MyMouseListener mouseListener = new MyMouseListener();
 		addMouseListener(mouseListener);
 		addMouseWheelListener(mouseListener);
@@ -108,11 +115,11 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		renderer.enableDebugMode(b);
 		viewChanged(MapViewEvent.Type.NEW_RENDERER);
 	}
-	
+
 	public boolean isDebugModeEnabled() {
 		return renderer.isDebugModeEnabled();
 	}
-	
+
 	/** Returns the component responsible for coordinate transformation. */
 	public CoordTransformer getTransformer() {
 		return transformer;
@@ -320,10 +327,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	}
 
 	protected void updateOffScreenImage() {
-		Image newImage = createImage(getWidth(), getHeight());
-		Graphics2D g2 = (Graphics2D) newImage.getGraphics();
-		g2.setBackground(renderer.getBackgroundColor());
-		g2.clearRect(0, 0, getWidth(), getHeight());
+		imageBdr.initImage(createImage(getWidth(), getHeight()));
+		imageBdr.setColor(renderer.getBackgroundColor());
+		imageBdr.setAreaFilled(true);
+		imageBdr.drawRect(0, 0, imageBdr.getWidth(), imageBdr.getHeight());
 		if (getWidth() > 0 && map != null) {
 			if (!isAdjusted) {
 				transformer.adjustTransformation(map.getBoundingBox(),
@@ -337,7 +344,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			float scale = transformer.computeScale();
 			BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
 			float viewScale = scale / renderer.getDisplayFactor();
-			renderer.initForRendering(g2, transformer, map);
+			renderer.initForRendering(imageBdr, transformer, map);
 			map.visitEntities(renderer, vbox, viewScale);
 			for (MapEntity entity : map.getVisibleMarkersAndTracks(viewScale))
 				entity.accept(renderer);
@@ -345,16 +352,17 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			if (renderer.isDebugModeEnabled() && map instanceof DefaultMap) {
 				List<double[]> splits = ((DefaultMap) map).getEntityTree()
 						.getSplitCoords();
-				g2.setColor(Color.LIGHT_GRAY);
-				g2.setStroke(new BasicStroke(1f));
+				imageBdr.setColor(UnifiedColor.LIGHT_GRAY);
+				imageBdr.setLineStyle(false, 1f);
+				CoordTransformer trans = renderer.getTransformer();
 				for (double[] split : splits)
-					g2.drawLine(renderer.transformer.x(split[1]),
-							renderer.transformer.y(split[0]),
-							renderer.transformer.x(split[3]),
-							renderer.transformer.y(split[2]));
+					imageBdr.drawLine(
+							renderer.getTransformer().x(split[1]),
+							trans.y(split[0]), trans.x(split[3]),
+							trans.y(split[2]));
 			}
 		}
-		image = newImage;
+		image = imageBdr.getResult();
 		isImageUpToDate = true;
 	}
 
@@ -365,7 +373,9 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private void paintPreview(int dx, int dy, float zoomfactor) {
 		if (image != null) {
 			Graphics2D g2 = (Graphics2D) getGraphics();
-			g2.setBackground(renderer.getBackgroundColor());
+			UnifiedColor bg = renderer.getBackgroundColor();
+			g2.setBackground(new Color(bg.getRed(), bg.getGreen(),
+					bg.getBlue(), bg.getAlpha()));
 			int newWidth = Math.round(image.getWidth(null) * zoomfactor);
 			int newHeight = (int) Math
 					.round(image.getHeight(null) * zoomfactor);
@@ -441,8 +451,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 							MapViewEvent.Type.MARKER_ADDED));
 				} else { // double click
 					map.removeMarker(marker);
-					MapNode mNode = renderer.getNextNode(e.getX(),
-							e.getY());
+					MapNode mNode = renderer.getNextNode(e.getX(), e.getY());
 					if (mNode != null)
 						showMapEntityInfoDialog(mNode,
 								renderer.isDebugModeEnabled());

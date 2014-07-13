@@ -1,4 +1,4 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
 import java.text.DecimalFormat;
 import java.util.Locale;

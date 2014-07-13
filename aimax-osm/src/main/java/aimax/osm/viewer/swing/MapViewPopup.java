@@ -1,4 +1,4 @@
-package aimax.osm.viewer;
+package aimax.osm.viewer.swing;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileFilter;
 
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.viewer.MapViewEvent;
 
 /**
  * Useful popup menu for the <code>MapViewPane</code>.
@@ -125,7 +126,8 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 							new FileInputStream(xmlFile)));
 					int size = (Integer) decoder.readObject();
 					for (int i = 0; i < size; i++) {
-						WritablePosition pos = (WritablePosition) decoder.readObject();
+						WritablePosition pos = (WritablePosition) decoder
+								.readObject();
 						pane.getMap().addMarker(pos.getLat(), pos.getLon());
 					}
 					pane.fireMapViewEvent(new MapViewEvent(pane,
@@ -171,25 +173,26 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		}
 		return fileChooser;
 	}
-	
+
 	/**
-	 * Provides a position implementation with full java bean interface which is suitable
-	 * for xml serialization.
+	 * Provides a position implementation with full java bean interface which is
+	 * suitable for xml serialization.
+	 * 
 	 * @author Ruediger Lunde
 	 */
 	public static class WritablePosition extends Position {
 		public WritablePosition() {
 			super(0f, 0f);
 		}
-		
+
 		public WritablePosition(MapNode node) {
 			super(node);
 		}
-	
+
 		public void setLat(float lat) {
 			this.lat = lat;
 		}
-		
+
 		public void setLon(float lon) {
 			this.lon = lon;
 		}

@@ -1,8 +1,5 @@
 package aimax.osm.viewer;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import aimax.osm.data.EntityVisitor;
 import aimax.osm.data.WayNodeProvider;
 import aimax.osm.data.entities.MapNode;
@@ -20,11 +17,11 @@ import aimax.osm.data.entities.Track;
  * 
  */
 public abstract class AbstractEntityRenderer implements EntityVisitor {
-	protected Graphics2D g2;
+	protected UnifiedImageBuilder imageBdr;
 	/** Is responsible for world to view coordinate transformations. */
 	protected CoordTransformer transformer;
 	protected WayNodeProvider wnProvider;
-	private Color backgroundColor = Color.WHITE;
+	private UnifiedColor backgroundColor = UnifiedColor.WHITE;
 	protected boolean debugMode;
 	/**
 	 * Controls the size of symbols, line widths, and texts. Value two doubles
@@ -32,11 +29,15 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 	 */
 	protected float displayFactor = 1.0f;
 
-	public Color getBackgroundColor() {
+	public CoordTransformer getTransformer() {
+		return transformer;
+	}
+	
+	public UnifiedColor getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(Color color) {
+	public void setBackgroundColor(UnifiedColor color) {
 		backgroundColor = color;
 	}
 
@@ -57,9 +58,9 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 	}
 
 	/** Resets the renderer. */
-	public void initForRendering(Graphics2D g2, CoordTransformer transformer,
+	public void initForRendering(UnifiedImageBuilder imageBuilder, CoordTransformer transformer,
 			WayNodeProvider wnProvider) {
-		this.g2 = g2;
+		this.imageBdr = imageBuilder;
 		this.transformer = transformer;
 		this.wnProvider = wnProvider;
 	}
