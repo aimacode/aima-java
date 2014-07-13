@@ -375,19 +375,17 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * direction, zero means north.
 	 */
 	protected void printOnewayArrow(float x, float y, double angle) {
-		// Line2D.Float line = new Line2D.Float(0f, 0f, 0f, displayFactorSym *
-		// 10f);
-		// AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-		// iBuilder.setColor(UnifiedColor.GRAY);
-		// iBuilder.setLineStyle(false, displayFactorSym);
-		// at.rotate(angle);
-		// iBuilder.draw(at.createTransformedShape(line));
-		// line.setLine(0f, 0f, 0f, displayFactorSym * 7f);
-		// at.rotate(-Math.PI / 6);
-		// iBuilder.draw(at.createTransformedShape(line));
-		// at.rotate(Math.PI / 3);
-		// iBuilder.draw(at.createTransformedShape(line));
-		// TODO
+		imageBdr.setColor(UColor.GRAY); // TODO
+		imageBdr.setLineStyle(false, displayFactorSym);
+		drawArrowLine(x, y, displayFactorSym * 10f, angle);
+		drawArrowLine(x, y, displayFactorSym * 7f, angle - Math.PI/4);
+		drawArrowLine(x, y, displayFactorSym * 7f, angle + Math.PI/4);
+	}
+
+	private void drawArrowLine(float x, float y, float length, double angle) {
+		imageBdr.drawLine(Math.round(x), Math.round(y),
+				(int) Math.round(-length * Math.sin(angle) + x),
+				(int) Math.round(length * Math.cos(angle) + y));
 	}
 
 	/** Finds a good place for printing the name of a way entity. */
