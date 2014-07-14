@@ -1,17 +1,22 @@
 /**
- * This package contains the presentation layer classes of the
- * OSM viewer. The class <code>MapViewPane</code> gets its data from an
- * <code>OsmMap</code> object and visualizes it on a canvas. It also
- * reacts on keyboard and mouse events and provides a popup menu.
- * By default, it uses a <code>DefaultEntityRenderer</code> to draw entities but
- * other renderers can be used as well. The default renderer does not
- * decide itself, which icon to use for a certain entity, or which color.
- * Instead, it assumes, that all entities have been classified before and
- * provide an attached <code>DefaultEntityViewInfo</code> object. For this
- * purpose, the OSM map must be equipped with an entity classifier.
- * Suitable examples of entity classifiers are provided by the
- * <code>MapStyleFactory</code>. The <code>MapViewFrame</code>
- * demonstrates, how the viewer can be embedded within a graphical
- * application frame.</p>
+ * This package contains classes for drawing images from map data. Drawing
+ * commands are send to a <code>UnifiedImageBuilder</code> which abstracts
+ * from the concrete graphics framework being used.
+ * <p>Renderers are responsible for controlling the drawing process. Here,
+ * a renderer is implemented as a visitor. It can be provided as parameter
+ * to {@link aimax.osm.data.OsmMap#visitEntities(aimax.osm.data.EntityVisitor, aimax.osm.data.BoundingBox, float)}.   
+ * <code>AbstractEntityRenderer</code> defines the general renderer interface
+ * and contains some common attributes. The <code>DefaultEntityRenderer</code>
+ * gives an example for a concrete implementation. The mapping between
+ * types of map entities and symbols for visualization is done by
+ * entity classifiers. They contain rules which assign <code>EntityViewInfo</code>
+ * objects to map entities depending on its attributes. See the
+ * <code>MapStyleFactory</code> for examples. Entity classifies are
+ * maintained by the map and not by the renderer for two reasons:
+ * First, attribute checks for classification can be reduced to one check when
+ * loading the map. Second, scale visibility information can be used
+ * to organize map for fast scale-dependent filtering.
+ * 
+ * @author Ruediger Lunde
  */
 package aimax.osm.viewer;
