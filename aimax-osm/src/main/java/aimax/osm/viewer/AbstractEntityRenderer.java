@@ -58,9 +58,9 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 	}
 
 	/** Resets the renderer. */
-	public void initForRendering(UnifiedImageBuilder imageBuilder, CoordTransformer transformer,
+	public void initForRendering(UnifiedImageBuilder imageBdr, CoordTransformer transformer,
 			WayNodeProvider wnProvider) {
-		this.imageBdr = imageBuilder;
+		this.imageBdr = imageBdr;
 		this.transformer = transformer;
 		this.wnProvider = wnProvider;
 	}

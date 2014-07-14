@@ -62,7 +62,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private ArrayList<MapViewEventListener> eventListeners;
 	protected boolean isAdjusted;
 	protected JPopupMenu popup;
-	protected ImageBuilder imageBdr;
+	protected AWTImageBuilder imageBdr;
 	/** Off-screen image. */
 	private Image image;
 	private boolean isImageUpToDate;
@@ -75,7 +75,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		eventListeners = new ArrayList<MapViewEventListener>();
 		isAdjusted = false;
 		popup = new MapViewPopup();
-		imageBdr = new ImageBuilder();
+		imageBdr = new AWTImageBuilder();
 		MyMouseListener mouseListener = new MyMouseListener();
 		addMouseListener(mouseListener);
 		addMouseWheelListener(mouseListener);

@@ -3,7 +3,7 @@ package aimax.osm.viewer;
 
 /**
  * Provides a platform independent interface to draw images. Implementations exist
- * for Swing and Android.
+ * for AWT and Android.
  * @author Daniel Wonnenberg
  *
  */

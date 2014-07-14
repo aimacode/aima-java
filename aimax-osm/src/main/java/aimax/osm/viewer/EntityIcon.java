@@ -1,6 +1,5 @@
 package aimax.osm.viewer;
 
-import java.awt.BasicStroke;
 
 /**
  * Defines a base class for scalable vector graphic icons.
@@ -21,19 +20,6 @@ public abstract class EntityIcon {
 
 	// ///////////////////////////////////////////////////////////////
 	// implementation classes
-
-	protected static BasicStroke currStroke;
-	protected static BasicStroke currStroke2;
-	protected static float currDisplayFactor;
-
-	protected static BasicStroke getStroke(float displayFactor, boolean s2) {
-		if (displayFactor != currDisplayFactor) {
-			currStroke = new BasicStroke(displayFactor);
-			currStroke2 = new BasicStroke(2f * displayFactor);
-			currDisplayFactor = displayFactor;
-		}
-		return s2 ? currStroke2 : currStroke;
-	}
 
 	/**
 	 * Implements a universally usable icon, consisting of a primitive shape and
