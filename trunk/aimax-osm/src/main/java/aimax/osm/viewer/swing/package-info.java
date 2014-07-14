@@ -11,8 +11,6 @@
  * Instead, it assumes, that all entities have been classified before and
  * provide an attached <code>DefaultEntityViewInfo</code> object. For this
  * purpose, the OSM map must be equipped with an entity classifier.
- * Suitable examples of entity classifiers are provided by the
- * platform independent <code>MapStyleFactory</code>.
  * The <code>MapViewFrame</code> demonstrates, how the viewer can be
  * embedded within a graphical application frame.</p>
  */

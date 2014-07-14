@@ -35,21 +35,22 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 	protected MapViewPane pane;
 	private JFileChooser fileChooser;
 
-	private JMenuItem infoMenuItem;
+	private JMenuItem entityInfoMenuItem;
 	private JMenuItem createMarkerMenuItem;
 	private JMenuItem removeMarkerMenuItem;
 	private JMenuItem loadMarkersMenuItem;
 	private JMenuItem saveMarkersMenuItem;
 	private JMenuItem clearMenuItem;
+	private JMenuItem functionsMenuItem;
 	private JCheckBoxMenuItem debugMenuItem;
 
 	private int x;
 	private int y;
 
 	public MapViewPopup() {
-		infoMenuItem = new JMenuItem("Info");
-		infoMenuItem.addActionListener(this);
-		add(infoMenuItem);
+		entityInfoMenuItem = new JMenuItem("Entity Info");
+		entityInfoMenuItem.addActionListener(this);
+		add(entityInfoMenuItem);
 
 		JMenu markerMenu = new JMenu("Marker");
 		add(markerMenu);
@@ -69,6 +70,10 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		clearMenuItem = new JMenuItem("Clear M&T");
 		clearMenuItem.addActionListener(this);
 		add(clearMenuItem);
+
+		functionsMenuItem = new JMenuItem("Functions");
+		functionsMenuItem.addActionListener(this);
+		add(functionsMenuItem);
 
 		addSeparator();
 		debugMenuItem = new JCheckBoxMenuItem("Debug Mode");
@@ -91,7 +96,7 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == infoMenuItem) {
+		if (ae.getSource() == entityInfoMenuItem) {
 			MapNode mNode = pane.getRenderer().getNextNode(x, y);
 			if (mNode != null)
 				pane.showMapEntityInfoDialog(mNode, pane.isDebugModeEnabled());
@@ -159,6 +164,10 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 				if (encoder != null)
 					encoder.close();
 			}
+		} else if (ae.getSource() == functionsMenuItem) {
+			JOptionPane.showMessageDialog(pane,
+					MapViewPane.FUNCTION_DESCRIPTION.split("\\|"),
+					"Function Description", JOptionPane.INFORMATION_MESSAGE);
 		} else if (ae.getSource() == debugMenuItem) {
 			pane.enableDebugMode(debugMenuItem.isSelected());
 		}
