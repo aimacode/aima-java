@@ -8,7 +8,12 @@ import java.awt.Image;
 import aimax.osm.viewer.UColor;
 import aimax.osm.viewer.UnifiedImageBuilder;
 
-public class ImageBuilder implements UnifiedImageBuilder {
+/**
+ * Specialized image builder for AWT images.
+ * 
+ * @author Ruediger Lunde
+ */
+public class AWTImageBuilder implements UnifiedImageBuilder {
 
 	private Image result;
 	private Graphics2D g2;
@@ -93,7 +98,7 @@ public class ImageBuilder implements UnifiedImageBuilder {
 		if (dashed) {
 			dash = new float[] { width * 2f };
 		}
-		g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT,
+		g2.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f));
 	}
 

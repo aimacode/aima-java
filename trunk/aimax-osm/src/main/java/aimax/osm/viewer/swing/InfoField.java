@@ -14,6 +14,11 @@ import aimax.osm.data.entities.Track;
 import aimax.osm.viewer.MapViewEvent;
 import aimax.osm.viewer.MapViewEventListener;
 
+/**
+ * Text field which informs the user about results of the last map interaction.
+ * @author Ruediger Lunde
+ *
+ */
 public class InfoField extends JTextField {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +41,7 @@ public class InfoField extends JTextField {
 	/**
 	 * Updates the info field based on events sent by the MapViewPane.
 	 * 
-	 * @author R. Lunde
+	 * @author Ruediger Lunde
 	 */
 	static class MapEventHandler implements MapViewEventListener,
 			MapEventListener {

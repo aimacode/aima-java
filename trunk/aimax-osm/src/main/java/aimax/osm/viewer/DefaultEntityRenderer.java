@@ -263,34 +263,34 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	}
 
 	/** Prints a line or fills an area. */
-	protected void printLine(UnifiedImageBuilder iBuilder, List<MapNode> nodes,
+	protected void printLine(UnifiedImageBuilder imageBdr, List<MapNode> nodes,
 			DefaultEntityViewInfo pInfo, boolean asArea, boolean asOneway,
 			NameInfo textInfo) {
 		// count++;
 		int[] xPoints = new int[nodes.size()];
 		int[] yPoints = new int[nodes.size()];
 
-		int viewWidth = !asArea ? iBuilder.getWidth() : -1;
-		int viewHeight = !asArea ? iBuilder.getHeight() : -1;
+		int viewWidth = !asArea ? imageBdr.getWidth() : -1;
+		int viewHeight = !asArea ? imageBdr.getHeight() : -1;
 		boolean visible = getViewCoords(nodes, viewWidth, viewHeight, xPoints,
 				yPoints);
 
 		if (visible) {
 			boolean filled = false;
 			if (asArea) {
-				iBuilder.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor
+				imageBdr.setColor(pInfo.wayFillColor != null ? pInfo.wayFillColor
 						: pInfo.wayColor);
-				iBuilder.setLineStyle(false, displayFactor);
-				iBuilder.setAreaFilled(true);
-				iBuilder.drawPolygon(xPoints, yPoints, nodes.size());
+				imageBdr.setLineStyle(false, displayFactor);
+				imageBdr.setAreaFilled(true);
+				imageBdr.drawPolygon(xPoints, yPoints, nodes.size());
 				filled = true;
 			}
 			if (!filled || pInfo.wayFillColor != null
 					&& !pInfo.wayFillColor.equals(pInfo.wayColor)) {
-				iBuilder.setColor(pInfo.wayColor);
-				iBuilder.setLineStyle(pInfo.wayDashed, pInfo.wayWidth
+				imageBdr.setColor(pInfo.wayColor);
+				imageBdr.setLineStyle(pInfo.wayDashed, pInfo.wayWidth
 						* displayFactorSym);
-				iBuilder.drawPolyline(xPoints, yPoints, nodes.size());
+				imageBdr.drawPolyline(xPoints, yPoints, nodes.size());
 			}
 			if (asOneway) {
 				float x = xPoints[xPoints.length - 1];
@@ -375,7 +375,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * direction, zero means north.
 	 */
 	protected void printOnewayArrow(float x, float y, double angle) {
-		imageBdr.setColor(UColor.GRAY); // TODO
+		imageBdr.setColor(UColor.GRAY);
 		imageBdr.setLineStyle(false, displayFactorSym);
 		drawArrowLine(x, y, displayFactorSym * 10f, angle);
 		drawArrowLine(x, y, displayFactorSym * 7f, angle - Math.PI/4);
@@ -405,7 +405,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	}
 
 	/** Prints a point of interest. */
-	protected void printPoint(UnifiedImageBuilder iBuilder, MapNode node,
+	protected void printPoint(UnifiedImageBuilder imageBdr, MapNode node,
 			DefaultEntityViewInfo pInfo, UColor nameColor) {
 		int x = transformer.x(node.getLon());
 		int y = transformer.y(node.getLat());
@@ -413,7 +413,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 		if (pInfo.icon != null) {
 			width = Math.round(pInfo.icon.size * displayFactorSym);
-			pInfo.icon.draw(iBuilder, x, y, displayFactor);
+			pInfo.icon.draw(imageBdr, x, y, displayFactor);
 		}
 
 		if (nameColor != null) {
