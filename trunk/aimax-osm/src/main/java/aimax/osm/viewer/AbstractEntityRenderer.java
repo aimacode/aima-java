@@ -63,6 +63,9 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 		this.imageBdr = imageBdr;
 		this.transformer = transformer;
 		this.wnProvider = wnProvider;
+		imageBdr.setColor(backgroundColor);
+		imageBdr.setAreaFilled(true);
+		imageBdr.drawRect(0, 0, imageBdr.getWidth(), imageBdr.getHeight());
 	}
 
 	/**

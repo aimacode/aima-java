@@ -328,19 +328,16 @@ public class MapViewPane extends JComponent implements MapEventListener {
 
 	protected void updateOffScreenImage() {
 		imageBdr.initImage(createImage(getWidth(), getHeight()));
-		imageBdr.setColor(renderer.getBackgroundColor());
-		imageBdr.setAreaFilled(true);
-		imageBdr.drawRect(0, 0, imageBdr.getWidth(), imageBdr.getHeight());
 		if (getWidth() > 0 && map != null) {
 			if (!isAdjusted) {
 				transformer.adjustTransformation(map.getBoundingBox(),
-						getWidth(), getHeight());
+						imageBdr.getWidth(), imageBdr.getHeight());
 				isAdjusted = true;
 			}
-			float latMin = transformer.lat(getHeight());
+			float latMin = transformer.lat(imageBdr.getHeight());
 			float lonMin = transformer.lon(0);
 			float latMax = transformer.lat(0);
-			float lonMax = transformer.lon(getWidth());
+			float lonMax = transformer.lon(imageBdr.getWidth());
 			float scale = transformer.computeScale();
 			BoundingBox vbox = new BoundingBox(latMin, lonMin, latMax, lonMax);
 			float viewScale = scale / renderer.getDisplayFactor();
@@ -356,8 +353,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 				imageBdr.setLineStyle(false, 1f);
 				CoordTransformer trans = renderer.getTransformer();
 				for (double[] split : splits)
-					imageBdr.drawLine(
-							renderer.getTransformer().x(split[1]),
+					imageBdr.drawLine(renderer.getTransformer().x(split[1]),
 							trans.y(split[0]), trans.x(split[3]),
 							trans.y(split[2]));
 			}

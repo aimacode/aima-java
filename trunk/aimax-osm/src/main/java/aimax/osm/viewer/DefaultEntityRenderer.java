@@ -325,8 +325,10 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * 
 	 * @param nodes
 	 *            List of way nodes.
-	 * @param clip
-	 *            Clipping rectangle or null (meaning no check).
+	 * @param viewWidth
+	 *            Used for clipping if > 0.
+	 * @param viewHeight
+	 *            Used for clipping if > 0.
 	 * @param xView
 	 *            Array of coordinates for the result.
 	 * @param yView
