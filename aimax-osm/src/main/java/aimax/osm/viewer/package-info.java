@@ -13,9 +13,9 @@
  * objects to map entities depending on its attributes. See the
  * <code>MapStyleFactory</code> for examples. Entity classifies are
  * maintained by the map and not by the renderer for two reasons:
- * First, attribute checks for classification can be reduced to one check when
- * loading the map. Second, scale visibility information can be used
- * to organize map for fast scale-dependent filtering.
+ * First, attribute checks for classification can be reduced to one check
+ * per entity when loading the map. Second, scale visibility information
+ * can be used to organize map for fast scale-dependent filtering.
  * 
  * @author Ruediger Lunde
  */

@@ -52,6 +52,16 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private static final long serialVersionUID = 1L;
 	// private Logger LOG = Logger.getLogger("aimax.osm");
 
+	public static final String FUNCTION_DESCRIPTION = ""
+			+ "Zoom: Mouse-Wheel; Buttons Plus, Minus"
+			+ "|Adjust symbol size: Alt-Mouse-Wheel; Buttons Alt+Plus, Alt-Minus"
+			+ "|Reduce step size during zoom and adjust: Additionally Shift"
+			+ "|Pan: Mouse-Drag; Buttons Up, Down, Left, Right"
+			+ "|Set a marker: Mouse-Left"
+			+ "|Remove a marker: Shift-Mouse-Left"
+			+ "|Add a node to a path: Ctrl-Mouse-Left"
+			+ "|Open a context menu: Mouse-Right";
+
 	/**
 	 * Maintains a reference to the model which provides the data to be
 	 * displayed.
