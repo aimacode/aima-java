@@ -38,12 +38,14 @@ import aimax.osm.viewer.MapViewEventListener;
 import aimax.osm.viewer.UColor;
 
 /**
- * Provides a panel which shows map data. As model, a
- * {@link aimax.osm.data.OsmMap} is used.
+ * Provides a panel which visualizes map data. As model, an
+ * {@link aimax.osm.data.OsmMap} is used. The panel reacts on user events
+ * and visualizes currently visible map entities as image. For details about
+ * image creation see method {@link #updateOffScreenImage()}.
  * <p>
  * Hint for using the viewer: Try Mouse-Left, Mouse-Right, Mouse-Drag,
  * Ctrl-Mouse-Left, Plus, Minus, Ctrl-Plus, Ctrl-Minus, arrow buttons, and also
- * the Mouse-Wheel for navigation, marking, and track definition.
+ * the Mouse-Wheel for navigation, marker placement, and track definition.
  * 
  * @author Ruediger Lunde
  */
@@ -53,10 +55,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	// private Logger LOG = Logger.getLogger("aimax.osm");
 
 	public static final String FUNCTION_DESCRIPTION = ""
-			+ "Zoom: Mouse-Wheel; Buttons Plus, Minus"
-			+ "|Adjust symbol size: Alt-Mouse-Wheel; Buttons Alt+Plus, Alt-Minus"
-			+ "|Reduce step size during zoom and adjust: Additionally Shift"
+			+ "Zoom: Mouse-Wheel; Buttons Plus, Minus, Space, Ctrl-Space"
+			+ "|Adjust symbol size: Ctrl-Mouse-Wheel; Buttons Ctrl+Plus, Ctrl-Minus"
 			+ "|Pan: Mouse-Drag; Buttons Up, Down, Left, Right"
+			+ "|Reduce step size during zoom, adjust, pan: Additionally Shift"
 			+ "|Set a marker: Mouse-Left"
 			+ "|Remove a marker: Shift-Mouse-Left"
 			+ "|Add a node to a path: Ctrl-Mouse-Left"
@@ -336,6 +338,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 		g.drawImage(image, 0, 0, this);
 	}
 
+	/**
+	 * Creates a new image for the currently visible part of the map and updates
+	 * attribute {@link #image}.
+	 */
 	protected void updateOffScreenImage() {
 		imageBdr.initImage(createImage(getWidth(), getHeight()));
 		if (getWidth() > 0 && map != null) {
@@ -501,13 +507,13 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			float fac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ? 1.1f
 					: 1.5f;
 			if (rot == -1) {
-				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 					multiplyDisplayFactorWith(fac);
 				} else {
 					zoom(fac, x, y);
 				}
 			} else if (rot == 1) {
-				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 					multiplyDisplayFactorWith(1f / fac);
 				} else {
 					zoom(1 / fac, x, y);
@@ -537,13 +543,13 @@ public class MapViewPane extends JComponent implements MapEventListener {
 					: 0.3f;
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_PLUS:
-				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
 					multiplyDisplayFactorWith(zfac);
 				else
 					zoom(zfac, getWidth() / 2, getHeight() / 2);
 				break;
 			case KeyEvent.VK_MINUS:
-				if ((e.getModifiers() & KeyEvent.ALT_MASK) != 0)
+				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
 					multiplyDisplayFactorWith(1f / zfac);
 				else
 					zoom(1 / zfac, getWidth() / 2, getHeight() / 2);
