@@ -1,24 +1,27 @@
 package aimax.osm.viewer;
 
-import aimax.osm.viewer.swing.MapViewPane;
 
 /**
  * Allows map views to inform interested listeners about user interactions such
- * as zooming or marker setting.
+ * as zooming or marker placement.
  * 
  * @author Ruediger Lunde
  * 
  */
 public class MapViewEvent {
-	MapViewPane source;
+	Object source;
 	Type type;
 
-	public MapViewEvent(MapViewPane source, Type type) {
+	/**
+	 * Creates a new MapViewEvent.
+	 * @param source A map view component.
+	 */
+	public MapViewEvent(Object source, Type type) {
 		this.source = source;
 		this.type = type;
 	}
 
-	public MapViewPane getSource() {
+	public Object getSource() {
 		return source;
 	}
 

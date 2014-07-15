@@ -1,6 +1,5 @@
 package aimax.osm.viewer;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,7 +29,6 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	 * Default size used for fonts (in logical units).
 	 */
 	protected float defaultFontSize = 12f;
-	protected Color backgroundColor;
 
 	protected float scale;
 	protected float displayFactorSym;
