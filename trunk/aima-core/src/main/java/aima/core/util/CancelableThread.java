@@ -19,7 +19,7 @@ public class CancelableThread extends Thread {
 		return false;
 	}
 
-	private boolean isCanceled;
+	private volatile boolean isCanceled;
 
 	/**
 	 * Returns <code>true</code> if this thread is canceled
