@@ -122,14 +122,14 @@ public abstract class EntityIcon {
 		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
-			imageBdr.setLineStyle(false, 2f * displayFactor);
 			imageBdr.setColor(lineColor);
+			imageBdr.setLineStyle(false, 2f * displayFactor);
+			imageBdr.setAreaFilled(false);
 			imageBdr.drawLine(x, y, x + dsize, y - dsize);
+			imageBdr.setColor(fillColor);
 			imageBdr.setLineStyle(false, displayFactor);
 			imageBdr.setAreaFilled(true);
 			int l = dsize / 3 + 1;
-			imageBdr.setColor(fillColor);
-			l = dsize / 3 + 1;
 			imageBdr.drawOval(x + dsize - l, y - dsize - l, 2 * l, 2 * l);
 		}
 	}
@@ -234,6 +234,7 @@ public abstract class EntityIcon {
 			imageBdr.drawPolygon(new int[] { x, x + dsize, x + offset, x },
 					new int[] { y + dsize, y + dsize, y, y + dsize }, 4);
 			imageBdr.setColor(lineColor);
+			imageBdr.setAreaFilled(false);
 			imageBdr.drawPolyline(new int[] { x + offset + offset / 2, x, x + dsize,
 					x + offset - offset / 2 }, new int[] { y - offset / 2,
 					y + dsize, y + dsize, y - offset / 2 }, 4);
