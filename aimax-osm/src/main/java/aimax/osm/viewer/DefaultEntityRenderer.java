@@ -288,6 +288,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 				imageBdr.setColor(pInfo.wayColor);
 				imageBdr.setLineStyle(pInfo.wayDashed, pInfo.wayWidth
 						* displayFactorSym);
+				imageBdr.setAreaFilled(false);
 				imageBdr.drawPolyline(xPoints, yPoints, nodes.size());
 			}
 			if (asOneway) {
@@ -377,6 +378,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	protected void printOnewayArrow(float x, float y, double angle) {
 		imageBdr.setColor(UColor.GRAY);
 		imageBdr.setLineStyle(false, displayFactorSym);
+		imageBdr.setAreaFilled(false);
 		drawArrowLine(x, y, displayFactorSym * 10f, angle);
 		drawArrowLine(x, y, displayFactorSym * 7f, angle - Math.PI/4);
 		drawArrowLine(x, y, displayFactorSym * 7f, angle + Math.PI/4);

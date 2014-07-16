@@ -367,6 +367,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 						.getSplitCoords();
 				imageBdr.setColor(UColor.LIGHT_GRAY);
 				imageBdr.setLineStyle(false, 1f);
+				imageBdr.setAreaFilled(false);
 				CoordTransformer trans = renderer.getTransformer();
 				for (double[] split : splits)
 					imageBdr.drawLine(renderer.getTransformer().x(split[1]),
