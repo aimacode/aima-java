@@ -80,7 +80,7 @@ public class WalkSAT {
 			} else {
 				// else flip whichever symbol in clause maximizes the number of
 				// satisfied clauses
-				model = flipSymbolInClausesMaximizesNumberSatisfiedClauses(
+				model = flipSymbolInClauseMaximizesNumberSatisfiedClauses(
 						clause, clauses, model);
 			}
 		}
@@ -164,7 +164,7 @@ public class WalkSAT {
 		return result;
 	}
 
-	protected Model flipSymbolInClausesMaximizesNumberSatisfiedClauses(
+	protected Model flipSymbolInClauseMaximizesNumberSatisfiedClauses(
 			Clause clause, Set<Clause> clauses, Model model) {
 		Model result = model;
 
@@ -176,13 +176,14 @@ public class WalkSAT {
 			Model flippedModel = result.flip(symbol);
 			int numberClausesSatisfied = 0;
 			for (Clause c : clauses) {
-				if (flippedModel.determineValue(c)) {
+				if (Boolean.TRUE.equals(flippedModel.determineValue(c))) {
 					numberClausesSatisfied++;
 				}
 			}
 			// test if this symbol flip is the new maximum
 			if (numberClausesSatisfied > maxClausesSatisfied) {
-				result = flippedModel;
+				result              = flippedModel;
+				maxClausesSatisfied = numberClausesSatisfied;
 				if (numberClausesSatisfied == clauses.size()) {
 					// i.e. satisfies all clauses
 					break; // this is our goal.
@@ -190,6 +191,6 @@ public class WalkSAT {
 			}
 		}
 
-		return model;
+		return result;
 	}
 }

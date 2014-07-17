@@ -119,7 +119,7 @@ public abstract class Sentence implements ParseTreeNode {
 	}
 
 	/**
-	 * All a PLVisitor to walk over the abstract syntax tree represented by this
+	 * Allow a PLVisitor to walk over the abstract syntax tree represented by this
 	 * Sentence.
 	 * 
 	 * @param plv

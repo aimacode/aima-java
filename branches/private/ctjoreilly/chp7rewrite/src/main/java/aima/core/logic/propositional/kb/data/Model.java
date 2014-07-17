@@ -12,37 +12,49 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
- * @author Ravi Mohan
+ * Artificial Intelligence A Modern Approach (3rd Edition): pages 240, 245.<br>
+ * <br>
+ * Models are mathematical abstractions, each of which simply fixes the truth or
+ * falsehood of every relevant sentence. In propositional logic, a model simply
+ * fixes the <b>truth value</b> - <em>true</em> or <em>false</em> - for
+ * every proposition symbol.<br>
+ * <br>
+ * Models as implemented here are immutable and can also represent partial assignments 
+ * to the set of proposition symbols in a Knowledge Base (i.e. a partial model).
  * 
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
  */
 public class Model implements PLVisitor<Boolean, Boolean> {
 
-	private HashMap<PropositionSymbol, Boolean> h = new HashMap<PropositionSymbol, Boolean>();
+	private HashMap<PropositionSymbol, Boolean> assignments = new HashMap<PropositionSymbol, Boolean>();
 
+	/**
+	 * Default Constructor.
+	 */
 	public Model() {
-
 	}
 
 	public Model(Map<PropositionSymbol, Boolean> values) {
-		h.putAll(values);
+		assignments.putAll(values);
 	}
 
 	public Boolean getValue(PropositionSymbol symbol) {
-		return h.get(symbol);
+		return assignments.get(symbol);
 	}
 
 	public boolean isTrue(PropositionSymbol symbol) {
-		return Boolean.TRUE.equals(h.get(symbol));
+		return Boolean.TRUE.equals(assignments.get(symbol));
 	}
 
 	public boolean isFalse(PropositionSymbol symbol) {
-		return Boolean.FALSE.equals(h.get(symbol));
+		return Boolean.FALSE.equals(assignments.get(symbol));
 	}
 
 	public Model union(PropositionSymbol symbol, boolean b) {
 		Model m = new Model();
-		m.h.putAll(this.h);
-		m.h.put(symbol, b);
+		m.assignments.putAll(this.assignments);
+		m.assignments.put(symbol, b);
 		return m;
 	}
 
@@ -69,7 +81,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	}
 
 	public Set<PropositionSymbol> getAssignedSymbols() {
-		return Collections.unmodifiableSet(h.keySet());
+		return Collections.unmodifiableSet(assignments.keySet());
 	}
 
 	/**
@@ -150,7 +162,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	}
 
 	public void print() {
-		for (Map.Entry<PropositionSymbol, Boolean> e : h.entrySet()) {
+		for (Map.Entry<PropositionSymbol, Boolean> e : assignments.entrySet()) {
 			System.out.print(e.getKey() + " = " + e.getValue() + " ");
 		}
 		System.out.println();
@@ -158,7 +170,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	@Override
 	public String toString() {
-		return h.toString();
+		return assignments.toString();
 	}
 
 	//
