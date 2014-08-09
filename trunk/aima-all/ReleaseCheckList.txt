@@ -107,8 +107,8 @@ http://maven.apache.org/
    mvn -P sonatype-oss-release deploy
    
 2. Close and Release: 
-   Follow steps 8 onwards from:
-   https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+   Follow Releasing to Central from:
+   http://central.sonatype.org/pages/ossrh-guide.html
    
 --- Publish the Release to the AIMA Website
    
