@@ -1,18 +1,49 @@
 = AIMA-CORE =
 
 == Requirements ==
-# JDK 1.6 - is the baseline JDK against which this project is developed. 
+# JDK 1.7 - is the baseline JDK against which this project is developed. 
 
+== Current Release: 0.11.0-Chp7-Rewrite ==
+CURRENTLY TODO
+--------------
+. @ 7.4.2
+. Review/Clean up contributed source in:
+  - aima\core\environment\wumpusworld\
+    . make code more closely follow description at beginning of chapter.
+  - HybridWumpusAgent
+    . Make extend KB-AGENT from figure 7.1.?
+  - WumpusKnowledgeBase
+  - WumpusFunctionFactoryTest
+. Ensure new propositional logic:
+  - CNF conversion logic is correctly distributing or over and (i.e. not over doing it).
+  - can handle always false and true proposition symbols.
+. Ensure all package paths are updated in table of algorithms.
 
-== Current Release: 0.10.5-Chp4-Complete ==
-0.10.5-Chp4-Rewrite : 09 Oct 2012 :<br>
-  * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
-  * Fixed Issue 65, Improve genetic algorithm implementation, rewritten to be easier to use/extend.
-  * Fixed Issue 73, misplaced tile heuristic function no longer counts the gap.
-  * Fixed Issue 74, defect in implementation of genetic algorithm, fixed indirectly due to Issue 65 re-implementation.
-  * Fixed Issue 76, QLearning Agent corrected to know which actions are possible in which states.
-  * Fixed Issue 77, valid hashCode() method missing on TicTacToeState.
-  * Minor documentation and code cleanup.
+0.11.0-Chp7-Rewrite : TBD!!! :<br>
+  * Baseline JDK supported by this library has been moved up from 1.6 to 1.7.
+  * Upgraded JUnit from 4.7 to 4.11.
+  * General Lexer and Parser Improvements:
+    * Tokens now track the position in the input that they started at.
+    * More informative Lexer and Parser exceptions are now generated.
+      Intended to help with identifying in the input where an error occurred.
+  * Propositional Parser Improvements:
+    * Takes operator precedence into account (i.e. does not require concrete syntax to be fully bracketed).
+    * Abstract syntax to Concrete syntax (ie. toString) only outputs brackets when necessary (easier to read)
+      so concrete syntax can be parsed back in again unchanged.
+    * Square brackets can be used in addition to parenthesis to explicitly indicate precedence.
+    * Symbols changed for the following logical connectives:
+      * not -> ~
+      * and -> &
+      * or  -> |
+    * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book.
+  * FOL Clause synchronization and performance enhancements contributed by Tobias Barth.
+  * Fixed Issue 31, Add implementation of - Fig 7.1 KB-Agent
+  * Fixed Issue 32, Add implementation of - Fig 7.20 Hybrid-Wumpus-Agent 
+  * Fixed Issue 72, Propositional CNF parsing issue.
+  * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
+  * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
+  * Fixed Issue 80, small bug in XYLocation.hashCode()
+  * Fixed Issue 83, Wrong time variable used in WumpusWorldKnowledgeBase.java
  
 = Details =
 
@@ -76,16 +107,16 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   6.5 ||     215|| Backtracking-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java BacktrackingStrategy]||
 ||   6.8 ||     221|| Min-Conflicts                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java MinConflictsStrategy]||
 ||   6.11||     209|| Tree-CSP-Solver              ||---||
-||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/KnowledgeBase.java KnowledgeBase]||
-||   7.1 ||     236|| KB-Agent                     ||---||
-||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence]||
-||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/TTEntails.java TTEntails]||
-||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/CNFTransformer.java CNFTransformer]||
-||   7.12||     255|| PL-Resolution                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/PLResolution.java PLResolution]||
-||   7.15||     258|| PL-FC-Entails?               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/PLFCEntails.java PLFCEntails]||
-||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/DPLL.java (method)-dpllSatisfiable(String)]||
-||   7.18||     263|| WalkSAT                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/algorithms/WalkSAT.java WalkSAT]||
-||   7.20||     270|| Hybrid-Wumpus-Agent          ||---||
+||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java KnowledgeBase]||
+||   7.1 ||     236|| KB-Agent                     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java KBAgent]||
+||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/PLParser.java PLParser]||
+||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java TTEntails]||
+||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java ConvertToCNF]||
+||   7.12||     255|| PL-Resolution                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java PLResolution]||
+||   7.15||     258|| PL-FC-Entails?               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java PLFCEntails]||
+||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java DPLLSatisfiable]||
+||   7.18||     263|| WalkSAT                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java WalkSAT]||
+||   7.20||     270|| Hybrid-Wumpus-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java HybridWumpusAgent]||
 ||   7.22||     272|| SATPlan                      ||---||
 ||   9   ||     323|| Subst                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java SubstVisitor]||
 ||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/Unifier.java Unifier]||
@@ -211,8 +242,6 @@ Searches like DepthFirstSearch which need to be used as a search (so implementin
 	 public DepthFirstSearch(QueueSearch search).
 
 == Logic Notes ==
-The ONE thing you need to watch out for is that the Parsers are VERY unforgiving. If you get a lexing or parsing error, there is a high probability there is an error in your logic string.
-
 To use First Order Logic, first you need to create an instance of aima.core.logic.fol.domain.FOLDomain which collects the FOL Constants, Prredicates, and Function etc... that you use to solve a particular problem.
 
 A parser (that understands the Grammar in figure 8.3 (page 293 of AIMA3e) needs to be instantiated with this domain, e.g:
@@ -249,7 +278,15 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 
 = Change History (Update in reverse chronological order) =
-
+0.10.5-Chp4-Rewrite : 09 Oct 2012 :<br>
+  * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
+  * Fixed Issue 65, Improve genetic algorithm implementation, rewritten to be easier to use/extend.
+  * Fixed Issue 73, misplaced tile heuristic function no longer counts the gap.
+  * Fixed Issue 74, defect in implementation of genetic algorithm, fixed indirectly due to Issue 65 re-implementation.
+  * Fixed Issue 76, QLearning Agent corrected to know which actions are possible in which states.
+  * Fixed Issue 77, valid hashCode() method missing on TicTacToeState.
+  * Minor documentation and code cleanup.
+  
 0.10.4-Chp5-Rewrite : 08 Jan 2012 :<br>
   * Redesigned and re-implemented adversarial search algorithms from Chapter 5.
   ** Rewrote Minimax-Decision and Alpha-Beta-Search algorithms.

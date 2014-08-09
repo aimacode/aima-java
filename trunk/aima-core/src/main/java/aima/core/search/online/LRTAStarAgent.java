@@ -12,7 +12,7 @@ import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
- * Artificial Intelligence A Modern Approach 3rdd Edition): Figure 4.24, page
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.24, page
  * 152.<br>
  * <br>
  * 

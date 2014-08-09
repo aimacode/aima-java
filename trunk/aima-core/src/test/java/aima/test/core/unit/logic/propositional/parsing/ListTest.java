@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.ast.Symbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -16,12 +16,12 @@ public class ListTest {
 
 	@Test
 	public void testListOfSymbolsClone() {
-		ArrayList<Symbol> l = new ArrayList<Symbol>();
-		l.add(new Symbol("A"));
-		l.add(new Symbol("B"));
-		l.add(new Symbol("C"));
-		List<Symbol> l2 = new ArrayList<Symbol>(l);
-		l2.remove(new Symbol("B"));
+		ArrayList<PropositionSymbol> l = new ArrayList<PropositionSymbol>();
+		l.add(new PropositionSymbol("A"));
+		l.add(new PropositionSymbol("B"));
+		l.add(new PropositionSymbol("C"));
+		List<PropositionSymbol> l2 = new ArrayList<PropositionSymbol>(l);
+		l2.remove(new PropositionSymbol("B"));
 		Assert.assertEquals(3, l.size());
 		Assert.assertEquals(2, l2.size());
 	}

@@ -13,7 +13,8 @@
 	
 	<path id="aima-core.test.classpath">
 		<path refid="aima-core.classpath" />
-		<pathelement path="${aima-core.dir.lib}/junit/junit-4.7.jar" />
+		<pathelement path="${aima-core.dir.lib}/junit/junit-4.11.jar" />
+		<pathelement path="${aima-core.dir.lib}/junit/hamcrest-core-1.3.jar" />
 		<pathelement path="${aima-core.dir.build.bin}/test" />
 		<pathelement path="${aima-core.dir.src}/test/resources" />
 	</path>

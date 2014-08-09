@@ -6,8 +6,8 @@ package aima.core.util.datastructure;
  * The operations on a queue are as follows:<br>
  * <ul>
  * <li>EMPTY?(queue) returns true only if there are no elements in the queue</li>
- * <li>POP(queue) removes teh first element of the queue and returns it.</li>
- * <li>INSERT(element, queue) inserts and element and returns the resulting
+ * <li>POP(queue) removes the first element of the queue and returns it.</li>
+ * <li>INSERT(element, queue) inserts an element and returns the resulting
  * queue.</li>
  * </ul>
  * Note: This extends the java.util.Queue collections interface in order to take

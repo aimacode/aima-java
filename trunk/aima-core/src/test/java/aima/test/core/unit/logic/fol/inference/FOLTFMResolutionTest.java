@@ -45,7 +45,7 @@ public class FOLTFMResolutionTest extends CommonFOLInferenceProcedureTests {
 	@Test
 	public void testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew() {
 		// The clauses in this KB can keep creating resolvents infinitely,
-		// therefore give it 20 seconds to find the 4 answers to this, should
+		// therefore give it 40 seconds to find the 4 answers to this, should
 		// be more than enough.
 		testHornClauseKBRingOfThievesQuerySkisXReturnsNancyRedBertDrew(new FOLTFMResolution(
 				40 * 1000));
