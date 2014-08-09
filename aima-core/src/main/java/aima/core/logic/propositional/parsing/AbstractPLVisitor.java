@@ -1,56 +1,41 @@
 package aima.core.logic.propositional.parsing;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import aima.core.logic.propositional.parsing.ast.BinarySentence;
-import aima.core.logic.propositional.parsing.ast.FalseSentence;
-import aima.core.logic.propositional.parsing.ast.MultiSentence;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.Symbol;
-import aima.core.logic.propositional.parsing.ast.TrueSentence;
-import aima.core.logic.propositional.parsing.ast.UnarySentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
- * @author Ravi Mohan
+ * Abstract implementation of the PLVisitor interface that provides default
+ * behavior for each of the methods.
  * 
+ * @author Ravi Mohan
+ * @author Ciaran O'Reilly
+ * 
+ * @param <A>
+ *            the argument type to be passed to the visitor methods.
  */
-public class AbstractPLVisitor implements PLVisitor {
-	private PEParser parser = new PEParser();
+public abstract class AbstractPLVisitor<A> implements PLVisitor<A, Sentence> {
 
-	public Object visitSymbol(Symbol s, Object arg) {
-		return new Symbol(s.getValue());
+	@Override
+	public Sentence visitPropositionSymbol(PropositionSymbol s, A arg) {
+		// default behavior is to treat propositional symbols as atomic
+		// and leave unchanged.
+		return s;
 	}
 
-	public Object visitTrueSentence(TrueSentence ts, Object arg) {
-		return new TrueSentence();
+	@Override
+	public Sentence visitUnarySentence(ComplexSentence s, A arg) {
+		// a new Complex Sentence with the same connective but possibly
+		// with its simpler sentence replaced by the visitor.
+		return new ComplexSentence(s.getConnective(), s.getSimplerSentence(0)
+				.accept(this, arg));
 	}
 
-	public Object visitFalseSentence(FalseSentence fs, Object arg) {
-		return new FalseSentence();
-	}
-
-	public Object visitNotSentence(UnarySentence fs, Object arg) {
-		return new UnarySentence((Sentence) fs.getNegated().accept(this, arg));
-	}
-
-	public Object visitBinarySentence(BinarySentence fs, Object arg) {
-		return new BinarySentence(fs.getOperator(), (Sentence) fs.getFirst()
-				.accept(this, arg), (Sentence) fs.getSecond().accept(this, arg));
-	}
-
-	public Object visitMultiSentence(MultiSentence fs, Object arg) {
-		List<Sentence> terms = fs.getSentences();
-		List<Sentence> newTerms = new ArrayList<Sentence>();
-		for (int i = 0; i < terms.size(); i++) {
-			Sentence s = (Sentence) terms.get(i);
-			Sentence subsTerm = (Sentence) s.accept(this, arg);
-			newTerms.add(subsTerm);
-		}
-		return new MultiSentence(fs.getOperator(), newTerms);
-	}
-
-	protected Sentence recreate(Object ast) {
-		return (Sentence) parser.parse(((Sentence) ast).toString());
+	@Override
+	public Sentence visitBinarySentence(ComplexSentence s, A arg) {
+		// a new Complex Sentence with the same connective but possibly
+		// with its simpler sentences replaced by the visitor.
+		return new ComplexSentence(s.getConnective(), s.getSimplerSentence(0)
+				.accept(this, arg), s.getSimplerSentence(1).accept(this, arg));
 	}
 }

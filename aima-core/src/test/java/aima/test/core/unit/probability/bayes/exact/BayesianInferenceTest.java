@@ -1,7 +1,6 @@
 package aima.test.core.unit.probability.bayes.exact;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.CategoricalDistribution;

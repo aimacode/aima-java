@@ -39,6 +39,7 @@ import aima.core.util.math.MixedRadixNumber;
  * 
  * 
  * @author Ciaran O'Reilly
+ * @author Tobias Barth
  * 
  */
 public class Clause {
@@ -402,7 +403,7 @@ public class Clause {
 	// PRIVATE METHODS
 	//
 	private void recalculateIdentity() {
-		synchronized (equalityIdentity) {
+		synchronized (this) {
 
 			// Sort the literals first based on negation, atomic sentence,
 			// constant, function and variable.
@@ -845,7 +846,6 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			noVarPositions = noVarPositions / 10;
 			maxWidth++;
 		}
-		String format = "%0" + maxWidth + "d";
 
 		// Sort the individual position lists
 		// And then add their string representations
@@ -856,7 +856,13 @@ class ClauseEqualityIdentityConstructor implements FOLVisitor {
 			Collections.sort(positions);
 			StringBuilder sb = new StringBuilder();
 			for (int pos : positions) {
-				sb.append(String.format(format, pos));
+				String posStr = Integer.toString(pos);
+				int posStrLen = posStr.length();
+				int padLen = maxWidth-posStrLen;
+				for (int i=0;i<padLen;i++) {
+					sb.append('0');
+				}
+				sb.append(posStr);
 			}
 			varOffsets.add(sb.toString());
 		}

@@ -26,6 +26,9 @@ public class SetOps {
 	 *         containing all of the elements contained in either set.)
 	 */
 	public static <T> Set<T> union(Set<T> s1, Set<T> s2) {
+		if (s1 == s2) {
+			return s1;
+		}
 		Set<T> union = new LinkedHashSet<T>(s1);
 		union.addAll(s2);
 		return union;
@@ -40,6 +43,9 @@ public class SetOps {
 	 *         the set containing only the elements common to both sets.)
 	 */
 	public static <T> Set<T> intersection(Set<T> s1, Set<T> s2) {
+		if (s1 == s2) {
+			return s1;
+		}
 		Set<T> intersection = new LinkedHashSet<T>(s1);
 		intersection.retainAll(s2);
 		return intersection;
@@ -55,6 +61,9 @@ public class SetOps {
 	 *         elements found in s1 but not in s2.)
 	 */
 	public static <T> Set<T> difference(Set<T> s1, Set<T> s2) {
+		if (s1 == s2) {
+			return new LinkedHashSet<T>();
+		}
 		Set<T> difference = new LinkedHashSet<T>(s1);
 		difference.removeAll(s2);
 		return difference;
