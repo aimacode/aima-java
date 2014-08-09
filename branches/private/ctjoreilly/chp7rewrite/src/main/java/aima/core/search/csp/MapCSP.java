@@ -1,7 +1,5 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.1, Page 204.<br>
@@ -32,16 +30,14 @@ public class MapCSP extends CSP {
 	 * @return the principle states and territories of Australia as a list of
 	 *         variables.
 	 */
-	private static List<Variable> collectVariables() {
-		List<Variable> variables = new ArrayList<Variable>();
-		variables.add(NSW);
-		variables.add(WA);
-		variables.add(NT);
-		variables.add(Q);
-		variables.add(SA);
-		variables.add(V);
-		variables.add(T);
-		return variables;
+	 private void collectVariables() {
+		addVariable(NSW);
+		addVariable(WA);
+		addVariable(NT);
+		addVariable(Q);
+		addVariable(SA);
+		addVariable(V);
+		addVariable(T);
 	}
 
 	/**
@@ -49,7 +45,7 @@ public class MapCSP extends CSP {
 	 * Australia, with the colors Red, Green, and Blue.
 	 */
 	public MapCSP() {
-		super(collectVariables());
+		collectVariables();
 
 		Domain colors = new Domain(new Object[] { RED, GREEN, BLUE });
 
