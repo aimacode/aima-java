@@ -42,7 +42,7 @@ public abstract class Parser<S> {
 	/**
 	 * Parse the input concrete syntax into an abstract syntax tree.
 	 * 
-	 * @param input
+	 * @param inputReader
 	 *            a Reader of the concrete syntax to be parsed.
 	 * @return the root node of an abstract syntax tree representation of the
 	 *         the concrete input syntax that was parsed.
