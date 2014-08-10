@@ -4,22 +4,9 @@
 # JDK 1.7 - is the baseline JDK against which this project is developed. 
 
 == Current Release: 0.11.0-Chp7-Rewrite ==
-CURRENTLY TODO
---------------
-. @ 7.4.2
-. Review/Clean up contributed source in:
-  - aima\core\environment\wumpusworld\
-    . make code more closely follow description at beginning of chapter.
-  - HybridWumpusAgent
-    . Make extend KB-AGENT from figure 7.1.?
-  - WumpusKnowledgeBase
-  - WumpusFunctionFactoryTest
-. Ensure new propositional logic:
-  - CNF conversion logic is correctly distributing or over and (i.e. not over doing it).
-  - can handle always false and true proposition symbols.
-. Ensure all package paths are updated in table of algorithms.
-
-0.11.0-Chp7-Rewrite : TBD!!! :<br>
+0.11.0-Chp7-Rewrite : 10 Aug 2014 :<br>
+  * Rewrite of the algorithms in Chapter 7 to more closely map to pseudo-code
+    in book and to resolve outstanding issues.
   * Baseline JDK supported by this library has been moved up from 1.6 to 1.7.
   * Upgraded JUnit from 4.7 to 4.11.
   * General Lexer and Parser Improvements:
@@ -44,6 +31,7 @@ CURRENTLY TODO
   * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
   * Fixed Issue 80, small bug in XYLocation.hashCode()
   * Fixed Issue 83, Wrong time variable used in WumpusWorldKnowledgeBase.java
+  * Improvements and defect fixes to CSP logic.
  
 = Details =
 
