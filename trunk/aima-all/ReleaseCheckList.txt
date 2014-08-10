@@ -92,7 +92,7 @@
 --- Publish the Release to the Maven Central Repository
 RELEVANT BACKGROUND:
 Deploying via Nexus Guide -
-https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+http://central.sonatype.org/pages/ossrh-guide.html
 The Sonatype/Nexus Open Source Respository -
 https://oss.sonatype.org/
 The Complete Maven Reference - 
