@@ -1,4 +1,5 @@
 #summary AIMA-Java Downloads.
+#labels Featured
 
 = Downloads =
 
