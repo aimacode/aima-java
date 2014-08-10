@@ -1,0 +1,10 @@
+#summary AIMA-Java Downloads.
+
+= Downloads =
+
+|| *Date* || *Release* || *File* ||
+||   10 Aug 2014   ||      1.8.0 ||[http://aima-java.googlecode.com/svn/trunk/aima-all/release/downloads/aima-java-1.8.0-Chp7-Rewrite.zip 1.8.0 Chapter 7 Rewrite, based on 3rd Edition of Book]||
+||                 ||           || ||
+||   03 Oct 2009   ||      v3 ||[http://aima-java.googlecode.com/svn/trunk/aima-all/release/downloads/example-osm-maps-v3.zip Version 3 of the aimax-osm Example Maps]||
+||                 ||           || ||
+||   03 Oct 2009   ||      0.95 ||[http://aima-java.googlecode.com/svn/trunk/aima-all/release/downloads/aima-java0.95.3rdOct2009.zip 0.95 Final Release based on 2nd Edition of Book (No longer supported)]||
