@@ -1,0 +1,64 @@
+package aima.core.environment.wumpusworld.action;
+
+import aima.core.agent.impl.DynamicAction;
+import aima.core.environment.wumpusworld.AgentPosition;
+
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 237.<br>
+ * <br>
+ * The agent can move Forward.
+ * 
+ * @author Federico Baron
+ * @author Alessandro Daniele
+ * @author Ciaran O'Reilly
+ */
+public class Forward extends DynamicAction {
+
+	public static final String FORWARD_ACTION_NAME = "Forward";
+	public static final String ATTRIBUTE_TO_POSITION = "toPosition";
+
+	private AgentPosition toPosition = null;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param currentPosition
+	 * 
+	 */
+	public Forward(AgentPosition currentPosition) {
+		super(FORWARD_ACTION_NAME);
+
+		int x = currentPosition.getX();
+		int y = currentPosition.getY();
+
+		AgentPosition.Orientation orientation = currentPosition
+				.getOrientation();
+		switch (orientation) {
+		case FACING_UP:
+			toPosition = new AgentPosition(x, y + 1, orientation);
+			break;
+		case FACING_DOWN:
+			toPosition = new AgentPosition(x, y - 1, orientation);
+			break;
+		case FACING_RIGHT:
+			toPosition = new AgentPosition(x + 1, y, orientation);
+			break;
+		case FACING_LEFT:
+			toPosition = new AgentPosition(x - 1, y, orientation);
+			break;
+		}
+		setAttribute(ATTRIBUTE_TO_POSITION, toPosition);
+	}
+
+	/**
+	 * 
+	 * @return the position after the agent move's forward. <b>Note:</b> this
+	 *         may not be a legal position within the environment in which the
+	 *         action was performed and this should be checked for. For example,
+	 *         if an agent tries to move forward and bumps into a wall, then the
+	 *         agent does not move.
+	 */
+	public AgentPosition getToPosition() {
+		return toPosition;
+	}
+}
