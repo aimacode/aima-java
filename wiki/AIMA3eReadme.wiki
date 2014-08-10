@@ -21,14 +21,13 @@ http://code.google.com/p/aima-java/wiki/GettingStarted
   * aima-all  : is the master project, used by aima-java developers, for creating releases.
  * Sub-Project directory organization is based on the standard [http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html Maven] directory layout.
 
-== Current Release: 1.7.0-Chp4-Complete ==
-1.7.0-Chp4-Complete : 09 Oct 2012 :<br>
-Addition of And-Or-Search-Graph algorithm from chapter 4 and a Nondeterministic Vacuum Environment to the Vacuum GUI. 
-Also, the Genetic Algorithm was reimplemented in order to make it easier to use/extend.
+== Current Release: 1.8.0-Chp7-Rewrite ==
+1.8.0-Chp7-Rewrite : 10 Aug 2014 :<br>
+Rewrite of Chapter 7's propositional logic infrastructure and associated algorithms.
 This is based on the following sub-project releases:
-  * aima-core (0.10.5) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
-  * aima-gui  (1.0.8)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
-  * aimax-osm (2.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+  * aima-core (0.11.0) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.9)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.3)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
     * Note: This project is under a different License.  
 
 == Bug Report - Acknowledgments ==
@@ -60,6 +59,15 @@ The following people sent in excellent comments and bug reports. Thank you!!!!<b
   * Phil Snowberger, Artificial Intelligence and Robotics Laboratory, University of Notre Dame<br>
   
 = Change History (Update in reverse chronological order) =
+1.7.0-Chp4-Complete : 09 Oct 2012 :<br>
+Addition of And-Or-Search-Graph algorithm from chapter 4 and a Nondeterministic Vacuum Environment to the Vacuum GUI. 
+Also, the Genetic Algorithm was reimplemented in order to make it easier to use/extend.
+This is based on the following sub-project releases:
+  * aima-core (0.10.5) : see - [http://aima-java.googlecode.com/svn/trunk/aima-core/README.txt README.txt] for details. 
+  * aima-gui  (1.0.8)  : see - [http://aima-java.googlecode.com/svn/trunk/aima-gui/README.txt README.txt] for details.
+  * aimax-osm (2.0.2)  : see - [http://aima-java.googlecode.com/svn/trunk/aimax-osm/README.txt README.txt] for details.
+    * Note: This project is under a different License. 
+    
 1.6.0-Chp5-Rewrite : 08 Jan 2012 :<br>
 Re-design and re-implementation of the adversarial search algorithms along with the addition of a Connect-4 GUI game
 to demonstrate new capabilities. 
