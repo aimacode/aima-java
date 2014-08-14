@@ -34,16 +34,16 @@ public class Forward extends DynamicAction {
 		AgentPosition.Orientation orientation = currentPosition
 				.getOrientation();
 		switch (orientation) {
-		case FACING_UP:
+		case FACING_NORTH:
 			toPosition = new AgentPosition(x, y + 1, orientation);
 			break;
-		case FACING_DOWN:
+		case FACING_SOUTH:
 			toPosition = new AgentPosition(x, y - 1, orientation);
 			break;
-		case FACING_RIGHT:
+		case FACING_EAST:
 			toPosition = new AgentPosition(x + 1, y, orientation);
 			break;
-		case FACING_LEFT:
+		case FACING_WEST:
 			toPosition = new AgentPosition(x - 1, y, orientation);
 			break;
 		}

@@ -123,7 +123,7 @@ public class KnowledgeBase {
 		} else if (sentences.size() == 1) {
 			return sentences.get(0);
 		} else {
-			// Chaining is done righ associative,
+			// Chaining is done right associative,
 			// in the same way parsing works.
 			Sentence soFar = sentences.get(sentences.size() - 1);
 			for (int i = sentences.size() - 2; i >= 0; i--) {

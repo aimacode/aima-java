@@ -35,6 +35,20 @@ public class ComplexSentence extends Sentence {
 			simplerSentences[i] = sentences[i];
 		}
 	}
+	
+	/**
+	 * Convenience constructor for binary sentences.
+	 * 
+	 * @param sentenceL
+	 * 			the left hand sentence.
+	 * @param binaryConnective
+	 * 			the binary connective.
+	 * @param sentenceR
+	 *  		the right hand sentence.
+	 */
+	public ComplexSentence(Sentence sentenceL, Connective binaryConnective, Sentence sentenceR) {
+		this(binaryConnective, sentenceL, sentenceR);
+	}
 
 	@Override
 	public Connective getConnective() {

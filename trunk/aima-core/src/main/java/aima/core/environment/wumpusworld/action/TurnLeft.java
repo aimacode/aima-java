@@ -27,17 +27,17 @@ public class TurnLeft extends DynamicAction {
 		super(TURN_LEFT_ACTION_NAME);
 
 		switch (currentOrientation) {
-		case FACING_UP:
-			toOrientation = AgentPosition.Orientation.FACING_LEFT;
+		case FACING_NORTH:
+			toOrientation = AgentPosition.Orientation.FACING_WEST;
 			break;
-		case FACING_DOWN:
-			toOrientation = AgentPosition.Orientation.FACING_RIGHT;
+		case FACING_SOUTH:
+			toOrientation = AgentPosition.Orientation.FACING_EAST;
 			break;
-		case FACING_RIGHT:
-			toOrientation = AgentPosition.Orientation.FACING_UP;
+		case FACING_EAST:
+			toOrientation = AgentPosition.Orientation.FACING_NORTH;
 			break;
-		case FACING_LEFT:
-			toOrientation = AgentPosition.Orientation.FACING_DOWN;
+		case FACING_WEST:
+			toOrientation = AgentPosition.Orientation.FACING_SOUTH;
 			break;
 		}
 		setAttribute(ATTRIBUTE_TO_ORIENTATION, toOrientation);

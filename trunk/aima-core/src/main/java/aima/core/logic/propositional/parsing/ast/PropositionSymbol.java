@@ -120,7 +120,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 *         representation, false otherwise.
 	 */
 	public static boolean isPropositionSymbolIdentifierPart(char ch) {
-		return Character.isJavaIdentifierPart(ch) || ch == ',';
+		return Character.isJavaIdentifierPart(ch);
 	}
 
 	/**

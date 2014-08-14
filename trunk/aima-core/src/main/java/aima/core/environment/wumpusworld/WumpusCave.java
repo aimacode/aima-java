@@ -88,39 +88,39 @@ public class WumpusCave {
 		List<AgentPosition> result = new ArrayList<AgentPosition>();
 
 		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1,
-				AgentPosition.Orientation.FACING_UP);
+				AgentPosition.Orientation.FACING_NORTH);
 		AgentPosition currentForwardSouth = new AgentPosition(x, y - 1,
-				AgentPosition.Orientation.FACING_DOWN);
+				AgentPosition.Orientation.FACING_SOUTH);
 		AgentPosition currentForwardEast = new AgentPosition(x + 1, y,
-				AgentPosition.Orientation.FACING_RIGHT);
+				AgentPosition.Orientation.FACING_EAST);
 		AgentPosition currentForwardWest = new AgentPosition(x - 1, y,
-				AgentPosition.Orientation.FACING_LEFT);
+				AgentPosition.Orientation.FACING_WEST);
 		AgentPosition currentNorth = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_UP);
+				AgentPosition.Orientation.FACING_NORTH);
 		AgentPosition currentSouth = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_DOWN);
+				AgentPosition.Orientation.FACING_SOUTH);
 		AgentPosition currentEast = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_RIGHT);
+				AgentPosition.Orientation.FACING_EAST);
 		AgentPosition currentWest = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_LEFT);
+				AgentPosition.Orientation.FACING_WEST);
 
 		switch (orientation) {
-		case FACING_UP:
+		case FACING_NORTH:
 			addIfAllowed(currentForwardNorth, result);
 			addIfAllowed(currentEast, result);
 			addIfAllowed(currentWest, result);
 			break;
-		case FACING_DOWN:
+		case FACING_SOUTH:
 			addIfAllowed(currentForwardSouth, result);
 			addIfAllowed(currentEast, result);
 			addIfAllowed(currentWest, result);
 			break;
-		case FACING_RIGHT:
+		case FACING_EAST:
 			addIfAllowed(currentNorth, result);
 			addIfAllowed(currentSouth, result);
 			addIfAllowed(currentForwardEast, result);
 			break;
-		case FACING_LEFT:
+		case FACING_WEST:
 			addIfAllowed(currentNorth, result);
 			addIfAllowed(currentSouth, result);
 			addIfAllowed(currentForwardWest, result);
