@@ -10,10 +10,21 @@ package aima.core.environment.wumpusworld;
 public class AgentPosition {
 	
 	public enum Orientation {
-		FACING_UP,
-		FACING_DOWN,
-		FACING_RIGHT,
-		FACING_LEFT
+		FACING_NORTH("FacingNorth"),
+		FACING_SOUTH("FacingSouth"),
+		FACING_EAST("FacingEast"),
+		FACING_WEST("FacingWest");
+		
+		@Override
+		public String toString() {
+			return name;
+		}
+		
+		private final String name;
+		
+		private Orientation(String name) {
+			this.name = name;
+		}
 	}
 	
 	private Room room;

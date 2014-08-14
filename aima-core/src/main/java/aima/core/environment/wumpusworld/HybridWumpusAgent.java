@@ -89,7 +89,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	private Queue<Action> plan = new FIFOQueue<Action>();
 	// the agents current location (default to same as figure 7.2)
 	private AgentPosition current = new AgentPosition(1, 1,
-			AgentPosition.Orientation.FACING_RIGHT);
+			AgentPosition.Orientation.FACING_EAST);
 
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
@@ -105,13 +105,13 @@ public class HybridWumpusAgent extends AbstractAgent {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.makePerceptSentence((AgentPercept) percept, t);
 		// TELL the KB the temporal "physics" sentences for time t
-		kb.addTemporalSentences(t);
+		kb.tellTemporalPhysicsSentences(t);
 
 		// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 		Room tmp = null;
 		for (int x = 1; x <= kb.getCaveXDimension(); x++) {
 			for (int y = 1; tmp == null && y <= kb.getCaveYDimension(); y++) {
-				if (kb.ask("L" + t + "_" + x + "_" + y) == true) {
+				if (kb.ask("L" + t + "," + x + "_" + y) == true) {
 					tmp = new Room(x, y);
 				}
 			}
@@ -119,22 +119,22 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		if (kb.ask("FacingNorth" + t)) {
 			current = new AgentPosition((int) tmp.getX(), (int) tmp.getY(),
-					AgentPosition.Orientation.FACING_UP);
+					AgentPosition.Orientation.FACING_NORTH);
 		} else if (kb.ask("FacingEast" + t)) {
 			current = new AgentPosition((int) tmp.getX(), (int) tmp.getY(),
-					AgentPosition.Orientation.FACING_RIGHT);
+					AgentPosition.Orientation.FACING_EAST);
 		} else if (kb.ask("FacingSouth" + t)) {
 			current = new AgentPosition((int) tmp.getX(), (int) tmp.getY(),
-					AgentPosition.Orientation.FACING_DOWN);
+					AgentPosition.Orientation.FACING_SOUTH);
 		} else if (kb.ask("FacingWest" + t)) {
 			current = new AgentPosition((int) tmp.getX(), (int) tmp.getY(),
-					AgentPosition.Orientation.FACING_LEFT);
+					AgentPosition.Orientation.FACING_WEST);
 		}
 
 		List<Room> safe = new ArrayList<Room>();
 		for (int x = 1; x <= kb.getCaveXDimension(); x++) {
 			for (int y = 1; y <= kb.getCaveYDimension(); y++) {
-				if (kb.ask("OK" + t + "_" + x + "_" + y)) {
+				if (kb.ask("OK" + t + "_" + x + "," + y)) {
 					safe.add(new Room(x, y));
 				}
 			}
@@ -260,13 +260,13 @@ public class HybridWumpusAgent extends AbstractAgent {
 			int y = (int) allowed.get(i).getY();
 
 			allowedPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_LEFT));
+					AgentPosition.Orientation.FACING_WEST));
 			allowedPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_RIGHT));
+					AgentPosition.Orientation.FACING_EAST));
 			allowedPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_UP));
+					AgentPosition.Orientation.FACING_NORTH));
 			allowedPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_DOWN));
+					AgentPosition.Orientation.FACING_SOUTH));
 		}
 		final Set<AgentPosition> goalPositions = new LinkedHashSet<AgentPosition>();
 		for (int i = 0; i < goals.size(); i++) {
@@ -274,13 +274,13 @@ public class HybridWumpusAgent extends AbstractAgent {
 			int y = (int) goals.get(i).getY();
 
 			goalPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_LEFT));
+					AgentPosition.Orientation.FACING_WEST));
 			goalPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_RIGHT));
+					AgentPosition.Orientation.FACING_EAST));
 			goalPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_UP));
+					AgentPosition.Orientation.FACING_NORTH));
 			goalPositions.add(new AgentPosition(x, y,
-					AgentPosition.Orientation.FACING_DOWN));
+					AgentPosition.Orientation.FACING_SOUTH));
 		}
 
 		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(),
@@ -351,19 +351,19 @@ public class HybridWumpusAgent extends AbstractAgent {
 			for (int i = 1; i <= kb.getCaveXDimension(); i++) {
 				if (i < x) {
 					shootingPositions.add(new AgentPosition(i, y,
-							AgentPosition.Orientation.FACING_RIGHT));
+							AgentPosition.Orientation.FACING_EAST));
 				}
 				if (i > x) {
 					shootingPositions.add(new AgentPosition(i, y,
-							AgentPosition.Orientation.FACING_LEFT));
+							AgentPosition.Orientation.FACING_WEST));
 				}
 				if (i < y) {
 					shootingPositions.add(new AgentPosition(x, i,
-							AgentPosition.Orientation.FACING_UP));
+							AgentPosition.Orientation.FACING_NORTH));
 				}
 				if (i > y) {
 					shootingPositions.add(new AgentPosition(x, i,
-							AgentPosition.Orientation.FACING_DOWN));
+							AgentPosition.Orientation.FACING_SOUTH));
 				}
 			}
 		}

@@ -1,9 +1,21 @@
 package aima.core.environment.wumpusworld;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicAction;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.Shoot;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.util.Util;
 
 /**
  * A Knowledge base tailored to the Wumpus World environment.
@@ -16,6 +28,28 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 
 	private int caveXDimension;
 	private int caveYDimension;
+	//
+	private static final String LOCATION          = "L";
+	private static final String BREEZE            = "B";
+	private static final String STENCH            = "S";
+	private static final String PIT               = "P";
+	private static final String WUMPUS            = "W";
+	private static final String WUMPUS_ALIVE      = "WumpusAlive";
+	private static final String HAVE_ARROW        = "HaveArrow";
+	private static final String FACING_NORTH      = AgentPosition.Orientation.FACING_NORTH.toString();
+	private static final String FACING_SOUTH      = AgentPosition.Orientation.FACING_SOUTH.toString();
+	private static final String FACING_EAST       = AgentPosition.Orientation.FACING_EAST.toString();
+	private static final String FACING_WEST       = AgentPosition.Orientation.FACING_WEST.toString();
+	private static final String PERCEPT_STENCH    = "Stench";
+	private static final String PERCEPT_BREEZE    = "Breeze";
+	private static final String PERCEPT_GLITTER   = "Glitter";
+	private static final String PERCEPT_BUMP      = "Bump";
+	private static final String PERCEPT_SCREAM    = "Scream";
+	private static final String ACTION_FORWARD    = Forward.FORWARD_ACTION_NAME;
+	private static final String ACTION_SHOOT      = Shoot.SHOOT_ACTION_NAME;
+	private static final String ACTION_TURN_LEFT  = TurnLeft.TURN_LEFT_ACTION_NAME;
+	private static final String ACTION_TURN_RIGHT = TurnRight.TURN_RIGHT_ACTION_NAME;
+	private static final String OK_TO_MOVE_INTO   = "OK";
 
 	/**
 	 * Create a Knowledge Base that contains the atemporal "wumpus physics" and
@@ -30,119 +64,66 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		this.caveXDimension = caveXandYDimensions;
 		this.caveYDimension = caveXandYDimensions;
 
-		// First tile rules
-		this.tell("( NOT W1s1 )");
-		this.tell("( NOT P1s1 )");
+		//
+		// 7.7.1 - The current state of the World
+		// The agent knows that the starting square contains no pit
+		this.tell(new ComplexSentence(Connective.NOT, newSymbol(PIT, 1, 1)));
+		// and no wumpus.
+		this.tell(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, 1, 1)));
 
 		// Atemporal rules about breeze and stench
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
-
-				int c = 0;
-				String sentence_b_str = "( B_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ";
-				String sentence_s_str = "( S_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ";
-				if (x > 1) {
-					sentence_b_str += "( P_" + (x - 1) + "_" + y + " "
-							+ Connective.OR + " ";
-					sentence_s_str += "( W_" + (x - 1) + "_" + y + " "
-							+ Connective.OR + " ";
-					c++;
+		// For each square, the agent knows that the square is breezy
+		// if and only if a neighboring square has a pit; and a square
+		// is smelly if and only if a neighboring square has a wumpus.
+		for (int y = 1; y <= caveYDimension; y++) {
+			for (int x = 1; x <= caveXDimension; x++) {
+				
+				List<PropositionSymbol> pitsIn  = new ArrayList<PropositionSymbol>();
+				List<PropositionSymbol> wumpsIn = new ArrayList<PropositionSymbol>();
+				
+				if (x > 1) { // West room exists
+					pitsIn.add(newSymbol(PIT, x-1, y));
+					wumpsIn.add(newSymbol(WUMPUS, x-1, y));
 				}
-				if (x < caveXDimension) {
-					sentence_b_str += "( P_" + (x + 1) + "_" + y + " OR ";
-					sentence_s_str += "( W_" + (x + 1) + "_" + y + " OR ";
-					c++;
+				if (y < caveYDimension) { // North room exists
+					pitsIn.add(newSymbol(PIT, x, y+1));
+					wumpsIn.add(newSymbol(WUMPUS, x, y+1));
 				}
-				if (y > 1) {
-					if (y == caveYDimension) {
-						sentence_b_str += "P_" + x + "_" + (y - 1) + " ";
-						sentence_s_str += "W_" + x + "_" + (y - 1) + " ";
-					} else {
-						sentence_b_str += "( P_" + x + "_" + (y - 1) + " OR ";
-						sentence_s_str += "( W_" + x + "_" + (y - 1) + " OR ";
-						c++;
-					}
+				if (x < caveXDimension) { // East room exists
+					pitsIn.add(newSymbol(PIT, x+1, y));
+					wumpsIn.add(newSymbol(WUMPUS, x+1, y));
 				}
-				if (y < caveYDimension) {
-					sentence_b_str += "P_" + x + "_" + (y + 1) + " ";
-					sentence_s_str += "W_" + x + "_" + (y + 1) + " ";
+				if (y > 1) { // South room exists
+					pitsIn.add(newSymbol(PIT, x, y-1));
+					wumpsIn.add(newSymbol(WUMPUS, x, y-1));
 				}
-
-				for (int k = 0; k < c; k++) {
-					sentence_b_str += ") ";
-					sentence_s_str += ") ";
-				}
-				sentence_b_str += ") ";
-				sentence_s_str += ") ";
-
-				this.tell(sentence_b_str);
-				this.tell(sentence_s_str);
+			
+				tell(new ComplexSentence(newSymbol(BREEZE, x, y), Connective.BICONDITIONAL, orSentence(pitsIn)));
+				tell(new ComplexSentence(newSymbol(STENCH, x, y), Connective.BICONDITIONAL, orSentence(wumpsIn)));
 			}
 		}
 
-		// Rule that describes existence of at least one Wumpus
-		String sentence_w_str = "";
+		// The agent also knows there is exactly one wumpus. This is represented
+		// in two parts. First, we have to say that there is at least one wumpus
+		List<PropositionSymbol> wumpsAtLeast = new ArrayList<PropositionSymbol>();
 		for (int x = 1; x <= caveXDimension; x++) {
 			for (int y = 1; y <= caveYDimension; y++) {
-				if ((x == caveXDimension) && (y == caveYDimension)) {
-					sentence_w_str += " W_" + x + "_" + y + " ";
-				} else {
-					sentence_w_str += "( W_" + x + "_" + y + " "
-							+ Connective.OR + " ";
-				}
+				wumpsAtLeast.add(newSymbol(WUMPUS, x, y));
 			}
 		}
+		tell(orSentence(wumpsAtLeast));
 
-		for (int i = 1; i < caveXDimension * caveYDimension; i++) {
-			sentence_w_str += ") ";
-		}
-
-		this.tell(sentence_w_str);
-
-		// Rule that describes existence of at most one Wumpus
-		String sentence_w2_str;
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
-				for (int xi = 1; xi <= caveXDimension; xi++) {
-					for (int yi = 1; yi <= caveYDimension; yi++) {
-						if (x != xi || y != yi) {
-							sentence_w2_str = "( ( " + Connective.NOT + " W_"
-									+ x + "_" + y + " ) " + Connective.OR
-									+ " ( " + Connective.NOT + " W_" + xi + "_"
-									+ yi + " ) )";
-							this.tell(sentence_w2_str);
-						}
-					}
-				}
+		// Then, we have to say that there is at most one wumpus.
+		// For each pair of locations, we add a sentence saying
+		// that at least one of them must be wumpus-free.
+		int numRooms = (caveXDimension*caveYDimension);
+		for (int i = 0; i < numRooms; i++) {
+			for (int j = i+1; j < numRooms; j++) {
+				tell(new ComplexSentence(Connective.OR,
+						new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, (i / caveXDimension)+1, (i % caveYDimension)+1)),
+						new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, (j / caveXDimension)+1, (j % caveYDimension)+1))));
 			}
 		}
-
-		// temporal rules at time zero
-		this.tell("L0_1_1");
-
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
-				this.tell("( L0_" + x + "_" + y + " " + Connective.IMPLICATION
-						+ " ( Breeze0 " + Connective.BICONDITIONAL + " B_" + x
-						+ "_" + y + " ) )");
-				this.tell("( L0_" + x + "_" + y + " " + Connective.IMPLICATION
-						+ " ( Stench0 " + Connective.BICONDITIONAL + " S_" + x
-						+ "_" + y + " ) )");
-
-				if (x != 1 || y != 1)
-					this.tell("( " + Connective.NOT + " L0" + x + "_" + y
-							+ " )");
-			}
-		}
-
-		this.tell("WumpusAlive0");
-		this.tell("HaveArrow0");
-		this.tell("FacingEast0");
-		this.tell("( " + Connective.NOT + " FacingWest0 )");
-		this.tell("( " + Connective.NOT + " FacingNorth0 )");
-		this.tell("( " + Connective.NOT + " FacingSouth0 )");
 	}
 	
 	public boolean ask(String sentence) {
@@ -175,11 +156,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 */
 	public void makeActionSentence(Action a, int time) {
 		String actionName = ((DynamicAction) a).getName();
-		this.tell(actionName + time);
+		tell(newSymbol(actionName, time));
 	}
 
 	/**
 	 * Add to KB sentences that describe the perception p
+	 * (only about the current time).
 	 * 
 	 * @param p
 	 *            perception that must be added to KB
@@ -188,187 +170,264 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 */
 	public void makePerceptSentence(AgentPercept p, int time) {
 		if (p.isStench()) {
-			this.tell("Stench" + time);
+			tell(newSymbol(PERCEPT_STENCH, time));
 		} else {
-			this.tell("( " + Connective.NOT + " Stench" + time + " )");
+			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_STENCH, time)));
 		}
 
 		if (p.isBreeze()) {
-			this.tell("Breeze" + time);
+			tell(newSymbol(PERCEPT_BREEZE, time));
 		} else {
-			this.tell("( " + Connective.NOT + " Breeze" + time + " )");
+			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BREEZE, time)));
 		}
 
 		if (p.isGlitter()) {
-			this.tell("Glitter" + time);
+			tell(newSymbol(PERCEPT_GLITTER, time));
 		} else {
-			this.tell("( " + Connective.NOT + " Glitter" + time + " )");
+			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_GLITTER, time)));
 		}
 
 		if (p.isBump()) {
-			this.tell("Bump" + time);
+			tell(newSymbol(PERCEPT_BUMP, time));
 		} else {
-			this.tell("( " + Connective.NOT + " Bump" + time + " )");
+			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BUMP, time)));
 		}
 
 		if (p.isScream()) {
-			this.tell("Scream" + time);
+			tell(newSymbol(PERCEPT_SCREAM, time));
 		} else {
-			this.tell("( " + Connective.NOT + " Scream" + time + " )");
+			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, time)));
 		}
 	}
 
 	/**
-	 * Add to KB all the sentences about the state of wumpus world at a time
-	 * step.
+	 * TELL the KB the temporal "physics" sentences for time t
 	 * 
-	 * @param time
+	 * @param t
 	 *            current time step.
 	 */
-	public void addTemporalSentences(int time) {
-
-		// sentences with time zero were added by constructor
-		if (time == 0) {
-			return;
+	public void tellTemporalPhysicsSentences(int t) {		
+		if (t == 0) {
+			// temporal rules at time zero
+			tell(newSymbol(LOCATION, 0, 1, 1));
+			tell(newSymbol(FACING_EAST, 0));
+			tell(newSymbol(HAVE_ARROW, 0));
+			tell(newSymbol(WUMPUS_ALIVE, 0));
 		}
-
-		int t = time - 1;
-
-		// current location rules (L3_2_2 represent tile 2,2 at time 3)
-		// ex.: ( L3_2_2 <=> ( ( L2_2_2 & ( ( ~Forward2 ) | Bump3 ) ) | (
-		// ( L2_1_2 & ( FacingEast2 & Forward2 ) ) | ( L2_2_1 & (
-		// FacingNorth2 & Forward2 ) ) )
+		
+		// We can connect stench and breeze percepts directly
+		// to the properties of the squares where they are experienced
+		// through the location fluent as follows. For any time step t
+		// and any square [x,y], we assert
 		for (int x = 1; x <= caveXDimension; x++) {
 			for (int y = 1; y <= caveYDimension; y++) {
-				this.tell("( L" + time + "_" + x + "_" + y + " "
-						+ Connective.IMPLICATION + " ( Breeze" + time + " "
-						+ Connective.BICONDITIONAL + " B_" + x + "_" + y
-						+ " ) )");
-				this.tell("( L" + time + "_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ( Stench" + time + " "
-						+ Connective.BICONDITIONAL + " S_" + x + "_" + y
-						+ " ) )");
-
-				String s = "( L" + time + "_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ( ( L" + t + "_" + x
-						+ "_" + y + " " + Connective.AND + " ( ( "
-						+ Connective.NOT + " Forward" + t + " ) "
-						+ Connective.OR + " Bump" + time + " ) )";
-
-				int c = 0;
-				if (x != 1) {
-					s += " " + Connective.OR + " ( ( L" + t + "_" + (x - 1)
-							+ "_" + y + " " + Connective.AND + " ( FacingEast"
-							+ t + " " + Connective.AND + " Forward" + t
-							+ " ) )";
-					c++;
-				}
-
-				if (x != caveXDimension) {
-					s += " " + Connective.OR + " ( ( L" + t + "_" + (x + 1)
-							+ "_" + y + " " + Connective.AND + " ( FacingWest"
-							+ t + " " + Connective.AND + " Forward" + t
-							+ " ) )";
-					c++;
-				}
-
-				if (y != 1) {
-					if (y == caveYDimension) {
-						s += " " + Connective.OR + " ( L" + t + "_" + x + "_"
-								+ (y - 1) + " " + Connective.AND
-								+ " ( FacingNorth" + t + " " + Connective.AND
-								+ " Forward" + t + " ) )";
-					} else {
-						s += " " + Connective.OR + " ( ( L" + t + "_" + x + "s"
-								+ (y - 1) + " " + Connective.AND
-								+ " ( FacingNorth" + t + " " + Connective.AND
-								+ " Forward" + t + " ) )";
-						c++;
-					}
-				}
-
-				if (y != caveYDimension) {
-					s += " OR ( L" + t + "_" + x + "_" + (y + 1) + " "
-							+ Connective.AND + " ( FacingSouth" + t + " "
-							+ Connective.AND + " Forward" + t + " ) )";
-				}
-
-				for (int k = 0; k <= c + 1; k++) {
-					s += " )";
-				}
-
-				// add sentence about location i,j
-				this.tell(s);
-
-				// add sentence about safety of location i,j
-				this.tell("( OK" + time + "_" + x + "_" + y + " "
-						+ Connective.BICONDITIONAL + " ( ( " + Connective.NOT
-						+ " P_" + x + "_" + y + " ) " + Connective.AND + " ( "
-						+ Connective.NOT + " ( W_" + x + "_" + y + " "
-						+ Connective.AND + " WumpusAlive" + time + " ) ) ) )");
+				tell(new ComplexSentence( 
+						newSymbol(LOCATION, t, x, y), 
+						Connective.IMPLICATION,
+						new ComplexSentence(newSymbol(PERCEPT_BREEZE, t), Connective.BICONDITIONAL, newSymbol(BREEZE, x, y))));
+				
+				tell(new ComplexSentence( 
+						newSymbol(LOCATION, t, x, y), 
+						Connective.IMPLICATION,
+						new ComplexSentence(newSymbol(PERCEPT_STENCH, t), Connective.BICONDITIONAL, newSymbol(STENCH, x, y))));
 			}
 		}
+		
+		//
+		// Successor state axioms (dependent on location)	
+		for (int x = 1; x <= caveXDimension; x++) {
+			for (int y = 1; y <= caveYDimension; y++) {
+
+				// Location
+				List<Sentence> locDisjuncts = new ArrayList<Sentence>();
+				locDisjuncts.add(new ComplexSentence(
+										newSymbol(LOCATION, t, x, y),
+										Connective.AND,
+										new ComplexSentence(
+												new ComplexSentence(Connective.NOT, newSymbol(ACTION_FORWARD, t)),
+												Connective.OR,
+												newSymbol(PERCEPT_BUMP, t+1))));
+				if (x > 1) { // West room is possible
+					locDisjuncts.add(new ComplexSentence(
+											newSymbol(LOCATION, t, x-1, y),
+											Connective.AND,
+											new ComplexSentence(
+													newSymbol(FACING_EAST, t),
+													Connective.AND,
+													newSymbol(ACTION_FORWARD, t))));
+				}
+				if (y < caveYDimension) { // North room is possible
+					locDisjuncts.add(new ComplexSentence(
+											newSymbol(LOCATION, t, x, y+1),
+											Connective.AND,
+											new ComplexSentence(
+													newSymbol(FACING_SOUTH, t),
+													Connective.AND,
+													newSymbol(ACTION_FORWARD, t))));
+				}
+				if (x < caveXDimension) { // East room is possible	
+					locDisjuncts.add(new ComplexSentence(
+											newSymbol(LOCATION, t, x+1, y),
+											Connective.AND,
+											new ComplexSentence(
+													newSymbol(FACING_WEST, t),
+													Connective.AND,
+													newSymbol(ACTION_FORWARD, t))));
+				}
+				if (y > 1) { // South room is possible
+					locDisjuncts.add(new ComplexSentence(
+											newSymbol(LOCATION, t, x, y-1),
+											Connective.AND,
+											new ComplexSentence(
+													newSymbol(FACING_NORTH, t),
+													Connective.AND,
+													newSymbol(ACTION_FORWARD, t))));
+				}
+				
+				tell(new ComplexSentence(
+							newSymbol(LOCATION, t+1, x, y),
+							Connective.BICONDITIONAL,
+							orSentence(locDisjuncts)));
+
+				// The most important question for the agent is whether
+				// a square is OK to move into, that is, the square contains
+				// no pit nor live wumpus.
+				tell(new ComplexSentence(
+							newSymbol(OK_TO_MOVE_INTO, t, x, y),
+							Connective.BICONDITIONAL,
+							new ComplexSentence(
+									new ComplexSentence(Connective.NOT, newSymbol(PIT, x, y)),
+									Connective.AND,
+									new ComplexSentence(Connective.NOT, 
+											new ComplexSentence(
+													newSymbol(WUMPUS, x, y),
+													Connective.AND,
+													newSymbol(WUMPUS_ALIVE, t))))));
+			}
+		} 
+		
+		//
+		// Successor state axioms (independent of location)
 
 		// Rules about current orientation
-		// e.g.: ( FacingEast3 <=> ( ( FacingNorth2 & TurnRight2 ) | ( (
-		// FacingSouth2 & TurnLeft2 ) | ( FacingEast2 & ( ( ~TurnRight2
-		// ) & ( ~TurnLeft2 ) ) ) ) ) )
-		String A = "( FacingNorth" + t + " " + Connective.AND + " TurnRight"
-				+ t + " )";
-		String B = "( FacingSouth" + t + " " + Connective.AND + " TurnLeft" + t
-				+ " )";
-		String C = "( FacingEast" + t + " " + Connective.AND + " ( ( "
-				+ Connective.NOT + " TurnRight" + t + " ) " + Connective.AND
-				+ " ( " + Connective.NOT + " TurnLeft" + t + " ) ) )";
-		String s = "( FacingEast" + (t + 1) + " " + Connective.BICONDITIONAL
-				+ " ( " + A + " " + Connective.OR + " ( " + B + " "
-				+ Connective.OR + " " + C + " ) ) )";
-		this.tell(s);
-
-		A = "( FacingNorth" + t + " " + Connective.AND + " TurnLeft" + t + " )";
-		B = "( FacingSouth" + t + " " + Connective.AND + " TurnRight" + t
-				+ " )";
-		C = "( FacingWest" + t + " " + Connective.AND + " ( ( "
-				+ Connective.NOT + " TurnRight" + t + " ) " + Connective.AND
-				+ " ( " + Connective.NOT + " TurnLeft" + t + " ) ) )";
-		s = "( FacingWest" + (t + 1) + " " + Connective.BICONDITIONAL + " ( "
-				+ A + " " + Connective.OR + " ( " + B + " " + Connective.OR
-				+ " " + C + " ) ) )";
-		this.tell(s);
-
-		A = "( FacingEast" + t + " " + Connective.AND + " TurnLeft" + t + " )";
-		B = "( FacingWest" + t + " " + Connective.AND + " TurnRight" + t + " )";
-		C = "( FacingNorth" + t + " " + Connective.AND + " ( ( "
-				+ Connective.NOT + " TurnRight" + t + " ) " + Connective.AND
-				+ " ( " + Connective.NOT + " TurnLeft" + t + " ) ) )";
-		s = "( FacingNorth" + (t + 1) + " " + Connective.BICONDITIONAL + " ( "
-				+ A + " " + Connective.OR + " ( " + B + " " + Connective.OR
-				+ " " + C + " ) ) )";
-		this.tell(s);
-
-		A = "( FacingWest" + t + " " + Connective.AND + " TurnLeft" + t + " )";
-		B = "( FacingEast" + t + " " + Connective.AND + " TurnRight" + t + " )";
-		C = "( FacingSouth" + t + " " + Connective.AND + " ( ( "
-				+ Connective.NOT + " TurnRight" + t + " ) " + Connective.AND
-				+ " ( " + Connective.NOT + " TurnLeft" + t + " ) ) )";
-		s = "( FacingSouth" + (t + 1) + " " + Connective.BICONDITIONAL + " ( "
-				+ A + " " + Connective.OR + " ( " + B + " " + Connective.OR
-				+ " " + C + " ) ) )";
-		this.tell(s);
-
-		// Rules about last action
-		this.tell("( Forward" + (t) + " " + Connective.BICONDITIONAL + " ( "
-				+ Connective.NOT + " TurnRight" + (t) + " ) )");
-		this.tell("( Forward" + (t) + " " + Connective.BICONDITIONAL + " ( "
-				+ Connective.NOT + " TurnLeft" + (t) + " ) )");
-
+		// Facing North
+		tell(new ComplexSentence(
+					newSymbol(FACING_NORTH, t+1),
+					Connective.BICONDITIONAL,
+					orSentence(Arrays.asList(
+							new ComplexSentence(newSymbol(FACING_WEST, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
+							new ComplexSentence(newSymbol(FACING_EAST, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
+							new ComplexSentence(newSymbol(FACING_NORTH, t),
+									Connective.AND,
+									new ComplexSentence(Connective.NOT,
+											new ComplexSentence(
+													newSymbol(ACTION_TURN_LEFT, t),
+													Connective.OR,
+													newSymbol(ACTION_TURN_RIGHT, t))))
+							))));
+		// Facing South
+		tell(new ComplexSentence(
+				newSymbol(FACING_SOUTH, t+1),
+				Connective.BICONDITIONAL,
+				orSentence(Arrays.asList(
+						new ComplexSentence(newSymbol(FACING_WEST, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
+						new ComplexSentence(newSymbol(FACING_EAST, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
+						new ComplexSentence(newSymbol(FACING_SOUTH, t),
+								Connective.AND,
+								new ComplexSentence(Connective.NOT,
+										new ComplexSentence(
+												newSymbol(ACTION_TURN_LEFT, t),
+												Connective.OR,
+												newSymbol(ACTION_TURN_RIGHT, t))))
+						))));		
+		// Facing East
+		tell(new ComplexSentence(
+				newSymbol(FACING_EAST, t+1),
+				Connective.BICONDITIONAL,
+				orSentence(Arrays.asList(
+						new ComplexSentence(newSymbol(FACING_NORTH, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
+						new ComplexSentence(newSymbol(FACING_SOUTH, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
+						new ComplexSentence(newSymbol(FACING_EAST, t),
+								Connective.AND,
+								new ComplexSentence(Connective.NOT,
+										new ComplexSentence(
+												newSymbol(ACTION_TURN_LEFT, t),
+												Connective.OR,
+												newSymbol(ACTION_TURN_RIGHT, t))))
+						))));			
+		// Facing West
+		tell(new ComplexSentence(
+				newSymbol(FACING_WEST, t+1),
+				Connective.BICONDITIONAL,
+				orSentence(Arrays.asList(
+						new ComplexSentence(newSymbol(FACING_NORTH, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
+						new ComplexSentence(newSymbol(FACING_SOUTH, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
+						new ComplexSentence(newSymbol(FACING_WEST, t),
+								Connective.AND,
+								new ComplexSentence(Connective.NOT,
+										new ComplexSentence(
+												newSymbol(ACTION_TURN_LEFT, t),
+												Connective.OR,
+												newSymbol(ACTION_TURN_RIGHT, t))))
+						))));
+		
 		// Rule about the arrow
-		this.tell("( HaveArrow" + time + " " + Connective.BICONDITIONAL
-				+ " ( HaveArrow" + (time - 1) + " " + Connective.AND + " ( "
-				+ Connective.NOT + " Shot" + (time - 1) + " ) ) )");
+		tell(new ComplexSentence(
+					newSymbol(HAVE_ARROW, t+1),
+					Connective.BICONDITIONAL,
+					new ComplexSentence(
+							newSymbol(HAVE_ARROW, t), 
+							Connective.AND, 
+							new ComplexSentence(Connective.NOT, newSymbol(ACTION_SHOOT, t)))));
+		
 		// Rule about wumpus (dead or alive)
-		this.tell("( WumpusAlive" + time + " " + Connective.BICONDITIONAL
-				+ " ( WumpusAlive" + (time - 1) + " " + Connective.AND + " ( "
-				+ Connective.NOT + " Scream" + time + " ) ) )");
+		tell(new ComplexSentence(
+				newSymbol(WUMPUS_ALIVE, t+1),
+				Connective.BICONDITIONAL,
+				new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, t+1))));
+	}
+	
+	@Override
+	public String toString() {
+		List<Sentence> sentences = getSentences(); 
+		if (sentences.size() == 0) {
+			return "";
+		} else {
+			boolean first = true;
+			StringBuilder sb = new StringBuilder();
+			for (Sentence s : sentences) {
+				if (!first) {
+					sb.append("\n");
+				}
+				sb.append(s.toString());
+				first = false;
+			}
+			return sb.toString();
+		}
+	}
+	
+	//
+	// PRIVATE
+	//
+	private PropositionSymbol newSymbol(String prefix, int timeStep) {
+		return new PropositionSymbol(prefix+"_"+timeStep);
+	}
+	
+	private PropositionSymbol newSymbol(String prefix, int x, int y) {
+		return new PropositionSymbol(prefix+"_"+x+"_"+y);
+	}
+	
+	private PropositionSymbol newSymbol(String prefix, int timeStep, int x, int y) {
+		return newSymbol(newSymbol(prefix, timeStep).toString(), x, y);
+	}
+	
+	private Sentence orSentence(List<? extends Sentence> disjuncts) {
+		if (disjuncts.size() == 0) {
+			return PropositionSymbol.FALSE;
+		}
+		else if (disjuncts.size() == 1) {
+			return disjuncts.get(0);
+		}
+		return new ComplexSentence(Util.first(disjuncts), Connective.OR, orSentence(Util.rest(disjuncts)));
 	}
 }

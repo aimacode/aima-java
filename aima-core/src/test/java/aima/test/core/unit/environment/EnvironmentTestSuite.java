@@ -23,7 +23,9 @@ import aima.test.core.unit.environment.vacuum.ReflexVacuumAgentTest;
 import aima.test.core.unit.environment.vacuum.SimpleReflexVacuumAgentTest;
 import aima.test.core.unit.environment.vacuum.TableDrivenVacuumAgentTest;
 import aima.test.core.unit.environment.vacuum.VacuumEnvironmentTest;
+import aima.test.core.unit.environment.wumpusworld.HybridWumpusAgentTest;
 import aima.test.core.unit.environment.wumpusworld.WumpusFunctionFactoryTest;
+import aima.test.core.unit.environment.wumpusworld.WumpusKnowledgeBaseTest;
 import aima.test.core.unit.environment.xyenv.XYEnvironmentTest;
 
 @RunWith(Suite.class)
@@ -37,8 +39,9 @@ import aima.test.core.unit.environment.xyenv.XYEnvironmentTest;
 		NQueensFunctionFactoryTest.class,
 		ModelBasedReflexVacuumAgentTest.class, ReflexVacuumAgentTest.class,
 		SimpleReflexVacuumAgentTest.class, TableDrivenVacuumAgentTest.class,
-		VacuumEnvironmentTest.class, WumpusFunctionFactoryTest.class,
-		XYEnvironmentTest.class })
+		VacuumEnvironmentTest.class, HybridWumpusAgentTest.class, 
+		WumpusFunctionFactoryTest.class,
+		WumpusKnowledgeBaseTest.class, XYEnvironmentTest.class })
 public class EnvironmentTestSuite {
 
 }

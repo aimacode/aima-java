@@ -44,10 +44,10 @@ public class WumpusFunctionFactoryTest {
 		//    - Turn right (change orientation, not position)
 		//    - Turn left (change orientation, not position)
 		//    - Forward (change position, not orientation)
-		AgentPosition P11U = new AgentPosition(1, 1, AgentPosition.Orientation.FACING_UP);
-		succPositions.add(new AgentPosition(1, 2, AgentPosition.Orientation.FACING_UP));
-		succOrientation.add(AgentPosition.Orientation.FACING_RIGHT);
-		succOrientation.add(AgentPosition.Orientation.FACING_LEFT);
+		AgentPosition P11U = new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH);
+		succPositions.add(new AgentPosition(1, 2, AgentPosition.Orientation.FACING_NORTH));
+		succOrientation.add(AgentPosition.Orientation.FACING_EAST);
+		succOrientation.add(AgentPosition.Orientation.FACING_WEST);
 		for (Action a : actionFunction.actions(P11U)) {
 			if (a instanceof Forward) {
 				Assert.assertTrue(succPositions.contains(((Forward)a).getToPosition()));
@@ -55,18 +55,18 @@ public class WumpusFunctionFactoryTest {
 			}
 			else if (a instanceof TurnLeft) { 
 				Assert.assertTrue(succOrientation.contains(((TurnLeft)a).getToOrientation()));
-				Assert.assertEquals("[1,1]->FACING_LEFT", resultFunction.result(P11U, a).toString());
+				Assert.assertEquals("[1,1]->FacingWest", resultFunction.result(P11U, a).toString());
 			}
 			else if (a instanceof TurnRight) {
 				Assert.assertTrue(succOrientation.contains(((TurnRight)a).getToOrientation()));
-				Assert.assertEquals("[1,1]->FACING_RIGHT", resultFunction.result(P11U, a).toString());
+				Assert.assertEquals("[1,1]->FacingEast", resultFunction.result(P11U, a).toString());
 			}
 		}
 		
 		
 		//If you are in front of a wall forward action is not possible
-		AgentPosition P31D = new AgentPosition(3, 1, AgentPosition.Orientation.FACING_DOWN);
-		AgentPosition P41R = new AgentPosition(4, 1, AgentPosition.Orientation.FACING_RIGHT);
+		AgentPosition P31D = new AgentPosition(3, 1, AgentPosition.Orientation.FACING_SOUTH);
+		AgentPosition P41R = new AgentPosition(4, 1, AgentPosition.Orientation.FACING_EAST);
 		for (Action a : actionFunction.actions(P31D)) {
 			Assert.assertFalse(a instanceof Forward);
 		}
