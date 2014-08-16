@@ -384,7 +384,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		tell(new ComplexSentence(
 				newSymbol(WUMPUS_ALIVE, t+1),
 				Connective.BICONDITIONAL,
-				new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, t+1))));
+				new ComplexSentence(
+						newSymbol(WUMPUS_ALIVE, t),
+						Connective.AND,
+						new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, t+1)))));
 	}
 	
 	@Override
