@@ -1,7 +1,11 @@
 package aima.core.logic.propositional.parsing.ast;
 
+import java.util.Arrays;
+import java.util.List;
+
 import aima.core.logic.common.ParseTreeNode;
 import aima.core.logic.propositional.parsing.PLVisitor;
+import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 244.<br>
@@ -174,7 +178,59 @@ public abstract class Sentence implements ParseTreeNode {
 
 		return result;
 	}
+	
+	/**
+	 * Create a disjunction of disjuncts.
+	 * @param disjuncts
+	 * 			the disjuncts from which to create the disjunction.
+	 * @return a disjunction of the given disjuncts.
+	 */
+	public static Sentence newDisjunction(Sentence... disjuncts) {
+		return newDisjunction(Arrays.asList(disjuncts));
+	}
+	
+	/**
+	 * Create a disjunction of disjuncts.
+	 * @param disjuncts
+	 * 			the disjuncts from which to create the disjunction.
+	 * @return a disjunction of the given disjuncts.
+	 */
+	public static Sentence newDisjunction(List<? extends Sentence> disjuncts) {
+		if (disjuncts.size() == 0) {
+			return PropositionSymbol.FALSE;
+		}
+		else if (disjuncts.size() == 1) {
+			return disjuncts.get(0);
+		}
+		return new ComplexSentence(Util.first(disjuncts), Connective.OR, newDisjunction(Util.rest(disjuncts)));		
+	}
 
+	/**
+	 * Create a conjunction of conjuncts.
+	 * @param conjuncts
+	 * 			the conjuncts from which to create the conjunction.
+	 * @return a conjunction of the given conjuncts.
+	 */
+	public static Sentence newConjunction(Sentence... conjuncts) {
+		return newConjunction(Arrays.asList(conjuncts));
+	}
+	
+	/**
+	 * Create a conjunction of conjuncts.
+	 * @param conjuncts
+	 * 			the conjuncts from which to create the conjunction.
+	 * @return a conjunction of the given conjuncts.
+	 */
+	public static Sentence newConjunction(List<? extends Sentence> conjuncts) {
+		if (conjuncts.size() == 0) {
+			return PropositionSymbol.TRUE;
+		}
+		else if (conjuncts.size() == 1) {
+			return conjuncts.get(0);
+		}
+		return new ComplexSentence(Util.first(conjuncts), Connective.AND, newConjunction(Util.rest(conjuncts)));		
+	}
+	
 	//
 	// PROTECTED
 	//
