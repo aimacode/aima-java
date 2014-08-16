@@ -2,6 +2,7 @@ package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicAction;
@@ -124,7 +125,39 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		}
 	}
 	
-	public boolean ask(String sentence) {
+	public AgentPosition askCurrentPosition(int t) {
+		return null; // TODO
+	}
+	
+	public Set<Room> askSafeRooms(int t) {
+		return null; // TODO
+	}
+	
+	public boolean askGlitter(int t) {
+		return ask(newSymbol(PERCEPT_GLITTER, t));
+	}
+	
+	public Set<Room> askUnvisitedRooms(int t) {
+		return null; // TODO
+	}
+	
+	public boolean askHaveArrow(int t) {
+		return ask(newSymbol(HAVE_ARROW, t));
+	}
+	
+	public Set<Room> askPossibleWumpusRooms(int t) {
+		return null; // TODO
+	}
+	
+	public Set<Room> askNotUnsafeRooms(int t) {
+		return null; // TODO
+	}
+	
+	public boolean askOK(int t, int x, int y) {
+		return ask(newSymbol(OK_TO_MOVE_INTO, t, x, y));
+	}
+	
+	public boolean ask(Sentence sentence) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

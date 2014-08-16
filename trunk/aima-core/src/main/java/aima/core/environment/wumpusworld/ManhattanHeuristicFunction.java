@@ -2,6 +2,7 @@ package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import aima.core.search.framework.HeuristicFunction;
 
@@ -16,7 +17,7 @@ public class ManhattanHeuristicFunction implements HeuristicFunction {
 	
 	List<Room> goals = new ArrayList<Room>();
 	
-	public ManhattanHeuristicFunction(List<Room> goals) {
+	public ManhattanHeuristicFunction(Set<Room> goals) {
 		this.goals.addAll(goals);
 	}
 	
