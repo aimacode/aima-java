@@ -1,7 +1,6 @@
 package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -15,7 +14,6 @@ import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.util.Util;
 
 /**
  * A Knowledge base tailored to the Wumpus World environment.
@@ -98,8 +96,8 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 					wumpsIn.add(newSymbol(WUMPUS, x, y-1));
 				}
 			
-				tell(new ComplexSentence(newSymbol(BREEZE, x, y), Connective.BICONDITIONAL, orSentence(pitsIn)));
-				tell(new ComplexSentence(newSymbol(STENCH, x, y), Connective.BICONDITIONAL, orSentence(wumpsIn)));
+				tell(new ComplexSentence(newSymbol(BREEZE, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(pitsIn)));
+				tell(new ComplexSentence(newSymbol(STENCH, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(wumpsIn)));
 			}
 		}
 
@@ -111,7 +109,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				wumpsAtLeast.add(newSymbol(WUMPUS, x, y));
 			}
 		}
-		tell(orSentence(wumpsAtLeast));
+		tell(Sentence.newDisjunction(wumpsAtLeast));
 
 		// Then, we have to say that there is at most one wumpus.
 		// For each pair of locations, we add a sentence saying
@@ -287,7 +285,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				tell(new ComplexSentence(
 							newSymbol(LOCATION, t+1, x, y),
 							Connective.BICONDITIONAL,
-							orSentence(locDisjuncts)));
+							Sentence.newDisjunction(locDisjuncts)));
 
 				// The most important question for the agent is whether
 				// a square is OK to move into, that is, the square contains
@@ -314,7 +312,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		tell(new ComplexSentence(
 					newSymbol(FACING_NORTH, t+1),
 					Connective.BICONDITIONAL,
-					orSentence(Arrays.asList(
+					Sentence.newDisjunction(
 							new ComplexSentence(newSymbol(FACING_WEST, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
 							new ComplexSentence(newSymbol(FACING_EAST, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
 							new ComplexSentence(newSymbol(FACING_NORTH, t),
@@ -324,12 +322,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 													newSymbol(ACTION_TURN_LEFT, t),
 													Connective.OR,
 													newSymbol(ACTION_TURN_RIGHT, t))))
-							))));
+							)));
 		// Facing South
 		tell(new ComplexSentence(
 				newSymbol(FACING_SOUTH, t+1),
 				Connective.BICONDITIONAL,
-				orSentence(Arrays.asList(
+				Sentence.newDisjunction(
 						new ComplexSentence(newSymbol(FACING_WEST, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
 						new ComplexSentence(newSymbol(FACING_EAST, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
 						new ComplexSentence(newSymbol(FACING_SOUTH, t),
@@ -339,12 +337,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 												newSymbol(ACTION_TURN_LEFT, t),
 												Connective.OR,
 												newSymbol(ACTION_TURN_RIGHT, t))))
-						))));		
+						)));		
 		// Facing East
 		tell(new ComplexSentence(
 				newSymbol(FACING_EAST, t+1),
 				Connective.BICONDITIONAL,
-				orSentence(Arrays.asList(
+				Sentence.newDisjunction(
 						new ComplexSentence(newSymbol(FACING_NORTH, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
 						new ComplexSentence(newSymbol(FACING_SOUTH, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
 						new ComplexSentence(newSymbol(FACING_EAST, t),
@@ -354,12 +352,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 												newSymbol(ACTION_TURN_LEFT, t),
 												Connective.OR,
 												newSymbol(ACTION_TURN_RIGHT, t))))
-						))));			
+						)));			
 		// Facing West
 		tell(new ComplexSentence(
 				newSymbol(FACING_WEST, t+1),
 				Connective.BICONDITIONAL,
-				orSentence(Arrays.asList(
+				Sentence.newDisjunction(
 						new ComplexSentence(newSymbol(FACING_NORTH, t), Connective.AND, newSymbol(ACTION_TURN_LEFT, t)),
 						new ComplexSentence(newSymbol(FACING_SOUTH, t), Connective.AND, newSymbol(ACTION_TURN_RIGHT, t)),
 						new ComplexSentence(newSymbol(FACING_WEST, t),
@@ -369,7 +367,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 												newSymbol(ACTION_TURN_LEFT, t),
 												Connective.OR,
 												newSymbol(ACTION_TURN_RIGHT, t))))
-						))));
+						)));
 		
 		// Rule about the arrow
 		tell(new ComplexSentence(
@@ -422,15 +420,5 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	
 	private PropositionSymbol newSymbol(String prefix, int timeStep, int x, int y) {
 		return newSymbol(newSymbol(prefix, timeStep).toString(), x, y);
-	}
-	
-	private Sentence orSentence(List<? extends Sentence> disjuncts) {
-		if (disjuncts.size() == 0) {
-			return PropositionSymbol.FALSE;
-		}
-		else if (disjuncts.size() == 1) {
-			return disjuncts.get(0);
-		}
-		return new ComplexSentence(Util.first(disjuncts), Connective.OR, orSentence(Util.rest(disjuncts)));
 	}
 }
