@@ -1,24 +1,31 @@
 package aima.core.logic.propositional.kb;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import aima.core.logic.propositional.inference.TTEntails;
+import aima.core.logic.propositional.kb.data.Clause;
+import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.visitors.SymbolCollector;
 
 /**
  * @author Ravi Mohan
  * @author Mike Stampone
  */
 public class KnowledgeBase {
-	private List<Sentence> sentences;
-
-	private PLParser parser;
+	private List<Sentence>         sentences = new ArrayList<Sentence>();
+	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.<Clause>emptySet());
+	private Set<PropositionSymbol> symbols   = new LinkedHashSet<PropositionSymbol>();
+	private PLParser               parser    = new PLParser();
 
 	public KnowledgeBase() {
-		sentences = new ArrayList<Sentence>();
-		parser = new PLParser();
 	}
 
 	/**
@@ -41,6 +48,8 @@ public class KnowledgeBase {
 	public void tell(Sentence aSentence) {
 		if (!(sentences.contains(aSentence))) {
 			sentences.add(aSentence);
+			asCNF = asCNF.extend(ConvertToConjunctionOfClauses.convert(aSentence).getClauses());
+			symbols.addAll(SymbolCollector.getSymbolsFrom(aSentence));
 		}
 	}
 
@@ -76,6 +85,22 @@ public class KnowledgeBase {
 	 */
 	public Sentence asSentence() {
 		return Sentence.newConjunction(sentences);
+	}
+	
+	/**
+	 * 
+	 * @return a Conjunctive Normal Form (CNF) representation of the Knowledge Base.
+	 */
+	public Set<Clause> asCNF() {
+		return asCNF.getClauses();
+	}
+	
+	/**
+	 * 
+	 * @return a unique set of the symbols currently contained in the Knowledge Base.
+	 */
+	public Set<PropositionSymbol> getSymbols() {
+		return symbols;
 	}
 
 	/**
