@@ -2,6 +2,7 @@ package aima.core.logic.propositional.inference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -146,10 +147,14 @@ public class DPLLSatisfiable {
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// AIMA3e p.g. 260: kb |= alpha, can be done by testing
 		// unsatisfiability of kb & ~alpha.
-		Sentence isContradiction = new ComplexSentence(Connective.AND,
-				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
+		Set<Clause>            kbAndNotAlpha = new LinkedHashSet<Clause>(kb.asCNF());
+		Set<PropositionSymbol> symbols       = new LinkedHashSet<PropositionSymbol>(kb.getSymbols());
+		Sentence               notQuery      = new ComplexSentence(Connective.NOT, alpha);
+		
+		kbAndNotAlpha.addAll(ConvertToConjunctionOfClauses.convert(notQuery).getClauses());
+		symbols.addAll(SymbolCollector.getSymbolsFrom(notQuery));
 
-		return !dpllSatisfiable(isContradiction);
+		return !dpll(kbAndNotAlpha, new ArrayList<PropositionSymbol>(symbols), new Model());
 	}
 
 	//
