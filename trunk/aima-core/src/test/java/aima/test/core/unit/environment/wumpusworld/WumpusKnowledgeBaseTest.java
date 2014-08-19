@@ -1,11 +1,13 @@
 package aima.test.core.unit.environment.wumpusworld;
 
+import java.util.HashSet;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.environment.wumpusworld.AgentPercept;
 import aima.core.environment.wumpusworld.AgentPosition;
+import aima.core.environment.wumpusworld.Room;
 import aima.core.environment.wumpusworld.WumpusKnowledgeBase;
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
@@ -16,70 +18,139 @@ import aima.core.environment.wumpusworld.action.TurnLeft;
  *
  */
 public class WumpusKnowledgeBaseTest {
-	private WumpusKnowledgeBase KB = null;
-	
-	@Before
-	public void setUp() {
-		KB = new WumpusKnowledgeBase(4);
-	}
 	
 	@Test
 	public void testAskCurrentPosition() {	
+		WumpusKnowledgeBase KB =  new WumpusKnowledgeBase(2); // Create very small cave in order to make inference for tests faster.
+		// NOTE: in the 2x2 cave for this set of assertion tests, 
+		// we are going to have no pits and the wumpus in [2,2]
+		// this needs to be correctly set up in order to keep the KB consistent.
 		int t = 0;
 		AgentPosition current;
-		step(new AgentPercept(false, false, false, false, false), t);	
+		step(KB, new AgentPercept(false, false, false, false, false), t);	
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), current);
 		KB.makeActionSentence(new Forward(current), t);
 		
 		t++;
-		step(new AgentPercept(false, false, false, false, false), t);	
+		step(KB, new AgentPercept(true, false, false, false, false), t);			
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(2, 1, AgentPosition.Orientation.FACING_EAST), current);
 		KB.makeActionSentence(new TurnLeft(current.getOrientation()), t);
 		
 		t++;
-		step(new AgentPercept(false, false, false, false, false), t);	
+		step(KB, new AgentPercept(true, false, false, false, false), t);	
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(2, 1, AgentPosition.Orientation.FACING_NORTH), current);
 		KB.makeActionSentence(new TurnLeft(current.getOrientation()), t);
 		
 		t++;
-		step(new AgentPercept(false, false, false, false, false), t);	
+		step(KB, new AgentPercept(true, false, false, false, false), t);	
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(2, 1, AgentPosition.Orientation.FACING_WEST), current);
 		KB.makeActionSentence(new Forward(current), t);
 		
 		t++;
-		step(new AgentPercept(false, false, false, false, false), t);	
+		step(KB, new AgentPercept(false, false, false, false, false), t);	
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_WEST), current);
 		KB.makeActionSentence(new Forward(current), t);
 		
 		t++;
-		step(new AgentPercept(false, false, false, true, false), t);	
+		step(KB, new AgentPercept(false, false, false, true, false), t);	
 		current = KB.askCurrentPosition(t);
 		Assert.assertEquals(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_WEST), current);
-		KB.makeActionSentence(new Forward(current), t);
+	}
+	
+	@SuppressWarnings("serial")
+	@Test
+	public void testAskSafeRooms() {
+		WumpusKnowledgeBase KB;
+		int t = 0;
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(false, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1));}}, KB.askSafeRooms(t));
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(true, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
+
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(false, true, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(true, true, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 	}
 	
 	@Test
 	public void testAskGlitter() {
-		step(new AgentPercept(false, false, false, false, false), 0);
+		WumpusKnowledgeBase KB =  new WumpusKnowledgeBase(2); 
+		step(KB, new AgentPercept(false, false, false, false, false), 0);
 		Assert.assertFalse(KB.askGlitter(0));
-		step(new AgentPercept(false, false, false, false, false), 1);
+		step(KB, new AgentPercept(false, false, false, false, false), 1);
 		Assert.assertFalse(KB.askGlitter(1));
-		step(new AgentPercept(false, false, true, false, false), 2);
+		step(KB, new AgentPercept(false, false, true, false, false), 2);
 		Assert.assertTrue(KB.askGlitter(2));
-		step(new AgentPercept(false, false, false, false, false), 3);
+		step(KB, new AgentPercept(false, false, false, false, false), 3);
 		Assert.assertFalse(KB.askGlitter(3));
 	}
 	
-	private void step(AgentPercept percept, int t) {
-		KB.tellTemporalPhysicsSentences(t);
-		KB.makePerceptSentence(percept, t);
-// TODO - remove		
-//System.out.println("\n\n*** KB at time step "+t+"=\n"+KB.toString());	
+	@SuppressWarnings("serial")
+	@Test
+	public void testAskUnvistedRooms() {
+		WumpusKnowledgeBase KB;
+		int t = 0;
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(false, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askUnvisitedRooms(t));
+		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST)), t); // Move agent to [2,1]		
+		
+		t++;
+		step(KB, new AgentPercept(true, false, false, false, false), t); // NOTE: Wumpus in [2,2] so have stench
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2,2));}}, KB.askUnvisitedRooms(t));
 	}
 	
+	@SuppressWarnings("serial")
+	@Test
+	public void testAskPossibleWumpusRooms() {
+		WumpusKnowledgeBase KB;
+		int t = 0;
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(false, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(2,2));}}, KB.askPossibleWumpusRooms(t));	
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(true, false, false, false, false), t); 		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2, 1));}}, KB.askPossibleWumpusRooms(t));		
+
+		KB =  new WumpusKnowledgeBase(3);
+		step(KB, new AgentPercept(false, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,3)); add(new Room(2,2)); add(new Room(2,3)); add(new Room(3,1)); add(new Room(3,2)); add(new Room(3,3));}}, KB.askPossibleWumpusRooms(t));
+		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST)), t); // Move agent to [2,1]		
+	}
+	
+	@SuppressWarnings("serial")
+	@Test
+	public void testAskNotUnsafeRooms() {
+		WumpusKnowledgeBase KB;
+		int t = 0;
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(false, false, false, false, false), t);		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2,1));}}, KB.askNotUnsafeRooms(t));	
+		
+		KB =  new WumpusKnowledgeBase(2);
+		step(KB, new AgentPercept(true, false, false, false, false), t); 		
+		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askNotUnsafeRooms(t));		
+	}
+	
+	private void step(WumpusKnowledgeBase KB, AgentPercept percept, int t) {
+		KB.tellTemporalPhysicsSentences(t);
+		KB.makePerceptSentence(percept, t);
+	}	
 }

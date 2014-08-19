@@ -42,7 +42,7 @@ import aima.core.util.datastructure.Queue;
  *   if ASK(KB, Glitter<sup>t</sup>) = true then
  *      plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
  *   if plan is empty then
- *      unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' < t}
+ *      unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
  *      plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
  *   if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
  *      possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
@@ -123,7 +123,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		// if plan is empty then
 		if (plan.isEmpty()) {
-			// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' < t}
+			// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
 			Set<Room> unvisited = kb.askUnvisitedRooms(t);
 			// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
 			plan.addAll(planRoute(current, SetOps.union(unvisited, safe), safe));
