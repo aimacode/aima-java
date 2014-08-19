@@ -245,7 +245,7 @@ public class DPLLSatisfiable {
 
 	/**
 	 * AIMA3e p.g. 260:<br>
-	 * <quote<i>Unit clause heuristic:</i> A <b>unit clause</b> was defined
+	 * <quote><i>Unit clause heuristic:</i> A <b>unit clause</b> was defined
 	 * earlier as a clause with just one literal. In the context of DPLL, it
 	 * also means clauses in which all literals but one are already assigned
 	 * false by the model. For example, if the model contains B = true, then (~B

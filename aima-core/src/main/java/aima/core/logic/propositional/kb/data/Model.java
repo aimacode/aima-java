@@ -121,7 +121,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 									// assignments.
 			result = Boolean.FALSE;
 		} else {
-			Set<PropositionSymbol> assignedSymbols = getAssignedSymbols();
+			Set<PropositionSymbol> assignedSymbols = assignments.keySet();
 			boolean unassignedSymbols = false;
 			for (PropositionSymbol positive : c.getPositiveSymbols()) {
 				if (assignedSymbols.contains(positive)) {

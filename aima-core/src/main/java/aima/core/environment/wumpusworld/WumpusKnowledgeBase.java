@@ -1,6 +1,7 @@
 package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,32 +27,31 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ciaran O'Reilly
  */
 public class WumpusKnowledgeBase extends KnowledgeBase {
-
+	public static final String LOCATION          = "L";
+	public static final String BREEZE            = "B";
+	public static final String STENCH            = "S";
+	public static final String PIT               = "P";
+	public static final String WUMPUS            = "W";
+	public static final String WUMPUS_ALIVE      = "WumpusAlive";
+	public static final String HAVE_ARROW        = "HaveArrow";
+	public static final String FACING_NORTH      = AgentPosition.Orientation.FACING_NORTH.toString();
+	public static final String FACING_SOUTH      = AgentPosition.Orientation.FACING_SOUTH.toString();
+	public static final String FACING_EAST       = AgentPosition.Orientation.FACING_EAST.toString();
+	public static final String FACING_WEST       = AgentPosition.Orientation.FACING_WEST.toString();
+	public static final String PERCEPT_STENCH    = "Stench";
+	public static final String PERCEPT_BREEZE    = "Breeze";
+	public static final String PERCEPT_GLITTER   = "Glitter";
+	public static final String PERCEPT_BUMP      = "Bump";
+	public static final String PERCEPT_SCREAM    = "Scream";
+	public static final String ACTION_FORWARD    = Forward.FORWARD_ACTION_NAME;
+	public static final String ACTION_SHOOT      = Shoot.SHOOT_ACTION_NAME;
+	public static final String ACTION_TURN_LEFT  = TurnLeft.TURN_LEFT_ACTION_NAME;
+	public static final String ACTION_TURN_RIGHT = TurnRight.TURN_RIGHT_ACTION_NAME;
+	public static final String OK_TO_MOVE_INTO   = "OK";
+	//
 	private int             caveXDimension;
 	private int             caveYDimension;
 	private DPLLSatisfiable dpll = new DPLLSatisfiable();
-	//
-	private static final String LOCATION          = "L";
-	private static final String BREEZE            = "B";
-	private static final String STENCH            = "S";
-	private static final String PIT               = "P";
-	private static final String WUMPUS            = "W";
-	private static final String WUMPUS_ALIVE      = "WumpusAlive";
-	private static final String HAVE_ARROW        = "HaveArrow";
-	private static final String FACING_NORTH      = AgentPosition.Orientation.FACING_NORTH.toString();
-	private static final String FACING_SOUTH      = AgentPosition.Orientation.FACING_SOUTH.toString();
-	private static final String FACING_EAST       = AgentPosition.Orientation.FACING_EAST.toString();
-	private static final String FACING_WEST       = AgentPosition.Orientation.FACING_WEST.toString();
-	private static final String PERCEPT_STENCH    = "Stench";
-	private static final String PERCEPT_BREEZE    = "Breeze";
-	private static final String PERCEPT_GLITTER   = "Glitter";
-	private static final String PERCEPT_BUMP      = "Bump";
-	private static final String PERCEPT_SCREAM    = "Scream";
-	private static final String ACTION_FORWARD    = Forward.FORWARD_ACTION_NAME;
-	private static final String ACTION_SHOOT      = Shoot.SHOOT_ACTION_NAME;
-	private static final String ACTION_TURN_LEFT  = TurnLeft.TURN_LEFT_ACTION_NAME;
-	private static final String ACTION_TURN_RIGHT = TurnRight.TURN_RIGHT_ACTION_NAME;
-	private static final String OK_TO_MOVE_INTO   = "OK";
 
 	/**
 	 * Create a Knowledge Base that contains the atemporal "wumpus physics" and
@@ -131,7 +131,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	public AgentPosition askCurrentPosition(int t) {
 		int locX = -1, locY = -1;
 		for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
-			for (int y = 1; y < getCaveYDimension() && locY == -1; y++) {
+			for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {
 				if (ask(newSymbol(LOCATION, t, x, y))) {
 					locX = x;
 					locY = y;
@@ -161,28 +161,75 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		return current;
 	}
 	
+	// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 	public Set<Room> askSafeRooms(int t) {
-		return null; // TODO
+		Set<Room> safe = new LinkedHashSet<Room>();
+		for (int x = 1; x <= getCaveXDimension(); x++) {
+			for (int y = 1; y <= getCaveYDimension(); y++) {
+				if (ask(newSymbol(OK_TO_MOVE_INTO, t, x, y))) {
+					safe.add(new Room(x, y));
+				}
+			}
+		}
+		return safe;
 	}
 	
 	public boolean askGlitter(int t) {
 		return ask(newSymbol(PERCEPT_GLITTER, t));
 	}
 	
+	// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
 	public Set<Room> askUnvisitedRooms(int t) {
-		return null; // TODO
+		Set<Room> unvisited = new LinkedHashSet<Room>();
+		
+		for (int x = 1; x <= getCaveXDimension(); x++) {
+			for (int y = 1; y <= getCaveYDimension(); y++) {
+				for (int tPrime = 0; tPrime <= t; tPrime++) {					
+					if (ask(newSymbol(LOCATION, tPrime, x, y))) {
+						break; // i.e. is not false for all t' <= t
+					}
+					if (tPrime == t) {
+						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
+					}
+				}
+			}
+		}
+		
+		return unvisited;
 	}
 	
 	public boolean askHaveArrow(int t) {
 		return ask(newSymbol(HAVE_ARROW, t));
 	}
 	
+	// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 	public Set<Room> askPossibleWumpusRooms(int t) {
-		return null; // TODO
+		Set<Room> possible = new LinkedHashSet<Room>();
+		
+		for (int x = 1; x <= getCaveXDimension(); x++) {
+			for (int y = 1; y <= getCaveYDimension(); y++) {
+				if (!ask(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, x, y)))) {
+					possible.add(new Room(x, y));
+				}
+			}
+		}
+		
+		return possible;
 	}
 	
+	// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
 	public Set<Room> askNotUnsafeRooms(int t) {
-		return null; // TODO
+		Set<Room> notUnsafe = new LinkedHashSet<Room>();
+		
+		for (int x = 1; x <= getCaveXDimension(); x++) {
+			for (int y = 1; y <= getCaveYDimension(); y++) {
+				if (!ask(new ComplexSentence(Connective.NOT, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
+					notUnsafe.add(new Room(x, y));
+				}
+			}
+		}
+		
+		return notUnsafe;
 	}
 	
 	public boolean askOK(int t, int x, int y) {
@@ -501,19 +548,16 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 			return sb.toString();
 		}
 	}
-	
-	//
-	// PRIVATE
-	//
-	private PropositionSymbol newSymbol(String prefix, int timeStep) {
+
+	public PropositionSymbol newSymbol(String prefix, int timeStep) {
 		return new PropositionSymbol(prefix+"_"+timeStep);
 	}
 	
-	private PropositionSymbol newSymbol(String prefix, int x, int y) {
+	public PropositionSymbol newSymbol(String prefix, int x, int y) {
 		return new PropositionSymbol(prefix+"_"+x+"_"+y);
 	}
 	
-	private PropositionSymbol newSymbol(String prefix, int timeStep, int x, int y) {
+	public PropositionSymbol newSymbol(String prefix, int timeStep, int x, int y) {
 		return newSymbol(newSymbol(prefix, timeStep).toString(), x, y);
 	}
 }
