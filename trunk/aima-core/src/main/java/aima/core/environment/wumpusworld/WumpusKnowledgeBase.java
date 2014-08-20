@@ -22,9 +22,9 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
 /**
  * A Knowledge base tailored to the Wumpus World environment.
  * 
+ * @author Ciaran O'Reilly
  * @author Federico Baron
  * @author Alessandro Daniele
- * @author Ciaran O'Reilly
  */
 public class WumpusKnowledgeBase extends KnowledgeBase {
 	public static final String LOCATION          = "L";

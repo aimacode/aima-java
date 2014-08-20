@@ -51,8 +51,9 @@ public class WumpusFunctionFactory {
 			
 			List<AgentPosition> linkedPositions = cave.getLocationsLinkedTo(position);
 			for (AgentPosition linkPos : linkedPositions) {
-				if (linkPos.getX() != position.getX() || linkPos.getY() != position.getY())
+				if (linkPos.getX() != position.getX() || linkPos.getY() != position.getY()) {
 					actions.add(new Forward(position));
+				}
 			}
 			actions.add(new TurnLeft(position.getOrientation()));
 			actions.add(new TurnRight(position.getOrientation()));
