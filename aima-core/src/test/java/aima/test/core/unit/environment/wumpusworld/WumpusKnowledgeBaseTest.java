@@ -11,6 +11,7 @@ import aima.core.environment.wumpusworld.Room;
 import aima.core.environment.wumpusworld.WumpusKnowledgeBase;
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
 
 /**
  * 
@@ -140,13 +141,51 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase(2);
+		KB = new WumpusKnowledgeBase(2);
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2,1));}}, KB.askNotUnsafeRooms(t));	
 		
 		KB =  new WumpusKnowledgeBase(2);
 		step(KB, new AgentPercept(true, false, false, false, false), t); 		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askNotUnsafeRooms(t));		
+	}
+	
+	@Test
+	public void testExampleInSection7_2_described_pg268_AIMA3e() {
+		// Make smaller in order to reduce the inference time required, this still covers all the relevant rooms for the example
+		WumpusKnowledgeBase KB = new WumpusKnowledgeBase(3); 
+		int t = 0;
+		// 0
+		step(KB, new AgentPercept(false, false, false, false, false), t);
+		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST)), t);
+		
+		t++; // 1
+		step(KB, new AgentPercept(false, true, false, false, false), t);
+		KB.makeActionSentence(new TurnRight(AgentPosition.Orientation.FACING_EAST), t);
+		
+		t++; // 2
+		step(KB, new AgentPercept(false, true, false, false, false), t);
+		KB.makeActionSentence(new TurnRight(AgentPosition.Orientation.FACING_SOUTH), t);
+		
+		t++; // 3
+		step(KB, new AgentPercept(false, true, false, false, false), t);
+		KB.makeActionSentence(new Forward(new AgentPosition(2, 1, AgentPosition.Orientation.FACING_WEST)), t);
+	
+		t++; // 4
+		step(KB, new AgentPercept(false, false, false, false, false), t);
+		KB.makeActionSentence(new TurnRight(AgentPosition.Orientation.FACING_WEST), t);
+		
+		t++; // 5
+		step(KB, new AgentPercept(false, false, false, false, false), t);
+		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH)), t);
+		
+		t++; // 6
+		step(KB, new AgentPercept(true, false, false, false, false), t);
+		
+		Assert.assertTrue(KB.ask(KB.newSymbol(WumpusKnowledgeBase.LOCATION, t, 1, 2)));
+		Assert.assertTrue(KB.ask(KB.newSymbol(WumpusKnowledgeBase.WUMPUS, 1, 3)));
+		Assert.assertTrue(KB.ask(KB.newSymbol(WumpusKnowledgeBase.PIT, 3, 1)));
+		Assert.assertTrue(KB.ask(KB.newSymbol(WumpusKnowledgeBase.OK_TO_MOVE_INTO, t, 2, 2)));
 	}
 	
 	private void step(WumpusKnowledgeBase KB, AgentPercept percept, int t) {
