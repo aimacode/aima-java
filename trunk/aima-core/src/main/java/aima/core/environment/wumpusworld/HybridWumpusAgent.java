@@ -1,5 +1,6 @@
 package aima.core.environment.wumpusworld;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -231,15 +232,23 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		HeuristicFunction hf = new ManhattanHeuristicFunction(goals);
 
-		Search search = new AStarSearch(new GraphSearch(), hf);
-		SearchAgent agent = null;
+		Search       search  = new AStarSearch(new GraphSearch(), hf);
+		SearchAgent  agent   = null;
+		List<Action> actions = null;
 		try {
-			agent = new SearchAgent(problem, search);
+			agent   = new SearchAgent(problem, search);
+			actions = agent.getActions();
+			// Search agent can return a NoOp if already at goal,
+			// in the context of this agent we will just return
+			// no actions.
+			if (actions.size() == 1 && actions.get(0).isNoOp()) {
+				actions = new ArrayList<Action>();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return agent.getActions();
+		return actions;
 	}
 	
 	/**
@@ -301,13 +310,9 @@ public class HybridWumpusAgent extends AbstractAgent {
 		List<Action> actions = planRoute(current, shootingPositionsArray,
 				allowed);
 
-		AgentPosition newPos;
-		if (actions.get(actions.size() - 1).isNoOp()) {
-			newPos = current;
-			actions.clear();
-		} else {
-			newPos = ((Forward) actions.get(actions.size() - 1))
-					.getToPosition();
+		AgentPosition newPos = current;
+		if (actions.size() > 0) {
+			newPos = ((Forward) actions.get(actions.size() - 1)).getToPosition();
 		}
 
 		while (!shootingPositions.contains(newPos)) {
