@@ -1,17 +1,21 @@
 package aima.test.core.unit.environment.wumpusworld;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.agent.impl.NoOpAction;
+import aima.core.agent.Action;
+import aima.core.environment.wumpusworld.AgentPercept;
 import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.Room;
+import aima.core.environment.wumpusworld.action.Climb;
 import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 
@@ -27,7 +31,7 @@ public class HybridWumpusAgentTest {
 	public void testPlanRoute() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
 		// Should be a NoOp plan as we are already at the goal.
-		Assert.assertEquals(Arrays.asList(NoOpAction.NO_OP), 
+		Assert.assertEquals(Collections.<Action>emptyList(), 
 			hwa.planRoute(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,1));
@@ -105,7 +109,12 @@ public class HybridWumpusAgentTest {
 	
 	@Test
 	public void testGrabAndClimb() {
-// TODO		
+		HybridWumpusAgent hwa = new HybridWumpusAgent(2);
+		// The gold is in the first square
+		Action a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		Assert.assertTrue(a instanceof Grab);
+		a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		Assert.assertTrue(a instanceof Climb);
 	}
 	
 	private static Set<Room> allRooms(int caveXandYDimensions) {
