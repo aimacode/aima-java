@@ -167,7 +167,7 @@ public class DPLLSatisfiable {
 	//
 
 	// Note: Override this method if you wish to change the initial variable
-	// ordering.
+	// ordering when dpllSatisfiable is called.
 	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
 		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(s));
