@@ -141,7 +141,7 @@ public class PropositionSymbol extends AtomicSentence {
 			return false;
 		}
 		PropositionSymbol sym = (PropositionSymbol) o;
-		return (sym.getSymbol().equals(getSymbol()));
+		return symbol.equals(sym.symbol);
 
 	}
 
