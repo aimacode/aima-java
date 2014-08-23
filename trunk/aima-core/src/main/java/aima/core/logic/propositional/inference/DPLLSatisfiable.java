@@ -16,7 +16,6 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.SetOps;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
@@ -252,12 +251,13 @@ public class DPLLSatisfiable {
 
 		// Determine the overlap/intersection between the positive and negative
 		// candidates
-		Set<PropositionSymbol> nonPureSymbols = SetOps.intersection(
-				candidatePurePositiveSymbols, candidatePureNegativeSymbols);
-
-		// Remove the non-pure symbols
-		candidatePurePositiveSymbols.removeAll(nonPureSymbols);
-		candidatePureNegativeSymbols.removeAll(nonPureSymbols);
+		for (PropositionSymbol s : symbolsToKeep) {
+			// Remove the non-pure symbols
+			if (candidatePurePositiveSymbols.contains(s) && candidatePureNegativeSymbols.contains(s)) {
+				candidatePurePositiveSymbols.remove(s);
+				candidatePureNegativeSymbols.remove(s);
+			}
+		}
 
 		// We have an implicit preference for positive pure symbols
 		if (candidatePurePositiveSymbols.size() > 0) {
