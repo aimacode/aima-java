@@ -15,11 +15,11 @@ import aima.core.logic.propositional.parsing.ast.Connective;
  * 
  */
 public class Literal {
-	private PropositionSymbol atom = null;
-	private boolean positive = true; // Assume positive by default.
+	private PropositionSymbol atom     = null;
+	private boolean           positive = true; // Assume positive by default.
 	//
 	private String cachedStringRep = null;
-	private int cachedHashCode = -1;
+	private int    cachedHashCode  = -1;
 
 	/**
 	 * Constructor for a positive literal.
@@ -41,7 +41,7 @@ public class Literal {
 	 *            literal.
 	 */
 	public Literal(PropositionSymbol atom, boolean positive) {
-		this.atom = atom;
+		this.atom     = atom;
 		this.positive = positive;
 	}
 
