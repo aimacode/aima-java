@@ -121,11 +121,12 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 									// assignments.
 			result = Boolean.FALSE;
 		} else {
-			Set<PropositionSymbol> assignedSymbols = assignments.keySet();
 			boolean unassignedSymbols = false;
+			Boolean value             = null;
 			for (PropositionSymbol positive : c.getPositiveSymbols()) {
-				if (assignedSymbols.contains(positive)) {
-					if (isTrue(positive)) {
+				value = assignments.get(positive);
+				if (value != null) {
+					if (Boolean.TRUE.equals(value)) {
 						result = Boolean.TRUE;
 						break;
 					}
@@ -136,8 +137,9 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 			// If truth not determined, continue checking negative symbols
 			if (result == null) {
 				for (PropositionSymbol negative : c.getNegativeSymbols()) {
-					if (assignedSymbols.contains(negative)) {
-						if (isFalse(negative)) {
+					value = assignments.get(negative);
+					if (value != null) {
+						if (Boolean.FALSE.equals(value)) {
 							result = Boolean.TRUE;
 							break;
 						}
