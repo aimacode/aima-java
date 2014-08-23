@@ -29,8 +29,11 @@ public class Clause {
 	//
 	private Set<PropositionSymbol> cachedPositiveSymbols = new LinkedHashSet<PropositionSymbol>();
 	private Set<PropositionSymbol> cachedNegativeSymbols = new LinkedHashSet<PropositionSymbol>();
-	private String cachedStringRep = null;
-	private int cachedHashCode = -1;
+	private Set<PropositionSymbol> cachedSymbols         = new LinkedHashSet<PropositionSymbol>();
+	//
+	private Boolean cachedIsTautologyResult = null;
+	private String  cachedStringRep         = null;
+	private int     cachedHashCode          = -1;
 
 	/**
 	 * Default constructor - i.e. the empty clause, which is 'False'.
@@ -73,9 +76,13 @@ public class Clause {
 				}
 			}
 		}
+		
+		cachedSymbols.addAll(cachedPositiveSymbols);
+		cachedSymbols.addAll(cachedNegativeSymbols);
 
 		// Make immutable
 		this.literals = Collections.unmodifiableSet(this.literals);
+		cachedSymbols = Collections.unmodifiableSet(cachedSymbols);
 		cachedPositiveSymbols = Collections
 				.unmodifiableSet(cachedPositiveSymbols);
 		cachedNegativeSymbols = Collections
@@ -167,24 +174,30 @@ public class Clause {
 	 * @return true if the clause represents a tautology, false otherwise.
 	 */
 	public boolean isTautology() {
-
-		for (Literal l : literals) {
-			if (l.isAlwaysTrue()) {
-				// {..., True, ...} is a tautology.
-				// {..., ~False, ...} is a tautology
-				return true;
+		if (cachedIsTautologyResult == null) {
+			for (Literal l : literals) {
+				if (l.isAlwaysTrue()) {
+					// {..., True, ...} is a tautology.
+					// {..., ~False, ...} is a tautology
+					cachedIsTautologyResult = true;
+				}
+			}
+			// If we still don't know
+			if (cachedIsTautologyResult == null) {
+				if (SetOps.intersection(cachedPositiveSymbols, cachedNegativeSymbols)
+						.size() > 0) {
+					// We have:
+					// P | ~P
+					// which is always true.
+					cachedIsTautologyResult = true;
+				}
+				else {
+					cachedIsTautologyResult = false;
+				}
 			}
 		}
 
-		if (SetOps.intersection(cachedPositiveSymbols, cachedNegativeSymbols)
-				.size() > 0) {
-			// We have:
-			// P | ~P
-			// which is always true.
-			return true;
-		}
-
-		return false;
+		return cachedIsTautologyResult;
 	}
 
 	/**
@@ -217,6 +230,14 @@ public class Clause {
 	 */
 	public Set<Literal> getLiterals() {
 		return literals;
+	}
+	
+	/**
+	 * 
+	 * @return the set of symbols from the clause's positive and negative literals.
+	 */
+	public Set<PropositionSymbol> getSymbols() {
+		return cachedSymbols;
 	}
 
 	/**

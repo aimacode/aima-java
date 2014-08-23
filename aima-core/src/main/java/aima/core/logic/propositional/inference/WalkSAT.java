@@ -11,7 +11,6 @@ import java.util.Set;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
-import aima.core.util.SetOps;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 263.<br>
@@ -123,8 +122,7 @@ public class WalkSAT {
 		// Collect the symbols in clauses
 		Set<PropositionSymbol> symbols = new LinkedHashSet<PropositionSymbol>();
 		for (Clause c : clauses) {
-			symbols.addAll(c.getPositiveSymbols());
-			symbols.addAll(c.getNegativeSymbols());
+			symbols.addAll(c.getSymbols());
 		}
 
 		// Make initial set of assignments
@@ -155,8 +153,7 @@ public class WalkSAT {
 
 	protected PropositionSymbol randomlySelectSymbolFromClause(Clause clause) {
 		// all the symbols in clause
-		Set<PropositionSymbol> symbols = SetOps.union(
-				clause.getPositiveSymbols(), clause.getNegativeSymbols());
+		Set<PropositionSymbol> symbols = clause.getSymbols();
 
 		// a randomly selected symbol from clause
 		PropositionSymbol result = (new ArrayList<PropositionSymbol>(symbols))
@@ -169,8 +166,7 @@ public class WalkSAT {
 		Model result = model;
 
 		// all the symbols in clause
-		Set<PropositionSymbol> symbols = SetOps.union(
-				clause.getPositiveSymbols(), clause.getNegativeSymbols());
+		Set<PropositionSymbol> symbols = clause.getSymbols();
 		int maxClausesSatisfied = -1;
 		for (PropositionSymbol symbol : symbols) {
 			Model flippedModel = result.flip(symbol);

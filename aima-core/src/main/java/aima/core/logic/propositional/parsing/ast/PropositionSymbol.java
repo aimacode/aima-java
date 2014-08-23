@@ -22,9 +22,9 @@ import javax.lang.model.SourceVersion;
  */
 public class PropositionSymbol extends AtomicSentence {
 	//
-	public static final String TRUE_SYMBOL = "True";
+	public static final String TRUE_SYMBOL  = "True";
 	public static final String FALSE_SYMBOL = "False";
-	public static final PropositionSymbol TRUE = new PropositionSymbol(TRUE_SYMBOL);
+	public static final PropositionSymbol TRUE  = new PropositionSymbol(TRUE_SYMBOL);
 	public static final PropositionSymbol FALSE = new PropositionSymbol(FALSE_SYMBOL);
 	//
 	private String symbol;
