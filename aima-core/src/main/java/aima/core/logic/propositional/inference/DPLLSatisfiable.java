@@ -95,13 +95,31 @@ public class DPLLSatisfiable {
 	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// if every clause in clauses is true in model then return true
-		if (everyClauseTrue(clauses, model)) {
+		// if some clause in clauses is false in model then return false
+		// NOTE: for optimization reasons we only want to determine the
+		// values of clauses once on each call to dpll
+		boolean allTrue = true;			
+		Set<Clause> unknownClauses = new LinkedHashSet<Clause>();
+		for (Clause c : clauses) {
+			Boolean value = model.determineValue(c);
+			if (!Boolean.TRUE.equals(value)) {
+				allTrue = false;
+				if (Boolean.FALSE.equals(value)) {					
+					return false;
+				}				
+				unknownClauses.add(c);
+			}
+		}
+		if (allTrue) {
 			return true;
 		}
-		// if some clause in clauses is false in model then return false
-		if (someClauseFalse(clauses, model)) {
-			return false;
-		}
+		
+		// NOTE: Performance Optimization -
+		// Going forward, algorithm can ignore clauses that are already 
+		// known to be true (reduces overhead on recursive calls and simplifies
+		// findPureSymbols() and findUnitClauses() logic as they can
+		// always assume unknown).
+		clauses = unknownClauses;
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
 		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
@@ -206,23 +224,31 @@ public class DPLLSatisfiable {
 			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
 		Pair<PropositionSymbol, Boolean> result = null;
 
+		Set<PropositionSymbol> symbolsToKeep = new HashSet<PropositionSymbol>(symbols);
 		// Collect up possible positive and negative candidate sets of pure
 		// symbols
 		Set<PropositionSymbol> candidatePurePositiveSymbols = new HashSet<PropositionSymbol>();
 		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
-			if (Boolean.TRUE.equals(model.determineValue(c))) {
-				continue;
+			// NOTE: no longer need to do this here as we remove, true clauses
+			// up front the the dpll call (as an optimization)
+			//if (Boolean.TRUE.equals(model.determineValue(c))) {
+			//	continue;
+			//}
+			// Collect possible candidates, removing all candidates that are
+			// not part of the input list of symbols to be considered.
+			for (PropositionSymbol p : c.getPositiveSymbols()) {
+				if (symbolsToKeep.contains(p)) {
+					candidatePurePositiveSymbols.add(p);
+				}
 			}
-			// Collect possible candidates
-			candidatePurePositiveSymbols.addAll(c.getPositiveSymbols());
-			candidatePureNegativeSymbols.addAll(c.getNegativeSymbols());
+			for (PropositionSymbol n : c.getNegativeSymbols()) {
+				if (symbolsToKeep.contains(n)) {
+					candidatePureNegativeSymbols.add(n);
+				}
+			}
 		}
-		// Remove all candidates that are not part of the input list of symbols
-		// to be considered
-		candidatePurePositiveSymbols.retainAll(symbols);
-		candidatePureNegativeSymbols.retainAll(symbols);
 
 		// Determine the overlap/intersection between the positive and negative
 		// candidates
@@ -278,63 +304,52 @@ public class DPLLSatisfiable {
 		for (Clause c : clauses) {
 			// if clauses value is currently unknown
 			// (i.e. means known literals are false)
-			if (model.determineValue(c) == null) {
-				Literal unassigned = null;
-				// Default definition of a unit clause is a clause
-				// with just one literal
-				if (c.isUnitClause()) {
-					unassigned = c.getLiterals().iterator().next();
-				} else {
-					// Also, a unit clause in the context of DPLL, also means a
-					// clauseF in which all literals but one are already
-					// assigned false by the model.
-					// Note: at this point we already know the clause is not
-					// true, so just need to determine if the clause has a
-					// single unassigned literal
-					for (Literal l : c.getLiterals()) {
-						Boolean value = model.getValue(l.getAtomicSentence());
-						if (value == null) {
-							// The first unassigned literal encountered.
-							if (unassigned == null) {
-								unassigned = l;
-							} else {
-								// This means we have more than 1 unassigned
-								// literal so lets skip
-								unassigned = null;
-								break;
-							}
+			// NOTE: no longer need to perform this check
+			// as only clauses with unknown values will
+			// be passed to this routine from dpll as it
+			// removes known ones up front.
+			// if (model.determineValue(c) == null) {
+			Literal unassigned = null;
+			// Default definition of a unit clause is a clause
+			// with just one literal
+			if (c.isUnitClause()) {
+				unassigned = c.getLiterals().iterator().next();
+			} else {
+				// Also, a unit clause in the context of DPLL, also means a
+				// clauseF in which all literals but one are already
+				// assigned false by the model.
+				// Note: at this point we already know the clause is not
+				// true, so just need to determine if the clause has a
+				// single unassigned literal
+				for (Literal l : c.getLiterals()) {
+					Boolean value = model.getValue(l.getAtomicSentence());
+					if (value == null) {
+						// The first unassigned literal encountered.
+						if (unassigned == null) {
+							unassigned = l;
+						} else {
+							// This means we have more than 1 unassigned
+							// literal so lets skip
+							unassigned = null;
+							break;
 						}
 					}
 				}
+			}
 
-				// if a value assigned it means we have a single
-				// unassigned literal and all the assigned literals
-				// are not true under the current model as we were
-				// unable to determine a value.
-				if (unassigned != null) {
-					result = new Pair<PropositionSymbol, Boolean>(
-							unassigned.getAtomicSentence(),
-							unassigned.isPositiveLiteral());
-					break;
-				}
+			// if a value assigned it means we have a single
+			// unassigned literal and all the assigned literals
+			// are not true under the current model as we were
+			// unable to determine a value.
+			if (unassigned != null) {
+				result = new Pair<PropositionSymbol, Boolean>(
+						unassigned.getAtomicSentence(),
+						unassigned.isPositiveLiteral());
+				break;
 			}
 		}
 
 		return result;
-	}
-
-	protected boolean everyClauseTrue(Set<Clause> clauses, Model model) {
-		return model.satisfies(clauses);
-	}
-
-	protected boolean someClauseFalse(Set<Clause> clauses, Model model) {
-		for (Clause c : clauses) {
-			// Only 1 needs to be false
-			if (Boolean.FALSE.equals(model.determineValue(c))) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	// symbols - P
