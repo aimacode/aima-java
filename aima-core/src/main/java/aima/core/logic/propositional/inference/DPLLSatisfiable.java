@@ -232,7 +232,7 @@ public class DPLLSatisfiable {
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
 			// NOTE: no longer need to do this here as we remove, true clauses
-			// up front the the dpll call (as an optimization)
+			// up front in the dpll call (as an optimization)
 			//if (Boolean.TRUE.equals(model.determineValue(c))) {
 			//	continue;
 			//}
