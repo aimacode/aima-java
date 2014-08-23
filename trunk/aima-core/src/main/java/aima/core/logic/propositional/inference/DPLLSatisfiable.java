@@ -147,12 +147,15 @@ public class DPLLSatisfiable {
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// AIMA3e p.g. 260: kb |= alpha, can be done by testing
 		// unsatisfiability of kb & ~alpha.
-		Set<Clause>            kbAndNotAlpha = new LinkedHashSet<Clause>(kb.asCNF());
-		Set<PropositionSymbol> symbols       = new LinkedHashSet<PropositionSymbol>(kb.getSymbols());
-		Sentence               notQuery      = new ComplexSentence(Connective.NOT, alpha);
+		Set<Clause>             kbAndNotAlpha = new LinkedHashSet<Clause>();
+		Sentence                notQuery      = new ComplexSentence(Connective.NOT, alpha);
+		Set<PropositionSymbol>  symbols       = new LinkedHashSet<PropositionSymbol>();
+		List<PropositionSymbol> querySymbols  = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(notQuery));
 		
+		kbAndNotAlpha.addAll(kb.asCNF());
 		kbAndNotAlpha.addAll(ConvertToConjunctionOfClauses.convert(notQuery).getClauses());
-		symbols.addAll(SymbolCollector.getSymbolsFrom(notQuery));
+		symbols.addAll(querySymbols);
+		symbols.addAll(kb.getSymbols());
 
 		return !dpll(kbAndNotAlpha, new ArrayList<PropositionSymbol>(symbols), new Model());
 	}
