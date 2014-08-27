@@ -1,14 +1,20 @@
 package aima.test.core.unit.logic.propositional.inference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
@@ -20,17 +26,25 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ciaran O'Reilly
  */
-public class DPLLSatisfiableTest {
+@RunWith(Parameterized.class)
+public class DPLLTest {
 
-	private DPLLSatisfiable dpll;
+	private DPLL     dpll;
 	private PLParser parser;
+	
+	@Parameters(name = "{index}: dpll={0}")
+    public static Collection<Object[]> inferenceAlgorithmSettings() {
+        return Arrays.asList(new Object[][] {
+        		{new DPLLSatisfiable()}, 
+        		{new OptimizedDPLL()}   
+        });
+    }
 
-	@Before
-	public void setUp() {
-		parser = new PLParser();
-		dpll = new DPLLSatisfiable();
+	public DPLLTest(DPLL dpll) {
+		this.dpll   = dpll;
+		this.parser = new PLParser();
 	}
 
 	@Test

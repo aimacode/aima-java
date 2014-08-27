@@ -130,8 +130,7 @@ public class DisjointSets<E> {
 				// i.e. set1 >= set2
 				set1.addAll(set2);
 				for (E element : set2) {
-					Set<E> pe = elementToSet.put(element, set1);
-					disjointSets.remove(pe);
+					disjointSets.remove(elementToSet.put(element, set1));
 				}
 			}
 		}

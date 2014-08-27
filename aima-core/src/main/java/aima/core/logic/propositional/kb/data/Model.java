@@ -19,7 +19,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * fixes the <b>truth value</b> - <em>true</em> or <em>false</em> - for
  * every proposition symbol.<br>
  * <br>
- * Models as implemented here are immutable and can also represent partial assignments 
+ * Models as implemented here can represent partial assignments 
  * to the set of proposition symbols in a Knowledge Base (i.e. a partial model).
  * 
  * @author Ravi Mohan
@@ -56,6 +56,15 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		m.assignments.putAll(this.assignments);
 		m.assignments.put(symbol, b);
 		return m;
+	}
+	
+	public Model unionInPlace(PropositionSymbol symbol, boolean b) {
+		assignments.put(symbol, b);
+		return this;
+	}
+	
+	public boolean remove(PropositionSymbol p) {
+		return assignments.remove(p);
 	}
 
 	public boolean isTrue(Sentence s) {
