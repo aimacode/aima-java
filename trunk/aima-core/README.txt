@@ -3,35 +3,15 @@
 == Requirements ==
 # JDK 1.7 - is the baseline JDK against which this project is developed. 
 
-== Current Release: 0.11.0-Chp7-Rewrite ==
-0.11.0-Chp7-Rewrite : 10 Aug 2014 :<br>
-  * Rewrite of the algorithms in Chapter 7 to more closely map to pseudo-code
-    in book and to resolve outstanding issues.
-  * Baseline JDK supported by this library has been moved up from 1.6 to 1.7.
-  * Upgraded JUnit from 4.7 to 4.11.
-  * General Lexer and Parser Improvements:
-    * Tokens now track the position in the input that they started at.
-    * More informative Lexer and Parser exceptions are now generated.
-      Intended to help with identifying in the input where an error occurred.
-  * Propositional Parser Improvements:
-    * Takes operator precedence into account (i.e. does not require concrete syntax to be fully bracketed).
-    * Abstract syntax to Concrete syntax (ie. toString) only outputs brackets when necessary (easier to read)
-      so concrete syntax can be parsed back in again unchanged.
-    * Square brackets can be used in addition to parenthesis to explicitly indicate precedence.
-    * Symbols changed for the following logical connectives:
-      * not -> ~
-      * and -> &
-      * or  -> |
-    * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book.
-  * FOL Clause synchronization and performance enhancements contributed by Tobias Barth.
-  * Fixed Issue 31, Add implementation of - Fig 7.1 KB-Agent
-  * Fixed Issue 32, Add implementation of - Fig 7.20 Hybrid-Wumpus-Agent 
-  * Fixed Issue 72, Propositional CNF parsing issue.
-  * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
-  * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
-  * Fixed Issue 80, small bug in XYLocation.hashCode()
-  * Fixed Issue 83, Wrong time variable used in WumpusWorldKnowledgeBase.java
-  * Improvements and defect fixes to CSP logic.
+== Current Release: 0.11.1-Chp7-Complete ==
+0.11.1-Chp7-Complete : ??? :<br>
+  * Fixed Issue 33, Add implementation of - Fig 7.22 SATPlan
+  * Improved performance of DPLL implementation and added an alternative implementation that uses a couple
+    of trivial optimizations to improve performance by about 40% over the default DPLL implementation
+    that matches the description in the book.
+  * New DPLL interface added to allow people to experiment with different implementations in order to try
+    out performance enhancement ideas from the book and other sources.
+  * Added tests for and corrected defects found in the HybridWumpusAgent and WumpusKnowledgeBase implementations.
  
 = Details =
 
@@ -52,7 +32,6 @@ To build from the command line:
 
 Note: Many IDE's have built in ant versions. So you may want to try that first. 
 Included in the aima-core directory are .classpath and .project files for the [http://www.eclipse.org Eclipse] IDE.
-
 
 == Index of Implemented Algorithms ==
 || *Fig* || *Page* || *Name (in book)*             || *Code* ||
@@ -105,7 +84,7 @@ Included in the aima-core directory are .classpath and .project files for the [h
 ||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java DPLLSatisfiable]||
 ||   7.18||     263|| WalkSAT                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java WalkSAT]||
 ||   7.20||     270|| Hybrid-Wumpus-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java HybridWumpusAgent]||
-||   7.22||     272|| SATPlan                      ||---||
+||   7.22||     272|| SATPlan                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java SATPlan]||
 ||   9   ||     323|| Subst                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java SubstVisitor]||
 ||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/Unifier.java Unifier]||
 ||   9.3 ||     332|| FOL-FC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
@@ -264,8 +243,36 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 
 2. Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps?) you need to implement this interface.
 
-
 = Change History (Update in reverse chronological order) =
+0.11.0-Chp7-Rewrite : 10 Aug 2014 :<br>
+  * Rewrite of the algorithms in Chapter 7 to more closely map to pseudo-code
+    in book and to resolve outstanding issues.
+  * Baseline JDK supported by this library has been moved up from 1.6 to 1.7.
+  * Upgraded JUnit from 4.7 to 4.11.
+  * General Lexer and Parser Improvements:
+    * Tokens now track the position in the input that they started at.
+    * More informative Lexer and Parser exceptions are now generated.
+      Intended to help with identifying in the input where an error occurred.
+  * Propositional Parser Improvements:
+    * Takes operator precedence into account (i.e. does not require concrete syntax to be fully bracketed).
+    * Abstract syntax to Concrete syntax (ie. toString) only outputs brackets when necessary (easier to read)
+      so concrete syntax can be parsed back in again unchanged.
+    * Square brackets can be used in addition to parenthesis to explicitly indicate precedence.
+    * Symbols changed for the following logical connectives:
+      * not -> ~
+      * and -> &
+      * or  -> |
+    * Abstract syntax tree (i.e. Sentence) simplified to correspond more closely with description in book.
+  * FOL Clause synchronization and performance enhancements contributed by Tobias Barth.
+  * Fixed Issue 31, Add implementation of - Fig 7.1 KB-Agent
+  * Fixed Issue 32, Add implementation of - Fig 7.20 Hybrid-Wumpus-Agent 
+  * Fixed Issue 72, Propositional CNF parsing issue.
+  * Fixed Issue 78, Propositional CNFTransformer fails to transform Sentence.
+  * Fixed Issue 79, Random/False Bug in AIMA WalkSAT.java
+  * Fixed Issue 80, small bug in XYLocation.hashCode()
+  * Fixed Issue 83, Wrong time variable used in WumpusWorldKnowledgeBase.java
+  * Improvements and defect fixes to CSP logic.
+  
 0.10.5-Chp4-Rewrite : 09 Oct 2012 :<br>
   * Implemented AND-OR-GRAPH-SEARCH from Chapter 4 (completing the set of algorithms from this chapter).
   * Fixed Issue 65, Improve genetic algorithm implementation, rewritten to be easier to use/extend.

@@ -12,7 +12,8 @@ import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.TurnRight;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
@@ -49,19 +50,27 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	public static final String ACTION_TURN_RIGHT = TurnRight.TURN_RIGHT_ACTION_NAME;
 	public static final String OK_TO_MOVE_INTO   = "OK";
 	//
-	private int             caveXDimension;
-	private int             caveYDimension;
-	private DPLLSatisfiable dpll = new DPLLSatisfiable();
+	private int  caveXDimension;
+	private int  caveYDimension;
+	private DPLL dpll;
 
+	public WumpusKnowledgeBase(int caveXandYDimensions) {
+		this(new OptimizedDPLL(), caveXandYDimensions);
+	}
 	/**
 	 * Create a Knowledge Base that contains the atemporal "wumpus physics" and
 	 * temporal rules with time zero.
 	 * 
+	 * @param dpll
+	 *        the dpll implementation to use for answering 'ask' queries.
 	 * @param caveXandYDimensions
 	 *            x and y dimensions of the wumpus world's cave.
-	 * */
-	public WumpusKnowledgeBase(int caveXandYDimensions) {
+	 * 
+	 */
+	public WumpusKnowledgeBase(DPLL dpll, int caveXandYDimensions) {
 		super();
+		
+		this.dpll = dpll;
 
 		this.caveXDimension = caveXandYDimensions;
 		this.caveYDimension = caveXandYDimensions;

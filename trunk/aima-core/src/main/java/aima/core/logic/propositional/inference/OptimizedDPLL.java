@@ -19,55 +19,10 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
-/**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 261.<br>
- * <br>
- * 
- * <pre>
- * <code>
- * function DPLL-SATISFIABLE?(s) returns true or false
- *   inputs: s, a sentence in propositional logic.
- *   
- *   clauses &larr; the set of clauses in the CNF representation of s
- *   symbols &larr; a list of the proposition symbols in s
- *   return DPLL(clauses, symbols, {})
- * 
- * --------------------------------------------------------------------------------
- * 
- * function DPLL(clauses, symbols, model) returns true or false
- *   
- *   if every clause in clauses is true in model then return true
- *   if some clause in clauses is false in model then return false
- *   P, value &larr; FIND-PURE-SYMBOL(symbols, clauses, model)
- *   if P is non-null then return DPLL(clauses, symbols - P, model &cup; {P = value})
- *   P, value &larr; FIND-UNIT-CLAUSE(clauses, model)
- *   if P is non-null then return DPLL(clauses, symbols - P, model &cup; {P = value})
- *   P &larr; FIRST(symbols); rest &larr; REST(symbols)
- *   return DPLL(clauses, rest, model &cup; {P = true}) or
- *          DPLL(clauses, rest, model &cup; {P = false})
- * </code>
- * </pre>
- * 
- * Figure 7.17 The DPLL algorithm for checking satisfiability of a sentence in
- * propositional logic. The ideas behind FIND-PURE-SYMBOL and FIND-UNIT-CLAUSE
- * are described in the test; each returns a symbol (or null) and the truth
- * value to assign to that symbol. Like TT-ENTAILS?, DPLL operates over partial
- * models.
- * 
- * @author Ciaran O'Reilly
- * @author Ravi Mohan
- * @author Mike Stampone
- */
-public class DPLLSatisfiable implements DPLL {
+public class OptimizedDPLL implements DPLL {
 
-	/**
-	 * DPLL-SATISFIABLE?(s)<br>
-	 * Checks the satisfiability of a sentence in propositional logic.
-	 * 
-	 * @param s
-	 *            a sentence in propositional logic.
-	 * @return true if the sentence is satisfiable, false otherwise.
-	 */
+	//
+	// START-DPLL
 	@Override
 	public boolean dpllSatisfiable(Sentence s) {
 		// clauses <- the set of clauses in the CNF representation of s
@@ -96,13 +51,31 @@ public class DPLLSatisfiable implements DPLL {
 	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// if every clause in clauses is true in model then return true
-		if (everyClauseTrue(clauses, model)) {
+		// if some clause in clauses is false in model then return false
+		// NOTE: for optimization reasons we only want to determine the
+		// values of clauses once on each call to dpll
+		boolean allTrue = true;			
+		Set<Clause> unknownClauses = new LinkedHashSet<Clause>();
+		for (Clause c : clauses) {
+			Boolean value = model.determineValue(c);
+			if (!Boolean.TRUE.equals(value)) {
+				allTrue = false;
+				if (Boolean.FALSE.equals(value)) {					
+					return false;
+				}				
+				unknownClauses.add(c);
+			}
+		}
+		if (allTrue) {
 			return true;
 		}
-		// if some clause in clauses is false in model then return false
-		if (someClauseFalse(clauses, model)) {
-			return false;
-		}
+		
+		// NOTE: Performance Optimization -
+		// Going forward, algorithm can ignore clauses that are already 
+		// known to be true (reduces overhead on recursive calls and simplifies
+		// findPureSymbols() and findUnitClauses() logic as they can
+		// always assume unknown).
+		clauses = unknownClauses;
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
 		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
@@ -111,7 +84,7 @@ public class DPLLSatisfiable implements DPLL {
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
 			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.union(pAndValue.getFirst(), pAndValue.getSecond()));
+					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
 		}
 
 		// P, value <- FIND-UNIT-CLAUSE(clauses, model)
@@ -120,7 +93,7 @@ public class DPLLSatisfiable implements DPLL {
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
 			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.union(pAndValue.getFirst(), pAndValue.getSecond()));
+					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
 		}
 
 		// P <- FIRST(symbols); rest <- REST(symbols)
@@ -128,13 +101,9 @@ public class DPLLSatisfiable implements DPLL {
 		List<PropositionSymbol> rest = Util.rest(symbols);
 		// return DPLL(clauses, rest, model U {P = true}) or
 		// ...... DPLL(clauses, rest, model U {P = false})
-		return dpll(clauses, rest, model.union(p, true))
-				|| dpll(clauses, rest, model.union(p, false));
+		return callDPLL(clauses, rest, model, p, true)
+				|| callDPLL(clauses, rest, model, p, false);
 	}
-
-	//
-	// SUPPORTING CODE
-	//
 
 	/**
 	 * Determine if KB |= &alpha;, i.e. alpha is entailed by KB.
@@ -161,17 +130,30 @@ public class DPLLSatisfiable implements DPLL {
 
 		return !dpll(kbAndNotAlpha, new ArrayList<PropositionSymbol>(symbols), new Model());
 	}
-
+	// END-DPLL
 	//
-	// PROTECTED:
+	
 	//
-
+	// PROTECTED
+	//
+	
 	// Note: Override this method if you wish to change the initial variable
 	// ordering when dpllSatisfiable is called.
 	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
 		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(s));
 
+		return result;
+	}
+	
+	protected boolean callDPLL(Set<Clause> clauses, List<PropositionSymbol> symbols,
+			Model model, PropositionSymbol p, boolean value) {
+		// We update the model in place with the assignment p=value,
+		boolean result = dpll(clauses, symbols, model.unionInPlace(p, value));
+		// as backtracking can occur during the recursive calls we
+		// need to remove the assigned value before we pop back out from this
+		// call.
+		model.remove(p);
 		return result;
 	}
 
@@ -210,9 +192,9 @@ public class DPLLSatisfiable implements DPLL {
 		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
-			if (Boolean.TRUE.equals(model.determineValue(c))) {
-				continue;
-			}
+			// NOTE: no longer need to do this here as we remove, true clauses
+			// up front in the dpll call (as an optimization)
+
 			// Collect possible candidates, removing all candidates that are
 			// not part of the input list of symbols to be considered.
 			for (PropositionSymbol p : c.getPositiveSymbols()) {
@@ -282,63 +264,51 @@ public class DPLLSatisfiable implements DPLL {
 		for (Clause c : clauses) {
 			// if clauses value is currently unknown
 			// (i.e. means known literals are false)
-			if (model.determineValue(c) == null) {
-				Literal unassigned = null;
-				// Default definition of a unit clause is a clause
-				// with just one literal
-				if (c.isUnitClause()) {
-					unassigned = c.getLiterals().iterator().next();
-				} else {
-					// Also, a unit clause in the context of DPLL, also means a
-					// clauseF in which all literals but one are already
-					// assigned false by the model.
-					// Note: at this point we already know the clause is not
-					// true, so just need to determine if the clause has a
-					// single unassigned literal
-					for (Literal l : c.getLiterals()) {
-						Boolean value = model.getValue(l.getAtomicSentence());
-						if (value == null) {
-							// The first unassigned literal encountered.
-							if (unassigned == null) {
-								unassigned = l;
-							} else {
-								// This means we have more than 1 unassigned
-								// literal so lets skip
-								unassigned = null;
-								break;
-							}
+			// NOTE: no longer need to perform this check
+			// as only clauses with unknown values will
+			// be passed to this routine from dpll as it
+			// removes known ones up front.
+			Literal unassigned = null;
+			// Default definition of a unit clause is a clause
+			// with just one literal
+			if (c.isUnitClause()) {
+				unassigned = c.getLiterals().iterator().next();
+			} else {
+				// Also, a unit clause in the context of DPLL, also means a
+				// clauseF in which all literals but one are already
+				// assigned false by the model.
+				// Note: at this point we already know the clause is not
+				// true, so just need to determine if the clause has a
+				// single unassigned literal
+				for (Literal l : c.getLiterals()) {
+					Boolean value = model.getValue(l.getAtomicSentence());
+					if (value == null) {
+						// The first unassigned literal encountered.
+						if (unassigned == null) {
+							unassigned = l;
+						} else {
+							// This means we have more than 1 unassigned
+							// literal so lets skip
+							unassigned = null;
+							break;
 						}
 					}
 				}
-	
-				// if a value assigned it means we have a single
-				// unassigned literal and all the assigned literals
-				// are not true under the current model as we were
-				// unable to determine a value.
-				if (unassigned != null) {
-					result = new Pair<PropositionSymbol, Boolean>(
-							unassigned.getAtomicSentence(),
-							unassigned.isPositiveLiteral());
-					break;
-				}
+			}
+
+			// if a value assigned it means we have a single
+			// unassigned literal and all the assigned literals
+			// are not true under the current model as we were
+			// unable to determine a value.
+			if (unassigned != null) {
+				result = new Pair<PropositionSymbol, Boolean>(
+						unassigned.getAtomicSentence(),
+						unassigned.isPositiveLiteral());
+				break;
 			}
 		}
 
 		return result;
-	}
-	
-	protected boolean everyClauseTrue(Set<Clause> clauses, Model model) {
-		return model.satisfies(clauses);
-	}
-
-	protected boolean someClauseFalse(Set<Clause> clauses, Model model) {
-		for (Clause c : clauses) {
-			// Only 1 needs to be false
-			if (Boolean.FALSE.equals(model.determineValue(c))) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	// symbols - P
