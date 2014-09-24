@@ -90,7 +90,7 @@ public class MixedRadixNumber extends Number {
 		long cvalue = 0;
 		long mvalue = 1;
 		for (int i = 0; i < radixValues.length; i++) {
-			if (radixValues[i] < 0 || radixValues[i] > radices[i]) {
+			if (radixValues[i] < 0 || radixValues[i] >= radices[i]) {
 				throw new IllegalArgumentException("Radix value " + i
 						+ " is out of range for radix at this position");
 			}
