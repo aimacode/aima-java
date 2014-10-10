@@ -49,11 +49,15 @@ public class CSP {
 	}
 
 	protected void addVariable(Variable var) {
-		Domain emptyDomain = new Domain(Collections.emptyList());
-		variables.add(var);
-		domains.add(emptyDomain);
-		varIndexHash.put(var, variables.size()-1);
-		cnet.put(var, new ArrayList<Constraint>());
+		if (!varIndexHash.containsKey(var)) {
+			Domain emptyDomain = new Domain(Collections.emptyList());
+			variables.add(var);
+			domains.add(emptyDomain);
+			varIndexHash.put(var, variables.size()-1);
+			cnet.put(var, new ArrayList<Constraint>());
+		} else {
+			throw new IllegalArgumentException("Variable with same name already exists.");
+		}
 	}
 	
 	public List<Variable> getVariables() {
