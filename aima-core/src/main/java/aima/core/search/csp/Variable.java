@@ -22,10 +22,11 @@ public class Variable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Variable) {
+		if (obj == null)
+			return false;
+		if (obj.getClass() == getClass())
 			return this.name.equals(((Variable) obj).name);
-		}
-		return super.equals(obj);
+		return false;
 	}
 
 	@Override
