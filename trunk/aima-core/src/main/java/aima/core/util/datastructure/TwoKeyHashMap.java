@@ -97,7 +97,7 @@ public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
 	 *         previously associated <code>null</code> with the specified key
 	 *         pair.
 	 */
-	public V remove(K1 key1, K2 key2) {
+	public V removeKey(K1 key1, K2 key2) {
 		return super.remove(new Pair<K1, K2>(key1, key2));
 	}
 
