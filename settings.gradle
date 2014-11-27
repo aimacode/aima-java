@@ -1,0 +1,4 @@
+rootProject.name = 'aima4e-java'
+
+include 'core'
+
