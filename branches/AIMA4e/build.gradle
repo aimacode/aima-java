@@ -15,9 +15,9 @@ idea {
     project {
         //if you want to set specific jdk and language level
         jdkName       = '1.8'
-        languageLevel = 'JDK_1_8'
+        languageLevel = '8'
         ipr.withXml { provider -> provider.node.component.find { 
-        	it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Subversion' 
+        	it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'svn'
         }        
     }
 }
