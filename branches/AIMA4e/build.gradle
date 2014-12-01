@@ -1,7 +1,6 @@
 apply plugin: 'java'
+apply plugin: 'idea'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 version = '4.0-SNAPSHOT'
 
 repositories {
@@ -10,4 +9,15 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+idea {
+    project {
+        //if you want to set specific jdk and language level
+        jdkName       = '1.8'
+        languageLevel = 'JDK_1_8'
+        ipr.withXml { provider -> provider.node.component.find { 
+        	it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Subversion' 
+        }        
+    }
 }
