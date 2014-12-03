@@ -69,7 +69,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		}
 		if (vals.length != ProbUtil.expectedSizeOfProbabilityTable(vars)) {
 			throw new IllegalArgumentException("ProbabilityTable of length "
-					+ values.length + " is not the correct size, should be "
+					+ vals.length + " is not the correct size, should be "
 					+ ProbUtil.expectedSizeOfProbabilityTable(vars)
 					+ " in order to represent all possible combinations.");
 		}
