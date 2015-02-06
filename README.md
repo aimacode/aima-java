@@ -3,6 +3,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ---
 
+## REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
+
 ## Current
 * Rewrite of chapters 2
 ** 2	    32	Environment	                type
@@ -10,8 +12,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ** 2.3	    34	Table-Driven-Vacuum-Agent	fn
 ** 2.7	    45	Table-Driven-Agent	        fn
 ** 2.8	    46	Reflex-Vacuum-Agent	        fn
-** 2.10	47	Simple-Reflex-Agent	        fn
-** 2.12	49	Reflex-Agent-With-State	    fn
+** 2.10	47	Simple-Reflex-Agent	            fn
+** 2.12	49	Reflex-Agent-With-State	        fn
 
 ---
 
