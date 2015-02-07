@@ -2,12 +2,14 @@ package aima.core.api.agent;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
- *
+ * <p>
  * Figure ?? Agents interact with environments through sensors and actuators.
+ * </p>
  *
+ * @param <P> the specific type of perceptual information the agent can perceive through its sensors.
  * @author Ciaran O'Reilly
  */
-public interface Agent {
+public interface Agent<P extends Percept> {
     /**
      * Call the Agent's program, which maps any given percept sequences to an
      * action.
@@ -17,5 +19,5 @@ public interface Agent {
      * @return the Action to be taken in response to the currently perceived
      *         percept.
      */
-    Action interact(Percept percept);
+    Action perceive(P percept);
 }
