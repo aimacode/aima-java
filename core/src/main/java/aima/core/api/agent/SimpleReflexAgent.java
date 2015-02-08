@@ -24,7 +24,7 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleReflexAgent<S, P extends Percept> extends Agent<P> {
+public interface SimpleReflexAgent<P extends Percept, S> extends Agent<P> {
     // persistent: rules, a set of condition-action rules
     Set<Rule<S>> rules();
 

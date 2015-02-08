@@ -12,11 +12,11 @@ import java.util.Map;
 /**
  * @author Ciaran O'Reilly
  */
-public abstract class AbstractTableDrivenAgent<P extends Percept> implements TableDrivenAgent<P> {
+public class BasicTableDrivenAgent<P extends Percept> implements TableDrivenAgent<P> {
     private List<Percept>              percepts = new ArrayList<>();
     private Map<List<Percept>, Action> table    = new HashMap<>();
 
-    public AbstractTableDrivenAgent(Map<List<Percept>, Action> table) {
+    public BasicTableDrivenAgent(Map<List<Percept>, Action> table) {
         this.table.putAll(table);
     }
 
