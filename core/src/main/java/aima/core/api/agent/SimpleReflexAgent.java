@@ -41,9 +41,11 @@ public interface SimpleReflexAgent<P extends Percept, S> extends Agent<P> {
         return action;
     }
 
+    // state <- INTERPRET-INPUT(percept)
     S interpretInput(P percept);
 
+    // rule <- RULE-MATCH(state, rules)
     default Optional<Rule<S>> ruleMatch(S state, Set<Rule<S>> rules) {
-        return rules.stream().filter(r -> r.condition().test(state)).findFirst();
+        return rules.stream().filter(rule -> rule.condition().test(state)).findFirst();
     }
 }
