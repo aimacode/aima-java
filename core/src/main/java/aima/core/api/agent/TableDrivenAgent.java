@@ -29,6 +29,7 @@ public interface TableDrivenAgent<P extends Percept> extends Agent<P> {
     List<Percept>              percepts();
     Map<List<Percept>, Action> table();
 
+    // function TABLE-DRIVEN-AGENT(percept) returns an action
     @Override
     default Action perceive(P percept) {
         // append percept to end of percepts

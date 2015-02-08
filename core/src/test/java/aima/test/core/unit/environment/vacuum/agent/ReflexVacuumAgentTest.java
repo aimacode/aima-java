@@ -1,8 +1,7 @@
 package aima.test.core.unit.environment.vacuum.agent;
 
-import aima.core.api.agent.Action;
 import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.agent.TableDrivenVacuumAgent;
+import aima.core.environment.vacuum.agent.ReflexVacuumAgent;
 import aima.core.environment.vacuum.perceive.LocalPercept;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,12 +10,12 @@ import org.junit.Test;
 /**
  * @author Ciaran O'Reilly
  */
-public class TableDrivenVacuumAgentTest {
-    private TableDrivenVacuumAgent agent;
+public class ReflexVacuumAgentTest {
+    private ReflexVacuumAgent agent;
 
     @Before
     public void setUp() {
-        agent = new TableDrivenVacuumAgent();
+        agent = new ReflexVacuumAgent();
     }
 
     @Test
@@ -62,9 +61,8 @@ public class TableDrivenVacuumAgentTest {
                 VacuumEnvironment.Left,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
         Assert.assertEquals(
-                Action.NoOp,
+                VacuumEnvironment.Right,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -83,9 +81,8 @@ public class TableDrivenVacuumAgentTest {
                 VacuumEnvironment.Left,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
         Assert.assertEquals(
-                Action.NoOp,
+                VacuumEnvironment.Right,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -104,10 +101,10 @@ public class TableDrivenVacuumAgentTest {
                 VacuumEnvironment.Suck,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
         Assert.assertEquals(
-                Action.NoOp,
+                VacuumEnvironment.Right,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
+
 }
