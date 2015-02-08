@@ -6,6 +6,10 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (rewrite of chapter 2 - core)
 * 2.12	49	Model-Based-Reflex-Agent fn
+    * Basic implementation
+    * Test Case
+* Table-Driven-Agent
+    * Basic-Table-Drive-Agent test case (i.e. reference example).
 
 ### LATER
 #### Chapter 2 'extra' module.
