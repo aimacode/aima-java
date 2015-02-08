@@ -7,28 +7,12 @@ import aima.core.environment.vacuum.VacuumEnvironment;
  * @author Ciaran O'Reilly
  */
 public class LocalPercept implements Percept {
-    private String                          location;
-    private VacuumEnvironment.LocationState state;
+    public final String                   location;
+    public final VacuumEnvironment.Status status;
 
-    public LocalPercept(String location, VacuumEnvironment.LocationState state) {
+    public LocalPercept(String location, VacuumEnvironment.Status state) {
         this.location = location;
-        this.state    = state;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public VacuumEnvironment.LocationState getState() {
-        return state;
-    }
-
-    public boolean isClean() {
-        return !isDirty();
-    }
-
-    public boolean isDirty() {
-        return getState() == VacuumEnvironment.LocationState.Dirty;
+        this.status    = state;
     }
 
     @Override
@@ -36,13 +20,13 @@ public class LocalPercept implements Percept {
         boolean result = false;
         if (obj != null && this.getClass() == obj.getClass()) {
             LocalPercept other = (LocalPercept) obj;
-            result = this.state == other.state && this.location.equals(other.location);
+            result = this.status == other.status && this.location.equals(other.location);
         }
         return result;
     }
 
     @Override
     public int hashCode() {
-        return location.hashCode() + state.hashCode();
+        return location.hashCode() + status.hashCode();
     }
 }
