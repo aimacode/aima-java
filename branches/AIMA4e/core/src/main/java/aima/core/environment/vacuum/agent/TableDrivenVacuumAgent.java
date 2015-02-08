@@ -1,6 +1,6 @@
 package aima.core.environment.vacuum.agent;
 
-import aima.core.agent.AbstractTableDrivenAgent;
+import aima.core.agent.BasicTableDrivenAgent;
 import aima.core.api.agent.Action;
 import aima.core.api.agent.Percept;
 import aima.core.environment.vacuum.VacuumEnvironment;
@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author Ciaran O'Reilly
  */
-public class TableDrivenVacuumAgent extends AbstractTableDrivenAgent<LocalPercept> {
+public class TableDrivenVacuumAgent extends BasicTableDrivenAgent<LocalPercept> {
     public TableDrivenVacuumAgent() {
         super(generatePartialTabulationOfActionFunction());
     }

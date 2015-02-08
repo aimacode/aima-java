@@ -7,9 +7,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ## Current
 * Rewrite of chapters 2 - core
-** 2.10	47	Simple-Reflex-Agent	            fn
-   - Add AbstractSimpleReflexAgent
-   - Add Test Case.
 ** 2.12	49	Model-Based-Reflex-Agent        fn
 ---
 
