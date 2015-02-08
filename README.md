@@ -3,15 +3,17 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ---
 
-## REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
-
-# TODO
-## CURRENT (rewrite of chapter 2 - core)
+## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
+### CURRENT (rewrite of chapter 2 - core)
 * 2.12	49	Model-Based-Reflex-Agent fn
 
-## LATER
-### Chapter 2 'extra' module.
+### LATER
+#### Chapter 2 'extra' module.
 * Environment defintion: Consider specifying Dimensions in API, see pg. 42.
-* Environment Simulator referenced on pg. 45.
+* Environment Simulator referenced on pg. 45 (this will be a refactor of the a lot of the environment stuff
+  in aima3e-core).
+
+---
+
 
 
