@@ -35,7 +35,8 @@ public interface ModelBasedReflexAgent<P extends Percept, S, M> extends Agent<P>
     //             model, a description of how the next state depends on current state and action
     //             rules, a set of condition-action rules
     //             action, the most recent action, initially none
-    S state();
+    S getState();
+    void setState(S state);
     M model();
     Set<Rule<S>> rules();
     Action getAction();
@@ -45,9 +46,9 @@ public interface ModelBasedReflexAgent<P extends Percept, S, M> extends Agent<P>
     @Override
     default Action perceive(P percept) {
         // state  <- UPDATE-STATE(state, action, percept, model)
-        S state = updateState(state(), getAction(), percept, model());
+        setState(updateState(getState(), getAction(), percept, model()));
         // rule   <- RULE-MATCH(state, rules)
-        Optional<Rule<S>> rule = ruleMatch(state, rules());
+        Optional<Rule<S>> rule = ruleMatch(getState(), rules());
         // action <- rule.ACTION
         setAction(rule.isPresent() ? rule.get().action() : Action.NoOp);
         // return action

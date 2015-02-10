@@ -35,8 +35,13 @@ public class BasicModelBasedReflexAgent<P extends Percept, S, M> implements Mode
     }
 
     @Override
-    public S state() {
+    public S getState() {
         return state;
+    }
+
+    @Override
+    public void setState(S state) {
+        this.state = state;
     }
 
     @Override
