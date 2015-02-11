@@ -6,7 +6,11 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (rewrite of chapter 3 - core)
 * 3 	66	Problem
+    * BasicProblem
+    * BasicProblemTest
 * 3.1 	67	Simple-Problem-Solving-Agent
+    * BasicSimpleProblemSolvingAgent
+    * BasicSimpleProblemSolvingAgentTest
 * 3.2 	68	Romania
 * 3.7 	77	Tree-Search
 * 3.7 	77	Graph-Search
@@ -26,8 +30,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### LATER
 
 #### Chapter 2 'core' module.
-* Test Case BasicModelBasedReflexAgent
-* Test case BasicTableDrivenAgent
+* BasicModelBasedReflexAgentTest
+* BasicTableDrivenAgentTest
 
 #### Chapter 2 'extra' module.
 * Environment defintion: Consider specifying Dimensions in API, see pg. 42.
