@@ -14,9 +14,9 @@ import java.util.Set;
  *               rules, a set of condition-action rules
  *               action, the most recent action, initially none
  *
- *   state  <- UPDATE-STATE(state, action, percept, model)
- *   rule   <- RULE-MATCH(state, rules)
- *   action <- rule.ACTION
+ *   state  &lt;- UPDATE-STATE(state, action, percept, model)
+ *   rule   &lt;- RULE-MATCH(state, rules)
+ *   action &lt;- rule.ACTION
  *   return action
  * </pre>
  *

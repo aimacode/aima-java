@@ -13,7 +13,7 @@ import java.util.Map;
  *               table, a table of actions, indexed by percept sequences, initially fully specified
  *
  *   append percept to end of percepts
- *   action <- LOOKUP(percepts, table)
+ *   action &lt;- LOOKUP(percepts, table)
  *   return action
  * </pre>
  *

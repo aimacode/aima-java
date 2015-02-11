@@ -11,9 +11,9 @@ import java.util.Set;
  * function SIMPLE-RELEX-AGENT(percept) returns an action
  *   persistent: rules, a set of condition-action rules
  *
- *   state  <- INTERPRET-INPUT(percept)
- *   rule   <- RULE-MATCH(state, rules)
- *   action <- rule.ACTION
+ *   state  &lt;- INTERPRET-INPUT(percept)
+ *   rule   &lt;- RULE-MATCH(state, rules)
+ *   action &lt;- rule.ACTION
  *   return action
  * </pre>
  *
