@@ -32,6 +32,6 @@ public interface Problem<S> {
     S initialState();
     Set<Action> actions(S s);
     S result(S s, Action a);
-    boolean goalState(S state);
+    boolean isGoalState(S state);
     double stepCost(S s, Action a, S sPrime);
 }

@@ -32,7 +32,7 @@ import java.util.List;
  * another goal and starts over.<br>
  *
  * @param <S> the type of internal state representation used by the agent.
- * @param <G> the type of the goal(s) the agent wishes to reach. In most common case this will be the same type as S.
+ * @param <G> the type of the goal(s) the agent wishes to reach. In simple cases this will be the same type as S.
  *
  * @author Ciaran O'Reilly
  */
@@ -42,7 +42,7 @@ public interface SimpleProblemSolvingAgent<P extends Percept, S, G> extends Agen
     //               goal, a goal, initially null
     //               problem, a problem formulation
     List<Action> getSeq();
-    List<Action> setSeq(List<Action> sequence);
+    void setSeq(List<Action> sequence);
     S getState();
     void setState(S state);
     G getGoal();
@@ -84,5 +84,5 @@ public interface SimpleProblemSolvingAgent<P extends Percept, S, G> extends Agen
     Problem<S> formulateProblem(S state, G goal);
 
     // seq <- SEARCH(problem)
-    List<Action> search(Problem problem);
+    List<Action> search(Problem<S> problem);
 }
