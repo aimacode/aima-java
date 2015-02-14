@@ -7,8 +7,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (rewrite of chapter 3 - core)
 * 3.7 	77	Tree-Search
 * 3.7 	77	Graph-Search
-* 3.10	79	Node
-* 3 	79	Queue
 * 3.11	82	Breadth-First-Search
 * 3.14	84	Uniform-Cost-Search
 * 3 	85	Depth-first Search
