@@ -1,6 +1,5 @@
 package aima.core.agent;
 
-import aima.core.api.agent.Percept;
 import aima.core.api.agent.Rule;
 import aima.core.api.agent.SimpleReflexAgent;
 
@@ -12,7 +11,7 @@ import java.util.function.Function;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicSimpleReflexAgent<P extends Percept, S> implements SimpleReflexAgent<P, S> {
+public class BasicSimpleReflexAgent<P, S> implements SimpleReflexAgent<P, S> {
     private Function<P, S> interpretInputFn = null;
     private Set<Rule<S>> rules = new LinkedHashSet<>();
 

@@ -1,12 +1,11 @@
 package aima.core.environment.vacuum.perceive;
 
-import aima.core.api.agent.Percept;
 import aima.core.environment.vacuum.VacuumEnvironment;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class LocalPercept implements Percept {
+public class LocalPercept {
     public final String                   location;
     public final VacuumEnvironment.Status status;
 

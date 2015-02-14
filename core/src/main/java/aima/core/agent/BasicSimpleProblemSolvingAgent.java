@@ -1,7 +1,6 @@
 package aima.core.agent;
 
 import aima.core.api.agent.Action;
-import aima.core.api.agent.Percept;
 import aima.core.api.agent.SimpleProblemSolvingAgent;
 import aima.core.api.search.Problem;
 
@@ -13,7 +12,7 @@ import java.util.function.Function;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicSimpleProblemSolvingAgent<P extends Percept, S, G> implements SimpleProblemSolvingAgent<P, S, G> {
+public class BasicSimpleProblemSolvingAgent<P, S, G> implements SimpleProblemSolvingAgent<P, S, G> {
 
     // state <- UPDATE-STATE(state, percept)
     private BiFunction<S, P, S> updateStateFn;

@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleProblemSolvingAgent<P extends Percept, S, G> extends Agent<P> {
+public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
     //   persistent: seq, an action sequence, initially empty
     //               state, some description of the current world state
     //               goal, a goal, initially null
@@ -64,7 +64,7 @@ public interface SimpleProblemSolvingAgent<P extends Percept, S, G> extends Agen
             // seq     <- SEARCH(problem)
             setSeq(search(getProblem()));
             // if seq = failure then return a null action
-            if (getSeq() == null) { return null; }
+            if (getSeq().isEmpty()) { return null; }
         }
         // action &lt;- FIRST(seq)
         Action action = getSeq().get(0);
