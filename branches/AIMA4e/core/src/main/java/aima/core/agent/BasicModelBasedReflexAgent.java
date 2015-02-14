@@ -2,7 +2,6 @@ package aima.core.agent;
 
 import aima.core.api.agent.Action;
 import aima.core.api.agent.ModelBasedReflexAgent;
-import aima.core.api.agent.Percept;
 import aima.core.api.agent.Rule;
 
 import java.util.Collection;
@@ -12,7 +11,7 @@ import java.util.Set;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicModelBasedReflexAgent<P extends Percept, S, M> implements ModelBasedReflexAgent<P, S, M> {
+public class BasicModelBasedReflexAgent<P, S, M> implements ModelBasedReflexAgent<P, S, M> {
     @FunctionalInterface
     public interface UpdateState<S, P, M> {
         S apply(S currentState, Action mostRecentAction, P percept, M model);

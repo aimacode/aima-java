@@ -9,7 +9,7 @@ package aima.core.api.agent;
  * @param <P> the specific type of perceptual information the agent can perceive through its sensors.
  * @author Ciaran O'Reilly
  */
-public interface Agent<P extends Percept> {
+public interface Agent<P> {
     /**
      * Call the Agent's program, which maps any given percept sequences to an action.
      *

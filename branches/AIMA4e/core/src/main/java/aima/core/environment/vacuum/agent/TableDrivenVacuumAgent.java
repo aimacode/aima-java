@@ -2,7 +2,6 @@ package aima.core.environment.vacuum.agent;
 
 import aima.core.agent.BasicTableDrivenAgent;
 import aima.core.api.agent.Action;
-import aima.core.api.agent.Percept;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.perceive.LocalPercept;
 
@@ -22,8 +21,8 @@ public class TableDrivenVacuumAgent extends BasicTableDrivenAgent<LocalPercept> 
     }
 
 
-    public static Map<List<Percept>, Action>  generatePartialTabulationOfActionFunction() {
-        Map<List<Percept>, Action> perceptSequenceToAction = new HashMap<>();
+    public static Map<List<LocalPercept>, Action>  generatePartialTabulationOfActionFunction() {
+        Map<List<LocalPercept>, Action> perceptSequenceToAction = new HashMap<>();
 
         // NOTE: While this particular table could be setup simply
         // using a few loops, the intent is to show how quickly a table

@@ -23,11 +23,11 @@ import java.util.Map;
  *
  * @author Ciaran O'Reilly
  */
-public interface TableDrivenAgent<P extends Percept> extends Agent<P> {
+public interface TableDrivenAgent<P> extends Agent<P> {
     // persistent: percepts, a sequence, initially empty
     //             table, a table of actions, indexed by percept sequences, initially fully specified
-    List<Percept>              percepts();
-    Map<List<Percept>, Action> table();
+    List<P>              percepts();
+    Map<List<P>, Action> table();
 
     // function TABLE-DRIVEN-AGENT(percept) returns an action
     @Override
@@ -40,7 +40,7 @@ public interface TableDrivenAgent<P extends Percept> extends Agent<P> {
         return action;
     }
 
-    default Action lookup(List<Percept> percepts, Map<List<Percept>, Action> table) {
+    default Action lookup(List<P> percepts, Map<List<P>, Action> table) {
         Action action = table.get(percepts);
         if (action == null) {
             action = Action.NoOp;

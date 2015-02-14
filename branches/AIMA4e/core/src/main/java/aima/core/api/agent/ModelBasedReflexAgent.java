@@ -29,7 +29,7 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface ModelBasedReflexAgent<P extends Percept, S, M> extends Agent<P> {
+public interface ModelBasedReflexAgent<P, S, M> extends Agent<P> {
 
     // persistent: state, the agent's current conception of the world state
     //             model, a description of how the next state depends on current state and action
