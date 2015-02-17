@@ -5,7 +5,7 @@ import aima.core.api.agent.Action;
 import java.util.Set;
 
 /**
- * Artificial Intelligence A Modern Approach (4thd Edition): page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page ??.<br>
  * <br>
  * A problem can be defined formally by five components: <br>
  * <ul>

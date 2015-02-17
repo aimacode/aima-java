@@ -13,13 +13,14 @@ public class BasicNode<S> implements Node<S> {
     private Action action;
     private double pathCost;
 
-    public static <S> Node<S> rootNode(S state) {
-       return new BasicNode(state);
+
+    public static <S> Node<S> rootNode(S state, double pathCost) {
+       return new BasicNode<>(state, pathCost);
     }
 
     public static <S> Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
         S sPrime = problem.result(parent.state(), action);
-        return new BasicNode(sPrime, parent, action, parent.pathCost()+problem.stepCost(parent.state(), action, sPrime));
+        return new BasicNode<>(sPrime, parent, action, parent.pathCost()+problem.stepCost(parent.state(), action, sPrime));
     }
 
     @Override
@@ -42,8 +43,8 @@ public class BasicNode<S> implements Node<S> {
         return pathCost;
     }
 
-    private BasicNode(S state) {
-       this(state, null, Action.NoOp, 0.0);
+    private BasicNode(S state, double pathCost) {
+        this(state, null, Action.NoOp, pathCost);
     }
 
     private BasicNode(S state, Node<S> parent, Action action, double pathCost) {
