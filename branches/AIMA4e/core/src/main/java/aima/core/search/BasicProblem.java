@@ -24,9 +24,11 @@ public class BasicProblem<S> implements Problem<S> {
     private StepCost<S> stepCostFn;
 
     public BasicProblem(S initialState,
+                        Function<S, Set<Action>> actionsFn,
                         BiFunction<S, Action, S> resultFn,
                         Predicate<S> goalTestPredicate) {
         this(initialState,
+                actionsFn,
                 resultFn,
                 goalTestPredicate,
                 (s, a, sPrime) -> 1.0  // Default step cost function.
@@ -34,10 +36,12 @@ public class BasicProblem<S> implements Problem<S> {
     }
 
     public BasicProblem(S initialState,
+                        Function<S, Set<Action>> actionsFn,
                         BiFunction<S, Action, S> resultFn,
                         Predicate<S> goalTestPredicate,
                         StepCost<S> stepCostFn) {
         this.initialState      = initialState;
+        this.actionsFn         = actionsFn;
         this.resultFn          = resultFn;
         this.goalTestPredicate = goalTestPredicate;
         this.stepCostFn        = stepCostFn;

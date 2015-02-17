@@ -5,9 +5,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (rewrite of chapter 3 - core)
-* 3.7 	77	Tree-Search
-* 3.7 	77	Graph-Search
-* 3.11	82	Breadth-First-Search
 * 3.14	84	Uniform-Cost-Search
 * 3 	85	Depth-first Search
 * 3.17	88	Depth-Limited-Search
@@ -21,9 +18,12 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### LATER
 
 #### Chapter 3 'core' module.
+* BreadthFirstSearchTest - additional tests.
 * BasicProblemTest
 * BasicSimpleProblemSolvingAgentTest
 * 3.2 	68	Romania
+* 3.7 	77	Tree-Search
+* 3.7 	77	Graph-Search
 
 #### Chapter 2 'core' module.
 * BasicModelBasedReflexAgentTest
