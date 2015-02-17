@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -37,12 +36,11 @@ import java.util.function.Function;
  *
  * @author Ciaran O'Reilly
  */
-public interface BreadthFirstSearch<S> extends Function<Problem<S>, List<Action>> {
+public interface BreadthFirstSearch<S> extends GraphSearch<S> {
 
     // function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
     @Override
     default List<Action> apply(Problem<S> problem) {
-
         // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
         Node<S> node = newNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
@@ -55,9 +53,9 @@ public interface BreadthFirstSearch<S> extends Function<Problem<S>, List<Action>
         // loop do
         while (true) {
             // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return Collections.emptyList(); }
+            if (frontier.isEmpty()) { return Collections.<Action>emptyList(); }
             // node <- POP(frontier) // chooses the shallowest node in frontier
-            node = frontier.poll();
+            node = frontier.remove();
             // add node.STATE to explored
             explored.add(node.state());
             // for each action in problem.ACTIONS(node.STATE) do
@@ -65,7 +63,7 @@ public interface BreadthFirstSearch<S> extends Function<Problem<S>, List<Action>
                 // child <- CHILD-NODE(problem, node, action)
                 Node<S> child = childNode(problem, node, action);
                 // if child.STATE is not in explored or frontier then
-                if (!(explored.contains(child.state()) || frontier.contains(node.state()))) {
+                if (!(explored.contains(child.state()) || frontier.contains(child.state()))) {
                     // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
                     if (problem.isGoalState(child.state())) { return solution(child); }
                     // frontier <- INSERT(child, frontier)
@@ -74,12 +72,4 @@ public interface BreadthFirstSearch<S> extends Function<Problem<S>, List<Action>
             }
         }
     }
-
-    Node<S> newNode(S state, double pathCost);
-    Node<S> childNode(Problem<S> problem, Node<S> parent, Action action);
-
-    Queue<Node<S>> newFrontier();
-    Set<S> newExplored();
-
-    List<Action> solution(Node<S> node);
 }
