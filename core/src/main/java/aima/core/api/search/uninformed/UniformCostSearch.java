@@ -4,7 +4,6 @@ import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -38,9 +37,6 @@ import java.util.Set;
  * support efficient membership testing, so it should combine the capabilities
  * of a priority queue and a hash table.
  *
- *
- * @param <S> the type of the state space
- *
  * @author Ciaran O'Reilly
  */
 public interface UniformCostSearch <S> extends GraphSearch<S> {
@@ -58,7 +54,7 @@ public interface UniformCostSearch <S> extends GraphSearch<S> {
         // loop do
         while (true) {
             // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return Collections.<Action>emptyList(); }
+            if (frontier.isEmpty()) { return failure(); }
             // node <- POP(frontier) // chooses the lowest-cost node in frontier
             node = frontier.remove();
             // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
