@@ -5,7 +5,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (rewrite of chapter 3 - core)
-* 3 	85	Depth-first Search
 * 3.17	88	Depth-Limited-Search
 * 3.18	89	Iterative-Deepening-Search
 * 3 	90	Bidirectional search
@@ -17,6 +16,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### LATER
 
 #### Chapter 3 'core' module.
+* BasicDepthFirstSearchTest
 * BasicUniformCostSearchTest
 * BreadthFirstSearchTest - additional tests.
 * BasicGraphSearchTest

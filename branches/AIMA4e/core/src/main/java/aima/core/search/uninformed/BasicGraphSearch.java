@@ -20,7 +20,7 @@ public class BasicGraphSearch<S> extends BasicSearchFunction<S> implements Graph
         return new HashSet<>();
     }
 
-    private class FrontierQueue extends LinkedList<Node<S>> {
+    protected class FrontierQueue extends LinkedList<Node<S>> {
         Set<S> states = new HashSet<>();
 
         // add
@@ -34,7 +34,7 @@ public class BasicGraphSearch<S> extends BasicSearchFunction<S> implements Graph
 
         @Override
         public Node<S> remove() {
-            Node<S> result = super.poll();
+            Node<S> result = super.remove();
             if (result != null) {
                 states.remove(result.state());
             }
