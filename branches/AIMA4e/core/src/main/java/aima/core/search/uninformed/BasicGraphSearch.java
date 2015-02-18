@@ -1,26 +1,14 @@
 package aima.core.search.uninformed;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
-import aima.core.api.search.Problem;
 import aima.core.api.search.uninformed.GraphSearch;
-import aima.core.search.BasicNode;
 
 import java.util.*;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicGraphSearch<S> implements GraphSearch<S> {
-    @Override
-    public Node<S> newNode(S state, double pathCost) {
-        return BasicNode.rootNode(state, pathCost);
-    }
-
-    @Override
-    public Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
-        return BasicNode.childNode(problem, parent, action);
-    }
+public class BasicGraphSearch<S> extends BasicSearchFunction<S> implements GraphSearch<S> {
 
     @Override
     public Queue<Node<S>> newFrontier() {
@@ -30,30 +18,6 @@ public class BasicGraphSearch<S> implements GraphSearch<S> {
     @Override
     public Set<S> newExplored() {
         return new HashSet<>();
-    }
-
-    @Override
-    public List<Action> solution(Node<S> node) {
-        // Use a LinkedList so we can insert into the front efficiently
-        LinkedList<Action> result = new LinkedList<>();
-        if (node.parent() == null) {
-            // This should be an Action.NoOp
-            result.add(node.action());
-        }
-        else {
-            // This loop will skip the root node's action, as
-            // we only want to include action from the root
-            // and not the default assigned to the root
-            // (i.e. usually an Action.NoOp)
-            while (node.parent() != null) {
-
-                result.addFirst(node.action());
-                node = node.parent();
-            }
-        }
-
-
-        return result;
     }
 
     private class FrontierQueue extends LinkedList<Node<S>> {

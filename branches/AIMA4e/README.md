@@ -20,10 +20,10 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * BasicUniformCostSearchTest
 * BreadthFirstSearchTest - additional tests.
 * BasicGraphSearchTest
+* BasicTreeSearchTest
 * BasicProblemTest
 * BasicSimpleProblemSolvingAgentTest
 * 3.2 	68	Romania
-* 3.7 	77	Tree-Search
 
 #### Chapter 2 'core' module.
 * BasicModelBasedReflexAgentTest
