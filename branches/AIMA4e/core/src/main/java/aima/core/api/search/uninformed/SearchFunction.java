@@ -7,7 +7,6 @@ import aima.core.api.search.Problem;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 
 /**
@@ -22,8 +21,6 @@ public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
 
     Node<S> newNode(S state, double pathCost);
     Node<S> childNode(Problem<S> problem, Node<S> parent, Action action);
-
-    Queue<Node<S>> newFrontier();
 
     default List<Action> failure() {
         // represented by an empty list

@@ -61,5 +61,6 @@ public interface GraphSearch<S> extends SearchFunction<S> {
         }
     }
 
+    Queue<Node<S>> newFrontier();
     Set<S> newExplored();
 }
