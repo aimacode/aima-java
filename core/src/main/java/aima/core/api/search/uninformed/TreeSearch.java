@@ -46,4 +46,6 @@ public interface TreeSearch<S> extends SearchFunction<S> {
             }
         }
     }
+
+    Queue<Node<S>> newFrontier();
 }
