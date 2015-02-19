@@ -11,6 +11,11 @@ import aima.core.search.BasicNode;
  */
 public abstract class BasicSearchFunction<S> implements SearchFunction<S> {
     @Override
+    public Node<S> newNode(S state) {
+        return BasicNode.rootNode(state);
+    }
+
+    @Override
     public Node<S> newNode(S state, double pathCost) {
         return BasicNode.rootNode(state, pathCost);
     }

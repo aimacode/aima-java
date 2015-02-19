@@ -19,6 +19,7 @@ import java.util.function.Function;
  */
 public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
 
+    Node<S> newNode(S state);
     Node<S> newNode(S state, double pathCost);
     Node<S> childNode(Problem<S> problem, Node<S> parent, Action action);
 

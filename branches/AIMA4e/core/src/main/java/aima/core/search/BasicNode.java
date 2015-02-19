@@ -14,6 +14,10 @@ public class BasicNode<S> implements Node<S> {
     private double pathCost;
 
 
+    public static <S> Node<S> rootNode(S state) {
+        return rootNode(state, 0);
+    }
+
     public static <S> Node<S> rootNode(S state, double pathCost) {
        return new BasicNode<>(state, pathCost);
     }
