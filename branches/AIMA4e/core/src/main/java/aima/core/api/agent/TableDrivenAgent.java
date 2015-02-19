@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Artificial Intelligence A Modern Approach (4thEdition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  * <br>
  *
  * <pre>

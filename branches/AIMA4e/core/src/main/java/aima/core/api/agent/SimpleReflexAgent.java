@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  * <br>
  *
  * <pre>
@@ -17,7 +17,7 @@ import java.util.Set;
  *   return action
  * </pre>
  *
- * Figure 2.10 A simple reflex agent. It acts according to a rule whose
+ * Figure ?? A simple reflex agent. It acts according to a rule whose
  * condition matches the current state, as defined by the percept.
  *
  * @param <S> the type of internal state representation used by the agent.
