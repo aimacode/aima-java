@@ -31,7 +31,7 @@ import java.util.Set;
  * </pre>
  *
  * Figure ?? Uniform-cost search on a graph. The algorithm is identical to the
- * general graph search algorithm in Figure 3.7, except for the use of a
+ * general graph search algorithm in Figure ??, except for the use of a
  * priority queue and the addition of an extra check in case a shorter path to a
  * frontier state is discovered. The data structure for frontier needs to
  * support efficient membership testing, so it should combine the capabilities
