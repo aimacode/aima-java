@@ -1,8 +1,6 @@
-package aima.core.api.search.uninformed;
+package aima.core.api.search;
 
 import aima.core.api.agent.Action;
-import aima.core.api.search.Node;
-import aima.core.api.search.Problem;
 
 import java.util.Collections;
 import java.util.LinkedList;

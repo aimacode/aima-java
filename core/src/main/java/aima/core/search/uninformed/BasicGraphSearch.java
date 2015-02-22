@@ -2,6 +2,7 @@ package aima.core.search.uninformed;
 
 import aima.core.api.search.Node;
 import aima.core.api.search.uninformed.GraphSearch;
+import aima.core.search.BasicSearchFunction;
 
 import java.util.*;
 

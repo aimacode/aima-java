@@ -2,6 +2,7 @@ package aima.core.api.search.uninformed;
 
 import aima.core.api.agent.Action;
 import aima.core.api.search.Problem;
+import aima.core.api.search.SearchFunction;
 
 import java.util.List;
 
