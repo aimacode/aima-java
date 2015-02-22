@@ -4,15 +4,17 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ---
 
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
-### CURRENT (rewrite of chapter 3 - core)
-* 3.26	99	Recursive-Best-First-Search
-* Uniform-Cost-Search need a better mechanism for determining state containment in the
-  queue and remove a node with a higher state cost.
-* Consider making the Frontier and Prirority queues into their own classes.
+### CURRENT (new demo GUI)
+
 
 ### LATER
 
 #### Chapter 3 'core' module.
+* Uniform-Cost-Search need a better mechanism for determining state containment in the
+  queue and remove a node with a higher state cost.
+* Consider making the Frontier and Prirority queues into their own classes.
+* Recursive-Best-First-Search - look to improve/tidy up implementation.
+* BasicRecursiveBestFirstSearchTest
 * 3 	92	Best-First search
 * 3 	92	Greedy best-First search
 * 3 	93	A* search

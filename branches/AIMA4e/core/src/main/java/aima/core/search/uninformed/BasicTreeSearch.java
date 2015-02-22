@@ -2,6 +2,7 @@ package aima.core.search.uninformed;
 
 import aima.core.api.search.Node;
 import aima.core.api.search.uninformed.TreeSearch;
+import aima.core.search.BasicSearchFunction;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -2,6 +2,7 @@ package aima.core.search.uninformed;
 
 import aima.core.api.search.uninformed.DepthLimitedSearch;
 import aima.core.api.search.uninformed.IterativeDeepeningSearch;
+import aima.core.search.BasicSearchFunction;
 
 /**
  * @author Ciaran O'Reilly
