@@ -67,9 +67,7 @@ public interface RecursiveBestFirstSearch<S> extends SearchFunction<S> {
         // loop do
         do {
             // best <- the lowest f-value node in successors
-            Collections.sort(successors, (s1, s2) -> {
-                if (s1.f < s2.f) {return -1;} else if (s1.f > s2.f) {return 1;} else {return 0;}
-            });
+            Collections.sort(successors, (s1, s2) -> Double.compare(s1.f, s2.f));
             SuccessorNode<S> best = successors.get(0);
             // if best.f > f_limit then return failure, best.f
             if (best.f > f_limit) { return new Result(failure(), best.f); }

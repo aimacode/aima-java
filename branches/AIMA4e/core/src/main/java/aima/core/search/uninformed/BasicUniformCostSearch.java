@@ -19,15 +19,7 @@ public class BasicUniformCostSearch<S> extends BasicGraphSearch<S> implements Un
         Set<S> states = new HashSet<>();
 
         PriorityFrontierQueue() {
-            super((n1, n2) -> {
-                if (n1.pathCost() < n2.pathCost()) {
-                    return -1;
-                }
-                else if (n1.pathCost() > n2.pathCost()) {
-                    return 1;
-                }
-                return 0;
-            });
+            super((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost()));
         }
 
         @Override
