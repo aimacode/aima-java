@@ -1,4 +1,4 @@
-package aima.core.search.informed;
+package aima.core.search.support;
 
 import aima.core.api.search.Node;
 
