@@ -3,7 +3,7 @@ package aima.core.search.uninformed;
 import aima.core.api.search.Node;
 import aima.core.api.search.uninformed.UniformCostSearch;
 import aima.core.search.BasicGraphSearch;
-import aima.core.search.informed.BasicPriorityFrontierQueue;
+import aima.core.search.support.BasicPriorityFrontierQueue;
 
 import java.util.*;
 
