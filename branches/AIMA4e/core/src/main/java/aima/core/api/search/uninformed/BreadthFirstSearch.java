@@ -1,6 +1,7 @@
 package aima.core.api.search.uninformed;
 
 import aima.core.api.agent.Action;
+import aima.core.api.search.GraphSearch;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
