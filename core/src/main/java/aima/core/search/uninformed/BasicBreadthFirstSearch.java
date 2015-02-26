@@ -1,6 +1,7 @@
 package aima.core.search.uninformed;
 
 import aima.core.api.search.uninformed.BreadthFirstSearch;
+import aima.core.search.BasicGraphSearch;
 
 /**
  * @author Ciaran O'Reilly

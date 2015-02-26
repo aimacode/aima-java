@@ -5,14 +5,15 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (new demo GUI)
-
+* Mock up screen prototypes
+* Tree-Search demo
+* Graph-Search demo
 
 ### LATER
 
 #### Chapter 3 'core' module.
 * Uniform-Cost-Search need a better mechanism for determining state containment in the
   queue and remove a node with a higher state cost.
-* Consider making the Frontier and Prirority queues into their own classes.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 * BasicRecursiveBestFirstSearchTest
 * 3 	92	Best-First search
@@ -41,5 +42,15 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ---
 
+## USEFUL RESOURCES
+### GUI
+* http://docs.oracle.com/javase/8/javase-clienttechnologies.htm
+* https://bitbucket.org/controlsfx/controlsfx/overview
+* https://bitbucket.org/Jerady/fontawesomefx
+* http://fortawesome.github.io/Font-Awesome/get-started/
+* http://www.pythontutor.com/
+* https://svgsalamander.java.net/docs/use.html
+* http://blog.netopyr.com/2012/03/09/creating-a-sprite-animation-with-javafx/
+* http://www.mrlonee.com/?p=319
 
 
