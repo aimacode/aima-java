@@ -39,7 +39,7 @@ public class CartesianProduct<T> implements Iterable<T[]> {
         this.elementBaseType = elementBaseType;
         // Copy the dimension information into own arrays
         // to ensure they cannot be mutated. This ensures
-        // we keep the immurable property.
+        // we keep the immutable property.
         this.radices = new int[dimensions.size()];
         for (int i = 0; i < dimensions.size(); i++) {
             this.radices[i] = dimensions.get(i).size();
