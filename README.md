@@ -52,5 +52,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * https://svgsalamander.java.net/docs/use.html
 * http://blog.netopyr.com/2012/03/09/creating-a-sprite-animation-with-javafx/
 * http://www.mrlonee.com/?p=319
+* http://harmoniccode.blogspot.com/
 
 
