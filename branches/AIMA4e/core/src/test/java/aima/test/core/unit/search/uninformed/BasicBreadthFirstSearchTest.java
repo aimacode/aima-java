@@ -23,16 +23,18 @@ public class BasicBreadthFirstSearchTest {
         }
 
         @Override
+        public String name() { return "Go(" + goTo + ")"; }
+
+        @Override
         public boolean equals(Object obj) {
-            if (obj instanceof GoAction) {
-                return this.goTo.equals(((GoAction) obj).goTo);
+            if (obj != null && obj instanceof GoAction) {
+                return this.name().equals(((Action)obj).name());
             }
             return super.equals(obj);
         }
-
         @Override
-        public String toString() {
-            return "Go("+goTo+")";
+        public int hashCode() {
+            return name().hashCode();
         }
     }
 
