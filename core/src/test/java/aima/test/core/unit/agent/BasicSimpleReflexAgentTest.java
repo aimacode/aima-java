@@ -4,7 +4,6 @@ import aima.core.agent.BasicSimpleReflexAgent;
 import aima.core.api.agent.Action;
 import aima.core.api.agent.Rule;
 import aima.core.api.agent.SimpleReflexAgent;
-import aima.test.core.unit.agent.support.TestAction;
 import aima.test.core.unit.agent.support.TestPercept;
 import aima.test.core.unit.agent.support.TestState;
 import org.junit.Assert;
@@ -28,11 +27,11 @@ public class BasicSimpleReflexAgentTest {
                 Arrays.asList(
                     new Rule<TestState>() {
                         public Predicate<TestState> condition() {return state -> state.dirty;}
-                        public Action action() {return new TestAction("Sweep");}
+                        public Action action() {return Action.newNamedAction("Sweep");}
                     },
                     new Rule<TestState>() {
                         public Predicate<TestState> condition() {return state -> !state.dirty;}
-                        public Action action() {return new TestAction("Drink Tea");}
+                        public Action action() {return Action.newNamedAction("Drink Tea");}
                     }
                 )
         );
@@ -40,11 +39,11 @@ public class BasicSimpleReflexAgentTest {
 
     @Test
     public void testSweep() {
-        Assert.assertEquals("Sweep", agent.perceive(new TestPercept("A", true)).toString());
+        Assert.assertEquals("Sweep", agent.perceive(new TestPercept("A", true)).name());
     }
 
     @Test
     public void tetDrinkTea() {
-        Assert.assertEquals("Drink Tea", agent.perceive(new TestPercept("A", false)).toString());
+        Assert.assertEquals("Drink Tea", agent.perceive(new TestPercept("A", false)).name());
     }
 }
