@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.RectangularGridProblem">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.RectangularGridProblemController">
    <top>
       <BorderPane prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <left>
@@ -32,7 +32,7 @@
    <center>
       <ScrollPane fx:id="problemViewScrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
-            <Pane fx:id="problemViewPane" prefHeight="368.0" prefWidth="598.0" />
+            <Pane fx:id="problemViewPane" prefHeight="368.0" prefWidth="598.0" style="-fx-background-color: white;" />
          </content>
       </ScrollPane>
    </center>
