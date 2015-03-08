@@ -12,51 +12,52 @@ import javafx.scene.shape.Line;
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularGridProblem {
+public class RectangularGridProblemController {
     @FXML private Label  problemTypeLabel;
     @FXML private Button listProblemsButton;
     @FXML private Button optionsButton;
     @FXML private ScrollPane problemViewScrollPane;
     @FXML private Pane problemViewPane;
 
-    private int numWidthNodes  = 12;
-    private int numHeightNodes = 14;
     private Circle[][] nodes;
-    private int nodeRadius = 10;
-    private int borderPadding = 10;
+    //
+    private int numWidthNodes  = 5;
+    private int numHeightNodes = 5;
+    //
+    private int nodeRadius              = 8;
+    private int borderPadding           = 10;
+    private int nodeRadiusSpacingFactor = 5;
 
     @FXML
     private void initialize() {
-        problemViewScrollPane.layout();
+        // Ensure the initial preferred width and height
+        // dimensions are available fo calculating padding
+        problemViewPane.autosize();
 
-        int width  = numWidthNodes * nodeRadius * 4;
-        int height = numHeightNodes * nodeRadius * 4;
+        int width  = numWidthNodes  * nodeRadius * nodeRadiusSpacingFactor;
+        int height = numHeightNodes * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
-        int vpWidth  =  (int) problemViewScrollPane.getWidth();
-        int vpHeight =  (int) problemViewScrollPane.getHeight();
+        int vpWidth  =  (int) problemViewPane.getWidth();
+        int vpHeight =  (int) problemViewPane.getHeight();
         if (width < vpWidth) {
-            xInset = (int) (width - vpWidth) / 2;
+            xInset = (vpWidth - width) / 2;
+        }
+        else {
+            problemViewPane.setPrefWidth(width);
         }
         if (height < vpHeight) {
-            yInset = (int) (height - vpHeight) / 2;
+            yInset = (vpHeight - height) / 2;
         }
-
-        problemViewScrollPane.setPannable(true);
- System.out.println("w"+problemViewPane.getWidth());
- System.out.println("h"+problemViewPane.getHeight());
-
- System.out.println("width="+width+", vpwidth="+vpWidth+", xInset="+xInset);
- System.out.println("height="+height+", vpheight="+vpHeight+", yInset="+yInset);
-
-        problemViewPane.setMinWidth(width);
-        problemViewPane.setMinHeight(height);
+        else {
+            problemViewPane.setPrefHeight(height);
+        }
 
         nodes = new Circle[numWidthNodes][numHeightNodes];
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
-                int x = xInset + (nodeRadius + borderPadding) + (i * (nodeRadius * 4));
-                int y = yInset + (nodeRadius + borderPadding) + (j * (nodeRadius * 4));
+                int x = xInset + (nodeRadius + borderPadding) + (i * (nodeRadius * nodeRadiusSpacingFactor));
+                int y = yInset + (nodeRadius + borderPadding) + (j * (nodeRadius * nodeRadiusSpacingFactor));
                 nodes[i][j] = new Circle(x, y, nodeRadius);
                 nodes[i][j].setFill(null);
                 nodes[i][j].setStroke(Color.BLACK);
@@ -64,12 +65,12 @@ public class RectangularGridProblem {
                 problemViewPane.getChildren().add(nodes[i][j]);
 
                 if (i > 0) {
-                    Line horizLine = new Line(x - (nodeRadius*3), y, x - nodeRadius, y);
+                    Line horizLine = new Line(x - (nodeRadius*(nodeRadiusSpacingFactor-1)), y, x - nodeRadius, y);
                     problemViewPane.getChildren().add(horizLine);
                 }
 
                 if (j > 0) {
-                    Line vertLine = new Line(x, y - (nodeRadius*3), x, y - nodeRadius);
+                    Line vertLine = new Line(x, y - (nodeRadius*(nodeRadiusSpacingFactor-1)), x, y - nodeRadius);
                     problemViewPane.getChildren().add(vertLine);
                 }
             }

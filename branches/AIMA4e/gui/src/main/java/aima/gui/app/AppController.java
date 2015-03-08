@@ -1,6 +1,6 @@
 package aima.gui.app;
 
-import aima.gui.demo.search.problem.RectangularGridProblem;
+import aima.gui.demo.search.tree.TreeSearchController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ToolBar;
@@ -19,8 +19,7 @@ public class AppController {
 
     @FXML
     private void initialize() throws IOException {
-        Pane problem = FXMLLoader.load(RectangularGridProblem.class.getResource("rectangulargridproblem.fxml"));
-        mainBorderPane.setCenter(problem);
-
+        Pane demoPane = FXMLLoader.load(TreeSearchController.class.getResource("treesearch.fxml"));
+        mainBorderPane.setCenter(demoPane);
     }
 }
