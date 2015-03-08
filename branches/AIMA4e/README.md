@@ -53,5 +53,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * http://blog.netopyr.com/2012/03/09/creating-a-sprite-animation-with-javafx/
 * http://www.mrlonee.com/?p=319
 * http://harmoniccode.blogspot.com/
+* https://rterp.wordpress.com/2014/07/28/adding-custom-javafx-component-to-scene-builder-2-0-part-2/
 
 
