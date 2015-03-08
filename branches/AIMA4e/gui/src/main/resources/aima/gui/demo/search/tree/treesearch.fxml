@@ -22,7 +22,7 @@
                <center>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <items>
-                        <BorderPane fx:id="problemPane" prefHeight="200.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="problemPane" prefHeight="200.0" prefWidth="200.0" />
                         <BorderPane fx:id="searchAlgoPane" prefHeight="200.0" prefWidth="200.0" />
                      </items>
                   </SplitPane>
