@@ -30,7 +30,7 @@
       </BorderPane>
    </top>
    <center>
-      <ScrollPane fx:id="problemViewScrollPane" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="problemViewScrollPane" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <content>
             <Pane fx:id="problemViewPane" prefHeight="234.0" prefWidth="457.0" style="-fx-background-color: white;" />
          </content>
