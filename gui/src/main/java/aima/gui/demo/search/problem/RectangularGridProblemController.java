@@ -8,10 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Ciaran O'Reilly
@@ -23,25 +29,34 @@ public class RectangularGridProblemController {
     @FXML private ScrollPane problemViewScrollPane;
     @FXML private Pane problemViewPane;
 
+    private Circle      startNode = null;
+    private Set<Circle> goalNodes = new HashSet<>();
     private Circle[][] nodes;
     //
     private int numWidthNodes  = 5;
     private int numHeightNodes = 5;
     //
-    private int nodeRadius              = 8;
+    private int nodeRadius              = 10;
     private int borderPadding           = 10;
     private int nodeRadiusSpacingFactor = 5;
+    //
+    private Paint defaultPaint = Color.WHITE;
+    private Image goalImage    = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
+    private Paint goalPaint    = new ImagePattern(goalImage, 0, 0, 16, 16, false);
+    private Paint startPaint   = Color.DARKGREEN;
 
     public void setupProblem() {
         // Ensure is clear of children on each setup
         problemViewPane.getChildren().clear();
+        startNode = null;
+        goalNodes.clear();
 
         int width  = numWidthNodes  * nodeRadius * nodeRadiusSpacingFactor;
         int height = numHeightNodes * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
-        int vpWidth  =  (int) problemViewScrollPane.getWidth();
-        int vpHeight =  (int) problemViewScrollPane.getHeight();
+        int vpWidth  =  (int) problemViewScrollPane.getWidth() - borderPadding;
+        int vpHeight =  (int) problemViewScrollPane.getHeight() - borderPadding;
         if (width < vpWidth) {
             xInset = (vpWidth - width) / 2;
             problemViewPane.setPrefWidth(vpWidth);
@@ -63,7 +78,7 @@ public class RectangularGridProblemController {
                 int x = xInset + (nodeRadius + borderPadding) + (i * (nodeRadius * nodeRadiusSpacingFactor));
                 int y = yInset + (nodeRadius + borderPadding) + (j * (nodeRadius * nodeRadiusSpacingFactor));
                 nodes[i][j] = new Circle(x, y, nodeRadius);
-                nodes[i][j].setFill(Color.WHITE);
+                nodes[i][j].setFill(defaultPaint);
                 nodes[i][j].setStroke(Color.BLACK);
                 nodes[i][j].setStrokeWidth(1);
 
@@ -71,7 +86,27 @@ public class RectangularGridProblemController {
                 Tooltip.install(nodes[i][j], t);
 
                 nodes[i][j].setOnMouseClicked(me -> {
-                    System.out.println("click! "+me.getSource());
+                    Circle clicked = (Circle) me.getSource();
+
+                    if (startNode == null) {
+                        startNode = clicked;
+                        startNode.setFill(startPaint);
+                        goalNodes.remove(startNode); // Ensure is not a goal
+                    }
+                    else if (startNode != null && clicked == startNode) {
+                        startNode = null;
+                        clicked.setFill(defaultPaint);
+                    }
+                    else {
+                        if (goalNodes.contains(clicked)) {
+                            clicked.setFill(defaultPaint);
+                            goalNodes.remove(clicked);
+                        }
+                        else {
+                            clicked.setFill(goalPaint);
+                            goalNodes.add(clicked);
+                        }
+                    }
                 });
 
                 problemViewPane.getChildren().add(nodes[i][j]);
