@@ -1,12 +1,11 @@
 package aima.core.environment.vacuum;
 
 import aima.core.api.agent.Action;
-import aima.core.api.agent.Environment;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class VacuumEnvironment implements Environment {
+public class VacuumEnvironment {
     //
     // Allowable actions in the Vacuum World Environment
     public static final Action Left  = Action.newNamedAction("Left");
