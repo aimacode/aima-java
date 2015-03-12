@@ -70,10 +70,106 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java">ModelBasedReflexAgentProgram</a></td>
    </tr>
    <tr>
-       <td></td>
-       <td></td>
-       <td></td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/"></a></td>
+       <td>3</td>
+       <td>66</td>
+       <td>Problem</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/Problem.java">Problem</a></td>
+   </tr>
+   <tr>
+       <td>3.1</td>
+       <td>67</td>
+       <td>Simple-Problem-Solving-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
+   </tr>
+   <tr>
+       <td>3.2</td>
+       <td>68</td>
+       <td>Romania</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
+   </tr>
+   <tr>
+       <td>3.7</td>
+       <td>77</td>
+       <td>Tree-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">TreeSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.7</td>
+       <td>77</td>
+       <td>Graph-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">GraphSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.10</td>
+       <td>79</td>
+       <td>Node</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/Node.java"></a>Node</td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>79</td>
+       <td>Queue</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/util/datastructure/Queue.java">Queue</a></td>
+   </tr>
+   <tr>
+       <td>3.11</td>
+       <td>82</td>
+       <td>Breadth-First-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">BreadthFirstSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.14</td>
+       <td>84</td>
+       <td>Uniform-Cost-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">UniformCostSearch</a></td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>85</td>
+       <td>Depth-first Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">DepthFirstSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.17</td>
+       <td>88</td>
+       <td>Depth-Limited-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">DepthLimitedSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.18</td>
+       <td>89</td>
+       <td>Iterative-Deepening-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>90</td>
+       <td>Bidirectional search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/uninformed/BidirectionalSearch.java">BidirectionalSearch</a></td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>92</td>
+       <td>Best-First search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java">BestFirstSearch</a></td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>92</td>
+       <td>Greedy best-First search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">GreedyBestFirstSearch</a></td>
+   </tr>
+   <tr>
+       <td>3</td>
+       <td>93</td>
+       <td>A* Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">AStarSearch</a></td>
+   </tr>
+   <tr>
+       <td>3.26</td>
+       <td>99</td>
+       <td>Recursive-Best-First-Search </td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
    </tr>
    <tr>
        <td></td>
@@ -84,25 +180,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tbody>
 </table> 
 
-
-
-||   3   ||      66|| Problem                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/Problem.java Problem]||
-||   3.1 ||      67|| Simple-Problem-Solving-Agent ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
-||   3.2 ||      68|| Romania                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
-||   3.7 ||      77|| Tree-Search                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java TreeSearch]||
-||   3.7 ||      77|| Graph-Search                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java GraphSearch]||
-||   3.10||      79|| Node                         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/Node.java Node]||
-||   3   ||      79|| Queue                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/util/datastructure/Queue.java Queue]||
-||   3.11||      82|| Breadth-First-Search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java BreadthFirstSearch]||
-||   3.14||      84|| Uniform-Cost-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java UniformCostSearch]||
-||   3   ||      85|| Depth-first Search           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java DepthFirstSearch]||
-||   3.17||      88|| Depth-Limited-Search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java DepthLimitedSearch]||
-||   3.18||      89|| Iterative-Deepening-Search   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java IterativeDeepeningSearch]||
-||   3   ||      90|| Bidirectional search         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/uninformed/BidirectionalSearch.java BidirectionalSearch]||
-||   3   ||      92|| Best-First search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java BestFirstSearch]||
-||   3   ||      92|| Greedy best-First search     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java GreedyBestFirstSearch]||
-||   3   ||      93|| A`*` search                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java AStarSearch]||
-||   3.26||      99|| Recursive-Best-First-Search  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java RecursiveBestFirstSearch]||
 ||   4.2 ||     122|| Hill-Climbing                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java HillClimbingSearch]||
 ||   4.5 ||     126|| Simulated-Annealing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
 ||   4.8 ||     129|| Genetic-Algorithm            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java GeneticAlgorithm]||
