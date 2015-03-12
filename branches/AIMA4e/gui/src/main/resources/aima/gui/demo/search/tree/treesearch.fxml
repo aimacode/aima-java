@@ -22,12 +22,12 @@
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <items>
                         <AnchorPane fx:id="problemPane" prefHeight="200.0" prefWidth="200.0" />
-                        <BorderPane fx:id="searchAlgoPane" prefHeight="200.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="searchAlgoPane" prefHeight="200.0" prefWidth="200.0" />
                      </items>
                   </SplitPane>
                </center>
             </BorderPane>
-            <BorderPane fx:id="searchInfoPane" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane fx:id="searchInfoPane" prefHeight="200.0" prefWidth="200.0" />
         </items>
       </SplitPane>
    </center>
