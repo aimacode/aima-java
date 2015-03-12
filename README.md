@@ -49,7 +49,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>2.7</td>
        <td>47</td>
        <td>Table-Driven-Agent</td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java">TableDrivenAgent</a></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java">TableDrivenAgentProgram</a></td>
    </tr>
    <tr>
        <td>2.8</td>
@@ -103,7 +103,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>3.10</td>
        <td>79</td>
        <td>Node</td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/Node.java"></a>Node</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/framework/Node.java">Node</a></td>
    </tr>
    <tr>
        <td>3</td>
