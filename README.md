@@ -9,17 +9,32 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
   * [Instructions on how to set up your workspace](http://code.google.com/p/aima-java/wiki/GettingStarted).
   * [Javadoc for the aima-core project](http://aima-java.googlecode.com/svn/trunk/aima-all/release/javadoc/aima-core/index.html).
   * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://code.google.com/p/aima-java/wiki//p/aima-java/wiki/AIMADownloads).
-  * Latest Maven Information (for integration as a third party library)
-      `{{{
-            <dependency>
-            <groupId>com.googlecode.aima-java</groupId>
-            <artifactId>aima-core</artifactId>
-            <version>0.11.0</version>
-            </dependency>
-      }}}`
+  * Latest Maven Information (for integration as a third party library)<br>
+       `<dependency>`<br>
+           `<groupId>com.googlecode.aima-java</groupId>`<br>
+           `<artifactId>aima-core</artifactId>`<br>
+           `<version>0.11.0</version>`<br>
+       `</dependency>`<br>
 
-= Index of Implemented Algorithms ==
-|| *Fig* || *Page* || *Name (in book)*             || *Code* ||
+# Index of Implemented Algorithms
+<table style="width:100%">
+   <tbody>
+   <tr>
+       <td>Fig</td>
+       <td>Page</td>
+       <td>Name (in book)</td>
+       <td>Code</td>
+   </tr>
+   <tr>
+       <td>2</td>
+       <td>34</td>
+       <td>Environment</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/Environment.java">Environment</a></td>
+   </tr>
+   </tbody>
+</table> 
+
+
 ||   2   ||      34|| Environment                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Environment.java Environment]||
 ||   2.1 ||      35|| Agent                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Agent.java Agent]||
 ||   2.3 ||      36|| Table-Driven-Vacuum-Agent    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java TableDrivenVacuumAgent]||
