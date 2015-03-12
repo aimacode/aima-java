@@ -15,7 +15,6 @@ import java.io.IOException;
 public class AppController {
     @FXML private ToolBar toolBar;
     @FXML private BorderPane mainBorderPane;
-    @FXML private BorderPane notificationPane;
 
     @FXML
     private void initialize() throws IOException {

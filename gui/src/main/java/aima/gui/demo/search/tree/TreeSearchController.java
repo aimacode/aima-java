@@ -2,6 +2,7 @@ package aima.gui.demo.search.tree;
 
 import aima.gui.demo.search.problem.RectangularGridProblemController;
 import aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController;
+import aima.gui.demo.search.tree.info.TreeSearchInfoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +29,10 @@ public class TreeSearchController {
         Pane algo = FXMLLoader.load(GeneralTreeSearchController.class.getResource("generaltreesearch.fxml"));
         anchor(algo);
         searchAlgoPane.getChildren().add(algo);
+
+        Pane info = FXMLLoader.load(TreeSearchInfoController.class.getResource("treesearchinfo.fxml"));
+        anchor(info);
+        searchInfoPane.getChildren().add(info);
     }
 
     private void anchor(Pane pane) {
