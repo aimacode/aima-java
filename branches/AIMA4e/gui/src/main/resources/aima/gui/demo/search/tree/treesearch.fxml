@@ -27,7 +27,7 @@
                   </SplitPane>
                </center>
             </BorderPane>
-            <AnchorPane fx:id="searchInfoPane" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane fx:id="searchInfoPane" prefHeight="200.0" prefWidth="1024.0" />
         </items>
       </SplitPane>
    </center>

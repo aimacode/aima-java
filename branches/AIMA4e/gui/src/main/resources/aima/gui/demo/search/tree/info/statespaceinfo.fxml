@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane prefHeight="266.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.info.StateSpaceInfoController">
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <Label fx:id="stateSpaceInfoLabel" text="State Space Visited" BorderPane.alignment="CENTER_LEFT" />
+         </left>
+      </BorderPane>
+   </top>
+   <center>
+      <ScrollPane fx:id="stateSpaceVisitedViewScrollPane" BorderPane.alignment="CENTER">
+         <content>
+            <Pane fx:id="stateSpaceVisitedViewPane" prefHeight="234.0" prefWidth="457.0" />
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

@@ -25,8 +25,4 @@
     <BorderPane fx:id="mainBorderPane" BorderPane.alignment="CENTER">
     </BorderPane>
 </center>
-<bottom>
-    <BorderPane fx:id="notificationPane" prefHeight="24.0" prefWidth="587.0" BorderPane.alignment="CENTER">
-    </BorderPane>
-</bottom>
 </BorderPane>
