@@ -172,6 +172,48 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
    </tr>
    <tr>
+       <td>4.2</td>
+       <td>122</td>
+       <td>Hill-Climbing</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">HillClimbingSearch</a></td>
+   </tr>
+   <tr>
+       <td>4.5</td>
+       <td>126</td>
+       <td>Simulated-Annealing</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">SimulatedAnnealingSearch</a></td>
+   </tr>
+   <tr>
+       <td>4.8</td>
+       <td>129</td>
+       <td>Genetic-Algorithm</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java">GeneticAlgorithm</a></td>
+   </tr>
+   <tr>
+       <td>4.11</td>
+       <td>136</td>
+       <td>And-Or-Graph-Search</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java">AndOrSearch</a></td>
+   </tr>
+   <tr>
+       <td>4</td>
+       <td>147</td>
+       <td>Online search problem</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java">OnlineSearchProblem</a></td>
+   </tr>
+   <tr>
+       <td>4.21</td>
+       <td>150</td>
+       <td>Online-DFS-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java">OnlineDFSAgent</a></td>
+   </tr>
+   <tr>
+       <td>4.24</td>
+       <td>152</td>
+       <td>LRTA*-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java">LRTAStarAgent</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -179,14 +221,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table> 
-
-||   4.2 ||     122|| Hill-Climbing                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java HillClimbingSearch]||
-||   4.5 ||     126|| Simulated-Annealing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java SimulatedAnnealingSearch]||
-||   4.8 ||     129|| Genetic-Algorithm            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java GeneticAlgorithm]||
-||   4.11||     136|| And-Or-Graph-Search          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java AndOrSearch]||
-||   4   ||     147|| Online search problem        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java OnlineSearchProblem] ||
-||   4.21||     150|| Online-DFS-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java OnlineDFSAgent] ||
-||   4.24||     152|| LRTA`*`-Agent                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java LRTAStarAgent] ||
+||   ||     ||                 ||[http://aima-java.googlecode.com/svn/trunk/ ] ||
 ||   5.3 ||     166|| Minimax-Decision             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java MinimaxSearch]||
 ||   5.7 ||     170|| Alpha-Beta-Search            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java AlphaBetaSearch]||
 ||   6   ||     202|| CSP                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/csp/CSP.java CSP]||
