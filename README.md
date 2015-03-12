@@ -11,9 +11,9 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
   * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://code.google.com/p/aima-java/wiki//p/aima-java/wiki/AIMADownloads).
   * Latest Maven Information (for integration as a third party library)<br>
        `<dependency>`<br>
-           `<groupId>com.googlecode.aima-java</groupId>`<br>
-           `<artifactId>aima-core</artifactId>`<br>
-           `<version>0.11.0</version>`<br>
+       `    <groupId>com.googlecode.aima-java</groupId>`<br>
+       `    <artifactId>aima-core</artifactId>`<br>
+       `    <version>0.11.0</version>`<br>
        `</dependency>`<br>
 
 # Index of Implemented Algorithms
@@ -31,17 +31,59 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>Environment</td>
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/Environment.java">Environment</a></td>
    </tr>
+   <tr>
+       <td>2.1</td>
+       <td>35</td>
+       <td>Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/Agent.java">Agent</a></td>
+   </tr>
+   <tr>
+       <td>2.3</td>
+       <td>36</td>
+       <td>Table-Driven-Vacuum-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
+   </tr>
+   <tr>
+       <td>2.7</td>
+       <td>47</td>
+       <td>Table-Driven-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java">TableDrivenAgent</a></td>
+   </tr>
+   <tr>
+       <td>2.8</td>
+       <td>48</td>
+       <td>Reflex-Vacuum-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
+   </tr>
+   <tr>
+       <td>2.10</td>
+       <td>49</td>
+       <td>Simple-Reflex-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java">SimpleReflexAgentProgram</a></td>
+   </tr>
+   <tr>
+       <td>2.12</td>
+       <td>51</td>
+       <td>Model-Based-Reflex-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java">ModelBasedReflexAgentProgram</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/"></a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/"></a></td>
+   </tr>
    </tbody>
 </table> 
 
 
-||   2   ||      34|| Environment                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Environment.java Environment]||
-||   2.1 ||      35|| Agent                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Agent.java Agent]||
-||   2.3 ||      36|| Table-Driven-Vacuum-Agent    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java TableDrivenVacuumAgent]||
-||   2.7 ||      47|| Table-Driven-Agent           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java TableDrivenAgent]||
-||   2.8 ||      48|| Reflex-Vacuum-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java ReflexVacuumAgent]||
-||   2.10||      49|| Simple-Reflex-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java SimpleReflexAgentProgram]||
-||   2.12||      51|| Model-Based-Reflex-Agent     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java ModelBasedReflexAgentProgram]||
+
 ||   3   ||      66|| Problem                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/Problem.java Problem]||
 ||   3.1 ||      67|| Simple-Problem-Solving-Agent ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java SimpleProblemSolvingAgent]||
 ||   3.2 ||      68|| Romania                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java SimplifiedRoadMapOfPartOfRomania]||
