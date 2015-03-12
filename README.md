@@ -12,11 +12,10 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
   * Latest Maven Information (for integration as a third party library)<br>
   
       `<dependency>`<br>
-          
-          `<groupId>com.googlecode.aima-java</groupId>`<br>
-          `<artifactId>aima-core</artifactId>`<br>
-          `<version>0.11.0</version>`<br>
 
+          <groupId>com.googlecode.aima-java</groupId>
+          <artifactId>aima-core</artifactId>
+          <version>0.11.0</version>
       `</dependency>`
 
 # Index of Implemented Algorithms
