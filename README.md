@@ -22,10 +22,10 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
 <table style="width:100%">
    <tbody>
    <tr>
-       <td>Fig</td>
-       <td>Page</td>
-       <td>Name (in book)</td>
-       <td>Code</td>
+       <td><b>Fig</b></td>
+       <td><b>Page</b></td>
+       <td><b>Name (in book)</b></td>
+       <td><b>Code</b></td>
    </tr>
    <tr>
        <td>2</td>
