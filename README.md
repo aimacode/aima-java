@@ -1,24 +1,24 @@
-# aima-java
-Java (JDK 7+) implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach - A Modern Approach 3rd Edition."
+# AIMA3e-Java (JDK 7+)
+Java implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach - A Modern Approach 3rd Edition."
 
-Java implementation of algorithms from [http://www.norvig.com/ Norvig] and [http://www.cs.berkeley.edu/~russell/ Russell]'s  [http://aima.cs.berkeley.edu/ Artificial Intelligence - A Modern Approach 3rd Edition] 
+Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/) 
 
-= Getting Started Links = 
-  * [http://aima-java.googlecode.com/svn/trunk/aima-all/release/aima3ejavademos.html Demo Applications that can be run from your browser].
-  * [http://code.google.com/p/aima-java/wiki/AIMA3eReadme An overview of the project].
-  * [http://code.google.com/p/aima-java/wiki/GettingStarted Instructions on how to set up your workspace].
-  * [http://aima-java.googlecode.com/svn/trunk/aima-all/release/javadoc/aima-core/index.html Javadoc for the aima-core project].
-  * [https://code.google.com/p/aima-java/wiki//p/aima-java/wiki/AIMADownloads Download the latest official version  = 1.8.0 (Aug 10 2014)].
+# Getting Started Links 
+  * [Demo Applications that can be run from your browser](http://aima-java.googlecode.com/svn/trunk/aima-all/release/aima3ejavademos.html).
+  * [An overview of the project](http://code.google.com/p/aima-java/wiki/AIMA3eReadme).
+  * [Instructions on how to set up your workspace](http://code.google.com/p/aima-java/wiki/GettingStarted).
+  * [Javadoc for the aima-core project](http://aima-java.googlecode.com/svn/trunk/aima-all/release/javadoc/aima-core/index.html).
+  * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://code.google.com/p/aima-java/wiki//p/aima-java/wiki/AIMADownloads).
   * Latest Maven Information (for integration as a third party library)
-{{{
-    <dependency>
-        <groupId>com.googlecode.aima-java</groupId>
-        <artifactId>aima-core</artifactId>
-        <version>0.11.0</version>
-    </dependency>
-}}}
+      {{{
+            <dependency>
+            <groupId>com.googlecode.aima-java</groupId>
+            <artifactId>aima-core</artifactId>
+            <version>0.11.0</version>
+            </dependency>
+      }}}
 
-== Index of Implemented Algorithms ==
+= Index of Implemented Algorithms ==
 || *Fig* || *Page* || *Name (in book)*             || *Code* ||
 ||   2   ||      34|| Environment                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Environment.java Environment]||
 ||   2.1 ||      35|| Agent                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/agent/Agent.java Agent]||
