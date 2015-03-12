@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane prefHeight="350.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController">
+    <top>
+        <BorderPane BorderPane.alignment="CENTER">
+            <left>
+                <Label fx:id="searchTypeLabel" text="General Tree Search" BorderPane.alignment="CENTER_LEFT" />
+            </left>
+            <right>
+                <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="listAlgorithmsButton" mnemonicParsing="false" text="List" />
+                        <Button fx:id="optionsButton" mnemonicParsing="false" text="Opts" />
+                    </children>
+                </HBox>
+            </right>
+        </BorderPane>
+    </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Pseudo-Code">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="pseudoCodeList" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Java">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="javaCodeList" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="50.0" prefWidth="497.0" BorderPane.alignment="CENTER">
+         <bottom>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="622.0" spacing="3.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="autoPlayButton" mnemonicParsing="false" text="[ &gt;" />
+                  <Label text="Steps Sec." />
+                  <ChoiceBox fx:id="stepsASecondChoiceBox" prefHeight="26.0" prefWidth="52.0" />
+                  <ToolBar prefHeight="38.0" prefWidth="164.0" style="-fx-background-color: null;">
+                    <items>
+                      <Button fx:id="startButton" mnemonicParsing="false" text="&lt;&lt;" />
+                        <Button fx:id="backButton" mnemonicParsing="false" text="&lt; " />
+                        <Button fx:id="forwardButton" mnemonicParsing="false" text=" &gt;" />
+                        <Button fx:id="endButton" mnemonicParsing="false" text=" &gt;&gt;" />
+                    </items>
+                  </ToolBar>
+                  <Region prefHeight="38.0" prefWidth="20.0" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" text="Reset" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </HBox>
+         </bottom>
+         <top>
+            <Slider fx:id="executionStepSlider" prefHeight="27.0" prefWidth="497.0" BorderPane.alignment="CENTER" />
+         </top>
+      </BorderPane>
+   </bottom>
+</BorderPane>

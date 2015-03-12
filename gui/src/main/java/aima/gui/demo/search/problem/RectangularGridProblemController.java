@@ -55,8 +55,8 @@ public class RectangularGridProblemController {
         int height = numHeightNodes * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
-        int vpWidth  =  (int) problemViewScrollPane.getWidth() - borderPadding;
-        int vpHeight =  (int) problemViewScrollPane.getHeight() - borderPadding;
+        int vpWidth  =  (int) problemViewScrollPane.getWidth() - 2;
+        int vpHeight =  (int) problemViewScrollPane.getHeight() - 2;
         if (width < vpWidth) {
             xInset = (vpWidth - width) / 2;
             problemViewPane.setPrefWidth(vpWidth);
