@@ -334,10 +334,52 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java">SubstVisitor</a></td>
    </tr>
    <tr>
-       <td></td>
-       <td></td>
-       <td></td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/"></a></td>
+       <td>9.1</td>
+       <td>328</td>
+       <td>Unify</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/Unifier.java">Unifier</a></td>
+   </tr>
+   <tr>
+       <td>9.3</td>
+       <td>332</td>
+       <td>FOL-FC-Ask</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java">FOLFCAsk</a></td>
+   </tr>
+   <tr>
+       <td>9.3</td>
+       <td>332</td>
+       <td>FOL-BC-Ask</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java">FOLBCAsk</a></td>
+   </tr>
+   <tr>
+       <td>9</td>
+       <td>345</td>
+       <td>CNF</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/CNFConverter.java">CNFConverter</a></td>
+   </tr>
+   <tr>
+       <td>9</td>
+       <td>347</td>
+       <td>Resolution</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLTFMResolution.java">FOLTFMResolution</a></td>
+   </tr>
+   <tr>
+       <td>9</td>
+       <td>354</td>
+       <td>Demodulation</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java">Demodulation</a></td>
+   </tr>
+   <tr>
+       <td>9</td>
+       <td>354</td>
+       <td>Paramodulation</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java">Paramodulation</a></td>
+   </tr>
+   <tr>
+       <td>9</td>
+       <td>345</td>
+       <td>Subsumption</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java">SubsumptionElimination</a></td>
    </tr>
    <tr>
        <td></td>
@@ -346,16 +388,8 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/"></a></td>
    </tr>
    </tbody>
-</table> 
+</table>  
 
-||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/Unifier.java Unifier]||
-||   9.3 ||     332|| FOL-FC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
-||   9.3 ||     332|| FOL-BC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java FOLBCAsk]||
-||   9   ||     345|| CNF                          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/CNFConverter.java CNFConverter]||
-||   9   ||     347|| Resolution                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLTFMResolution.java FOLTFMResolution], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLOTTERLikeTheoremProver.java FOLOTTERLikeTheoremProver]||
-||   9   ||     354|| Demodulation                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java Demodulation]||
-||   9   ||     354|| Paramodulation               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java Paramodulation]||
-||   9   ||     345|| Subsumption                  ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java SubsumptionElimination]||
 ||  10.9 ||     383|| Graphplan                    ||---||
 ||  11.5 ||     409|| Hierarchical-Search          ||---||
 ||  11.8 ||     414|| Angelic-Search               ||---||
