@@ -466,6 +466,36 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java">GibbsAsk</a></td>
    </tr>
    <tr>
+       <td>15.4</td>
+       <td>576</td>
+       <td>Forward-Backward</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java">ForwardBackward</a></td>
+   </tr>
+   <tr>
+       <td>15</td>
+       <td>578</td>
+       <td>Hidden Markov Model</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java">HiddenMarkovModel</a></td>
+   </tr>
+   <tr>
+       <td>15.6</td>
+       <td>580</td>
+       <td>Fixed-Lag-Smoothing</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java">FixedLagSmoothing</a></td>
+   </tr>
+   <tr>
+       <td>15</td>
+       <td>590</td>
+       <td>Dynamic Bayesian Network</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java">DynamicBayesianNetwork</a></td>
+   </tr>
+   <tr>
+       <td>15.17</td>
+       <td>598</td>
+       <td>Particle-Filtering</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java">ParticleFiltering</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -473,11 +503,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table>  
-||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java ForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackward.java HMMForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackwardConstantSpace.java HMMForwardBackwardConstantSpace]||
-||  15   ||     578|| Hidden Markov Model          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java HiddenMarkovModel]||
-||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java FixedLagSmoothing]||
-||  15   ||     590|| Dynamic Bayesian Network     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java DynamicBayesianNetwork]||
-||  15.17||     598|| Particle-Filtering           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java ParticleFiltering]||
 ||  16.9 ||     632|| Information-Gathering-Agent  ||---||
 ||  17   ||     647|| Markov Decision Process      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java MarkovDecisionProcess]||
 ||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java ValueIteration]||
