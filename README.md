@@ -31,7 +31,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>2</td>
        <td>34</td>
        <td>Environment</td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/agent/Environment.java">Environment</a></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIM3e/aima-core/src/main/java/aima/core/agent/Environment.java">Environment</a></td>
    </tr>
    <tr>
        <td>2.1</td>
