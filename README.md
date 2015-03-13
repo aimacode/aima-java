@@ -262,6 +262,78 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>---</a></td>
    </tr>
    <tr>
+       <td>7</td>
+       <td>235</td>
+       <td>Knowledge Base</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java">KnowledgeBase</a></td>
+   </tr>
+   <tr>
+       <td>7.1</td>
+       <td>236</td>
+       <td>KB-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java">KBAgent</a></td>
+   </tr>
+   <tr>
+       <td>7.7</td>
+       <td>244</td>
+       <td>Propositional-Logic-Sentence</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java">Sentence</a></td>
+   </tr>
+   <tr>
+       <td>7.10</td>
+       <td>248</td>
+       <td>TT-Entails</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java">TTEntails</a></td>
+   </tr>
+   <tr>
+       <td>7</td>
+       <td>253</td>
+       <td>Convert-to-CNF</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java">ConvertToCNF</a></td>
+   </tr>
+   <tr>
+       <td>7.12</td>
+       <td>255</td>
+       <td>PL-Resolution</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java">PLResolution</a></td>
+   </tr>
+   <tr>
+       <td>7.15</td>
+       <td>258</td>
+       <td>PL-FC-Entails?</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java">PLFCEntails</a></td>
+   </tr>
+   <tr>
+       <td>7.17</td>
+       <td>261</td>
+       <td>DPLL-Satisfiable?</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java">DPLLSatisfiable</a></td>
+   </tr>
+   <tr>
+       <td>7.18</td>
+       <td>263</td>
+       <td>WalkSAT</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
+   </tr>
+   <tr>
+       <td>7.20</td>
+       <td>270</td>
+       <td>Hybrid-Wumpus-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java">HybridWumpusAgent</a></td>
+   </tr>
+   <tr>
+       <td>7.22</td>
+       <td>272</td>
+       <td>SATPlan</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java">SATPlan</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/"></a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -270,17 +342,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tbody>
 </table> 
 
-||   7   ||     235|| Knowledge Base               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java KnowledgeBase]||
-||   7.1 ||     236|| KB-Agent                     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java KBAgent]||
-||   7.7 ||     244|| Propositional-Logic-Sentence ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java Sentence], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/parsing/PLParser.java PLParser]||
-||   7.10||     248|| TT-Entails                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java TTEntails]||
-||   7   ||     253|| Convert-to-CNF               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java ConvertToCNF]||
-||   7.12||     255|| PL-Resolution                ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java PLResolution]||
-||   7.15||     258|| PL-FC-Entails?               ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java PLFCEntails]||
-||   7.17||     261|| DPLL-Satisfiable?            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java DPLLSatisfiable]||
-||   7.18||     263|| WalkSAT                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java WalkSAT]||
-||   7.20||     270|| Hybrid-Wumpus-Agent          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java HybridWumpusAgent]||
-||   7.22||     272|| SATPlan                      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java SATPlan]||
 ||   9   ||     323|| Subst                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java SubstVisitor]||
 ||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/Unifier.java Unifier]||
 ||   9.3 ||     332|| FOL-FC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
