@@ -496,6 +496,42 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java">ParticleFiltering</a></td>
    </tr>
    <tr>
+       <td>16.9</td>
+       <td>632</td>
+       <td>Information-Gathering-Agent</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td>17</td>
+       <td>647</td>
+       <td>Markov Decision Process</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java">MarkovDecisionProcess</a></td>
+   </tr>
+   <tr>
+       <td>17.4</td>
+       <td>653</td>
+       <td>Value-Iteration</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java">ValueIteration</a></td>
+   </tr>
+   <tr>
+       <td>17.7</td>
+       <td>657</td>
+       <td>Policy-Iteration</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java">PolicyIteration</a></td>
+   </tr>
+   <tr>
+       <td>17.9</td>
+       <td>663</td>
+       <td>POMDP-Value-Iteration</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/"></a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -503,11 +539,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table>  
-||  16.9 ||     632|| Information-Gathering-Agent  ||---||
-||  17   ||     647|| Markov Decision Process      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java MarkovDecisionProcess]||
-||  17.4 ||     653|| Value-Iteration              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java ValueIteration]||
-||  17.7 ||     657|| Policy-Iteration             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java PolicyIteration]||
-||  17.9 ||     663|| POMDP-Value-Iteration        ||---||
 ||  18.5 ||     702|| Decision-Tree-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java DecisionTreeLearner]||
 ||  18.8 ||     710|| Cross-Validation-Wrapper     ||---||
 ||  18.11||     717|| Decision-List-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java DecisionListLearner]||
