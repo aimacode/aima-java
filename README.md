@@ -1,4 +1,4 @@
-# AIMA3e-Java (JDK 7+)
+# ![](https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-all/release/images/aima3e.jpg)AIMA3e-Java (JDK 7+)
 Java implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach - A Modern Approach 3rd Edition."
 
 Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/) 
