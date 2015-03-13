@@ -526,6 +526,36 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td>---</a></td>
    </tr>
    <tr>
+       <td>18.5</td>
+       <td>702</td>
+       <td>Decision-Tree-Learning</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java">DecisionTreeLearner</a></td>
+   </tr>
+   <tr>
+       <td>18.8</td>
+       <td>710</td>
+       <td>Cross-Validation-Wrapper</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td>18.11</td>
+       <td>717</td>
+       <td>Decision-List-Learning</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java">DecisionListLearner</a></td>
+   </tr>
+   <tr>
+       <td>18.24</td>
+       <td>734</td>
+       <td>Back-Prop-Learning</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/neural/BackPropLearning.java">BackPropLearning</a></td>
+   </tr>
+   <tr>
+       <td>18.34</td>
+       <td>751</td>
+       <td>AdaBoost</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java">AdaBoostLearner</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -539,11 +569,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table>  
-||  18.5 ||     702|| Decision-Tree-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java DecisionTreeLearner]||
-||  18.8 ||     710|| Cross-Validation-Wrapper     ||---||
-||  18.11||     717|| Decision-List-Learning       ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java DecisionListLearner]||
-||  18.24||     734|| Back-Prop-Learning           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/neural/BackPropLearning.java BackPropLearning]||
-||  18.34||     751|| AdaBoost                     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java AdaBoostLearner]||
 ||  19.2 ||     771|| Current-Best-Learning        ||---||
 ||  19.3 ||     773|| Version-Space-Learning       ||---||
 ||  19.8 ||     786|| Minimal-Consistent-Det       ||---||
