@@ -556,26 +556,64 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java">AdaBoostLearner</a></td>
    </tr>
    <tr>
-       <td></td>
-       <td></td>
-       <td></td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/"></a></td>
+       <td>19.2</td>
+       <td>771</td>
+       <td>Current-Best-Learning</td>
+       <td>---</td>
    </tr>
    <tr>
-       <td></td>
-       <td></td>
-       <td></td>
-       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/"></a></td>
+       <td>19.3</td>
+       <td>773</td>
+       <td>Version-Space-Learning</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>19.8</td>
+       <td>786</td>
+       <td>Minimal-Consistent-Det</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>19.12</td>
+       <td>793</td>
+       <td>FOIL</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>21.2</td>
+       <td>834</td>
+       <td>Passive-ADP-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java">PassiveADPAgent</a></td>
+   </tr>
+   <tr>
+       <td>21.4</td>
+       <td>837</td>
+       <td>Passive-TD-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java">PassiveTDAgent</a></td>
+   </tr>
+   <tr>
+       <td>21.8</td>
+       <td>844</td>
+       <td>Q-Learning-Agent</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java">QLearningAgent</a></td>
+   </tr>
+   <tr>
+       <td>22.1</td>
+       <td>871</td>
+       <td>HITS</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>23.5</td>
+       <td>894</td>
+       <td>CYK-Parse</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>25.9</td>
+       <td>982</td>
+       <td>Monte-Carlo-Localization</td>
+       <td>---</td>
    </tr>
    </tbody>
-</table>  
-||  19.2 ||     771|| Current-Best-Learning        ||---||
-||  19.3 ||     773|| Version-Space-Learning       ||---||
-||  19.8 ||     786|| Minimal-Consistent-Det       ||---||
-||  19.12||     793|| FOIL                         ||---||
-||  21.2 ||     834|| Passive-ADP-Agent            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java PassiveADPAgent]||
-||  21.4 ||     837|| Passive-TD-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java PassiveTDAgent]||
-||  21.8 ||     844|| Q-Learning-Agent             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java QLearningAgent]||
-||  22.1 ||     871|| HITS                         ||---||
-||  23.5 ||     894|| CYK-Parse                    ||---||
-||  25.9 ||     982|| Monte-Carlo-Localization     ||---||
+</table>
