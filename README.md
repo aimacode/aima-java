@@ -382,6 +382,48 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java">SubsumptionElimination</a></td>
    </tr>
    <tr>
+       <td>10.9</td>
+       <td>383</td>
+       <td>Graphplan</td>
+       <td>---</td>
+   </tr>
+   <tr>
+       <td>11.5</td>
+       <td>409</td>
+       <td>Hierarchical-Search</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td>11.8</td>
+       <td>414</td>
+       <td>Angelic-Search</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td>13.1</td>
+       <td>484</td>
+       <td>DT-Agent</td>
+       <td>---</a></td>
+   </tr>
+   <tr>
+       <td>13</td>
+       <td>484</td>
+       <td>Probability-Model</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java">ProbabilityModel</a></td>
+   </tr>
+   <tr>
+       <td>13</td>
+       <td>487</td>
+       <td>Probability-Distribution</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java">ProbabilityDistribution</a></td>
+   </tr>
+   <tr>
+       <td>13</td>
+       <td>490</td>
+       <td>Full-Joint-Distribution</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java">FullJointDistributionModel</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -389,14 +431,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table>  
-
-||  10.9 ||     383|| Graphplan                    ||---||
-||  11.5 ||     409|| Hierarchical-Search          ||---||
-||  11.8 ||     414|| Angelic-Search               ||---||
-||  13.1 ||     484|| DT-Agent                     ||---||
-||  13   ||     484|| Probability-Model            ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java ProbabilityModel], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/FiniteProbabilityModel.java FiniteProbabilityModel]||
-||  13   ||     487|| Probability-Distribution     ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java ProbabilityDistribution], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/CategoricalDistribution.java CategoricalDistribution]||
-||  13   ||     490|| Full-Joint-Distribution      ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java FullJointDistributionModel]||
+||     ||     ||       ||[http://aima-java.googlecode.com/svn/trunk/ ]||
 ||  14   ||     510|| Bayesian Network             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java BayesianNetwork]||
 ||  14.9 ||     525|| Enumeration-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java EnumerationAsk]||
 ||  14.11||     528|| Elimination-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java EliminationAsk]||
