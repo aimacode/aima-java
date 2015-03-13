@@ -328,6 +328,12 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java">SATPlan</a></td>
    </tr>
    <tr>
+       <td>9</td>
+       <td>323</td>
+       <td>Subst</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/master/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java">SubstVisitor</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -342,7 +348,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tbody>
 </table> 
 
-||   9   ||     323|| Subst                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java SubstVisitor]||
+||      ||     ||                         ||[http://aima-java.googlecode.com/svn/trunk/ ]||
 ||   9.1 ||     328|| Unify                        ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/Unifier.java Unifier]||
 ||   9.3 ||     332|| FOL-FC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java FOLFCAsk]||
 ||   9.3 ||     332|| FOL-BC-Ask                   ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java FOLBCAsk]||
