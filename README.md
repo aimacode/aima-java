@@ -5,8 +5,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
 
 # Getting Started Links 
   * [Demo Applications that can be run from your browser](http://aima-java.googlecode.com/svn/trunk/aima-all/release/aima3ejavademos.html).
-  * [An overview of the project](http://code.google.com/p/aima-java/wiki/AIMA3eReadme).
-  * [Instructions on how to set up your workspace](http://code.google.com/p/aima-java/wiki/GettingStarted).
   * [Javadoc for the aima-core project](http://aima-java.googlecode.com/svn/trunk/aima-all/release/javadoc/aima-core/index.html).
   * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://github.com/ctjoreilly/aima-java/releases/tag/aima3e-v1.8.0).
   * Latest Maven Information (for integration as a third party library)<br>
