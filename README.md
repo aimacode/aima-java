@@ -424,6 +424,48 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
        <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java">FullJointDistributionModel</a></td>
    </tr>
    <tr>
+       <td>14</td>
+       <td>510</td>
+       <td>Bayesian Network</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java">BayesianNetwork</a></td>
+   </tr>
+   <tr>
+       <td>14.9</td>
+       <td>525</td>
+       <td>Enumeration-Ask</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java">EnumerationAsk</a></td>
+   </tr>
+   <tr>
+       <td>14.11</td>
+       <td>528</td>
+       <td>Elimination-Ask</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">EliminationAsk</a></td>
+   </tr>
+   <tr>
+       <td>14.13</td>
+       <td>531</td>
+       <td>Prior-Sample</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/PriorSample.java">PriorSample</a></td>
+   </tr>
+   <tr>
+       <td>14.14</td>
+       <td>533</td>
+       <td>Rejection-Sampling</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java">RejectionSampling</a></td>
+   </tr>
+   <tr>
+       <td>14.15</td>
+       <td>534</td>
+       <td>Likelihood-Weighting</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java">LikelihoodWeighting</a></td>
+   </tr>
+   <tr>
+       <td>14.16</td>
+       <td>537</td>
+       <td>GIBBS-Ask</td>
+       <td><a href="https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java">GibbsAsk</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
@@ -431,14 +473,6 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
    </tr>
    </tbody>
 </table>  
-||     ||     ||       ||[http://aima-java.googlecode.com/svn/trunk/ ]||
-||  14   ||     510|| Bayesian Network             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java BayesianNetwork]||
-||  14.9 ||     525|| Enumeration-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java EnumerationAsk]||
-||  14.11||     528|| Elimination-Ask              ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java EliminationAsk]||
-||  14.13||     531|| Prior-Sample                 ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/PriorSample.java PriorSample]||
-||  14.14||     533|| Rejection-Sampling           ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java RejectionSampling]||
-||  14.15||     534|| Likelihood-Weighting         ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java LikelihoodWeighting]||
-||  14.16||     537|| GIBBS-Ask                    ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java GibbsAsk]||
 ||  15.4 ||     576|| Forward-Backward             ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java ForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackward.java HMMForwardBackward], [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/HMMForwardBackwardConstantSpace.java HMMForwardBackwardConstantSpace]||
 ||  15   ||     578|| Hidden Markov Model          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java HiddenMarkovModel]||
 ||  15.6 ||     580|| Fixed-Lag-Smoothing          ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java FixedLagSmoothing]||
