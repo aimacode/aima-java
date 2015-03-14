@@ -8,12 +8,13 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
   * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://github.com/ctjoreilly/aima-java/releases/tag/aima3e-v1.8.0).
   * Latest Maven Information (for integration as a third party library)<br>
   
-      `<dependency>`<br>
-
+      ```
+      <dependency>
           <groupId>com.googlecode.aima-java</groupId>
           <artifactId>aima-core</artifactId>
           <version>0.11.0</version>
-      `</dependency>`
+      </dependency>
+      ```
 
 # Index of Implemented Algorithms
 <table style="width:100%">
