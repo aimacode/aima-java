@@ -1,21 +1,22 @@
 # ![](https://github.com/ctjoreilly/aima-java/blob/AIMA3e/aima-all/release/images/aima3e.jpg)AIMA3e-Java (JDK 7+)
 Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/) 
 
-# Getting Started Links 
-  * [Demo Applications that can be run from your browser](http://aima-java.googlecode.com/svn/trunk/aima-all/release/aima3ejavademos.html).
+### Getting Started Links 
+  * [Demo Applications that can be run from your browser](http://ctjoreilly.github.io/aima-java/aima3e/aima3ejavademos.html).
   * [Overview of Project](https://github.com/ctjoreilly/aima-java/wiki/AIMA3e-Overview)
-  * [Javadoc for the aima-core project](http://aima-java.googlecode.com/svn/trunk/aima-all/release/javadoc/aima-core/index.html).
+  * [Javadoc for the aima-core project](http://ctjoreilly.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
   * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://github.com/ctjoreilly/aima-java/releases/tag/aima3e-v1.8.0).
   * Latest Maven Information (for integration as a third party library)<br>
   
-      `<dependency>`<br>
-
+      ```
+      <dependency>
           <groupId>com.googlecode.aima-java</groupId>
           <artifactId>aima-core</artifactId>
           <version>0.11.0</version>
-      `</dependency>`
+      </dependency>
+      ```
 
-# Index of Implemented Algorithms
+### Index of Implemented Algorithms
 <table style="width:100%">
    <tbody>
    <tr>
