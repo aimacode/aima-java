@@ -6,6 +6,6 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 
-	<target name="test" depends="aima-core.test-all">>
+	<target name="test" depends="aima-core.test-all">
         </target>	
 </project>
