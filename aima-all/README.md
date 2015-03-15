@@ -7,11 +7,11 @@ This project is used solely for creating combined releases of all of the AIMA3e 
 * Checkout the latest version of all the projects into a clean workspace.
 * Ensure the revisions # in the build.properties files of each project are updated.
 * Ensure the revision #s in the pom.xml file in aima-core is set to match the one in 
-  build.properties.
-* Ensure the README.txt file in each project is updated to reflect the release (i.e.
+  its build.properties.
+* Ensure the README file in each project is updated to reflect the release (i.e.
   update the 'Current Release' section at a minimum). 
-* Commit changes to SVN server for each project updated.
-* run the aima-all.release ant task from the aima-all project.
+* Commit and push changes to GitHib.
+* run the `aima-all.release ant task` from the `aima-all` project.
 
 ### Update the JavaDoc
 * Upload the latest version of the aima-core Javadoc:<br>
@@ -26,8 +26,6 @@ This project is used solely for creating combined releases of all of the AIMA3e 
   `aima-all/build/release/release` <br>
   to the `gh-pages` branch:<br>
   `aima3e/jars`
-* push the changes to the `gh-pages` branch.
-
 * Create a keystore which will be used to sign the copied jars, e.g.:
 ```
    > keytool -genkey -keystore c:/temp/aima3e.keystore -alias aima3e
@@ -72,7 +70,7 @@ This project is used solely for creating combined releases of all of the AIMA3e 
 * Close and Release. [Follow Releasing to Central from](http://central.sonatype.org/pages/ossrh-guide.html)
    
 ## Publish the Release to the AIMA Website
-* Upload the .zip file from aima-all/build/release to the project's releases page. Delete the previous release.
+* Upload the .zip file from `aima-all/build/release` to the project's releases page. Delete the previous release.
 * Update the AIMA3e `README.md` to indicate the latest revision # (ensure Maven info also updated). 
 * Update the `AIMA3e Overview` wiki page with the latest release information.
 * Send an email to team members letting them know the release has gone out the door.
