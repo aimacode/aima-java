@@ -6,14 +6,14 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
   * [Setting up your own workspace](https://github.com/ctjoreilly/aima-java/wiki/AIMA3e-Workspace-Setup).
   * [Demo Applications that can be run from your browser](http://ctjoreilly.github.io/aima-java/aima3e/aima3ejavademos.html).
   * [Javadoc for the aima-core project](http://ctjoreilly.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
-  * [Download the latest official version  = 1.8.0 (Aug 10 2014)](https://github.com/ctjoreilly/aima-java/releases/tag/aima3e-v1.8.0).
+  * [Download the latest official version  = 1.8.1 (Mar 15 2015)](https://github.com/ctjoreilly/aima-java/releases/latest).
   * Latest Maven Information (for integration as a third party library)<br>
   
       ```
       <dependency>
           <groupId>com.googlecode.aima-java</groupId>
           <artifactId>aima-core</artifactId>
-          <version>0.11.0</version>
+          <version>0.11.1</version>
       </dependency>
       ```
 
