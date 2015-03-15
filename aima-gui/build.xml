@@ -58,7 +58,6 @@
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
 		    </manifest>
 			 <fileset dir="${aima-gui.dir.build.bin}/main" />
-			 <fileset dir="${aima-gui.dir.src}/main/resources" excludes="**/*.svn" />
 		</jar>
 	</target>
 	

@@ -59,7 +59,7 @@
 		        <attribute name="AIMAX-OSM-Version" value="${aimax-osm.version}" />
 		    </manifest>
 			 <fileset dir="${aimax-osm.dir.build.bin}/main" />
-			 <fileset dir="${aimax-osm.dir.src}/main/resources" excludes="**/*.svn" />
+			 <fileset dir="${aimax-osm.dir.src}/main/resources" excludes="**/*.git, .gitignore" />
 		</jar>
 		<copy todir="${aimax-osm.dir.build.release}" file="${aimax-osm.dir.lib}/commons-compress-1.1.jar" />
 	</target>

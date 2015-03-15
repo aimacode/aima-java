@@ -23,15 +23,14 @@
 	</target>
 	
 	<target name="aima-all.release" depends="aima-all.makedirs,aima-core.release,aima-gui.release,aimax-osm.release">
-		<copy todir="${aima-all.dir.build.release}" file="README.txt" />
 		<copy todir="${aima-all.dir.build.release}/aima-core">
-			<fileset dir="${path.to.aima-core.project}" excludes="**/*.svn, build/, bin/" />
+			<fileset dir="${path.to.aima-core.project}" excludes="**/*.git, .gitignore, build/, bin/" />
 		</copy>
 		<copy todir="${aima-all.dir.build.release}/aima-gui">
-			<fileset dir="${path.to.aima-gui.project}" excludes="**/*.svn, build/ bin/" />
+			<fileset dir="${path.to.aima-gui.project}" excludes="**/*.git, .gitignore, build/ bin/" />
 		</copy>
 		<copy todir="${aima-all.dir.build.release}/aimax-osm">
-			<fileset dir="${path.to.aimax-osm.project}" excludes="**/*.svn, build/ bin/" />
+			<fileset dir="${path.to.aimax-osm.project}" excludes="**/*.git, .gitignore, build/ bin/" />
 		</copy>		
 		<copy todir="${aima-all.dir.build.release}/release">
 			<fileset dir="${aima-core.dir.build.release}" />

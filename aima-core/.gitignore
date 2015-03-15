@@ -1,1 +1,8 @@
 /bin/
+/build/
+/target/
+
+# Mac Specific
+.DS_Store
+.AppleDouble
+.LSOverride
