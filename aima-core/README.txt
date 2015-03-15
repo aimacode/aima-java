@@ -4,7 +4,7 @@
 # JDK 1.7 - is the baseline JDK against which this project is developed. 
 
 == Current Release: 0.11.1-Chp7-Complete ==
-0.11.1-Chp7-Complete : ??? :<br>
+0.11.1-Chp7-Complete : Mar 15 2015 :<br>
   * Fixed Issue 33, Add implementation of - Fig 7.22 SATPlan
   * Improved performance of DPLL implementation and added an alternative implementation that uses a couple
     of trivial optimizations to improve performance by about 40% over the default DPLL implementation
