@@ -1,8 +1,7 @@
 
-<project name="aima3e-java" basedir="." default="aima3e-java.test">
-	<dirname property="aima3e-java.basedir" file="${ant.file.aima3e-java}"/>
-	<property file="${aima-all.basedir}/ant.build.properties.local"/>
-	<property file="${aima-all.basedir}/ant.build.properties"/> 
+<project name="aima3e-java" basedir="." default="test">
+	<property file="${aima-all.basedir}/build.properties.local"/>
+	<property file="${aima-all.basedir}/build.properties"/> 
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 
