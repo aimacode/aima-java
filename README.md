@@ -1,4 +1,4 @@
-# AIMA4e-Java (JDK 8+)
+# AIMA4e-Java (JDK 8+) [![Build Status](https://travis-ci.org/ctjoreilly/aima-java.svg?branch=AIMA4e)](https://travis-ci.org/ctjoreilly/aima-java)
 Java implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach 4th Edition."
 
 ---
