@@ -5,7 +5,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## NOTE: This is an in progress complete rewrite of the algorithms, leveraging JDK 8's new language features, from the AIMA3e branch (currently master branch)
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (new demo GUI)
-* Mock up screen prototypes
 * Tree-Search demo
 * Graph-Search demo
 
