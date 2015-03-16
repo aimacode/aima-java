@@ -1,7 +1,7 @@
 # AIMA3e-Java aima-all
 This project is used solely for creating combined releases of all of the AIMA3e projects.
 
-## CHECK LIST FOR CREATING AN AIMA3e-JAVA RELEASE
+## Check List for creating an AIMA3e-Java Release
 
 ### Create the Release 
 * Checkout the latest version of all the projects into a clean workspace.
