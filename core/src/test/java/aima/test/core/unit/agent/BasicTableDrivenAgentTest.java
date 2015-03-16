@@ -1,6 +1,7 @@
 package aima.test.core.unit.agent;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -8,6 +9,7 @@ import org.junit.Test;
  */
 public class BasicTableDrivenAgentTest {
 
+    @Ignore("TODO")
     @Test
     public void testTODO() {
         Assert.fail("TODO");
