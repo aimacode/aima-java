@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp  spec="6.0+"  codebase="http://ctjoreilly.github.io/aima-java/aima3e"  href="aima-gui-ConnectFourApp.jnlp">  
+<jnlp  spec="6.0+"  codebase="http://aima-java.github.io/aima-java/aima3e"  href="aima-gui-ConnectFourApp.jnlp">  
   <information>    
     <title>Connect Four Demo Application</title>
     <description>Connect Four Demo Application</description>      
     <vendor>AIMA3e-Java Open Source Project</vendor>    
-    <homepage href="https://github.com/ctjoreilly/aima-java"/> 
+    <homepage href="https://github.com/aima-java/aima-java"/> 
     <icon href="images/aima3e.jpg"/>
     <icon kind="splash" href="images/aima3ebig.jpg"/>
     <offline-allowed/>
