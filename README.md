@@ -1,6 +1,5 @@
-# ![](https://github.com/ctjoreilly/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+)
-Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/) <br>
-[![Build Status](https://travis-ci.org/ctjoreilly/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/ctjoreilly/aima-java)
+# ![](https://github.com/ctjoreilly/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+) [![Build Status](https://travis-ci.org/ctjoreilly/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/ctjoreilly/aima-java)
+Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/)
 ### Getting Started Links 
   * [Overview of Project](https://github.com/ctjoreilly/aima-java/wiki/AIMA3e-Overview).
   * [Setting up your own workspace](https://github.com/ctjoreilly/aima-java/wiki/AIMA3e-Workspace-Setup).
