@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.paint.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 
 <BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.app.AppController">
 <top>
-    <VBox prefHeight="40.0" prefWidth="587.0" BorderPane.alignment="CENTER">
+    <VBox prefHeight="34.0" prefWidth="587.0" BorderPane.alignment="CENTER">
         <children>
-            <ToolBar fx:id="toolBar" prefHeight="40.0" prefWidth="200.0" />
+            <ToolBar fx:id="toolBar" prefHeight="34.0" prefWidth="200.0" />
         </children>
     </VBox>
 </top>

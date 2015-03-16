@@ -23,5 +23,5 @@
         #hiddenSplitter *.horizontal-grabber {
     -fx-background-color: null;
     -fx-border-color: null;
-    -fx-padding: 5px;
+    -fx-padding: 3px;
 }
