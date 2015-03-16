@@ -5,3 +5,23 @@
 .scroll-pane {
    -fx-background-color: white;
 }
+
+.contentPane {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 1px;
+}
+
+.hiddenSplitter {
+    -fx-background-color: null;
+    -fx-padding: 0px;
+}
+
+.hiddenSplitter *.split-pane-divider,
+        #hiddenSplitter *.vertical-grabber,
+        #hiddenSplitter *.horizontal-grabber {
+    -fx-background-color: null;
+    -fx-border-color: null;
+    -fx-padding: 5px;
+}
