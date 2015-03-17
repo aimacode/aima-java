@@ -78,13 +78,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>2.10</td>
        <td>49</td>
        <td>Simple-Reflex-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleReflexAgent.java">SimpleReflexAgentProgram</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
    </tr>
    <tr>
        <td>2.12</td>
        <td>51</td>
        <td>Model-Based-Reflex-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/ModelBasedReflexAgent.java">ModelBasedReflexAgentProgram</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
        <td>3</td>
