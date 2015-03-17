@@ -17,7 +17,7 @@
    <top>
       <BorderPane BorderPane.alignment="CENTER">
          <left>
-            <Label fx:id="searchSpaceInfoLabel" text="Search Space" BorderPane.alignment="CENTER_LEFT" />
+            <Label fx:id="searchSpaceInfoLabel" text="Search Space" underline="true" BorderPane.alignment="CENTER_LEFT" />
          </left>
       </BorderPane>
    </top>

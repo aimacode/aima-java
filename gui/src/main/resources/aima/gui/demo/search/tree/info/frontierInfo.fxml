@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="266.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.info.FrontierInfoController">
-   <top>
-      <HBox prefHeight="38.0" prefWidth="460.0" spacing="3.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Frontier" />
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
-                  <ProgressBar prefWidth="200.0" progress="0.0" BorderPane.alignment="CENTER" />
-               </top>
-               <center>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="#current" />
-                        <Label fx:id="currentFrontierCountLabel" text="0" />
-                     </children>
-                  </HBox>
-               </center>
-            </BorderPane>
-            <Label text="#max" />
-            <Label fx:id="maxFrontierCountLabel" text="0" />
-         </children>
-      </HBox>
-   </top>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
@@ -65,4 +44,35 @@
    <padding>
       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
    </padding>
+   <top>
+      <BorderPane prefHeight="61.0" prefWidth="456.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label text="Frontier" underline="true" BorderPane.alignment="TOP_LEFT" />
+         </top>
+         <bottom>
+            <HBox prefHeight="38.0" prefWidth="460.0" spacing="3.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <ProgressBar prefWidth="200.0" progress="0.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <center>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label text="#current" />
+                              <Label fx:id="currentFrontierCountLabel" text="0" />
+                           </children>
+                        </HBox>
+                     </center>
+                  </BorderPane>
+                  <Label text="#max" />
+                  <Label fx:id="maxFrontierCountLabel" text="0" />
+               </children>
+            </HBox>
+         </bottom>
+         <padding>
+            <Insets bottom="2.0" />
+         </padding>
+      </BorderPane>
+   </top>
 </BorderPane>

@@ -39,6 +39,7 @@ public class RectangularGridProblemController {
     private int nodeRadius              = 10;
     private int borderPadding           = 10;
     private int nodeRadiusSpacingFactor = 5;
+    private int viewportPadding         = 8;
     //
     private Paint defaultPaint = Color.WHITE;
     private Image goalImage    = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
@@ -55,8 +56,8 @@ public class RectangularGridProblemController {
         int height = numHeightNodes * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
-        int vpWidth  =  (int) problemViewScrollPane.getWidth() - 2;
-        int vpHeight =  (int) problemViewScrollPane.getHeight() - 2;
+        int vpWidth  =  (int) problemViewScrollPane.getWidth() - viewportPadding;
+        int vpHeight =  (int) problemViewScrollPane.getHeight() - viewportPadding;
         if (width < vpWidth) {
             xInset = (vpWidth - width) / 2;
             problemViewPane.setPrefWidth(vpWidth);
