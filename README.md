@@ -15,7 +15,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
   queue and remove a node with a higher state cost.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 * BasicRecursiveBestFirstSearchTest
-* 3 	92	Best-First search
+* 3     92	Best-First search
 * 3 	92	Greedy best-First search
 * 3 	93	A* search
 * 3 	90	Bidirectional search
