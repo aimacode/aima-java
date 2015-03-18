@@ -19,11 +19,11 @@ public class CodeReader {
     public static final String CODE_MARKER_PREFIX = "@";
 
     // Test Main
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         read("tree-search.code");
     }
 
-    public static List<CodeRepresentation> read(String codeFileName) throws IOException, URISyntaxException {
+    public static List<CodeRepresentation> read(String codeFileName) {
         final List<CodeRepresentation> result = new ArrayList<>();
 
         final StringBuilder codeTypeName = new StringBuilder();
@@ -45,6 +45,12 @@ public class CodeReader {
                     process(line, source, codeCommands);
                 }
             });
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        catch (URISyntaxException urie) {
+            urie.printStackTrace();
         }
         // Ensure the last code representation is included as well
         if (codeTypeName.length() > 0) {

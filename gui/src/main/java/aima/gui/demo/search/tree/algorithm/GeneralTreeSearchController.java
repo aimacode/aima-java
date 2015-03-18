@@ -1,9 +1,13 @@
 package aima.gui.demo.search.tree.algorithm;
 
+import aima.gui.support.code.CodeReader;
+import aima.gui.support.code.CodeRepresentation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.List;
 
 
 /**
@@ -11,8 +15,7 @@ import javafx.scene.control.*;
  */
 public class GeneralTreeSearchController {
     @FXML private Slider executionStepSlider;
-    @FXML private ListView<String> pseudoCodeList;
-    @FXML private ListView<String> javaCodeList;
+    @FXML private TabPane codeTabPane;
     @FXML private Button autoPlayButton;
     @FXML private ChoiceBox<Integer> stepsASecondChoiceBox;
     @FXML private Button startButton;
@@ -33,5 +36,15 @@ public class GeneralTreeSearchController {
         backButton.setTooltip(new Tooltip("Back"));
         forwardButton.setTooltip(new Tooltip("Forward"));
         endButton.setTooltip(new Tooltip("End"));
+
+        List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code");
+        codeRepresentations.forEach(cr -> {
+            Tab tab = new Tab(cr.codeTypeName);
+            TextArea ta = new TextArea();
+            ta.setText(cr.source);
+            ta.setEditable(false);
+            tab.setContent(ta);
+            codeTabPane.getTabs().add(tab);
+        });
     }
 }
