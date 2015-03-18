@@ -10,8 +10,8 @@
 // function TREE-SEARCH(problem) returns a solution, or failure
 @start@default List<Action> apply(Problem<S> problem) {@start@
   // initialize the frontier using the initial state of the problem
-  @initialize@Queue<Node<S>> frontier = newFrontier();
-  frontier.add(newNode(problem.initialState(), 0));@initialize@
+  @initialize@Queue<Node<S>> frontier = newFrontier();@initialize@
+  @initialize@frontier.add(newNode(problem.initialState(), 0));@initialize@
   // loop do
   while (true) {
   // if the frontier is empty then return failure
