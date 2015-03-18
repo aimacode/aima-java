@@ -17,7 +17,7 @@
     <top>
         <BorderPane BorderPane.alignment="CENTER">
             <left>
-                <Label fx:id="searchTypeLabel" text="General Tree Search" underline="true" BorderPane.alignment="CENTER_LEFT" />
+                <Label fx:id="searchTypeLabel" text="Algorithm: General Tree Search" underline="true" BorderPane.alignment="CENTER_LEFT" />
             </left>
             <right>
                 <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
