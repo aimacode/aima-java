@@ -14,12 +14,12 @@
     @initialize@frontier.add(newNode(problem.initialState(), 0));@initialize@
     // loop do
     while (true) {
-    // if the frontier is empty then return failure
-    if (@frontier-empty-check@frontier.isEmpty()@frontier-empty-check@) { @failure@return failure();@failure@ }
-    // choose a leaf node and remove it from the frontier
-    @frontier-remove@Node<S> node = frontier.remove();@frontier-remove@
-    // if the node contains a goal state then return the corresponding solution
-    if (@check-goal@problem.isGoalState(node.state())@check-goal@) { @solution@return solution(node);@solution@ }
+        // if the frontier is empty then return failure
+        if (@frontier-empty-check@frontier.isEmpty()@frontier-empty-check@) { @failure@return failure();@failure@ }
+        // choose a leaf node and remove it from the frontier
+        @frontier-remove@Node<S> node = frontier.remove();@frontier-remove@
+        // if the node contains a goal state then return the corresponding solution
+        if (@check-goal@problem.isGoalState(node.state())@check-goal@) { @solution@return solution(node);@solution@ }
         // expand the chosen node, adding the resulting nodes to the frontier
         for (@expand-node@Action action : problem.actions(node.state())@expand-node@) {
             @add-frontier@frontier.add(childNode(problem, node, action));@add-frontier@
