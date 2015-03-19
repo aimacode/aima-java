@@ -1,6 +1,6 @@
 AIMA JAVA Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
 
-NOTE: This branch is no longer supported. 0.95 is the Final Release based on the 2nd Edition of Book.
+NOTE: This branch is no longer supported. Release 0.95 is the final release based on the 2nd edition of the book.
 
 #Some Notes
 
