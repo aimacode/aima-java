@@ -1,6 +1,8 @@
 AIMA JAVA Notes By Ravi(magesmail@yahoo.com) and Ciaran (ctjoreilly@gmail.com).
 
-#summary some notes
+NOTE: This branch is no longer supported. 0.95 is the Final Release based on the 2nd Edition of Book.
+
+#Some Notes
 
 = Introduction =
 The latest  (and ever evolving) code can be found at http://code.google.com/p/aima-java/. if you notice a bug please try checking out the latest  version from the svn repository to  see if it persists.
