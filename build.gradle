@@ -21,7 +21,20 @@ allprojects {
 subprojects {
     // all projects must be compatible with the java version specified here
     sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    tasks.withType(Test) {
+        scanForTestClasses = false
+        include "**/*Test.class"
+    }
+
+}
+
+project(':') {
+    dependencies {
+        compile project(':gui')
+    }
 }
 
 project(':gui') {
