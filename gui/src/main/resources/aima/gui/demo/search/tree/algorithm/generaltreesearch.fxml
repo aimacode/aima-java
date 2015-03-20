@@ -22,7 +22,7 @@
             <right>
                 <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="listAlgorithmsButton" mnemonicParsing="false" text="List" />
+                        <Button fx:id="listAlgorithmsButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="List" />
                     </children>
                 </HBox>
             </right>

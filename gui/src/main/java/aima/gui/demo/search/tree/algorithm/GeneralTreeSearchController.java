@@ -2,18 +2,20 @@ package aima.gui.demo.search.tree.algorithm;
 
 import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -21,6 +23,7 @@ import java.util.List;
  */
 public class GeneralTreeSearchController {
     @FXML private Slider executionStepSlider;
+    @FXML private Button listAlgorithmsButton;
     @FXML private TabPane codeTabPane;
     @FXML private Button autoPlayButton;
     @FXML private ChoiceBox<Integer> stepsASecondChoiceBox;
@@ -30,11 +33,36 @@ public class GeneralTreeSearchController {
     @FXML private Button endButton;
     @FXML private Button resetButton;
     //
+    private static final String _iconSize = "16px";
     private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.SANS_SERIF, 12);
     private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, 12);
+    //
+    private static final String[] JAVA_KEYWORDS = new String[] {
+            "abstract", "assert", "boolean", "break", "byte",
+            "case", "catch", "char", "class", "const",
+            "continue", "default", "do", "double", "else",
+            "enum", "extends", "final", "finally", "float",
+            "for", "goto", "if", "implements", "import",
+            "instanceof", "int", "interface", "long", "native",
+            "new", "package", "private", "protected", "public",
+            "return", "short", "static", "strictfp", "super",
+            "switch", "synchronized", "this", "throw", "throws",
+            "transient", "try", "void", "volatile", "while"
+    };
+    private static final String JAVA_KEYWORD_PATTERN = "\\b(" + String.join("|", JAVA_KEYWORDS) + ")\\b";
+    private static final Pattern JAVA_PATTERN = Pattern.compile(JAVA_KEYWORD_PATTERN);
 
     @FXML
     private void initialize() {
+        GlyphsDude.setIcon(listAlgorithmsButton, FontAwesomeIcons.BARS, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(startButton, FontAwesomeIcons.FAST_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(backButton, FontAwesomeIcons.STEP_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(forwardButton, FontAwesomeIcons.STEP_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(endButton, FontAwesomeIcons.FAST_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(resetButton, FontAwesomeIcons.EJECT, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+
+        listAlgorithmsButton.setTooltip(new Tooltip("Select Algorithm"));
         executionStepSlider.setMin(0);
         executionStepSlider.setBlockIncrement(1);
         executionStepSlider.setMax(1);
@@ -45,6 +73,7 @@ public class GeneralTreeSearchController {
         backButton.setTooltip(new Tooltip("Back"));
         forwardButton.setTooltip(new Tooltip("Forward"));
         endButton.setTooltip(new Tooltip("End"));
+        resetButton.setTooltip(new Tooltip("Reset"));
 
         List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code");
         codeRepresentations.forEach(cr -> {
@@ -74,6 +103,15 @@ public class GeneralTreeSearchController {
         }
         else if (cr.codeTypeName.equalsIgnoreCase("Java")) {
             text.forEach(t -> t.setFont(_defaultCodeFont));
+            // Handle keywords
+            Matcher matcher = JAVA_PATTERN.matcher(cr.source);
+            while (matcher.find()) {
+                for (int i = matcher.start(); i < matcher.end(); i++) {
+                    text.get(i).setFill(Color.BLUEVIOLET);
+                }
+            }
+
+            // Handle comments
             int s = 0;
             while (s < cr.source.length()) {
                 s = cr.source.indexOf("//", s);

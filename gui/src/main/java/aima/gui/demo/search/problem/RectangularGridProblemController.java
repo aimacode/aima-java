@@ -1,13 +1,12 @@
 package aima.gui.demo.search.problem;
 
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -24,11 +23,14 @@ import java.util.Set;
  */
 public class RectangularGridProblemController {
     @FXML private Label  problemTypeLabel;
-    @FXML private Button listProblemsButton;
     @FXML private Button optionsButton;
+    @FXML private Button listProblemsButton;
     @FXML private ScrollPane problemViewScrollPane;
     @FXML private Pane problemViewPane;
 
+    //
+    private static final String _iconSize = "16px";
+    //
     private Circle      startNode = null;
     private Set<Circle> goalNodes = new HashSet<>();
     private Circle[][] nodes;
@@ -127,6 +129,12 @@ public class RectangularGridProblemController {
 
     @FXML
     private void initialize() {
+        GlyphsDude.setIcon(optionsButton, FontAwesomeIcons.GEAR, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(listProblemsButton, FontAwesomeIcons.BARS, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+
+        optionsButton.setTooltip(new Tooltip("Configure Problem"));
+        listProblemsButton.setTooltip(new Tooltip("Select Problem"));
+
         problemViewScrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {

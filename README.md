@@ -185,6 +185,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### GUI
 * http://docs.oracle.com/javase/8/javase-clienttechnologies.htm
 * https://bitbucket.org/controlsfx/controlsfx/overview
+* http://fxexperience.com/
 * https://bitbucket.org/Jerady/fontawesomefx
 * http://fortawesome.github.io/Font-Awesome/get-started/
 * http://www.pythontutor.com/

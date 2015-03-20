@@ -22,8 +22,8 @@
          <right>
             <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="listProblemsButton" mnemonicParsing="false" text="List" />
                   <Button fx:id="optionsButton" mnemonicParsing="false" text="Opts" />
+                  <Button fx:id="listProblemsButton" mnemonicParsing="false" text="List" />
                </children>
             </HBox>
          </right>
