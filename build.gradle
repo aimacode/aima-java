@@ -24,9 +24,15 @@ subprojects {
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 }
 
+project(':gui') {
+    dependencies {
+        compile project(":core")
+    }
+}
 
 project(':gui') {
     dependencies {
+        compile project(":extra")
         compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
     }
 }

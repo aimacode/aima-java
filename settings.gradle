@@ -1,6 +1,6 @@
 rootProject.name = 'aima4e-java'
 
-include 'core'
-
-include 'gui'
+include ':core'
+include ':extra'
+include ':gui'
 
