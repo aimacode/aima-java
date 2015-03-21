@@ -37,7 +37,7 @@ public interface TreeSearch<S> extends SearchFunction<S> {
             // choose a leaf node and remove it from the frontier
             Node<S> node = frontier.remove();
             // if the node contains a goal state then return the corresponding solution
-            if (problem.isGoalState(node.state())) { return solution(node); }
+            if (isGoalState(node, problem)) { return solution(node); }
             // expand the chosen node, adding the resulting nodes to the frontier
             for (Action action : problem.actions(node.state())) {
                 frontier.add(childNode(problem, node, action));

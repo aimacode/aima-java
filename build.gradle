@@ -39,13 +39,13 @@ project(':') {
 
 project(':gui') {
     dependencies {
-        compile project(":core")
+        compile project(":extra")
+        compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
     }
 }
 
-project(':gui') {
+project(':extra') {
     dependencies {
-        compile project(":extra")
-        compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
+        compile project(":core")
     }
 }

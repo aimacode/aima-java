@@ -59,7 +59,7 @@ public interface UniformCostSearch <S> extends GraphSearch<S> {
             // node <- POP(frontier) // chooses the lowest-cost node in frontier
             node = frontier.remove();
             // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-            if (problem.isGoalState(node.state())) { return solution(node); }
+            if (isGoalState(node, problem)) { return solution(node); }
             // add node.STATE to explored
             explored.add(node.state());
             // for each action in problem.ACTIONS(node.STATE) do

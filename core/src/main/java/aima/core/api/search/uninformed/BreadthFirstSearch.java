@@ -42,7 +42,7 @@ public interface BreadthFirstSearch<S> extends GraphSearch<S> {
         // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
         Node<S> node = newNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (problem.isGoalState(node.state())) { return solution(node); }
+        if (isGoalState(node, problem)) { return solution(node); }
         // frontier <- a FIFO queue with node as the only element
         Queue<Node<S>> frontier = newFrontier();
         frontier.add(node);
@@ -63,7 +63,7 @@ public interface BreadthFirstSearch<S> extends GraphSearch<S> {
                 // if child.STATE is not in explored or frontier then
                 if (!(explored.contains(child.state()) || frontier.contains(child.state()))) {
                     // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-                    if (problem.isGoalState(child.state())) { return solution(child); }
+                    if (isGoalState(child, problem)) { return solution(child); }
                     // frontier <- INSERT(child, frontier)
                     frontier.add(child);
                 }

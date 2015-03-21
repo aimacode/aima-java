@@ -21,6 +21,10 @@ public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
     Node<S> newNode(S state, double pathCost);
     Node<S> childNode(Problem<S> problem, Node<S> parent, Action action);
 
+    default boolean isGoalState(Node<S> node, Problem<S> problem) {
+        return problem.isGoalState(node.state());
+    }
+
     default List<Action> failure() {
         // represented by an empty list
         return Collections.<Action>emptyList();

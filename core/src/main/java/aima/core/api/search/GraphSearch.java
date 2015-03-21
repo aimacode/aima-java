@@ -45,7 +45,7 @@ public interface GraphSearch<S> extends SearchFunction<S> {
             // choose a leaf node and remove it from the frontier
             Node<S> node = frontier.remove();
             // if the node contains a goal state then return the corresponding solution
-            if (problem.isGoalState(node.state())) { return solution(node); }
+            if (isGoalState(node, problem)) { return solution(node); }
             // add the node to the explored set
             explored.add(node.state());
             // expand the chosen node, adding the resulting nodes to the frontier

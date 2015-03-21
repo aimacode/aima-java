@@ -1,5 +1,6 @@
 package aima.gui.demo.search.tree.algorithm;
 
+import aima.extra.instrument.search.TreeSearchCmdInstr;
 import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
@@ -75,7 +76,7 @@ public class GeneralTreeSearchController {
         endButton.setTooltip(new Tooltip("End"));
         resetButton.setTooltip(new Tooltip("Reset"));
 
-        List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code");
+        List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
         codeRepresentations.forEach(cr -> {
             Tab tab = new Tab(cr.codeTypeName);
             TextFlow tf = new TextFlow();

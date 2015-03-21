@@ -49,7 +49,7 @@ public interface RecursiveBestFirstSearch<S> extends SearchFunction<S> {
     // function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
     default Result rbfs(Problem<S> problem, SuccessorNode<S> node, double f_limit) {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (problem.isGoalState(node.n.state())) { return new Result(solution(node.n)); }
+        if (isGoalState(node.n, problem)) { return new Result(solution(node.n)); }
         // successors <- []
         List<SuccessorNode<S>>  successors = new ArrayList<>();
         // for each action in problem.ACTION(node.STATE) do

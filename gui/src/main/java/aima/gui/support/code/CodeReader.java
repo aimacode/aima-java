@@ -1,13 +1,12 @@
 package aima.gui.support.code;
 
+import aima.extra.instrument.search.TreeSearchCmdInstr;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 
@@ -20,10 +19,10 @@ public class CodeReader {
 
     // Test Main
     public static void main(String[] args) {
-        read("tree-search.code");
+        read("tree-search.code", TreeSearchCmdInstr.CMDS);
     }
 
-    public static List<CodeRepresentation> read(String codeFileName) {
+    public static List<CodeRepresentation> read(String codeFileName, Set<String> expectedCmds) {
         final List<CodeRepresentation> result = new ArrayList<>();
 
         final StringBuilder codeTypeName = new StringBuilder();
@@ -54,7 +53,11 @@ public class CodeReader {
         }
         // Ensure the last code representation is included as well
         if (codeTypeName.length() > 0) {
-            result.add(new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands)));
+            CodeRepresentation cr = new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands));
+            if (!cr.commandIdToCommand.keySet().equals(expectedCmds)) {
+                throw new IllegalArgumentException("Code Representation is missing command ids :\n"+cr.commandIdToCommand.keySet()+"\n"+expectedCmds);
+            }
+            result.add(cr);
         }
 
         return result;

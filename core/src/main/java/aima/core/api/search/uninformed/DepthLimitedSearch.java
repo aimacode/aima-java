@@ -43,7 +43,7 @@ public interface DepthLimitedSearch<S> extends SearchFunction<S> {
     // function RECURSIVE-DLS(node, problem, limit) returns a solution, or failure/cutoff
     default List<Action> recursiveDLS(Node<S> node, Problem<S> problem, int limit) {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (problem.isGoalState(node.state())) {
+        if (isGoalState(node, problem)) {
             return solution(node);
         } // else if limit = 0 then return cutoff
         else if (limit == 0) {

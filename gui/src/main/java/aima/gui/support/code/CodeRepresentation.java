@@ -14,7 +14,7 @@ public class CodeRepresentation {
         this.codeTypeName = codeTypeName;
         this.source       = source;
 
-        Map<String, CodeCommand> cmdIdToCommand = new HashMap<>();
+        Map<String, CodeCommand> cmdIdToCommand = new LinkedHashMap<>();
         codeCommands.forEach(cc -> cmdIdToCommand.put(cc.commandId, cc));
         this.commandIdToCommand = Collections.unmodifiableMap(cmdIdToCommand);
     }
