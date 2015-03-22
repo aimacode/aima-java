@@ -6,6 +6,7 @@ import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
@@ -23,17 +24,6 @@ import java.util.regex.Pattern;
  * @author Ciaran O'Reilly
  */
 public class GeneralTreeSearchController {
-    @FXML private Slider executionStepSlider;
-    @FXML private Button listAlgorithmsButton;
-    @FXML private TabPane codeTabPane;
-    @FXML private Button autoPlayButton;
-    @FXML private ChoiceBox<Integer> stepsASecondChoiceBox;
-    @FXML private Button startButton;
-    @FXML private Button backButton;
-    @FXML private Button forwardButton;
-    @FXML private Button endButton;
-    @FXML private Button resetButton;
-    //
     private static final String _iconSize = "16px";
     private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.SANS_SERIF, 12);
     private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, 12);
@@ -52,6 +42,36 @@ public class GeneralTreeSearchController {
     };
     private static final String JAVA_KEYWORD_PATTERN = "\\b(" + String.join("|", JAVA_KEYWORDS) + ")\\b";
     private static final Pattern JAVA_PATTERN = Pattern.compile(JAVA_KEYWORD_PATTERN);
+    //
+    @FXML private Slider executionStepSlider;
+    @FXML private Button listAlgorithmsButton;
+    @FXML private TabPane codeTabPane;
+    @FXML private Button autoPlayButton;
+    @FXML private ChoiceBox<Integer> stepsASecondChoiceBox;
+    @FXML private Button startButton;
+    @FXML private Button backButton;
+    @FXML private Button forwardButton;
+    @FXML private Button endButton;
+    @FXML private Button resetButton;
+    //
+    private boolean autoPlayPlaying = false;
+
+
+    @FXML
+    protected void autoPlay(ActionEvent event) {
+        if (autoPlayPlaying) {
+            // Stop auto-playing
+            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            autoPlayButton.setTooltip(new Tooltip("Auto Play"));
+            autoPlayPlaying = false;
+        }
+        else {
+            // Start auto-playing
+            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
+            autoPlayPlaying = true;
+        }
+    }
 
     @FXML
     private void initialize() {

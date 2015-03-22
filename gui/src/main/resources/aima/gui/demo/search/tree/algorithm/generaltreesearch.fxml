@@ -36,10 +36,10 @@
          <bottom>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="622.0" spacing="3.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="autoPlayButton" mnemonicParsing="false" text="[ &gt;" />
-                  <Label text="Steps Sec." />
+                  <Button fx:id="autoPlayButton" mnemonicParsing="false" onAction="#autoPlay" text="[ &gt;" />
                   <ChoiceBox fx:id="stepsASecondChoiceBox" prefHeight="26.0" prefWidth="52.0" />
-                  <ToolBar prefHeight="38.0" prefWidth="164.0" style="-fx-background-color: null;">
+                  <Label text=" step(s) a sec." />
+                  <ToolBar style="-fx-background-color: null;">
                     <items>
                       <Button fx:id="startButton" mnemonicParsing="false" text="&lt;&lt;" />
                         <Button fx:id="backButton" mnemonicParsing="false" text="&lt; " />

@@ -12,8 +12,14 @@ import java.util.*;
  * @author Ciaran O'Reilly
  */
 public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
+    interface Cmd<S> {
+        String  commandId();
+        int     frontierSize();
+        Node<S> node();
+    }
+
     interface Listener<S> {
-        void cmd(String commandId, int frontierSize, Node<S> node);
+        void cmd(Cmd command);
     }
 
     public static final String CMD_START                = "start";
@@ -48,33 +54,47 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     @Override
     public Queue<Node<S>> newFrontier() {
         frontier = new InstrLinkedList();
-        listener.cmd(CMD_START, 0, null);
+        notify(CMD_START, 0, null);
         return frontier;
     }
 
     @Override
     public Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
         Node<S> child = super.childNode(problem, parent, action);
-        listener.cmd(CMD_EXPAND_NODE, frontier.size(), child);
+        notify(CMD_EXPAND_NODE, frontier.size(), child);
         return child;
     }
 
     @Override
     public boolean isGoalState(Node<S> node, Problem<S> problem) {
-        listener.cmd(CMD_CHECK_GOAL, frontier.size(), node);
+        notify(CMD_CHECK_GOAL, frontier.size(), node);
         return super.isGoalState(node, problem);
     }
 
     @Override
     public List<Action> failure() {
-        listener.cmd(CMD_FAILURE, frontier.size(), null);
+        notify(CMD_FAILURE, frontier.size(), null);
         return super.failure();
     }
 
     @Override
     public List<Action> solution(Node<S> node) {
-        listener.cmd(CMD_SOLUTION, frontier.size(), node);
+        notify(CMD_SOLUTION, frontier.size(), node);
         return super.solution(node);
+    }
+
+    private void notify(final String commandId, final int frontierSize, final Node<S> node) {
+        listener.cmd(new Cmd<S>() {
+            public String commandId() {
+                return commandId;
+            }
+            public int frontierSize() {
+                return frontierSize;
+            }
+            public Node<S> node() {
+                return node;
+            }
+        });
     }
 
     private class InstrLinkedList extends LinkedList<Node<S>> {
@@ -83,14 +103,14 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
         @Override
         public boolean isEmpty() {
             boolean result = super.isEmpty();
-            listener.cmd(CMD_FRONTIER_EMPTY_CHECK, size(), null);
+            TreeSearchCmdInstr.this.notify(CMD_FRONTIER_EMPTY_CHECK, size(), null);
             return result;
         }
 
         @Override
         public Node<S> remove() {
             Node<S> removed =  super.remove();
-            listener.cmd(CMD_FRONTIER_REMOVE, size(), removed);
+            TreeSearchCmdInstr.this.notify(CMD_FRONTIER_REMOVE, size(), removed);
             return removed;
         }
 
@@ -99,10 +119,10 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
             boolean result = super.add(e);
             if (firstAdd) {
                 firstAdd = false;
-                listener.cmd(CMD_INITIALIZE, size(), e);
+                TreeSearchCmdInstr.this.notify(CMD_INITIALIZE, size(), e);
             }
             else {
-                listener.cmd(CMD_ADD_FRONTIER, size(), e);
+                TreeSearchCmdInstr.this.notify(CMD_ADD_FRONTIER, size(), e);
             }
             return result;
         }
