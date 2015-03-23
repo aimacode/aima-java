@@ -12,14 +12,14 @@ import java.util.*;
  * @author Ciaran O'Reilly
  */
 public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
-    interface Cmd<S> {
+    public interface Cmd<S> {
         String  commandId();
         int     frontierSize();
         Node<S> node();
     }
 
-    interface Listener<S> {
-        void cmd(Cmd command);
+    public interface Listener<S> {
+        void cmd(Cmd<S> command);
     }
 
     public static final String CMD_START                = "start";
