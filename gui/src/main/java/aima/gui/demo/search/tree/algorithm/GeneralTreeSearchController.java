@@ -1,6 +1,8 @@
 package aima.gui.demo.search.tree.algorithm;
 
 import aima.extra.instrument.search.TreeSearchCmdInstr;
+import aima.gui.demo.search.problem.rectangular.AtVertex;
+import aima.gui.demo.search.problem.rectangular.RectangularProblem;
 import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
@@ -15,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +58,7 @@ public class GeneralTreeSearchController {
     @FXML private Button resetButton;
     //
     private boolean autoPlayPlaying = false;
-
+    private TreeSearchAlgoSimulator<AtVertex> simulator = new TreeSearchAlgoSimulator();
 
     @FXML
     protected void autoPlay(ActionEvent event) {
@@ -70,6 +73,10 @@ public class GeneralTreeSearchController {
             GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
             autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
             autoPlayPlaying = true;
+
+// TODO - problem comes externally
+            simulator.setProblem(new RectangularProblem(3, 3, new AtVertex(0, 0), Arrays.asList(new AtVertex(2, 2))));
+            simulator.start();
         }
     }
 
