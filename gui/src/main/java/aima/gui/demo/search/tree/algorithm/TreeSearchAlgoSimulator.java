@@ -34,6 +34,14 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         return problem;
     }
 
+    public void incCurrentExecutionIndex() {
+        currentExecutionIndex.set(currentExecutionIndex.get()+1);
+    }
+
+    public void decCurrentExecutionIndex() {
+        currentExecutionIndex.set(currentExecutionIndex.get()-1);
+    }
+
     public int getCurrentExecutionIndex() {
         return currentExecutionIndex.get();
     }
@@ -64,8 +72,10 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
     @Override
     protected Task<Void> createTask() {
-// TODO - cleanup
-System.out.println("createTask");
+        // Restarting the execution
+        currentExecutionIndex.set(0);
+        executed.get().clear();
+
         return new Task<Void>() {
             @Override
             public Void call() {
@@ -75,7 +85,6 @@ System.out.println("createTask");
                         if (isCancelled()) {
                             throw new CancellationException("Cancelled");
                         }
-System.out.println(command.commandId());
                         executed.get().add(command);
                     }
                 });

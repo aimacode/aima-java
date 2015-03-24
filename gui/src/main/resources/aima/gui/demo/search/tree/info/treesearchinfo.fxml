@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.info.TreeSearchInfoController">
    <children>
-      <SplitPane dividerPositions="0.33140655105973027, 0.6657032755298651" prefHeight="200.0" prefWidth="200.0" styleClass="hiddenSplitter" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.36, 0.72" prefHeight="200.0" prefWidth="200.0" styleClass="hiddenSplitter" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane fx:id="stateSpaceInfo" prefHeight="400.0" prefWidth="224.0" styleClass="contentPane" />
             <AnchorPane fx:id="searchSpaceInfo" prefHeight="200.0" prefWidth="200.0" styleClass="contentPane" />

@@ -7,7 +7,11 @@ import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,9 +79,24 @@ public class GeneralTreeSearchController {
             autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
             autoPlayPlaying = true;
 
-// TODO - problem comes externally
-            simulator.setProblem(new RectangularProblem(3, 3, new AtVertex(0, 0), Arrays.asList(new AtVertex(2, 2))));
+// TODO - problem comes externally and simulator should be started there
+            simulator.setProblem(new RectangularProblem(2, 2, new AtVertex(0, 0), Arrays.asList(new AtVertex(1, 1))));
             simulator.start();
+
+            ScheduledService<Void> playBack = new ScheduledService<Void>() {
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+                       protected Void call() {
+                           if (simulator.getCurrentExecutionIndex() < simulator.getExecuted().size()) {
+                               simulator.incCurrentExecutionIndex();
+                           }
+                           return null;
+                       }
+                    };
+                }
+            };
+            playBack.setPeriod(Duration.seconds(stepsASecondChoiceBox.getValue()));
+            playBack.start();
         }
     }
 
@@ -102,6 +122,21 @@ public class GeneralTreeSearchController {
         forwardButton.setTooltip(new Tooltip("Forward"));
         endButton.setTooltip(new Tooltip("End"));
         resetButton.setTooltip(new Tooltip("Reset"));
+
+        simulator.currentExecutionIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                int max = 0;
+                for (int i = 0; i < newValue.intValue(); i++) {
+                    int fs = simulator.getExecuted().get(i).frontierSize();
+                    if (fs > max) {
+                        max = fs;
+                    }
+                }
+                int current = simulator.getExecuted().get(newValue.intValue()-1).frontierSize();
+System.out.println("idx="+newValue+", current="+current+", max="+max+", size="+simulator.getExecuted().size());
+            }
+        });
 
         List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
         codeRepresentations.forEach(cr -> {
