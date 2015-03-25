@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Ciaran O'Reilly
  */
-public class GeneralTreeSearchController {
+public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.Observer<S> {
     private static final String _iconSize = "16px";
     private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.SANS_SERIF, 12);
     private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, 12);
@@ -63,7 +63,14 @@ public class GeneralTreeSearchController {
     @FXML private Button resetButton;
     //
     private boolean autoPlayPlaying = false;
-    private TreeSearchAlgoSimulator<AtVertex> simulator = new TreeSearchAlgoSimulator();
+    //
+    private TreeSearchAlgoSimulator<S> simulator;
+
+
+    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+        this.simulator = simulator;
+    }
+
 
     @FXML
     protected void autoPlay(ActionEvent event) {
@@ -78,10 +85,7 @@ public class GeneralTreeSearchController {
             GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
             autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
             autoPlayPlaying = true;
-
-// TODO - problem comes externally and simulator should be started there
-            simulator.setProblem(new RectangularProblem(2, 2, new AtVertex(0, 0), Arrays.asList(new AtVertex(1, 1))));
-            simulator.start();
+// TODO - clean up
 
             ScheduledService<Void> playBack = new ScheduledService<Void>() {
                 protected Task<Void> createTask() {
@@ -122,21 +126,6 @@ public class GeneralTreeSearchController {
         forwardButton.setTooltip(new Tooltip("Forward"));
         endButton.setTooltip(new Tooltip("End"));
         resetButton.setTooltip(new Tooltip("Reset"));
-
-        simulator.currentExecutionIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                int max = 0;
-                for (int i = 0; i < newValue.intValue(); i++) {
-                    int fs = simulator.getExecuted().get(i).frontierSize();
-                    if (fs > max) {
-                        max = fs;
-                    }
-                }
-                int current = simulator.getExecuted().get(newValue.intValue()-1).frontierSize();
-System.out.println("idx="+newValue+", current="+current+", max="+max+", size="+simulator.getExecuted().size());
-            }
-        });
 
         List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
         codeRepresentations.forEach(cr -> {

@@ -21,6 +21,9 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(0);
     private ObjectProperty<ObservableList<TreeSearchCmdInstr.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
+    public interface Observer<S> {
+        void setSimulator(TreeSearchAlgoSimulator<S> simulator);
+    }
 
     public Problem<S> getProblem() {
         return problem.get();
