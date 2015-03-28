@@ -1,5 +1,6 @@
 package aima.gui.demo.search.tree.info;
 
+import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,26 +20,14 @@ public class TreeSearchInfoController<S> implements TreeSearchAlgoSimulator.Obse
     @FXML private AnchorPane frontierInfo;
     //
     private TreeSearchAlgoSimulator<S> simulator;
+    //
+    private TreeSearchAlgoSimulator.Observer<S> frontierInfoController;
 
 
     public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
         this.simulator = simulator;
 
-        simulator.currentExecutionIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                int max = 0;
-                for (int i = 0; i < newValue.intValue(); i++) {
-                    int fs = simulator.getExecuted().get(i).frontierSize();
-                    if (fs > max) {
-                        max = fs;
-                    }
-                }
-                int current = simulator.getExecuted().get(newValue.intValue()-1).frontierSize();
-// TODO - remove
-System.out.println("idx="+newValue+", current="+current+", max="+max+", size="+simulator.getExecuted().size());
-            }
-        });
+        frontierInfoController.setSimulator(simulator);
     }
 
     @FXML
@@ -51,9 +40,11 @@ System.out.println("idx="+newValue+", current="+current+", max="+max+", size="+s
         anchor(search);
         searchSpaceInfo.getChildren().add(search);
 
-        Pane frontier = FXMLLoader.load(FrontierInfoController.class.getResource("frontierinfo.fxml"));
-        anchor(frontier);
-        frontierInfo.getChildren().add(frontier);
+        FXMLLoader frontierInfoLoader = new FXMLLoader(FrontierInfoController.class.getResource("frontierinfo.fxml"));
+        Pane frontierInfoPane = frontierInfoLoader.load();
+        anchor(frontierInfoPane);
+        frontierInfo.getChildren().add(frontierInfoPane);
+        frontierInfoController = frontierInfoLoader.getController();
     }
 
     private void anchor(Pane pane) {

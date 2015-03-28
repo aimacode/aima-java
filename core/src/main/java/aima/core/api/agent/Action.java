@@ -32,6 +32,8 @@ public interface Action {
             @Override
             public String name() { return name; }
             @Override
+            public String toString() { return name(); }
+            @Override
             public boolean equals(Object obj) {
                 if (obj != null && obj instanceof Action) {
                     return this.name().equals(((Action)obj).name());

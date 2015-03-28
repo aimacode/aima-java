@@ -24,7 +24,7 @@ public class TreeSearchController {
     @FXML private AnchorPane searchAlgoPane;
     @FXML private AnchorPane searchInfoPane;
     //
-    private TreeSearchAlgoSimulator<AtVertex> simulator = new TreeSearchAlgoSimulator();
+    private TreeSearchAlgoSimulator<AtVertex> simulator = new TreeSearchAlgoSimulator<>();
 
     @FXML
     private void initialize() throws IOException {
