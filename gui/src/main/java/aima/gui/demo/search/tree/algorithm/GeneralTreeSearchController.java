@@ -7,6 +7,7 @@ import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -62,9 +63,22 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML private Button endButton;
     @FXML private Button resetButton;
     //
-    private boolean autoPlayPlaying = false;
-    //
     private TreeSearchAlgoSimulator<S> simulator;
+    //
+    private ScheduledService<Void> autoPlayBack = new ScheduledService<Void>() {
+        protected Task<Void> createTask() {
+            return new Task<Void>() {
+                protected Void call() {
+                    Platform.runLater(() -> {
+                        if (simulator.getCurrentExecutionIndex() < simulator.getExecuted().size()) {
+                            simulator.incCurrentExecutionIndex();
+                        }
+                    });
+                    return null;
+                }
+            };
+        }
+    };
 
 
     public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
@@ -74,33 +88,18 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
 
     @FXML
     protected void autoPlay(ActionEvent event) {
-        if (autoPlayPlaying) {
+        if (autoPlayBack.isRunning()) {
             // Stop auto-playing
             GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
             autoPlayButton.setTooltip(new Tooltip("Auto Play"));
-            autoPlayPlaying = false;
+            autoPlayBack.cancel();
         }
         else {
             // Start auto-playing
             GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
             autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
-            autoPlayPlaying = true;
-// TODO - clean up
-
-            ScheduledService<Void> playBack = new ScheduledService<Void>() {
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                       protected Void call() {
-                           if (simulator.getCurrentExecutionIndex() < simulator.getExecuted().size()) {
-                               simulator.incCurrentExecutionIndex();
-                           }
-                           return null;
-                       }
-                    };
-                }
-            };
-            playBack.setPeriod(Duration.seconds(stepsASecondChoiceBox.getValue()));
-            playBack.start();
+            autoPlayBack.setPeriod(Duration.seconds(1.0 / (double) stepsASecondChoiceBox.getValue()));
+            autoPlayBack.restart();
         }
     }
 

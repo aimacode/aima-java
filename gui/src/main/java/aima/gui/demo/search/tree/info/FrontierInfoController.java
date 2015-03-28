@@ -2,7 +2,6 @@ package aima.gui.demo.search.tree.info;
 
 import aima.core.api.search.Node;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -29,36 +28,34 @@ public class FrontierInfoController<S> implements TreeSearchAlgoSimulator.Observ
         simulator.currentExecutionIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Platform.runLater(() -> {
-                    int max = 0;
-                    for (int i = 0; i < newValue.intValue(); i++) {
-                        int fs = simulator.getExecuted().get(i).frontierSize();
-                        if (fs > max) {
-                            max = fs;
-                        }
+                int max = 0;
+                for (int i = 0; i < newValue.intValue(); i++) {
+                    int fs = simulator.getExecuted().get(i).frontierSize();
+                    if (fs > max) {
+                        max = fs;
                     }
-                    int current = simulator.getExecuted().get(newValue.intValue() - 1).frontierSize();
-                    Node<S> cNode = simulator.getExecuted().get(newValue.intValue() - 1).node();
+                }
+                int current = simulator.getExecuted().get(newValue.intValue() - 1).frontierSize();
+                Node<S> cNode = simulator.getExecuted().get(newValue.intValue() - 1).node();
 
-                    currentFrontierCountLabel.textProperty().set("" + current);
-                    maxFrontierCountLabel.textProperty().set("" + max);
+                currentFrontierCountLabel.textProperty().set("" + current);
+                maxFrontierCountLabel.textProperty().set("" + max);
 
-                    if (max > 0) {
-                        frontierProgress.setProgress(((double) current) / ((double) max));
-                    }
-                    else {
-                        frontierProgress.setProgress(0);
-                    }
+                if (max > 0) {
+                    frontierProgress.setProgress(((double) current) / ((double) max));
+                }
+                else {
+                    frontierProgress.setProgress(0);
+                }
 
-                    String state = cNode == null ? "-" : cNode.state().toString();
-                    String patent = cNode == null ? "-" : cNode.parent() == null ? "null" : cNode.parent().state().toString();
-                    String action = cNode == null ? "-" : cNode.action().toString();
-                    String cost = cNode == null ? "-" : "" + cNode.pathCost();
-                    stateLabel.textProperty().set(state);
-                    parentLabel.textProperty().set(patent);
-                    actionLabel.textProperty().set(action);
-                    pathCostLabel.textProperty().set(cost);
-                });
+                String state = cNode == null ? "-" : cNode.state().toString();
+                String patent = cNode == null ? "-" : cNode.parent() == null ? "null" : cNode.parent().state().toString();
+                String action = cNode == null ? "-" : cNode.action().toString();
+                String cost = cNode == null ? "-" : "" + cNode.pathCost();
+                stateLabel.textProperty().set(state);
+                parentLabel.textProperty().set(patent);
+                actionLabel.textProperty().set(action);
+                pathCostLabel.textProperty().set(cost);
             }
         });
     }
