@@ -6,7 +6,6 @@ import aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import aima.gui.demo.search.tree.info.FrontierInfoController;
 import aima.gui.demo.search.tree.info.SearchSpaceInfoController;
-import aima.gui.demo.search.tree.info.rectangular.RectangularStateSpaceInfoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -32,8 +31,12 @@ public class TreeSearchController {
         Pane problem = problemLoader.load();
         anchor(problem);
         problemPane.getChildren().addAll(problem);
-        TreeSearchAlgoSimulator.Observer<AtVertex> problemController = problemLoader.getController();
+        RectangularGridProblemController problemController = problemLoader.getController();
         problemController.setSimulator(simulator);
+
+        Pane state = problemController.createSearchSpaceInfoRepresentation();
+        anchor(state);
+        stateSpaceInfo.getChildren().add(state);
 
         FXMLLoader treeSearchLoader = new FXMLLoader(GeneralTreeSearchController.class.getResource("generaltreesearch.fxml"));
         Pane algo = treeSearchLoader.load();
@@ -41,10 +44,6 @@ public class TreeSearchController {
         searchAlgoPane.getChildren().add(algo);
         TreeSearchAlgoSimulator.Observer<AtVertex> treeSearchController = treeSearchLoader.getController();
         treeSearchController.setSimulator(simulator);
-
-        Pane state = FXMLLoader.load(RectangularStateSpaceInfoController.class.getResource("rectangularstatespaceinfo.fxml"));
-        anchor(state);
-        stateSpaceInfo.getChildren().add(state);
 
         Pane search = FXMLLoader.load(SearchSpaceInfoController.class.getResource("searchspaceinfo.fxml"));
         anchor(search);

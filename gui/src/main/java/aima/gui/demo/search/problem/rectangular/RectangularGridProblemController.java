@@ -1,6 +1,7 @@
 package aima.gui.demo.search.problem.rectangular;
 
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
+import aima.gui.demo.search.tree.info.rectangular.RectangularStateSpaceInfoController;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.beans.property.IntegerProperty;
@@ -8,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,6 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -83,6 +86,15 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     @Override
     public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
         this.simulator = simulator;
+    }
+
+    public Pane createSearchSpaceInfoRepresentation() throws IOException {
+        FXMLLoader stateSpaceInfoLoader = new FXMLLoader(RectangularStateSpaceInfoController.class.getResource("rectangularstatespaceinfo.fxml"));
+        Pane stateSpaceInfoPane =  stateSpaceInfoLoader.load();
+
+// TODO - wire up controller
+
+        return stateSpaceInfoPane;
     }
 
     public void setupProblem() {
