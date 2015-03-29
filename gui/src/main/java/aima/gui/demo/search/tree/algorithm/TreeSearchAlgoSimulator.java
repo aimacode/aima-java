@@ -43,7 +43,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     }
 
     public void incCurrentExecutionIndex() {
-        if (isExecutionStarted() && getCurrentExecutionIndex() < executed.get().size()) {
+        if (isExecutionStarted() && getCurrentExecutionIndex() < executed.get().size()-1) {
             currentExecutionIndex.set(currentExecutionIndex.get()+1);
         }
     }
