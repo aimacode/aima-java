@@ -23,20 +23,20 @@
                     </rowConstraints>
                      <children>
                         <Label text="State" />
-                        <Label text="Parent" GridPane.rowIndex="1" />
-                        <Label text="Action" GridPane.rowIndex="2" />
-                        <Label text="Path Cost g(n)" GridPane.rowIndex="3" />
+                        <Label text="Action" GridPane.rowIndex="1" />
+                        <Label text="Path Cost g(n)" GridPane.rowIndex="2" />
+                        <Label text="Parent" GridPane.rowIndex="3" />
                         <Label fx:id="stateLabel" text="-" GridPane.columnIndex="1" />
-                        <Label fx:id="parentLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="actionLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="pathCostLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="actionLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="pathCostLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="parentLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
          </center>
          <top>
-            <Label text="Node" underline="true" BorderPane.alignment="CENTER_LEFT" />
+            <Label text="Current Node" underline="true" BorderPane.alignment="CENTER_LEFT" />
          </top>
       </BorderPane>
    </center>
