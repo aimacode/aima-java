@@ -12,7 +12,7 @@ import java.util.function.Predicate;
  */
 public class RectangularProblem extends BasicProblem<AtVertex> {
 
-    public RectangularProblem(int xSize, int ySize, AtVertex initialState, List<AtVertex> goals) {
+    public RectangularProblem(int xSize, int ySize, AtVertex initialState, Collection<AtVertex> goals) {
         super(initialState,
                 RectangularProblem.actions(xSize, ySize),
                 RectangularProblem::resultOf,
@@ -45,7 +45,7 @@ public class RectangularProblem extends BasicProblem<AtVertex> {
         return new AtVertex(goX, goY);
     }
 
-    public static Predicate<AtVertex> goalTest(List<AtVertex> goals) {
+    public static Predicate<AtVertex> goalTest(Collection<AtVertex> goals) {
         final Set<AtVertex> testGoals = new HashSet<>(goals);
         return testGoals::contains;
     }

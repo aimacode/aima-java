@@ -1,9 +1,7 @@
 package aima.gui.demo.search.tree.info;
 
-import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import aima.gui.demo.search.tree.info.rectangular.RectangularStateSpaceInfoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -32,7 +30,7 @@ public class TreeSearchInfoController<S> implements TreeSearchAlgoSimulator.Obse
 
     @FXML
     private void initialize() throws IOException {
-        Pane state = FXMLLoader.load(StateSpaceInfoController.class.getResource("statespaceinfo.fxml"));
+        Pane state = FXMLLoader.load(RectangularStateSpaceInfoController.class.getResource("rectangularstatespaceinfo.fxml"));
         anchor(state);
         stateSpaceInfo.getChildren().add(state);
 

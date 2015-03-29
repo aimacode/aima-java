@@ -1,4 +1,4 @@
-package aima.gui.demo.search.problem;
+package aima.gui.demo.search.problem.rectangular;
 
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
@@ -12,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.util.HashSet;
@@ -31,9 +30,9 @@ public class RectangularGridProblemController {
     //
     private static final String _iconSize = "16px";
     //
-    private Circle      startNode = null;
-    private Set<Circle> goalNodes = new HashSet<>();
-    private Circle[][] nodes;
+    private Vertex      startNode = null;
+    private Set<Vertex> goalNodes = new HashSet<>();
+    private Vertex[][]  nodes;
     //
     private int numWidthNodes  = 5;
     private int numHeightNodes = 5;
@@ -77,21 +76,21 @@ public class RectangularGridProblemController {
             problemViewPane.setPrefHeight(height);
         }
 
-        nodes = new Circle[numWidthNodes][numHeightNodes];
-        for (int i = 0; i < nodes.length; i++) {
-            for (int j = 0; j < nodes[i].length; j++) {
-                int x = xInset + (nodeRadius + borderPadding) + (i * (nodeRadius * nodeRadiusSpacingFactor));
-                int y = yInset + (nodeRadius + borderPadding) + (j * (nodeRadius * nodeRadiusSpacingFactor));
-                nodes[i][j] = new Circle(x, y, nodeRadius);
-                nodes[i][j].setFill(defaultPaint);
-                nodes[i][j].setStroke(Color.BLACK);
-                nodes[i][j].setStrokeWidth(1);
+        nodes = new Vertex[numWidthNodes][numHeightNodes];
+        for (int x = 0; x < nodes.length; x++) {
+            for (int y = 0; y < nodes[x].length; y++) {
+                int centerX = xInset + (nodeRadius + borderPadding) + (x * (nodeRadius * nodeRadiusSpacingFactor));
+                int centerY = yInset + (nodeRadius + borderPadding) + (y * (nodeRadius * nodeRadiusSpacingFactor));
+                nodes[x][y] = new Vertex(x, y, centerX, centerY, nodeRadius);
+                nodes[x][y].setFill(defaultPaint);
+                nodes[x][y].setStroke(Color.BLACK);
+                nodes[x][y].setStrokeWidth(1);
 
-                Tooltip t = new Tooltip("("+i+","+j+")");
-                Tooltip.install(nodes[i][j], t);
+                Tooltip t = new Tooltip("("+x+","+y+")");
+                Tooltip.install(nodes[x][y], t);
 
-                nodes[i][j].setOnMouseClicked(me -> {
-                    Circle clicked = (Circle) me.getSource();
+                nodes[x][y].setOnMouseClicked(me -> {
+                    Vertex clicked = (Vertex) me.getSource();
 
                     if (startNode == null) {
                         startNode = clicked;
@@ -121,15 +120,15 @@ public class RectangularGridProblemController {
                     }
                 });
 
-                problemViewPane.getChildren().add(nodes[i][j]);
+                problemViewPane.getChildren().add(nodes[x][y]);
 
-                if (i > 0) {
-                    Line horizLine = new Line(x - (nodeRadius*(nodeRadiusSpacingFactor-1)), y, x - nodeRadius, y);
+                if (x > 0) {
+                    Line horizLine = new Line(centerX - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerY, centerX - nodeRadius, centerY);
                     problemViewPane.getChildren().add(horizLine);
                 }
 
-                if (j > 0) {
-                    Line vertLine = new Line(x, y - (nodeRadius*(nodeRadiusSpacingFactor-1)), x, y - nodeRadius);
+                if (y > 0) {
+                    Line vertLine = new Line(centerX, centerY - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerX, centerY - nodeRadius);
                     problemViewPane.getChildren().add(vertLine);
                 }
             }

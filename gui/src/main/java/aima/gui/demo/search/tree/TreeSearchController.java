@@ -1,6 +1,6 @@
 package aima.gui.demo.search.tree;
 
-import aima.gui.demo.search.problem.RectangularGridProblemController;
+import aima.gui.demo.search.problem.rectangular.RectangularGridProblemController;
 import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.problem.rectangular.RectangularProblem;
 import aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController;
@@ -9,12 +9,10 @@ import aima.gui.demo.search.tree.info.TreeSearchInfoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Ciaran O'Reilly
@@ -48,7 +46,7 @@ public class TreeSearchController {
 
 
  // TODO - move into problem definition controller
-        simulator.setProblem(new RectangularProblem(2, 2, new AtVertex(0, 0), Arrays.asList(new AtVertex(1, 1))));
+        simulator.setProblem(new RectangularProblem(2, 2, new AtVertex(0, 0), Collections.singletonList(new AtVertex(1, 1))));
         simulator.start();
     }
 
