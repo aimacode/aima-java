@@ -3,6 +3,7 @@ package aima.gui.demo.search.tree.algorithm;
 import aima.extra.instrument.search.TreeSearchCmdInstr;
 import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.problem.rectangular.RectangularProblem;
+import aima.gui.support.code.CodeCommand;
 import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
 import de.jensd.fx.glyphs.GlyphsDude;
@@ -18,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
@@ -34,8 +36,10 @@ import java.util.regex.Pattern;
  */
 public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.Observer<S> {
     private static final String _iconSize = "16px";
-    private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.SANS_SERIF, 12);
-    private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, 12);
+    private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
+    private static final Font _boldPseudoCodeFont    = Font.font(java.awt.Font.MONOSPACED, FontWeight.BOLD, 11);
+    private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
+    private static final Font _boldCodeFont          = Font.font(java.awt.Font.MONOSPACED, FontWeight.BOLD, 11);
     //
     private static final String[] JAVA_KEYWORDS = new String[] {
             "abstract", "assert", "boolean", "break", "byte",
@@ -62,6 +66,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML private Button nextStepButton;
     @FXML private Button goLastStepButton;
     //
+    private List<CodeRepresentationInfo> codeInfo = new ArrayList<>();
     private TreeSearchAlgoSimulator<S> simulator;
     private boolean inUpdateSliderCall = false;
     //
@@ -87,6 +92,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         this.simulator = simulator;
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
             updateSlider();
+            updateCodeRepresentations();
         });
         simulator.executedProperty().addListener((observable, oldValue, newValue) -> {
             updateSlider();
@@ -135,6 +141,8 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
                 text.add(t);
             }
             styleText(cr, text);
+
+            codeInfo.add(new CodeRepresentationInfo(cr, text));
 
             tf.getChildren().addAll(text);
 
@@ -193,6 +201,41 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         inUpdateSliderCall = false;
     }
 
+    private void updateCodeRepresentations() {
+        if (simulator.isExecutionStarted() && simulator.getCurrentExecutionIndex() >= 0) {
+            codeInfo.forEach(ci -> {
+
+                Font normal;
+                Font bold;
+                if (ci.representation.codeTypeName.equalsIgnoreCase("Pseudo-Code")) {
+                    normal = _defaultPseudoCodeFont;
+                    bold   = _boldPseudoCodeFont;
+                }
+                else {
+                    normal = _defaultCodeFont;
+                    bold   = _boldCodeFont;
+                }
+
+                ci.lastHightlighted.forEach(t -> {
+                    t.setUnderline(false);
+                    t.setFont(normal);
+                });
+                ci.lastHightlighted.clear();
+                TreeSearchCmdInstr.Cmd<S> cmd = simulator.getExecuted().get(simulator.getCurrentExecutionIndex());
+                CodeCommand codeCommand = ci.representation.commandIdToCommand.get(cmd.commandId());
+                codeCommand.sourceIndexes.forEach(si -> {
+                    for (int i = si.startIdx; i < si.endIdx; i++) {
+                        ci.lastHightlighted.add(ci.text.get(i));
+                    }
+                });
+                ci.lastHightlighted.forEach(t -> {
+                    t.setUnderline(true);
+                    t.setFont(bold);
+                });
+            });
+        }
+    }
+
     private void styleText(CodeRepresentation cr, List<Text> text) {
         if (cr.codeTypeName.equalsIgnoreCase("Pseudo-Code")) {
             text.forEach(t -> t.setFont(_defaultPseudoCodeFont));
@@ -222,6 +265,17 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
                     s = e;
                 }
             }
+        }
+    }
+
+    private class CodeRepresentationInfo {
+        public final CodeRepresentation representation;
+        public final List<Text> text;
+        public final List<Text> lastHightlighted = new ArrayList<>();
+
+        CodeRepresentationInfo(CodeRepresentation codeRepresentation, List<Text> text) {
+            this.representation = codeRepresentation;
+            this.text           = new ArrayList<>(text);
         }
     }
 }

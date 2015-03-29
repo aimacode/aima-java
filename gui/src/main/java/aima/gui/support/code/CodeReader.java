@@ -41,7 +41,7 @@ public class CodeReader {
                     codeTypeName.append(line.substring(CODE_TYPE_PREFIX.length()));
                 }
                 else {
-                    process(line, source, codeCommands);
+                    process(codeTypeName.toString(), line, source, codeCommands);
                 }
             });
         }
@@ -53,17 +53,19 @@ public class CodeReader {
         }
         // Ensure the last code representation is included as well
         if (codeTypeName.length() > 0) {
-            CodeRepresentation cr = new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands));
+            result.add(new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands)));
+        }
+
+        result.forEach(cr -> {
             if (!cr.commandIdToCommand.keySet().equals(expectedCmds)) {
                 throw new IllegalArgumentException("Code Representation is missing command ids :\n"+cr.commandIdToCommand.keySet()+"\n"+expectedCmds);
             }
-            result.add(cr);
-        }
+        });
 
         return result;
     }
 
-    private static void process(String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
+    private static void process(String codeTypeName, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
         int s = 0;
         while (s < line.length()) {
             int m = line.indexOf(CODE_MARKER_PREFIX, s);
@@ -75,13 +77,13 @@ public class CodeReader {
                 if (s < m) {
                     source.append(line.substring(s, m));
                 }
-                s = processMarker(m, line, source, codeCommands);
+                s = processMarker(codeTypeName, m, line, source, codeCommands);
             }
         }
         source.append("\n");
     }
 
-    private static int processMarker(int s1, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
+    private static int processMarker(String codeTypeName, int s1, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
         int e1 = line.indexOf(CODE_MARKER_PREFIX, s1+1);
         int s2 = line.indexOf(CODE_MARKER_PREFIX, e1+1);
         int e2 = line.indexOf(CODE_MARKER_PREFIX, s2+1);
@@ -97,14 +99,14 @@ public class CodeReader {
             throw new IllegalArgumentException("Code marker start and begin tags do not match up ("+c1+", "+c2+") :\n"+line);
         }
 
-        List<SourceIndex> sis = codeCommands.get(c1);
+        List<SourceIndex> sis = codeCommands.get(codeTypeName);
         if (sis == null) {
             sis = new ArrayList<>();
             codeCommands.put(c1, sis);
         }
 
         String sourceFragment = line.substring(e1+1, s2);
-        sis.add(new SourceIndex(source.length() + 1, source.length() + sourceFragment.length()));
+        sis.add(new SourceIndex(source.length(), source.length() + sourceFragment.length()));
         source.append(sourceFragment);
 
         return e2+1;

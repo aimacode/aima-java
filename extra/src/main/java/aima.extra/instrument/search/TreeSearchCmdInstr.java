@@ -64,7 +64,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     @Override
     public Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
         Node<S> child = super.childNode(problem, parent, action);
-        notify(CMD_EXPAND_NODE, frontier.size(), child);
+        notify(CMD_EXPAND_NODE, frontier.size(), parent);
         return child;
     }
 
