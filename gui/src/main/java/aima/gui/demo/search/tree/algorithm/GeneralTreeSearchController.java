@@ -146,22 +146,22 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
 
     @FXML
     private void firstStep(ActionEvent ae) {
-
+        simulator.setCurrentExecutionIndexFirst();
     }
 
     @FXML
     private void previousStep(ActionEvent ae) {
-
+        simulator.decCurrentExecutionIndex();
     }
 
     @FXML
     private void nextStep(ActionEvent ae) {
-
+        simulator.incCurrentExecutionIndex();
     }
 
     @FXML
     private void lastStep(ActionEvent ae) {
-
+        simulator.setCurrentExecutionIndexLast();
     }
 
     private void styleText(CodeRepresentation cr, List<Text> text) {

@@ -42,11 +42,16 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     }
 
     public void incCurrentExecutionIndex() {
-        currentExecutionIndex.set(currentExecutionIndex.get()+1);
+        if (isExecutionStarted() && getCurrentExecutionIndex() < executed.get().size()) {
+            currentExecutionIndex.set(currentExecutionIndex.get()+1);
+        }
     }
 
     public void decCurrentExecutionIndex() {
-        currentExecutionIndex.set(currentExecutionIndex.get()-1);
+
+        if (isExecutionStarted() && getCurrentExecutionIndex() > 0) {
+            currentExecutionIndex.set(currentExecutionIndex.get()-1);
+        }
     }
 
     public int getCurrentExecutionIndex() {
@@ -54,7 +59,22 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     }
 
     public void setCurrentExecutionIndex(int index) {
-        currentExecutionIndex.set(index);
+        if (isExecutionStarted() && index >= 0 && index < executed.get().size()) {
+            currentExecutionIndex.set(index);
+        }
+    }
+
+    public void setCurrentExecutionIndexFirst() {
+
+        if (isExecutionStarted()) {
+            currentExecutionIndex.set(0);
+        }
+    }
+
+    public void setCurrentExecutionIndexLast() {
+        if (isExecutionStarted()) {
+            currentExecutionIndex.set(executed.get().size() - 1);
+        }
     }
 
     public IntegerProperty currentExecutionIndexProperty() {
