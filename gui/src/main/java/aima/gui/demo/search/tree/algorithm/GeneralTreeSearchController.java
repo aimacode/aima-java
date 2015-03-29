@@ -114,6 +114,10 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         nextStepButton.setTooltip(new Tooltip("Got to next execution step"));
         goLastStepButton.setTooltip(new Tooltip("Go to last execution step"));
 
+        stepsASecondChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            autoPlayBack.setPeriod(Duration.seconds(1.0 / newValue.doubleValue()));
+        });
+
         executionStepSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!inUpdateSliderCall) {
                 simulator.setCurrentExecutionIndex(newValue.intValue());
