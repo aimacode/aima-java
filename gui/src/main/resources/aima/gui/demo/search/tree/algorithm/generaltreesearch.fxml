@@ -41,14 +41,13 @@
                   <Label text=" step(s) a sec." />
                   <ToolBar style="-fx-background-color: null;">
                     <items>
-                      <Button fx:id="startButton" mnemonicParsing="false" text="&lt;&lt;" />
-                        <Button fx:id="backButton" mnemonicParsing="false" text="&lt; " />
-                        <Button fx:id="forwardButton" mnemonicParsing="false" text=" &gt;" />
-                        <Button fx:id="endButton" mnemonicParsing="false" text=" &gt;&gt;" />
+                      <Button fx:id="goFirstStepButton" mnemonicParsing="false" onAction="#firstStep" text="&lt;&lt;" />
+                        <Button fx:id="previousStepButton" mnemonicParsing="false" onAction="#previousStep" text="&lt; " />
+                        <Button fx:id="nextStepButton" mnemonicParsing="false" onAction="#nextStep" text=" &gt;" />
+                        <Button fx:id="goLastStepButton" mnemonicParsing="false" onAction="#lastStep" text=" &gt;&gt;" />
                     </items>
                   </ToolBar>
                   <Region prefHeight="38.0" prefWidth="20.0" />
-                  <Button fx:id="resetButton" mnemonicParsing="false" text="Reset" />
                </children>
                <opaqueInsets>
                   <Insets />

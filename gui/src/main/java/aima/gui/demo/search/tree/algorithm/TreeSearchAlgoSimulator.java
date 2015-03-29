@@ -18,7 +18,7 @@ import java.util.concurrent.CancellationException;
  */
 public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     private ObjectProperty<Problem<S>> problem = new SimpleObjectProperty<>();
-    private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(0);
+    private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(-1);
     private ObjectProperty<ObservableList<TreeSearchCmdInstr.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
     public interface Observer<S> {
@@ -35,6 +35,10 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
     public ObjectProperty<Problem<S>> problemProperty() {
         return problem;
+    }
+
+    public boolean isCurrentExecutionIndexAtEnd() {
+        return currentExecutionIndex.get() >= executed.get().size() -1;
     }
 
     public void incCurrentExecutionIndex() {
@@ -76,7 +80,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     @Override
     protected Task<Void> createTask() {
         // Restarting the execution
-        currentExecutionIndex.set(0);
+        currentExecutionIndex.set(-1);
         executed.get().clear();
 
         return new Task<Void>() {

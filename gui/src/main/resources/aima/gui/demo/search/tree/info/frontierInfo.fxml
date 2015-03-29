@@ -36,7 +36,7 @@
             </AnchorPane>
          </center>
          <top>
-            <Label text="Next Node to Expand" underline="true" BorderPane.alignment="CENTER_LEFT" />
+            <Label text="Node" underline="true" BorderPane.alignment="CENTER_LEFT" />
          </top>
       </BorderPane>
    </center>

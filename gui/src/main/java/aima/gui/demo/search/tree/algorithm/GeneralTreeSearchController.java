@@ -57,11 +57,10 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML private TabPane codeTabPane;
     @FXML private Button autoPlayButton;
     @FXML private ChoiceBox<Integer> stepsASecondChoiceBox;
-    @FXML private Button startButton;
-    @FXML private Button backButton;
-    @FXML private Button forwardButton;
-    @FXML private Button endButton;
-    @FXML private Button resetButton;
+    @FXML private Button goFirstStepButton;
+    @FXML private Button previousStepButton;
+    @FXML private Button nextStepButton;
+    @FXML private Button goLastStepButton;
     //
     private TreeSearchAlgoSimulator<S> simulator;
     //
@@ -70,7 +69,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
             return new Task<Void>() {
                 protected Void call() {
                     Platform.runLater(() -> {
-                        if (simulator.getCurrentExecutionIndex() < simulator.getExecuted().size()) {
+                        if (!simulator.isCurrentExecutionIndexAtEnd()) {
                             simulator.incCurrentExecutionIndex();
                         }
                     });
@@ -80,51 +79,31 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         }
     };
 
-
     public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
         this.simulator = simulator;
     }
 
 
     @FXML
-    protected void autoPlay(ActionEvent event) {
-        if (autoPlayBack.isRunning()) {
-            // Stop auto-playing
-            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-            autoPlayButton.setTooltip(new Tooltip("Auto Play"));
-            autoPlayBack.cancel();
-        }
-        else {
-            // Start auto-playing
-            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-            autoPlayButton.setTooltip(new Tooltip("Stop Playing"));
-            autoPlayBack.setPeriod(Duration.seconds(1.0 / (double) stepsASecondChoiceBox.getValue()));
-            autoPlayBack.restart();
-        }
-    }
-
-    @FXML
     private void initialize() {
         GlyphsDude.setIcon(listAlgorithmsButton, FontAwesomeIcons.BARS, _iconSize, ContentDisplay.GRAPHIC_ONLY);
         GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(startButton, FontAwesomeIcons.FAST_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(backButton, FontAwesomeIcons.STEP_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(forwardButton, FontAwesomeIcons.STEP_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(endButton, FontAwesomeIcons.FAST_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(resetButton, FontAwesomeIcons.EJECT, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(goFirstStepButton, FontAwesomeIcons.FAST_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(previousStepButton, FontAwesomeIcons.STEP_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(nextStepButton, FontAwesomeIcons.STEP_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        GlyphsDude.setIcon(goLastStepButton, FontAwesomeIcons.FAST_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
 
-        listAlgorithmsButton.setTooltip(new Tooltip("Select Algorithm"));
+        listAlgorithmsButton.setTooltip(new Tooltip("Select algorithm"));
         executionStepSlider.setMin(0);
         executionStepSlider.setBlockIncrement(1);
         executionStepSlider.setMax(1);
-        autoPlayButton.setTooltip(new Tooltip("Auto Play"));
+        autoPlayButton.setTooltip(new Tooltip("Auto play execution"));
         stepsASecondChoiceBox.setItems(FXCollections.<Integer>observableArrayList(1, 2, 3, 4, 5, 10, 20, 50));
         stepsASecondChoiceBox.setValue(1);
-        startButton.setTooltip(new Tooltip("Start"));
-        backButton.setTooltip(new Tooltip("Back"));
-        forwardButton.setTooltip(new Tooltip("Forward"));
-        endButton.setTooltip(new Tooltip("End"));
-        resetButton.setTooltip(new Tooltip("Reset"));
+        goFirstStepButton.setTooltip(new Tooltip("Go to first execution step"));
+        previousStepButton.setTooltip(new Tooltip("Go to previous execution step"));
+        nextStepButton.setTooltip(new Tooltip("Got to next execution step"));
+        goLastStepButton.setTooltip(new Tooltip("Go to last execution step"));
 
         List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
         codeRepresentations.forEach(cr -> {
@@ -146,6 +125,43 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
             tab.setContent(sp);
             codeTabPane.getTabs().add(tab);
         });
+    }
+
+    @FXML
+    private void autoPlay(ActionEvent event) {
+        if (autoPlayBack.isRunning()) {
+            // Stop auto-playing
+            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            autoPlayButton.setTooltip(new Tooltip("Auto play execution"));
+            autoPlayBack.cancel();
+        }
+        else {
+            // Start auto-playing
+            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            autoPlayButton.setTooltip(new Tooltip("Stop auto playing execution"));
+            autoPlayBack.setPeriod(Duration.seconds(1.0 / (double) stepsASecondChoiceBox.getValue()));
+            autoPlayBack.restart();
+        }
+    }
+
+    @FXML
+    private void firstStep(ActionEvent ae) {
+
+    }
+
+    @FXML
+    private void previousStep(ActionEvent ae) {
+
+    }
+
+    @FXML
+    private void nextStep(ActionEvent ae) {
+
+    }
+
+    @FXML
+    private void lastStep(ActionEvent ae) {
+
     }
 
     private void styleText(CodeRepresentation cr, List<Text> text) {
