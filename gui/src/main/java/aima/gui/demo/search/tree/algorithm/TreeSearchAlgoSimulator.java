@@ -31,6 +31,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
     public void setProblem(Problem<S> problem) {
         this.problem.set(problem);
+        restart();
     }
 
     public ObjectProperty<Problem<S>> problemProperty() {
@@ -117,7 +118,9 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
                 });
 
                 try {
-                    search.apply(getProblem());
+                    if (getProblem() != null) {
+                        search.apply(getProblem());
+                    }
                 }
                 catch (CancellationException ce) {
                     // Expected on cancellation

@@ -73,6 +73,9 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
                         if (!simulator.isCurrentExecutionIndexAtEnd()) {
                             simulator.incCurrentExecutionIndex();
                         }
+                        else {
+                            autoPlayButton.fire();
+                        }
                     });
                     return null;
                 }

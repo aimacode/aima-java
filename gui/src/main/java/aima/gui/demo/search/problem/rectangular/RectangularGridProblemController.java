@@ -15,13 +15,15 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularGridProblemController<S> implements TreeSearchAlgoSimulator.Observer<S> {
+public class RectangularGridProblemController implements TreeSearchAlgoSimulator.Observer<AtVertex> {
     @FXML private Label  problemTypeLabel;
     @FXML private Button optionsButton;
     @FXML private Button listProblemsButton;
@@ -50,11 +52,10 @@ public class RectangularGridProblemController<S> implements TreeSearchAlgoSimula
     private Paint goalPaint       = new ImagePattern(goalImage, 0, 0, 16, 16, false);
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
     //
-    private TreeSearchAlgoSimulator<S> simulator;
+    private TreeSearchAlgoSimulator<AtVertex> simulator;
 
-    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
         this.simulator = simulator;
-
     }
 
     public void setupProblem() {
@@ -125,6 +126,15 @@ public class RectangularGridProblemController<S> implements TreeSearchAlgoSimula
                             clicked.setFill(goalPaint);
                             goalNodes.add(clicked);
                         }
+                    }
+
+                    if (startNode == null) {
+                        simulator.setProblem(null);
+                    }
+                    else {
+                        simulator.setProblem(new RectangularProblem(numWidthNodes, numHeightNodes,
+                                new AtVertex(startNode.x, startNode.y),
+                                goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
                     }
                 });
 

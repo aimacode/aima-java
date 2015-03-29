@@ -26,9 +26,12 @@ public class TreeSearchController {
 
     @FXML
     private void initialize() throws IOException {
-        Pane problem = FXMLLoader.load(RectangularGridProblemController.class.getResource("rectangulargridproblem.fxml"));
+        FXMLLoader problemLoader = new FXMLLoader(RectangularGridProblemController.class.getResource("rectangulargridproblem.fxml"));
+        Pane problem = problemLoader.load();
         anchor(problem);
         problemPane.getChildren().addAll(problem);
+        TreeSearchAlgoSimulator.Observer<AtVertex> problemController = problemLoader.getController();
+        problemController.setSimulator(simulator);
 
         FXMLLoader treeSearchLoader = new FXMLLoader(GeneralTreeSearchController.class.getResource("generaltreesearch.fxml"));
         Pane algo = treeSearchLoader.load();
@@ -43,11 +46,6 @@ public class TreeSearchController {
         searchInfoPane.getChildren().add(info);
         TreeSearchAlgoSimulator.Observer<AtVertex> treeInfoController = treeInfoLoader.getController();
         treeInfoController.setSimulator(simulator);
-
-
- // TODO - move into problem definition controller
-        simulator.setProblem(new RectangularProblem(2, 2, new AtVertex(0, 0), Collections.singletonList(new AtVertex(1, 1))));
-        simulator.start();
     }
 
     private void anchor(Pane pane) {
