@@ -4,7 +4,7 @@ import aima.gui.demo.search.problem.rectangular.RectangularGridProblemController
 import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
-import aima.gui.demo.search.tree.info.FrontierInfoController;
+import aima.gui.demo.search.tree.info.SummaryInfoController;
 import aima.gui.demo.search.tree.info.SearchSpaceInfoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +49,7 @@ public class TreeSearchController {
         anchor(search);
         searchSpaceInfo.getChildren().add(search);
 
-        FXMLLoader frontierInfoLoader = new FXMLLoader(FrontierInfoController.class.getResource("frontierinfo.fxml"));
+        FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryinfo.fxml"));
         Pane frontierInfoPane = frontierInfoLoader.load();
         anchor(frontierInfoPane);
         frontierInfo.getChildren().add(frontierInfoPane);

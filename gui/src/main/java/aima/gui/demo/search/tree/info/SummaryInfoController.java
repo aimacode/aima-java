@@ -10,7 +10,7 @@ import javafx.scene.control.ProgressBar;
 /**
  * @author Ciaran O'Reilly
  */
-public class FrontierInfoController<S> implements TreeSearchAlgoSimulator.Observer<S> {
+public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observer<S> {
     @FXML private ProgressBar frontierProgress;
     @FXML private Label currentFrontierCountLabel;
     @FXML private Label maxFrontierCountLabel;
