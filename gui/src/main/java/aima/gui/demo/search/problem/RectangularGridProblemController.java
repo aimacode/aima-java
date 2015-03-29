@@ -43,10 +43,12 @@ public class RectangularGridProblemController {
     private int nodeRadiusSpacingFactor = 5;
     private int viewportPadding         = 8;
     //
-    private Paint defaultPaint = Color.WHITE;
-    private Image goalImage    = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
-    private Paint goalPaint    = new ImagePattern(goalImage, 0, 0, 16, 16, false);
-    private Paint startPaint   = Color.DARKGREEN;
+    private Paint defaultPaint    = Color.WHITE;
+    private Image goalImage       = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
+    private Image startGoalImage  = new Image(RectangularGridProblemController.class.getResourceAsStream("startgoal.png"));
+    private Paint startPaint      = Color.DARKGREEN;
+    private Paint goalPaint       = new ImagePattern(goalImage, 0, 0, 16, 16, false);
+    private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
 
     public void setupProblem() {
         // Ensure is clear of children on each setup
@@ -97,8 +99,15 @@ public class RectangularGridProblemController {
                         goalNodes.remove(startNode); // Ensure is not a goal
                     }
                     else if (startNode != null && clicked == startNode) {
-                        startNode = null;
-                        clicked.setFill(defaultPaint);
+                        if (goalNodes.contains(clicked)) {
+                            startNode = null;
+                            goalNodes.remove(clicked);
+                            clicked.setFill(defaultPaint);
+                        }
+                        else {
+                            goalNodes.add(clicked);
+                            clicked.setFill(startGoalPaint);
+                        }
                     }
                     else {
                         if (goalNodes.contains(clicked)) {
