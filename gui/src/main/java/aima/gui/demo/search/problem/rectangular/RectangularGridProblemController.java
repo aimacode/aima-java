@@ -3,6 +3,8 @@ package aima.gui.demo.search.problem.rectangular;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,7 +17,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,9 +38,6 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     private Set<Vertex> goalNodes = new HashSet<>();
     private Vertex[][]  nodes;
     //
-    private int numWidthNodes  = 5;
-    private int numHeightNodes = 5;
-    //
     private int nodeRadius              = 10;
     private int borderPadding           = 10;
     private int nodeRadiusSpacingFactor = 5;
@@ -53,7 +51,36 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
     //
     private TreeSearchAlgoSimulator<AtVertex> simulator;
+    //
+    private IntegerProperty xDimensionSize  = new SimpleIntegerProperty(5);
+    private IntegerProperty yDimensionSize = new SimpleIntegerProperty(5);
 
+    public int getXDimensionSize() {
+        return xDimensionSize.get();
+    }
+
+    public IntegerProperty xDimensionSizeProperty() {
+        return xDimensionSize;
+    }
+
+    public void setXDimensionSize(int xDimensionSize) {
+        this.xDimensionSize.set(xDimensionSize);
+    }
+
+
+    public int getYDimensionSize() {
+        return yDimensionSize.get();
+    }
+
+    public IntegerProperty yDimensionSizeProperty() {
+        return yDimensionSize;
+    }
+
+    public void setYDimensionSize(int yDimensionSize) {
+        this.yDimensionSize.set(yDimensionSize);
+    }
+
+    @Override
     public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
         this.simulator = simulator;
     }
@@ -64,8 +91,8 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         startNode = null;
         goalNodes.clear();
 
-        int width  = numWidthNodes  * nodeRadius * nodeRadiusSpacingFactor;
-        int height = numHeightNodes * nodeRadius * nodeRadiusSpacingFactor;
+        int width  = getXDimensionSize()  * nodeRadius * nodeRadiusSpacingFactor;
+        int height = getYDimensionSize() * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
         int vpWidth  =  (int) problemViewScrollPane.getWidth() - viewportPadding;
@@ -85,7 +112,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
             problemViewPane.setPrefHeight(height);
         }
 
-        nodes = new Vertex[numWidthNodes][numHeightNodes];
+        nodes = new Vertex[getXDimensionSize()][getYDimensionSize()];
         for (int x = 0; x < nodes.length; x++) {
             for (int y = 0; y < nodes[x].length; y++) {
                 int centerX = xInset + (nodeRadius + borderPadding) + (x * (nodeRadius * nodeRadiusSpacingFactor));
@@ -132,7 +159,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                         simulator.setProblem(null);
                     }
                     else {
-                        simulator.setProblem(new RectangularProblem(numWidthNodes, numHeightNodes,
+                        simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
                                 new AtVertex(startNode.x, startNode.y),
                                 goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
                     }
