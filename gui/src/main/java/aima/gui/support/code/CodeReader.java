@@ -41,7 +41,7 @@ public class CodeReader {
                     codeTypeName.append(line.substring(CODE_TYPE_PREFIX.length()));
                 }
                 else {
-                    process(codeTypeName.toString(), line, source, codeCommands);
+                    process(line, source, codeCommands);
                 }
             });
         }
@@ -65,7 +65,7 @@ public class CodeReader {
         return result;
     }
 
-    private static void process(String codeTypeName, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
+    private static void process(String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
         int s = 0;
         while (s < line.length()) {
             int m = line.indexOf(CODE_MARKER_PREFIX, s);
@@ -77,13 +77,13 @@ public class CodeReader {
                 if (s < m) {
                     source.append(line.substring(s, m));
                 }
-                s = processMarker(codeTypeName, m, line, source, codeCommands);
+                s = processMarker(m, line, source, codeCommands);
             }
         }
         source.append("\n");
     }
 
-    private static int processMarker(String codeTypeName, int s1, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
+    private static int processMarker(int s1, String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {
         int e1 = line.indexOf(CODE_MARKER_PREFIX, s1+1);
         int s2 = line.indexOf(CODE_MARKER_PREFIX, e1+1);
         int e2 = line.indexOf(CODE_MARKER_PREFIX, s2+1);
@@ -99,7 +99,7 @@ public class CodeReader {
             throw new IllegalArgumentException("Code marker start and begin tags do not match up ("+c1+", "+c2+") :\n"+line);
         }
 
-        List<SourceIndex> sis = codeCommands.get(codeTypeName);
+        List<SourceIndex> sis = codeCommands.get(c1);
         if (sis == null) {
             sis = new ArrayList<>();
             codeCommands.put(c1, sis);
@@ -116,6 +116,8 @@ public class CodeReader {
         final List<CodeCommand> result = new ArrayList<>();
 
         commandIdsToSourceIndexes.forEach((k, v) -> result.add(new CodeCommand(k, v)));
+
+        commandIdsToSourceIndexes.clear();
 
         return result;
     }
