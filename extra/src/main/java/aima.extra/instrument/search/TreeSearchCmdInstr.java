@@ -15,6 +15,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     public interface Cmd<S> {
         String  commandId();
         int     frontierSize();
+        int     maxFrontierSize();
         Node<S> node();
     }
 
@@ -46,6 +47,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
 
     private Listener<S> listener;
     private Queue<Node<S>> frontier;
+    private int maxFrontierSize = 0;
 
     public TreeSearchCmdInstr(Listener<S> listener) {
         this.listener = listener;
@@ -53,7 +55,8 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
 
     @Override
     public Queue<Node<S>> newFrontier() {
-        frontier = new InstrLinkedList();
+        frontier        = new InstrLinkedList();
+        maxFrontierSize = 0;
         notify(CMD_START, 0, null);
         return frontier;
     }
@@ -84,6 +87,10 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     }
 
     private void notify(final String commandId, final int frontierSize, final Node<S> node) {
+        if (frontierSize > maxFrontierSize) {
+            maxFrontierSize = frontierSize;
+        }
+        int max = maxFrontierSize;
         listener.cmd(new Cmd<S>() {
             public String commandId() {
                 return commandId;
@@ -91,6 +98,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
             public int frontierSize() {
                 return frontierSize;
             }
+            public int maxFrontierSize() { return max; }
             public Node<S> node() {
                 return node;
             }

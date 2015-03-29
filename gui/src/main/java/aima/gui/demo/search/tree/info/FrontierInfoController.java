@@ -1,6 +1,7 @@
 package aima.gui.demo.search.tree.info;
 
 import aima.core.api.search.Node;
+import aima.extra.instrument.search.TreeSearchCmdInstr;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,15 +31,11 @@ public class FrontierInfoController<S> implements TreeSearchAlgoSimulator.Observ
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 int currentExecutionIndex = newValue.intValue();
                 if (currentExecutionIndex >= 0) {
-                    int max = 0;
-                    for (int i = 0; i <= currentExecutionIndex; i++) {
-                        int fs = simulator.getExecuted().get(i).frontierSize();
-                        if (fs > max) {
-                            max = fs;
-                        }
-                    }
-                    int current = simulator.getExecuted().get(currentExecutionIndex).frontierSize();
-                    Node<S> cNode = simulator.getExecuted().get(currentExecutionIndex).node();
+                    TreeSearchCmdInstr.Cmd<S> cmd  = simulator.getExecuted().get(currentExecutionIndex);
+
+                    int current  = cmd.frontierSize();
+                    int max      = cmd.maxFrontierSize();
+                    Node<S> node = cmd.node();
 
                     currentFrontierCountLabel.textProperty().set("" + current);
                     maxFrontierCountLabel.textProperty().set("" + max);
@@ -49,10 +46,11 @@ public class FrontierInfoController<S> implements TreeSearchAlgoSimulator.Observ
                         frontierProgress.setProgress(0);
                     }
 
-                    String state = cNode == null ? "-" : cNode.state().toString();
-                    String patent = cNode == null ? "-" : cNode.parent() == null ? "null" : cNode.parent().state().toString();
-                    String action = cNode == null ? "-" : cNode.action().toString();
-                    String cost = cNode == null ? "-" : "" + cNode.pathCost();
+                    String state  = node == null ? "-" : node.state().toString();
+                    String patent = node == null ? "-" : node.parent() == null ? "null" : node.parent().state().toString();
+                    String action = node == null ? "-" : node.action().toString();
+                    String cost   = node == null ? "-" : "" + node.pathCost();
+
                     stateLabel.textProperty().set(state);
                     parentLabel.textProperty().set(patent);
                     actionLabel.textProperty().set(action);
