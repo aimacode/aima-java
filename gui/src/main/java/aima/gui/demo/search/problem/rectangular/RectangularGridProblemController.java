@@ -1,5 +1,6 @@
 package aima.gui.demo.search.problem.rectangular;
 
+import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.beans.value.ChangeListener;
@@ -20,7 +21,7 @@ import java.util.Set;
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularGridProblemController {
+public class RectangularGridProblemController<S> implements TreeSearchAlgoSimulator.Observer<S> {
     @FXML private Label  problemTypeLabel;
     @FXML private Button optionsButton;
     @FXML private Button listProblemsButton;
@@ -48,6 +49,13 @@ public class RectangularGridProblemController {
     private Paint startPaint      = Color.DARKGREEN;
     private Paint goalPaint       = new ImagePattern(goalImage, 0, 0, 16, 16, false);
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
+    //
+    private TreeSearchAlgoSimulator<S> simulator;
+
+    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+        this.simulator = simulator;
+
+    }
 
     public void setupProblem() {
         // Ensure is clear of children on each setup
@@ -153,6 +161,5 @@ public class RectangularGridProblemController {
                 problemViewScrollPane.viewportBoundsProperty().removeListener(this);
             }
         });
-
     }
 }

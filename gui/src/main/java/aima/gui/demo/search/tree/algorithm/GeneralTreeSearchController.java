@@ -63,6 +63,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML private Button goLastStepButton;
     //
     private TreeSearchAlgoSimulator<S> simulator;
+    private boolean inUpdateSliderCall = false;
     //
     private ScheduledService<Void> autoPlayBack = new ScheduledService<Void>() {
         protected Task<Void> createTask() {
@@ -81,6 +82,12 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
 
     public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
         this.simulator = simulator;
+        simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
+            updateSlider();
+        });
+        simulator.executedProperty().addListener((observable, oldValue, newValue) -> {
+            updateSlider();
+        });
     }
 
 
@@ -95,7 +102,6 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
 
         listAlgorithmsButton.setTooltip(new Tooltip("Select algorithm"));
         executionStepSlider.setMin(0);
-        executionStepSlider.setBlockIncrement(1);
         executionStepSlider.setMax(1);
         autoPlayButton.setTooltip(new Tooltip("Auto play execution"));
         stepsASecondChoiceBox.setItems(FXCollections.<Integer>observableArrayList(1, 2, 3, 4, 5, 10, 20, 50));
@@ -104,6 +110,12 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         previousStepButton.setTooltip(new Tooltip("Go to previous execution step"));
         nextStepButton.setTooltip(new Tooltip("Got to next execution step"));
         goLastStepButton.setTooltip(new Tooltip("Go to last execution step"));
+
+        executionStepSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!inUpdateSliderCall) {
+                simulator.setCurrentExecutionIndex(newValue.intValue());
+            }
+        });
 
         List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
         codeRepresentations.forEach(cr -> {
@@ -162,6 +174,16 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML
     private void lastStep(ActionEvent ae) {
         simulator.setCurrentExecutionIndexLast();
+    }
+
+    private void updateSlider() {
+        inUpdateSliderCall = true;
+        if (simulator.isExecutionStarted()) {
+            executionStepSlider.setMin(0);
+            executionStepSlider.setMax(simulator.getExecuted().size()-1);
+            executionStepSlider.setValue(simulator.getCurrentExecutionIndex());
+        }
+        inUpdateSliderCall = false;
     }
 
     private void styleText(CodeRepresentation cr, List<Text> text) {
