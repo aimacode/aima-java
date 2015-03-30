@@ -22,6 +22,7 @@ import javafx.scene.shape.Line;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -39,9 +40,9 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     //
     private Vertex      startNode = null;
     private Set<Vertex> goalNodes = new HashSet<>();
-    private Vertex[][]  nodes;
+    private Vertex[][]  vertexes;
     //
-    private int nodeRadius              = 10;
+    private int nodeRadius              = 12;
     private int borderPadding           = 10;
     private int nodeRadiusSpacingFactor = 5;
     private int viewportPadding         = 8;
@@ -92,39 +93,38 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         FXMLLoader stateSpaceInfoLoader = new FXMLLoader(RectangularStateSpaceInfoController.class.getResource("rectangularstatespaceinfo.fxml"));
         Pane stateSpaceInfoPane =  stateSpaceInfoLoader.load();
 
-// TODO - wire up controller
+        RectangularStateSpaceInfoController problemStateSpaceController = stateSpaceInfoLoader.getController();
+        problemStateSpaceController.setProblemController(this);
 
         return stateSpaceInfoPane;
     }
 
-    public void setupProblem() {
-        // Ensure is clear of children on each setup
-        problemViewPane.getChildren().clear();
-        startNode = null;
-        goalNodes.clear();
+    public Vertex[][] setupGrid(Pane pane, ScrollPane containingScrollPane, Consumer<Vertex> vertexConsumer) {
+        pane.getChildren().clear();
 
-        int width  = getXDimensionSize()  * nodeRadius * nodeRadiusSpacingFactor;
+        Vertex[][] nodes = new Vertex[getXDimensionSize()][getYDimensionSize()];
+
+        int width  = getXDimensionSize() * nodeRadius * nodeRadiusSpacingFactor;
         int height = getYDimensionSize() * nodeRadius * nodeRadiusSpacingFactor;
         int xInset = 0;
         int yInset = 0;
-        int vpWidth  =  (int) problemViewScrollPane.getWidth() - viewportPadding;
-        int vpHeight =  (int) problemViewScrollPane.getHeight() - viewportPadding;
+        int vpWidth  =  (int) containingScrollPane.getWidth() - viewportPadding;
+        int vpHeight =  (int) containingScrollPane.getHeight() - viewportPadding;
         if (width < vpWidth) {
             xInset = (vpWidth - width) / 2;
-            problemViewPane.setPrefWidth(vpWidth);
+            pane.setPrefWidth(vpWidth);
         }
         else {
-            problemViewPane.setPrefWidth(width);
+            pane.setPrefWidth(width);
         }
         if (height < vpHeight) {
             yInset = (vpHeight - height) / 2;
-            problemViewPane.setPrefHeight(vpHeight);
+            pane.setPrefHeight(vpHeight);
         }
         else {
-            problemViewPane.setPrefHeight(height);
+            pane.setPrefHeight(height);
         }
 
-        nodes = new Vertex[getXDimensionSize()][getYDimensionSize()];
         for (int x = 0; x < nodes.length; x++) {
             for (int y = 0; y < nodes[x].length; y++) {
                 int centerX = xInset + (nodeRadius + borderPadding) + (x * (nodeRadius * nodeRadiusSpacingFactor));
@@ -134,62 +134,68 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                 nodes[x][y].setStroke(Color.BLACK);
                 nodes[x][y].setStrokeWidth(1);
 
-                Tooltip t = new Tooltip("("+x+","+y+")");
-                Tooltip.install(nodes[x][y], t);
-
-                nodes[x][y].setOnMouseClicked(me -> {
-                    Vertex clicked = (Vertex) me.getSource();
-
-                    if (startNode == null) {
-                        startNode = clicked;
-                        startNode.setFill(startPaint);
-                        goalNodes.remove(startNode); // Ensure is not a goal
-                    }
-                    else if (startNode != null && clicked == startNode) {
-                        if (goalNodes.contains(clicked)) {
-                            startNode = null;
-                            goalNodes.remove(clicked);
-                            clicked.setFill(defaultPaint);
-                        }
-                        else {
-                            goalNodes.add(clicked);
-                            clicked.setFill(startGoalPaint);
-                        }
-                    }
-                    else {
-                        if (goalNodes.contains(clicked)) {
-                            clicked.setFill(defaultPaint);
-                            goalNodes.remove(clicked);
-                        }
-                        else {
-                            clicked.setFill(goalPaint);
-                            goalNodes.add(clicked);
-                        }
-                    }
-
-                    if (startNode == null) {
-                        simulator.setProblem(null);
-                    }
-                    else {
-                        simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
-                                new AtVertex(startNode.x, startNode.y),
-                                goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
-                    }
-                });
-
-                problemViewPane.getChildren().add(nodes[x][y]);
+                pane.getChildren().add(nodes[x][y]);
 
                 if (x > 0) {
                     Line horizLine = new Line(centerX - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerY, centerX - nodeRadius, centerY);
-                    problemViewPane.getChildren().add(horizLine);
+                    pane.getChildren().add(horizLine);
                 }
 
                 if (y > 0) {
                     Line vertLine = new Line(centerX, centerY - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerX, centerY - nodeRadius);
-                    problemViewPane.getChildren().add(vertLine);
+                    pane.getChildren().add(vertLine);
                 }
+
+                vertexConsumer.accept(nodes[x][y]);
             }
         }
+
+        return nodes;
+    }
+
+    public void setupProblem() {
+        startNode = null;
+        goalNodes.clear();
+
+        vertexes = setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
+            Tooltip t = new Tooltip("("+vertex.x+","+vertex.y+")");
+            Tooltip.install(vertex, t);
+
+            vertex.setOnMouseClicked(me -> {
+                Vertex clicked = (Vertex) me.getSource();
+
+                if (startNode == null) {
+                    startNode = clicked;
+                    startNode.setFill(startPaint);
+                    goalNodes.remove(startNode); // Ensure is not a goal
+                } else if (startNode != null && clicked == startNode) {
+                    if (goalNodes.contains(clicked)) {
+                        startNode = null;
+                        goalNodes.remove(clicked);
+                        clicked.setFill(defaultPaint);
+                    } else {
+                        goalNodes.add(clicked);
+                        clicked.setFill(startGoalPaint);
+                    }
+                } else {
+                    if (goalNodes.contains(clicked)) {
+                        clicked.setFill(defaultPaint);
+                        goalNodes.remove(clicked);
+                    } else {
+                        clicked.setFill(goalPaint);
+                        goalNodes.add(clicked);
+                    }
+                }
+
+                if (startNode == null) {
+                    simulator.setProblem(null);
+                } else {
+                    simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
+                            new AtVertex(startNode.x, startNode.y),
+                            goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
+                }
+            });
+        });
     }
 
     @FXML
