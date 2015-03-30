@@ -3,6 +3,7 @@ package aima.gui.demo.search.tree.info.rectangular;
 import aima.extra.instrument.search.TreeSearchCmdInstr;
 import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.problem.rectangular.RectangularGridProblemController;
+import aima.gui.demo.search.problem.rectangular.Vertex;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,6 +31,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
     private TreeSearchAlgoSimulator<AtVertex> simulator;
     private RectangularGridProblemController problemController;
     private Map<AtVertex, Label> stateLabels = new HashMap<>();
+    private Vertex[][] vertexes;
 
     public void setProblemController(RectangularGridProblemController problemController) {
         this.problemController = problemController;
@@ -52,27 +54,32 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
         this.simulator = simulator;
         simulator.currentExecutionIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (this.simulator.isExecutionStarted() && this.simulator.getCurrentExecutionIndex() >= 0) {
-                TreeSearchCmdInstr.Cmd cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
+                TreeSearchCmdInstr.Cmd<AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
                 Map<AtVertex, Integer> visited = cmd.statesVisitiedCounts();
                 stateLabels.entrySet().forEach(e -> {
                     Integer cnt = visited.get(e.getKey());
                     if (cnt == null) {
                         e.getValue().setText("");
+                        vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(1);
                     }
                     else {
                         e.getValue().setText(""+cnt);
+                        vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(2);
                     }
                 });
             }
             else {
-                stateLabels.values().forEach(l -> l.setText(""));
+                stateLabels.entrySet().forEach(e -> {
+                    e.getValue().setText("");
+                    vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(1);
+                });
             }
         });
     }
 
     private void setupStateSpaceRepresentation() {
         stateLabels.clear();
-        problemController.setupGrid(stateSpaceVisitedViewPane, stateSpaceVisitedViewScrollPane, vertex -> {
+        vertexes = problemController.setupGrid(stateSpaceVisitedViewPane, stateSpaceVisitedViewScrollPane, vertex -> {
             Label l = new Label("");
             l.setFont(_defaultLabelFont);
             stateLabels.put(new AtVertex(vertex.x, vertex.y), l);
