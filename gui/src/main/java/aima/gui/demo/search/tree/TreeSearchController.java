@@ -32,11 +32,12 @@ public class TreeSearchController {
         anchor(problem);
         problemPane.getChildren().addAll(problem);
         RectangularGridProblemController problemController = problemLoader.getController();
-        problemController.setSimulator(simulator);
 
         Pane state = problemController.createSearchSpaceInfoRepresentation();
         anchor(state);
         stateSpaceInfo.getChildren().add(state);
+
+        problemController.setSimulator(simulator);
 
         FXMLLoader treeSearchLoader = new FXMLLoader(GeneralTreeSearchController.class.getResource("generaltreesearch.fxml"));
         Pane algo = treeSearchLoader.load();

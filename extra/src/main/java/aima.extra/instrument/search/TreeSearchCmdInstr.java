@@ -13,10 +13,11 @@ import java.util.*;
  */
 public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
     public interface Cmd<S> {
-        String  commandId();
-        int     frontierSize();
-        int     maxFrontierSize();
-        Node<S> node();
+        String          commandId();
+        int             frontierSize();
+        int             maxFrontierSize();
+        Node<S>         node();
+        Map<S, Integer> statesVisitiedCounts();
     }
 
     public interface Listener<S> {
@@ -48,6 +49,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     private Listener<S> listener;
     private Queue<Node<S>> frontier;
     private int maxFrontierSize = 0;
+    private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
 
     public TreeSearchCmdInstr(Listener<S> listener) {
         this.listener = listener;
@@ -57,6 +59,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     public Queue<Node<S>> newFrontier() {
         frontier        = new InstrLinkedList();
         maxFrontierSize = 0;
+        statesVisitiedCounts.clear();
         notify(CMD_START, 0, null);
         return frontier;
     }
@@ -91,6 +94,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
             maxFrontierSize = frontierSize;
         }
         int max = maxFrontierSize;
+        Map<S, Integer> visited = new HashMap<>(statesVisitiedCounts);
         listener.cmd(new Cmd<S>() {
             public String commandId() {
                 return commandId;
@@ -102,6 +106,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
             public Node<S> node() {
                 return node;
             }
+            public Map<S, Integer> statesVisitiedCounts() { return visited; }
         });
     }
 
@@ -118,6 +123,15 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
         @Override
         public Node<S> remove() {
             Node<S> removed =  super.remove();
+
+            Integer visitedCount = statesVisitiedCounts.get(removed.state());
+            if (visitedCount == null)  {
+                statesVisitiedCounts.put(removed.state(), 1);
+            }
+            else {
+                statesVisitiedCounts.put(removed.state(), visitedCount+1);
+            }
+
             TreeSearchCmdInstr.this.notify(CMD_FRONTIER_REMOVE, size(), removed);
             return removed;
         }

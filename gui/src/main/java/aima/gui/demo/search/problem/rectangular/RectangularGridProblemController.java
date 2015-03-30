@@ -55,6 +55,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
     //
     private TreeSearchAlgoSimulator<AtVertex> simulator;
+    private RectangularStateSpaceInfoController problemStateSpaceController;
     //
     private IntegerProperty xDimensionSize  = new SimpleIntegerProperty(5);
     private IntegerProperty yDimensionSize = new SimpleIntegerProperty(5);
@@ -87,13 +88,14 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     @Override
     public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
         this.simulator = simulator;
+        problemStateSpaceController.setSimulator(simulator);
     }
 
     public Pane createSearchSpaceInfoRepresentation() throws IOException {
         FXMLLoader stateSpaceInfoLoader = new FXMLLoader(RectangularStateSpaceInfoController.class.getResource("rectangularstatespaceinfo.fxml"));
-        Pane stateSpaceInfoPane =  stateSpaceInfoLoader.load();
+        Pane stateSpaceInfoPane = stateSpaceInfoLoader.load();
 
-        RectangularStateSpaceInfoController problemStateSpaceController = stateSpaceInfoLoader.getController();
+        problemStateSpaceController = stateSpaceInfoLoader.getController();
         problemStateSpaceController.setProblemController(this);
 
         return stateSpaceInfoPane;
