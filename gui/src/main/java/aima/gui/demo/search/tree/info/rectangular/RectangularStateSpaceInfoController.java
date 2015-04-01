@@ -12,6 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -58,20 +59,32 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                 Map<AtVertex, Integer> visited = cmd.statesVisitiedCounts();
                 stateLabels.entrySet().forEach(e -> {
                     Integer cnt = visited.get(e.getKey());
+                    e.getValue().setTextFill(Color.BLACK);
                     if (cnt == null) {
                         e.getValue().setText("");
-                        vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(1);
+                        if (cmd.statesInFrontierNotVisited().contains(e.getKey())) {
+                            vertexes[e.getKey().x][e.getKey().y].setFill(Color.WHITE);
+                            vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                        }
+                        else {
+                            vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
+                            vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
+                        }
                     }
                     else {
+                        e.getValue().setTextFill(Color.WHITE);
                         e.getValue().setText(""+cnt);
-                        vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(2);
+                        vertexes[e.getKey().x][e.getKey().y].setFill(Color.BLACK);
+                        vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
                     }
                 });
             }
             else {
                 stateLabels.entrySet().forEach(e -> {
+                    e.getValue().setTextFill(Color.BLACK);
                     e.getValue().setText("");
-                    vertexes[e.getKey().x][e.getKey().y].setStrokeWidth(1);
+                    vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
+                    vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
                 });
             }
         });
@@ -88,8 +101,10 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                 l.setLayoutX(vertex.getCenterX() - (l.getWidth() / 2));
             });
             l.heightProperty().addListener((observable, oldValue, newValue) -> {
-                l.setLayoutY(vertex.getCenterY()-(l.getHeight()/2));
+                l.setLayoutY(vertex.getCenterY() - (l.getHeight() / 2));
             });
+            vertex.setFill(Color.LIGHTGRAY);
+            vertex.setStroke(Color.LIGHTGRAY);
         });
     }
 }

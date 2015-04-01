@@ -18,6 +18,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
         int             maxFrontierSize();
         Node<S>         node();
         Map<S, Integer> statesVisitiedCounts();
+        Set<S>          statesInFrontierNotVisited();
     }
 
     public interface Listener<S> {
@@ -47,7 +48,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     )));
 
     private Listener<S> listener;
-    private Queue<Node<S>> frontier;
+    private InstrLinkedList frontier;
     private int maxFrontierSize = 0;
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
 
@@ -95,6 +96,9 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
         }
         int max = maxFrontierSize;
         Map<S, Integer> visited = new HashMap<>(statesVisitiedCounts);
+        Set<S> statesInFrontierNotVisited = new HashSet<>();
+        frontier.stream().forEach(n -> statesInFrontierNotVisited.add(n.state()));
+        statesInFrontierNotVisited.removeAll(visited.keySet());
         listener.cmd(new Cmd<S>() {
             public String commandId() {
                 return commandId;
@@ -107,6 +111,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
                 return node;
             }
             public Map<S, Integer> statesVisitiedCounts() { return visited; }
+            public Set<S> statesInFrontierNotVisited() { return statesInFrontierNotVisited; }
         });
     }
 
