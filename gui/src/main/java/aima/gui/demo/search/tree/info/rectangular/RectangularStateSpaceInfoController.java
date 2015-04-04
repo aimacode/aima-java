@@ -1,6 +1,6 @@
 package aima.gui.demo.search.tree.info.rectangular;
 
-import aima.extra.instrument.search.TreeSearchCmdInstr;
+import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.demo.search.problem.rectangular.AtVertex;
 import aima.gui.demo.search.problem.rectangular.RectangularGridProblemController;
 import aima.gui.demo.search.problem.rectangular.Vertex;
@@ -55,7 +55,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
         this.simulator = simulator;
         simulator.currentExecutionIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (this.simulator.isExecutionStarted() && this.simulator.getCurrentExecutionIndex() >= 0) {
-                TreeSearchCmdInstr.Cmd<AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
+                TreeSearchInstrumented.Cmd<AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
                 Map<AtVertex, Integer> visited = cmd.statesVisitiedCounts();
                 stateLabels.entrySet().forEach(e -> {
                     Integer cnt = visited.get(e.getKey());

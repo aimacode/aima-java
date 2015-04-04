@@ -2,7 +2,7 @@ package aima.gui.demo.search.problem.rectangular;
 
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import aima.gui.demo.search.tree.info.rectangular.RectangularStateSpaceInfoController;
-import de.jensd.fx.glyphs.GlyphsDude;
+import aima.gui.support.fx.FXUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -35,8 +35,6 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     @FXML private ScrollPane problemViewScrollPane;
     @FXML private Pane problemViewPane;
 
-    //
-    private static final String _iconSize = "16px";
     //
     private Vertex      startNode = null;
     private Set<Vertex> goalNodes = new HashSet<>();
@@ -202,8 +200,9 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
 
     @FXML
     private void initialize() {
-        GlyphsDude.setIcon(optionsButton, FontAwesomeIcons.GEAR, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(listProblemsButton, FontAwesomeIcons.BARS, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        FXUtil.setDefaultButtonIcon(optionsButton, FontAwesomeIcons.GEAR);
+        FXUtil.setDefaultButtonIcon(listProblemsButton, FontAwesomeIcons.BARS);
+
 
         optionsButton.setTooltip(new Tooltip("Configure Problem"));
         listProblemsButton.setTooltip(new Tooltip("Select Problem"));

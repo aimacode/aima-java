@@ -1,7 +1,7 @@
 package aima.gui.demo.search.tree.info;
 
 import aima.core.api.search.Node;
-import aima.extra.instrument.search.TreeSearchCmdInstr;
+import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,7 +26,7 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
 
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
             if (currentExecutionIndex.intValue() >= 0) {
-                TreeSearchCmdInstr.Cmd<S> cmd  = simulator.getExecuted().get(currentExecutionIndex.intValue());
+                TreeSearchInstrumented.Cmd<S> cmd  = simulator.getExecuted().get(currentExecutionIndex.intValue());
 
                 int current  = cmd.frontierSize();
                 int max      = cmd.maxFrontierSize();

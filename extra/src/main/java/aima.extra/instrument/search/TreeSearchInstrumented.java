@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
+public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
     public interface Cmd<S> {
         String          commandId();
         int             frontierSize();
@@ -52,7 +52,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
     private int maxFrontierSize = 0;
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
 
-    public TreeSearchCmdInstr(Listener<S> listener) {
+    public TreeSearchInstrumented(Listener<S> listener) {
         this.listener = listener;
     }
 
@@ -121,7 +121,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
         @Override
         public boolean isEmpty() {
             boolean result = super.isEmpty();
-            TreeSearchCmdInstr.this.notify(CMD_FRONTIER_EMPTY_CHECK, size(), null);
+            TreeSearchInstrumented.this.notify(CMD_FRONTIER_EMPTY_CHECK, size(), null);
             return result;
         }
 
@@ -137,7 +137,7 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
                 statesVisitiedCounts.put(removed.state(), visitedCount+1);
             }
 
-            TreeSearchCmdInstr.this.notify(CMD_FRONTIER_REMOVE, size(), removed);
+            TreeSearchInstrumented.this.notify(CMD_FRONTIER_REMOVE, size(), removed);
             return removed;
         }
 
@@ -146,10 +146,10 @@ public class TreeSearchCmdInstr<S> extends BasicSearchFunction<S> implements Tre
             boolean result = super.add(e);
             if (firstAdd) {
                 firstAdd = false;
-                TreeSearchCmdInstr.this.notify(CMD_INITIALIZE, size(), e);
+                TreeSearchInstrumented.this.notify(CMD_INITIALIZE, size(), e);
             }
             else {
-                TreeSearchCmdInstr.this.notify(CMD_ADD_FRONTIER, size(), e);
+                TreeSearchInstrumented.this.notify(CMD_ADD_FRONTIER, size(), e);
             }
             return result;
         }

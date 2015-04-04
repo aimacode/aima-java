@@ -1,7 +1,7 @@
 package aima.gui.demo.search.tree.algorithm;
 
 import aima.core.api.search.Problem;
-import aima.extra.instrument.search.TreeSearchCmdInstr;
+import aima.extra.instrument.search.TreeSearchInstrumented;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -19,7 +19,7 @@ import java.util.concurrent.CancellationException;
 public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     private ObjectProperty<Problem<S>> problem = new SimpleObjectProperty<>();
     private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(-1);
-    private ObjectProperty<ObservableList<TreeSearchCmdInstr.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
+    private ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
     public interface Observer<S> {
         void setSimulator(TreeSearchAlgoSimulator<S> simulator);
@@ -86,15 +86,15 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         return executed.get().size() > 0;
     }
 
-    public ObservableList<TreeSearchCmdInstr.Cmd<S>> getExecuted() {
+    public ObservableList<TreeSearchInstrumented.Cmd<S>> getExecuted() {
         return executed.get();
     }
 
-    public void setExecuted(ObservableList<TreeSearchCmdInstr.Cmd<S>> executed) {
+    public void setExecuted(ObservableList<TreeSearchInstrumented.Cmd<S>> executed) {
         this.executed.set(executed);
     }
 
-    public ObjectProperty<ObservableList<TreeSearchCmdInstr.Cmd<S>>> executedProperty() {
+    public ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executedProperty() {
         return executed;
     }
 
@@ -108,13 +108,11 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
             @Override
             public Void call() {
 
-                TreeSearchCmdInstr<S> search = new TreeSearchCmdInstr(new TreeSearchCmdInstr.Listener<S>() {
-                    public void cmd(TreeSearchCmdInstr.Cmd<S> command) {
-                        if (isCancelled()) {
-                            throw new CancellationException("Cancelled");
-                        }
-                        executed.get().add(command);
+                TreeSearchInstrumented<S> search = new TreeSearchInstrumented((command) -> {
+                    if (isCancelled()) {
+                        throw new CancellationException("Cancelled");
                     }
+                    executed.get().add(command);
                 });
 
                 try {

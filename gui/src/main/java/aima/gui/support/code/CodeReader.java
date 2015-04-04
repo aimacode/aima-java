@@ -1,6 +1,6 @@
 package aima.gui.support.code;
 
-import aima.extra.instrument.search.TreeSearchCmdInstr;
+import aima.extra.instrument.search.TreeSearchInstrumented;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +19,7 @@ public class CodeReader {
 
     // Test Main
     public static void main(String[] args) {
-        read("tree-search.code", TreeSearchCmdInstr.CMDS);
+        read("tree-search.code", TreeSearchInstrumented.CMDS);
     }
 
     public static List<CodeRepresentation> read(String codeFileName, Set<String> expectedCmds) {

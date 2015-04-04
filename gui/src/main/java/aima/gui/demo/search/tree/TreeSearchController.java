@@ -6,6 +6,7 @@ import aima.gui.demo.search.tree.algorithm.GeneralTreeSearchController;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import aima.gui.demo.search.tree.info.SummaryInfoController;
 import aima.gui.demo.search.tree.info.SearchSpaceInfoController;
+import aima.gui.support.fx.FXUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -29,39 +30,32 @@ public class TreeSearchController {
     private void initialize() throws IOException {
         FXMLLoader problemLoader = new FXMLLoader(RectangularGridProblemController.class.getResource("rectangulargridproblem.fxml"));
         Pane problem = problemLoader.load();
-        anchor(problem);
+        FXUtil.anchor(problem);
         problemPane.getChildren().addAll(problem);
         RectangularGridProblemController problemController = problemLoader.getController();
 
         Pane state = problemController.createSearchSpaceInfoRepresentation();
-        anchor(state);
+        FXUtil.anchor(state);
         stateSpaceInfo.getChildren().add(state);
 
         problemController.setSimulator(simulator);
 
         FXMLLoader treeSearchLoader = new FXMLLoader(GeneralTreeSearchController.class.getResource("generaltreesearch.fxml"));
         Pane algo = treeSearchLoader.load();
-        anchor(algo);
+        FXUtil.anchor(algo);
         searchAlgoPane.getChildren().add(algo);
         TreeSearchAlgoSimulator.Observer<AtVertex> treeSearchController = treeSearchLoader.getController();
         treeSearchController.setSimulator(simulator);
 
         Pane search = FXMLLoader.load(SearchSpaceInfoController.class.getResource("searchspaceinfo.fxml"));
-        anchor(search);
+        FXUtil.anchor(search);
         searchSpaceInfo.getChildren().add(search);
 
         FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryinfo.fxml"));
         Pane frontierInfoPane = frontierInfoLoader.load();
-        anchor(frontierInfoPane);
+        FXUtil.anchor(frontierInfoPane);
         frontierInfo.getChildren().add(frontierInfoPane);
         TreeSearchAlgoSimulator.Observer<AtVertex> frontierInfoController = frontierInfoLoader.getController();
         frontierInfoController.setSimulator(simulator);
-    }
-
-    private void anchor(Pane pane) {
-        AnchorPane.setTopAnchor(pane, 0.0);
-        AnchorPane.setLeftAnchor(pane, 0.0);
-        AnchorPane.setRightAnchor(pane, 0.0);
-        AnchorPane.setBottomAnchor(pane, 0.0);
     }
 }

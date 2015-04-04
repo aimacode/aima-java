@@ -1,16 +1,12 @@
 package aima.gui.demo.search.tree.algorithm;
 
-import aima.extra.instrument.search.TreeSearchCmdInstr;
-import aima.gui.demo.search.problem.rectangular.AtVertex;
-import aima.gui.demo.search.problem.rectangular.RectangularProblem;
+import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.support.code.CodeCommand;
 import aima.gui.support.code.CodeReader;
 import aima.gui.support.code.CodeRepresentation;
-import de.jensd.fx.glyphs.GlyphsDude;
+import aima.gui.support.fx.FXUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -25,7 +21,6 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +30,6 @@ import java.util.regex.Pattern;
  * @author Ciaran O'Reilly
  */
 public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.Observer<S> {
-    private static final String _iconSize = "16px";
     private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
     private static final Font _boldPseudoCodeFont    = Font.font(java.awt.Font.MONOSPACED, FontWeight.BOLD, 11);
     private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
@@ -102,12 +96,12 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
 
     @FXML
     private void initialize() {
-        GlyphsDude.setIcon(listAlgorithmsButton, FontAwesomeIcons.BARS, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(goFirstStepButton, FontAwesomeIcons.FAST_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(previousStepButton, FontAwesomeIcons.STEP_BACKWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(nextStepButton, FontAwesomeIcons.STEP_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
-        GlyphsDude.setIcon(goLastStepButton, FontAwesomeIcons.FAST_FORWARD, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+        FXUtil.setDefaultButtonIcon(listAlgorithmsButton, FontAwesomeIcons.BARS);
+        FXUtil.setDefaultButtonIcon(autoPlayButton, FontAwesomeIcons.PLAY);
+        FXUtil.setDefaultButtonIcon(goFirstStepButton, FontAwesomeIcons.FAST_BACKWARD);
+        FXUtil.setDefaultButtonIcon(previousStepButton, FontAwesomeIcons.STEP_BACKWARD);
+        FXUtil.setDefaultButtonIcon(nextStepButton, FontAwesomeIcons.STEP_FORWARD);
+        FXUtil.setDefaultButtonIcon(goLastStepButton, FontAwesomeIcons.FAST_FORWARD);
 
         listAlgorithmsButton.setTooltip(new Tooltip("Select algorithm"));
         executionStepSlider.setMin(0);
@@ -130,7 +124,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
             }
         });
 
-        List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchCmdInstr.CMDS);
+        List<CodeRepresentation> codeRepresentations = CodeReader.read("tree-search.code", TreeSearchInstrumented.CMDS);
         codeRepresentations.forEach(cr -> {
             Tab tab = new Tab(cr.codeTypeName);
             TextFlow tf = new TextFlow();
@@ -158,13 +152,13 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     private void autoPlay(ActionEvent event) {
         if (autoPlayBack.isRunning()) {
             // Stop auto-playing
-            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.PLAY, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            FXUtil.setDefaultButtonIcon(autoPlayButton, FontAwesomeIcons.PLAY);
             autoPlayButton.setTooltip(new Tooltip("Auto play execution"));
             autoPlayBack.cancel();
         }
         else {
             // Start auto-playing
-            GlyphsDude.setIcon(autoPlayButton, FontAwesomeIcons.STOP, _iconSize, ContentDisplay.GRAPHIC_ONLY);
+            FXUtil.setDefaultButtonIcon(autoPlayButton, FontAwesomeIcons.STOP);
             autoPlayButton.setTooltip(new Tooltip("Stop auto playing execution"));
             autoPlayBack.setPeriod(Duration.seconds(1.0 / (double) stepsASecondChoiceBox.getValue()));
             autoPlayBack.restart();
@@ -221,7 +215,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
                     t.setFont(normal);
                 });
                 ci.lastHightlighted.clear();
-                TreeSearchCmdInstr.Cmd<S> cmd = simulator.getExecuted().get(simulator.getCurrentExecutionIndex());
+                TreeSearchInstrumented.Cmd<S> cmd = simulator.getExecuted().get(simulator.getCurrentExecutionIndex());
                 CodeCommand codeCommand = ci.representation.commandIdToCommand.get(cmd.commandId());
                 codeCommand.sourceIndexes.forEach(si -> {
                     for (int i = si.startIdx; i < si.endIdx; i++) {
