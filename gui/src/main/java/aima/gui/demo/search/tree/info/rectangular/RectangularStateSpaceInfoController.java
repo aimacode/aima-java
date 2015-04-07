@@ -2,6 +2,7 @@ package aima.gui.demo.search.tree.info.rectangular;
 
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.demo.search.problem.rectangular.AtVertex;
+import aima.gui.demo.search.problem.rectangular.RectangularGrid;
 import aima.gui.demo.search.problem.rectangular.RectangularGridProblemController;
 import aima.gui.demo.search.problem.rectangular.Vertex;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
@@ -32,7 +33,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
     private TreeSearchAlgoSimulator<AtVertex> simulator;
     private RectangularGridProblemController problemController;
     private Map<AtVertex, Label> stateLabels = new HashMap<>();
-    private Vertex[][] vertexes;
+    private RectangularGrid grid;
 
     public void setProblemController(RectangularGridProblemController problemController) {
         this.problemController = problemController;
@@ -63,19 +64,19 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                     if (cnt == null) {
                         e.getValue().setText("");
                         if (cmd.statesInFrontierNotVisited().contains(e.getKey())) {
-                            vertexes[e.getKey().x][e.getKey().y].setFill(Color.WHITE);
-                            vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                            grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.WHITE);
+                            grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
                         }
                         else {
-                            vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
-                            vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
+                            grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
+                            grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
                         }
                     }
                     else {
                         e.getValue().setTextFill(Color.WHITE);
                         e.getValue().setText(""+cnt);
-                        vertexes[e.getKey().x][e.getKey().y].setFill(Color.BLACK);
-                        vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                        grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.BLACK);
+                        grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
                     }
                 });
             }
@@ -83,8 +84,8 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                 stateLabels.entrySet().forEach(e -> {
                     e.getValue().setTextFill(Color.BLACK);
                     e.getValue().setText("");
-                    vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
-                    vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
+                    grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
+                    grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
                 });
             }
         });
@@ -92,19 +93,24 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
 
     private void setupStateSpaceRepresentation() {
         stateLabels.clear();
-        vertexes = problemController.setupGrid(stateSpaceVisitedViewPane, stateSpaceVisitedViewScrollPane, vertex -> {
-            Label l = new Label("");
-            l.setFont(_defaultLabelFont);
-            stateLabels.put(new AtVertex(vertex.x, vertex.y), l);
-            stateSpaceVisitedViewPane.getChildren().add(l);
-            l.widthProperty().addListener((observable, oldValue, newValue) -> {
-                l.setLayoutX(vertex.getCenterX() - (l.getWidth() / 2));
-            });
-            l.heightProperty().addListener((observable, oldValue, newValue) -> {
-                l.setLayoutY(vertex.getCenterY() - (l.getHeight() / 2));
-            });
-            vertex.setFill(Color.LIGHTGRAY);
-            vertex.setStroke(Color.LIGHTGRAY);
-        });
+        grid = problemController.setupGrid(stateSpaceVisitedViewPane, stateSpaceVisitedViewScrollPane,
+                vertex -> {
+                    Label l = new Label("");
+                    l.setFont(_defaultLabelFont);
+                    stateLabels.put(new AtVertex(vertex.x, vertex.y), l);
+                    stateSpaceVisitedViewPane.getChildren().add(l);
+                    l.widthProperty().addListener((observable, oldValue, newValue) -> {
+                        l.setLayoutX(vertex.getCenterX() - (l.getWidth() / 2));
+                    });
+                    l.heightProperty().addListener((observable, oldValue, newValue) -> {
+                        l.setLayoutY(vertex.getCenterY() - (l.getHeight() / 2));
+                    });
+                    vertex.setFill(Color.LIGHTGRAY);
+                    vertex.setStroke(Color.LIGHTGRAY);
+                },
+                edge -> {
+                    edge.setFill(Color.LIGHTGRAY);
+                    edge.setStroke(Color.LIGHTGRAY);
+                });
     }
 }

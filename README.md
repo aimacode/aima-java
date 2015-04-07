@@ -7,7 +7,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (new demo GUI)
 * Tree-Search demo
     * Make edges colorable
-    * Indicate last vertex visited  
+    * Indicate last vertex visited 
+    * TreeSearchInstrumented - improve memory usage by constructing minimal deltas.
 * Graph-Search demo
 
 ### LATER

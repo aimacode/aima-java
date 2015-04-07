@@ -17,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -38,12 +37,10 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     //
     private Vertex      startNode = null;
     private Set<Vertex> goalNodes = new HashSet<>();
-    private Vertex[][]  vertexes;
     //
-    private int nodeRadius              = 12;
-    private int borderPadding           = 10;
-    private int nodeRadiusSpacingFactor = 5;
-    private int viewportPadding         = 8;
+    private int vertexRadius              = 12;
+    private int borderPadding             = 10;
+    private int vertexRadiusSpacingFactor = 5;
     //
     private Paint defaultPaint    = Color.WHITE;
     private Image goalImage       = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
@@ -99,67 +96,33 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         return stateSpaceInfoPane;
     }
 
-    public Vertex[][] setupGrid(Pane pane, ScrollPane containingScrollPane, Consumer<Vertex> vertexConsumer) {
+    public RectangularGrid setupGrid(Pane pane, ScrollPane containingScrollPane, Consumer<Vertex> vertexConsumer, Consumer<Edge> edgeConsumer) {
         pane.getChildren().clear();
 
-        Vertex[][] nodes = new Vertex[getXDimensionSize()][getYDimensionSize()];
+        RectangularGrid grid = RectangularGrid.setupGrid(xDimensionSize.get(), yDimensionSize.get(),
+                vertexRadius,  vertexRadiusSpacingFactor, borderPadding,
+                pane, containingScrollPane,
+                vertex -> {
+                    vertexConsumer.accept(vertex);
+                },
+                edge -> {
+                    edgeConsumer.accept(edge);
+                });
 
-        int width  = getXDimensionSize() * nodeRadius * nodeRadiusSpacingFactor;
-        int height = getYDimensionSize() * nodeRadius * nodeRadiusSpacingFactor;
-        int xInset = 0;
-        int yInset = 0;
-        int vpWidth  =  (int) containingScrollPane.getWidth() - viewportPadding;
-        int vpHeight =  (int) containingScrollPane.getHeight() - viewportPadding;
-        if (width < vpWidth) {
-            xInset = (vpWidth - width) / 2;
-            pane.setPrefWidth(vpWidth);
-        }
-        else {
-            pane.setPrefWidth(width);
-        }
-        if (height < vpHeight) {
-            yInset = (vpHeight - height) / 2;
-            pane.setPrefHeight(vpHeight);
-        }
-        else {
-            pane.setPrefHeight(height);
-        }
-
-        for (int x = 0; x < nodes.length; x++) {
-            for (int y = 0; y < nodes[x].length; y++) {
-                int centerX = xInset + (nodeRadius + borderPadding) + (x * (nodeRadius * nodeRadiusSpacingFactor));
-                int centerY = yInset + (nodeRadius + borderPadding) + (y * (nodeRadius * nodeRadiusSpacingFactor));
-                nodes[x][y] = new Vertex(x, y, centerX, centerY, nodeRadius);
-                nodes[x][y].setFill(defaultPaint);
-                nodes[x][y].setStroke(Color.BLACK);
-                nodes[x][y].setStrokeWidth(1);
-
-                pane.getChildren().add(nodes[x][y]);
-
-                if (x > 0) {
-                    Line horizLine = new Line(centerX - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerY, centerX - nodeRadius, centerY);
-                    pane.getChildren().add(horizLine);
-                }
-
-                if (y > 0) {
-                    Line vertLine = new Line(centerX, centerY - (nodeRadius*(nodeRadiusSpacingFactor-1)), centerX, centerY - nodeRadius);
-                    pane.getChildren().add(vertLine);
-                }
-
-                vertexConsumer.accept(nodes[x][y]);
-            }
-        }
-
-        return nodes;
+        return grid;
     }
 
     public void setupProblem() {
         startNode = null;
         goalNodes.clear();
 
-        vertexes = setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
+        setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
             Tooltip t = new Tooltip("("+vertex.x+","+vertex.y+")");
             Tooltip.install(vertex, t);
+
+            vertex.setFill(defaultPaint);
+            vertex.setStroke(Color.BLACK);
+            vertex.setStrokeWidth(1);
 
             vertex.setOnMouseClicked(me -> {
                 Vertex clicked = (Vertex) me.getSource();
@@ -195,6 +158,10 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                             goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
                 }
             });
+        },
+        edge -> {
+            edge.setStroke(Color.BLACK);
+            edge.setStrokeWidth(1);
         });
     }
 
