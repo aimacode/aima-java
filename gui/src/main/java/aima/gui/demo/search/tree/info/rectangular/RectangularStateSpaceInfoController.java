@@ -34,6 +34,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
     private RectangularGridProblemController problemController;
     private Map<AtVertex, Label> stateLabels = new HashMap<>();
     private RectangularGrid grid;
+    private double defaultRadius = 0;
 
     public void setProblemController(RectangularGridProblemController problemController) {
         this.problemController = problemController;
@@ -74,9 +75,15 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                     }
                     else {
                         e.getValue().setTextFill(Color.WHITE);
-                        e.getValue().setText(""+cnt);
+                        e.getValue().setText("" + cnt);
                         grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.BLACK);
                         grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                    }
+                    if (cmd.lastNodeVisited() != null && e.getKey().equals(cmd.lastNodeVisited().state())) {
+                        grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius+3);
+                    }
+                    else {
+                        grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius);
                     }
                 });
             }
@@ -84,6 +91,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                 stateLabels.entrySet().forEach(e -> {
                     e.getValue().setTextFill(Color.BLACK);
                     e.getValue().setText("");
+                    grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius);
                     grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
                     grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
                 });
@@ -95,6 +103,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
         stateLabels.clear();
         grid = problemController.setupGrid(stateSpaceVisitedViewPane, stateSpaceVisitedViewScrollPane,
                 vertex -> {
+                    defaultRadius = vertex.getRadius();
                     Label l = new Label("");
                     l.setFont(_defaultLabelFont);
                     stateLabels.put(new AtVertex(vertex.x, vertex.y), l);
