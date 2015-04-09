@@ -60,40 +60,62 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                 TreeSearchInstrumented.Cmd<AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
                 Map<AtVertex, Integer> visited = cmd.statesVisitiedCounts();
                 stateLabels.entrySet().forEach(e -> {
+                    Vertex currentVertex = grid.vertexes[e.getKey().x][e.getKey().y];
                     Integer cnt = visited.get(e.getKey());
                     e.getValue().setTextFill(Color.BLACK);
                     if (cnt == null) {
                         e.getValue().setText("");
                         if (cmd.statesInFrontierNotVisited().contains(e.getKey())) {
-                            grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.WHITE);
-                            grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                            currentVertex.setFill(Color.WHITE);
+                            currentVertex.setStroke(Color.BLACK);
                         }
                         else {
-                            grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
-                            grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
+                            currentVertex.setFill(Color.LIGHTGRAY);
+                            currentVertex.setStroke(Color.LIGHTGRAY);
                         }
                     }
                     else {
                         e.getValue().setTextFill(Color.WHITE);
                         e.getValue().setText("" + cnt);
-                        grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.BLACK);
-                        grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.BLACK);
+                        currentVertex.setFill(Color.BLACK);
+                        currentVertex.setStroke(Color.BLACK);
                     }
+
+                    // Indicate the last node visited by increasing its size
                     if (cmd.lastNodeVisited() != null && e.getKey().equals(cmd.lastNodeVisited().state())) {
-                        grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius+3);
+                        currentVertex.setRadius(defaultRadius + 3);
                     }
                     else {
-                        grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius);
+                        currentVertex.setRadius(defaultRadius);
                     }
+
+                    // Update the edges based on how they are connected
+                    currentVertex.getNeighbours().forEach(neighbour -> {
+                        AtVertex neighbourAt = new AtVertex(neighbour.x, neighbour.y);
+                        if (visited.containsKey(e.getKey())
+                            && (visited.containsKey(neighbourAt) || cmd.statesInFrontierNotVisited().contains(neighbourAt))) {
+                            currentVertex.getEdgeFor(neighbour).setFill(Color.BLACK);
+                            currentVertex.getEdgeFor(neighbour).setStroke(Color.BLACK);
+                        }
+                        else if (!visited.containsKey(neighbourAt)) {
+                            currentVertex.getEdgeFor(neighbour).setFill(Color.LIGHTGRAY);
+                            currentVertex.getEdgeFor(neighbour).setStroke(Color.LIGHTGRAY);
+                        }
+                    });
                 });
             }
             else {
                 stateLabels.entrySet().forEach(e -> {
                     e.getValue().setTextFill(Color.BLACK);
                     e.getValue().setText("");
-                    grid.vertexes[e.getKey().x][e.getKey().y].setRadius(defaultRadius);
-                    grid.vertexes[e.getKey().x][e.getKey().y].setFill(Color.LIGHTGRAY);
-                    grid.vertexes[e.getKey().x][e.getKey().y].setStroke(Color.LIGHTGRAY);
+                    Vertex currentVertex = grid.vertexes[e.getKey().x][e.getKey().y];
+                    currentVertex.setRadius(defaultRadius);
+                    currentVertex.setFill(Color.LIGHTGRAY);
+                    currentVertex.setStroke(Color.LIGHTGRAY);
+                    currentVertex.getEdges().forEach(edge -> {
+                        edge.setFill(Color.LIGHTGRAY);
+                        edge.setStroke(Color.LIGHTGRAY);
+                    });
                 });
             }
         });
