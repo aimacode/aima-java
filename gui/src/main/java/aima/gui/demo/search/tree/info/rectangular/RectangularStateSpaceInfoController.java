@@ -65,7 +65,7 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                     e.getValue().setTextFill(Color.BLACK);
                     if (cnt == null) {
                         e.getValue().setText("");
-                        if (cmd.statesInFrontierNotVisited().contains(e.getKey())) {
+                        if (cmd.statesInFrontierNotVisited().containsKey(e.getKey())) {
                             currentVertex.setFill(Color.WHITE);
                             currentVertex.setStroke(Color.BLACK);
                         }
@@ -92,10 +92,19 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
                     // Update the edges based on how they are connected
                     currentVertex.getNeighbours().forEach(neighbour -> {
                         AtVertex neighbourAt = new AtVertex(neighbour.x, neighbour.y);
-                        if (visited.containsKey(e.getKey())
-                            && (visited.containsKey(neighbourAt) || cmd.statesInFrontierNotVisited().contains(neighbourAt))) {
+                        if (visited.containsKey(e.getKey()) && visited.containsKey(neighbourAt)) {
                             currentVertex.getEdgeFor(neighbour).setFill(Color.BLACK);
                             currentVertex.getEdgeFor(neighbour).setStroke(Color.BLACK);
+                        }
+                        else if (visited.containsKey(e.getKey()) && cmd.statesInFrontierNotVisited().containsKey(neighbourAt)) {
+                            if (cmd.statesInFrontierNotVisited().get(neighbourAt).parent().state().equals(e.getKey())) {
+                                currentVertex.getEdgeFor(neighbour).setFill(Color.BLACK);
+                                currentVertex.getEdgeFor(neighbour).setStroke(Color.BLACK);
+                            }
+                            else {
+                                currentVertex.getEdgeFor(neighbour).setFill(Color.LIGHTGRAY);
+                                currentVertex.getEdgeFor(neighbour).setStroke(Color.LIGHTGRAY);
+                            }
                         }
                         else if (!visited.containsKey(neighbourAt)) {
                             currentVertex.getEdgeFor(neighbour).setFill(Color.LIGHTGRAY);

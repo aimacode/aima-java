@@ -18,7 +18,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         int             maxFrontierSize();
         Node<S>         node();
         Map<S, Integer> statesVisitiedCounts();
-        Set<S>          statesInFrontierNotVisited();
+        Map<S, Node<S>> statesInFrontierNotVisited();
         Node<S>         lastNodeVisited();
     }
 
@@ -52,7 +52,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
     private InstrLinkedList frontier;
     private int maxFrontierSize = 0;
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
-    private Set<S> statesInFrontierNotVisited = new HashSet<>();
+    private Map<S, Node<S>> statesInFrontierNotVisited = new HashMap<>();
     private Node<S> lastNodeVisited;
 
     public TreeSearchInstrumented(Listener<S> listener) {
@@ -101,7 +101,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         }
         int max = maxFrontierSize;
         final Map<S, Integer> visited =  statesVisitiedCounts;
-        final Set<S> notVisited = statesInFrontierNotVisited;
+        final Map<S, Node<S>> notVisited = statesInFrontierNotVisited;
         final Node<S> last = lastNodeVisited;
         listener.cmd(new Cmd<S>() {
             public String commandId() {
@@ -115,7 +115,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
                 return node;
             }
             public Map<S, Integer> statesVisitiedCounts() { return visited; }
-            public Set<S> statesInFrontierNotVisited() { return notVisited; }
+            public Map<S, Node<S>> statesInFrontierNotVisited() { return notVisited; }
             public Node<S> lastNodeVisited() { return last; }
         });
     }
@@ -145,8 +145,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             }
 
 
-            if (statesInFrontierNotVisited.contains(removed.state())) {
-                statesInFrontierNotVisited = new HashSet<>(statesInFrontierNotVisited);
+            if (statesInFrontierNotVisited.containsKey(removed.state())) {
+                statesInFrontierNotVisited = new HashMap<>(statesInFrontierNotVisited);
                 statesInFrontierNotVisited.remove(removed.state());
             }
 
@@ -159,9 +159,9 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             boolean result = super.add(e);
 
             if (!statesVisitiedCounts.containsKey(e.state())) {
-                if (!statesInFrontierNotVisited.contains(e.state())) {
-                    statesInFrontierNotVisited = new HashSet<>(statesInFrontierNotVisited);
-                    statesInFrontierNotVisited.add(e.state());
+                if (!statesInFrontierNotVisited.containsKey(e.state())) {
+                    statesInFrontierNotVisited = new HashMap<>(statesInFrontierNotVisited);
+                    statesInFrontierNotVisited.put(e.state(), e);
                 }
             }
             if (firstAdd) {
