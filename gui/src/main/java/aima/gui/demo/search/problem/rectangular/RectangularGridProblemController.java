@@ -122,15 +122,25 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     public void setupProblem() {
         startNode = null;
         goalNodes.clear();
-        notificationLabel.setText(_selectStartMessage);
+        notificationLabel.setText("");
 
-        setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
+        RectangularGrid grid = setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
             Tooltip t = new Tooltip("("+vertex.x+","+vertex.y+")");
             Tooltip.install(vertex, t);
 
             vertex.setFill(defaultPaint);
             vertex.setStroke(Color.BLACK);
             vertex.setStrokeWidth(1);
+
+            // Auto select initial start and goal nodes
+            if ((xDimensionSize.get()/2) == vertex.x && (yDimensionSize.get()/2) == vertex.y) {
+                startNode = vertex;
+                startNode.setFill(startPaint);
+            }
+            if (vertex.x == 0 && vertex.y == 0) {
+                goalNodes.add(vertex);
+                vertex.setFill(goalPaint);
+            }
 
             vertex.setOnMouseClicked(me -> {
                 Vertex clicked = (Vertex) me.getSource();
@@ -183,6 +193,11 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
             edge.setStroke(Color.BLACK);
             edge.setStrokeWidth(1);
         });
+
+        // Start the initial problem solving
+        simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
+                new AtVertex(startNode.x, startNode.y),
+                goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
     }
 
     @FXML
