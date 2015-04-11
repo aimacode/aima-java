@@ -7,13 +7,7 @@
 ##############################################################################
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS=" \
--Djava.security.debug=sunpkcs11 \
--Djavax.net.ssl.trustStore=NONE \
--Djavax.net.ssl.trustStoreType=pkcs11 \
--Djavax.net.ssl.keyStore=NONE \
--Djavax.net.ssl.keyStoreType=pkcs11 \
-"
+DEFAULT_JVM_OPTS=""
 
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
