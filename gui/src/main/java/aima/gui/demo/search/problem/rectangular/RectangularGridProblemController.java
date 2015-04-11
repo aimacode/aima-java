@@ -103,7 +103,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                     simulatorStateLabel.setText("");
                     break;
                 case SEARCHING_FOR_SOLUTUION:
-                    simulatorStateLabel.setText("Searching for solution...");
+                    simulatorStateLabel.setText("Searching for solution... (can simulate currently running search on right).");
                     break;
                 case SOLUTION_FOUND:
                     simulatorStateLabel.setText("Solution to problem exists - simulate search on right.");
