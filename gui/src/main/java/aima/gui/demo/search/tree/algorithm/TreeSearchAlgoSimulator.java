@@ -3,6 +3,7 @@ package aima.gui.demo.search.tree.algorithm;
 import aima.core.api.search.Problem;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,13 +16,46 @@ import java.util.concurrent.CancellationException;
  * @author Ciaran O'Reilly
  */
 public class TreeSearchAlgoSimulator<S> extends Service<Void> {
+
+    public enum SimulatorState {
+        NOT_STARTED,
+        SEARCHING_FOR_SOLUTUION,
+        SOLUTION_FOUND,
+        FAILURE_ENCOUNTERED
+    }
+
     private ObjectProperty<Problem<S>> problem = new SimpleObjectProperty<>();
+    private ObjectProperty<SimulatorState> state = new SimpleObjectProperty<>(SimulatorState.NOT_STARTED);
+    private BooleanProperty atSolution = new SimpleBooleanProperty(false);
+    private BooleanProperty atFailure = new SimpleBooleanProperty(false);
     private LongProperty executionDelay = new SimpleLongProperty(0);
     private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(-1);
     private ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
     public interface Observer<S> {
         void setSimulator(TreeSearchAlgoSimulator<S> simulator);
+    }
+
+    public TreeSearchAlgoSimulator() {
+
+        atSolution.bind(Bindings.createBooleanBinding(() -> {
+            boolean result = false;
+            if (isExecutionStarted()
+                    && isCurrentExecutionIndexAtEnd()
+                    && executed.get().get(executed.get().size()-1).commandId() == TreeSearchInstrumented.CMD_SOLUTION) {
+                result = true;
+            }
+            return result;
+        }, currentExecutionIndexProperty()));
+        atFailure.bind(Bindings.createBooleanBinding(() -> {
+            boolean result = false;
+            if (isExecutionStarted()
+                    && isCurrentExecutionIndexAtEnd()
+                    && executed.get().get(executed.get().size()-1).commandId() == TreeSearchInstrumented.CMD_FAILURE) {
+                result = true;
+            }
+            return result;
+        }, currentExecutionIndexProperty()));
     }
 
     public Problem<S> getProblem() {
@@ -36,6 +70,30 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
     public ObjectProperty<Problem<S>> problemProperty() {
         return problem;
+    }
+
+    public SimulatorState getSimulatorState() {
+        return state.get();
+    }
+
+    public ReadOnlyObjectProperty<SimulatorState> simulatorStateProperty() {
+        return state;
+    }
+
+    public boolean isAtSolution() {
+        return atSolution.get();
+    }
+
+    public ReadOnlyBooleanProperty atSolutionProperty() {
+        return atSolution;
+    }
+
+    public boolean isAtFailure() {
+        return atFailure.get();
+    }
+
+    public ReadOnlyBooleanProperty atFailureProperty() {
+        return atFailure;
     }
 
     public long getExecutionDelay() {
@@ -112,6 +170,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
     @Override
     protected Task<Void> createTask() {
+        state.set(SimulatorState.NOT_STARTED);
         // Restarting the execution
         currentExecutionIndex.set(-1);
         executed.get().clear();
@@ -119,15 +178,18 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         return new Task<Void>() {
             @Override
             public Void call() {
-
-                TreeSearchInstrumented<S> search = new TreeSearchInstrumented((command) -> {
+                StringBuilder lastCommandId = new StringBuilder();
+                Platform.runLater(() -> state.set(SimulatorState.SEARCHING_FOR_SOLUTUION));
+                TreeSearchInstrumented<S> search = new TreeSearchInstrumented<>((command) -> {
                     if (isCancelled()) {
                         throw new CancellationException("Cancelled");
                     }
+                    lastCommandId.setLength(0);
+                    lastCommandId.append(command.commandId());
                     Platform.runLater(() -> executed.get().add(command));
                     if (getExecutionDelay() > 0) {
                         try {
-                            Thread.currentThread().sleep(getExecutionDelay());
+                            Thread.sleep(getExecutionDelay());
                         } catch (InterruptedException ie) {
                             // Can be interrupted
                         }
@@ -142,6 +204,17 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
                 catch (CancellationException ce) {
                     // Expected on cancellation
                 }
+
+                SimulatorState toReport = SimulatorState.NOT_STARTED;
+                if (lastCommandId.toString().equals(TreeSearchInstrumented.CMD_SOLUTION)) {
+                    toReport = SimulatorState.SOLUTION_FOUND;
+                }
+                else if (lastCommandId.toString().equals(TreeSearchInstrumented.CMD_FAILURE)) {
+                    toReport = SimulatorState.FAILURE_ENCOUNTERED;
+                }
+
+                final SimulatorState fToReport = toReport;
+                Platform.runLater(() -> state.set(fToReport));
 
                 return null;
             }

@@ -47,4 +47,7 @@
          </content>
       </ScrollPane>
    </center>
+   <bottom>
+      <Label fx:id="simulatorStateLabel" BorderPane.alignment="CENTER_LEFT" />
+   </bottom>
 </BorderPane>

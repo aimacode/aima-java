@@ -36,6 +36,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     //
     @FXML private Label  problemTypeLabel;
     @FXML private Label  notificationLabel;
+    @FXML private Label  simulatorStateLabel;
     @FXML private Button optionsButton;
     @FXML private Button listProblemsButton;
     @FXML private ScrollPane problemViewScrollPane;
@@ -91,6 +92,27 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
         this.simulator = simulator;
         problemStateSpaceController.setSimulator(simulator);
+        this.simulator.atSolutionProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+// TODO - animate path to solution
+            }
+        });
+        this.simulator.simulatorStateProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case NOT_STARTED:
+                    simulatorStateLabel.setText("");
+                    break;
+                case SEARCHING_FOR_SOLUTUION:
+                    simulatorStateLabel.setText("Searching for solution...");
+                    break;
+                case SOLUTION_FOUND:
+                    simulatorStateLabel.setText("Solution to problem exists - simulate search on right.");
+                    break;
+                case FAILURE_ENCOUNTERED:
+                    simulatorStateLabel.setText("Unable to find solution to problem - simulate search on right.");
+                    break;
+            }
+        });
     }
 
     public Pane createSearchSpaceInfoRepresentation() throws IOException {
