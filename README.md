@@ -6,8 +6,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (new demo GUI)
 * Tree-Search demo
+    * fix 'goal' message not displaying correctly.
+    * once problem properly setup tell the user computing answer and when result is found.
+        * indicate they can animate the solution at anytime.
     * In grid problem, when solution found animate path to solution.
-    * Search Space View - design.
+    * Configure rectangular problem
+        * Change size of grid
+        * Specify order of expansion.
+    * Search Space View - design and implement.
 * Graph-Search demo
     * Summary information related to explored set.
 

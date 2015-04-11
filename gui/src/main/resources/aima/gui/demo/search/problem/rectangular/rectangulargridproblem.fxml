@@ -13,11 +13,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.rectangular.RectangularGridProblemController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.rectangular.RectangularGridProblemController">
    <top>
       <BorderPane BorderPane.alignment="CENTER">
          <right>
-            <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
+            <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="TOP_RIGHT">
                <children>
                   <Button fx:id="optionsButton" mnemonicParsing="false" text="Opts" />
                   <Button fx:id="listProblemsButton" mnemonicParsing="false" text="List" />
@@ -25,11 +25,17 @@
             </HBox>
          </right>
          <left>
-            <VBox BorderPane.alignment="CENTER">
+            <VBox spacing="1.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="problemTypeLabel" text="Problem: Rectangular Grid" underline="true" />
-                  <Label fx:id="notificationLabel" />
+                  <Label fx:id="notificationLabel" text="No goal(s) selected," />
                </children>
+               <opaqueInsets>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets bottom="2.0" left="1.0" right="1.0" top="1.0" />
+               </BorderPane.margin>
             </VBox>
          </left>
       </BorderPane>
