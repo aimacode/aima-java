@@ -13,12 +13,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane prefHeight="266.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.rectangular.RectangularGridProblemController">
+<BorderPane  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.problem.rectangular.RectangularGridProblemController">
    <top>
       <BorderPane BorderPane.alignment="CENTER">
-         <left>
-            <Label fx:id="problemTypeLabel" text="Problem: Rectangular Grid" underline="true" BorderPane.alignment="CENTER_LEFT" />
-         </left>
          <right>
             <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="100.0" spacing="3.0" BorderPane.alignment="CENTER">
                <children>
@@ -27,12 +24,20 @@
                </children>
             </HBox>
          </right>
+         <left>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="problemTypeLabel" text="Problem: Rectangular Grid" underline="true" />
+                  <Label fx:id="notificationLabel" />
+               </children>
+            </VBox>
+         </left>
       </BorderPane>
    </top>
    <center>
       <ScrollPane fx:id="problemViewScrollPane" BorderPane.alignment="CENTER">
          <content>
-            <Pane fx:id="problemViewPane" prefHeight="234.0" prefWidth="457.0" />
+            <Pane fx:id="problemViewPane" />
          </content>
       </ScrollPane>
    </center>

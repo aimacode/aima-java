@@ -9,7 +9,7 @@
         <items>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" styleClass="hiddenSplitter" BorderPane.alignment="CENTER">
+                  <SplitPane dividerPositions="0.45" prefHeight="200.0" prefWidth="200.0" styleClass="hiddenSplitter" BorderPane.alignment="CENTER">
                      <items>
                         <AnchorPane fx:id="problemPane" styleClass="contentPane" />
                         <AnchorPane fx:id="searchAlgoPane" styleClass="contentPane" />

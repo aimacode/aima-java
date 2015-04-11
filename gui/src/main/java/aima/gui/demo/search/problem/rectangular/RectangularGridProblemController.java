@@ -28,7 +28,14 @@ import java.util.stream.Collectors;
  * @author Ciaran O'Reilly
  */
 public class RectangularGridProblemController implements TreeSearchAlgoSimulator.Observer<AtVertex> {
+    //
+    public static final int _fastestPlaybackSpeed = 50;
+    //
+    private static final String _selectStartMessage    = "A start vertex must be selected.";
+    private static final String _notGoalWarningMessage = "No goal(s) selected, will run to memory exhaustion.";
+    //
     @FXML private Label  problemTypeLabel;
+    @FXML private Label  notificationLabel;
     @FXML private Button optionsButton;
     @FXML private Button listProblemsButton;
     @FXML private ScrollPane problemViewScrollPane;
@@ -115,6 +122,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     public void setupProblem() {
         startNode = null;
         goalNodes.clear();
+        notificationLabel.setText(_selectStartMessage);
 
         setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
             Tooltip t = new Tooltip("("+vertex.x+","+vertex.y+")");
@@ -151,8 +159,20 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                 }
 
                 if (startNode == null) {
+                    notificationLabel.setText(_selectStartMessage);
                     simulator.setProblem(null);
                 } else {
+                    if (goalNodes.size() == 0) {
+                        notificationLabel.setText(_notGoalWarningMessage);
+                        // Delay execution by max playback speed:
+                        // So that the user has the opportunity to interact with the ui without it being slowed
+                        // down by a search we know will never complete.
+                        simulator.setExecutionDelay(1000/(_fastestPlaybackSpeed+5));
+                    }
+                    else {
+                        notificationLabel.setText("");
+                        simulator.setExecutionDelay(0); // Want to to run to completion as fast as possible
+                    }
                     simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
                             new AtVertex(startNode.x, startNode.y),
                             goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));

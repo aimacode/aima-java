@@ -8,6 +8,7 @@ import aima.gui.support.fx.FXUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -88,9 +89,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
             updateSlider();
             updateCodeRepresentations();
         });
-        simulator.executedProperty().addListener((observable, oldValue, newValue) -> {
-            updateSlider();
-        });
+        simulator.executedProperty().get().addListener((ListChangeListener.Change<? extends TreeSearchInstrumented.Cmd<S>> c) -> updateSlider());
     }
 
 

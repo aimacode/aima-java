@@ -2,10 +2,8 @@ package aima.gui.demo.search.tree.algorithm;
 
 import aima.core.api.search.Problem;
 import aima.extra.instrument.search.TreeSearchInstrumented;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -18,6 +16,7 @@ import java.util.concurrent.CancellationException;
  */
 public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     private ObjectProperty<Problem<S>> problem = new SimpleObjectProperty<>();
+    private LongProperty executionDelay = new SimpleLongProperty(0);
     private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(-1);
     private ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
@@ -30,12 +29,25 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
     }
 
     public void setProblem(Problem<S> problem) {
+        cancel();
         this.problem.set(problem);
         restart();
     }
 
     public ObjectProperty<Problem<S>> problemProperty() {
         return problem;
+    }
+
+    public long getExecutionDelay() {
+        return executionDelay.get();
+    }
+
+    public void setExecutionDelay(long executionDelay) {
+        this.executionDelay.set(executionDelay);
+    }
+
+    public LongProperty executionDelayProperty() {
+        return executionDelay;
     }
 
     public boolean isCurrentExecutionIndexAtEnd() {
@@ -112,7 +124,14 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
                     if (isCancelled()) {
                         throw new CancellationException("Cancelled");
                     }
-                    executed.get().add(command);
+                    Platform.runLater(() -> executed.get().add(command));
+                    if (getExecutionDelay() > 0) {
+                        try {
+                            Thread.currentThread().sleep(getExecutionDelay());
+                        } catch (InterruptedException ie) {
+                            // Can be interrupted
+                        }
+                    }
                 });
 
                 try {
