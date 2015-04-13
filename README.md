@@ -9,8 +9,10 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
     * In grid problem, when solution found animate path to solution.
     * Configure rectangular problem
         * Change size of grid
-        * Specify order of expansion.
+        * Specify order of actions.
     * Search Space View - design and implement.
+    * In summary view show next 5 items on frontier
+    * Add additional tree search algorithms to simulate
 * Graph-Search demo
     * Summary information related to explored set.
 

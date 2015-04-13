@@ -22,17 +22,17 @@ public class RectangularProblem extends BasicProblem<AtVertex> {
     public static Function<AtVertex, Set<Action>> actions(final int xSize, int ySize)  {
         return atVertex -> {
             Set<Action> result = new LinkedHashSet<>();
-            if (atVertex.x > 0) {
-                result.add(go(atVertex.x-1, atVertex.y));
-            }
-            if (atVertex.x < xSize) {
-                result.add(go(atVertex.x+1, atVertex.y));
-            }
             if (atVertex.y > 0) {
                 result.add(go(atVertex.x, atVertex.y-1));
             }
+            if (atVertex.x < xSize) {
+                result.add(go(atVertex.x + 1, atVertex.y));
+            }
             if (atVertex.y < ySize) {
                 result.add(go(atVertex.x, atVertex.y+1));
+            }
+            if (atVertex.x > 0) {
+                result.add(go(atVertex.x-1, atVertex.y));
             }
 
             return result;

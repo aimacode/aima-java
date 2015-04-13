@@ -95,6 +95,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         this.simulator.atSolutionProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
 // TODO - animate path to solution
+                System.out.println("Solution="+simulator.getSolution());
             }
         });
         this.simulator.simulatorStateProperty().addListener((observable, oldValue, newValue) -> {
