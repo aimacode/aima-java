@@ -53,7 +53,8 @@
 	</target>
 
 	<target name="aima-core.test-all" depends="aima-core.compile-all">
-		<junit haltonfailure="true">
+		<junit haltonfailure="true" fork="yes">
+			<jvmarg value="-Xmx1024m"/>
 			<formatter type="plain" usefile="no" />
 			<test name="aima.test.core.unit.AllAIMAUnitTestSuite" />
 			<classpath refid="aima-core.test.classpath" />
