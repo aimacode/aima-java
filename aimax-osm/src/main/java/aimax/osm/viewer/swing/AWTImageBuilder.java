@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 import aimax.osm.viewer.UColor;
 import aimax.osm.viewer.UnifiedImageBuilder;
@@ -22,6 +23,8 @@ public class AWTImageBuilder implements UnifiedImageBuilder {
 	public void initImage(Image image) {
 		result = image;
 		g2 = (Graphics2D) image.getGraphics();
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 
 	/** Returns the width of the image under construction. */
