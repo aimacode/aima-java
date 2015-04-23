@@ -4,6 +4,9 @@ import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import aima.gui.demo.search.tree.info.rectangular.RectangularStateSpaceInfoController;
 import aima.gui.support.fx.FXUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -17,10 +20,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -43,8 +48,10 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     @FXML private Pane problemViewPane;
 
     //
-    private Vertex      startNode = null;
-    private Set<Vertex> goalNodes = new HashSet<>();
+    private RectangularGrid grid             = null;
+    private Vertex          startNode        = null;
+    private Set<Vertex>     goalNodes        = new HashSet<>();
+    private Timeline        solutionTimeline = new Timeline();
     //
     private int vertexRadius              = 12;
     private int borderPadding             = 10;
@@ -93,9 +100,22 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         this.simulator = simulator;
         problemStateSpaceController.setSimulator(simulator);
         this.simulator.atSolutionProperty().addListener((observable, oldValue, newValue) -> {
+            solutionTimeline.stop();
+            solutionTimeline.getKeyFrames().clear();
+            colorGrid();
             if (newValue) {
-// TODO - animate path to solution
-                System.out.println("Solution="+simulator.getSolution());
+                final AtVertex[] current = new AtVertex[] {new AtVertex(startNode.x, startNode.y)};
+                final AtomicInteger time = new AtomicInteger(0);
+                final AtomicInteger cnt  = new AtomicInteger(0);
+                simulator.getSolution().forEach(action -> {
+                    if (cnt.addAndGet(1) != simulator.getSolution().size()) {
+                        AtVertex next = RectangularProblem.resultOf(current[0], action);
+                        solutionTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(time.addAndGet(1000)), new KeyValue(grid.vertexes[next.x][next.y].fillProperty(), startPaint)));
+
+                        current[0] = next;
+                    }
+                });
+                solutionTimeline.play();
             }
         });
         this.simulator.simulatorStateProperty().addListener((observable, oldValue, newValue) -> {
@@ -146,8 +166,9 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         startNode = null;
         goalNodes.clear();
         notificationLabel.setText("");
+        problemViewPane.getChildren().clear();
 
-        RectangularGrid grid = setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
+        grid = setupGrid(problemViewPane, problemViewScrollPane, vertex -> {
             Tooltip t = new Tooltip("("+vertex.x+","+vertex.y+")");
             Tooltip.install(vertex, t);
 
@@ -170,26 +191,23 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
 
                 if (startNode == null) {
                     startNode = clicked;
-                    startNode.setFill(startPaint);
                     goalNodes.remove(startNode); // Ensure is not a goal
                 } else if (startNode != null && clicked == startNode) {
                     if (goalNodes.contains(clicked)) {
                         startNode = null;
                         goalNodes.remove(clicked);
-                        clicked.setFill(defaultPaint);
                     } else {
                         goalNodes.add(clicked);
-                        clicked.setFill(startGoalPaint);
                     }
                 } else {
                     if (goalNodes.contains(clicked)) {
-                        clicked.setFill(defaultPaint);
                         goalNodes.remove(clicked);
                     } else {
-                        clicked.setFill(goalPaint);
                         goalNodes.add(clicked);
                     }
                 }
+
+                colorGrid();
 
                 if (startNode == null) {
                     notificationLabel.setText(_selectStartMessage);
@@ -200,9 +218,8 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                         // Delay execution by max playback speed:
                         // So that the user has the opportunity to interact with the ui without it being slowed
                         // down by a search we know will never complete.
-                        simulator.setExecutionDelay(1000/(_fastestPlaybackSpeed+5));
-                    }
-                    else {
+                        simulator.setExecutionDelay(1000 / (_fastestPlaybackSpeed + 5));
+                    } else {
                         notificationLabel.setText("");
                         simulator.setExecutionDelay(0); // Want to to run to completion as fast as possible
                     }
@@ -221,6 +238,23 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
         simulator.setProblem(new RectangularProblem(getXDimensionSize(), getYDimensionSize(),
                 new AtVertex(startNode.x, startNode.y),
                 goalNodes.stream().map(v -> new AtVertex(v.x, v.y)).collect(Collectors.toList())));
+    }
+
+    private void colorGrid() {
+        for (int x = 0; x < grid.vertexes.length; x++) {
+            for (int y = 0; y < grid.vertexes[x].length; y++) {
+                Vertex v = grid.vertexes[x][y];
+                if (startNode == v && goalNodes.contains(v)) {
+                    v.setFill(startGoalPaint);
+                } else if (startNode == v) {
+                    v.setFill(startPaint);
+                } else if (goalNodes.contains(v)) {
+                    v.setFill(goalPaint);
+                } else {
+                    v.setFill(defaultPaint);
+                }
+            }
+        }
     }
 
     @FXML
