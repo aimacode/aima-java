@@ -2,10 +2,10 @@ package aima.gui.support.code;
 
 import aima.extra.instrument.search.TreeSearchInstrumented;
 
-import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -23,34 +23,39 @@ public class CodeReader {
     }
 
     public static List<CodeRepresentation> read(String codeFileName, Set<String> expectedCmds) {
-        final List<CodeRepresentation> result = new ArrayList<>();
+        List<CodeRepresentation> result = new ArrayList<>();
 
-        final StringBuilder codeTypeName = new StringBuilder();
-        final StringBuilder source       = new StringBuilder();
-        final Map<String, List<SourceIndex>> codeCommands = new LinkedHashMap<>();
-        try (Stream<String> lines = Files.lines(Paths.get(CodeReader.class.getResource(codeFileName).toURI()))) {
-            lines.forEach(line -> {
-                if (line.startsWith(CODE_TYPE_PREFIX)) {
-                    // If we have already processed a code representation
-                    if (codeTypeName.length() > 0) {
-                        result.add(new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands)));
+        StringBuilder codeTypeName = new StringBuilder();
+        StringBuilder source       = new StringBuilder();
+        Map<String, List<SourceIndex>> codeCommands = new LinkedHashMap<>();
+
+        try {
+            URI uri = CodeReader.class.getResource(codeFileName).toURI();
+            // Need to do this if reading form jar file.
+            if (uri.toString().contains("!")) {
+                final Map<String, String> env = new HashMap<>();
+                final String[] array = uri.toString().split("!");
+                try (FileSystem fs  = FileSystems.newFileSystem(URI.create(array[0]), env)) {
+                    Path path = fs.getPath(array[1]);
+                    try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
+                        getContent(lines, codeTypeName, source, codeCommands, result);
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            else {
+                try (Stream<String> lines = Files.lines(Paths.get(uri), StandardCharsets.UTF_8)) {
+                    getContent(lines, codeTypeName, source, codeCommands, result);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-                    codeTypeName.setLength(0);
-                    source.setLength(0);
-                    codeTypeName.append(line.substring(CODE_TYPE_PREFIX.length()));
-                }
-                else {
-                    process(line, source, codeCommands);
-                }
-            });
-        }
-        catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        catch (URISyntaxException urie) {
-            urie.printStackTrace();
-        }
         // Ensure the last code representation is included as well
         if (codeTypeName.length() > 0) {
             result.add(new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands)));
@@ -58,11 +63,33 @@ public class CodeReader {
 
         result.forEach(cr -> {
             if (!cr.commandIdToCommand.keySet().equals(expectedCmds)) {
-                throw new IllegalArgumentException("Code Representation is missing command ids :\n"+cr.commandIdToCommand.keySet()+"\n"+expectedCmds);
+                throw new IllegalArgumentException("Code Representation is missing command ids :\n" + cr.commandIdToCommand.keySet() + "\n" + expectedCmds);
             }
         });
 
         return result;
+    }
+
+    private static void getContent(Stream<String> lines,
+                                   StringBuilder codeTypeName,
+                                   StringBuilder source,
+                                   Map<String, List<SourceIndex>> codeCommands,
+                                   List<CodeRepresentation> result) {
+        lines.forEach(line -> {
+            if (line.startsWith(CODE_TYPE_PREFIX)) {
+                // If we have already processed a code representation
+                if (codeTypeName.length() > 0) {
+                    result.add(new CodeRepresentation(codeTypeName.toString(), source.toString(), convert(codeCommands)));
+                }
+
+                codeTypeName.setLength(0);
+                source.setLength(0);
+                codeTypeName.append(line.substring(CODE_TYPE_PREFIX.length()));
+            }
+            else {
+                process(line, source, codeCommands);
+            }
+        });
     }
 
     private static void process(String line, StringBuilder source, Map<String, List<SourceIndex>> codeCommands) {

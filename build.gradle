@@ -49,3 +49,8 @@ project(':extra') {
         compile project(":core")
     }
 }
+
+task AIMADemoApp(type: JavaExec, dependsOn: classes) {
+    main = 'aima.gui.app.AIMADemoApp'
+    classpath = files(sourceSets.main.output, configurations.runtime)
+}

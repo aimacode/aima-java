@@ -51,7 +51,7 @@ public class TreeSearchController {
         FXUtil.anchor(search);
         searchSpaceInfo.getChildren().add(search);
 
-        FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryinfo.fxml"));
+        FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryInfo.fxml"));
         Pane frontierInfoPane = frontierInfoLoader.load();
         FXUtil.anchor(frontierInfoPane);
         frontierInfo.getChildren().add(frontierInfoPane);
