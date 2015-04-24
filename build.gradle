@@ -41,6 +41,7 @@ project(':gui') {
     dependencies {
         compile project(":extra")
         compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
+        compile group: 'org.controlsfx', name: 'controlsfx', version: '8.20.8'
     }
 }
 

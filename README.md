@@ -147,10 +147,10 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (new demo GUI)
 * Tree-Search demo
+    * Search Space View - design and implement.
     * Configure rectangular problem
         * Change size of grid
         * Specify order of actions.
-    * Search Space View - design and implement.
     * Add additional tree search algorithms to simulate
 * Graph-Search demo
     * Summary information related to explored set.

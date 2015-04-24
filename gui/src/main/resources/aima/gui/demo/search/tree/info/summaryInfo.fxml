@@ -41,9 +41,6 @@
          </top>
       </BorderPane>
    </center>
-   <padding>
-      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-   </padding>
    <top>
       <BorderPane prefHeight="61.0" prefWidth="456.0" BorderPane.alignment="CENTER">
          <top>
@@ -94,6 +91,9 @@
                      </children>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
             </VBox>
          </bottom>
       </BorderPane>
