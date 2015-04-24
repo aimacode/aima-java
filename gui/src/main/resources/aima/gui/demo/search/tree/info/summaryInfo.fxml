@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -48,30 +49,53 @@
          <top>
             <Label text="Frontier" underline="true" BorderPane.alignment="TOP_LEFT" />
          </top>
-         <bottom>
-            <HBox prefHeight="38.0" prefWidth="460.0" spacing="3.0" BorderPane.alignment="CENTER">
-               <children>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-                        <ProgressBar fx:id="frontierProgress" prefWidth="200.0" progress="0.0" BorderPane.alignment="CENTER" />
-                     </top>
-                     <center>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Label text="#current" />
-                              <Label fx:id="currentFrontierCountLabel" text="0" />
-                           </children>
-                        </HBox>
-                     </center>
-                  </BorderPane>
-                  <Label text="#max" />
-                  <Label fx:id="maxFrontierCountLabel" text="0" />
-               </children>
-            </HBox>
-         </bottom>
          <padding>
             <Insets bottom="2.0" />
          </padding>
+         <bottom>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <HBox spacing="3.0">
+                     <children>
+                        <BorderPane>
+                           <top>
+                              <ProgressBar fx:id="frontierProgress" prefWidth="150.0" progress="0.0" BorderPane.alignment="CENTER" />
+                           </top>
+                           <center>
+                              <HBox alignment="CENTER" spacing="3.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="#current" />
+                                    <Label fx:id="currentFrontierCountLabel" text="0" />
+                                 </children>
+                              </HBox>
+                           </center>
+                        </BorderPane>
+                        <Label text="#max" />
+                        <Label fx:id="maxFrontierCountLabel" text="0" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" spacing="3.0">
+                     <children>
+                        <BorderPane>
+                           <center>
+                              <HBox alignment="CENTER" spacing="3.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="#removed" />
+                                    <Label fx:id="removedFrontierCountLabel" text="0" />
+                                 </children>
+                              </HBox>
+                           </center>
+                           <top>
+                              <ProgressBar fx:id="frontierAddRemoveProgress" prefWidth="150.0" progress="0.0" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                        <Label text="#added" />
+                        <Label fx:id="addedFrontierCountLabel" text="0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </bottom>
       </BorderPane>
    </top>
 </BorderPane>

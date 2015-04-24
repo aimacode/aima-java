@@ -14,6 +14,9 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
     @FXML private ProgressBar frontierProgress;
     @FXML private Label currentFrontierCountLabel;
     @FXML private Label maxFrontierCountLabel;
+    @FXML private ProgressBar frontierAddRemoveProgress;
+    @FXML private Label removedFrontierCountLabel;
+    @FXML private Label addedFrontierCountLabel;
     @FXML private Label stateLabel;
     @FXML private Label parentLabel;
     @FXML private Label actionLabel;
@@ -25,32 +28,51 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
         this.simulator = simulator;
 
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
+            int    currentCount  = 0;
+            int     maxCount     = 0;
+            double frontierMax   = 0;
+            int    removedCount  = 0;
+            int    addedCount    = 0;
+            double frontierAdded = 0;
+            String state         = "-";
+            String patent        = "-";
+            String action        = "-";
+            String cost          = "-";
+
             if (currentExecutionIndex.intValue() >= 0) {
                 TreeSearchInstrumented.Cmd<S> cmd  = simulator.getExecuted().get(currentExecutionIndex.intValue());
 
-                int current  = cmd.frontierSize();
-                int max      = cmd.maxFrontierSize();
+                currentCount = cmd.currentFrontierSize();
+                maxCount     = cmd.maxFrontierSize();
                 Node<S> node = cmd.node();
 
-                currentFrontierCountLabel.textProperty().set("" + current);
-                maxFrontierCountLabel.textProperty().set("" + max);
-
-                if (max > 0) {
-                    frontierProgress.setProgress(((double) current) / ((double) max));
-                } else {
-                    frontierProgress.setProgress(0);
+                if (maxCount > 0) {
+                    frontierMax = ((double) currentCount) / ((double) maxCount);
                 }
 
-                String state  = node == null ? "-" : node.state().toString();
-                String patent = node == null ? "-" : node.parent() == null ? "null" : node.parent().state().toString();
-                String action = node == null ? "-" : node.action().toString();
-                String cost   = node == null ? "-" : "" + node.pathCost();
+                addedCount   = cmd.numberAddedToFrontier();
+                removedCount = cmd.numberRemovedFromFrontier();
 
-                stateLabel.textProperty().set(state);
-                parentLabel.textProperty().set(patent);
-                actionLabel.textProperty().set(action);
-                pathCostLabel.textProperty().set(cost);
+                if (addedCount > 0) {
+                    frontierAdded = ((double) removedCount) / ((double) addedCount);
+                }
+
+                state  = node == null ? "-" : node.state().toString();
+                patent = node == null ? "-" : node.parent() == null ? "null" : node.parent().state().toString();
+                action = node == null ? "-" : node.action().toString();
+                cost   = node == null ? "-" : "" + node.pathCost();
             }
+
+            currentFrontierCountLabel.textProperty().set(""+currentCount);
+            maxFrontierCountLabel.textProperty().set(""+maxCount);
+            frontierProgress.setProgress(frontierMax);
+            removedFrontierCountLabel.textProperty().set(""+removedCount);
+            addedFrontierCountLabel.textProperty().set(""+addedCount);
+            frontierAddRemoveProgress.setProgress(frontierAdded);
+            stateLabel.textProperty().set(state);
+            parentLabel.textProperty().set(patent);
+            actionLabel.textProperty().set(action);
+            pathCostLabel.textProperty().set(cost);
         });
     }
 

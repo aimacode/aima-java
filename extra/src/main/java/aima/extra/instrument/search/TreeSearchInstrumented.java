@@ -14,8 +14,10 @@ import java.util.*;
 public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
     public interface Cmd<S> {
         String          commandId();
-        int             frontierSize();
+        int             currentFrontierSize();
         int             maxFrontierSize();
+        int             numberAddedToFrontier();
+        int             numberRemovedFromFrontier();
         Node<S>         node();
         Map<S, Integer> statesVisitiedCounts();
         Map<S, Node<S>> statesInFrontierNotVisited();
@@ -51,6 +53,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
     private Listener<S> listener;
     private InstrLinkedList frontier;
     private int maxFrontierSize = 0;
+    private int numberAddedToFrontier = 0;
+    private int numberRemovedFromFrontier = 0;
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
     private Map<S, Node<S>> statesInFrontierNotVisited = new HashMap<>();
     private Node<S> lastNodeVisited;
@@ -63,6 +67,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
     public Queue<Node<S>> newFrontier() {
         frontier        = new InstrLinkedList();
         maxFrontierSize = 0;
+        numberAddedToFrontier = 0;
+        numberRemovedFromFrontier = 0;
         statesVisitiedCounts.clear();
         statesInFrontierNotVisited.clear();
         lastNodeVisited = null;
@@ -100,6 +106,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             maxFrontierSize = frontierSize;
         }
         int max = maxFrontierSize;
+        int numberAdded = numberAddedToFrontier;
+        int numberRemoved = numberRemovedFromFrontier;
         final Map<S, Integer> visited =  statesVisitiedCounts;
         final Map<S, Node<S>> notVisited = statesInFrontierNotVisited;
         final Node<S> last = lastNodeVisited;
@@ -107,9 +115,11 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             public String commandId() {
                 return commandId;
             }
-            public int frontierSize() {
+            public int currentFrontierSize() {
                 return frontierSize;
             }
+            public int numberAddedToFrontier() { return numberAdded; };
+            public int  numberRemovedFromFrontier() { return numberRemoved; };
             public int maxFrontierSize() { return max; }
             public Node<S> node() {
                 return node;
@@ -133,6 +143,9 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         @Override
         public Node<S> remove() {
             Node<S> removed =  super.remove();
+
+            numberRemovedFromFrontier++;
+
             lastNodeVisited = removed;
 
             statesVisitiedCounts = new HashMap<>(statesVisitiedCounts);
@@ -157,6 +170,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         @Override
         public boolean add(Node<S> e) {
             boolean result = super.add(e);
+
+            numberAddedToFrontier++;
 
             if (!statesVisitiedCounts.containsKey(e.state())) {
                 if (!statesInFrontierNotVisited.containsKey(e.state())) {

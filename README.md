@@ -151,7 +151,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
         * Change size of grid
         * Specify order of actions.
     * Search Space View - design and implement.
-    * In summary view show next 5 items on frontier
     * Add additional tree search algorithms to simulate
 * Graph-Search demo
     * Summary information related to explored set.

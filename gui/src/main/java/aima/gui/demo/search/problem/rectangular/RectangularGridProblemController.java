@@ -61,6 +61,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     private Image goalImage       = new Image(RectangularGridProblemController.class.getResourceAsStream("goal.png"));
     private Image startGoalImage  = new Image(RectangularGridProblemController.class.getResourceAsStream("startgoal.png"));
     private Paint startPaint      = Color.DARKGREEN;
+    private Paint solutionColor   = Color.BLACK;
     private Paint goalPaint       = new ImagePattern(goalImage, 0, 0, 16, 16, false);
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
     //
@@ -110,8 +111,9 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
                 simulator.getSolution().forEach(action -> {
                     if (cnt.addAndGet(1) != simulator.getSolution().size()) {
                         AtVertex next = RectangularProblem.resultOf(current[0], action);
-                        solutionTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(time.addAndGet(1000)), new KeyValue(grid.vertexes[next.x][next.y].fillProperty(), startPaint)));
-
+                        Paint startColor = cnt.get() == 1 ? startPaint : defaultPaint;
+                        solutionTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(time.get()), new KeyValue(grid.vertexes[next.x][next.y].fillProperty(), startColor)));
+                        solutionTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(time.addAndGet(200)), new KeyValue(grid.vertexes[next.x][next.y].fillProperty(), solutionColor)));
                         current[0] = next;
                     }
                 });
