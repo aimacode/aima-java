@@ -24,6 +24,7 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
     //
     private TreeSearchAlgoSimulator<S> simulator;
 
+    @Override
     public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
         this.simulator = simulator;
 

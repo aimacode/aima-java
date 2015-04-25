@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane prefHeight="266.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.info.SearchSpaceInfoController">
+<BorderPane prefHeight="221.0" prefWidth="344.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aima.gui.demo.search.tree.info.SearchSpaceInfoController">
    <top>
       <BorderPane BorderPane.alignment="CENTER">
          <left>
@@ -22,9 +22,25 @@
       </BorderPane>
    </top>
    <center>
-      <ScrollPane fx:id="searchSpaceViewScrollPane" BorderPane.alignment="CENTER">
+      <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <Pane fx:id="searchSpaceViewPane" prefHeight="234.0" prefWidth="457.0" />
+            <GridPane fx:id="searchSpaceViewGridPane" prefHeight="34.0" prefWidth="214.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="27.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="42.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="54.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="85.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="\@" />
+                  <Label text="Level" underline="true" GridPane.columnIndex="1" />
+                  <Label text="Width" underline="true" GridPane.columnIndex="2" />
+                  <Label prefHeight="16.0" prefWidth="73.0" text="Unexplored" underline="true" GridPane.columnIndex="3" />
+               </children>
+            </GridPane>
          </content>
       </ScrollPane>
    </center>

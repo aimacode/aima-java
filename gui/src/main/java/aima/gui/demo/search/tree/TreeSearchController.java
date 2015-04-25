@@ -47,9 +47,12 @@ public class TreeSearchController {
         TreeSearchAlgoSimulator.Observer<AtVertex> treeSearchController = treeSearchLoader.getController();
         treeSearchController.setSimulator(simulator);
 
-        Pane search = FXMLLoader.load(SearchSpaceInfoController.class.getResource("searchspaceinfo.fxml"));
+        FXMLLoader searchLoader = new FXMLLoader(SearchSpaceInfoController.class.getResource("searchspaceinfo.fxml"));
+        Pane search = searchLoader.load();
         FXUtil.anchor(search);
         searchSpaceInfo.getChildren().add(search);
+        TreeSearchAlgoSimulator.Observer<AtVertex> searchController = searchLoader.getController();
+        searchController.setSimulator(simulator);
 
         FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryInfo.fxml"));
         Pane frontierInfoPane = frontierInfoLoader.load();

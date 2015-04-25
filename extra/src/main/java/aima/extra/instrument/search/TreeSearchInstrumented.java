@@ -4,6 +4,7 @@ import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 import aima.core.api.search.TreeSearch;
+import aima.core.search.BasicNode;
 import aima.core.search.BasicSearchFunction;
 
 import java.util.*;
@@ -22,6 +23,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         Map<S, Integer> statesVisitiedCounts();
         Map<S, Node<S>> statesInFrontierNotVisited();
         Node<S>         lastNodeVisited();
+        List<Integer>   searchSpaceLevelCounts();
+        List<Integer>   searchSpaceLevelRemainingCounts();
     }
 
     public interface Listener<S> {
@@ -58,6 +61,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
     private Map<S, Node<S>> statesInFrontierNotVisited = new HashMap<>();
     private Node<S> lastNodeVisited;
+    private List<Integer> searchSpaceLevelCounts = new ArrayList<>();
+    private List<Integer> searchSpaceLevelRemainingCounts = new ArrayList<>();
 
     public TreeSearchInstrumented(Listener<S> listener) {
         this.listener = listener;
@@ -72,6 +77,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         statesVisitiedCounts.clear();
         statesInFrontierNotVisited.clear();
         lastNodeVisited = null;
+        searchSpaceLevelCounts.clear();
+        searchSpaceLevelRemainingCounts.clear();
         notify(CMD_START, 0, null);
         return frontier;
     }
@@ -111,22 +118,22 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         final Map<S, Integer> visited =  statesVisitiedCounts;
         final Map<S, Node<S>> notVisited = statesInFrontierNotVisited;
         final Node<S> last = lastNodeVisited;
+        final List<Integer> levelCounts = searchSpaceLevelCounts;
+        final List<Integer> levelRemaining = searchSpaceLevelRemainingCounts;
         listener.cmd(new Cmd<S>() {
-            public String commandId() {
-                return commandId;
-            }
+            public String commandId() { return commandId; }
             public int currentFrontierSize() {
                 return frontierSize;
             }
             public int numberAddedToFrontier() { return numberAdded; };
             public int  numberRemovedFromFrontier() { return numberRemoved; };
             public int maxFrontierSize() { return max; }
-            public Node<S> node() {
-                return node;
-            }
+            public Node<S> node() { return node; }
             public Map<S, Integer> statesVisitiedCounts() { return visited; }
             public Map<S, Node<S>> statesInFrontierNotVisited() { return notVisited; }
             public Node<S> lastNodeVisited() { return last; }
+            public List<Integer> searchSpaceLevelCounts() { return levelCounts; }
+            public List<Integer> searchSpaceLevelRemainingCounts() { return levelRemaining; }
         });
     }
 
@@ -147,6 +154,10 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             numberRemovedFromFrontier++;
 
             lastNodeVisited = removed;
+
+            int level = BasicNode.depth(removed);
+            searchSpaceLevelRemainingCounts = new ArrayList<>(searchSpaceLevelRemainingCounts);
+            searchSpaceLevelRemainingCounts.set(level, searchSpaceLevelRemainingCounts.get(level) - 1);
 
             statesVisitiedCounts = new HashMap<>(statesVisitiedCounts);
             Integer visitedCount = statesVisitiedCounts.get(removed.state());
@@ -173,6 +184,17 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
 
             numberAddedToFrontier++;
 
+            int level = BasicNode.depth(e);
+            searchSpaceLevelCounts = new ArrayList<>(searchSpaceLevelCounts);
+            searchSpaceLevelRemainingCounts = new ArrayList<>(searchSpaceLevelRemainingCounts);
+            if (level >= searchSpaceLevelCounts.size()) {
+                searchSpaceLevelCounts.add(1);
+                searchSpaceLevelRemainingCounts.add(1);
+            } else {
+                searchSpaceLevelCounts.set(level, searchSpaceLevelCounts.get(level) + 1);
+                searchSpaceLevelRemainingCounts.set(level, searchSpaceLevelRemainingCounts.get(level) + 1);
+            }
+
             if (!statesVisitiedCounts.containsKey(e.state())) {
                 if (!statesInFrontierNotVisited.containsKey(e.state())) {
                     statesInFrontierNotVisited = new HashMap<>(statesInFrontierNotVisited);
@@ -182,8 +204,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             if (firstAdd) {
                 firstAdd = false;
                 TreeSearchInstrumented.this.notify(CMD_INITIALIZE, size(), e);
-            }
-            else {
+            } else {
                 TreeSearchInstrumented.this.notify(CMD_ADD_FRONTIER, size(), e);
             }
             return result;

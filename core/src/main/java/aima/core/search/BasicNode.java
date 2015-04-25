@@ -27,6 +27,14 @@ public class BasicNode<S> implements Node<S> {
         return new BasicNode<>(sPrime, parent, action, parent.pathCost()+problem.stepCost(parent.state(), action, sPrime));
     }
 
+    public static int depth(Node n) {
+        int level = 0;
+        while ((n = n.parent()) != null) {
+            level++;
+        }
+        return level;
+    }
+
     @Override
     public S state() {
         return state;
