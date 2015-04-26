@@ -6,13 +6,15 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 /**
  * @author Ciaran O'Reilly
  */
 public class FXUtil {
-    public static final int _buttonDefaultIconSize    = 16;
+    public static final int _buttonDefaultIconSize = 16;
+    public static final int _labelDefaultIconSize  = 12;
 
     public static void anchor(Node node) {
         AnchorPane.setTopAnchor(node, 0.0);
@@ -24,6 +26,10 @@ public class FXUtil {
     public static void setDefaultButtonIcon(Button button, GlyphIcons icon) {
         GlyphsDude.setIcon(button, icon, iconSize(_buttonDefaultIconSize), ContentDisplay.GRAPHIC_ONLY);
         fixButtonSize(button, _buttonDefaultIconSize);
+    }
+
+    public static void setDefaultLabelIcon(Label label, GlyphIcons icon) {
+        GlyphsDude.setIcon(label, icon, iconSize(_labelDefaultIconSize), ContentDisplay.GRAPHIC_ONLY);
     }
 
     //

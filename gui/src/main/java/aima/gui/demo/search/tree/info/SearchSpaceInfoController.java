@@ -3,6 +3,8 @@ package aima.gui.demo.search.tree.info;
 import aima.core.search.BasicNode;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
+import aima.gui.support.fx.FXUtil;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -40,13 +42,23 @@ public class SearchSpaceInfoController<S> implements TreeSearchAlgoSimulator.Obs
             for (int i = 0; i < levelCounts.size(); i++) {
                 offset += 4;
                 if (offset >= searchSpaceViewGridPane.getChildren().size()) {
-                    searchSpaceViewGridPane.add(new Label(currentLevel == i ? "->" : ""), 0, i+1);
+                    Label arrow = new Label("");
+                    if (currentLevel == i) {
+                        FXUtil.setDefaultLabelIcon(arrow, FontAwesomeIcons.ARROW_RIGHT);
+                    }
+                    searchSpaceViewGridPane.add(arrow, 0, i+1);
                     searchSpaceViewGridPane.add(new Label(""+i), 1, i+1);
                     searchSpaceViewGridPane.add(new Label(""+levelCounts.get(i)), 2, i+1);
                     searchSpaceViewGridPane.add(new Label(""+unexploredCounts.get(i)), 3, i+1);
                 }
                 else {
-                    ((Label)searchSpaceViewGridPane.getChildren().get(offset)).setText(currentLevel == i ? "->" : "");
+                    Label arrow = (Label) searchSpaceViewGridPane.getChildren().get(offset);
+                    if (currentLevel == i) {
+                        FXUtil.setDefaultLabelIcon(arrow, FontAwesomeIcons.ARROW_RIGHT);
+                    }
+                    else {
+                        arrow.setGraphic(null);
+                    }
                     ((Label)searchSpaceViewGridPane.getChildren().get(offset+1)).setText(""+i);
                     ((Label)searchSpaceViewGridPane.getChildren().get(offset+2)).setText(""+levelCounts.get(i));
                     ((Label)searchSpaceViewGridPane.getChildren().get(offset+3)).setText(""+unexploredCounts.get(i));

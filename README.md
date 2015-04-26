@@ -150,7 +150,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
     * Configure rectangular problem
         * Change size of grid
         * Specify order of actions.
-    * Add additional tree search algorithms to simulate
+    * Add additional tree search algorithms to simulate    
 * Graph-Search demo
     * Summary information related to explored set.
 
