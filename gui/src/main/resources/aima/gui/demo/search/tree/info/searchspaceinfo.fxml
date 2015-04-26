@@ -24,7 +24,7 @@
    <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="searchSpaceViewGridPane" prefHeight="17.0" prefWidth="211.0">
+            <GridPane fx:id="searchSpaceViewGridPane" prefHeight="17.0" prefWidth="233.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="27.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="42.0" />
