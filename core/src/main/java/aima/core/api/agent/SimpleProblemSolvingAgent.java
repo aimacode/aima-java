@@ -41,14 +41,10 @@ public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
     //               state, some description of the current world state
     //               goal, a goal, initially null
     //               problem, a problem formulation
-    List<Action> getSeq();
-    void setSeq(List<Action> sequence);
-    S getState();
-    void setState(S state);
-    G getGoal();
-    void setGoal(G goal);
-    Problem<S> getProblem();
-    void setProblem(Problem<S> problem);
+    List<Action> getSeq();   void setSeq(List<Action> sequence);
+    S getState();            void setState(S state);
+    G getGoal();             void setGoal(G goal);
+    Problem<S> getProblem(); void setProblem(Problem<S> problem);
 
     // function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
     @Override
@@ -64,11 +60,11 @@ public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
             // seq     <- SEARCH(problem)
             setSeq(search(getProblem()));
             // if seq = failure then return a null action
-            if (getSeq().isEmpty()) { return null; }
+            if (isFailure(getSeq())) { return null; }
         }
-        // action &lt;- FIRST(seq)
+        // action <- FIRST(seq)
         Action action = getSeq().get(0);
-        // seq &lt;- REST(seq)
+        // seq <- REST(seq)
         setSeq(getSeq().subList(1, 0));
         // return action
         return action;
@@ -85,4 +81,8 @@ public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
 
     // seq <- SEARCH(problem)
     List<Action> search(Problem<S> problem);
+
+    default boolean isFailure(List<Action> seq) {
+        return seq == null || seq.isEmpty();
+    }
 }
