@@ -66,7 +66,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.2</td>
        <td>68</td>
        <td>Romania</td>
-       <td>---</td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
    </tr>
    <tr>
        <td>3.7</td>
