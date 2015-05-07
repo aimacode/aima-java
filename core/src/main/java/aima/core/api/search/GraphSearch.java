@@ -49,9 +49,9 @@ public interface GraphSearch<S> extends SearchFunction<S> {
             // add the node to the explored set
             explored.add(node.state());
             // expand the chosen node, adding the resulting nodes to the frontier
-            //   only if not in the frontier or explored set
             for (Action action : problem.actions(node.state())) {
                 Node<S> child = childNode(problem, node, action);
+                // only if not in the frontier or explored set
                 if (!(frontier.contains(child.state()) || explored.contains(child.state()))) {
                     frontier.add(child);
                 }
