@@ -152,9 +152,9 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
             * GeneralTreeSearch (fig 3.7)
         * GraphSearch (Marker Interface)
             * GeneralGraphSearch (fig 3.7)
-            
-    Uninformed
-    Informed
+    * SearchStrategy        
+        * Uninformed
+        * Informed    
 * Tree-Search demo
     * Configure rectangular problem
         * Change size of grid
@@ -167,6 +167,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
     * Add additional tree search algorithms to simulate    
 * Graph-Search demo
     * Summary information related to explored set.
+* GUI demo
+    * Mark each algorithm (search) with icons indicating complexity, optimality, time and space complexity (chp 3 pg 80).
 
 ### LATER
 

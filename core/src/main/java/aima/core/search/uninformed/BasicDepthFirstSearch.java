@@ -18,8 +18,7 @@ import java.util.Queue;
  */
 public class BasicDepthFirstSearch<S> extends BasicGraphSearch<S> {
 
-    @Override
-    public Queue<Node<S>> newFrontier() {
-        return Collections.asLifoQueue(new BasicFrontierQueue<>());
+    public BasicDepthFirstSearch() {
+        super(() -> Collections.asLifoQueue(new BasicFrontierQueue<>()));
     }
 }

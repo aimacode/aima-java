@@ -9,6 +9,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
+ * Basic implementation of the Problem interface.
+ *
  * @author Ciaran O'Reilly
  */
 public class BasicProblem<S> implements Problem<S> {

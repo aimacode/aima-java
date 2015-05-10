@@ -12,8 +12,7 @@ import java.util.*;
  */
 public class BasicUniformCostSearch<S> extends BasicGraphSearch<S> implements UniformCostSearch<S> {
 
-    @Override
-    public Queue<Node<S>> newFrontier() {
-        return new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost()));
+    public BasicUniformCostSearch() {
+        super(() -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())));
     }
 }

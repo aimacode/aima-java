@@ -26,10 +26,12 @@ public class BasicNode<S> implements Node<S> {
 
     /**
      * Take a parent node and an action and return the resulting child node.
+     *
      * @param problem
      *        the problem for which the child node is to be instantiated, contains
      *        the function RESULT(s, a) that returns the state that results from doing
-     *        action a in state s.
+     *        action a in state s, as well as the step cost function for going from
+     *        state s to s' using action a.
      * @param parent
      *        the parent node of the child.
      * @param action
