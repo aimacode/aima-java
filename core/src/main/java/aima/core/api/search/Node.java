@@ -26,8 +26,29 @@ import aima.core.api.agent.Action;
  * @author Ciaran O'Reilly
  */
 public interface Node<S> {
+
+    /**
+     *
+     * @return the state in the state space to which the node corresponds.
+     */
     S state();
+
+    /**
+     *
+     * @return  the node in the search tree that generated this node.
+     */
     Node<S> parent();
+
+    /**
+     *
+     * @return the action that was applied to the parent to generate the node.
+     */
     Action action();
+
+    /**
+     *
+     * @return the cost, traditionally denoted by <em>g(n)</em>, of the path from
+     * the initial state to the node, as indicated by the parent pointers.
+     */
     double pathCost();
 }
