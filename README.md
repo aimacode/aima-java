@@ -146,10 +146,24 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ---
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (new demo GUI)
+* Re-design uninformed and informed search hierarchy:
+    * SearchFunction
+        * TreeSearch (Marker Interface)
+            * GeneralTreeSearch (fig 3.7)
+        * GraphSearch (Marker Interface)
+            * GeneralGraphSearch (fig 3.7)
+            
+    Uninformed
+    Informed
 * Tree-Search demo
     * Configure rectangular problem
         * Change size of grid
         * Specify order of actions.
+            * Clockwise
+            * Anti-Clockwise
+            * Random
+                * Check box for 'each time' new random sequence.
+            * User Selected (via groups of toggle buttons).
     * Add additional tree search algorithms to simulate    
 * Graph-Search demo
     * Summary information related to explored set.
