@@ -5,6 +5,8 @@ import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
 /**
+ * Basic implementation of the Node interface.
+ *
  * @author Ciaran O'Reilly
  */
 public class BasicNode<S> implements Node<S> {
@@ -22,6 +24,20 @@ public class BasicNode<S> implements Node<S> {
        return new BasicNode<>(state, pathCost);
     }
 
+    /**
+     * Take a parent node and an action and return the resulting child node.
+     * @param problem
+     *        the problem for which the child node is to be instantiated, contains
+     *        the function RESULT(s, a) that returns the state that results from doing
+     *        action a in state s.
+     * @param parent
+     *        the parent node of the child.
+     * @param action
+     *        the action taken in the parent node, which results in the child node.
+     * @param <S>
+     *        the type of the state that node contains.
+     * @return the resulting child node.
+     */
     public static <S> Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
         S sPrime = problem.result(parent.state(), action);
         return new BasicNode<>(sPrime, parent, action, parent.pathCost()+problem.stepCost(parent.state(), action, sPrime));

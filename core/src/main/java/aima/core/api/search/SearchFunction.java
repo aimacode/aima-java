@@ -30,6 +30,15 @@ public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
         return Collections.<Action>emptyList();
     }
 
+    /**
+     * Default implementation of the <em>SOLUTION</em> function which returns
+     * the sequence of actions obtained by following parent pointers back to
+     * root.
+     *
+     * @param node
+     *        a goal node.
+     * @return the sequence of actions used to go from the root to the given node.
+     */
     default List<Action> solution(Node<S> node) {
         // Use a LinkedList so we can insert into the front efficiently
         LinkedList<Action> result = new LinkedList<>();
