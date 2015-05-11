@@ -32,6 +32,14 @@ import java.util.Set;
  *
  * Figure ?? Breadth-first search on a graph.<br>
  *
+ * An instance of the general graph-search algorithm (Figure ?.?) in which the
+ * shallowest unexpanded node is chosen for expansion. This is achieved very simply
+ * by using a FIFO queue for the frontier. Thus, new nodes (which are always deeper
+ * than their parent) go to the back of the queue, and old nodes, which are shallower
+ * than the new nodes, get expanded first. There is one slight tweak on the general
+ * graph-search algorithm, which is that the goal test is applied to each node
+ * when it is generated rather than when it is selected for expansion.
+ *
  * @author Ciaran O'Reilly
  */
 public interface BreadthFirstSearch<S> extends GraphSearch<S> {

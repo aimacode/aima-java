@@ -28,7 +28,7 @@ import java.util.List;
  *       if cutoff_occurred? then return cutoff else return failure
  * </pre>
  *
- * Figure ?? A recursive implementation of depth-limited search.
+ * Figure ?? A recursive implementation of depth-limited tree search.
  *
  * @author Ciaran O'Reilly
  */

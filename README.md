@@ -148,14 +148,34 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (new demo GUI)
 * Re-design uninformed and informed search hierarchy:
     * SearchFunction
-        * TreeSearch (Marker Interface)
+        * TreeSearch (Marker Interface or sub-package)
             * GeneralTreeSearch (fig 3.7)
-        * GraphSearch (Marker Interface)
+                * BasicGeneralTreeSearch
+                    * BasicDepthFirstTreeSearch
+                      (pg. 86 'modified at no extra memory cost so that it checks new states against those on the path from the root to the current node; to avoid infinite loops)
+                * UniformCostTreeSearch  (ensure does not need to be at same level as GeneralTreeSearch)
+                    * BasicUniformCostTreeSearch
+            * BreadthFirstTreeSearch (variant of General tree search which checks if solution before adding to frontier)
+                * BasicBreadthFirstTreeSearch   
+            * RecursiveTreeSearch (Marker Interface)
+                * RecursiveDepthLimitedTreeSearch (fig 3.17)
+                    * BasicRecursiveDepthLimitedTreeSearch
+                * IterariveDeepeningDepthFirstSearch
+                    * BasicIterativeDeepeningDepthFirstSearch
+        * GraphSearch (Marker Interface or sub-package)
             * GeneralGraphSearch (fig 3.7)
-    * SearchStrategy        
-        * Uninformed
-        * Informed    
+                * BasicGeneralGraphSearch
+                    * BasicDepthFirstGraphSearch
+            * BreadthFirstGraphSearch (fig 3.11)
+                * BasicBreadthFirstGraphSearch
+            * UniformCostGraphSearch (fig 3.14)
+                * BasicUniformCostGraphSearch
+    * SearchStrategy (are distinguished by the order in which their nodes are expanded)       
+        * UninformedSearchStrategy (Marker Interface or as is sub-package)
+        * InformedSearchStrategy   (Interface or as is sub-package) 
+            * evaluation function f(n)
 * Tree-Search demo
+    * Add additional tree search algorithms to simulate 
     * Configure rectangular problem
         * Change size of grid
         * Specify order of actions.
@@ -164,11 +184,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
             * Random
                 * Check box for 'each time' new random sequence.
             * User Selected (via groups of toggle buttons).
-    * Add additional tree search algorithms to simulate    
+    * Add additional problems
+        * Binary search tree (i.e. fig 3.12 and also take into account fig 3.16)
+            * Possibly show before Rectangular problem in demo
+        * 2D Map (i.e. Map of Romania)
 * Graph-Search demo
     * Summary information related to explored set.
 * GUI demo
-    * Mark each algorithm (search) with icons indicating complexity, optimality, time and space complexity (chp 3 pg 80).
+    * Mark each algorithm (search) with icons indicating complexity, optimality, time and space complexity (chp 3 pg 80 and fig 3.21).
 
 ### LATER
 
@@ -190,7 +213,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * BasicTreeSearchTest
 * BasicProblemTest
 * BasicSimpleProblemSolvingAgentTest
-* 3.2 	68	Romania
 
 #### Chapter 2 'core' module.
 * BasicModelBasedReflexAgentTest
