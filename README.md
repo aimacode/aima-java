@@ -162,6 +162,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
                     * BasicRecursiveDepthLimitedTreeSearch
                 * IterariveDeepeningDepthFirstSearch
                     * BasicIterativeDeepeningDepthFirstSearch
+                * RecursiveBestFirstTreeSearch (fig 3.26)
+                    * BasicRecursiveBestFirstTreeSearch
             * BestFirstTreeSearch (pg 92)
                 * GreedyBestFirstTreeSearch
                     * BasicGreedyBestFirstTreeSearch
@@ -175,13 +177,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
                 * BasicBreadthFirstGraphSearch
             * UniformCostGraphSearch (fig 3.14)
                 * BasicUniformCostGraphSearch
-            * BestFirstGraphSearch (pg 92)
+            * BestFirstGraphSearch (pg 92 - implementation identical to fig 3.14 except for cost)
                 * GreedyBestFirstGraphSearch
                     * BasicGreedyBestFirstGraphSearch 
                 * AStartGraphSearch
                     * BasicAStartGraphSearch
 * Tree-Search demo
     * Add additional tree search algorithms to simulate 
+    * Add visualizations specific to recursive tree search algorithms
     * Configure rectangular problem
         * Change size of grid
         * Specify order of actions.
@@ -194,6 +197,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
         * Binary search tree (i.e. fig 3.12 and also take into account fig 3.16)
             * Possibly show before Rectangular problem in demo
         * 2D Map (i.e. Map of Romania)
+            * A* display contours (fig 3.25)
         * Informed search
             * Display heuristic information summary pane (fig 3.22)
 * Graph-Search demo
