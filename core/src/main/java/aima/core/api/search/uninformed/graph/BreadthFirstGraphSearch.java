@@ -1,7 +1,7 @@
-package aima.core.api.search.uninformed;
+package aima.core.api.search.uninformed.graph;
 
 import aima.core.api.agent.Action;
-import aima.core.api.search.GraphSearch;
+import aima.core.api.search.GeneralGraphSearch;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
@@ -42,7 +42,7 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface BreadthFirstSearch<S> extends GraphSearch<S> {
+public interface BreadthFirstGraphSearch<S> extends GeneralGraphSearch<S> {
 
     // function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
     @Override

@@ -1,4 +1,4 @@
-package aima.core.api.search.informed;
+package aima.core.api.search.informed.tree;
 
 import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
@@ -38,7 +38,7 @@ import java.util.function.Function;
  *
  * @author Ciaran O'Reilly
  */
-public interface RecursiveBestFirstSearch<S> extends SearchFunction<S> {
+public interface RecursiveBestFirstTreeSearch<S> extends SearchFunction<S> {
     // function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure
     @Override
     default List<Action> apply(Problem<S> problem) {

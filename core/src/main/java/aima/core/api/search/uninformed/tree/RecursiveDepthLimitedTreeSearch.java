@@ -1,4 +1,4 @@
-package aima.core.api.search.uninformed;
+package aima.core.api.search.uninformed.tree;
 
 import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface DepthLimitedSearch<S> extends SearchFunction<S> {
+public interface RecursiveDepthLimitedTreeSearch<S> extends SearchFunction<S> {
 
     // function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
     default List<Action> depthLimitedSearch(Problem<S> problem, int limit) {

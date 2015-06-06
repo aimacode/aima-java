@@ -1,11 +1,9 @@
-package aima.core.search.uninformed;
+package aima.core.search.uninformed.graph;
 
-import aima.core.api.search.Node;
-import aima.core.search.BasicGraphSearch;
+import aima.core.search.BasicGeneralGraphSearch;
 import aima.core.search.support.BasicFrontierQueue;
 
 import java.util.Collections;
-import java.util.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ??.<br>
@@ -16,9 +14,9 @@ import java.util.Queue;
  *
  * @author Ciaran O'Reilly
  */
-public class BasicDepthFirstSearch<S> extends BasicGraphSearch<S> {
+public class BasicDepthFirstGraphSearch<S> extends BasicGeneralGraphSearch<S> {
 
-    public BasicDepthFirstSearch() {
+    public BasicDepthFirstGraphSearch() {
         super(() -> Collections.asLifoQueue(new BasicFrontierQueue<>()));
     }
 }

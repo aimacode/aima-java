@@ -1,4 +1,4 @@
-package aima.core.api.search.uninformed;
+package aima.core.api.search.uninformed.tree;
 
 import aima.core.api.agent.Action;
 import aima.core.api.search.Problem;
@@ -38,5 +38,5 @@ public interface IterativeDeepeningSearch<S> extends SearchFunction<S> {
         }
     }
 
-    DepthLimitedSearch<S> dls();
+    RecursiveDepthLimitedTreeSearch<S> dls();
 }

@@ -72,13 +72,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.7</td>
        <td>77</td>
        <td>Tree-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/TreeSearch.java">TreeSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralTreeSearch.java">GeneralTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.7</td>
        <td>77</td>
        <td>Graph-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GraphSearch.java">GraphSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralGraphSearch.java">GeneralGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.10</td>
@@ -90,13 +90,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.11</td>
        <td>82</td>
        <td>Breadth-First-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/BreadthFirstSearch.java">BreadthFirstSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.14</td>
        <td>84</td>
        <td>Uniform-Cost-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/UniformCostSearch.java">UniformCostSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
@@ -108,13 +108,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.17</td>
        <td>88</td>
        <td>Depth-Limited-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/DepthLimitedSearch.java">DepthLimitedSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/RecursiveDepthLimitedTreeSearch.java">RecursiveDepthLimitedTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.18</td>
        <td>89</td>
        <td>Iterative-Deepening-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
@@ -138,7 +138,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.26</td>
        <td>99</td>
        <td>Recursive-Best-First-Search </td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/tree/RecursiveBestFirstTreeSearch.java">RecursiveBestFirstTreeSearch</a></td>
    </tr>
    </tbody>
 </table>
@@ -160,8 +160,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
             * RecursiveTreeSearch (Marker Interface)
                 * RecursiveDepthLimitedTreeSearch (fig 3.17)
                     * BasicRecursiveDepthLimitedTreeSearch
-                * IterariveDeepeningDepthFirstSearch
-                    * BasicIterativeDeepeningDepthFirstSearch
+                * IterariveDeepeningSearch
+                    * BasicIterativeDeepeningSearch
                 * RecursiveBestFirstTreeSearch (fig 3.26)
                     * BasicRecursiveBestFirstTreeSearch
             * BestFirstTreeSearch (pg 92)

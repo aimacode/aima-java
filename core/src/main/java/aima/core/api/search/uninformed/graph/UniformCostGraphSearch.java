@@ -1,7 +1,7 @@
-package aima.core.api.search.uninformed;
+package aima.core.api.search.uninformed.graph;
 
 import aima.core.api.agent.Action;
-import aima.core.api.search.GraphSearch;
+import aima.core.api.search.GeneralGraphSearch;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
@@ -40,7 +40,7 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface UniformCostSearch <S> extends GraphSearch<S> {
+public interface UniformCostGraphSearch<S> extends GeneralGraphSearch<S> {
 
     // function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
     @Override

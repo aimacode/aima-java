@@ -1,8 +1,8 @@
-package aima.test.core.unit.search.uninformed;
+package aima.test.core.unit.search.uninformed.graph;
 
 import aima.core.api.agent.Action;
 import aima.core.search.BasicProblem;
-import aima.core.search.uninformed.BasicBreadthFirstSearch;
+import aima.core.search.uninformed.graph.BasicBreadthFirstGraphSearch;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicBreadthFirstSearchTest {
+public class BasicBreadthFirstGraphSearchTest {
 
     class GoAction implements Action {
         String goTo;
@@ -57,7 +57,7 @@ public class BasicBreadthFirstSearchTest {
     public void testAllSimpleBinaryTreeGoals() {
         Assert.assertEquals(
                 Arrays.asList(Action.NoOp),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "A"::equals
@@ -65,7 +65,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("B")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "B"::equals
@@ -73,7 +73,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("C")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "C"::equals
@@ -81,7 +81,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("B"), new GoAction("D")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "D"::equals
@@ -89,7 +89,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("B"), new GoAction("E")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "E"::equals
@@ -97,7 +97,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("C"), new GoAction("F")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "F"::equals
@@ -105,7 +105,7 @@ public class BasicBreadthFirstSearchTest {
 
         Assert.assertEquals(
                 Arrays.asList((Action) new GoAction("C"), new GoAction("G")),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("A",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "G"::equals
@@ -115,14 +115,14 @@ public class BasicBreadthFirstSearchTest {
     @Test
     public void testUnreachableSimpleBinaryTreeGoals() {
         Assert.assertEquals(Collections.<Action>emptyList(),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("B",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "A"::equals
                 )));
 
         Assert.assertEquals(Collections.<Action>emptyList(),
-                new BasicBreadthFirstSearch<String>().apply(new BasicProblem<>("B",
+                new BasicBreadthFirstGraphSearch<String>().apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
                         "X"::equals

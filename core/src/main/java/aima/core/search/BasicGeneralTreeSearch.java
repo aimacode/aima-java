@@ -1,7 +1,7 @@
 package aima.core.search;
 
 import aima.core.api.search.Node;
-import aima.core.api.search.TreeSearch;
+import aima.core.api.search.GeneralTreeSearch;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,15 +10,15 @@ import java.util.function.Supplier;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicTreeSearch<S> extends BasicSearchFunction<S> implements TreeSearch<S> {
+public class BasicGeneralTreeSearch<S> extends BasicSearchFunction<S> implements GeneralTreeSearch<S> {
 
     private Supplier<Queue<Node<S>>> frontierSupplier;
 
-    public BasicTreeSearch() {
+    public BasicGeneralTreeSearch() {
        this(LinkedList::new);
     }
 
-    public BasicTreeSearch(Supplier<Queue<Node<S>>> frontierSupplier) {
+    public BasicGeneralTreeSearch(Supplier<Queue<Node<S>>> frontierSupplier) {
         this.frontierSupplier = frontierSupplier;
     }
 
