@@ -120,13 +120,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3</td>
        <td>92</td>
        <td>Best-First search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/BestFirstGraphSearch.java">AStarGraphSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/BestFirstGraphSearch.java">BestFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>92</td>
        <td>Greedy best-First search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/GreedBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/GreedyBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
