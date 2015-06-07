@@ -120,19 +120,19 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3</td>
        <td>92</td>
        <td>Best-First search</td>
-       <td>---</td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/BestFirstGraphSearch.java">AStarGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>92</td>
        <td>Greedy best-First search</td>
-       <td>---</td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/GreedBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>93</td>
        <td>A* Search</td>
-       <td>---</td>
+       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/AStarGraphSearch.java">AStarGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.26</td>
@@ -148,40 +148,40 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (new demo GUI)
 * Re-design uninformed and informed search hierarchy:
     * SearchFunction
-        * TreeSearch (Marker Interface or sub-package)
-            * GeneralTreeSearch (fig 3.7)
-                * BasicGeneralTreeSearch
+        * TreeSearch (sub-package)
+            * GeneralTreeSearch (fig 3.7) x
+                * BasicGeneralTreeSearch x
                     * BasicDepthFirstTreeSearch
                       (pg. 86 'modified at no extra memory cost so that it checks new states against those on the path from the root to the current node; to avoid infinite loops)
                 * UniformCostTreeSearch  (ensure does not need to be at same level as GeneralTreeSearch)
                     * BasicUniformCostTreeSearch
             * BreadthFirstTreeSearch (variant of General tree search which checks if solution before adding to frontier)
                 * BasicBreadthFirstTreeSearch   
-            * RecursiveTreeSearch (Marker Interface)
-                * RecursiveDepthLimitedTreeSearch (fig 3.17)
-                    * BasicRecursiveDepthLimitedTreeSearch
-                * IterariveDeepeningSearch
-                    * BasicIterativeDeepeningSearch
-                * RecursiveBestFirstTreeSearch (fig 3.26)
-                    * BasicRecursiveBestFirstTreeSearch
+            * recursive
+                * RecursiveDepthLimitedTreeSearch (fig 3.17) x
+                    * BasicRecursiveDepthLimitedTreeSearch x
+                * IterariveDeepeningSearch x
+                    * BasicIterativeDeepeningSearch x
+                * RecursiveBestFirstTreeSearch (fig 3.26) x
+                    * BasicRecursiveBestFirstTreeSearch   x
             * BestFirstTreeSearch (pg 92)
                 * GreedyBestFirstTreeSearch
                     * BasicGreedyBestFirstTreeSearch
                 * AStarTreeSearch
                     * BasicAStarTreeSearch                     
         * GraphSearch (Marker Interface or sub-package)
-            * GeneralGraphSearch (fig 3.7)
-                * BasicGeneralGraphSearch
-                    * BasicDepthFirstGraphSearch
-            * BreadthFirstGraphSearch (fig 3.11)
-                * BasicBreadthFirstGraphSearch
-            * UniformCostGraphSearch (fig 3.14)
-                * BasicUniformCostGraphSearch
-            * BestFirstGraphSearch (pg 92 - implementation identical to fig 3.14 except for cost)
-                * GreedyBestFirstGraphSearch
-                    * BasicGreedyBestFirstGraphSearch 
-                * AStartGraphSearch
-                    * BasicAStartGraphSearch
+            * GeneralGraphSearch (fig 3.7) x
+                * BasicGeneralGraphSearch x
+                    * BasicDepthFirstGraphSearch x
+            * BreadthFirstGraphSearch (fig 3.11) x
+                * BasicBreadthFirstGraphSearch x
+            * UniformCostGraphSearch (fig 3.14) x
+                * BasicUniformCostGraphSearch x
+            * BestFirstGraphSearch (pg 92 - implementation identical to fig 3.14 except for cost) x
+                * GreedyBestFirstGraphSearch  x
+                    * BasicGreedyBestFirstGraphSearch  x
+                * AStartGraphSearch x
+                    * BasicAStartGraphSearch x
 * Tree-Search demo
     * Add additional tree search algorithms to simulate 
     * Add visualizations specific to recursive tree search algorithms
@@ -212,10 +212,10 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
   queue and remove a node with a higher state cost.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 * BasicRecursiveBestFirstSearchTest
-* 3     92	Best-First search
-* 3 	92	Greedy best-First search
-* 3 	93	A* search
 * 3 	90	Bidirectional search
+* BasicBestFirstGraphSearchTest
+* BasicGreedyestFirstGraphSearchTest
+* BasicAStarGraphSearchTest
 * BasicIterativeDeepeningSearchTest
 * BasicDepthLimitedSearchTest
 * BasicDepthFirstSearchTest
