@@ -53,7 +53,7 @@ that is all you need to do (unless you plan to write a different search than is 
 To actually search you need to
   # configure a problem instance
   # select a search. Configure this with Tree Search or GraphSearch if applicable.
-  # instantiate a SerachAgent and 
+  # instantiate a SearchAgent and 
   # print any actions and metrics 
 
 A good example (from the NQueens Demo ) is: 
