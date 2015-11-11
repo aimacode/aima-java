@@ -75,7 +75,7 @@ public class Token {
 		result = 37 * result + type;
 		result = 37 * result + text.hashCode();
 		result = 37 * result + startCharPositionInInput;
-		return 17;
+		return result;
 	}
 
 	@Override
