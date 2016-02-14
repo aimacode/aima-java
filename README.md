@@ -1,11 +1,11 @@
 # ![](https://github.com/aima-java/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+) [![Build Status](https://travis-ci.org/aima-java/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/aima-java/aima-java)
 Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/)
 ### Getting Started Links 
-  * [Overview of Project](https://github.com/aima-java/aima-java/wiki/AIMA3e-Overview).
-  * [Setting up your own workspace](https://github.com/aima-java/aima-java/wiki/AIMA3e-Workspace-Setup).
-  * [Demo Applications that can be run from your browser](http://aima-java.github.io/aima-java/aima3e/aima3ejavademos.html).
-  * [Javadoc for the aima-core project](http://aima-java.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
-  * [Download the latest official version  = 1.8.1 (Mar 15 2015)](https://github.com/aima-java/aima-java/releases/tag/aima3e-v1.8.1).
+  * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
+  * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup).
+  * [Demo Applications that can be run from your browser](http://aimacode.github.io/aima-java/aima3e/aima3ejavademos.html).
+  * [Javadoc for the aima-core project](http://aimacode.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
+  * [Download the latest official version  = 1.8.1 (Mar 15 2015)](https://github.com/aimacode/aima-java/releases/tag/aima3e-v1.8.1).
   * Latest Maven Information (for integration as a third party library)<br>
   
       ```
