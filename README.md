@@ -1,4 +1,4 @@
-# AIMA4e-Java (JDK 8+) [![Build Status](https://travis-ci.org/aima-java/aima-java.svg?branch=AIMA4e)](https://travis-ci.org/aima-java/aima-java)
+# AIMA4e-Java (JDK 8+) [![Build Status](https://travis-ci.org/aimacode/aima-java.svg?branch=AIMA4e)](https://travis-ci.org/aimacode/aima-java)
 Java implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach 4th Edition."
 
 ---
@@ -18,127 +18,127 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>2.1</td>
        <td>35</td>
        <td>Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/Agent.java">Agent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/Agent.java">Agent</a></td>
    </tr>
    <tr>
        <td>2.3</td>
        <td>36</td>
        <td>Table-Driven-Vacuum-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.7</td>
        <td>47</td>
        <td>Table-Driven-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/TableDrivenAgent.java">TableDrivenAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/TableDrivenAgent.java">TableDrivenAgent</a></td>
    </tr>
    <tr>
        <td>2.8</td>
        <td>48</td>
        <td>Reflex-Vacuum-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.10</td>
        <td>49</td>
        <td>Simple-Reflex-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
    </tr>
    <tr>
        <td>2.12</td>
        <td>51</td>
        <td>Model-Based-Reflex-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>66</td>
        <td>Problem</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/Problem.java">Problem</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/Problem.java">Problem</a></td>
    </tr>
    <tr>
        <td>3.1</td>
        <td>67</td>
        <td>Simple-Problem-Solving-Agent</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
    </tr>
    <tr>
        <td>3.2</td>
        <td>68</td>
        <td>Romania</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
    </tr>
    <tr>
        <td>3.7</td>
        <td>77</td>
        <td>Tree-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralTreeSearch.java">GeneralTreeSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralTreeSearch.java">GeneralTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.7</td>
        <td>77</td>
        <td>Graph-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralGraphSearch.java">GeneralGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/GeneralGraphSearch.java">GeneralGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.10</td>
        <td>79</td>
        <td>Node</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/Node.java">Node</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/Node.java">Node</a></td>
    </tr>
    <tr>
        <td>3.11</td>
        <td>82</td>
        <td>Breadth-First-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.14</td>
        <td>84</td>
        <td>Uniform-Cost-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>85</td>
        <td>Depth-first Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/uninformed/graph/BasicDepthFirstGraphSearch.java">BasicDepthFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/uninformed/graph/BasicDepthFirstGraphSearch.java">BasicDepthFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.17</td>
        <td>88</td>
        <td>Depth-Limited-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/RecursiveDepthLimitedTreeSearch.java">RecursiveDepthLimitedTreeSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/RecursiveDepthLimitedTreeSearch.java">RecursiveDepthLimitedTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.18</td>
        <td>89</td>
        <td>Iterative-Deepening-Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>92</td>
        <td>Best-First search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/BestFirstGraphSearch.java">BestFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/BestFirstGraphSearch.java">BestFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>92</td>
        <td>Greedy best-First search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/GreedyBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/GreedyBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
        <td>93</td>
        <td>A* Search</td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/AStarGraphSearch.java">AStarGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/AStarGraphSearch.java">AStarGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.26</td>
        <td>99</td>
        <td>Recursive-Best-First-Search </td>
-       <td><a href="https://github.com/aima-java/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/tree/RecursiveBestFirstTreeSearch.java">RecursiveBestFirstTreeSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/tree/RecursiveBestFirstTreeSearch.java">RecursiveBestFirstTreeSearch</a></td>
    </tr>
    </tbody>
 </table>
