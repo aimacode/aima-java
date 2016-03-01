@@ -17,601 +17,104 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
       ```
 
 ### Index of Implemented Algorithms
-<table style="width:100%">
-   <tbody>
-   <tr>
-       <td><b>Fig</b></td>
-       <td><b>Page</b></td>
-       <td><b>Name (in book)</b></td>
-       <td><b>Code</b></td>
-   </tr>
-   <tr>
-       <td>2</td>
-       <td>34</td>
-       <td>Environment</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/agent/Environment.java">Environment</a></td>
-   </tr>
-   <tr>
-       <td>2.1</td>
-       <td>35</td>
-       <td>Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/agent/Agent.java">Agent</a></td>
-   </tr>
-   <tr>
-       <td>2.3</td>
-       <td>36</td>
-       <td>Table-Driven-Vacuum-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
-   </tr>
-   <tr>
-       <td>2.7</td>
-       <td>47</td>
-       <td>Table-Driven-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java">TableDrivenAgentProgram</a></td>
-   </tr>
-   <tr>
-       <td>2.8</td>
-       <td>48</td>
-       <td>Reflex-Vacuum-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
-   </tr>
-   <tr>
-       <td>2.10</td>
-       <td>49</td>
-       <td>Simple-Reflex-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java">SimpleReflexAgentProgram</a></td>
-   </tr>
-   <tr>
-       <td>2.12</td>
-       <td>51</td>
-       <td>Model-Based-Reflex-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java">ModelBasedReflexAgentProgram</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>66</td>
-       <td>Problem</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/framework/Problem.java">Problem</a></td>
-   </tr>
-   <tr>
-       <td>3.1</td>
-       <td>67</td>
-       <td>Simple-Problem-Solving-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
-   </tr>
-   <tr>
-       <td>3.2</td>
-       <td>68</td>
-       <td>Romania</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
-   </tr>
-   <tr>
-       <td>3.7</td>
-       <td>77</td>
-       <td>Tree-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java">TreeSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.7</td>
-       <td>77</td>
-       <td>Graph-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java">GraphSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.10</td>
-       <td>79</td>
-       <td>Node</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/framework/Node.java">Node</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>79</td>
-       <td>Queue</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/util/datastructure/Queue.java">Queue</a></td>
-   </tr>
-   <tr>
-       <td>3.11</td>
-       <td>82</td>
-       <td>Breadth-First-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java">BreadthFirstSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.14</td>
-       <td>84</td>
-       <td>Uniform-Cost-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java">UniformCostSearch</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>85</td>
-       <td>Depth-first Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java">DepthFirstSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.17</td>
-       <td>88</td>
-       <td>Depth-Limited-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java">DepthLimitedSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.18</td>
-       <td>89</td>
-       <td>Iterative-Deepening-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>90</td>
-       <td>Bidirectional search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/uninformed/BidirectionalSearch.java">BidirectionalSearch</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>92</td>
-       <td>Best-First search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java">BestFirstSearch</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>92</td>
-       <td>Greedy best-First search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java">GreedyBestFirstSearch</a></td>
-   </tr>
-   <tr>
-       <td>3</td>
-       <td>93</td>
-       <td>A* Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java">AStarSearch</a></td>
-   </tr>
-   <tr>
-       <td>3.26</td>
-       <td>99</td>
-       <td>Recursive-Best-First-Search </td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
-   </tr>
-   <tr>
-       <td>4.2</td>
-       <td>122</td>
-       <td>Hill-Climbing</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java">HillClimbingSearch</a></td>
-   </tr>
-   <tr>
-       <td>4.5</td>
-       <td>126</td>
-       <td>Simulated-Annealing</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java">SimulatedAnnealingSearch</a></td>
-   </tr>
-   <tr>
-       <td>4.8</td>
-       <td>129</td>
-       <td>Genetic-Algorithm</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java">GeneticAlgorithm</a></td>
-   </tr>
-   <tr>
-       <td>4.11</td>
-       <td>136</td>
-       <td>And-Or-Graph-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java">AndOrSearch</a></td>
-   </tr>
-   <tr>
-       <td>4</td>
-       <td>147</td>
-       <td>Online search problem</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java">OnlineSearchProblem</a></td>
-   </tr>
-   <tr>
-       <td>4.21</td>
-       <td>150</td>
-       <td>Online-DFS-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java">OnlineDFSAgent</a></td>
-   </tr>
-   <tr>
-       <td>4.24</td>
-       <td>152</td>
-       <td>LRTA*-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java">LRTAStarAgent</a></td>
-   </tr>
-   <tr>
-       <td>5.3</td>
-       <td>166</td>
-       <td>Minimax-Decision</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java">MinimaxSearch</a></td>
-   </tr>
-   <tr>
-       <td>5.7</td>
-       <td>170</td>
-       <td>Alpha-Beta-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java">AlphaBetaSearch</a></td>
-   </tr>
-   <tr>
-       <td>6</td>
-       <td>202</td>
-       <td>CSP</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/csp/CSP.java">CSP</a></td>
-   </tr>
-   <tr>
-       <td>6.1</td>
-       <td>204</td>
-       <td>Map CSP</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/csp/MapCSP.java">MapCSP</a></td>
-   </tr>
-   <tr>
-       <td>6.3</td>
-       <td>209</td>
-       <td>AC-3</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java">AC3Strategy</a></td>
-   </tr>
-   <tr>
-       <td>6.5</td>
-       <td>215</td>
-       <td>Backtracking-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java">BacktrackingStrategy</a></td>
-   </tr>
-   <tr>
-       <td>6.8</td>
-       <td>221</td>
-       <td>Min-Conflicts</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java">MinConflictsStrategy</a></td>
-   </tr>
-   <tr>
-       <td>6.11</td>
-       <td>209</td>
-       <td>Tree-CSP-Solver</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>7</td>
-       <td>235</td>
-       <td>Knowledge Base</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java">KnowledgeBase</a></td>
-   </tr>
-   <tr>
-       <td>7.1</td>
-       <td>236</td>
-       <td>KB-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java">KBAgent</a></td>
-   </tr>
-   <tr>
-       <td>7.7</td>
-       <td>244</td>
-       <td>Propositional-Logic-Sentence</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java">Sentence</a></td>
-   </tr>
-   <tr>
-       <td>7.10</td>
-       <td>248</td>
-       <td>TT-Entails</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java">TTEntails</a></td>
-   </tr>
-   <tr>
-       <td>7</td>
-       <td>253</td>
-       <td>Convert-to-CNF</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java">ConvertToCNF</a></td>
-   </tr>
-   <tr>
-       <td>7.12</td>
-       <td>255</td>
-       <td>PL-Resolution</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java">PLResolution</a></td>
-   </tr>
-   <tr>
-       <td>7.15</td>
-       <td>258</td>
-       <td>PL-FC-Entails?</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java">PLFCEntails</a></td>
-   </tr>
-   <tr>
-       <td>7.17</td>
-       <td>261</td>
-       <td>DPLL-Satisfiable?</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java">DPLLSatisfiable</a></td>
-   </tr>
-   <tr>
-       <td>7.18</td>
-       <td>263</td>
-       <td>WalkSAT</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
-   </tr>
-   <tr>
-       <td>7.20</td>
-       <td>270</td>
-       <td>Hybrid-Wumpus-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java">HybridWumpusAgent</a></td>
-   </tr>
-   <tr>
-       <td>7.22</td>
-       <td>272</td>
-       <td>SATPlan</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java">SATPlan</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>323</td>
-       <td>Subst</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java">SubstVisitor</a></td>
-   </tr>
-   <tr>
-       <td>9.1</td>
-       <td>328</td>
-       <td>Unify</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/Unifier.java">Unifier</a></td>
-   </tr>
-   <tr>
-       <td>9.3</td>
-       <td>332</td>
-       <td>FOL-FC-Ask</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java">FOLFCAsk</a></td>
-   </tr>
-   <tr>
-       <td>9.3</td>
-       <td>332</td>
-       <td>FOL-BC-Ask</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java">FOLBCAsk</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>345</td>
-       <td>CNF</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/CNFConverter.java">CNFConverter</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>347</td>
-       <td>Resolution</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/FOLTFMResolution.java">FOLTFMResolution</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>354</td>
-       <td>Demodulation</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java">Demodulation</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>354</td>
-       <td>Paramodulation</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java">Paramodulation</a></td>
-   </tr>
-   <tr>
-       <td>9</td>
-       <td>345</td>
-       <td>Subsumption</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java">SubsumptionElimination</a></td>
-   </tr>
-   <tr>
-       <td>10.9</td>
-       <td>383</td>
-       <td>Graphplan</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>11.5</td>
-       <td>409</td>
-       <td>Hierarchical-Search</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>11.8</td>
-       <td>414</td>
-       <td>Angelic-Search</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>13.1</td>
-       <td>484</td>
-       <td>DT-Agent</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>13</td>
-       <td>484</td>
-       <td>Probability-Model</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java">ProbabilityModel</a></td>
-   </tr>
-   <tr>
-       <td>13</td>
-       <td>487</td>
-       <td>Probability-Distribution</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java">ProbabilityDistribution</a></td>
-   </tr>
-   <tr>
-       <td>13</td>
-       <td>490</td>
-       <td>Full-Joint-Distribution</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java">FullJointDistributionModel</a></td>
-   </tr>
-   <tr>
-       <td>14</td>
-       <td>510</td>
-       <td>Bayesian Network</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java">BayesianNetwork</a></td>
-   </tr>
-   <tr>
-       <td>14.9</td>
-       <td>525</td>
-       <td>Enumeration-Ask</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java">EnumerationAsk</a></td>
-   </tr>
-   <tr>
-       <td>14.11</td>
-       <td>528</td>
-       <td>Elimination-Ask</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">EliminationAsk</a></td>
-   </tr>
-   <tr>
-       <td>14.13</td>
-       <td>531</td>
-       <td>Prior-Sample</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/PriorSample.java">PriorSample</a></td>
-   </tr>
-   <tr>
-       <td>14.14</td>
-       <td>533</td>
-       <td>Rejection-Sampling</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java">RejectionSampling</a></td>
-   </tr>
-   <tr>
-       <td>14.15</td>
-       <td>534</td>
-       <td>Likelihood-Weighting</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java">LikelihoodWeighting</a></td>
-   </tr>
-   <tr>
-       <td>14.16</td>
-       <td>537</td>
-       <td>GIBBS-Ask</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java">GibbsAsk</a></td>
-   </tr>
-   <tr>
-       <td>15.4</td>
-       <td>576</td>
-       <td>Forward-Backward</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java">ForwardBackward</a></td>
-   </tr>
-   <tr>
-       <td>15</td>
-       <td>578</td>
-       <td>Hidden Markov Model</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java">HiddenMarkovModel</a></td>
-   </tr>
-   <tr>
-       <td>15.6</td>
-       <td>580</td>
-       <td>Fixed-Lag-Smoothing</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java">FixedLagSmoothing</a></td>
-   </tr>
-   <tr>
-       <td>15</td>
-       <td>590</td>
-       <td>Dynamic Bayesian Network</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java">DynamicBayesianNetwork</a></td>
-   </tr>
-   <tr>
-       <td>15.17</td>
-       <td>598</td>
-       <td>Particle-Filtering</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java">ParticleFiltering</a></td>
-   </tr>
-   <tr>
-       <td>16.9</td>
-       <td>632</td>
-       <td>Information-Gathering-Agent</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>17</td>
-       <td>647</td>
-       <td>Markov Decision Process</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java">MarkovDecisionProcess</a></td>
-   </tr>
-   <tr>
-       <td>17.4</td>
-       <td>653</td>
-       <td>Value-Iteration</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java">ValueIteration</a></td>
-   </tr>
-   <tr>
-       <td>17.7</td>
-       <td>657</td>
-       <td>Policy-Iteration</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java">PolicyIteration</a></td>
-   </tr>
-   <tr>
-       <td>17.9</td>
-       <td>663</td>
-       <td>POMDP-Value-Iteration</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>18.5</td>
-       <td>702</td>
-       <td>Decision-Tree-Learning</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java">DecisionTreeLearner</a></td>
-   </tr>
-   <tr>
-       <td>18.8</td>
-       <td>710</td>
-       <td>Cross-Validation-Wrapper</td>
-       <td>---</a></td>
-   </tr>
-   <tr>
-       <td>18.11</td>
-       <td>717</td>
-       <td>Decision-List-Learning</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java">DecisionListLearner</a></td>
-   </tr>
-   <tr>
-       <td>18.24</td>
-       <td>734</td>
-       <td>Back-Prop-Learning</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/neural/BackPropLearning.java">BackPropLearning</a></td>
-   </tr>
-   <tr>
-       <td>18.34</td>
-       <td>751</td>
-       <td>AdaBoost</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java">AdaBoostLearner</a></td>
-   </tr>
-   <tr>
-       <td>19.2</td>
-       <td>771</td>
-       <td>Current-Best-Learning</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>19.3</td>
-       <td>773</td>
-       <td>Version-Space-Learning</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>19.8</td>
-       <td>786</td>
-       <td>Minimal-Consistent-Det</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>19.12</td>
-       <td>793</td>
-       <td>FOIL</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>21.2</td>
-       <td>834</td>
-       <td>Passive-ADP-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java">PassiveADPAgent</a></td>
-   </tr>
-   <tr>
-       <td>21.4</td>
-       <td>837</td>
-       <td>Passive-TD-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java">PassiveTDAgent</a></td>
-   </tr>
-   <tr>
-       <td>21.8</td>
-       <td>844</td>
-       <td>Q-Learning-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java">QLearningAgent</a></td>
-   </tr>
-   <tr>
-       <td>22.1</td>
-       <td>871</td>
-       <td>HITS</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>23.5</td>
-       <td>894</td>
-       <td>CYK-Parse</td>
-       <td>---</td>
-   </tr>
-   <tr>
-       <td>25.9</td>
-       <td>982</td>
-       <td>Monte-Carlo-Localization</td>
-       <td>---</td>
-   </tr>
-   </tbody>
-</table>
+
+|Fig|Page|Name (in book)|Code|
+| -------- |:--------:| :-----| :----- |
+|2|34|Environment|[Environment](/aima-core/src/main/java/aima/core/agent/Environment.java)|
+|2.1|35|Agent|[Agent](/aima-core/src/main/java/aima/core/agent/Agent.java)|
+|2.3|36|Table-Driven-Vacuum-Agent|[TableDrivenVacuumAgent](/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java)|
+|2.7|47|Table-Driven-Agent|[TableDrivenAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/TableDrivenAgentProgram.java)|
+|2.8|48|Reflex-Vacuum-Agent|[ReflexVacuumAgent](/aima-core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java)|
+|2.10|49|Simple-Reflex-Agent|[SimpleReflexAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java)|
+|2.12|51|Model-Based-Reflex-Agent|[ModelBasedReflexAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java)|
+|3|66|Problem|[Problem](/aima-core/src/main/java/aima/core/search/framework/Problem.java)|
+|3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java)|
+|3.2|68|Romania|[SimplifiedRoadMapOfPartOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java)|
+|3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java)|
+|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java)|
+|3.10|79|Node|[Node](/aima-core/src/main/java/aima/core/search/framework/Node.java)|
+|3|79|Queue|[Queue](/aima-core/src/main/java/aima/core/util/datastructure/Queue.java)|
+|3.11|82|Breadth-First-Search|[BreadthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java)|
+|3.14|84|Uniform-Cost-Search|[UniformCostSearch](/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java)|
+|3|85|Depth-first Search|[DepthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java)|
+|3.17|88|Depth-Limited-Search|[DepthLimitedSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java)|
+|3.18|89|Iterative-Deepening-Search|[IterativeDeepeningSearch](/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java)|
+|3|90|Bidirectional search|[BidirectionalSearch](/aima-core/src/main/java/aima/core/search/uninformed/BidirectionalSearch.java)|
+|3|92|Best-First search|[BestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java)|
+|3|92|Greedy best-First search|[GreedyBestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java)|
+|3|93|A\* Search|[AStarSearch](/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java)|
+|3.26|99|Recursive-Best-First-Search |[RecursiveBestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/RecursiveBestFirstSearch.java)|
+|4.2|122|Hill-Climbing|[HillClimbingSearch](/aima-core/src/main/java/aima/core/search/local/HillClimbingSearch.java)|
+|4.5|126|Simulated-Annealing|[SimulatedAnnealingSearch](/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java)|
+|4.8|129|Genetic-Algorithm|[GeneticAlgorithm](/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java)|
+|4.11|136|And-Or-Graph-Search|[AndOrSearch](/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java)|
+|4|147|Online search problem|[OnlineSearchProblem](/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java)|
+|4.21|150|Online-DFS-Agent|[OnlineDFSAgent](/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java)|
+|4.24|152|LRTA\*-Agent|[LRTAStarAgent](/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java)|
+|5.3|166|Minimax-Decision|[MinimaxSearch](/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java)|
+|5.7|170|Alpha-Beta-Search|[AlphaBetaSearch](/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java)|
+|6|202|CSP|[CSP](/aima-core/src/main/java/aima/core/search/csp/CSP.java)|
+|6.1|204|Map CSP|[MapCSP](/aima-core/src/main/java/aima/core/search/csp/MapCSP.java)|
+|6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java)|
+|6.5|215|Backtracking-Search|[BacktrackingStrategy](/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java)|
+|6.8|221|Min-Conflicts|[MinConflictsStrategy](/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java)|
+|6.11|209|Tree-CSP-Solver|---|
+|7|235|Knowledge Base|[KnowledgeBase](/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java)|
+|7.1|236|KB-Agent|[KBAgent](/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java)|
+|7.7|244|Propositional-Logic-Sentence|[Sentence](/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java)|
+|7.10|248|TT-Entails|[TTEntails](/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java)|
+|7|253|Convert-to-CNF|[ConvertToCNF](/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java)|
+|7.12|255|PL-Resolution|[PLResolution](/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java)|
+|7.15|258|PL-FC-Entails?|[PLFCEntails](/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java)|
+|7.17|261|DPLL-Satisfiable?|[DPLLSatisfiable](/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java)|
+|7.18|263|WalkSAT|[WalkSAT](/aima-core/src/main/java/aima/core/logic/propositional/inference/WalkSAT.java)|
+|7.20|270|Hybrid-Wumpus-Agent|[HybridWumpusAgent](/aima-core/src/main/java/aima/core/environment/wumpusworld/HybridWumpusAgent.java)|
+|7.22|272|SATPlan|[SATPlan](/aima-core/src/main/java/aima/core/logic/propositional/inference/SATPlan.java)|
+|9|323|Subst|[SubstVisitor](/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java)|
+|9.1|328|Unify|[Unifier](/aima-core/src/main/java/aima/core/logic/fol/Unifier.java)|
+|9.3|332|FOL-FC-Ask|[FOLFCAsk](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java)|
+|9.3|332|FOL-BC-Ask|[FOLBCAsk](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java)|
+|9|345|CNF|[CNFConverter](/aima-core/src/main/java/aima/core/logic/fol/CNFConverter.java)|
+|9|347|Resolution|[FOLTFMResolution](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLTFMResolution.java)|
+|9|354|Demodulation|[Demodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java)|
+|9|354|Paramodulation|[Paramodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java)|
+|9|345|Subsumption|[SubsumptionElimination](/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java)|
+|10.9|383|Graphplan|---|
+|11.5|409|Hierarchical-Search|---|
+|11.8|414|Angelic-Search|---|
+|13.1|484|DT-Agent|---|
+|13|484|Probability-Model|[ProbabilityModel](/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java)|
+|13|487|Probability-Distribution|[ProbabilityDistribution](/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java)|
+|13|490|Full-Joint-Distribution|[FullJointDistributionModel](/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java)|
+|14|510|Bayesian Network|[BayesianNetwork](/aima-core/src/main/java/aima/core/probability/bayes/BayesianNetwork.java)|
+|14.9|525|Enumeration-Ask|[EnumerationAsk](/aima-core/src/main/java/aima/core/probability/bayes/exact/EnumerationAsk.java)|
+|14.11|528|Elimination-Ask|[EliminationAsk](/aima-core/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java)|
+|14.13|531|Prior-Sample|[PriorSample](/aima-core/src/main/java/aima/core/probability/bayes/approx/PriorSample.java)|
+|14.14|533|Rejection-Sampling|[RejectionSampling](/aima-core/src/main/java/aima/core/probability/bayes/approx/RejectionSampling.java)|
+|14.15|534|Likelihood-Weighting|[LikelihoodWeighting](/aima-core/src/main/java/aima/core/probability/bayes/approx/LikelihoodWeighting.java)|
+|14.16|537|GIBBS-Ask|[GibbsAsk](/aima-core/src/main/java/aima/core/probability/bayes/approx/GibbsAsk.java)|
+|15.4|576|Forward-Backward|[ForwardBackward](/aima-core/src/main/java/aima/core/probability/temporal/generic/ForwardBackward.java)|
+|15|578|Hidden Markov Model|[HiddenMarkovModel](/aima-core/src/main/java/aima/core/probability/hmm/HiddenMarkovModel.java)|
+|15.6|580|Fixed-Lag-Smoothing|[FixedLagSmoothing](/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java)|
+|15|590|Dynamic Bayesian Network|[DynamicBayesianNetwork](/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java)|
+|15.17|598|Particle-Filtering|[ParticleFiltering](/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java)|
+|16.9|632|Information-Gathering-Agent|---|
+|17|647|Markov Decision Process|[MarkovDecisionProcess](/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java)|
+|17.4|653|Value-Iteration|[ValueIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java)|
+|17.7|657|Policy-Iteration|[PolicyIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java)|
+|17.9|663|POMDP-Value-Iteration|---|
+|18.5|702|Decision-Tree-Learning|[DecisionTreeLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java)|
+|18.8|710|Cross-Validation-Wrapper|---|
+|18.11|717|Decision-List-Learning|[DecisionListLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java)|
+|18.24|734|Back-Prop-Learning|[BackPropLearning](/aima-core/src/main/java/aima/core/learning/neural/BackPropLearning.java)|
+|18.34|751|AdaBoost|[AdaBoostLearner](/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java)|
+|19.2|771|Current-Best-Learning|---|
+|19.3|773|Version-Space-Learning|---|
+|19.8|786|Minimal-Consistent-Det|---|
+|19.12|793|FOIL|---|
+|21.2|834|Passive-ADP-Agent|[PassiveADPAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java)|
+|21.4|837|Passive-TD-Agent|[PassiveTDAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java)|
+|21.8|844|Q-Learning-Agent|[QLearningAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java)|
+|22.1|871|HITS|---|
+|23.5|894|CYK-Parse|---|
+|25.9|982|Monte-Carlo-Localization|---|
