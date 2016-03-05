@@ -1,5 +1,8 @@
 # ![](https://github.com/aimacode/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+) [![Build Status](https://travis-ci.org/aimacode/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/aimacode/aima-java)
-Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/)
+Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/).
+
+We're loooking for one student sponsored by Google Summer of Code (GSoC) to work on this project; if you want to be that student, make some good contributions here (by looking throush the "Issues" and resolving some, or by looking at the table of algorithms below and implementing a missing one, or by looking at the [pseudocode of algorithms from the book](http://aima.cs.berkeley.edu/algorithms.pdf) and adding or improving one), and submit your application. (And we're always looking for solid contributors who are not affiliated with GSoC.)
+
 ### Getting Started Links 
   * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
   * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup).
