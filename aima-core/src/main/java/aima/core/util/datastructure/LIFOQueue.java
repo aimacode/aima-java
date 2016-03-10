@@ -26,20 +26,23 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	//
 	// START-Queue
 	public boolean isEmpty() {
-		return 0 == size();
+		int size1 = this.size() ;
+		if(size1==0)
+			return true ;
+		return false ;
 	}
 
 	@Override
 	public E pop() {
-		return poll();
+		return this.poll();
 	}
 
 	public void push(E element) {
-		addFirst(element);
+		this.addFirst(element);
 	}
 
 	public Queue<E> insert(E element) {
-		if (offer(element)) {
+		if(offer(element)!=false) {
 			return this;
 		}
 		return null;
@@ -53,18 +56,18 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	// order.
 	@Override
 	public boolean add(E e) {
-		addFirst(e);
+		this.addFirst(e);
 		return true;
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		return addAll(0, c);
+		return this.addAll(0, c);
 	}
 
 	@Override
 	public boolean offer(E e) {
-		add(0, e);
+		this.add(0, e);
 		return true;
 	}
 	// End-Override LinkedList methods in order for it to behave like a LIFO.
