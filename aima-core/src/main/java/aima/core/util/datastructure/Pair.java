@@ -45,7 +45,7 @@ public class Pair<X, Y> {
 	public boolean equals(Object o) {
 		if (o instanceof Pair<?, ?>) {
 			Pair<?, ?> p = (Pair<?, ?>) o;
-			return a.equals(p.a) && b.equals(p.b);
+			return ((a.equals(p.a)) && (b.equals(p.b)));
 		}
 		return false;
 	}
