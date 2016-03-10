@@ -8,9 +8,8 @@ package aima.core.util.datastructure;
  * @author Mike Stampone
  */
 public class XYLocation {
-	public enum Direction 
-	{
-		North, South, East, West,NorthEast,NorthWest,SouthEast,SouthWest
+	public enum Direction {
+		North, South, East, West
 	};
 
 	int xCoOrdinate, yCoOrdinate;
@@ -77,43 +76,7 @@ public class XYLocation {
 	public XYLocation south() {
 		return new XYLocation(xCoOrdinate, yCoOrdinate + 1);
 	}
-	/**
-	 * Returns the yCoordinate one unit ahead and xCoordinate one unit behind,this location. 
-	 */
-	public XYLocation northeast(){
-		return new XYLocation(xCoOrdinate+1,yCoOrdinate-1) ;
-	}
-	
-	/**
-	*  Returns the yCoordinate one unit ahead and xCoordinate one unit ahead,this location. 
-	*/
-	public XYLocation northwest(){
-		return new XYLocation(xCoOrdinate-1,yCoOrdinate-1) ;
-	}
-	
-	public XYLocation southeast(){
-		return new XYLocation(xCoOrdinate+1,yCoOrdinate+1) ;
-	}
-	
-	public XYLocation southwest(){
-		return new XYLocation(xCoOrdinate-1,yCoOrdinate+1) ;
-	}
-	
-	public XYLocation topleft(){
-		return northwest() ;
-	}
-	
-	public XYLocation topright(){
-		return northeast() ;
-	}
-	
-	public XYLocation bottomleft(){
-		return southwest() ;
-	}
-	
-	public XYLocation bottomright(){
-		return southeast() ;
-	}
+
 	/**
 	 * Returns the location one unit left of this location.
 	 * 
@@ -169,20 +132,7 @@ public class XYLocation {
 		}
 		if (direction.equals(Direction.West)) {
 			return west();
-		}
-		if(direction.equals(Direction.NorthEast)){
-			return northeast() ;
-		}
-		if(direction.equals(Direction.NorthWest)){
-			return northwest() ;
-		}
-		if(direction.equals(Direction.SouthEast)){
-			return southeast() ;
-		}
-		if(direction.equals(Direction.SouthWest)){
-			return southwest() ;
-		}
-		else {
+		} else {
 			throw new RuntimeException("Unknown direction " + direction);
 		}
 	}
