@@ -45,16 +45,29 @@ public class Pair<X, Y> {
 	public boolean equals(Object o) {
 		if (o instanceof Pair<?, ?>) {
 			Pair<?, ?> p = (Pair<?, ?>) o;
-			return a.equals(p.a) && b.equals(p.b);
+			if(((a.equals(p.a)) && (b.equals(p.b)))!=false)
+				return true ;
+			else
+				return false ;
 		}
 		return false;
 	}
-
+	/**
+	* Returns the hashcode of the pair
+	*
+	* @return the hashcode of the pair
+	*/
 	@Override
 	public int hashCode() {
 		return a.hashCode() + 31 * b.hashCode();
 	}
 
+
+	/**
+	* Returns the pair in the string format
+	*
+	* @return the pair in the string format
+	*/
 	@Override
 	public String toString() {
 		return "< " + getFirst().toString() + " , " + getSecond().toString()
