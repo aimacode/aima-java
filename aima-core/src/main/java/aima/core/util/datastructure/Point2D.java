@@ -42,13 +42,8 @@ public class Point2D {
 	 * @return the Euclidean distance between a specified point and this point.
 	 */
 	public double distance(Point2D pt) {
-		// Distance Between X Coordinates
-		double x_distance = (pt.getX() - x) * (pt.getX() - x);
-		// Distance Between Y Coordinates
-		double y_distance = (pt.getY()-y)*(pt.getY()-y) ;
-		// Distance Between 2d Points
-		double total_distance = Math.sqrt(x_distance + y_distance) ;
-		
-		return total_distance ;
+		double result = (pt.getX() - x) * (pt.getX() - x);
+		result += (pt.getY() - y) * (pt.getY() - y);
+		return Math.sqrt(result);
 	}
 }
