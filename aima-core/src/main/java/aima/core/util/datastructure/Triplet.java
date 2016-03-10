@@ -59,17 +59,30 @@ public class Triplet<X, Y, Z> {
 	public boolean equals(Object o) {
 		if (o instanceof Triplet<?, ?, ?>) {
 			Triplet<?, ?, ?> other = (Triplet<?, ?, ?>) o;
-			return (x.equals(other.x)) && (y.equals(other.y))
-					&& (z.equals(other.z));
+			if(((x.equals(other.x)) && (y.equals(other.y)) && (z.equals(other.z)))!=false)
+				return true ;
+			else
+				return false ;
 		}
 		return false;
 	}
 
+	/**
+	* Returns the hashcode of the triplet.
+	*
+	* @return the hashcode of the triplet.
+	*/
 	@Override
 	public int hashCode() {
 		return x.hashCode() + 31 * y.hashCode() + 31 * z.hashCode();
 	}
 
+
+	/**
+	*Returns the Triplet in a String Format
+	*
+	* @return the Triplet in String Format
+	*/
 	@Override
 	public String toString() {
 		return "< " + x.toString() + " , " + y.toString() + " , "
