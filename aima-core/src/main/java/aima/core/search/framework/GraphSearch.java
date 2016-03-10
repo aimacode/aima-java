@@ -69,7 +69,7 @@ public class GraphSearch extends QueueSearch {
 	@Override
 	public boolean removeNodeFromFrontier(Node toRemove) {
 		boolean removed = super.removeNodeFromFrontier(toRemove);
-		if (removed) {
+		if (removed!=false) {
 			frontierState.remove(toRemove.getState());
 		}
 		return removed;
@@ -83,15 +83,17 @@ public class GraphSearch extends QueueSearch {
 		// add the node to the explored set
 		explored.add(nodeToExpand.getState());
 		// expand the chosen node, adding the resulting nodes to the frontier
+		Node frontierNode ;
+		boolean yesAddToFrontier ;
 		for (Node cfn : expandNode(nodeToExpand, problem)) {
-			Node frontierNode = frontierState.get(cfn.getState());
-			boolean yesAddToFrontier = false;
-			if (null == frontierNode) {
-				if (!explored.contains(cfn.getState())) {
+			frontierNode = frontierState.get(cfn.getState());
+			yesAddToFrontier = false;
+			if(null == frontierNode) {
+				if(explored.contains(cfn.getState())==false) {
 					// child.STATE is not in frontier and not yet explored
 					yesAddToFrontier = true;
 				}
-			} else if (null != replaceFrontierNodeAtStateCostFunction
+			} else if(null != replaceFrontierNodeAtStateCostFunction
 					&& replaceFrontierNodeAtStateCostFunction.compare(cfn,
 							frontierNode) < 0) {
 				// child.STATE is in frontier with higher cost
@@ -105,13 +107,11 @@ public class GraphSearch extends QueueSearch {
 				// as 1 or more may reach the same state at the same time
 				addToFrontier.remove(frontierNode);
 			}
-
-			if (yesAddToFrontier) {
+			if(yesAddToFrontier!=false) {
 				addToFrontier.add(cfn);
 				frontierState.put(cfn.getState(), cfn);
 			}
 		}
-
 		return addToFrontier;
 	}
 }
