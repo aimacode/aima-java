@@ -28,12 +28,8 @@ public class IfStateThenPlan {
 	 * @param state
 	 * @return the plan if the given state matches, null otherwise.
 	 */
-	public Plan ifStateMatches(Object state) {
-		if (this.state.equals(state)) {
-			return this.plan;
-		} else {
-			return null;
-		}
+	public Plan ifStateMatches(Object state){
+		return this.state.equals(state)==true?this.plan:null ;
 	}
 
 	/**
