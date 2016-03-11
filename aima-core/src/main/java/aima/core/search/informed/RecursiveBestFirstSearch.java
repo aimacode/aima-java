@@ -159,7 +159,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 			f[s] = Math.max(evaluationFunction.f(successors.get(s)), node_f);
 		}
 
-		// repeat
+		//loop do
 		while (true) {
 			// best ← the lowest f-value node in successors
 			int bestIndex = getBestFValueIndex(f);
