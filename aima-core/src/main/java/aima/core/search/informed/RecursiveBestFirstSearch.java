@@ -22,17 +22,17 @@ import aima.core.search.framework.SearchUtils;
  *   
  * function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   successors &lt;- []
+ *   successors ← []
  *   for each action in problem.ACTION(node.STATE) do
  *       add CHILD-NODE(problem, node, action) into successors
  *   if successors is empty then return failure, infinity
  *   for each s in successors do // update f with value from previous search, if any
- *     s.f &lt;- max(s.g + s.h, node.f)
+ *     s.f ← max(s.g + s.h, node.f)
  *   repeat
- *     best &lt;- the lowest f-value node in successors
- *     if best.f &gt; f_limit then return failure, best.f
- *     alternative &lt;- the second-lowest f-value among successors
- *     result, best.f &lt;- RBFS(problem, best, min(f_limit, alternative))
+ *     best ← the lowest f-value node in successors
+ *     if best.f > f_limit then return failure, best.f
+ *     alternative ← the second-lowest f-value among successors
+ *     result, best.f ← RBFS(problem, best, min(f_limit, alternative))
  *     if result != failure then return result
  * </pre>
  * 
@@ -143,34 +143,32 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 			return new SearchResult(n, fLimit);
 		}
 
-		// successors <- []
+		// successors ← []
 		// for each action in problem.ACTION(node.STATE) do
 		// add CHILD-NODE(problem, node, action) into successors
 		List<Node> successors = expandNode(n, p);
 		// if successors is empty then return failure, infinity
-		if (0 == successors.size()) {
+		if (successors==null) {
 			return new SearchResult(null, INFINITY);
 		}
 		double[] f = new double[successors.size()];
 		// for each s in successors do
 		// update f with value from previous search, if any
-		int size = successors.size();
-		for (int s = 0; s < size; s++) {
-			// s.f <- max(s.g + s.h, node.f)
+		for (int s = 0; s <successors.size(); s++) {
+			// s.f ← max(s.g + s.h, node.f)
 			f[s] = Math.max(evaluationFunction.f(successors.get(s)), node_f);
 		}
 
-		// repeat
+		//loop do
 		while (true) {
-			// best <- the lowest f-value node in successors
+			// best ← the lowest f-value node in successors
 			int bestIndex = getBestFValueIndex(f);
 			// if best.f > f_limit then return failure, best.f
 			if (f[bestIndex] > fLimit) {
 				return new SearchResult(null, f[bestIndex]);
 			}
-			// if best.f > f_limit then return failure, best.f
 			int altIndex = getNextBestFValueIndex(f, bestIndex);
-			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
+			// result, best.f ← RBFS(problem, best, min(f_limit, alternative))
 			SearchResult sr = rbfs(p, successors.get(bestIndex), f[bestIndex],
 					Math.min(fLimit, f[altIndex]), recursiveDepth + 1);
 			f[bestIndex] = sr.getFCostLimit();

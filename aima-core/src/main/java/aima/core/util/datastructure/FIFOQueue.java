@@ -26,7 +26,10 @@ public class FIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	//
 	// START-Queue
 	public boolean isEmpty() {
-		return 0 == size();
+		int size1 = size() ;
+		if(size1==0)
+			return true ;
+		return false ;
 	}
 
 	public E pop() {
@@ -38,7 +41,7 @@ public class FIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	}
 
 	public Queue<E> insert(E element) {
-		if (offer(element)) {
+		if (offer(element)!=false) {
 			return this;
 		}
 		return null;
