@@ -11,15 +11,12 @@ import aima.core.search.framework.Search;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
- * 89.<br>
- * <br>
+ * 89.
  * 
- * <pre>
  * function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
  *   for depth = 0 to infinity  do
- *     result &lt;- DEPTH-LIMITED-SEARCH(problem, depth)
+ *     result  ←  DEPTH-LIMITED-SEARCH(problem, depth)
  *     if result != cutoff then return result
- * </pre>
  * 
  * Figure 3.18 The iterative deepening search algorithm, which repeatedly
  * applies depth-limited search with increasing limits. It terminates when a
