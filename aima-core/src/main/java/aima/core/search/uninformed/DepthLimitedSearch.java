@@ -14,10 +14,8 @@ import aima.core.search.framework.SearchUtils;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page
- * 88.<br>
- * <br>
+ * 88.
  * 
- * <pre>
  * function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
  *   return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem, limit)
  *   
@@ -25,14 +23,13 @@ import aima.core.search.framework.SearchUtils;
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   else if limit = 0 then return cutoff
  *   else
- *       cutoff_occurred? &lt;- false
+ *       cutoff_occurred?  ←  false
  *       for each action in problem.ACTIONS(node.STATE) do
- *           child &lt;- CHILD-NODE(problem, node, action)
- *           result &lt;- RECURSIVE-DLS(child, problem, limit - 1)
- *           if result = cutoff then cutoff_occurred? &lt;- true
+ *           child  ←  CHILD-NODE(problem, node, action)
+ *           result  ←  RECURSIVE-DLS(child, problem, limit - 1)
+ *           if result = cutoff then cutoff_occurred?  ←  true
  *           else if result != failure then return result
  *       if cutoff_occurred? then return cutoff else return failure
- * </pre>
  * 
  * Figure 3.17 A recursive implementation of depth-limited search.
  * 
@@ -50,13 +47,13 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	}
 
 	/**
-	 * Returns <code>true</code> if the specified action list indicates a search
+	 * Returns true if the specified action list indicates a search
 	 * reached it limit without finding a goal.
 	 * 
 	 * @param result
 	 *            the action list resulting from a previous search
 	 * 
-	 * @return <code>true</code> if the specified action list indicates a search
+	 * @return true if the specified action list indicates a search
 	 *         reached it limit without finding a goal.
 	 */
 	public boolean isCutOff(List<Action> result) {
@@ -65,13 +62,13 @@ public class DepthLimitedSearch extends NodeExpander implements Search {
 	}
 
 	/**
-	 * Returns <code>true</code> if the specified action list indicates a goal
+	 * Returns true if the specified action list indicates a goal
 	 * not found.
 	 * 
 	 * @param result
 	 *            the action list resulting from a previous search
 	 * 
-	 * @return <code>true</code> if the specified action list indicates a goal
+	 * @return true if the specified action list indicates a goal
 	 *         not found.
 	 */
 	public boolean isFailure(List<Action> result) {
