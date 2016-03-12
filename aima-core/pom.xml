@@ -17,7 +17,7 @@
 
 	<packaging>jar</packaging>
 	<description>AIMA-Java Core Algorithms from the book Artificial Intelligence a Modern Approach 3rd Ed.</description>
-	<url>http://code.google.com/p/aima-java/</url>
+	<url>https://github.com/aimacode/aima-java/</url>
 	<licenses>
 		<license>
 			<name>MIT License</name>
@@ -26,9 +26,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>http://aima-java.googlecode.com/svn/trunk/aima-core</url>
-		<connection>scm:svn:http://aima-java.googlecode.com/svn/trunk/aima-core</connection>
-		<developerConnection>scm:svn:https://aima-java.googlecode.com/svn/trunk/aima-core</developerConnection>
+		<url>https://github.com/aimacode/aima-java/tree/AIMA3e/aima-core</url>
+		<connection>scm:git:https://github.com/aimacode/aima-java/tree/AIMA3e/aima-core</connection>
+		<developerConnection>scm:git:https://github.com/aimacode/aima-java/tree/AIMA3e/aima-core</developerConnection>
 	</scm>
 	<developers>
 		<developer>
