@@ -3,11 +3,12 @@ package aima.core.search.uninformed;
 import java.util.List;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.GraphSearch;
+//import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.QueueSearch;
+//import aima.core.search.framework.QueueSearch;
+import aima.core.search.framework.TreeSearch;
 import aima.core.search.framework.Search;
 import aima.core.util.datastructure.FIFOQueue;
 
@@ -15,7 +16,7 @@ import aima.core.util.datastructure.FIFOQueue;
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page
  * 82.<br>
  * <br>
- * 
+ *
  * <pre>
  * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
@@ -32,23 +33,23 @@ import aima.core.util.datastructure.FIFOQueue;
  *              if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
  *              frontier &lt;- INSERT(child, frontier)
  * </pre>
- * 
+ *
  * Figure 3.11 Breadth-first search on a graph.<br>
  * <br>
  * <b>Note:</b> Supports both Tree and Graph based versions by assigning an
  * instance of TreeSearch or GraphSearch to its constructor.
- * 
+ *
  * @author Ciaran O'Reilly
  */
 public class BreadthFirstSearch implements Search {
 
-	private final QueueSearch search;
+	private final TreeSearch search;
 
 	public BreadthFirstSearch() {
-		this(new GraphSearch());
+		this(new TreeSearch());
 	}
 
-	public BreadthFirstSearch(QueueSearch search) {
+	public BreadthFirstSearch(TreeSearch search) {
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
 		search.setCheckGoalBeforeAddingToFrontier(true);

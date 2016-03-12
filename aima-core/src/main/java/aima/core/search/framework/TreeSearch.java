@@ -10,7 +10,7 @@ import aima.core.util.CancelableThread;
  * @author Ravi Mohan
  * @author Sadhana Srinivasan
  */
-public abstract class TreeSearch extends NodeExpander {
+public class TreeSearch extends QueueSearch {
 	public static final String METRIC_TREE_SIZE = "treeSize";
 
 	public static final String METRIC_MAX_TREE_SIZE = "maxTreeSize";
