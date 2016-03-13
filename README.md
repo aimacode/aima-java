@@ -3,7 +3,7 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
 
 We're loooking for one student sponsored by Google Summer of Code (GSoC) to work on this project; if you want to be that student, make some good contributions here (by looking through the "Issues" and resolving some, or by looking at the table of algorithms below and implementing a missing one, or by looking at the [pseudocode of algorithms from the book](http://aima.cs.berkeley.edu/algorithms.pdf) and adding or improving one), and submit your application. (And we're always looking for solid contributors who are not affiliated with GSoC.)
 
-NOTE: While we would like to complete the set of algorithms on the AIMA4e branch we are planning on focussing most of our efforts on the new AIMA4e branch going forward. This is a complete rewrite of the algorithms from the AIMA3e branch and will be updated to reflect any changes in the yet to be published 4th edition of the book.
+NOTE: While we would like to complete the set of algorithms on the AIMA3e branch (the current default) we are planning on focussing most of our efforts on the new AIMA4e branch going forward. This is a complete rewrite of the algorithms from the AIMA3e branch and will be updated to reflect any changes in the yet to be published 4th edition of the book.
 
 ### Getting Started Links 
   * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
