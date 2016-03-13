@@ -2,7 +2,7 @@
 Java implementation of algorithms from Norvig And Russell's "Artificial Intelligence - A Modern Approach 4th Edition."
 
 ---
-## NOTE: This is an in progress complete rewrite of the algorithms, leveraging JDK 8's new language features, from the AIMA3e branch (currently master branch)
+## NOTE: This is an in progress complete rewrite of the algorithms, leveraging JDK 8's new language features, from the AIMA3e branch (currently master branch). This will also become the new master branch once the 4th edition of "Artificial Intelligence - A Modern Approach" is published.
 
 ---
 ## Index of Implemented Algorithms
