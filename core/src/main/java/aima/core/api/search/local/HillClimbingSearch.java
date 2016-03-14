@@ -67,6 +67,7 @@ public interface HillClimbingSearch<S> extends SearchFunction<S> {
         double h;
 
         SuccessorNode(Node<S> node, Function<Node<S>, Double> h) {
+            this.n = node;
             this.h = h.apply(node);
             this.value = -1 * this.h;
         }
