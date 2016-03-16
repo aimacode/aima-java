@@ -24,13 +24,10 @@ public class MapCSP extends CSP {
 	public static final String BLUE = "BLUE";
 
 	/**
-	 * Returns the principle states and territories of Australia as a list of
-	 * variables.
-	 * 
-	 * @return the principle states and territories of Australia as a list of
-	 *         variables.
+	 * Constructs a map CSP for the principal states and territories of
+	 * Australia, with the colors Red, Green, and Blue.
 	 */
-	 private void collectVariables() {
+	public MapCSP() {
 		addVariable(NSW);
 		addVariable(WA);
 		addVariable(NT);
@@ -38,14 +35,6 @@ public class MapCSP extends CSP {
 		addVariable(SA);
 		addVariable(V);
 		addVariable(T);
-	}
-
-	/**
-	 * Constructs a map CSP for the principal states and territories of
-	 * Australia, with the colors Red, Green, and Blue.
-	 */
-	public MapCSP() {
-		collectVariables();
 
 		Domain colors = new Domain(new Object[] { RED, GREEN, BLUE });
 
