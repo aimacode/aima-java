@@ -48,7 +48,7 @@ public interface HillClimbingSearch<S> extends SearchFunction<S> {
                 successors.add(new SuccessorNode<>(childNode(problem, current.n, action), this::h));
             }
             if (successors.isEmpty()) {
-                return failure();
+                return solution(current.n);
             } else {
                 Collections.sort(successors, (s1, s2) -> Double.compare(s2.value, s1.value));
                 neighbor = successors.get(0);
@@ -58,6 +58,7 @@ public interface HillClimbingSearch<S> extends SearchFunction<S> {
                 if (isGoalState(current.n, problem)) {
                     return solution(current.n);
                 }
+
             }
             current = neighbor;
         } while (true);
