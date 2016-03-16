@@ -47,10 +47,14 @@ public interface HillClimbingSearch<S> extends SearchFunction<S> {
             for (Action action : problem.actions(current.n.state())) {
                 successors.add(new SuccessorNode<>(childNode(problem, current.n, action), this::h));
             }
-            Collections.sort(successors, (s1, s2) -> Double.compare(s2.value, s1.value));
-            neighbor = successors.get(0);
+            if (successors.isEmpty()) {
+                neighbor = null;
+            } else {
+                Collections.sort(successors, (s1, s2) -> Double.compare(s2.value, s1.value));
+                neighbor = successors.get(0);
+            }
             // if neighbor.VALUE <= current.VALUE then return current.STATE
-            if (neighbor.value <= current.value) {
+            if (neighbor == null || neighbor.value <= current.value) {
                 if (isGoalState(current.n, problem)) {
                     return solution(current.n);
                 }
