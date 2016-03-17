@@ -1,9 +1,9 @@
-package aima.core.search.nondeterministic;
-
+package aima.test.core.unit.search.HiererchicalSearchTest;
+import aima.core.search.nondeterministic.HierarchicalSearch.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class HirerarchicalSearchTest {
+public class HierarchicalSearchTest {
 	@Test
 	public void test1_Hierarchical_Search() {
 		 Problem p=new Problem();
@@ -37,3 +37,4 @@ public class HirerarchicalSearchTest {
 	       assertEquals("Qwerty",actualResult,hr.Hierarchical_Search(p,8));
 	}
 }
+
