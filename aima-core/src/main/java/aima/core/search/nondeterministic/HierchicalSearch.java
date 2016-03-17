@@ -22,7 +22,7 @@ package aima.core.search.nondeterministic;
  *frontier <- INSERT(APPEND(prefix , sequence, suffix), frontier)
  * </pre>
  */
-public class HiererchicalSearch {
+public class HierarchicalSearch {
 	  static int front=-1;
 	  static String[] frontier=new String[100];
 	  static int i=0,j=0,k=0,l=2,m=1; //hierarchy
