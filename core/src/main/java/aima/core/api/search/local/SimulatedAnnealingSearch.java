@@ -81,10 +81,6 @@ public interface SimulatedAnnealingSearch<S> extends SearchFunction<S> {
 				}
 			}
 		}
-		System.out.println("Printing ret: ");
-		for ( Action action : ret ) {
-			System.out.print (action + " ");
-		}
 		return ret;
 	}
 	
