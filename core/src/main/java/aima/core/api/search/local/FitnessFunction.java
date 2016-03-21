@@ -1,5 +1,7 @@
 package aima.core.api.search.local;
 
+import aima.core.search.local.Individual;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 127.<br>
  * <br>

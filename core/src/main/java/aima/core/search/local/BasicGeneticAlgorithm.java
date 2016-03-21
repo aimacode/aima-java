@@ -2,7 +2,6 @@ package aima.core.search.local;
 
 import aima.core.api.search.local.FitnessFunction;
 import aima.core.api.search.local.GeneticAlgorithm;
-import aima.core.api.search.local.Individual;
 
 import java.util.LinkedHashSet;
 import java.util.ArrayList;
@@ -48,11 +47,11 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Michael Crosscombe
  */
-public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
+public class BasicGeneticAlgorithm<A> implements GeneticAlgorithm<A> {
 
     // Genetic Algorithm-specific variables
     protected int individualLength;
-    protected List<Integer> finiteAlphabet;
+    protected List<A> finiteAlphabet;
     // Mutation variables
     protected double mutationProbability;
     protected Random random;
@@ -93,20 +92,22 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
 
         Individual<A> bestIndividual = null;
 
-        validatePopulation(population);
+        // Create a local copy of the population to work with
+        List<Individual<A>> localPopulation = new ArrayList<Individual<A>>(population);
+        validatePopulation(localPopulation);
 
         // repeat
         do {
             // new_population &lt;- empty set
-            Set<Individual<A>> newPopulation = new LinkedHashSet<Individual<A>>(population.size());
+            List<Individual<A>> newPopulation = new ArrayList<Individual<A>>(localPopulation.size());
             // for i = 1 to SIZE(population) do
-            for (int i : new Range(population.size())) {
+            for (int i = 0; i < localPopulation.size(); i++) {
                 // x &lt;- RANDOM-SELECTION(population, FITNESS-FN)
-                Individual<A> x = randomSelection(population, fitnessFn);
+                Individual<A> x = randomSelection(localPopulation, fitnessFn);
                 // y &lt;- RANDOM-SELECTION(population, FITNESS-FN)
-                Individual<A> y = randomSelection(population, fitnessFn);
+                Individual<A> y = randomSelection(localPopulation, fitnessFn);
                 while (y == x) { // select new y until x and y are different
-                    y = randomSelection(population, fitnessFn);
+                    y = randomSelection(localPopulation, fitnessFn);
                 }
 
                 // child &lt;- REPRODUCE(x,y)
@@ -120,20 +121,24 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
                 newPopulation.add(child);
             }
             // population &lt;-  new_population
-            population = newPopulation;
+            localPopulation.clear();
+            localPopulation.addAll(newPopulation);
 
-            bestIndividual = bestIndividual(population, fitnessFn);
+            bestIndividual = bestIndividual(localPopulation, fitnessFn);
             elapsedTime = System.currentTimeMillis() - startTime;
         }
         // until some individual is fit enough, or enough time has elapsed
         while (fitnessFn.getValue(bestIndividual) == maxFitness || elapsedTime < timeLimitMilliseconds);
+        // set input population to new population
+        population.clear();
+        population.addAll(localPopulation);
         // return the best individual in population, according to FITNESS-FN
         return bestIndividual;
     }
 
     @Override
     // RANDOM-SELECTION(population, FITNESS-FN)
-    public Individual<A> randomSelection(Set<Individual<A>> population,
+    public Individual<A> randomSelection(List<Individual<A>> population,
                                           FitnessFunction<A> fitnessFn) {
 
         Individual<A> selected = null;
@@ -141,13 +146,13 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
         // Determine fitness values for the population
         double[] fitnessValues = new double[population.size()];
         double fitnessTotal = 0.0;
-        for (int i : new Range(population.size())) {
-            fitnessValues[i] = fitnessFn(population.get(i));
+        for (int i = 0; i < population.size(); i++) {
+            fitnessValues[i] = fitnessFn.getValue(population.get(i));
             fitnessTotal += fitnessValues[i];
         }
 
         // Normalise the fitness values
-        for (int i : new Range(population.size())) {
+        for (int i = 0; i < population.size(); i++) {
             fitnessValues[i] = fitnessValues[i] / fitnessTotal;
         }
 
@@ -155,8 +160,8 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
         // over their fitness values
         double probability = random.nextDouble();
         double total = 0.0;
-        for (double fitnessValue : fitnessValues) {
-            total += fitnessValue;
+        for (int i = 0; i < fitnessValues.length; i++) {
+            total += fitnessValues[i];
             if (probability <= total) {
                 selected = population.get(i);
                 break;
@@ -205,7 +210,7 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
     }
 
     @Override
-    public Individual<A> bestIndividual(Set<Individual<A>> population,
+    public Individual<A> bestIndividual(List<Individual<A>> population,
                                          FitnessFunction<A> fitnessFn) {
 
         Individual<A>  bestIndividual = null;
@@ -226,7 +231,7 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
     public int randomOffset(int length) { return random.nextInt(length); }
 
     @Override
-    public void validatePopulation(Set<Individual<A>> population) {
+    public void validatePopulation(List<Individual<A>> population) {
 
         // Require at least 1 individual in population in order
         // for algorithm to work

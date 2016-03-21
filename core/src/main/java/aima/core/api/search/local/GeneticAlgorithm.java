@@ -1,7 +1,8 @@
 package aima.core.api.search.local;
 
-import aima.core.api.search.local.Individual;
+import aima.core.search.local.Individual;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,18 +15,18 @@ public interface GeneticAlgorithm<A> {
     Individual<A> geneticAlgorithm(Set<Individual<A>> population,
                                    FitnessFunction<A> fitnessFn);
 
-    Individual<A> randomSelection(Set<Individual<A>> population,
-                                          FitnessFunction<A> fitnessFn);
+    Individual<A> randomSelection(List<Individual<A>> population,
+                                  FitnessFunction<A> fitnessFn);
 
     // function REPRODUCE(x, y) returns an individual
     Individual<A> reproduce(Individual<A> x, Individual<A> y);
 
     Individual<A> mutate(Individual<A> child);
 
-    Individual<A> bestIndividual(Set<Individual<A>> population,
+    Individual<A> bestIndividual(List<Individual<A>> population,
                                  FitnessFunction<A> fitnessFn);
 
     int randomOffset(int length);
 
-    void validatePopulation(Set<Individual<A>> population);
+    void validatePopulation(List<Individual<A>> population);
 }

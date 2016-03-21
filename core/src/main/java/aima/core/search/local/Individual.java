@@ -1,4 +1,4 @@
-package aima.core.api.search.local;
+package aima.core.search.local;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,15 +16,25 @@ import java.util.List;
  *            individuals in the population (this is to provide flexibility in
  *            terms of how a problem can be encoded).
  */
-public interface Individual<A> {
+public class Individual<A> {
 
-    List representation = null;
+    private List<A> representation = null;
+
+    /**
+     * Construct an individual using the provided representation.
+     *
+     * @param representation
+     *            the individual's representation.
+     */
+    public Individual(List<A> representation) {
+        this.representation = Collections.unmodifiableList(representation);
+    }
 
     /**
      *
      * @return the individual's representation.
      */
-    default List<A> representation() {
+    List<A> representation() {
         return representation;
     }
 
@@ -32,7 +42,7 @@ public interface Individual<A> {
      *
      * @return the length of the individual's representation.
      */
-    default int length() {
+    int length() {
         return representation.size();
     }
 }
