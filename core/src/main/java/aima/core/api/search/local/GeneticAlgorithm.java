@@ -8,7 +8,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Michael Crosscombe
  */
-public interface GeneticAlgorithm {
+public interface GeneticAlgorithm<A> {
 
     // function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
     Individual<A> geneticAlgorithm(Set<Individual<A>> population,

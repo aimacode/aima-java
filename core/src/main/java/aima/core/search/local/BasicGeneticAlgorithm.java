@@ -48,7 +48,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Michael Crosscombe
  */
-public class BasicGeneticAlgorithm implements GeneticAlgorithm {
+public class BasicGeneticAlgorithm implements GeneticAlgorithm<A> {
 
     // Genetic Algorithm-specific variables
     protected int individualLength;
@@ -222,13 +222,6 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm {
         return bestIndividual;
     }
 
-    public void setTimeLimit(long timeLimitMilliseconds) {
-
-        this.timeLimitMilliseconds = timeLimitMilliseconds;
-    }
-
-    public void setMaxFitness(long maxFitness) { this.maxFitness = maxFitness; }
-
     @Override
     public int randomOffset(int length) { return random.nextInt(length); }
 
@@ -252,4 +245,11 @@ public class BasicGeneticAlgorithm implements GeneticAlgorithm {
             }
         }
     }
+
+    public void setTimeLimit(long timeLimitMilliseconds) {
+
+        this.timeLimitMilliseconds = timeLimitMilliseconds;
+    }
+
+    public void setMaxFitness(long maxFitness) { this.maxFitness = maxFitness; }
 }

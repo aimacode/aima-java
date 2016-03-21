@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface Individual<A> {
 
-    List<A> representation = null;
+    List representation = null;
 
     /**
      *
