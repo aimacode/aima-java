@@ -123,67 +123,67 @@ public class OnlineDFSAgentTest {
      };
     
     
-    @Test
-    public void testClass() {
-    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-    	
-    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-    	
-        Assert.assertEquals(onlineDFSAgent.getProblem(),onlineSearchProblem);
-        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction(),perceptToStateFn);
-        
-        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction().apply(1),"B");
-        Assert.assertNotEquals(onlineDFSAgent.getPerceptToStateFunction().apply(0),"B");
-    }
-    
-    @Test
-    public void testAlreadyAtGoal() {
-    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-    	
-    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-
-    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
-    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
-    	
-    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
-    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
-    	
-    	}
-    
-//    	@Test
-//		public void testNormalSearch() {
-//    	//Defining "G" as the goal state
-//    	Predicate<String> newGoalTestFn = state -> { 
-//        	if (state.equals("G")) { 
-//        		return true;
-//        	}
-//        	return false;
-//        };
-//        
-//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, newGoalTestFn, stepCostFn);
+//    @Test
+//    public void testClass() {
+//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
 //    	
 //    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
 //    	
-//    	//Start State is 0 == "A"
-//    	int state = 0;
-//    	Action action;
-//    	StringBuffer result = new StringBuffer(100);
+//        Assert.assertEquals(onlineDFSAgent.getProblem(),onlineSearchProblem);
+//        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction(),perceptToStateFn);
+//        
+//        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction().apply(1),"B");
+//        Assert.assertNotEquals(onlineDFSAgent.getPerceptToStateFunction().apply(0),"B");
+//    }
+//    
+//    @Test
+//    public void testAlreadyAtGoal() {
+//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
 //    	
-//    	while ( true ) {
-//    		action = onlineDFSAgent.perceive(state);
-//    		if ( action.name().equals("NoOp") ) {
-//    			result.append("NoOp");
-//    			break;
-//    		}
-//    		state = newState(action);
-//    		result.append(action.name());
-//    		result.append(" ");
+//    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+//
+//    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
+//    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
+//    	
+//    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
+//    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
+//    	
 //    	}
-//    	
-//		Assert.assertEquals(
-//				"Go(B) Go(A) Go(C) Go(A) Go(C) Go(A) Go(B) Go(D) Go(B) Go(E) Go(B) Go(E) Go(B) Go(D) Go(F) Go(D) Go(G) NoOp",
-//				result.toString());
-//	}
+    
+    	@Test
+		public void testNormalSearch() {
+	    	//Defining "G" as the goal state
+	    	Predicate<String> newGoalTestFn = state -> { 
+	        	if (state.equals("G")) { 
+	        		return true;
+	        	}
+	        	return false;
+	        };
+	        
+	    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, newGoalTestFn, stepCostFn);
+	    	
+	    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+	    	
+	    	//Start State is 0 == "A"
+	    	int state = 0;
+	    	Action action;
+	    	StringBuffer result = new StringBuffer(100);
+	    	
+	    	while ( true ) {
+	    		action = onlineDFSAgent.perceive(state);
+	    		if ( action.name().equals("NoOp") ) {
+	    			result.append("NoOp");
+	    			break;
+	    		}
+	    		state = newState(action);
+	    		result.append(action.name());
+	    		result.append(" ");
+	    	}
+	    	
+			Assert.assertEquals(
+					"Go(B) Go(A) Go(C) Go(A) Go(C) Go(A) Go(B) Go(D) Go(B) Go(E) Go(B) Go(E) Go(B) Go(D) Go(F) Go(D) Go(G) NoOp",
+					result.toString());
+    	}
 //    
 //    @Test
 //	public void testNoPath() {
@@ -322,16 +322,16 @@ public class OnlineDFSAgentTest {
 //				
 //	}
 //    
-//    public int newState(Action action) {
-//    		 if ( action.name().contains("A") ) { return 0; }
-//    	else if ( action.name().contains("B") ) { return 1; }
-//    	else if ( action.name().contains("C") ) { return 2; }
-//    	else if ( action.name().contains("D") ) { return 3; }
-//    	else if ( action.name().contains("E") ) { return 4; }
-//    	else if ( action.name().contains("F") ) { return 5; }
-//    	else if ( action.name().contains("G") ) { return 6; }
-//    	return -1;
-//    }
+    public int newState(Action action) {
+    		 if ( action.name().contains("A") ) { return 0; }
+    	else if ( action.name().contains("B") ) { return 1; }
+    	else if ( action.name().contains("C") ) { return 2; }
+    	else if ( action.name().contains("D") ) { return 3; }
+    	else if ( action.name().contains("E") ) { return 4; }
+    	else if ( action.name().contains("F") ) { return 5; }
+    	else if ( action.name().contains("G") ) { return 6; }
+    	return -1;
+    }
 //    public int newStateExample(Action action) {
 //    		 if ( action.name().contains("1,1") ) { return 0; }
 //    	else if ( action.name().contains("1,2") ) { return 1; }
