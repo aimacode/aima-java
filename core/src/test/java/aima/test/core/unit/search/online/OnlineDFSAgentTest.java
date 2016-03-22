@@ -185,69 +185,71 @@ public class OnlineDFSAgentTest {
 //					result.toString());
 //    	}
     
-    @Test
-	public void testNoPath() {
-    	
-    	/** Graph:
-    	 *   A ---- B
-    	 */
-    	Map<String, List<String>> newMap = new HashMap<String, List<String>>() {{
-    		put("A", Arrays.asList("B"));
-    		put("B", Arrays.asList("A"));
-        }};
-        //The Action Function
-    	Function<String, Set<Action>> newActionsFn = state -> {
-            if (newMap.containsKey(state)) {
-                return new LinkedHashSet<>(newMap.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
-            }
-            return Collections.emptySet();
-        };
-        /**
-         * Arbitrary Goal-State Function which defines "X" as Goal state
-         */
-        Predicate<String> newGoalTestFn = state -> { 
-        	if (state.equals("X")) { 
-        		return true;
-        	}
-        	return false;
-        };
-        /**	
-         * Arbitrary Percept to State Function
-         * Assigns 0 to "A" and 1 to "B"
-         */
-        Function<Integer,String> perceptToStateFn = percept -> {
-              	   if ( percept.intValue() == 0 ) { return "A"; }
-              else if ( percept.intValue() == 1 ) { return "B"; }
-              return "";
-        };
-        /**
-         * Arbitrary Step Cost function. Path Cost is 1.
-         */
-        StepCostFunction<String> stepCostFn = (state1, action, state2) -> {
-        		return 1.0;
-        };
-        
-        OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(newActionsFn, newGoalTestFn, stepCostFn);
-    	
-    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-    	
-    	int state = 0;
-    	Action action;
-    	StringBuffer result = new StringBuffer(100);
-    	
-    	while ( true ) {
-    		action = onlineDFSAgent.perceive(state);
-    		if ( action.name().equals("NoOp") ) {
-    			result.append("NoOp");
-    			break;
-    		}
-    		state = newState(action);
-    		result.append(action.name());
-    		result.append(" ");
-    	}
-    	
-		Assert.assertEquals( "Go(B) Go(A) Go(B) Go(A) NoOp", result.toString());
-	}
+     /** Graph:
+ 	 *   A ---- B
+ 	 */
+ 	Map<String, List<String>> newMap = new HashMap<String, List<String>>() {{
+ 		put("A", Arrays.asList("B"));
+ 		put("B", Arrays.asList("A"));
+     }};
+     //The Action Function
+ 	Function<String, Set<Action>> newActionsFn = state -> {
+         if (newMap.containsKey(state)) {
+             return new LinkedHashSet<>(newMap.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
+         }
+         return Collections.emptySet();
+     };
+     /**
+      * Arbitrary Goal-State Function which defines "X" as Goal state
+      */
+     Predicate<String> newGoalTestFn = state -> { 
+     	if (state.equals("X")) { 
+     		return true;
+     	}
+     	return false;
+     };
+     
+	    @Test
+		public void testNoPath() {
+	    	
+	    	
+	        /**	
+	         * Arbitrary Percept to State Function
+	         * Assigns 0 to "A" and 1 to "B"
+	         */
+	        Function<Integer,String> newPerceptToStateFn = percept -> {
+	              	   if ( percept.intValue() == 0 ) { return "A"; }
+	              else if ( percept.intValue() == 1 ) { return "B"; }
+	              return "";
+	        };
+	        /**
+	         * Arbitrary Step Cost function. Path Cost is 1.
+	         */
+	        StepCostFunction<String> newStepCostFn = (state1, action, state2) -> {
+	        		return 1.0;
+	        };
+	        
+	        OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(newActionsFn, newGoalTestFn, newStepCostFn);
+	    	
+	    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, newPerceptToStateFn);
+	    	
+	    	int state = 0;
+	    	Action action;
+	    	StringBuffer result = new StringBuffer(100);
+	    	
+	    	while ( true ) {
+	    		action = onlineDFSAgent.perceive(state);
+	    		if ( action.name().equals("NoOp") ) {
+	    			result.append("NoOp");
+	    			break;
+	    		}
+	    		state = newState(action);
+	    		result.append(action.name());
+	    		result.append(" ");
+	    	}
+	    	
+			Assert.assertEquals( "Go(B) Go(A) Go(B) Go(A) NoOp", result.toString());
+		}
 //    
 //    
 //    @Test
