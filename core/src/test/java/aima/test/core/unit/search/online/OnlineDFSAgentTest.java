@@ -135,23 +135,23 @@ public class OnlineDFSAgentTest {
         Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction().apply(1),"B");
         Assert.assertNotEquals(onlineDFSAgent.getPerceptToStateFunction().apply(0),"B");
     }
-//    
-//    @Test
-//    public void testAlreadyAtGoal() {
-//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-//    	
-//    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-//
-//    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
-//    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
-//    	
-//    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
-//    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
-//    	
-//    	}
-//    
-//    @Test
-//	public void testNormalSearch() {
+    
+    @Test
+    public void testAlreadyAtGoal() {
+    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+    	
+    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+
+    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
+    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
+    	
+    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
+    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
+    	
+    	}
+    
+//    	@Test
+//		public void testNormalSearch() {
 //    	//Defining "G" as the goal state
 //    	Predicate<String> newGoalTestFn = state -> { 
 //        	if (state.equals("G")) { 
