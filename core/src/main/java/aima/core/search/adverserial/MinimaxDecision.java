@@ -1,6 +1,6 @@
 package aima.core.search.adverserial;
 
-import aima.core.api.search.adversarial.Game;
+import aima.core.api.search.adversarial.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 169.<br>
@@ -30,7 +30,7 @@ import aima.core.api.search.adversarial.Game;
  * action corresponding to the best possible move, that is, the move that leads
  * to the outcome with the best utility, under the assumption that the opponent
  * plays to minimize utility. The functions MAX-VALUE and MIN-VALUE go through
- * the whole game tree, all the way to the leaves, to determine the backed-up
+ * the whole problem tree, all the way to the leaves, to determine the backed-up
  * value of a state. The notation argmax_[a in S] f(a) computes the element a of
  * set S that has the maximum value of f(a).
  *
@@ -38,24 +38,21 @@ import aima.core.api.search.adversarial.Game;
  * @author Ruediger Lunde
  * @author Minh Tuan Tran
  *
- * @param <STATE>
- *            Type which is used for states in the game.
- * @param <ACTION>
- *            Type which is used for actions in the game.
- * @param <PLAYER>
- *            Type which is used for players in the game.
+ * @param <S>
+ *            Type which is used for states in the problem.
  */
-public class MinimaxSearch<STATE, ACTION, PLAYER> extends AdversarialSearch<STATE, ACTION>
-        implements aima.core.api.search.adversarial.MinimaxSearch<STATE, ACTION, PLAYER> {
 
-    private Game<STATE, ACTION, PLAYER> game;
+public class MinimaxDecision<S> extends AdversarialSearch<S>
+        implements aima.core.api.search.adversarial.MinimaxDecision<S> {
 
-    public MinimaxSearch(Game<STATE, ACTION, PLAYER> game) {
-        this.game = game;
+    private Problem<S> problem;
+
+    public MinimaxDecision(Problem<S> problem) {
+        this.problem = problem;
     }
 
     @Override
-    public Game<STATE, ACTION, PLAYER> game() {
-        return game;
+    public Problem<S> problem() {
+        return problem;
     }
 }
