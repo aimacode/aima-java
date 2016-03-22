@@ -1,12 +1,14 @@
 package aima.core.search.adverserial;
 
+import aima.core.api.agent.Action;
+
 /**
  * Base class implementing AdversarialSearch interface
  * @author Minh Tuan Tran
  */
-public class AdversarialSearch<STATE, ACTION> implements aima.core.api.search.adversarial.AdversarialSearch<STATE, ACTION>{
+public class AdversarialSearch<S> implements aima.core.api.search.adversarial.AdversarialSearch<S>{
 
-    public ACTION makeDecision(STATE state) {
+    public Action execute(S state) {
         return null;
     }
 }
