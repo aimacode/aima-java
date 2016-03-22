@@ -123,67 +123,67 @@ public class OnlineDFSAgentTest {
      };
     
     
-    @Test
-    public void testClass() {
-    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-    	
-    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-    	
-        Assert.assertEquals(onlineDFSAgent.getProblem(),onlineSearchProblem);
-        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction(),perceptToStateFn);
-        
-        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction().apply(1),"B");
-        Assert.assertNotEquals(onlineDFSAgent.getPerceptToStateFunction().apply(0),"B");
-    }
-    
-    @Test
-    public void testAlreadyAtGoal() {
-    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-    	
-    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-
-    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
-    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
-    	
-    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
-    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
-    	
-    	}
-    
-    	@Test
-		public void testNormalSearch() {
-	    	//Defining "G" as the goal state
-	    	Predicate<String> newGoalTestFn = state -> { 
-	        	if (state.equals("G")) { 
-	        		return true;
-	        	}
-	        	return false;
-	        };
-	        
-	    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, newGoalTestFn, stepCostFn);
-	    	
-	    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-	    	
-	    	//Start State is 0 == "A"
-	    	int state = 0;
-	    	Action action;
-	    	StringBuffer result = new StringBuffer(100);
-	    	
-	    	while ( true ) {
-	    		action = onlineDFSAgent.perceive(state);
-	    		if ( action.name().equals("NoOp") ) {
-	    			result.append("NoOp");
-	    			break;
-	    		}
-	    		state = newState(action);
-	    		result.append(action.name());
-	    		result.append(" ");
-	    	}
-	    	
-			Assert.assertEquals(
-					"Go(B) Go(A) Go(C) Go(A) Go(C) Go(A) Go(B) Go(D) Go(B) Go(E) Go(B) Go(E) Go(B) Go(D) Go(F) Go(D) Go(G) NoOp",
-					result.toString());
-    	}
+//    @Test
+//    public void testClass() {
+//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+//    	
+//    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+//    	
+//        Assert.assertEquals(onlineDFSAgent.getProblem(),onlineSearchProblem);
+//        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction(),perceptToStateFn);
+//        
+//        Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction().apply(1),"B");
+//        Assert.assertNotEquals(onlineDFSAgent.getPerceptToStateFunction().apply(0),"B");
+//    }
+//    
+//    @Test
+//    public void testAlreadyAtGoal() {
+//    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+//    	
+//    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+//
+//    	Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
+//    	Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
+//    	
+//    	Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
+//    	Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
+//    	
+//    	}
+//    
+//    	@Test
+//		public void testNormalSearch() {
+//	    	//Defining "G" as the goal state
+//	    	Predicate<String> newGoalTestFn = state -> { 
+//	        	if (state.equals("G")) { 
+//	        		return true;
+//	        	}
+//	        	return false;
+//	        };
+//	        
+//	    	OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, newGoalTestFn, stepCostFn);
+//	    	
+//	    	BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+//	    	
+//	    	//Start State is 0 == "A"
+//	    	int state = 0;
+//	    	Action action;
+//	    	StringBuffer result = new StringBuffer(100);
+//	    	
+//	    	while ( true ) {
+//	    		action = onlineDFSAgent.perceive(state);
+//	    		if ( action.name().equals("NoOp") ) {
+//	    			result.append("NoOp");
+//	    			break;
+//	    		}
+//	    		state = newState(action);
+//	    		result.append(action.name());
+//	    		result.append(" ");
+//	    	}
+//	    	
+//			Assert.assertEquals(
+//					"Go(B) Go(A) Go(C) Go(A) Go(C) Go(A) Go(B) Go(D) Go(B) Go(E) Go(B) Go(E) Go(B) Go(D) Go(F) Go(D) Go(G) NoOp",
+//					result.toString());
+//    	}
     
     @Test
 	public void testNoPath() {
