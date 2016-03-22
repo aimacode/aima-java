@@ -58,24 +58,4 @@ public class MinimaxSearch<STATE, ACTION, PLAYER> extends AdversarialSearch<STAT
     public Game<STATE, ACTION, PLAYER> game() {
         return game;
     }
-
-    @Override
-    public double minValue(STATE state, PLAYER player) {
-        if (game().isTerminal(state))
-            return game().getUtility(state, player);
-        double value = Double.POSITIVE_INFINITY;
-        for (ACTION a : game().getActions(state))
-            value = Math.min(value, maxValue(game().getResult(state, a), player));
-        return value;
-    }
-
-    @Override
-    public double maxValue(STATE state, PLAYER player) {
-        if (game().isTerminal(state))
-            return game().getUtility(state, player);
-        double value = Double.NEGATIVE_INFINITY;
-        for (ACTION a : game().getActions(state))
-            value = Math.max(value, minValue(game().getResult(state, a), player));
-        return value;
-    }
 }
