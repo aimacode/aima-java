@@ -2,7 +2,7 @@ package aima.core.search.csp;
 
 import java.util.List;
 
-import aima.core.csp.Variable;
+import aima.core.search.csp.Variable;
 
 /**
  * A constraint specifies the allowable combinations of values for a set of
