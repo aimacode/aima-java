@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import aima.core.csp.Variable;
+import aima.core.search.csp.Variable;
 
 /**
  * An assignment assigns values to some or all variables of a CSP.
