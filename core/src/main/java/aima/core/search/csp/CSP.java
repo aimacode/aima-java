@@ -6,7 +6,7 @@ import java.util.List;
 
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
-import aima.core.csp.Variable;
+import aima.core.search.csp.Variable;
 
 
 /**
