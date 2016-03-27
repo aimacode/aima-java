@@ -23,15 +23,6 @@ public class BasicFitnessFunctionTest implements FitnessFunction<Integer> {
     // Board size for the n-queen problem
     private int boardDimensions[];
 
-    /**
-     * Initial action should be to calculate maximal fitness value
-     * of a given population.
-     * In the N Queen example, this is the number of non-attacking
-     * pairs with a maximal fitness value of (n * (n-1)) / 2 for n
-     * queens.
-     */
-    public BasicFitnessFunctionTest(Individual<Integer> individual) {}
-
     public double getValue(Individual<Integer> individual) {
 
         // Fitness value for individual
@@ -45,4 +36,12 @@ public class BasicFitnessFunctionTest implements FitnessFunction<Integer> {
     public void  setBoardDimensions(int[] dimensions){
         this.boardDimensions = dimensions;
     }
+
+    /**
+     * Initial action should be to calculate maximal fitness value
+     * of a given population.
+     * In the N Queen example, this is the number of non-attacking
+     * pairs with a maximal fitness value of (n * (n-1)) / 2 for n
+     * queens.
+     */
 }
