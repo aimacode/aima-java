@@ -37,16 +37,12 @@ public class BasicFitnessFunctionTest implements FitnessFunction<Integer> {
         // Fitness value for individual
         double fitnessValue = 0.0;
 
-        for (individual : )
-
         return fitnessValue;
     }
 
-    public Individual<Integer> generateRandomIndividual(Set<Integer> finiteAlphabet) {
+    //public Individual<Integer> generateRandomIndividual(Set<Integer> finiteAlphabet) {}
 
-    }
-
-    public void  {
+    public void  setBoardDimensions(int[] dimensions){
         this.boardDimensions = dimensions;
     }
 }
