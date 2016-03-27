@@ -2,6 +2,8 @@ package aima.core.api.search.local;
 
 import aima.core.search.local.Individual;
 
+import java.util.Set;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 127.<br>
  * <br>
@@ -16,13 +18,12 @@ import aima.core.search.local.Individual;
  *            individuals in the population (this is to provide flexibility in
  *            terms of how a problem can be encoded).
  */
-@FunctionalInterface
 public interface FitnessFunction<A> {
 
     /**
      *
      * @param individual
-     *            the individual whose fitness is to be accessed.
+     *            an individual of the population.
      * @return the individual's fitness value (the higher the better).
      */
     double getValue(Individual<A> individual);

@@ -34,7 +34,7 @@ public class Individual<A> {
      *
      * @return the individual's representation.
      */
-    List<A> representation() {
+    public List<A> representation() {
         return representation;
     }
 
@@ -42,7 +42,7 @@ public class Individual<A> {
      *
      * @return the length of the individual's representation.
      */
-    int length() {
+    public int length() {
         return representation.size();
     }
 }
