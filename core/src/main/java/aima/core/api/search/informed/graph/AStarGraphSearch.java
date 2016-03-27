@@ -9,6 +9,8 @@ import java.util.function.ToDoubleFunction;
  * <br>
  *
  * The algorithm is identical to UNIFORM-COST graph search except tht A* uses <em>g + h</em> instead of g.
+ * g(n) : cost to reach node n.
+ * h(n) : cost to get from node to goal.
  *
  * @author Ciaran O'Reilly
  */
