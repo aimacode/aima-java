@@ -29,7 +29,7 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface ModelBasedReflexAgent<P, S, M> extends Agent<P> {
+public interface ModelBasedReflexAgent<A, P, S, M> extends Agent<A, P> {
 
     // persistent: state, the agent's current conception of the world state
     //             model, a description of how the next state depends on current state and action
@@ -38,28 +38,28 @@ public interface ModelBasedReflexAgent<P, S, M> extends Agent<P> {
     S getState();
     void setState(S state);
     M model();
-    Set<Rule<S>> rules();
-    Action getAction();
-    void setAction(Action action);
+    Set<Rule<A, S>> rules();
+    A getAction();
+    void setAction(A action);
 
     // function MODEL-BASED-REFLEX-AGENT(percept) returns an action
     @Override
-    default Action perceive(P percept) {
+    default A perceive(P percept) {
         // state  <- UPDATE-STATE(state, action, percept, model)
         setState(updateState(getState(), getAction(), percept, model()));
         // rule   <- RULE-MATCH(state, rules)
-        Optional<Rule<S>> rule = ruleMatch(getState(), rules());
+        Optional<Rule<A, S>> rule = ruleMatch(getState(), rules());
         // action <- rule.ACTION
-        setAction(rule.isPresent() ? rule.get().action() : Action.NoOp);
+        setAction(rule.isPresent() ? rule.get().action() : null);
         // return action
         return getAction();
     }
 
     // state  <- UPDATE-STATE(state, action, percept, model)
-    S updateState(S currentState, Action mostRecentAction, P percept, M model);
+    S updateState(S currentState, A mostRecentAction, P percept, M model);
 
     // rule <- RULE-MATCH(state, rules)
-    default Optional<Rule<S>> ruleMatch(S state, Set<Rule<S>> rules) {
+    default Optional<Rule<A, S>> ruleMatch(S state, Set<Rule<A, S>> rules) {
         return rules.stream().filter(rule -> rule.condition().test(state)).findFirst();
     }
 }

@@ -1,6 +1,5 @@
 package aima.gui.demo.search.problem.rectangular;
 
-import aima.core.api.agent.Action;
 import aima.core.search.BasicProblem;
 
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.function.Predicate;
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularProblem extends BasicProblem<AtVertex> {
+public class RectangularProblem extends BasicProblem<String, AtVertex> {
 
     public RectangularProblem(int xSize, int ySize, AtVertex initialState, Collection<AtVertex> goals) {
         super(initialState,
@@ -19,9 +18,9 @@ public class RectangularProblem extends BasicProblem<AtVertex> {
                 RectangularProblem.goalTest(goals));
     }
 
-    public static Function<AtVertex, Set<Action>> actions(final int xSize, int ySize)  {
+    public static Function<AtVertex, Set<String>> actions(final int xSize, int ySize)  {
         return atVertex -> {
-            Set<Action> result = new LinkedHashSet<>();
+            Set<String> result = new LinkedHashSet<>();
             if (atVertex.y > 0) {
                 result.add(go(atVertex.x, atVertex.y-1));
             }
@@ -39,9 +38,9 @@ public class RectangularProblem extends BasicProblem<AtVertex> {
         };
     }
 
-    public static AtVertex resultOf(AtVertex at, Action a) {
-        int goX = Integer.parseInt(a.name().substring(a.name().indexOf("(") + 1, a.name().indexOf(",")));
-        int goY = Integer.parseInt(a.name().substring(a.name().indexOf(",")+1,a.name().indexOf(")")));
+    public static AtVertex resultOf(AtVertex at, String a) {
+        int goX = Integer.parseInt(a.substring(a.indexOf("(") + 1, a.indexOf(",")));
+        int goY = Integer.parseInt(a.substring(a.indexOf(",")+1,a.indexOf(")")));
         return new AtVertex(goX, goY);
     }
 
@@ -50,7 +49,7 @@ public class RectangularProblem extends BasicProblem<AtVertex> {
         return testGoals::contains;
     }
 
-    public static Action go(int x, int y) {
-        return Action.newNamedAction("Go("+x+","+y+")");
+    public static String go(int x, int y) {
+        return "Go("+x+","+y+")";
     }
 }

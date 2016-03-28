@@ -7,16 +7,16 @@ import aima.core.search.BasicSearchFunction;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicIterativeDeepeningSearch<S> extends BasicSearchFunction<S> implements IterativeDeepeningSearch<S> {
+public class BasicIterativeDeepeningSearch<A, S> extends BasicSearchFunction<A, S> implements IterativeDeepeningSearch<A, S> {
 
-    private RecursiveDepthLimitedTreeSearch<S> dls;
+    private RecursiveDepthLimitedTreeSearch<A, S> dls;
 
     public BasicIterativeDeepeningSearch() {
         dls = new BasicRecursiveDepthLimitedTreeSearch<>(0);
     }
 
     @Override
-    public RecursiveDepthLimitedTreeSearch<S> dls() {
+    public RecursiveDepthLimitedTreeSearch<A, S> dls() {
         return dls;
     }
 }

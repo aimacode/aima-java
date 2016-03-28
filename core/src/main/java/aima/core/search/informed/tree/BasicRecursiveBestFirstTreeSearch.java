@@ -9,16 +9,16 @@ import java.util.function.Function;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicRecursiveBestFirstTreeSearch<S> extends BasicSearchFunction<S> implements RecursiveBestFirstTreeSearch<S> {
+public class BasicRecursiveBestFirstTreeSearch<A, S> extends BasicSearchFunction<A, S> implements RecursiveBestFirstTreeSearch<A, S> {
 
-    private Function<Node<S>, Double> heuristicFn;
+    private Function<Node<A, S>, Double> heuristicFn;
 
-    public BasicRecursiveBestFirstTreeSearch(Function<Node<S>, Double> heuristicFn) {
+    public BasicRecursiveBestFirstTreeSearch(Function<Node<A, S>, Double> heuristicFn) {
         this.heuristicFn = heuristicFn;
     }
 
     @Override
-    public double h(Node<S> node) {
+    public double h(Node<A, S> node) {
         return heuristicFn.apply(node);
     }
 }

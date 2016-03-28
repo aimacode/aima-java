@@ -6,5 +6,5 @@ import aima.core.search.BasicGeneralGraphSearch;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicBreadthFirstGraphSearch<S> extends BasicGeneralGraphSearch<S> implements BreadthFirstGraphSearch<S> {
+public class BasicBreadthFirstGraphSearch<A, S> extends BasicGeneralGraphSearch<A, S> implements BreadthFirstGraphSearch<A, S> {
 }

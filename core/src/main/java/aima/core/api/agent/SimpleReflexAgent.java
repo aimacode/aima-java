@@ -24,19 +24,19 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleReflexAgent<P, S> extends Agent<P> {
+public interface SimpleReflexAgent<A, P, S> extends Agent<A, P> {
     // persistent: rules, a set of condition-action rules
-    Set<Rule<S>> rules();
+    Set<Rule<A, S>> rules();
 
     // function SIMPLE-RELEX-AGENT(percept) returns an action
     @Override
-    default Action perceive(P percept) {
+    default A perceive(P percept) {
         // state  <- INTERPRET-INPUT(percept)
         S state = interpretInput(percept);
         // rule   <- RULE-MATCH(state, rules)
-        Optional<Rule<S>> rule = ruleMatch(state, rules());
+        Optional<Rule<A, S>> rule = ruleMatch(state, rules());
         // action <- rule.ACTION
-        Action action = rule.isPresent() ? rule.get().action() : Action.NoOp;
+        A action = rule.isPresent() ? rule.get().action() : null;
         // return action
         return action;
     }
@@ -45,7 +45,7 @@ public interface SimpleReflexAgent<P, S> extends Agent<P> {
     S interpretInput(P percept);
 
     // rule <- RULE-MATCH(state, rules)
-    default Optional<Rule<S>> ruleMatch(S state, Set<Rule<S>> rules) {
+    default Optional<Rule<A, S>> ruleMatch(S state, Set<Rule<A, S>> rules) {
         return rules.stream().filter(rule -> rule.condition().test(state)).findFirst();
     }
 }

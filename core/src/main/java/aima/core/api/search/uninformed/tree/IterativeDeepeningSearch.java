@@ -1,6 +1,5 @@
 package aima.core.api.search.uninformed.tree;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
 
@@ -24,19 +23,19 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface IterativeDeepeningSearch<S> extends SearchFunction<S> {
+public interface IterativeDeepeningSearch<A, S> extends SearchFunction<A, S> {
 
     // function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
     @Override
-    default List<Action> apply(Problem<S> problem) {
+    default List<A> apply(Problem<A, S> problem) {
         // for depth = 0 to infinity  do
         for (int depth = 0; true; depth++) {
             // result <- DEPTH-LIMITED-SEARCH(problem, depth)
-            List<Action> result = dls().depthLimitedSearch(problem, depth);
+            List<A> result = dls().depthLimitedSearch(problem, depth);
             // if result != cutoff then return result
             if (result != dls().cutoff()) { return result; }
         }
     }
 
-    RecursiveDepthLimitedTreeSearch<S> dls();
+    RecursiveDepthLimitedTreeSearch<A, S> dls();
 }

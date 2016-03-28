@@ -8,16 +8,16 @@ import java.util.function.ToDoubleFunction;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicGreedyBestFirstGraphSearch<S> extends BasicBestFirstGraphSearch<S> implements GreedyBestFirstGraphSearch<S> {
-    private ToDoubleFunction<Node<S>> h;
+public class BasicGreedyBestFirstGraphSearch<A, S> extends BasicBestFirstGraphSearch<A, S> implements GreedyBestFirstGraphSearch<A, S> {
+    private ToDoubleFunction<Node<A, S>> h;
 
-    public BasicGreedyBestFirstGraphSearch(ToDoubleFunction<Node<S>> h) {
+    public BasicGreedyBestFirstGraphSearch(ToDoubleFunction<Node<A, S>> h) {
         super(h);
         this.h = h;
     }
 
     @Override
-    public ToDoubleFunction<Node<S>> h() {
+    public ToDoubleFunction<Node<A, S>> h() {
       return h;
     }
 }

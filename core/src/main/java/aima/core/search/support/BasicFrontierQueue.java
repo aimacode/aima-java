@@ -9,12 +9,14 @@ import java.util.Set;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicFrontierQueue<S> extends LinkedList<Node<S>> {
-    private Set<S> states = new HashSet<>();
+public class BasicFrontierQueue<A, S> extends LinkedList<Node<A, S>> {
+	private static final long serialVersionUID = 1L;
+	//
+	private Set<S> states = new HashSet<>();
 
     // add
     @Override
-    public boolean add(Node<S> node) {
+    public boolean add(Node<A, S> node) {
         if (!states.add(node.state())) {
             throw new IllegalArgumentException("Node's state is already in the frontier: " + node);
         }
@@ -22,8 +24,8 @@ public class BasicFrontierQueue<S> extends LinkedList<Node<S>> {
     }
 
     @Override
-    public Node<S> remove() {
-        Node<S> result = super.remove();
+    public Node<A, S> remove() {
+        Node<A, S> result = super.remove();
         if (result != null) {
             states.remove(result.state());
         }
