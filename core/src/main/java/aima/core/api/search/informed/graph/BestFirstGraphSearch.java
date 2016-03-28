@@ -18,11 +18,11 @@ import java.util.function.ToDoubleFunction;
  *
  * @author Ciaran O'Reilly
  */
-public interface BestFirstGraphSearch<S> extends UniformCostGraphSearch<S> {
+public interface BestFirstGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
 
     /**
      *
      * @return the evaluation function.
      */
-    ToDoubleFunction<Node<S>> f();
+    ToDoubleFunction<Node<A, S>> f();
 }

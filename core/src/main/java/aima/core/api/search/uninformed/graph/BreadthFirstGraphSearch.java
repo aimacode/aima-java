@@ -1,6 +1,5 @@
 package aima.core.api.search.uninformed.graph;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.GeneralGraphSearch;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
@@ -42,17 +41,17 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface BreadthFirstGraphSearch<S> extends GeneralGraphSearch<S> {
+public interface BreadthFirstGraphSearch<A, S> extends GeneralGraphSearch<A, S> {
 
     // function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
     @Override
-    default List<Action> apply(Problem<S> problem) {
+    default List<A> apply(Problem<A, S> problem) {
         // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
-        Node<S> node = newNode(problem.initialState(), 0);
+        Node<A, S> node = newNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (isGoalState(node, problem)) { return solution(node); }
         // frontier <- a FIFO queue with node as the only element
-        Queue<Node<S>> frontier = newFrontier();
+        Queue<Node<A, S>> frontier = newFrontier();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = newExplored();
@@ -65,9 +64,9 @@ public interface BreadthFirstGraphSearch<S> extends GeneralGraphSearch<S> {
             // add node.STATE to explored
             explored.add(node.state());
             // for each action in problem.ACTIONS(node.STATE) do
-            for (Action action : problem.actions(node.state())) {
+            for (A action : problem.actions(node.state())) {
                 // child <- CHILD-NODE(problem, node, action)
-                Node<S> child = childNode(problem, node, action);
+                Node<A, S> child = childNode(problem, node, action);
                 // if child.STATE is not in explored or frontier then
                 if (!(explored.contains(child.state()) || frontier.contains(child.state()))) {
                     // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)

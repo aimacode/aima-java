@@ -1,7 +1,5 @@
 package aima.core.api.search;
 
-import aima.core.api.agent.Action;
-
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -28,13 +26,13 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface GeneralGraphSearch<S> extends SearchFunction<S> {
+public interface GeneralGraphSearch<A, S> extends SearchFunction<A, S> {
 
     // function GRAPH-SEARCH(problem) returns a solution, or failure
     @Override
-    default List<Action> apply(Problem<S> problem) {
+    default List<A> apply(Problem<A, S> problem) {
         // initialize the frontier using the initial state of problem
-        Queue<Node<S>> frontier = newFrontier();
+        Queue<Node<A, S>> frontier = newFrontier();
         frontier.add(newNode(problem.initialState(), 0));
         // initialize the explored set to be empty
         Set<S> explored = newExplored();
@@ -43,14 +41,14 @@ public interface GeneralGraphSearch<S> extends SearchFunction<S> {
             // if the frontier is empty then return failure
             if (frontier.isEmpty()) { return failure(); }
             // choose a leaf node and remove it from the frontier
-            Node<S> node = frontier.remove();
+            Node<A, S> node = frontier.remove();
             // if the node contains a goal state then return the corresponding solution
             if (isGoalState(node, problem)) { return solution(node); }
             // add the node to the explored set
             explored.add(node.state());
             // expand the chosen node, adding the resulting nodes to the frontier
-            for (Action action : problem.actions(node.state())) {
-                Node<S> child = childNode(problem, node, action);
+            for (A action : problem.actions(node.state())) {
+                Node<A, S> child = childNode(problem, node, action);
                 // only if not in the frontier or explored set
                 if (!(frontier.contains(child.state()) || explored.contains(child.state()))) {
                     frontier.add(child);
@@ -59,6 +57,6 @@ public interface GeneralGraphSearch<S> extends SearchFunction<S> {
         }
     }
 
-    Queue<Node<S>> newFrontier();
+    Queue<Node<A, S>> newFrontier();
     Set<S> newExplored();
 }

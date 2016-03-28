@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @author Ciaran O'Reilly
  */
-public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.Observer<S> {
+public class GeneralTreeSearchController<A, S> implements TreeSearchAlgoSimulator.Observer<A, S> {
     private static final Font _defaultPseudoCodeFont = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
     private static final Font _boldPseudoCodeFont    = Font.font(java.awt.Font.MONOSPACED, FontWeight.BOLD, 11);
     private static final Font _defaultCodeFont       = Font.font(java.awt.Font.MONOSPACED, FontWeight.NORMAL, 11);
@@ -62,7 +62,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
     @FXML private Button goLastStepButton;
     //
     private List<CodeRepresentationInfo> codeInfo = new ArrayList<>();
-    private TreeSearchAlgoSimulator<S> simulator;
+    private TreeSearchAlgoSimulator<A, S> simulator;
     private boolean inUpdateSliderCall = false;
     //
     private ScheduledService<Void> autoPlayBack = new ScheduledService<Void>() {
@@ -83,13 +83,13 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
         }
     };
 
-    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<A, S> simulator) {
         this.simulator = simulator;
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
             updateSlider();
             updateCodeRepresentations();
         });
-        simulator.executedProperty().get().addListener((ListChangeListener.Change<? extends TreeSearchInstrumented.Cmd<S>> c) -> updateSlider());
+        simulator.executedProperty().get().addListener((ListChangeListener.Change<? extends TreeSearchInstrumented.Cmd<A, S>> c) -> updateSlider());
     }
 
 
@@ -214,7 +214,7 @@ public class GeneralTreeSearchController<S> implements TreeSearchAlgoSimulator.O
                     t.setFont(normal);
                 });
                 ci.lastHightlighted.clear();
-                TreeSearchInstrumented.Cmd<S> cmd = simulator.getExecuted().get(simulator.getCurrentExecutionIndex());
+                TreeSearchInstrumented.Cmd<A, S> cmd = simulator.getExecuted().get(simulator.getCurrentExecutionIndex());
                 CodeCommand codeCommand = ci.representation.commandIdToCommand.get(cmd.commandId());
                 codeCommand.sourceIndexes.forEach(si -> {
                     for (int i = si.startIdx; i < si.endIdx; i++) {

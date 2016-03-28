@@ -21,11 +21,11 @@ public class ReflexVacuumAgentTest {
     @Test
     public void testACleanAClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -34,15 +34,15 @@ public class ReflexVacuumAgentTest {
     @Test
     public void testACleanBClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -50,19 +50,19 @@ public class ReflexVacuumAgentTest {
     @Test
     public void testACleanBDirty() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -70,19 +70,19 @@ public class ReflexVacuumAgentTest {
     @Test
     public void testADirtyBClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -90,19 +90,19 @@ public class ReflexVacuumAgentTest {
     @Test
     public void testADirtyBDirty() {
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }

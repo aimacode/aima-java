@@ -1,6 +1,5 @@
 package aima.gui.demo.search.tree.algorithm;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Problem;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import javafx.application.Platform;
@@ -19,7 +18,7 @@ import java.util.concurrent.Semaphore;
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchAlgoSimulator<S> extends Service<Void> {
+public class TreeSearchAlgoSimulator<A, S> extends Service<Void> {
 
     public enum SimulatorState {
         NOT_STARTED,
@@ -28,19 +27,19 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         FAILURE_ENCOUNTERED
     }
 
-    private ObjectProperty<Problem<S>> problem = new SimpleObjectProperty<>();
+    private ObjectProperty<Problem<A, S>> problem = new SimpleObjectProperty<>();
     private ObjectProperty<SimulatorState> state = new SimpleObjectProperty<>(SimulatorState.NOT_STARTED);
     private BooleanProperty atSolution = new SimpleBooleanProperty(false);
     private BooleanProperty atFailure = new SimpleBooleanProperty(false);
-    private ObjectProperty<List<Action>> solution = new SimpleObjectProperty<>(Collections.emptyList());
+    private ObjectProperty<List<A>> solution = new SimpleObjectProperty<>(Collections.emptyList());
     private LongProperty executionDelay = new SimpleLongProperty(0);
     private IntegerProperty currentExecutionIndex = new SimpleIntegerProperty(-1);
-    private ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
+    private ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<A, S>>> executed = new SimpleObjectProperty<>(FXCollections.observableArrayList());
     //
     private Semaphore callLock = new Semaphore(1);
 
-    public interface Observer<S> {
-        void setSimulator(TreeSearchAlgoSimulator<S> simulator);
+    public interface Observer<A, S> {
+        void setSimulator(TreeSearchAlgoSimulator<A, S> simulator);
     }
 
     public TreeSearchAlgoSimulator() {
@@ -65,17 +64,17 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         }, currentExecutionIndexProperty()));
     }
 
-    public Problem<S> getProblem() {
+    public Problem<A, S> getProblem() {
         return problem.get();
     }
 
-    public void setProblem(Problem<S> problem) {
+    public void setProblem(Problem<A, S> problem) {
         cancel();
         this.problem.set(problem);
         restart();
     }
 
-    public ObjectProperty<Problem<S>> problemProperty() {
+    public ObjectProperty<Problem<A, S>> problemProperty() {
         return problem;
     }
 
@@ -103,11 +102,11 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         return atFailure;
     }
 
-    public List<Action> getSolution() {
+    public List<A> getSolution() {
         return solution.get();
     }
 
-    public ReadOnlyObjectProperty<List<Action>> solutionProperty() {
+    public ReadOnlyObjectProperty<List<A>> solutionProperty() {
         return solution;
     }
 
@@ -171,15 +170,15 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
         return executed.get().size() > 0;
     }
 
-    public ObservableList<TreeSearchInstrumented.Cmd<S>> getExecuted() {
+    public ObservableList<TreeSearchInstrumented.Cmd<A, S>> getExecuted() {
         return executed.get();
     }
 
-    public void setExecuted(ObservableList<TreeSearchInstrumented.Cmd<S>> executed) {
+    public void setExecuted(ObservableList<TreeSearchInstrumented.Cmd<A, S>> executed) {
         this.executed.set(executed);
     }
 
-    public ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<S>>> executedProperty() {
+    public ObjectProperty<ObservableList<TreeSearchInstrumented.Cmd<A, S>>> executedProperty() {
         return executed;
     }
 
@@ -204,7 +203,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
                 StringBuilder lastCommandId = new StringBuilder();
                 Platform.runLater(() -> state.set(SimulatorState.SEARCHING_FOR_SOLUTUION));
-                TreeSearchInstrumented<S> search = new TreeSearchInstrumented<>((command) -> {
+                TreeSearchInstrumented<A, S> search = new TreeSearchInstrumented<>((command) -> {
                     if (isCancelled()) {
                         throw new CancellationException("Cancelled");
                     }
@@ -222,7 +221,7 @@ public class TreeSearchAlgoSimulator<S> extends Service<Void> {
 
                 try {
                     if (getProblem() != null) {
-                        List<Action> result = search.apply(getProblem());
+                        List<A> result = search.apply(getProblem());
                         Platform.runLater(() -> solution.set(Collections.unmodifiableList(result)));
                     }
                 }

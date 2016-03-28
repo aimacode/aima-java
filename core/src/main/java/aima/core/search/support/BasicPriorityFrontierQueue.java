@@ -10,15 +10,17 @@ import java.util.Set;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicPriorityFrontierQueue<S> extends PriorityQueue<Node<S>> {
-    private Set<S> states = new HashSet<>();
+public class BasicPriorityFrontierQueue<A, S> extends PriorityQueue<Node<A, S>> {
+	private static final long serialVersionUID = 1L;
+	//
+	private Set<S> states = new HashSet<>();
 
-    public BasicPriorityFrontierQueue(Comparator<Node<S>> comparator) {
+    public BasicPriorityFrontierQueue(Comparator<Node<A, S>> comparator) {
         super(comparator);
     }
 
     @Override
-    public boolean add(Node<S> node) {
+    public boolean add(Node<A, S> node) {
         if (!states.add(node.state())) {
             throw new IllegalArgumentException("Node's state is already in the frontier: " + node);
         }
@@ -26,8 +28,8 @@ public class BasicPriorityFrontierQueue<S> extends PriorityQueue<Node<S>> {
     }
 
     @Override
-    public Node<S> remove() {
-        Node<S> result = super.poll();
+    public Node<A, S> remove() {
+        Node<A, S> result = super.poll();
         if (result != null) {
             states.remove(result.state());
         }

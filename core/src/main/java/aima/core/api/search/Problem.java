@@ -1,7 +1,5 @@
 package aima.core.api.search;
 
-import aima.core.api.agent.Action;
-
 import java.util.Set;
 
 /**
@@ -24,10 +22,11 @@ import java.util.Set;
  * reach state s' is denoted by c(s,a,s')</li>
  * </ul>
  *
+ * @param <A> the type of the actions that can be performed.
  * @param <S> the type of the initial state that the agent starts in.
  * @author Ciaran O'Reilly
  */
-public interface Problem<S> {
+public interface Problem<A, S> {
     /**
      * @return the initial state that the agent starts in.
      */
@@ -39,7 +38,7 @@ public interface Problem<S> {
      * @param s a particular state s
      * @return the set of actions that can be executed in s
      */
-    Set<Action> actions(S s);
+    Set<A> actions(S s);
 
     /**
      * Represents the Transition Model.
@@ -50,7 +49,7 @@ public interface Problem<S> {
      *        an action performed in state s
      * @return the state that results from doing action a in state s.
      */
-    S result(S s, Action a);
+    S result(S s, A a);
 
     /**
      * The goal test, which determines if a given state is a goal state.
@@ -73,5 +72,5 @@ public interface Problem<S> {
      *        the resulting state from performing action a.
      * @return the step cost of taking action a in state s to reach state s'.
      */
-    double stepCost(S s, Action a, S sPrime);
+    double stepCost(S s, A a, S sPrime);
 }

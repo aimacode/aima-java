@@ -9,16 +9,16 @@ import java.util.function.ToDoubleFunction;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicBestFirstGraphSearch<S> extends BasicUniformCostGraphSearch<S> implements BestFirstGraphSearch<S> {
-    private ToDoubleFunction<Node<S>> f;
+public class BasicBestFirstGraphSearch<A, S> extends BasicUniformCostGraphSearch<A, S> implements BestFirstGraphSearch<A, S> {
+    private ToDoubleFunction<Node<A, S>> f;
 
-    public BasicBestFirstGraphSearch(ToDoubleFunction<Node<S>> f) {
+    public BasicBestFirstGraphSearch(ToDoubleFunction<Node<A, S>> f) {
         super(f);
         this.f = f;
     }
 
     @Override
-    public ToDoubleFunction<Node<S>> f() {
+    public ToDoubleFunction<Node<A, S>> f() {
       return f;
     }
 }

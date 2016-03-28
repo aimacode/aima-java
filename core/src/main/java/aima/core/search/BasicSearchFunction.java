@@ -1,6 +1,5 @@
 package aima.core.search;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
@@ -8,19 +7,19 @@ import aima.core.api.search.SearchFunction;
 /**
  * @author Ciaran O'Reilly
  */
-public abstract class BasicSearchFunction<S> implements SearchFunction<S> {
+public abstract class BasicSearchFunction<A, S> implements SearchFunction<A, S> {
     @Override
-    public Node<S> newNode(S state) {
+    public Node<A, S> newNode(S state) {
         return BasicNode.rootNode(state);
     }
 
     @Override
-    public Node<S> newNode(S state, double pathCost) {
+    public Node<A, S> newNode(S state, double pathCost) {
         return BasicNode.rootNode(state, pathCost);
     }
 
     @Override
-    public Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
+    public Node<A, S> childNode(Problem<A, S> problem, Node<A, S> parent, A action) {
         return BasicNode.childNode(problem, parent, action);
     }
 }

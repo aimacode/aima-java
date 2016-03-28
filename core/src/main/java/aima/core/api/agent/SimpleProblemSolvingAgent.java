@@ -36,19 +36,19 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
+public interface SimpleProblemSolvingAgent<A, P, S, G> extends Agent<A, P> {
     //   persistent: seq, an action sequence, initially empty
     //               state, some description of the current world state
     //               goal, a goal, initially null
     //               problem, a problem formulation
-    List<Action> getSeq();   void setSeq(List<Action> sequence);
-    S getState();            void setState(S state);
-    G getGoal();             void setGoal(G goal);
-    Problem<S> getProblem(); void setProblem(Problem<S> problem);
+    List<A> getSeq();           void setSeq(List<A> sequence);
+    S getState();               void setState(S state);
+    G getGoal();                void setGoal(G goal);
+    Problem<A, S> getProblem(); void setProblem(Problem<A, S> problem);
 
     // function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
     @Override
-    default Action perceive(P percept) {
+    default A perceive(P percept) {
         // state <- UPDATE-STATE(state, percept)
         setState(updateState(getState(), percept));
         // if seq is empty then
@@ -63,7 +63,7 @@ public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
             if (isFailure(getSeq())) { return null; }
         }
         // action <- FIRST(seq)
-        Action action = getSeq().get(0);
+        A action = getSeq().get(0);
         // seq <- REST(seq)
         setSeq(getSeq().subList(1, 0));
         // return action
@@ -77,12 +77,12 @@ public interface SimpleProblemSolvingAgent<P, S, G> extends Agent<P> {
     G formulateGoal(S state);
 
     // problem <- FORMULATE-PROBLEM(state, goal)
-    Problem<S> formulateProblem(S state, G goal);
+    Problem<A, S> formulateProblem(S state, G goal);
 
     // seq <- SEARCH(problem)
-    List<Action> search(Problem<S> problem);
+    List<A> search(Problem<A, S> problem);
 
-    default boolean isFailure(List<Action> seq) {
+    default boolean isFailure(List<A> seq) {
         return seq == null || seq.isEmpty();
     }
 }

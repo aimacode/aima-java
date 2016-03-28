@@ -1,6 +1,5 @@
 package aima.core.api.search.uninformed.tree;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
@@ -32,16 +31,16 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface RecursiveDepthLimitedTreeSearch<S> extends SearchFunction<S> {
+public interface RecursiveDepthLimitedTreeSearch<A, S> extends SearchFunction<A, S> {
 
     // function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
-    default List<Action> depthLimitedSearch(Problem<S> problem, int limit) {
+    default List<A> depthLimitedSearch(Problem<A, S> problem, int limit) {
         // return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem, limit)
         return recursiveDLS(newNode(problem.initialState()), problem, limit);
     }
 
     // function RECURSIVE-DLS(node, problem, limit) returns a solution, or failure/cutoff
-    default List<Action> recursiveDLS(Node<S> node, Problem<S> problem, int limit) {
+    default List<A> recursiveDLS(Node<A, S> node, Problem<A, S> problem, int limit) {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (isGoalState(node, problem)) {
             return solution(node);
@@ -53,11 +52,11 @@ public interface RecursiveDepthLimitedTreeSearch<S> extends SearchFunction<S> {
             // cutoff_occurred? <- false
             boolean cutoff_occurred = false;
             // for each action in problem.ACTIONS(node.STATE) do
-            for (Action action : problem.actions(node.state())) {
+            for (A action : problem.actions(node.state())) {
                 // child <- CHILD-NODE(problem, node, action)
-                Node<S> child = childNode(problem, node, action);
+                Node<A, S> child = childNode(problem, node, action);
                 // result <- RECURSIVE-DLS(child, problem, limit - 1)
-                List<Action> result = recursiveDLS(child, problem, limit-1);
+                List<A> result = recursiveDLS(child, problem, limit-1);
                 // if result = cutoff then cutoff_occurred? <- true
                 if (result == cutoff()) {
                     cutoff_occurred = true;
@@ -70,10 +69,10 @@ public interface RecursiveDepthLimitedTreeSearch<S> extends SearchFunction<S> {
     }
 
     @Override
-    default List<Action> apply(Problem<S> problem) {
+    default List<A> apply(Problem<A, S> problem) {
         return depthLimitedSearch(problem, limit());
     }
 
     int limit();
-    List<Action> cutoff();
+    List<A> cutoff();
 }

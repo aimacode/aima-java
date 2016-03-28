@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularGridProblemController implements TreeSearchAlgoSimulator.Observer<AtVertex> {
+public class RectangularGridProblemController implements TreeSearchAlgoSimulator.Observer<String, AtVertex> {
     //
     public static final int _fastestPlaybackSpeed = 50;
     //
@@ -65,7 +65,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     private Paint goalPaint       = new ImagePattern(goalImage, 0, 0, 16, 16, false);
     private Paint startGoalPaint  = new ImagePattern(startGoalImage, 0, 0, 16, 16, false);
     //
-    private TreeSearchAlgoSimulator<AtVertex> simulator;
+    private TreeSearchAlgoSimulator<String, AtVertex> simulator;
     private RectangularStateSpaceInfoController problemStateSpaceController;
     //
     private IntegerProperty xDimensionSize  = new SimpleIntegerProperty(5);
@@ -97,7 +97,7 @@ public class RectangularGridProblemController implements TreeSearchAlgoSimulator
     }
 
     @Override
-    public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<String, AtVertex> simulator) {
         this.simulator = simulator;
         problemStateSpaceController.setSimulator(simulator);
         this.simulator.atSolutionProperty().addListener((observable, oldValue, newValue) -> {

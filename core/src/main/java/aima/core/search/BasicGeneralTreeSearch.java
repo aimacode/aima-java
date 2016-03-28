@@ -10,21 +10,21 @@ import java.util.function.Supplier;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicGeneralTreeSearch<S> extends BasicSearchFunction<S> implements GeneralTreeSearch<S> {
+public class BasicGeneralTreeSearch<A, S> extends BasicSearchFunction<A, S> implements GeneralTreeSearch<A, S> {
 
-    private Supplier<Queue<Node<S>>> frontierSupplier;
+    private Supplier<Queue<Node<A, S>>> frontierSupplier;
 
     public BasicGeneralTreeSearch() {
        this(LinkedList::new);
     }
 
-    public BasicGeneralTreeSearch(Supplier<Queue<Node<S>>> frontierSupplier) {
+    public BasicGeneralTreeSearch(Supplier<Queue<Node<A, S>>> frontierSupplier) {
         this.frontierSupplier = frontierSupplier;
     }
 
 
     @Override
-    public Queue<Node<S>> newFrontier() {
+    public Queue<Node<A, S>> newFrontier() {
         return frontierSupplier.get();
     }
 }

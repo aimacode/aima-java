@@ -1,7 +1,5 @@
 package aima.core.api.search;
 
-import aima.core.api.agent.Action;
-
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  *
@@ -21,11 +19,12 @@ import aima.core.api.agent.Action;
  * the initial state to the node, as indicated by the parent pointers.</li>
  * </ul>
  *
+ * @param <A> the type of the action.
  * @param <S> the type of the state that node contains.
  *
  * @author Ciaran O'Reilly
  */
-public interface Node<S> {
+public interface Node<A, S> {
 
     /**
      *
@@ -37,13 +36,13 @@ public interface Node<S> {
      *
      * @return  the node in the search tree that generated this node.
      */
-    Node<S> parent();
+    Node<A, S> parent();
 
     /**
      *
      * @return the action that was applied to the parent to generate the node.
      */
-    Action action();
+    A action();
 
     /**
      *

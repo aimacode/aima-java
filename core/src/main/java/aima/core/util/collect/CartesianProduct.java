@@ -69,7 +69,9 @@ public class CartesianProduct<T> implements Iterable<T[]> {
      * @param n               the power to raise the dimension by.
      */
     public CartesianProduct(Class<T> elementBaseType, List<? extends T> dimension, int n) {
-        this(elementBaseType, new ArrayList<List<? extends T>>() {{
+        this(elementBaseType, new ArrayList<List<? extends T>>() {
+			private static final long serialVersionUID = 1L;
+		{
             if (n <= 0) {
                 throw new IllegalArgumentException("n must be > 0");
             }

@@ -1,6 +1,5 @@
 package aima.core.environment.vacuum;
 
-import aima.core.api.agent.Action;
 
 /**
  * @author Ciaran O'Reilly
@@ -8,9 +7,9 @@ import aima.core.api.agent.Action;
 public class VacuumEnvironment {
     //
     // Allowable actions in the Vacuum World Environment
-    public static final Action Left  = Action.newNamedAction("Left");
-    public static final Action Right = Action.newNamedAction("Right");
-    public static final Action Suck  = Action.newNamedAction("Suck");
+    public static final String ACTION_LEFT  = "Left";
+    public static final String ACTION_RIGHT = "Right";
+    public static final String ACTION_SUCK  = "Suck";
     //
     // Two default locations mentioned in examples given in AIMA4e
     public static final String LOCATION_A = "A";

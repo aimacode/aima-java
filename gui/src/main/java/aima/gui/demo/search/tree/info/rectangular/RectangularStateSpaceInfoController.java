@@ -23,14 +23,14 @@ import java.util.Map;
 /**
  * @author Ciaran O'Reilly
  */
-public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimulator.Observer<AtVertex> {
+public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimulator.Observer<String, AtVertex> {
     //
     private static final Font _defaultLabelFont = Font.font(java.awt.Font.MONOSPACED, FontWeight.BOLD, 10);
     //
     @FXML private ScrollPane stateSpaceVisitedViewScrollPane;
     @FXML private Pane stateSpaceVisitedViewPane;
     //
-    private TreeSearchAlgoSimulator<AtVertex> simulator;
+    private TreeSearchAlgoSimulator<String, AtVertex> simulator;
     private RectangularGridProblemController problemController;
     private Map<AtVertex, Label> stateLabels = new HashMap<>();
     private RectangularGrid grid;
@@ -53,11 +53,11 @@ public class RectangularStateSpaceInfoController implements TreeSearchAlgoSimula
     }
 
     @Override
-    public void setSimulator(TreeSearchAlgoSimulator<AtVertex> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<String, AtVertex> simulator) {
         this.simulator = simulator;
         simulator.currentExecutionIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (this.simulator.isExecutionStarted() && this.simulator.getCurrentExecutionIndex() >= 0) {
-                TreeSearchInstrumented.Cmd<AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
+                TreeSearchInstrumented.Cmd<String, AtVertex> cmd = this.simulator.getExecuted().get(this.simulator.getCurrentExecutionIndex());
                 Map<AtVertex, Integer> visited = cmd.statesVisitiedCounts();
                 stateLabels.entrySet().forEach(e -> {
                     Vertex currentVertex = grid.vertexes[e.getKey().x][e.getKey().y];

@@ -1,6 +1,5 @@
 package aima.extra.instrument.search;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 import aima.core.api.search.GeneralTreeSearch;
@@ -12,23 +11,23 @@ import java.util.*;
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements GeneralTreeSearch<S> {
-    public interface Cmd<S> {
-        String          commandId();
-        int             currentFrontierSize();
-        int             maxFrontierSize();
-        int             numberAddedToFrontier();
-        int             numberRemovedFromFrontier();
-        Node<S>         node();
-        Map<S, Integer> statesVisitiedCounts();
-        Map<S, Node<S>> statesInFrontierNotVisited();
-        Node<S>         lastNodeVisited();
-        List<Integer>   searchSpaceLevelCounts();
-        List<Integer>   searchSpaceLevelRemainingCounts();
+public class TreeSearchInstrumented<A, S> extends BasicSearchFunction<A, S> implements GeneralTreeSearch<A, S> {
+    public interface Cmd<A, S> {
+        String             commandId();
+        int                currentFrontierSize();
+        int                maxFrontierSize();
+        int                numberAddedToFrontier();
+        int                numberRemovedFromFrontier();
+        Node<A, S>         node();
+        Map<S, Integer>    statesVisitiedCounts();
+        Map<S, Node<A, S>> statesInFrontierNotVisited();
+        Node<A, S>         lastNodeVisited();
+        List<Integer>      searchSpaceLevelCounts();
+        List<Integer>      searchSpaceLevelRemainingCounts();
     }
 
-    public interface Listener<S> {
-        void cmd(Cmd<S> command);
+    public interface Listener<A, S> {
+        void cmd(Cmd<A, S> command);
     }
 
     public static final String CMD_START                = "start";
@@ -53,23 +52,23 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             CMD_ADD_FRONTIER
     )));
 
-    private Listener<S> listener;
+    private Listener<A, S> listener;
     private InstrLinkedList frontier;
     private int maxFrontierSize = 0;
     private int numberAddedToFrontier = 0;
     private int numberRemovedFromFrontier = 0;
     private Map<S, Integer> statesVisitiedCounts = new HashMap<>();
-    private Map<S, Node<S>> statesInFrontierNotVisited = new HashMap<>();
-    private Node<S> lastNodeVisited;
+    private Map<S, Node<A, S>> statesInFrontierNotVisited = new HashMap<>();
+    private Node<A, S> lastNodeVisited;
     private List<Integer> searchSpaceLevelCounts = new ArrayList<>();
     private List<Integer> searchSpaceLevelRemainingCounts = new ArrayList<>();
 
-    public TreeSearchInstrumented(Listener<S> listener) {
+    public TreeSearchInstrumented(Listener<A, S> listener) {
         this.listener = listener;
     }
 
     @Override
-    public Queue<Node<S>> newFrontier() {
+    public Queue<Node<A, S>> newFrontier() {
         frontier        = new InstrLinkedList();
         maxFrontierSize = 0;
         numberAddedToFrontier = 0;
@@ -84,31 +83,31 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
     }
 
     @Override
-    public Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
-        Node<S> child = super.childNode(problem, parent, action);
+    public Node<A, S> childNode(Problem<A, S> problem, Node<A, S> parent, A action) {
+        Node<A, S> child = super.childNode(problem, parent, action);
         notify(CMD_EXPAND_NODE, frontier.size(), parent);
         return child;
     }
 
     @Override
-    public boolean isGoalState(Node<S> node, Problem<S> problem) {
+    public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
         notify(CMD_CHECK_GOAL, frontier.size(), node);
         return super.isGoalState(node, problem);
     }
 
     @Override
-    public List<Action> failure() {
+    public List<A> failure() {
         notify(CMD_FAILURE, frontier.size(), null);
         return super.failure();
     }
 
     @Override
-    public List<Action> solution(Node<S> node) {
+    public List<A> solution(Node<A, S> node) {
         notify(CMD_SOLUTION, frontier.size(), node);
         return super.solution(node);
     }
 
-    private void notify(final String commandId, final int frontierSize, final Node<S> node) {
+    private void notify(final String commandId, final int frontierSize, final Node<A, S> node) {
         if (frontierSize > maxFrontierSize) {
             maxFrontierSize = frontierSize;
         }
@@ -116,11 +115,11 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         int numberAdded = numberAddedToFrontier;
         int numberRemoved = numberRemovedFromFrontier;
         final Map<S, Integer> visited =  statesVisitiedCounts;
-        final Map<S, Node<S>> notVisited = statesInFrontierNotVisited;
-        final Node<S> last = lastNodeVisited;
+        final Map<S, Node<A, S>> notVisited = statesInFrontierNotVisited;
+        final Node<A, S> last = lastNodeVisited;
         final List<Integer> levelCounts = searchSpaceLevelCounts;
         final List<Integer> levelRemaining = searchSpaceLevelRemainingCounts;
-        listener.cmd(new Cmd<S>() {
+        listener.cmd(new Cmd<A, S>() {
             public String commandId() { return commandId; }
             public int currentFrontierSize() {
                 return frontierSize;
@@ -128,17 +127,19 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
             public int numberAddedToFrontier() { return numberAdded; };
             public int  numberRemovedFromFrontier() { return numberRemoved; };
             public int maxFrontierSize() { return max; }
-            public Node<S> node() { return node; }
+            public Node<A, S> node() { return node; }
             public Map<S, Integer> statesVisitiedCounts() { return visited; }
-            public Map<S, Node<S>> statesInFrontierNotVisited() { return notVisited; }
-            public Node<S> lastNodeVisited() { return last; }
+            public Map<S, Node<A, S>> statesInFrontierNotVisited() { return notVisited; }
+            public Node<A, S> lastNodeVisited() { return last; }
             public List<Integer> searchSpaceLevelCounts() { return levelCounts; }
             public List<Integer> searchSpaceLevelRemainingCounts() { return levelRemaining; }
         });
     }
 
-    private class InstrLinkedList extends LinkedList<Node<S>> {
-        boolean firstAdd = true;
+    private class InstrLinkedList extends LinkedList<Node<A, S>> {
+		private static final long serialVersionUID = 1L;
+		//
+		boolean firstAdd = true;
 
         @Override
         public boolean isEmpty() {
@@ -148,8 +149,8 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         }
 
         @Override
-        public Node<S> remove() {
-            Node<S> removed =  super.remove();
+        public Node<A, S> remove() {
+            Node<A, S> removed =  super.remove();
 
             numberRemovedFromFrontier++;
 
@@ -179,7 +180,7 @@ public class TreeSearchInstrumented<S> extends BasicSearchFunction<S> implements
         }
 
         @Override
-        public boolean add(Node<S> e) {
+        public boolean add(Node<A, S> e) {
             boolean result = super.add(e);
 
             numberAddedToFrontier++;
