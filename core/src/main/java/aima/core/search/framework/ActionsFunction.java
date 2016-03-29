@@ -8,6 +8,7 @@ import java.util.Set;
  * Given a particular state s, ACTIONS(s) returns the set of actions that can be
  * executed in s. We say that each of these actions is <b>applicable</b> in s.
  * 
+ * @author Subham Mishra
  * @author Ciaran O'Reilly
  * 
  */
