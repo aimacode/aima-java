@@ -63,7 +63,7 @@ NOTE: While we would like to complete the set of algorithms on the AIMA3e branch
 |6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java)|
 |6.5|215|Backtracking-Search|[BacktrackingStrategy](/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java)|
 |6.8|221|Min-Conflicts|[MinConflictsStrategy](/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java)|
-|6.11|209|Tree-CSP-Solver|---|
+|6.11|224|Tree-CSP-Solver|---|
 |7|235|Knowledge Base|[KnowledgeBase](/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java)|
 |7.1|236|KB-Agent|[KBAgent](/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java)|
 |7.7|244|Propositional-Logic-Sentence|[Sentence](/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java)|
