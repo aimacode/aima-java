@@ -1,8 +1,5 @@
 package aima.core.api.search.adversarial;
 
-
-import java.util.List;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page ??.<br>
  * <br>
@@ -10,9 +7,9 @@ import java.util.List;
  * to use in chapter 5
  */
 
-public interface Problem<S> extends aima.core.api.search.Problem<S>{
+public interface Problem<A, S> extends aima.core.api.search.Problem<A, S>{
 
-    boolean terminalTest(S state);
+    boolean terminalTest(S s);
 
-    double utility(S state);
+    double utility(S s);
 }

@@ -1,18 +1,17 @@
 package aima.core.api.search.adversarial;
 
-import aima.core.api.agent.Action;
-
 /**
  * Variant of the search interface. Since players can only control the next
  * move, method <code>execute</code> returns only one action, not a
  * sequence of actions.
  *
  * @author Ruediger Lunde
+ * @author Minh Tuan Tran
  */
-public interface AdversarialSearch<S> {
+public interface AdversarialSearch<A,S> {
 
     /**
-     * Returns the action which appears to be the best at the given state.
+     * Returns the action which appears to be the best at the given s.
      */
-    Action execute(S state);
+    A execute(S state);
 }
