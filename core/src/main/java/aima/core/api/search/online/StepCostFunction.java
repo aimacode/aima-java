@@ -6,10 +6,8 @@ package aima.core.api.search.online;
  * @author Anurag Rai
  */
 
-import aima.core.api.agent.Action;
-
 @FunctionalInterface
-public interface StepCostFunction<S> {
+public interface StepCostFunction<A, S> {
 	/**
 	 * @param stateFrom
 	 *            the state from which action a is to be performed.
@@ -21,5 +19,5 @@ public interface StepCostFunction<S> {
 	 * @return the cost of taking action a in state stateFrom to reach state stateTo.
 	 * 
 	 */
-	double apply(S stateFrom, Action action, S stateTo);
+	double apply(S stateFrom, A action, S stateTo);
 }

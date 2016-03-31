@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.online.StepCostFunction;
 
 /**
@@ -24,10 +23,10 @@ import aima.core.api.search.online.StepCostFunction;
  * 
  * @author Anurag Rai
  */
-public class OnlineSearchProblem<S> {
+public class OnlineSearchProblem<A, S> {
 
-	protected Function<S,Set<Action>> actionsFunction;
-	protected StepCostFunction<S> stepCostFunction;
+	protected Function<S,Set<A>> actionsFunction;
+	protected StepCostFunction<A, S> stepCostFunction;
 	protected Predicate<S> goalTest;
 	
 
@@ -44,7 +43,7 @@ public class OnlineSearchProblem<S> {
 	 *            the step-cost function c(s, a, s') - note that this cannot be
 	 *            used until the agent knows that s' is the outcome
 	 */
-	public OnlineSearchProblem(Function<S,Set<Action>> actionsFunction, Predicate<S> goalTest, StepCostFunction<S> stepCostFunction) {
+	public OnlineSearchProblem(Function<S,Set<A>> actionsFunction, Predicate<S> goalTest, StepCostFunction<A, S> stepCostFunction) {
 		this.actionsFunction = actionsFunction;
 		this.goalTest = goalTest;
 		this.stepCostFunction = stepCostFunction;
@@ -55,7 +54,7 @@ public class OnlineSearchProblem<S> {
 	 * 
 	 * @return the action function of this online search problem.
 	 */
-	public Function<S,Set<Action>> getActionsFunction() {
+	public Function<S,Set<A>> getActionsFunction() {
 		return actionsFunction;
 	}
 
@@ -76,7 +75,7 @@ public class OnlineSearchProblem<S> {
 	 * 
 	 * @return the step cost function of this online search problem.
 	 */
-	public StepCostFunction<S> getStepCostFunction() {
+	public StepCostFunction<A, S> getStepCostFunction() {
 		return stepCostFunction;
 	}
 

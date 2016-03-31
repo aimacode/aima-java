@@ -19,21 +19,19 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.online.StepCostFunction;
 import aima.core.search.online.OnlineSearchProblem;
 
 public class OnlineSearchProblemTest {
 	
 	//The Action that is used
-	class GoAction implements Action {
+	class GoAction {
         String goTo;
 
         GoAction(String goTo) {
             this.goTo = goTo;
         }
 
-        @Override
         public String name() {
             return "Go(" + goTo + ")";
         }
@@ -41,7 +39,7 @@ public class OnlineSearchProblemTest {
         @Override
         public boolean equals(Object obj) {
             if (obj != null && obj instanceof GoAction) {
-                return this.name().equals(((Action) obj).name());
+                return this.name().equals(((GoAction) obj).name());
             }
             return super.equals(obj);
         }
@@ -67,7 +65,7 @@ public class OnlineSearchProblemTest {
     }};
 	
     //The Action Function
-	Function<String, Set<Action>> actionsFn = state -> {
+	Function<String, Set<GoAction>> actionsFn = state -> {
         if (map.containsKey(state)) {
             return new LinkedHashSet<>(map.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
         }
@@ -83,7 +81,7 @@ public class OnlineSearchProblemTest {
     };
     
     //Arbitrary Step Cost function
-    StepCostFunction<String> stepCostFn = (state1, action, state2) -> {
+    StepCostFunction<GoAction, String> stepCostFn = (state1, action, state2) -> {
     	if ( state1.equals("A") && state2.equals("X") && action.equals(new GoAction("B"))) {
     		return 5.0;
     	}
@@ -93,7 +91,7 @@ public class OnlineSearchProblemTest {
     
     @Test
     public void testClass() {
-    	OnlineSearchProblem<String> onlineSearchPorblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+    	OnlineSearchProblem<GoAction, String> onlineSearchPorblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
 
         Assert.assertEquals(onlineSearchPorblem.getActionsFunction(),actionsFn);
 
@@ -102,7 +100,7 @@ public class OnlineSearchProblemTest {
     
     @Test
     public void testGoalState() {
-    	OnlineSearchProblem<String> onlineSearchPorblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+    	OnlineSearchProblem<GoAction, String> onlineSearchPorblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
 
         Assert.assertNotEquals(onlineSearchPorblem.isGoalState("A"),true);
         Assert.assertNotEquals(onlineSearchPorblem.isGoalState("B"),true);
@@ -111,8 +109,8 @@ public class OnlineSearchProblemTest {
     }
     
     @Test
-    public void testActonsFunction() {
-    	OnlineSearchProblem<String> onlineSearchPorblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+    public void testActionsFunction() {
+    	OnlineSearchProblem<GoAction, String> onlineSearchPorblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
     	LinkedHashSet<GoAction> temp1 = new LinkedHashSet<>();
     	temp1.add(new GoAction("B"));
         Assert.assertEquals(onlineSearchPorblem.getActionsFunction().apply("A"), temp1);
@@ -134,7 +132,7 @@ public class OnlineSearchProblemTest {
     
     @Test
     public void testStepCostFunction() {
-    	OnlineSearchProblem<String> onlineSearchPorblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+    	OnlineSearchProblem<GoAction, String> onlineSearchPorblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
     	
         Assert.assertEquals(onlineSearchPorblem.getStepCostFunction().apply("A",new GoAction("B"),"X"), 5.0, 0);
         
