@@ -10,7 +10,7 @@ import javafx.scene.control.ProgressBar;
 /**
  * @author Ciaran O'Reilly
  */
-public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observer<S> {
+public class SummaryInfoController<A, S> implements TreeSearchAlgoSimulator.Observer<A, S> {
     @FXML private ProgressBar frontierProgress;
     @FXML private Label currentFrontierCountLabel;
     @FXML private Label maxFrontierCountLabel;
@@ -22,10 +22,10 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
     @FXML private Label actionLabel;
     @FXML private Label pathCostLabel;
     //
-    private TreeSearchAlgoSimulator<S> simulator;
+    private TreeSearchAlgoSimulator<A, S> simulator;
 
     @Override
-    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<A, S> simulator) {
         this.simulator = simulator;
 
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
@@ -41,11 +41,11 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
             String cost          = "-";
 
             if (currentExecutionIndex.intValue() >= 0) {
-                TreeSearchInstrumented.Cmd<S> cmd  = simulator.getExecuted().get(currentExecutionIndex.intValue());
+                TreeSearchInstrumented.Cmd<A, S> cmd  = simulator.getExecuted().get(currentExecutionIndex.intValue());
 
-                currentCount = cmd.currentFrontierSize();
-                maxCount     = cmd.maxFrontierSize();
-                Node<S> node = cmd.node();
+                currentCount    = cmd.currentFrontierSize();
+                maxCount        = cmd.maxFrontierSize();
+                Node<A, S> node = cmd.node();
 
                 if (maxCount > 0) {
                     frontierMax = ((double) currentCount) / ((double) maxCount);
@@ -60,7 +60,7 @@ public class SummaryInfoController<S> implements TreeSearchAlgoSimulator.Observe
 
                 state  = node == null ? "-" : node.state().toString();
                 patent = node == null ? "-" : node.parent() == null ? "null" : node.parent().state().toString();
-                action = node == null ? "-" : node.action().toString();
+                action = node == null ? "-" : (""+node.action());
                 cost   = node == null ? "-" : "" + node.pathCost();
             }
 

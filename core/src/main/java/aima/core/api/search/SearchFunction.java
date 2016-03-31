@@ -1,7 +1,5 @@
 package aima.core.api.search;
 
-import aima.core.api.agent.Action;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,23 +9,24 @@ import java.util.function.Function;
  * Description of a Search Function. Provides basic API methods for different specializations
  * (e.g. Tree and Graph search).
  *
+ * @param <A> the type of the actions that can be performed.
  * @param <S> the type of the state space
  *
  * @author Ciaran O'Reilly
  */
-public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
+public interface SearchFunction<A, S> extends Function<Problem<A, S>, List<A>> {
 
-    Node<S> newNode(S state);
-    Node<S> newNode(S state, double pathCost);
-    Node<S> childNode(Problem<S> problem, Node<S> parent, Action action);
+    Node<A, S> newNode(S state);
+    Node<A, S> newNode(S state, double pathCost);
+    Node<A, S> childNode(Problem<A, S> problem, Node<A, S> parent, A action);
 
-    default boolean isGoalState(Node<S> node, Problem<S> problem) {
+    default boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
         return problem.isGoalState(node.state());
     }
 
-    default List<Action> failure() {
+    default List<A> failure() {
         // represented by an empty list
-        return Collections.<Action>emptyList();
+        return Collections.<A>emptyList();
     }
 
     /**
@@ -39,9 +38,9 @@ public interface SearchFunction<S> extends Function<Problem<S>, List<Action>> {
      *        a goal node.
      * @return the sequence of actions used to go from the root to the given node.
      */
-    default List<Action> solution(Node<S> node) {
+    default List<A> solution(Node<A, S> node) {
         // Use a LinkedList so we can insert into the front efficiently
-        LinkedList<Action> result = new LinkedList<>();
+        LinkedList<A> result = new LinkedList<>();
         if (node.parent() == null) {
             // This should be an Action.NoOp as it implies we are
             // at the goal already, so there is nothing to do

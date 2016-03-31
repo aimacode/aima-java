@@ -1,6 +1,5 @@
 package aima.core.search;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 
@@ -9,18 +8,18 @@ import aima.core.api.search.Problem;
  *
  * @author Ciaran O'Reilly
  */
-public class BasicNode<S> implements Node<S> {
+public class BasicNode<A, S> implements Node<A, S> {
     private S state;
-    private Node<S> parent;
-    private Action action;
+    private Node<A, S> parent;
+    private A action;
     private double pathCost;
 
 
-    public static <S> Node<S> rootNode(S state) {
+    public static <A, S> Node<A, S> rootNode(S state) {
         return rootNode(state, 0);
     }
 
-    public static <S> Node<S> rootNode(S state, double pathCost) {
+    public static <A, S> Node<A, S> rootNode(S state, double pathCost) {
        return new BasicNode<>(state, pathCost);
     }
 
@@ -36,11 +35,13 @@ public class BasicNode<S> implements Node<S> {
      *        the parent node of the child.
      * @param action
      *        the action taken in the parent node, which results in the child node.
+     * @param <A>
+     *        the action type.        
      * @param <S>
      *        the type of the state that node contains.
      * @return the resulting child node.
      */
-    public static <S> Node<S> childNode(Problem<S> problem, Node<S> parent, Action action) {
+    public static <A, S> Node<A, S> childNode(Problem<A, S> problem, Node<A, S> parent, A action) {
         S sPrime = problem.result(parent.state(), action);
         return new BasicNode<>(sPrime, parent, action, parent.pathCost()+problem.stepCost(parent.state(), action, sPrime));
     }
@@ -59,12 +60,12 @@ public class BasicNode<S> implements Node<S> {
     }
 
     @Override
-    public Node<S> parent() {
+    public Node<A, S> parent() {
         return parent;
     }
 
     @Override
-    public Action action() {
+    public A action() {
         return action;
     }
 
@@ -74,10 +75,10 @@ public class BasicNode<S> implements Node<S> {
     }
 
     private BasicNode(S state, double pathCost) {
-        this(state, null, Action.NoOp, pathCost);
+        this(state, null, null, pathCost);
     }
 
-    private BasicNode(S state, Node<S> parent, Action action, double pathCost) {
+    private BasicNode(S state, Node<A, S> parent, A action, double pathCost) {
         this.state    = state;
         this.parent   = parent;
         this.action   = action;

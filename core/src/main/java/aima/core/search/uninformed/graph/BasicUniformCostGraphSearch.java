@@ -10,14 +10,14 @@ import java.util.function.ToDoubleFunction;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicUniformCostGraphSearch<S> extends BasicGeneralGraphSearch<S> implements UniformCostGraphSearch<S> {
+public class BasicUniformCostGraphSearch<A, S> extends BasicGeneralGraphSearch<A, S> implements UniformCostGraphSearch<A, S> {
 
     public BasicUniformCostGraphSearch() {
         // For UNIFORM-COST-SEARCH a priority queue ordered by PATH-COST
         this(Node::pathCost);
     }
 
-    public BasicUniformCostGraphSearch(ToDoubleFunction<Node<S>> nodeCost) {
+    public BasicUniformCostGraphSearch(ToDoubleFunction<Node<A, S>> nodeCost) {
         super(() -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(nodeCost.applyAsDouble(n1), nodeCost.applyAsDouble(n2))));
     }
 }

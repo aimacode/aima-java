@@ -7,28 +7,26 @@ import aima.gui.support.fx.FXUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class SearchSpaceInfoController<S> implements TreeSearchAlgoSimulator.Observer<S> {
+public class SearchSpaceInfoController<A, S> implements TreeSearchAlgoSimulator.Observer<A, S> {
     @FXML private GridPane   searchSpaceViewGridPane;
 
     @Override
-    public void setSimulator(TreeSearchAlgoSimulator<S> simulator) {
+    public void setSimulator(TreeSearchAlgoSimulator<A, S> simulator) {
 
         simulator.currentExecutionIndexProperty().addListener((observable, oldExecutionIndex, currentExecutionIndex) -> {
             List<Integer> levelCounts      = Collections.emptyList();
             List<Integer> unexploredCounts = Collections.emptyList();
             int           currentLevel     = 0;
             if (currentExecutionIndex.intValue() >= 0) {
-                TreeSearchInstrumented.Cmd<S> cmd = simulator.getExecuted().get(currentExecutionIndex.intValue());
+                TreeSearchInstrumented.Cmd<A, S> cmd = simulator.getExecuted().get(currentExecutionIndex.intValue());
                 levelCounts      = cmd.searchSpaceLevelCounts();
                 unexploredCounts = cmd.searchSpaceLevelRemainingCounts();
                 currentLevel     = cmd.lastNodeVisited() != null ? BasicNode.depth(cmd.lastNodeVisited()) : 0;

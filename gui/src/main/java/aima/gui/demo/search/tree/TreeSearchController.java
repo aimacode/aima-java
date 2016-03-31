@@ -24,7 +24,7 @@ public class TreeSearchController {
     @FXML private AnchorPane searchSpaceInfo;
     @FXML private AnchorPane frontierInfo;
     //
-    private TreeSearchAlgoSimulator<AtVertex> simulator = new TreeSearchAlgoSimulator<>();
+    private TreeSearchAlgoSimulator<String, AtVertex> simulator = new TreeSearchAlgoSimulator<>();
 
     @FXML
     private void initialize() throws IOException {
@@ -44,21 +44,21 @@ public class TreeSearchController {
         Pane algo = treeSearchLoader.load();
         FXUtil.anchor(algo);
         searchAlgoPane.getChildren().add(algo);
-        TreeSearchAlgoSimulator.Observer<AtVertex> treeSearchController = treeSearchLoader.getController();
+        TreeSearchAlgoSimulator.Observer<String, AtVertex> treeSearchController = treeSearchLoader.getController();
         treeSearchController.setSimulator(simulator);
 
         FXMLLoader searchLoader = new FXMLLoader(SearchSpaceInfoController.class.getResource("searchspaceinfo.fxml"));
         Pane search = searchLoader.load();
         FXUtil.anchor(search);
         searchSpaceInfo.getChildren().add(search);
-        TreeSearchAlgoSimulator.Observer<AtVertex> searchController = searchLoader.getController();
+        TreeSearchAlgoSimulator.Observer<String, AtVertex> searchController = searchLoader.getController();
         searchController.setSimulator(simulator);
 
         FXMLLoader frontierInfoLoader = new FXMLLoader(SummaryInfoController.class.getResource("summaryinformation.fxml"));
         Pane frontierInfoPane = frontierInfoLoader.load();
         FXUtil.anchor(frontierInfoPane);
         frontierInfo.getChildren().add(frontierInfoPane);
-        TreeSearchAlgoSimulator.Observer<AtVertex> frontierInfoController = frontierInfoLoader.getController();
+        TreeSearchAlgoSimulator.Observer<String, AtVertex> frontierInfoController = frontierInfoLoader.getController();
         frontierInfoController.setSimulator(simulator);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Collections;
  *
  * @author Ciaran O'Reilly
  */
-public class BasicDepthFirstGraphSearch<S> extends BasicGeneralGraphSearch<S> {
+public class BasicDepthFirstGraphSearch<A, S> extends BasicGeneralGraphSearch<A, S> {
 
     public BasicDepthFirstGraphSearch() {
         super(() -> Collections.asLifoQueue(new BasicFrontierQueue<>()));

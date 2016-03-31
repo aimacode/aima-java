@@ -1,5 +1,13 @@
+# gradle
+.gradle
+
 *.iml
 .idea
+
+# eclipse
+.settings
+/.classpath
+/.project
 
 # Mac Specific
 

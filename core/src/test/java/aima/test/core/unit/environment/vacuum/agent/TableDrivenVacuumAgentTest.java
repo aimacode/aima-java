@@ -1,6 +1,5 @@
 package aima.test.core.unit.environment.vacuum.agent;
 
-import aima.core.api.agent.Action;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.agent.TableDrivenVacuumAgent;
 import aima.core.environment.vacuum.perceive.LocalPercept;
@@ -22,11 +21,11 @@ public class TableDrivenVacuumAgentTest {
     @Test
     public void testACleanAClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -35,15 +34,15 @@ public class TableDrivenVacuumAgentTest {
     @Test
     public void testACleanBClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -51,20 +50,19 @@ public class TableDrivenVacuumAgentTest {
     @Test
     public void testACleanBDirty() {
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
-        Assert.assertEquals(
-                Action.NoOp,
+        // Table is only defined for max 3 percepts in a sequence, so will generate a null.
+        Assert.assertNull(
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -72,20 +70,19 @@ public class TableDrivenVacuumAgentTest {
     @Test
     public void testADirtyBClean() {
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Left,
+                VacuumEnvironment.ACTION_LEFT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
-        Assert.assertEquals(
-                Action.NoOp,
+        // Table is only defined for max 3 percepts in a sequence, so will generate a null.
+        Assert.assertNull(
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }
@@ -93,20 +90,19 @@ public class TableDrivenVacuumAgentTest {
     @Test
     public void testADirtyBDirty() {
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Right,
+                VacuumEnvironment.ACTION_RIGHT,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
         Assert.assertEquals(
-                VacuumEnvironment.Suck,
+                VacuumEnvironment.ACTION_SUCK,
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty))
         );
-        // Table is only defined for max 3 percepts in a sequence, so will generate a NoOp.
-        Assert.assertEquals(
-                Action.NoOp,
+        // Table is only defined for max 3 percepts in a sequence, so will generate a null.
+        Assert.assertNull(
                 agent.perceive(new LocalPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean))
         );
     }

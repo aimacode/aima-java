@@ -11,17 +11,17 @@ import java.util.function.Function;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicSimpleReflexAgent<P, S> implements SimpleReflexAgent<P, S> {
+public class BasicSimpleReflexAgent<A, P, S> implements SimpleReflexAgent<A, P, S> {
     private Function<P, S> interpretInputFn = null;
-    private Set<Rule<S>> rules = new LinkedHashSet<>();
+    private Set<Rule<A, S>> rules = new LinkedHashSet<>();
 
-    public BasicSimpleReflexAgent(Function<P, S> interpretInput, Collection<Rule<S>> rules) {
+    public BasicSimpleReflexAgent(Function<P, S> interpretInput, Collection<Rule<A, S>> rules) {
         this.interpretInputFn = interpretInput;
         this.rules.addAll(rules);
     }
 
     @Override
-    public Set<Rule<S>> rules() {
+    public Set<Rule<A, S>> rules() {
         return rules;
     }
 

@@ -1,6 +1,5 @@
 package aima.core.environment.vacuum.agent;
 
-import aima.core.api.agent.Action;
 import aima.core.api.agent.Agent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.perceive.LocalPercept;
@@ -22,23 +21,23 @@ import aima.core.environment.vacuum.perceive.LocalPercept;
  *
  * @author Ciaran O'Reilly
  */
-public class ReflexVacuumAgent implements Agent<LocalPercept> {
+public class ReflexVacuumAgent implements Agent<String, LocalPercept> {
 
     // function REFLEX-VACUUM-AGENT([location, status]) returns an action
     @Override
-    public Action perceive(LocalPercept percept) {
+    public String perceive(LocalPercept percept) {
         // if status = Dirty then return Suck
         if (percept.status == VacuumEnvironment.Status.Dirty) {
-            return VacuumEnvironment.Suck;
+            return VacuumEnvironment.ACTION_SUCK;
         } // else if location = A then return Right
         else if (percept.location.equals(VacuumEnvironment.LOCATION_A)) {
-            return VacuumEnvironment.Right;
+            return VacuumEnvironment.ACTION_RIGHT;
         } // else if location = B then return Left
         else if (percept.location.equals(VacuumEnvironment.LOCATION_B)) {
-            return VacuumEnvironment.Left;
+            return VacuumEnvironment.ACTION_LEFT;
         }
 
-        // NOTE: if environment is as described in aima4e this should no be reached
-        return Action.NoOp;
+        // NOTE: if environment is as described in aima4e this should not be reached
+        return null;
     }
 }

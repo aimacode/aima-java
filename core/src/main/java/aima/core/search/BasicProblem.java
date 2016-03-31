@@ -1,6 +1,5 @@
 package aima.core.search;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Problem;
 
 import java.util.Set;
@@ -13,21 +12,21 @@ import java.util.function.Predicate;
  *
  * @author Ciaran O'Reilly
  */
-public class BasicProblem<S> implements Problem<S> {
+public class BasicProblem<A, S> implements Problem<A, S> {
     @FunctionalInterface
-    public interface StepCost<S> {
-        double c(S s, Action a, S sPrime);
+    public interface StepCost<A, S> {
+        double c(S s, A a, S sPrime);
     }
 
     private S initialState;
-    private Function<S, Set<Action>> actionsFn;
-    private BiFunction<S, Action, S> resultFn;
+    private Function<S, Set<A>> actionsFn;
+    private BiFunction<S, A, S> resultFn;
     private Predicate<S> goalTestPredicate;
-    private StepCost<S> stepCostFn;
+    private StepCost<A, S> stepCostFn;
 
     public BasicProblem(S initialState,
-                        Function<S, Set<Action>> actionsFn,
-                        BiFunction<S, Action, S> resultFn,
+                        Function<S, Set<A>> actionsFn,
+                        BiFunction<S, A, S> resultFn,
                         Predicate<S> goalTestPredicate) {
         this(initialState,
                 actionsFn,
@@ -38,10 +37,10 @@ public class BasicProblem<S> implements Problem<S> {
     }
 
     public BasicProblem(S initialState,
-                        Function<S, Set<Action>> actionsFn,
-                        BiFunction<S, Action, S> resultFn,
+                        Function<S, Set<A>> actionsFn,
+                        BiFunction<S, A, S> resultFn,
                         Predicate<S> goalTestPredicate,
-                        StepCost<S> stepCostFn) {
+                        StepCost<A, S> stepCostFn) {
         this.initialState      = initialState;
         this.actionsFn         = actionsFn;
         this.resultFn          = resultFn;
@@ -55,12 +54,12 @@ public class BasicProblem<S> implements Problem<S> {
     }
 
     @Override
-    public Set<Action> actions(S s) {
+    public Set<A> actions(S s) {
         return actionsFn.apply(s);
     }
 
     @Override
-    public S result(S s, Action a) {
+    public S result(S s, A a) {
         return resultFn.apply(s, a);
     }
 
@@ -70,7 +69,7 @@ public class BasicProblem<S> implements Problem<S> {
     }
 
     @Override
-    public double stepCost(S s, Action a, S sPrime) {
+    public double stepCost(S s, A a, S sPrime) {
         return stepCostFn.c(s, a, sPrime);
     }
 }

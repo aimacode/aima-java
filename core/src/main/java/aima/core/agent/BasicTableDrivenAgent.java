@@ -1,6 +1,5 @@
 package aima.core.agent;
 
-import aima.core.api.agent.Action;
 import aima.core.api.agent.TableDrivenAgent;
 
 import java.util.ArrayList;
@@ -11,11 +10,11 @@ import java.util.Map;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicTableDrivenAgent<P> implements TableDrivenAgent<P> {
-    private List<P>              percepts = new ArrayList<>();
-    private Map<List<P>, Action> table    = new HashMap<>();
+public class BasicTableDrivenAgent<A, P> implements TableDrivenAgent<A, P> {
+    private List<P>         percepts = new ArrayList<>();
+    private Map<List<P>, A> table    = new HashMap<>();
 
-    public BasicTableDrivenAgent(Map<List<P>, Action> table) {
+    public BasicTableDrivenAgent(Map<List<P>, A> table) {
         this.table.putAll(table);
     }
 
@@ -25,7 +24,7 @@ public class BasicTableDrivenAgent<P> implements TableDrivenAgent<P> {
     }
 
     @Override
-    public Map<List<P>, Action> table() {
+    public Map<List<P>, A> table() {
         return table;
     }
 }

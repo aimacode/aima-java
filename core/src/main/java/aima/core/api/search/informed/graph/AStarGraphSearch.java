@@ -12,16 +12,16 @@ import java.util.function.ToDoubleFunction;
  *
  * @author Ciaran O'Reilly
  */
-public interface AStarGraphSearch<S> extends BestFirstGraphSearch<S> {
+public interface AStarGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 
     /**
      *
      * @return the heuristic function.
      */
-    ToDoubleFunction<Node<S>> h();
+    ToDoubleFunction<Node<A, S>> h();
 
     @Override
-    default ToDoubleFunction<Node<S>> f() {
+    default ToDoubleFunction<Node<A, S>> f() {
         // g + h
         return n -> n.pathCost() + h().applyAsDouble(n);
     }

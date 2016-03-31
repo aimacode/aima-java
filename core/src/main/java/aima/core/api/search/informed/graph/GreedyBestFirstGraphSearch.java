@@ -1,7 +1,6 @@
 package aima.core.api.search.informed.graph;
 
 import aima.core.api.search.Node;
-import aima.core.api.search.uninformed.graph.UniformCostGraphSearch;
 
 import java.util.function.ToDoubleFunction;
 
@@ -15,16 +14,16 @@ import java.util.function.ToDoubleFunction;
  *
  * @author Ciaran O'Reilly
  */
-public interface GreedyBestFirstGraphSearch<S> extends BestFirstGraphSearch<S> {
+public interface GreedyBestFirstGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 
     /**
      *
      * @return the heuristic function.
      */
-    ToDoubleFunction<Node<S>> h();
+    ToDoubleFunction<Node<A, S>> h();
 
     @Override
-    default ToDoubleFunction<Node<S>> f() {
+    default ToDoubleFunction<Node<A, S>> f() {
         return h();  // f(n) = h(n)
     }
 }
