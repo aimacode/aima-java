@@ -1,6 +1,5 @@
 package aima.core.api.search.local;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
@@ -38,21 +37,21 @@ import java.util.function.Function;
  * 
  */
 
-/*
- * @param <S>
+/**
+ * @param <A, S>
  */
-public interface SimulatedAnnealingSearch<S> extends SearchFunction<S> {
+public interface SimulatedAnnealingSearch<A, S> extends SearchFunction<A, S> {
 
 	Scheduler getScheduler();
-	Function<Node<S>, Double> getHeuristicFunction();
+	Function<Node<A, S>, Double> getHeuristicFunction();
 	
 	@Override
-	default List<Action> apply(Problem<S> problem) {
+	default List<A> apply(Problem<A, S> problem) {
 		Scheduler scheduler = getScheduler();
-		Function<Node<S>, Double> hf = getHeuristicFunction();
+		Function<Node<A, S>, Double> hf = getHeuristicFunction();
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node<S> current = newNode(problem.initialState(), 0);
-		List<Action> ret = new ArrayList<Action>();
+		Node<A, S> current = newNode(problem.initialState(), 0);
+		List<A> ret = new ArrayList<A>();
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while ( true ) {
@@ -65,14 +64,14 @@ public interface SimulatedAnnealingSearch<S> extends SearchFunction<S> {
 				break;
 			}
 			
-			List<Node<S>> children = new ArrayList<>();
+			List<Node<A, S>> children = new ArrayList<>();
 			// expand the current node to find the children
-			for (Action action : problem.actions(current.state())) {
+			for (A action : problem.actions(current.state())) {
 	               children.add(childNode(problem, current, action));
 	        }
 			if ( !children.isEmpty() ) {
 				// next <- a randomly selected successor of current
-				Node<S> next = children.get(new Random().nextInt(children.size()));
+				Node<A, S> next = children.get(new Random().nextInt(children.size()));
 				// /\E <- next.VALUE - current.value
 				double deltaE = getValue(hf, next) - getValue(hf, current);
 
@@ -100,15 +99,18 @@ public interface SimulatedAnnealingSearch<S> extends SearchFunction<S> {
 	}
 
 
-	// if /\E > 0 then current <- next
-	// else current <- next only with probability e^(/\E/T)
+	/**
+	 *  if /\E > 0 then current <- next
+	 *  else current <- next only with probability e^(/\E/T)
+	 */
+	
 	default boolean shouldAccept(double temperature, double deltaE) {
 		return (deltaE > 0.0)
 				|| (new Random().nextDouble() <= probabilityOfAcceptance(
 						temperature, deltaE));
 	}
 
-	default double getValue(Function<Node<S>, Double> hf, Node<S> n) {
+	default double getValue(Function<Node<A, S>, Double> hf, Node<A, S> n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
