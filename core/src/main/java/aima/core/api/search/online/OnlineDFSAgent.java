@@ -37,23 +37,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import aima.core.api.agent.Action;
 import aima.core.api.agent.Agent;
 import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 
-public interface OnlineDFSAgent<P, S> extends Agent<P> {
+public interface OnlineDFSAgent<A, P, S> extends Agent<A, P> {
+	
 	@Override
-	default Action perceive(P percept) {
-		
+	default A perceive(P percept) {
 		S sDelta = getPerceptToStateFunction().apply(percept);
 		S s = getPreviousState();
-		Action a = getPreviousAction();
+		A a = getPreviousAction();
 		// if GOAL-TEST(s') then return stop
 		if ( getProblem().isGoalState(sDelta) ) {
-			a = Action.NoOp;
+			a = (A) null;
 		}
 		else {
 			// if s' is a new state (not in untried) then 
@@ -85,12 +84,12 @@ public interface OnlineDFSAgent<P, S> extends Agent<P> {
 			if ( getUntried().get(sDelta).isEmpty() ) {
 				// if unbacktracked[s'] is empty then return stop
 				if (getUnbacktracked().get(sDelta).isEmpty()) {
-					a = Action.NoOp;
+					a = (A) null;
 				} 
 				// else a <- an action b such that result[s', b] = POP(unbacktracked[s'])
 				else {
 					S popped = getUnbacktracked().get(sDelta).remove(0);
-					for (Pair<S, Action> sa : getResult().keySet()) {
+					for (Pair<S, A> sa : getResult().keySet()) {
 						if (sa.getFirst().equals(sDelta) && getResult().get(sa).equals(popped)) {
 							a = sa.getSecond();
 							break;
@@ -110,12 +109,12 @@ public interface OnlineDFSAgent<P, S> extends Agent<P> {
 	}
 	
 	Function<P,S> getPerceptToStateFunction();
-	OnlineSearchProblem<S> getProblem();
-	TwoKeyHashMap<S, Action, S> getResult();
-	Map<S, List<Action>> getUntried();
+	OnlineSearchProblem<A, S> getProblem();
+	TwoKeyHashMap<S, A, S> getResult();
+	Map<S, List<A>> getUntried();
 	Map<S, List<S>> getUnbacktracked();
-	Action getPreviousAction();
+	A getPreviousAction();
 	S getPreviousState();
 	void setPreviousState(S s);
-	void setPreviousAction(Action a);
+	void setPreviousAction(A a);
 }

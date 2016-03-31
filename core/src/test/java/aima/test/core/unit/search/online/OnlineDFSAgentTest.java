@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.online.StepCostFunction;
 import aima.core.search.online.BasicOnlineDFSAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -27,14 +26,13 @@ import aima.core.search.online.OnlineSearchProblem;
 public class OnlineDFSAgentTest {
 
 	//The Action that is used
-	class GoAction implements Action {
+	class GoAction {
 		String goTo;
 
 		GoAction(String goTo) {
 			this.goTo = goTo;
 		}
 
-		@Override
 		public String name() {
 			return "Go(" + goTo + ")";
 		}
@@ -42,7 +40,7 @@ public class OnlineDFSAgentTest {
 		@Override
 		public boolean equals(Object obj) {
 			if (obj != null && obj instanceof GoAction) {
-				return this.name().equals(((Action) obj).name());
+				return this.name().equals(((GoAction) obj).name());
 			}
 			return super.equals(obj);
 		}
@@ -72,7 +70,7 @@ public class OnlineDFSAgentTest {
 	}};
 
 	//The Action Function
-	Function<String, Set<Action>> actionsFn = state -> {
+	Function<String, Set<GoAction>> actionsFn = state -> {
 		if (map.containsKey(state)) {
 			return new LinkedHashSet<>(map.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
 		}
@@ -88,7 +86,7 @@ public class OnlineDFSAgentTest {
 	};
 
 	//Arbitrary Step Cost function
-	StepCostFunction<String> stepCostFn = (state1, action, state2) -> {
+	StepCostFunction<GoAction, String> stepCostFn = (state1, action, state2) -> {
 		if ( (state1.equals("A") && state2.equals("B")) || (state1.equals("B") && state2.equals("A")) ) {
 			return 5.0;
 		}
@@ -125,9 +123,9 @@ public class OnlineDFSAgentTest {
 
 	@Test
 	public void testClass() {
-		OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
+		OnlineSearchProblem<GoAction, String> onlineSearchProblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
 
-		BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, perceptToStateFn);
 
 		Assert.assertEquals(onlineDFSAgent.getProblem(),onlineSearchProblem);
 		Assert.assertEquals(onlineDFSAgent.getPerceptToStateFunction(),perceptToStateFn);
@@ -138,15 +136,15 @@ public class OnlineDFSAgentTest {
 
 	@Test
 	public void testAlreadyAtGoal() {
-		OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, goalTestFn, stepCostFn);
-
-		BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
-
-		Assert.assertEquals(onlineDFSAgent.getProblem().isGoalState("A"),true);
-		Assert.assertEquals(onlineDFSAgent.perceive(0), Action.NoOp);
-
-		Assert.assertNotEquals(onlineDFSAgent.getProblem().isGoalState("B"),true);
-		Assert.assertNotEquals(onlineDFSAgent.perceive(1), Action.NoOp);
+		OnlineSearchProblem<GoAction, String> onlineSearchProblem = new OnlineSearchProblem<GoAction, String>(actionsFn, goalTestFn, stepCostFn);
+		
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent1 = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, perceptToStateFn);
+		Assert.assertEquals(onlineDFSAgent1.getProblem().isGoalState("A"),true);
+		Assert.assertEquals(onlineDFSAgent1.perceive(0), (GoAction) null);
+		
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent2 = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, perceptToStateFn);
+		Assert.assertNotEquals(onlineDFSAgent2.getProblem().isGoalState("B"),true);
+		Assert.assertNotEquals(onlineDFSAgent2.perceive(1), (GoAction) null);
 
 	}
 
@@ -160,18 +158,18 @@ public class OnlineDFSAgentTest {
 			return false;
 		};
 
-		OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(actionsFn, newGoalTestFn, stepCostFn);
+		OnlineSearchProblem<GoAction, String> onlineSearchProblem = new OnlineSearchProblem<GoAction, String>(actionsFn, newGoalTestFn, stepCostFn);
 
-		BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, perceptToStateFn);
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, perceptToStateFn);
 
 		//Start State is 0 == "A"
 		int state = 0;
-		Action action;
+		GoAction action;
 		StringBuffer result = new StringBuffer(100);
 
 		while ( true ) {
 			action = onlineDFSAgent.perceive(state);
-			if ( action.name().equals("NoOp") ) {
+			if ( action == null ) {
 				result.append("NoOp");
 				break;
 			}
@@ -193,7 +191,7 @@ public class OnlineDFSAgentTest {
 		put("B", Arrays.asList("A"));
 	}};
 	//The Action Function
-	Function<String, Set<Action>> newActionsFn = state -> {
+	Function<String, Set<GoAction>> newActionsFn = state -> {
 		if (newMap.containsKey(state)) {
 			return new LinkedHashSet<>(newMap.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
 		}
@@ -225,21 +223,21 @@ public class OnlineDFSAgentTest {
 		/**
 		 * Arbitrary Step Cost function. Path Cost is 1.
 		 */
-		StepCostFunction<String> newStepCostFn = (state1, action, state2) -> {
+		StepCostFunction<GoAction, String> newStepCostFn = (state1, action, state2) -> {
 			return 1.0;
 		};
 
-		OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(newActionsFn, newGoalTestFn, newStepCostFn);
+		OnlineSearchProblem<GoAction, String> onlineSearchProblem = new OnlineSearchProblem<GoAction, String>(newActionsFn, newGoalTestFn, newStepCostFn);
 
-		BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, newPerceptToStateFn);
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, newPerceptToStateFn);
 
 		int state = 0;
-		Action action;
+		GoAction action;
 		StringBuffer result = new StringBuffer(100);
 
 		while ( true ) {
 			action = onlineDFSAgent.perceive(state);
-			if ( action.name().equals("NoOp") ) {
+			if ( action == null ) {
 				result.append("NoOp");
 				break;
 			}
@@ -264,7 +262,7 @@ public class OnlineDFSAgentTest {
 		put("3,3", Arrays.asList("3,2"));
 	}};
 	//The Action Function
-	Function<String, Set<Action>> newExampleActionsFn = state -> {
+	Function<String, Set<GoAction>> newExampleActionsFn = state -> {
 		if (newExampleMap.containsKey(state)) {
 			return new LinkedHashSet<>(newExampleMap.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
 		}
@@ -294,23 +292,23 @@ public class OnlineDFSAgentTest {
 		return "";
 	};
 	//Arbitrary Step Cost function. Path Cost is 1.
-	StepCostFunction<String> newExampleStepCostFn = (state1, action, state2) -> { return 1.0; };
+	StepCostFunction<GoAction, String> newExampleStepCostFn = (state1, action, state2) -> { return 1.0; };
 
 
 	@Test
 	public void testAIMA3eFig4_19() {
 
-		OnlineSearchProblem<String> onlineSearchProblem = new OnlineSearchProblem<String>(newExampleActionsFn, newExampleGoalTestFn, newExampleStepCostFn);
+		OnlineSearchProblem<GoAction, String> onlineSearchProblem = new OnlineSearchProblem<GoAction, String>(newExampleActionsFn, newExampleGoalTestFn, newExampleStepCostFn);
 
-		BasicOnlineDFSAgent<Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<Integer, String>(onlineSearchProblem, newExamplePerceptToStateFn);
+		BasicOnlineDFSAgent<GoAction, Integer, String> onlineDFSAgent = new BasicOnlineDFSAgent<GoAction, Integer, String>(onlineSearchProblem, newExamplePerceptToStateFn);
 
 		int state = 0;
-		Action action;
+		GoAction action;
 		StringBuffer result = new StringBuffer(100);
 
 		while ( true ) {
 			action = onlineDFSAgent.perceive(state);
-			if ( action.name().equals("NoOp") ) {
+			if ( action == null ) {
 				result.append("NoOp");
 				break;
 			}
@@ -326,7 +324,7 @@ public class OnlineDFSAgentTest {
 
 	}
 
-	public int newState(Action action) {
+	public int newState(GoAction action) {
 		if ( action.name().contains("A") ) { return 0; }
 		else if ( action.name().contains("B") ) { return 1; }
 		else if ( action.name().contains("C") ) { return 2; }
@@ -336,7 +334,7 @@ public class OnlineDFSAgentTest {
 		else if ( action.name().contains("G") ) { return 6; }
 		return -1;
 	}
-	public int newStateExample(Action action) {
+	public int newStateExample(GoAction action) {
 		if ( action.name().contains("1,1") ) { return 0; }
 		else if ( action.name().contains("1,2") ) { return 1; }
 		else if ( action.name().contains("1,3") ) { return 2; }
