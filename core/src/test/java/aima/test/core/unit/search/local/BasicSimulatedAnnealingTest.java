@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.api.agent.Action;
 import aima.core.api.search.Node;
 import aima.core.search.BasicProblem;
 import aima.core.search.local.BasicSimulatedAnnealingSearch;
@@ -25,14 +24,13 @@ import aima.core.search.local.BasicSimulatedAnnealingSearch;
  */
 public class BasicSimulatedAnnealingTest {
 
-    class GoAction implements Action {
+    class GoAction {
         String goTo;
 
         GoAction(String goTo) {
             this.goTo = goTo;
         }
 
-        @Override
         public String name() {
             return "Go(" + goTo + ")";
         }
@@ -40,7 +38,7 @@ public class BasicSimulatedAnnealingTest {
         @Override
         public boolean equals(Object obj) {
             if (obj != null && obj instanceof GoAction) {
-                return this.name().equals(((Action) obj).name());
+                return this.name().equals(((GoAction) obj).name());
             }
             return super.equals(obj);
         }
@@ -60,17 +58,17 @@ public class BasicSimulatedAnnealingTest {
 
     }};
 
-    Function<String, Set<Action>> simpleBinaryTreeActionsFn = state -> {
+    Function<String, Set<GoAction>> simpleBinaryTreeActionsFn = state -> {
         if (simpleBinaryTreeStateSpace.containsKey(state)) {
             return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
         }
         return Collections.emptySet();
     };
 
-    BiFunction<String, Action, String> goActionResultFn = (state, action) -> ((GoAction) action).goTo;
+    BiFunction<String, GoAction, String> goActionResultFn = (state, action) -> ((GoAction) action).goTo;
 
     //the heuristic function will be represented by the ascii value of the first character in the state name
-    Function<Node<String>, Double> asciiHeuristicFn = node -> {
+    Function<Node<GoAction, String>, Double> asciiHeuristicFn = node -> {
         String state = node.state();
         int asciiCode = (int) state.charAt(0);
         return (double) asciiCode;
@@ -78,9 +76,9 @@ public class BasicSimulatedAnnealingTest {
 
     @Test
     public void testAsciiHeuristicFunction() {
-        BasicSimulatedAnnealingSearch<String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
-        Node<String> nodeA = simulatedAnnealing.newNode("A");
-        Node<String> nodeB = simulatedAnnealing.newNode("B");
+        BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
+        Node<GoAction, String> nodeA = simulatedAnnealing.newNode("A");
+        Node<GoAction, String> nodeB = simulatedAnnealing.newNode("B");
 
         Assert.assertEquals(
                 simulatedAnnealing.getHeuristicFunction().apply(nodeA),
@@ -103,10 +101,10 @@ public class BasicSimulatedAnnealingTest {
 
     @Test
     public void testAlreadyInGoalState() {
-        BasicSimulatedAnnealingSearch<String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
+        BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
 
         Assert.assertEquals(
-                Arrays.asList(Action.NoOp),
+                Arrays.asList((GoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -114,7 +112,7 @@ public class BasicSimulatedAnnealingTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(Action.NoOp),
+                Arrays.asList((GoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -124,7 +122,7 @@ public class BasicSimulatedAnnealingTest {
 
     @Test
     public void testDelE() {
-    	BasicSimulatedAnnealingSearch<String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
+    	BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
     	int deltaE = -1;
 		double higherTemperature = 30.0;
 		double lowerTemperature = 29.5;
