@@ -9,9 +9,9 @@ import aima.core.search.BasicSearchFunction;
 /**
  * @author Anurag Rai
  */
-public class BasicSimulatedAnnealingSearch<S> extends BasicSearchFunction<S> implements SimulatedAnnealingSearch<S> {
+public class BasicSimulatedAnnealingSearch<A, S> extends BasicSearchFunction<A, S> implements SimulatedAnnealingSearch<A, S> {
 
-    private final Function<Node<S>, Double> heuristicFn;
+    private final Function<Node<A, S>, Double> heuristicFn;
     private final Scheduler scheduler;
 	
     /**
@@ -21,7 +21,7 @@ public class BasicSimulatedAnnealingSearch<S> extends BasicSearchFunction<S> imp
 	 * @param heuristicFn
 	 *            a heuristic function
 	 */
-    public BasicSimulatedAnnealingSearch(Function<Node<S>, Double> heuristicFn) {
+    public BasicSimulatedAnnealingSearch(Function<Node<A, S>, Double> heuristicFn) {
 		this.heuristicFn = heuristicFn;
 		scheduler = new Scheduler();
 	}
@@ -32,7 +32,7 @@ public class BasicSimulatedAnnealingSearch<S> extends BasicSearchFunction<S> imp
 	}
 
 	@Override
-	public Function<Node<S>, Double> getHeuristicFunction() {
+	public Function<Node<A, S>, Double> getHeuristicFunction() {
 		return this.heuristicFn;
 	}
 }
