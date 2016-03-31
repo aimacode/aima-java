@@ -49,21 +49,21 @@ import aima.core.api.search.nondeterministic.AndSearch;
 import aima.core.api.search.nondeterministic.NondeterministicProblem;
 import aima.core.api.search.nondeterministic.OrSearch;
 
-public class AndOrSearch<S> implements OrSearch<S> {
+public class AndOrSearch<A, S> implements OrSearch<A, S> {
 
-	private AndSearch<S> andSearch;
-	private OrSearch<S> orSearch;
+	private AndSearch<A, S> andSearch;
+	private OrSearch<A, S> orSearch;
 	
-	public AndSearch<S> andSearch() {
+	public AndSearch<A, S> andSearch() {
 		return andSearch; 
 	}
 	
-	public OrSearch<S> orSearch() {
+	public OrSearch<A, S> orSearch() {
 		return orSearch; 
 	}
 
 	@Override
-	public Plan apply(NondeterministicProblem<S> problem) {
+	public Plan<A> apply(NondeterministicProblem<A, S> problem) {
 		List<S> path = new ArrayList<>();
 		return orSearch.apply(problem.initialState(),problem,path);
 	}

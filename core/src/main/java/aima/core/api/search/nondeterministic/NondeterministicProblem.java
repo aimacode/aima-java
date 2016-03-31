@@ -2,16 +2,14 @@ package aima.core.api.search.nondeterministic;
 
 import java.util.Set;
 
-import aima.core.api.agent.Action;
-
 /**
  * Non-deterministic problems may have multiple results for a given state and
  * action; this class handles these results by mimicking Problem and replacing
  * ResultFunction (one result) with ResultsFunction (a set of results).
  * 
- * @author Andrew Brown
+ * @author Anurag Rai
  */
-public interface NondeterministicProblem<S> {
+public interface NondeterministicProblem<A, S> {
 
 	/**
      * @return the initial state that the agent starts in.
@@ -24,7 +22,7 @@ public interface NondeterministicProblem<S> {
      * @param s a particular state s
      * @return the set of actions that can be executed in s
      */
-    Set<Action> actions(S s);
+    Set<A> actions(S s);
 
     /**
      * Represents the Transition Model.
@@ -35,10 +33,10 @@ public interface NondeterministicProblem<S> {
      *        an action performed in state s
      * @return the state that results from doing action a in state s.
      */
-    S result(S s, Action a);
+    S result(S s, A a);
     
     
-    Set<S> results(S s,Action a);
+    Set<S> results(S s,A a);
     
     
     /**
@@ -62,5 +60,5 @@ public interface NondeterministicProblem<S> {
      *        the resulting state from performing action a.
      * @return the step cost of taking action a in state s to reach state s'.
      */
-    double stepCost(S s, Action a, S sPrime);
+    double stepCost(S s, A a, S sPrime);
 }

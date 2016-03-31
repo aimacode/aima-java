@@ -18,18 +18,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import aima.core.api.agent.Action;
 import aima.core.search.nondeterministic.IfStateThenPlan;
 import aima.core.search.nondeterministic.Plan;
 
-public interface AndSearch<S> extends Function<Plan, List<Action>> {
+public interface AndSearch<A,S> extends Function<Plan<A>, List<A>> {
 	
-	
-	default Plan apply(Set<S> states, NondeterministicProblem<S> problem, List<S> path) {
-		@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
+	default Plan<A> apply(Set<S> states, NondeterministicProblem<A, S> problem, List<S> path) {
 		S[] _states = (S[]) states.toArray();
 		//List<List<Action>> plans = new ArrayList<>();
-		Plan[] plans = new Plan[_states.length];
+		Plan<A>[] plans = new Plan[_states.length];
 		// for each s_i in states do
 		for (int i = 0; i < _states.length; i++) {
 			// plan_i <- OR-SEARCH(s_i, problem, path)
@@ -44,13 +42,13 @@ public interface AndSearch<S> extends Function<Plan, List<Action>> {
 		Object[] steps = new Object[plans.length];
 		if (plans.length > 0) {
 			for (int i = 0; i < plans.length - 1; i++) {
-				steps[i] = new IfStateThenPlan(_states[i], plans[i]);
+				steps[i] = new IfStateThenPlan<A>(_states[i], plans[i]);
 			}
 			steps[steps.length-1] = plans[plans.length - 1];
 		}
 		
-		return new Plan(steps);
+		return new Plan<A>(steps);
 	}
 	
-	OrSearch<S> orSearch();
+	OrSearch<A, S> orSearch();
 }

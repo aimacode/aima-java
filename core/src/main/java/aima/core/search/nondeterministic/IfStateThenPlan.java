@@ -4,12 +4,11 @@ package aima.core.search.nondeterministic;
  * Represents an if-state-then-plan statement for use with AND-OR search;
  * explanation given on page 135 of AIMA3e.
  * 
- * @author Andrew Brown
  */
-public class IfStateThenPlan {
+public class IfStateThenPlan<A> {
 
 	private Object state;
-	private Plan plan;
+	private Plan<A> plan;
 
 	/**
 	 * Constructor
@@ -17,7 +16,7 @@ public class IfStateThenPlan {
 	 * @param state
 	 * @param plan
 	 */
-	public IfStateThenPlan(Object state, Plan plan) {
+	public IfStateThenPlan(Object state, Plan<A> plan) {
 		this.state = state;
 		this.plan = plan;
 	}
@@ -28,7 +27,7 @@ public class IfStateThenPlan {
 	 * @param state
 	 * @return the plan if the given state matches, null otherwise.
 	 */
-	public Plan ifStateMatches(Object state) {
+	public Plan<A> ifStateMatches(Object state) {
 		if (this.state.equals(state)) {
 			return this.plan;
 		} else {

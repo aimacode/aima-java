@@ -12,30 +12,30 @@ package aima.core.api.search.nondeterministic;
  * return failure
  * </code>
  * </pre>
+ * 
  * @author Anurag Rai
  */
 
 import java.util.List;
 import java.util.function.Function;
 
-import aima.core.api.agent.Action;
 import aima.core.search.nondeterministic.Plan;
 
-public interface OrSearch<S> extends Function<NondeterministicProblem<S>,Plan> {
+public interface OrSearch<A, S> extends Function<NondeterministicProblem<A, S>,Plan<A>> {
 	
-	default Plan apply(S state, NondeterministicProblem<S> problem, List<S> path ) {
+	default Plan<A> apply(S state, NondeterministicProblem<A, S> problem, List<S> path ) {
 		// if problem.GOAL-TEST(state) then return the empty plan
 		if ( problem.isGoalState(state) )
-			return new Plan();
+			return new Plan<A>();
 		// if state is on path then return failure
 		if (path.contains(state) ) {
 			return null;
 		}
 		// for each action in problem.ACTIONS(state) do
-		for ( Action action : problem.actions(state) ) {
+		for ( A action : problem.actions(state) ) {
 			// plan <- AND-SEARCH(RESULTS(state, action), problem, [state|path])
 			path.add(0,state);
-			Plan plan = andSearch().apply( problem.results(state, action), problem, path );
+			Plan<A> plan = andSearch().apply( problem.results(state, action), problem, path );
 			// if plan != failure then return [action|plan]
 			if ( plan != null ) {
 				return plan;
@@ -45,5 +45,5 @@ public interface OrSearch<S> extends Function<NondeterministicProblem<S>,Plan> {
 		return null;
 	}
 	
-	AndSearch<S> andSearch();
+	AndSearch<A, S> andSearch();
 }

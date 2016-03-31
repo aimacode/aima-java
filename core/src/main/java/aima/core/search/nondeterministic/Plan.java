@@ -1,8 +1,7 @@
 package aima.core.search.nondeterministic;
 
 import java.util.LinkedList;
-
-import aima.core.api.agent.Action;
+import java.util.StringJoiner;
 
 /**
  * Represents a solution plan for an AND-OR search; according to page 135
@@ -13,9 +12,9 @@ import aima.core.api.agent.Action;
  * satisfying (2)--and every AND node is an if-state-then-plan-else
  * chain--satisfying (3).
  * 
- * @author Andrew Brown
+ * @author Anurag Rai
  */
-public class Plan extends LinkedList<Object> {
+public class Plan<A> extends LinkedList<Object> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +48,7 @@ public class Plan extends LinkedList<Object> {
 	 *            the action to be prepended to this plan.
 	 * @return this plan with action prepended to it.
 	 */
-	public Plan prepend(Action action) {
+	public Plan<A> prepend(A action) {
 		this.offerFirst(action);
 		return this;
 	}
@@ -61,19 +60,11 @@ public class Plan extends LinkedList<Object> {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("[");
-		int count = 0;
-		int size = this.size();
+		StringJoiner sj = new StringJoiner(",", "[", "]");
 		for (Object step : this) {
-			s.append(step);
-			if (count < size - 1) {
-				s.append(", ");
-			}
-			count++;
+			sj.add((CharSequence) step);
 		}
-		s.append("]");
-		return s.toString();
+		return sj.toString();
 	}
 }
 
