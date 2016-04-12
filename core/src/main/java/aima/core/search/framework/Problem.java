@@ -146,7 +146,7 @@ public class Problem<A> {
 	//
 	// PROTECTED METHODS
 	//
-	//protected Problem() {
-	//}
+	protected Problem() {
+	}
 }
  
