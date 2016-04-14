@@ -28,6 +28,7 @@ import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
+import aima.core.util.datastructure.XYLocation;
 
 /**
  * @author Ravi Mohan
@@ -117,7 +118,11 @@ public class NQueensDemo {
 	private static void nQueensSimulatedAnnealingSearch() {
 		System.out.println("\nNQueensDemo Simulated Annealing  -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(_boardSize), NQueensFunctionFactory.getIActionsFunction(),
+			NQueensBoard initBoard = new NQueensBoard(_boardSize);
+			for (int i = 0; i < _boardSize; i++)
+				initBoard.addQueenAt(new XYLocation(i, 0));
+			
+			Problem problem = new Problem(initBoard, NQueensFunctionFactory.getCActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(new AttackingPairsHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);
@@ -135,7 +140,11 @@ public class NQueensDemo {
 	private static void nQueensHillClimbingSearch() {
 		System.out.println("\nNQueensDemo HillClimbing  -->");
 		try {
-			Problem problem = new Problem(new NQueensBoard(_boardSize), NQueensFunctionFactory.getIActionsFunction(),
+			NQueensBoard initBoard = new NQueensBoard(_boardSize);
+			for (int i = 0; i < _boardSize; i++)
+				initBoard.addQueenAt(new XYLocation(i, 0));
+			
+			Problem problem = new Problem(initBoard, NQueensFunctionFactory.getCActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 			HillClimbingSearch search = new HillClimbingSearch(new AttackingPairsHeuristic());
 			SearchAgent agent = new SearchAgent(problem, search);

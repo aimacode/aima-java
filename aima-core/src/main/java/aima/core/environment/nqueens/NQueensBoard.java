@@ -51,6 +51,7 @@ public class NQueensBoard {
 		return size;
 	}
 
+	/** Column and row indices start with 0! */
 	public void addQueenAt(XYLocation l) {
 		if (!(queenExistsAt(l)))
 			squares[l.getXCoOrdinate()][l.getYCoOrdinate()] = 1;
