@@ -14,6 +14,11 @@ import aima.core.util.datastructure.XYLocation;
  */
 public class NQueensBoard {
 
+	/** Parameters for initialization. */
+	public static enum Config {
+		EMPTY, QUEENS_IN_FIRST_ROW
+	};
+
 	/**
 	 * X---> increases left to right with zero based index Y increases top to
 	 * bottom with zero based index | | V
@@ -22,14 +27,33 @@ public class NQueensBoard {
 
 	int size;
 
-	public NQueensBoard(int n) {
-		size = n;
+	/**
+	 * Creates a board with <code>size</code> rows and size columns. Column and
+	 * row indices start with 0.
+	 */
+	public NQueensBoard(int size) {
+		this.size = size;
 		squares = new int[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				squares[i][j] = 0;
 			}
 		}
+	}
+
+	/**
+	 * Creates a board with <code>size</code> rows and size columns. Column and
+	 * row indices start with 0.
+	 * 
+	 * @param config
+	 *            Controls whether the board is initially empty or contains some
+	 *            queens.
+	 */
+	public NQueensBoard(int size, Config config) {
+		this(size);
+		if (config == Config.QUEENS_IN_FIRST_ROW)
+			for (int i = 0; i < size; i++)
+				addQueenAt(new XYLocation(i, 0));
 	}
 
 	public void clear() {
@@ -125,17 +149,14 @@ public class NQueensBoard {
 	public int getNumberOfAttacksOn(XYLocation l) {
 		int x = l.getXCoOrdinate();
 		int y = l.getYCoOrdinate();
-		return numberOfHorizontalAttacksOn(x, y)
-				+ numberOfVerticalAttacksOn(x, y)
-				+ numberOfDiagonalAttacksOn(x, y);
+		return numberOfHorizontalAttacksOn(x, y) + numberOfVerticalAttacksOn(x, y) + numberOfDiagonalAttacksOn(x, y);
 	}
 
 	public boolean isSquareUnderAttack(XYLocation l) {
 		int x = l.getXCoOrdinate();
 		int y = l.getYCoOrdinate();
-		return (isSquareHorizontallyAttacked(x, y)
-				|| isSquareVerticallyAttacked(x, y) || isSquareDiagonallyAttacked(
-					x, y));
+		return (isSquareHorizontallyAttacked(x, y) || isSquareVerticallyAttacked(x, y)
+				|| isSquareDiagonallyAttacked(x, y));
 	}
 
 	private boolean isSquareHorizontallyAttacked(int x, int y) {
