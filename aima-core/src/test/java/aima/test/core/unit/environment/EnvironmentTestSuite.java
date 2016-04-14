@@ -14,7 +14,7 @@ import aima.test.core.unit.environment.map.MapFunctionFactoryTest;
 import aima.test.core.unit.environment.map.MapStepCostFunctionTest;
 import aima.test.core.unit.environment.map.MapTest;
 import aima.test.core.unit.environment.nqueens.NQueensBoardTest;
-import aima.test.core.unit.environment.nqueens.NQueensFitnessFunctionTest;
+import aima.test.core.unit.environment.nqueens.NQueensGenAlgoUtilTest;
 import aima.test.core.unit.environment.nqueens.NQueensFunctionFactoryTest;
 import aima.test.core.unit.environment.nqueens.NQueensGoalTestTest;
 import aima.test.core.unit.environment.tictactoe.TicTacToeTest;
@@ -35,7 +35,7 @@ import aima.test.core.unit.environment.xyenv.XYEnvironmentTest;
 		MapAgentTest.class, MapEnvironmentTest.class,
 		MapStepCostFunctionTest.class, MapFunctionFactoryTest.class,
 		MapTest.class, NQueensBoardTest.class,
-		NQueensFitnessFunctionTest.class, NQueensGoalTestTest.class,
+		NQueensGenAlgoUtilTest.class, NQueensGoalTestTest.class,
 		NQueensFunctionFactoryTest.class,
 		ModelBasedReflexVacuumAgentTest.class, ReflexVacuumAgentTest.class,
 		SimpleReflexVacuumAgentTest.class, TableDrivenVacuumAgentTest.class,

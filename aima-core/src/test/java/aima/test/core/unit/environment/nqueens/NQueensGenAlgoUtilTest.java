@@ -8,20 +8,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensFitnessFunction;
+import aima.core.environment.nqueens.NQueensGenAlgoUtil;
+import aima.core.search.framework.GoalTest;
+import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.Individual;
 
 /**
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
-public class NQueensFitnessFunctionTest {
+public class NQueensGenAlgoUtilTest {
 
-	NQueensFitnessFunction fitnessFunction;
+	FitnessFunction<Integer> fitnessFunction;
+	GoalTest goalTest;
 
 	@Before
 	public void setUp() {
-		fitnessFunction = new NQueensFitnessFunction();
+		fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
+		goalTest = NQueensGenAlgoUtil.getGoalTest();
 	}
 
 	@Test
@@ -46,17 +51,17 @@ public class NQueensFitnessFunctionTest {
 
 	@Test
 	public void test_isGoalState() {
-		Assert.assertTrue(fitnessFunction.isGoalState(new Individual<Integer>(
+		Assert.assertTrue(goalTest.isGoalState(new Individual<Integer>(
 				Arrays.asList(new Integer[] { 0, 4, 7, 5, 2, 6, 1, 3 }))));
-		Assert.assertFalse(fitnessFunction.isGoalState(new Individual<Integer>(
+		Assert.assertFalse(goalTest.isGoalState(new Individual<Integer>(
 				Arrays.asList(new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0 }))));
-		Assert.assertFalse(fitnessFunction.isGoalState(new Individual<Integer>(
+		Assert.assertFalse(goalTest.isGoalState(new Individual<Integer>(
 				Arrays.asList(new Integer[] { 5, 6, 1, 3, 6, 4, 7, 7 }))));
 	}
 
 	@Test
 	public void test_getBoardForIndividual() {
-		NQueensBoard board = fitnessFunction
+		NQueensBoard board = NQueensGenAlgoUtil
 				.getBoardForIndividual(new Individual<Integer>(Arrays
 						.asList(new Integer[] { 5, 6, 1, 3, 6, 4, 7, 7 })));
 		Assert.assertEquals(" -  -  -  -  -  -  -  - \n"
@@ -73,7 +78,7 @@ public class NQueensFitnessFunctionTest {
 	@Test
 	public void test_generateRandomIndividual() {
 		for (int i = 2; i <= 40; i++) {
-			Individual<Integer> individual = fitnessFunction
+			Individual<Integer> individual = NQueensGenAlgoUtil
 					.generateRandomIndividual(i);
 			Assert.assertEquals(i, individual.length());
 		}
@@ -82,7 +87,7 @@ public class NQueensFitnessFunctionTest {
 	@Test
 	public void test_getFiniteAlphabet() {
 		for (int i = 2; i <= 40; i++) {
-			Set<Integer> fab = fitnessFunction
+			Set<Integer> fab = NQueensGenAlgoUtil
 					.getFiniteAlphabetForBoardOfSize(i);
 			Assert.assertEquals(i, fab.size());
 		}
