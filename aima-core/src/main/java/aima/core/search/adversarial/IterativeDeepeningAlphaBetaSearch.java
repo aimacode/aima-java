@@ -23,6 +23,9 @@ import aima.core.search.framework.Metrics;
 public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		implements AdversarialSearch<STATE, ACTION> {
 
+	public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
+	public final static String METRICS_MAX_DEPTH = "maxDepth";
+	
 	protected Game<STATE, ACTION, PLAYER> game;
 	protected double utilMax;
 	protected double utilMin;
@@ -31,8 +34,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	private long maxTime;
 	private boolean logEnabled;
 
-	private int expandedNodes;
-	private int maxDepth;
+	private Metrics metrics = new Metrics();
 
 	/** Creates a new search object for a given game. */
 	public static <STATE, ACTION, PLAYER> IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> createFor(
@@ -59,12 +61,11 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 	 */
 	@Override
 	public ACTION makeDecision(STATE state) {
+		metrics = new Metrics();
 		List<ACTION> results = null;
 		double resultValue = Double.NEGATIVE_INFINITY;
 		PLAYER player = game.getPlayer(state);
 		StringBuffer logText = null;
-		expandedNodes = 0;
-		maxDepth = 0;
 		currDepthLimit = 0;
 		long startTime = System.currentTimeMillis();
 		boolean exit = false;
@@ -105,7 +106,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 				resultValue = newResultValue;
 			}
 			if (!exit && results.size() == 1
-					&& this.isSignificantlyBetter(resultValue, secondBestValue))
+					&& isSignificantlyBetter(resultValue, secondBestValue))
 				break;
 		} while (!exit && maxDepthReached && !hasSafeWinner(resultValue));
 		return results.get(0);
@@ -113,8 +114,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 
 	public double maxValue(STATE state, PLAYER player, double alpha,
 			double beta, int depth) { // returns an utility value
-		expandedNodes++;
-		maxDepth = Math.max(maxDepth, depth);
+		
+		updateMetrics(depth);
 		if (game.isTerminal(state) || depth >= currDepthLimit) {
 			return eval(state, player);
 		} else {
@@ -133,8 +134,8 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 
 	public double minValue(STATE state, PLAYER player, double alpha,
 			double beta, int depth) { // returns an utility
-		expandedNodes++;
-		maxDepth = Math.max(maxDepth, depth);
+		
+		updateMetrics(depth);
 		if (game.isTerminal(state) || depth >= currDepthLimit) {
 			return eval(state, player);
 		} else {
@@ -151,13 +152,15 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>
 		}
 	}
 
+	private void updateMetrics(int depth) {
+		metrics.incrementInt(METRICS_NODES_EXPANDED);
+		metrics.set(METRICS_MAX_DEPTH, Math.max(metrics.getInt(METRICS_MAX_DEPTH), depth));
+	}
+	
 	/** Returns some statistic data from the last search. */
 	@Override
 	public Metrics getMetrics() {
-		Metrics result = new Metrics();
-		result.set("expandedNodes", expandedNodes);
-		result.set("maxDepth", maxDepth);
-		return result;
+		return metrics;
 	}
 
 	/**

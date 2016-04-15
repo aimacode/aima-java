@@ -5,6 +5,7 @@ import java.util.Set;
 
 /**
  * Stores key-value pairs for efficiency analysis.
+ * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
@@ -22,21 +23,28 @@ public class Metrics {
 	public void set(String name, double d) {
 		hash.put(name, Double.toString(d));
 	}
-	
+
+	public void incrementInt(String name) {
+		set(name, getInt(name) + 1);
+	}
+
 	public void set(String name, long l) {
 		hash.put(name, Long.toString(l));
 	}
 
 	public int getInt(String name) {
-		return new Integer(hash.get(name)).intValue();
+		String value = hash.get(name);
+		return value != null ? Integer.parseInt(value) : 0;
 	}
 
 	public double getDouble(String name) {
-		return new Double(hash.get(name)).doubleValue();
+		String value = hash.get(name);
+		return value != null ? Double.parseDouble(value) : 0.0;
 	}
-	
+
 	public long getLong(String name) {
-		return new Long(hash.get(name)).longValue();
+		String value = hash.get(name);
+		return value != null ? Long.parseLong(value) : 0l;
 	}
 
 	public String get(String name) {
@@ -46,7 +54,7 @@ public class Metrics {
 	public Set<String> keySet() {
 		return hash.keySet();
 	}
-	
+
 	public String toString() {
 		return hash.toString();
 	}

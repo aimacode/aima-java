@@ -387,7 +387,7 @@ public class BidirectionalSearchTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==F]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=4:METRIC[queueSize]=3:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
+				"CurrentLocation=In(A), Goal=In(F):Action[name==moveTo, location==B]:Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:Action[name==moveTo, location==F]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=5:METRIC[queueSize]=5:METRIC[nodesExpanded]=8:Action[name==NoOp]:",
 				envChanges.toString());
 
 		Assert.assertEquals(

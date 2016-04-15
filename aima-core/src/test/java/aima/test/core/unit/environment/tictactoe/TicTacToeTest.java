@@ -144,7 +144,7 @@ public class TicTacToeTest {
 		MinimaxSearch<TicTacToeState, XYLocation, String> search = MinimaxSearch
 				.createFor(game);
 		search.makeDecision(state);
-		int expandedNodes = search.getMetrics().getInt("expandedNodes");
+		int expandedNodes = search.getMetrics().getInt(MinimaxSearch.METRICS_NODES_EXPANDED);
 		Assert.assertEquals(549945, expandedNodes);
 	}
 
@@ -153,7 +153,7 @@ public class TicTacToeTest {
 		AlphaBetaSearch<TicTacToeState, XYLocation, String> search = AlphaBetaSearch
 				.createFor(game);
 		search.makeDecision(state);
-		int expandedNodes = search.getMetrics().getInt("expandedNodes");
+		int expandedNodes = search.getMetrics().getInt(MinimaxSearch.METRICS_NODES_EXPANDED);
 		Assert.assertEquals(30709, expandedNodes);
 	}
 
@@ -162,7 +162,7 @@ public class TicTacToeTest {
 		IterativeDeepeningAlphaBetaSearch<TicTacToeState, XYLocation, String> search = IterativeDeepeningAlphaBetaSearch
 				.createFor(game, 0.0, 1.0, 100);
 		search.makeDecision(state);
-		int expandedNodes = search.getMetrics().getInt("expandedNodes");
+		int expandedNodes = search.getMetrics().getInt(MinimaxSearch.METRICS_NODES_EXPANDED);
 		Assert.assertEquals(76035, expandedNodes);
 	}
 }

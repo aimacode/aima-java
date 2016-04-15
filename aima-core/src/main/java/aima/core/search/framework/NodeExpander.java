@@ -70,8 +70,7 @@ public class NodeExpander {
 					successorState);
 			childNodes.add(new Node(successorState, node, action, stepCost));
 		}
-		metrics.set(METRIC_NODES_EXPANDED,
-				metrics.getInt(METRIC_NODES_EXPANDED) + 1);
+		metrics.incrementInt(METRIC_NODES_EXPANDED);
 
 		return childNodes;
 	}

@@ -1,18 +1,16 @@
 package aima.core.search.framework;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77. <br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
+ * <br>
  * <br>
  * 
  * <pre>
@@ -32,83 +30,52 @@ import aima.core.util.datastructure.Queue;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class GraphSearch extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
-	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
-	private Comparator<Node> replaceFrontierNodeAtStateCostFunction = null;
 	private List<Node> addToFrontier = new ArrayList<Node>();
+	//public static List<Node> expandedNodes;
 
-	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
-		return replaceFrontierNodeAtStateCostFunction;
-	}
-
-	public void setReplaceFrontierNodeAtStateCostFunction(
-			Comparator<Node> replaceFrontierNodeAtStateCostFunction) {
-		this.replaceFrontierNodeAtStateCostFunction = replaceFrontierNodeAtStateCostFunction;
-	}
-
-	// Need to override search() method so that I can re-initialize
-	// the explored set should multiple calls to search be made.
+	/**
+	 * Clears the set of explored states and calls the search implementation of
+	 * <code>QueSearch</code>
+	 */
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
-		frontierState.clear();
+		//expandedNodes = new ArrayList<Node>();
 		return super.search(problem, frontier);
 	}
 
+	/**
+	 * Pops nodes of already explored states from the top end of the frontier
+	 * and checks whether there are still some nodes left.
+	 */
 	@Override
-	public Node popNodeFromFrontier() {
-		Node toRemove = super.popNodeFromFrontier();
-		frontierState.remove(toRemove.getState());
-		return toRemove;
+	protected boolean isFrontierEmpty() {
+		while (!frontier.isEmpty() && explored.contains(frontier.peek().getState()))
+			frontier.pop();
+		return frontier.isEmpty();
 	}
 
+	/**
+	 * Expands the node and returns only nodes of those states which have not been explored yet.
+	 */
 	@Override
-	public boolean removeNodeFromFrontier(Node toRemove) {
-		boolean removed = super.removeNodeFromFrontier(toRemove);
-		if (removed) {
-			frontierState.remove(toRemove.getState());
-		}
-		return removed;
-	}
-
-	@Override
-	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
-			Problem problem) {
+	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand, Problem problem) {
 
 		addToFrontier.clear();
 		// add the node to the explored set
 		explored.add(nodeToExpand.getState());
 		// expand the chosen node, adding the resulting nodes to the frontier
+		//expandedNodes.add(nodeToExpand);
 		for (Node cfn : expandNode(nodeToExpand, problem)) {
-			Node frontierNode = frontierState.get(cfn.getState());
-			boolean yesAddToFrontier = false;
-			if (null == frontierNode) {
-				if (!explored.contains(cfn.getState())) {
-					// child.STATE is not in frontier and not yet explored
-					yesAddToFrontier = true;
-				}
-			} else if (null != replaceFrontierNodeAtStateCostFunction
-					&& replaceFrontierNodeAtStateCostFunction.compare(cfn,
-							frontierNode) < 0) {
-				// child.STATE is in frontier with higher cost
-				// replace that frontier node with child
-				yesAddToFrontier = true;
-				// Want to replace the current frontier node with the child
-				// node therefore mark the child to be added and remove the
-				// current fontierNode
-				removeNodeFromFrontier(frontierNode);
-				// Ensure removed from add to frontier as well
-				// as 1 or more may reach the same state at the same time
-				addToFrontier.remove(frontierNode);
-			}
-
-			if (yesAddToFrontier) {
+			if (!explored.contains(cfn.getState())) {
+				// child.STATE is not in frontier and not yet explored
 				addToFrontier.add(cfn);
-				frontierState.put(cfn.getState(), cfn);
 			}
 		}
 

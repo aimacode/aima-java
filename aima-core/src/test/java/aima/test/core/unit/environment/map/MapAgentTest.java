@@ -11,6 +11,7 @@ import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
+import aima.core.search.framework.GraphSearchReducedFrontier;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**
@@ -38,8 +39,7 @@ public class MapAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(),
-				new String[] { "A" });
+		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -52,8 +52,25 @@ public class MapAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(),
-				new String[] { "D" });
+		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "D" });
+		me.addAgent(ma, "A");
+		me.addEnvironmentView(new TestEnvironmentView());
+		me.stepUntilDone();
+
+		Assert.assertEquals(
+				"CurrentLocation=In(A), Goal=In(D):Action[name==moveTo, location==C]:Action[name==moveTo, location==D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name==NoOp]:",
+				envChanges.toString());
+	}
+
+	@Test
+	public void testNormalSearchGraphSearchMinFrontier() {
+		MapEnvironment me = new MapEnvironment(aMap);
+		GraphSearchReducedFrontier gSearch = new GraphSearchReducedFrontier();
+		UniformCostSearch ucSearch = new UniformCostSearch(gSearch);
+		gSearch.setReplaceFrontierNodeAtStateCostFunction(ucSearch.getComparator());
+
+		MapAgent ma = new MapAgent(me.getMap(), me, ucSearch, new String[] { "D" });
+
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -66,8 +83,7 @@ public class MapAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(),
-				new String[] { "A" });
+		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "E");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -86,8 +102,7 @@ public class MapAgentTest {
 			// Nothing
 		}
 
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState state) {
+		public void agentActed(Agent agent, Action action, EnvironmentState state) {
 			envChanges.append(action).append(":");
 		}
 	}

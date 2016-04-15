@@ -24,17 +24,17 @@ import aima.core.util.datastructure.LIFOQueue;
  */
 public class DepthFirstSearch implements Search {
 
-	QueueSearch search;
+	QueueSearch implementation;
 
-	public DepthFirstSearch(QueueSearch search) {
-		this.search = search;
+	public DepthFirstSearch(QueueSearch impl) {
+		this.implementation = impl;
 	}
 
 	public List<Action> search(Problem p) {
-		return search.search(p, new LIFOQueue<Node>());
+		return implementation.search(p, new LIFOQueue<Node>());
 	}
 
 	public Metrics getMetrics() {
-		return search.getMetrics();
+		return implementation.getMetrics();
 	}
 }

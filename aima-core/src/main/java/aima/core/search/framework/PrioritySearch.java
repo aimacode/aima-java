@@ -7,27 +7,28 @@ import aima.core.agent.Action;
 import aima.core.util.datastructure.PriorityQueue;
 
 /**
+ * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
 public class PrioritySearch implements Search {
-	private final QueueSearch search;
+	private final QueueSearch implementation;
 	private final Comparator<Node> comparator;
 
-	public PrioritySearch(QueueSearch search, Comparator<Node> comparator) {
-		this.search = search;
+	public PrioritySearch(QueueSearch impl, Comparator<Node> comparator) {
+		this.implementation = impl;
 		this.comparator = comparator;
-		if (search instanceof GraphSearch) {
-			((GraphSearch) search)
-					.setReplaceFrontierNodeAtStateCostFunction(comparator);
-		}
 	}
 	
 	public List<Action> search(Problem p) throws Exception {
-		return search.search(p, new PriorityQueue<Node>(5, comparator));
+		return implementation.search(p, new PriorityQueue<Node>(5, comparator));
+	}
+	
+	public Comparator<Node> getComparator() {
+		return comparator;
 	}
 
 	public Metrics getMetrics() {
-		return search.getMetrics();
+		return implementation.getMetrics();
 	}
 }

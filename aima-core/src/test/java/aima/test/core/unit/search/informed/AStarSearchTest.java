@@ -48,11 +48,11 @@ public class AStarSearchTest {
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
-			Assert.assertEquals("926",
+			Assert.assertEquals("1133", // "926" GraphSearchReduced Frontier
 					agent.getInstrumentation().getProperty("nodesExpanded"));
-			Assert.assertEquals("534",
+			Assert.assertEquals("676", // "534" GraphSearchReduced Frontier
 					agent.getInstrumentation().getProperty("queueSize"));
-			Assert.assertEquals("535",
+			Assert.assertEquals("677", // "535" GraphSearchReduced Frontier
 					agent.getInstrumentation().getProperty("maxQueueSize"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,9 +127,9 @@ public class AStarSearchTest {
 		Assert.assertEquals(4, agent.getActions().size());
 		Assert.assertEquals("5",
 				agent.getInstrumentation().getProperty("nodesExpanded"));
-		Assert.assertEquals("4",
-				agent.getInstrumentation().getProperty("queueSize"));
 		Assert.assertEquals("6",
+				agent.getInstrumentation().getProperty("queueSize"));
+		Assert.assertEquals("7",
 				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 

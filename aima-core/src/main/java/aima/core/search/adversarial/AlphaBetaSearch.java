@@ -48,8 +48,10 @@ import aima.core.search.framework.Metrics;
 public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 		AdversarialSearch<STATE, ACTION> {
 
+	public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
+	
 	Game<STATE, ACTION, PLAYER> game;
-	private int expandedNodes;
+	private Metrics metrics = new Metrics();
 
 	/** Creates a new search object for a given game. */
 	public static <STATE, ACTION, PLAYER> AlphaBetaSearch<STATE, ACTION, PLAYER> createFor(
@@ -63,7 +65,7 @@ public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 
 	@Override
 	public ACTION makeDecision(STATE state) {
-		expandedNodes = 0;
+		metrics = new Metrics();
 		ACTION result = null;
 		double resultValue = Double.NEGATIVE_INFINITY;
 		PLAYER player = game.getPlayer(state);
@@ -79,7 +81,7 @@ public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	}
 
 	public double maxValue(STATE state, PLAYER player, double alpha, double beta) {
-		expandedNodes++;
+		metrics.incrementInt(METRICS_NODES_EXPANDED);
 		if (game.isTerminal(state))
 			return game.getUtility(state, player);
 		double value = Double.NEGATIVE_INFINITY;
@@ -94,7 +96,7 @@ public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	}
 
 	public double minValue(STATE state, PLAYER player, double alpha, double beta) {
-		expandedNodes++;
+		metrics.incrementInt(METRICS_NODES_EXPANDED);
 		if (game.isTerminal(state))
 			return game.getUtility(state, player);
 		double value = Double.POSITIVE_INFINITY;
@@ -110,8 +112,6 @@ public class AlphaBetaSearch<STATE, ACTION, PLAYER> implements
 
 	@Override
 	public Metrics getMetrics() {
-		Metrics result = new Metrics();
-		result.set("expandedNodes", expandedNodes);
-		return result;
+		return metrics;
 	}
 }

@@ -27,15 +27,15 @@ public class BestFirstSearch extends PrioritySearch {
 	 * Constructs a best first search from a specified search problem and
 	 * evaluation function.
 	 * 
-	 * @param search
+	 * @param impl
 	 *            a search problem
 	 * @param ef
 	 *            an evaluation function, which returns a number purporting to
 	 *            describe the desirability (or lack thereof) of expanding a
 	 *            node
 	 */
-	public BestFirstSearch(QueueSearch search, EvaluationFunction ef) {
-		super(search, createComparator(ef));
+	public BestFirstSearch(QueueSearch impl, EvaluationFunction ef) {
+		super(impl, createComparator(ef));
 	}
 
 	private static Comparator<Node> createComparator(final EvaluationFunction ef) {
