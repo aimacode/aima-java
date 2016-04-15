@@ -132,17 +132,6 @@ import aima.core.search.framework.*;
 						
 				}
 			}
-			
-			
-			
-			//for (State key1 : a.keySet())
-			
-			{
-				//for (State key2 : a.key1.keySet())
-				{
-					
-				}
-			}
 		}
 	}
 	/**
