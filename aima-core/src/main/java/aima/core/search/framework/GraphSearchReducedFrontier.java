@@ -1,6 +1,5 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,19 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.util.datastructure.PriorityQueue;
 import aima.core.util.datastructure.Queue;
 
 /**
- * This version of graph search keeps the frontier short by focusing on the best
- * node for each state only. If a node is added to the frontier, this
- * implementation checks whether another node for the same state already exists
- * and decides whether to replace it or ignore the new node depending on their
- * costs. A comparator (set by
- * <code>setReplaceFrontierNodeAtStateCostFunction</code>) is needed for that.
- * 
- * <br>
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
- * <br>
  * <br>
  * 
  * <pre>
@@ -39,88 +30,89 @@ import aima.core.util.datastructure.Queue;
  * 
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * 
+ * <br>
+ * This version of graph search keeps the frontier short by focusing on the best
+ * node for each state only. It should be used in combination with priority
+ * queue frontiers. If a node is added to the frontier, this implementation
+ * checks whether another node for the same state already exists and decides
+ * whether to replace it or ignore the new node depending on the node's costs
+ * (comparator of priority queue is used, if available).
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class GraphSearchReducedFrontier extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
 	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
-	private Comparator<Node> replaceFrontierNodeAtStateCostFunction = null;
-	private List<Node> addToFrontier = new ArrayList<Node>();
+	private Comparator<Node> nodeComparator = null;
 
 	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
-		return replaceFrontierNodeAtStateCostFunction;
+		return nodeComparator;
 	}
 
 	/**
-	 * Important: This function must be called before calling search! Priority search
-	 * provides a convenient getter method.
+	 * Sets the comparator if a priority queue is used, resets explored list and
+	 * state map and calls the inherited version of search.
 	 */
-	public void setReplaceFrontierNodeAtStateCostFunction(Comparator<Node> replaceFrontierNodeAtStateCostFunction) {
-		this.replaceFrontierNodeAtStateCostFunction = replaceFrontierNodeAtStateCostFunction;
-	}
-
-	// Need to override search() method so that I can re-initialize
-	// the explored set should multiple calls to search be made.
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
+		if (frontier instanceof PriorityQueue<?>)
+			nodeComparator = (Comparator<Node>) ((PriorityQueue<?>) frontier).comparator();
 		explored.clear();
 		frontierState.clear();
 		return super.search(problem, frontier);
 	}
 
+	/**
+	 * Inserts the node at the tail of the frontier.
+	 */
 	@Override
-	public Node popNodeFromFrontier() {
-		Node toRemove = super.popNodeFromFrontier();
-		frontierState.remove(toRemove.getState());
-		return toRemove;
-	}
+	protected void insertIntoFrontier(Node node) {
+		Node frontierNode = frontierState.get(node.getState());
 
-	public boolean removeNodeFromFrontier(Node toRemove) {
-		boolean removed = frontier.remove(toRemove);
-		if (removed) {
-			frontierState.remove(toRemove.getState());
+		if (null == frontierNode) {
+			if (!explored.contains(node.getState())) {
+				// child.STATE is not in frontier and not yet explored
+				frontier.insert(node);
+				frontierState.put(node.getState(), node);
+				updateMetrics(frontier.size());
+			}
+		} else if (null != nodeComparator && nodeComparator.compare(node, frontierNode) < 0) {
+			// child.STATE is in frontier with higher cost
+			// replace that frontier node with child
+			if (frontier.remove(frontierNode))
+				frontierState.remove(frontierNode.getState());
+			frontier.insert(node);
+			frontierState.put(node.getState(), node);
+			updateMetrics(frontier.size());
 		}
-		return removed;
 	}
 
+	/**
+	 * Removes the node at the head of the frontier, adds the corresponding
+	 * state to the explored set, and returns the node.
+	 * 
+	 * @return the node at the head of the frontier.
+	 */
 	@Override
-	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand, Problem problem) {
-
-		addToFrontier.clear();
+	protected Node popNodeFromFrontier() {
+		Node result = frontier.pop();
 		// add the node to the explored set
-		explored.add(nodeToExpand.getState());
-		// expand the chosen node, adding the resulting nodes to the frontier
-		for (Node cfn : expandNode(nodeToExpand, problem)) {
-			Node frontierNode = frontierState.get(cfn.getState());
-			boolean yesAddToFrontier = false;
-			if (null == frontierNode) {
-				if (!explored.contains(cfn.getState())) {
-					// child.STATE is not in frontier and not yet explored
-					yesAddToFrontier = true;
-				}
-			} else if (null != replaceFrontierNodeAtStateCostFunction
-					&& replaceFrontierNodeAtStateCostFunction.compare(cfn, frontierNode) < 0) {
-				// child.STATE is in frontier with higher cost
-				// replace that frontier node with child
-				yesAddToFrontier = true;
-				// Want to replace the current frontier node with the child
-				// node therefore mark the child to be added and remove the
-				// current fontierNode
-				removeNodeFromFrontier(frontierNode);
-				// Ensure removed from add to frontier as well
-				// as 1 or more may reach the same state at the same time
-				addToFrontier.remove(frontierNode);
-			}
+		explored.add(result.getState());
+		frontierState.remove(result.getState());
+		updateMetrics(frontier.size());
+		return result;
+	}
 
-			if (yesAddToFrontier) {
-				addToFrontier.add(cfn);
-				frontierState.put(cfn.getState(), cfn);
-			}
-		}
-
-		return addToFrontier;
+	/**
+	 * Checks whether the frontier contains not yet expanded nodes.
+	 */
+	@Override
+	protected boolean isFrontierEmpty() {
+		return frontier.isEmpty();
 	}
 }

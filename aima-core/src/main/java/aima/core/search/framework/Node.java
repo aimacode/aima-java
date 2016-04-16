@@ -52,7 +52,7 @@ public class Node {
 	 */
 	public Node(Object state) {
 		this.state = state;
-		this.pathCost = 0.0;
+		pathCost = 0.0;
 	}
 
 	/**
@@ -75,7 +75,8 @@ public class Node {
 		this(state);
 		this.parent = parent;
 		this.action = action;
-		this.pathCost = parent.pathCost + stepCost;
+		if (parent != null)
+			this.pathCost = parent.pathCost + stepCost;
 	}
 
 	/**

@@ -38,7 +38,7 @@ public class GreedyBestFirstSearchTest {
 			Search search = new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 
-			Assert.assertEquals(49, agent.getActions().size());
+			Assert.assertEquals(49, agent.getActions().size()); // GraphSearchReducedFrontier: "49"
 			Assert.assertEquals("332", // GraphSearchReducedFrontier: "197"
 					agent.getInstrumentation().getProperty("nodesExpanded"));
 			Assert.assertEquals("241", // GraphSearchReducedFrontier: "140"
@@ -62,9 +62,8 @@ public class GreedyBestFirstSearchTest {
 
 			Problem problem = new Problem(board, EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			GraphSearchReducedFrontier gSearch = new GraphSearchReducedFrontier();
-			PrioritySearch search = new GreedyBestFirstSearch(gSearch, new ManhattanHeuristicFunction());
-			gSearch.setReplaceFrontierNodeAtStateCostFunction(search.getComparator());
+			PrioritySearch search = new GreedyBestFirstSearch(new GraphSearchReducedFrontier(),
+					new ManhattanHeuristicFunction());
 
 			SearchAgent agent = new SearchAgent(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.OperationNotSupportedException;
+
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
 import aima.core.search.framework.GraphSearch;
@@ -21,7 +23,10 @@ import aima.core.util.datastructure.FIFOQueue;
  * <br>
  * Bidirectional search.<br>
  * <br>
- * <b>Note:</b> Based on the description of this algorithm i.e. 'Bidirectional
+ * <b>Note:</b> 
+ * Sorry, currently not supported. Use BidirectionalQueueSearch instead.
+ * <br>
+ * Based on the description of this algorithm i.e. 'Bidirectional
  * search is implemented by replacing the goal test with a check to see whether
  * the frontiers of the two searches intersect;', it is possible for the
  * searches to pass each other's frontiers by, in particular if the problem is
@@ -52,8 +57,16 @@ public class BidirectionalSearch implements Search {
 		metrics = new Metrics();
 	}
 
+	/**
+	 * Sorry, currently not supported. Use BidirectionalQueueSearch instead.
+	 */
 	public List<Action> search(Problem p) throws Exception {
 
+		throw new OperationNotSupportedException(
+				"Sorry, currently not available. Use BidirectionalQueueSearch instead.");
+	}
+
+	public List<Action> searchOutOfOrder(Problem p) throws Exception {
 		assert (p instanceof BidirectionalProblem);
 
 		searchOutcome = SearchOutcome.PATH_NOT_FOUND;
@@ -89,15 +102,17 @@ public class BidirectionalSearch implements Search {
 			// searches meet or one or other is at the GOAL.
 			if (!opFrontier.isEmpty()) {
 				opNode = opFrontier.pop();
-				opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode,
-						op));
+				// opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode,
+				// // TODO
+				// op));
 			} else {
 				opNode = null;
 			}
 			if (!rpFrontier.isEmpty()) {
 				rpNode = rpFrontier.pop();
-				rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode,
-						rp));
+				// rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode,
+				// // TODO
+				// rp));
 			} else {
 				rpNode = null;
 			}
@@ -125,8 +140,7 @@ public class BidirectionalSearch implements Search {
 					prpNode = rpNode;
 				}
 				if (null != popNode && null != prpNode) {
-					List<Action> actions = retrieveActions(op, rp, popNode,
-							prpNode);
+					List<Action> actions = retrieveActions(op, rp, popNode, prpNode);
 					// It may be the case that it is not in fact possible to
 					// traverse from the original node to the goal node based on
 					// the reverse path (i.e. unidirectional links: e.g.
@@ -275,8 +289,7 @@ public class BidirectionalSearch implements Search {
 	//
 	// PRIVATE METHODS
 	//
-	private List<Action> retrieveActions(Problem op, Problem rp,
-			Node originalPath, Node reversePath) {
+	private List<Action> retrieveActions(Problem op, Problem rp, Node originalPath, Node reversePath) {
 		List<Action> actions = new ArrayList<Action>();
 
 		if (null == reversePath) {
@@ -284,8 +297,7 @@ public class BidirectionalSearch implements Search {
 			// from the original problem first
 			setPathCost(originalPath.getPathCost());
 			searchOutcome = SearchOutcome.PATH_FOUND_FROM_ORIGINAL_PROBLEM;
-			actions = SearchUtils.actionsFromNodes(originalPath
-					.getPathFromRoot());
+			actions = SearchUtils.actionsFromNodes(originalPath.getPathFromRoot());
 		} else {
 			List<Node> nodePath = new ArrayList<Node>();
 			Object originalState = null;
@@ -325,8 +337,7 @@ public class BidirectionalSearch implements Search {
 				// overlap, as they can link based on their fringes, that
 				// the reverse path is actually capable of connecting to
 				// the previous node in the original path (if not root).
-				if (canConnectToOriginalFromReverse(rp, originalPath,
-						reversePath)) {
+				if (canConnectToOriginalFromReverse(rp, originalPath, reversePath)) {
 					searchOutcome = SearchOutcome.PATH_FOUND_BETWEEN_PROBLEMS;
 				} else {
 					searchOutcome = SearchOutcome.PATH_FOUND_FROM_ORIGINAL_PROBLEM;
@@ -337,8 +348,7 @@ public class BidirectionalSearch implements Search {
 		return actions;
 	}
 
-	private boolean canTraversePathFromOriginalProblem(Problem op,
-			List<Node> path, List<Action> actions) {
+	private boolean canTraversePathFromOriginalProblem(Problem op, List<Node> path, List<Action> actions) {
 		boolean rVal = true;
 		double pc = 0.0;
 
@@ -350,8 +360,7 @@ public class BidirectionalSearch implements Search {
 				Object isNext = op.getResultFunction().result(currentState, a);
 				if (nextState.equals(isNext)) {
 					found = true;
-					pc += op.getStepCostFunction()
-							.c(currentState, a, nextState);
+					pc += op.getStepCostFunction().c(currentState, a, nextState);
 					actions.add(a);
 					break;
 				}
@@ -368,17 +377,14 @@ public class BidirectionalSearch implements Search {
 		return rVal;
 	}
 
-	private boolean canConnectToOriginalFromReverse(Problem rp,
-			Node originalPath, Node reversePath) {
+	private boolean canConnectToOriginalFromReverse(Problem rp, Node originalPath, Node reversePath) {
 		boolean rVal = true;
 
 		// Only need to test if not already at root
 		if (!originalPath.isRootNode()) {
 			rVal = false;
-			for (Action a : rp.getActionsFunction().actions(
-					reversePath.getState())) {
-				Object nextState = rp.getResultFunction().result(
-						reversePath.getState(), a);
+			for (Action a : rp.getActionsFunction().actions(reversePath.getState())) {
+				Object nextState = rp.getResultFunction().result(reversePath.getState(), a);
 				if (originalPath.getParent().getState().equals(nextState)) {
 					rVal = true;
 					break;

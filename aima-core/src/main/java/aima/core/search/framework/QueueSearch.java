@@ -8,7 +8,9 @@ import aima.core.util.CancelableThread;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Base class for search implementations, especially for <code>TreeSearch</code> and <code>GraphSearch</code>.
+ * Base class for search implementations, especially for <code>TreeSearch</code>
+ * and <code>GraphSearch</code>.
+ * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
@@ -20,16 +22,15 @@ public abstract class QueueSearch extends NodeExpander {
 	public static final String METRIC_PATH_COST = "pathCost";
 
 	protected Queue<Node> frontier;
-
-	private boolean checkGoalBeforeAddingToFrontier = false;
+	protected boolean checkGoalBeforeAddingToFrontier = false;
 
 	/**
 	 * Returns a list of actions to the goal if the goal was found, a list
 	 * containing a single NoOp Action if already at the goal, or an empty list
-	 * if the goal could not be found. This template method provides a base
-	 * for tree and graph search implementations. It can be customized by
-	 * overriding some primitive operations, especially
-	 * <code>getResultingNodesToAddToFrontier</code>.
+	 * if the goal could not be found. This template method provides a base for
+	 * tree and graph search implementations. It can be customized by overriding
+	 * some primitive operations, especially {@link #insertIntoFrontier(Node)},
+	 * {@link #popNodeFromFrontier()}, and {@link #isFrontierEmpty()}.
 	 * 
 	 * @param problem
 	 *            the search problem
@@ -42,7 +43,6 @@ public abstract class QueueSearch extends NodeExpander {
 	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		this.frontier = frontier;
-
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
@@ -50,12 +50,10 @@ public abstract class QueueSearch extends NodeExpander {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
 		}
-		frontier.insert(root);
-		updateMetrics(frontier.size());
+		insertIntoFrontier(root);
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
 			Node nodeToExpand = popNodeFromFrontier();
-			updateMetrics(frontier.size());
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
 			if (!isCheckGoalBeforeAddingToFrontier()) {
@@ -66,47 +64,52 @@ public abstract class QueueSearch extends NodeExpander {
 			}
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			for (Node successor : getResultingNodesToAddToFrontier(nodeToExpand, problem)) {
+			for (Node successor : expandNode(nodeToExpand, problem)) {
 				if (isCheckGoalBeforeAddingToFrontier()) {
 					if (SearchUtils.isGoalState(problem, successor))
 						return getSolution(successor);
 				}
-				frontier.insert(successor);
+				insertIntoFrontier(successor);
 			}
-			updateMetrics(frontier.size());
 		}
 		// if the frontier is empty then return failure
 		return failure();
 	}
 
 	/**
-	 * Primitive operation which decides if nodes for all successor states are
-	 * added to the frontier or only a selected subset.
+	 * Primitive operation which inserts the node at the tail of the frontier.
 	 */
-	protected abstract List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand, Problem p);
+	protected abstract void insertIntoFrontier(Node node);
+
+	/**
+	 * Primitive operation which removes and returns the node at the head of the
+	 * frontier.
+	 * 
+	 * @return the node at the head of the frontier.
+	 */
+	protected abstract Node popNodeFromFrontier();
+
+	/**
+	 * Primitive operation which checks whether the frontier contains not yet
+	 * expanded nodes.
+	 */
+	protected abstract boolean isFrontierEmpty();
 
 	public boolean isCheckGoalBeforeAddingToFrontier() {
 		return checkGoalBeforeAddingToFrontier;
 	}
 
+	/**
+	 * Enables optimization for FIFO queue based search, especially breadth
+	 * first search.
+	 * 
+	 * @param checkGoalBeforeAddingToFrontier
+	 */
 	public void setCheckGoalBeforeAddingToFrontier(boolean checkGoalBeforeAddingToFrontier) {
 		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
 	}
 
-	/**
-	 * Removes and returns the node at the head of the frontier.
-	 * 
-	 * @return the node at the head of the frontier.
-	 */
-	protected Node popNodeFromFrontier() {
-		return frontier.pop();
-	}
-
-	protected boolean isFrontierEmpty() {
-		return frontier.isEmpty();
-	}
-
-	protected List<Action> getSolution(Node node) {
+	private List<Action> getSolution(Node node) {
 		metrics.set(METRIC_PATH_COST, node.getPathCost());
 		return SearchUtils.actionsFromNodes(node.getPathFromRoot());
 	}
@@ -119,7 +122,7 @@ public abstract class QueueSearch extends NodeExpander {
 		metrics.set(METRIC_PATH_COST, 0);
 	}
 
-	private void updateMetrics(int queueSize) {
+	protected void updateMetrics(int queueSize) {
 
 		metrics.set(METRIC_QUEUE_SIZE, queueSize);
 		int maxQSize = metrics.getInt(METRIC_MAX_QUEUE_SIZE);
@@ -143,7 +146,7 @@ public abstract class QueueSearch extends NodeExpander {
 	//
 	// PRIVATE METHODS
 	//
-	private List<Action> failure() {
+	protected List<Action> failure() {
 		return Collections.emptyList();
 	}
 }

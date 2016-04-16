@@ -1,6 +1,5 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +9,6 @@ import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
- * <br>
  * <br>
  * 
  * <pre>
@@ -35,8 +33,7 @@ import aima.core.util.datastructure.Queue;
 public class GraphSearch extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
-	private List<Node> addToFrontier = new ArrayList<Node>();
-	//public static List<Node> expandedNodes;
+	// public static List<Node> expandedNodes;
 
 	/**
 	 * Clears the set of explored states and calls the search implementation of
@@ -46,8 +43,34 @@ public class GraphSearch extends QueueSearch {
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
-		//expandedNodes = new ArrayList<Node>();
+		// expandedNodes = new ArrayList<Node>();
 		return super.search(problem, frontier);
+	}
+
+	/**
+	 * Inserts the node at the tail of the frontier if the corresponding state was not yet explored.
+	 */
+	@Override
+	protected void insertIntoFrontier(Node node) {
+		if (!explored.contains(node.getState())) {
+			frontier.insert(node);
+			updateMetrics(frontier.size());
+		}
+	}
+
+	/**
+	 * Removes the node at the head of the frontier, adds the corresponding
+	 * state to the explored set, and returns the node.
+	 * 
+	 * @return the node at the head of the frontier.
+	 */
+	@Override
+	protected Node popNodeFromFrontier() {
+		Node result = frontier.pop();
+		// add the node to the explored set
+		explored.add(result.getState());
+		updateMetrics(frontier.size());
+		return result;
 	}
 
 	/**
@@ -58,27 +81,7 @@ public class GraphSearch extends QueueSearch {
 	protected boolean isFrontierEmpty() {
 		while (!frontier.isEmpty() && explored.contains(frontier.peek().getState()))
 			frontier.pop();
+		updateMetrics(frontier.size());
 		return frontier.isEmpty();
-	}
-
-	/**
-	 * Expands the node and returns only nodes of those states which have not been explored yet.
-	 */
-	@Override
-	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand, Problem problem) {
-
-		addToFrontier.clear();
-		// add the node to the explored set
-		explored.add(nodeToExpand.getState());
-		// expand the chosen node, adding the resulting nodes to the frontier
-		//expandedNodes.add(nodeToExpand);
-		for (Node cfn : expandNode(nodeToExpand, problem)) {
-			if (!explored.contains(cfn.getState())) {
-				// child.STATE is not in frontier and not yet explored
-				addToFrontier.add(cfn);
-			}
-		}
-
-		return addToFrontier;
 	}
 }

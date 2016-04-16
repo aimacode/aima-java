@@ -65,9 +65,7 @@ public class MapAgentTest {
 	@Test
 	public void testNormalSearchGraphSearchMinFrontier() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		GraphSearchReducedFrontier gSearch = new GraphSearchReducedFrontier();
-		UniformCostSearch ucSearch = new UniformCostSearch(gSearch);
-		gSearch.setReplaceFrontierNodeAtStateCostFunction(ucSearch.getComparator());
+		UniformCostSearch ucSearch = new UniformCostSearch(new GraphSearchReducedFrontier());
 
 		MapAgent ma = new MapAgent(me.getMap(), me, ucSearch, new String[] { "D" });
 

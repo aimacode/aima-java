@@ -1,7 +1,5 @@
 package aima.core.search.framework;
 
-import java.util.List;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.<br>
  * <br>
@@ -19,14 +17,37 @@ import java.util.List;
  * Figure 3.7 An informal description of the general tree-search algorithm.
  * 
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class TreeSearch extends QueueSearch {
 
+	/**
+	 * Inserts the node at the tail of the frontier.
+	 */
 	@Override
-	public List<Node> getResultingNodesToAddToFrontier(Node nodeToExpand,
-			Problem problem) {
-		// expand the chosen node, adding the resulting nodes to the frontier
-		return expandNode(nodeToExpand, problem);
+	protected void insertIntoFrontier(Node node) {
+		frontier.insert(node);
+		updateMetrics(frontier.size());
+	}
+	
+	/**
+	 * Removes and returns the node at the head of the frontier.
+	 * 
+	 * @return the node at the head of the frontier.
+	 */
+	@Override
+	protected Node popNodeFromFrontier() {
+		Node result = frontier.pop();
+		updateMetrics(frontier.size());
+		return result;
+	}
+
+	/**
+	 * Checks whether the frontier contains not yet expanded nodes.
+	 */
+	@Override
+	protected boolean isFrontierEmpty() {
+		return frontier.isEmpty();
 	}
 }
