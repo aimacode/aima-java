@@ -56,7 +56,7 @@ public abstract class QueueSearch extends NodeExpander {
 			Node nodeToExpand = popNodeFromFrontier();
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
-			if (!isCheckGoalBeforeAddingToFrontier()) {
+			if (!checkGoalBeforeAddingToFrontier) {
 				// if the node contains a goal state then return the
 				// corresponding solution
 				if (SearchUtils.isGoalState(problem, nodeToExpand))
@@ -64,12 +64,12 @@ public abstract class QueueSearch extends NodeExpander {
 			}
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			for (Node successor : expandNode(nodeToExpand, problem)) {
-				if (isCheckGoalBeforeAddingToFrontier()) {
-					if (SearchUtils.isGoalState(problem, successor))
-						return getSolution(successor);
+			for (Node childNode : expandNode(nodeToExpand, problem)) {
+				if (checkGoalBeforeAddingToFrontier) {
+					if (SearchUtils.isGoalState(problem, childNode))
+						return getSolution(childNode);
 				}
-				insertIntoFrontier(successor);
+				insertIntoFrontier(childNode);
 			}
 		}
 		// if the frontier is empty then return failure

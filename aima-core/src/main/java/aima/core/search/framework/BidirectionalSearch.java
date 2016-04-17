@@ -96,10 +96,10 @@ public class BidirectionalSearch extends QueueSearch {
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
 			ExtendedNode nodeToExpand = (ExtendedNode) popNodeFromFrontier();
+			ExtendedNode nodeFromOtherProblem;
+			
 			// if the node contains a goal state then return the
 			// corresponding solution
-			ExtendedNode nodeFromOtherProblem;
-
 			if (!checkGoalBeforeAddingToFrontier
 					&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
 				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
@@ -172,10 +172,7 @@ public class BidirectionalSearch extends QueueSearch {
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty()) {
-			Node result = frontier.peek();
-			if (!isExplored(result))
-				break;
+		while (!frontier.isEmpty() && isExplored(frontier.peek())) {
 			frontier.pop();
 			updateMetrics(frontier.size());
 		}
@@ -198,9 +195,9 @@ public class BidirectionalSearch extends QueueSearch {
 		while (revNode.getParent() != null) {
 			Action action = getReverseAction(orgP, revNode);
 			if (action != null) {
-				Object stateNext = revNode.getParent().getState();
-				double stepCosts = orgP.getStepCostFunction().c(revNode.getState(), action, stateNext);
-				orgNode = new Node(stateNext, orgNode, action, stepCosts);
+				Object nextState = revNode.getParent().getState();
+				double stepCosts = orgP.getStepCostFunction().c(revNode.getState(), action, nextState);
+				orgNode = new Node(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else { // should never happen...
 				searchOutcome = SearchOutcome.PATH_FOUND_BUT_NO_REVERSE_ACTIONS;
