@@ -19,11 +19,13 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
 import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.search.framework.BidirectionalSearch;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
@@ -43,8 +45,8 @@ import aima.gui.framework.SimpleAgentApp;
 import aima.gui.framework.SimulationThread;
 
 /**
- * Graphical 8-puzzle game application. It demonstrates the performance
- * of different search algorithms. Additionally, users can make experiences with
+ * Graphical 8-puzzle game application. It demonstrates the performance of
+ * different search algorithms. Additionally, users can make experiences with
  * human problem solving.
  * 
  * @author Ruediger Lunde
@@ -63,24 +65,19 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	}
 
 	static {
-		addSearchAlgorithm("Breadth First Search (Graph Search)",
-				new BreadthFirstSearch(new GraphSearch()));
-		addSearchAlgorithm("Depth Limited Search (9)",
-				new DepthLimitedSearch(9));
-		addSearchAlgorithm("Iterative Deepening Search",
-				new IterativeDeepeningSearch());
+		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Breadth First Search (Bidirectional Search)",
+				new BreadthFirstSearch(new BidirectionalSearch()));
+		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
+		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(),
-						new MisplacedTilleHeuristicFunction()));
+				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(),
-						new ManhattanHeuristicFunction()));
+				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
-				new AStarSearch(new GraphSearch(),
-						new MisplacedTilleHeuristicFunction()));
+				new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
-				new AStarSearch(new GraphSearch(),
-						new ManhattanHeuristicFunction()));
+				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search",
 				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction()));
 	}
@@ -125,12 +122,9 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		public EightPuzzleFrame() {
 			setTitle("Eight Puzzle Application");
-			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] {
-					"Select Environment", "Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Medium",
-					"Extreme", "Random" }, 0);
-			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
-					.toArray(new String[] {}), 0);
+			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] { "Select Environment", "Select Search" });
+			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Medium", "Extreme", "Random" }, 0);
+			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[] {}), 0);
 			setEnvView(new EightPuzzleView());
 			setSize(800, 600);
 		}
@@ -142,8 +136,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	 * By pressing a button, the user can move the corresponding tile to the
 	 * adjacent gap.
 	 */
-	protected static class EightPuzzleView extends AgentAppEnvironmentView
-			implements ActionListener {
+	protected static class EightPuzzleView extends AgentAppEnvironmentView implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 
@@ -168,8 +161,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Agent value null indicates a user initiated action. */
 		@Override
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState resultingState) {
+		public void agentActed(Agent agent, Action action, EnvironmentState resultingState) {
 			showState();
 			notify((agent == null ? "User: " : "") + action.toString());
 		}
@@ -185,10 +177,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		protected void showState() {
 			int[] vals = ((EightPuzzleEnvironment) env).getBoard().getState();
 			for (int i = 0; i < 9; i++) {
-				squareButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY
-						: Color.WHITE);
-				squareButtons[i].setText(vals[i] == 0 ? "" : Integer
-						.toString(vals[i]));
+				squareButtons[i].setBackground(vals[i] == 0 ? Color.LIGHT_GRAY : Color.WHITE);
+				squareButtons[i].setText(vals[i] == 0 ? "" : Integer.toString(vals[i]));
 			}
 		}
 
@@ -201,8 +191,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			for (int i = 0; i < 9; i++) {
 				if (ae.getSource() == squareButtons[i]) {
 					EightPuzzleController contr = (EightPuzzleController) getController();
-					XYLocation locGap = ((EightPuzzleEnvironment) env)
-							.getBoard().getLocationOf(0);
+					XYLocation locGap = ((EightPuzzleEnvironment) env).getBoard().getLocationOf(0);
 					if (locGap.getXCoOrdinate() == i / 3) {
 						if (locGap.getYCoOrdinate() == i % 3 - 1)
 							contr.executeUserAction(EightPuzzleBoard.RIGHT);
@@ -244,26 +233,31 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			EightPuzzleBoard board = null;
 			switch (selState.getIndex(EightPuzzleFrame.ENV_SEL)) {
 			case 0: // three moves
-				board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6,
-						7, 8 });
+				board = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
 				break;
 			case 1: // medium
-				board = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3,
-						0, 6 });
+				board = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
 				break;
 			case 2: // extreme
-				board = new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3,
-						2, 1 });
+				board = new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
 				break;
 			case 3: // random
-				board = new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8});
+				board = new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
 				Random r = new Random(System.currentTimeMillis());
-				for (int i = 0; i < 200 ; i++) {
+				for (int i = 0; i < 200; i++) {
 					switch (r.nextInt(4)) {
-					case 0: board.moveGapUp(); break;
-					case 1: board.moveGapDown(); break;
-					case 2: board.moveGapLeft(); break;
-					case 3: board.moveGapRight(); break;
+					case 0:
+						board.moveGapUp();
+						break;
+					case 1:
+						board.moveGapDown();
+						break;
+					case 2:
+						board.moveGapLeft();
+						break;
+					case 3:
+						board.moveGapRight();
+						break;
 					}
 				}
 			}
@@ -279,12 +273,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		 */
 		protected void addAgent() throws Exception {
 			if (agent == null) {
-				int pSel = frame.getSelection().getIndex(
-						EightPuzzleFrame.SEARCH_SEL);
-				Problem problem = new Problem(env.getBoard(),
-						EightPuzzleFunctionFactory.getActionsFunction(),
-						EightPuzzleFunctionFactory.getResultFunction(),
-						new EightPuzzleGoalTest());
+				int pSel = frame.getSelection().getIndex(EightPuzzleFrame.SEARCH_SEL);
+				Problem problem = new BidirectionalEightPuzzleProblem(env.getBoard());
 				Search search = SEARCH_ALGOS.get(pSel);
 				agent = new SearchAgent(problem, search);
 				env.addAgent(agent);

@@ -1,5 +1,6 @@
 package aima.gui.applications.search.map;
 
+import aima.core.search.framework.BidirectionalSearch;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.QueueSearch;
@@ -42,6 +43,8 @@ public class SearchFactory {
 	public final static int TREE_SEARCH = 0;
 	/** Search mode: graph search. */
 	public final static int GRAPH_SEARCH = 1;
+	/** Search mode: bidirectional search. */
+	public final static int BIDIRECTIONAL_SEARCH = 2;
 
 	/** Contains the only existing instance. */
 	private static SearchFactory instance;
@@ -74,7 +77,7 @@ public class SearchFactory {
 	 * {@link #createSearch(int, int, HeuristicFunction)}.
 	 */
 	public String[] getSearchModeNames() {
-		return new String[] { "Tree Search", "Graph Search" };
+		return new String[] { "Tree Search", "Graph Search", "Bidirectional Search" };
 	}
 
 	/**
@@ -95,6 +98,9 @@ public class SearchFactory {
 			break;
 		case GRAPH_SEARCH:
 			qs = new GraphSearch();
+			break;
+		case BIDIRECTIONAL_SEARCH:
+			qs = new BidirectionalSearch();
 		}
 		switch (strategy) {
 		case DF_SEARCH:
