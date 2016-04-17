@@ -8,8 +8,8 @@ import aima.core.util.CancelableThread;
 import aima.core.util.datastructure.Queue;
 
 /**
- * Base class for search implementations, especially for <code>TreeSearch</code>
- * and <code>GraphSearch</code>.
+ * Base class for queue-based search implementations, especially for {@link TreeSearch},
+ * {@link GraphSearch}, and {@link BidirectionalSearch}.
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly

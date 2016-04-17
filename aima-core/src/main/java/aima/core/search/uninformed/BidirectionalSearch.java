@@ -24,7 +24,7 @@ import aima.core.util.datastructure.FIFOQueue;
  * Bidirectional search.<br>
  * <br>
  * <b>Note:</b> 
- * Sorry, currently not supported. Use BidirectionalQueueSearch instead.
+ * Sorry, currently not supported. Use BidirectionalSearch in search framework package instead.
  * <br>
  * Based on the description of this algorithm i.e. 'Bidirectional
  * search is implemented by replacing the goal test with a check to see whether
@@ -63,7 +63,7 @@ public class BidirectionalSearch implements Search {
 	public List<Action> search(Problem p) throws Exception {
 
 		throw new OperationNotSupportedException(
-				"Sorry, currently not available. Use BidirectionalQueueSearch instead.");
+				"Sorry, currently not available. Use version in search framework package instead.");
 	}
 
 	public List<Action> searchOutOfOrder(Problem p) throws Exception {

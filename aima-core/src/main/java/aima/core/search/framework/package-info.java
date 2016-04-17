@@ -1,20 +1,26 @@
 /**
  * This package contains base classes for search algorithm implementations. Many
- * algorithms are basically queue search algorithms. They construct a tree of
+ * algorithms are basically queue-based algorithms. They construct a tree of
  * nodes which represents the possible sequences of actions and the
- * corresponding resulting states. A queue is used to manage and prioritize
- * the current end points of already analyzed sequences of actions.
+ * corresponding resulting states. A queue is used to manage and prioritize the
+ * current end points of already analyzed sequences of actions.
+ * 
  * <br>
- * Specializations are possible in two ways: Prioritization can be done by
- * time (e.g. first come first serve), by comparator or by evaluation function.
- * All this different strategies can be combined with different loop/cycle handling
- * strategies to avoid incompleteness and improve efficiency.
+ * Specializations are possible in two ways: There are different ways to define
+ * a queue (A), and to use the queue to explore the search space (B). (A) is
+ * about prioritizing nodes, which can be done by time (e.g. first come first
+ * serve), by comparator, or by evaluation function. (B) is about controlling
+ * the simulated exploration based on a given queue data structure. It includes
+ * strategies for filtering nodes to avoid getting stuck in loops.
+ * 
  * <br>
- * Here, the bridge pattern is used. Different abstractions of search are provided
- * as subclasses of <code>Search</code> and especially <code>PrioritySearch</code>.
- * Most of them delegate the work to some <code>QueueSearch</code> implementation.
- * The two important concrete implementations are <code>TreeSearch</code> and
- * <code>GraphSearch</code>. 
+ * To support arbitrary combinations of different strategies for (A) and (B),
+ * the bridge pattern is used here. Different abstractions of search are
+ * provided as specializations of {@link Search} and especially
+ * {@link PrioritySearch}. Most of them delegate the work to some
+ * {@link QueueSearch} implementation. The most important concrete
+ * implementations are {@link TreeSearch}, {@link GraphSearch}, and
+ * {@link BidirectionalSearch}.
  * 
  * @author Ruediger Lunde
  */
