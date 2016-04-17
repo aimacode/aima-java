@@ -29,17 +29,10 @@ import aima.core.util.datastructure.Queue;
  */
 public class BidirectionalSearch extends QueueSearch {
 
-	// last value should never occur!
-	public enum SearchOutcome {
-		PATH_FOUND, PATH_NOT_FOUND, PATH_FOUND_BUT_NO_REVERSE_ACTIONS
-	};
-
 	private final static int ORG_P_IDX = 0;
 	private final static int REV_P_IDX = 1;
 
 	private boolean isReverseActionTestEnabled = true;
-
-	private SearchOutcome searchOutcome = SearchOutcome.PATH_NOT_FOUND;
 
 	// index 0: original problem, index 2: reverse problem
 	private List<Map<Object, ExtendedNode>> explored;
@@ -78,7 +71,6 @@ public class BidirectionalSearch extends QueueSearch {
 		clearInstrumentation();
 		explored.get(ORG_P_IDX).clear();
 		explored.get(REV_P_IDX).clear();
-		searchOutcome = SearchOutcome.PATH_NOT_FOUND;
 
 		Problem orgP = ((BidirectionalProblem) problem).getOriginalProblem();
 		Problem revP = ((BidirectionalProblem) problem).getReverseProblem();
@@ -97,7 +89,7 @@ public class BidirectionalSearch extends QueueSearch {
 			// choose a leaf node and remove it from the frontier
 			ExtendedNode nodeToExpand = (ExtendedNode) popNodeFromFrontier();
 			ExtendedNode nodeFromOtherProblem;
-			
+
 			// if the node contains a goal state then return the
 			// corresponding solution
 			if (!checkGoalBeforeAddingToFrontier
@@ -130,13 +122,6 @@ public class BidirectionalSearch extends QueueSearch {
 	 */
 	public void setReverseActionTestEnabled(boolean state) {
 		isReverseActionTestEnabled = state;
-	}
-
-	/**
-	 * Describes the success of the last search call.
-	 */
-	public SearchOutcome getSearchOutcome() {
-		return searchOutcome;
 	}
 
 	/**
@@ -199,16 +184,19 @@ public class BidirectionalSearch extends QueueSearch {
 				double stepCosts = orgP.getStepCostFunction().c(revNode.getState(), action, nextState);
 				orgNode = new Node(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
-			} else { // should never happen...
-				searchOutcome = SearchOutcome.PATH_FOUND_BUT_NO_REVERSE_ACTIONS;
+			} else {
 				return failure();
 			}
 		}
 		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());
-		searchOutcome = SearchOutcome.PATH_FOUND;
 		return SearchUtils.actionsFromNodes(orgNode.getPathFromRoot());
 	}
 
+	/**
+	 * Returns the action which leads from the state of <code>node</code> to the
+	 * state of the node's parent, if such an action exists in problem
+	 * <code>orgP</code>.
+	 */
 	private Action getReverseAction(Problem orgP, Node node) {
 		Object currState = node.getState();
 		Object nextState = node.getParent().getState();

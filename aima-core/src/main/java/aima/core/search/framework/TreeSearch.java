@@ -1,7 +1,7 @@
 package aima.core.search.framework;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.<br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
  * <br>
  * 
  * <pre>
@@ -15,6 +15,10 @@ package aima.core.search.framework;
  * </pre>
  * 
  * Figure 3.7 An informal description of the general tree-search algorithm.
+ * 
+ * <br>
+ * See superclass {@link QueueSearch} for the implementation of the main
+ * algorithm.
  * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
@@ -30,7 +34,7 @@ public class TreeSearch extends QueueSearch {
 		frontier.insert(node);
 		updateMetrics(frontier.size());
 	}
-	
+
 	/**
 	 * Removes and returns the node at the head of the frontier.
 	 * 

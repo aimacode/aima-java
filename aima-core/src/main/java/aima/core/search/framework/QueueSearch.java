@@ -123,26 +123,13 @@ public abstract class QueueSearch extends NodeExpander {
 	}
 
 	protected void updateMetrics(int queueSize) {
-
 		metrics.set(METRIC_QUEUE_SIZE, queueSize);
 		int maxQSize = metrics.getInt(METRIC_MAX_QUEUE_SIZE);
 		if (queueSize > maxQSize) {
 			metrics.set(METRIC_MAX_QUEUE_SIZE, queueSize);
 		}
 	}
-
-	public int getQueueSize() {
-		return metrics.getInt("queueSize");
-	}
-
-	public int getMaxQueueSize() {
-		return metrics.getInt(METRIC_MAX_QUEUE_SIZE);
-	}
-
-	public double getPathCost() {
-		return metrics.getDouble(METRIC_PATH_COST);
-	}
-
+	
 	//
 	// PRIVATE METHODS
 	//

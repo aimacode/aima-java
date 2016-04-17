@@ -25,6 +25,9 @@ import aima.core.util.datastructure.Queue;
  * </pre>
  * 
  * Figure 3.7 An informal description of the general graph-search algorithm.
+ * <br>
+ * See superclass {@link QueueSearch} for the implementation of the main
+ * algorithm.
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
@@ -48,7 +51,8 @@ public class GraphSearch extends QueueSearch {
 	}
 
 	/**
-	 * Inserts the node at the tail of the frontier if the corresponding state was not yet explored.
+	 * Inserts the node at the tail of the frontier if the corresponding state
+	 * was not yet explored.
 	 */
 	@Override
 	protected void insertIntoFrontier(Node node) {

@@ -31,12 +31,13 @@ import aima.core.util.datastructure.Queue;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * 
  * <br>
- * This version of graph search keeps the frontier short by focusing on the best
- * node for each state only. It should be used in combination with priority
- * queue frontiers. If a node is added to the frontier, this implementation
- * checks whether another node for the same state already exists and decides
- * whether to replace it or ignore the new node depending on the node's costs
- * (comparator of priority queue is used, if available).
+ * See superclass {@link QueueSearch} for the implementation of the main
+ * algorithm. This version of graph search keeps the frontier short by focusing
+ * on the best node for each state only. It should be used in combination with
+ * priority queue frontiers. If a node is added to the frontier, this
+ * implementation checks whether another node for the same state already exists
+ * and decides whether to replace it or ignore the new node depending on the
+ * node's costs (comparator of priority queue is used, if available).
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
