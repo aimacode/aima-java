@@ -3,12 +3,12 @@ package aima.core.search.uninformed;
 import java.util.List;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.QueueSearch;
 import aima.core.search.framework.Search;
+import aima.core.search.framework.qsearch.GraphSearch;
+import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**
@@ -35,31 +35,32 @@ import aima.core.util.datastructure.FIFOQueue;
  * 
  * Figure 3.11 Breadth-first search on a graph.<br>
  * <br>
- * <b>Note:</b> Supports both Tree and Graph based versions by assigning an
- * instance of TreeSearch or GraphSearch to its constructor.
+ * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch by
+ * assigning an instance of the corresponding QueueSearch implementation to its
+ * constructor.
  * 
  * @author Ciaran O'Reilly
  */
 public class BreadthFirstSearch implements Search {
 
-	private final QueueSearch search;
+	private final QueueSearch implementation;
 
 	public BreadthFirstSearch() {
 		this(new GraphSearch());
 	}
 
-	public BreadthFirstSearch(QueueSearch search) {
+	public BreadthFirstSearch(QueueSearch impl) {
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
-		search.setCheckGoalBeforeAddingToFrontier(true);
-		this.search = search;
+		implementation = impl;
+		implementation.setCheckGoalBeforeAddingToFrontier(true);
 	}
 
 	public List<Action> search(Problem p) {
-		return search.search(p, new FIFOQueue<Node>());
+		return implementation.search(p, new FIFOQueue<Node>());
 	}
 
 	public Metrics getMetrics() {
-		return search.getMetrics();
+		return implementation.getMetrics();
 	}
 }

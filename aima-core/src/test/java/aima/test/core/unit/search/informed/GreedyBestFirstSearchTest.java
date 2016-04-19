@@ -13,13 +13,13 @@ import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.map.StraightLineDistanceHeuristicFunction;
 import aima.core.search.framework.DefaultGoalTest;
-import aima.core.search.framework.GraphSearch;
-import aima.core.search.framework.GraphSearchReducedFrontier;
 import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.TreeSearch;
+import aima.core.search.framework.qsearch.GraphSearch;
+import aima.core.search.framework.qsearch.GraphSearchReducedFrontier;
+import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
 
 public class GreedyBestFirstSearchTest {

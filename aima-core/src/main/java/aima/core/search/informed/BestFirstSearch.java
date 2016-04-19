@@ -5,7 +5,7 @@ import java.util.Comparator;
 import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
-import aima.core.search.framework.QueueSearch;
+import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>

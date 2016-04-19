@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.qsearch;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.Problem;
 import aima.core.util.datastructure.PriorityQueue;
 import aima.core.util.datastructure.Queue;
 

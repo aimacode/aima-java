@@ -12,7 +12,7 @@ import aima.core.environment.nqueens.NQueensGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.TreeSearch;
+import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 
 public class BreadthFirstSearchTest {

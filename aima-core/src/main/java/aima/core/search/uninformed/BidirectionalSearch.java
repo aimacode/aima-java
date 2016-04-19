@@ -10,12 +10,12 @@ import javax.naming.OperationNotSupportedException;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.util.datastructure.FIFOQueue;
 
 /**

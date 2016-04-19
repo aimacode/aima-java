@@ -2,10 +2,10 @@ package aima.core.search.uninformed;
 
 import java.util.Comparator;
 
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
-import aima.core.search.framework.QueueSearch;
+import aima.core.search.framework.qsearch.GraphSearch;
+import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.14, page
@@ -33,9 +33,12 @@ import aima.core.search.framework.QueueSearch;
  * Figure 3.14 Uniform-cost search on a graph. The algorithm is identical to the
  * general graph search algorithm in Figure 3.7, except for the use of a
  * priority queue and the addition of an extra check in case a shorter path to a
- * frontier state is discovered. The data structure for frontier needs to
- * support efficient membership testing, so it should combine the capabilities
- * of a priority queue and a hash table.
+ * frontier state is discovered.
+ * 
+ * </br>
+ * This implementation is more general. It supports TreeSearch, GraphSearch, and
+ * BidirectionalSearch by assigning an instance of the corresponding QueueSearch
+ * implementation to its constructor.
  * 
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
@@ -43,19 +46,19 @@ import aima.core.search.framework.QueueSearch;
  */
 public class UniformCostSearch extends PrioritySearch {
 
+	/** Creates a UniformCostSearch instance using GraphSearch */
 	public UniformCostSearch() {
 		this(new GraphSearch());
 	}
 
-	public UniformCostSearch(QueueSearch search) {
-		super(search, createPathCostComparator());
+	public UniformCostSearch(QueueSearch impl) {
+		super(impl, createPathCostComparator());
 	}
-	
+
 	private static Comparator<Node> createPathCostComparator() {
 		return new Comparator<Node>() {
 			public int compare(Node node1, Node node2) {
-				return (new Double(node1.getPathCost()).compareTo(new Double(node2
-						.getPathCost())));
+				return (new Double(node1.getPathCost()).compareTo(new Double(node2.getPathCost())));
 			}
 		};
 	}

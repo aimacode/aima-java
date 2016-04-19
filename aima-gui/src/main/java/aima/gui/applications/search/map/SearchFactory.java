@@ -1,11 +1,11 @@
 package aima.gui.applications.search.map;
 
-import aima.core.search.framework.BidirectionalSearch;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.QueueSearch;
 import aima.core.search.framework.Search;
-import aima.core.search.framework.TreeSearch;
+import aima.core.search.framework.qsearch.BidirectionalSearch;
+import aima.core.search.framework.qsearch.GraphSearch;
+import aima.core.search.framework.qsearch.QueueSearch;
+import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;

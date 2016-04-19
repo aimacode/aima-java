@@ -1,9 +1,10 @@
 /**
- * This package contains base classes for search algorithm implementations. Many
- * search algorithms are basically queue-based algorithms. They construct a tree
- * of nodes which represents the possible sequences of actions and the
- * corresponding resulting states. A queue is used to manage and prioritize the
- * current end points of already analyzed sequences.
+ * This package (together with subpackage <code>qsearch</code>) contains base
+ * classes for search algorithm implementations. Many search algorithms are
+ * basically queue-based algorithms. They construct a tree of nodes which
+ * represents the possible sequences of actions and the corresponding resulting
+ * states. A queue is used to manage and prioritize the current end points of
+ * already analyzed sequences.
  * 
  * <br>
  * Specializations are possible in two ways: There are different ways to define
@@ -19,9 +20,9 @@
  * the bridge pattern is used here. Different abstractions of search are
  * provided as specializations of {@link Search} and especially
  * {@link PrioritySearch}. Most of them delegate the work to some
- * {@link QueueSearch} implementation. The most important concrete
- * implementations are {@link TreeSearch}, {@link GraphSearch}, and
- * {@link BidirectionalSearch}.
+ * {@link aima.core.search.framework.qsearch.QueueSearch} implementation. The
+ * most important concrete implementations are TreeSearch, GraphSearch, and
+ * BidirectionalSearch.
  * 
  * @author Ruediger Lunde
  */

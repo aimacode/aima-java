@@ -1,4 +1,6 @@
-package aima.core.search.framework;
+package aima.core.search.framework.qsearch;
+
+import aima.core.search.framework.Node;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.

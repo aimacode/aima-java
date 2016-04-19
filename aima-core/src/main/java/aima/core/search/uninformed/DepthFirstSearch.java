@@ -6,8 +6,8 @@ import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.QueueSearch;
 import aima.core.search.framework.Search;
+import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.util.datastructure.LIFOQueue;
 
 /**
@@ -16,10 +16,11 @@ import aima.core.util.datastructure.LIFOQueue;
  * Depth-first search always expands the deepest node in the current frontier of
  * the search tree. <br>
  * <br>
- * <b>Note:</b> Supports both Tree and Graph based versions by assigning an
- * instance of TreeSearch or GraphSearch to its constructor.
+ * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch by assigning an
+ * instance of the corresponding QueueSearch implementation to its constructor.
  * 
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class DepthFirstSearch implements Search {

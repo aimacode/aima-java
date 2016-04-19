@@ -1,9 +1,13 @@
-package aima.core.search.framework;
+package aima.core.search.framework.qsearch;
 
 import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.Problem;
+import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
 import aima.core.util.datastructure.Queue;
 

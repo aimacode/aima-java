@@ -1,10 +1,12 @@
-package aima.core.search.framework;
+package aima.core.search.framework.qsearch;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.Problem;
 import aima.core.util.datastructure.Queue;
 
 /**

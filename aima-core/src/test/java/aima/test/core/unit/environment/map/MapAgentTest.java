@@ -11,7 +11,7 @@ import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
-import aima.core.search.framework.GraphSearchReducedFrontier;
+import aima.core.search.framework.qsearch.GraphSearchReducedFrontier;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**

@@ -1,7 +1,7 @@
 package aima.core.search.informed;
 
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.QueueSearch;
+import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 93.<br>
@@ -17,6 +17,7 @@ import aima.core.search.framework.QueueSearch;
  * 
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class AStarSearch extends BestFirstSearch {
 
@@ -24,14 +25,14 @@ public class AStarSearch extends BestFirstSearch {
 	 * Constructs an A* search from the specified search problem and heuristic
 	 * function
 	 * 
-	 * @param search
-	 *            a search problem
+	 * @param impl
+	 *            a search space exploration strategy.
 	 * @param hf
 	 *            a heuristic function <em>h(n)</em>, which estimates the cost
 	 *            of the cheapest path from the state at node <em>n</em> to a
 	 *            goal state.
 	 */
-	public AStarSearch(QueueSearch search, HeuristicFunction hf) {
-		super(search, new AStarEvaluationFunction(hf));
+	public AStarSearch(QueueSearch impl, HeuristicFunction hf) {
+		super(impl, new AStarEvaluationFunction(hf));
 	}
 }

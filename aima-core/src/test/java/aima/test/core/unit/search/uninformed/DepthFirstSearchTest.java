@@ -9,10 +9,10 @@ import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 
 public class DepthFirstSearchTest {
