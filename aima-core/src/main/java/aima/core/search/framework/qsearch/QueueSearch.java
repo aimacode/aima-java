@@ -1,6 +1,5 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -80,7 +79,7 @@ public abstract class QueueSearch {
 			}
 		}
 		// if the frontier is empty then return failure
-		return failure();
+		return SearchUtils.failure();
 	}
 
 	/**
@@ -141,9 +140,5 @@ public abstract class QueueSearch {
 	private List<Action> getSolution(Node node) {
 		metrics.set(METRIC_PATH_COST, node.getPathCost());
 		return SearchUtils.getSequenceOfActions(node);
-	}
-	
-	protected List<Action> failure() {
-		return Collections.emptyList();
 	}
 }

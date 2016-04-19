@@ -117,7 +117,7 @@ public class BidirectionalSearch extends QueueSearch {
 			}
 		}
 		// if the frontier is empty then return failure
-		return failure();
+		return SearchUtils.failure();
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class BidirectionalSearch extends QueueSearch {
 				orgNode = new Node(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else {
-				return failure();
+				return SearchUtils.failure();
 			}
 		}
 		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());

@@ -1,12 +1,12 @@
 package aima.core.search.uninformed;
 
-import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchUtils;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
@@ -38,7 +38,6 @@ public class IterativeDeepeningSearch implements Search {
 
 	private final Metrics metrics = new Metrics();
 
-	
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
 	public List<Action> search(Problem p) throws Exception {
@@ -50,19 +49,17 @@ public class IterativeDeepeningSearch implements Search {
 			List<Action> result = dls.search(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
-			if (!dls.isCutOff(result)) {
-				metrics.set(METRIC_PATH_COST, dls.getPathCost());
+			if (!dls.isCutOff(result))
 				return result;
-			}
 		}
-		return failure();
+		return SearchUtils.failure();
 	}
 
 	@Override
 	public Metrics getMetrics() {
 		return metrics;
 	}
-	
+
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
@@ -77,11 +74,7 @@ public class IterativeDeepeningSearch implements Search {
 
 	private void updateMetrics(Metrics dlsMetrics) {
 		metrics.set(METRIC_NODES_EXPANDED,
-				metrics.getInt(METRIC_NODES_EXPANDED)
-						+ dlsMetrics.getInt(METRIC_NODES_EXPANDED));
-	}
-	
-	private List<Action> failure() {
-		return Collections.emptyList();
+				metrics.getInt(METRIC_NODES_EXPANDED) + dlsMetrics.getInt(METRIC_NODES_EXPANDED));
+		metrics.set(METRIC_PATH_COST, dlsMetrics.getDouble(METRIC_PATH_COST));
 	}
 }

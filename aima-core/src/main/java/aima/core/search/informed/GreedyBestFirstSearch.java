@@ -20,7 +20,7 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 	 * and heuristic function.
 	 * 
 	 * @param impl
-	 *            a search problem
+	 *            a search space exploration strategy.
 	 * @param hf
 	 *            a heuristic function <em>h(n)</em>, which estimates the
 	 *            cheapest path from the state at node <em>n</em> to a goal

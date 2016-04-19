@@ -63,7 +63,7 @@ public class BidirectionalSearch implements Search {
 	public List<Action> search(Problem p) throws Exception {
 
 		throw new OperationNotSupportedException(
-				"Sorry, currently not available. Use version in search framework package instead.");
+				"Sorry, currently not available. Use version in framework.qsearch package instead.");
 	}
 
 	public List<Action> searchOutOfOrder(Problem p) throws Exception {

@@ -65,7 +65,7 @@ public class SearchUtils {
 	}
 
 	/** Returns an empty action list. */
-	public List<Action> failure() {
+	public static List<Action> failure() {
 		return Collections.emptyList();
 	}
 

@@ -16,8 +16,9 @@ import aima.core.util.datastructure.LIFOQueue;
  * Depth-first search always expands the deepest node in the current frontier of
  * the search tree. <br>
  * <br>
- * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch by assigning an
- * instance of the corresponding QueueSearch implementation to its constructor.
+ * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch. Just
+ * provide an instance of the desired QueueSearch implementation to the
+ * constructor!
  * 
  * @author Ravi Mohan
  * @author Ruediger Lunde

@@ -35,11 +35,12 @@ import aima.core.util.datastructure.FIFOQueue;
  * 
  * Figure 3.11 Breadth-first search on a graph.<br>
  * <br>
- * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch by
- * assigning an instance of the corresponding QueueSearch implementation to its
- * constructor.
+ * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch. Just
+ * provide an instance of the desired QueueSearch implementation to the
+ * constructor!
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class BreadthFirstSearch implements Search {
 
@@ -50,9 +51,9 @@ public class BreadthFirstSearch implements Search {
 	}
 
 	public BreadthFirstSearch(QueueSearch impl) {
+		implementation = impl;
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
-		implementation = impl;
 		implementation.setCheckGoalBeforeAddingToFrontier(true);
 	}
 

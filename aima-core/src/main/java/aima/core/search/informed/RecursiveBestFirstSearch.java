@@ -94,38 +94,6 @@ public class RecursiveBestFirstSearch implements Search {
 		metrics.set(METRIC_PATH_COST, 0.0);
 	}
 
-	/**
-	 * Increases the maximum recursive depth if the specified depth is greater
-	 * than the current maximum.
-	 * 
-	 * @param recursiveDepth
-	 *            the depth of the current path
-	 */
-	public void setMaxRecursiveDepth(int recursiveDepth) {
-		int maxRdepth = metrics.getInt(METRIC_MAX_RECURSIVE_DEPTH);
-		if (recursiveDepth > maxRdepth) {
-			metrics.set(METRIC_MAX_RECURSIVE_DEPTH, recursiveDepth);
-		}
-	}
-
-	/**
-	 * Returns the maximum recursive depth.
-	 * 
-	 * @return the maximum recursive depth.
-	 */
-	public int getMaxRecursiveDepth() {
-		return metrics.getInt(METRIC_MAX_RECURSIVE_DEPTH);
-	}
-
-	/**
-	 * Returns the path cost.
-	 * 
-	 * @return the path cost
-	 */
-	public double getPathCost() {
-		return metrics.getDouble(METRIC_PATH_COST);
-	}
-
 	//
 	// PRIVATE METHODS
 	//
@@ -133,7 +101,7 @@ public class RecursiveBestFirstSearch implements Search {
 	// a new f-cost limit
 	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit, int recursiveDepth) {
 
-		setMaxRecursiveDepth(recursiveDepth);
+		updateMetrics(recursiveDepth);
 
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 		if (SearchUtils.isGoalState(p, n)) {
@@ -210,38 +178,53 @@ public class RecursiveBestFirstSearch implements Search {
 
 		return lidx;
 	}
-}
-
-class SearchResult {
-	public enum SearchOutcome {
-		FAILURE, SOLUTION_FOUND
-	};
-
-	private Node solution;
-
-	private SearchOutcome outcome;
-
-	private final Double fCostLimit;
-
-	public SearchResult(Node solution, Double fCostLimit) {
-		if (null == solution) {
-			this.outcome = SearchOutcome.FAILURE;
-		} else {
-			this.outcome = SearchOutcome.SOLUTION_FOUND;
-			this.solution = solution;
+	
+	/**
+	 * Increases the maximum recursive depth if the specified depth is greater
+	 * than the current maximum.
+	 * 
+	 * @param recursiveDepth
+	 *            the depth of the current path
+	 */
+	private void updateMetrics(int recursiveDepth) {
+		int maxRdepth = metrics.getInt(METRIC_MAX_RECURSIVE_DEPTH);
+		if (recursiveDepth > maxRdepth) {
+			metrics.set(METRIC_MAX_RECURSIVE_DEPTH, recursiveDepth);
 		}
-		this.fCostLimit = fCostLimit;
 	}
+	
+	static class SearchResult {
+		public enum SearchOutcome {
+			FAILURE, SOLUTION_FOUND
+		};
 
-	public SearchOutcome getOutcome() {
-		return outcome;
-	}
+		private Node solution;
 
-	public Node getSolution() {
-		return solution;
-	}
+		private SearchOutcome outcome;
 
-	public Double getFCostLimit() {
-		return fCostLimit;
+		private final Double fCostLimit;
+
+		public SearchResult(Node solution, Double fCostLimit) {
+			if (null == solution) {
+				this.outcome = SearchOutcome.FAILURE;
+			} else {
+				this.outcome = SearchOutcome.SOLUTION_FOUND;
+				this.solution = solution;
+			}
+			this.fCostLimit = fCostLimit;
+		}
+
+		public SearchOutcome getOutcome() {
+			return outcome;
+		}
+
+		public Node getSolution() {
+			return solution;
+		}
+
+		public Double getFCostLimit() {
+			return fCostLimit;
+		}
 	}
 }
+

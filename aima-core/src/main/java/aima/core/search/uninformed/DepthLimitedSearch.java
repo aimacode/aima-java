@@ -42,16 +42,40 @@ import aima.core.search.framework.SearchUtils;
  * @author Ruediger Lunde
  */
 public class DepthLimitedSearch implements Search {
-	
+
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
-	
+
 	private static List<Action> cutoffResult = null;
-	protected Metrics metrics = new Metrics();
 	private final int limit;
+	private Metrics metrics = new Metrics();
 
 	public DepthLimitedSearch(int limit) {
 		this.limit = limit;
+	}
+
+	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
+	// failure/cutoff
+	/**
+	 * Returns a list of actions to the goal if the goal was found, a list
+	 * containing a single NoOp Action if already at the goal, an empty list if
+	 * the goal could not be found, or a list containing a single
+	 * CutOffIndicatorAction.CUT_OFF if the search reached its limit without
+	 * finding a goal.
+	 * 
+	 * @return if goal found, the list of actions to the Goal. If already at the
+	 *         goal you will receive a List with a single NoOp Action in it. If
+	 *         fail to find the Goal, an empty list will be returned to indicate
+	 *         that the search failed. If the search was cutoff (i.e. reached
+	 *         its limit without finding a goal) a List with one
+	 *         CutOffIndicatorAction.CUT_OFF in it will be returned (Note: this
+	 *         is a NoOp action).
+	 */
+	public List<Action> search(Problem p) throws Exception {
+		clearInstrumentation();
+		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
+		// limit)
+		return recursiveDLS(new Node(p.getInitialState()), p, limit);
 	}
 
 	/**
@@ -65,8 +89,7 @@ public class DepthLimitedSearch implements Search {
 	 *         reached it limit without finding a goal.
 	 */
 	public boolean isCutOff(List<Action> result) {
-		return 1 == result.size()
-				&& CutOffIndicatorAction.CUT_OFF.equals(result.get(0));
+		return 1 == result.size() && CutOffIndicatorAction.CUT_OFF.equals(result.get(0));
 	}
 
 	/**
@@ -83,53 +106,19 @@ public class DepthLimitedSearch implements Search {
 		return 0 == result.size();
 	}
 
-	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
-	// failure/cutoff
-	/**
-	 * Returns a list of actions to the goal if the goal was found, a list
-	 * containing a single NoOp Action if already at the goal, an empty list if
-	 * the goal could not be found, or a list containing a single
-	 * CutOffIndicatorAction.CUT_OFF if the search reached its limit without
-	 * finding a goal.
-	 * 
-	 * @param p
-	 * @return if goal found, the list of actions to the Goal. If already at the
-	 *         goal you will receive a List with a single NoOp Action in it. If
-	 *         fail to find the Goal, an empty list will be returned to indicate
-	 *         that the search failed. If the search was cutoff (i.e. reached
-	 *         its limit without finding a goal) a List with one
-	 *         CutOffIndicatorAction.CUT_OFF in it will be returned (Note: this
-	 *         is a NoOp action).
-	 */
-	public List<Action> search(Problem p) throws Exception {
-		clearInstrumentation();
-		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
-		// limit)
-		return recursiveDLS(new Node(p.getInitialState()), p, limit);
-	}
-	
 	/**
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
 		return metrics;
 	}
-	
+
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
 	public void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
-	}
-
-	/**
-	 * Returns the path cost metric.
-	 * 
-	 * @return the path cost metric
-	 */
-	public double getPathCost() {
-		return metrics.getDouble(METRIC_PATH_COST);
 	}
 
 	//
@@ -169,7 +158,7 @@ public class DepthLimitedSearch implements Search {
 			if (cutoff_occurred) {
 				return cutoff();
 			} else {
-				return failure();
+				return SearchUtils.failure();
 			}
 		}
 	}
@@ -183,9 +172,5 @@ public class DepthLimitedSearch implements Search {
 			cutoffResult = Collections.unmodifiableList(cutoffResult);
 		}
 		return cutoffResult;
-	}
-
-	private List<Action> failure() {
-		return Collections.emptyList();
 	}
 }
