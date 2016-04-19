@@ -44,7 +44,7 @@ NOTE: While we would like to complete the set of algorithms on the AIMA3e branch
 |3|85|Depth-first Search|[DepthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java)|
 |3.17|88|Depth-Limited-Search|[DepthLimitedSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java)|
 |3.18|89|Iterative-Deepening-Search|[IterativeDeepeningSearch](/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java)|
-|3|90|Bidirectional search|[BidirectionalSearch](/aima-core/src/main/java/aima/core/search/core/qsearch/BidirectionalSearch.java)|
+|3|90|Bidirectional search|[BidirectionalSearch](/aima-core/src/main/java/aima/core/search/qsearch/BidirectionalSearch.java)|
 |3|92|Best-First search|[BestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java)|
 |3|92|Greedy best-First search|[GreedyBestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java)|
 |3|93|A\* Search|[AStarSearch](/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java)|
