@@ -20,18 +20,20 @@ import aimax.osm.data.entities.WayRef;
  */
 public class OsmActionsFunction implements ActionsFunction {
 
+	public static enum OneWayMode {IGNORE, TRAVEL_FORWARD, TRAVEL_BACKWARDS}; 
+	
 	protected MapWayFilter filter;
-	private boolean ignoreOneWays;
+	private OneWayMode oneWayMode;
 	/**
 	 * Goal node, possibly null. If a goal is specified, travel actions will
 	 * include paths with size greater one.
 	 */
 	protected MapNode goal;
 
-	public OsmActionsFunction(MapWayFilter filter, boolean ignoreOneWays,
+	public OsmActionsFunction(MapWayFilter filter, OneWayMode oneWayMode,
 			MapNode goal) {
 		this.filter = filter;
-		this.ignoreOneWays = ignoreOneWays;
+		this.oneWayMode = oneWayMode;
 		this.goal = goal;
 	}
 
@@ -46,6 +48,7 @@ public class OsmActionsFunction implements ActionsFunction {
 				int nodeIdx = wref.getNodeIdx();
 				List<MapNode> wayNodes = way.getNodes();
 				MapNode to;
+				if (oneWayMode != OneWayMode.TRAVEL_BACKWARDS || !way.isOneway())
 				for (int idx = nodeIdx + 1; idx < wayNodes.size(); idx++) {
 					to = wayNodes.get(idx);
 					if (goal == null || goal == to
@@ -55,7 +58,7 @@ public class OsmActionsFunction implements ActionsFunction {
 						break;
 					}
 				}
-				if (!way.isOneway() || ignoreOneWays) {
+				if (oneWayMode != OneWayMode.TRAVEL_FORWARD || !way.isOneway()) {
 					for (int idx = nodeIdx - 1; idx >= 0; idx--) {
 						to = wayNodes.get(idx);
 						if (goal == null || goal == to

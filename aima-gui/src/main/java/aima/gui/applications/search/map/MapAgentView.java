@@ -148,7 +148,7 @@ public class MapAgentView extends EmptyEnvironmentView {
 		Map envMap = getMapEnv().getMap();
 		for (String l1 : envMap.getLocations()) {
 			Point2D pt1 = envMap.getPosition(l1);
-			List<String> linkedLocs = envMap.getLocationsLinkedTo(l1);
+			List<String> linkedLocs = envMap.getPossibleNextLocations(l1);
 			for (String l2 : linkedLocs) {
 				Point2D pt2 = envMap.getPosition(l2);
 				g2.setColor(Color.lightGray);

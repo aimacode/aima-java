@@ -32,14 +32,14 @@ public class MapTest {
 		ArrayList<String> locations = new ArrayList<String>();
 		List<String> linkedTo;
 
-		linkedTo = aMap.getLocationsLinkedTo("A");
+		linkedTo = aMap.getPossibleNextLocations("A");
 		locations.clear();
 		locations.add("B");
 		locations.add("C");
 		Assert.assertTrue(locations.containsAll(linkedTo)
 				&& linkedTo.size() == 2);
 
-		linkedTo = aMap.getLocationsLinkedTo("B");
+		linkedTo = aMap.getPossibleNextLocations("B");
 		locations.clear();
 		locations.add("A");
 		locations.add("C");
@@ -47,7 +47,7 @@ public class MapTest {
 		Assert.assertTrue(locations.containsAll(linkedTo)
 				&& linkedTo.size() == 3);
 
-		linkedTo = aMap.getLocationsLinkedTo("C");
+		linkedTo = aMap.getPossibleNextLocations("C");
 		locations.clear();
 		locations.add("A");
 		locations.add("B");
@@ -55,13 +55,13 @@ public class MapTest {
 		Assert.assertTrue(locations.containsAll(linkedTo)
 				&& linkedTo.size() == 3);
 
-		linkedTo = aMap.getLocationsLinkedTo("D");
+		linkedTo = aMap.getPossibleNextLocations("D");
 		locations.clear();
 		locations.add("C");
 		Assert.assertTrue(locations.containsAll(linkedTo)
 				&& linkedTo.size() == 1);
 
-		linkedTo = aMap.getLocationsLinkedTo("E");
+		linkedTo = aMap.getPossibleNextLocations("E");
 		Assert.assertTrue(linkedTo.size() == 0);
 	}
 

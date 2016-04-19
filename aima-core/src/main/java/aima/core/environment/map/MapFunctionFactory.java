@@ -16,32 +16,39 @@ import aima.core.search.framework.ResultFunction;
  * 
  */
 public class MapFunctionFactory {
-	private static ResultFunction _resultFunction = null;
-	private static PerceptToStateFunction _perceptToStateFunction = null;
+	private static ResultFunction resultFunction;
+	private static PerceptToStateFunction perceptToStateFunction;
 
 	public static ActionsFunction getActionsFunction(Map map) {
-		return new MapActionsFunction(map);
+		return new MapActionsFunction(map, false);
+	}
+	
+	public static ActionsFunction getReverseActionsFunction(Map map) {
+		return new MapActionsFunction(map, true);
 	}
 
 	public static ResultFunction getResultFunction() {
-		if (null == _resultFunction) {
-			_resultFunction = new MapResultFunction();
+		if (null == resultFunction) {
+			resultFunction = new MapResultFunction();
 		}
-		return _resultFunction;
+		return resultFunction;
 	}
 
 	private static class MapActionsFunction implements ActionsFunction {
 		private Map map = null;
+		private boolean reverseMode;
 
-		public MapActionsFunction(Map map) {
+		public MapActionsFunction(Map map, boolean reverseMode) {
 			this.map = map;
+			this.reverseMode = reverseMode;
 		}
 
 		public Set<Action> actions(Object state) {
 			Set<Action> actions = new LinkedHashSet<Action>();
 			String location = state.toString();
 
-			List<String> linkedLocations = map.getLocationsLinkedTo(location);
+			List<String> linkedLocations = reverseMode ? map.getPossiblePrevLocations(location)
+					: map.getPossibleNextLocations(location);
 			for (String linkLoc : linkedLocations) {
 				actions.add(new MoveToAction(linkLoc));
 			}
@@ -51,10 +58,10 @@ public class MapFunctionFactory {
 	}
 
 	public static PerceptToStateFunction getPerceptToStateFunction() {
-		if (null == _perceptToStateFunction) {
-			_perceptToStateFunction = new MapPerceptToStateFunction();
+		if (null == perceptToStateFunction) {
+			perceptToStateFunction = new MapPerceptToStateFunction();
 		}
-		return _perceptToStateFunction;
+		return perceptToStateFunction;
 	}
 
 	private static class MapResultFunction implements ResultFunction {
@@ -75,11 +82,9 @@ public class MapFunctionFactory {
 		}
 	}
 
-	private static class MapPerceptToStateFunction implements
-			PerceptToStateFunction {
+	private static class MapPerceptToStateFunction implements PerceptToStateFunction {
 		public Object getState(Percept p) {
-			return ((DynamicPercept) p)
-					.getAttribute(DynAttributeNames.PERCEPT_IN);
+			return ((DynamicPercept) p).getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 	}
 }

@@ -14,6 +14,7 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.WayRef;
+import aimax.osm.routing.OsmActionsFunction.OneWayMode;
 
 /**
  * Adapter class which provides an aima-core <code>Map</code> interface for
@@ -37,14 +38,14 @@ public class MapAdapter implements Map {
 	 * Controls whether a way which is marked as one-way can be traveled in both
 	 * directions.
 	 */
-	boolean ignoreOneways;
+	boolean ignoreOneWayRoads;
 
 	public MapAdapter(OsmMap map) {
 		this.osmMap = map;
 	}
 
 	public void ignoreOneways(boolean state) {
-		ignoreOneways = state;
+		ignoreOneWayRoads = state;
 	}
 
 	public void setMapWayFilter(MapWayFilter filter) {
@@ -59,8 +60,7 @@ public class MapAdapter implements Map {
 	public Double getDistance(String fromLocation, String toLocation) {
 		MapNode node1 = getWayNode(fromLocation);
 		MapNode node2 = getWayNode(toLocation);
-		if (node1 != null && node2 != null
-				&& getLocationsLinkedTo(fromLocation).contains(toLocation))
+		if (node1 != null && node2 != null && getPossibleNextLocations(fromLocation).contains(toLocation))
 			return new Position(node1).getDistKM(node2);
 		else
 			return null;
@@ -84,9 +84,18 @@ public class MapAdapter implements Map {
 	}
 
 	@Override
-	public List<String> getLocationsLinkedTo(String fromLocation) {
+	public List<String> getPossibleNextLocations(String location) {
+		return getReachableLocations(location, ignoreOneWayRoads ? OneWayMode.IGNORE : OneWayMode.TRAVEL_FORWARD);
+	}
+	
+	@Override
+	public List<String> getPossiblePrevLocations(String location) {
+		return getReachableLocations(location, ignoreOneWayRoads ? OneWayMode.IGNORE : OneWayMode.TRAVEL_BACKWARDS);
+	}
+
+	private List<String> getReachableLocations(String location, OneWayMode oneWayMode) {
 		List<String> result = new ArrayList<String>();
-		MapNode node = getWayNode(fromLocation);
+		MapNode node = getWayNode(location);
 		if (node != null) {
 			for (WayRef wref : node.getWayRefs()) {
 				if (filter == null || filter.isAccepted(wref.getWay())) {
@@ -94,11 +103,12 @@ public class MapAdapter implements Map {
 					int nodeIdx = wref.getNodeIdx();
 					List<MapNode> wayNodes = way.getNodes();
 					MapNode next;
-					if (wayNodes.size() > nodeIdx + 1) {
+					if (wayNodes.size() > nodeIdx + 1
+							&& (oneWayMode != OneWayMode.TRAVEL_BACKWARDS || !way.isOneway())) {
 						next = wayNodes.get(nodeIdx + 1);
 						result.add(Long.toString(next.getId()));
 					}
-					if (nodeIdx > 0 && (!way.isOneway() || ignoreOneways)) {
+					if (nodeIdx > 0 && (oneWayMode != OneWayMode.TRAVEL_FORWARD || !way.isOneway())) {
 						next = wayNodes.get(nodeIdx - 1);
 						result.add(Long.toString(next.getId()));
 					}

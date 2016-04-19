@@ -1,10 +1,12 @@
 package aimax.osm.routing;
 
+import aima.core.search.framework.BidirectionalProblem;
 import aima.core.search.framework.DefaultGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.StepCostFunction;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.routing.OsmActionsFunction.OneWayMode;
 
 /**
  * Implements a route finding problem whose representation is directly based on
@@ -14,7 +16,10 @@ import aimax.osm.data.entities.MapNode;
  * 
  * @author Ruediger Lunde
  */
-public class RouteFindingProblem extends Problem {
+public class RouteFindingProblem extends Problem implements BidirectionalProblem {
+
+	Problem reverseProblem;
+
 	/**
 	 * Creates a new route planning problem.
 	 * 
@@ -25,13 +30,8 @@ public class RouteFindingProblem extends Problem {
 	 * @param filter
 	 *            A filter for ways constraining routing results.
 	 */
-	public RouteFindingProblem(MapNode from, MapNode to, MapWayFilter filter,
-			boolean ignoreOneWays) {
-		initialState = from;
-		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
-		resultFunction = new OsmResultFunction();
-		goalTest = new DefaultGoalTest(to);
-		stepCostFunction = new OsmDistanceStepCostFunction();
+	public RouteFindingProblem(MapNode from, MapNode to, MapWayFilter filter, boolean ignoreOneWays) {
+		this(from, to, filter, ignoreOneWays, new OsmDistanceStepCostFunction());
 	}
 
 	/**
@@ -46,12 +46,26 @@ public class RouteFindingProblem extends Problem {
 	 * @param costs
 	 *            Maps <code>OsmMoveAction</code>s to costs.
 	 */
-	public RouteFindingProblem(MapNode from, MapNode to, MapWayFilter filter,
-			boolean ignoreOneWays, StepCostFunction costs) {
+	public RouteFindingProblem(MapNode from, MapNode to, MapWayFilter filter, boolean ignoreOneWays,
+			StepCostFunction costs) {
+		OneWayMode fMode = ignoreOneWays ? OneWayMode.IGNORE : OneWayMode.TRAVEL_FORWARD;
+		OneWayMode rMode = ignoreOneWays ? OneWayMode.IGNORE : OneWayMode.TRAVEL_BACKWARDS;
+
 		initialState = from;
-		actionsFunction = new OsmActionsFunction(filter, ignoreOneWays, to);
+		actionsFunction = new OsmActionsFunction(filter, fMode, to);
 		resultFunction = new OsmResultFunction();
 		goalTest = new DefaultGoalTest(to);
 		stepCostFunction = costs;
+
+		reverseProblem = new Problem(to, new OsmActionsFunction(filter, rMode, from), resultFunction,
+				new DefaultGoalTest(from), costs);
+	}
+
+	public Problem getOriginalProblem() {
+		return this;
+	}
+
+	public Problem getReverseProblem() {
+		return reverseProblem;
 	}
 }

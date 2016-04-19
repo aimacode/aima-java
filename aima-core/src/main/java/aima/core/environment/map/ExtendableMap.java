@@ -60,10 +60,20 @@ public class ExtendableMap implements Map {
 	 * Answers to the question: Where can I get, following one of the
 	 * connections starting at the specified location?
 	 */
-	public List<String> getLocationsLinkedTo(String fromLocation) {
-		List<String> result = links.getSuccessors(fromLocation);
+	public List<String> getPossibleNextLocations(String location) {
+		List<String> result = links.getSuccessors(location);
 		Collections.sort(result);
 		return result;
+	}
+
+	/**
+	 * Answers to the question: From where can I reach a specified location,
+	 * following one of the map connections? This implementation just calls
+	 * {@link #getPossibleNextLocations(String)} as the underlying graph structure
+	 * cannot be traversed efficiently in reverse order.
+	 */
+	public List<String> getPossiblePrevLocations(String location) {
+		return getPossibleNextLocations(location);
 	}
 
 	/**
@@ -75,8 +85,7 @@ public class ExtendableMap implements Map {
 	}
 
 	/** Adds a one-way connection to the map. */
-	public void addUnidirectionalLink(String fromLocation, String toLocation,
-			Double distance) {
+	public void addUnidirectionalLink(String fromLocation, String toLocation, Double distance) {
 		links.set(fromLocation, toLocation, distance);
 	}
 
@@ -84,8 +93,7 @@ public class ExtendableMap implements Map {
 	 * Adds a connection which can be traveled in both direction. Internally,
 	 * such a connection is represented as two one-way connections.
 	 */
-	public void addBidirectionalLink(String fromLocation, String toLocation,
-			Double distance) {
+	public void addBidirectionalLink(String fromLocation, String toLocation, Double distance) {
 		links.set(fromLocation, toLocation, distance);
 		links.set(toLocation, fromLocation, distance);
 	}
@@ -131,8 +139,7 @@ public class ExtendableMap implements Map {
 	 *            the reference position
 	 */
 	public void setDistAndDirToRefLocation(String loc, double dist, int dir) {
-		Point2D coords = new Point2D(-Math.sin(dir * Math.PI / 180.0) * dist,
-				Math.cos(dir * Math.PI / 180.0) * dist);
+		Point2D coords = new Point2D(-Math.sin(dir * Math.PI / 180.0) * dist, Math.cos(dir * Math.PI / 180.0) * dist);
 		links.addVertex(loc);
 		locationPositions.put(loc, coords);
 	}
