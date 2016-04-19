@@ -94,7 +94,7 @@ public class BidirectionalSearch implements Search {
 		rpFrontier.insert(rpNode);
 
 		setQueueSize(opFrontier.size() + rpFrontier.size());
-		setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
+		//setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded()); // TODO
 
 		while (!(opFrontier.isEmpty() && rpFrontier.isEmpty())) {
 			// Determine the nodes to work with and expand their fringes
@@ -118,7 +118,7 @@ public class BidirectionalSearch implements Search {
 			}
 
 			setQueueSize(opFrontier.size() + rpFrontier.size());
-			setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded());
+			//setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded()); // TODO
 
 			//
 			// First Check if either frontier contains the other's state
@@ -297,7 +297,7 @@ public class BidirectionalSearch implements Search {
 			// from the original problem first
 			setPathCost(originalPath.getPathCost());
 			searchOutcome = SearchOutcome.PATH_FOUND_FROM_ORIGINAL_PROBLEM;
-			actions = SearchUtils.actionsFromNodes(originalPath.getPathFromRoot());
+			actions = SearchUtils.getSequenceOfActions(originalPath);
 		} else {
 			List<Node> nodePath = new ArrayList<Node>();
 			Object originalState = null;

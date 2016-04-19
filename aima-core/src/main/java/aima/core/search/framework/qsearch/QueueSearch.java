@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
@@ -20,11 +20,13 @@ import aima.core.util.datastructure.Queue;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public abstract class QueueSearch extends NodeExpander {
+public abstract class QueueSearch {
+	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_QUEUE_SIZE = "queueSize";
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 	public static final String METRIC_PATH_COST = "pathCost";
 
+	protected Metrics metrics = new Metrics();
 	protected Queue<Node> frontier;
 	protected boolean checkGoalBeforeAddingToFrontier = false;
 
@@ -50,7 +52,7 @@ public abstract class QueueSearch extends NodeExpander {
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
-		if (isCheckGoalBeforeAddingToFrontier()) {
+		if (checkGoalBeforeAddingToFrontier) {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
 		}
@@ -68,7 +70,8 @@ public abstract class QueueSearch extends NodeExpander {
 			}
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			for (Node childNode : expandNode(nodeToExpand, problem)) {
+			metrics.incrementInt(METRIC_NODES_EXPANDED);
+			for (Node childNode : SearchUtils.expandNode(nodeToExpand, problem)) {
 				if (checkGoalBeforeAddingToFrontier) {
 					if (SearchUtils.isGoalState(problem, childNode))
 						return getSolution(childNode);
@@ -99,10 +102,6 @@ public abstract class QueueSearch extends NodeExpander {
 	 */
 	protected abstract boolean isFrontierEmpty();
 
-	public boolean isCheckGoalBeforeAddingToFrontier() {
-		return checkGoalBeforeAddingToFrontier;
-	}
-
 	/**
 	 * Enables optimization for FIFO queue based search, especially breadth
 	 * first search.
@@ -113,14 +112,19 @@ public abstract class QueueSearch extends NodeExpander {
 		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
 	}
 
-	private List<Action> getSolution(Node node) {
-		metrics.set(METRIC_PATH_COST, node.getPathCost());
-		return SearchUtils.actionsFromNodes(node.getPathFromRoot());
+	
+	/**
+	 * Returns all the search metrics.
+	 */
+	public Metrics getMetrics() {
+		return metrics;
 	}
-
-	@Override
+	
+	/**
+	 * Sets all metrics to zero.
+	 */
 	public void clearInstrumentation() {
-		super.clearInstrumentation();
+		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_QUEUE_SIZE, 0);
 		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);
 		metrics.set(METRIC_PATH_COST, 0);
@@ -134,9 +138,11 @@ public abstract class QueueSearch extends NodeExpander {
 		}
 	}
 	
-	//
-	// PRIVATE METHODS
-	//
+	private List<Action> getSolution(Node node) {
+		metrics.set(METRIC_PATH_COST, node.getPathCost());
+		return SearchUtils.getSequenceOfActions(node);
+	}
+	
 	protected List<Action> failure() {
 		return Collections.emptyList();
 	}

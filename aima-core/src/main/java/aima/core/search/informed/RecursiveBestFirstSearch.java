@@ -5,8 +5,8 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.EvaluationFunction;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
@@ -40,16 +40,18 @@ import aima.core.search.framework.SearchUtils;
  * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class RecursiveBestFirstSearch extends NodeExpander implements Search {
+public class RecursiveBestFirstSearch implements Search {
 
-	private final EvaluationFunction evaluationFunction;
-
-	private static final String MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
-
-	private static final String PATH_COST = "pathCost";
+	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
+	public static final String METRIC_MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
+	public static final String METRIC_PATH_COST = "pathCost";
 
 	private static final Double INFINITY = Double.MAX_VALUE;
+
+	private final EvaluationFunction evaluationFunction;
+	private Metrics metrics = new Metrics();
 
 	public RecursiveBestFirstSearch(EvaluationFunction ef) {
 		evaluationFunction = ef;
@@ -67,8 +69,8 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		SearchResult sr = rbfs(p, n, evaluationFunction.f(n), INFINITY, 0);
 		if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {
 			Node s = sr.getSolution();
-			actions = SearchUtils.actionsFromNodes(s.getPathFromRoot());
-			setPathCost(s.getPathCost());
+			actions = SearchUtils.getSequenceOfActions(s);
+			metrics.set(METRIC_PATH_COST, s.getPathCost());
 		}
 
 		// Empty List can indicate already at Goal
@@ -77,13 +79,19 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	}
 
 	/**
+	 * Returns all the search metrics.
+	 */
+	public Metrics getMetrics() {
+		return metrics;
+	}
+
+	/**
 	 * Sets all metrics to zero.
 	 */
-	@Override
 	public void clearInstrumentation() {
-		super.clearInstrumentation();
-		metrics.set(MAX_RECURSIVE_DEPTH, 0);
-		metrics.set(PATH_COST, 0.0);
+		metrics.set(METRIC_NODES_EXPANDED, 0);
+		metrics.set(METRIC_MAX_RECURSIVE_DEPTH, 0);
+		metrics.set(METRIC_PATH_COST, 0.0);
 	}
 
 	/**
@@ -94,9 +102,9 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	 *            the depth of the current path
 	 */
 	public void setMaxRecursiveDepth(int recursiveDepth) {
-		int maxRdepth = metrics.getInt(MAX_RECURSIVE_DEPTH);
+		int maxRdepth = metrics.getInt(METRIC_MAX_RECURSIVE_DEPTH);
 		if (recursiveDepth > maxRdepth) {
-			metrics.set(MAX_RECURSIVE_DEPTH, recursiveDepth);
+			metrics.set(METRIC_MAX_RECURSIVE_DEPTH, recursiveDepth);
 		}
 	}
 
@@ -106,7 +114,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	 * @return the maximum recursive depth.
 	 */
 	public int getMaxRecursiveDepth() {
-		return metrics.getInt(MAX_RECURSIVE_DEPTH);
+		return metrics.getInt(METRIC_MAX_RECURSIVE_DEPTH);
 	}
 
 	/**
@@ -115,17 +123,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	 * @return the path cost
 	 */
 	public double getPathCost() {
-		return metrics.getDouble(PATH_COST);
-	}
-
-	/**
-	 * Sets the path cost.
-	 * 
-	 * @param pathCost
-	 *            the cost of the path
-	 */
-	public void setPathCost(Double pathCost) {
-		metrics.set(PATH_COST, pathCost);
+		return metrics.getDouble(METRIC_PATH_COST);
 	}
 
 	//
@@ -133,8 +131,7 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 	//
 	// function RBFS(problem, node, f_limit) returns a solution, or failure and
 	// a new f-cost limit
-	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit,
-			int recursiveDepth) {
+	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit, int recursiveDepth) {
 
 		setMaxRecursiveDepth(recursiveDepth);
 
@@ -146,9 +143,10 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 		// successors <- []
 		// for each action in problem.ACTION(node.STATE) do
 		// add CHILD-NODE(problem, node, action) into successors
-		List<Node> successors = expandNode(n, p);
+		metrics.incrementInt(METRIC_NODES_EXPANDED);
+		List<Node> successors = SearchUtils.expandNode(n, p);
 		// if successors is empty then return failure, infinity
-		if (0 == successors.size()) {
+		if (successors.isEmpty()) {
 			return new SearchResult(null, INFINITY);
 		}
 		double[] f = new double[successors.size()];
@@ -171,8 +169,8 @@ public class RecursiveBestFirstSearch extends NodeExpander implements Search {
 			// if best.f > f_limit then return failure, best.f
 			int altIndex = getNextBestFValueIndex(f, bestIndex);
 			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
-			SearchResult sr = rbfs(p, successors.get(bestIndex), f[bestIndex],
-					Math.min(fLimit, f[altIndex]), recursiveDepth + 1);
+			SearchResult sr = rbfs(p, successors.get(bestIndex), f[bestIndex], Math.min(fLimit, f[altIndex]),
+					recursiveDepth + 1);
 			f[bestIndex] = sr.getFCostLimit();
 			// if result != failure then return result
 			if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {

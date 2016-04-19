@@ -5,8 +5,8 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
@@ -35,18 +35,20 @@ import aima.core.util.CancelableThread;
  * 
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class HillClimbingSearch extends NodeExpander implements Search {
+public class HillClimbingSearch implements Search {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
 	};
+	
+	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 
 	private HeuristicFunction hf = null;
-
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
-
 	private Object lastState = null;
+	private Metrics metrics = new Metrics();
 
 	/**
 	 * Constructs a hill-climbing search from the specified heuristic function.
@@ -81,7 +83,8 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		Node neighbor = null;
 		// loop do
 		while (!CancelableThread.currIsCanceled()) {
-			List<Node> children = expandNode(current, p);
+			metrics.incrementInt(METRIC_NODES_EXPANDED);
+			List<Node> children = SearchUtils.expandNode(current, p);
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
 
@@ -91,14 +94,14 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
 				lastState = current.getState();
-				return SearchUtils.actionsFromNodes(current.getPathFromRoot());
+				return SearchUtils.getSequenceOfActions(current);
 			}
 			// current <- neighbor
 			current = neighbor;
 		}
 		return new ArrayList<Action>();
 	}
-
+	
 	/**
 	 * Returns SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
 	 * if the local maximum is not a goal state.
@@ -121,6 +124,20 @@ public class HillClimbingSearch extends NodeExpander implements Search {
 		return lastState;
 	}
 
+	/**
+	 * Returns all the search metrics.
+	 */
+	public Metrics getMetrics() {
+		return metrics;
+	}
+	
+	/**
+	 * Sets all metrics to zero.
+	 */
+	public void clearInstrumentation() {
+		metrics.set(METRIC_NODES_EXPANDED, 0);
+	}
+	
 	//
 	// PRIVATE METHODS
 	//

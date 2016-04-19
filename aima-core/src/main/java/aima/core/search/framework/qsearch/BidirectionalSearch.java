@@ -102,7 +102,8 @@ public class BidirectionalSearch extends QueueSearch {
 
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			for (Node cn : expandNode(nodeToExpand, problem)) {
+			metrics.incrementInt(METRIC_NODES_EXPANDED);
+			for (Node cn : SearchUtils.expandNode(nodeToExpand, problem)) {
 				ExtendedNode childNode = new ExtendedNode(cn, nodeToExpand.getProblemIndex());
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, childNode) != null) {
@@ -193,7 +194,7 @@ public class BidirectionalSearch extends QueueSearch {
 			}
 		}
 		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());
-		return SearchUtils.actionsFromNodes(orgNode.getPathFromRoot());
+		return SearchUtils.getSequenceOfActions(orgNode);
 	}
 
 	/**

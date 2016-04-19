@@ -6,8 +6,8 @@ import java.util.Random;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
@@ -40,19 +40,22 @@ import aima.core.util.Util;
  * 
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class SimulatedAnnealingSearch extends NodeExpander implements Search {
+public class SimulatedAnnealingSearch implements Search {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
 	};
-
+	
+	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
+	
 	private final HeuristicFunction hf;
 	private final Scheduler scheduler;
-
+	
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
-
 	private Object lastState = null;
+	private Metrics metrics = new Metrics();
 
 	/**
 	 * Constructs a simulated annealing search from the specified heuristic
@@ -100,12 +103,13 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 				if (SearchUtils.isGoalState(p, current)) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
-				ret = SearchUtils.actionsFromNodes(current.getPathFromRoot());
+				ret = SearchUtils.getSequenceOfActions(current);
 				lastState = current.getState();
 				break;
 			}
 
-			List<Node> children = expandNode(current, p);
+			metrics.incrementInt(METRIC_NODES_EXPANDED);
+			List<Node> children = SearchUtils.expandNode(current, p);
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
 				next = Util.selectRandomlyFromList(children);
@@ -150,6 +154,20 @@ public class SimulatedAnnealingSearch extends NodeExpander implements Search {
 		return lastState;
 	}
 
+	/**
+	 * Returns all the search metrics.
+	 */
+	public Metrics getMetrics() {
+		return metrics;
+	}
+	
+	/**
+	 * Sets all metrics to zero.
+	 */
+	public void clearInstrumentation() {
+		metrics.set(METRIC_NODES_EXPANDED, 0);
+	}
+	
 	//
 	// PRIVATE METHODS
 	//
