@@ -35,8 +35,8 @@ NOTE: While we would like to complete the set of algorithms on the AIMA3e branch
 |3|66|Problem|[Problem](/aima-core/src/main/java/aima/core/search/framework/Problem.java)|
 |3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java)|
 |3.2|68|Romania|[SimplifiedRoadMapOfPartOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java)|
-|3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java)|
-|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java)|
+|3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/TreeSearch.java)|
+|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch.java)|
 |3.10|79|Node|[Node](/aima-core/src/main/java/aima/core/search/framework/Node.java)|
 |3|79|Queue|[Queue](/aima-core/src/main/java/aima/core/util/datastructure/Queue.java)|
 |3.11|82|Breadth-First-Search|[BreadthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java)|
@@ -44,7 +44,7 @@ NOTE: While we would like to complete the set of algorithms on the AIMA3e branch
 |3|85|Depth-first Search|[DepthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java)|
 |3.17|88|Depth-Limited-Search|[DepthLimitedSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthLimitedSearch.java)|
 |3.18|89|Iterative-Deepening-Search|[IterativeDeepeningSearch](/aima-core/src/main/java/aima/core/search/uninformed/IterativeDeepeningSearch.java)|
-|3|90|Bidirectional search|[BidirectionalSearch](/aima-core/src/main/java/aima/core/search/uninformed/BidirectionalSearch.java)|
+|3|90|Bidirectional search|[BidirectionalSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/BidirectionalSearch.java)|
 |3|92|Best-First search|[BestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/BestFirstSearch.java)|
 |3|92|Greedy best-First search|[GreedyBestFirstSearch](/aima-core/src/main/java/aima/core/search/informed/GreedyBestFirstSearch.java)|
 |3|93|A\* Search|[AStarSearch](/aima-core/src/main/java/aima/core/search/informed/AStarSearch.java)|
