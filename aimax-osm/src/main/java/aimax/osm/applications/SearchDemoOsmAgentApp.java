@@ -6,11 +6,11 @@ import java.util.List;
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapAgent;
-import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
-import aima.core.search.framework.DefaultGoalTest;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.SearchUtils.NodeListener;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.datastructure.Point2D;
@@ -90,6 +90,13 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 		@Override
 		public void prepare(String changedSelector) {
 			visitedStates.clear();
+			SearchUtils.nodeListeners.clear();
+			SearchUtils.nodeListeners.add(new NodeListener() {
+				@Override
+				public void onNodeExpanded(Node node) {
+					visitedStates.add(node.getState());
+				}
+			});
 			super.prepare(changedSelector);
 		}
 
@@ -112,43 +119,16 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 			MapAgentFrame.SelectionState state = frame.getSelection();
 			switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 			case 0:
-				agent = new SDMapAgent(env, search, new String[] { locs[1] });
+				agent = new MapAgent(map, env, search, new String[] { locs[1] });
 				break;
 			case 1:
 				Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-				OnlineSearchProblem osp = new OnlineSearchProblem(
-						p.getActionsFunction(), p.getGoalTest(),
+				OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
 						p.getStepCostFunction());
-				agent = new LRTAStarAgent(osp,
-						MapFunctionFactory.getPerceptToStateFunction(),
-						heuristic);
+				agent = new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 				break;
 			}
 			env.addAgent(agent, locs[0]);
-		}
-	}
-
-	/** Variant of the <code>MapAgent</code>. */
-	private static class SDMapAgent extends MapAgent {
-		public SDMapAgent(MapEnvironment mapEnvironment, Search search,
-				String[] goalTests) {
-			super(mapEnvironment.getMap(), mapEnvironment, search, goalTests);
-		}
-
-		@Override
-		protected Problem formulateProblem(Object goal) {
-			BidirectionalMapProblem problem = (BidirectionalMapProblem) super
-					.formulateProblem(goal);
-			Problem result = new Problem(problem.getInitialState(),
-					problem.getActionsFunction(), problem.getResultFunction(),
-					new DefaultGoalTest((String) goal) {
-						@Override
-						public boolean isGoalState(Object state) {
-							visitedStates.add(state);
-							return super.isGoalState(state);
-						}
-					}, problem.getStepCostFunction());
-			return result;
 		}
 	}
 
@@ -157,14 +137,11 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	 * nodes mentioned in {@link SearchDemoOsmAgentApp#visitedStates}.
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
-		DefaultEntityViewInfo highlightProp = new MapStyleFactory()
-				.createPoiInfo(0, 0, 5, UColor.GREEN,
-						MapStyleFactory.createRectangle(4, UColor.GREEN),
-						false);
+		DefaultEntityViewInfo highlightProp = new MapStyleFactory().createPoiInfo(0, 0, 5, UColor.GREEN,
+				MapStyleFactory.createRectangle(4, UColor.GREEN), false);
 
 		@Override
-		public void printWay(MapWay way, DefaultEntityViewInfo eprop,
-				boolean asArea) {
+		public void printWay(MapWay way, DefaultEntityViewInfo eprop, boolean asArea) {
 			super.printWay(way, eprop, asArea);
 			if (scale >= highlightProp.minVisibleScale * displayFactor) {
 				for (MapNode node : getWayNodes(way))

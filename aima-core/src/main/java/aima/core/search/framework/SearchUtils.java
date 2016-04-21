@@ -16,6 +16,17 @@ import aima.core.agent.impl.NoOpAction;
  */
 public class SearchUtils {
 
+	public static interface NodeListener {
+		void onNodeExpanded(Node node);
+	}
+
+	/**
+	 * All node listeners added to this list get informed whenever a node is
+	 * expanded. This is for demonstration and debugging purposes only. Handle
+	 * with care!
+	 */
+	public static List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
+
 	/**
 	 * Returns the children obtained from expanding the specified node in the
 	 * specified problem.
@@ -30,6 +41,9 @@ public class SearchUtils {
 	 */
 	public static List<Node> expandNode(Node node, Problem problem) {
 		List<Node> childNodes = new ArrayList<Node>();
+
+		for (NodeListener listener : nodeListeners)
+			listener.onNodeExpanded(node);
 
 		ActionsFunction actionsFunction = problem.getActionsFunction();
 		ResultFunction resultFunction = problem.getResultFunction();

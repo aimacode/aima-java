@@ -19,17 +19,15 @@ import aima.core.search.framework.SimpleProblemSolvingAgent;
  * 
  */
 public class MapAgent extends SimpleProblemSolvingAgent {
-	private Map map = null;
 
-	private EnvironmentViewNotifier notifier = null;
-
-	private DynamicState state = new DynamicState();
-
+	protected Map map = null;
+	protected DynamicState state = new DynamicState();
+	
+	private EnvironmentViewNotifier notifier = null;	
 	private Search search = null;
-
-	private String[] goalTests = null;
-
+	private String[] goals = null;
 	private int goalTestPos = 0;
+
 
 	public MapAgent(Map map, EnvironmentViewNotifier notifier, Search search) {
 		this.map = map;
@@ -46,13 +44,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	}
 
 	public MapAgent(Map map, EnvironmentViewNotifier notifier, Search search,
-			String[] goalTests) {
-		super(goalTests.length);
+			String[] goals) {
+		super(goals.length);
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
-		this.goalTests = new String[goalTests.length];
-		System.arraycopy(goalTests, 0, this.goalTests, 0, goalTests.length);
+		this.goals = new String[goals.length];
+		System.arraycopy(goals, 0, this.goals, 0, goals.length);
 	}
 
 	//
@@ -71,10 +69,10 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 	@Override
 	protected Object formulateGoal() {
 		Object goal = null;
-		if (null == goalTests) {
+		if (null == goals) {
 			goal = map.randomlyGenerateDestination();
 		} else {
-			goal = goalTests[goalTestPos];
+			goal = goals[goalTestPos];
 			goalTestPos++;
 		}
 		notifier.notifyViews("CurrentLocation=In("

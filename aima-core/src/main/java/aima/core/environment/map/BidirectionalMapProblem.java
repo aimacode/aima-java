@@ -2,31 +2,32 @@ package aima.core.environment.map;
 
 import aima.core.search.framework.BidirectionalProblem;
 import aima.core.search.framework.DefaultGoalTest;
+import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.Problem;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
-public class BidirectionalMapProblem extends Problem implements
-		BidirectionalProblem {
+public class BidirectionalMapProblem extends Problem implements BidirectionalProblem {
 
 	Map map;
 
 	Problem reverseProblem;
 
-	public BidirectionalMapProblem(Map map, String initialState,
-			String goalState) {
-		super(initialState, MapFunctionFactory.getActionsFunction(map),
-				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						goalState), new MapStepCostFunction(map));
+	public BidirectionalMapProblem(Map map, String initialState, String goalState) {
+		this(map, initialState, goalState, new DefaultGoalTest(goalState));
+	}
+
+	public BidirectionalMapProblem(Map map, String initialState, String goalState, GoalTest goalTest) {
+		super(initialState, MapFunctionFactory.getActionsFunction(map), MapFunctionFactory.getResultFunction(),
+				goalTest, new MapStepCostFunction(map));
 
 		this.map = map;
 
-		reverseProblem = new Problem(goalState,
-				MapFunctionFactory.getReverseActionsFunction(map),
-				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
-						initialState), new MapStepCostFunction(map));
+		reverseProblem = new Problem(goalState, MapFunctionFactory.getReverseActionsFunction(map),
+				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(initialState),
+				new MapStepCostFunction(map));
 	}
 
 	//
