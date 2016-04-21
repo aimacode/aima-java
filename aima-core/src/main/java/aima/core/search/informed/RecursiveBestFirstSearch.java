@@ -1,7 +1,10 @@
 package aima.core.search.informed;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.EvaluationFunction;
@@ -38,6 +41,10 @@ import aima.core.search.framework.SearchUtils;
  * 
  * Figure 3.26 The algorithm for recursive best-first search.
  * 
+ * <br>
+ * This version additionally provides an option to avoid loops. States on the
+ * current path are stored in a hash set if the loop avoidance option is enabled.
+ * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
@@ -51,24 +58,34 @@ public class RecursiveBestFirstSearch implements Search {
 	private static final Double INFINITY = Double.MAX_VALUE;
 
 	private final EvaluationFunction evaluationFunction;
+	private boolean avoidLoops;
+	// stores the states on the current path if avoidLoops is true.
+	Set<Object> explored = new HashSet<Object>();
 	private Metrics metrics = new Metrics();
 
 	public RecursiveBestFirstSearch(EvaluationFunction ef) {
+		this(ef, false);
+	}
+
+	/** Constructor which allows to enable the loop avoidance strategy. */
+	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops) {
 		evaluationFunction = ef;
+		this.avoidLoops = avoidLoops;
 	}
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
 	public List<Action> search(Problem p) throws Exception {
 		List<Action> actions = new ArrayList<Action>();
+		explored.clear();
 
 		clearInstrumentation();
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
 		Node n = new Node(p.getInitialState());
 		SearchResult sr = rbfs(p, n, evaluationFunction.f(n), INFINITY, 0);
-		if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {
-			Node s = sr.getSolution();
+		if (sr.hasSolution()) {
+			Node s = sr.getSolutionNode();
 			actions = SearchUtils.getSequenceOfActions(s);
 			metrics.set(METRIC_PATH_COST, s.getPathCost());
 		}
@@ -99,24 +116,22 @@ public class RecursiveBestFirstSearch implements Search {
 	//
 	// function RBFS(problem, node, f_limit) returns a solution, or failure and
 	// a new f-cost limit
-	private SearchResult rbfs(Problem p, Node n, double node_f, double fLimit, int recursiveDepth) {
-
+	private SearchResult rbfs(Problem p, Node node, double node_f, double fLimit, int recursiveDepth) {
 		updateMetrics(recursiveDepth);
 
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (SearchUtils.isGoalState(p, n)) {
-			return new SearchResult(n, fLimit);
-		}
+		if (SearchUtils.isGoalState(p, node))
+			return getResult(null, node, fLimit);
 
 		// successors <- []
 		// for each action in problem.ACTION(node.STATE) do
 		// add CHILD-NODE(problem, node, action) into successors
-		metrics.incrementInt(METRIC_NODES_EXPANDED);
-		List<Node> successors = SearchUtils.expandNode(n, p);
+		List<Node> successors = expandNode(node, p);
+
 		// if successors is empty then return failure, infinity
-		if (successors.isEmpty()) {
-			return new SearchResult(null, INFINITY);
-		}
+		if (successors.isEmpty())
+			return getResult(node, null, INFINITY);
+
 		double[] f = new double[successors.size()];
 		// for each s in successors do
 		// update f with value from previous search, if any
@@ -132,7 +147,7 @@ public class RecursiveBestFirstSearch implements Search {
 			int bestIndex = getBestFValueIndex(f);
 			// if best.f > f_limit then return failure, best.f
 			if (f[bestIndex] > fLimit) {
-				return new SearchResult(null, f[bestIndex]);
+				return getResult(node, null, f[bestIndex]);
 			}
 			// if best.f > f_limit then return failure, best.f
 			int altIndex = getNextBestFValueIndex(f, bestIndex);
@@ -141,8 +156,8 @@ public class RecursiveBestFirstSearch implements Search {
 					recursiveDepth + 1);
 			f[bestIndex] = sr.getFCostLimit();
 			// if result != failure then return result
-			if (sr.getOutcome() == SearchResult.SearchOutcome.SOLUTION_FOUND) {
-				return sr;
+			if (sr.hasSolution()) {
+				return getResult(node, sr.getSolutionNode(), sr.getFCostLimit());
 			}
 		}
 	}
@@ -178,7 +193,26 @@ public class RecursiveBestFirstSearch implements Search {
 
 		return lidx;
 	}
-	
+
+	private List<Node> expandNode(Node node, Problem problem) {
+		metrics.incrementInt(METRIC_NODES_EXPANDED);
+		List<Node> result = SearchUtils.expandNode(node, problem);
+		if (avoidLoops) {
+			explored.add(node.getState());
+			for (Iterator<Node> ni = result.iterator(); ni.hasNext();)
+				if (explored.contains(ni.next().getState())) {
+					ni.remove();
+				}
+		}
+		return result;
+	}
+
+	private SearchResult getResult(Node currNode, Node solutionNode, double fCostLimit) {
+		if (avoidLoops && currNode != null)
+			explored.remove(currNode.getState());
+		return new SearchResult(solutionNode, fCostLimit);
+	}
+
 	/**
 	 * Increases the maximum recursive depth if the specified depth is greater
 	 * than the current maximum.
@@ -192,34 +226,23 @@ public class RecursiveBestFirstSearch implements Search {
 			metrics.set(METRIC_MAX_RECURSIVE_DEPTH, recursiveDepth);
 		}
 	}
-	
+
 	static class SearchResult {
-		public enum SearchOutcome {
-			FAILURE, SOLUTION_FOUND
-		};
 
-		private Node solution;
+		private Node solNode;
+		private final double fCostLimit;
 
-		private SearchOutcome outcome;
-
-		private final Double fCostLimit;
-
-		public SearchResult(Node solution, Double fCostLimit) {
-			if (null == solution) {
-				this.outcome = SearchOutcome.FAILURE;
-			} else {
-				this.outcome = SearchOutcome.SOLUTION_FOUND;
-				this.solution = solution;
-			}
+		public SearchResult(Node solutionNode, double fCostLimit) {
+			this.solNode = solutionNode;
 			this.fCostLimit = fCostLimit;
 		}
 
-		public SearchOutcome getOutcome() {
-			return outcome;
+		public boolean hasSolution() {
+			return solNode != null;
 		}
 
-		public Node getSolution() {
-			return solution;
+		public Node getSolutionNode() {
+			return solNode;
 		}
 
 		public Double getFCostLimit() {
@@ -227,4 +250,3 @@ public class RecursiveBestFirstSearch implements Search {
 		}
 	}
 }
-

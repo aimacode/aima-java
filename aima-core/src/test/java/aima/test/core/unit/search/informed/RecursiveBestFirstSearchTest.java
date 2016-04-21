@@ -28,6 +28,7 @@ public class RecursiveBestFirstSearchTest {
 	Map aMap;
 
 	RecursiveBestFirstSearch recursiveBestFirstSearch;
+	RecursiveBestFirstSearch recursiveBestFirstSearchAvoidingLoops;
 
 	@Before
 	public void setUp() {
@@ -46,6 +47,8 @@ public class RecursiveBestFirstSearchTest {
 
 		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
 				new AStarEvaluationFunction(heuristicFunction));
+		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch(
+				new AStarEvaluationFunction(heuristicFunction), true);
 	}
 
 	@Test
@@ -75,6 +78,38 @@ public class RecursiveBestFirstSearchTest {
 
 		Assert.assertEquals(
 				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+				envChanges.toString());
+	}
+	
+	@Test
+	public void testAIMA3eAradNeamtA() {
+		MapEnvironment me = new MapEnvironment(aMap);
+		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearch,
+				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
+
+		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.addEnvironmentView(new TestEnvironmentView());
+		me.stepUntilDone();
+
+		Assert.assertEquals(
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:Action[name==moveTo, location==Urziceni]:Action[name==moveTo, location==Vaslui]:Action[name==moveTo, location==Iasi]:Action[name==moveTo, location==Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=12:METRIC[nodesExpanded]=340208:Action[name==NoOp]:",
+				envChanges.toString());
+	}
+	
+	
+	@Test
+	public void testAIMA3eAradNeamtB() {
+		MapEnvironment me = new MapEnvironment(aMap);
+		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearchAvoidingLoops,
+				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
+
+		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.addEnvironmentView(new TestEnvironmentView());
+		me.stepUntilDone();
+
+		// loops avoided, now much less number of expanded nodes ...
+		Assert.assertEquals(
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:Action[name==moveTo, location==Urziceni]:Action[name==moveTo, location==Vaslui]:Action[name==moveTo, location==Iasi]:Action[name==moveTo, location==Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=9:METRIC[nodesExpanded]=1367:Action[name==NoOp]:",
 				envChanges.toString());
 	}
 

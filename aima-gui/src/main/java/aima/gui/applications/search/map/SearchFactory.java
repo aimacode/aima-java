@@ -36,8 +36,10 @@ public class SearchFactory {
 	public final static int ASTAR_SEARCH = 5;
 	/** Search strategy: Recursive best first search. */
 	public final static int RBF_SEARCH = 6;
+	/** Search strategy: Recursive best first search avoiding loops. */
+	public final static int RBF_AL_SEARCH = 7;
 	/** Search strategy: Hill climbing search. */
-	public final static int HILL_SEARCH = 7;
+	public final static int HILL_SEARCH = 8;
 
 	/** Search mode: tree search. */
 	public final static int TREE_SEARCH = 0;
@@ -68,7 +70,7 @@ public class SearchFactory {
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
 				"Iterative Deepening", "Uniform Cost", "Greedy Best First",
-				"A*", "Recursive Best First", "Hill Climbing" };
+				"A*", "Recursive Best First", "Recursive Best First Avoiding Loops", "Hill Climbing" };
 	}
 
 	/**
@@ -124,6 +126,10 @@ public class SearchFactory {
 		case RBF_SEARCH:
 			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(
 					hf));
+			break;
+		case RBF_AL_SEARCH:
+			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(
+					hf), true);
 			break;
 		case HILL_SEARCH:
 			result = new HillClimbingSearch(hf);
