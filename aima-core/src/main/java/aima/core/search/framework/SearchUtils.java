@@ -40,7 +40,7 @@ public class SearchUtils {
 	 *         specified problem.
 	 */
 	public static List<Node> expandNode(Node node, Problem problem) {
-		List<Node> childNodes = new ArrayList<Node>();
+		List<Node> successors = new ArrayList<Node>();
 
 		for (NodeListener listener : nodeListeners)
 			listener.onNodeExpanded(node);
@@ -53,9 +53,9 @@ public class SearchUtils {
 			Object successorState = resultFunction.result(node.getState(), action);
 
 			double stepCost = stepCostFunction.c(node.getState(), action, successorState);
-			childNodes.add(new Node(successorState, node, action, stepCost));
+			successors.add(new Node(successorState, node, action, stepCost));
 		}
-		return childNodes;
+		return successors;
 	}
 
 	/**

@@ -70,12 +70,12 @@ public abstract class QueueSearch {
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node childNode : SearchUtils.expandNode(nodeToExpand, problem)) {
+			for (Node successor : SearchUtils.expandNode(nodeToExpand, problem)) {
 				if (checkGoalBeforeAddingToFrontier) {
-					if (SearchUtils.isGoalState(problem, childNode))
-						return getSolution(childNode);
+					if (SearchUtils.isGoalState(problem, successor))
+						return getSolution(successor);
 				}
-				insertIntoFrontier(childNode);
+				insertIntoFrontier(successor);
 			}
 		}
 		// if the frontier is empty then return failure

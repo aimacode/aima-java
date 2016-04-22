@@ -103,16 +103,16 @@ public class BidirectionalSearch extends QueueSearch {
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node cn : SearchUtils.expandNode(nodeToExpand, problem)) {
-				ExtendedNode childNode = new ExtendedNode(cn, nodeToExpand.getProblemIndex());
+			for (Node s : SearchUtils.expandNode(nodeToExpand, problem)) {
+				ExtendedNode successor = new ExtendedNode(s, nodeToExpand.getProblemIndex());
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
-						|| getReverseAction(orgP, childNode) != null) {
+						|| getReverseAction(orgP, successor) != null) {
 
 					if (checkGoalBeforeAddingToFrontier
-							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(childNode)) != null)
-						return getSolution(orgP, childNode, nodeFromOtherProblem);
+							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(successor)) != null)
+						return getSolution(orgP, successor, nodeFromOtherProblem);
 
-					insertIntoFrontier(childNode);
+					insertIntoFrontier(successor);
 				}
 			}
 		}
