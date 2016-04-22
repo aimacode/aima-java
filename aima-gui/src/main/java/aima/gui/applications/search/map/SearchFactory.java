@@ -70,7 +70,7 @@ public class SearchFactory {
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
 				"Iterative Deepening", "Uniform Cost", "Greedy Best First",
-				"A*", "Recursive Best First", "Recursive Best First Avoiding Loops", "Hill Climbing" };
+				"A*", "Recursive Best First", "Recursive Best First No Loops", "Hill Climbing" };
 	}
 
 	/**

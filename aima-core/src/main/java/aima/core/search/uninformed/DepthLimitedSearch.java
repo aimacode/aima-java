@@ -93,20 +93,6 @@ public class DepthLimitedSearch implements Search {
 	}
 
 	/**
-	 * Returns <code>true</code> if the specified action list indicates a goal
-	 * not found.
-	 * 
-	 * @param result
-	 *            the action list resulting from a previous search
-	 * 
-	 * @return <code>true</code> if the specified action list indicates a goal
-	 *         not found.
-	 */
-	public boolean isFailure(List<Action> result) {
-		return 0 == result.size();
-	}
-
-	/**
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
@@ -148,7 +134,7 @@ public class DepthLimitedSearch implements Search {
 				// if result = cutoff then cutoff_occurred? <- true
 				if (isCutOff(result)) {
 					cutoff_occurred = true;
-				} else if (!isFailure(result)) {
+				} else if (!SearchUtils.isFailure(result)) {
 					// else if result != failure then return result
 					return result;
 				}

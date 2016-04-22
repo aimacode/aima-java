@@ -12,6 +12,7 @@ import aima.core.environment.nqueens.NQueensGoalTest;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchUtils;
 import aima.core.search.uninformed.DepthLimitedSearch;
 
 public class DepthLimitedSearchTest {
@@ -51,7 +52,7 @@ public class DepthLimitedSearchTest {
 		DepthLimitedSearch search = new DepthLimitedSearch(5);
 		SearchAgent agent = new SearchAgent(problem, search);
 		List<Action> actions = agent.getActions();
-		Assert.assertEquals(true, search.isFailure(actions));
+		Assert.assertEquals(true, SearchUtils.isFailure(actions));
 	}
 
 	//

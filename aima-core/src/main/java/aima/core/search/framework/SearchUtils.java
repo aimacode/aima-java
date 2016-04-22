@@ -82,6 +82,11 @@ public class SearchUtils {
 	public static List<Action> failure() {
 		return Collections.emptyList();
 	}
+	
+	/** Checks whether a list of actions is empty. */
+	public static boolean isFailure(List<Action> actions) {
+		return actions.isEmpty();
+	}
 
 	/**
 	 * Calls the goal test of the problem and - if the goal test is effectively

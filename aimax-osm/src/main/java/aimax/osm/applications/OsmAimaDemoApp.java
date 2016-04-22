@@ -28,7 +28,7 @@ public class OsmAimaDemoApp {
 		frame.setTitle("AIMA3e Java Demos with OSM");
 		AimaDemoApp.registerDemos(frame);
 		registerDemos(frame);
-		frame.setSize(800, 600);
+		frame.setSize(1000, 700);
 		frame.setVisible(true);
 	}
 }

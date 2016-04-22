@@ -63,7 +63,7 @@ public class AimaDemoApp {
 	public static void main(String[] args) {
 		AimaDemoFrame frame = new AimaDemoFrame();
 		registerDemos(frame);
-		frame.setSize(800, 600);
+		frame.setSize(1000, 700);
 		frame.setVisible(true);
 	}
 }
