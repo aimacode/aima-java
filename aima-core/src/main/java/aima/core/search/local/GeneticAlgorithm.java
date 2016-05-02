@@ -64,14 +64,11 @@ public class GeneticAlgorithm<A> {
 	protected double mutationProbability;
 	protected Random random;
 
-	public GeneticAlgorithm(int individualLength, Set<A> finiteAlphabet,
-			double mutationProbability) {
-		this(individualLength, finiteAlphabet, mutationProbability,
-				new Random());
+	public GeneticAlgorithm(int individualLength, Set<A> finiteAlphabet, double mutationProbability) {
+		this(individualLength, finiteAlphabet, mutationProbability, new Random());
 	}
 
-	public GeneticAlgorithm(int individualLength, Set<A> finiteAlphabet,
-			double mutationProbability, Random random) {
+	public GeneticAlgorithm(int individualLength, Set<A> finiteAlphabet, double mutationProbability, Random random) {
 		this.individualLength = individualLength;
 		this.finiteAlphabet = new ArrayList<A>(finiteAlphabet);
 		this.mutationProbability = mutationProbability;
@@ -100,9 +97,8 @@ public class GeneticAlgorithm<A> {
 	// function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
 	// inputs: population, a set of individuals
 	// FITNESS-FN, a function that measures the fitness of an individual
-	public Individual<A> geneticAlgorithm(Set<Individual<A>> population,
-			FitnessFunction<A> fitnessFn, GoalTest goalTest,
-			long maxTimeMilliseconds) {
+	public Individual<A> geneticAlgorithm(Set<Individual<A>> population, FitnessFunction<A> fitnessFn,
+			GoalTest goalTest, long maxTimeMilliseconds) {
 		Individual<A> bestIndividual = null;
 
 		// Create a local copy of the population to work with
@@ -110,25 +106,21 @@ public class GeneticAlgorithm<A> {
 		// Validate the population and setup the instrumentation
 		validatePopulation(population);
 		clearInstrumentation();
-		setPopulationSize(population.size());
 
 		long startTime = System.currentTimeMillis();
 
 		// repeat
-		int cnt = 0;
+		int itCount = 0;
 		do {
 			bestIndividual = nextGeneration(population, fitnessFn);
-			cnt++;
 
+			updateMetrics(population.size(), ++itCount, System.currentTimeMillis() - startTime);
+			
 			// until some individual is fit enough, or enough time has elapsed
-			if (maxTimeMilliseconds > 0L) {
-				if ((System.currentTimeMillis() - startTime) > maxTimeMilliseconds) {
+			if (maxTimeMilliseconds > 0L)
+				if ((System.currentTimeMillis() - startTime) > maxTimeMilliseconds)
 					break;
-				}
-			}
 		} while (!goalTest.isGoalState(bestIndividual));
-		setIterations(cnt);
-		setTimeInMilliseconds(System.currentTimeMillis()-startTime);
 
 		// return the best individual in population, according to FITNESS-FN
 		return bestIndividual;
@@ -138,9 +130,7 @@ public class GeneticAlgorithm<A> {
 	 * Sets the population size and number of iterations to zero.
 	 */
 	public void clearInstrumentation() {
-		setPopulationSize(0);
-		setIterations(0);
-		setTimeInMilliseconds(0L);
+		updateMetrics(0, 0, 0L);
 	}
 
 	/**
@@ -162,16 +152,6 @@ public class GeneticAlgorithm<A> {
 	}
 
 	/**
-	 * Sets the population size.
-	 * 
-	 * @param size
-	 *            the population size.
-	 */
-	public void setPopulationSize(int size) {
-		metrics.set(POPULATION_SIZE, size);
-	}
-
-	/**
 	 * Returns the number of iterations of the genetic algorithm.
 	 * 
 	 * @return the number of iterations of the genetic algorithm.
@@ -179,17 +159,7 @@ public class GeneticAlgorithm<A> {
 	public int getIterations() {
 		return metrics.getInt(ITERATIONS);
 	}
-
-	/**
-	 * Sets the number of iterations of the genetic algorithm.
-	 * 
-	 * @param cnt
-	 *            the number of iterations.
-	 */
-	public void setIterations(int cnt) {
-		metrics.set(ITERATIONS, cnt);
-	}
-
+	
 	/**
 	 * 
 	 * @return the time in milliseconds that the genetic algorithm took.
@@ -197,16 +167,21 @@ public class GeneticAlgorithm<A> {
 	public long getTimeInMilliseconds() {
 		return metrics.getLong(TIME_IN_MILLISECONDS);
 	}
-
+	
 	/**
-	 * Set the time in milliseconds that the genetic algorithm took.
+	 * Updates statistic data collected during search.
 	 * 
+	 * @param itCount
+	 *            the number of iterations.
 	 * @param time
 	 *            the time in milliseconds that the genetic algorithm took.
 	 */
-	public void setTimeInMilliseconds(long time) {
+	private void updateMetrics(int popSize, int itCount, long time) {
+		metrics.set(POPULATION_SIZE, popSize);
+		metrics.set(ITERATIONS, itCount);
 		metrics.set(TIME_IN_MILLISECONDS, time);
 	}
+
 
 	//
 	// PROTECTED METHODS
@@ -214,15 +189,13 @@ public class GeneticAlgorithm<A> {
 	// Note: Override these protected methods to create your own desired
 	// behavior.
 	//
-	protected Individual<A> nextGeneration(Set<Individual<A>> population,
-			FitnessFunction<A> fitnessFn) {
+	protected Individual<A> nextGeneration(Set<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		// new_population <- empty set
 		Set<Individual<A>> newPopulation = new HashSet<Individual<A>>();
 
 		// Represent the population as a list to simplify/optimize random
 		// selection.
-		List<Individual<A>> populationAsList = new ArrayList<Individual<A>>(
-				population);
+		List<Individual<A>> populationAsList = new ArrayList<Individual<A>>(population);
 
 		// for i = 1 to SIZE(population) do
 		for (int i = 0; i < population.size(); i++) {
@@ -247,8 +220,7 @@ public class GeneticAlgorithm<A> {
 	}
 
 	// RANDOM-SELECTION(population, FITNESS-FN)
-	protected Individual<A> randomSelection(List<Individual<A>> population,
-			FitnessFunction<A> fitnessFn) {
+	protected Individual<A> randomSelection(List<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		Individual<A> selected = null;
 
 		// Determine all of the fitness values
@@ -292,8 +264,7 @@ public class GeneticAlgorithm<A> {
 		// return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
 		List<A> childRepresentation = new ArrayList<A>();
 		childRepresentation.addAll(x.getRepresentation().subList(0, c));
-		childRepresentation.addAll(y.getRepresentation().subList(c,
-				individualLength));
+		childRepresentation.addAll(y.getRepresentation().subList(c, individualLength));
 
 		Individual<A> child = new Individual<A>(childRepresentation);
 		return child;
@@ -303,19 +274,16 @@ public class GeneticAlgorithm<A> {
 		int mutateOffset = randomOffset(individualLength);
 		int alphaOffset = randomOffset(finiteAlphabet.size());
 
-		List<A> mutatedRepresentation = new ArrayList<A>(
-				child.getRepresentation());
+		List<A> mutatedRepresentation = new ArrayList<A>(child.getRepresentation());
 
-		mutatedRepresentation
-				.set(mutateOffset, finiteAlphabet.get(alphaOffset));
+		mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
 
 		Individual<A> mutatedChild = new Individual<A>(mutatedRepresentation);
 
 		return mutatedChild;
 	}
 
-	protected Individual<A> retrieveBestIndividual(
-			Set<Individual<A>> population, FitnessFunction<A> fitnessFn) {
+	protected Individual<A> retrieveBestIndividual(Set<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		Individual<A> bestIndividual = null;
 		double bestSoFarFValue = Double.NEGATIVE_INFINITY;
 
@@ -338,16 +306,14 @@ public class GeneticAlgorithm<A> {
 		// Require at least 1 individual in population in order
 		// for algorithm to work
 		if (population.size() < 1) {
-			throw new IllegalArgumentException(
-					"Must start with at least a population of size 1");
+			throw new IllegalArgumentException("Must start with at least a population of size 1");
 		}
 		// String lengths are assumed to be of fixed size,
 		// therefore ensure initial populations lengths correspond to this
 		for (Individual<A> individual : population) {
 			if (individual.length() != this.individualLength) {
 				throw new IllegalArgumentException("Individual [" + individual
-						+ "] in population is not the required length of "
-						+ this.individualLength);
+						+ "] in population is not the required length of " + this.individualLength);
 			}
 		}
 	}
