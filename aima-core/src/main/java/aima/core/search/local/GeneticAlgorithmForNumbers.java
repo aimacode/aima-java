@@ -14,8 +14,8 @@ import aima.core.search.local.Individual;
  * Variant of the genetic algorithm which uses double numbers from a fixed
  * interval instead of symbols from a finite alphabet in the representations of
  * individuals. Reproduction uses values somewhere between the values of the
- * parents. Mutation adds some random offset. Population printer implementations
- * can be used to trace progress. <br>
+ * parents. Mutation adds some random offset. Progress tracer implementations
+ * can be used to get informed about the running iterations. <br>
  * A typical use case for this genetic algorithm version is finding maximums in
  * a given mathematical (fitness) function.
  * 
@@ -26,7 +26,7 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 
 	private double minimum;
 	private double maximum;
-	private List<PopulationPrinter> populationPrinters = new ArrayList<PopulationPrinter>();
+	private List<ProgressTracer> progressTracers = new ArrayList<ProgressTracer>();
 
 	/**
 	 * Constructor.
@@ -48,8 +48,8 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	}
 
 	/** Population printers can be used to display progress information. */
-	public void addPopulationPrinter(PopulationPrinter printer) {
-		populationPrinters.add(printer);
+	public void addPopulationPrinter(ProgressTracer printer) {
+		progressTracers.add(printer);
 	}
 
 	/** Convenience method. */
@@ -79,8 +79,8 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	protected List<Individual<Double>> nextGeneration(List<Individual<Double>> population,
 			FitnessFunction<Double> fitnessFn) {
 		List<Individual<Double>> result = super.nextGeneration(population, fitnessFn);
-		for (PopulationPrinter printer : populationPrinters)
-			printer.print(getIterations(), population);
+		for (ProgressTracer printer : progressTracers)
+			printer.traceProgress(getIterations(), population);
 		return result;
 	}
 
@@ -119,11 +119,11 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	}
 
 	/**
-	 * Interface for progress trackers.
+	 * Interface for progress tracers.
 	 * 
 	 * @author Ruediger Lunde
 	 */
-	public static interface PopulationPrinter {
-		void print(int itCount, Collection<Individual<Double>> gen);
+	public static interface ProgressTracer {
+		void traceProgress(int itCount, Collection<Individual<Double>> gen);
 	}
 }
