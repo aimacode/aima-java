@@ -49,6 +49,7 @@ public class SimulatedAnnealingSearch implements Search {
 	};
 	
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
+	public static final String TEMPERATURE = "temp";
 	
 	private final HeuristicFunction hf;
 	private final Scheduler scheduler;
@@ -108,7 +109,7 @@ public class SimulatedAnnealingSearch implements Search {
 				break;
 			}
 
-			metrics.incrementInt(METRIC_NODES_EXPANDED);
+			updateMetrics(temperature);
 			List<Node> children = SearchUtils.expandNode(current, p);
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
@@ -161,11 +162,17 @@ public class SimulatedAnnealingSearch implements Search {
 		return metrics;
 	}
 	
+	private void updateMetrics(double temperature) {
+		metrics.incrementInt(METRIC_NODES_EXPANDED);
+		metrics.set(TEMPERATURE, temperature);
+	}
+	
 	/**
 	 * Sets all metrics to zero.
 	 */
 	public void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
+		metrics.set(TEMPERATURE, 0);
 	}
 	
 	//

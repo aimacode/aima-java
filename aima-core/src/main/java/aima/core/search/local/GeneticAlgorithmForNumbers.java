@@ -48,8 +48,8 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	}
 
 	/** Population printers can be used to display progress information. */
-	public void addPopulationPrinter(ProgressTracer printer) {
-		progressTracers.add(printer);
+	public void addProgressTracer(ProgressTracer pTracer) {
+		progressTracers.add(pTracer);
 	}
 
 	/** Convenience method. */
@@ -124,6 +124,6 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	 * @author Ruediger Lunde
 	 */
 	public static interface ProgressTracer {
-		void traceProgress(int itCount, Collection<Individual<Double>> gen);
+		void traceProgress(int itCount, Collection<Individual<Double>> generation);
 	}
 }

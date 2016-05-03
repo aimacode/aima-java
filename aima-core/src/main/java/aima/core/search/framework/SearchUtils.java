@@ -19,13 +19,18 @@ public class SearchUtils {
 	public static interface NodeListener {
 		void onNodeExpanded(Node node);
 	}
+	
+	private static List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
 
 	/**
 	 * All node listeners added to this list get informed whenever a node is
 	 * expanded. This is for demonstration and debugging purposes only. Handle
-	 * with care!
+	 * with care! Clear before adding something new. Listeners should never do
+	 * unsafe down casts.
 	 */
-	public static List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
+	public static List<NodeListener> getNodeListeners() {
+		return nodeListeners;
+	}
 
 	/**
 	 * Returns the children obtained from expanding the specified node in the
