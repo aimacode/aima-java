@@ -1,10 +1,9 @@
 package aima.core.environment.nqueens;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import aima.core.search.framework.GoalTest;
 import aima.core.search.local.FitnessFunction;
@@ -42,8 +41,8 @@ public class NQueensGenAlgoUtil {
 		return individual;
 	}
 
-	public static Set<Integer> getFiniteAlphabetForBoardOfSize(int size) {
-		Set<Integer> fab = new HashSet<Integer>();
+	public static Collection<Integer> getFiniteAlphabetForBoardOfSize(int size) {
+		Collection<Integer> fab = new ArrayList<Integer>();
 
 		for (int i = 0; i < size; i++) {
 			fab.add(i);
@@ -54,7 +53,7 @@ public class NQueensGenAlgoUtil {
 	
 	public static class NQueensFitnessFunction implements FitnessFunction<Integer> {
 
-		public double getValue(Individual<Integer> individual) {
+		public double apply(Individual<Integer> individual) {
 			double fitness = 0;
 
 			NQueensBoard board = getBoardForIndividual(individual);

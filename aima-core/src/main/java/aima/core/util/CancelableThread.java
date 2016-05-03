@@ -3,11 +3,18 @@ package aima.core.util;
 /**
  * Implements a thread with an additional flag indicating cancellation.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  * @author Mike Stampone
  */
 public class CancelableThread extends Thread {
 
+	public CancelableThread() {
+	}
+	
+	public CancelableThread(Runnable runnable) {
+		super(runnable);
+	}
+	
 	/**
 	 * Returns <code>true</code> if the current thread is canceled
 	 * 

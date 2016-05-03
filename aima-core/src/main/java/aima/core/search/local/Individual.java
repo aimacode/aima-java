@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class Individual<A> {
 	private List<A> representation = new ArrayList<A>();
+	private int descendants; // for debugging!
 
 	/**
 	 * Construct an individual using the provided representation.
@@ -44,5 +45,23 @@ public class Individual<A> {
 	 */
 	public int length() {
 		return representation.size();
+	}
+
+	/**
+	 * Should be called by the genetic algorithm whenever the individual is
+	 * selected to produce a descendant.
+	 */
+	public void incDescendants() {
+		descendants++;
+	}
+
+	/** Returns the number of descendants for this individual. */
+	public int getDescendants() {
+		return descendants;
+	}
+
+	@Override
+	public String toString() {
+		return representation.toString() + descendants;
 	}
 }

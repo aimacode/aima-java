@@ -6,6 +6,8 @@ package aima.core.search.local;
  * Each state is rated by the objective function, or (in Genetic Algorithm
  * terminology) the fitness function. A fitness function should return higher
  * values for better states.
+ * <br>
+ * Here, we assume that all values are greater or equal to zero.
  * 
  * @author Ciaran O'Reilly
  * 
@@ -22,5 +24,5 @@ public interface FitnessFunction<A> {
 	 *            the individual whose fitness is to be accessed.
 	 * @return the individual's fitness value (the higher the better).
 	 */
-	double getValue(Individual<A> individual);
+	double apply(Individual<A> individual);
 }

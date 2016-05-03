@@ -1,7 +1,7 @@
 package aima.test.core.unit.environment.nqueens;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,20 +32,20 @@ public class NQueensGenAlgoUtilTest {
 	@Test
 	public void test_getValue() {
 		Assert.assertTrue(0.0 == fitnessFunction
-				.getValue(new Individual<Integer>(Arrays.asList(new Integer[] {
+				.apply(new Individual<Integer>(Arrays.asList(new Integer[] {
 						0, 0, 0, 0, 0, 0, 0, 0 }))));
 		Assert.assertTrue(0.0 == fitnessFunction
-				.getValue(new Individual<Integer>(Arrays.asList(new Integer[] {
+				.apply(new Individual<Integer>(Arrays.asList(new Integer[] {
 						0, 1, 2, 3, 4, 5, 6, 7 }))));
 		Assert.assertTrue(0.0 == fitnessFunction
-				.getValue(new Individual<Integer>(Arrays.asList(new Integer[] {
+				.apply(new Individual<Integer>(Arrays.asList(new Integer[] {
 						7, 6, 5, 4, 3, 2, 1, 0 }))));
 
 		Assert.assertTrue(23.0 == fitnessFunction
-				.getValue(new Individual<Integer>(Arrays.asList(new Integer[] {
+				.apply(new Individual<Integer>(Arrays.asList(new Integer[] {
 						5, 6, 1, 3, 6, 4, 7, 7 }))));
 		Assert.assertTrue(28.0 == fitnessFunction
-				.getValue(new Individual<Integer>(Arrays.asList(new Integer[] {
+				.apply(new Individual<Integer>(Arrays.asList(new Integer[] {
 						0, 4, 7, 5, 2, 6, 1, 3 }))));
 	}
 
@@ -87,7 +87,7 @@ public class NQueensGenAlgoUtilTest {
 	@Test
 	public void test_getFiniteAlphabet() {
 		for (int i = 2; i <= 40; i++) {
-			Set<Integer> fab = NQueensGenAlgoUtil
+			Collection<Integer> fab = NQueensGenAlgoUtil
 					.getFiniteAlphabetForBoardOfSize(i);
 			Assert.assertEquals(i, fab.size());
 		}
