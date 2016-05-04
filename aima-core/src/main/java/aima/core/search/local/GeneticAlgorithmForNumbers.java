@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import aima.core.search.framework.GoalTest;
-import aima.core.search.local.FitnessFunction;
-import aima.core.search.local.GeneticAlgorithm;
-import aima.core.search.local.Individual;
 
 /**
  * Variant of the genetic algorithm which uses double numbers from a fixed
@@ -80,7 +77,7 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 			FitnessFunction<Double> fitnessFn) {
 		List<Individual<Double>> result = super.nextGeneration(population, fitnessFn);
 		for (ProgressTracer printer : progressTracers)
-			printer.traceProgress(getIterations(), population);
+			printer.traceProgress(getIterations(), population, result);
 		return result;
 	}
 
@@ -124,6 +121,6 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 	 * @author Ruediger Lunde
 	 */
 	public static interface ProgressTracer {
-		void traceProgress(int itCount, Collection<Individual<Double>> generation);
+		void traceProgress(int itCount, Collection<Individual<Double>> oldGen, Collection<Individual<Double>> newGen);
 	}
 }
