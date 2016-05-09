@@ -90,8 +90,8 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 		@Override
 		public void prepare(String changedSelector) {
 			visitedStates.clear();
-			SearchUtils.getNodeListeners().clear();
-			SearchUtils.getNodeListeners().add(new NodeListener() {
+			SearchUtils.clearNodeListeners();
+			SearchUtils.addNodeListener(new NodeListener() {
 				@Override
 				public void onNodeExpanded(Node node) {
 					visitedStates.add(node.getState());

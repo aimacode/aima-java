@@ -39,7 +39,7 @@ public class Metrics {
 
 	public double getDouble(String name) {
 		String value = hash.get(name);
-		return value != null ? Double.parseDouble(value) : 0.0;
+		return value != null ? Double.parseDouble(value) : Double.NaN;
 	}
 
 	public long getLong(String name) {

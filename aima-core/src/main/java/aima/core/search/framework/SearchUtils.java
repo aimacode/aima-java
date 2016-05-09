@@ -19,8 +19,6 @@ public class SearchUtils {
 	public static interface NodeListener {
 		void onNodeExpanded(Node node);
 	}
-	
-	private static List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
 
 	/**
 	 * All node listeners added to this list get informed whenever a node is
@@ -28,8 +26,19 @@ public class SearchUtils {
 	 * with care! Clear before adding something new. Listeners should never do
 	 * unsafe down casts.
 	 */
-	public static List<NodeListener> getNodeListeners() {
-		return nodeListeners;
+	private static List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
+
+	/**
+	 * Adds a listener to the list of node listeners. It is informed whenever
+	 * a node is expanded during search. Handle with care...
+	 */
+	public static void addNodeListener(NodeListener listener) {
+		nodeListeners.add(listener);
+	}
+	
+	/** Clears the list of node listeners. */
+	public static void clearNodeListeners() {
+		nodeListeners = new ArrayList<NodeListener>();
 	}
 
 	/**
