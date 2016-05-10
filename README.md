@@ -18,7 +18,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>2.1</td>
        <td>35</td>
        <td>Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/Agent.java">Agent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/api/Agent.java">Agent</a></td>
    </tr>
    <tr>
        <td>2.3</td>
@@ -30,7 +30,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>2.7</td>
        <td>47</td>
        <td>Table-Driven-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/TableDrivenAgent.java">TableDrivenAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/TableDrivenAgent.java">TableDrivenAgent</a></td>
    </tr>
    <tr>
        <td>2.8</td>
@@ -42,13 +42,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>2.10</td>
        <td>49</td>
        <td>Simple-Reflex-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
    </tr>
    <tr>
        <td>2.12</td>
        <td>51</td>
        <td>Model-Based-Reflex-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
        <td>3</td>
