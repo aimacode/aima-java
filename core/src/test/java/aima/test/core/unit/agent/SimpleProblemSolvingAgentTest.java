@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicSimpleProblemSolvingAgentTest {
+public class SimpleProblemSolvingAgentTest {
 
     @Ignore("TODO")
     @Test

@@ -1,8 +1,7 @@
 package aima.test.core.unit.agent;
 
-import aima.core.agent.BasicSimpleReflexAgent;
-import aima.core.api.agent.Rule;
-import aima.core.api.agent.SimpleReflexAgent;
+import aima.core.agent.api.Rule;
+import aima.core.agent.basic.SimpleReflexAgent;
 import aima.test.core.unit.agent.support.TestPercept;
 import aima.test.core.unit.agent.support.TestState;
 import org.junit.Assert;
@@ -15,14 +14,13 @@ import java.util.function.Predicate;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicSimpleReflexAgentTest {
+public class SimpleReflexAgentTest {
 
     private SimpleReflexAgent<String, TestPercept, TestState> agent;
 
     @Before
     public void setUp() {
-        agent = new BasicSimpleReflexAgent<>(
-                percept -> new TestState(percept.location, percept.floorIsDirty),
+        agent = new SimpleReflexAgent<>(              
                 Arrays.asList(
                     new Rule<String, TestState>() {
                         public Predicate<TestState> condition() {return state -> state.dirty;}
@@ -32,7 +30,8 @@ public class BasicSimpleReflexAgentTest {
                         public Predicate<TestState> condition() {return state -> !state.dirty;}
                         public String action() {return "Drink Tea";}
                     }
-                )
+                ),
+                percept -> new TestState(percept.location, percept.floorIsDirty)
         );
     }
 

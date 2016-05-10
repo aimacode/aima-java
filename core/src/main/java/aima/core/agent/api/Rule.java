@@ -1,4 +1,4 @@
-package aima.core.api.agent;
+package aima.core.agent.api;
 
 import java.util.function.Predicate;
 

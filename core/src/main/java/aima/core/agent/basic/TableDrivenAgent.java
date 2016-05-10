@@ -1,7 +1,11 @@
-package aima.core.api.agent;
+package aima.core.agent.basic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import aima.core.agent.api.Agent;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -23,24 +27,33 @@ import java.util.Map;
  *
  * @author Ciaran O'Reilly
  */
-public interface TableDrivenAgent<A, P> extends Agent<A, P> {
+public class TableDrivenAgent<A, P> implements Agent<A, P> {
     // persistent: percepts, a sequence, initially empty
     //             table, a table of actions, indexed by percept sequences, initially fully specified
-    List<P>         percepts();
-    Map<List<P>, A> table();
+    private List<P>         percepts = new ArrayList<>();
+    private Map<List<P>, A> table    = new HashMap<>();
+    
+    public TableDrivenAgent(Map<List<P>, A> table) {
+        this.table.putAll(table);
+    }
+    
+    //
+    // Getters
+    public List<P> getPercepts() { return percepts; }
+    public Map<List<P>, A> getTable() { return table; }
 
     // function TABLE-DRIVEN-AGENT(percept) returns an action
     @Override
-    default A perceive(P percept) {
+    public A perceive(P percept) {
         // append percept to end of percepts
-        percepts().add(percept);
+        getPercepts().add(percept);
         // action <- LOOKUP(percepts, table)
-        A action = lookup(percepts(), table());
+        A action = lookup(getPercepts(), getTable());
         // return action
         return action;
     }
 
-    default A lookup(List<P> percepts, Map<List<P>, A> table) {
+    public A lookup(List<P> percepts, Map<List<P>, A> table) {
         A action = table.get(percepts);
         return action;
     }

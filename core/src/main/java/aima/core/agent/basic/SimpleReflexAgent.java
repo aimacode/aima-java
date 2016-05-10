@@ -1,7 +1,13 @@
-package aima.core.api.agent;
+package aima.core.agent.basic;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+
+import aima.core.agent.api.Agent;
+import aima.core.agent.api.Rule;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -24,17 +30,29 @@ import java.util.Set;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleReflexAgent<A, P, S> extends Agent<A, P> {
+public class SimpleReflexAgent<A, P, S> implements Agent<A, P> {
     // persistent: rules, a set of condition-action rules
-    Set<Rule<A, S>> rules();
+	private Set<Rule<A, S>> rules = new LinkedHashSet<>();
+	//
+	// Make composable the interpret input logic
+	private Function<P, S> interpretInputFn = null; // state <- INTERPRET-INPUT(percept)
+	
+	public SimpleReflexAgent(Collection<Rule<A, S>> rules, Function<P, S> interpretInput) {
+        this.rules.addAll(rules);
+        this.interpretInputFn = interpretInput;
+    }
+	
+	//
+	// Getters
+    public Set<Rule<A, S>> getRules() { return rules; }
 
     // function SIMPLE-RELEX-AGENT(percept) returns an action
     @Override
-    default A perceive(P percept) {
+    public A perceive(P percept) {
         // state  <- INTERPRET-INPUT(percept)
         S state = interpretInput(percept);
         // rule   <- RULE-MATCH(state, rules)
-        Optional<Rule<A, S>> rule = ruleMatch(state, rules());
+        Optional<Rule<A, S>> rule = ruleMatch(state, getRules());
         // action <- rule.ACTION
         A action = rule.isPresent() ? rule.get().action() : null;
         // return action
@@ -42,10 +60,12 @@ public interface SimpleReflexAgent<A, P, S> extends Agent<A, P> {
     }
 
     // state <- INTERPRET-INPUT(percept)
-    S interpretInput(P percept);
+    public S interpretInput(P percept) {
+        return this.interpretInputFn.apply(percept);
+    }
 
     // rule <- RULE-MATCH(state, rules)
-    default Optional<Rule<A, S>> ruleMatch(S state, Set<Rule<A, S>> rules) {
-        return rules.stream().filter(rule -> rule.condition().test(state)).findFirst();
+    public Optional<Rule<A, S>> ruleMatch(S state, Set<Rule<A, S>> rules) {
+        return getRules().stream().filter(rule -> rule.condition().test(state)).findFirst();
     }
 }

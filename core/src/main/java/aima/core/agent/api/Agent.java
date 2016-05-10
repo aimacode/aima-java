@@ -1,4 +1,4 @@
-package aima.core.api.agent;
+package aima.core.agent.api;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>

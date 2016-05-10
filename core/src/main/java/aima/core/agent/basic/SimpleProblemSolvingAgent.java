@@ -1,8 +1,12 @@
-package aima.core.api.agent;
+package aima.core.agent.basic;
 
+import aima.core.agent.api.Agent;
 import aima.core.api.search.Problem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -36,19 +40,49 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public interface SimpleProblemSolvingAgent<A, P, S, G> extends Agent<A, P> {
+public class SimpleProblemSolvingAgent<A, P, S, G> implements Agent<A, P> {
     //   persistent: seq, an action sequence, initially empty
     //               state, some description of the current world state
     //               goal, a goal, initially null
     //               problem, a problem formulation
-    List<A> getSeq();           void setSeq(List<A> sequence);
-    S getState();               void setState(S state);
-    G getGoal();                void setGoal(G goal);
-    Problem<A, S> getProblem(); void setProblem(Problem<A, S> problem);
+    private List<A> seq = new ArrayList<>();
+    private S state;
+    private G goal;
+    private Problem<A, S> problem;
+    //
+    // Make composable the various logical functions
+    private BiFunction<S, P, S> updateStateFn; // state <- UPDATE-STATE(state, percept)
+    private Function<S, G> formulateGoalFn; // goal <- FORMULATE-GOAL(state)
+    private BiFunction<S, G, Problem<A, S>> formulateProblemFn; // problem <- FORMULATE-PROBLEM(state, goal)
+    private Function<Problem<A, S>, List<A>> searchFn; // seq <- SEARCH(problem)
+    
+    public SimpleProblemSolvingAgent(BiFunction<S, P, S> updateStateFn,
+            Function<S, G> formulateGoalFn,
+            BiFunction<S, G, Problem<A, S>> formulateProblemFn,
+            Function<Problem<A, S>, List<A>> searchFn) {
+		this.updateStateFn      = updateStateFn;
+		this.formulateGoalFn    = formulateGoalFn;
+		this.formulateProblemFn = formulateProblemFn;
+		this.searchFn           = searchFn;
+	}
+    
+    //
+    // Getters and Setters
+    public List<A> getSeq() { return seq; }
+    public void setSeq(List<A> sequence) { this.seq = sequence; }
+    //
+    public S getState() { return state; }
+    public void setState(S state) { this.state = state; }
+    //
+    public G getGoal() { return goal; }
+    public void setGoal(G goal) { this.goal = goal; }
+    //
+    public Problem<A, S> getProblem() { return problem; }
+    public void setProblem(Problem<A, S> problem) { this.problem = problem; }
 
     // function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
     @Override
-    default A perceive(P percept) {
+    public A perceive(P percept) {
         // state <- UPDATE-STATE(state, percept)
         setState(updateState(getState(), percept));
         // if seq is empty then
@@ -70,19 +104,23 @@ public interface SimpleProblemSolvingAgent<A, P, S, G> extends Agent<A, P> {
         return action;
     }
 
-    // state <- UPDATE-STATE(state, percept)
-    S updateState(S currentState, P percept);
+    public S updateState(S currentState, P percept) {
+        return updateStateFn.apply(currentState, percept);
+    }
 
-    // goal <- FORMULATE-GOAL(state)
-    G formulateGoal(S state);
+    public G formulateGoal(S state) {
+        return formulateGoalFn.apply(state);
+    }
 
-    // problem <- FORMULATE-PROBLEM(state, goal)
-    Problem<A, S> formulateProblem(S state, G goal);
+    public Problem<A, S> formulateProblem(S state, G goal) {
+        return formulateProblemFn.apply(state, goal);
+    }
 
-    // seq <- SEARCH(problem)
-    List<A> search(Problem<A, S> problem);
+    public List<A> search(Problem<A, S> problem) {
+        return searchFn.apply(problem);
+    }
 
-    default boolean isFailure(List<A> seq) {
+    public boolean isFailure(List<A> seq) {
         return seq == null || seq.isEmpty();
     }
 }

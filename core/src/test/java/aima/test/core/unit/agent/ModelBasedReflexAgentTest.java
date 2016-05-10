@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicModelBasedReflexAgentTest {
+public class ModelBasedReflexAgentTest {
 
     @Ignore("TODO")
     @Test

@@ -1,6 +1,6 @@
 package aima.core.environment.vacuum.agent;
 
-import aima.core.agent.BasicTableDrivenAgent;
+import aima.core.agent.basic.TableDrivenAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.perceive.LocalPercept;
 
@@ -14,11 +14,10 @@ import java.util.*;
  *
  * @author Ciaran O'Reilly
  */
-public class TableDrivenVacuumAgent extends BasicTableDrivenAgent<String, LocalPercept> {
+public class TableDrivenVacuumAgent extends TableDrivenAgent<String, LocalPercept> {
     public TableDrivenVacuumAgent() {
         super(generatePartialTabulationOfActionFunction());
     }
-
 
     public static Map<List<LocalPercept>, String>  generatePartialTabulationOfActionFunction() {
         Map<List<LocalPercept>, String> perceptSequenceToAction = new HashMap<>();

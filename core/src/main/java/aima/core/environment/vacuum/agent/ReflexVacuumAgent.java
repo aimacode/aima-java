@@ -1,11 +1,11 @@
 package aima.core.environment.vacuum.agent;
 
-import aima.core.api.agent.Agent;
+import aima.core.agent.api.Agent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.perceive.LocalPercept;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  * <br>
  *
  * <pre>

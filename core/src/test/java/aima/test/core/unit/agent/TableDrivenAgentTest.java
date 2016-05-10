@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicTableDrivenAgentTest {
+public class TableDrivenAgentTest {
 
     @Ignore("TODO")
     @Test
