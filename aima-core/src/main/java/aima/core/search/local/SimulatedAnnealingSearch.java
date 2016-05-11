@@ -92,7 +92,7 @@ public class SimulatedAnnealingSearch implements Search {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = new Node(p.getInitialState());
 		Node next = null;
-		List<Action> result = new ArrayList<Action>();
+		List<Action> ret = new ArrayList<Action>();
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (!CancelableThread.currIsCanceled()) {
@@ -104,7 +104,7 @@ public class SimulatedAnnealingSearch implements Search {
 				if (SearchUtils.isGoalState(p, current)) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
-				result = SearchUtils.getSequenceOfActions(current);
+				ret = SearchUtils.getSequenceOfActions(current);
 				lastState = current.getState();
 				break;
 			}
@@ -122,7 +122,7 @@ public class SimulatedAnnealingSearch implements Search {
 				}
 			}
 		}
-		return result;
+		return ret;
 	}
 
 	/**

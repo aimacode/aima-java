@@ -46,6 +46,18 @@ public class ConnectFourGame implements Game<ConnectFourState, Integer, String> 
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns the player number corresponding to the specified player. For
+	 * efficiency reasons, <code>ConnectFourState</code>s use numbers instead of
+	 * strings to identify players.
+	 */
+	public int getPlayerNum(String player) {
+		for (int i = 0; i < players.length; i++)
+			if (players[i] == player)
+				return i+1;
+		throw new IllegalArgumentException("Wrong player number.");
+	}
 
 	@Override
 	public List<Integer> getActions(ConnectFourState state) {
