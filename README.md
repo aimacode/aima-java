@@ -60,7 +60,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.1</td>
        <td>67</td>
        <td>Simple-Problem-Solving-Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/agent/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
    </tr>
    <tr>
        <td>3.2</td>
