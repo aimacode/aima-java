@@ -1,6 +1,6 @@
 package aima.gui.demo.search.tree.info;
 
-import aima.core.api.search.Node;
+import aima.core.search.api.Node;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import aima.gui.demo.search.tree.algorithm.TreeSearchAlgoSimulator;
 import javafx.fxml.FXML;

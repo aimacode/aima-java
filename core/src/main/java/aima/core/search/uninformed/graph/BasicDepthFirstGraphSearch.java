@@ -1,7 +1,7 @@
 package aima.core.search.uninformed.graph;
 
 import aima.core.search.BasicGeneralGraphSearch;
-import aima.core.search.support.BasicFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueue;
 
 import java.util.Collections;
 

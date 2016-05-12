@@ -1,7 +1,7 @@
 package aima.core.search;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.GeneralTreeSearch;
+import aima.core.search.api.Node;
 
 import java.util.LinkedList;
 import java.util.Queue;

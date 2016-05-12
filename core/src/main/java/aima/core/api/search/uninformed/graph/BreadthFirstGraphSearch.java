@@ -1,8 +1,8 @@
 package aima.core.api.search.uninformed.graph;
 
 import aima.core.api.search.GeneralGraphSearch;
-import aima.core.api.search.Node;
-import aima.core.api.search.Problem;
+import aima.core.search.api.Node;
+import aima.core.search.api.Problem;
 
 import java.util.List;
 import java.util.Queue;

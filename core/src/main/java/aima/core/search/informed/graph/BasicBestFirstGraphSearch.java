@@ -1,7 +1,7 @@
 package aima.core.search.informed.graph;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.informed.graph.BestFirstGraphSearch;
+import aima.core.search.api.Node;
 import aima.core.search.uninformed.graph.BasicUniformCostGraphSearch;
 
 import java.util.function.ToDoubleFunction;

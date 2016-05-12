@@ -1,7 +1,7 @@
 package aima.core.api.search.uninformed.tree;
 
-import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
+import aima.core.search.api.Problem;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package aima.core.agent.basic;
 
 import aima.core.agent.api.Agent;
-import aima.core.api.search.Problem;
+import aima.core.search.api.Problem;
 
 import java.util.ArrayList;
 import java.util.List;

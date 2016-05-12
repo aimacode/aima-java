@@ -1,8 +1,8 @@
 package aima.core.api.search.informed.graph;
 
-import aima.core.api.search.Node;
-
 import java.util.function.ToDoubleFunction;
+
+import aima.core.search.api.Node;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>

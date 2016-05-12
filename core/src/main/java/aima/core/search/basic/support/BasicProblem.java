@@ -1,11 +1,11 @@
-package aima.core.search;
-
-import aima.core.api.search.Problem;
+package aima.core.search.basic.support;
 
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import aima.core.search.api.Problem;
 
 /**
  * Basic implementation of the Problem interface.

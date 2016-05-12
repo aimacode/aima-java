@@ -1,8 +1,8 @@
 package aima.core.api.search.local;
 
-import aima.core.api.search.Node;
-import aima.core.api.search.Problem;
 import aima.core.api.search.SearchFunction;
+import aima.core.search.api.Node;
+import aima.core.search.api.Problem;
 import aima.core.search.local.Scheduler;
 
 import java.util.ArrayList;

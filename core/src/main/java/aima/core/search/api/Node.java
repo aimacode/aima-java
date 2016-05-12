@@ -1,4 +1,4 @@
-package aima.core.api.search;
+package aima.core.search.api;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>

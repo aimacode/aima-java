@@ -1,20 +1,24 @@
-package aima.core.search.support;
+package aima.core.search.basic.support;
 
-import aima.core.api.search.Node;
-
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Set;
+
+import aima.core.search.api.Node;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class BasicFrontierQueue<A, S> extends LinkedList<Node<A, S>> {
+public class BasicPriorityFrontierQueue<A, S> extends PriorityQueue<Node<A, S>> {
 	private static final long serialVersionUID = 1L;
 	//
 	private Set<S> states = new HashSet<>();
 
-    // add
+    public BasicPriorityFrontierQueue(Comparator<Node<A, S>> comparator) {
+        super(comparator);
+    }
+
     @Override
     public boolean add(Node<A, S> node) {
         if (!states.add(node.state())) {
@@ -25,7 +29,7 @@ public class BasicFrontierQueue<A, S> extends LinkedList<Node<A, S>> {
 
     @Override
     public Node<A, S> remove() {
-        Node<A, S> result = super.remove();
+        Node<A, S> result = super.poll();
         if (result != null) {
             states.remove(result.state());
         }
@@ -40,4 +44,3 @@ public class BasicFrontierQueue<A, S> extends LinkedList<Node<A, S>> {
         return states.contains(o);
     }
 }
-

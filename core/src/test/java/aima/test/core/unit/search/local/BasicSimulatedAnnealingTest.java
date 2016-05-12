@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.api.search.Node;
-import aima.core.search.BasicProblem;
+import aima.core.search.api.Node;
+import aima.core.search.basic.support.BasicProblem;
 import aima.core.search.local.BasicSimulatedAnnealingSearch;
 
 

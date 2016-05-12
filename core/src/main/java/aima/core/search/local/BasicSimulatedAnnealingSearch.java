@@ -2,9 +2,9 @@ package aima.core.search.local;
 
 import java.util.function.Function;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.local.SimulatedAnnealingSearch;
 import aima.core.search.BasicSearchFunction;
+import aima.core.search.api.Node;
 
 /**
  * @author Anurag Rai

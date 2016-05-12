@@ -1,6 +1,6 @@
 package aima.gui.demo.search.tree.algorithm;
 
-import aima.core.api.search.Problem;
+import aima.core.search.api.Problem;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;

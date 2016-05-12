@@ -1,4 +1,4 @@
-package aima.core.api.search;
+package aima.core.search.api;
 
 import java.util.Set;
 

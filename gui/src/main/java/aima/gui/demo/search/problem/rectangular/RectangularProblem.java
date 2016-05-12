@@ -1,10 +1,10 @@
 package aima.gui.demo.search.problem.rectangular;
 
-import aima.core.search.BasicProblem;
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import aima.core.search.basic.support.BasicProblem;
 
 /**
  * @author Ciaran O'Reilly

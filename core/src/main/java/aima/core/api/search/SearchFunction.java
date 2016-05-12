@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import aima.core.search.api.Node;
+import aima.core.search.api.Problem;
+
 /**
  * Description of a Search Function. Provides basic API methods for different specializations
  * (e.g. Tree and Graph search).

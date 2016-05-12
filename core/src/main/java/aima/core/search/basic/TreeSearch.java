@@ -1,10 +1,15 @@
-package aima.core.api.search;
+package aima.core.search.basic;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Supplier;
 
 import aima.core.search.api.Node;
+import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
+import aima.core.search.api.Search;
+import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -24,13 +29,25 @@ import aima.core.search.api.Problem;
  *
  * @author Ciaran O'Reilly
  */
-public interface GeneralTreeSearch<A, S> extends SearchFunction<A, S> {
+public class TreeSearch<A, S> implements Search<A, S> {
+	private NodeFactory<A, S> nodeFactory;
+    private Supplier<Queue<Node<A, S>>> frontierSupplier;
+    
+    public TreeSearch() {
+    	this(new BasicNodeFactory<>(), LinkedList::new);
+    }
+    
+	public TreeSearch(NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
+		this.nodeFactory      = nodeFactory;
+		this.frontierSupplier = frontierSupplier;
+	}
+	
     // function TREE-SEARCH(problem) returns a solution, or failure
     @Override
-    default List<A> apply(Problem<A, S> problem) {
+    public List<A> apply(Problem<A, S> problem) {
         // initialize the frontier using the initial state of the problem
-        Queue<Node<A, S>> frontier = newFrontier();
-        frontier.add(newNode(problem.initialState(), 0));
+        Queue<Node<A, S>> frontier = frontierSupplier.get();
+        frontier.add(nodeFactory.newRootNode(problem.initialState(), 0));
         // loop do
         while (true) {
             // if the frontier is empty then return failure
@@ -41,10 +58,8 @@ public interface GeneralTreeSearch<A, S> extends SearchFunction<A, S> {
             if (isGoalState(node, problem)) { return solution(node); }
             // expand the chosen node, adding the resulting nodes to the frontier
             for (A action : problem.actions(node.state())) {
-                frontier.add(childNode(problem, node, action));
+                frontier.add(nodeFactory.newChildNode(problem, node, action));
             }
         }
     }
-
-    Queue<Node<A, S>> newFrontier();
 }

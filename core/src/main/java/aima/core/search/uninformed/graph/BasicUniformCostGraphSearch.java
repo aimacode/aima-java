@@ -1,9 +1,9 @@
 package aima.core.search.uninformed.graph;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.uninformed.graph.UniformCostGraphSearch;
 import aima.core.search.BasicGeneralGraphSearch;
-import aima.core.search.support.BasicPriorityFrontierQueue;
+import aima.core.search.api.Node;
+import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 
 import java.util.function.ToDoubleFunction;
 

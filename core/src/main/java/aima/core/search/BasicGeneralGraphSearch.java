@@ -1,8 +1,8 @@
 package aima.core.search;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.GeneralGraphSearch;
-import aima.core.search.support.BasicFrontierQueue;
+import aima.core.search.api.Node;
+import aima.core.search.basic.support.BasicFrontierQueue;
 
 import java.util.*;
 import java.util.function.Supplier;

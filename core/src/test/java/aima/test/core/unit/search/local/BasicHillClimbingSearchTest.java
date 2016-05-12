@@ -1,8 +1,8 @@
 package aima.test.core.unit.search.local;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.local.HillClimbingSearch;
-import aima.core.search.BasicProblem;
+import aima.core.search.api.Node;
+import aima.core.search.basic.support.BasicProblem;
 import aima.core.search.local.BasicHillClimbingSearch;
 
 

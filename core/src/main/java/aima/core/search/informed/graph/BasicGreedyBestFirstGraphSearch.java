@@ -1,7 +1,7 @@
 package aima.core.search.informed.graph;
 
-import aima.core.api.search.Node;
 import aima.core.api.search.informed.graph.GreedyBestFirstGraphSearch;
+import aima.core.search.api.Node;
 
 import java.util.function.ToDoubleFunction;
 

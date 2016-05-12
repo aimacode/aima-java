@@ -1,6 +1,6 @@
 package aima.test.core.unit.search.uninformed.graph;
 
-import aima.core.search.BasicProblem;
+import aima.core.search.basic.support.BasicProblem;
 import aima.core.search.uninformed.graph.BasicBreadthFirstGraphSearch;
 import org.junit.Assert;
 import org.junit.Test;
