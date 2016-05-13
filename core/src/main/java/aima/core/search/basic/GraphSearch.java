@@ -45,6 +45,10 @@ public class GraphSearch<A, S> implements Search<A, S> {
     	this(new BasicNodeFactory<>(), BasicFrontierQueue::new, HashSet::new);
     }
     
+    public GraphSearch(Supplier<Queue<Node<A, S>>> frontierSupplier) {
+    	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
+    }
+    
     public GraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	this.nodeFactory      = nodeFactory;
     	this.frontierSupplier = frontierSupplier;
