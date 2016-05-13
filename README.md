@@ -96,7 +96,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.14</td>
        <td>84</td>
        <td>Uniform-Cost-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
    </tr>
    <tr>
        <td>3</td>
