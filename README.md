@@ -108,7 +108,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.17</td>
        <td>88</td>
        <td>Depth-Limited-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/RecursiveDepthLimitedTreeSearch.java">RecursiveDepthLimitedTreeSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthLimitedTreeSearch.java">DepthLimitedTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.18</td>
