@@ -47,7 +47,7 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ciaran O'Reilly
  */
 public class BreadthFirstGraphSearch<A, S> implements Search<A, S> {
-	
+
 	private NodeFactory<A, S>           nodeFactory;
     private Supplier<Queue<Node<A, S>>> frontierSupplier;
     private Supplier<Set<S>>            exploredSupplier;
