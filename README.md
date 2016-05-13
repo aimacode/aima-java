@@ -90,7 +90,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.11</td>
        <td>82</td>
        <td>Breadth-First-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/graph/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.14</td>
