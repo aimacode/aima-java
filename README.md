@@ -102,7 +102,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3</td>
        <td>85</td>
        <td>Depth-first Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/uninformed/graph/BasicDepthFirstGraphSearch.java">BasicDepthFirstGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstGraphSearch.java">DepthFirstGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.17</td>
