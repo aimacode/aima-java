@@ -55,14 +55,16 @@ import aima.core.util.Util;
 public class GeneticAlgorithm<A> {
 	protected static final String POPULATION_SIZE = "populationSize";
 	protected static final String ITERATIONS = "iterations";
-	protected static final String TIME_IN_MILLISECONDS = "timeInMilliseconds";
+	protected static final String TIME_IN_MILLISECONDS = "timeInMSec";
 	//
 	protected Metrics metrics = new Metrics();
 	//
 	protected int individualLength;
 	protected List<A> finiteAlphabet;
 	protected double mutationProbability;
+	
 	protected Random random;
+	private List<ProgressTracer<A>> progressTracers = new ArrayList<ProgressTracer<A>>();
 
 	public GeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability) {
 		this(individualLength, finiteAlphabet, mutationProbability, new Random());
@@ -78,6 +80,25 @@ public class GeneticAlgorithm<A> {
 		assert (this.mutationProbability >= 0.0 && this.mutationProbability <= 1.0);
 	}
 
+	/** Progress tracers can be used to display progress information. */
+	public void addProgressTracer(ProgressTracer<A> pTracer) {
+		progressTracers.add(pTracer);
+	}
+	
+	/**
+	 * Starts the genetic algorithm and stops after a specified number of
+	 * iterations.
+	 */
+	public Individual<A> geneticAlgorithm(Collection<Individual<A>> initPopulation,
+			FitnessFunction<A> fitnessFn, final int maxIterations) {
+		GoalTest goalTest = new GoalTest() {
+			@Override
+			public boolean isGoalState(Object state) {
+				return getIterations() >= maxIterations;
+			}};
+		return geneticAlgorithm(initPopulation, fitnessFn, goalTest, 0L);
+	}
+	
 	/**
 	 * Template method controlling search. It returns the best individual in the
 	 * specified population, according to the specified FITNESS-FN and goal
@@ -108,7 +129,7 @@ public class GeneticAlgorithm<A> {
 		List<Individual<A>> population = new ArrayList<Individual<A>>(initPopulation);
 		// Validate the population and setup the instrumentation
 		validatePopulation(population);
-		clearInstrumentation();
+		updateMetrics(population, 0, 0L);
 
 		long startTime = System.currentTimeMillis();
 
@@ -118,7 +139,7 @@ public class GeneticAlgorithm<A> {
 			population = nextGeneration(population, fitnessFn);
 			bestIndividual = retrieveBestIndividual(population, fitnessFn);
 
-			updateMetrics(population.size(), ++itCount, System.currentTimeMillis() - startTime);
+			updateMetrics(population, ++itCount, System.currentTimeMillis() - startTime);
 
 			// until some individual is fit enough, or enough time has elapsed
 			if (maxTimeMilliseconds > 0L && (System.currentTimeMillis() - startTime) > maxTimeMilliseconds)
@@ -127,6 +148,7 @@ public class GeneticAlgorithm<A> {
 				break;
 		} while (!goalTest.isGoalState(bestIndividual));
 
+		notifyProgressTracers(itCount, population);
 		// return the best individual in population, according to FITNESS-FN
 		return bestIndividual;
 	}
@@ -150,7 +172,7 @@ public class GeneticAlgorithm<A> {
 	 * Sets the population size and number of iterations to zero.
 	 */
 	public void clearInstrumentation() {
-		updateMetrics(0, 0, 0L);
+		updateMetrics(new ArrayList<Individual<A>>(), 0, 0L);
 	}
 
 	/**
@@ -196,8 +218,8 @@ public class GeneticAlgorithm<A> {
 	 * @param time
 	 *            the time in milliseconds that the genetic algorithm took.
 	 */
-	private void updateMetrics(int popSize, int itCount, long time) {
-		metrics.set(POPULATION_SIZE, popSize);
+	protected void updateMetrics(Collection<Individual<A>> population, int itCount, long time) {
+		metrics.set(POPULATION_SIZE, population.size());
 		metrics.set(ITERATIONS, itCount);
 		metrics.set(TIME_IN_MILLISECONDS, time);
 	}
@@ -215,7 +237,6 @@ public class GeneticAlgorithm<A> {
 	protected List<Individual<A>> nextGeneration(List<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		// new_population <- empty set
 		List<Individual<A>> newPopulation = new ArrayList<Individual<A>>(population.size());
-
 		// for i = 1 to SIZE(population) do
 		for (int i = 0; i < population.size(); i++) {
 			// x <- RANDOM-SELECTION(population, FITNESS-FN)
@@ -231,7 +252,7 @@ public class GeneticAlgorithm<A> {
 			// add child to new_population
 			newPopulation.add(child);
 		}
-
+		notifyProgressTracers(getIterations(), population);
 		return newPopulation;
 	}
 
@@ -311,5 +332,19 @@ public class GeneticAlgorithm<A> {
 						+ "] in population is not the required length of " + this.individualLength);
 			}
 		}
+	}
+	
+	private void notifyProgressTracers(int itCount, Collection<Individual<A>> generation) {
+		for (ProgressTracer<A> tracer : progressTracers)
+			tracer.traceProgress(getIterations(), generation);
+	}
+	
+	/**
+	 * Interface for progress tracers.
+	 * 
+	 * @author Ruediger Lunde
+	 */
+	public interface ProgressTracer<A> {
+		void traceProgress(int itCount, Collection<Individual<A>> population);
 	}
 }

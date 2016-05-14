@@ -1,11 +1,8 @@
 package aima.core.search.local;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import aima.core.search.framework.GoalTest;
 
 /**
  * Variant of the genetic algorithm which uses double numbers from a fixed
@@ -23,7 +20,6 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 
 	private double minimum;
 	private double maximum;
-	private List<ProgressTracer> progressTracers = new ArrayList<ProgressTracer>();
 
 	/**
 	 * Constructor.
@@ -44,41 +40,12 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 		maximum = max;
 	}
 
-	/** Population printers can be used to display progress information. */
-	public void addProgressTracer(ProgressTracer pTracer) {
-		progressTracers.add(pTracer);
-	}
-
 	/** Convenience method. */
 	public Individual<Double> createRandomIndividual() {
 		List<Double> representation = new ArrayList<Double>(individualLength);
 		for (int i = 0; i < individualLength; i++)
 			representation.add(minimum + random.nextDouble() * (maximum - minimum));
 		return new Individual<Double>(representation);
-	}
-
-	/**
-	 * Starts the genetic algorithm and stops after a specified number of
-	 * iterations.
-	 */
-	public Individual<Double> geneticAlgorithm(Collection<Individual<Double>> population,
-			FitnessFunction<Double> fitnessFn, final int maxIterations) {
-		GoalTest goalTest = new GoalTest() {
-			@Override
-			public boolean isGoalState(Object state) {
-				return getIterations() >= maxIterations;
-			}};
-		return super.geneticAlgorithm(population, fitnessFn, goalTest, 0L);
-	}
-
-	/** Calls super implementation and additionally informs population printers. */
-	@Override
-	protected List<Individual<Double>> nextGeneration(List<Individual<Double>> population,
-			FitnessFunction<Double> fitnessFn) {
-		List<Individual<Double>> result = super.nextGeneration(population, fitnessFn);
-		for (ProgressTracer printer : progressTracers)
-			printer.traceProgress(getIterations(), population, result);
-		return result;
 	}
 
 	/**
@@ -113,14 +80,5 @@ public class GeneticAlgorithmForNumbers extends GeneticAlgorithm<Double> {
 			newRep.add(num);
 		}
 		return new Individual<>(newRep);
-	}
-
-	/**
-	 * Interface for progress tracers.
-	 * 
-	 * @author Ruediger Lunde
-	 */
-	public static interface ProgressTracer {
-		void traceProgress(int itCount, Collection<Individual<Double>> oldGen, Collection<Individual<Double>> newGen);
 	}
 }
