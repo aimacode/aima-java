@@ -2,6 +2,7 @@ package aima.core.search.framework;
 
 import java.util.Hashtable;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Stores key-value pairs for efficiency analysis.
@@ -55,7 +56,9 @@ public class Metrics {
 		return hash.keySet();
 	}
 
+	/** Sorts the key-value pairs by key names and formats them as equations. */
 	public String toString() {
-		return hash.toString();
+		TreeMap<String, String> map = new TreeMap<String, String>(hash);
+		return map.toString();
 	}
 }
