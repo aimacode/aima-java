@@ -2,6 +2,7 @@ package aima.core.search.basic.uninformed;
 
 import java.util.List;
 
+import aima.core.search.api.DepthLimitedSearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
@@ -33,7 +34,7 @@ import aima.core.search.basic.support.BasicNodeFactory;
  *
  * @author Ciaran O'Reilly
  */
-public class DepthLimitedTreeSearch<A, S> implements Search<A, S> {
+public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedSearch<A, S> {
 	private int limit;
 	private NodeFactory<A, S> nodeFactory;
 	
@@ -42,16 +43,17 @@ public class DepthLimitedTreeSearch<A, S> implements Search<A, S> {
     }
 	
 	public DepthLimitedTreeSearch(int limit, NodeFactory<A, S> nodeFactory) {
-		this.limit            = limit;
-		this.nodeFactory      = nodeFactory;
+		this.limit       = limit;
+		this.nodeFactory = nodeFactory;
 	}
 	
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        return depthLimitedSearch(problem, limit());
+        return depthLimitedSearch(problem, getLimit());
     }
     
     // function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or failure/cutoff
+    @Override
     public List<A> depthLimitedSearch(Problem<A, S> problem, int limit) {
         // return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem, limit)
         return recursiveDLS(nodeFactory.newRootNode(problem.initialState()), problem, limit);
@@ -64,7 +66,7 @@ public class DepthLimitedTreeSearch<A, S> implements Search<A, S> {
             return solution(node);
         } // else if limit = 0 then return cutoff
         else if (limit == 0) {
-            return cutoff();
+            return getCutoff();
         } // else
         else {
             // cutoff_occurred? <- false
@@ -76,21 +78,23 @@ public class DepthLimitedTreeSearch<A, S> implements Search<A, S> {
                 // result <- RECURSIVE-DLS(child, problem, limit - 1)
                 List<A> result = recursiveDLS(child, problem, limit-1);
                 // if result = cutoff then cutoff_occurred? <- true
-                if (result == cutoff()) {
+                if (result == getCutoff()) {
                     cutoff_occurred = true;
                 } // else if result != failure then return result
                 else if (result != failure()) { return result; }
             }
             // if cutoff_occurred? then return cutoff else return failure
-            if (cutoff_occurred) { return cutoff(); } else { return failure(); }
+            if (cutoff_occurred) { return getCutoff(); } else { return failure(); }
         }
     }
 
-    public int limit() {
+    @Override
+    public int getLimit() {
         return limit;
     }
 
-    public List<A> cutoff() {
+    @Override
+    public List<A> getCutoff() {
         return null;
     }
 }
