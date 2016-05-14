@@ -49,7 +49,8 @@ public class SimulatedAnnealingSearch implements Search {
 	};
 	
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
-	public static final String TEMPERATURE = "temp";
+	public static final String METRIC_TEMPERATURE = "temp";
+	public static final String METRIC_NODE_VALUE = "nodeValue";
 	
 	private final HeuristicFunction hf;
 	private final Scheduler scheduler;
@@ -92,7 +93,7 @@ public class SimulatedAnnealingSearch implements Search {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = new Node(p.getInitialState());
 		Node next = null;
-		List<Action> ret = new ArrayList<Action>();
+		List<Action> result = new ArrayList<Action>();
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (!CancelableThread.currIsCanceled()) {
@@ -104,24 +105,24 @@ public class SimulatedAnnealingSearch implements Search {
 			if (temperature == 0.0) {
 				if (SearchUtils.isGoalState(p, current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				ret = SearchUtils.getSequenceOfActions(current);
+				result = SearchUtils.getSequenceOfActions(current);
 				break;
 			}
 
-			updateMetrics(temperature);
+			updateMetrics(temperature, getValue(current));
 			List<Node> children = SearchUtils.expandNode(current, p);
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
 				next = Util.selectRandomlyFromList(children);
 				// /\E <- next.VALUE - current.value
-				double deltaE = getValue(p, next) - getValue(p, current);
+				double deltaE = getValue(next) - getValue(current);
 
 				if (shouldAccept(temperature, deltaE)) {
 					current = next;
 				}
 			}
 		}
-		return ret;
+		return result;
 	}
 
 	/**
@@ -160,9 +161,10 @@ public class SimulatedAnnealingSearch implements Search {
 		return metrics;
 	}
 	
-	private void updateMetrics(double temperature) {
+	private void updateMetrics(double temperature, double value) {
 		metrics.incrementInt(METRIC_NODES_EXPANDED);
-		metrics.set(TEMPERATURE, temperature);
+		metrics.set(METRIC_TEMPERATURE, temperature);
+		metrics.set(METRIC_NODE_VALUE, value);
 	}
 	
 	/**
@@ -170,7 +172,8 @@ public class SimulatedAnnealingSearch implements Search {
 	 */
 	public void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
-		metrics.set(TEMPERATURE, 0);
+		metrics.set(METRIC_TEMPERATURE, 0);
+		metrics.set(METRIC_NODE_VALUE, 0);
 	}
 	
 	//
@@ -185,7 +188,7 @@ public class SimulatedAnnealingSearch implements Search {
 						temperature, deltaE));
 	}
 
-	private double getValue(Problem p, Node n) {
+	private double getValue(Node n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT

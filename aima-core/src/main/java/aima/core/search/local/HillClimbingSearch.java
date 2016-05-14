@@ -44,6 +44,7 @@ public class HillClimbingSearch implements Search {
 	};
 	
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
+	public static final String METRIC_NODE_VALUE = "nodeValue";
 
 	private HeuristicFunction hf = null;
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
@@ -77,13 +78,13 @@ public class HillClimbingSearch implements Search {
 	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
-		lastState = null;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = new Node(p.getInitialState());
 		Node neighbor = null;
 		// loop do
 		while (!CancelableThread.currIsCanceled()) {
 			lastState = current.getState();
+			metrics.set(METRIC_NODE_VALUE, getValue(current));
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
 			List<Node> children = SearchUtils.expandNode(current, p);
 			// neighbor <- a highest-valued successor of current
@@ -91,9 +92,8 @@ public class HillClimbingSearch implements Search {
 			
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
-				if (SearchUtils.isGoalState(p, current)) {
+				if (SearchUtils.isGoalState(p, current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				}
 				return SearchUtils.getSequenceOfActions(current);
 			}
 			// current <- neighbor
@@ -136,6 +136,7 @@ public class HillClimbingSearch implements Search {
 	 */
 	public void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
+		metrics.set(METRIC_NODE_VALUE, 0);
 	}
 	
 	//
