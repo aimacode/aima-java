@@ -40,7 +40,7 @@ public class IterativeDeepeningSearch implements Search {
 
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		// for depth = 0 to infinity do
 		for (int i = 0; i <= INFINITY; i++) {

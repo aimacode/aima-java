@@ -71,7 +71,7 @@ public class DepthLimitedSearch implements Search {
 	 *         CutOffIndicatorAction.CUT_OFF in it will be returned (Note: this
 	 *         is a NoOp action).
 	 */
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)

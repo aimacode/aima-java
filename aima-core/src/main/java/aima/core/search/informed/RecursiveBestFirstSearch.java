@@ -75,7 +75,7 @@ public class RecursiveBestFirstSearch implements Search {
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 		List<Action> actions = new ArrayList<Action>();
 		explored.clear();
 

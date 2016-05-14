@@ -22,7 +22,7 @@ public interface Search {
 	 *         containing a single NoOp Action if already at the goal, or an
 	 *         empty list if the goal could not be found.
 	 */
-	List<Action> search(Problem p) throws Exception;
+	List<Action> search(Problem p);
 
 	/**
 	 * Returns all the metrics of the search.

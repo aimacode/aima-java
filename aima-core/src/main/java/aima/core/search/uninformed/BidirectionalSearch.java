@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.OperationNotSupportedException;
-
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
 import aima.core.search.framework.Metrics;
@@ -60,13 +58,13 @@ public class BidirectionalSearch implements Search {
 	/**
 	 * Sorry, currently not supported. Use BidirectionalQueueSearch instead.
 	 */
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 
-		throw new OperationNotSupportedException(
+		throw new RuntimeException (
 				"Sorry, currently not available. Use version in framework.qsearch package instead.");
 	}
 
-	public List<Action> searchOutOfOrder(Problem p) throws Exception {
+	List<Action> searchOutOfOrder(Problem p) throws Exception {
 		assert (p instanceof BidirectionalProblem);
 
 		searchOutcome = SearchOutcome.PATH_NOT_FOUND;

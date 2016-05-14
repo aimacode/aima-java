@@ -74,7 +74,7 @@ public class HillClimbingSearch implements Search {
 	 *         user.
 	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;

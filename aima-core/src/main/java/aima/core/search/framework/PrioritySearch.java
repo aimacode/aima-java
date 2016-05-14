@@ -25,7 +25,7 @@ public class PrioritySearch implements Search {
 		comparator = comp;
 	}
 
-	public List<Action> search(Problem p) throws Exception {
+	public List<Action> search(Problem p) {
 		return implementation.search(p, new PriorityQueue<Node>(5, comparator));
 	}
 
