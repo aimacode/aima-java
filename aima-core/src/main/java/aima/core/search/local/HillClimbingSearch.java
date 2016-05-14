@@ -83,17 +83,17 @@ public class HillClimbingSearch implements Search {
 		Node neighbor = null;
 		// loop do
 		while (!CancelableThread.currIsCanceled()) {
+			lastState = current.getState();
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
 			List<Node> children = SearchUtils.expandNode(current, p);
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
-
+			
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
 				if (SearchUtils.isGoalState(p, current)) {
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				}
-				lastState = current.getState();
 				return SearchUtils.getSequenceOfActions(current);
 			}
 			// current <- neighbor

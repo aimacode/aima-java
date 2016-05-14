@@ -2,6 +2,7 @@ package aima.core.environment.nqueens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import aima.core.util.datastructure.XYLocation;
 
@@ -10,13 +11,13 @@ import aima.core.util.datastructure.XYLocation;
  * placed (only one per square) and moved.
  * 
  * @author Ravi Mohan
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class NQueensBoard {
 
 	/** Parameters for initialization. */
 	public static enum Config {
-		EMPTY, QUEENS_IN_FIRST_ROW
+		EMPTY, QUEENS_IN_FIRST_ROW, QUEEN_IN_EVERY_COL
 	};
 
 	/**
@@ -51,9 +52,14 @@ public class NQueensBoard {
 	 */
 	public NQueensBoard(int size, Config config) {
 		this(size);
-		if (config == Config.QUEENS_IN_FIRST_ROW)
+		if (config == Config.QUEENS_IN_FIRST_ROW) {
 			for (int i = 0; i < size; i++)
 				addQueenAt(new XYLocation(i, 0));
+		} else if (config == Config.QUEEN_IN_EVERY_COL) {
+			Random r = new Random();
+			for (int i = 0; i < size; i++)
+				addQueenAt(new XYLocation(i, r.nextInt(size)));
+		}
 	}
 
 	public void clear() {
