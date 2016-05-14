@@ -99,13 +99,12 @@ public class SimulatedAnnealingSearch implements Search {
 			// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;
+			lastState = current.getState();
 			// if temperature = 0 then return current
 			if (temperature == 0.0) {
-				if (SearchUtils.isGoalState(p, current)) {
+				if (SearchUtils.isGoalState(p, current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				}
 				ret = SearchUtils.getSequenceOfActions(current);
-				lastState = current.getState();
 				break;
 			}
 
