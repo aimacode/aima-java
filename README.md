@@ -114,7 +114,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.18</td>
        <td>89</td>
        <td>Iterative-Deepening-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/uninformed/tree/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
        <td>3</td>

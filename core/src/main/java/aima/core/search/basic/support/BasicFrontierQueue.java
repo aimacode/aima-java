@@ -7,6 +7,8 @@ import java.util.Set;
 import aima.core.search.api.Node;
 
 /**
+ * NOTE: 'The data structure for frontier needs to support efficient membership testing.' 
+ * 
  * @author Ciaran O'Reilly
  */
 public class BasicFrontierQueue<A, S> extends LinkedList<Node<A, S>> {

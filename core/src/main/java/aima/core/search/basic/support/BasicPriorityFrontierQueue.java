@@ -8,6 +8,9 @@ import java.util.Set;
 import aima.core.search.api.Node;
 
 /**
+ * NOTE: 'The data structure for frontier needs to support efficient membership testing, 
+ * so it should combine the capabilities of a priority queue and a hash table.'
+ * 
  * @author Ciaran O'Reilly
  */
 public class BasicPriorityFrontierQueue<A, S> extends PriorityQueue<Node<A, S>> {
