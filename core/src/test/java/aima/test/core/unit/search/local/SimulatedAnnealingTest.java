@@ -9,43 +9,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.search.api.Node;
+import aima.core.search.basic.local.SimulatedAnnealingSearch;
+import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicProblem;
-import aima.core.search.local.BasicSimulatedAnnealingSearch;
+import aima.test.core.unit.search.support.TestGoAction;
 
 
 /*
  * @author Anurag Rai
  */
-public class BasicSimulatedAnnealingTest {
-
-    class GoAction {
-        String goTo;
-        GoAction(String goTo) {
-            this.goTo = goTo;
-        }
-
-        public String name() { return "Go(" + goTo + ")"; }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj != null && obj instanceof GoAction) {
-                return this.name().equals(((GoAction)obj).name());
-            }
-            return super.equals(obj);
-        }
-        @Override
-        public int hashCode() {
-            return name().hashCode();
-        }
-    }
-
-    Map<String, List<String>> simpleBinaryTreeStateSpace = new HashMap<String, List<String>>() {{
+public class SimulatedAnnealingTest {
+    Map<String, List<String>> simpleBinaryTreeStateSpace = new HashMap<String, List<String>>() {
+		private static final long serialVersionUID = 1L; {
         put("C", Arrays.asList("A", "B"));
         put("E", Arrays.asList("C", "D"));
         put("F", Arrays.asList("X", "D"));
@@ -54,17 +36,17 @@ public class BasicSimulatedAnnealingTest {
 
     }};
 
-    Function<String, Set<GoAction>> simpleBinaryTreeActionsFn = state -> {
+    Function<String, Set<TestGoAction>> simpleBinaryTreeActionsFn = state -> {
         if (simpleBinaryTreeStateSpace.containsKey(state)) {
-            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
+            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(TestGoAction::new).collect(Collectors.toList()));
         }
         return Collections.emptySet();
     };
 
-    BiFunction<String, GoAction, String> goActionResultFn = (state, action) -> ((GoAction) action).goTo;
+    BiFunction<String, TestGoAction, String> goActionResultFn = (state, action) -> ((TestGoAction) action).getGoTo();
 
     //the heuristic function will be represented by the ascii value of the first character in the state name
-    Function<Node<GoAction, String>, Double> asciiHeuristicFn = node -> {
+    ToDoubleFunction<Node<TestGoAction, String>> asciiHeuristicFn = node -> {
         String state = node.state();
         int asciiCode = (int) state.charAt(0);
         return (double) asciiCode;
@@ -72,35 +54,36 @@ public class BasicSimulatedAnnealingTest {
 
     @Test
     public void testAsciiHeuristicFunction() {
-        BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
-        Node<GoAction, String> nodeA = simulatedAnnealing.newNode("A");
-        Node<GoAction, String> nodeB = simulatedAnnealing.newNode("B");
+        SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
+        BasicNodeFactory<TestGoAction, String> nodeFactory = new BasicNodeFactory<>();
+        Node<TestGoAction, String> nodeA = nodeFactory.newRootNode("A");
+        Node<TestGoAction, String> nodeB = nodeFactory.newRootNode("B");
 
         Assert.assertEquals(
-                simulatedAnnealing.getHeuristicFunction().apply(nodeA),
-                simulatedAnnealing.getHeuristicFunction().apply(nodeA),
+                simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
+                simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
                 0
         );
 
         Assert.assertEquals(
-        		simulatedAnnealing.getHeuristicFunction().apply(nodeB),
-        		simulatedAnnealing.getHeuristicFunction().apply(nodeB),
+        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
+        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
                 0
         );
 
         Assert.assertNotEquals(
-        		simulatedAnnealing.getHeuristicFunction().apply(nodeA),
-        		simulatedAnnealing.getHeuristicFunction().apply(nodeB),
+        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
+        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
                 0
         );
     }
 
     @Test
     public void testAlreadyInGoalState() {
-        BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
+        SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
 
         Assert.assertEquals(
-        		Arrays.asList((GoAction) null),
+        		Arrays.asList((TestGoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -108,7 +91,7 @@ public class BasicSimulatedAnnealingTest {
                 )));
 
         Assert.assertEquals(
-        		Arrays.asList((GoAction) null),
+        		Arrays.asList((TestGoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -118,7 +101,7 @@ public class BasicSimulatedAnnealingTest {
 
     @Test
     public void testDelE() {
-    	BasicSimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new BasicSimulatedAnnealingSearch<>(asciiHeuristicFn);
+    	SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
     	int deltaE = -1;
 		double higherTemperature = 30.0;
 		double lowerTemperature = 29.5;
