@@ -8,7 +8,7 @@ import aima.core.search.api.Node;
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  * <br>
  *
- * The algorithm is identical to UNIFORM-COST graph search except tht A* uses <em>g + h</em> instead of g.
+ * The algorithm is identical to UNIFORM-COST graph search except that A* uses <em>g + h</em> instead of g.
  *
  * @author Ciaran O'Reilly
  */
