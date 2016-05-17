@@ -21,8 +21,10 @@ public class CartesianProductTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalCartesianProduct2() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+				private static final long serialVersionUID = 1L;{
                 add("1e1");
                 add("1e2");
             }});
@@ -34,13 +36,16 @@ public class CartesianProductTest {
 
     @Test
     public void testSize() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
@@ -52,12 +57,15 @@ public class CartesianProductTest {
 
     @Test
     public void testIterator() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
@@ -77,15 +85,19 @@ public class CartesianProductTest {
 
     @Test
     public void testIteratorWithFixedValue() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("3e1");
                 add("3e2");
             }});
@@ -105,13 +117,16 @@ public class CartesianProductTest {
 
     @Test
     public void testSpliteratorTryAdvance() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
@@ -131,16 +146,20 @@ public class CartesianProductTest {
     public void testSpliteratorTrySimpleSplits() {
         Spliterator<String[]> splor1, splor2, splor3, splor4;
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
             }});
         }}).spliterator();
         splor2 = splor1.trySplit();
         Assert.assertNull(splor2);
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
@@ -152,13 +171,16 @@ public class CartesianProductTest {
         Assert.assertTrue(splor1.tryAdvance(tuple -> Assert.assertArrayEquals(new String[] {"1e2"}, tuple)));
         Assert.assertFalse(splor1.tryAdvance(tuple -> Assert.fail("Should not be called")));
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
@@ -175,13 +197,16 @@ public class CartesianProductTest {
         Assert.assertTrue(splor1.tryAdvance(tuple -> Assert.assertArrayEquals(new String[] {"1e3", "2e2"}, tuple)));
         Assert.assertFalse(splor1.tryAdvance(tuple -> Assert.fail("Should not be called")));
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
                 add("2e3");
@@ -202,13 +227,16 @@ public class CartesianProductTest {
         Assert.assertFalse(splor1.tryAdvance(tuple -> Assert.fail("Should not be called")));
 
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
                 add("2e3");
@@ -236,29 +264,36 @@ public class CartesianProductTest {
     public void testSpliteratorEstimateSize() {
         Spliterator<String[]> splor1, splor2;
         Assert.assertEquals(9,
-                new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>(){{
-                    add(new ArrayList<String>() {{
+                new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>(){
+        			private static final long serialVersionUID = 1L; {
+                    add(new ArrayList<String>() {
+            			private static final long serialVersionUID = 1L; {
                         add("1e1");
                         add("1e2");
                         add("1e3");
                     }});
-                    add(new ArrayList<String>() {{
+                    add(new ArrayList<String>() {
+            			private static final long serialVersionUID = 1L; {
                         add("2e1");
                         add("2e2");
                         add("2e3");
                     }});
                 }}).spliterator().estimateSize());
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("3e1");
                 add("3e2");
             }});
@@ -267,18 +302,22 @@ public class CartesianProductTest {
         Assert.assertEquals(4, splor1.estimateSize());
         Assert.assertEquals(4, splor2.estimateSize());
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
                 add("1e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
                 add("2e3");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("3e1");
                 add("3e2");
                 add("3e3");
@@ -305,16 +344,20 @@ public class CartesianProductTest {
     public void testSpliteratorCharacteristics() {
         Spliterator<String[]> splor1, splor2;
 
-        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        splor1 = new CartesianProduct<>(String.class, new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
                 add("2e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("3e1");
                 add("3e2");
             }});
@@ -375,15 +418,19 @@ public class CartesianProductTest {
 
     @Test
     public void testToString() {
-        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {{
-            add(new ArrayList<String>() {{
+        List<List<? extends String>> listOfListsOfElements = new ArrayList<List<? extends String>>() {
+			private static final long serialVersionUID = 1L; {
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("1e1");
                 add("1e2");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("2e1");
             }});
-            add(new ArrayList<String>() {{
+            add(new ArrayList<String>() {
+    			private static final long serialVersionUID = 1L; {
                 add("3e1");
                 add("3e2");
             }});

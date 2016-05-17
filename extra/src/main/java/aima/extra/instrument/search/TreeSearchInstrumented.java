@@ -1,17 +1,18 @@
 package aima.extra.instrument.search;
 
-import aima.core.api.search.GeneralTreeSearch;
-import aima.core.search.BasicSearchFunction;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
+import aima.core.search.basic.TreeSearch;
 import aima.core.search.basic.support.BasicNode;
+import aima.core.search.basic.support.BasicNodeFactory;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchInstrumented<A, S> extends BasicSearchFunction<A, S> implements GeneralTreeSearch<A, S> {
+public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> {
     public interface Cmd<A, S> {
         String             commandId();
         int                currentFrontierSize();
@@ -65,28 +66,8 @@ public class TreeSearchInstrumented<A, S> extends BasicSearchFunction<A, S> impl
 
     public TreeSearchInstrumented(Listener<A, S> listener) {
         this.listener = listener;
-    }
-
-    @Override
-    public Queue<Node<A, S>> newFrontier() {
-        frontier        = new InstrLinkedList();
-        maxFrontierSize = 0;
-        numberAddedToFrontier = 0;
-        numberRemovedFromFrontier = 0;
-        statesVisitiedCounts.clear();
-        statesInFrontierNotVisited.clear();
-        lastNodeVisited = null;
-        searchSpaceLevelCounts.clear();
-        searchSpaceLevelRemainingCounts.clear();
-        notify(CMD_START, 0, null);
-        return frontier;
-    }
-
-    @Override
-    public Node<A, S> childNode(Problem<A, S> problem, Node<A, S> parent, A action) {
-        Node<A, S> child = super.childNode(problem, parent, action);
-        notify(CMD_EXPAND_NODE, frontier.size(), parent);
-        return child;
+        setNodeFactory(new InstrumentedNodeFactory());
+        setFrontierSupplier(new InstrumentedFrontierSupplier());
     }
 
     @Override
@@ -210,5 +191,31 @@ public class TreeSearchInstrumented<A, S> extends BasicSearchFunction<A, S> impl
             }
             return result;
         }
+    }
+    
+    class InstrumentedNodeFactory extends BasicNodeFactory<A, S> {
+        @Override
+        public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> parent, A action) {
+            Node<A, S> child = super.newChildNode(problem, parent, action);
+            TreeSearchInstrumented.this.notify(CMD_EXPAND_NODE, frontier.size(), parent);
+            return child;
+        }
+    }
+    
+    class InstrumentedFrontierSupplier implements Supplier<Queue<Node<A, S>>> {
+    	@Override
+    	public Queue<Node<A, S>> get() {
+	        frontier        = new InstrLinkedList();
+	        maxFrontierSize = 0;
+	        numberAddedToFrontier = 0;
+	        numberRemovedFromFrontier = 0;
+	        statesVisitiedCounts.clear();
+	        statesInFrontierNotVisited.clear();
+	        lastNodeVisited = null;
+	        searchSpaceLevelCounts.clear();
+	        searchSpaceLevelRemainingCounts.clear();
+	        TreeSearchInstrumented.this.notify(CMD_START, 0, null);
+	        return frontier;
+	    }
     }
 }

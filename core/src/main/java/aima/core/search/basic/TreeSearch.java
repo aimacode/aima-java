@@ -38,8 +38,8 @@ public class TreeSearch<A, S> implements Search<A, S> {
     }
     
 	public TreeSearch(NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
-		this.nodeFactory      = nodeFactory;
-		this.frontierSupplier = frontierSupplier;
+		setNodeFactory(nodeFactory);
+		setFrontierSupplier(frontierSupplier);
 	}
 	
     // function TREE-SEARCH(problem) returns a solution, or failure
@@ -61,5 +61,13 @@ public class TreeSearch<A, S> implements Search<A, S> {
                 frontier.add(nodeFactory.newChildNode(problem, node, action));
             }
         }
+    }
+    
+    public void setNodeFactory(NodeFactory<A, S> nodeFactory) {
+    	this.nodeFactory = nodeFactory;
+    }
+    
+    public void setFrontierSupplier(Supplier<Queue<Node<A, S>>> frontierSupplier) {
+    	this.frontierSupplier = frontierSupplier;
     }
 }
