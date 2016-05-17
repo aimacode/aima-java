@@ -138,7 +138,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.26</td>
        <td>99</td>
        <td>Recursive-Best-First-Search </td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/tree/RecursiveBestFirstTreeSearch.java">RecursiveBestFirstTreeSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
    </tr>
    </tbody>
 </table>
