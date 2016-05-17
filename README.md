@@ -132,7 +132,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3</td>
        <td>93</td>
        <td>A* Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/api/search/informed/graph/AStarGraphSearch.java">AStarGraphSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/AStarGraphSearch.java">AStarGraphSearch</a></td>
    </tr>
    <tr>
        <td>3.26</td>
