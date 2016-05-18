@@ -39,7 +39,7 @@ public interface Search <A, S> extends Function<Problem<A, S>, List<A>> {
         // Use a LinkedList so we can insert into the front efficiently
         LinkedList<A> result = new LinkedList<>();
         if (node.parent() == null) {
-            // This should be an Action.NoOp as it implies we are
+            // This should represent a NoOp action as it implies we are
             // at the goal already, so there is nothing to do
             result.add(node.action());
         }
@@ -47,7 +47,7 @@ public interface Search <A, S> extends Function<Problem<A, S>, List<A>> {
             // This loop will skip the root node's action, as
             // we only want to include action from the root
             // and not the default assigned to the root itself
-            // (i.e. usually an Action.NoOp)
+            // (i.e. usually some form of a NoOp Action)
             while (node.parent() != null) {
                 result.addFirst(node.action());
                 node = node.parent();
