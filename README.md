@@ -208,8 +208,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### LATER
 
 #### Chapter 3 'core' module.
-* Uniform-Cost-Search need a better mechanism for determining state containment in the
-  queue and remove a node with a higher state cost.
+* Uniform-Cost-Search need a better mechanism for determining s containment in the
+  queue and remove a node with a higher s cost.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 * BasicRecursiveBestFirstSearchTest
 * 3 	90	Bidirectional search

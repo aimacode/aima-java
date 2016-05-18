@@ -1,15 +1,15 @@
 @CODE:Pseudo-Code
 @start@function TREE-SEARCH(problem) returns a solution, or failure@start@
-  @initialize@initialize the frontier using the initial state of the problem@initialize@
+  @initialize@initialize the frontier using the initial s of the problem@initialize@
   loop do
     if the @frontier-empty-check@frontier is empty@frontier-empty-check@ then @failure@return failure@failure@
     @frontier-remove@choose a leaf node and remove it from the frontier@frontier-remove@
-    if the @check-goal@node contains a goal state@check-goal@ then @solution@return the corresponding solution@solution@
+    if the @check-goal@node contains a goal s@check-goal@ then @solution@return the corresponding solution@solution@
     @expand-node@expand the chosen node@expand-node@, @add-frontier@adding the resulting nodes to the frontier@add-frontier@
 @CODE:Java
 // function TREE-SEARCH(problem) returns a solution, or failure
 @start@default List<Action> apply(Problem<S> problem) {@start@
-  // initialize the frontier using the initial state of the problem
+  // initialize the frontier using the initial s of the problem
   @initialize@Queue<Node<S>> frontier = newFrontier();@initialize@
   @initialize@frontier.add(newNode(problem.initialState(), 0));@initialize@
   // loop do
@@ -18,10 +18,10 @@
     if (@frontier-empty-check@frontier.isEmpty()@frontier-empty-check@) { @failure@return failure();@failure@ }
     // choose a leaf node and remove it from the frontier
     @frontier-remove@Node<S> node = frontier.remove();@frontier-remove@
-    // if the node contains a goal state then return the corresponding solution
+    // if the node contains a goal s then return the corresponding solution
     if (@check-goal@isGoalState(node, problem)@check-goal@) { @solution@return solution(node);@solution@ }
     // expand the chosen node, adding the resulting nodes to the frontier
-    for (@expand-node@Action action : problem.actions(node.state())@expand-node@) {
+    for (@expand-node@Action action : problem.actions(node.s())@expand-node@) {
       @add-frontier@frontier.add(childNode(problem, node, action));@add-frontier@
     }
   }
