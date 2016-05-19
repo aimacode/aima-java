@@ -145,90 +145,27 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ---
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
-### CURRENT (new demo GUI)
-* Re-design uninformed and informed search hierarchy:
-    * SearchFunction
-        * TreeSearch (sub-package)
-            * GeneralTreeSearch (fig 3.7) x
-                * BasicGeneralTreeSearch x
-                    * BasicDepthFirstTreeSearch
-                      (pg. 86 'modified at no extra memory cost so that it checks new states against those on the path from the root to the current node; to avoid infinite loops)
-                * UniformCostTreeSearch  (ensure does not need to be at same level as GeneralTreeSearch)
-                    * BasicUniformCostTreeSearch
-            * BreadthFirstTreeSearch (variant of General tree search which checks if solution before adding to frontier)
-                * BasicBreadthFirstTreeSearch   
-            * recursive
-                * RecursiveDepthLimitedTreeSearch (fig 3.17) x
-                    * BasicRecursiveDepthLimitedTreeSearch x
-                * IterariveDeepeningSearch x
-                    * BasicIterativeDeepeningSearch x
-                * RecursiveBestFirstTreeSearch (fig 3.26) x
-                    * BasicRecursiveBestFirstTreeSearch   x
-            * BestFirstTreeSearch (pg 92)
-                * GreedyBestFirstTreeSearch
-                    * BasicGreedyBestFirstTreeSearch
-                * AStarTreeSearch
-                    * BasicAStarTreeSearch                     
-        * GraphSearch (Marker Interface or sub-package)
-            * GeneralGraphSearch (fig 3.7) x
-                * BasicGeneralGraphSearch x
-                    * BasicDepthFirstGraphSearch x
-            * BreadthFirstGraphSearch (fig 3.11) x
-                * BasicBreadthFirstGraphSearch x
-            * UniformCostGraphSearch (fig 3.14) x
-                * BasicUniformCostGraphSearch x
-            * BestFirstGraphSearch (pg 92 - implementation identical to fig 3.14 except for cost) x
-                * GreedyBestFirstGraphSearch  x
-                    * BasicGreedyBestFirstGraphSearch  x
-                * AStartGraphSearch x
-                    * BasicAStartGraphSearch x
-* Tree-Search demo
-    * Add additional tree search algorithms to simulate 
-    * Add visualizations specific to recursive tree search algorithms
-    * Configure rectangular problem
-        * Change size of grid
-        * Specify order of actions.
-            * Clockwise
-            * Anti-Clockwise
-            * Random
-                * Check box for 'each time' new random sequence.
-            * User Selected (via groups of toggle buttons).
-    * Add additional problems
-        * Binary search tree (i.e. fig 3.12 and also take into account fig 3.16)
-            * Possibly show before Rectangular problem in demo
-        * 2D Map (i.e. Map of Romania)
-            * A* display contours (fig 3.25)
-        * Informed search
-            * Display heuristic information summary pane (fig 3.22)
-* Graph-Search demo
-    * Summary information related to explored set.
-* GUI demo
-    * Mark each algorithm (search) with icons indicating complexity, optimality, time and space complexity (chp 3 pg 80 and fig 3.21).
-
-### LATER
-
-#### Chapter 3 'core' module.
+### CURRENT (Chp 3 and 4)
+* Change approach for checking state containment in queues to be more explicit and compasable 
+  (i.e. BasicFrontierQueue and BasicPriorityFrontierQueue)
+* Re-design uninformed and informed search hierarchy to support similar functionality to aima3e branch:
+    * Add DepthFirstTreeSearch
+      (Note: pg. 86 'modified at no extra memory cost so that it checks new states against 
+       those on the path from the root to the current node; to avoid infinite loops)
 * Uniform-Cost-Search need a better mechanism for determining state containment in the
   queue and remove a node with a higher state cost.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
-* BasicRecursiveBestFirstSearchTest
-* 3 	90	Bidirectional search
-* BasicBestFirstGraphSearchTest
-* BasicGreedyestFirstGraphSearchTest
-* BasicAStarGraphSearchTest
-* BasicIterativeDeepeningSearchTest
-* BasicDepthLimitedSearchTest
-* BasicDepthFirstSearchTest
-* BasicUniformCostSearchTest
-* BreadthFirstSearchTest - additional tests.
-* BasicGraphSearchTest
-* BasicTreeSearchTest
-* BasicProblemTest
-* BasicSimpleProblemSolvingAgentTest
+
+### LATER
+
+#### Chapter 4 'core' module.
+* Add tests for all implemented algorithms.
+
+#### Chapter 3 'core' module.
+* Add tests for all implemented algorithms.
 
 #### Chapter 2 'core' module.
-* BasicModelBasedReflexAgentTest
-* BasicTableDrivenAgentTest
+* Add tests for all implemented algorithms.
 
 #### Chapter 2 'extra' module.
 * Environment defintion: Consider specifying Dimensions in API, see pg. 42.
