@@ -1,14 +1,14 @@
 package aima.core.search.basic;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Supplier;
 
+import aima.core.search.api.FrontierQueue;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.basic.support.BasicFrontierQueue;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
@@ -31,13 +31,13 @@ import aima.core.search.basic.support.BasicNodeFactory;
  */
 public class TreeSearch<A, S> implements Search<A, S> {
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<Queue<Node<A, S>>> frontierSupplier;
+    private Supplier<FrontierQueue<A, S>> frontierSupplier;
     
     public TreeSearch() {
-    	this(new BasicNodeFactory<>(), LinkedList::new);
+    	this(new BasicNodeFactory<>(), BasicFrontierQueue::new);
     }
     
-	public TreeSearch(NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
+	public TreeSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueue<A, S>> frontierSupplier) {
 		setNodeFactory(nodeFactory);
 		setFrontierSupplier(frontierSupplier);
 	}
@@ -46,7 +46,7 @@ public class TreeSearch<A, S> implements Search<A, S> {
     @Override
     public List<A> apply(Problem<A, S> problem) {
         // initialize the frontier using the initial state of the problem
-        Queue<Node<A, S>> frontier = frontierSupplier.get();
+        FrontierQueue<A, S> frontier = frontierSupplier.get();
         frontier.add(nodeFactory.newRootNode(problem.initialState(), 0));
         // loop do
         while (true) {
@@ -67,7 +67,7 @@ public class TreeSearch<A, S> implements Search<A, S> {
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<Queue<Node<A, S>>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<FrontierQueue<A, S>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
 }

@@ -1,6 +1,8 @@
 package aima.core.search.basic.uninformed;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -19,10 +21,10 @@ import aima.core.search.basic.support.BasicFrontierQueue;
  */
 public class DepthFirstGraphSearch<A, S> extends GraphSearch<A, S> {
 	public DepthFirstGraphSearch() {
-		super(() -> Collections.asLifoQueue(new BasicFrontierQueue<>()));
+		super(() -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
 	}
 	
 	public DepthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> Collections.asLifoQueue(new BasicFrontierQueue<>()), exploredSupplier);
+		super(nodeFactory, () -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new), exploredSupplier);
 	}
 }

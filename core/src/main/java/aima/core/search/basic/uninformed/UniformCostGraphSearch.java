@@ -2,10 +2,10 @@ package aima.core.search.basic.uninformed;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import aima.core.search.api.FrontierQueue;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
@@ -45,18 +45,18 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueue;
  * @author Ciaran O'Reilly
  */
 public class UniformCostGraphSearch<A, S> implements Search<A, S> {
-	private NodeFactory<A, S>           nodeFactory;
-    private Supplier<Queue<Node<A, S>>> frontierSupplier;
-    private Supplier<Set<S>>            exploredSupplier;
+	private NodeFactory<A, S> nodeFactory;
+    private Supplier<FrontierQueue<A, S>> frontierSupplier;
+    private Supplier<Set<S>> exploredSupplier;
     
 	public UniformCostGraphSearch() {
     	this(new BasicNodeFactory<>(), () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), HashSet::new);
     }
 	
-	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
-    	this.nodeFactory      = nodeFactory;
-    	this.frontierSupplier = frontierSupplier;
-    	this.exploredSupplier = exploredSupplier;
+	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    	setNodeFactory(nodeFactory);
+    	setFrontierSupplier(frontierSupplier);
+    	setExploredSupplier(exploredSupplier);
     }
 	
 	// function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
@@ -65,7 +65,7 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
         // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // frontier <- a priority queue ordered by PATH-COST, with node as the only element
-        Queue<Node<A, S>> frontier = frontierSupplier.get();
+        FrontierQueue<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
@@ -84,7 +84,7 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
                 // child <- CHILD-NODE(problem, node, action)
                 Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
                 // if child.STATE is not in explored or frontier then
-                boolean childStateInFrontier = frontier.contains(child.state());
+                boolean childStateInFrontier = frontier.containsState(child.state());
                 if (!(childStateInFrontier || explored.contains(child.state()))) {
                     // frontier <- INSERT(child, frontier)
                     frontier.add(child);
@@ -95,5 +95,17 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
                 }
             }
         }
+    }
+    
+    public void setNodeFactory(NodeFactory<A, S> nodeFactory) {
+    	this.nodeFactory = nodeFactory;
+    }
+    
+    public void setFrontierSupplier(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    	this.frontierSupplier = frontierSupplier;
+    }
+    
+    public void setExploredSupplier(Supplier<Set<S>> exploredSupplier) {
+    	this.exploredSupplier = exploredSupplier;
     }
 }
