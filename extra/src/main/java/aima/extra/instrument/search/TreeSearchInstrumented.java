@@ -1,8 +1,10 @@
 package aima.extra.instrument.search;
 
+import aima.core.search.api.FrontierQueue;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.basic.TreeSearch;
+import aima.core.search.basic.support.BasicFrontierQueue;
 import aima.core.search.basic.support.BasicNode;
 import aima.core.search.basic.support.BasicNodeFactory;
 
@@ -202,20 +204,24 @@ public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> {
         }
     }
     
-    class InstrumentedFrontierSupplier implements Supplier<Queue<Node<A, S>>> {
+    class InstrumentedFrontierSupplier implements Supplier<FrontierQueue<A, S>> {
     	@Override
-    	public Queue<Node<A, S>> get() {
-	        frontier        = new InstrLinkedList();
-	        maxFrontierSize = 0;
-	        numberAddedToFrontier = 0;
-	        numberRemovedFromFrontier = 0;
-	        statesVisitiedCounts.clear();
-	        statesInFrontierNotVisited.clear();
-	        lastNodeVisited = null;
-	        searchSpaceLevelCounts.clear();
-	        searchSpaceLevelRemainingCounts.clear();
-	        TreeSearchInstrumented.this.notify(CMD_START, 0, null);
-	        return frontier;
+    	public FrontierQueue<A, S> get() {
+	        return new BasicFrontierQueue<>(() -> {
+	        	frontier = new InstrLinkedList();
+	        	maxFrontierSize = 0;
+		        numberAddedToFrontier = 0;
+		        numberRemovedFromFrontier = 0;
+		        statesVisitiedCounts.clear();
+		        statesInFrontierNotVisited.clear();
+		        lastNodeVisited = null;
+		        searchSpaceLevelCounts.clear();
+		        searchSpaceLevelRemainingCounts.clear();
+		        TreeSearchInstrumented.this.notify(CMD_START, 0, null);
+	        	return frontier;
+	        }, 
+// TODO - tree search allows repeated states on the frontier, so need to fix	        		
+	        HashSet::new);
 	    }
     }
 }
