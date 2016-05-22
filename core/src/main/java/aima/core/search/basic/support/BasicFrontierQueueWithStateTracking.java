@@ -11,28 +11,26 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueue;
+import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 
 /**
- * An implementation of the FrontierQueue interface that wraps an underlying queue but
- * tracks the state of all nodes contained in the underlying queue.
+ * An implementation of the FrontierQueueWithStateTracking interface that wraps an underlying queue but
+ * tracks the state of all nodes contained in the underlying queue in a Set.
  * 
  * @author Ciaran O'Reilly
  */
-public class BasicFrontierQueue<A, S> implements FrontierQueue<A, S>, Serializable {
+public class BasicFrontierQueueWithStateTracking<A, S> implements FrontierQueueWithStateTracking<A, S>, Serializable {
 	private static final long serialVersionUID = 1L;
 	//
 	private Queue<Node<A, S>> queue;
-// TODO - replace with a state membership tracker type of interface, so that the decision as to how many times 
-// a state can be repeated in the frontier is left up to it. 	
 	private Set<S> states;
 	
-	public BasicFrontierQueue() {
+	public BasicFrontierQueueWithStateTracking() {
 		this(LinkedList::new, HashSet::new);
 	}
 	
-	public BasicFrontierQueue(Supplier<Queue<Node<A, S>>> underlyingQueueSupplier, Supplier<Set<S>> stateMembershipSupplier) {
+	public BasicFrontierQueueWithStateTracking(Supplier<Queue<Node<A, S>>> underlyingQueueSupplier, Supplier<Set<S>> stateMembershipSupplier) {
 		this.queue  = underlyingQueueSupplier.get();
 		this.states = stateMembershipSupplier.get();
 	}

@@ -10,7 +10,7 @@ import java.util.Queue;
  * 
  * @author Ciaran O'Reilly
  */
-public interface FrontierQueue<A, S> extends Queue<Node<A, S>> {
+public interface FrontierQueueWithStateTracking<A, S> extends Queue<Node<A, S>> {
 	
 	default boolean containsState(Node<A, S> node) {
 		return containsState(node.state());

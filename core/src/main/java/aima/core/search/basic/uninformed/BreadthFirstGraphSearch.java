@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueue;
+import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
-import aima.core.search.basic.support.BasicFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
@@ -49,18 +49,18 @@ import aima.core.search.basic.support.BasicNodeFactory;
 public class BreadthFirstGraphSearch<A, S> implements Search<A, S> {
 
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<FrontierQueue<A, S>> frontierSupplier;
+    private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
     public BreadthFirstGraphSearch() {
-    	this(new BasicNodeFactory<>(), BasicFrontierQueue::new, HashSet::new);
+    	this(new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
     }
     
-    public BreadthFirstGraphSearch(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    public BreadthFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public BreadthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public BreadthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
@@ -74,7 +74,7 @@ public class BreadthFirstGraphSearch<A, S> implements Search<A, S> {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (isGoalState(node, problem)) { return solution(node); }
         // frontier <- a FIFO queue with node as the only element
-        FrontierQueue<A, S> frontier = frontierSupplier.get();
+        FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
@@ -105,7 +105,7 @@ public class BreadthFirstGraphSearch<A, S> implements Search<A, S> {
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
     

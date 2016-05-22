@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueue;
+import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTracking;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -46,14 +46,14 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueue;
  */
 public class UniformCostGraphSearch<A, S> implements Search<A, S> {
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<FrontierQueue<A, S>> frontierSupplier;
+    private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
 	public UniformCostGraphSearch() {
-    	this(new BasicNodeFactory<>(), () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), HashSet::new);
+    	this(new BasicNodeFactory<>(), () -> new BasicPriorityFrontierQueueWithStateTracking<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), HashSet::new);
     }
 	
-	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
@@ -65,7 +65,7 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
         // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // frontier <- a priority queue ordered by PATH-COST, with node as the only element
-        FrontierQueue<A, S> frontier = frontierSupplier.get();
+        FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
@@ -101,7 +101,7 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
     

@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
 import aima.core.search.basic.GraphSearch;
-import aima.core.search.basic.support.BasicFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ??.<br>
@@ -21,10 +21,10 @@ import aima.core.search.basic.support.BasicFrontierQueue;
  */
 public class DepthFirstGraphSearch<A, S> extends GraphSearch<A, S> {
 	public DepthFirstGraphSearch() {
-		super(() -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
+		super(() -> new BasicFrontierQueueWithStateTracking<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
 	}
 	
 	public DepthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new), exploredSupplier);
+		super(nodeFactory, () -> new BasicFrontierQueueWithStateTracking<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new), exploredSupplier);
 	}
 }

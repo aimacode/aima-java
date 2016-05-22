@@ -8,7 +8,7 @@ import java.util.function.ToDoubleFunction;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTracking;
 import aima.core.search.basic.uninformed.UniformCostGraphSearch;
 
 /**
@@ -33,7 +33,7 @@ public class BestFirstGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
 	}
 	
 	public BestFirstGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> f, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))), exploredSupplier);
+		super(nodeFactory, () -> new BasicPriorityFrontierQueueWithStateTracking<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))), exploredSupplier);
 	}
 	
 	public ToDoubleFunction<Node<A, S>> getEvaluationFunctionF() {

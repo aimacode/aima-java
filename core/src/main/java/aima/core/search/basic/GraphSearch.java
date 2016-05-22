@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueue;
+import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
-import aima.core.search.basic.support.BasicFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
@@ -38,18 +38,18 @@ import aima.core.search.basic.support.BasicNodeFactory;
 public class GraphSearch<A, S> implements Search<A, S> {
 	
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<FrontierQueue<A, S>> frontierSupplier;
+    private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
     public GraphSearch() {
-    	this(new BasicNodeFactory<>(), BasicFrontierQueue::new, HashSet::new);
+    	this(new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
     }
     
-    public GraphSearch(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    public GraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public GraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public GraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
@@ -59,7 +59,7 @@ public class GraphSearch<A, S> implements Search<A, S> {
     @Override
     public List<A> apply(Problem<A, S> problem) {
         // initialize the frontier using the initial state of problem
-        FrontierQueue<A, S> frontier = frontierSupplier.get();
+        FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(nodeFactory.newRootNode(problem.initialState(), 0));
         // initialize the explored set to be empty
         Set<S> explored = exploredSupplier.get();
@@ -88,7 +88,7 @@ public class GraphSearch<A, S> implements Search<A, S> {
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<FrontierQueue<A, S>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
     
