@@ -158,8 +158,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ---
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (Chp 3 and 4)
-* Change approach for checking state containment in queues to be more explicit and composable 
-  (i.e. BasicFrontierQueue and BasicPriorityFrontierQueue)
 * Re-design uninformed and informed search hierarchy to support similar functionality to aima3e branch:
     * Add DepthFirstTreeSearch
       (Note: pg. 86 'modified at no extra memory cost so that it checks new states against 

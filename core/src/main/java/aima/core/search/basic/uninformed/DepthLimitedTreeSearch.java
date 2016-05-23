@@ -33,6 +33,9 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * Figure ?? A recursive implementation of depth-limited tree search.
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Ruediger Lunde
+ * @author Mike Stampone
  */
 public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedSearch<A, S> {
 	private int limit;

@@ -23,6 +23,9 @@ import aima.core.search.basic.uninformed.UniformCostGraphSearch;
  * of <em>g</em> to order the priority queue.
  *
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
+ * @author Mike Stampone
+ * 
  */
 public class BestFirstGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
 

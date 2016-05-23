@@ -13,6 +13,9 @@ import java.util.function.Function;
  * @param <S> the type of the state space
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Mike Stampone
+ * 
  */
 @FunctionalInterface
 public interface Search <A, S> extends Function<Problem<A, S>, List<A>> {

@@ -39,6 +39,9 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * Figure ?? The algorithm for recursive best-first search.
  *
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
+ * @author Mike Stampone
+ * 
  */
 public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;

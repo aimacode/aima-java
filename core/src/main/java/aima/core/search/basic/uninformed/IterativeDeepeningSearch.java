@@ -23,6 +23,8 @@ import aima.core.search.api.Search;
  * that no solution exists.
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Ruediger Lunde
  */
 public class IterativeDeepeningSearch<A, S> implements Search<A, S> {
 	

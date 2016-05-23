@@ -13,6 +13,9 @@ import aima.core.search.api.Node;
  * function; that is <em>f(n) = h(n)</em>.
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Mike Stampone
+ * 
  */
 public class GreedyBestFirstGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;

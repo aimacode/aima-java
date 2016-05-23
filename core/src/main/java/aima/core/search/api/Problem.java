@@ -24,7 +24,11 @@ import java.util.Set;
  *
  * @param <A> the type of the actions that can be performed.
  * @param <S> the type of the initial state that the agent starts in.
+ * 
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Mike Stampone
+ * 
  */
 public interface Problem<A, S> {
     /**

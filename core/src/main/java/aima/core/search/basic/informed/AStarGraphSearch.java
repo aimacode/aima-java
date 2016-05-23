@@ -18,6 +18,9 @@ import aima.core.search.basic.uninformed.UniformCostGraphSearch;
  * The algorithm is identical to UNIFORM-COST graph search except that A* uses <em>g + h</em> instead of g.
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Ruediger Lunde
+ * @author Mike Stampone
  */
 public class AStarGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
 

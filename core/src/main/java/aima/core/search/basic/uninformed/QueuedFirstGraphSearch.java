@@ -10,62 +10,68 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTracking;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
+ * Generalization of the BREADTH-FIRST-SEARCH described in Artificial Intelligence A Modern Approach (4th Edition): 
+ * Figure ??, page ??.<br>
  * <br>
  *
  * <pre>
- * function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
- *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
- *   frontier &lt;- a priority queue ordered by PATH-COST, with node as the only element
+ * function QUEUED-FIRST-SEARCH(problem) returns a solution, or failure
+ *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
+ *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+ *   frontier &lt;- a queue with node as the only element
  *   explored &lt;- an empty set
  *   loop do
  *      if EMPTY?(frontier) then return failure
- *      node &lt;- POP(frontier) // chooses the lowest-cost node in frontier
- *      if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+ *      node &lt;- POP(frontier) // chooses the shallowest node in frontier
  *      add node.STATE to explored
  *      for each action in problem.ACTIONS(node.STATE) do
  *          child &lt;- CHILD-NODE(problem, node, action)
  *          if child.STATE is not in explored or frontier then
- *             frontier &lt;- INSERT(child, frontier)
- *          else if child.STATE is in frontier with higher PATH-COST then
- *             replace that frontier node with child
+ *              if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
+ *              frontier &lt;- INSERT(child, frontier)
  * </pre>
  *
- * Figure ?? Uniform-cost search on a graph. The algorithm is identical to the
- * general graph search algorithm in Figure ??, except for the use of a
- * priority queue and the addition of an extra check in case a shorter path to a
- * frontier state is discovered. The data structure for frontier needs to
- * support efficient membership testing, so it should combine the capabilities
- * of a priority queue and a hash table.
+ * An instance of the general graph-search algorithm (Figure ?.?) in which the
+ * node is chosen for expansion by using a queue for the frontier. There is one 
+ * slight tweak on the general graph-search algorithm, which is that the goal test 
+ * is applied to each node when it is generated rather than when it is selected for 
+ * expansion.
  *
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class UniformCostGraphSearch<A, S> implements Search<A, S> {
+public class QueuedFirstGraphSearch<A, S> implements Search<A, S> {
+
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
-	public UniformCostGraphSearch() {
-    	this(new BasicNodeFactory<>(), () -> new BasicPriorityFrontierQueueWithStateTracking<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), HashSet::new);
+    public QueuedFirstGraphSearch() {
+    	this(new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
     }
-	
-	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    
+    public QueuedFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
+    }
+    
+    public QueuedFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
     }
 	
-	// function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
+	// function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
+        // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
-        // frontier <- a priority queue ordered by PATH-COST, with node as the only element
+        // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+        if (isGoalState(node, problem)) { return solution(node); }
+        // frontier <- a queue with node as the only element
         FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
@@ -74,10 +80,8 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
         while (true) {
             // if EMPTY?(frontier) then return failure
             if (frontier.isEmpty()) { return failure(); }
-            // node <- POP(frontier) // chooses the lowest-cost node in frontier
+            // node <- POP(frontier) // chooses the shallowest node in frontier
             node = frontier.remove();
-            // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-            if (isGoalState(node, problem)) { return solution(node); }
             // add node.STATE to explored
             explored.add(node.state());
             // for each action in problem.ACTIONS(node.STATE) do
@@ -85,13 +89,10 @@ public class UniformCostGraphSearch<A, S> implements Search<A, S> {
                 // child <- CHILD-NODE(problem, node, action)
                 Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
                 // if child.STATE is not in explored or frontier then
-                boolean childStateInFrontier = frontier.containsState(child.state());
-                if (!(childStateInFrontier || explored.contains(child.state()))) {
+                if (!(explored.contains(child.state()) || frontier.containsState(child.state()))) {
+                    // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
+                    if (isGoalState(child, problem)) { return solution(child); }
                     // frontier <- INSERT(child, frontier)
-                    frontier.add(child);
-                } // else if child.STATE is in frontier with higher PATH-COST then
-                else if (childStateInFrontier && frontier.removeIf(n -> n.state().equals(child.state()) && n.pathCost() > child.pathCost())) {
-                    // replace that frontier node with child
                     frontier.add(child);
                 }
             }

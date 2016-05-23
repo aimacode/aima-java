@@ -23,6 +23,8 @@ package aima.core.search.api;
  * @param <S> the type of the state that node contains.
  *
  * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Mike Stampone
  */
 public interface Node<A, S> {
 
