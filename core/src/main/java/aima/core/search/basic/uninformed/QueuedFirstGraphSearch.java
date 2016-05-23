@@ -19,7 +19,7 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * <br>
  *
  * <pre>
- * function QUEUED-FIRST-SEARCH(problem) returns a solution, or failure
+ * function QUEUED-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   frontier &lt;- a queue with node as the only element

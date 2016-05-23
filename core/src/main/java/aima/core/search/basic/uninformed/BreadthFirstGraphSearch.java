@@ -13,7 +13,7 @@ import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
  * <br>
  *
  * <pre>
- * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+ * function BREADTH-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   frontier &lt;- a FIFO queue with node as the only element
