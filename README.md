@@ -158,13 +158,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ---
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (Chp 3 and 4)
+* Uniform-Cost-Search (i.e. PriorityGraphSearch) need a better mechanism for determining state containment in the
+  queue and remove a node with a higher state cost.
 * Re-design uninformed and informed search hierarchy to support similar functionality to aima3e branch:
     * Add DepthFirstTreeSearch
       (Note: pg. 86 'modified at no extra memory cost so that it checks new states against 
        those on the path from the root to the current node; to avoid infinite loops)
     * DepthFirstGraphSearch extend logic in BreadthFirstGraphSearch instead of GraphSearch?
-* Uniform-Cost-Search need a better mechanism for determining state containment in the
-  queue and remove a node with a higher state cost.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 
 ### LATER

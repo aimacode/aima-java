@@ -8,8 +8,8 @@ import java.util.function.ToDoubleFunction;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTracking;
-import aima.core.search.basic.uninformed.UniformCostGraphSearch;
+import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.uninformed.PriorityGraphSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -22,7 +22,7 @@ import aima.core.search.basic.uninformed.UniformCostGraphSearch;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class AStarGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
+public class AStarGraphSearch<A, S> extends PriorityGraphSearch<A, S> {
 
 	private ToDoubleFunction<Node<A, S>> h;
 	
@@ -31,7 +31,8 @@ public class AStarGraphSearch<A, S> extends UniformCostGraphSearch<A, S> {
 	}
 	
 	public AStarGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> h, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicPriorityFrontierQueueWithStateTracking<>((n1, n2) -> Double.compare(n1.pathCost()+h.applyAsDouble(n1), n2.pathCost()+h.applyAsDouble(n2))), exploredSupplier);
+		super(nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost()+h.applyAsDouble(n1), n2.pathCost()+h.applyAsDouble(n2))), exploredSupplier);
+		this.h = h;
 	}
 	
 	public ToDoubleFunction<Node<A, S>> getHeuristicFunctionH() {

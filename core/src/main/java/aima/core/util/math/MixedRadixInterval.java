@@ -12,7 +12,7 @@ import java.util.stream.StreamSupport;
 
 /**
  * A <a href="http://en.wikipedia.org/wiki/Mixed_radix">mixed radix</a>
- * <a href="http://en.wikipedia.org/wiki/Interval_%28mathematics%29">interval</a> where the endpoints are inclusive.
+ * <a href="http://en.wikipedia.org/wiki/Interval_%28mathematics%29">interval</a> where the end points are inclusive.
  *
  * @author Ciaran O'Reilly
  */

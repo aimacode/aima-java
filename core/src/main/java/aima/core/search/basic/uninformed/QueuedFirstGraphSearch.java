@@ -10,7 +10,6 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
-import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
@@ -49,10 +48,6 @@ public class QueuedFirstGraphSearch<A, S> implements Search<A, S> {
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
-    
-    public QueuedFirstGraphSearch() {
-    	this(new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
-    }
     
     public QueuedFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);

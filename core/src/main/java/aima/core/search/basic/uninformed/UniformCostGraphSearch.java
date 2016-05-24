@@ -1,17 +1,12 @@
 package aima.core.search.basic.uninformed;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueueWithStateTracking;
-import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
-import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTracking;
+import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -45,68 +40,12 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueueWithStateTrackin
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class UniformCostGraphSearch<A, S> implements Search<A, S> {
-	private NodeFactory<A, S> nodeFactory;
-    private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
-    private Supplier<Set<S>> exploredSupplier;
-    
+public class UniformCostGraphSearch<A, S> extends PriorityGraphSearch<A, S> {
 	public UniformCostGraphSearch() {
-    	this(new BasicNodeFactory<>(), () -> new BasicPriorityFrontierQueueWithStateTracking<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), HashSet::new);
+    	this(new BasicNodeFactory<>(), HashSet::new);
     }
 	
-	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
-    	setNodeFactory(nodeFactory);
-    	setFrontierSupplier(frontierSupplier);
-    	setExploredSupplier(exploredSupplier);
-    }
-	
-	// function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
-    @Override
-    public List<A> apply(Problem<A, S> problem) {
-        // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
-        Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
-        // frontier <- a priority queue ordered by PATH-COST, with node as the only element
-        FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
-        frontier.add(node);
-        // explored <- an empty set
-        Set<S> explored = exploredSupplier.get();
-        // loop do
-        while (true) {
-            // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return failure(); }
-            // node <- POP(frontier) // chooses the lowest-cost node in frontier
-            node = frontier.remove();
-            // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-            if (isGoalState(node, problem)) { return solution(node); }
-            // add node.STATE to explored
-            explored.add(node.state());
-            // for each action in problem.ACTIONS(node.STATE) do
-            for (A action : problem.actions(node.state())) {
-                // child <- CHILD-NODE(problem, node, action)
-                Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
-                // if child.STATE is not in explored or frontier then
-                boolean childStateInFrontier = frontier.containsState(child.state());
-                if (!(childStateInFrontier || explored.contains(child.state()))) {
-                    // frontier <- INSERT(child, frontier)
-                    frontier.add(child);
-                } // else if child.STATE is in frontier with higher PATH-COST then
-                else if (childStateInFrontier && frontier.removeIf(n -> n.state().equals(child.state()) && n.pathCost() > child.pathCost())) {
-                    // replace that frontier node with child
-                    frontier.add(child);
-                }
-            }
-        }
-    }
-    
-    public void setNodeFactory(NodeFactory<A, S> nodeFactory) {
-    	this.nodeFactory = nodeFactory;
-    }
-    
-    public void setFrontierSupplier(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
-    	this.frontierSupplier = frontierSupplier;
-    }
-    
-    public void setExploredSupplier(Supplier<Set<S>> exploredSupplier) {
-    	this.exploredSupplier = exploredSupplier;
+	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
+    	super(nodeFactory, () -> new BasicPriorityFrontierQueue<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), exploredSupplier);
     }
 }
