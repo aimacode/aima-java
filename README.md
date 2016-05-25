@@ -3,6 +3,8 @@ Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Rus
 
 NOTE: While we would like to complete the set of algorithms on the AIMA3e branch (the current default) we are planning on focussing most of our efforts on the new AIMA4e branch going forward. This is a complete rewrite of the algorithms from the AIMA3e branch and will be updated to reflect any changes in the yet to be published 4th edition of the book.
 
+NOTE: If you would like to get involved and contribute to the project, please email me (Ciaran) at ctjoreilly@gmail.com so I can assist and coordinate efforts.
+
 ### Getting Started Links 
   * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
   * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup).
