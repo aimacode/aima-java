@@ -18,8 +18,8 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * <br>
  *
  * <pre>
- * function QUEUED-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
- *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
+ * function GOAL-TESTED-QUEUED-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
+ *   node &lt;- a node with STATE = problem.INITIAL-STATE
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   frontier &lt;- a queue with node as the only element
  *   explored &lt;- an empty set
@@ -43,26 +43,26 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class QueuedFirstGraphSearch<A, S> implements Search<A, S> {
+public class GoalTestedQueuedFirstGraphSearch<A, S> implements Search<A, S> {
 
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
-    public QueuedFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public GoalTestedQueuedFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public QueuedFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public GoalTestedQueuedFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
     }
 	
-	// function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+	// function GOAL-TESTED-QUEUED-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
+        // node <- a node with STATE = problem.INITIAL-STATE
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (isGoalState(node, problem)) { return solution(node); }
