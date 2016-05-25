@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
+import aima.core.search.basic.QueuedFirstGraphSearch;
 import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 
 /**

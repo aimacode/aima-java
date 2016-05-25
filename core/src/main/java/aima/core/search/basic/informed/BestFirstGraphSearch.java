@@ -7,9 +7,9 @@ import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
+import aima.core.search.basic.PriorityGraphSearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
-import aima.core.search.basic.uninformed.PriorityGraphSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
