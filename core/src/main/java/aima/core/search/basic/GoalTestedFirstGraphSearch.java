@@ -13,10 +13,6 @@ import aima.core.search.api.Search;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
- * Generalization of the BREADTH-FIRST-SEARCH described in Artificial Intelligence A Modern Approach (4th Edition): 
- * Figure ??, page ??.<br>
- * <br>
- *
  * <pre>
  * function GOAL-TESTED-FIRST-GRAPH-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE
