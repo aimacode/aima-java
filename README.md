@@ -96,7 +96,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    </tr>
       <tr>
        <td>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirsTreeSearch.java">BreadthFirstTreeSearch</a>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstTreeSearch.java">BreadthFirstTreeSearch</a>
        </td>
    </tr>
    <tr>
