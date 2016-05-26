@@ -39,17 +39,17 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GoalTestedFirstGraphSearch<A, S> implements Search<A, S> {
+public class GraphGoalTestedFirstSearch<A, S> implements Search<A, S> {
 
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
-    public GoalTestedFirstGraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public GraphGoalTestedFirstSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public GoalTestedFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public GraphGoalTestedFirstSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);

@@ -42,12 +42,12 @@ import aima.core.search.api.Search;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class PriorityGraphSearch<A, S> implements Search<A, S> {
+public class GraphShortestPathPrioritySearch<A, S> implements Search<A, S> {
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<PriorityFrontierQueue<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
 	
-	public PriorityGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+	public GraphShortestPathPrioritySearch(NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);

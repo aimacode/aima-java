@@ -7,7 +7,7 @@ import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
-import aima.core.search.basic.PriorityGraphSearch;
+import aima.core.search.basic.GraphShortestPathPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 
@@ -22,7 +22,7 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueue;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class AStarGraphSearch<A, S> extends PriorityGraphSearch<A, S> {
+public class AStarGraphSearch<A, S> extends GraphShortestPathPrioritySearch<A, S> {
 
 	private ToDoubleFunction<Node<A, S>> h;
 	

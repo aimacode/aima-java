@@ -34,16 +34,16 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GoalTestedFirstTreeSearch<A, S> implements Search<A, S> {
+public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
 
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     
-    public GoalTestedFirstTreeSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public TreeGoalTestedFirstSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	this(new BasicNodeFactory<>(), frontierSupplier);
     }
     
-    public GoalTestedFirstTreeSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public TreeGoalTestedFirstSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     }
