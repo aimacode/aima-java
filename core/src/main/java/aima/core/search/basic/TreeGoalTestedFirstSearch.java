@@ -12,7 +12,7 @@ import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
  * <pre>
- * function GOAL-TESTED-FIRST-TREE-SEARCH(problem) returns a solution, or failure
+ * function TREE-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   frontier &lt;- a queue with node as the only element
@@ -48,10 +48,10 @@ public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
     	setFrontierSupplier(frontierSupplier);
     }
 	
-	// function GOAL-TESTED-FIRST-TREE-SEARCH(problem) returns a solution, or failure
+	// function TREE-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
+        // node <- a node with STATE = problem.INITIAL-STATE
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (isGoalState(node, problem)) { return solution(node); }
