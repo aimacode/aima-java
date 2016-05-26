@@ -199,11 +199,16 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 
 ---
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
-### CURRENT (Chp 3 and 4)
+### CURRENT 
+#### Chp 3 
 * GraphShortestPathPrioritySearch and TreeShortestPathPrioritySearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
+* Add a mechanism to support CancelableThread idea from aima3e. Want to make more flexible and less intrusive than the aima3e approach.
+* Add a mechanism for gathering search metrics. Want to make more flexible and introduce less clutter into the core algorithms in order to support.
+#### Chp 4
+* Follow up on Genetic Algorithm experiments on N-Queens problem (based on aima3e implementation) to determine if performs no better than random selection.
 
 ### LATER
 
@@ -217,9 +222,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * Add tests for all implemented algorithms.
 
 #### Chapter 2 'extra' module.
-* Environment defintion: Consider specifying Dimensions in API, see pg. 42.
-* Environment Simulator referenced on pg. 45 (this will be a refactor of the a lot of the environment stuff
-  in aima3e-core).
+* Environment definition: Consider specifying Dimensions in API, see pg. 42.
+* Environment Simulator referenced on pg. 45 (this will be a re-factor of a lot of the environment stuff in aima3e-core).
 
 ---
 
