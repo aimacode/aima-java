@@ -7,9 +7,7 @@ import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
-import aima.core.search.basic.GraphShortestPathPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -22,7 +20,7 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueue;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class AStarGraphSearch<A, S> extends GraphShortestPathPrioritySearch<A, S> {
+public class AStarGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 
 	private ToDoubleFunction<Node<A, S>> h;
 	
@@ -31,7 +29,7 @@ public class AStarGraphSearch<A, S> extends GraphShortestPathPrioritySearch<A, S
 	}
 	
 	public AStarGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> h, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(n1.pathCost()+h.applyAsDouble(n1), n2.pathCost()+h.applyAsDouble(n2))), exploredSupplier);
+		super(nodeFactory, (node) -> node.pathCost()+h.applyAsDouble(node), exploredSupplier);
 		this.h = h;
 	}
 	

@@ -1,8 +1,13 @@
 package aima.core.search.basic.informed;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
+import aima.core.search.api.NodeFactory;
+import aima.core.search.basic.support.BasicNodeFactory;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -19,9 +24,13 @@ import aima.core.search.api.Node;
  */
 public class GreedyBestFirstGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
-
+	
 	public GreedyBestFirstGraphSearch(ToDoubleFunction<Node<A, S>> h) {
-	    super(h);
+		this(new BasicNodeFactory<>(), h, HashSet::new);
+	}
+
+	public GreedyBestFirstGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> h, Supplier<Set<S>> exploredSupplier) {
+	    super(nodeFactory, h, exploredSupplier);
 	    this.h = h;
 	}
 	

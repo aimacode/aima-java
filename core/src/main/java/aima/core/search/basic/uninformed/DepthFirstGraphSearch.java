@@ -11,18 +11,6 @@ import aima.core.search.basic.GraphGoalTestedFirstSearch;
 import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ??.<br>
- * <br>
- * The depth-first algorithm is an instance of the graph-search algorithm
- * in Figure ??; whereas breadth-first-search uses a FIFO queue, depth-first
- * search uses a LIFO queue.
- *
- * @author Ciaran O'Reilly
- * @author Ravi Mohan
- * @author Ruediger Lunde
- */
-
-/**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
  * <br>
  *
@@ -50,6 +38,7 @@ import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
  *
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
+ * @author Ravi Mohan
  */
 public class DepthFirstGraphSearch<A, S> extends GraphGoalTestedFirstSearch<A, S> {
 	public DepthFirstGraphSearch() {
