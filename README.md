@@ -87,22 +87,43 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/api/Node.java">Node</a></td>
    </tr>
    <tr>
-       <td>3.11</td>
-       <td>82</td>
-       <td>Breadth-First-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a></td>
+       <td rowspan="2">3.11</td>
+       <td rowspan="2">82</td>
+       <td rowspan="2">Breadth-First-Search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a>
+       </td>
+   </tr>
+      <tr>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirsTreeSearch.java">BreadthFirstTreeSearch</a>
+       </td>
    </tr>
    <tr>
-       <td>3.14</td>
-       <td>84</td>
-       <td>Uniform-Cost-Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a></td>
+       <td rowspan="2">3.14</td>
+       <td rowspan="2">84</td>
+       <td rowspan="2">Uniform-Cost-Search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a>
+       </td>
+   </tr>
+      <tr>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostTreeSearch.java">UniformCostTreeSearch</a>
+       </td>
    </tr>
    <tr>
-       <td>3</td>
-       <td>85</td>
-       <td>Depth-first Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstGraphSearch.java">DepthFirstGraphSearch</a></td>
+       <td rowspan="2">3</td>
+       <td rowspan="2">85</td>
+       <td rowspan="2">Depth-first Search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstGraphSearch.java">DepthFirstGraphSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstTreeSearch.java">DepthFirstTreeSearch</a>
+       </td>
    </tr>
    <tr>
        <td>3.17</td>
@@ -117,23 +138,44 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
-       <td>3</td>
-       <td>92</td>
-       <td>Best-First search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstGraphSearch.java">BestFirstGraphSearch</a></td>
+       <td rowspan="2">3</td>
+       <td rowspan="2">92</td>
+       <td rowspan="2">Best-First search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstGraphSearch.java">BestFirstGraphSearch</a>
+       </td>
    </tr>
    <tr>
-       <td>3</td>
-       <td>92</td>
-       <td>Greedy best-First search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/GreedyBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a></td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstTreeSearch.java">BestFirstTreeSearch</a>
+       </td>
    </tr>
    <tr>
-       <td>3</td>
-       <td>93</td>
-       <td>A* Search</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/AStarGraphSearch.java">AStarGraphSearch</a></td>
+       <td rowspan="2">3</td>
+       <td rowspan="2">92</td>
+       <td rowspan="2">Greedy best-First search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/GreedyBestFirstGraphSearch.java">GreedyBestFirstGraphSearch</a>
+       </td>
    </tr>
+   <tr>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/GreedyBestFirstTreeSearch.java">GreedyBestFirstTreeSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td rowspan="2">3</td>
+       <td rowspan="2">93</td>
+       <td rowspan="2">A* Search</td>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/AStarGraphSearch.java">AStarGraphSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/AStarTreeSearch.java">AStarTreeSearch</a>
+       </td>
+   </tr>   
    <tr>
        <td>3.26</td>
        <td>99</td>
