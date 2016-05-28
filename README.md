@@ -1,9 +1,5 @@
 # ![](https://github.com/aimacode/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+) [![Build Status](https://travis-ci.org/aimacode/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/aimacode/aima-java)
-Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/).
-
-NOTE: While we would like to complete the set of algorithms on the AIMA3e branch (the current default) we are planning on focussing most of our efforts on the new AIMA4e branch going forward. This is a complete rewrite of the algorithms from the AIMA3e branch and will be updated to reflect any changes in the yet to be published 4th edition of the book.
-
-NOTE: If you would like to get involved and contribute to the project, please email me (Ciaran) at ctjoreilly@gmail.com so I can assist and coordinate efforts.
+Java implementation of algorithms from [Norvig](http://www.norvig.com/) and [Russell's](http://www.cs.berkeley.edu/~russell/)  [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/). You can use this in conjunction with a course on AI, or for study on your own. We're loooking for [solid contributors](https://github.com/aimacode/aima-java/wiki/AIMAJava-Contributing) to help.
 
 ### Getting Started Links 
   * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
