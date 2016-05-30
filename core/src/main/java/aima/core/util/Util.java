@@ -10,9 +10,6 @@ import java.util.Set;
  * @author Anurag Rai
  */
 public class Util {
-	public static final String NO = "No";
-	public static final String YES = "Yes";
-
 	/**
 	 * Get the first element from a list.
 	 * 
