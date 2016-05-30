@@ -11,8 +11,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td><b>Fig</b></td>
        <td><b>Page</b></td>
-       <td><b>Name (in book)</b></td>
-       <td><b>Code</b></td>
+       <td><b>Name/Pseudocode (in book)</b></td>
+       <td><b>Implementation(s)</b></td>
    </tr>
    <tr>
        <td>2.1</td>
@@ -23,31 +23,31 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>2.3</td>
        <td>36</td>
-       <td>Table-Driven-Vacuum-Agent</td>
+       <td>Table-Driven-Vacuum-Agent</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.7</td>
        <td>47</td>
-       <td>Table-Driven-Agent</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Table-Driven-Agent.md">Table-Driven-Agent</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/TableDrivenAgent.java">TableDrivenAgent</a></td>
    </tr>
    <tr>
        <td>2.8</td>
        <td>48</td>
-       <td>Reflex-Vacuum-Agent</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Reflex-Vacuum-Agent.md">Reflex-Vacuum-Agent</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.10</td>
        <td>49</td>
-       <td>Simple-Reflex-Agent</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Simple-Reflex-Agent.md">Simple-Reflex-Agent</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
    </tr>
    <tr>
        <td>2.12</td>
        <td>51</td>
-       <td>Model-Based-Reflex-Agent</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Model-Based-Reflex-Agent.md">Model-Based-Reflex-Agent</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
