@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.logic.propositional.api.SimpleKnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
@@ -22,7 +23,7 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
  * @author Anurag Rai
  * 
  */
-public class KnowledgeBase {
+public class KnowledgeBase implements SimpleKnowledgeBase {
 	private List<Sentence>         sentences = new ArrayList<Sentence>();
 	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.<Clause>emptySet());
 	private Set<PropositionSymbol> symbols   = new LinkedHashSet<PropositionSymbol>();
@@ -37,6 +38,7 @@ public class KnowledgeBase {
 	 * @param aSentence
 	 *            a fact to be added to the knowledge base.
 	 */
+	@Override
 	public void tell(String aSentence) {
 		tell((Sentence) parser.parse(aSentence));	
 	}
@@ -112,11 +114,8 @@ public class KnowledgeBase {
 		}
 	}
 
-	/**
-	 * Returns the list of sentences in the knowledge base.
-	 * 
-	 * @return the list of sentences in the knowledge base.
-	 */
+
+	@Override
 	public List<Sentence> getSentences() {
 		return sentences;
 	}
