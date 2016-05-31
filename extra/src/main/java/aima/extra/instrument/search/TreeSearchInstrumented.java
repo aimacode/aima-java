@@ -2,6 +2,7 @@ package aima.extra.instrument.search;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.TreeSearch;
 import aima.core.search.basic.support.BasicNode;
 import aima.core.search.basic.support.BasicNodeFactory;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> {
+public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> implements SearchController<A, S> {
     public interface Cmd<A, S> {
         String             commandId();
         int                currentFrontierSize();
@@ -66,6 +67,7 @@ public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> {
 
     public TreeSearchInstrumented(Listener<A, S> listener) {
         this.listener = listener;
+        setSearchController(this);
         setNodeFactory(new InstrumentedNodeFactory());
         setFrontierSupplier(new InstrumentedFrontierSupplier());
     }
@@ -73,19 +75,19 @@ public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> {
     @Override
     public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
         notify(CMD_CHECK_GOAL, frontier.size(), node);
-        return super.isGoalState(node, problem);
+        return SearchController.super.isGoalState(node, problem);
     }
 
     @Override
     public List<A> failure() {
         notify(CMD_FAILURE, frontier.size(), null);
-        return super.failure();
+        return SearchController.super.failure();
     }
 
     @Override
     public List<A> solution(Node<A, S> node) {
         notify(CMD_SOLUTION, frontier.size(), node);
-        return super.solution(node);
+        return SearchController.super.solution(node);
     }
 
     private void notify(final String commandId, final int frontierSize, final Node<A, S> node) {
