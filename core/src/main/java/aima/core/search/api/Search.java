@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Description of a Search Function. Provides basic API methods for different specializations
- * (e.g. Tree and Graph search).
+ * Description of a Search Function.
  *
  * @param <A> the type of the actions that can be performed.
  * @param <S> the type of the state space
