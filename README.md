@@ -205,7 +205,6 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
-* Add a mechanism to support CancelableThread idea from aima3e. Want to make more flexible and less intrusive than the aima3e approach.
 * Add a mechanism for gathering search metrics. Want to make more flexible and introduce less clutter into the core algorithms in order to support.
 
 #### Chp 4
