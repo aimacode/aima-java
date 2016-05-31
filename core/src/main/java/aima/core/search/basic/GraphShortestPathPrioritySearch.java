@@ -9,6 +9,7 @@ import aima.core.search.api.NodeFactory;
 import aima.core.search.api.PriorityFrontierQueue;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 
 /**
  * <pre>
@@ -39,12 +40,14 @@ import aima.core.search.api.Search;
  * @author Ruediger Lunde
  */
 public class GraphShortestPathPrioritySearch<A, S> implements Search<A, S> {
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<PriorityFrontierQueue<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
 	
-	public GraphShortestPathPrioritySearch(NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
-    	setNodeFactory(nodeFactory);
+	public GraphShortestPathPrioritySearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+		setSearchController(searchController);
+		setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
     }
@@ -60,13 +63,13 @@ public class GraphShortestPathPrioritySearch<A, S> implements Search<A, S> {
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (true) {
+        while (searchController.isKeepSearchingTillGoalFound()) {
             // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return failure(); }
+            if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the highest priority node in frontier
             node = frontier.remove();
             // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-            if (isGoalState(node, problem)) { return solution(node); }
+            if (searchController.isGoalState(node, problem)) { return searchController.solution(node); }
             // add node.STATE to explored
             explored.add(node.state());
             // for each action in problem.ACTIONS(node.STATE) do
@@ -87,6 +90,11 @@ public class GraphShortestPathPrioritySearch<A, S> implements Search<A, S> {
                 }
             }
         }
+        return searchController.failure();
+    }
+    
+    public void setSearchController(SearchController<A, S> searchController) {
+    	this.searchController = searchController;
     }
     
     public void setNodeFactory(NodeFactory<A, S> nodeFactory) {

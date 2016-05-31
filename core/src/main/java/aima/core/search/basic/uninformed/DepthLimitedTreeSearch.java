@@ -7,7 +7,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -39,15 +41,17 @@ import aima.core.search.basic.support.BasicNodeFactory;
  */
 public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedSearch<A, S> {
 	private int limit;
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
 	
 	public DepthLimitedTreeSearch(int limit) {
-        this(limit, new BasicNodeFactory<>());
+        this(limit, new BasicSearchController<>(), new BasicNodeFactory<>());
     }
 	
-	public DepthLimitedTreeSearch(int limit, NodeFactory<A, S> nodeFactory) {
-		this.limit       = limit;
-		this.nodeFactory = nodeFactory;
+	public DepthLimitedTreeSearch(int limit, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
+		this.limit            = limit;
+		this.searchController = searchController;
+		this.nodeFactory      = nodeFactory;
 	}
 	
     @Override
@@ -65,8 +69,8 @@ public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedS
     // function RECURSIVE-DLS(node, problem, limit) returns a solution, or failure/cutoff
     public List<A> recursiveDLS(Node<A, S> node, Problem<A, S> problem, int limit) {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (isGoalState(node, problem)) {
-            return solution(node);
+        if (searchController.isGoalState(node, problem)) {
+            return searchController.solution(node);
         } // else if limit = 0 then return cutoff
         else if (limit == 0) {
             return getCutoff();
@@ -84,10 +88,10 @@ public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedS
                 if (result == getCutoff()) {
                     cutoff_occurred = true;
                 } // else if result != failure then return result
-                else if (result != failure()) { return result; }
+                else if (result != searchController.failure()) { return result; }
             }
             // if cutoff_occurred? then return cutoff else return failure
-            if (cutoff_occurred) { return getCutoff(); } else { return failure(); }
+            if (cutoff_occurred) { return getCutoff(); } else { return searchController.failure(); }
         }
     }
 

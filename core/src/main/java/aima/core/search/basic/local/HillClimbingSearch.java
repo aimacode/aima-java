@@ -9,7 +9,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -38,14 +40,16 @@ import aima.core.search.basic.support.BasicNodeFactory;
  */
 public class HillClimbingSearch<A, S> implements Search<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
 	
 	public HillClimbingSearch(ToDoubleFunction<Node<A, S>> h) {
-		this(h, new BasicNodeFactory<>());
+		this(h, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}
 			
-	public HillClimbingSearch(ToDoubleFunction<Node<A, S>> h, NodeFactory<A, S> nodeFactory) {
+	public HillClimbingSearch(ToDoubleFunction<Node<A, S>> h, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
 		this.h = h;
+		this.searchController = searchController;
 		this.nodeFactory = nodeFactory;
 	}
 	
@@ -63,14 +67,14 @@ public class HillClimbingSearch<A, S> implements Search<A, S> {
                 successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, current.n, action), this.h));
             }
             if (successors.isEmpty()) {
-                return solution(current.n);
+                return searchController.solution(current.n);
             } else {
                 Collections.sort(successors, (s1, s2) -> Double.compare(s2.value, s1.value));
                 neighbor = successors.get(0);
             }
             // if neighbor.VALUE <= current.VALUE then return current.STATE
             if (neighbor.value <= current.value) {
-            	return solution(current.n);
+            	return searchController.solution(current.n);
             }
             current = neighbor;
         } while (true);

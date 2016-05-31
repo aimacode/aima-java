@@ -9,7 +9,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -42,6 +44,7 @@ import aima.core.search.basic.support.BasicNodeFactory;
 public class SimulatedAnnealingSearch<A, S> implements Search<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
 	private Scheduler scheduler;
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
 	
 	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h) {
@@ -49,12 +52,13 @@ public class SimulatedAnnealingSearch<A, S> implements Search<A, S> {
 	}
 	
 	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler) {
-		this(h, scheduler, new BasicNodeFactory<>());
+		this(h, scheduler, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}
 			
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler, NodeFactory<A, S> nodeFactory) {
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
 		this.h = h;
 		this.scheduler = scheduler;
+		this.searchController = searchController;
 		this.nodeFactory = nodeFactory;
 	}
 	
@@ -71,7 +75,7 @@ public class SimulatedAnnealingSearch<A, S> implements Search<A, S> {
 			timeStep++;
 			// if temperature = 0 then return current
 			if ( temperature == 0.0 ) {
-				ret = solution(current);
+				ret = searchController.solution(current);
 				break;
 			}
 			

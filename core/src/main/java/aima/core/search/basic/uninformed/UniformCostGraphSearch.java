@@ -5,9 +5,11 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.GraphShortestPathPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -43,10 +45,10 @@ import aima.core.search.basic.support.BasicPriorityFrontierQueue;
  */
 public class UniformCostGraphSearch<A, S> extends GraphShortestPathPrioritySearch<A, S> {
 	public UniformCostGraphSearch() {
-    	this(new BasicNodeFactory<>(), HashSet::new);
+    	this(new BasicSearchController<>(), new BasicNodeFactory<>(), HashSet::new);
     }
 	
-	public UniformCostGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-    	super(nodeFactory, () -> new BasicPriorityFrontierQueue<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), exploredSupplier);
+	public UniformCostGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
+    	super(searchController, nodeFactory, () -> new BasicPriorityFrontierQueue<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), exploredSupplier);
     }
 }

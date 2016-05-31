@@ -8,7 +8,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * <pre>
@@ -35,15 +37,16 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ruediger Lunde
  */
 public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
-
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     
     public TreeGoalTestedFirstSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
-    	this(new BasicNodeFactory<>(), frontierSupplier);
+    	this(new BasicSearchController<>(), new BasicNodeFactory<>(), frontierSupplier);
     }
     
-    public TreeGoalTestedFirstSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public TreeGoalTestedFirstSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    	setSearchController(searchController);
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     }
@@ -54,14 +57,14 @@ public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
         // node <- a node with STATE = problem.INITIAL-STATE
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (isGoalState(node, problem)) { return solution(node); }
+        if (searchController.isGoalState(node, problem)) { return searchController.solution(node); }
         // frontier <- a queue with node as the only element
         FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // loop do
-        while (true) {
+        while (searchController.isKeepSearchingTillGoalFound()) {
             // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return failure(); }
+            if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the shallowest node in frontier
             node = frontier.remove();
             // for each action in problem.ACTIONS(node.STATE) do
@@ -69,11 +72,16 @@ public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
                 // child <- CHILD-NODE(problem, node, action)
                 Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
                 // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-                if (isGoalState(child, problem)) { return solution(child); }
+                if (searchController.isGoalState(child, problem)) { return searchController.solution(child); }
                 // frontier <- INSERT(child, frontier)
                 frontier.add(child);
             }
         }
+        return searchController.failure();
+    }
+    
+    public void setSearchController(SearchController<A, S> searchController) {
+    	this.searchController = searchController;
     }
     
     public void setNodeFactory(NodeFactory<A, S> nodeFactory) {

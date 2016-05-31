@@ -7,9 +7,11 @@ import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.GraphShortestPathPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -32,11 +34,11 @@ public class BestFirstGraphSearch<A, S> extends GraphShortestPathPrioritySearch<
 	private ToDoubleFunction<Node<A, S>> f;
 	
 	public BestFirstGraphSearch(ToDoubleFunction<Node<A, S>> f) {
-		this(new BasicNodeFactory<>(), f, HashSet::new);
+		this(new BasicSearchController<>(), new BasicNodeFactory<>(), f, HashSet::new);
 	}
 	
-	public BestFirstGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> f, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))), exploredSupplier);
+	public BestFirstGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> f, Supplier<Set<S>> exploredSupplier) {
+		super(searchController, nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))), exploredSupplier);
 		this.f = f;
 	}
 	

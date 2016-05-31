@@ -10,7 +10,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * <pre>
@@ -40,16 +42,17 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ruediger Lunde
  */
 public class GraphGoalTestedFirstSearch<A, S> implements Search<A, S> {
-
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
     public GraphGoalTestedFirstSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
-    	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
+    	this(new BasicSearchController<>(), new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public GraphGoalTestedFirstSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public GraphGoalTestedFirstSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    	setSearchController(searchController);
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
@@ -61,16 +64,16 @@ public class GraphGoalTestedFirstSearch<A, S> implements Search<A, S> {
         // node <- a node with STATE = problem.INITIAL-STATE
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (isGoalState(node, problem)) { return solution(node); }
+        if (searchController.isGoalState(node, problem)) { return searchController.solution(node); }
         // frontier <- a queue with node as the only element
         FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (true) {
+        while (searchController.isKeepSearchingTillGoalFound()) {
             // if EMPTY?(frontier) then return failure
-            if (frontier.isEmpty()) { return failure(); }
+            if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the shallowest node in frontier
             node = frontier.remove();
             // add node.STATE to explored
@@ -82,12 +85,17 @@ public class GraphGoalTestedFirstSearch<A, S> implements Search<A, S> {
                 // if child.STATE is not in explored or frontier then
                 if (!(explored.contains(child.state()) || frontier.containsState(child.state()))) {
                     // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-                    if (isGoalState(child, problem)) { return solution(child); }
+                    if (searchController.isGoalState(child, problem)) { return searchController.solution(child); }
                     // frontier <- INSERT(child, frontier)
                     frontier.add(child);
                 }
             }
         }
+        return searchController.failure();
+    }
+    
+    public void setSearchController(SearchController<A, S> searchController) {
+    	this.searchController = searchController;
     }
     
     public void setNodeFactory(NodeFactory<A, S> nodeFactory) {

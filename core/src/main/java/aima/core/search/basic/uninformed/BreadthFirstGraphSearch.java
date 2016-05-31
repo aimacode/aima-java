@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.GraphGoalTestedFirstSearch;
 import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 
@@ -48,7 +49,7 @@ public class BreadthFirstGraphSearch<A, S> extends GraphGoalTestedFirstSearch<A,
 		super(() -> new BasicFrontierQueueWithStateTracking<A, S>(LinkedList::new, HashSet::new));
 	}
 	
-	public BreadthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicFrontierQueueWithStateTracking<A, S>(LinkedList::new, HashSet::new), exploredSupplier);
+	public BreadthFirstGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
+		super(searchController, nodeFactory, () -> new BasicFrontierQueueWithStateTracking<A, S>(LinkedList::new, HashSet::new), exploredSupplier);
 	}
 }

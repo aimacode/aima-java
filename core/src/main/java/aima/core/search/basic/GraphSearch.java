@@ -10,8 +10,10 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??. <br>
@@ -36,20 +38,21 @@ import aima.core.search.basic.support.BasicNodeFactory;
  * @author Ciaran O'Reilly
  */
 public class GraphSearch<A, S> implements Search<A, S> {
-	
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
     
     public GraphSearch() {
-    	this(new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
+    	this(new BasicSearchController<>(), new BasicNodeFactory<>(), BasicFrontierQueueWithStateTracking::new, HashSet::new);
     }
     
     public GraphSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
-    	this(new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
+    	this(new BasicSearchController<>(), new BasicNodeFactory<>(), frontierSupplier, HashSet::new);
     }
     
-    public GraphSearch(NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    public GraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+    	setSearchController(searchController);
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
     	setExploredSupplier(exploredSupplier);
@@ -64,13 +67,13 @@ public class GraphSearch<A, S> implements Search<A, S> {
         // initialize the explored set to be empty
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (true) {
+        while (searchController.isKeepSearchingTillGoalFound()) {
             // if the frontier is empty then return failure
-            if (frontier.isEmpty()) { return failure(); }
+            if (frontier.isEmpty()) { return searchController.failure(); }
             // choose a leaf node and remove it from the frontier
             Node<A, S> node = frontier.remove();
             // if the node contains a goal state then return the corresponding solution
-            if (isGoalState(node, problem)) { return solution(node); }
+            if (searchController.isGoalState(node, problem)) { return searchController.solution(node); }
             // add the node to the explored set
             explored.add(node.state());
             // expand the chosen node, adding the resulting nodes to the frontier
@@ -82,6 +85,11 @@ public class GraphSearch<A, S> implements Search<A, S> {
                 }
             }
         }
+        return searchController.failure();
+    }
+    
+    public void setSearchController(SearchController<A, S> searchController) {
+    	this.searchController = searchController;
     }
     
     public void setNodeFactory(NodeFactory<A, S> nodeFactory) {

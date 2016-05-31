@@ -10,7 +10,9 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.Search;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -45,14 +47,16 @@ import aima.core.search.basic.support.BasicNodeFactory;
  */
 public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
+	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
 	
 	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h) {
-		this(h, new BasicNodeFactory<>());
+		this(h, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}
 			
-	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h, NodeFactory<A, S> nodeFactory) {
+	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
 		this.h = h;
+		this.searchController = searchController;
 		this.nodeFactory = nodeFactory;
 	}
 			
@@ -66,7 +70,7 @@ public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
     // function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
     public Result rbfs(Problem<A, S> problem, SuccessorNode node, double f_limit) {
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (isGoalState(node.n, problem)) { return new Result(solution(node.n)); }
+        if (searchController.isGoalState(node.n, problem)) { return new Result(searchController.solution(node.n)); }
         // successors <- []
         List<SuccessorNode> successors = new ArrayList<>();
         // for each action in problem.ACTION(node.STATE) do
@@ -75,7 +79,7 @@ public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
             successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, node.n, action), this::h));
         }
         // if successors is empty then return failure, infinity
-        if (successors.isEmpty()) { return new Result(failure(), Double.POSITIVE_INFINITY); }
+        if (successors.isEmpty()) { return new Result(searchController.failure(), Double.POSITIVE_INFINITY); }
         // for each s in successors do // update f with value from previous search, if any
         for (SuccessorNode s : successors) {
             // s.f <- max(s.g + s.h, node.f)
@@ -87,7 +91,7 @@ public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
             Collections.sort(successors, (s1, s2) -> Double.compare(s1.f, s2.f));
             SuccessorNode best = successors.get(0);
             // if best.f > f_limit then return failure, best.f
-            if (best.f > f_limit) { return new Result(failure(), best.f); }
+            if (best.f > f_limit) { return new Result(searchController.failure(), best.f); }
             // alternative <- the second-lowest f-value among successors
             double alternative = successors.size() > 1 ? successors.get(1).f : best.f;
             // result, best.f <- RBFS(problem, best, min(f_limit, alternative))
@@ -95,7 +99,8 @@ public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
             best.f        = result.newFCostLimit;
             // if result != failure then return result
             if (!result.isFailure()) { return result; }
-        } while (true);
+        } while (searchController.isKeepSearchingTillGoalFound());
+        return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
     }
 
     public double h(Node<A, S> node) {

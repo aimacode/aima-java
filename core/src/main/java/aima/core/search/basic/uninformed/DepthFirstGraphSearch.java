@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.GraphGoalTestedFirstSearch;
 import aima.core.search.basic.support.BasicFrontierQueueWithStateTracking;
 
@@ -45,7 +46,7 @@ public class DepthFirstGraphSearch<A, S> extends GraphGoalTestedFirstSearch<A, S
 		super(() -> new BasicFrontierQueueWithStateTracking<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
 	}
 	
-	public DepthFirstGraphSearch(NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, () -> new BasicFrontierQueueWithStateTracking<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new), exploredSupplier);
+	public DepthFirstGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
+		super(searchController, nodeFactory, () -> new BasicFrontierQueueWithStateTracking<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new), exploredSupplier);
 	}
 }

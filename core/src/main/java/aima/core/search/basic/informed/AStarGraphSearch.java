@@ -7,7 +7,9 @@ import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
+import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -25,11 +27,11 @@ public class AStarGraphSearch<A, S> extends BestFirstGraphSearch<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
 	
 	public AStarGraphSearch(ToDoubleFunction<Node<A, S>> h) {
-		this(new BasicNodeFactory<>(), h, HashSet::new);
+		this(new BasicSearchController<>(), new BasicNodeFactory<>(), h, HashSet::new);
 	}
 	
-	public AStarGraphSearch(NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> h, Supplier<Set<S>> exploredSupplier) {
-		super(nodeFactory, (node) -> node.pathCost()+h.applyAsDouble(node), exploredSupplier);
+	public AStarGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> h, Supplier<Set<S>> exploredSupplier) {
+		super(searchController, nodeFactory, (node) -> node.pathCost()+h.applyAsDouble(node), exploredSupplier);
 		this.h = h;
 	}
 	
