@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.lang.model.SourceVersion;
 
-import aima.core.logic.common.Lexer;
-import aima.core.logic.common.LogicTokenTypes;
-import aima.core.logic.common.Parser;
-import aima.core.logic.common.ParserException;
-import aima.core.logic.common.Token;
+import aima.core.logic.api.common.Lexer;
+import aima.core.logic.api.common.LogicTokenTypes;
+import aima.core.logic.api.common.Parser;
+import aima.core.logic.api.common.ParserException;
+import aima.core.logic.api.common.Token;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;

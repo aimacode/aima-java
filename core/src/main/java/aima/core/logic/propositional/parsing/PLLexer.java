@@ -1,9 +1,9 @@
 package aima.core.logic.propositional.parsing;
 
-import aima.core.logic.common.Lexer;
-import aima.core.logic.common.LexerException;
-import aima.core.logic.common.LogicTokenTypes;
-import aima.core.logic.common.Token;
+import aima.core.logic.api.common.Lexer;
+import aima.core.logic.api.common.LexerException;
+import aima.core.logic.api.common.LogicTokenTypes;
+import aima.core.logic.api.common.Token;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 

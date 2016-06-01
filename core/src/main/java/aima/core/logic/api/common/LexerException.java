@@ -1,4 +1,4 @@
-package aima.core.logic.common;
+package aima.core.logic.api.common;
 
 /**
  * A runtime exception to be used to describe Lexer exceptions. In particular it

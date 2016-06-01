@@ -1,4 +1,4 @@
-package aima.core.logic.common;
+package aima.core.logic.api.common;
 
 import java.io.IOException;
 import java.io.Reader;

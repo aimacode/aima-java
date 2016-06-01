@@ -4,15 +4,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.common.LexerException;
-import aima.core.logic.common.LogicTokenTypes;
-import aima.core.logic.common.ParserException;
+import aima.core.logic.api.common.LexerException;
+import aima.core.logic.api.common.LogicTokenTypes;
+import aima.core.logic.api.common.ParserException;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Anurag Rai
  */
 public class PLParserTest {
 	private PLParser parser   = null;
