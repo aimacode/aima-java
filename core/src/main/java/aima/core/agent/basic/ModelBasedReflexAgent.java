@@ -36,7 +36,7 @@ import aima.core.agent.api.Rule;
  */
 public class ModelBasedReflexAgent<A, P, S, M> implements Agent<A, P> {
     @FunctionalInterface
-    public interface UpdateState<S, A, P, M> {
+    public interface UpdateStateFunction<S, A, P, M> {
         S apply(S currentState, A mostRecentAction, P percept, M model);
     }
     
@@ -49,12 +49,12 @@ public class ModelBasedReflexAgent<A, P, S, M> implements Agent<A, P> {
     private Set<Rule<A, S>> rules = new LinkedHashSet<>();
     private A action = null;
     // Make composable the update state logic  
-    private UpdateState<S, A, P, M> updateStateFn; // state  <- UPDATE-STATE(state, action, percept, model)
+    private UpdateStateFunction<S, A, P, M> updateStateFn; // state  <- UPDATE-STATE(state, action, percept, model)
     
     public ModelBasedReflexAgent(S state,
             M model,
             Collection<Rule<A, S>> rules,
-            UpdateState<S, A, P, M> updateStateFn) {
+            UpdateStateFunction<S, A, P, M> updateStateFn) {
     	this.state = state;
     	this.model = model;
     	this.rules.addAll(rules);
