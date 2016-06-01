@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.kb.KnowledgeBase;
+import aima.core.logic.basic.propositional.kb.KnowledgeBase;
 
 /**
  * @author Ravi Mohan

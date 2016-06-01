@@ -3,7 +3,7 @@ package aima.test.core.unit.logic.propositional.parsing;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 
 public class PropositionSymbolTest {
 

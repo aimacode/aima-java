@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
-import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.basic.propositional.kb.data.ConjunctionOfClauses;
+import aima.core.logic.basic.propositional.parsing.PLParser;
+import aima.core.logic.basic.propositional.parsing.ast.Sentence;
+import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
 
 /**
  * @author Ravi Mohan

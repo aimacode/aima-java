@@ -5,9 +5,9 @@ import java.util.HashSet;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.logic.propositional.kb.data.Clause;
-import aima.core.logic.propositional.kb.data.Literal;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.basic.propositional.kb.data.Clause;
+import aima.core.logic.basic.propositional.kb.data.Literal;
+import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.Util;
 
 /**

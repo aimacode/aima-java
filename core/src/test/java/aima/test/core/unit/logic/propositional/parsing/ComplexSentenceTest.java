@@ -2,10 +2,10 @@ package aima.test.core.unit.logic.propositional.parsing;
 
 import org.junit.Test;
 
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.basic.propositional.parsing.ast.Connective;
+import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 
 public class ComplexSentenceTest {
 	@Test(expected = IllegalArgumentException.class)

@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.api.common.LexerException;
-import aima.core.logic.api.common.LogicTokenTypes;
-import aima.core.logic.api.common.Token;
-import aima.core.logic.propositional.parsing.PLLexer;
+import aima.core.logic.basic.common.LexerException;
+import aima.core.logic.basic.common.LogicTokenTypes;
+import aima.core.logic.basic.common.Token;
+import aima.core.logic.basic.propositional.parsing.PLLexer;
 
 /**
  * @author Ravi Mohan

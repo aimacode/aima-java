@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.propositional.kb.data.Model;
-import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.basic.propositional.kb.data.Model;
+import aima.core.logic.basic.propositional.parsing.PLParser;
+import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
