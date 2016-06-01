@@ -71,13 +71,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>3.7</td>
        <td>77</td>
-       <td>Tree-Search</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeSearch.java">TreeSearch</a></td>
    </tr>
    <tr>
        <td>3.7</td>
        <td>77</td>
-       <td>Graph-Search</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphSearch.java">GraphSearch</a></td>
    </tr>
    <tr>
@@ -89,7 +89,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td rowspan="2">3.11</td>
        <td rowspan="2">82</td>
-       <td rowspan="2">Breadth-First-Search</td>
+       <td rowspan="2"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Breadth-First-Search.md">Breadth-First-Search</a></td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a>
        </td>
@@ -102,7 +102,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td rowspan="2">3.14</td>
        <td rowspan="2">84</td>
-       <td rowspan="2">Uniform-Cost-Search</td>
+       <td rowspan="2"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Uniform-Cost-Search.md">Uniform-Cost-Search</a></td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a>
        </td>
@@ -128,13 +128,13 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>3.17</td>
        <td>88</td>
-       <td>Depth-Limited-Search</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Depth-Limited-Search.md">Depth-Limited-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthLimitedTreeSearch.java">DepthLimitedTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.18</td>
        <td>89</td>
-       <td>Iterative-Deepening-Search</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Iterative-Deepening-Search.md">Iterative-Deepening-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
@@ -179,7 +179,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>3.26</td>
        <td>99</td>
-       <td>Recursive-Best-First-Search</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Recursive-Best-First-Search.md">Recursive-Best-First-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
    </tr>
    <tr>
