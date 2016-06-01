@@ -1,7 +1,7 @@
 package aima.core.logic.basic.propositional;
 
 import aima.core.agent.api.Agent;
-import aima.core.logic.basic.propositional.kb.KnowledgeBase;
+import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 
 /**
@@ -31,11 +31,11 @@ import aima.core.logic.basic.propositional.parsing.ast.Sentence;
  */
 public abstract class KBAgent<A,P> implements Agent<A,P> {
 	// persistent: KB, a knowledge base
-	protected KnowledgeBase KB;
+	protected BasicKnowledgeBase KB;
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 
-	public KBAgent(KnowledgeBase KB) {
+	public KBAgent(BasicKnowledgeBase KB) {
 		this.KB = KB;
 	}
 
@@ -103,5 +103,5 @@ public abstract class KBAgent<A,P> implements Agent<A,P> {
 	 * @return the Action to be performed in response to the given query.
 	 */
 	// ASK(KB, MAKE-ACTION-QUERY(t))
-	public abstract A ask(KnowledgeBase KB, Sentence actionQuery);
+	public abstract A ask(BasicKnowledgeBase KB, Sentence actionQuery);
 }

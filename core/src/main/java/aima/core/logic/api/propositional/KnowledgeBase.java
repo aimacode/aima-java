@@ -8,7 +8,7 @@ import aima.core.logic.basic.propositional.parsing.ast.Sentence;
  * @author Anurag Rai
  */
 
-public interface SimpleKnowledgeBase {
+public interface KnowledgeBase {
 	
 	public void tell(String aSentence);
 	public List<Sentence> getSentences();

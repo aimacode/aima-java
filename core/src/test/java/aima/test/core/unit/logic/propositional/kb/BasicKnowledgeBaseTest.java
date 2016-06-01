@@ -4,18 +4,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.logic.basic.propositional.kb.KnowledgeBase;
+import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
 
 /**
  * @author Ravi Mohan
  * @author Anurag Rai
  */
-public class KnowledgeBaseTest {
-	private KnowledgeBase kb;
+public class BasicKnowledgeBaseTest {
+	private BasicKnowledgeBase kb;
 
 	@Before
 	public void setUp() {
-		kb = new KnowledgeBase();
+		kb = new BasicKnowledgeBase();
 	}
 
 	@Test
