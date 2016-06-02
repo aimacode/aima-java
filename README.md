@@ -92,14 +92,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="2"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Breadth-First-Search.md">Breadth-First-Search</a></td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstGraphSearch.java">BreadthFirstGraphSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphGoalTestedFirstSearch.java">GraphGoalTestedFirstSearch</a>           
        </td>
    </tr>
       <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstTreeSearch.java">BreadthFirstTreeSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeGoalTestedFirstSearch.java">TreeGoalTestedFirstSearch</a>              
        </td>
    </tr>
@@ -109,14 +109,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="2"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Uniform-Cost-Search.md">Uniform-Cost-Search</a></td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphPrioritySearch.java">GraphPrioritySearch</a>
        </td>
    </tr>
       <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostTreeSearch.java">UniformCostTreeSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreePrioritySearch.java">TreePrioritySearch</a>           
        </td>
    </tr>
@@ -126,14 +126,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="2">Depth-first Search</td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstGraphSearch.java">DepthFirstGraphSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphGoalTestedFirstSearch.java">GraphGoalTestedFirstSearch</a>            
        </td>
    </tr>
    <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstTreeSearch.java">DepthFirstTreeSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeGoalTestedFirstSearch.java">TreeGoalTestedFirstSearch</a>   
        </td>
    </tr>
@@ -155,14 +155,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="2">Best-First search</td>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstGraphSearch.java">BestFirstGraphSearch</a> 
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphPrioritySearch.java">GraphPrioritySearch</a>
        </td>
    </tr>
    <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstTreeSearch.java">BestFirstTreeSearch</a>
-           </em>specializes</em>
+           <em>specializes</em>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreePrioritySearch.java">TreePrioritySearch</a>
        </td>
    </tr>
