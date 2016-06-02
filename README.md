@@ -191,7 +191,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>4.5</td>
        <td>126</td>
-       <td>Simulated-Annealing</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Simulated-Annealing.md">Simulated-Annealing</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/local/SimulatedAnnealingSearch.java">SimulatedAnnealingSearch</a></td>
    </tr>   
    </tbody>
@@ -201,6 +201,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
+* Add Bidirectional Search implementation.
 * GraphShortestPathPrioritySearch and TreeShortestPathPrioritySearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority.
@@ -208,6 +209,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * Add a mechanism for gathering search metrics. Want to make more flexible and introduce less clutter into the core algorithms in order to support.
 
 #### Chp 4
+* Reconsider using a separate state oriented Search API (as opposed to the current sequence of actions).
 * Follow up on Genetic Algorithm experiments on N-Queens problem (based on aima3e implementation) to determine if performs no better than random selection.
 
 #### Chp 5
