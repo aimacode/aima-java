@@ -217,6 +217,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
+* Different types of Search APIs (i.e SearchActionsFunction, SearchStateFunction, SearchActionFunction) for different use cases.
+* Re-introduce better composition mechanism into search algorithm implementations to reduce amount of inheritance required.
 * Add Bidirectional Search implementation.
 * GraphPrioritySearch and TreePrioritySearch potentially 
   need a better mechanism for determining state containment and removal of a node 

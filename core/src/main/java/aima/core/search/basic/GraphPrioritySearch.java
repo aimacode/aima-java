@@ -13,7 +13,7 @@ import aima.core.search.api.SearchController;
 
 /**
  * <pre>
- * function GRAPH-SHORTEST-PATH-PRIORITY-SEARCH(problem) returns a solution, or failure
+ * function GRAPH-PRIORITY-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE
  *   frontier &lt;- a priority queue, with node as the only element
  *   explored &lt;- an empty set
@@ -52,7 +52,7 @@ public class GraphPrioritySearch<A, S> implements Search<A, S> {
     	setExploredSupplier(exploredSupplier);
     }
 	
-	// function GRAPH-SHORTEST-PATH-PRIORITY-SEARCH((problem) returns a solution, or failure
+	// function GRAPH-PRIORITY-SEARCH((problem) returns a solution, or failure
     @Override
     public List<A> apply(Problem<A, S> problem) {
         // node <- a node with STATE = problem.INITIAL-STATE

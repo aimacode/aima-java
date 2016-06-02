@@ -12,7 +12,7 @@ import aima.core.search.api.SearchController;
 
 /**
  * <pre>
- * function TREE-SHORTEST-PATH-PRIORITY-SEARCH(problem) returns a solution, or failure
+ * function TREE-PRIORITY-SEARCH(problem) returns a solution, or failure
  *   node &lt;- a node with STATE = problem.INITIAL-STATE
  *   frontier &lt;- a priority queue, with node as the only element
  *   loop do
@@ -47,7 +47,7 @@ public class TreePrioritySearch<A, S> implements Search<A, S> {
     	setFrontierSupplier(frontierSupplier);
     }
 	
-	// function TREE-SHORTEST-PATH-PRIORITY-SEARCH(problem) returns a solution, or failure
+	// function TREE-PRIORITY-SEARCH(problem) returns a solution, or failure
     @Override
     public List<A> apply(Problem<A, S> problem) {
         // node <- a node with STATE = problem.INITIAL-STATE
