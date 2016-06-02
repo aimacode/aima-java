@@ -2,7 +2,7 @@ package aima.core.search.basic.uninformed;
 
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
-import aima.core.search.basic.TreeShortestPathPrioritySearch;
+import aima.core.search.basic.TreePrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 import aima.core.search.basic.support.BasicSearchController;
@@ -12,7 +12,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class UniformCostTreeSearch<A, S> extends TreeShortestPathPrioritySearch<A, S> {
+public class UniformCostTreeSearch<A, S> extends TreePrioritySearch<A, S> {
 	public UniformCostTreeSearch() {
     	this(new BasicSearchController<>(), new BasicNodeFactory<>());
     }

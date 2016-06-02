@@ -5,7 +5,7 @@ import java.util.function.ToDoubleFunction;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
-import aima.core.search.basic.TreeShortestPathPrioritySearch;
+import aima.core.search.basic.TreePrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 import aima.core.search.basic.support.BasicSearchController;
@@ -16,7 +16,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Mike Stampone
  * 
  */
-public class BestFirstTreeSearch<A, S> extends TreeShortestPathPrioritySearch<A, S> {
+public class BestFirstTreeSearch<A, S> extends TreePrioritySearch<A, S> {
 
 	private ToDoubleFunction<Node<A, S>> f;
 	

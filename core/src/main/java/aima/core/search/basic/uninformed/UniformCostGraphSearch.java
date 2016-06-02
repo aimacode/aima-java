@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
-import aima.core.search.basic.GraphShortestPathPrioritySearch;
+import aima.core.search.basic.GraphPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicPriorityFrontierQueue;
 import aima.core.search.basic.support.BasicSearchController;
@@ -43,7 +43,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class UniformCostGraphSearch<A, S> extends GraphShortestPathPrioritySearch<A, S> {
+public class UniformCostGraphSearch<A, S> extends GraphPrioritySearch<A, S> {
 	public UniformCostGraphSearch() {
     	this(new BasicSearchController<>(), new BasicNodeFactory<>(), HashSet::new);
     }

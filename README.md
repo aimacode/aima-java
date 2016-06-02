@@ -110,14 +110,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostGraphSearch.java">UniformCostGraphSearch</a>
            </em>specializes</em>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphShortestPathPrioritySearch.java">GraphShortestPathPrioritySearch</a>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphPrioritySearch.java">GraphPrioritySearch</a>
        </td>
    </tr>
       <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostTreeSearch.java">UniformCostTreeSearch</a>
            </em>specializes</em>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeShortestPathPrioritySearch.java">TreeShortestPathPrioritySearch</a>           
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreePrioritySearch.java">TreePrioritySearch</a>           
        </td>
    </tr>
    <tr>
@@ -156,14 +156,14 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstGraphSearch.java">BestFirstGraphSearch</a> 
            </em>specializes</em>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphShortestPathPrioritySearch.java">GraphShortestPathPrioritySearch</a>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphPrioritySearch.java">GraphPrioritySearch</a>
        </td>
    </tr>
    <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/BestFirstTreeSearch.java">BestFirstTreeSearch</a>
            </em>specializes</em>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeShortestPathPrioritySearch.java">TreeShortestPathPrioritySearch</a>
+           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreePrioritySearch.java">TreePrioritySearch</a>
        </td>
    </tr>
    <tr>
@@ -218,7 +218,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
 * Add Bidirectional Search implementation.
-* GraphShortestPathPrioritySearch and TreeShortestPathPrioritySearch potentially 
+* GraphPrioritySearch and TreePrioritySearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.

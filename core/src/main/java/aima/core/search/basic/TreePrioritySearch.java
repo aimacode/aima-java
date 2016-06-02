@@ -29,19 +29,19 @@ import aima.core.search.api.SearchController;
  *
  * The algorithm is identical to the general tree search algorithm in Figure ??, 
  * except for the use of a priority queue and the addition of an extra check in 
- * case a shorter path to a frontier state is discovered. The data structure for 
+ * case a higher priority to a frontier state is discovered. The data structure for 
  * frontier needs to support efficient membership testing, so it should combine the 
  * capabilities of a priority queue and a hash table.
  *
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class TreeShortestPathPrioritySearch<A, S> implements Search<A, S> {
+public class TreePrioritySearch<A, S> implements Search<A, S> {
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<PriorityFrontierQueue<A, S>> frontierSupplier;
 	
-	public TreeShortestPathPrioritySearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier) {
+	public TreePrioritySearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier) {
 		setSearchController(searchController);
 		setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
