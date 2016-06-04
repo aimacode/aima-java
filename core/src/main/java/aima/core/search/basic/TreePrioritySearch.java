@@ -56,7 +56,7 @@ public class TreePrioritySearch<A, S> implements Search<A, S> {
         PriorityFrontierQueue<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // loop do
-        while (searchController.isKeepSearchingTillGoalFound()) {
+        while (searchController.isExecuting()) {
             // if EMPTY?(frontier) then return failure
             if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the highest priority node in frontier

@@ -67,7 +67,7 @@ public class GraphSearch<A, S> implements Search<A, S> {
         // initialize the explored set to be empty
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (searchController.isKeepSearchingTillGoalFound()) {
+        while (searchController.isExecuting()) {
             // if the frontier is empty then return failure
             if (frontier.isEmpty()) { return searchController.failure(); }
             // choose a leaf node and remove it from the frontier

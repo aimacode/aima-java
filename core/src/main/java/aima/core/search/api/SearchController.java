@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import aima.core.util.ExecutionController;
+
 /**
  * Coarse grain search control. Provides basic API methods for different specializations
  * (e.g. Tree and Graph search).
@@ -14,11 +16,7 @@ import java.util.List;
  * @author Ciaran O'Reilly
  * 
  */
-public interface SearchController<A, S> {
-	
-	default boolean isKeepSearchingTillGoalFound() {
-		return true;
-	}
+public interface SearchController<A, S> extends ExecutionController {
 	
     default boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
         return problem.isGoalState(node.state());

@@ -53,7 +53,7 @@ public class TreeSearch<A, S> implements Search<A, S> {
         Queue<Node<A, S>> frontier = frontierSupplier.get();
         frontier.add(nodeFactory.newRootNode(problem.initialState(), 0));
         // loop do
-        while (searchController.isKeepSearchingTillGoalFound()) {
+        while (searchController.isExecuting()) {
             // if the frontier is empty then return failure
             if (frontier.isEmpty()) { return searchController.failure(); }
             // choose a leaf node and remove it from the frontier

@@ -63,7 +63,7 @@ public class GraphPrioritySearch<A, S> implements Search<A, S> {
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (searchController.isKeepSearchingTillGoalFound()) {
+        while (searchController.isExecuting()) {
             // if EMPTY?(frontier) then return failure
             if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the highest priority node in frontier

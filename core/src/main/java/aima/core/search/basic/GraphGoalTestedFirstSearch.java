@@ -71,7 +71,7 @@ public class GraphGoalTestedFirstSearch<A, S> implements Search<A, S> {
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
         // loop do
-        while (searchController.isKeepSearchingTillGoalFound()) {
+        while (searchController.isExecuting()) {
             // if EMPTY?(frontier) then return failure
             if (frontier.isEmpty()) { return searchController.failure(); }
             // node <- POP(frontier) // chooses the shallowest node in frontier

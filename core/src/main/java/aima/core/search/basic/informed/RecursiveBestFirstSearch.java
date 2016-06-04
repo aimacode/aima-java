@@ -99,7 +99,7 @@ public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
             best.f        = result.newFCostLimit;
             // if result != failure then return result
             if (!result.isFailure()) { return result; }
-        } while (searchController.isKeepSearchingTillGoalFound());
+        } while (searchController.isExecuting());
         return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
     }
 
