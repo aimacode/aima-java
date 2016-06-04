@@ -1,9 +1,9 @@
 package aima.core.search.basic;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Supplier;
 
-import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
@@ -39,13 +39,13 @@ import aima.core.search.basic.support.BasicSearchController;
 public class TreeGoalTestedFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;
+    private Supplier<Queue<Node<A, S>>> frontierSupplier;
     
-    public TreeGoalTestedFirstSearch(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public TreeGoalTestedFirstSearch(Supplier<Queue<Node<A, S>>> frontierSupplier) {
     	this(new BasicSearchController<>(), new BasicNodeFactory<>(), frontierSupplier);
     }
     
-    public TreeGoalTestedFirstSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public TreeGoalTestedFirstSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
     	setSearchController(searchController);
     	setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
@@ -59,7 +59,7 @@ public class TreeGoalTestedFirstSearch<A, S> implements SearchForActionsFunction
         // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         if (searchController.isGoalState(node, problem)) { return searchController.solution(node); }
         // frontier <- a queue with node as the only element
-        FrontierQueueWithStateTracking<A, S> frontier = frontierSupplier.get();
+        Queue<Node<A, S>> frontier = frontierSupplier.get();
         frontier.add(node);
         // loop do
         while (searchController.isExecuting()) {
@@ -88,7 +88,7 @@ public class TreeGoalTestedFirstSearch<A, S> implements SearchForActionsFunction
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<Queue<Node<A, S>>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
 }
