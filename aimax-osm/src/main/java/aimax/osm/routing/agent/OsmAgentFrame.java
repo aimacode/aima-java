@@ -16,10 +16,10 @@ public class OsmAgentFrame extends MapAgentFrame {
 		setTitle("OMAS - the Osm Map Agent Simulator");
 		setSelectors(new String[]{
 				SCENARIO_SEL, AGENT_SEL,
-				SEARCH_SEL, SEARCH_MODE_SEL, HEURISTIC_SEL},
+				SEARCH_SEL, Q_SEARCH_IMPL_SEL, HEURISTIC_SEL},
 				new String[]{
 				"Select Scenario", "Select Agent",
-				"Select Search Strategy", "Select Search Mode", "Select Heuristic"}
+				"Select Search Strategy", "Select QSearch Implementation", "Select Heuristic"}
 		);
 		setSelectorItems(SCENARIO_SEL,
 				new String[] {"Use any way", "Travel by car", "Travel by bicycle"}, 0);
@@ -27,8 +27,8 @@ public class OsmAgentFrame extends MapAgentFrame {
 				new String[] {"Offline Search", "Online Search (LRTA*)"}, 0);
 		setSelectorItems(SEARCH_SEL,
 				SearchFactory.getInstance().getSearchStrategyNames(), 5);
-		setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
-				.getSearchModeNames(), 1); // change the default!
+		setSelectorItems(Q_SEARCH_IMPL_SEL, SearchFactory.getInstance()
+				.getQSearchImplNames(), 1); // change the default!
 		setSelectorItems(HEURISTIC_SEL, new String[] { "=0",
 				"SLD" }, 1);
 		getMessageLogger().setLogLater(true);

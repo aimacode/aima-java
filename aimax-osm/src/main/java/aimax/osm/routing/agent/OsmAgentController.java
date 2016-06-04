@@ -77,7 +77,7 @@ public class OsmAgentController extends AgentAppController {
 		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
 		search = SearchFactory.getInstance().createSearch(
 				state.getIndex(MapAgentFrame.SEARCH_SEL),
-				state.getIndex(MapAgentFrame.SEARCH_MODE_SEL), heuristic);
+				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 		frame.getEnvView().setEnvironment(env);
 		isPrepared = true;
 	}

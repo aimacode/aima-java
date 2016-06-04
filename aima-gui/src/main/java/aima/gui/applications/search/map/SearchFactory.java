@@ -4,6 +4,7 @@ import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
+import aima.core.search.framework.qsearch.GraphSearchBFS;
 import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.AStarEvaluationFunction;
@@ -41,12 +42,14 @@ public class SearchFactory {
 	/** Search strategy: Hill climbing search. */
 	public final static int HILL_SEARCH = 8;
 
-	/** Search mode: tree search. */
+	/** Queue search implementation: tree search. */
 	public final static int TREE_SEARCH = 0;
-	/** Search mode: graph search. */
+	/** Queue search implementation: graph search. */
 	public final static int GRAPH_SEARCH = 1;
-	/** Search mode: bidirectional search. */
-	public final static int BIDIRECTIONAL_SEARCH = 2;
+	/** Queue search implementation: graph search for breadth first search. */
+	public final static int GRAPH_SEARCH_BFS = 2;
+	/** Queue search implementation: bidirectional search. */
+	public final static int BIDIRECTIONAL_SEARCH = 3;
 
 	/** Contains the only existing instance. */
 	private static SearchFactory instance;
@@ -74,12 +77,12 @@ public class SearchFactory {
 	}
 
 	/**
-	 * Returns the names of all search modes, which are supported by this
+	 * Returns the names of all queue search implementation names, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
 	 * {@link #createSearch(int, int, HeuristicFunction)}.
 	 */
-	public String[] getSearchModeNames() {
-		return new String[] { "Tree Search", "Graph Search", "Bidirectional Search" };
+	public String[] getQSearchImplNames() {
+		return new String[] { "Tree Search", "Graph Search", "Graph Search BFS", "Bidirectional Search" };
 	}
 
 	/**
@@ -87,19 +90,22 @@ public class SearchFactory {
 	 * 
 	 * @param strategy
 	 *            search strategy. See static constants.
-	 * @param mode
-	 *            search mode: {@link #TREE_SEARCH} or {@link #GRAPH_SEARCH}
+	 * @param qSearchImpl
+	 *            queue search implementation: e.g. {@link #TREE_SEARCH}, {@link #GRAPH_SEARCH}
 	 * 
 	 */
-	public Search createSearch(int strategy, int mode, HeuristicFunction hf) {
+	public Search createSearch(int strategy, int qSearchImpl, HeuristicFunction hf) {
 		QueueSearch qs = null;
 		Search result = null;
-		switch (mode) {
+		switch (qSearchImpl) {
 		case TREE_SEARCH:
 			qs = new TreeSearch();
 			break;
 		case GRAPH_SEARCH:
 			qs = new GraphSearch();
+			break;
+		case GRAPH_SEARCH_BFS:
+			qs = new GraphSearchBFS();
 			break;
 		case BIDIRECTIONAL_SEARCH:
 			qs = new BidirectionalSearch();

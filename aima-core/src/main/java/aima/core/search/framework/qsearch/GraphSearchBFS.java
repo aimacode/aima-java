@@ -30,70 +30,64 @@ import aima.core.util.datastructure.Queue;
  * <br>
  * This implementation is based on the template method
  * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
- * provides implementations for the needed primitive operations. In contrast to
- * the code above, here, nodes resulting from node expansion are added to the
- * frontier even if nodes with equal states already exist there. This makes it
- * possible to use the implementation also in combination with priority queue
- * frontiers.
+ * provides implementations for the needed primitive operations. It is the most
+ * efficient variant of graph search for breadth first search. But don't expect
+ * shortest paths in combination with priority queue frontiers.
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphSearch extends QueueSearch {
-	
+public class GraphSearchBFS extends QueueSearch {
+
 	private Set<Object> explored = new HashSet<Object>();
-	
+	private Set<Object> frontierStates = new HashSet<Object>();
+
 	/**
 	 * Clears the set of explored states and calls the search implementation of
 	 * <code>QueSearch</code>
 	 */
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
-		// initialize the explored set to be empty
+		// Initialise the explored set to be empty
 		explored.clear();
-		// expandedNodes = new ArrayList<Node>();
+		frontierStates.clear();
 		return super.search(problem, frontier);
 	}
 
 	/**
 	 * Inserts the node at the tail of the frontier if the corresponding state
-	 * was not yet explored.
+	 * is not already a frontier state and was not yet explored.
 	 */
 	@Override
 	protected void insertIntoFrontier(Node node) {
-		if (!explored.contains(node.getState())) {
+		if (!explored.contains(node.getState()) && !frontierStates.contains(node.getState())) {
 			frontier.insert(node);
+			frontierStates.add(node.getState());
 			updateMetrics(frontier.size());
 		}
 	}
 
 	/**
 	 * Removes the node at the head of the frontier, adds the corresponding
-	 * state to the explored set, and returns the node. As the template method
-	 * (the caller) calls {@link #isFrontierEmpty() before, the resulting node
-	 * state will always be unexplored yet.
+	 * state to the explored set, and returns the node.
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
 	protected Node popNodeFromFrontier() {
 		Node result = frontier.pop();
-		// add the node to the explored set
 		explored.add(result.getState());
+		frontierStates.remove(result.getState());
 		updateMetrics(frontier.size());
 		return result;
 	}
 
 	/**
-	 * Pops nodes of already explored states from the top end of the frontier
-	 * and checks whether there are still some nodes left.
+	 * Checks whether there are still some nodes left.
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty() && explored.contains(frontier.peek().getState()))
-			frontier.pop();
-		updateMetrics(frontier.size());
 		return frontier.isEmpty();
 	}
 }

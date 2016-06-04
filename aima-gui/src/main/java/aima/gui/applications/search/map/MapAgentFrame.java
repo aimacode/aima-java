@@ -19,20 +19,20 @@ public class MapAgentFrame extends AgentAppFrame {
 	public static String DESTINATION_SEL = "DestinationSelection";
 	public static String AGENT_SEL = "AgentSelection";
 	public static String SEARCH_SEL = "SearchSelection";
-	public static String SEARCH_MODE_SEL = "SearchModeSelection";
+	public static String Q_SEARCH_IMPL_SEL = "SearchModeSelection";
 	public static String HEURISTIC_SEL = "HeuristicSelection";
 
 	/** Standard constructor. */
 	public MapAgentFrame() {
 		setSelectors(new String[] { SCENARIO_SEL, DESTINATION_SEL, AGENT_SEL,
-				SEARCH_SEL, SEARCH_MODE_SEL, HEURISTIC_SEL }, new String[] {
+				SEARCH_SEL, Q_SEARCH_IMPL_SEL, HEURISTIC_SEL }, new String[] {
 				"Select Scenario", "Select Destinations", "Select Agent",
-				"Select Search Strategy", "Select Search Mode",
+				"Select Search Strategy", "Select QSearch Implementation",
 				"Select Heuristic" });
 		setSelectorItems(SEARCH_SEL, SearchFactory.getInstance()
 				.getSearchStrategyNames(), 5);
-		setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
-				.getSearchModeNames(), 0);
+		setSelectorItems(Q_SEARCH_IMPL_SEL, SearchFactory.getInstance()
+				.getQSearchImplNames(), 0);
 		setEnvView(new MapAgentView());
 		setSplitPaneResizeWeight(0.75);
 		setSize(1000, 700);

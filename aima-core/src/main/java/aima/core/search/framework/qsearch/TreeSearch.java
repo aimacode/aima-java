@@ -1,6 +1,8 @@
 package aima.core.search.framework.qsearch;
 
 import aima.core.search.framework.Node;
+import aima.core.search.framework.Problem;
+import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -19,8 +21,9 @@ import aima.core.search.framework.Node;
  * Figure 3.7 An informal description of the general tree-search algorithm.
  * 
  * <br>
- * See superclass {@link QueueSearch} for the implementation of the main
- * algorithm.
+ * This implementation is based on the template method
+ * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
+ * provides implementations for the needed primitive operations.
  * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
