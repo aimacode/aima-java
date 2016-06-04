@@ -4,7 +4,7 @@ import java.util.List;
 
 import aima.core.search.api.DepthLimitedSearch;
 import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
@@ -26,7 +26,7 @@ import aima.core.search.api.Search;
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
-public class IterativeDeepeningSearch<A, S> implements Search<A, S> {
+public class IterativeDeepeningSearch<A, S> implements SearchForActionsFunction<A, S> {
 	
 	private DepthLimitedSearch<A, S> dls;
 	

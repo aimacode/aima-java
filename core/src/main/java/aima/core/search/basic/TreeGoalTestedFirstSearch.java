@@ -7,7 +7,7 @@ import aima.core.search.api.FrontierQueueWithStateTracking;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
@@ -36,7 +36,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class TreeGoalTestedFirstSearch<A, S> implements Search<A, S> {
+public class TreeGoalTestedFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<FrontierQueueWithStateTracking<A, S>> frontierSupplier;

@@ -6,7 +6,7 @@ import aima.core.search.api.DepthLimitedSearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
@@ -39,7 +39,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class DepthLimitedTreeSearch<A, S> implements Search<A, S>, DepthLimitedSearch<A, S> {
+public class DepthLimitedTreeSearch<A, S> implements SearchForActionsFunction<A, S>, DepthLimitedSearch<A, S> {
 	private int limit;
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;

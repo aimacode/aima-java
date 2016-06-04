@@ -19,7 +19,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.search.basic.uninformed.BreadthFirstGraphSearch;
 import aima.test.core.unit.search.support.TestGoAction;
@@ -35,7 +35,7 @@ public class BreadthFirstGraphSearchTest {
 	}
 	 
     @Parameter
-	public Search<TestGoAction, String> breadthFirstGraphSearch;
+	public SearchForActionsFunction<TestGoAction, String> breadthFirstGraphSearch;
 	 
     Map<String, List<String>> simpleBinaryTreeStateSpace = new HashMap<String, List<String>>() {
     	private static final long serialVersionUID = 1L; {

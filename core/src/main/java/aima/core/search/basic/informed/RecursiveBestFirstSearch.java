@@ -9,7 +9,7 @@ import java.util.function.ToDoubleFunction;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
@@ -45,7 +45,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Mike Stampone
  * 
  */
-public class RecursiveBestFirstSearch<A, S> implements Search<A, S> {
+public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;

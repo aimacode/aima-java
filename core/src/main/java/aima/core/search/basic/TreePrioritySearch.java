@@ -7,7 +7,7 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.PriorityFrontierQueue;
 import aima.core.search.api.Problem;
-import aima.core.search.api.Search;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.api.SearchController;
 
 /**
@@ -36,7 +36,7 @@ import aima.core.search.api.SearchController;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class TreePrioritySearch<A, S> implements Search<A, S> {
+public class TreePrioritySearch<A, S> implements SearchForActionsFunction<A, S> {
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
     private Supplier<PriorityFrontierQueue<A, S>> frontierSupplier;
