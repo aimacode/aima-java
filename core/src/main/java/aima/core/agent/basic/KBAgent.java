@@ -1,4 +1,4 @@
-package aima.core.logic.basic.propositional;
+package aima.core.agent.basic;
 
 import aima.core.agent.api.Agent;
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
