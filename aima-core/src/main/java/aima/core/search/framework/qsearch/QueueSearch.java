@@ -27,7 +27,7 @@ public abstract class QueueSearch {
 
 	protected Metrics metrics = new Metrics();
 	protected Queue<Node> frontier;
-	protected boolean checkGoalBeforeAddingToFrontier = false;
+	protected boolean earlyGoalCheck = false;
 
 	/**
 	 * Returns a list of actions to the goal if the goal was found, a list
@@ -51,7 +51,7 @@ public abstract class QueueSearch {
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
-		if (checkGoalBeforeAddingToFrontier) {
+		if (earlyGoalCheck) {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
 		}
@@ -61,7 +61,7 @@ public abstract class QueueSearch {
 			Node nodeToExpand = popNodeFromFrontier();
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
-			if (!checkGoalBeforeAddingToFrontier) {
+			if (!earlyGoalCheck) {
 				// if the node contains a goal state then return the
 				// corresponding solution
 				if (SearchUtils.isGoalState(problem, nodeToExpand))
@@ -71,7 +71,7 @@ public abstract class QueueSearch {
 			// frontier
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
 			for (Node successor : SearchUtils.expandNode(nodeToExpand, problem)) {
-				if (checkGoalBeforeAddingToFrontier) {
+				if (earlyGoalCheck) {
 					if (SearchUtils.isGoalState(problem, successor))
 						return getSolution(successor);
 				}
@@ -105,10 +105,10 @@ public abstract class QueueSearch {
 	 * Enables optimization for FIFO queue based search, especially breadth
 	 * first search.
 	 * 
-	 * @param checkGoalBeforeAddingToFrontier
+	 * @param state
 	 */
-	public void setCheckGoalBeforeAddingToFrontier(boolean checkGoalBeforeAddingToFrontier) {
-		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
+	public void setEarlyGoalCheck(boolean state) {
+		this.earlyGoalCheck = state;
 	}
 
 	

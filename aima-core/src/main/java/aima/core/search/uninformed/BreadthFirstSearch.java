@@ -54,7 +54,7 @@ public class BreadthFirstSearch implements Search {
 		implementation = impl;
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
-		implementation.setCheckGoalBeforeAddingToFrontier(true);
+		implementation.setEarlyGoalCheck(true);
 	}
 
 	public List<Action> search(Problem p) {
