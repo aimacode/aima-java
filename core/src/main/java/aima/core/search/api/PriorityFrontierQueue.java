@@ -13,12 +13,6 @@ import java.util.Comparator;
  */
 public interface PriorityFrontierQueue<A, S> extends FrontierQueueWithStateTracking<A, S> {
 	
-	default boolean containsState(Node<A, S> node) {
-		return containsState(node.state());
-	}
-	
-	boolean containsState(S state);
-	
 	// NOTE: by Java's PriorityQueue convention, nodes that compare lower have higher priority.
 	Comparator<Node<A, S>> getComparator();
 }
