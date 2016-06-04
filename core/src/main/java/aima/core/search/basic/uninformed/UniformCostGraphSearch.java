@@ -8,7 +8,7 @@ import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.GraphPrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueByPriority;
 import aima.core.search.basic.support.BasicSearchController;
 
 /**
@@ -49,6 +49,6 @@ public class UniformCostGraphSearch<A, S> extends GraphPrioritySearch<A, S> {
     }
 	
 	public UniformCostGraphSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Set<S>> exploredSupplier) {
-    	super(searchController, nodeFactory, () -> new BasicPriorityFrontierQueue<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), exploredSupplier);
+    	super(searchController, nodeFactory, () -> new BasicFrontierQueueByPriority<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())), exploredSupplier);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Comparator;
  * 
  * @author Ciaran O'Reilly
  */
-public interface PriorityFrontierQueue<A, S> extends FrontierQueueWithStateTracking<A, S> {
+public interface FrontierQueueByPriority<A, S> extends FrontierQueueWithStateTracking<A, S> {
 	
 	// NOTE: by Java's PriorityQueue convention, nodes that compare lower have higher priority.
 	Comparator<Node<A, S>> getComparator();

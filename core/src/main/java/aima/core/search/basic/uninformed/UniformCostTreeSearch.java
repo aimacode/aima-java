@@ -4,7 +4,7 @@ import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.TreePrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueByPriority;
 import aima.core.search.basic.support.BasicSearchController;
 
 /**
@@ -18,6 +18,6 @@ public class UniformCostTreeSearch<A, S> extends TreePrioritySearch<A, S> {
     }
 	
 	public UniformCostTreeSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
-    	super(searchController, nodeFactory, () -> new BasicPriorityFrontierQueue<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())));
+    	super(searchController, nodeFactory, () -> new BasicFrontierQueueByPriority<A, S>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost())));
     }
 }

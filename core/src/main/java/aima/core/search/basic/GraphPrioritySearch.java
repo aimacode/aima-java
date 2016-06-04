@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
-import aima.core.search.api.PriorityFrontierQueue;
+import aima.core.search.api.FrontierQueueByPriority;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.api.SearchController;
@@ -42,10 +42,10 @@ import aima.core.search.api.SearchController;
 public class GraphPrioritySearch<A, S> implements SearchForActionsFunction<A, S> {
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
-    private Supplier<PriorityFrontierQueue<A, S>> frontierSupplier;
+    private Supplier<FrontierQueueByPriority<A, S>> frontierSupplier;
     private Supplier<Set<S>> exploredSupplier;
 	
-	public GraphPrioritySearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<PriorityFrontierQueue<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
+	public GraphPrioritySearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<FrontierQueueByPriority<A, S>> frontierSupplier, Supplier<Set<S>> exploredSupplier) {
 		setSearchController(searchController);
 		setNodeFactory(nodeFactory);
     	setFrontierSupplier(frontierSupplier);
@@ -58,7 +58,7 @@ public class GraphPrioritySearch<A, S> implements SearchForActionsFunction<A, S>
         // node <- a node with STATE = problem.INITIAL-STATE
         Node<A, S> node = nodeFactory.newRootNode(problem.initialState(), 0);
         // frontier <- a priority queue, with node as the only element
-        PriorityFrontierQueue<A, S> frontier = frontierSupplier.get();
+        FrontierQueueByPriority<A, S> frontier = frontierSupplier.get();
         frontier.add(node);
         // explored <- an empty set
         Set<S> explored = exploredSupplier.get();
@@ -101,7 +101,7 @@ public class GraphPrioritySearch<A, S> implements SearchForActionsFunction<A, S>
     	this.nodeFactory = nodeFactory;
     }
     
-    public void setFrontierSupplier(Supplier<PriorityFrontierQueue<A, S>> frontierSupplier) {
+    public void setFrontierSupplier(Supplier<FrontierQueueByPriority<A, S>> frontierSupplier) {
     	this.frontierSupplier = frontierSupplier;
     }
     

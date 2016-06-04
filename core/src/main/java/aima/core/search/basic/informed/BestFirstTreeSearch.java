@@ -7,7 +7,7 @@ import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.TreePrioritySearch;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicPriorityFrontierQueue;
+import aima.core.search.basic.support.BasicFrontierQueueByPriority;
 import aima.core.search.basic.support.BasicSearchController;
 
 /**
@@ -25,7 +25,7 @@ public class BestFirstTreeSearch<A, S> extends TreePrioritySearch<A, S> {
 	}
 	
 	public BestFirstTreeSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, ToDoubleFunction<Node<A, S>> f) {
-		super(searchController, nodeFactory, () -> new BasicPriorityFrontierQueue<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))));
+		super(searchController, nodeFactory, () -> new BasicFrontierQueueByPriority<>((n1, n2) -> Double.compare(f.applyAsDouble(n1), f.applyAsDouble(n2))));
 		this.f = f;
 	}
 	
