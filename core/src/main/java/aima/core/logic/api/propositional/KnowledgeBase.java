@@ -12,5 +12,6 @@ public interface KnowledgeBase {
 	
 	public void tell(String aSentence);
 	public List<Sentence> getSentences();
-
+	public Sentence asSentence();
+	public boolean askWithTTEntails(String queryString);
 }

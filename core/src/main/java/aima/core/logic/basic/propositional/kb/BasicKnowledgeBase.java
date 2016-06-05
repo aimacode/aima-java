@@ -15,6 +15,7 @@ import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.basic.propositional.visitors.SymbolCollector;
+import aima.core.logic.basic.propositional.inference.TTEntails;
 
 /**
  * @author Ravi Mohan
@@ -68,15 +69,6 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 	}
 
 	/**
-	 * Returns the number of sentences in the knowledge base.
-	 * 
-	 * @return the number of sentences in the knowledge base.
-	 */
-	public int size() {
-		return sentences.size();
-	}
-
-	/**
 	 * Returns the list of sentences in the knowledge base chained together as a
 	 * single sentence.
 	 * 
@@ -88,21 +80,32 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 	}
 	
 	/**
+	 * Returns the number of sentences in the knowledge base.
 	 * 
-	 * @return a Conjunctive Normal Form (CNF) representation of the Knowledge Base.
+	 * @return the number of sentences in the knowledge base.
 	 */
-	public Set<Clause> asCNF() {
-		return asCNF.getClauses();
-	}
-	
-	/**
-	 * 
-	 * @return a unique set of the symbols currently contained in the Knowledge Base.
-	 */
-	public Set<PropositionSymbol> getSymbols() {
-		return symbols;
+	public int size() {
+		return sentences.size();
 	}
 
+	/**
+	 * Returns the answer to the specified question using the TT-Entails
+	 * algorithm.
+	 * 
+	 * @param queryString
+	 *            a question to ASK the knowledge base
+	 * 
+	 * @return the answer to the specified question using the TT-Entails
+	 *         algorithm.
+	 */
+	public boolean askWithTTEntails(String queryString) {
+		
+		PLParser parser = new PLParser();
+
+		Sentence alpha = parser.parse(queryString);
+
+		return new TTEntails().ttEntails(this, alpha);
+	}
 	
 	@Override
 	public String toString() {
