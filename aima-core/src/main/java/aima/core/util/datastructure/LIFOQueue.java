@@ -18,11 +18,11 @@ import java.util.Queue;
 public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	private static final long serialVersionUID = 1;
 
-	public LIFOQueue() {
+	public LIFOQueue(char c) {
 		super();
 	}
 
-	public LIFOQueue(Collection<? extends E> c) {
+	public LIFOQueue(char ch, Collection<? extends E> c) {
 		super(c);
 	}
 	
