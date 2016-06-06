@@ -15,7 +15,6 @@ import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.basic.propositional.visitors.SymbolCollector;
-import aima.core.logic.basic.propositional.inference.TTEntails;
 
 /**
  * @author Ravi Mohan
@@ -73,25 +72,6 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 	 */
 	public int size() {
 		return sentences.size();
-	}
-
-	/**
-	 * Returns the answer to the specified question using the TT-Entails
-	 * algorithm.
-	 * 
-	 * @param queryString
-	 *            a question to ASK the knowledge base
-	 * 
-	 * @return the answer to the specified question using the TT-Entails
-	 *         algorithm.
-	 */
-	public boolean askWithTTEntails(String queryString) {
-		
-		PLParser parser = new PLParser();
-
-		Sentence alpha = parser.parse(queryString);
-
-		return new TTEntails().ttEntails(this, alpha);
 	}
 	
 	@Override

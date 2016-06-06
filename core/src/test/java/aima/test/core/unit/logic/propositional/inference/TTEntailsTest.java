@@ -28,43 +28,43 @@ public class TTEntailsTest {
 	@Test
 	public void testSimpleSentence1() {
 		kb.tell("A & B");
-		Assert.assertEquals(true, kb.askWithTTEntails("A"));
+		Assert.assertEquals(true, tte.ttEntails(kb, "A"));
 	}
 
 	@Test
 	public void testSimpleSentence2() {
 		kb.tell("A | B");
-		Assert.assertEquals(false, kb.askWithTTEntails("A"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "A"));
 	}
 
 	@Test
 	public void testSimpleSentence3() {
 		kb.tell("(A => B) & A");
-		Assert.assertEquals(true, kb.askWithTTEntails("B"));
+		Assert.assertEquals(true, tte.ttEntails(kb, "B"));
 	}
 
 	@Test
 	public void testSimpleSentence4() {
 		kb.tell("(A => B) & B");
-		Assert.assertEquals(false, kb.askWithTTEntails("A"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "A"));
 	}
 
 	@Test
 	public void testSimpleSentence5() {
 		kb.tell("A");
-		Assert.assertEquals(false, kb.askWithTTEntails("~A"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "~A"));
 	}
 
 	@Test
 	public void testSUnkownSymbol() {
 		kb.tell("(A => B) & B");
-		Assert.assertEquals(false, kb.askWithTTEntails("X"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "X"));
 	}
 
 	@Test
 	public void testSimpleSentence6() {
 		kb.tell("~A");
-		Assert.assertEquals(false, kb.askWithTTEntails("A"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "A"));
 	}
 
 	@Test
@@ -75,8 +75,8 @@ public class TTEntailsTest {
 		kb.tell("~B11");
 		kb.tell("B21");
 
-		Assert.assertEquals(true, kb.askWithTTEntails("~P12"));
-		Assert.assertEquals(false, kb.askWithTTEntails("P22"));
+		Assert.assertEquals(true, tte.ttEntails(kb, "~P12"));
+		Assert.assertEquals(false, tte.ttEntails(kb, "P22"));
 	}
 
 	@Test
@@ -91,22 +91,22 @@ public class TTEntailsTest {
 		kb.tell("B10");
 		kb.tell("B01");
 
-		Assert.assertTrue(kb.askWithTTEntails("P00"));
-		Assert.assertFalse(kb.askWithTTEntails("~P00"));
+		Assert.assertTrue(tte.ttEntails(kb, "P00"));
+		Assert.assertFalse(tte.ttEntails(kb, "~P00"));
 	}
 
 	@Test
 	public void testDoesNotKnow() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("A");
-		Assert.assertFalse(kb.askWithTTEntails("B"));
-		Assert.assertFalse(kb.askWithTTEntails("~B"));
+		Assert.assertFalse(tte.ttEntails(kb, "B"));
+		Assert.assertFalse(tte.ttEntails(kb, "~B"));
 	}
 
 	public void testTTEntailsSucceedsWithCStackOverFlowBugReport() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 
-		Assert.assertTrue(kb.askWithTTEntails("((A | (~ A)) & (A | B))"));
+		Assert.assertTrue(tte.ttEntails(kb, "((A | (~ A)) & (A | B))"));
 	}
 
 	@Test

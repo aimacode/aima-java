@@ -5,6 +5,7 @@ import java.util.List;
 
 import aima.core.logic.api.propositional.KnowledgeBase;
 import aima.core.logic.basic.propositional.kb.data.Model;
+import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.SymbolCollector;
@@ -49,7 +50,27 @@ import aima.core.util.Util;
  * @author Anurag Rai
  */
 public class TTEntails {
-
+	
+	/**
+	 * Returns the answer to the specified question using the TT-Entails
+	 * algorithm.
+	 * 
+	 * @param kb
+	 *            KB, the knowledge base, a sentence in propositional logic
+	 * 
+	 * @param queryString
+	 *            a question to ASK the knowledge base
+	 *            
+	 * @return the answer to the specified question using the TT-Entails
+	 *         algorithm.
+	 */
+	public boolean ttEntails(KnowledgeBase kb, String queryString) {
+		
+		PLParser parser = new PLParser();
+		Sentence alpha = parser.parse(queryString);
+		return ttEntails(kb, alpha);
+	}
+	
 	/**
 	 * function TT-ENTAILS?(KB, &alpha;) returns true or false.
 	 * 
