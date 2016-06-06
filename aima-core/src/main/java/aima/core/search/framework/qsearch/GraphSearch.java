@@ -61,7 +61,7 @@ public class GraphSearch extends QueueSearch {
 	 * was not yet explored.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
+	protected void addToFrontier(Node node) {
 		if (!explored.contains(node.getState())) {
 			frontier.add(node);
 			updateMetrics(frontier.size());
@@ -77,7 +77,7 @@ public class GraphSearch extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
+	protected Node removeFromFrontier() {
 		Node result = frontier.remove();
 		// add the node to the explored set
 		explored.add(result.getState());
@@ -91,7 +91,7 @@ public class GraphSearch extends QueueSearch {
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty() && explored.contains(frontier.peek().getState()))
+		while (!frontier.isEmpty() && explored.contains(frontier.element().getState()))
 			frontier.remove();
 		updateMetrics(frontier.size());
 		return frontier.isEmpty();

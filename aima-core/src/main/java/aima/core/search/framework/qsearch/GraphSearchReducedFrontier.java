@@ -50,10 +50,10 @@ import aima.core.search.framework.Problem;
 public class GraphSearchReducedFrontier extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
-	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
+	private Map<Object, Node> frontierNodeLookup = new HashMap<Object, Node>();
 	private Comparator<Node> nodeComparator = null;
 
-	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
+	public Comparator<Node> getNodeComparator() {
 		return nodeComparator;
 	}
 
@@ -68,7 +68,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 		if (frontier instanceof PriorityQueue<?>)
 			nodeComparator = (Comparator<Node>) ((PriorityQueue<?>) frontier).comparator();
 		explored.clear();
-		frontierState.clear();
+		frontierNodeLookup.clear();
 		return super.search(problem, frontier);
 	}
 
@@ -76,23 +76,23 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * Inserts the node at the tail of the frontier.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
-		Node frontierNode = frontierState.get(node.getState());
+	protected void addToFrontier(Node node) {
+		Node frontierNode = frontierNodeLookup.get(node.getState());
 
 		if (null == frontierNode) {
 			if (!explored.contains(node.getState())) {
 				// child.STATE is not in frontier and not yet explored
 				frontier.add(node);
-				frontierState.put(node.getState(), node);
+				frontierNodeLookup.put(node.getState(), node);
 				updateMetrics(frontier.size());
 			}
 		} else if (null != nodeComparator && nodeComparator.compare(node, frontierNode) < 0) {
 			// child.STATE is in frontier with higher cost
 			// replace that frontier node with child
 			if (frontier.remove(frontierNode))
-				frontierState.remove(frontierNode.getState());
+				frontierNodeLookup.remove(frontierNode.getState());
 			frontier.add(node);
-			frontierState.put(node.getState(), node);
+			frontierNodeLookup.put(node.getState(), node);
 			updateMetrics(frontier.size());
 		}
 	}
@@ -104,11 +104,11 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
+	protected Node removeFromFrontier() {
 		Node result = frontier.remove();
+		frontierNodeLookup.remove(result.getState());
 		// add the node to the explored set
 		explored.add(result.getState());
-		frontierState.remove(result.getState());
 		updateMetrics(frontier.size());
 		return result;
 	}

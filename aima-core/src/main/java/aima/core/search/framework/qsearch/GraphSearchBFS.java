@@ -49,7 +49,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 */
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
-		// Initialise the explored set to be empty
+		// Initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();
 		return super.search(problem, frontier);
@@ -60,7 +60,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 * is not already a frontier state and was not yet explored.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
+	protected void addToFrontier(Node node) {
 		if (!explored.contains(node.getState()) && !frontierStates.contains(node.getState())) {
 			frontier.add(node);
 			frontierStates.add(node.getState());
@@ -75,7 +75,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
+	protected Node removeFromFrontier() {
 		Node result = frontier.remove();
 		explored.add(result.getState());
 		frontierStates.remove(result.getState());

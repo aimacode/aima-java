@@ -34,8 +34,8 @@ public abstract class QueueSearch {
 	 * containing a single NoOp Action if already at the goal, or an empty list
 	 * if the goal could not be found. This template method provides a base for
 	 * tree and graph search implementations. It can be customized by overriding
-	 * some primitive operations, especially {@link #insertIntoFrontier(Node)},
-	 * {@link #popNodeFromFrontier()}, and {@link #isFrontierEmpty()}.
+	 * some primitive operations, especially {@link #addToFrontier(Node)},
+	 * {@link #removeFromFrontier()}, and {@link #isFrontierEmpty()}.
 	 * 
 	 * @param problem
 	 *            the search problem
@@ -55,10 +55,10 @@ public abstract class QueueSearch {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
 		}
-		insertIntoFrontier(root);
+		addToFrontier(root);
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
-			Node nodeToExpand = popNodeFromFrontier();
+			Node nodeToExpand = removeFromFrontier();
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
 			if (!earlyGoalCheck) {
@@ -75,7 +75,7 @@ public abstract class QueueSearch {
 					if (SearchUtils.isGoalState(problem, successor))
 						return getSolution(successor);
 				}
-				insertIntoFrontier(successor);
+				addToFrontier(successor);
 			}
 		}
 		// if the frontier is empty then return failure
@@ -85,7 +85,7 @@ public abstract class QueueSearch {
 	/**
 	 * Primitive operation which inserts the node at the tail of the frontier.
 	 */
-	protected abstract void insertIntoFrontier(Node node);
+	protected abstract void addToFrontier(Node node);
 
 	/**
 	 * Primitive operation which removes and returns the node at the head of the
@@ -93,7 +93,7 @@ public abstract class QueueSearch {
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
-	protected abstract Node popNodeFromFrontier();
+	protected abstract Node removeFromFrontier();
 
 	/**
 	 * Primitive operation which checks whether the frontier contains not yet

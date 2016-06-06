@@ -36,7 +36,7 @@ public class TreeSearch extends QueueSearch {
 	 * Inserts the node at the tail of the frontier.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
+	protected void addToFrontier(Node node) {
 		frontier.add(node);
 		updateMetrics(frontier.size());
 	}
@@ -47,7 +47,7 @@ public class TreeSearch extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
+	protected Node removeFromFrontier() {
 		Node result = frontier.remove();
 		updateMetrics(frontier.size());
 		return result;
