@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.util.datastructure.PriorityQueue;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -82,7 +82,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 		if (null == frontierNode) {
 			if (!explored.contains(node.getState())) {
 				// child.STATE is not in frontier and not yet explored
-				frontier.insert(node);
+				frontier.add(node);
 				frontierState.put(node.getState(), node);
 				updateMetrics(frontier.size());
 			}
@@ -91,7 +91,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 			// replace that frontier node with child
 			if (frontier.remove(frontierNode))
 				frontierState.remove(frontierNode.getState());
-			frontier.insert(node);
+			frontier.add(node);
 			frontierState.put(node.getState(), node);
 			updateMetrics(frontier.size());
 		}
@@ -105,7 +105,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 */
 	@Override
 	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+		Node result = frontier.remove();
 		// add the node to the explored set
 		explored.add(result.getState());
 		frontierState.remove(result.getState());

@@ -169,7 +169,7 @@ public class MapColoringApp extends SimpleAgentApp {
 			prepareActions();
 			try {
 				while (!actions.isEmpty() && !frame.simulationPaused()) {
-					env.executeAction(null, actions.pop());
+					env.executeAction(null, actions.remove());
 					actionCount++;
 					Thread.sleep(200);
 				}
@@ -186,7 +186,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		public void step(MessageLogger logger) {
 			prepareActions();
 			if (!actions.isEmpty()) {
-				env.executeAction(null, actions.pop());
+				env.executeAction(null, actions.remove());
 				actionCount++;
 				if (actions.isEmpty())
 					logger.log("Number of Steps: " + actionCount);

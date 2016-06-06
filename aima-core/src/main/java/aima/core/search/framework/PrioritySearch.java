@@ -2,10 +2,10 @@ package aima.core.search.framework;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.qsearch.QueueSearch;
-import aima.core.util.datastructure.PriorityQueue;
 
 /**
  * Maintains a {@link QueueSearch} implementation and a node comparator. Search

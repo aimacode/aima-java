@@ -88,8 +88,8 @@ public class BidirectionalSearch implements Search {
 
 		Node opNode = new Node(op.getInitialState());
 		Node rpNode = new Node(rp.getInitialState());
-		opFrontier.insert(opNode);
-		rpFrontier.insert(rpNode);
+		opFrontier.add(opNode);
+		rpFrontier.add(rpNode);
 
 		setQueueSize(opFrontier.size() + rpFrontier.size());
 		//setNodesExpanded(ogs.getNodesExpanded() + rgs.getNodesExpanded()); // TODO
@@ -99,7 +99,7 @@ public class BidirectionalSearch implements Search {
 			// in preparation for testing whether or not the two
 			// searches meet or one or other is at the GOAL.
 			if (!opFrontier.isEmpty()) {
-				opNode = opFrontier.pop();
+				opNode = opFrontier.remove();
 				// opFrontier.addAll(ogs.getResultingNodesToAddToFrontier(opNode,
 				// // TODO
 				// op));
@@ -107,7 +107,7 @@ public class BidirectionalSearch implements Search {
 				opNode = null;
 			}
 			if (!rpFrontier.isEmpty()) {
-				rpNode = rpFrontier.pop();
+				rpNode = rpFrontier.remove();
 				// rpFrontier.addAll(rgs.getResultingNodesToAddToFrontier(rpNode,
 				// // TODO
 				// rp));
@@ -417,8 +417,8 @@ class CachedStateQueue<E> extends FIFOQueue<E> {
 
 	//
 	// START-Queue
-	public E pop() {
-		E popped = super.pop();
+	public E remove() {
+		E popped = super.remove();
 		cachedState.remove(((Node) popped).getState());
 		return popped;
 	}

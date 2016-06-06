@@ -37,9 +37,9 @@ public class FIFOQueueTest {
 		l.add("salaam alaikum");
 		queue.addAll(l);
 		Assert.assertEquals(3, queue.size());
-		Assert.assertEquals("Hi", queue.pop());
-		Assert.assertEquals("bonjour", queue.pop());
-		Assert.assertEquals("salaam alaikum", queue.pop());
+		Assert.assertEquals("Hi", queue.remove());
+		Assert.assertEquals("bonjour", queue.remove());
+		Assert.assertEquals("salaam alaikum", queue.remove());
 
 		Assert.assertEquals(0, queue.size());
 	}

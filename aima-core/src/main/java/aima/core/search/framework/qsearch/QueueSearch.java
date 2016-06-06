@@ -1,6 +1,7 @@
 package aima.core.search.framework.qsearch;
 
 import java.util.List;
+import java.util.Queue;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
@@ -8,7 +9,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Base class for queue-based search implementations, especially for {@link TreeSearch},

@@ -37,9 +37,9 @@ public class LIFOQueueTest {
 		l.add("bonjour");
 		queue.addAll(l);
 		Assert.assertEquals(3, queue.size());
-		Assert.assertEquals("salaam alaikum", queue.pop());
-		Assert.assertEquals("bonjour", queue.pop());
-		Assert.assertEquals("Hello", queue.pop());
+		Assert.assertEquals("salaam alaikum", queue.remove());
+		Assert.assertEquals("bonjour", queue.remove());
+		Assert.assertEquals("Hello", queue.remove());
 
 		Assert.assertEquals(0, queue.size());
 	}

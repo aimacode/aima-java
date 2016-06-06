@@ -1,8 +1,9 @@
 package aima.core.search.framework.qsearch;
 
+import java.util.Queue;
+
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -36,7 +37,7 @@ public class TreeSearch extends QueueSearch {
 	 */
 	@Override
 	protected void insertIntoFrontier(Node node) {
-		frontier.insert(node);
+		frontier.add(node);
 		updateMetrics(frontier.size());
 	}
 
@@ -47,7 +48,7 @@ public class TreeSearch extends QueueSearch {
 	 */
 	@Override
 	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+		Node result = frontier.remove();
 		updateMetrics(frontier.size());
 		return result;
 	}

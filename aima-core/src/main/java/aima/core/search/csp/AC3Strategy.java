@@ -83,7 +83,7 @@ public class AC3Strategy {
 	private void reduceDomains(FIFOQueue<Variable> queue, CSP csp,
 			DomainRestoreInfo info) {
 		while (!queue.isEmpty()) {
-			Variable var = queue.pop();
+			Variable var = queue.remove();
 			for (Constraint constraint : csp.getConstraints(var)) {
 				if (constraint.getScope().size() == 2) {
 					Variable neighbor = csp.getNeighbor(var, constraint);

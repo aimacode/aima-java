@@ -2,12 +2,12 @@ package aima.core.search.framework.qsearch;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -63,7 +63,7 @@ public class GraphSearch extends QueueSearch {
 	@Override
 	protected void insertIntoFrontier(Node node) {
 		if (!explored.contains(node.getState())) {
-			frontier.insert(node);
+			frontier.add(node);
 			updateMetrics(frontier.size());
 		}
 	}
@@ -78,7 +78,7 @@ public class GraphSearch extends QueueSearch {
 	 */
 	@Override
 	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+		Node result = frontier.remove();
 		// add the node to the explored set
 		explored.add(result.getState());
 		updateMetrics(frontier.size());
@@ -92,7 +92,7 @@ public class GraphSearch extends QueueSearch {
 	@Override
 	protected boolean isFrontierEmpty() {
 		while (!frontier.isEmpty() && explored.contains(frontier.peek().getState()))
-			frontier.pop();
+			frontier.remove();
 		updateMetrics(frontier.size());
 		return frontier.isEmpty();
 	}

@@ -107,24 +107,24 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 		Object currentStep = this.stack.peek();
 		// push...
 		if (currentStep instanceof Action) {
-			return (Action) this.stack.pop();
+			return (Action) this.stack.remove();
 		} // case: next step is a plan
 		else if (currentStep instanceof Plan) {
 			Plan newPlan = (Plan) currentStep;
 			if (newPlan.size() > 0) {
 				this.stack.push(newPlan.removeFirst());
 			} else {
-				this.stack.pop();
+				this.stack.remove();
 			}
 			return this.execute(percept);
 		} // case: next step is an if-then
 		else if (currentStep instanceof IfStateThenPlan) {
-			IfStateThenPlan conditional = (IfStateThenPlan) this.stack.pop();
+			IfStateThenPlan conditional = (IfStateThenPlan) this.stack.remove();
 			this.stack.push(conditional.ifStateMatches(percept));
 			return this.execute(percept);
 		} // case: ignore next step if null
 		else if (currentStep == null) {
-			this.stack.pop();
+			this.stack.remove();
 			return this.execute(percept);
 		} else {
 			throw new RuntimeException("Unrecognized contingency plan step.");

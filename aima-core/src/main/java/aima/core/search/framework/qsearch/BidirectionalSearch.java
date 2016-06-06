@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
@@ -11,7 +12,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 90.<br>
@@ -136,7 +136,7 @@ public class BidirectionalSearch extends QueueSearch {
 	@Override
 	protected void insertIntoFrontier(Node node) {
 		if (!isExplored(node)) {
-			frontier.insert(node);
+			frontier.add(node);
 			updateMetrics(frontier.size());
 		}
 	}
@@ -149,7 +149,7 @@ public class BidirectionalSearch extends QueueSearch {
 	 */
 	@Override
 	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+		Node result = frontier.remove();
 		// add the node to the explored set of the corresponding problem
 		setExplored(result);
 		updateMetrics(frontier.size());
@@ -163,7 +163,7 @@ public class BidirectionalSearch extends QueueSearch {
 	@Override
 	protected boolean isFrontierEmpty() {
 		while (!frontier.isEmpty() && isExplored(frontier.peek())) {
-			frontier.pop();
+			frontier.remove();
 			updateMetrics(frontier.size());
 		}
 		return frontier.isEmpty();
