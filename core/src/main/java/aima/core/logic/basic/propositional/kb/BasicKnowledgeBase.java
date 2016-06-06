@@ -32,12 +32,6 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 	public BasicKnowledgeBase() {
 	}
 
-	/**
-	 * Adds the specified sentence to the knowledge base.
-	 * 
-	 * @param aSentence
-	 *            a fact to be added to the knowledge base.
-	 */
 	@Override
 	public void tell(String aSentence) {
 		tell((Sentence) parser.parse(aSentence));	
@@ -68,13 +62,6 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 		Arrays.stream(percepts).forEach( percept -> tell(percept) );
 	}
 
-	/**
-	 * Returns the list of sentences in the knowledge base chained together as a
-	 * single sentence.
-	 * 
-	 * @return the list of sentences in the knowledge base chained together as a
-	 *         single sentence.
-	 */
 	public Sentence asSentence() {
 		return Sentence.newConjunction(sentences);
 	}
