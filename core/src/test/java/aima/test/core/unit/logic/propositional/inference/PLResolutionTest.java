@@ -162,6 +162,18 @@ public class PLResolutionTest {
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
 	}
+	
+	@Test
+	public void testPLResolve7() {
+		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		kb.tell("P");
+		kb.tell("P => Q");
+		kb.tell("(P => Q) => (Q => R)");
+		Sentence alpha = parser.parse("R");
+
+		boolean b = resolution.plResolution(kb, alpha);
+		Assert.assertEquals(true, b);
+	}
 
 	@Test
 	public void testMultipleClauseResolution() {
