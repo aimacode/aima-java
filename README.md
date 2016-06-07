@@ -72,7 +72,11 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td>3.7</td>
        <td>77</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeSearch.java">TreeSearch</a></td>
+       <td>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a><br>
+       Alternative:<br>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeSearch.java">TreeSearch</a>
+       </td>
    </tr>
    <tr>
        <td>3.7</td>
