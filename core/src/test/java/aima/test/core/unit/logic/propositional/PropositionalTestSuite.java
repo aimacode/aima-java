@@ -3,6 +3,8 @@ package aima.test.core.unit.logic.propositional;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import aima.test.core.unit.logic.propositional.inference.PLResolutionTest;
+import aima.test.core.unit.logic.propositional.inference.TTEntailsTest;
 import aima.test.core.unit.logic.propositional.kb.BasicKnowledgeBaseTest;
 import aima.test.core.unit.logic.propositional.kb.data.ClauseTest;
 import aima.test.core.unit.logic.propositional.kb.data.ConvertToConjunctionOfClausesTest;
@@ -21,7 +23,7 @@ import aima.test.core.unit.logic.propositional.visitors.SymbolCollectorTest;
 		PLParserTest.class, PropositionSymbolTest.class,
 		ConvertToCNFTest.class, ClauseTest.class,
 		ConvertToConjunctionOfClausesTest.class, LiteralTest.class,
-		SymbolCollectorTest.class })
+		SymbolCollectorTest.class, PLResolutionTest.class, TTEntailsTest.class })
 
 public class PropositionalTestSuite {
 }
