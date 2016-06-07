@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
@@ -73,21 +74,10 @@ public class ConjunctionOfClauses {
 	@Override
 	public String toString() {
 		if (cachedStringRep == null) {
-			StringBuilder sb = new StringBuilder();
-			boolean first = true;
-			sb.append("{");
-			for (Clause c : clauses) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append(", ");
-				}
-				sb.append(c);
-			}
-			sb.append("}");
-			cachedStringRep = sb.toString();
+			StringJoiner sj = new StringJoiner(", ", "{", "}");			
+			clauses.stream().forEach( clause -> sj.add((CharSequence) clause.toString()));	
+			cachedStringRep = sj.toString();
 		}
-
 		return cachedStringRep;
 	}
 
