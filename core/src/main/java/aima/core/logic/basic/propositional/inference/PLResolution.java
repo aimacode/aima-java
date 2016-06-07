@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import aima.core.logic.api.propositional.KnowledgeBase;
 import aima.core.logic.basic.propositional.kb.data.Clause;
@@ -191,29 +193,32 @@ public class PLResolution {
 		return clauses;
 	}
 
-	protected void resolvePositiveWithNegative(Clause c1, Clause c2,
-			Set<Clause> resolvents) {
+	protected void resolvePositiveWithNegative(Clause c1, Clause c2, Set<Clause> resolvents) {
 		// Calculate the complementary positive literals from c1 with
 		// the negative literals from c2
 		Set<PropositionSymbol> complementary = SetOps.intersection(
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
 		// Construct a resolvent clause for each complement found
 		for (PropositionSymbol complement : complementary) {
-			List<Literal> resolventLiterals = new ArrayList<Literal>();
+			
 			// Retrieve the literals from c1 that are not the complement
-			for (Literal c1l : c1.getLiterals()) {
-				if (c1l.isNegativeLiteral()
-						|| !c1l.getAtomicSentence().equals(complement)) {
-					resolventLiterals.add(c1l);
-				}
-			}
+			List<Literal> resolventLiteralsFromC1 = c1.getLiterals().stream().filter(
+													c1l -> c1l.isNegativeLiteral() 
+													|| !c1l.getAtomicSentence().equals(complement))
+													.collect(Collectors.toList());
+			
 			// Retrieve the literals from c2 that are not the complement
-			for (Literal c2l : c2.getLiterals()) {
-				if (c2l.isPositiveLiteral()
-						|| !c2l.getAtomicSentence().equals(complement)) {
-					resolventLiterals.add(c2l);
-				}
-			}
+			List<Literal> resolventLiteralsFromC2 = c2.getLiterals().stream().filter(
+													c2l -> c2l.isPositiveLiteral()
+													|| !c2l.getAtomicSentence().equals(complement))
+													.collect(Collectors.toList());
+			
+			
+			List<Literal> resolventLiterals = Stream.concat(
+												resolventLiteralsFromC1.stream(), 
+												resolventLiteralsFromC2.stream())
+											  .collect(Collectors.toList());
+			
 			// Construct the resolvent clause
 			Clause resolvent = new Clause(resolventLiterals);
 			// Discard tautological clauses if this optimization is turned on.
