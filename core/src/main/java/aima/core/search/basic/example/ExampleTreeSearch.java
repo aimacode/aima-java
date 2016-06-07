@@ -52,8 +52,8 @@ public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
     
     //
     // Supporting Code
-	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
-	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
+    protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
+    protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
     
     public ExampleTreeSearch() {
     }

@@ -56,19 +56,19 @@ public class TreeSearch<A, S> implements SearchForActionsFunction<A, S> {
     
     //
     // Supporting Code
-	private SearchController<A, S> searchController;
-	private NodeFactory<A, S> nodeFactory;
+    private SearchController<A, S> searchController;
+    private NodeFactory<A, S> nodeFactory;
     private Supplier<Queue<Node<A, S>>> frontierSupplier;
     
     public TreeSearch() {
     	this(new BasicSearchController<>(), new BasicNodeFactory<>(), LinkedList::new);
     }
     
-	public TreeSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
-		setSearchController(searchController);
-		setNodeFactory(nodeFactory);
-		setFrontierSupplier(frontierSupplier);
-	}
+    public TreeSearch(SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory, Supplier<Queue<Node<A, S>>> frontierSupplier) {
+    	setSearchController(searchController);
+    	setNodeFactory(nodeFactory);
+    	setFrontierSupplier(frontierSupplier);
+    }
     
     public void setSearchController(SearchController<A, S> searchController) {
     	this.searchController = searchController;
@@ -84,15 +84,7 @@ public class TreeSearch<A, S> implements SearchForActionsFunction<A, S> {
     
     public Queue<Node<A, S>> newFrontier(S initialState) {
     	Queue<Node<A, S>> frontier = frontierSupplier.get();
-        frontier.add(nodeFactory.newRootNode(initialState));
+    	frontier.add(nodeFactory.newRootNode(initialState));
     	return frontier;
-    }
-    
-    public List<Node<A, S>> expand(Node<A, S> node, Problem<A, S> problem) {
-    	List<Node<A, S>> childNodes = new ArrayList<>();
-    	
-    	
-    	
-    	return childNodes;
     }
 }
