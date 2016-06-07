@@ -203,21 +203,21 @@ public class PLResolution {
 			
 			// Retrieve the literals from c1 that are not the complement
 			List<Literal> resolventLiteralsFromC1 = c1.getLiterals().stream().filter(
-													c1l -> c1l.isNegativeLiteral() 
-													|| !c1l.getAtomicSentence().equals(complement))
-													.collect(Collectors.toList());
+								c1l -> c1l.isNegativeLiteral() 
+								|| !c1l.getAtomicSentence().equals(complement))
+								.collect(Collectors.toList());
 			
 			// Retrieve the literals from c2 that are not the complement
 			List<Literal> resolventLiteralsFromC2 = c2.getLiterals().stream().filter(
-													c2l -> c2l.isPositiveLiteral()
-													|| !c2l.getAtomicSentence().equals(complement))
-													.collect(Collectors.toList());
+								c2l -> c2l.isPositiveLiteral()
+								|| !c2l.getAtomicSentence().equals(complement))
+								.collect(Collectors.toList());
 			
 			
 			List<Literal> resolventLiterals = Stream.concat(
-												resolventLiteralsFromC1.stream(), 
-												resolventLiteralsFromC2.stream())
-											  .collect(Collectors.toList());
+								resolventLiteralsFromC1.stream(), 
+								resolventLiteralsFromC2.stream())
+								.collect(Collectors.toList());
 			
 			// Construct the resolvent clause
 			Clause resolvent = new Clause(resolventLiterals);
