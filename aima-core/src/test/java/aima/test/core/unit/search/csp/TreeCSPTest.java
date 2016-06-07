@@ -33,6 +33,13 @@ public class TreeCSPTest {
 		Assert.assertEquals(TreeCSP.RED, results.getAssignment(TreeCSP.D));
 		Assert.assertEquals(TreeCSP.GREEN, results.getAssignment(TreeCSP.E));
 		Assert.assertEquals(TreeCSP.GREEN, results.getAssignment(TreeCSP.F));
+		
+		Assert.assertEquals(TreeCSP.RED, results.getAssignment(TreeCSP.A1));
+		Assert.assertEquals(TreeCSP.GREEN, results.getAssignment(TreeCSP.B1));
+		Assert.assertEquals(TreeCSP.RED, results.getAssignment(TreeCSP.C1));
+		Assert.assertEquals(TreeCSP.RED, results.getAssignment(TreeCSP.D1));
+		Assert.assertEquals(TreeCSP.GREEN, results.getAssignment(TreeCSP.E1));
+		Assert.assertEquals(TreeCSP.GREEN, results.getAssignment(TreeCSP.F1));
 
 	}
 }

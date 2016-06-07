@@ -1,11 +1,8 @@
 package aima.core.search.csp;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.11, Page 224.<br>
@@ -78,17 +75,22 @@ public class TreeCSPSolver extends SolutionStrategy {
 			this.fireStateChanged(csp);
 			return null ;
 		}
-		List<Node> topologicalNodes ;
+		List<Node> topologicalNodes = new ArrayList<Node>() ;
 		try {
-			Variable rootVar = csp.getVariables().get( 0 ) ;
+			
 			// this set of variables is used for detection of loops.
 			Set<Variable> orderedVariables = new HashSet<Variable>() ;
-			topologicalNodes = 
-				topologicalSort( 
-					csp, 
-					new Node( rootVar, null ),
-					orderedVariables
+			// This is necessary as the tree can consist of separated compartments.
+			while( csp.getVariables().size() > topologicalNodes.size() ) {
+				Variable rootVar = findUnusedVar( csp, orderedVariables ) ;
+				topologicalNodes.addAll( 
+					topologicalSort( 
+						csp, 
+						new Node( rootVar, null ),
+						orderedVariables
+					)
 				);
+			}		
 		} catch ( LoopException lEx ) {
 			System.out.println( lEx.getMessage() );
 			return null ;
@@ -96,7 +98,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 		int j ;
 		try {
 			for( j = topologicalNodes.size()-1 ; j >= 1; j-- ) {
-				makeArcConsistent(topologicalNodes.get(j), topologicalNodes.get(j).parent,  csp ) ;
+				makeArcConsistent(topologicalNodes.get(j), topologicalNodes.get(j-1)/*.parent*/,  csp ) ;
 			}
 		} catch ( ContradictionException unsolvEx ) {
 			System.out.println(  unsolvEx.getMessage() );
@@ -112,6 +114,15 @@ public class TreeCSPSolver extends SolutionStrategy {
 
 
 	}
+	
+    Variable findUnusedVar( CSP csp, Set<Variable> orderedVariables ) {
+    	for( Variable var: csp.getVariables() ) {
+    		if( !orderedVariables.contains( var )) {
+    			return var ;
+    		}
+    	}
+    	return null ;
+    }
 	
 	Assignment makeAssignments( List<Node> topologicalNodes, CSP csp ) throws ContradictionException {
 		Assignment assignment = new Assignment();
