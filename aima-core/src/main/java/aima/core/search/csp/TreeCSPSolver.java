@@ -98,7 +98,10 @@ public class TreeCSPSolver extends SolutionStrategy {
 		int j ;
 		try {
 			for( j = topologicalNodes.size()-1 ; j >= 1; j-- ) {
-				makeArcConsistent(topologicalNodes.get(j), topologicalNodes.get(j-1)/*.parent*/,  csp ) ;
+				Node currentNode = topologicalNodes.get(j) ;
+				if( currentNode.parent != null ) {
+					makeArcConsistent(currentNode, currentNode.parent,  csp ) ;
+				}	
 			}
 		} catch ( ContradictionException unsolvEx ) {
 			System.out.println(  unsolvEx.getMessage() );
