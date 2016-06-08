@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.BidirectionalProblem;
@@ -11,7 +12,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 90.<br>
@@ -86,17 +86,17 @@ public class BidirectionalSearch extends QueueSearch {
 			return getSolution(orgP, initStateNode, goalStateNode);
 
 		// initialize the frontier using the initial state of the problem
-		insertIntoFrontier(initStateNode);
-		insertIntoFrontier(goalStateNode);
+		addToFrontier(initStateNode);
+		addToFrontier(goalStateNode);
 
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
-			ExtendedNode nodeToExpand = (ExtendedNode) popNodeFromFrontier();
+			ExtendedNode nodeToExpand = (ExtendedNode) removeFromFrontier();
 			ExtendedNode nodeFromOtherProblem;
 
 			// if the node contains a goal state then return the
 			// corresponding solution
-			if (!checkGoalBeforeAddingToFrontier
+			if (!earlyGoalCheck
 					&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
 				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
 
@@ -108,11 +108,11 @@ public class BidirectionalSearch extends QueueSearch {
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, successor) != null) {
 
-					if (checkGoalBeforeAddingToFrontier
+					if (earlyGoalCheck
 							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(successor)) != null)
 						return getSolution(orgP, successor, nodeFromOtherProblem);
 
-					insertIntoFrontier(successor);
+					addToFrontier(successor);
 				}
 			}
 		}
@@ -134,22 +134,24 @@ public class BidirectionalSearch extends QueueSearch {
 	 * is not yet explored.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
+	protected void addToFrontier(Node node) {
 		if (!isExplored(node)) {
-			frontier.insert(node);
+			frontier.add(node);
 			updateMetrics(frontier.size());
 		}
 	}
 
 	/**
 	 * Removes the node at the head of the frontier, adds it to the
-	 * corresponding explored map, and returns the node.
+	 * corresponding explored map, and returns the node. As the template method
+	 * (the caller) calls {@link #isFrontierEmpty() before, the resulting node
+	 * state will always be unexplored yet.
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+	protected Node removeFromFrontier() {
+		Node result = frontier.remove();
 		// add the node to the explored set of the corresponding problem
 		setExplored(result);
 		updateMetrics(frontier.size());
@@ -162,8 +164,8 @@ public class BidirectionalSearch extends QueueSearch {
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty() && isExplored(frontier.peek())) {
-			frontier.pop();
+		while (!frontier.isEmpty() && isExplored(frontier.element())) {
+			frontier.remove();
 			updateMetrics(frontier.size());
 		}
 		return frontier.isEmpty();

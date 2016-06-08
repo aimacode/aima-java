@@ -2,58 +2,34 @@ package aima.core.util.datastructure;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 80.<br>
  * <br>
  * Last-in, first-out or LIFO queue (also known as a stack), which pops the
- * newest element of the queue;
+ * newest element of the queue. This implementation overrides standard Java
+ * queue operations of LinkedList to obtain a LIFO behavior.
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 	private static final long serialVersionUID = 1;
 
-	public LIFOQueue() {
+	public LIFOQueue(char c) {
 		super();
 	}
 
-	public LIFOQueue(Collection<? extends E> c) {
+	public LIFOQueue(char ch, Collection<? extends E> c) {
 		super(c);
 	}
-
-	//
-	// START-Queue
-	public boolean isEmpty() {
-		return 0 == size();
-	}
-
+	
+	/** Adds the specified element at the head of the queue. */
 	@Override
-	public E pop() {
-		return poll();
-	}
-
-	public void push(E element) {
+	public boolean add(E element) {
 		addFirst(element);
-	}
-
-	public Queue<E> insert(E element) {
-		if (offer(element)) {
-			return this;
-		}
-		return null;
-	}
-
-	// END-Queue
-	//
-
-	//
-	// START-Override LinkedList methods in order for it to behave in LIFO
-	// order.
-	@Override
-	public boolean add(E e) {
-		addFirst(e);
 		return true;
 	}
 
@@ -62,11 +38,10 @@ public class LIFOQueue<E> extends LinkedList<E> implements Queue<E> {
 		return addAll(0, c);
 	}
 
+	/** Adds the specified element at the head of the queue. */
 	@Override
 	public boolean offer(E e) {
-		add(0, e);
+		addFirst(e);
 		return true;
 	}
-	// End-Override LinkedList methods in order for it to behave like a LIFO.
-	//
 }

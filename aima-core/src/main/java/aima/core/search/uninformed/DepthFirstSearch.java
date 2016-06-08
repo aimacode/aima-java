@@ -1,5 +1,7 @@
 package aima.core.search.uninformed;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -8,7 +10,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.qsearch.QueueSearch;
-import aima.core.util.datastructure.LIFOQueue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 85.<br>
@@ -33,7 +34,7 @@ public class DepthFirstSearch implements Search {
 	}
 
 	public List<Action> search(Problem p) {
-		return implementation.search(p, new LIFOQueue<Node>());
+		return implementation.search(p, Collections.asLifoQueue(new LinkedList<Node>()));
 	}
 
 	public Metrics getMetrics() {

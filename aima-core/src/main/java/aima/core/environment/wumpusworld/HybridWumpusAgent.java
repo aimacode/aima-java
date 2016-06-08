@@ -3,7 +3,9 @@ package aima.core.environment.wumpusworld;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import aima.core.agent.Action;
@@ -22,8 +24,6 @@ import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.util.SetOps;
-import aima.core.util.datastructure.FIFOQueue;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 270.<br>
@@ -87,7 +87,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 	// plan, an action sequence, initially empty
-	private Queue<Action> plan = new FIFOQueue<Action>();
+	private Queue<Action> plan = new LinkedList<Action>(); // FIFOQueue
 
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
@@ -154,7 +154,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 			plan.add(new Climb());
 		}
 		// action <- POP(plan)
-		Action action = plan.pop();
+		Action action = plan.remove();
 		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
 		kb.makeActionSentence(action, t);
 		// t <- t+1

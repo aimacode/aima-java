@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
-import aima.core.util.datastructure.PriorityQueue;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -33,9 +33,11 @@ import aima.core.util.datastructure.Queue;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * 
  * <br>
- * See superclass {@link QueueSearch} for the implementation of the main
- * algorithm. This version of graph search keeps the frontier short by focusing
- * on the best node for each state only. It should be used in combination with
+ * This implementation is based on the template method
+ * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
+ * provides implementations for the needed primitive operations. It implements a
+ * special version of graph search which keeps the frontier short by focusing on
+ * the best node for each state only. It should only be used in combination with
  * priority queue frontiers. If a node is added to the frontier, this
  * implementation checks whether another node for the same state already exists
  * and decides whether to replace it or ignore the new node depending on the
@@ -48,10 +50,10 @@ import aima.core.util.datastructure.Queue;
 public class GraphSearchReducedFrontier extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
-	private Map<Object, Node> frontierState = new HashMap<Object, Node>();
+	private Map<Object, Node> frontierNodeLookup = new HashMap<Object, Node>();
 	private Comparator<Node> nodeComparator = null;
 
-	public Comparator<Node> getReplaceFrontierNodeAtStateCostFunction() {
+	public Comparator<Node> getNodeComparator() {
 		return nodeComparator;
 	}
 
@@ -66,7 +68,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 		if (frontier instanceof PriorityQueue<?>)
 			nodeComparator = (Comparator<Node>) ((PriorityQueue<?>) frontier).comparator();
 		explored.clear();
-		frontierState.clear();
+		frontierNodeLookup.clear();
 		return super.search(problem, frontier);
 	}
 
@@ -74,23 +76,23 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * Inserts the node at the tail of the frontier.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
-		Node frontierNode = frontierState.get(node.getState());
+	protected void addToFrontier(Node node) {
+		Node frontierNode = frontierNodeLookup.get(node.getState());
 
 		if (null == frontierNode) {
 			if (!explored.contains(node.getState())) {
 				// child.STATE is not in frontier and not yet explored
-				frontier.insert(node);
-				frontierState.put(node.getState(), node);
+				frontier.add(node);
+				frontierNodeLookup.put(node.getState(), node);
 				updateMetrics(frontier.size());
 			}
 		} else if (null != nodeComparator && nodeComparator.compare(node, frontierNode) < 0) {
 			// child.STATE is in frontier with higher cost
 			// replace that frontier node with child
 			if (frontier.remove(frontierNode))
-				frontierState.remove(frontierNode.getState());
-			frontier.insert(node);
-			frontierState.put(node.getState(), node);
+				frontierNodeLookup.remove(frontierNode.getState());
+			frontier.add(node);
+			frontierNodeLookup.put(node.getState(), node);
 			updateMetrics(frontier.size());
 		}
 	}
@@ -102,11 +104,11 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+	protected Node removeFromFrontier() {
+		Node result = frontier.remove();
+		frontierNodeLookup.remove(result.getState());
 		// add the node to the explored set
 		explored.add(result.getState());
-		frontierState.remove(result.getState());
 		updateMetrics(frontier.size());
 		return result;
 	}

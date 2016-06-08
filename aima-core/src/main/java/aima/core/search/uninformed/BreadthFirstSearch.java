@@ -1,5 +1,6 @@
 package aima.core.search.uninformed;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -9,7 +10,6 @@ import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
-import aima.core.util.datastructure.FIFOQueue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.11, page
@@ -54,11 +54,11 @@ public class BreadthFirstSearch implements Search {
 		implementation = impl;
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
-		implementation.setCheckGoalBeforeAddingToFrontier(true);
+		implementation.setEarlyGoalCheck(true);
 	}
 
 	public List<Action> search(Problem p) {
-		return implementation.search(p, new FIFOQueue<Node>());
+		return implementation.search(p, new LinkedList<Node>() /* FIFOQueue */);
 	}
 
 	public Metrics getMetrics() {

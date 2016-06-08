@@ -2,7 +2,9 @@ package aima.core.logic.propositional.inference;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import aima.core.logic.propositional.kb.KnowledgeBase;
@@ -10,8 +12,6 @@ import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
-import aima.core.util.datastructure.FIFOQueue;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 258.<br>
@@ -86,7 +86,7 @@ public class PLFCEntails {
 		// while agenda is not empty do
 		while (!agenda.isEmpty()) {
 			// p <- Pop(agenda)
-			PropositionSymbol p = agenda.pop();
+			PropositionSymbol p = agenda.remove();
 			// if p = q then return true
 			if (p.equals(q)) {
 				return true;
@@ -154,7 +154,7 @@ public class PLFCEntails {
 	protected Queue<PropositionSymbol> initializeAgenda(Map<Clause, Integer> count) {
 		// agenda <- a queue of symbols, initially symbols known to be true in
 		// KB
-		Queue<PropositionSymbol> agenda = new FIFOQueue<PropositionSymbol>();
+		Queue<PropositionSymbol> agenda = new LinkedList<PropositionSymbol>();
 		for (Clause c : count.keySet()) {
 			// No premise just a conclusion, then we know its true
 			if (c.getNumberNegativeLiterals() == 0) {

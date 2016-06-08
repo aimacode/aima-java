@@ -1,6 +1,7 @@
 package aima.core.search.framework.qsearch;
 
 import java.util.List;
+import java.util.Queue;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
@@ -8,7 +9,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.SearchUtils;
 import aima.core.util.CancelableThread;
-import aima.core.util.datastructure.Queue;
 
 /**
  * Base class for queue-based search implementations, especially for {@link TreeSearch},
@@ -27,15 +27,15 @@ public abstract class QueueSearch {
 
 	protected Metrics metrics = new Metrics();
 	protected Queue<Node> frontier;
-	protected boolean checkGoalBeforeAddingToFrontier = false;
+	protected boolean earlyGoalCheck = false;
 
 	/**
 	 * Returns a list of actions to the goal if the goal was found, a list
 	 * containing a single NoOp Action if already at the goal, or an empty list
 	 * if the goal could not be found. This template method provides a base for
 	 * tree and graph search implementations. It can be customized by overriding
-	 * some primitive operations, especially {@link #insertIntoFrontier(Node)},
-	 * {@link #popNodeFromFrontier()}, and {@link #isFrontierEmpty()}.
+	 * some primitive operations, especially {@link #addToFrontier(Node)},
+	 * {@link #removeFromFrontier()}, and {@link #isFrontierEmpty()}.
 	 * 
 	 * @param problem
 	 *            the search problem
@@ -51,17 +51,17 @@ public abstract class QueueSearch {
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
 		Node root = new Node(problem.getInitialState());
-		if (checkGoalBeforeAddingToFrontier) {
+		if (earlyGoalCheck) {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
 		}
-		insertIntoFrontier(root);
+		addToFrontier(root);
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
-			Node nodeToExpand = popNodeFromFrontier();
+			Node nodeToExpand = removeFromFrontier();
 			// Only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
-			if (!checkGoalBeforeAddingToFrontier) {
+			if (!earlyGoalCheck) {
 				// if the node contains a goal state then return the
 				// corresponding solution
 				if (SearchUtils.isGoalState(problem, nodeToExpand))
@@ -71,11 +71,11 @@ public abstract class QueueSearch {
 			// frontier
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
 			for (Node successor : SearchUtils.expandNode(nodeToExpand, problem)) {
-				if (checkGoalBeforeAddingToFrontier) {
+				if (earlyGoalCheck) {
 					if (SearchUtils.isGoalState(problem, successor))
 						return getSolution(successor);
 				}
-				insertIntoFrontier(successor);
+				addToFrontier(successor);
 			}
 		}
 		// if the frontier is empty then return failure
@@ -85,7 +85,7 @@ public abstract class QueueSearch {
 	/**
 	 * Primitive operation which inserts the node at the tail of the frontier.
 	 */
-	protected abstract void insertIntoFrontier(Node node);
+	protected abstract void addToFrontier(Node node);
 
 	/**
 	 * Primitive operation which removes and returns the node at the head of the
@@ -93,7 +93,7 @@ public abstract class QueueSearch {
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
-	protected abstract Node popNodeFromFrontier();
+	protected abstract Node removeFromFrontier();
 
 	/**
 	 * Primitive operation which checks whether the frontier contains not yet
@@ -105,10 +105,10 @@ public abstract class QueueSearch {
 	 * Enables optimization for FIFO queue based search, especially breadth
 	 * first search.
 	 * 
-	 * @param checkGoalBeforeAddingToFrontier
+	 * @param state
 	 */
-	public void setCheckGoalBeforeAddingToFrontier(boolean checkGoalBeforeAddingToFrontier) {
-		this.checkGoalBeforeAddingToFrontier = checkGoalBeforeAddingToFrontier;
+	public void setEarlyGoalCheck(boolean state) {
+		this.earlyGoalCheck = state;
 	}
 
 	

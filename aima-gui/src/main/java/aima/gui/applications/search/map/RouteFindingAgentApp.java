@@ -21,7 +21,7 @@ import aima.gui.framework.SimpleAgentApp;
  * starts a map agent frame and supports runtime experiments. This
  * implementation is based on the {@link aima.core.environment.map.MapAgent} and
  * the {@link aima.core.environment.map.MapEnvironment}. It can be used as a
- * code template for creating new applications with different specialized kinds
+ * code template for creating new applications with different specialised kinds
  * of agents and environments.
  * 
  * @author Ruediger Lunde
@@ -72,8 +72,8 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 					"Romania, from Fagaras",
 					"Australia, from Sydney",
 					"Australia, from Random" }, 0);
-			setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
-					.getSearchModeNames(), 1); // change the default!
+			setSelectorItems(Q_SEARCH_IMPL_SEL, SearchFactory.getInstance()
+					.getQSearchImplNames(), 1); // change the default!
 			setSelectorItems(HEURISTIC_SEL, new String[] { "=0", "SLD" }, 1);
 		}
 

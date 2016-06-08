@@ -1,6 +1,8 @@
 package aima.gui.applications.search.csp;
 
 import java.awt.Color;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
@@ -11,7 +13,6 @@ import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.MapCSP;
 import aima.core.search.csp.MinConflictsStrategy;
 import aima.core.search.csp.SolutionStrategy;
-import aima.core.util.datastructure.FIFOQueue;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppEnvironmentView;
 import aima.gui.framework.AgentAppFrame;
@@ -98,12 +99,12 @@ public class MapColoringApp extends SimpleAgentApp {
 
 		protected CSPEnvironment env;
 		protected SolutionStrategy strategy;
-		protected FIFOQueue<CSPEnvironment.StateChangeAction> actions;
+		protected Queue<CSPEnvironment.StateChangeAction> actions; // FIFOQueue
 		protected int actionCount;
 
 		protected MapColoringController() {
 			env = new CSPEnvironment();
-			actions = new FIFOQueue<CSPEnvironment.StateChangeAction>();
+			actions = new LinkedList<CSPEnvironment.StateChangeAction>();
 		}
 
 		protected CSPView getCSPView() {
@@ -169,7 +170,7 @@ public class MapColoringApp extends SimpleAgentApp {
 			prepareActions();
 			try {
 				while (!actions.isEmpty() && !frame.simulationPaused()) {
-					env.executeAction(null, actions.pop());
+					env.executeAction(null, actions.remove());
 					actionCount++;
 					Thread.sleep(200);
 				}
@@ -186,7 +187,7 @@ public class MapColoringApp extends SimpleAgentApp {
 		public void step(MessageLogger logger) {
 			prepareActions();
 			if (!actions.isEmpty()) {
-				env.executeAction(null, actions.pop());
+				env.executeAction(null, actions.remove());
 				actionCount++;
 				if (actions.isEmpty())
 					logger.log("Number of Steps: " + actionCount);

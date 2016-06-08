@@ -1,6 +1,9 @@
 package aima.core.search.framework.qsearch;
 
+import java.util.Queue;
+
 import aima.core.search.framework.Node;
+import aima.core.search.framework.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -19,8 +22,9 @@ import aima.core.search.framework.Node;
  * Figure 3.7 An informal description of the general tree-search algorithm.
  * 
  * <br>
- * See superclass {@link QueueSearch} for the implementation of the main
- * algorithm.
+ * This implementation is based on the template method
+ * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
+ * provides implementations for the needed primitive operations.
  * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
@@ -32,8 +36,8 @@ public class TreeSearch extends QueueSearch {
 	 * Inserts the node at the tail of the frontier.
 	 */
 	@Override
-	protected void insertIntoFrontier(Node node) {
-		frontier.insert(node);
+	protected void addToFrontier(Node node) {
+		frontier.add(node);
 		updateMetrics(frontier.size());
 	}
 
@@ -43,8 +47,8 @@ public class TreeSearch extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node popNodeFromFrontier() {
-		Node result = frontier.pop();
+	protected Node removeFromFrontier() {
+		Node result = frontier.remove();
 		updateMetrics(frontier.size());
 		return result;
 	}
