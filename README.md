@@ -69,12 +69,20 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
    </tr>
    <tr>
-       <td>3.7</td>
-       <td>77</td>
-       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
+       <td rowspan="3">3.7</td>
+       <td rowspan="3">77</td>
+       <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a><br>
-       Alternative:<br>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a>	           
+       </td>
+   </tr>
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
+       <td>
        <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/TreeSearch.java">TreeSearch</a>
        </td>
    </tr>
@@ -100,7 +108,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/GraphGoalTestedFirstSearch.java">GraphGoalTestedFirstSearch</a>           
        </td>
    </tr>
-      <tr>
+   <tr>
        <td>
            <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstTreeSearch.java">BreadthFirstTreeSearch</a>
            <em>specializes</em>
