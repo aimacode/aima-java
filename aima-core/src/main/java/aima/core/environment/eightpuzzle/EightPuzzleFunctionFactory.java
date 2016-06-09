@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * @author Ravi Mohan

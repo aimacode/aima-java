@@ -13,8 +13,8 @@ import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.TurnRight;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * 

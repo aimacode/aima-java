@@ -1,6 +1,6 @@
 package aima.core.environment.nqueens;
 
-import aima.core.search.framework.GoalTest;
+import aima.core.search.framework.problem.GoalTest;
 
 /**
  * @author R. Lunde

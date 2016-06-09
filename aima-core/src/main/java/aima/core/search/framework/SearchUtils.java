@@ -6,6 +6,11 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.search.framework.problem.Problem;
+import aima.core.search.framework.problem.ResultFunction;
+import aima.core.search.framework.problem.StepCostFunction;
 
 /**
  * Provides several useful static methods for implementing search.

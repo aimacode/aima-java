@@ -10,8 +10,8 @@ import org.junit.Test;
 import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * @author Ravi Mohan

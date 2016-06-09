@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensGenAlgoUtil;
-import aima.core.search.framework.GoalTest;
+import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.Individual;
 

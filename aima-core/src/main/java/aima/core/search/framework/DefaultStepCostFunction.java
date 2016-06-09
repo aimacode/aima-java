@@ -1,6 +1,7 @@
 package aima.core.search.framework;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.problem.StepCostFunction;
 
 /**
  * Returns one for every action.

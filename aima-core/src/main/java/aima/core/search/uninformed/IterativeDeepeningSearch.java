@@ -4,9 +4,9 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page

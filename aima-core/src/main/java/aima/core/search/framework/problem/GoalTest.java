@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 67.<br>

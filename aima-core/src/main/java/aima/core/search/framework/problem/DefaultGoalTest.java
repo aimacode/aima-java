@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.problem;
 
 /**
  * Checks whether a given state equals an explicitly specified goal state.

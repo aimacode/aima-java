@@ -7,7 +7,7 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.

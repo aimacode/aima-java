@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
@@ -26,7 +27,7 @@ public class PrioritySearch implements Search {
 	}
 
 	public List<Action> search(Problem p) {
-		return implementation.search(p, new PriorityQueue<Node>(5, comparator));
+		return implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
 	}
 
 	public Comparator<Node> getComparator() {

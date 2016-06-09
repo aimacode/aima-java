@@ -1,7 +1,7 @@
 package aimax.osm.routing;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * Returns the end node of the movement if an <code>OsmMoveAction</code>

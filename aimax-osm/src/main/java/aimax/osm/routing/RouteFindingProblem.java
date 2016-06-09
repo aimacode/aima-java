@@ -1,9 +1,9 @@
 package aimax.osm.routing;
 
-import aima.core.search.framework.BidirectionalProblem;
-import aima.core.search.framework.DefaultGoalTest;
-import aima.core.search.framework.Problem;
-import aima.core.search.framework.StepCostFunction;
+import aima.core.search.framework.problem.BidirectionalProblem;
+import aima.core.search.framework.problem.DefaultGoalTest;
+import aima.core.search.framework.problem.Problem;
+import aima.core.search.framework.problem.StepCostFunction;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.routing.OsmActionsFunction.OneWayMode;

@@ -7,9 +7,9 @@ import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
 
 /**

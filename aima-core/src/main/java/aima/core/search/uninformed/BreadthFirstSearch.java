@@ -6,8 +6,9 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
+import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.Search;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
 
@@ -58,7 +59,7 @@ public class BreadthFirstSearch implements Search {
 	}
 
 	public List<Action> search(Problem p) {
-		return implementation.search(p, new LinkedList<Node>() /* FIFOQueue */);
+		return implementation.search(p, QueueFactory.<Node>createFifoQueue());
 	}
 
 	public Metrics getMetrics() {

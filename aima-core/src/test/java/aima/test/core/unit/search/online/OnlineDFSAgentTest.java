@@ -12,7 +12,7 @@ import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
-import aima.core.search.framework.DefaultGoalTest;
+import aima.core.search.framework.problem.DefaultGoalTest;
 import aima.core.search.online.OnlineDFSAgent;
 import aima.core.search.online.OnlineSearchProblem;
 
