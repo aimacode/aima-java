@@ -6,11 +6,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import aima.core.logic.api.propositional.KnowledgeBase;
 import aima.core.logic.basic.propositional.kb.data.Clause;
 import aima.core.logic.basic.propositional.kb.data.Literal;
+import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
@@ -62,9 +62,25 @@ import aima.core.util.SetOps;
  * @author Anurag Rai
  */
 public class PLResolution {
+	
 	/**
 	 * PL-RESOLUTION(KB, &alpha;)<br>
 	 * A simple resolution algorithm for propositional logic.
+	 * 
+	 * @param kb
+	 *            the knowledge base, a sentence in propositional logic.
+	 * @param alpha
+	 *            the query, a sentence in propositional logic.
+	 * @return true if KB |= &alpha;, false otherwise.
+	 */
+	public boolean plResolution(KnowledgeBase kb, String queryString) {
+		PLParser parser = new PLParser();
+		Sentence alpha = parser.parse(queryString);
+		return plResolution(kb, alpha);
+	}
+	
+	/**
+	 * function PL-RESOLUTION(KB, &alpha;) returns true or false
 	 * 
 	 * @param kb
 	 *            the knowledge base, a sentence in propositional logic.
@@ -200,24 +216,16 @@ public class PLResolution {
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
 		// Construct a resolvent clause for each complement found
 		for (PropositionSymbol complement : complementary) {
-			
 			// Retrieve the literals from c1 that are not the complement
-			List<Literal> resolventLiteralsFromC1 = c1.getLiterals().stream().filter(
-								c1l -> c1l.isNegativeLiteral() 
-								|| !c1l.getAtomicSentence().equals(complement))
-								.collect(Collectors.toList());
-			
+			List<Literal> resolventLiterals = c1.getLiterals().stream().filter(
+					c1l -> c1l.isNegativeLiteral() 
+					|| !c1l.getAtomicSentence().equals(complement))
+					.collect(Collectors.toList());		
 			// Retrieve the literals from c2 that are not the complement
-			List<Literal> resolventLiteralsFromC2 = c2.getLiterals().stream().filter(
-								c2l -> c2l.isPositiveLiteral()
-								|| !c2l.getAtomicSentence().equals(complement))
-								.collect(Collectors.toList());
-			
-			
-			List<Literal> resolventLiterals = Stream.concat(
-								resolventLiteralsFromC1.stream(), 
-								resolventLiteralsFromC2.stream())
-								.collect(Collectors.toList());
+			c2.getLiterals().stream().filter(
+					c2l -> c2l.isPositiveLiteral()
+					|| !c2l.getAtomicSentence().equals(complement))
+					.forEach(resolventLiterals::add);
 			
 			// Construct the resolvent clause
 			Clause resolvent = new Clause(resolventLiterals);
