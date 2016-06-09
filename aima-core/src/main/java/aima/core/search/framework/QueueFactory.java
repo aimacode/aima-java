@@ -34,6 +34,6 @@ public class QueueFactory {
 	 * element comes first!
 	 */
 	public static <E> Queue<E> createPriorityQueue(Comparator<? super E> comparator) {
-		return new PriorityQueue<E>(comparator);
+		return new PriorityQueue<E>(11, comparator);
 	}
 }
