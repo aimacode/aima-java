@@ -106,50 +106,66 @@ public class PLResolutionTest {
 	public void testPLResolve1() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("P11");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(false, b);
+		String alpha = "P11";
+		Sentence query = parser.parse("P11");
+		//test alpha as String
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(false, resolution.plResolution(kb, query));
+		
 	}
 
 	@Test
 	public void testPLResolve2() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("A & B");
-		Sentence alpha = parser.parse("B");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "B";
+		Sentence query = parser.parse("B");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve3() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("~P11");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "~P11";
+		Sentence query = parser.parse("~P11");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve4() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("A | B");
-		Sentence alpha = parser.parse("B");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(false, b);
+		String alpha = "B";
+		Sentence query = parser.parse("B");
+		//test alpha as String
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve5() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("~B11");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(false, b);
+		String alpha = "~B11";
+		Sentence query = parser.parse("~B11");
+		//test alpha as String
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 	
 	@Test
@@ -157,10 +173,13 @@ public class PLResolutionTest {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		// e.g. from AIMA3e pg. 254
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
-		Sentence alpha = parser.parse("~P21");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "~P21";
+		Sentence query = parser.parse("~P21");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 	
 	@Test
@@ -169,10 +188,13 @@ public class PLResolutionTest {
 		kb.tell("P");
 		kb.tell("P => Q");
 		kb.tell("(P => Q) => (Q => R)");
-		Sentence alpha = parser.parse("R");
 
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "R";
+		Sentence query = parser.parse("R");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 
 	@Test
@@ -180,10 +202,14 @@ public class PLResolutionTest {
 		// test (and fix) suggested by Huy Dinh. Thanks Huy!
 		BasicKnowledgeBase kb = new BasicKnowledgeBase();
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
-		Sentence alpha = parser.parse("B");
-
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(false, b); // false as KB says nothing about B
+		
+		String alpha = "B";
+		Sentence query = parser.parse("B");
+		//test alpha as String
+		// false as KB says nothing about B
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha)); 
+		//test alpha as Sentence
+		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 
 	@Test
@@ -198,9 +224,12 @@ public class PLResolutionTest {
 		kb.tell("B10");
 		kb.tell("B01");
 		
-		Sentence alpha = parser.parse("P00");
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "P00";
+		Sentence query = parser.parse("P00");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 	
 	@Test
@@ -215,8 +244,11 @@ public class PLResolutionTest {
 		kb.tell("B10");
 		kb.tell("B01");
 		
-		Sentence alpha = parser.parse("P00");
-		boolean b = resolution.plResolution(kb, alpha);
-		Assert.assertEquals(true, b);
+		String alpha = "P00";
+		Sentence query = parser.parse("P00");
+		//test alpha as String
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		//test alpha as Sentence
+		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 }
