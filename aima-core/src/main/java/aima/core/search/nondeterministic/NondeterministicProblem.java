@@ -1,7 +1,7 @@
 package aima.core.search.nondeterministic;
 
-import aima.core.search.framework.*;
 import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.ResultFunction;
 import aima.core.search.framework.problem.StepCostFunction;

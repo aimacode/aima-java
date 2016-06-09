@@ -3,6 +3,7 @@ package aima.core.search.framework.qsearch;
 import java.util.Queue;
 
 import aima.core.search.framework.Node;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -32,6 +33,14 @@ import aima.core.search.framework.problem.Problem;
  */
 public class TreeSearch extends QueueSearch {
 
+	public TreeSearch() {
+		this(new NodeExpander());
+	}
+
+	public TreeSearch(NodeExpander nodeExpander) {
+		super(nodeExpander);
+	}
+	
 	/**
 	 * Inserts the node at the tail of the frontier.
 	 */

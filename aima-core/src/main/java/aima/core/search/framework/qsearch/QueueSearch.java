@@ -6,6 +6,7 @@ import java.util.Queue;
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
@@ -25,10 +26,19 @@ public abstract class QueueSearch {
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	protected Metrics metrics = new Metrics();
+	final protected NodeExpander nodeExpander;
 	protected Queue<Node> frontier;
 	protected boolean earlyGoalCheck = false;
-
+	protected Metrics metrics = new Metrics();
+	
+	protected QueueSearch(NodeExpander nodeExpander) {
+		this.nodeExpander = nodeExpander;
+	}
+	
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
 	/**
 	 * Returns a list of actions to the goal if the goal was found, a list
 	 * containing a single NoOp Action if already at the goal, or an empty list
@@ -50,7 +60,7 @@ public abstract class QueueSearch {
 		this.frontier = frontier;
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
-		Node root = new Node(problem.getInitialState());
+		Node root = nodeExpander.createRootNode(problem.getInitialState());
 		if (earlyGoalCheck) {
 			if (SearchUtils.isGoalState(problem, root))
 				return getSolution(root);
@@ -69,8 +79,7 @@ public abstract class QueueSearch {
 			}
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node successor : SearchUtils.expandNode(nodeToExpand, problem)) {
+			for (Node successor : nodeExpander.expand(nodeToExpand, problem)) {
 				if (earlyGoalCheck) {
 					if (SearchUtils.isGoalState(problem, successor))
 						return getSolution(successor);
@@ -116,6 +125,7 @@ public abstract class QueueSearch {
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
+		metrics.set(METRIC_NODES_EXPANDED,nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 	
@@ -123,6 +133,7 @@ public abstract class QueueSearch {
 	 * Sets all metrics to zero.
 	 */
 	public void clearInstrumentation() {
+		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_QUEUE_SIZE, 0);
 		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);

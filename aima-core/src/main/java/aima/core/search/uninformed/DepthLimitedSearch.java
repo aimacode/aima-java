@@ -8,8 +8,9 @@ import aima.core.agent.Action;
 import aima.core.search.framework.CutOffIndicatorAction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -41,17 +42,23 @@ import aima.core.search.framework.problem.Problem;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class DepthLimitedSearch implements Search {
+public class DepthLimitedSearch implements SearchForActions {
 
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
 	private static List<Action> cutoffResult = null;
 	private final int limit;
+	private final NodeExpander nodeExpander;
 	private Metrics metrics = new Metrics();
 
 	public DepthLimitedSearch(int limit) {
+		this(limit, new NodeExpander());
+	}
+	
+	public DepthLimitedSearch(int limit, NodeExpander nodeExpander) {
 		this.limit = limit;
+		this.nodeExpander = nodeExpander;
 	}
 
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
@@ -71,11 +78,12 @@ public class DepthLimitedSearch implements Search {
 	 *         CutOffIndicatorAction.CUT_OFF in it will be returned (Note: this
 	 *         is a NoOp action).
 	 */
+	@Override
 	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
-		return recursiveDLS(new Node(p.getInitialState()), p, limit);
+		return recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
 	}
 
 	/**
@@ -92,9 +100,15 @@ public class DepthLimitedSearch implements Search {
 		return 1 == result.size() && CutOffIndicatorAction.CUT_OFF.equals(result.get(0));
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
 	/**
 	 * Returns all the search metrics.
 	 */
+	@Override
 	public Metrics getMetrics() {
 		return metrics;
 	}
@@ -102,7 +116,7 @@ public class DepthLimitedSearch implements Search {
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	private void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
 	}
@@ -127,7 +141,7 @@ public class DepthLimitedSearch implements Search {
 			boolean cutoff_occurred = false;
 			// for each action in problem.ACTIONS(node.STATE) do
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node child : SearchUtils.expandNode(node, problem)) {
+			for (Node child : nodeExpander.expand(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
 				List<Action> result = recursiveDLS(child, problem, limit - 1);

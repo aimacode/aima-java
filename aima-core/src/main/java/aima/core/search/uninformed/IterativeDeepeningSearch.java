@@ -4,8 +4,9 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -29,23 +30,35 @@ import aima.core.search.framework.problem.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class IterativeDeepeningSearch implements Search {
+public class IterativeDeepeningSearch implements SearchForActions {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
 	// Not infinity, but will do, :-)
 	private final static int INFINITY = Integer.MAX_VALUE;
 
-	private final Metrics metrics = new Metrics();
+	private final NodeExpander nodeExpander;
+	private final Metrics metrics;
 
+	public IterativeDeepeningSearch() {
+		this(new NodeExpander());
+	}
+	
+	public IterativeDeepeningSearch(NodeExpander nodeExpander) {
+		this.nodeExpander = nodeExpander;
+		this.metrics = new Metrics();
+	}
+	
+	
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
+	@Override
 	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		// for depth = 0 to infinity do
 		for (int i = 0; i <= INFINITY; i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
-			DepthLimitedSearch dls = new DepthLimitedSearch(i);
+			DepthLimitedSearch dls = new DepthLimitedSearch(i, nodeExpander);
 			List<Action> result = dls.search(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
@@ -56,6 +69,11 @@ public class IterativeDeepeningSearch implements Search {
 	}
 
 	@Override
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
+	@Override
 	public Metrics getMetrics() {
 		return metrics;
 	}
@@ -63,7 +81,7 @@ public class IterativeDeepeningSearch implements Search {
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	private void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
 	}

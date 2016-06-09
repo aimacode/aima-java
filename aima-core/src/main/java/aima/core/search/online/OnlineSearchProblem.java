@@ -1,7 +1,7 @@
 package aima.core.search.online;
 
-import aima.core.search.framework.DefaultStepCostFunction;
 import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.StepCostFunction;
 

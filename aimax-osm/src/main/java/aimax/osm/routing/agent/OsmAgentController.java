@@ -10,7 +10,7 @@ import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -33,7 +33,7 @@ public class OsmAgentController extends AgentAppController {
 	protected MapAdapter map;
 	protected MapEnvironment env;
 	/** Search method to be used. */
-	protected Search search;
+	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
 	protected AdaptableHeuristicFunction heuristic;
 

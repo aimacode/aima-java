@@ -1,7 +1,7 @@
 package aima.gui.applications.search.map;
 
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.GraphSearchBFS;
@@ -94,9 +94,9 @@ public class SearchFactory {
 	 *            queue search implementation: e.g. {@link #TREE_SEARCH}, {@link #GRAPH_SEARCH}
 	 * 
 	 */
-	public Search createSearch(int strategy, int qSearchImpl, HeuristicFunction hf) {
+	public SearchForActions createSearch(int strategy, int qSearchImpl, HeuristicFunction hf) {
 		QueueSearch qs = null;
-		Search result = null;
+		SearchForActions result = null;
 		switch (qSearchImpl) {
 		case TREE_SEARCH:
 			qs = new TreeSearch();

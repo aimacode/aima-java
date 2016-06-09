@@ -8,7 +8,8 @@ import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
@@ -42,7 +43,7 @@ import aima.core.util.Util;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class SimulatedAnnealingSearch implements Search {
+public class SimulatedAnnealingSearch implements SearchForActions {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
@@ -54,6 +55,7 @@ public class SimulatedAnnealingSearch implements Search {
 	
 	private final HeuristicFunction hf;
 	private final Scheduler scheduler;
+	private final NodeExpander nodeExpander;
 	
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 	private Object lastState = null;
@@ -67,8 +69,7 @@ public class SimulatedAnnealingSearch implements Search {
 	 *            a heuristic function
 	 */
 	public SimulatedAnnealingSearch(HeuristicFunction hf) {
-		this.hf = hf;
-		this.scheduler = new Scheduler();
+		this(hf, new Scheduler());
 	}
 
 	/**
@@ -81,17 +82,23 @@ public class SimulatedAnnealingSearch implements Search {
 	 *            a mapping from time to "temperature"
 	 */
 	public SimulatedAnnealingSearch(HeuristicFunction hf, Scheduler scheduler) {
+		this(hf, scheduler, new NodeExpander());
+	}
+	
+	public SimulatedAnnealingSearch(HeuristicFunction hf, Scheduler scheduler, NodeExpander nodeExpander) {
 		this.hf = hf;
 		this.scheduler = scheduler;
+		this.nodeExpander = nodeExpander;
 	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
+	@Override
 	public List<Action> search(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node current = new Node(p.getInitialState());
+		Node current = nodeExpander.createRootNode(p.getInitialState());
 		Node next = null;
 		List<Action> result = new ArrayList<Action>();
 		// for t = 1 to INFINITY do
@@ -110,7 +117,7 @@ public class SimulatedAnnealingSearch implements Search {
 			}
 
 			updateMetrics(temperature, getValue(current));
-			List<Node> children = SearchUtils.expandNode(current, p);
+			List<Node> children = nodeExpander.expand(current, p);
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
 				next = Util.selectRandomlyFromList(children);
@@ -154,15 +161,21 @@ public class SimulatedAnnealingSearch implements Search {
 		return lastState;
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
 	/**
 	 * Returns all the search metrics.
 	 */
+	@Override
 	public Metrics getMetrics() {
+		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 	
 	private void updateMetrics(double temperature, double value) {
-		metrics.incrementInt(METRIC_NODES_EXPANDED);
 		metrics.set(METRIC_TEMPERATURE, temperature);
 		metrics.set(METRIC_NODE_VALUE, value);
 	}
@@ -170,7 +183,8 @@ public class SimulatedAnnealingSearch implements Search {
 	/**
 	 * Sets all metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	private void clearInstrumentation() {
+		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_TEMPERATURE, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);

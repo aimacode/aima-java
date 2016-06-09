@@ -1,7 +1,5 @@
 package aima.core.search.framework.problem;
 
-import aima.core.search.framework.DefaultStepCostFunction;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 66.<br>
  * <br>

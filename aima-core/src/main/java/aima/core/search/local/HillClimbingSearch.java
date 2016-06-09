@@ -7,7 +7,8 @@ import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
@@ -37,7 +38,7 @@ import aima.core.util.CancelableThread;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class HillClimbingSearch implements Search {
+public class HillClimbingSearch implements SearchForActions {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
@@ -47,6 +48,7 @@ public class HillClimbingSearch implements Search {
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 
 	private HeuristicFunction hf = null;
+	private final NodeExpander nodeExpander;
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 	private Object lastState = null;
 	private Metrics metrics = new Metrics();
@@ -58,7 +60,12 @@ public class HillClimbingSearch implements Search {
 	 *            a heuristic function
 	 */
 	public HillClimbingSearch(HeuristicFunction hf) {
+		this(hf, new NodeExpander());
+	}
+	
+	public HillClimbingSearch(HeuristicFunction hf, NodeExpander nodeExpander) {
 		this.hf = hf;
+		this.nodeExpander = nodeExpander;
 	}
 
 	/**
@@ -79,14 +86,13 @@ public class HillClimbingSearch implements Search {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node current = new Node(p.getInitialState());
+		Node current = nodeExpander.createRootNode(p.getInitialState());
 		Node neighbor = null;
 		// loop do
 		while (!CancelableThread.currIsCanceled()) {
 			lastState = current.getState();
 			metrics.set(METRIC_NODE_VALUE, getValue(current));
-			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			List<Node> children = SearchUtils.expandNode(current, p);
+			List<Node> children = nodeExpander.expand(current, p);
 			// neighbor <- a highest-valued successor of current
 			neighbor = getHighestValuedNodeFrom(children, p);
 			
@@ -124,17 +130,24 @@ public class HillClimbingSearch implements Search {
 		return lastState;
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
 	/**
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
+		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 	
 	/**
 	 * Sets all metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	private void clearInstrumentation() {
+		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);
 	}

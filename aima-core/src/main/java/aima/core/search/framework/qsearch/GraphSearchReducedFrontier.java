@@ -11,6 +11,7 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -53,8 +54,12 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	private Map<Object, Node> frontierNodeLookup = new HashMap<Object, Node>();
 	private Comparator<Node> nodeComparator = null;
 
-	public Comparator<Node> getNodeComparator() {
-		return nodeComparator;
+	public GraphSearchReducedFrontier() {
+		this(new NodeExpander());
+	}
+
+	public GraphSearchReducedFrontier(NodeExpander nodeExpander) {
+		super(nodeExpander);
 	}
 
 	/**
@@ -70,6 +75,10 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 		explored.clear();
 		frontierNodeLookup.clear();
 		return super.search(problem, frontier);
+	}
+	
+	public Comparator<Node> getNodeComparator() {
+		return nodeComparator;
 	}
 
 	/**
