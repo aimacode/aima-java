@@ -69,9 +69,9 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
    </tr>
    <tr>
-       <td rowspan="3">3.7</td>
-       <td rowspan="3">77</td>
-       <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
+       <td rowspan="5">3.7</td>
+       <td rowspan="5">77</td>
+       <td rowspan="5"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
        <td>
        <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a>	           
        </td>
@@ -87,9 +87,19 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        </td>
    </tr>
    <tr>
-       <td rowspan="3">3.7</td>
-       <td rowspan="3">77</td>
-       <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
+       <td>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/TreeGoalTestedFirstQueueSearch.java">TreeGoalTestedFirstQueueSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/TreePriorityQueueSearch.java">TreePriorityQueueSearch</a>
+       </td>
+   </tr>   
+   <tr>
+       <td rowspan="5">3.7</td>
+       <td rowspan="5">77</td>
+       <td rowspan="5"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleGraphSearch.java">ExampleGraphSearch</a>
        </td>
    </tr>
@@ -101,6 +111,16 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
    <tr>
        <td>
        <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphQueueSearch.java">GraphQueueSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphGoalTestedFirstQueueSearch.java">GraphGoalTestedFirstQueueSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphPriorityQueueSearch.java">GraphPriorityQueueSearch</a>
        </td>
    </tr>
    <tr>
@@ -215,9 +235,8 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
 * Different types of Search APIs (i.e SearchActionsFunction, SearchStateFunction, SearchActionFunction) for different use cases.
-* Re-introduce better composition mechanism into search algorithm implementations to reduce amount of inheritance required.
 * Add Bidirectional Search implementation.
-* GraphPrioritySearch and TreePrioritySearch potentially 
+* GraphPriorityQueueSearch and TreePriorityQueueSearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority.
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
