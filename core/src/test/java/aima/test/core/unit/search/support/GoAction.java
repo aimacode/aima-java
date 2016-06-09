@@ -1,9 +1,9 @@
 package aima.test.core.unit.search.support;
 
-public class TestGoAction {
+public class GoAction {
 	private String goTo;
 	
-    public TestGoAction(String goTo) {
+    public GoAction(String goTo) {
         this.goTo = goTo;
     }
 
@@ -13,13 +13,18 @@ public class TestGoAction {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof TestGoAction) {
-            return this.getName().equals(((TestGoAction)obj).getName());
+        if (obj != null && obj instanceof GoAction) {
+            return this.getName().equals(((GoAction)obj).getName());
         }
         return super.equals(obj);
     }
     @Override
     public int hashCode() {
         return getName().hashCode();
+    }
+    
+    @Override
+    public String toString() {
+    	return getName();
     }
 }

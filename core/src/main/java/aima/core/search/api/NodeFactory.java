@@ -1,5 +1,8 @@
 package aima.core.search.api;
 
+import java.util.Comparator;
+import java.util.function.ToDoubleFunction;
+
 /**
  * A Node Factory, used to construct implementations of the Node interface.
  *  
@@ -8,8 +11,20 @@ package aima.core.search.api;
  *
  * @author Ciaran O'Reilly
  */
-public interface NodeFactory<A, S> {
+public interface NodeFactory<A, S> extends Comparator<Node<A, S>>{
     Node<A, S> newRootNode(S state);
     Node<A, S> newRootNode(S state, double pathCost);
     Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> parent, A action);
+    ToDoubleFunction<Node<A, S>> getNodeCostFunction();
+    void setNodeCostFunction(ToDoubleFunction<Node<A, S>> nodeCostFunction);
+    
+    @Override
+    default int compare(Node<A, S> n1, Node<A, S> n2) {
+    	ToDoubleFunction<Node<A, S>> nodeCostFunction = getNodeCostFunction();
+    	if (nodeCostFunction == null) {
+    		// Default to comparing using path costs if an explicit node cost function isn't provided
+    		return Double.compare(n1.pathCost(), n2.pathCost());
+    	}
+    	return Double.compare(nodeCostFunction.applyAsDouble(n1), nodeCostFunction.applyAsDouble(n2));
+    }
 }

@@ -19,7 +19,7 @@ import aima.core.search.api.Node;
 import aima.core.search.basic.local.SimulatedAnnealingSearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicProblem;
-import aima.test.core.unit.search.support.TestGoAction;
+import aima.test.core.unit.search.support.GoAction;
 
 
 /*
@@ -36,17 +36,17 @@ public class SimulatedAnnealingTest {
 
     }};
 
-    Function<String, Set<TestGoAction>> simpleBinaryTreeActionsFn = state -> {
+    Function<String, Set<GoAction>> simpleBinaryTreeActionsFn = state -> {
         if (simpleBinaryTreeStateSpace.containsKey(state)) {
-            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(TestGoAction::new).collect(Collectors.toList()));
+            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
         }
         return Collections.emptySet();
     };
 
-    BiFunction<String, TestGoAction, String> goActionResultFn = (state, action) -> ((TestGoAction) action).getGoTo();
+    BiFunction<String, GoAction, String> goActionResultFn = (state, action) -> ((GoAction) action).getGoTo();
 
     //the heuristic function will be represented by the ascii value of the first character in the state name
-    ToDoubleFunction<Node<TestGoAction, String>> asciiHeuristicFn = node -> {
+    ToDoubleFunction<Node<GoAction, String>> asciiHeuristicFn = node -> {
         String state = node.state();
         int asciiCode = (int) state.charAt(0);
         return (double) asciiCode;
@@ -54,10 +54,10 @@ public class SimulatedAnnealingTest {
 
     @Test
     public void testAsciiHeuristicFunction() {
-        SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
-        BasicNodeFactory<TestGoAction, String> nodeFactory = new BasicNodeFactory<>();
-        Node<TestGoAction, String> nodeA = nodeFactory.newRootNode("A");
-        Node<TestGoAction, String> nodeB = nodeFactory.newRootNode("B");
+        SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
+        BasicNodeFactory<GoAction, String> nodeFactory = new BasicNodeFactory<>();
+        Node<GoAction, String> nodeA = nodeFactory.newRootNode("A");
+        Node<GoAction, String> nodeB = nodeFactory.newRootNode("B");
 
         Assert.assertEquals(
                 simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
@@ -80,10 +80,10 @@ public class SimulatedAnnealingTest {
 
     @Test
     public void testAlreadyInGoalState() {
-        SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
+        SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
 
         Assert.assertEquals(
-        		Arrays.asList((TestGoAction) null),
+        		Arrays.asList((GoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -91,7 +91,7 @@ public class SimulatedAnnealingTest {
                 )));
 
         Assert.assertEquals(
-        		Arrays.asList((TestGoAction) null),
+        		Arrays.asList((GoAction) null),
                 simulatedAnnealing.apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -101,7 +101,7 @@ public class SimulatedAnnealingTest {
 
     @Test
     public void testDelE() {
-    	SimulatedAnnealingSearch<TestGoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
+    	SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
     	int deltaE = -1;
 		double higherTemperature = 30.0;
 		double lowerTemperature = 29.5;

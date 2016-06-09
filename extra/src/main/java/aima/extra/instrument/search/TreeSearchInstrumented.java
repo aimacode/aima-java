@@ -3,7 +3,7 @@ package aima.extra.instrument.search;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchController;
-import aima.core.search.basic.TreeSearch;
+import aima.core.search.basic.queue.TreeQueueSearch;
 import aima.core.search.basic.support.BasicNode;
 import aima.core.search.basic.support.BasicNodeFactory;
 
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 /**
  * @author Ciaran O'Reilly
  */
-public class TreeSearchInstrumented<A, S> extends TreeSearch<A, S> implements SearchController<A, S> {
+public class TreeSearchInstrumented<A, S> extends TreeQueueSearch<A, S> implements SearchController<A, S> {
     public interface Cmd<A, S> {
         String             commandId();
         int                currentFrontierSize();

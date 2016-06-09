@@ -4,7 +4,7 @@ import aima.core.search.api.Node;
 import aima.core.search.basic.local.HillClimbingSearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicProblem;
-import aima.test.core.unit.search.support.TestGoAction;
+import aima.test.core.unit.search.support.GoAction;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,17 +29,17 @@ public class HillClimbingSearchTest {
 
     }};
 
-    Function<String, Set<TestGoAction>> simpleBinaryTreeActionsFn = state -> {
+    Function<String, Set<GoAction>> simpleBinaryTreeActionsFn = state -> {
         if (simpleBinaryTreeStateSpace.containsKey(state)) {
-            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(TestGoAction::new).collect(Collectors.toList()));
+            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
         }
         return Collections.emptySet();
     };
 
-    BiFunction<String, TestGoAction, String> goActionResultFn = (state, action) -> action.getGoTo();
+    BiFunction<String, GoAction, String> goActionResultFn = (state, action) -> action.getGoTo();
 
     //the heuristic function will be represented by the ascii value of the first character in the state name
-    ToDoubleFunction<Node<TestGoAction, String>> asciiHeuristicFn = node -> {
+    ToDoubleFunction<Node<GoAction, String>> asciiHeuristicFn = node -> {
         String state = node.state();
         int asciiCode = (int) state.charAt(0);
         return (double) asciiCode;
@@ -47,11 +47,11 @@ public class HillClimbingSearchTest {
 
     @Test
     public void testAsciiHeuristicFunction() {
-        HillClimbingSearch<TestGoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
-        BasicNodeFactory<TestGoAction, String> nodeFactory = new BasicNodeFactory<>();
+        HillClimbingSearch<GoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
+        BasicNodeFactory<GoAction, String> nodeFactory = new BasicNodeFactory<>();
         
-        Node<TestGoAction, String> nodeA = nodeFactory.newRootNode("A");
-        Node<TestGoAction, String> nodeB = nodeFactory.newRootNode("B");
+        Node<GoAction, String> nodeA = nodeFactory.newRootNode("A");
+        Node<GoAction, String> nodeB = nodeFactory.newRootNode("B");
 
         Assert.assertEquals(
                 hillClimbingSearch.getHeuristicFunctionH().applyAsDouble(nodeA),
@@ -74,10 +74,10 @@ public class HillClimbingSearchTest {
 
     @Test
     public void testAlreadyInGoalState() {
-        HillClimbingSearch<TestGoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
+        HillClimbingSearch<GoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
 
         Assert.assertEquals(
-        		Arrays.asList((TestGoAction) null),
+        		Arrays.asList((GoAction) null),
                 hillClimbingSearch.apply(new BasicProblem<>("A",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -85,7 +85,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-        		Arrays.asList((TestGoAction) null),
+        		Arrays.asList((GoAction) null),
                 hillClimbingSearch.apply(new BasicProblem<>("B",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -95,10 +95,10 @@ public class HillClimbingSearchTest {
 
     @Test
     public void testSuccessfulGlobalMaximum() {
-        HillClimbingSearch<TestGoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
+        HillClimbingSearch<GoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("A")),
+                Arrays.asList(new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("C",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -106,7 +106,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("C"), new TestGoAction("A")),
+                Arrays.asList(new GoAction("C"), new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("E",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -114,7 +114,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("E"), new TestGoAction("C"), new TestGoAction("A")),
+                Arrays.asList(new GoAction("E"), new GoAction("C"), new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("G",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -124,11 +124,11 @@ public class HillClimbingSearchTest {
 
     @Test
     public void testSuccessfulLocalMaximum() {
-        HillClimbingSearch<TestGoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
+        HillClimbingSearch<GoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
 
         // ends up in state D, with no hope of ever reaching the Global Maximum
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("D")),
+                Arrays.asList(new GoAction("D")),
                 hillClimbingSearch.apply(new BasicProblem<>("F",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -136,7 +136,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("F"), new TestGoAction("D")),
+                Arrays.asList(new GoAction("F"), new GoAction("D")),
                 hillClimbingSearch.apply(new BasicProblem<>("I",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -146,12 +146,12 @@ public class HillClimbingSearchTest {
 
     @Test
     public void testUnsuccessfulHillClimbing() {
-        HillClimbingSearch<TestGoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
+        HillClimbingSearch<GoAction, String> hillClimbingSearch = new HillClimbingSearch<>(asciiHeuristicFn);
 
         // when starting from state C an action towards A will always be selected
         // goalTestPredicate parameter seems redundant, since Hill Climbing will always evolve towards the local maximum, no matter what the destination is
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("A")),
+                Arrays.asList(new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("C",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -159,7 +159,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("A")),
+                Arrays.asList(new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("C",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
@@ -167,7 +167,7 @@ public class HillClimbingSearchTest {
                 )));
 
         Assert.assertEquals(
-                Arrays.asList(new TestGoAction("A")),
+                Arrays.asList(new GoAction("A")),
                 hillClimbingSearch.apply(new BasicProblem<>("C",
                         simpleBinaryTreeActionsFn,
                         goActionResultFn,
