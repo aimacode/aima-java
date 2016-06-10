@@ -58,7 +58,7 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 			explored.add(node.state());
 			// expand the chosen node, adding the resulting nodes to the frontier
 			for (A action : problem.actions(node.state())) {
-				Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
+				Node<A, S> child = newChildNode(problem, node, action);
 				// only if not in the frontier or explored set
 				if (!(containsState(frontier, child) || explored.contains(child.state()))) {
 					frontier.add(child);
@@ -73,6 +73,10 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
 
 	public ExampleGraphSearch() {
+	}
+	
+	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
+		return nodeFactory.newChildNode(problem, node, action);
 	}
 	
 	public Queue<Node<A, S>> newFrontier(S initialState) {

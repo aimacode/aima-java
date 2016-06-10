@@ -36,28 +36,28 @@ public class TreeGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchFor
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE
-		Node<A, S> node = getNodeFactory().newRootNode(problem.initialState(), 0);
+		Node<A, S> node = newRootNode(problem.initialState());
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (getSearchController().isGoalState(node, problem)) { return getSearchController().solution(node); }
+		if (isGoalState(node, problem)) { return solution(node); }
 		// frontier <- a queue with node as the only element
 		Queue<Node<A, S>> frontier = newFrontier(node);
 		// loop do
-		while (getSearchController().isExecuting()) {
+		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return getSearchController().failure(); }
+			if (frontier.isEmpty()) { return failure(); }
 			// node <- POP(frontier) // chooses the shallowest node in frontier
 			node = frontier.remove();
 			// for each action in problem.ACTIONS(node.STATE) do
 			for (A action : problem.actions(node.state())) {
 				// child <- CHILD-NODE(problem, node, action)
-				Node<A, S> child = getNodeFactory().newChildNode(problem, node, action);
+				Node<A, S> child = newChildNode(problem, node, action);
 				// if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-				if (getSearchController().isGoalState(child, problem)) { return getSearchController().solution(child); }
+				if (isGoalState(child, problem)) { return solution(child); }
 				// frontier <- INSERT(child, frontier)
 				frontier.add(child);
 			}
 		}
-		return getSearchController().failure();
+		return failure();
 	}
 	
 	//

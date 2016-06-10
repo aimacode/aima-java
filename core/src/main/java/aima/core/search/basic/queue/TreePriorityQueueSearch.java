@@ -37,37 +37,33 @@ public class TreePriorityQueueSearch<A, S> extends AbstractQueueSearchForActions
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE
-		Node<A, S> node = getNodeFactory().newRootNode(problem.initialState());
+		Node<A, S> node = newRootNode(problem.initialState());
 		// frontier <- a priority queue, with node as the only element
 		Queue<Node<A, S>> frontier = newFrontier(node);
 		// loop do
-		while (getSearchController().isExecuting()) {
+		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return getSearchController().failure(); }
+			if (frontier.isEmpty()) { return failure(); }
 			// node <- POP(frontier) // chooses the highest priority node in frontier
 			node = frontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (getSearchController().isGoalState(node, problem)) { return getSearchController().solution(node);}
+			if (isGoalState(node, problem)) { return solution(node);}
 			// for each action in problem.ACTIONS(node.STATE) do
 			for (A action : problem.actions(node.state())) {
 				// child <- CHILD-NODE(problem, node, action)
-				Node<A, S> child = getNodeFactory().newChildNode(problem, node, action);
+				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in frontier then
 				boolean childStateInFrontier = containsState(frontier, child.state());
 				if (!childStateInFrontier) {
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
 				} // else if child.STATE is in frontier with lower priority then
-				else if (childStateInFrontier &&
-						// NOTE: by Java's PriorityQueue convention, nodes that compare
-						// lower have a higher priority.
-						frontier.removeIf(n -> child.state().equals(n.state())
-								&& getNodeFactory().compare(child, n) < 0)) {
+				else if (childStateInFrontier && removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
 					// replace that frontier node with child
 					frontier.add(child);
 				}
 			}
 		}
-		return getSearchController().failure();
+		return failure();
 	}
 }

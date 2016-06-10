@@ -236,7 +236,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
 * Add Bidirectional Search implementation.
 * GraphPriorityQueueSearch and TreePriorityQueueSearch potentially 
   need a better mechanism for determining state containment and removal of a node 
-  with a lower priority.
+  with a lower priority (i.e. AbstractQueueSearchForActions.removedNodeFromFrontierWithSameStateAndLowerPriority()).
 * Recursive-Best-First-Search - look to improve/tidy up implementation.
 * Add a mechanism for gathering search metrics. Want to make more flexible and introduce less clutter into the core algorithms in order to support.
 
