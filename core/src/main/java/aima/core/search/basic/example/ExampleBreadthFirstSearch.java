@@ -72,8 +72,7 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 				Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
 				// if child.STATE is not in explored or frontier then
 				if (!(explored.contains(child.state()) || containsState(frontier, child))) {
-					// if problem.GOAL-TEST(child.STATE) then return
-					// SOLUTION(child)
+					// if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
 					if (problem.isGoalState(child.state())) { return solution(child); }
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
