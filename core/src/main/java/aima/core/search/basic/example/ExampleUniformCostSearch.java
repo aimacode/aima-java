@@ -1,7 +1,6 @@
 package aima.core.search.basic.example;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
