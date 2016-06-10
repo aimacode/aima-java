@@ -150,8 +150,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="3">3.14</td>
        <td rowspan="3">84</td>
        <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Uniform-Cost-Search.md">Uniform-Cost-Search</a></td>
-       <td>
-       TODO - ExampleUniformCostSearch
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleUniformcostSearch.java">ExampleUniformCostSearch</a>
        </td>
    </tr>
    <tr>

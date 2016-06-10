@@ -94,7 +94,7 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 	}
 	
 	public boolean containsState(Queue<Node<A, S>> frontier, Node<A, S> child) {
-		// NOTE: Not very efficient
+		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(child.state()));
 	}
 }
