@@ -20,6 +20,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import aima.core.search.api.SearchForActionsFunction;
+import aima.core.search.basic.example.ExampleBreadthFirstSearch;
 import aima.core.search.basic.queue.GraphGoalTestedFirstQueueSearch;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.search.basic.uninformed.BreadthFirstQueueSearch;
@@ -31,6 +32,7 @@ public class BreadthFirstGraphSearchTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
 		return Arrays.asList(new Object[][] {
+			{new ExampleBreadthFirstSearch<GoAction, String>()},
 			{new BreadthFirstQueueSearch<GoAction, String>(new GraphGoalTestedFirstQueueSearch<>())}
 		});
 	}
@@ -56,13 +58,13 @@ public class BreadthFirstGraphSearchTest {
     
     @Test
     public void testAllSimpleBinaryTreeGoals() {
-//        Assert.assertEquals(
-//                Arrays.asList((GoAction) null),
-//                breadthFirstGraphSearch.apply(new BasicProblem<>("A",
-//                        simpleBinaryTreeActionsFn,
-//                        goActionResultFn,
-//                        "A"::equals
-//                )));
+        Assert.assertEquals(
+                Arrays.asList((GoAction) null),
+                breadthFirstGraphSearch.apply(new BasicProblem<>("A",
+                        simpleBinaryTreeActionsFn,
+                        goActionResultFn,
+                        "A"::equals
+                )));
 
         Assert.assertEquals(
                 Arrays.asList(new GoAction("B")),

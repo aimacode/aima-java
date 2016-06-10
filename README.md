@@ -133,8 +133,7 @@ Java implementation of algorithms from Norvig And Russell's "Artificial Intellig
        <td rowspan="3">3.11</td>
        <td rowspan="3">82</td>
        <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/Breadth-First-Search.md">Breadth-First-Search</a></td>
-       <td> 
-       TODO - ExampleBreadthFirstSearch         
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleBreadthFirstSearch.java">ExampleBreadthFirstSearch</a>
        </td>
    </tr>
    <tr>

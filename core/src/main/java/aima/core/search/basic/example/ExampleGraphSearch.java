@@ -60,9 +60,7 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 			for (A action : problem.actions(node.state())) {
 				Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
 				// only if not in the frontier or explored set
-				if (!(frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(child.state())) 
-						|| 
-						explored.contains(child.state()))) {
+				if (!(containsState(frontier, child) || explored.contains(child.state()))) {
 					frontier.add(child);
 				}
 			}
@@ -93,5 +91,10 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
+	}
+	
+	public boolean containsState(Queue<Node<A, S>> frontier, Node<A, S> child) {
+		// NOTE: Not very efficient
+		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(child.state()));
 	}
 }
