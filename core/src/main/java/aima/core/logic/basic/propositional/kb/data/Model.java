@@ -2,12 +2,15 @@ package aima.core.logic.basic.propositional.kb.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import aima.core.logic.basic.propositional.kb.data.Clause;
 import aima.core.logic.basic.propositional.parsing.PLVisitor;
 import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
+
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
@@ -56,6 +59,11 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		m.assignments.put(symbol, b);
 		return m;
 	}
+	
+	public Model unionInPlace(PropositionSymbol symbol, boolean b) {
+		assignments.put(symbol, b);
+		return this;
+	}
 		
 	public boolean isTrue(Sentence s) {
 		return Boolean.TRUE.equals(s.accept(this, null));
@@ -67,6 +75,88 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	public boolean isUnknown(Sentence s) {
 		return null == s.accept(this, null);
+	}
+	
+	public boolean remove(PropositionSymbol p) {
+		return assignments.remove(p);
+	}
+	
+	/**
+	 * Determine if the model satisfies a set of clauses.
+	 * 
+	 * @param clauses
+	 *            a set of propositional clauses.
+	 * @return if the model satisfies the clauses, false otherwise.
+	 */
+	public boolean satisfies(Set<Clause> clauses) {
+		for (Clause c : clauses) {
+			// All must to be true
+			if (!Boolean.TRUE.equals(determineValue(c))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Determine based on the current assignments within the model, whether a
+	 * clause is known to be true, false, or unknown.
+	 * 
+	 * @param c
+	 *            a propositional clause.
+	 * @return true, if the clause is known to be true under the model's
+	 *         assignments. false, if the clause is known to be false under the
+	 *         model's assignments. null, if it is unknown whether the clause is
+	 *         true or false under the model's current assignments.
+	 */
+	public Boolean determineValue(Clause c) {
+		Boolean result = null; // i.e. unknown
+
+		if (c.isTautology()) { // Test independent of the model's assignments.
+			result = Boolean.TRUE;
+		} else if (c.isFalse()) { // Test independent of the model's
+									// assignments.
+			result = Boolean.FALSE;
+		} else {
+			boolean unassignedSymbols = false;
+			Boolean value             = null;
+			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+				value = assignments.get(positive);
+				if (value != null) {
+					if (Boolean.TRUE.equals(value)) {
+						result = Boolean.TRUE;
+						break;
+					}
+				} else {
+					unassignedSymbols = true;
+				}
+			}
+			// If truth not determined, continue checking negative symbols
+			if (result == null) {
+				for (PropositionSymbol negative : c.getNegativeSymbols()) {
+					value = assignments.get(negative);
+					if (value != null) {
+						if (Boolean.FALSE.equals(value)) {
+							result = Boolean.TRUE;
+							break;
+						}
+					} else {
+						unassignedSymbols = true;
+					}
+				}
+
+				if (result == null) {
+					// If truth not determined and there are no
+					// unassigned symbols then we can determine falsehood
+					// (i.e. all of its literals are assigned false under the
+					// model)
+					if (!unassignedSymbols) {
+						result = Boolean.FALSE;
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override
