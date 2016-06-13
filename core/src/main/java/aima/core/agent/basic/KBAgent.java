@@ -15,9 +15,9 @@ import aima.core.logic.basic.propositional.parsing.ast.Sentence;
  *               t, a counter, initially 0, indicating time
  *           
  *   TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
- *   action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))
+ *   action &larr; ASK(KB, MAKE-ACTION-QUERY(t))
  *   TELL(KB, MAKE-ACTION-SENTENCE(action, t))
- *   t &lt;- t + 1
+ *   t &larr; t + 1
  *   return action
  * 
  * </pre>
@@ -29,29 +29,30 @@ import aima.core.logic.basic.propositional.parsing.ast.Sentence;
  * @author Ciaran O'Reilly
  * @author Anurag Rai
  */
-public abstract class KBAgent<A,P> implements Agent<A,P> {
-	// persistent: KB, a knowledge base
-	protected BasicKnowledgeBase KB;
-	// t, a counter, initially 0, indicating time
-	private int t = 0;
-
-	public KBAgent(BasicKnowledgeBase KB) {
-		this.KB = KB;
-	}
+public abstract class KBAgent<A, P> implements Agent<A, P> {
+	// persistent:
+	protected BasicKnowledgeBase KB; // a knowledge base
+	private int t = 0; // a counter, initially 0, indicating time
 
 	// function KB-AGENT(percept) returns an action
 	@Override
 	public A perceive(P percept) {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		KB.tell(makePerceptSentence(percept, t));
-		// action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))
+		// action <- ASK(KB, MAKE-ACTION-QUERY(t))
 		A action = ask(KB, makeActionQuery(t));
 		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
 		KB.tell(makeActionSentence(action, t));
-		// t &lt;- t + 1
+		// t <- t + 1
 		t = t + 1;
 		// return action
 		return action;
+	}
+	
+	//
+	// Supporting Code
+	public KBAgent(BasicKnowledgeBase KB) {
+		this.KB = KB;
 	}
 
 	/**
@@ -81,25 +82,27 @@ public abstract class KBAgent<A,P> implements Agent<A,P> {
 	public abstract Sentence makeActionQuery(int t);
 
 	/**
-	 * MAKE-ACTION-SENTENCE constructs a sentence asserting that the chosen action was executed.
+	 * MAKE-ACTION-SENTENCE constructs a sentence asserting that the chosen
+	 * action was executed.
+	 * 
 	 * @param action
-	 *        the chose action.
+	 *            the chose action.
 	 * @param t
-	 *        the time at which the action was executed.
+	 *            the time at which the action was executed.
 	 * @return a sentence asserting that the chosen action was executed.
 	 */
 	// MAKE-ACTION-SENTENCE(action, t)
 	public abstract Sentence makeActionSentence(A action, int t);
-	
+
 	/**
-	 * A wrapper around the KB's ask() method which translates the action (in the form of
-	 * a sentence) determined by the KB into an allowed 'Action' object from the current
-	 * environment in which the KB-AGENT resides.
+	 * A wrapper around the KB's ask() method which translates the action (in
+	 * the form of a sentence) determined by the KB into an allowed 'Action'
+	 * object from the current environment in which the KB-AGENT resides.
 	 * 
 	 * @param KB
-	 *        the KB to ask.
+	 *            the KB to ask.
 	 * @param actionQuery
-	 *        an action query.
+	 *            an action query.
 	 * @return the Action to be performed in response to the given query.
 	 */
 	// ASK(KB, MAKE-ACTION-QUERY(t))
