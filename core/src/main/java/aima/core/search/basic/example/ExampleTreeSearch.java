@@ -41,12 +41,18 @@ public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 		// loop do
 		while (true) {
 			// if the frontier is empty then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// choose a leaf node and remove it from the frontier
 			Node<A, S> node = frontier.remove();
-			// if the node contains a goal state then return the corresponding solution
-			if (problem.isGoalState(node.state())) { return solution(node); }
-			// expand the chosen node, adding the resulting nodes to the frontier
+			// if the node contains a goal state then return the corresponding
+			// solution
+			if (problem.isGoalState(node.state())) {
+				return solution(node);
+			}
+			// expand the chosen node, adding the resulting nodes to the
+			// frontier
 			frontier.addAll(expand(node, problem));
 		}
 	}

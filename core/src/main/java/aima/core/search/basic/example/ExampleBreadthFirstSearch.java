@@ -53,7 +53,9 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 		// node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
 		Node<A, S> node = newRootNode(problem.initialState(), 0);
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (problem.isGoalState(node.state())) { return solution(node); }
+		if (problem.isGoalState(node.state())) {
+			return solution(node);
+		}
 		// frontier <- a FIFO queue with node as the only element
 		Queue<Node<A, S>> frontier = newFIFOQueue(node);
 		// explored <- an empty set
@@ -61,7 +63,9 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 		// loop do
 		while (true) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// node <- POP(frontier) // chooses the shallowest node in frontier
 			node = frontier.remove();
 			// add node.STATE to explored
@@ -72,15 +76,18 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in explored or frontier then
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
-					// if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-					if (problem.isGoalState(child.state())) { return solution(child); }
+					// if problem.GOAL-TEST(child.STATE) then return
+					// SOLUTION(child)
+					if (problem.isGoalState(child.state())) {
+						return solution(child);
+					}
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
 				}
 			}
 		}
 	}
-	
+
 	//
 	// Supporting Code
 	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
@@ -88,26 +95,26 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 
 	public ExampleBreadthFirstSearch() {
 	}
-	
+
 	public Node<A, S> newRootNode(S initialState, double pathCost) {
 		return nodeFactory.newRootNode(initialState, pathCost);
 	}
-	
+
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
 		return nodeFactory.newChildNode(problem, node, action);
 	}
-	
+
 	public Queue<Node<A, S>> newFIFOQueue(Node<A, S> initialNode) {
 		// NOTE: LinkedList has FIFO queue semantics by default.
 		Queue<Node<A, S>> frontier = new LinkedList<>();
 		frontier.add(initialNode);
 		return frontier;
 	}
-	
+
 	public Set<S> newExploredSet() {
 		return new HashSet<>();
 	}
-	
+
 	public List<A> failure() {
 		return searchController.failure();
 	}
@@ -115,7 +122,7 @@ public class ExampleBreadthFirstSearch<A, S> implements SearchForActionsFunction
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
 	}
-	
+
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(state));

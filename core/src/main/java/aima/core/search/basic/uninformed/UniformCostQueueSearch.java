@@ -16,6 +16,7 @@ public class UniformCostQueueSearch<A, S> extends QueueSearchForActionsWrapper<A
 	public UniformCostQueueSearch(QueueSearchForActions<A, S> qsearchImpl) {
 		super(qsearchImpl);
 		qsearchImpl.getNodeFactory().setNodeCostFunction(node -> node.pathCost());
-		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashSet::new));
-    }
+		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(
+				() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashSet::new));
+	}
 }

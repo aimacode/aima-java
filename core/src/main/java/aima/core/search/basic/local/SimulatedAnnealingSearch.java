@@ -14,20 +14,23 @@ import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * <br>
  * <br>
  * 
  * <pre>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
- *                    
- *   current &lt;- MAKE-NODE(problem.INITIAL-STATE)
- *   for t = 1 to INFINITY do
- *     T &lt;- schedule(t)
+ *   inputs: problem, a problem
+ *           schedule, a mapping from time to "temperature"
+ *
+ *   current &larr; MAKE-NODE(problem.INITIAL-STATE)
+ *   for t = 1 to &infin; do
+ *     T &larr; schedule(t)
  *     if T = 0 then return current
- *     next &lt;- a randomly selected successor of current
- *     /\E &lt;- next.VALUE - current.value
- *     if /\E &gt; 0 then current &lt;- next
- *     else current &lt;- next only with probability e&circ;(/\E/T)
+ *     next &larr; a randomly selected successor of current
+ *     &Delta;E &larr; next.VALUE - current.value
+ *     if &Delta;E &gt; 0 then current &larr; next
+ *     else current &larr; next only with probability e<sup>&Delta;E/T</sup>
  * </pre>
  * 
  * Figure ?? The simulated annealing search algorithm, a version of stochastic
@@ -42,26 +45,7 @@ import aima.core.search.basic.support.BasicSearchController;
  * @author Ruediger Lunde
  */
 public class SimulatedAnnealingSearch<A, S> implements SearchForActionsFunction<A, S> {
-	private ToDoubleFunction<Node<A, S>> h;
-	private Scheduler scheduler;
-	private SearchController<A, S> searchController;
-	private NodeFactory<A, S> nodeFactory;
-	
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h) {
-		this(h, new Scheduler());
-	}
-	
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler) {
-		this(h, scheduler, new BasicSearchController<>(), new BasicNodeFactory<>());
-	}
-			
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
-		this.h = h;
-		this.scheduler = scheduler;
-		this.searchController = searchController;
-		this.nodeFactory = nodeFactory;
-	}
-	
+	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -69,22 +53,22 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForActionsFunction<
 		List<A> ret = new ArrayList<A>();
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
-		while ( true ) {
-			// temperature <- schedule(t)		
+		while (true) {
+			// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;
 			// if temperature = 0 then return current
-			if ( temperature == 0.0 ) {
+			if (temperature == 0.0) {
 				ret = searchController.solution(current);
 				break;
 			}
-			
+
 			List<Node<A, S>> children = new ArrayList<>();
 			// expand the current node to find the children
 			for (A action : problem.actions(current.state())) {
-	               children.add(nodeFactory.newChildNode(problem, current, action));
-	        }
-			if ( !children.isEmpty() ) {
+				children.add(nodeFactory.newChildNode(problem, current, action));
+			}
+			if (!children.isEmpty()) {
 				// next <- a randomly selected successor of current
 				Node<A, S> next = children.get(new Random().nextInt(children.size()));
 				// /\E <- next.VALUE - current.value
@@ -98,6 +82,28 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForActionsFunction<
 		return ret;
 	}
 	
+	//
+	// Supporting Code
+	private Scheduler scheduler;
+	private ToDoubleFunction<Node<A, S>> h;
+	private SearchController<A, S> searchController;
+	private NodeFactory<A, S> nodeFactory;
+
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h) {
+		this(h, new Scheduler());
+	}
+
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler) {
+		this(h, scheduler, new BasicSearchController<>(), new BasicNodeFactory<>());
+	}
+
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<A, S>> h, Scheduler scheduler,
+			SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
+		this.h = h;
+		this.scheduler = scheduler;
+		this.searchController = searchController;
+		this.nodeFactory = nodeFactory;
+	}
 
 	/**
 	 * Returns <em>e</em><sup>&delta<em>E / T</em></sup>
@@ -113,13 +119,10 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForActionsFunction<
 		return Math.exp(deltaE / temperature);
 	}
 
-
 	// if /\E > 0 then current <- next
 	// else current <- next only with probability e^(/\E/T)
 	public boolean shouldAccept(double temperature, double deltaE) {
-		return (deltaE > 0.0)
-				|| (new Random().nextDouble() <= probabilityOfAcceptance(
-						temperature, deltaE));
+		return (deltaE > 0.0) || (new Random().nextDouble() <= probabilityOfAcceptance(temperature, deltaE));
 	}
 
 	public double getValue(ToDoubleFunction<Node<A, S>> hf, Node<A, S> n) {
@@ -128,58 +131,57 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForActionsFunction<
 		// SA deals with gradient DESCENT
 		return -1 * hf.applyAsDouble(n);
 	}
-	
-    public ToDoubleFunction<Node<A, S>> getHeuristicFunctionH() {
-    	return h;
-    }
-    
-    public Scheduler getScheduler() {
-    	return scheduler;
-    }
-    
-    /**
-     * The Scheduler for Simulated Annealing.
-     * 
+
+	public ToDoubleFunction<Node<A, S>> getHeuristicFunctionH() {
+		return h;
+	}
+
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
+
+	/**
+	 * The Scheduler for Simulated Annealing.
+	 * 
 	 * @author Ravi Mohan
 	 * @author Anurag Rai
-     */
-    public static class Scheduler {
+	 */
+	public static class Scheduler {
 
-      	private final int k, limit;
-    	private final double lam;
-    	
-    	//default constructor
-    	public Scheduler() {
-    		//base value
-    		this.k = 20;
-    		this.lam = 0.045;
-    		//time limit
-    		this.limit = 100;
-    	}
-    	
-    	public Scheduler(int k, double lam, int limit) {
-    		this.k = k;
-    		this.lam = lam;
-    		this.limit = limit;
-    	}
-    	
-    	/*
-    	* The probability also decreases as the temperature T goes down: 
-    	* bad moves are more likely to be allowed at the start
-    	* when T is high, and they become more unlikely as T decreases.
-    	*
-    	* @param t
-    	*		the time that has gone by from the start of the algo
-    	*
-    	* @return the value of schedule calculated as a function of given time
-    	*/
-    	public double getTemp(int t) {
-    	  if (t < limit) {
-    			double res = k * Math.exp((-1) * lam * t);
-    			return res;
-    		} else {
-    			return 0.0;
-    		}
-    	}
-    }
+		private final int k, limit;
+		private final double lam;
+
+		// default constructor
+		public Scheduler() {
+			// base value
+			this.k = 20;
+			this.lam = 0.045;
+			// time limit
+			this.limit = 100;
+		}
+
+		public Scheduler(int k, double lam, int limit) {
+			this.k = k;
+			this.lam = lam;
+			this.limit = limit;
+		}
+
+		/*
+		 * The probability also decreases as the temperature T goes down: bad
+		 * moves are more likely to be allowed at the start when T is high, and
+		 * they become more unlikely as T decreases.
+		 *
+		 * @param t the time that has gone by from the start of the algo
+		 *
+		 * @return the value of schedule calculated as a function of given time
+		 */
+		public double getTemp(int t) {
+			if (t < limit) {
+				double res = k * Math.exp((-1) * lam * t);
+				return res;
+			} else {
+				return 0.0;
+			}
+		}
+	}
 }

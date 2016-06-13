@@ -17,13 +17,14 @@ import aima.core.search.basic.support.BasicFrontierQueue;
  * 
  */
 public class BestFirstQueueSearch<A, S> extends QueueSearchForActionsWrapper<A, S> {
-	
+
 	public BestFirstQueueSearch(QueueSearchForActions<A, S> qsearchImpl, ToDoubleFunction<Node<A, S>> f) {
 		super(qsearchImpl);
 		qsearchImpl.getNodeFactory().setNodeCostFunction(f);
-		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashSet::new));
+		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(
+				() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashSet::new));
 	}
-	
+
 	public ToDoubleFunction<Node<A, S>> getEvaluationFunctionF() {
 		return getQueueSearchForActionsImpl().getNodeFactory().getNodeCostFunction();
 	}

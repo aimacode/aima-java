@@ -1,7 +1,8 @@
 package aima.core.search.api;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * <br>
  *
  * Figure ?? Nodes are the data structures from which the search tree is
  * constructed. Each has a parent, a state, and various bookkeeping fields.
@@ -19,8 +20,10 @@ package aima.core.search.api;
  * the initial state to the node, as indicated by the parent pointers.</li>
  * </ul>
  *
- * @param <A> the type of the action.
- * @param <S> the type of the state that node contains.
+ * @param <A>
+ *            the type of the action.
+ * @param <S>
+ *            the type of the state that node contains.
  *
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
@@ -28,28 +31,29 @@ package aima.core.search.api;
  */
 public interface Node<A, S> {
 
-    /**
-     *
-     * @return the state in the state space to which the node corresponds.
-     */
-    S state();
+	/**
+	 *
+	 * @return the state in the state space to which the node corresponds.
+	 */
+	S state();
 
-    /**
-     *
-     * @return  the node in the search tree that generated this node.
-     */
-    Node<A, S> parent();
+	/**
+	 *
+	 * @return the node in the search tree that generated this node.
+	 */
+	Node<A, S> parent();
 
-    /**
-     *
-     * @return the action that was applied to the parent to generate the node.
-     */
-    A action();
+	/**
+	 *
+	 * @return the action that was applied to the parent to generate the node.
+	 */
+	A action();
 
-    /**
-     *
-     * @return the cost, traditionally denoted by <em>g(n)</em>, of the path from
-     * the initial state to the node, as indicated by the parent pointers.
-     */
-    double pathCost();
+	/**
+	 *
+	 * @return the cost, traditionally denoted by <em>g(n)</em>, of the path
+	 *         from the initial state to the node, as indicated by the parent
+	 *         pointers.
+	 */
+	double pathCost();
 }

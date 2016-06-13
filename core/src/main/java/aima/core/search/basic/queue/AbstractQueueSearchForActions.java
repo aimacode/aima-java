@@ -20,7 +20,7 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 	private Supplier<Queue<Node<A, S>>> frontierSupplier;
 	private Supplier<Set<S>> exploredSupplier;
 	private boolean frontierSupportsStateContainmentCheck = false;
-	
+
 	@Override
 	public SearchController<A, S> getSearchController() {
 		if (searchController == null) {
@@ -28,7 +28,7 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		}
 		return searchController;
 	}
-	
+
 	@Override
 	public void setSearchController(SearchController<A, S> searchController) {
 		this.searchController = searchController;
@@ -41,7 +41,7 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		}
 		return nodeFactory;
 	}
-	
+
 	@Override
 	public void setNodeFactory(NodeFactory<A, S> nodeFactory) {
 		this.nodeFactory = nodeFactory;
@@ -54,12 +54,12 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		}
 		return frontierSupplier;
 	}
-	
+
 	@Override
 	public void setFrontierSupplier(Supplier<Queue<Node<A, S>>> frontierSupplier) {
 		this.frontierSupplier = frontierSupplier;
 	}
-	
+
 	@Override
 	public Supplier<Set<S>> getExploredSupplier() {
 		if (exploredSupplier == null) {
@@ -72,19 +72,19 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 	public void setExploredSupplier(Supplier<Set<S>> exploredSupplier) {
 		this.exploredSupplier = exploredSupplier;
 	}
-	
+
 	public Node<A, S> newRootNode(S initialState) {
 		return getNodeFactory().newRootNode(initialState);
 	}
-	
+
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
 		return getNodeFactory().newChildNode(problem, node, action);
 	}
-	
+
 	public Queue<Node<A, S>> newFrontier(S initialState) {
 		return newFrontier(getNodeFactory().newRootNode(initialState));
 	}
-	
+
 	public Queue<Node<A, S>> newFrontier(Node<A, S> initialNode) {
 		Queue<Node<A, S>> frontier = getFrontierSupplier().get();
 		frontier.add(initialNode);
@@ -92,19 +92,19 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		frontierSupportsStateContainmentCheck = frontier.contains(initialNode.state());
 		return frontier;
 	}
-	
+
 	public boolean loopDo() {
 		return getSearchController().isExecuting();
 	}
-	
+
 	public Set<S> newExploredSet() {
 		return new HashSet<>();
 	}
-	
+
 	public List<A> failure() {
 		return searchController.failure();
 	}
-	
+
 	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
 		return getSearchController().isGoalState(node, problem);
 	}
@@ -112,17 +112,19 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
 	}
-	
+
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {
 		if (!frontierSupportsStateContainmentCheck) {
-			throw new IllegalStateException("Algorithm has been configured with a frontier queue that does not support contains(state).");
+			throw new IllegalStateException(
+					"Algorithm has been configured with a frontier queue that does not support contains(state).");
 		}
 		return frontier.contains(state);
 	}
-	
+
 	public boolean removedNodeFromFrontierWithSameStateAndLowerPriority(Node<A, S> child, Queue<Node<A, S>> frontier) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
-		// NOTE: by Java's PriorityQueue convention, nodes that compare lower (i.e. cost) have a higher priority.
+		// NOTE: by Java's PriorityQueue convention, nodes that compare lower
+		// (i.e. cost) have a higher priority.
 		return frontier.removeIf(n -> child.state().equals(n.state()) && getNodeFactory().compare(child, n) < 0);
 	}
 }

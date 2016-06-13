@@ -17,6 +17,7 @@ import aima.core.search.basic.support.BasicFrontierQueue;
 public class DepthFirstQueueSearch<A, S> extends QueueSearchForActionsWrapper<A, S> {
 	public DepthFirstQueueSearch(QueueSearchForActions<A, S> qsearchImpl) {
 		super(qsearchImpl);
-		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
+		qsearchImpl.setFrontierSupplier(
+				() -> new BasicFrontierQueue<A, S>(() -> Collections.asLifoQueue(new LinkedList<>()), HashSet::new));
 	}
 }

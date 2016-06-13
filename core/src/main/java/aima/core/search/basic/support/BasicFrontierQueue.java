@@ -113,8 +113,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	public boolean contains(Object o) {
 		if (o instanceof Node) {
 			return queue.contains(o);
-		}
-		else {
+		} else {
 			// Assume is a State
 			return states.contains(o);
 		}

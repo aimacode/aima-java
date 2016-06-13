@@ -35,23 +35,30 @@ public class TreeQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
 		// loop do
 		while (loopDo()) {
 			// if the frontier is empty then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// choose a leaf node and remove it from the frontier
 			Node<A, S> node = frontier.remove();
-			// if the node contains a goal state then return the corresponding solution
-			if (isGoalState(node, problem)) { return solution(node);}
-			// expand the chosen node, adding the resulting nodes to the frontier
+			// if the node contains a goal state then return the corresponding
+			// solution
+			if (isGoalState(node, problem)) {
+				return solution(node);
+			}
+			// expand the chosen node, adding the resulting nodes to the
+			// frontier
 			for (A action : problem.actions(node.state())) {
 				frontier.add(newChildNode(problem, node, action));
 			}
 		}
 		return failure();
 	}
-	
+
 	//
 	// Supporting Code
 	public TreeQueueSearch() {
-		// We default to a LinkedList instead of the parent classes default of a queue that supports
+		// We default to a LinkedList instead of the parent classes default of a
+		// queue that supports
 		// state tracking as it is not required in this instance.
 		setFrontierSupplier(LinkedList::new);
 	}

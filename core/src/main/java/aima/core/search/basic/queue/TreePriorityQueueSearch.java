@@ -9,16 +9,16 @@ import aima.core.search.api.Problem;
 /**
  * <pre>
  * function TREE-PRIORITY-SEARCH(problem) returns a solution, or failure
- *   node &lt;- a node with STATE = problem.INITIAL-STATE
- *   frontier &lt;- a priority queue, with node as the only element
+ *   node &larr; a node with STATE = problem.INITIAL-STATE
+ *   frontier &larr; a priority queue, with node as the only element
  *   loop do
  *      if EMPTY?(frontier) then return failure
- *      node &lt;- POP(frontier) // chooses the highest priority node in frontier
+ *      node &larr; POP(frontier) // chooses the highest priority node in frontier
  *      if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *      for each action in problem.ACTIONS(node.STATE) do
- *          child &lt;- CHILD-NODE(problem, node, action)
+ *          child &larr; CHILD-NODE(problem, node, action)
  *          if child.STATE is not in frontier then
- *             frontier &lt;- INSERT(child, frontier)
+ *             frontier &larr; INSERT(child, frontier)
  *          else if child.STATE is in frontier with lower priority then
  *             replace that frontier node with child
  * </pre>
@@ -43,11 +43,16 @@ public class TreePriorityQueueSearch<A, S> extends AbstractQueueSearchForActions
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
-			// node <- POP(frontier) // chooses the highest priority node in frontier
+			if (frontier.isEmpty()) {
+				return failure();
+			}
+			// node <- POP(frontier) // chooses the highest priority node in
+			// frontier
 			node = frontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (isGoalState(node, problem)) { return solution(node);}
+			if (isGoalState(node, problem)) {
+				return solution(node);
+			}
 			// for each action in problem.ACTIONS(node.STATE) do
 			for (A action : problem.actions(node.state())) {
 				// child <- CHILD-NODE(problem, node, action)
@@ -58,7 +63,8 @@ public class TreePriorityQueueSearch<A, S> extends AbstractQueueSearchForActions
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
 				} // else if child.STATE is in frontier with lower priority then
-				else if (childStateInFrontier && removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
+				else if (childStateInFrontier
+						&& removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
 					// replace that frontier node with child
 					frontier.add(child);
 				}

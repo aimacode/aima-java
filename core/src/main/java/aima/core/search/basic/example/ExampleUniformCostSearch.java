@@ -49,18 +49,23 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
 		Node<A, S> node = newRootNode(problem.initialState(), 0);
-		// frontier <- a priority queue ordered by PATH-COST, with node as the only element
+		// frontier <- a priority queue ordered by PATH-COST, with node as the
+		// only element
 		Queue<Node<A, S>> frontier = newPriorityQueueOrderedByPathCost(node);
 		// explored <- an empty set
 		Set<S> explored = newExploredSet();
 		// loop do
 		while (true) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// node <- POP(frontier) // chooses the lowest-cost node in frontier
 			node = frontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (problem.isGoalState(node.state())) { return solution(node); }
+			if (problem.isGoalState(node.state())) {
+				return solution(node);
+			}
 			// add node.STATE to explored
 			explored.add(node.state());
 			// for each action in problem.ACTIONS(node.STATE) do
@@ -71,7 +76,8 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
-				} // else if child.STATE is in frontier with higher PATH-COST then
+				} // else if child.STATE is in frontier with higher PATH-COST
+					// then
 				else if (removedNodeFromFrontierWithSameStateAndHigherPathCost(child, frontier)) {
 					// replace that frontier node with child
 					frontier.add(child);
@@ -87,11 +93,11 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 
 	public ExampleUniformCostSearch() {
 	}
-	
+
 	public Node<A, S> newRootNode(S initialState, double pathCost) {
 		return nodeFactory.newRootNode(initialState, pathCost);
 	}
-	
+
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
 		return nodeFactory.newChildNode(problem, node, action);
 	}
@@ -118,7 +124,7 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(state));
 	}
-	
+
 	public boolean removedNodeFromFrontierWithSameStateAndHigherPathCost(Node<A, S> child, Queue<Node<A, S>> frontier) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.removeIf(n -> n.state().equals(child.state()) && n.pathCost() > child.pathCost());

@@ -15,7 +15,8 @@ import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * <br>
  * <br>
  *
  * <pre>
@@ -24,17 +25,17 @@ import aima.core.search.basic.support.BasicSearchController;
  *
  * function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   successors &lt;- []
+ *   successors &larr; []
  *   for each action in problem.ACTION(node.STATE) do
  *       add CHILD-NODE(problem, node, action) into successors
  *   if successors is empty then return failure, infinity
  *   for each s in successors do // update f with value from previous search, if any
- *     s.f &lt;- max(s.g + s.h, node.f)
+ *     s.f &larr; max(s.g + s.h, node.f)
  *   loop do
- *     best &lt;- the lowest f-value node in successors
+ *     best &larr; the lowest f-value node in successors
  *     if best.f &gt; f_limit then return failure, best.f
- *     alternative &lt;- the second-lowest f-value among successors
- *     result, best.f &lt;- RBFS(problem, best, min(f_limit, alternative))
+ *     alternative &larr; the second-lowest f-value among successors
+ *     result, best.f &larr; RBFS(problem, best, min(f_limit, alternative))
  *     if result != failure then return result
  * </pre>
  *
@@ -46,106 +47,122 @@ import aima.core.search.basic.support.BasicSearchController;
  * 
  */
 public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
+	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
+	// failure
+	@Override
+	public List<A> apply(Problem<A, S> problem) {
+		// return RBFS(problem, MAKE-NODE(problem.INITIAL-STATE), infinity)
+		return rbfs(problem, new SuccessorNode(nodeFactory.newRootNode(problem.initialState()), this::h),
+				Double.POSITIVE_INFINITY).result();
+	}
+
+	// function RBFS(problem, node, f_limit) returns a solution, or failure and
+	// a new f-cost limit
+	public Result rbfs(Problem<A, S> problem, SuccessorNode node, double f_limit) {
+		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+		if (searchController.isGoalState(node.n, problem)) {
+			return new Result(searchController.solution(node.n));
+		}
+		// successors <- []
+		List<SuccessorNode> successors = new ArrayList<>();
+		// for each action in problem.ACTION(node.STATE) do
+		for (A action : problem.actions(node.n.state())) {
+			// add CHILD-NODE(problem, node, action) into successors
+			successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, node.n, action), this::h));
+		}
+		// if successors is empty then return failure, infinity
+		if (successors.isEmpty()) {
+			return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
+		}
+		// for each s in successors do // update f with value from previous
+		// search, if any
+		for (SuccessorNode s : successors) {
+			// s.f <- max(s.g + s.h, node.f)
+			s.f = Math.max(s.g + s.h, node.f);
+		}
+		// loop do
+		do {
+			// best <- the lowest f-value node in successors
+			Collections.sort(successors, (s1, s2) -> Double.compare(s1.f, s2.f));
+			SuccessorNode best = successors.get(0);
+			// if best.f > f_limit then return failure, best.f
+			if (best.f > f_limit) {
+				return new Result(searchController.failure(), best.f);
+			}
+			// alternative <- the second-lowest f-value among successors
+			double alternative = successors.size() > 1 ? successors.get(1).f : best.f;
+			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
+			Result result = rbfs(problem, best, Math.min(f_limit, alternative));
+			best.f = result.newFCostLimit;
+			// if result != failure then return result
+			if (!result.isFailure()) {
+				return result;
+			}
+		} while (searchController.isExecuting());
+		return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
+	}
+	
+	//
+	// Supporting Code
 	private ToDoubleFunction<Node<A, S>> h;
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
-	
+
 	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h) {
 		this(h, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}
-			
-	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h, SearchController<A, S> searchController, NodeFactory<A, S> nodeFactory) {
+
+	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h, SearchController<A, S> searchController,
+			NodeFactory<A, S> nodeFactory) {
 		this.h = h;
 		this.searchController = searchController;
 		this.nodeFactory = nodeFactory;
 	}
-			
-    // function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure
-    @Override
-    public List<A> apply(Problem<A, S> problem) {
-        // return RBFS(problem, MAKE-NODE(problem.INITIAL-STATE), infinity)
-        return rbfs(problem, new SuccessorNode(nodeFactory.newRootNode(problem.initialState()), this::h), Double.POSITIVE_INFINITY).result();
-    }
 
-    // function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
-    public Result rbfs(Problem<A, S> problem, SuccessorNode node, double f_limit) {
-        // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-        if (searchController.isGoalState(node.n, problem)) { return new Result(searchController.solution(node.n)); }
-        // successors <- []
-        List<SuccessorNode> successors = new ArrayList<>();
-        // for each action in problem.ACTION(node.STATE) do
-        for (A action: problem.actions(node.n.state())) {
-            // add CHILD-NODE(problem, node, action) into successors
-            successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, node.n, action), this::h));
-        }
-        // if successors is empty then return failure, infinity
-        if (successors.isEmpty()) { return new Result(searchController.failure(), Double.POSITIVE_INFINITY); }
-        // for each s in successors do // update f with value from previous search, if any
-        for (SuccessorNode s : successors) {
-            // s.f <- max(s.g + s.h, node.f)
-            s.f = Math.max(s.g + s.h, node.f);
-        }
-        // loop do
-        do {
-            // best <- the lowest f-value node in successors
-            Collections.sort(successors, (s1, s2) -> Double.compare(s1.f, s2.f));
-            SuccessorNode best = successors.get(0);
-            // if best.f > f_limit then return failure, best.f
-            if (best.f > f_limit) { return new Result(searchController.failure(), best.f); }
-            // alternative <- the second-lowest f-value among successors
-            double alternative = successors.size() > 1 ? successors.get(1).f : best.f;
-            // result, best.f <- RBFS(problem, best, min(f_limit, alternative))
-            Result result = rbfs(problem, best, Math.min(f_limit, alternative));
-            best.f        = result.newFCostLimit;
-            // if result != failure then return result
-            if (!result.isFailure()) { return result; }
-        } while (searchController.isExecuting());
-        return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
-    }
+	public double h(Node<A, S> node) {
+		return h.applyAsDouble(node);
+	}
 
-    public double h(Node<A, S> node) {
-    	return h.applyAsDouble(node);
-    }
+	class Result {
+		List<A> result;
+		boolean issolution;
+		double newFCostLimit = 0;
 
-    class Result {
-        List<A> result;
-        boolean issolution;
-        double newFCostLimit = 0;
+		Result(List<A> solution) {
+			this.result = solution;
+			this.issolution = true;
+		}
 
-        Result(List<A> solution) {
-            this.result     = solution;
-            this.issolution = true;
-        }
+		Result(List<A> failure, double newFCostLimit) {
+			this.result = failure;
+			this.issolution = false;
+			this.newFCostLimit = newFCostLimit;
+		}
 
-        Result(List<A> failure, double newFCostLimit) {
-            this.result        = failure;
-            this.issolution    = false;
-            this.newFCostLimit = newFCostLimit;
-        }
+		boolean isSolution() {
+			return issolution;
+		}
 
-        boolean isSolution() {
-            return issolution;
-        }
+		boolean isFailure() {
+			return !isSolution();
+		}
 
-        boolean isFailure() {
-            return !isSolution();
-        }
+		List<A> result() {
+			return result;
+		}
+	}
 
-        List<A> result() {
-            return result;
-        }
-    }
+	class SuccessorNode {
+		Node<A, S> n;
+		double g;
+		double h;
+		double f;
 
-    class SuccessorNode {
-        Node<A, S> n;
-        double     g;
-        double     h;
-        double     f;
-        SuccessorNode(Node<A, S> node, Function<Node<A, S>, Double> h) {
-            this.n = node;
-            this.g = node.pathCost();
-            this.h = h.apply(node);
-            this.f = g + this.h;
-        }
-    }
+		SuccessorNode(Node<A, S> node, Function<Node<A, S>, Double> h) {
+			this.n = node;
+			this.g = node.pathCost();
+			this.h = h.apply(node);
+			this.f = g + this.h;
+		}
+	}
 }

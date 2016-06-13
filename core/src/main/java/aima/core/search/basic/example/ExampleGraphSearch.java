@@ -49,14 +49,20 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 		// loop do
 		while (true) {
 			// if the frontier is empty then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// choose a leaf node and remove it from the frontier
 			Node<A, S> node = frontier.remove();
-			// if the node contains a goal state then return the corresponding solution
-			if (problem.isGoalState(node.state())) { return solution(node); }
+			// if the node contains a goal state then return the corresponding
+			// solution
+			if (problem.isGoalState(node.state())) {
+				return solution(node);
+			}
 			// add the node to the explored set
 			explored.add(node.state());
-			// expand the chosen node, adding the resulting nodes to the frontier
+			// expand the chosen node, adding the resulting nodes to the
+			// frontier
 			for (A action : problem.actions(node.state())) {
 				Node<A, S> child = newChildNode(problem, node, action);
 				// only if not in the frontier or explored set
@@ -74,21 +80,21 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 
 	public ExampleGraphSearch() {
 	}
-	
+
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
 		return nodeFactory.newChildNode(problem, node, action);
 	}
-	
+
 	public Queue<Node<A, S>> newFrontier(S initialState) {
 		Queue<Node<A, S>> frontier = new LinkedList<>();
 		frontier.add(nodeFactory.newRootNode(initialState));
 		return frontier;
 	}
-	
+
 	public Set<S> newExploredSet() {
 		return new HashSet<>();
 	}
-	
+
 	public List<A> failure() {
 		return searchController.failure();
 	}
@@ -96,7 +102,7 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
 	}
-	
+
 	public boolean containsState(Queue<Node<A, S>> frontier, Node<A, S> child) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(child.state()));

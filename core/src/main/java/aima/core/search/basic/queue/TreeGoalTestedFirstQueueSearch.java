@@ -10,16 +10,16 @@ import aima.core.search.api.Problem;
 /**
  * <pre>
  * function TREE-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
- *   node &lt;- a node with STATE = problem.INITIAL-STATE
+ *   node &larr; a node with STATE = problem.INITIAL-STATE
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   frontier &lt;- a queue with node as the only element
+ *   frontier &larr; a queue with node as the only element
  *   loop do
  *      if EMPTY?(frontier) then return failure
- *      node &lt;- POP(frontier) // chooses the shallowest node in frontier
+ *      node &larr; POP(frontier) // chooses the shallowest node in frontier
  *      for each action in problem.ACTIONS(node.STATE) do
- *          child &lt;- CHILD-NODE(problem, node, action)
+ *          child &larr; CHILD-NODE(problem, node, action)
  *          if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
- *          frontier &lt;- INSERT(child, frontier)
+ *          frontier &larr; INSERT(child, frontier)
  * </pre>
  *
  * An instance of the general tree-search algorithm (Figure ?.?) in which the
@@ -32,19 +32,24 @@ import aima.core.search.api.Problem;
  * @author Ruediger Lunde
  */
 public class TreeGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
-	// function TREE-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
+	// function TREE-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or
+	// failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE
 		Node<A, S> node = newRootNode(problem.initialState());
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (isGoalState(node, problem)) { return solution(node); }
+		if (isGoalState(node, problem)) {
+			return solution(node);
+		}
 		// frontier <- a queue with node as the only element
 		Queue<Node<A, S>> frontier = newFrontier(node);
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// node <- POP(frontier) // chooses the shallowest node in frontier
 			node = frontier.remove();
 			// for each action in problem.ACTIONS(node.STATE) do
@@ -52,18 +57,21 @@ public class TreeGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchFor
 				// child <- CHILD-NODE(problem, node, action)
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-				if (isGoalState(child, problem)) { return solution(child); }
+				if (isGoalState(child, problem)) {
+					return solution(child);
+				}
 				// frontier <- INSERT(child, frontier)
 				frontier.add(child);
 			}
 		}
 		return failure();
 	}
-	
+
 	//
 	// Supporting Code
 	public TreeGoalTestedFirstQueueSearch() {
-		// We default to a LinkedList instead of the parent classes default of a queue that supports
+		// We default to a LinkedList instead of the parent classes default of a
+		// queue that supports
 		// state tracking as it is not required in this instance.
 		setFrontierSupplier(LinkedList::new);
 	}

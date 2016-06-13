@@ -10,19 +10,19 @@ import aima.core.search.api.Problem;
 /**
  * <pre>
  * function GRAPH-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
- *   node &lt;- a node with STATE = problem.INITIAL-STATE
+ *   node &larr; a node with STATE = problem.INITIAL-STATE
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   frontier &lt;- a queue with node as the only element
- *   explored &lt;- an empty set
+ *   frontier &larr; a queue with node as the only element
+ *   explored &larr; an empty set
  *   loop do
  *      if EMPTY?(frontier) then return failure
- *      node &lt;- POP(frontier) // chooses the shallowest node in frontier
+ *      node &larr; POP(frontier) // chooses the shallowest node in frontier
  *      add node.STATE to explored
  *      for each action in problem.ACTIONS(node.STATE) do
- *          child &lt;- CHILD-NODE(problem, node, action)
+ *          child &larr; CHILD-NODE(problem, node, action)
  *          if child.STATE is not in explored or frontier then
  *              if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
- *              frontier &lt;- INSERT(child, frontier)
+ *              frontier &larr; INSERT(child, frontier)
  * </pre>
  *
  * An instance of the general graph-search algorithm (Figure ?.?) in which the
@@ -35,13 +35,16 @@ import aima.core.search.api.Problem;
  * @author Ruediger Lunde
  */
 public class GraphGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
-	// function GRAPH-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or failure
+	// function GRAPH-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or
+	// failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE
 		Node<A, S> node = newRootNode(problem.initialState());
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (isGoalState(node, problem)) { return solution(node); }
+		if (isGoalState(node, problem)) {
+			return solution(node);
+		}
 		// frontier <- a queue with node as the only element
 		Queue<Node<A, S>> frontier = newFrontier(node);
 		// explored <- an empty set
@@ -49,7 +52,9 @@ public class GraphGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchFo
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
+			if (frontier.isEmpty()) {
+				return failure();
+			}
 			// node <- POP(frontier) // chooses the shallowest node in frontier
 			node = frontier.remove();
 			// add node.STATE to explored
@@ -60,8 +65,11 @@ public class GraphGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchFo
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in explored or frontier then
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
-					// if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
-					if (isGoalState(child, problem)) { return solution(child); }
+					// if problem.GOAL-TEST(child.STATE) then return
+					// SOLUTION(child)
+					if (isGoalState(child, problem)) {
+						return solution(child);
+					}
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
 				}
