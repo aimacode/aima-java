@@ -164,8 +164,8 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        </td>
    </tr>
    <tr>
-       <td>3</td>
-       <td>5</td>
+       <td>3?</td>
+       <td>??</td>
        <td>Depth-first Search</td>
        <td>
        <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>            
