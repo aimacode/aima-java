@@ -51,6 +51,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr>
        <td>3?</td>
        <td>??</td>
        <td>Problem</td>
@@ -212,6 +218,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Recursive-Best-First-Search.md">Recursive-Best-First-Search</a></td>
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
    </tr>
    <tr>
        <td>4.?</td>
