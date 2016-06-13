@@ -48,8 +48,9 @@ public interface SearchController<A, S> extends ExecutionController {
 		// Use a LinkedList so we can insert into the front efficiently
 		LinkedList<A> result = new LinkedList<>();
 		if (node.parent() == null) {
-			// This should represent a NoOp action as it implies we are
-			// at the goal already, so there is nothing to do
+			// This should represent a NoOp action (a null should suffice in
+			// most cases) as it implies we are at the goal already, so there is
+			// nothing to do
 			result.add(node.action());
 		} else {
 			// This loop will skip the root node's action, as

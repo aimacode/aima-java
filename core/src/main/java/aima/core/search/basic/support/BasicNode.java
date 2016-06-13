@@ -1,5 +1,7 @@
 package aima.core.search.basic.support;
 
+import java.util.StringJoiner;
+
 import aima.core.search.api.Node;
 
 /**
@@ -39,6 +41,16 @@ public class BasicNode<A, S> implements Node<A, S> {
 	@Override
 	public double pathCost() {
 		return pathCost;
+	}
+	
+	@Override
+	public String toString() {
+		StringJoiner sj = new StringJoiner(", ", "Node(", ")");
+		sj.add(state.toString());
+		sj.add(parent == null ? "null" : parent.state().toString());
+		sj.add(action == null ? "null" : action.toString());
+		sj.add(""+pathCost);
+		return sj.toString();
 	}
 
 	//
