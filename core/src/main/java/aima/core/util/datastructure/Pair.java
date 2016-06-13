@@ -57,7 +57,6 @@ public class Pair<X, Y> {
 
 	@Override
 	public String toString() {
-		return "< " + getFirst().toString() + " , " + getSecond().toString()
-				+ " > ";
+		return "< " + getFirst().toString() + " , " + getSecond().toString() + " > ";
 	}
 }
