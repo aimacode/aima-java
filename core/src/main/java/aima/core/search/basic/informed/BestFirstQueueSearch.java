@@ -21,7 +21,7 @@ public class BestFirstQueueSearch<A, S> extends QueueSearchForActionsWrapper<A, 
 	public BestFirstQueueSearch(QueueSearchForActions<A, S> qsearchImpl, ToDoubleFunction<Node<A, S>> f) {
 		super(qsearchImpl);
 		qsearchImpl.getNodeFactory().setNodeCostFunction(f);
-		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(
+		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<A, S>(
 				() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashMap::new));
 	}
 
