@@ -7,10 +7,6 @@ public class GoAction {
 		this.goTo = goTo;
 	}
 
-	public String getName() {
-		return "Go(" + goTo + ")";
-	}
-
 	public String getGoTo() {
 		return goTo;
 	}
@@ -18,18 +14,18 @@ public class GoAction {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj != null && obj instanceof GoAction) {
-			return this.getName().equals(((GoAction) obj).getName());
+			return this.getGoTo().equals(((GoAction) obj).getGoTo());
 		}
 		return super.equals(obj);
 	}
 
 	@Override
 	public int hashCode() {
-		return getName().hashCode();
+		return getGoTo().hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return getName();
+		return "Go("+getGoTo()+")";
 	}
 }
