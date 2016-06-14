@@ -2,12 +2,12 @@ package aima.core.search.basic.support;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -16,15 +16,10 @@ import aima.core.search.api.Node;
 /**
  * An implementation of the Queue interface that wraps an underlying queue
  * implementation but tracks the state of all nodes contained in the underlying
- * queue in a Set. This is to allow algorithms that need to determine if a
- * particular state is present in the queue to do so quickly.<br>
- * <em>Note:</em> This is intended to be used with the search implementations
- * described in AIMA4e and as such it works under the assumption that there are
- * not to be > 1 node with equal state values in the queue at the same time. If
- * there is it will throw an exception. An alternative implementation could
- * count the number of nodes in the queue that contain a particular state but
- * this will introduce additional book keeping overhead and is not necessary for
- * the use cases currently present in the source base.
+ * queue in a Map (i.e. to count the number of instances of a particular state
+ * on the queue - intended to support tree based algorithms as well). This is to
+ * allow algorithms that need to determine if a particular state is present in
+ * the queue to do so quickly.<br>
  * 
  * @author Ciaran O'Reilly
  */
@@ -32,14 +27,14 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	private static final long serialVersionUID = 1L;
 	//
 	private Queue<Node<A, S>> queue;
-	private Set<S> states;
+	private Map<S, Integer> states;
 
 	public BasicFrontierQueue() {
-		this(LinkedList::new, HashSet::new);
+		this(LinkedList::new, HashMap::new);
 	}
 
 	public BasicFrontierQueue(Supplier<Queue<Node<A, S>>> underlyingQueueSupplier,
-			Supplier<Set<S>> stateMembershipSupplier) {
+			Supplier<Map<S, Integer>> stateMembershipSupplier) {
 		this.queue = underlyingQueueSupplier.get();
 		this.states = stateMembershipSupplier.get();
 	}
@@ -50,9 +45,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	public boolean add(Node<A, S> node) {
 		boolean inserted = queue.add(node);
 		if (inserted) {
-			if (!states.add(node.state())) {
-				throw new IllegalArgumentException("Node's state is already in the frontier: " + node);
-			}
+			incrementState(node.state());
 		}
 
 		return inserted;
@@ -62,9 +55,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	public boolean offer(Node<A, S> node) {
 		boolean inserted = queue.offer(node);
 		if (inserted) {
-			if (!states.add(node.state())) {
-				throw new IllegalArgumentException("Node's state is already in the frontier: " + node);
-			}
+			incrementState(node.state());
 		}
 		return inserted;
 	}
@@ -73,7 +64,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	public Node<A, S> remove() {
 		Node<A, S> result = queue.remove();
 		if (result != null) {
-			states.remove(result.state());
+			decrementState(result.state());
 		}
 		return result;
 	}
@@ -82,7 +73,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	public Node<A, S> poll() {
 		Node<A, S> result = queue.poll();
 		if (result != null) {
-			states.remove(result.state());
+			decrementState(result.state());
 		}
 		return result;
 	}
@@ -115,7 +106,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 			return queue.contains(o);
 		} else {
 			// Assume is a State
-			return states.contains(o);
+			return states.containsKey(o);
 		}
 	}
 
@@ -167,7 +158,7 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 			if (filter.test(node)) {
 				each.remove();
 				removed = true;
-				states.remove(node.state());
+				decrementState(node.state());
 			}
 		}
 		return removed;
@@ -193,5 +184,23 @@ public class BasicFrontierQueue<A, S> implements Queue<Node<A, S>>, Serializable
 	@Override
 	public int hashCode() {
 		return queue.hashCode();
+	}
+
+	protected void incrementState(S state) {
+		states.merge(state, 1, Integer::sum);
+	}
+
+	protected void decrementState(S state) {
+		// NOTE: works under the assumption the state is already in the map
+		// (otherwise will not work)
+		states.merge(state, -1, (oldValue, newValue) -> {
+			int decrementedValue = Integer.sum(oldValue, newValue);
+			if (decrementedValue == 0) {
+				return null; // Causes it to be removed from the map
+			}
+			else {
+				return decrementedValue;
+			}
+		});
 	}
 }

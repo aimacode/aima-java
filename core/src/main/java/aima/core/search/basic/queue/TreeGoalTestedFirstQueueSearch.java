@@ -71,8 +71,8 @@ public class TreeGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchFor
 	// Supporting Code
 	public TreeGoalTestedFirstQueueSearch() {
 		// We default to a LinkedList instead of the parent classes default of a
-		// queue that supports
-		// state tracking as it is not required in this instance.
+		// queue that supports state tracking as it is not required in this
+		// instance.
 		setFrontierSupplier(LinkedList::new);
 	}
 }

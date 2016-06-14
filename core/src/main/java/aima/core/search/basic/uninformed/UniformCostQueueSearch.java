@@ -1,6 +1,6 @@
 package aima.core.search.basic.uninformed;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import aima.core.search.basic.queue.QueueSearchForActions;
@@ -17,6 +17,6 @@ public class UniformCostQueueSearch<A, S> extends QueueSearchForActionsWrapper<A
 		super(qsearchImpl);
 		qsearchImpl.getNodeFactory().setNodeCostFunction(node -> node.pathCost());
 		qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<>(
-				() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashSet::new));
+				() -> new PriorityQueue<>(getQueueSearchForActionsImpl().getNodeFactory()), HashMap::new));
 	}
 }

@@ -17,6 +17,10 @@ import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.example.ExampleBreadthFirstSearch;
 import aima.core.search.basic.queue.GraphGoalTestedFirstQueueSearch;
+import aima.core.search.basic.queue.GraphQueueSearch;
+import aima.core.search.basic.queue.QueueSearchForActions;
+import aima.core.search.basic.queue.TreeGoalTestedFirstQueueSearch;
+import aima.core.search.basic.queue.TreeQueueSearch;
 import aima.core.search.basic.uninformed.BreadthFirstQueueSearch;
 import aima.test.core.unit.search.support.GoAction;
 import aima.test.core.unit.search.support.ProblemFactory;
@@ -26,7 +30,9 @@ public class BreadthFirstGraphSearchTest {
 
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "ExampleBreadthFirstSearch" }, { "BreadthFirstQueueSearch" } });
+		return Arrays.asList(new Object[][] { { "ExampleBreadthFirstSearch" },
+				{ "BreadthFirstQueueSearch-GraphGoalTestFirst" }, { "BreadthFirstQueueSearch-Graph" },
+				{ "BreadthFirstQueueSearch-TreeGoalTestedFirst" }, { "BreadthFirstQueueSearch-Tree" } });
 	}
 
 	@Parameter
@@ -37,7 +43,19 @@ public class BreadthFirstGraphSearchTest {
 		if ("ExampleBreadthFirstSearch".equals(searchFunctionName)) {
 			searchForActionsFunction = new ExampleBreadthFirstSearch<A, S>();
 		} else {
-			searchForActionsFunction = new BreadthFirstQueueSearch<A, S>(new GraphGoalTestedFirstQueueSearch<>());
+			QueueSearchForActions<A, S> qsearchVariant;
+			String variant = searchFunctionName.split("-")[1];
+			if (variant.equals("GraphGoalTestFirst")) { // NOTE: Matches version
+														// in book
+				qsearchVariant = new GraphGoalTestedFirstQueueSearch<>();
+			} else if (variant.equals("Graph")) {
+				qsearchVariant = new GraphQueueSearch<>();
+			} else if (variant.equals("TreeGoalTestedFirst")) {
+				qsearchVariant = new TreeGoalTestedFirstQueueSearch<>();
+			} else {
+				qsearchVariant = new TreeQueueSearch<>();
+			}
+			searchForActionsFunction = new BreadthFirstQueueSearch<A, S>(qsearchVariant);
 		}
 
 		return searchForActionsFunction.apply(problem);
@@ -64,7 +82,7 @@ public class BreadthFirstGraphSearchTest {
 		Assert.assertEquals(Collections.<String> emptyList(),
 				searchForActions(ProblemFactory.getSimpleBinaryTreeProblem("B", "A")));
 	}
-	
+
 	@Test
 	public void testReachableSimplifiedRoadmapOfPartOfRomania() {
 		Assert.assertEquals(Arrays.asList((String) null),
