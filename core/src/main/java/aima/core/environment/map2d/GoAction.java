@@ -1,4 +1,4 @@
-package aima.test.core.unit.search.support;
+package aima.core.environment.map2d;
 
 public class GoAction {
 	private String goTo;

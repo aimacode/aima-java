@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
+import aima.core.environment.map2d.GoAction;
 import aima.core.search.api.Node;
 import aima.core.search.basic.local.SimulatedAnnealingSearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicProblem;
-import aima.test.core.unit.search.support.GoAction;
 
 
 /*

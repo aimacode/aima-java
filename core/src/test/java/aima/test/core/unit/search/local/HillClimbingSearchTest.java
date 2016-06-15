@@ -1,10 +1,10 @@
 package aima.test.core.unit.search.local;
 
+import aima.core.environment.map2d.GoAction;
 import aima.core.search.api.Node;
 import aima.core.search.basic.local.HillClimbingSearch;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicProblem;
-import aima.test.core.unit.search.support.GoAction;
 
 import org.junit.Assert;
 import org.junit.Test;

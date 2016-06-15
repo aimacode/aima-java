@@ -1,9 +1,9 @@
-package aima.test.core.unit.search.support;
+package aima.core.environment.map2d;
 
-public class InLocationState {
+public class InState {
 	private String location;
 
-	public InLocationState(String location) {
+	public InState(String location) {
 		this.location = location;
 	}
 
@@ -13,8 +13,8 @@ public class InLocationState {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof InLocationState) {
-			return this.getLocation().equals(((InLocationState) obj).getLocation());
+		if (obj != null && obj instanceof InState) {
+			return this.getLocation().equals(((InState) obj).getLocation());
 		}
 		return super.equals(obj);
 	}

@@ -1,4 +1,4 @@
-package aima.test.core.unit.search.support;
+package aima.core.environment.support;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +15,15 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import aima.core.environment.map2d.GoAction;
+import aima.core.environment.map2d.InState;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.api.Problem;
 import aima.core.search.basic.support.BasicProblem;
 
 public class ProblemFactory {
 
-	public static Problem<GoAction, InLocationState> getSimplifiedRoadMapOfPartOfRomania(String initialState,
+	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomania(String initialState,
 			final String... goalStates) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
 		final Set<String> locations = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
@@ -35,7 +37,7 @@ public class ProblemFactory {
 			}
 		}
 
-		Function<InLocationState, Set<GoAction>> actionsFn = inLocationState -> {
+		Function<InState, Set<GoAction>> actionsFn = inLocationState -> {
 			Set<GoAction> actions = new LinkedHashSet<>();
 			for (String toLocation : simplifidRoadMapOfPartOfRomania
 					.getLocationsLinkedTo(inLocationState.getLocation())) {
@@ -44,10 +46,10 @@ public class ProblemFactory {
 			return actions;
 		};
 
-		BiFunction<InLocationState, GoAction, InLocationState> resultFn = (state,
-				action) -> new InLocationState(action.getGoTo());
+		BiFunction<InState, GoAction, InState> resultFn = (state,
+				action) -> new InState(action.getGoTo());
 
-		Predicate<InLocationState> goalTestPredicate = inLocationState -> {
+		Predicate<InState> goalTestPredicate = inLocationState -> {
 			for (String goalState : goalStates) {
 				if (goalState.equals(inLocationState.getLocation())) {
 					return true;
@@ -56,7 +58,7 @@ public class ProblemFactory {
 			return false;
 		};
 
-		return new BasicProblem<>(new InLocationState(initialState), actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {

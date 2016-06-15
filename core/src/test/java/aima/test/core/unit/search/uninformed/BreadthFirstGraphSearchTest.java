@@ -12,7 +12,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.example.ExampleBreadthFirstSearch;
@@ -22,8 +24,6 @@ import aima.core.search.basic.queue.QueueSearchForActions;
 import aima.core.search.basic.queue.TreeGoalTestedFirstQueueSearch;
 import aima.core.search.basic.queue.TreeQueueSearch;
 import aima.core.search.basic.uninformed.BreadthFirstQueueSearch;
-import aima.test.core.unit.search.support.GoAction;
-import aima.test.core.unit.search.support.ProblemFactory;
 
 @RunWith(Parameterized.class)
 public class BreadthFirstGraphSearchTest {
