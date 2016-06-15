@@ -18,12 +18,15 @@ import java.util.function.Predicate;
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.vacuum.VELocalState;
+import aima.core.environment.vacuum.VEWorldState;
+import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Problem;
 import aima.core.search.basic.support.BasicProblem;
 
 public class ProblemFactory {
 
-	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomania(String initialState,
+	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomaniaProblem(String initialState,
 			final String... goalStates) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
 		final Set<String> locations = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
@@ -59,6 +62,26 @@ public class ProblemFactory {
 		};
 
 		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
+	}
+	
+	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation, final VELocalState... leftToRightLocalStates) {		
+		// Actions are always the same irrespective of what state you are in.
+		final Set<String> actions = new LinkedHashSet<>();
+		actions.add(VacuumEnvironment.ACTION_LEFT);
+		actions.add(VacuumEnvironment.ACTION_RIGHT);
+		actions.add(VacuumEnvironment.ACTION_SUCK);
+		Function<VEWorldState, Set<String>> actionsFn = inState -> {
+			return actions;
+		};
+
+		BiFunction<VEWorldState, String, VEWorldState> resultFn = (worldState,
+				action) -> worldState.performDeterministic(action);
+
+		Predicate<VEWorldState> goalTestPredicate = worldState -> {
+			return worldState.isAllClean();
+		};
+
+		return new BasicProblem<>(new VEWorldState(inInitialLocation, leftToRightLocalStates), actionsFn, resultFn, goalTestPredicate);
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {

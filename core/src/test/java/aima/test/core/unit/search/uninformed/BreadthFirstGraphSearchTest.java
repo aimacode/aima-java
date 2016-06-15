@@ -15,6 +15,8 @@ import org.junit.runners.Parameterized.Parameters;
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
+import aima.core.environment.vacuum.VELocalState;
+import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.example.ExampleBreadthFirstSearch;
@@ -62,6 +64,97 @@ public class BreadthFirstGraphSearchTest {
 	}
 
 	@Test
+	public void testSimplifiedRoadmapOfPartOfRomania() {
+		Assert.assertEquals(Arrays.asList((String) null),
+				searchForActions(ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(
+						SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.ARAD)));
+
+		Assert.assertEquals(
+				Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
+						new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
+						new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
+				searchForActions(ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(
+						SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST)));
+	}
+
+	@Test
+	public void testSimpleVacuumEnvironment() {
+		Assert.assertEquals(Arrays.asList((String) null),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("A",
+						new VELocalState("A", VacuumEnvironment.Status.Clean),
+						new VELocalState("B", VacuumEnvironment.Status.Clean))));
+
+		Assert.assertEquals(Arrays.asList(VacuumEnvironment.ACTION_RIGHT, VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("A",
+						new VELocalState("A", VacuumEnvironment.Status.Clean),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty))));
+
+		Assert.assertEquals(Arrays.asList(VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("A",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Clean))));
+
+		Assert.assertEquals(
+				Arrays.asList(VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_RIGHT,
+						VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("A",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty))));
+
+		Assert.assertEquals(Arrays.asList((String) null),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("B",
+						new VELocalState("A", VacuumEnvironment.Status.Clean),
+						new VELocalState("B", VacuumEnvironment.Status.Clean))));
+
+		Assert.assertEquals(Arrays.asList(VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("B",
+						new VELocalState("A", VacuumEnvironment.Status.Clean),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty))));
+
+		Assert.assertEquals(Arrays.asList(VacuumEnvironment.ACTION_LEFT, VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("B",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Clean))));
+
+		Assert.assertEquals(
+				Arrays.asList(VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_LEFT,
+						VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("B",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty))));
+
+		// A slightly larger world
+		Assert.assertEquals(
+				Arrays.asList(VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_RIGHT,
+						VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_RIGHT, VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("A",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty),
+						new VELocalState("C", VacuumEnvironment.Status.Dirty))));
+
+		Assert.assertEquals(
+				Arrays.asList(VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_LEFT,
+						VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_LEFT, VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("C",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty),
+						new VELocalState("C", VacuumEnvironment.Status.Dirty))));
+
+		Assert.assertEquals(
+				// NOTE: This sequence of actions is only correct because we
+				// always order our possible actions [Left, Right, Suck] in
+				// ProblemFactory.getSimpleVacuumWorldProblem(), if the order
+				// was different we would get a different answer.
+				Arrays.asList(VacuumEnvironment.ACTION_LEFT, VacuumEnvironment.ACTION_SUCK,
+						VacuumEnvironment.ACTION_RIGHT, VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_RIGHT,
+						VacuumEnvironment.ACTION_SUCK),
+				searchForActions(ProblemFactory.getSimpleVacuumWorldProblem("B",
+						new VELocalState("A", VacuumEnvironment.Status.Dirty),
+						new VELocalState("B", VacuumEnvironment.Status.Dirty),
+						new VELocalState("C", VacuumEnvironment.Status.Dirty))));
+	}
+
+	@Test
 	public void testReachableSimpleBinaryTreeGoals() {
 		Assert.assertEquals(Arrays.asList((String) null),
 				searchForActions(ProblemFactory.getSimpleBinaryTreeProblem("A", "A")));
@@ -81,19 +174,5 @@ public class BreadthFirstGraphSearchTest {
 	public void testUnreachableSimpleBinaryTreeGoals() {
 		Assert.assertEquals(Collections.<String> emptyList(),
 				searchForActions(ProblemFactory.getSimpleBinaryTreeProblem("B", "A")));
-	}
-
-	@Test
-	public void testReachableSimplifiedRoadmapOfPartOfRomania() {
-		Assert.assertEquals(Arrays.asList((String) null),
-				searchForActions(ProblemFactory.getSimplifiedRoadMapOfPartOfRomania(
-						SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.ARAD)));
-
-		Assert.assertEquals(
-				Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
-						new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
-						new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
-				searchForActions(ProblemFactory.getSimplifiedRoadMapOfPartOfRomania(
-						SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST)));
 	}
 }

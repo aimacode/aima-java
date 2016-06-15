@@ -1,3 +1,4 @@
+
 package aima.core.environment.vacuum;
 
 /**
@@ -5,7 +6,8 @@ package aima.core.environment.vacuum;
  */
 public class VacuumEnvironment {
 	//
-	// Allowable actions in the Vacuum World Environment
+	// The 3 allowable actions in the Simple Vacuum World Environment
+	// (others in more complex worlds could be 'Up' and 'Down'.
 	public static final String ACTION_LEFT = "Left";
 	public static final String ACTION_RIGHT = "Right";
 	public static final String ACTION_SUCK = "Suck";

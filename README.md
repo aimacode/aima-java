@@ -24,7 +24,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>2.?</td>
        <td>??</td>
        <td>Table-Driven-Vacuum-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
@@ -36,7 +36,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>2.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Reflex-Vacuum-Agent.md">Reflex-Vacuum-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/agent/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>

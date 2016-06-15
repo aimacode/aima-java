@@ -1,8 +1,6 @@
-package aima.core.environment.vacuum.agent;
+package aima.core.environment.vacuum;
 
 import aima.core.agent.api.Agent;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.perceive.LocalPercept;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
@@ -22,11 +20,11 @@ import aima.core.environment.vacuum.perceive.LocalPercept;
  *
  * @author Ciaran O'Reilly
  */
-public class ReflexVacuumAgent implements Agent<String, LocalPercept> {
+public class ReflexVacuumAgent implements Agent<String, VEPercept> {
 
 	// function REFLEX-VACUUM-AGENT([location, status]) returns an action
 	@Override
-	public String perceive(LocalPercept percept) {
+	public String perceive(VEPercept percept) {
 		// if status = Dirty then return Suck
 		if (percept.status == VacuumEnvironment.Status.Dirty) {
 			return VacuumEnvironment.ACTION_SUCK;

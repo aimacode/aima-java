@@ -1,15 +1,13 @@
-package aima.core.environment.vacuum.perceive;
-
-import aima.core.environment.vacuum.VacuumEnvironment;
+package aima.core.environment.vacuum;
 
 /**
  * @author Ciaran O'Reilly
  */
-public class LocalPercept {
+public class VELocalState {
 	public final String location;
 	public final VacuumEnvironment.Status status;
 
-	public LocalPercept(String location, VacuumEnvironment.Status state) {
+	public VELocalState(String location, VacuumEnvironment.Status state) {
 		this.location = location;
 		this.status = state;
 	}
@@ -18,7 +16,7 @@ public class LocalPercept {
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj != null && this.getClass() == obj.getClass()) {
-			LocalPercept other = (LocalPercept) obj;
+			VELocalState other = (VELocalState) obj;
 			result = this.status == other.status && this.location.equals(other.location);
 		}
 		return result;
@@ -27,5 +25,10 @@ public class LocalPercept {
 	@Override
 	public int hashCode() {
 		return location.hashCode() + status.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return "VE("+location+", "+status+")";
 	}
 }
