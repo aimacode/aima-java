@@ -10,6 +10,7 @@ import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
+import aima.core.logic.basic.propositional.kb.data.Model;
 
 
 /**
@@ -79,6 +80,16 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	
 	public boolean remove(PropositionSymbol p) {
 		return assignments.remove(p);
+	}
+	
+	public Model flip(PropositionSymbol s) {
+		if (isTrue(s)) {
+			return union(s, false);
+		}
+		if (isFalse(s)) {
+			return union(s, true);
+		}
+		return this;
 	}
 	
 	/**
