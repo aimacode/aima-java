@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * @author Ciaran O'Reilly
  */
-public class SearchSpaceInfoController<A, S> implements TreeSearchAlgoSimulator.Observer<A, S> {
-    @FXML private GridPane   searchSpaceViewGridPane;
+public class SearchTreeInfoController<A, S> implements TreeSearchAlgoSimulator.Observer<A, S> {
+    @FXML private GridPane   searchTreeViewGridPane;
 
     @Override
     public void setSimulator(TreeSearchAlgoSimulator<A, S> simulator) {
@@ -32,34 +32,34 @@ public class SearchSpaceInfoController<A, S> implements TreeSearchAlgoSimulator.
                 currentLevel     = cmd.lastNodeVisited() != null ? BasicNode.depth(cmd.lastNodeVisited()) : 0;
             }
 
-            int childCount = searchSpaceViewGridPane.getChildren().size();
+            int childCount = searchTreeViewGridPane.getChildren().size();
             if ((childCount / 4) > (levelCounts.size()+1)) {
-                searchSpaceViewGridPane.getChildren().remove((levelCounts.size()+1)*4, searchSpaceViewGridPane.getChildren().size());
+                searchTreeViewGridPane.getChildren().remove((levelCounts.size()+1)*4, searchTreeViewGridPane.getChildren().size());
             }
             int offset = 0;
             for (int i = 0; i < levelCounts.size(); i++) {
                 offset += 4;
-                if (offset >= searchSpaceViewGridPane.getChildren().size()) {
+                if (offset >= searchTreeViewGridPane.getChildren().size()) {
                     Label arrow = new Label("");
                     if (currentLevel == i) {
                         FXUtil.setDefaultLabelIcon(arrow, FontAwesomeIcons.ARROW_RIGHT);
                     }
-                    searchSpaceViewGridPane.add(arrow, 0, i+1);
-                    searchSpaceViewGridPane.add(new Label(""+i), 1, i+1);
-                    searchSpaceViewGridPane.add(new Label(""+levelCounts.get(i)), 2, i+1);
-                    searchSpaceViewGridPane.add(new Label(""+unexploredCounts.get(i)), 3, i+1);
+                    searchTreeViewGridPane.add(arrow, 0, i+1);
+                    searchTreeViewGridPane.add(new Label(""+i), 1, i+1);
+                    searchTreeViewGridPane.add(new Label(""+levelCounts.get(i)), 2, i+1);
+                    searchTreeViewGridPane.add(new Label(""+unexploredCounts.get(i)), 3, i+1);
                 }
                 else {
-                    Label arrow = (Label) searchSpaceViewGridPane.getChildren().get(offset);
+                    Label arrow = (Label) searchTreeViewGridPane.getChildren().get(offset);
                     if (currentLevel == i) {
                         FXUtil.setDefaultLabelIcon(arrow, FontAwesomeIcons.ARROW_RIGHT);
                     }
                     else {
                         arrow.setGraphic(null);
                     }
-                    ((Label)searchSpaceViewGridPane.getChildren().get(offset+1)).setText(""+i);
-                    ((Label)searchSpaceViewGridPane.getChildren().get(offset+2)).setText(""+levelCounts.get(i));
-                    ((Label)searchSpaceViewGridPane.getChildren().get(offset+3)).setText(""+unexploredCounts.get(i));
+                    ((Label)searchTreeViewGridPane.getChildren().get(offset+1)).setText(""+i);
+                    ((Label)searchTreeViewGridPane.getChildren().get(offset+2)).setText(""+levelCounts.get(i));
+                    ((Label)searchTreeViewGridPane.getChildren().get(offset+3)).setText(""+unexploredCounts.get(i));
                 }
             }
         });
