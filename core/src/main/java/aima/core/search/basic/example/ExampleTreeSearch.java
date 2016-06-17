@@ -1,6 +1,5 @@
 package aima.core.search.basic.example;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -53,7 +52,9 @@ public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 			}
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			frontier.addAll(expand(node, problem));
+			for (A action : problem.actions(node.state())) {
+				frontier.add(newChildNode(problem, node, action));
+			}
 		}
 	}
 
@@ -79,13 +80,7 @@ public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 		return searchController.solution(node);
 	}
 
-	public List<Node<A, S>> expand(Node<A, S> node, Problem<A, S> problem) {
-		List<Node<A, S>> childNodes = new ArrayList<>();
-
-		for (A action : problem.actions(node.state())) {
-			childNodes.add(nodeFactory.newChildNode(problem, node, action));
-		}
-
-		return childNodes;
+	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
+		return nodeFactory.newChildNode(problem, node, action);
 	}
 }
