@@ -262,6 +262,24 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/PLResolution.java">PLResolution</a></td>
    </tr>
    <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/PL-FC-Entails.md">PL-FC-Entails?</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/PLFCEntails.java">PLFCEntails</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/DPLL-Satisfiable.md">DPLL-Satisfiable?</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/DPLLSatisfiable.java">DPLLSatisfiable</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/WalkSAT.md">WalkSAT</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
