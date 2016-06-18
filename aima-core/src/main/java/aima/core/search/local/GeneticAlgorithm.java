@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.problem.GoalTest;
 import aima.core.util.CancelableThread;
 import aima.core.util.Util;
 

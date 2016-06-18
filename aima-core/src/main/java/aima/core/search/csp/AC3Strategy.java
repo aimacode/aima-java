@@ -1,7 +1,8 @@
 package aima.core.search.csp;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Queue;
+
+import aima.core.search.framework.QueueFactory;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class AC3Strategy {
 	 */
 	public DomainRestoreInfo reduceDomains(CSP csp) {
 		DomainRestoreInfo result = new DomainRestoreInfo();
-		Deque<Variable> queue = new LinkedList<Variable>();
+		Queue<Variable> queue = QueueFactory.<Variable>createLifoQueue();
 		for (Variable var : csp.getVariables())
 			queue.add(var);
 		reduceDomains(queue, csp, result);
@@ -69,7 +70,7 @@ public class AC3Strategy {
 		Domain domain = csp.getDomain(var);
 		if (domain.contains(value)) {
 			if (domain.size() > 1) {
-				Deque<Variable> queue = new LinkedList<Variable>();
+				Queue<Variable> queue = QueueFactory.<Variable>createLifoQueue();
 				queue.add(var);
 				result.storeDomainFor(var, domain);
 				csp.setDomain(var, new Domain(new Object[] { value }));
@@ -81,7 +82,7 @@ public class AC3Strategy {
 		return result.compactify();
 	}
 
-	private void reduceDomains(Deque<Variable> queue, CSP csp,
+	private void reduceDomains(Queue<Variable> queue, CSP csp,
 			DomainRestoreInfo info) {
 		while (!queue.isEmpty()) {
 			Variable var = queue.remove();
@@ -93,7 +94,7 @@ public class AC3Strategy {
 							info.setEmptyDomainFound(true);
 							return;
 						}
-						queue.addFirst(neighbor);
+						queue.add(neighbor);
 					}
 				}
 			}

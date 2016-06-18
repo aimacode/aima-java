@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.problem;
 
 /**
  * An interface describing a problem that can be tackled from both directions at

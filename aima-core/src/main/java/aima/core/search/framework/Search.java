@@ -3,6 +3,7 @@ package aima.core.search.framework;
 import java.util.List;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ravi Mohan

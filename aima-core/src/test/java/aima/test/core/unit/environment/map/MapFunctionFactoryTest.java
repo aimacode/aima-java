@@ -10,8 +10,8 @@ import aima.core.agent.Action;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * @author Ciaran O'Reilly

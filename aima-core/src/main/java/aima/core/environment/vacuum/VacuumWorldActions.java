@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.ActionsFunction;
+import aima.core.search.framework.problem.ActionsFunction;
 
 /**
  * Specifies the actions available to the agent at state s

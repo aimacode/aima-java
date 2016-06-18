@@ -8,9 +8,8 @@ import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
-import aima.core.search.framework.SearchUtils;
-import aima.core.search.framework.SearchUtils.NodeListener;
+import aima.core.search.framework.NodeExpander.NodeListener;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.datastructure.Point2D;
@@ -89,15 +88,14 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 
 		@Override
 		public void prepare(String changedSelector) {
+			super.prepare(changedSelector);
 			visitedStates.clear();
-			SearchUtils.clearNodeListeners();
-			SearchUtils.addNodeListener(new NodeListener() {
+			search.getNodeExpander().addNodeListener(new NodeListener() {
 				@Override
 				public void onNodeExpanded(Node node) {
 					visitedStates.add(node.getState());
 				}
 			});
-			super.prepare(changedSelector);
 		}
 
 		/** Creates new agents and adds them to the current environment. */

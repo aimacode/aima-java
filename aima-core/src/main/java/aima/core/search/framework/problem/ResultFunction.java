@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.problem;
 
 import aima.core.agent.Action;
 

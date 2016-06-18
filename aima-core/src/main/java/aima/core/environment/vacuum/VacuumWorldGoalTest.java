@@ -1,7 +1,7 @@
 package aima.core.environment.vacuum;
 
 import aima.core.agent.Agent;
-import aima.core.search.framework.GoalTest;
+import aima.core.search.framework.problem.GoalTest;
 
 /**
  * Tests for goals states

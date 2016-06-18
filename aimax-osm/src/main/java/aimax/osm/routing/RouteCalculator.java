@@ -5,8 +5,8 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.util.CancelableThread;

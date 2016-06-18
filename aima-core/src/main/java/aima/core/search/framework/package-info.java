@@ -1,5 +1,5 @@
 /**
- * This package (together with subpackage <code>qsearch</code>) contains base
+ * This package (together with its subpackages) contains base
  * classes for search algorithm implementations. Many search algorithms are
  * basically queue-based algorithms. They construct a tree of nodes which
  * represents the possible sequences of actions and the corresponding resulting

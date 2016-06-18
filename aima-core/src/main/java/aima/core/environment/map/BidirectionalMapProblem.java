@@ -1,9 +1,9 @@
 package aima.core.environment.map;
 
-import aima.core.search.framework.BidirectionalProblem;
-import aima.core.search.framework.DefaultGoalTest;
-import aima.core.search.framework.GoalTest;
-import aima.core.search.framework.Problem;
+import aima.core.search.framework.problem.BidirectionalProblem;
+import aima.core.search.framework.problem.DefaultGoalTest;
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ciaran O'Reilly

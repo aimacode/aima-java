@@ -12,10 +12,10 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SolutionChecker;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 

@@ -10,9 +10,9 @@ import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ciaran O'Reilly

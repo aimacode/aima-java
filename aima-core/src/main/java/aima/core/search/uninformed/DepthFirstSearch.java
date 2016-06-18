@@ -1,14 +1,14 @@
 package aima.core.search.uninformed;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.QueueFactory;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
@@ -25,7 +25,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ruediger Lunde
  * 
  */
-public class DepthFirstSearch implements Search {
+public class DepthFirstSearch implements SearchForActions {
 
 	QueueSearch implementation;
 
@@ -33,10 +33,17 @@ public class DepthFirstSearch implements Search {
 		this.implementation = impl;
 	}
 
+	@Override
 	public List<Action> search(Problem p) {
-		return implementation.search(p, Collections.asLifoQueue(new LinkedList<Node>()));
+		return implementation.search(p, QueueFactory.<Node>createLifoQueue());
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return implementation.getNodeExpander();
+	}
+	
+	@Override
 	public Metrics getMetrics() {
 		return implementation.getMetrics();
 	}

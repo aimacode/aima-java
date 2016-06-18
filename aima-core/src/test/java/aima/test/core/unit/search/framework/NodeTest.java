@@ -27,7 +27,7 @@ public class NodeTest {
 	public void testGetPathFromRoot() {
 		Node node1 = new Node("state1");
 		Node node2 = new Node("state2", node1, null, 1.0);
-		Node node3 = new Node("state3", node2, null, 1.0);
+		Node node3 = new Node("state3", node2, null, 2.0);
 		List<Node> path = node3.getPathFromRoot();
 		Assert.assertEquals(node1, path.get(0));
 		Assert.assertEquals(node2, path.get(1));

@@ -7,10 +7,11 @@ import java.util.Map;
 import java.util.Queue;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.BidirectionalProblem;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.problem.BidirectionalProblem;
+import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
 
 /**
@@ -43,6 +44,11 @@ public class BidirectionalSearch extends QueueSearch {
 	private ExtendedNode goalStateNode;
 
 	public BidirectionalSearch() {
+		this(new NodeExpander());
+	}
+
+	public BidirectionalSearch(NodeExpander nodeExpander) {
+		super(nodeExpander);
 		explored = new ArrayList<Map<Object, ExtendedNode>>(2);
 		explored.add(new HashMap<Object, ExtendedNode>());
 		explored.add(new HashMap<Object, ExtendedNode>());
@@ -79,8 +85,8 @@ public class BidirectionalSearch extends QueueSearch {
 		Problem orgP = ((BidirectionalProblem) problem).getOriginalProblem();
 		Problem revP = ((BidirectionalProblem) problem).getReverseProblem();
 		ExtendedNode initStateNode;
-		initStateNode = new ExtendedNode(new Node(orgP.getInitialState()), ORG_P_IDX);
-		goalStateNode = new ExtendedNode(new Node(revP.getInitialState()), REV_P_IDX);
+		initStateNode = new ExtendedNode(nodeExpander.createRootNode(orgP.getInitialState()), ORG_P_IDX);
+		goalStateNode = new ExtendedNode(nodeExpander.createRootNode(revP.getInitialState()), REV_P_IDX);
 
 		if (orgP.getInitialState().equals(revP.getInitialState()))
 			return getSolution(orgP, initStateNode, goalStateNode);
@@ -96,14 +102,12 @@ public class BidirectionalSearch extends QueueSearch {
 
 			// if the node contains a goal state then return the
 			// corresponding solution
-			if (!earlyGoalCheck
-					&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
+			if (!earlyGoalCheck && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
 				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
 
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node s : SearchUtils.expandNode(nodeToExpand, problem)) {
+			for (Node s : nodeExpander.expand(nodeToExpand, problem)) {
 				ExtendedNode successor = new ExtendedNode(s, nodeToExpand.getProblemIndex());
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, successor) != null) {
@@ -189,7 +193,7 @@ public class BidirectionalSearch extends QueueSearch {
 			if (action != null) {
 				Object nextState = revNode.getParent().getState();
 				double stepCosts = orgP.getStepCostFunction().c(revNode.getState(), action, nextState);
-				orgNode = new Node(nextState, orgNode, action, stepCosts);
+				orgNode = nodeExpander.createNode(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else {
 				return SearchUtils.failure();
@@ -250,8 +254,7 @@ public class BidirectionalSearch extends QueueSearch {
 		int problemIndex;
 
 		public ExtendedNode(Node node, int problemIndex) {
-			super(node.getState(), node.getParent(), node.getAction(),
-					node.getParent() != null ? node.getPathCost() - node.getParent().getPathCost() : 0.0);
+			super(node.getState(), node.getParent(), node.getAction(), node.getPathCost());
 			this.problemIndex = problemIndex;
 		}
 

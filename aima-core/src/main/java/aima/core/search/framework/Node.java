@@ -56,7 +56,7 @@ public class Node {
 	}
 
 	/**
-	 * Constructs a node with the specified state, parent, action, and step
+	 * Constructs a node with the specified state, parent, action, and path
 	 * cost.
 	 * 
 	 * @param state
@@ -66,17 +66,16 @@ public class Node {
 	 * @param action
 	 *            the action that was applied to the parent to generate the
 	 *            node.
-	 * @param stepCost
-	 *            the cost from the parent node to this node. Used to calculate
-	 *            the full pathCost from the root node to here, based on the
-	 *            parent's path cost.
+	 * @param pathCost
+	 *            full pathCost from the root node to here, typically
+	 *            the root's path costs plus the step costs for executing
+	 *            the the specified action.
 	 */
-	public Node(Object state, Node parent, Action action, double stepCost) {
+	public Node(Object state, Node parent, Action action, double pathCost) {
 		this(state);
 		this.parent = parent;
 		this.action = action;
-		if (parent != null)
-			this.pathCost = parent.pathCost + stepCost;
+		this.pathCost = pathCost;
 	}
 
 	/**
@@ -145,7 +144,6 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return "[parent=" + parent + ", action=" + action + ", state="
-				+ getState() + ", pathCost=" + pathCost + "]";
+		return "[parent=" + parent + ", action=" + action + ", state=" + getState() + ", pathCost=" + pathCost + "]";
 	}
 }

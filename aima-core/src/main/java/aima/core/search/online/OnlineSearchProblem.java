@@ -1,9 +1,9 @@
 package aima.core.search.online;
 
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.DefaultStepCostFunction;
-import aima.core.search.framework.GoalTest;
-import aima.core.search.framework.StepCostFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.DefaultStepCostFunction;
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.search.framework.problem.StepCostFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 147.<br>

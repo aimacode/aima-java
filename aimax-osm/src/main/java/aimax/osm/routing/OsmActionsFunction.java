@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.ActionsFunction;
+import aima.core.search.framework.problem.ActionsFunction;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;

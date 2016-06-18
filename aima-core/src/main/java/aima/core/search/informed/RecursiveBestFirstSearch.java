@@ -10,9 +10,10 @@ import aima.core.agent.Action;
 import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page
@@ -49,7 +50,7 @@ import aima.core.search.framework.SearchUtils;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class RecursiveBestFirstSearch implements Search {
+public class RecursiveBestFirstSearch implements SearchForActions {
 
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
@@ -59,9 +60,11 @@ public class RecursiveBestFirstSearch implements Search {
 
 	private final EvaluationFunction evaluationFunction;
 	private boolean avoidLoops;
+	private final NodeExpander nodeExpander;
+	
 	// stores the states on the current path if avoidLoops is true.
 	Set<Object> explored = new HashSet<Object>();
-	private Metrics metrics = new Metrics();
+	private Metrics metrics;
 
 	public RecursiveBestFirstSearch(EvaluationFunction ef) {
 		this(ef, false);
@@ -69,12 +72,20 @@ public class RecursiveBestFirstSearch implements Search {
 
 	/** Constructor which allows to enable the loop avoidance strategy. */
 	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops) {
+		this(ef, avoidLoops, new NodeExpander());
+	}
+	
+	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops, NodeExpander nodeExpander) {
 		evaluationFunction = ef;
 		this.avoidLoops = avoidLoops;
+		this.nodeExpander = nodeExpander;
+		metrics = new Metrics();
 	}
+	
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
+	@Override
 	public List<Action> search(Problem p) {
 		List<Action> actions = new ArrayList<Action>();
 		explored.clear();
@@ -82,7 +93,7 @@ public class RecursiveBestFirstSearch implements Search {
 		clearInstrumentation();
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
-		Node n = new Node(p.getInitialState());
+		Node n = nodeExpander.createRootNode(p.getInitialState());
 		SearchResult sr = rbfs(p, n, evaluationFunction.f(n), INFINITY, 0);
 		if (sr.hasSolution()) {
 			Node s = sr.getSolutionNode();
@@ -95,17 +106,25 @@ public class RecursiveBestFirstSearch implements Search {
 		return actions;
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
+	
 	/**
 	 * Returns all the search metrics.
 	 */
+	@Override
 	public Metrics getMetrics() {
+		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 
 	/**
 	 * Sets all metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	private void clearInstrumentation() {
+		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_MAX_RECURSIVE_DEPTH, 0);
 		metrics.set(METRIC_PATH_COST, 0.0);
@@ -195,8 +214,7 @@ public class RecursiveBestFirstSearch implements Search {
 	}
 
 	private List<Node> expandNode(Node node, Problem problem) {
-		metrics.incrementInt(METRIC_NODES_EXPANDED);
-		List<Node> result = SearchUtils.expandNode(node, problem);
+		List<Node> result = nodeExpander.expand(node, problem);
 		if (avoidLoops) {
 			explored.add(node.getState());
 			for (Iterator<Node> ni = result.iterator(); ni.hasNext();)

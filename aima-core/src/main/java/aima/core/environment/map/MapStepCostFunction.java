@@ -1,7 +1,7 @@
 package aima.core.environment.map;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.StepCostFunction;
+import aima.core.search.framework.problem.StepCostFunction;
 
 /**
  * Implementation of StepCostFunction interface that uses the distance between

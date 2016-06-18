@@ -7,7 +7,8 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.Problem;
+import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.7, page 77.
@@ -41,9 +42,17 @@ import aima.core.search.framework.Problem;
  * @author Ruediger Lunde
  */
 public class GraphSearch extends QueueSearch {
-	
+
 	private Set<Object> explored = new HashSet<Object>();
-	
+
+	public GraphSearch() {
+		this(new NodeExpander());
+	}
+
+	public GraphSearch(NodeExpander nodeExpander) {
+		super(nodeExpander);
+	}
+
 	/**
 	 * Clears the set of explored states and calls the search implementation of
 	 * <code>QueSearch</code>

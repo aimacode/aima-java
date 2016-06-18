@@ -1,7 +1,7 @@
 package aimax.osm.routing;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.StepCostFunction;
+import aima.core.search.framework.problem.StepCostFunction;
 
 /**
  * Assumes actions of type <code>OsmMoveAction<code> and gets the

@@ -8,6 +8,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ravi Mohan

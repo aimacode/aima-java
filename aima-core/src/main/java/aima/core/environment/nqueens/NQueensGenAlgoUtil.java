@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import aima.core.search.framework.GoalTest;
+import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.Individual;
 import aima.core.util.datastructure.XYLocation;

@@ -9,7 +9,7 @@ import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
 import aima.core.environment.vacuum.VacuumWorldActions;
 import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.DefaultStepCostFunction;
+import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 
 /**

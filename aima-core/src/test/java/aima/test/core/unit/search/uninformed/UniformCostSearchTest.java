@@ -14,10 +14,10 @@ import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.search.framework.DefaultGoalTest;
-import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.problem.DefaultGoalTest;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.search.uninformed.UniformCostSearch;
 

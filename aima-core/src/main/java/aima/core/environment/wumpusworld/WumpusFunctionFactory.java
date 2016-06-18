@@ -8,8 +8,8 @@ import aima.core.agent.Action;
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.TurnRight;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.ResultFunction;
+import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * Factory class for constructing functions for use in the Wumpus World environment.

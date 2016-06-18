@@ -2,9 +2,9 @@ package aima.core.search.framework;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import aima.core.agent.Action;
+import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
@@ -16,7 +16,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
-public class PrioritySearch implements Search {
+public class PrioritySearch implements SearchForActions {
 	private final QueueSearch implementation;
 	private final Comparator<Node> comparator;
 
@@ -25,14 +25,21 @@ public class PrioritySearch implements Search {
 		comparator = comp;
 	}
 
+	@Override
 	public List<Action> search(Problem p) {
-		return implementation.search(p, new PriorityQueue<Node>(5, comparator));
+		return implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
 	}
 
 	public Comparator<Node> getComparator() {
 		return comparator;
 	}
 
+	@Override
+	public NodeExpander getNodeExpander() {
+		return implementation.getNodeExpander();
+	}
+	
+	@Override
 	public Metrics getMetrics() {
 		return implementation.getMetrics();
 	}
