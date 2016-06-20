@@ -1,4 +1,4 @@
-@CODE:Pseudo-Code
+@CODE:Pseudocode
 @start@function TREE-SEARCH(problem) returns a solution, or failure@start@
   @initialize@initialize the frontier using the initial state of the problem@initialize@
   loop do
@@ -25,3 +25,15 @@
     }
   }
 }
+@CODE:Python
+@start@def tree_search(problem, frontier):@start@
+    """Search through the successors of a problem to find a goal.
+    The argument frontier should be an empty queue.
+    Don't worry about repeated paths to a state. [Figure 3.7]"""
+    @initialize@frontier.append(Node(problem.initial))@initialize@
+    @frontier-empty-check@while frontier:@frontier-empty-check@
+        @frontier-remove@node = frontier.pop()@frontier-remove@
+        if @check-goal@problem.goal_test(node.state)@check-goal@:
+            @solution@return node@solution@
+        @add-frontier@frontier.extend@add-frontier@(@expand-node@node.expand(problem@expand-node@))
+return @failure@None@failure@
