@@ -280,10 +280,16 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
    </tr>
    <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Hybrid-Wumpus-Agent.md">Hybrid-Wumpus-Agent</a></td>
        <td></td>
-       <td></td>
-       <td></td>
-       <td></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/SATPlan.md">SATPlan</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/SATPlan.java">SATPlan</a></td>
    </tr>
    </tbody>
 </table>
