@@ -85,7 +85,7 @@ public class ProblemFactory {
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {
-		return Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "0", "P", "Q", "R",
+		return Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
 				"S", "T", "U", "V", "W", "X", "Y", "Z");
 	}
 

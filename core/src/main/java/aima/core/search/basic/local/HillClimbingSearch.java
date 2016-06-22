@@ -1,21 +1,13 @@
 package aima.core.search.basic.local;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.ToDoubleFunction;
 
-import aima.core.search.api.Node;
-import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
-import aima.core.search.api.SearchForActionsFunction;
-import aima.core.search.api.SearchController;
-import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicSearchController;
+import aima.core.search.api.SearchForStateFunction;
+import aima.core.util.ExecutionController;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
- * <br>
  * <br>
  * <p>
  * 
@@ -35,69 +27,82 @@ import aima.core.search.basic.support.BasicSearchController;
  * but if a heuristic cost estimate h is used, we would find the neighbor with
  * the lowest h.
  *
- * @author Paul Anton
- * @author Ravi Mohan
- * @author Mike Stampone
+ * @author Ciaran O'Reilly
  * @author Ruediger Lunde
+ * @author Ravi Mohan
+ * @author Paul Anton
+ * @author Mike Stampone
  */
-public class HillClimbingSearch<A, S> implements SearchForActionsFunction<A, S> {
+public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	@Override
-	public List<A> apply(Problem<A, S> problem) {
+	public S apply(Problem<A, S> problem) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		SuccessorNode current = new SuccessorNode(nodeFactory.newRootNode(problem.initialState()), this.h);
-		SuccessorNode neighbor;
+		Node current = makeNode(problem.initialState());
 		// loop do
-		do {
+		while (loopDo()) {
 			// neighbor <- a highest-valued successor of current
-			List<SuccessorNode> successors = new ArrayList<>();
-			for (A action : problem.actions(current.n.state())) {
-				successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, current.n, action), this.h));
-			}
-			if (successors.isEmpty()) {
-				return searchController.solution(current.n);
-			} else {
-				Collections.sort(successors, (s1, s2) -> Double.compare(s2.value, s1.value));
-				neighbor = successors.get(0);
-			}
+			Node neighbor = highestValuedSuccessor(current, problem);
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if (neighbor.value <= current.value) {
-				return searchController.solution(current.n);
+				return current.state;
 			}
+			// current <- neighbor
 			current = neighbor;
-		} while (true);
+		}
+		return current.state;
 	}
 
 	//
 	// Supporting Code
-	private ToDoubleFunction<Node<A, S>> h;
-	private SearchController<A, S> searchController;
-	private NodeFactory<A, S> nodeFactory;
-
-	public HillClimbingSearch(ToDoubleFunction<Node<A, S>> h) {
-		this(h, new BasicSearchController<>(), new BasicNodeFactory<>());
-	}
-
-	public HillClimbingSearch(ToDoubleFunction<Node<A, S>> h, SearchController<A, S> searchController,
-			NodeFactory<A, S> nodeFactory) {
-		this.h = h;
-		this.searchController = searchController;
-		this.nodeFactory = nodeFactory;
-	}
-
-	public ToDoubleFunction<Node<A, S>> getHeuristicFunctionH() {
-		return h;
-	}
-
-	class SuccessorNode {
-		Node<A, S> n;
+	public class Node {
+		S state;
 		double value;
-		double h;
 
-		SuccessorNode(Node<A, S> node, ToDoubleFunction<Node<A, S>> h) {
-			this.n = node;
-			this.h = h.applyAsDouble(node);
-			this.value = -1 * this.h;
+		Node(S state, double value) {
+			this.state = state;
+			this.value = value;
 		}
+
+		@Override
+		public String toString() {
+			return "N(" + state.toString() + ", " + value + ")";
+		}
+	}
+
+	protected ToDoubleFunction<S> stateValueFn;
+	protected ExecutionController executionController;
+
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn) {
+		this(stateValueFn, new ExecutionController() {
+		});
+	}
+
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, ExecutionController executionController) {
+		this.stateValueFn = stateValueFn;
+		this.executionController = executionController;
+	}
+
+	public Node makeNode(S state) {
+		return new Node(state, stateValueFn.applyAsDouble(state));
+	}
+
+	public boolean loopDo() {
+		return executionController.isExecuting();
+	}
+
+	public Node highestValuedSuccessor(Node current, Problem<A, S> problem) {
+		Node highestValueSuccessor = null;
+		for (A action : problem.actions(current.state)) {
+			Node successor = makeNode(problem.result(current.state, action));
+			if (highestValueSuccessor == null || successor.value > highestValueSuccessor.value) {
+				highestValueSuccessor = successor;
+			}
+		}
+		// If no successor then just be our own neighbor
+		if (highestValueSuccessor == null) {
+			highestValueSuccessor = current;
+		}
+		return highestValueSuccessor;
 	}
 }
