@@ -18,9 +18,9 @@ public class RectangularProblem extends BasicProblem<String, AtVertex> {
                 RectangularProblem.goalTest(goals));
     }
 
-    public static Function<AtVertex, Set<String>> actions(final int xSize, int ySize)  {
+    public static Function<AtVertex, List<String>> actions(final int xSize, int ySize)  {
         return atVertex -> {
-            Set<String> result = new LinkedHashSet<>();
+            List<String> result = new ArrayList<>();
             if (atVertex.y > 0) {
                 result.add(go(atVertex.x, atVertex.y-1));
             }

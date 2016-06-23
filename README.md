@@ -247,7 +247,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>4.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Simulated-Annealing.md">Simulated-Annealing</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/local/SimulatedAnnealingSearch.java">SimulatedAnnealingSearch</a></td>
+       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleSimulatedAnnealingSearch.java">ExampleSimulatedAnnealingSearch</a></td>
    </tr>
    <tr>
        <td></td>

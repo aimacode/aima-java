@@ -1,6 +1,6 @@
 package aima.core.search.api;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ??.<br>
@@ -43,9 +43,9 @@ public interface Problem<A, S> {
 	 *
 	 * @param s
 	 *            a particular state s
-	 * @return the set of actions that can be executed in s
+	 * @return the set of actions that can be executed in s (returned in a list for access convenience).
 	 */
-	Set<A> actions(S s);
+	List<A> actions(S s);
 
 	/**
 	 * Represents the Transition Model.

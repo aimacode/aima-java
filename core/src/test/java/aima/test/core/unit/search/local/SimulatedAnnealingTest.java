@@ -1,113 +1,61 @@
 package aima.test.core.unit.search.local;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.Collection;
 import java.util.function.ToDoubleFunction;
-import java.util.stream.Collectors;
 
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
-import aima.core.environment.map2d.GoAction;
-import aima.core.search.api.Node;
-import aima.core.search.basic.local.SimulatedAnnealingSearch;
-import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.BasicProblem;
+import aima.core.environment.support.ProblemFactory;
+import aima.core.search.api.Problem;
+import aima.core.search.api.SearchForStateFunction;
+import aima.core.search.basic.example.ExampleSimulatedAnnealingSearch;
 
-
-/*
+/**
+ * 
+ * @author Ciaran O'Reilly
  * @author Anurag Rai
  */
 public class SimulatedAnnealingTest {
-    Map<String, List<String>> simpleBinaryTreeStateSpace = new HashMap<String, List<String>>() {
-		private static final long serialVersionUID = 1L; {
-        put("C", Arrays.asList("A", "B"));
-        put("E", Arrays.asList("C", "D"));
-        put("F", Arrays.asList("X", "D"));
-        put("G", Arrays.asList("E", "F"));
-        put("I", Arrays.asList("G", "F"));
+	@Parameters(name = "{index}: {0}")
+	public static Collection<Object[]> implementations() {
+		return Arrays.asList(new Object[][] { { "ExampleSimulatedAnnealingSearch" } });
+	}
+	
+	@Parameter
+	public String searchForStateFunctionName;
 
-    }};
+	// The state value function will be represented by the ascii value of the
+	// first character in the state name.
+	ToDoubleFunction<String> asciiChar0StateValueFn = state -> {
+		return (double) state.charAt(0);
+	};
 
-    Function<String, Set<GoAction>> simpleBinaryTreeActionsFn = state -> {
-        if (simpleBinaryTreeStateSpace.containsKey(state)) {
-            return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state).stream().map(GoAction::new).collect(Collectors.toList()));
-        }
-        return Collections.emptySet();
-    };
+	public <A, S> S searchForState(Problem<A, S> problem, ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
+		SearchForStateFunction<A, S> searchForStateFunction;
+		
+		searchForStateFunction = new ExampleSimulatedAnnealingSearch<A, S>(stateValueFn, isGradientAscentVersion);
+		
+		return searchForStateFunction.apply(problem);
+	}
+	
+	//
+	// NOTE: We use timeouts as simulated-annealing selects a random action so in most cases you cannot predetermine its result.
 
-    BiFunction<String, GoAction, String> goActionResultFn = (state, action) -> ((GoAction) action).getGoTo();
+	@Test(timeout=1000)
+	public void testReachableGlobalMaximum() {
+		while (!"Z".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("F", "Z"), asciiChar0StateValueFn, true)));
+	}
 
-    //the heuristic function will be represented by the ascii value of the first character in the state name
-    ToDoubleFunction<Node<GoAction, String>> asciiHeuristicFn = node -> {
-        String state = node.state();
-        int asciiCode = (int) state.charAt(0);
-        return (double) asciiCode;
-    };
+	@Test(timeout=1000)
+	public void testReachableLocalMaximum() {
+		while(!"O".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("A", "Z"), asciiChar0StateValueFn, true)));
+	}
 
-    @Test
-    public void testAsciiHeuristicFunction() {
-        SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
-        BasicNodeFactory<GoAction, String> nodeFactory = new BasicNodeFactory<>();
-        Node<GoAction, String> nodeA = nodeFactory.newRootNode("A");
-        Node<GoAction, String> nodeB = nodeFactory.newRootNode("B");
-
-        Assert.assertEquals(
-                simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
-                simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
-                0
-        );
-
-        Assert.assertEquals(
-        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
-        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
-                0
-        );
-
-        Assert.assertNotEquals(
-        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeA),
-        		simulatedAnnealing.getHeuristicFunctionH().applyAsDouble(nodeB),
-                0
-        );
-    }
-
-    @Test
-    public void testAlreadyInGoalState() {
-        SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
-
-        Assert.assertEquals(
-        		Arrays.asList((GoAction) null),
-                simulatedAnnealing.apply(new BasicProblem<>("A",
-                        simpleBinaryTreeActionsFn,
-                        goActionResultFn,
-                        "A"::equals
-                )));
-
-        Assert.assertEquals(
-        		Arrays.asList((GoAction) null),
-                simulatedAnnealing.apply(new BasicProblem<>("B",
-                        simpleBinaryTreeActionsFn,
-                        goActionResultFn,
-                        "B"::equals
-                )));
-    }
-
-    @Test
-    public void testDelE() {
-    	SimulatedAnnealingSearch<GoAction, String> simulatedAnnealing = new SimulatedAnnealingSearch<>(asciiHeuristicFn);
-    	int deltaE = -1;
-		double higherTemperature = 30.0;
-		double lowerTemperature = 29.5;
-
-		Assert.assertTrue(simulatedAnnealing.probabilityOfAcceptance(lowerTemperature,
-				deltaE) < simulatedAnnealing.probabilityOfAcceptance(higherTemperature,
-				deltaE));
-    }
+	@Test(timeout=1000)
+	public void testNoSuccessors() {
+		while (!"P".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("P", "Z"), asciiChar0StateValueFn, true)));
+	}
 }

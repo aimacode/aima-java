@@ -39,14 +39,14 @@ public class HillClimbingSearchTest {
 		return (double) state.charAt(0);
 	};
 
-	public <A, S> S searchForState(Problem<A, S> problem, ToDoubleFunction<S> stateValuFn, boolean isSteepestAscentVersion) {
+	public <A, S> S searchForState(Problem<A, S> problem, ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion) {
 		SearchForStateFunction<A, S> searchForStateFunction;
 		
 		if ("ExampleHillClimbingSearch".equals(searchForStateFunctionName)) {
-			searchForStateFunction = new ExampleHillClimbingSearch<A, S>(stateValuFn, isSteepestAscentVersion);
+			searchForStateFunction = new ExampleHillClimbingSearch<A, S>(stateValueFn, isSteepestAscentVersion);
 		}
 		else {
-			searchForStateFunction = new HillClimbingSearch<A, S>(stateValuFn, isSteepestAscentVersion);
+			searchForStateFunction = new HillClimbingSearch<A, S>(stateValueFn, isSteepestAscentVersion);
 		}
 		return searchForStateFunction.apply(problem);
 	}

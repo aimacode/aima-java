@@ -3,7 +3,6 @@ package aima.gui.support.code;
 import aima.extra.instrument.search.TreeSearchInstrumented;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;

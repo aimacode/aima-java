@@ -18,19 +18,15 @@ public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	@Override
 	public S apply(Problem<A, S> problem) {
-		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node<S> current = makeNode(problem.initialState());
 		int consecutiveSidewayMovesTaken = 0;
-		// loop do
 		while (loopDo()) {
-			// neighbor <- a highest-valued successor of current
 			Node<S> neighbor = highestValuedSuccessor(current, problem);
 			// There are no successor nodes in this state space 
 			// (i.e. a dead end state with irreversible actions).
 			if (neighbor == null) {
 				return current.state;
 			}
-			// if neighbor.VALUE < current.VALUE then return current.STATE
 			if (neighbor.value < current.value) {
 				return current.state;
 			} else if (neighbor.value == current.value) {
@@ -41,7 +37,6 @@ public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 					return current.state;
 				}
 			} else {
-				// current <- neighbor
 				current = neighbor;
 				consecutiveSidewayMovesTaken = 0;
 			}

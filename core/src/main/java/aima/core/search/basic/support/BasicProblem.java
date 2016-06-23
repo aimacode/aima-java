@@ -1,6 +1,6 @@
 package aima.core.search.basic.support;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -19,18 +19,18 @@ public class BasicProblem<A, S> implements Problem<A, S> {
 	}
 
 	private S initialState;
-	private Function<S, Set<A>> actionsFn;
+	private Function<S, List<A>> actionsFn;
 	private BiFunction<S, A, S> resultFn;
 	private Predicate<S> goalTestPredicate;
 	private StepCost<A, S> stepCostFn;
 
-	public BasicProblem(S initialState, Function<S, Set<A>> actionsFn, BiFunction<S, A, S> resultFn,
+	public BasicProblem(S initialState, Function<S, List<A>> actionsFn, BiFunction<S, A, S> resultFn,
 			Predicate<S> goalTestPredicate) {
 		// Default step cost function.
 		this(initialState, actionsFn, resultFn, goalTestPredicate, (s, a, sPrime) -> 1.0);
 	}
 
-	public BasicProblem(S initialState, Function<S, Set<A>> actionsFn, BiFunction<S, A, S> resultFn,
+	public BasicProblem(S initialState, Function<S, List<A>> actionsFn, BiFunction<S, A, S> resultFn,
 			Predicate<S> goalTestPredicate, StepCost<A, S> stepCostFn) {
 		this.initialState = initialState;
 		this.actionsFn = actionsFn;
@@ -45,7 +45,7 @@ public class BasicProblem<A, S> implements Problem<A, S> {
 	}
 
 	@Override
-	public Set<A> actions(S s) {
+	public List<A> actions(S s) {
 		return actionsFn.apply(s);
 	}
 

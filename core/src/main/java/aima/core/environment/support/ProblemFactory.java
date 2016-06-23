@@ -40,8 +40,8 @@ public class ProblemFactory {
 			}
 		}
 
-		Function<InState, Set<GoAction>> actionsFn = inLocationState -> {
-			Set<GoAction> actions = new LinkedHashSet<>();
+		Function<InState, List<GoAction>> actionsFn = inLocationState -> {
+			List<GoAction> actions = new ArrayList<>();
 			for (String toLocation : simplifidRoadMapOfPartOfRomania
 					.getLocationsLinkedTo(inLocationState.getLocation())) {
 				actions.add(new GoAction(toLocation));
@@ -66,11 +66,11 @@ public class ProblemFactory {
 	
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation, final VELocalState... leftToRightLocalStates) {		
 		// Actions are always the same irrespective of what state you are in.
-		final Set<String> actions = new LinkedHashSet<>();
+		final List<String> actions = new ArrayList<>();
 		actions.add(VacuumEnvironment.ACTION_LEFT);
 		actions.add(VacuumEnvironment.ACTION_RIGHT);
 		actions.add(VacuumEnvironment.ACTION_SUCK);
-		Function<VEWorldState, Set<String>> actionsFn = inState -> {
+		Function<VEWorldState, List<String>> actionsFn = inState -> {
 			return actions;
 		};
 
@@ -121,11 +121,11 @@ public class ProblemFactory {
 			simpleBinaryTreeStateSpace.put(node, targets);
 		}
 
-		Function<String, Set<String>> actionsFn = state -> {
+		Function<String, List<String>> actionsFn = state -> {
 			if (simpleBinaryTreeStateSpace.containsKey(state)) {
-				return new LinkedHashSet<>(simpleBinaryTreeStateSpace.get(state));
+				return new ArrayList<>(simpleBinaryTreeStateSpace.get(state));
 			}
-			return Collections.emptySet();
+			return Collections.emptyList();
 		};
 
 		BiFunction<String, String, String> resultFn = (state, action) -> action;
