@@ -28,7 +28,7 @@ import aima.core.search.basic.queue.TreeQueueSearch;
 import aima.core.search.basic.uninformed.BreadthFirstQueueSearch;
 
 @RunWith(Parameterized.class)
-public class BreadthFirstGraphSearchTest {
+public class BreadthFirstSearchTest {
 
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
@@ -47,8 +47,8 @@ public class BreadthFirstGraphSearchTest {
 		} else {
 			QueueSearchForActions<A, S> qsearchVariant;
 			String variant = searchFunctionName.split("-")[1];
-			if (variant.equals("GraphGoalTestFirst")) { // NOTE: Matches version
-														// in book
+			// NOTE: Matches version in book
+			if (variant.equals("GraphGoalTestFirst")) {
 				qsearchVariant = new GraphGoalTestedFirstQueueSearch<>();
 			} else if (variant.equals("Graph")) {
 				qsearchVariant = new GraphQueueSearch<>();
@@ -172,7 +172,7 @@ public class BreadthFirstGraphSearchTest {
 
 	@Test
 	public void testUnreachableSimpleBinaryTreeGoals() {
-		Assert.assertEquals(Collections.<String> emptyList(),
+		Assert.assertEquals(Collections.<String>emptyList(),
 				searchForActions(ProblemFactory.getSimpleBinaryTreeProblem("B", "A")));
 	}
 }

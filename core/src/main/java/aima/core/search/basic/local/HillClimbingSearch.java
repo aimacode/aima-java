@@ -1,5 +1,6 @@
 package aima.core.search.basic.local;
 
+import java.util.Random;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Problem;
@@ -7,55 +8,61 @@ import aima.core.search.api.SearchForStateFunction;
 import aima.core.util.ExecutionController;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
- * <br>
- * <p>
- * 
- * <pre>
- * function HILL-CLIMBING(problem) returns a state that is a local maximum
- *
- *   current &larr; MAKE-NODE(problem.INITIAL-STATE)
- *   loop do
- *     neighbor &larr; a highest-valued successor of current
- *     if neighbor.VALUE &le; current.VALUE then return current.STATE
- *     current &larr; neighbor
- * </pre>
- * <p>
- * Figure ?? The hill-climbing search algorithm, which is the most basic local
- * search technique. At each step the current node is replaced by the best
- * neighbor; in this version, that means the neighbor with the highest VALUE,
- * but if a heuristic cost estimate h is used, we would find the neighbor with
- * the lowest h.
+ * An alternative implementation of hill-climbing search that allows for
+ * sideways moves and whose search can be interrupted by an ExecutionController
+ * (e.g. for use in a GUI).
  *
  * @author Ciaran O'Reilly
- * @author Ruediger Lunde
- * @author Ravi Mohan
- * @author Paul Anton
- * @author Mike Stampone
  */
 public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	@Override
 	public S apply(Problem<A, S> problem) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node current = makeNode(problem.initialState());
+		Node<S> current = makeNode(problem.initialState());
+		int consecutiveSidewayMovesTaken = 0;
 		// loop do
 		while (loopDo()) {
 			// neighbor <- a highest-valued successor of current
-			Node neighbor = highestValuedSuccessor(current, problem);
-			// if neighbor.VALUE <= current.VALUE then return current.STATE
-			if (neighbor.value <= current.value) {
+			Node<S> neighbor = highestValuedSuccessor(current, problem);
+			// There are no successor nodes in this state space 
+			// (i.e. a dead end state with irreversible actions).
+			if (neighbor == null) {
 				return current.state;
 			}
-			// current <- neighbor
-			current = neighbor;
+			// if neighbor.VALUE < current.VALUE then return current.STATE
+			if (neighbor.value < current.value) {
+				return current.state;
+			} else if (neighbor.value == current.value) {
+				if (consecutiveSidewayMovesTaken < allowedConsecutiveSidewayMoves) {
+					consecutiveSidewayMovesTaken++;
+					current = neighbor;
+				} else {
+					return current.state;
+				}
+			} else {
+				// current <- neighbor
+				current = neighbor;
+				consecutiveSidewayMovesTaken = 0;
+			}
 		}
 		return current.state;
 	}
 
 	//
 	// Supporting Code
-	public class Node {
+
+	/**
+	 * The algorithm does not maintain a search tree, so the data structure for
+	 * the current node need only record the state and value of the
+	 * objective/cost function.
+	 * 
+	 * @author oreilly
+	 *
+	 * @param <S>
+	 *            the type of the state space
+	 */
+	public static class Node<S> {
 		S state;
 		double value;
 
@@ -66,43 +73,68 @@ public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 
 		@Override
 		public String toString() {
-			return "N(" + state.toString() + ", " + value + ")";
+			return "N(" + state + ", " + value + ")";
 		}
 	}
 
+	/*
+	 * Represents an objective (higher better) or cost/heuristic (lower better)
+	 * function. If a cost/heuristic function is passed in the
+	 * 'isSteepestAscentVersion' should be set to false for the algorithm to
+	 * search for minimums.
+	 */
 	protected ToDoubleFunction<S> stateValueFn;
+	protected int allowedConsecutiveSidewayMoves;
 	protected ExecutionController executionController;
+	protected Random random = new Random();
 
 	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn) {
-		this(stateValueFn, new ExecutionController() {
-		});
+		this(stateValueFn, true);
 	}
 
-	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, ExecutionController executionController) {
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion) {
+		this(stateValueFn, isSteepestAscentVersion, 100);
+	}
+
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion,
+			int allowedConsecutiveSidewayMoves) {
+		this(stateValueFn, isSteepestAscentVersion, allowedConsecutiveSidewayMoves, null);
+	}
+
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion,
+			int allowedConsecutiveSidewayMoves, ExecutionController executionController) {
 		this.stateValueFn = stateValueFn;
+		if (!isSteepestAscentVersion) {
+			// Convert from one to the other by switching the sign
+			this.stateValueFn = (state) -> stateValueFn.applyAsDouble(state) * -1;
+		}
+		this.allowedConsecutiveSidewayMoves = allowedConsecutiveSidewayMoves;
 		this.executionController = executionController;
 	}
 
-	public Node makeNode(S state) {
-		return new Node(state, stateValueFn.applyAsDouble(state));
+	public Node<S> makeNode(S state) {
+		return new Node<>(state, stateValueFn.applyAsDouble(state));
 	}
 
 	public boolean loopDo() {
-		return executionController.isExecuting();
+		return executionController == null || executionController.isExecuting();
 	}
 
-	public Node highestValuedSuccessor(Node current, Problem<A, S> problem) {
-		Node highestValueSuccessor = null;
+	public Node<S> highestValuedSuccessor(Node<S> current, Problem<A, S> problem) {
+		Node<S> highestValueSuccessor = null;
 		for (A action : problem.actions(current.state)) {
-			Node successor = makeNode(problem.result(current.state, action));
+			Node<S> successor = makeNode(problem.result(current.state, action));
 			if (highestValueSuccessor == null || successor.value > highestValueSuccessor.value) {
 				highestValueSuccessor = successor;
+			} else if (successor.value == highestValueSuccessor.value) {
+				// With ties we need to randomly select a successor, otherwise
+				// depending on order we could get stuck in an infinite loop
+				if (random.nextBoolean()) {
+					highestValueSuccessor = successor;
+				}
 			}
 		}
-		// If no successor then just be our own neighbor
-		if (highestValueSuccessor == null) {
-			highestValueSuccessor = current;
-		}
+
 		return highestValueSuccessor;
 	}
 }

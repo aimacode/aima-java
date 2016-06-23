@@ -226,11 +226,23 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
    </tr>
    <tr>
-       <td>4.?</td>
-       <td>??</td>
-       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Hill-Climbing.md">Hill-Climbing</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/local/HillClimbingSearch.java">HillClimbingSearch</a></td>
+       <td rowspan="3">4.?</td>
+       <td rowspan="3">??</td>
+       <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Hill-Climbing.md">Hill-Climbing</a></td>
+		<td>
+       	<a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleHillClimbingSearch.java">ExampleHillClimbingSearch</a>
+       </td>
    </tr>
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
+       <td>
+       	<a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/local/HillClimbingSearch.java">HillClimbingSearch</a>
+       </td>
+   </tr>   
    <tr>
        <td>4.?</td>
        <td>??</td>
