@@ -60,12 +60,10 @@ public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunc
 			// if &Delta;E > 0 then current <- next
 			if (DeltaE > 0) {
 				current = next;
-			} 
-			else {
-				// else current <- next only with probability e^&Delta;E/T
-				if (Math.exp(DeltaE/T) > random.nextDouble()) {
-					current = next;
-				}
+			}
+			// else current <- next only with probability e^&Delta;E/T
+			else if (Math.exp(DeltaE / T) > random.nextDouble()) {
+				current = next;
 			}
 		}
 	}
@@ -102,8 +100,6 @@ public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunc
 		}
 	}
 
-	
-	
 	/*
 	 * Represents an objective (higher better) or cost/heuristic (lower better)
 	 * function. If a cost/heuristic function is passed in the
@@ -117,12 +113,13 @@ public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunc
 	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn) {
 		this(stateValueFn, true);
 	}
-	
+
 	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
 		this(stateValueFn, isGradientAscentVersion, new BasicSchedule());
 	}
 
-	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion, ToDoubleFunction<Integer> scheduler) {
+	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion,
+			ToDoubleFunction<Integer> scheduler) {
 		this.stateValueFn = stateValueFn;
 		if (!isGradientAscentVersion) {
 			// Convert from one to the other by switching the sign
@@ -130,24 +127,25 @@ public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunc
 		}
 		this.schedule = scheduler;
 	}
-	
+
 	public Node<S> makeNode(S state) {
 		return new Node<>(state, stateValueFn.applyAsDouble(state));
 	}
-	
+
 	public double schedule(int t) {
 		double T = schedule.applyAsDouble(t);
 		if (T < 0) {
-			throw new IllegalArgumentException("Configured schedule returns negative temperatures: t="+t+", T="+T);
+			throw new IllegalArgumentException(
+					"Configured schedule returns negative temperatures: t=" + t + ", T=" + T);
 		}
 		return T;
 	}
-	
+
 	public Node<S> randomlySelectSuccessor(Node<S> current, Problem<A, S> problem) {
-		// Default successor to current, so that in the case we reach a dead-end state
-		// i.e. one without reversible actions we will return something. This will not
-		// break the code above as the loop will exit when the temperature winds down
-		// to 0.
+		// Default successor to current, so that in the case we reach a dead-end
+		// state i.e. one without reversible actions we will return something.
+		// This will not break the code above as the loop will exit when the
+		// temperature winds down to 0.
 		Node<S> successor = current;
 		List<A> actions = problem.actions(current.state);
 		if (actions.size() > 0) {
