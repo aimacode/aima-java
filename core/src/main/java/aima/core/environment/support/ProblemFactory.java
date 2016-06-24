@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
@@ -23,6 +24,7 @@ import aima.core.environment.vacuum.VEWorldState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Problem;
 import aima.core.search.basic.support.BasicProblem;
+import aima.core.util.datastructure.Pair;
 
 public class ProblemFactory {
 
@@ -49,8 +51,7 @@ public class ProblemFactory {
 			return actions;
 		};
 
-		BiFunction<InState, GoAction, InState> resultFn = (state,
-				action) -> new InState(action.getGoTo());
+		BiFunction<InState, GoAction, InState> resultFn = (state, action) -> new InState(action.getGoTo());
 
 		Predicate<InState> goalTestPredicate = inLocationState -> {
 			for (String goalState : goalStates) {
@@ -63,8 +64,9 @@ public class ProblemFactory {
 
 		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
 	}
-	
-	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation, final VELocalState... leftToRightLocalStates) {		
+
+	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
+			final VELocalState... leftToRightLocalStates) {
 		// Actions are always the same irrespective of what state you are in.
 		final List<String> actions = new ArrayList<>();
 		actions.add(VacuumEnvironment.ACTION_LEFT);
@@ -74,14 +76,15 @@ public class ProblemFactory {
 			return actions;
 		};
 
-		BiFunction<VEWorldState, String, VEWorldState> resultFn = (worldState,
-				action) -> worldState.performDeterministic(action);
+		BiFunction<VEWorldState, String, VEWorldState> resultFn = (worldState, action) -> worldState
+				.performDeterministic(action);
 
 		Predicate<VEWorldState> goalTestPredicate = worldState -> {
 			return worldState.isAllClean();
 		};
 
-		return new BasicProblem<>(new VEWorldState(inInitialLocation, leftToRightLocalStates), actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(new VEWorldState(inInitialLocation, leftToRightLocalStates), actionsFn, resultFn,
+				goalTestPredicate);
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {
@@ -137,6 +140,110 @@ public class ProblemFactory {
 				}
 			}
 			return false;
+		};
+
+		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
+	}
+
+	public static final int DEFAULT_DISCRETE_FUNCTION_SHOULDER_VALUE = 5;
+	public static final int DEFAULT_DISCRETE_FUNCTION_GLOBAL_MAXIMIM = 9;
+	public static final int DEFAULT_DISCRETE_FUNCTION_GLOBAL_MINIMUM = 1;
+	public static final int DEFAULT_DISCRETE_FUNCTION_LOCAL_MAXIMUM_VALUE = 4;
+	public static final int DEFAULT_DISCRETE_FUNCTION_FLAT_LOCAL_MAXIMUM_VALUE = 3;
+
+	/**
+	 * A simple discrete function problem based on Figure 4.1 from AIMA3e
+	 * 
+	 * @param xInitialStateValue
+	 *            x's initial value.
+	 * @param goalIsGlobalMaximum
+	 *            true if goal is global maximum, false if it is global minimum.
+	 * @return a simple discrete function problem based on Figure 4.1 from
+	 *         AIMA3e.
+	 */
+	public static Problem<String, Pair<Integer, Integer>> getDefaultSimpleDiscreteFunctionProblem(
+			int xInitialStateValue, boolean goalIsGlobalMaximum) {
+		return getSimpleDiscreteFunctionProblem(xInitialStateValue,
+				new int[] { 2, // y = f(x=0)
+						3, // y = f(x=1)
+						4, // y = f(x=2)
+						5, // y = f(x=3) // start of shoulder
+						5, // y = f(x=4) // shoulder
+						5, // y = f(x=5) // end of shoulder
+						6, // y = f(x=6)
+						7, // y = f(x=7)
+						8, // y = f(x=8)
+						9, // y = f(x=9) // global maximum
+						7, // y = f(x=10)
+						4, // y = f(x=11)
+						2, // y = f(x=12)
+						1, // y = f(x=13) // global minimum
+						2, // y = f(x=14)
+						3, // y = f(x=15)
+						4, // y = f(x=16) // local maximum
+						3, // y = f(x=17)
+						2, // y = f(x=18) // local minimum
+						3, // y = f(x=19) // start 'flat' local maximum
+						3, // y = f(x=20) // 'flat' local maximum
+						3, // y = f(x=21) // end 'flat' local maximum
+						2, // y = f(x=22)
+						1, // y = f(x=23) // global minimum
+						1, // y = f(x=24) // global minimum
+				}, goalIsGlobalMaximum);
+	}
+
+	public static Problem<String, Pair<Integer, Integer>> getSimpleDiscreteFunctionProblem(int xInitialStateValue,
+			final int[] dependentValues, boolean goalIsGlobalMaximum) {
+		if (xInitialStateValue < 0 || xInitialStateValue >= dependentValues.length) {
+			throw new IllegalArgumentException(
+					"x initial value is outside legal range of [0, " + (dependentValues.length - 1) + "]");
+		}
+		final List<Pair<Integer, Integer>> x_y_functionTable = new ArrayList<>();
+		for (int x = 0; x < dependentValues.length; x++) {
+			x_y_functionTable.add(new Pair<>(x, dependentValues[x]));
+		}
+		final Pair<Integer, Integer> initialState = x_y_functionTable.get(xInitialStateValue);
+
+		final Integer goalValue;
+		if (goalIsGlobalMaximum) {
+			goalValue = IntStream.of(dependentValues).max().getAsInt();
+		}
+		// else foal is global minimum
+		else {
+			goalValue = IntStream.of(dependentValues).min().getAsInt();
+		}
+		// Note: we intentionally allow actions that won't have an effect
+		// at the range boundaries of the function to ensure calling algorithms
+		// can properly handle the case where the current state would be
+		// considered a neighbor
+		// (i.e. the result of an action leaves us in the same state)
+		final List<String> actions = new ArrayList<>();
+		actions.add("Left");
+		actions.add("Right");
+		Function<Pair<Integer, Integer>, List<String>> actionsFn = inState -> {
+			return actions;
+		};
+
+		BiFunction<Pair<Integer, Integer>, String, Pair<Integer, Integer>> resultFn = (x_y, action) -> {
+			if ("Left".equals(action)) {
+				if (x_y.getFirst().equals(0)) {
+					return x_y;
+				} else {
+					return x_y_functionTable.get(x_y.getFirst() - 1);
+				}
+			}
+			// else its 'Right'
+			else {
+				if (x_y.getFirst().equals(x_y_functionTable.size() - 1)) {
+					return x_y;
+				} else {
+					return x_y_functionTable.get(x_y.getFirst() + 1);
+				}
+			}
+		};
+
+		Predicate<Pair<Integer, Integer>> goalTestPredicate = x_y -> {
+			return x_y.getSecond().equals(goalValue);
 		};
 
 		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
