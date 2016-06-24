@@ -145,6 +145,33 @@ public class ProblemFactory {
 		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
 	}
 
+	public static final int[] DEFAULT_DISCRETE_FUNCTION_DEPENDENT_VALUES = new int[] { // ->
+			2, // y = f(x=0)
+			3, // y = f(x=1)
+			4, // y = f(x=2)
+			5, // y = f(x=3) - start of shoulder
+			5, // y = f(x=4) - shoulder
+			5, // y = f(x=5) - end of shoulder
+			6, // y = f(x=6)
+			7, // y = f(x=7)
+			8, // y = f(x=8)
+			9, // y = f(x=9) - global maximum
+			7, // y = f(x=10)
+			4, // y = f(x=11)
+			2, // y = f(x=12)
+			1, // y = f(x=13) - global minimum
+			2, // y = f(x=14)
+			3, // y = f(x=15)
+			4, // y = f(x=16) - local maximum
+			3, // y = f(x=17)
+			2, // y = f(x=18) - local minimum
+			3, // y = f(x=19) - start 'flat' local maximum
+			3, // y = f(x=20) - 'flat' local maximum
+			3, // y = f(x=21) - end 'flat' local maximum
+			2, // y = f(x=22)
+			1, // y = f(x=23) - global minimum
+			1, // y = f(x=24) - global minimum
+	};
 	public static final int DEFAULT_DISCRETE_FUNCTION_SHOULDER_VALUE = 5;
 	public static final int DEFAULT_DISCRETE_FUNCTION_GLOBAL_MAXIMIM = 9;
 	public static final int DEFAULT_DISCRETE_FUNCTION_GLOBAL_MINIMUM = 1;
@@ -163,33 +190,8 @@ public class ProblemFactory {
 	 */
 	public static Problem<String, Pair<Integer, Integer>> getDefaultSimpleDiscreteFunctionProblem(
 			int xInitialStateValue, boolean goalIsGlobalMaximum) {
-		return getSimpleDiscreteFunctionProblem(xInitialStateValue,
-				new int[] { 2, // y = f(x=0)
-						3, // y = f(x=1)
-						4, // y = f(x=2)
-						5, // y = f(x=3) // start of shoulder
-						5, // y = f(x=4) // shoulder
-						5, // y = f(x=5) // end of shoulder
-						6, // y = f(x=6)
-						7, // y = f(x=7)
-						8, // y = f(x=8)
-						9, // y = f(x=9) // global maximum
-						7, // y = f(x=10)
-						4, // y = f(x=11)
-						2, // y = f(x=12)
-						1, // y = f(x=13) // global minimum
-						2, // y = f(x=14)
-						3, // y = f(x=15)
-						4, // y = f(x=16) // local maximum
-						3, // y = f(x=17)
-						2, // y = f(x=18) // local minimum
-						3, // y = f(x=19) // start 'flat' local maximum
-						3, // y = f(x=20) // 'flat' local maximum
-						3, // y = f(x=21) // end 'flat' local maximum
-						2, // y = f(x=22)
-						1, // y = f(x=23) // global minimum
-						1, // y = f(x=24) // global minimum
-				}, goalIsGlobalMaximum);
+		return getSimpleDiscreteFunctionProblem(xInitialStateValue, DEFAULT_DISCRETE_FUNCTION_DEPENDENT_VALUES,
+				goalIsGlobalMaximum);
 	}
 
 	public static Problem<String, Pair<Integer, Integer>> getSimpleDiscreteFunctionProblem(int xInitialStateValue,

@@ -12,6 +12,7 @@ import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForStateFunction;
 import aima.core.search.basic.example.ExampleSimulatedAnnealingSearch;
+import aima.core.util.datastructure.Pair;
 
 /**
  * 
@@ -32,6 +33,8 @@ public class SimulatedAnnealingTest {
 	ToDoubleFunction<String> asciiChar0StateValueFn = state -> {
 		return (double) state.charAt(0);
 	};
+	
+	ToDoubleFunction<Pair<Integer, Integer>> y_valueFn = x_y -> x_y.getSecond().doubleValue();
 
 	public <A, S> S searchForState(Problem<A, S> problem, ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
 		SearchForStateFunction<A, S> searchForStateFunction;
@@ -47,6 +50,17 @@ public class SimulatedAnnealingTest {
 	@Test(timeout=1000)
 	public void testReachableGlobalMaximum() {
 		while (!"Z".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("F", "Z"), asciiChar0StateValueFn, true)));
+		
+		while(ProblemFactory.DEFAULT_DISCRETE_FUNCTION_GLOBAL_MAXIMIM !=
+				searchForState(ProblemFactory.getDefaultSimpleDiscreteFunctionProblem(6, true), y_valueFn, true)
+						.getSecond().intValue());
+		
+		// Simulated annealing should always find the global maximum in this search space within a reasonable number of attempts.
+		for (int x = 0; x < ProblemFactory.DEFAULT_DISCRETE_FUNCTION_DEPENDENT_VALUES.length; x++) {
+			while(ProblemFactory.DEFAULT_DISCRETE_FUNCTION_GLOBAL_MAXIMIM !=
+				searchForState(ProblemFactory.getDefaultSimpleDiscreteFunctionProblem(x, true), y_valueFn, true)
+						.getSecond().intValue());
+		}
 	}
 
 	@Test(timeout=1000)
