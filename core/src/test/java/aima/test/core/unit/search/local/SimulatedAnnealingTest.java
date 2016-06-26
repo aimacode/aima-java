@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.ToDoubleFunction;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
@@ -47,9 +46,7 @@ public class SimulatedAnnealingTest {
 	
 	//
 	// NOTE: We use timeouts as simulated-annealing selects a random action so in most cases you cannot predetermine its result.
-
-	@Ignore
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	public void testReachableGlobalMaximum() {
 		while (!"Z".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("F", "Z"), asciiChar0StateValueFn, true)));
 		
@@ -65,14 +62,12 @@ public class SimulatedAnnealingTest {
 		}
 	}
 
-	@Ignore
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	public void testReachableLocalMaximum() {
 		while(!"O".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("A", "Z"), asciiChar0StateValueFn, true)));
 	}
 
-	@Ignore
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	public void testNoSuccessors() {
 		while (!"P".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("P", "Z"), asciiChar0StateValueFn, true)));
 	}
