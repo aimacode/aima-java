@@ -51,6 +51,16 @@ project(':extra') {
     }
 }
 
+test {
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+    
+    afterTest { (descriptor, result) ->
+        logger.lifecycle("Test : " + descriptor + " completed with: " + result )
+    }
+}
+
 task AIMADemoApp(type: JavaExec, dependsOn: classes) {
     main = 'aima.gui.app.AIMADemoApp'
     classpath = files(sourceSets.main.output, configurations.runtime)
