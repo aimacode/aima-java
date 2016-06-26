@@ -98,10 +98,10 @@ public class AgentPercept {
 	
 	@Override
 	public String toString() {
-		return "["+ ((stench) ? "Stench" : "None") + ", "
-				  + ((breeze) ? "Breeze" : "None") + ", "
-				  + ((glitter) ? "Glitter" : "None") + ", "
-				  + ((bump) ? "Bump" : "None") + ", "
-				  + ((scream) ? "Scream" : "None") + "]";
+		return "["+ ((stench)  ? "Stench"  : "None") + ", "
+			  + ((breeze)  ? "Breeze"  : "None") + ", "
+			  + ((glitter) ? "Glitter" : "None") + ", "
+			  + ((bump)    ? "Bump"    : "None") + ", "
+			  + ((scream)  ? "Scream"  : "None") + "]";
 	}
 }
