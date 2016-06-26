@@ -84,13 +84,8 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 	// plan, an action sequence, initially empty
-	private Queue<WWAction> plan = new LinkedList<WWAction>(); // FIFOQueue
+	private Queue<WWAction> plan = new LinkedList<>();
 
-	@Override
-	public WWAction perceive(AgentPercept percept) {
-		return execute(percept);
-	}
-	
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
 	 * 
@@ -98,10 +93,9 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 	 *            a list, [stench, breeze, glitter, bump, scream]
 	 * 
 	 * @return an action the agent should take.
-	 */
-
-	public WWAction execute(AgentPercept percept) {
-
+	 */ 
+	@Override
+	public WWAction perceive(AgentPercept percept) {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.makePerceptSentence(percept, t);
 		// TELL the KB the temporal "physics" sentences for time t
@@ -115,7 +109,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 		// if ASK(KB, Glitter<sup>t</sup>) = true then		
 		if (kb.askGlitter(t)) {
 			// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
-			Set<Room> goals = new LinkedHashSet<Room>();
+			Set<Room> goals = new LinkedHashSet<>();
 			goals.add(new Room(1, 1));
 
 			plan.add(new Grab());
@@ -150,7 +144,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 		// if plan is empty then		
 		if (plan.isEmpty()) {
 			// plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
-			Set<Room> start = new LinkedHashSet<Room>();
+			Set<Room> start = new LinkedHashSet<>();
 			start.add(new Room(1, 1));
 			plan.addAll(planRoute(current, start, safe));
 			plan.add(new Climb());
@@ -184,7 +178,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 		// Every square represent 4 possible positions for the agent, it could
 		// be in different orientations. For every square in allowed and goals
 		// sets we add 4 squares.
-		Set<AgentPosition> allowedPositions = new LinkedHashSet<AgentPosition>();
+		Set<AgentPosition> allowedPositions = new LinkedHashSet<>();
 		for (Room allowedRoom : allowed) {
 			int x = allowedRoom.getX();
 			int y = allowedRoom.getY();
@@ -198,7 +192,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 			allowedPositions.add(new AgentPosition(x, y,
 					AgentPosition.Orientation.FACING_SOUTH));
 		}
-		final Set<AgentPosition> goalPositions = new LinkedHashSet<AgentPosition>();
+		final Set<AgentPosition> goalPositions = new LinkedHashSet<>();
 		for (Room goalRoom : goals) {
 			int x = goalRoom.getX();
 			int y = goalRoom.getY();
@@ -223,13 +217,13 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 			return false;
 		};
 				
-		BasicProblem<WWAction, AgentPosition> problem = new BasicProblem<WWAction,AgentPosition>(current,
+		BasicProblem<WWAction, AgentPosition> problem = new BasicProblem<>(current,
 				WumpusFunctionFactory.getActionsFunction(cave),
 				WumpusFunctionFactory.getResultFunction(), goalTest);
 
 
 		AStarQueueSearch<WWAction, AgentPosition> search = 
-				new AStarQueueSearch<WWAction, AgentPosition>( new GraphPriorityQueueSearch<WWAction, AgentPosition>(), new ManhattanHeuristicFunction(goals));
+				new AStarQueueSearch<>( new GraphPriorityQueueSearch<>(), new ManhattanHeuristicFunction(goals));
 		
 		List<WWAction> actions = null;
 		try {
@@ -238,7 +232,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 			// in the context of this agent we will just return
 			// no actions.
 			if (actions.size() == 1 && (actions.get(0) == null)) {
-				actions = new ArrayList<WWAction>();
+				actions = new ArrayList<>();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -263,7 +257,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 	public List<WWAction> planShot(AgentPosition current,
 			Set<Room> possibleWumpus, Set<Room> allowed) {
 
-		Set<AgentPosition> shootingPositions = new LinkedHashSet<AgentPosition>();
+		Set<AgentPosition> shootingPositions = new LinkedHashSet<>();
 
 		for (Room p : possibleWumpus) {
 			int x = p.getX();
@@ -297,7 +291,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 		}
 
 		Iterator<AgentPosition> it = shootingPositions.iterator();
-		Set<Room> shootingPositionsArray = new LinkedHashSet<Room>();
+		Set<Room> shootingPositionsArray = new LinkedHashSet<>();
 		while (it.hasNext()) {
 			AgentPosition tmp = it.next();
 			shootingPositionsArray.add(new Room(tmp.getX(), tmp.getY()));

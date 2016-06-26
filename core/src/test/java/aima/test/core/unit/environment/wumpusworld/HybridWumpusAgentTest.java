@@ -7,7 +7,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.environment.wumpusworld.AgentPercept;
@@ -29,7 +28,7 @@ import aima.core.environment.wumpusworld.action.WWAction;
 public class HybridWumpusAgentTest {
 
 	@SuppressWarnings("serial")
-	@Ignore
+	@Test
 	public void testPlanRoute() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
 		
@@ -77,7 +76,7 @@ public class HybridWumpusAgentTest {
 	}
 	
 	@SuppressWarnings("serial")
-	@Ignore
+	@Test
 	public void testPlanShot() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
 		
@@ -118,9 +117,9 @@ public class HybridWumpusAgentTest {
 	public void testGrabAndClimb() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(2);
 		// The gold is in the first square
-		WWAction a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		WWAction a = hwa.perceive(new AgentPercept(true, true, true, false, false));
 		Assert.assertTrue(a instanceof Grab);
-		a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		a = hwa.perceive(new AgentPercept(true, true, true, false, false));
 		Assert.assertTrue(a instanceof Climb);
 	}
 	
