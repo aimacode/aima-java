@@ -18,37 +18,37 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>2.?</td>
        <td>??</td>
        <td>Agent</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/api/Agent.java">Agent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/api/Agent.java">Agent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
        <td>??</td>
        <td>Table-Driven-Vacuum-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java">TableDrivenVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Table-Driven-Agent.md">Table-Driven-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/TableDrivenAgent.java">TableDrivenAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/TableDrivenAgent.java">TableDrivenAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Reflex-Vacuum-Agent.md">Reflex-Vacuum-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/environment/vacuum/ReflexVacuumAgent.java">ReflexVacuumAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Simple-Reflex-Agent.md">Simple-Reflex-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/SimpleReflexAgent.java">SimpleReflexAgent</a></td>
    </tr>
    <tr>
        <td>2.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Model-Based-Reflex-Agent.md">Model-Based-Reflex-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/ModelBasedReflexAgent.java">ModelBasedReflexAgent</a></td>
    </tr>
    <tr>
        <td></td>
@@ -60,26 +60,26 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>3?</td>
        <td>??</td>
        <td>Problem</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/api/Problem.java">Problem</a></td>
+       <td><a href="core/src/main/java/aima/core/search/api/Problem.java">Problem</a></td>
    </tr>
    <tr>
        <td>3?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Simple-Problem-Solving-Agent.md">Simple-Problem-Solving-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/SimpleProblemSolvingAgent.java">SimpleProblemSolvingAgent</a></td>
    </tr>
    <tr>
        <td>3.?</td>
        <td>??</td>
        <td>Romania</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
+       <td><a href="core/src/main/java/aima/core/environment/map2d/SimplifiedRoadMapOfPartOfRomania.java">SimplifiedRoadMapOfPartOfRomania</a></td>
    </tr>
    <tr>
        <td rowspan="5">3.?</td>
        <td rowspan="5">??</td>
        <td rowspan="5"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Tree-Search-and-Graph-Search.md">Tree-Search</a></td>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a>	           
+       <a href="core/src/main/java/aima/core/search/basic/example/ExampleTreeSearch.java">ExampleTreeSearch</a>	           
        </td>
    </tr>
    <tr>
@@ -89,24 +89,24 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/TreeQueueSearch.java">TreeQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/TreeQueueSearch.java">TreeQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/TreeGoalTestedFirstQueueSearch.java">TreeGoalTestedFirstQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/TreeGoalTestedFirstQueueSearch.java">TreeGoalTestedFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/TreePriorityQueueSearch.java">TreePriorityQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/TreePriorityQueueSearch.java">TreePriorityQueueSearch</a>
        </td>
    </tr>   
    <tr>
        <td rowspan="5">3.?</td>
        <td rowspan="5">??</td>
        <td rowspan="5"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleGraphSearch.java">ExampleGraphSearch</a>
+       <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleGraphSearch.java">ExampleGraphSearch</a>
        </td>
    </tr>
    <tr>
@@ -116,30 +116,30 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphQueueSearch.java">GraphQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/GraphQueueSearch.java">GraphQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphGoalTestedFirstQueueSearch.java">GraphGoalTestedFirstQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/GraphGoalTestedFirstQueueSearch.java">GraphGoalTestedFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/queue/GraphPriorityQueueSearch.java">GraphPriorityQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/queue/GraphPriorityQueueSearch.java">GraphPriorityQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td>3.?</td>
        <td>??</td>
        <td>Node</td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/api/Node.java">Node</a></td>
+       <td><a href="core/src/main/java/aima/core/search/api/Node.java">Node</a></td>
    </tr>
    <tr>
        <td rowspan="3">3.?</td>
        <td rowspan="3">??</td>
        <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Breadth-First-Search.md">Breadth-First-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleBreadthFirstSearch.java">ExampleBreadthFirstSearch</a>
+       <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleBreadthFirstSearch.java">ExampleBreadthFirstSearch</a>
        </td>
    </tr>
    <tr>
@@ -149,14 +149,14 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstQueueSearch.java">BreadthFirstQueueSearch</a>
+       <a href="ore/src/main/java/aima/core/search/basic/uninformed/BreadthFirstQueueSearch.java">BreadthFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
        <td rowspan="3">3.?</td>
        <td rowspan="3">??</td>
        <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Uniform-Cost-Search.md">Uniform-Cost-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleUniformCostSearch.java">ExampleUniformCostSearch</a>
+       <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleUniformCostSearch.java">ExampleUniformCostSearch</a>
        </td>
    </tr>
    <tr>
@@ -166,7 +166,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/UniformCostQueueSearch.java">UniformCostQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/uninformed/UniformCostQueueSearch.java">UniformCostQueueSearch</a>
        </td>
    </tr>
    <tr>
@@ -174,20 +174,20 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td>Depth-first Search</td>
        <td>
-       <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>            
+       <a href="core/src/main/java/aima/core/search/basic/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>            
        </td>
    </tr>
    <tr>
        <td>3.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Depth-Limited-Search.md">Depth-Limited-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/DepthLimitedTreeSearch.java">DepthLimitedTreeSearch</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/uninformed/DepthLimitedTreeSearch.java">DepthLimitedTreeSearch</a></td>
    </tr>
    <tr>
        <td>3.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Iterative-Deepening-Search.md">Iterative-Deepening-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
        <td>3?</td>
@@ -202,7 +202,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td>Greedy best-First search</td>
        <td>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/GreedyBestFirstQueueSearch.java">GreedyBestFirstQueueSearch</a>
+           <a href="core/src/main/java/aima/core/search/basic/informed/GreedyBestFirstQueueSearch.java">GreedyBestFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
@@ -210,14 +210,14 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td>A* Search</td>
        <td>
-           <a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/AStarQueueSearch.java">AStarQueueSearch</a>
+           <a href="core/src/main/java/aima/core/search/basic/informed/AStarQueueSearch.java">AStarQueueSearch</a>
        </td>
    </tr>   
    <tr>
        <td>3.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Recursive-Best-First-Search.md">Recursive-Best-First-Search</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/informed/RecursiveBestFirstSearch.java">RecursiveBestFirstSearch</a></td>
    </tr>
    <tr>
        <td></td>
@@ -230,7 +230,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td rowspan="3">??</td>
        <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Hill-Climbing.md">Hill-Climbing</a></td>
 		<td>
-       	<a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleHillClimbingSearch.java">ExampleHillClimbingSearch</a>
+       	<a href="core/src/main/java/aima/core/search/basic/example/ExampleHillClimbingSearch.java">ExampleHillClimbingSearch</a>
        </td>
    </tr>
    <tr>
@@ -240,14 +240,14 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       	<a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/local/HillClimbingSearch.java">HillClimbingSearch</a>
+       	<a href="core/src/main/java/aima/core/search/basic/local/HillClimbingSearch.java">HillClimbingSearch</a>
        </td>
    </tr>   
    <tr>
        <td>4.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Simulated-Annealing.md">Simulated-Annealing</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/search/basic/example/ExampleSimulatedAnnealingSearch.java">ExampleSimulatedAnnealingSearch</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleSimulatedAnnealingSearch.java">ExampleSimulatedAnnealingSearch</a></td>
    </tr>
    <tr>
        <td></td>
@@ -259,37 +259,37 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/KB-Agent.md">KB-Agent</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/agent/basic/KBAgent.java">KBAgent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/KBAgent.java">KBAgent</a></td>
    </tr>
    <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/TT-Entails.md">TT-Entails</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/TTEntails.java">TTEntails</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/TTEntails.java">TTEntails</a></td>
    </tr>
    <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/PL-Resolution.md">PL-Resolution</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/PLResolution.java">PLResolution</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/PLResolution.java">PLResolution</a></td>
    </tr>
    <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/PL-FC-Entails.md">PL-FC-Entails?</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/PLFCEntails.java">PLFCEntails</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/PLFCEntails.java">PLFCEntails</a></td>
    </tr>
    <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/DPLL-Satisfiable.md">DPLL-Satisfiable?</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/DPLLSatisfiable.java">DPLLSatisfiable</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/DPLLSatisfiable.java">DPLLSatisfiable</a></td>
    </tr>
    <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/WalkSAT.md">WalkSAT</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/WalkSAT.java">WalkSAT</a></td>
    </tr>
    <tr>
        <td>7.?</td>
@@ -301,7 +301,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/SATPlan.md">SATPlan</a></td>
-       <td><a href="https://github.com/aimacode/aima-java/blob/AIMA4e/core/src/main/java/aima/core/logic/basic/propositional/inference/SATPlan.java">SATPlan</a></td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/SATPlan.java">SATPlan</a></td>
    </tr>
    </tbody>
 </table>
