@@ -11,7 +11,8 @@ import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.environment.wumpusworld.action.WWAction;
 
 /**
- * Factory class for constructing functions for use in the Wumpus World environment.
+ * Factory class for constructing functions for use in the Wumpus World
+ * environment.
  * 
  * @author Federico Baron
  * @author Alessandro Daniele
@@ -38,21 +39,21 @@ public class WumpusFunctionFactory {
 		public WumpusActionsFunction(WumpusCave cave) {
 			this.cave = cave;
 		}
-		
+
 		@Override
 		public List<WWAction> apply(AgentPosition t) {
 			return actions(t);
 		}
-		
+
 		private List<WWAction> actions(AgentPosition state) {
-			List<WWAction> actions = new LinkedList<WWAction>();
+			List<WWAction> actions = new LinkedList<>();
 			AgentPosition position = null;
 			try {
 				position = (AgentPosition) state;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			List<AgentPosition> linkedPositions = cave.getLocationsLinkedTo(position);
 			for (AgentPosition linkPos : linkedPositions) {
 				if (linkPos.getX() != position.getX() || linkPos.getY() != position.getY()) {
@@ -67,26 +68,24 @@ public class WumpusFunctionFactory {
 	}
 
 	private static class WumpusResultFunction implements BiFunction<AgentPosition, WWAction, AgentPosition> {
-		
+
 		@Override
 		public AgentPosition apply(AgentPosition t, WWAction u) {
 			return result(t, u);
 		}
-		
+
 		private AgentPosition result(AgentPosition s, WWAction a) {
 
 			if (a instanceof Forward) {
 				Forward fa = (Forward) a;
-				
+
 				return fa.getToPosition();
-			}
-			else if (a instanceof TurnLeft) {
+			} else if (a instanceof TurnLeft) {
 				TurnLeft tLeft = (TurnLeft) a;
 				AgentPosition res = (AgentPosition) s;
 
 				return new AgentPosition(res.getX(), res.getY(), tLeft.getToOrientation());
-			}
-			else if (a instanceof TurnRight) {
+			} else if (a instanceof TurnRight) {
 				TurnRight tRight = (TurnRight) a;
 				AgentPosition res = (AgentPosition) s;
 

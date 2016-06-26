@@ -14,10 +14,9 @@ package aima.core.environment.wumpusworld.action;
  * @author Anurag Rai
  */
 public class Shoot extends WWAction {
-	
+
 	public static final String SHOOT_ACTION_NAME = "Shoot";
-	
-	
+
 	public Shoot() {
 		super(SHOOT_ACTION_NAME);
 	}

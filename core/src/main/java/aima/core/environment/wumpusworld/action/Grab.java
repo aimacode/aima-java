@@ -11,7 +11,7 @@ package aima.core.environment.wumpusworld.action;
  */
 public class Grab extends WWAction {
 	public static final String GRAB_ACTION_NAME = "Grab";
-	
+
 	public Grab() {
 		super(GRAB_ACTION_NAME);
 	}

@@ -3,6 +3,13 @@ package aima.core.environment.wumpusworld.action;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Base class for Wumpus World Actions.
+ * 
+ * @author Anurag Rai
+ * @author Ciaran O'Reilly
+ *
+ */
 public class WWAction {
 	public static final String ATTRIBUTE_NAME = "name";
 	private Map<Object, Object> attributes = new LinkedHashMap<Object, Object>();

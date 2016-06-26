@@ -25,7 +25,7 @@ public class TurnLeft extends WWAction {
 	 */
 	public TurnLeft(AgentPosition.Orientation currentOrientation) {
 		super(TURN_LEFT_ACTION_NAME);
-		
+
 		switch (currentOrientation) {
 		case FACING_NORTH:
 			toOrientation = AgentPosition.Orientation.FACING_WEST;

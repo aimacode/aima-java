@@ -47,8 +47,7 @@ public class AgentPercept {
 	 * @param bump
 	 * @param scream
 	 */
-	public AgentPercept(boolean stench, boolean breeze, boolean glitter,
-			boolean bump, boolean scream) {
+	public AgentPercept(boolean stench, boolean breeze, boolean glitter, boolean bump, boolean scream) {
 		setStench(stench);
 		setBreeze(breeze);
 		setGlitter(glitter);
@@ -95,13 +94,11 @@ public class AgentPercept {
 	public void setScream(boolean scream) {
 		this.scream = scream;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "["+ ((stench)  ? "Stench"  : "None") + ", "
-			  + ((breeze)  ? "Breeze"  : "None") + ", "
-			  + ((glitter) ? "Glitter" : "None") + ", "
-			  + ((bump)    ? "Bump"    : "None") + ", "
-			  + ((scream)  ? "Scream"  : "None") + "]";
+		return "[" + ((stench) ? "Stench" : "None") + ", " + ((breeze) ? "Breeze" : "None") + ", "
+				+ ((glitter) ? "Glitter" : "None") + ", " + ((bump) ? "Bump" : "None") + ", "
+				+ ((scream) ? "Scream" : "None") + "]";
 	}
 }

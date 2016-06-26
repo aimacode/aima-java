@@ -11,9 +11,9 @@ package aima.core.environment.wumpusworld.action;
  */
 public class Climb extends WWAction {
 	public static final String CLIMB_ACTION_NAME = "Climb";
-	
+
 	public Climb() {
 		super(CLIMB_ACTION_NAME);
 	}
-	
+
 }

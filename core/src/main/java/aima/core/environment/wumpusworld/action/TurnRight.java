@@ -25,8 +25,8 @@ public class TurnRight extends WWAction {
 	 */
 	public TurnRight(AgentPosition.Orientation currentOrientation) {
 		super(TURN_RIGHT_ACTION_NAME);
-		
-		switch(currentOrientation) {
+
+		switch (currentOrientation) {
 		case FACING_NORTH:
 			toOrientation = AgentPosition.Orientation.FACING_EAST;
 			break;
@@ -42,7 +42,7 @@ public class TurnRight extends WWAction {
 		}
 		setAttribute(ATTRIBUTE_TO_ORIENTATION, toOrientation);
 	}
-	
+
 	/**
 	 * 
 	 * @return the orientation the agent should be after the action occurred.

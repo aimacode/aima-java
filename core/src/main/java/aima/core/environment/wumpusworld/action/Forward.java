@@ -27,12 +27,11 @@ public class Forward extends WWAction {
 	 */
 	public Forward(AgentPosition currentPosition) {
 		super(FORWARD_ACTION_NAME);
-		
+
 		int x = currentPosition.getX();
 		int y = currentPosition.getY();
 
-		AgentPosition.Orientation orientation = currentPosition
-				.getOrientation();
+		AgentPosition.Orientation orientation = currentPosition.getOrientation();
 		switch (orientation) {
 		case FACING_NORTH:
 			toPosition = new AgentPosition(x, y + 1, orientation);
