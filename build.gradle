@@ -37,6 +37,16 @@ project(':') {
     }
 }
 
+project(':core') {
+	test {
+		afterTest { descriptor, result ->
+		    if (result.getResultType() == TestResult.ResultType.FAILURE) {
+     			logger.lifecycle("FAILED test: " + descriptor)
+     		}
+  		}
+	}
+}
+
 project(':gui') {
     dependencies {
         compile project(":extra")

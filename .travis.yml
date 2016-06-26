@@ -1,4 +1,4 @@
 language: java
 jdk:
 - oraclejdk8
-script: ./gradlew check
+script: ./gradlew check --info
