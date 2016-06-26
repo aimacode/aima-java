@@ -149,7 +149,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <a href="ore/src/main/java/aima/core/search/basic/uninformed/BreadthFirstQueueSearch.java">BreadthFirstQueueSearch</a>
+       <a href="core/src/main/java/aima/core/search/basic/uninformed/BreadthFirstQueueSearch.java">BreadthFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
