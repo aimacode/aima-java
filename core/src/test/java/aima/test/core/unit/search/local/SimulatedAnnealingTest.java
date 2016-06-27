@@ -46,7 +46,7 @@ public class SimulatedAnnealingTest {
 	
 	//
 	// NOTE: We use timeouts as simulated-annealing selects a random action so in most cases you cannot predetermine its result.
-	@Test(timeout=1000)
+	@Test(timeout=3000)
 	public void testReachableGlobalMaximum() {
 		while (!"Z".equals(searchForState(ProblemFactory.getSimpleBinaryTreeProblem("F", "Z"), asciiChar0StateValueFn, true)));
 		

@@ -39,6 +39,9 @@ project(':') {
 
 project(':core') {
 	test {
+		beforeTest { descriptor ->
+     		logger.lifecycle("Running test: " + descriptor)
+  		}
 		afterTest { descriptor, result ->
 		    if (result.getResultType() == TestResult.ResultType.FAILURE) {
      			logger.lifecycle("FAILED test: " + descriptor)
