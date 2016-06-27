@@ -45,7 +45,6 @@ project(':core') {
 		
 		testLogging.showStandardStreams = true
 		testLogging.showExceptions = true
-		testLogging.events ="failed"
 		 
 		afterTest { descriptor, result ->
 			if (result.getResultType() == TestResult.ResultType.FAILURE) {
