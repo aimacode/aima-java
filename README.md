@@ -250,6 +250,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleSimulatedAnnealingSearch.java">ExampleSimulatedAnnealingSearch</a></td>
    </tr>
    <tr>
+       <td>4.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Genetic-Algorithm.md">Genetic-Algorithm</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleGeneticAlgorithm.java">ExampleGeneticAlgorithm</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>

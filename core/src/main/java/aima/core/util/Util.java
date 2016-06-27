@@ -49,4 +49,21 @@ public class Util {
 
 		return set;
 	}
+	
+	public static double[] normalize(double[] probDist) {
+		int len = probDist.length;
+		double total = 0.0;
+		for (double d : probDist) {
+			total = total + d;
+		}
+
+		double[] normalized = new double[len];
+		if (total != 0) {
+			for (int i = 0; i < len; i++) {
+				normalized[i] = probDist[i] / total;
+			}
+		}
+
+		return normalized;
+	}
 }
