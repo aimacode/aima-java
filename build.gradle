@@ -41,12 +41,17 @@ project(':core') {
 	test {
 		testLogging.showStandardStreams = true
 		testLogging.showExceptions = true
+		testLogging.events ="failed"
 		 
 		afterTest { descriptor, result ->
-		    if (result.getResultType() == TestResult.ResultType.FAILURE) {
-     			logger.lifecycle("FAILED test: " + descriptor)
-     		}
+			if (result.getResultType() == TestResult.ResultType.FAILURE) {
+				logger.lifecycle("FAILED test: " + descriptor)
+			}
   		}
+  		
+  		onOutput { descriptor, event ->
+			logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+		}
 	}
 }
 
