@@ -39,6 +39,10 @@ project(':') {
 
 project(':core') {
 	test {
+		// set heap size for the test JVM(s)
+		minHeapSize = "128m"
+		maxHeapSize = "1024m"
+		
 		testLogging.showStandardStreams = true
 		testLogging.showExceptions = true
 		testLogging.events ="failed"
