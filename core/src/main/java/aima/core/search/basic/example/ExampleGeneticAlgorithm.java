@@ -13,8 +13,8 @@ import aima.core.util.ExecutionController;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page
- * 129.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page
+ * ??.<br>
  * <br>
  * 
  * <pre>
@@ -42,7 +42,7 @@ import aima.core.util.Util;
  *   return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
  * </pre>
  * 
- * Figure 4.8 A genetic algorithm. The algorithm is the same as the one
+ * Figure ?? A genetic algorithm. The algorithm is the same as the one
  * diagrammed in Figure 4.6, with one variation: in this more popular version,
  * each mating of two parents produces only one offspring, not two.
  * 
