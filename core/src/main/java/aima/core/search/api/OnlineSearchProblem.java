@@ -26,7 +26,7 @@ public interface OnlineSearchProblem<A, S> extends
 		// List<A> actions(S s)
 		ActionsFunction<A, S>,
 		// boolean isGoalState(S s)
-		GoalStatePredicate<S>,
+		GoalTestPredicate<S>,
 		// double stepCost(S s, A a, S s')
 		StepCostFunction<A, S> {
 }

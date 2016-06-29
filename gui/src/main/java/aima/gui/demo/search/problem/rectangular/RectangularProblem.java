@@ -3,7 +3,7 @@ package aima.gui.demo.search.problem.rectangular;
 import java.util.*;
 
 import aima.core.search.api.ActionsFunction;
-import aima.core.search.api.GoalStatePredicate;
+import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.basic.support.BasicProblem;
 
 /**
@@ -44,7 +44,7 @@ public class RectangularProblem extends BasicProblem<String, AtVertex> {
         return new AtVertex(goX, goY);
     }
 
-    public static GoalStatePredicate<AtVertex> goalTest(Collection<AtVertex> goals) {
+    public static GoalTestPredicate<AtVertex> goalTest(Collection<AtVertex> goals) {
         final Set<AtVertex> testGoals = new HashSet<>(goals);
         return testGoals::contains;
     }

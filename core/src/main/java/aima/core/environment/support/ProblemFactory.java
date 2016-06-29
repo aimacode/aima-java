@@ -20,7 +20,7 @@ import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VEWorldState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.ActionsFunction;
-import aima.core.search.api.GoalStatePredicate;
+import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.Problem;
 import aima.core.search.api.ResultFunction;
 import aima.core.search.basic.support.BasicProblem;
@@ -53,7 +53,7 @@ public class ProblemFactory {
 
 		ResultFunction<GoAction, InState> resultFn = (state, action) -> new InState(action.getGoTo());
 
-		GoalStatePredicate<InState> goalStatePredicate = inLocationState -> {
+		GoalTestPredicate<InState> goalTestPredicate = inLocationState -> {
 			for (String goalState : goalStates) {
 				if (goalState.equals(inLocationState.getLocation())) {
 					return true;
@@ -62,7 +62,7 @@ public class ProblemFactory {
 			return false;
 		};
 
-		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalStatePredicate);
+		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
 	}
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
@@ -79,12 +79,12 @@ public class ProblemFactory {
 		ResultFunction<String, VEWorldState> resultFn = (worldState, action) -> worldState
 				.performDeterministic(action);
 
-		GoalStatePredicate<VEWorldState> goalStatePredicate = worldState -> {
+		GoalTestPredicate<VEWorldState> goalTestPredicate = worldState -> {
 			return worldState.isAllClean();
 		};
 
 		return new BasicProblem<>(new VEWorldState(inInitialLocation, leftToRightLocalStates), actionsFn, resultFn,
-				goalStatePredicate);
+				goalTestPredicate);
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {
@@ -133,7 +133,7 @@ public class ProblemFactory {
 
 		ResultFunction<String, String> resultFn = (state, action) -> action;
 
-		GoalStatePredicate<String> goalStatePredicate = state -> {
+		GoalTestPredicate<String> goalTestPredicate = state -> {
 			for (String goalState : goalStates) {
 				if (goalState.equals(state)) {
 					return true;
@@ -142,7 +142,7 @@ public class ProblemFactory {
 			return false;
 		};
 
-		return new BasicProblem<>(initialState, actionsFn, resultFn, goalStatePredicate);
+		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
 	}
 
 	public static final int[] DEFAULT_DISCRETE_FUNCTION_DEPENDENT_VALUES = new int[] { // ->
@@ -244,10 +244,10 @@ public class ProblemFactory {
 			}
 		};
 
-		GoalStatePredicate<Pair<Integer, Integer>> goalStatePredicate = x_y -> {
+		GoalTestPredicate<Pair<Integer, Integer>> goalTestPredicate = x_y -> {
 			return x_y.getSecond().equals(goalValue);
 		};
 
-		return new BasicProblem<>(initialState, actionsFn, resultFn, goalStatePredicate);
+		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
 	}
 }

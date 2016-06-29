@@ -22,7 +22,7 @@ public interface NondeterministicProblem<A, S> extends
 		// List<S> results(S s, A a)
 		ResultsFunction<A, S>,
 		// boolean isGoalState(S s)
-		GoalStatePredicate<S>,
+		GoalTestPredicate<S>,
 		// double stepCost(S s, A a, S s')
 		StepCostFunction<A, S> {
 }

@@ -10,7 +10,7 @@ package aima.core.search.api;
  * 
  */
 @FunctionalInterface
-public interface GoalStatePredicate<S> {
+public interface GoalTestPredicate<S> {
 	/**
 	 * The goal test, which determines if a given state is a goal state.
 	 *

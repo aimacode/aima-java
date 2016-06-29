@@ -38,7 +38,7 @@ public interface Problem<A, S> extends
 		// S result(S s, A a)
 		ResultFunction<A, S>,
 		// boolean isGoalState(S s)
-		GoalStatePredicate<S>,
+		GoalTestPredicate<S>,
 		// double stepCost(S s, A a, S s')
 		StepCostFunction<A, S> {
 }
