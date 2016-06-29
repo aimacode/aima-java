@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import aima.core.environment.map2d.GoAction;
@@ -22,7 +19,10 @@ import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VEWorldState;
 import aima.core.environment.vacuum.VacuumEnvironment;
+import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.GoalStatePredicate;
 import aima.core.search.api.Problem;
+import aima.core.search.api.ResultFunction;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.datastructure.Pair;
 
@@ -42,7 +42,7 @@ public class ProblemFactory {
 			}
 		}
 
-		Function<InState, List<GoAction>> actionsFn = inLocationState -> {
+		ActionsFunction<GoAction, InState> actionsFn = inLocationState -> {
 			List<GoAction> actions = new ArrayList<>();
 			for (String toLocation : simplifidRoadMapOfPartOfRomania
 					.getLocationsLinkedTo(inLocationState.getLocation())) {
@@ -51,9 +51,9 @@ public class ProblemFactory {
 			return actions;
 		};
 
-		BiFunction<InState, GoAction, InState> resultFn = (state, action) -> new InState(action.getGoTo());
+		ResultFunction<GoAction, InState> resultFn = (state, action) -> new InState(action.getGoTo());
 
-		Predicate<InState> goalTestPredicate = inLocationState -> {
+		GoalStatePredicate<InState> goalStatePredicate = inLocationState -> {
 			for (String goalState : goalStates) {
 				if (goalState.equals(inLocationState.getLocation())) {
 					return true;
@@ -62,7 +62,7 @@ public class ProblemFactory {
 			return false;
 		};
 
-		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalStatePredicate);
 	}
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
@@ -72,19 +72,19 @@ public class ProblemFactory {
 		actions.add(VacuumEnvironment.ACTION_LEFT);
 		actions.add(VacuumEnvironment.ACTION_RIGHT);
 		actions.add(VacuumEnvironment.ACTION_SUCK);
-		Function<VEWorldState, List<String>> actionsFn = inState -> {
+		ActionsFunction<String, VEWorldState> actionsFn = inState -> {
 			return actions;
 		};
 
-		BiFunction<VEWorldState, String, VEWorldState> resultFn = (worldState, action) -> worldState
+		ResultFunction<String, VEWorldState> resultFn = (worldState, action) -> worldState
 				.performDeterministic(action);
 
-		Predicate<VEWorldState> goalTestPredicate = worldState -> {
+		GoalStatePredicate<VEWorldState> goalStatePredicate = worldState -> {
 			return worldState.isAllClean();
 		};
 
 		return new BasicProblem<>(new VEWorldState(inInitialLocation, leftToRightLocalStates), actionsFn, resultFn,
-				goalTestPredicate);
+				goalStatePredicate);
 	}
 
 	public static List<String> getSimpleBinaryTreeStates() {
@@ -124,16 +124,16 @@ public class ProblemFactory {
 			simpleBinaryTreeStateSpace.put(node, targets);
 		}
 
-		Function<String, List<String>> actionsFn = state -> {
+		ActionsFunction<String, String> actionsFn = state -> {
 			if (simpleBinaryTreeStateSpace.containsKey(state)) {
 				return new ArrayList<>(simpleBinaryTreeStateSpace.get(state));
 			}
 			return Collections.emptyList();
 		};
 
-		BiFunction<String, String, String> resultFn = (state, action) -> action;
+		ResultFunction<String, String> resultFn = (state, action) -> action;
 
-		Predicate<String> goalTestPredicate = state -> {
+		GoalStatePredicate<String> goalStatePredicate = state -> {
 			for (String goalState : goalStates) {
 				if (goalState.equals(state)) {
 					return true;
@@ -142,7 +142,7 @@ public class ProblemFactory {
 			return false;
 		};
 
-		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(initialState, actionsFn, resultFn, goalStatePredicate);
 	}
 
 	public static final int[] DEFAULT_DISCRETE_FUNCTION_DEPENDENT_VALUES = new int[] { // ->
@@ -222,11 +222,11 @@ public class ProblemFactory {
 		final List<String> actions = new ArrayList<>();
 		actions.add("Left");
 		actions.add("Right");
-		Function<Pair<Integer, Integer>, List<String>> actionsFn = inState -> {
+		ActionsFunction<String, Pair<Integer, Integer>> actionsFn = inState -> {
 			return actions;
 		};
 
-		BiFunction<Pair<Integer, Integer>, String, Pair<Integer, Integer>> resultFn = (x_y, action) -> {
+		ResultFunction<String, Pair<Integer, Integer>> resultFn = (x_y, action) -> {
 			if ("Left".equals(action)) {
 				if (x_y.getFirst().equals(0)) {
 					return x_y;
@@ -244,10 +244,10 @@ public class ProblemFactory {
 			}
 		};
 
-		Predicate<Pair<Integer, Integer>> goalTestPredicate = x_y -> {
+		GoalStatePredicate<Pair<Integer, Integer>> goalStatePredicate = x_y -> {
 			return x_y.getSecond().equals(goalValue);
 		};
 
-		return new BasicProblem<>(initialState, actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(initialState, actionsFn, resultFn, goalStatePredicate);
 	}
 }

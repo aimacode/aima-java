@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import aima.core.agent.api.Agent;
 import aima.core.environment.wumpusworld.action.Climb;
@@ -16,6 +15,7 @@ import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.WWAction;
+import aima.core.search.api.GoalStatePredicate;
 import aima.core.search.basic.informed.AStarQueueSearch;
 import aima.core.search.basic.queue.GraphPriorityQueueSearch;
 import aima.core.search.basic.support.BasicProblem;
@@ -202,7 +202,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 
 		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedPositions);
 
-		Predicate<AgentPosition> goalTest = state -> {
+		GoalStatePredicate<AgentPosition> goalTest = state -> {
 			if (goalPositions.contains(state)) {
 				return true;
 			}

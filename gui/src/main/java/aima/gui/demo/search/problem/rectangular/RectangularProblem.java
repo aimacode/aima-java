@@ -1,9 +1,9 @@
 package aima.gui.demo.search.problem.rectangular;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
+import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.GoalStatePredicate;
 import aima.core.search.basic.support.BasicProblem;
 
 /**
@@ -18,7 +18,7 @@ public class RectangularProblem extends BasicProblem<String, AtVertex> {
                 RectangularProblem.goalTest(goals));
     }
 
-    public static Function<AtVertex, List<String>> actions(final int xSize, int ySize)  {
+    public static ActionsFunction<String, AtVertex> actions(final int xSize, int ySize)  {
         return atVertex -> {
             List<String> result = new ArrayList<>();
             if (atVertex.y > 0) {
@@ -44,7 +44,7 @@ public class RectangularProblem extends BasicProblem<String, AtVertex> {
         return new AtVertex(goX, goY);
     }
 
-    public static Predicate<AtVertex> goalTest(Collection<AtVertex> goals) {
+    public static GoalStatePredicate<AtVertex> goalTest(Collection<AtVertex> goals) {
         final Set<AtVertex> testGoals = new HashSet<>(goals);
         return testGoals::contains;
     }

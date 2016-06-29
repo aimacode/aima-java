@@ -2,13 +2,13 @@ package aima.core.environment.wumpusworld;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.environment.wumpusworld.action.WWAction;
+import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.ResultFunction;
 
 /**
  * Factory class for constructing functions for use in the Wumpus World
@@ -20,20 +20,17 @@ import aima.core.environment.wumpusworld.action.WWAction;
  * @author Anurag Rai
  */
 public class WumpusFunctionFactory {
-	private static BiFunction<AgentPosition, WWAction, AgentPosition> resultFunction = null;
+	private static final ResultFunction<WWAction, AgentPosition> _resultFunction = new WumpusResultFunction();;
 
-	public static Function<AgentPosition, List<WWAction>> getActionsFunction(WumpusCave cave) {
+	public static ActionsFunction<WWAction, AgentPosition> getActionsFunction(WumpusCave cave) {
 		return new WumpusActionsFunction(cave);
 	}
 
-	public static BiFunction<AgentPosition, WWAction, AgentPosition> getResultFunction() {
-		if (null == resultFunction) {
-			resultFunction = new WumpusResultFunction();
-		}
-		return resultFunction;
+	public static ResultFunction<WWAction, AgentPosition> getResultFunction() {
+		return _resultFunction;
 	}
 
-	private static class WumpusActionsFunction implements Function<AgentPosition, List<WWAction>> {
+	private static class WumpusActionsFunction implements ActionsFunction<WWAction, AgentPosition> {
 		private WumpusCave cave;
 
 		public WumpusActionsFunction(WumpusCave cave) {
@@ -41,40 +38,25 @@ public class WumpusFunctionFactory {
 		}
 
 		@Override
-		public List<WWAction> apply(AgentPosition t) {
-			return actions(t);
-		}
-
-		private List<WWAction> actions(AgentPosition state) {
+		public List<WWAction> actions(AgentPosition state) {
 			List<WWAction> actions = new LinkedList<>();
-			AgentPosition position = null;
-			try {
-				position = (AgentPosition) state;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 
-			List<AgentPosition> linkedPositions = cave.getLocationsLinkedTo(position);
+			List<AgentPosition> linkedPositions = cave.getLocationsLinkedTo(state);
 			for (AgentPosition linkPos : linkedPositions) {
-				if (linkPos.getX() != position.getX() || linkPos.getY() != position.getY()) {
-					actions.add((WWAction) new Forward(position));
+				if (linkPos.getX() != state.getX() || linkPos.getY() != state.getY()) {
+					actions.add(new Forward(state));
 				}
 			}
-			actions.add((WWAction) new TurnLeft(position.getOrientation()));
-			actions.add((WWAction) new TurnRight(position.getOrientation()));
+			actions.add(new TurnLeft(state.getOrientation()));
+			actions.add(new TurnRight(state.getOrientation()));
 
 			return actions;
 		}
 	}
 
-	private static class WumpusResultFunction implements BiFunction<AgentPosition, WWAction, AgentPosition> {
-
+	private static class WumpusResultFunction implements ResultFunction<WWAction, AgentPosition> {
 		@Override
-		public AgentPosition apply(AgentPosition t, WWAction u) {
-			return result(t, u);
-		}
-
-		private AgentPosition result(AgentPosition s, WWAction a) {
+		public AgentPosition result(AgentPosition s, WWAction a) {
 
 			if (a instanceof Forward) {
 				Forward fa = (Forward) a;
@@ -82,12 +64,12 @@ public class WumpusFunctionFactory {
 				return fa.getToPosition();
 			} else if (a instanceof TurnLeft) {
 				TurnLeft tLeft = (TurnLeft) a;
-				AgentPosition res = (AgentPosition) s;
+				AgentPosition res = s;
 
 				return new AgentPosition(res.getX(), res.getY(), tLeft.getToOrientation());
 			} else if (a instanceof TurnRight) {
 				TurnRight tRight = (TurnRight) a;
-				AgentPosition res = (AgentPosition) s;
+				AgentPosition res = s;
 
 				return new AgentPosition(res.getX(), res.getY(), tRight.getToOrientation());
 			}
