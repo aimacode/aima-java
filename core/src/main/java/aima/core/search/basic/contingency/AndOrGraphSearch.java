@@ -131,10 +131,10 @@ public class AndOrGraphSearch<A, S> implements SearchForConditionalPlanFunction<
 	}
 
 	public ConditionalPlan<A, S> newPlan(A action, ConditionalPlan<A, S> plan) {
-		return null; // TODO
+		return new BasicConditionalPlan<>(action, plan);
 	}
 
 	public ConditionalPlan<A, S> newPlan(List<Pair<S, ConditionalPlan<A, S>>> conditionedPlans) {
-		return null; // TODO
+		return new BasicConditionalPlan<>(conditionedPlans);
 	}
 }
