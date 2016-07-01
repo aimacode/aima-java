@@ -142,9 +142,9 @@ public class BreadthFirstSearchTest {
 
 		Assert.assertEquals(
 				// NOTE: This sequence of actions is only correct because we
-				// always order our possible actions [Left, Right, Suck] in
+				// always order our possible actions [Left, Suck, Right] in
 				// ProblemFactory.getSimpleVacuumWorldProblem(), if the order
-				// was different we would get a different answer.
+				// was different we would likely get a different answer.
 				Arrays.asList(VacuumEnvironment.ACTION_LEFT, VacuumEnvironment.ACTION_SUCK,
 						VacuumEnvironment.ACTION_RIGHT, VacuumEnvironment.ACTION_SUCK, VacuumEnvironment.ACTION_RIGHT,
 						VacuumEnvironment.ACTION_SUCK),

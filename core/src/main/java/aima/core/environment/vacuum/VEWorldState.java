@@ -59,10 +59,7 @@ public class VEWorldState {
 			break;
 		case VacuumEnvironment.ACTION_SUCK:
 			if (locationLocalStateMap.get(currentLocation).status == VacuumEnvironment.Status.Dirty) {
-				Map<String, VELocalState> updatedLocationLocalStateMap = new LinkedHashMap<>(locationLocalStateMap);
-				updatedLocationLocalStateMap.put(currentLocation,
-						new VELocalState(currentLocation, VacuumEnvironment.Status.Clean));
-				resultingWorldState = new VEWorldState(currentLocation, updatedLocationLocalStateMap);
+				resultingWorldState = makeStatus(currentLocation, VacuumEnvironment.Status.Clean);
 			}
 			break;
 		default:
@@ -70,10 +67,21 @@ public class VEWorldState {
 		}
 		return resultingWorldState;
 	}
+	
+	public boolean isClean(String location) {
+		return locationLocalStateMap.get(currentLocation).status == VacuumEnvironment.Status.Clean;
+	}
 
 	public boolean isAllClean() {
 		return locationLocalStateMap.values().stream()
 				.allMatch(localState -> localState.status == VacuumEnvironment.Status.Clean);
+	}
+	
+	public VEWorldState makeStatus(String location, VacuumEnvironment.Status status) {
+		Map<String, VELocalState> updatedLocationLocalStateMap = new LinkedHashMap<>(locationLocalStateMap);
+		updatedLocationLocalStateMap.put(location,
+				new VELocalState(location, status));
+		return new VEWorldState(location, updatedLocationLocalStateMap);
 	}
 
 	@Override

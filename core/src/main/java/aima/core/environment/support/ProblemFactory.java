@@ -67,17 +67,27 @@ public class ProblemFactory {
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
 			final VELocalState... leftToRightLocalStates) {
-		// Actions are always the same irrespective of what state you are in.
-		final List<String> actions = new ArrayList<>();
-		actions.add(VacuumEnvironment.ACTION_LEFT);
-		actions.add(VacuumEnvironment.ACTION_RIGHT);
-		actions.add(VacuumEnvironment.ACTION_SUCK);
+		final List<String> allActions = new ArrayList<>();
+		allActions.add(VacuumEnvironment.ACTION_LEFT);
+		allActions.add(VacuumEnvironment.ACTION_SUCK);
+		allActions.add(VacuumEnvironment.ACTION_RIGHT);
+		final List<String> fromLeftActions = new ArrayList<>();
+		fromLeftActions.add(VacuumEnvironment.ACTION_SUCK);
+		fromLeftActions.add(VacuumEnvironment.ACTION_RIGHT);
+		final List<String> fromRightActions = new ArrayList<>();
+		fromRightActions.add(VacuumEnvironment.ACTION_LEFT);
+		fromRightActions.add(VacuumEnvironment.ACTION_SUCK);
 		ActionsFunction<String, VEWorldState> actionsFn = inState -> {
-			return actions;
+			if (inState.currentLocation.equals(leftToRightLocalStates[0].location)) {
+				return fromLeftActions;
+			} else if (inState.currentLocation
+					.equals(leftToRightLocalStates[leftToRightLocalStates.length - 1].location)) {
+				return fromRightActions;
+			}
+			return allActions;
 		};
 
-		ResultFunction<String, VEWorldState> resultFn = (worldState, action) -> worldState
-				.performDeterministic(action);
+		ResultFunction<String, VEWorldState> resultFn = (worldState, action) -> worldState.performDeterministic(action);
 
 		GoalTestPredicate<VEWorldState> goalTestPredicate = worldState -> {
 			return worldState.isAllClean();

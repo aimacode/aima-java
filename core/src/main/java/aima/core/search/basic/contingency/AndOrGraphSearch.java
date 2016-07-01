@@ -92,7 +92,7 @@ public class AndOrGraphSearch<A, S> implements SearchForConditionalPlanFunction<
 
 	// function AND-SEARCH(states, problem, path) returns a conditional plan, or
 	// failure
-	public ConditionalPlan<A, S> andSearch(List<S> states, NondeterministicProblem<A, S> problem, List<S> path) {
+	public ConditionalPlan<A, S> andSearch(List<S> states, NondeterministicProblem<A, S> problem, List<S> path) {		
 		List<Pair<S, ConditionalPlan<A, S>>> conditionedPlans = new ArrayList<>();
 		// for each s<sub>i</sub> in states do
 		for (S s_i : states) {
@@ -102,6 +102,7 @@ public class AndOrGraphSearch<A, S> implements SearchForConditionalPlanFunction<
 			if (plan_i == failure()) {
 				return failure();
 			}
+			conditionedPlans.add(new Pair<>(s_i, plan_i));
 		}
 		// return [if s<sub>1</sub> then plan<sub>1</sub> else if s<sub>2</sub>
 		// then plan<sub>2</sub> else ... if s<sub>n-1</sub> then

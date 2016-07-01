@@ -256,6 +256,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/example/ExampleGeneticAlgorithm.java">ExampleGeneticAlgorithm</a></td>
    </tr>
    <tr>
+       <td>4.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/And-Or-Graph-Search.md">And-Or-Graph-Search</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/contingency/AndOrGraphSearch.java">AndOrGraphSearch</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
