@@ -13,7 +13,11 @@ import aima.core.util.CancelableThread;
 
 /**
  * Base class for queue-based search implementations, especially for {@link TreeSearch},
- * {@link GraphSearch}, and {@link BidirectionalSearch}.
+ * {@link GraphSearch}, and {@link BidirectionalSearch}. It provides a template method
+ * for controlling search execution and defines primitive methods encapsulating frontier
+ * access. Tree search implementations will implement frontier access straight-forward.
+ * Graph search implementations will add node filtering mechanisms to avoid that
+ * nodes of already explored states are selected for expansion.   
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
@@ -33,10 +37,6 @@ public abstract class QueueSearch {
 	
 	protected QueueSearch(NodeExpander nodeExpander) {
 		this.nodeExpander = nodeExpander;
-	}
-	
-	public NodeExpander getNodeExpander() {
-		return nodeExpander;
 	}
 	
 	/**
@@ -120,6 +120,9 @@ public abstract class QueueSearch {
 		this.earlyGoalCheck = state;
 	}
 
+	public NodeExpander getNodeExpander() {
+		return nodeExpander;
+	}
 	
 	/**
 	 * Returns all the search metrics.

@@ -35,10 +35,10 @@ import aima.core.search.framework.problem.Problem;
  * 
  * <br>
  * This implementation is based on the template method
- * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
- * provides implementations for the needed primitive operations. It implements a
- * special version of graph search which keeps the frontier short by focusing on
- * the best node for each state only. It should only be used in combination with
+ * {@link QueueSearch#search(Problem, Queue)} of the superclass and provides
+ * implementations for the needed primitive operations. It implements a special
+ * version of graph search which keeps the frontier short by focusing on the
+ * best node for each state only. It should only be used in combination with
  * priority queue frontiers. If a node is added to the frontier, this
  * implementation checks whether another node for the same state already exists
  * and decides whether to replace it or ignore the new node depending on the
@@ -76,33 +76,35 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 		frontierNodeLookup.clear();
 		return super.search(problem, frontier);
 	}
-	
+
 	public Comparator<Node> getNodeComparator() {
 		return nodeComparator;
 	}
 
 	/**
-	 * Inserts the node at the tail of the frontier.
+	 * Inserts the node into the frontier if the node's state is not yet
+	 * explored and not present in the frontier. If a second node for the same
+	 * state is already part of the frontier, it is checked, which node is better
+	 * (with respect to priority). Depending of the result, the existing node is
+	 * replaced or the new node is dropped.
 	 */
 	@Override
 	protected void addToFrontier(Node node) {
-		Node frontierNode = frontierNodeLookup.get(node.getState());
-
-		if (null == frontierNode) {
-			if (!explored.contains(node.getState())) {
+		if (!explored.contains(node.getState())) {
+			Node frontierNode = frontierNodeLookup.get(node.getState());
+			if (frontierNode == null) {
 				// child.STATE is not in frontier and not yet explored
 				frontier.add(node);
 				frontierNodeLookup.put(node.getState(), node);
 				updateMetrics(frontier.size());
+			} else if (nodeComparator != null && nodeComparator.compare(node, frontierNode) < 0) {
+				// child.STATE is in frontier with higher cost
+				// replace that frontier node with child
+				if (frontier.remove(frontierNode))
+					frontierNodeLookup.remove(frontierNode.getState());
+				frontier.add(node);
+				frontierNodeLookup.put(node.getState(), node);
 			}
-		} else if (null != nodeComparator && nodeComparator.compare(node, frontierNode) < 0) {
-			// child.STATE is in frontier with higher cost
-			// replace that frontier node with child
-			if (frontier.remove(frontierNode))
-				frontierNodeLookup.remove(frontierNode.getState());
-			frontier.add(node);
-			frontierNodeLookup.put(node.getState(), node);
-			updateMetrics(frontier.size());
 		}
 	}
 
