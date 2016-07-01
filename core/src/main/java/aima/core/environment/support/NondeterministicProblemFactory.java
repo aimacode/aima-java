@@ -18,23 +18,12 @@ public class NondeterministicProblemFactory {
 
 	public static NondeterministicProblem<String, VEWorldState> getSimpleErraticVacuumWorldProblem(
 			String inInitialLocation, final VELocalState... leftToRightLocalStates) {
+		// These actions are legal in all states
 		final List<String> allActions = new ArrayList<>();
 		allActions.add(VacuumEnvironment.ACTION_LEFT);
 		allActions.add(VacuumEnvironment.ACTION_SUCK);
 		allActions.add(VacuumEnvironment.ACTION_RIGHT);
-		final List<String> fromLeftActions = new ArrayList<>();
-		fromLeftActions.add(VacuumEnvironment.ACTION_SUCK);
-		fromLeftActions.add(VacuumEnvironment.ACTION_RIGHT);
-		final List<String> fromRightActions = new ArrayList<>();
-		fromRightActions.add(VacuumEnvironment.ACTION_LEFT);
-		fromRightActions.add(VacuumEnvironment.ACTION_SUCK);
 		ActionsFunction<String, VEWorldState> actionsFn = inState -> {
-			if (inState.currentLocation.equals(leftToRightLocalStates[0].location)) {
-				return fromLeftActions;
-			} else if (inState.currentLocation
-					.equals(leftToRightLocalStates[leftToRightLocalStates.length - 1].location)) {
-				return fromRightActions;
-			}
 			return allActions;
 		};
 
