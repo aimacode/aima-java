@@ -41,7 +41,7 @@ public abstract class QueueSearch {
 	}
 
 	/**
-	 * Receives a problem and queue implementing the search strategy and
+	 * Receives a problem and a queue implementing the search strategy and
 	 * computes a list of actions which transform the initial state into a goal
 	 * state. This template method provides a base for tree and graph search
 	 * implementations. It can be customized by overriding some primitive
