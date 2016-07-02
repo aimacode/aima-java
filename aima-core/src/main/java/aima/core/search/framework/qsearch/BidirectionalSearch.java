@@ -108,7 +108,7 @@ public class BidirectionalSearch extends QueueSearch {
 
 			// if the node contains a goal state then return the
 			// corresponding solution
-			if (!earlyGoalCheck && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
+			if (!earlyGoalTest && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
 				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
 
 			// expand the chosen node, adding the resulting nodes to the
@@ -118,7 +118,7 @@ public class BidirectionalSearch extends QueueSearch {
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, successor) != null) {
 
-					if (earlyGoalCheck
+					if (earlyGoalTest
 							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(successor)) != null)
 						return getSolution(orgP, successor, nodeFromOtherProblem);
 
