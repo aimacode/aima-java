@@ -34,7 +34,6 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/TreeSearch.java)|
 |3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch.java)|
 |3.10|79|Node|[Node](/aima-core/src/main/java/aima/core/search/framework/Node.java)|
-|3|79|Queue|[Queue](/aima-core/src/main/java/aima/core/util/datastructure/Queue.java)|
 |3.11|82|Breadth-First-Search|[BreadthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java)|
 |3.14|84|Uniform-Cost-Search|[UniformCostSearch](/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java)|
 |3|85|Depth-first Search|[DepthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/DepthFirstSearch.java)|
