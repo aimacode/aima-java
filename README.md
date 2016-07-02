@@ -262,6 +262,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/contingency/AndOrGraphSearch.java">AndOrGraphSearch</a></td>
    </tr>
    <tr>
+       <td>4.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Online-DFS-Agent.md">Online-DFS-Agent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/OnlineDFSAgent.java">OnlineDFSAgent</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
