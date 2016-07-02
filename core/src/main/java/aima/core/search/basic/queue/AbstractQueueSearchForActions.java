@@ -133,6 +133,6 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		// NOTE: by Java's PriorityQueue convention, nodes that compare lower
 		// (i.e. cost) have a higher priority.
-		return frontier.removeIf(n -> child.state().equals(n.state()) && getNodeFactory().compare(child, n) < 0);
+		return frontier.removeIf(n -> child.state().equals(n.state()) && getNodeComparator().compare(child, n) < 0);
 	}
 }
