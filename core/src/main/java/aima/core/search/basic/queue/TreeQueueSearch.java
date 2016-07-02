@@ -1,6 +1,5 @@
 package aima.core.search.basic.queue;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -52,14 +51,5 @@ public class TreeQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
 			}
 		}
 		return failure();
-	}
-
-	//
-	// Supporting Code
-	public TreeQueueSearch() {
-		// We default to a LinkedList instead of the parent classes default of a
-		// queue that supports state tracking as it is not required in this
-		// instance.
-		setFrontierSupplier(LinkedList::new);
 	}
 }
