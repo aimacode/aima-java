@@ -34,7 +34,8 @@ import aima.core.search.api.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
+public class GraphGoalTestedFirstQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S>
+		implements QueueSearchForActions.DoesStateContainmentCheckingOnFrontier {
 	// function GRAPH-GOAL-TESTED-FIRST-SEARCH(problem) returns a solution, or
 	// failure
 	@Override

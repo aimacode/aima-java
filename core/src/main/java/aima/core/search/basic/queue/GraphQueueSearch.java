@@ -30,7 +30,8 @@ import aima.core.search.api.Problem;
  *
  * @author Ciaran O'Reilly
  */
-public class GraphQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
+public class GraphQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S>
+		implements QueueSearchForActions.DoesStateContainmentCheckingOnFrontier {
 	// function GRAPH-SEARCH(problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {

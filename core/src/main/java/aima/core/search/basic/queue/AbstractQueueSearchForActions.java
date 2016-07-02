@@ -1,6 +1,7 @@
 package aima.core.search.basic.queue;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -50,7 +51,14 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 	@Override
 	public Supplier<Queue<Node<A, S>>> getFrontierSupplier() {
 		if (frontierSupplier == null) {
-			frontierSupplier = BasicFrontierQueue::new;
+			if (this instanceof QueueSearchForActions.DoesStateContainmentCheckingOnFrontier) {
+				// Basic frontier queue supports doing containment checking of a node's state.
+				frontierSupplier = BasicFrontierQueue::new;
+			}
+			else {
+				// Otherwise the standard java queue implementation is all that is needed by default.
+				frontierSupplier = LinkedList::new;
+			}
 		}
 		return frontierSupplier;
 	}

@@ -32,7 +32,8 @@ import aima.core.search.api.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class TreePriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
+public class TreePriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S>
+		implements QueueSearchForActions.DoesStateContainmentCheckingOnFrontier {
 	// function TREE-PRIORITY-SEARCH(problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {

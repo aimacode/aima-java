@@ -35,7 +35,8 @@ import aima.core.search.api.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
+public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S>
+		implements QueueSearchForActions.DoesStateContainmentCheckingOnFrontier {
 	// function GRAPH-PRIORITY-SEARCH((problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
@@ -48,11 +49,16 @@ public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForAction
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) { return failure(); }
-			// node <- POP(frontier) // chooses the highest priority node in frontier
+			if (frontier.isEmpty()) {
+				return failure();
+			}
+			// node <- POP(frontier) // chooses the highest priority node in
+			// frontier
 			node = frontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (isGoalState(node, problem)) { return solution(node); }
+			if (isGoalState(node, problem)) {
+				return solution(node);
+			}
 			// add node.STATE to explored
 			explored.add(node.state());
 			// for each action in problem.ACTIONS(node.STATE) do
@@ -65,7 +71,8 @@ public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForAction
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
 				} // else if child.STATE is in frontier with lower priority then
-				else if (childStateInFrontier && removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
+				else if (childStateInFrontier
+						&& removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
 					// replace that frontier node with child
 					frontier.add(child);
 				}
