@@ -1,4 +1,4 @@
-package aima.core.search.basic.informed;
+package aima.core.search.basic.uninformed;
 
 import java.util.HashSet;
 import java.util.List;
