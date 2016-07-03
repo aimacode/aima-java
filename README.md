@@ -313,7 +313,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Hybrid-Wumpus-Agent.md">Hybrid-Wumpus-Agent</a></td>
-       <td><a href="aima/extra/environment/wumpusworld/HybridWumpusAgent.java">HybridWumpusAgent</a></td>
+       <td><a href="extra/src/main/java/aima/extra/environment/wumpusworld/HybridWumpusAgent.java">HybridWumpusAgent</a></td>
    </tr>
    <tr>
        <td>7.?</td>
