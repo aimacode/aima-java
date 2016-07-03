@@ -69,7 +69,6 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 	public A perceive(P percept) {
 		// s', a percept that identifies the current state
 		S sPrime = identifyStateFor(percept);
-
 		if (isGoalState(sPrime)) {
 			return stop();
 		}
@@ -78,11 +77,19 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 			untried.put(sPrime, actions(sPrime));
 		}
 		// if s is not null then do
+		//
 		if (s != null) {
-			// result[s, a] <- s'
-			result.put(s, a, sPrime);
-			// add s to the front of the unbacktracked[s']
-			unbacktracked.computeIfAbsent(sPrime, key -> new LinkedList<>()).push(s);
+			// TODO - clarify the need for this additional check:
+			// If already seen the result of [s, a]
+			// then don't put it back on the unbacktracked
+			// list otherwise it can keep oscillating
+			// between the same states endlessly.
+			if (!sPrime.equals(result.get(s, a))) {
+				// result[s, a] <- s'
+				result.put(s, a, sPrime);
+				// add s to the front of the unbacktracked[s']
+				unbacktracked.computeIfAbsent(sPrime, key -> new LinkedList<>()).push(s);
+			}
 		}
 		// if untried[s'] is empty then
 		if (untried.get(sPrime).isEmpty()) {
@@ -107,11 +114,15 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 
 	//
 	// Supporting Code
-	private Function<P, S> identifyStateFunction;
 	private OnlineSearchProblem<A, S> onlineProblem;
+	private Function<P, S> identifyStateFunction;
 	private A stopAction;
 
-	public OnlineDFSAgent(Function<P, S> identifyStateFunction, OnlineSearchProblem<A, S> onlineProblem, A stopAction) {
+	public OnlineDFSAgent(OnlineSearchProblem<A, S> onlineProblem, Function<P, S> identifyStateFunction) {
+		this(onlineProblem, identifyStateFunction, null);
+	}
+
+	public OnlineDFSAgent(OnlineSearchProblem<A, S> onlineProblem, Function<P, S> identifyStateFunction, A stopAction) {
 		this.identifyStateFunction = identifyStateFunction;
 		this.onlineProblem = onlineProblem;
 		this.stopAction = stopAction;

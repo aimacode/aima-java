@@ -353,8 +353,8 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 * Add a mechanism for gathering search metrics. Want to make more flexible and introduce less clutter into the core algorithms in order to support.
 
 #### Chp 4
-* Reconsider using a separate state oriented Search API (as opposed to the current sequence of actions).
 * Follow up on Genetic Algorithm experiments on N-Queens problem (based on aima3e implementation) to determine if performs no better than random selection.
+* Online-DFS-Agent - Clarify the need for the additional check `if (!sPrime.equals(result.get(s, a))) {`, which is not present in the pseudocode but required to stop it looping endlessly on certain test problems.
 
 #### Chp 5
 
