@@ -52,7 +52,7 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 
 	private Set<Object> explored = new HashSet<Object>();
 	private Map<Object, Node> frontierNodeLookup = new HashMap<Object, Node>();
-	private Comparator<Node> nodeComparator = null;
+	private Comparator<? super Node> nodeComparator = null;
 
 	public GraphSearchReducedFrontier() {
 		this(new NodeExpander());
@@ -66,18 +66,17 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * Sets the comparator if a priority queue is used, resets explored list and
 	 * state map and calls the inherited version of search.
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		if (frontier instanceof PriorityQueue<?>)
-			nodeComparator = (Comparator<Node>) ((PriorityQueue<?>) frontier).comparator();
+			nodeComparator = ((PriorityQueue<Node>) frontier).comparator();
 		explored.clear();
 		frontierNodeLookup.clear();
 		return super.search(problem, frontier);
 	}
 
-	public Comparator<Node> getNodeComparator() {
+	public Comparator<? super Node> getNodeComparator() {
 		return nodeComparator;
 	}
 
