@@ -2,7 +2,6 @@ package aima.extra.search.pqueue.uninformed;
 
 import java.util.PriorityQueue;
 
-import aima.extra.search.pqueue.GraphPriorityQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
 import aima.extra.search.pqueue.QueueSearchForActionsWrapper;
 

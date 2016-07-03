@@ -3,7 +3,6 @@ package aima.extra.search.pqueue.uninformed;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import aima.extra.search.pqueue.GraphQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
 import aima.extra.search.pqueue.QueueSearchForActionsWrapper;
 

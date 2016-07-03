@@ -20,12 +20,12 @@ import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.uninformed.BreadthFirstSearch;
-import aima.extra.search.pqueue.GraphGoalTestedFirstQueueSearch;
-import aima.extra.search.pqueue.GraphQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
-import aima.extra.search.pqueue.TreeGoalTestedFirstQueueSearch;
-import aima.extra.search.pqueue.TreeQueueSearch;
 import aima.extra.search.pqueue.uninformed.BreadthFirstQueueSearch;
+import aima.extra.search.pqueue.uninformed.GraphGoalTestedFirstQueueSearch;
+import aima.extra.search.pqueue.uninformed.GraphQueueSearch;
+import aima.extra.search.pqueue.uninformed.TreeGoalTestedFirstQueueSearch;
+import aima.extra.search.pqueue.uninformed.TreeQueueSearch;
 
 @RunWith(Parameterized.class)
 public class BreadthFirstSearchTest {

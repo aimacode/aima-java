@@ -1,10 +1,11 @@
-package aima.extra.search.pqueue;
+package aima.extra.search.pqueue.uninformed;
 
 import java.util.List;
 import java.util.Queue;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
+import aima.extra.search.pqueue.AbstractQueueSearchForActions;
 
 /**
  * <pre>

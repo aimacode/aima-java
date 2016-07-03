@@ -2,7 +2,6 @@ package aima.extra.search.pqueue.uninformed;
 
 import java.util.LinkedList;
 
-import aima.extra.search.pqueue.GraphGoalTestedFirstQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
 import aima.extra.search.pqueue.QueueSearchForActionsWrapper;
 

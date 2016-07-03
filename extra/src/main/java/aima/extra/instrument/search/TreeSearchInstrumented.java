@@ -5,7 +5,7 @@ import aima.core.search.api.Problem;
 import aima.core.search.api.SearchController;
 import aima.core.search.basic.support.BasicNode;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.extra.search.pqueue.TreeQueueSearch;
+import aima.extra.search.pqueue.uninformed.TreeQueueSearch;
 
 import java.util.*;
 import java.util.function.Supplier;

@@ -18,8 +18,8 @@ import aima.extra.environment.wumpusworld.action.Grab;
 import aima.extra.environment.wumpusworld.action.Shoot;
 import aima.extra.environment.wumpusworld.action.TurnLeft;
 import aima.extra.environment.wumpusworld.action.WWAction;
-import aima.extra.search.pqueue.GraphPriorityQueueSearch;
 import aima.extra.search.pqueue.informed.AStarQueueSearch;
+import aima.extra.search.pqueue.uninformed.GraphPriorityQueueSearch;
 
 /**
  * Artificial Intelligence WWAction Modern Approach (4th Edition): page ???.<br>

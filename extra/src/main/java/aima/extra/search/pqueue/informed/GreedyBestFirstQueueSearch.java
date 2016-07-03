@@ -3,8 +3,8 @@ package aima.extra.search.pqueue.informed;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
-import aima.extra.search.pqueue.GraphPriorityQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
+import aima.extra.search.pqueue.uninformed.GraphPriorityQueueSearch;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
