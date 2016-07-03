@@ -103,9 +103,9 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        </td>
    </tr>   
    <tr>
-       <td rowspan="5">3.?</td>
-       <td rowspan="5">??</td>
-       <td rowspan="5"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
+       <td rowspan="6">3.?</td>
+       <td rowspan="6">??</td>
+       <td rowspan="6"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Tree-Search-and-Graph-Search.md">Graph-Search</a></td>
        <td><a href="core/src/main/java/aima/core/search/basic/uninformed/GraphSearch.java">GraphSearch</a>
        </td>
    </tr>
@@ -129,6 +129,11 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <a href="extra/src/main/java/aima/extra/search/pqueue/uninformed/GraphPriorityQueueSearch.java">GraphPriorityQueueSearch</a>
        </td>
    </tr>
+   <tr>
+       <td>
+       <a href="extra/src/main/java/aima/extra/search/pqueue/uninformed/GraphRLPriorityQueueSearch.java">GraphRLPriorityQueueSearch</a>
+       </td>
+   </tr>  
    <tr>
        <td>3.?</td>
        <td>??</td>
