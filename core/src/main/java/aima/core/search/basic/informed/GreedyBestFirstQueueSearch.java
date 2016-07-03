@@ -3,6 +3,7 @@ package aima.core.search.basic.informed;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
+import aima.core.search.basic.queue.GraphPriorityQueueSearch;
 import aima.core.search.basic.queue.QueueSearchForActions;
 
 /**
@@ -22,6 +23,10 @@ import aima.core.search.basic.queue.QueueSearchForActions;
  */
 public class GreedyBestFirstQueueSearch<A, S> extends BestFirstQueueSearch<A, S> {
 	private ToDoubleFunction<Node<A, S>> h;
+	
+	public GreedyBestFirstQueueSearch(ToDoubleFunction<Node<A, S>> h) {
+		this(new GraphPriorityQueueSearch<>(), h);
+	}
 
 	public GreedyBestFirstQueueSearch(QueueSearchForActions<A, S> qsearchImpl, ToDoubleFunction<Node<A, S>> h) {
 		super(qsearchImpl, h);

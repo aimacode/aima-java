@@ -4,6 +4,7 @@ import java.util.PriorityQueue;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.search.api.Node;
+import aima.core.search.basic.queue.GraphPriorityQueueSearch;
 import aima.core.search.basic.queue.QueueSearchForActions;
 import aima.core.search.basic.queue.QueueSearchForActionsWrapper;
 
@@ -15,6 +16,10 @@ import aima.core.search.basic.queue.QueueSearchForActionsWrapper;
  * 
  */
 public class BestFirstQueueSearch<A, S> extends QueueSearchForActionsWrapper<A, S> {
+	
+	public BestFirstQueueSearch(ToDoubleFunction<Node<A, S>> f) {
+		this(new GraphPriorityQueueSearch<>(), f);
+	}
 
 	public BestFirstQueueSearch(QueueSearchForActions<A, S> qsearchImpl, ToDoubleFunction<Node<A, S>> f) {
 		super(qsearchImpl);
