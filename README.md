@@ -338,8 +338,6 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 ## TODO (REMEMBER - KEEP IT SIMPLE SIMPLE SIMPLE!!!! :)
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
-* Move hybrid wumpus agent environment back to core.
-    * Requires a core version of A* search.
 * Uniform-Cost-Search NoOp case and need for small constant.
 * Different types of Search APIs (i.e SearchActionsFunction, SearchStateFunction, SearchActionFunction) for different use cases.
 * Add Bidirectional Search implementation.
