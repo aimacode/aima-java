@@ -7,7 +7,6 @@ import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.extra.search.pqueue.AbstractQueueSearchForActions;
 import aima.extra.search.pqueue.QueueSearchForActions;
-import aima.extra.search.pqueue.QueueSearchForActions.DoesStateContainmentCheckingOnFrontier;
 
 /**
  * <pre>

@@ -11,6 +11,18 @@ import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.support.BasicFrontierQueue;
 
+/**
+ * A wrapper/adapter around an underlying QueueSearchForActions implementation.
+ * Intended to configure the parameterized queue search implementation to suit
+ * the particular search strategy being represented by the wrapper.
+ * 
+ * @param <A>
+ *            the type of the actions that can be performed.
+ * @param <S>
+ *            the type of the state space
+ *  
+ * @author Ciaran O'Reilly
+ */
 public class QueueSearchForActionsWrapper<A, S> implements SearchForActionsFunction<A, S> {
 	private QueueSearchForActions<A, S> qsearchImpl;
 
@@ -29,18 +41,18 @@ public class QueueSearchForActionsWrapper<A, S> implements SearchForActionsFunct
 
 	public void setFrontierSupplier(Supplier<Queue<Node<A, S>>> frontierSupplier) {
 		if (qsearchImpl instanceof QueueSearchForActions.DoesStateContainmentCheckingOnFrontier) {
-			// Ensure we set a supplier that supports node state containment checking
+			// Ensure we set a supplier that supports node state containment
+			// checking
 			qsearchImpl.setFrontierSupplier(() -> new BasicFrontierQueue<A, S>(frontierSupplier, HashMap::new));
-		}
-		else {
+		} else {
 			qsearchImpl.setFrontierSupplier(frontierSupplier);
 		}
 	}
-	
+
 	public ToDoubleFunction<Node<A, S>> getNodeCostFunction() {
 		return getQueueSearchForActionsImpl().getNodeFactory().getNodeCostFunction();
 	}
-	
+
 	public void setNodeCostFunction(ToDoubleFunction<Node<A, S>> nodeCostFunction) {
 		qsearchImpl.getNodeFactory().setNodeCostFunction(nodeCostFunction);
 	}
