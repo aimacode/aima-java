@@ -10,6 +10,7 @@ import java.util.Set;
 
 import aima.core.agent.api.Agent;
 import aima.core.search.api.GoalTestPredicate;
+import aima.core.search.basic.informed.AStarSearch;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.SetOps;
 import aima.extra.environment.wumpusworld.action.Climb;
@@ -18,8 +19,6 @@ import aima.extra.environment.wumpusworld.action.Grab;
 import aima.extra.environment.wumpusworld.action.Shoot;
 import aima.extra.environment.wumpusworld.action.TurnLeft;
 import aima.extra.environment.wumpusworld.action.WWAction;
-import aima.extra.search.pqueue.informed.AStarQueueSearch;
-import aima.extra.search.pqueue.uninformed.GraphPriorityQueueSearch;
 
 /**
  * Artificial Intelligence WWAction Modern Approach (4th Edition): page ???.<br>
@@ -212,8 +211,7 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 		BasicProblem<WWAction, AgentPosition> problem = new BasicProblem<>(current,
 				WumpusFunctionFactory.getActionsFunction(cave), WumpusFunctionFactory.getResultFunction(), goalTest);
 
-		AStarQueueSearch<WWAction, AgentPosition> search = new AStarQueueSearch<>(new GraphPriorityQueueSearch<>(),
-				new ManhattanHeuristicFunction(goals));
+		AStarSearch<WWAction, AgentPosition> search = new AStarSearch<>(new ManhattanHeuristicFunction(goals));
 
 		List<WWAction> actions = null;
 		try {

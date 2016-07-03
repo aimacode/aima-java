@@ -206,13 +206,23 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        </td>
    </tr>
    <tr>
-       <td>3?</td>
-       <td>??</td>
-       <td>A* Search</td>
+       <td rowspan="3">3?</td>
+       <td rowspan="3">??</td>
+       <td rowspan="3">A* Search</td>
        <td>
-           <a href="extra/src/main/java/aima/extra/search/pqueue/informed/AStarQueueSearch.java">AStarQueueSearch</a>
+           <a href="core/src/main/java/aima/core/search/basic/informed/AStarSearch.java">AStarSearch</a>
        </td>
-   </tr>   
+   </tr>
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
+       <td>
+       	<a href="extra/src/main/java/aima/extra/search/pqueue/informed/AStarQueueSearch.java">AStarQueueSearch</a>
+       </td>
+   </tr>    
    <tr>
        <td>3.?</td>
        <td>??</td>
