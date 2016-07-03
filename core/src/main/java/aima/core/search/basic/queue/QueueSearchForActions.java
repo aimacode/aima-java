@@ -26,10 +26,7 @@ public interface QueueSearchForActions<A, S> extends SearchForActionsFunction<A,
 	void setNodeFactory(NodeFactory<A, S> nodeFactory);
 	
 	default Comparator<Node<A, S>> getNodeComparator() {
-		// Note: by default node factories know how to compare their nodes		
-		// We provide this method to make it more explicit that its a
-		// comparator and not a factory that we are dealing with.
-		return getNodeFactory();
+		return getNodeFactory().getNodeComparator();
 	}
 
 	Supplier<Queue<Node<A, S>>> getFrontierSupplier();
