@@ -54,7 +54,7 @@ import aima.core.util.Util;
  *            individuals in the population (this is to provide flexibility in
  *            terms of how a problem can be encoded).
  */
-public class ExampleGeneticAlgorithm<A> {
+public class GeneticAlgorithm<A> {
 	/**
 	 * function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
 	 * 
@@ -112,7 +112,7 @@ public class ExampleGeneticAlgorithm<A> {
 	private Predicate<Individual<A>> fitEnoughPredicate;
 	private ExecutionController executionController;
 
-	public ExampleGeneticAlgorithm(List<A> alphabet, double mutationProbability, Random random,
+	public GeneticAlgorithm(List<A> alphabet, double mutationProbability, Random random,
 			Predicate<Individual<A>> fitEnoughPredicate, ExecutionController executionController) {
 		this.alphabet = alphabet;
 		this.mutationProbability = mutationProbability;

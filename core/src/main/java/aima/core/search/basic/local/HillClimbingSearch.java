@@ -32,7 +32,7 @@ import aima.core.search.api.SearchForStateFunction;
  * @author Paul Anton
  * @author Mike Stampone
  */
-public class ExampleHillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
+public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	@Override
 	public S apply(Problem<A, S> problem) {
@@ -87,11 +87,11 @@ public class ExampleHillClimbingSearch<A, S> implements SearchForStateFunction<A
 	 */
 	protected ToDoubleFunction<S> stateValueFn;
 
-	public ExampleHillClimbingSearch(ToDoubleFunction<S> stateValueFn) {
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn) {
 		this(stateValueFn, true);
 	}
 
-	public ExampleHillClimbingSearch(ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion) {
+	public HillClimbingSearch(ToDoubleFunction<S> stateValueFn, boolean isSteepestAscentVersion) {
 		this.stateValueFn = stateValueFn;
 		if (!isSteepestAscentVersion) {
 			// Convert from one to the other by switching the sign

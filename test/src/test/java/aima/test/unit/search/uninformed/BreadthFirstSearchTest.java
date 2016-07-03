@@ -19,7 +19,7 @@ import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
-import aima.core.search.basic.uninformed.ExampleBreadthFirstSearch;
+import aima.core.search.basic.uninformed.BreadthFirstSearch;
 import aima.extra.search.pqueue.GraphGoalTestedFirstQueueSearch;
 import aima.extra.search.pqueue.GraphQueueSearch;
 import aima.extra.search.pqueue.QueueSearchForActions;
@@ -32,7 +32,7 @@ public class BreadthFirstSearchTest {
 
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "ExampleBreadthFirstSearch" },
+		return Arrays.asList(new Object[][] { { "BreadthFirstSearch" },
 				{ "BreadthFirstQueueSearch-GraphGoalTestFirst" }, { "BreadthFirstQueueSearch-Graph" },
 				{ "BreadthFirstQueueSearch-TreeGoalTestedFirst" }, { "BreadthFirstQueueSearch-Tree" } });
 	}
@@ -42,8 +42,8 @@ public class BreadthFirstSearchTest {
 
 	public <A, S> List<A> searchForActions(Problem<A, S> problem) {
 		SearchForActionsFunction<A, S> searchForActionsFunction;
-		if ("ExampleBreadthFirstSearch".equals(searchFunctionName)) {
-			searchForActionsFunction = new ExampleBreadthFirstSearch<A, S>();
+		if ("BreadthFirstSearch".equals(searchFunctionName)) {
+			searchForActionsFunction = new BreadthFirstSearch<A, S>();
 		} else {
 			QueueSearchForActions<A, S> qsearchVariant;
 			String variant = searchFunctionName.split("-")[1];

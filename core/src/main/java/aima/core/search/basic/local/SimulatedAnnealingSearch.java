@@ -40,7 +40,7 @@ import aima.core.search.basic.support.BasicSchedule;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A, S> {
+public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A, S> {
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	public S simulatedAnnealing(Problem<A, S> problem, ToDoubleFunction<Integer> schedule) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -110,15 +110,15 @@ public class ExampleSimulatedAnnealingSearch<A, S> implements SearchForStateFunc
 	protected ToDoubleFunction<Integer> schedule;
 	protected Random random = new Random();
 
-	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn) {
+	public SimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn) {
 		this(stateValueFn, true);
 	}
 
-	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
+	public SimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
 		this(stateValueFn, isGradientAscentVersion, new BasicSchedule());
 	}
 
-	public ExampleSimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion,
+	public SimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion,
 			ToDoubleFunction<Integer> scheduler) {
 		this.stateValueFn = stateValueFn;
 		if (!isGradientAscentVersion) {

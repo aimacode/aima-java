@@ -11,7 +11,7 @@ import org.junit.runners.Parameterized.Parameters;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForStateFunction;
-import aima.core.search.basic.local.ExampleSimulatedAnnealingSearch;
+import aima.core.search.basic.local.SimulatedAnnealingSearch;
 import aima.core.util.datastructure.Pair;
 
 /**
@@ -22,7 +22,7 @@ import aima.core.util.datastructure.Pair;
 public class SimulatedAnnealingTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "ExampleSimulatedAnnealingSearch" } });
+		return Arrays.asList(new Object[][] { { "SimulatedAnnealingSearch" } });
 	}
 	
 	@Parameter
@@ -39,7 +39,7 @@ public class SimulatedAnnealingTest {
 	public <A, S> S searchForState(Problem<A, S> problem, ToDoubleFunction<S> stateValueFn, boolean isGradientAscentVersion) {
 		SearchForStateFunction<A, S> searchForStateFunction;
 		
-		searchForStateFunction = new ExampleSimulatedAnnealingSearch<A, S>(stateValueFn, isGradientAscentVersion);
+		searchForStateFunction = new SimulatedAnnealingSearch<A, S>(stateValueFn, isGradientAscentVersion);
 		
 		return searchForStateFunction.apply(problem);
 	}

@@ -1,8 +1,8 @@
-package aima.core.search.basic.informed;
+package aima.core.search.basic.uninformed;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -16,42 +16,48 @@ import aima.core.search.basic.support.BasicSearchController;
 
 /**
  * <pre>
- * function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
- *   node &larr; a node with STATE = problem.INITIAL-STATE, PATH-COST=0
- *   frontier &larr; a priority queue ordered by PATH-COST, with node as the only element
+ * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+ *   node &lt;- a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
+ *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+ *   frontier &larr; a FIFO queue with node as the only element
  *   explored &larr; an empty set
  *   loop do
  *      if EMPTY?(frontier) then return failure
- *      node &lt;- POP(frontier) // chooses the lowest-cost node in frontier
- *      if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+ *      node &larr; POP(frontier) // chooses the shallowest node in frontier 
  *      add node.STATE to explored
  *      for each action in problem.ACTIONS(node.STATE) do
  *          child &larr; CHILD-NODE(problem, node, action)
  *          if child.STATE is not in explored or frontier then
- *             frontier &larr; INSERT(child, frontier)
- *          else if child.STATE is in frontier with higher PATH-COST then
- *             replace that frontier node with child
+ *              if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
+ *              frontier &larr; INSERT(child, frontier)
  * </pre>
  *
- * Figure ?? Uniform-cost search on a graph. The algorithm is identical to the
- * general graph search algorithm in Figure ??, except for the use of a priority
- * queue and the addition of an extra check in case a shorted path to a frontier
- * state is discovered. The data structure for frontier needs to support
- * efficient membership testing, so it should combine the capabilities of a
- * priority queue and a hash table.
+ * Figure ?? Breadth-first graph search.
+ *
+ * Breadth-first search is an instance of the general graph-search algorithm
+ * (Figure ??) in which the shallowest unexpanded node is chosen for expansion.
+ * This is achieved very simply by using a FIFO queue for the frontier. Thus,
+ * new nodes (which are always deeper than their parents) fo to the back of the
+ * queue, and old nodes, which are shallower than the new nodes, get expanded
+ * first. There is one slight tweak on the general graph-search algorithm, which
+ * is that the goal test is applied to each node when it is generated rather
+ * than when it is selected for expansion.
  *
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
-	// function UNIFORM-COST-SEARCH((problem) returns a solution, or failure
+public class BreadthFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
+	// function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
 		Node<A, S> node = newRootNode(problem.initialState(), 0);
-		// frontier <- a priority queue ordered by PATH-COST, with node as the
-		// only element
-		Queue<Node<A, S>> frontier = newPriorityQueueOrderedByPathCost(node);
+		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+		if (problem.isGoalState(node.state())) {
+			return solution(node);
+		}
+		// frontier <- a FIFO queue with node as the only element
+		Queue<Node<A, S>> frontier = newFIFOQueue(node);
 		// explored <- an empty set
 		Set<S> explored = newExploredSet();
 		// loop do
@@ -60,12 +66,8 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 			if (frontier.isEmpty()) {
 				return failure();
 			}
-			// node <- POP(frontier) // chooses the lowest-cost node in frontier
+			// node <- POP(frontier) // chooses the shallowest node in frontier
 			node = frontier.remove();
-			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (problem.isGoalState(node.state())) {
-				return solution(node);
-			}
 			// add node.STATE to explored
 			explored.add(node.state());
 			// for each action in problem.ACTIONS(node.STATE) do
@@ -74,12 +76,12 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in explored or frontier then
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
+					// if problem.GOAL-TEST(child.STATE) then return
+					// SOLUTION(child)
+					if (problem.isGoalState(child.state())) {
+						return solution(child);
+					}
 					// frontier <- INSERT(child, frontier)
-					frontier.add(child);
-				} // else if child.STATE is in frontier with higher PATH-COST
-					// then
-				else if (removedNodeFromFrontierWithSameStateAndHigherPathCost(child, frontier)) {
-					// replace that frontier node with child
 					frontier.add(child);
 				}
 			}
@@ -91,7 +93,7 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
 	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
 
-	public ExampleUniformCostSearch() {
+	public BreadthFirstSearch() {
 	}
 
 	public Node<A, S> newRootNode(S initialState, double pathCost) {
@@ -102,8 +104,9 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 		return nodeFactory.newChildNode(problem, node, action);
 	}
 
-	public Queue<Node<A, S>> newPriorityQueueOrderedByPathCost(Node<A, S> initialNode) {
-		Queue<Node<A, S>> frontier = new PriorityQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost()));
+	public Queue<Node<A, S>> newFIFOQueue(Node<A, S> initialNode) {
+		// NOTE: LinkedList has FIFO queue semantics by default.
+		Queue<Node<A, S>> frontier = new LinkedList<>();
 		frontier.add(initialNode);
 		return frontier;
 	}
@@ -123,10 +126,5 @@ public class ExampleUniformCostSearch<A, S> implements SearchForActionsFunction<
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(state));
-	}
-
-	public boolean removedNodeFromFrontierWithSameStateAndHigherPathCost(Node<A, S> child, Queue<Node<A, S>> frontier) {
-		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
-		return frontier.removeIf(n -> n.state().equals(child.state()) && n.pathCost() > child.pathCost());
 	}
 }

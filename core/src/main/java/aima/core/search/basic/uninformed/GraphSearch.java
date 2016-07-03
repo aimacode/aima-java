@@ -37,7 +37,7 @@ import aima.core.search.basic.support.BasicSearchController;
  *
  * @author Ciaran O'Reilly
  */
-public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> {
+public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 
 	// function GRAPH-SEARCH(problem) returns a solution, or failure
 	@Override
@@ -78,7 +78,7 @@ public class ExampleGraphSearch<A, S> implements SearchForActionsFunction<A, S> 
 	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
 	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
 
-	public ExampleGraphSearch() {
+	public GraphSearch() {
 	}
 
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {

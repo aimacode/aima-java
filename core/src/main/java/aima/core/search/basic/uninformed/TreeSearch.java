@@ -31,7 +31,7 @@ import aima.core.search.basic.support.BasicSearchController;
  *
  * @author Ciaran O'Reilly
  */
-public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
+public class TreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 	// function TREE-SEARCH(problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
@@ -63,7 +63,7 @@ public class ExampleTreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
 	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
 
-	public ExampleTreeSearch() {
+	public TreeSearch() {
 	}
 
 	public Queue<Node<A, S>> newFrontier(S initialState) {

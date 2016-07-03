@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized.Parameters;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForStateFunction;
-import aima.core.search.basic.local.ExampleHillClimbingSearch;
+import aima.core.search.basic.local.HillClimbingSearch;
 import aima.core.util.datastructure.Pair;
 import aima.extra.search.local.HillClimbingSearchWithSidewaysMoves;
 
@@ -46,7 +46,7 @@ public class HillClimbingSearchTest {
 		SearchForStateFunction<A, S> searchForStateFunction;
 
 		if ("HillClimbingSearch".equals(searchForStateFunctionName)) {
-			searchForStateFunction = new ExampleHillClimbingSearch<A, S>(stateValueFn, isSteepestAscentVersion);
+			searchForStateFunction = new HillClimbingSearch<A, S>(stateValueFn, isSteepestAscentVersion);
 		} else {
 			searchForStateFunction = new HillClimbingSearchWithSidewaysMoves<A, S>(stateValueFn, isSteepestAscentVersion);
 		}
