@@ -174,7 +174,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td>Depth-first Search</td>
        <td>
-       <a href="core/src/main/java/aima/core/search/basic/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>            
+       <a href="extra/src/main/java/aima/extra/search/pqueue/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>
        </td>
    </tr>
    <tr>
