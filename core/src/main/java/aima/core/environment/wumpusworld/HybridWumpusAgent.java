@@ -1,4 +1,4 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,16 +9,16 @@ import java.util.Queue;
 import java.util.Set;
 
 import aima.core.agent.api.Agent;
+import aima.core.environment.wumpusworld.action.Climb;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.Grab;
+import aima.core.environment.wumpusworld.action.Shoot;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.basic.informed.AStarSearch;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.SetOps;
-import aima.extra.environment.wumpusworld.action.Climb;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.Grab;
-import aima.extra.environment.wumpusworld.action.Shoot;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.WWAction;
 
 /**
  * Artificial Intelligence WWAction Modern Approach (4th Edition): page ???.<br>

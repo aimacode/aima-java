@@ -1,12 +1,12 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.ToDoubleFunction;
 
+import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.search.api.Node;
-import aima.extra.environment.wumpusworld.action.WWAction;
 
 /**
  * Heuristic for calculating the Manhattan distance between two rooms within a

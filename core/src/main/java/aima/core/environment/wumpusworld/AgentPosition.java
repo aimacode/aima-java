@@ -1,4 +1,4 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 /**
  * Representation of an Agent's [x,y] position and orientation [up, down, right,

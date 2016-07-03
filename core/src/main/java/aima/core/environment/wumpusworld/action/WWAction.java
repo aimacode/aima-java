@@ -1,4 +1,4 @@
-package aima.extra.environment.wumpusworld.action;
+package aima.core.environment.wumpusworld.action;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

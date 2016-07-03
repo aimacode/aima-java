@@ -1,4 +1,4 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>

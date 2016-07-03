@@ -1,14 +1,14 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
+import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.search.api.ActionsFunction;
 import aima.core.search.api.ResultFunction;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.TurnRight;
-import aima.extra.environment.wumpusworld.action.WWAction;
 
 /**
  * Factory class for constructing functions for use in the Wumpus World

@@ -6,15 +6,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.environment.wumpusworld.AgentPosition;
+import aima.core.environment.wumpusworld.WumpusCave;
+import aima.core.environment.wumpusworld.WumpusFunctionFactory;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
+import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.search.api.ActionsFunction;
 import aima.core.search.api.ResultFunction;
-import aima.extra.environment.wumpusworld.AgentPosition;
-import aima.extra.environment.wumpusworld.WumpusCave;
-import aima.extra.environment.wumpusworld.WumpusFunctionFactory;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.TurnRight;
-import aima.extra.environment.wumpusworld.action.WWAction;
 
 /**
  * 

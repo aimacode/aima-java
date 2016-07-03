@@ -1,4 +1,4 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.HashSet;

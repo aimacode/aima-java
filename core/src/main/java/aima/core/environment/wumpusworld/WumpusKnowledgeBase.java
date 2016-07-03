@@ -1,10 +1,16 @@
-package aima.extra.environment.wumpusworld;
+package aima.core.environment.wumpusworld;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.environment.wumpusworld.action.Climb;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.Grab;
+import aima.core.environment.wumpusworld.action.Shoot;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.logic.api.propositional.DPLL;
 import aima.core.logic.basic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
@@ -12,12 +18,6 @@ import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
-import aima.extra.environment.wumpusworld.action.Climb;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.Grab;
-import aima.extra.environment.wumpusworld.action.Shoot;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.TurnRight;
 
 /**
  * A Knowledge base tailored to the Wumpus World environment.

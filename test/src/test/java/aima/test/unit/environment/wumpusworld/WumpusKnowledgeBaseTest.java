@@ -10,17 +10,17 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import aima.core.environment.wumpusworld.AgentPercept;
+import aima.core.environment.wumpusworld.AgentPosition;
+import aima.core.environment.wumpusworld.Room;
+import aima.core.environment.wumpusworld.WumpusKnowledgeBase;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.TurnRight;
+import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.logic.api.propositional.DPLL;
 import aima.core.logic.basic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.basic.propositional.inference.OptimizedDPLL;
-import aima.extra.environment.wumpusworld.AgentPercept;
-import aima.extra.environment.wumpusworld.AgentPosition;
-import aima.extra.environment.wumpusworld.Room;
-import aima.extra.environment.wumpusworld.WumpusKnowledgeBase;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.TurnRight;
-import aima.extra.environment.wumpusworld.action.WWAction;
 
 /**
  * 

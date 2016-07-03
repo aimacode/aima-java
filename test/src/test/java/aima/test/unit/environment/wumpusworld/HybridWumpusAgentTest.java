@@ -9,16 +9,16 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.extra.environment.wumpusworld.AgentPercept;
-import aima.extra.environment.wumpusworld.AgentPosition;
-import aima.extra.environment.wumpusworld.HybridWumpusAgent;
-import aima.extra.environment.wumpusworld.Room;
-import aima.extra.environment.wumpusworld.action.Climb;
-import aima.extra.environment.wumpusworld.action.Forward;
-import aima.extra.environment.wumpusworld.action.Grab;
-import aima.extra.environment.wumpusworld.action.Shoot;
-import aima.extra.environment.wumpusworld.action.TurnLeft;
-import aima.extra.environment.wumpusworld.action.WWAction;
+import aima.core.environment.wumpusworld.AgentPercept;
+import aima.core.environment.wumpusworld.AgentPosition;
+import aima.core.environment.wumpusworld.HybridWumpusAgent;
+import aima.core.environment.wumpusworld.Room;
+import aima.core.environment.wumpusworld.action.Climb;
+import aima.core.environment.wumpusworld.action.Forward;
+import aima.core.environment.wumpusworld.action.Grab;
+import aima.core.environment.wumpusworld.action.Shoot;
+import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.environment.wumpusworld.action.WWAction;
 
 /**
  * 

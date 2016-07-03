@@ -1,6 +1,6 @@
-package aima.extra.environment.wumpusworld.action;
+package aima.core.environment.wumpusworld.action;
 
-import aima.extra.environment.wumpusworld.AgentPosition;
+import aima.core.environment.wumpusworld.AgentPosition;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
