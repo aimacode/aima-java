@@ -38,6 +38,26 @@ project(':') {
 }
 
 project(':core') {
+}
+
+project(':gui') {
+    dependencies {
+        compile project(":extra")
+        compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
+        compile group: 'org.controlsfx', name: 'controlsfx', version: '8.20.8'
+    }
+}
+
+project(':extra') {
+    dependencies {
+        compile project(":core")
+    }
+}
+
+project(':test') {
+    dependencies {
+        compile project(":extra")
+    }
 	test {
 		// set heap size for the test JVM(s)
 		minHeapSize = "128m"
@@ -56,20 +76,6 @@ project(':core') {
 			logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
 		}
 	}
-}
-
-project(':gui') {
-    dependencies {
-        compile project(":extra")
-        compile group: 'de.jensd', name: 'fontawesomefx', version: '8.2'
-        compile group: 'org.controlsfx', name: 'controlsfx', version: '8.20.8'
-    }
-}
-
-project(':extra') {
-    dependencies {
-        compile project(":core")
-    }
 }
 
 task AIMADemoApp(type: JavaExec, dependsOn: classes) {

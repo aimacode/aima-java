@@ -1,0 +1,13 @@
+/bin/
+/build/
+/target/
+*.iml
+.settings
+.gradle
+
+# Mac Specific
+.DS_Store
+.AppleDouble
+.LSOverride
+/.classpath
+/.project

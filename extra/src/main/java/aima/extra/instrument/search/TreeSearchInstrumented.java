@@ -3,9 +3,9 @@ package aima.extra.instrument.search;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchController;
-import aima.core.search.basic.queue.TreeQueueSearch;
 import aima.core.search.basic.support.BasicNode;
 import aima.core.search.basic.support.BasicNodeFactory;
+import aima.extra.search.pqueue.TreeQueueSearch;
 
 import java.util.*;
 import java.util.function.Supplier;
