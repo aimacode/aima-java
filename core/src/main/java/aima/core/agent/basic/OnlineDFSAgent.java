@@ -25,7 +25,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *    
  *   if GOAL-TEST(s&prime;) then return stop
  *   if s&prime; is a new state (not in untried) then untried[s&prime;] &larr; ACTIONS(s&prime;)
- *   if s is not null then
+ *   if s is not null and s&prime; &ne; result[s, a] then
  *       result[s, a] &larr; s&prime;
  *       add s to the front of the unbacktracked[s&prime;]
  *   if untried[s&prime;] is empty then
@@ -76,20 +76,12 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 		if (!untried.containsKey(sPrime)) {
 			untried.put(sPrime, actions(sPrime));
 		}
-		// if s is not null then do
-		//
-		if (s != null) {
-			// TODO - clarify the need for this additional check:
-			// If already seen the result of [s, a]
-			// then don't put it back on the unbacktracked
-			// list otherwise it can keep oscillating
-			// between the same states endlessly.
-			if (!sPrime.equals(result.get(s, a))) {
-				// result[s, a] <- s'
-				result.put(s, a, sPrime);
-				// add s to the front of the unbacktracked[s']
-				unbacktracked.computeIfAbsent(sPrime, key -> new LinkedList<>()).push(s);
-			}
+		// if s is not null and s' != result[s, a] then do
+		if (s != null && !sPrime.equals(result.get(s, a))) {
+			// result[s, a] <- s'
+			result.put(s, a, sPrime);
+			// add s to the front of the unbacktracked[s']
+			unbacktracked.computeIfAbsent(sPrime, key -> new LinkedList<>()).push(s);
 		}
 		// if untried[s'] is empty then
 		if (untried.get(sPrime).isEmpty()) {

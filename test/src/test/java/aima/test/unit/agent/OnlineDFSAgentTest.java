@@ -141,7 +141,7 @@ public class OnlineDFSAgentTest {
 	}
 
 	Map2D mazeFigure4_19 = new ExtendableMap2D() {
-		{
+		{			
 			addBidirectionalLink("1,1", "1,2", 1.0);
 			addBidirectionalLink("1,1", "2,1", 1.0);
 			addBidirectionalLink("1,3", "2,3", 1.0);

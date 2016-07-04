@@ -3,6 +3,7 @@ package aima.core.environment.map2d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a directed labeled graph. Vertices are represented by their unique
@@ -20,7 +21,7 @@ import java.util.List;
 public class LabeledGraph<V, E> {
 
 	// Lookup for edge label information. Contains an entry for every vertex label.
-	private final HashMap<V, HashMap<V, E>> globalEdgeLookup;
+	private final Map<V, Map<V, E>> globalEdgeLookup;
 	// List of the labels of all vertices within the graph.
 	private final List<V> vertexLabels;
 
@@ -55,7 +56,7 @@ public class LabeledGraph<V, E> {
 	 *            an edge
 	 */
 	public void set(V from, V to, E edge) {
-		HashMap<V, E> localEdgeLookup = checkForNewVertex(from);
+		Map<V, E> localEdgeLookup = checkForNewVertex(from);
 		localEdgeLookup.put(to, edge);
 		checkForNewVertex(to);
 	}
@@ -69,7 +70,7 @@ public class LabeledGraph<V, E> {
 	 *            the to vertex of the edge
 	 */
 	public void remove(V from, V to) {
-		HashMap<V, E> localEdgeLookup = globalEdgeLookup.get(from);
+		Map<V, E> localEdgeLookup = globalEdgeLookup.get(from);
 		if (localEdgeLookup != null) {
 			localEdgeLookup.remove(to);
 		}
@@ -88,7 +89,7 @@ public class LabeledGraph<V, E> {
 	 *         there is no edge between them.
 	 */
 	public E get(V from, V to) {
-		HashMap<V, E> localEdgeLookup = globalEdgeLookup.get(from);
+		Map<V, E> localEdgeLookup = globalEdgeLookup.get(from);
 		return localEdgeLookup == null ? null : localEdgeLookup.get(to);
 	}
 
@@ -103,7 +104,7 @@ public class LabeledGraph<V, E> {
 	 */
 	public List<V> getSuccessors(V v) {
 		List<V> result = new ArrayList<>();
-		HashMap<V, E> localEdgeLookup = globalEdgeLookup.get(v);
+		Map<V, E> localEdgeLookup = globalEdgeLookup.get(v);
 		if (localEdgeLookup != null) {
 			result.addAll(localEdgeLookup.keySet());
 		}
@@ -143,8 +144,8 @@ public class LabeledGraph<V, E> {
 	//
 
 	// Handles new vertices
-	private HashMap<V, E> checkForNewVertex(V v) {
-		HashMap<V, E> result = globalEdgeLookup.get(v);
+	private Map<V, E> checkForNewVertex(V v) {
+		Map<V, E> result = globalEdgeLookup.get(v);
 		if (result == null) {
 			result = new HashMap<>();
 			globalEdgeLookup.put(v, result);

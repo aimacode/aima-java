@@ -2,7 +2,7 @@ package aima.core.environment.map2d;
 
 import javafx.geometry.Point2D;
 
-import java.util.Collections;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class ExtendableMap2D implements Map2D {
 	private final LabeledGraph<String, Double> links;
 
 	/** Stores xy-coordinates for each location. */
-	private final HashMap<String, Point2D> locationPositions;
+	private final Map<String, Point2D> locationPositions;
 
 	/** Default constructor. Creates an empty map. */
 	public ExtendableMap2D() {
@@ -43,7 +43,6 @@ public class ExtendableMap2D implements Map2D {
 	@Override
 	public List<String> getLocationsLinkedTo(String fromLocation) {
 		List<String> result = links.getSuccessors(fromLocation);
-		Collections.sort(result);
 		return result;
 	}
 
