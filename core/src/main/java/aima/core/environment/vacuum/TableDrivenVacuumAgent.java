@@ -4,6 +4,14 @@ import aima.core.agent.basic.TableDrivenAgent;
 
 import java.util.*;
 
+import static aima.core.environment.vacuum.VacuumEnvironment.ACTION_LEFT;
+import static aima.core.environment.vacuum.VacuumEnvironment.ACTION_RIGHT;
+import static aima.core.environment.vacuum.VacuumEnvironment.ACTION_SUCK;
+import static aima.core.environment.vacuum.VacuumEnvironment.LOCATION_A;
+import static aima.core.environment.vacuum.VacuumEnvironment.LOCATION_B;
+import static aima.core.environment.vacuum.VacuumEnvironment.Status.Clean;
+import static aima.core.environment.vacuum.VacuumEnvironment.Status.Dirty;
+
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
  * <br>
@@ -27,428 +35,196 @@ public class TableDrivenVacuumAgent extends TableDrivenAgent<String, VEPercept> 
 
 		//
 		// Level 1: 4 states
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 
 		//
 		// Level 2: 4x4 states
 		// 1
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Clean)),
+				ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Dirty)),
+				ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Clean)),
+				ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Dirty)),
+				ACTION_SUCK);
 		// 2
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Clean)),
+				ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Dirty)),
+				ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Clean)),
+				ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Dirty)),
+				ACTION_SUCK);
 		// 3
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Clean)),
+				ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Dirty)),
+				ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Clean)),
+				ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Dirty)),
+				ACTION_SUCK);
 		// 4
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Clean)),
+				ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Dirty)),
+				ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Clean)),
+				ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Dirty)),
+				ACTION_SUCK);
 
 		//
 		// Level 3: 4x4x4 states
 		// 1-1
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 1-2
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 1-3
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 1-4
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 2-1
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 2-2
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 2-3
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 2-4
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_A, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 3-1
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 3-2
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 3-3
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 3-4
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Clean), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 4-1
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 4-2
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_A, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 4-3
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Clean),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 		// 4-4
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_RIGHT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Clean)),
-				VacuumEnvironment.ACTION_LEFT);
-		perceptSequenceToAction.put(
-				Arrays.asList(new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty),
-						new VEPercept(VacuumEnvironment.LOCATION_B, VacuumEnvironment.Status.Dirty)),
-				VacuumEnvironment.ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Clean)), ACTION_RIGHT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_A, Dirty)), ACTION_SUCK);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Clean)), ACTION_LEFT);
+		perceptSequenceToAction.put(Arrays.asList(new VEPercept(LOCATION_B, Dirty), new VEPercept(LOCATION_B, Dirty),
+				new VEPercept(LOCATION_B, Dirty)), ACTION_SUCK);
 
 		//
 		// Level 4: 4x4x4x4 states
