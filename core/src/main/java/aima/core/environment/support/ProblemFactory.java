@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
+import aima.core.environment.map2d.Map2DFunctionFactory;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VEWorldState;
@@ -29,40 +30,25 @@ import aima.core.util.datastructure.Pair;
 public class ProblemFactory {
 
 	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomaniaProblem(String initialState,
-			final String... goalStates) {
+			final String... goalLocations) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
-		final Set<String> locations = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
-		if (!locations.contains(initialState)) {
+		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
+		if (!locationSet.contains(initialState)) {
 			throw new IllegalArgumentException(
 					"Initial State " + initialState + " is not a member of the state space.");
 		}
-		for (String goalState : goalStates) {
-			if (!locations.contains(goalState)) {
-				throw new IllegalArgumentException("Goal State " + goalState + " is not a member of the state space.");
+		for (String location : goalLocations) {
+			if (!locationSet.contains(location)) {
+				throw new IllegalArgumentException(
+						"Goal location " + location + " is not a member of the state space.");
 			}
 		}
 
-		ActionsFunction<GoAction, InState> actionsFn = inLocationState -> {
-			List<GoAction> actions = new ArrayList<>();
-			for (String toLocation : simplifidRoadMapOfPartOfRomania
-					.getLocationsLinkedTo(inLocationState.getLocation())) {
-				actions.add(new GoAction(toLocation));
-			}
-			return actions;
-		};
-
-		ResultFunction<GoAction, InState> resultFn = (state, action) -> new InState(action.getGoTo());
-
-		GoalTestPredicate<InState> goalTestPredicate = inLocationState -> {
-			for (String goalState : goalStates) {
-				if (goalState.equals(inLocationState.getLocation())) {
-					return true;
-				}
-			}
-			return false;
-		};
-
-		return new BasicProblem<>(new InState(initialState), actionsFn, resultFn, goalTestPredicate);
+		return new BasicProblem<>(new InState(initialState),
+				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
+				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
+				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocations),
+				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
