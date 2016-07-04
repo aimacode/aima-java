@@ -1,9 +1,10 @@
 package aima.core.environment.map2d;
 
-import javafx.geometry.Point2D;
-
 import java.util.Map;
-import java.util.HashMap;
+
+import aima.core.util.datastructure.Point2D;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class ExtendableMap2D implements Map2D {
 	/** Default constructor. Creates an empty map. */
 	public ExtendableMap2D() {
 		links = new LabeledGraph<>();
-		locationPositions = new HashMap<>();
+		locationPositions = new LinkedHashMap<>();
 	}
 
 	//

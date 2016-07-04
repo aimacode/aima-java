@@ -1,7 +1,7 @@
 package aima.core.environment.map2d;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class LabeledGraph<V, E> {
 	 * Default constructor. Creates a new empty graph.
 	 */
 	public LabeledGraph() {
-		globalEdgeLookup = new HashMap<>();
+		globalEdgeLookup = new LinkedHashMap<>();
 		vertexLabels = new ArrayList<>();
 	}
 
@@ -147,7 +147,7 @@ public class LabeledGraph<V, E> {
 	private Map<V, E> checkForNewVertex(V v) {
 		Map<V, E> result = globalEdgeLookup.get(v);
 		if (result == null) {
-			result = new HashMap<>();
+			result = new LinkedHashMap<>();
 			globalEdgeLookup.put(v, result);
 			vertexLabels.add(v);
 		}

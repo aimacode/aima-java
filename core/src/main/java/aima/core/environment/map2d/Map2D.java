@@ -1,8 +1,8 @@
 package aima.core.environment.map2d;
 
-import javafx.geometry.Point2D;
-
 import java.util.List;
+
+import aima.core.util.datastructure.Point2D;
 
 /**
  * Provides a general interface for two dimensional maps.
