@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 import aima.core.agent.api.Agent;
 import aima.core.search.api.OnlineSearchProblem;
-import aima.core.util.datastructure.TwoKeyHashMap;
+import aima.core.util.datastructure.TwoKeyLookup;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ?.??, page
@@ -54,7 +54,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  */
 public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final TwoKeyHashMap<S, A, S> result = new TwoKeyHashMap<S, A, S>();
+	private final TwoKeyLookup<S, A, S> result = new TwoKeyLookup<S, A, S>();
 	// untried, a table that lists, for each state, the actions not yet tried
 	private final Map<S, Deque<A>> untried = new HashMap<S, Deque<A>>();
 	// unbacktracked, a table that lists, for each state, the backtracks not yet
@@ -92,9 +92,8 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 			// else a <- an action b such that result[s',b] =
 			// POP(unbacktracked[s'])
 			S popped = unbacktracked.get(sPrime).pop();
-			a = result.entrySet().stream()
-					.filter(entry -> entry.getKey().getFirst().equals(sPrime) && entry.getValue().equals(popped))
-					.findFirst().get().getKey().getSecond();
+			a = result.getEntrySetForK1(sPrime).stream().filter(k2Entry -> k2Entry.getValue().equals(popped))
+					.findFirst().get().getKey();
 		} else {
 			// else a <- POP(untried[s'])
 			a = untried.get(sPrime).pop();

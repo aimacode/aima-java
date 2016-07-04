@@ -1,11 +1,11 @@
 package aima.core.util.datastructure;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Provides a hash map which is indexed by two keys. In fact this is just a hash
- * map which is indexed by a pair containing the two keys. The provided two-key
- * access methods try to increase code readability.
+ * Provides a lookup which is indexed by two keys.
  * 
  * @param <K1>
  *            First key
@@ -15,10 +15,11 @@ import java.util.HashMap;
  *            Result value
  * 
  * @author Ruediger Lunde
+ * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
-public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
-	private static final long serialVersionUID = -2232849394229644162L;
+public class TwoKeyLookup<K1, K2, V> {
+	private Map<K1, Map<K2, V>> k1Map = new LinkedHashMap<>();
 
 	/**
 	 * Associates the specified value with the specified key pair in this map.
@@ -36,7 +37,7 @@ public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
 	 * 
 	 */
 	public void put(K1 key1, K2 key2, V value) {
-		super.put(new Pair<K1, K2>(key1, key2), value);
+		k1Map.computeIfAbsent(key1, k1 -> new LinkedHashMap<>()).put(key2, value);
 	}
 
 	/**
@@ -60,7 +61,12 @@ public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
 	 *         pair.
 	 */
 	public V get(K1 key1, K2 key2) {
-		return super.get(new Pair<K1, K2>(key1, key2));
+		V value = null;
+		Map<K2, V> k2Map = k1Map.get(key1);
+		if (k2Map != null) {
+			value = k2Map.get(key2);
+		}
+		return value;
 	}
 
 	/**
@@ -78,7 +84,12 @@ public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
 	 *         specified key.
 	 */
 	public boolean containsKey(K1 key1, K2 key2) {
-		return super.containsKey(new Pair<K1, K2>(key1, key2));
+		boolean contains = false;
+		Map<K2, V> k2Map = k1Map.get(key1);
+		if (k2Map != null) {
+			contains = k2Map.containsKey(key2);
+		}
+		return contains;
 	}
 
 	/**
@@ -98,6 +109,27 @@ public class TwoKeyHashMap<K1, K2, V> extends HashMap<Pair<K1, K2>, V> {
 	 *         pair.
 	 */
 	public V removeKey(K1 key1, K2 key2) {
-		return super.remove(new Pair<K1, K2>(key1, key2));
+		V value = null;
+		Map<K2, V> k2Map = k1Map.remove(key1);
+		if (k2Map != null) {
+			value = k2Map.remove(k1Map);
+		}
+		return value;
+	}
+
+	/**
+	 * Get the entry set associated with the first key of the lookup.
+	 * 
+	 * @param key1
+	 *            the first key of the lookup.
+	 * @return the entry set of K2 and V pairs contained within K1.
+	 */
+	public Set<Map.Entry<K2, V>> getEntrySetForK1(K1 key1) {
+		Set<Map.Entry<K2, V>> entrySet = null;
+		Map<K2, V> k2Map = k1Map.get(key1);
+		if (k2Map != null) {
+			entrySet = k2Map.entrySet();
+		}
+		return entrySet;
 	}
 }
