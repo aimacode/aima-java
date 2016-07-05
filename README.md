@@ -283,6 +283,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/agent/basic/OnlineDFSAgent.java">OnlineDFSAgent</a></td>
    </tr>
    <tr>
+       <td>4.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/LRTAStar-Agent.md">LRTA*-Agent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/LRTAStarAgent.java">LRTAStarAgent</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
