@@ -54,28 +54,27 @@ import aima.core.util.datastructure.TwoKeyLookup;
  */
 public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final TwoKeyLookup<S, A, S> result = new TwoKeyLookup<S, A, S>();
+	protected final TwoKeyLookup<S, A, S> result = new TwoKeyLookup<S, A, S>();
 	// untried, a table that lists, for each state, the actions not yet tried
-	private final Map<S, Deque<A>> untried = new HashMap<S, Deque<A>>();
+	protected final Map<S, Deque<A>> untried = new HashMap<S, Deque<A>>();
 	// unbacktracked, a table that lists, for each state, the backtracks not yet
 	// tried
-	private final Map<S, Deque<S>> unbacktracked = new HashMap<S, Deque<S>>();
+	protected final Map<S, Deque<S>> unbacktracked = new HashMap<S, Deque<S>>();
 	// s, a, the previous state and action, initially null
-	private S s = null;
-	private A a = null;
+	protected S s = null;
+	protected A a = null;
 
 	// function ONLINE-DFS-AGENT(s&prime;) returns an action
 	@Override
 	public A perceive(P percept) {
-		// s', a percept that identifies the current state
+		// inputs: s', a percept that identifies the current state
 		S sPrime = identifyStateFor(percept);
+		// if GOAL-TEST(s') then return stop
 		if (isGoalState(sPrime)) {
 			return stop();
 		}
 		// if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
-		if (!untried.containsKey(sPrime)) {
-			untried.put(sPrime, actions(sPrime));
-		}
+		untried.computeIfAbsent(sPrime, state -> actions(state));
 		// if s is not null and s' != result[s, a] then do
 		if (s != null && !sPrime.equals(result.get(s, a))) {
 			// result[s, a] <- s'
@@ -105,9 +104,9 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 
 	//
 	// Supporting Code
-	private OnlineSearchProblem<A, S> onlineProblem;
-	private Function<P, S> identifyStateFunction;
-	private A stopAction;
+	protected OnlineSearchProblem<A, S> onlineProblem;
+	protected Function<P, S> identifyStateFunction;
+	protected A stopAction;
 
 	public OnlineDFSAgent(OnlineSearchProblem<A, S> onlineProblem, Function<P, S> identifyStateFunction) {
 		this(onlineProblem, identifyStateFunction, null);
