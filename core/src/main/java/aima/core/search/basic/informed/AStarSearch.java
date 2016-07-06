@@ -1,5 +1,6 @@
 package aima.core.search.basic.informed;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -103,7 +104,7 @@ public class AStarSearch<A, S> implements SearchForActionsFunction<A, S> {
 
 	public Queue<Node<A, S>> newPriorityQueueOrderedByPathCostPlusH(Node<A, S> initialNode) {
 		Queue<Node<A, S>> frontier = new PriorityQueue<>(
-				(n1, n2) -> Double.compare(n1.pathCost() + h.applyAsDouble(n1), n2.pathCost() + h.applyAsDouble(n2)));
+				Comparator.comparingDouble(n -> n.pathCost() + h.applyAsDouble(n)));
 		frontier.add(initialNode);
 		return frontier;
 	}

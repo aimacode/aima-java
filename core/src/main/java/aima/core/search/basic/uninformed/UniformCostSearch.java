@@ -1,5 +1,6 @@
 package aima.core.search.basic.uninformed;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -103,7 +104,7 @@ public class UniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
 	}
 
 	public Queue<Node<A, S>> newPriorityQueueOrderedByPathCost(Node<A, S> initialNode) {
-		Queue<Node<A, S>> frontier = new PriorityQueue<>((n1, n2) -> Double.compare(n1.pathCost(), n2.pathCost()));
+		Queue<Node<A, S>> frontier = new PriorityQueue<>(Comparator.comparingDouble(Node::pathCost));
 		frontier.add(initialNode);
 		return frontier;
 	}

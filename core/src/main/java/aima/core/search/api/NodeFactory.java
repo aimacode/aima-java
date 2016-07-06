@@ -23,19 +23,11 @@ public interface NodeFactory<A, S> {
 	ToDoubleFunction<Node<A, S>> getNodeCostFunction();
 
 	void setNodeCostFunction(ToDoubleFunction<Node<A, S>> nodeCostFunction);
-	
+
 	default Comparator<Node<A, S>> getNodeComparator() {
-		return new Comparator<Node<A, S>>() {
-			@Override
-			public int compare(Node<A, S> n1, Node<A, S> n2) {
-				ToDoubleFunction<Node<A, S>> nodeCostFunction = getNodeCostFunction();
-				if (nodeCostFunction == null) {
-					// Default to comparing using path costs if an explicit node cost
-					// function isn't provided
-					return Double.compare(n1.pathCost(), n2.pathCost());
-				}
-				return Double.compare(nodeCostFunction.applyAsDouble(n1), nodeCostFunction.applyAsDouble(n2));
-			}
-		};
+		// Default to comparing using path costs if an explicit node cost
+		// function isn't provided
+		return Comparator.comparingDouble(
+				n -> getNodeCostFunction() == null ? n.pathCost() : getNodeCostFunction().applyAsDouble(n));
 	}
 }

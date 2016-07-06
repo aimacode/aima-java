@@ -1,7 +1,7 @@
 package aima.core.search.basic.informed;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
@@ -83,8 +83,7 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 		// loop do
 		do {
 			// best <- the lowest f-value node in successors
-			Collections.sort(successors, (s1, s2) -> Double.compare(s1.f, s2.f));
-			SuccessorNode best = successors.get(0);
+			SuccessorNode best = successors.stream().min(Comparator.comparingDouble(s -> s.f)).get();
 			// if best.f > f_limit then return failure, best.f
 			if (best.f > f_limit) {
 				return new Result(searchController.failure(), best.f);
@@ -101,7 +100,7 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 		} while (searchController.isExecuting());
 		return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
 	}
-	
+
 	//
 	// Supporting Code
 	private ToDoubleFunction<Node<A, S>> h;

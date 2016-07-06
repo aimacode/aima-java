@@ -18,11 +18,11 @@ import aima.core.search.basic.support.BasicProblem;
 public class LRTAStarAgentTest {
 	Map2D mapAtoF= new ExtendableMap2D() {
 		{
-			addBidirectionalLink("A", "B", 4.0);
-			addBidirectionalLink("B", "C", 4.0);
-			addBidirectionalLink("C", "D", 4.0);
-			addBidirectionalLink("D", "E", 4.0);
-			addBidirectionalLink("E", "F", 4.0);
+			addBidirectionalLink("A", "B", 1.0);
+			addBidirectionalLink("B", "C", 1.0);
+			addBidirectionalLink("C", "D", 1.0);
+			addBidirectionalLink("D", "E", 1.0);
+			addBidirectionalLink("E", "F", 1.0);
 		}
 	};
 	
@@ -50,17 +50,19 @@ public class LRTAStarAgentTest {
 				Map2DFunctionFactory.getActionsFunction(mapAtoF), inState -> "F".equals(inState.getLocation()),
 				Map2DFunctionFactory.getStepCostFunction(mapAtoF));
 
-		LRTAStarAgent<GoAction, Integer, InState> lrtasa = new LRTAStarAgent<>(osp, inState -> 1.0, alphabetPerceptToStateFn);
+		LRTAStarAgent<GoAction, Integer, InState> lrtasa = new LRTAStarAgent<>(osp, inState -> 'F' - inState.getLocation().charAt(0), alphabetPerceptToStateFn);
 
 		testExpectedActionSequence(lrtasa, 0 /* i.e. 'A' */, alphabetStateToPerceptFn,
-				"Go(B) Go(C) Go(D) Go(E) Go(F) NoOp");
+				"Go(B) Go(A) Go(B) Go(C) Go(B) Go(C) Go(D) Go(C) Go(D) Go(E) Go(D) Go(E) Go(F) NoOp");
 		
 		osp = new BasicProblem<>(
 				Map2DFunctionFactory.getActionsFunction(mapAtoF), inState -> "A".equals(inState.getLocation()),
 				Map2DFunctionFactory.getStepCostFunction(mapAtoF));
-		lrtasa = new LRTAStarAgent<>(osp, inState -> 1.0, alphabetPerceptToStateFn);
+		
+		lrtasa = new LRTAStarAgent<>(osp, inState -> inState.getLocation().charAt(0) - 'A', alphabetPerceptToStateFn);
+		
 		testExpectedActionSequence(lrtasa, 5 /* i.e. 'F' */, alphabetStateToPerceptFn,
-				"Go(E) Go(F) Go(E) Go(D) Go(E) Go(D) Go(C) Go(D) Go(C) Go(B) Go(C) Go(B) Go(A) NoOp");
+				"Go(E) Go(D) Go(C) Go(B) Go(A) NoOp");
 	}
 	
 	public void testExpectedActionSequence(LRTAStarAgent<GoAction, Integer, InState> lrtasa, int initialPercept,

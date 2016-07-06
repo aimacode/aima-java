@@ -1,5 +1,6 @@
 package aima.core.agent.basic;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,8 @@ import aima.core.search.api.OnlineSearchProblem;
 import aima.core.util.datastructure.TwoKeyLookup;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page
- * ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ???.
+ * <br>
  * <br>
  * 
  * <pre>
@@ -83,13 +84,8 @@ public class LRTAStarAgent<A, P, S> implements Agent<A, P> {
 		}
 		// a <- an action b in ACTIONS(s') that minimizes LRTA*-COST(s', b,
 		// result[s', b], H)
-		a = actions(sPrime).stream().reduce((b1, b2) -> {
-			if (lrtaCost(sPrime, b1, result.get(sPrime, b1), H) < lrtaCost(sPrime, b2, result.get(sPrime, b2), H)) {
-				return b1;
-			} else {
-				return b2;
-			}
-		}).get();
+		a = actions(sPrime).stream().min(Comparator.comparingDouble(b -> lrtaCost(sPrime, b, result.get(sPrime, b), H)))
+				.get();
 		// s <- s'
 		s = sPrime;
 		return a;
