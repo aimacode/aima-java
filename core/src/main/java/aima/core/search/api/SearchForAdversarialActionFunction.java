@@ -17,7 +17,7 @@ import java.util.function.Function;
  * 
  */
 @FunctionalInterface
-public interface SearchForAdversarialDecisionFunction<S, A> extends Function<S, A> {
+public interface SearchForAdversarialActionFunction<S, A> extends Function<S, A> {
 	@Override
 	A apply(S state);
 }

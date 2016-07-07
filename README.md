@@ -295,6 +295,18 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
    </tr>
    <tr>
+       <td>5.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Minimax-Decision.md">Minimax-Decision</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/adversarial/MinimaxDecision.java">MinimaxDecision</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/KB-Agent.md">KB-Agent</a></td>
