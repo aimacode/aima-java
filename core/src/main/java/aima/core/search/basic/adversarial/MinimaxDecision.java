@@ -73,6 +73,7 @@ public class MinimaxDecision<S, A, P> implements SearchForAdversarialActionFunct
 		return v;
 	}
 
+	// function MIN-VALUE(state) returns a utility value
 	public double minValue(S state) {
 		// if TERMINAL-TEST(state) then return UTILITY(state)
 		if (terminalTest(state)) {
