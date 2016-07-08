@@ -368,7 +368,6 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
 * Uniform-Cost-Search NoOp case and need for small constant.
-* Different types of Search APIs (i.e SearchActionsFunction, SearchStateFunction, SearchActionFunction) for different use cases.
 * Add Bidirectional Search implementation.
 * GraphPriorityQueueSearch and TreePriorityQueueSearch potentially 
   need a better mechanism for determining state containment and removal of a node 
@@ -381,6 +380,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 * Online-DFS-Agent - Clarify the need for the additional check `if (!sPrime.equals(result.get(s, a))) {`, which is not present in the pseudocode but required to stop it looping endlessly on certain test problems.
 
 #### Chp 5
+* Implement version of IterativeDeepeningAlphaBetaSearch from aima3e branch in `extra` module.
 
 #### Chp 6
 
