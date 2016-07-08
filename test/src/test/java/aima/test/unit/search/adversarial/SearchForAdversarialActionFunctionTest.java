@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -18,20 +20,29 @@ import aima.core.search.api.PlayerFunction;
 import aima.core.search.api.SearchForAdversarialActionFunction;
 import aima.core.search.api.TerminalStateUtilityFunction;
 import aima.core.search.api.TerminalTestPredicate;
+import aima.core.search.basic.adversarial.AlphaBetaSearch;
 import aima.core.search.basic.adversarial.MinimaxDecision;
 import aima.core.search.basic.support.BasicGame;
 
-public class MinimaxDecisionTest {
+@RunWith(Parameterized.class)
+public class SearchForAdversarialActionFunctionTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "MinimaxDecision" } });
+		return Arrays.asList(new Object[][] { { "MinimaxDecision" },  { "AlphaBetaSearch" } });
 	}
 
 	@Parameter
 	public String searchFunctionName;
 
 	public <S, A, P> A searchForAdversarialAction(Game<S, A, P> game) {
-		SearchForAdversarialActionFunction<S, A> searchFn = new MinimaxDecision<>(game);
+		SearchForAdversarialActionFunction<S, A> searchFn = null;
+		
+		if ("MinimaxDecision".equals(searchFunctionName)) {
+			searchFn = new MinimaxDecision<>(game);
+		}
+		else if ("AlphaBetaSearch".equals(searchFunctionName)) {
+			searchFn = new AlphaBetaSearch<>(game);
+		}
 
 		return searchFn.apply(game.initialState());
 	}

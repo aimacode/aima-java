@@ -301,6 +301,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/adversarial/MinimaxDecision.java">MinimaxDecision</a></td>
    </tr>
    <tr>
+       <td>5.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Alpha-Beta-Search.md">Alpha-Beta-Search</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/adversarial/AlphaBetaSearch.java">AlphaBetaSearch</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>

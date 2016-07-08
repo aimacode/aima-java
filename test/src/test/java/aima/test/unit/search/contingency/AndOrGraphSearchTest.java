@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -20,6 +22,7 @@ import aima.core.search.api.NondeterministicProblem;
 import aima.core.search.api.SearchForConditionalPlanFunction;
 import aima.core.search.basic.contingency.AndOrGraphSearch;
 
+@RunWith(Parameterized.class)
 public class AndOrGraphSearchTest {
 
 	@Parameters(name = "{index}: {0}")

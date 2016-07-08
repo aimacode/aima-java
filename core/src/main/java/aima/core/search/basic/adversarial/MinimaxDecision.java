@@ -16,16 +16,16 @@ import aima.core.search.api.SearchForAdversarialActionFunction;
  * 
  * function MAX-VALUE(state) returns a utility value
  *   if TERMINAL-TEST(state) then return UTILITY(state)
- *   v = -&infin;
+ *   v &larr; -&infin;
  *   for each a in ACTIONS(state) do
- *     v = MAX(v, MIN-VALUE(RESULT(state, a)))
+ *     v &larr; MAX(v, MIN-VALUE(RESULT(state, a)))
  *   return v
  * 
  * function MIN-VALUE(state) returns a utility value
  *   if TERMINAL-TEST(state) then return UTILITY(state)
- *     v = &infin;
+ *     v &larr; &infin;
  *     for each a in ACTIONS(state) do
- *       v  = MIN(v, MAX-VALUE(RESULT(state, a)))
+ *       v &larr; MIN(v, MAX-VALUE(RESULT(state, a)))
  *   return v
  * </code>
  * </pre>
@@ -63,11 +63,11 @@ public class MinimaxDecision<S, A, P> implements SearchForAdversarialActionFunct
 		if (terminalTest(state)) {
 			return utility(state);
 		}
-		// v = -&infin;
+		// v <- -&infin;
 		double v = Double.NEGATIVE_INFINITY;
 		// for each a in ACTIONS(state) do
 		for (A a : actions(state)) {
-			// v = MAX(v, MIN-VALUE(RESULT(state, a)))
+			// v <- MAX(v, MIN-VALUE(RESULT(state, a)))
 			v = Math.max(v, minValue(result(state, a)));
 		}
 		return v;
@@ -79,11 +79,11 @@ public class MinimaxDecision<S, A, P> implements SearchForAdversarialActionFunct
 		if (terminalTest(state)) {
 			return utility(state);
 		}
-		// v = &infin;
+		// v <- &infin;
 		double v = Double.POSITIVE_INFINITY;
 		// for each a in ACTIONS(state) do
 		for (A a : actions(state)) {
-			// v  = MIN(v, MAX-VALUE(RESULT(state, a)))
+			// v <- MIN(v, MAX-VALUE(RESULT(state, a)))
 			v = Math.min(v, maxValue(result(state, a)));
 		}
 		return v;
