@@ -28,20 +28,18 @@ project(':') {
 }
 
 project(':core') {
+}
+
+project(':extra') {
 	apply plugin: 'antlr'
     dependencies {
         antlr "org.antlr:antlr4:4.5.3"
+        compile project(":core")
     }
     
     generateGrammarSource {
         maxHeapSize = "64m"
-        arguments += ["-visitor", "-long-messages", "-package", "aima.core.logic.basic.propositional"]
-    }
-}
-
-project(':extra') {
-    dependencies {
-        compile project(":core")
+        arguments += ["-visitor", "-long-messages", "-package", "aima.extra.logic.propositional.parser"]
     }
 }
 
