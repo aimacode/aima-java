@@ -1,5 +1,5 @@
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
+    gradleVersion = '2.14'
 }
 
 allprojects {
@@ -13,16 +13,6 @@ allprojects {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-        testCompile group: 'junit', name: 'junit', version: '4.11'
-        antlr "org.antlr:antlr4:4.5.3"
-    }
-    
-    generateGrammarSource {
-        maxHeapSize = "64m"
-        arguments += ["-visitor", "-long-messages"]
-	}
 }
 
 subprojects {
@@ -30,12 +20,6 @@ subprojects {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-    tasks.withType(Test) {
-        scanForTestClasses = false
-        include "**/*Test.class"
-    }
-
 }
 
 project(':') {
@@ -45,6 +29,20 @@ project(':') {
 }
 
 project(':core') {
+    dependencies {
+        compile group: 'org.antlr', name: 'antlr4', version: '4.5.3'
+    }
+    
+    generateGrammarSource {
+        maxHeapSize = "64m"
+        arguments += ["-visitor", "-long-messages"]
+	}
+}
+
+project(':extra') {
+    dependencies {
+        compile project(":core")
+    }
 }
 
 project(':gui') {
@@ -55,15 +53,10 @@ project(':gui') {
     }
 }
 
-project(':extra') {
-    dependencies {
-        compile project(":core")
-    }
-}
-
 project(':test') {
     dependencies {
         compile project(":extra")
+        testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 	test {
 		// set heap size for the test JVM(s)
@@ -83,6 +76,11 @@ project(':test') {
 			logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
 		}
 	}
+	
+	tasks.withType(Test) {
+        scanForTestClasses = false
+        include "**/*Test.class"
+    }
 }
 
 task AIMADemoApp(type: JavaExec, dependsOn: classes) {
