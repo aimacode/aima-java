@@ -16,7 +16,14 @@ allprojects {
 
     dependencies {
         testCompile group: 'junit', name: 'junit', version: '4.11'
+        //antlr "org.antlr:antlr:3.5.2" // use ANTLR version 3
+        antlr "org.antlr:antlr4:4.5" // use ANTLR version 4
     }
+    
+    generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages"]
+}
 }
 
 subprojects {
@@ -84,12 +91,3 @@ task AIMADemoApp(type: JavaExec, dependsOn: classes) {
     classpath = files(sourceSets.main.output, configurations.runtime)
 }
 
-dependencies {
-    //antlr "org.antlr:antlr:3.5.2" // use ANTLR version 3
-    antlr "org.antlr:antlr4:4.5" // use ANTLR version 4
-}
-
-generateGrammarSource {
-    maxHeapSize = "64m"
-    arguments += ["-visitor", "-long-messages"]
-}
