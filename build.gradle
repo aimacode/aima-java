@@ -8,6 +8,7 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
+	apply plugin: 'antlr'
 
     repositories {
         mavenCentral()
@@ -81,4 +82,14 @@ project(':test') {
 task AIMADemoApp(type: JavaExec, dependsOn: classes) {
     main = 'aima.gui.app.AIMADemoApp'
     classpath = files(sourceSets.main.output, configurations.runtime)
+}
+
+dependencies {
+    //antlr "org.antlr:antlr:3.5.2" // use ANTLR version 3
+    antlr "org.antlr:antlr4:4.5" // use ANTLR version 4
+}
+
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages"]
 }
