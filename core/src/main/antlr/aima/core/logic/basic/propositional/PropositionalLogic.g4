@@ -1,3 +1,5 @@
+grammar PropositionalLogic;
+
 /*
  * Sentence        -> AtomicSentence : ComplexStence
  * AtomicSentence  -> True : False : P : Q : R : ...
@@ -10,7 +12,6 @@
  *
  * OPERATOR PRECEDENCE: ~, &, |, =>, <=>
  */
-grammar PropositionalLogic;
 
 /*
 =============

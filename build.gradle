@@ -8,7 +8,6 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-	apply plugin: 'antlr'
 
     repositories {
         mavenCentral()
@@ -29,14 +28,15 @@ project(':') {
 }
 
 project(':core') {
+	apply plugin: 'antlr'
     dependencies {
-        compile group: 'org.antlr', name: 'antlr4', version: '4.5.3'
+        antlr "org.antlr:antlr4:4.5.3"
     }
     
     generateGrammarSource {
         maxHeapSize = "64m"
-        arguments += ["-visitor", "-long-messages"]
-	}
+        arguments += ["-visitor", "-long-messages", "-package", "aima.core.logic.basic.propositional"]
+    }
 }
 
 project(':extra') {
