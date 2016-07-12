@@ -315,7 +315,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>6.?</td>
        <td>??</td>
-       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/AC-3">AC-3</a></td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/AC-3.md">AC-3</a></td>
        <td><a href="core/src/main/java/aima/core/search/basic/csp/AC3.java">AC3</a></td>
    </tr>
    <tr>
