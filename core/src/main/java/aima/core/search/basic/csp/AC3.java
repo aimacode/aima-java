@@ -58,23 +58,22 @@ public class AC3 implements Predicate<CSP> {
 	// inputs: csp, a binary CSP with components (X, D, C)
 	@Override
 	public boolean test(CSP csp) {
-		// local variables: queue, a queue of arcs, initially all the arcs in
-		// csp
+		// local variables: queue, a queue of arcs,
+		// initially all the arcs in csp
 		Queue<Arc> queue = allArcs(csp);
 		// while queue is not empty do
 		while (!queue.isEmpty()) {
 			// (X_i, X_j) = REMOVE-FIRST(queue)
 			Arc X = queue.remove();
-			// if REVISE(csp, X<sub>i</sub>, X<sub>j</sub>) then
+			// if REVISE(csp, X_i, X_j) then
 			if (revise(csp, X)) {
-				// if size of D<sub>i</sub> = 0 then return false
+				// if size of D_i = 0 then return false
 				if (csp.getDomains().get(X.i).size() == 0) {
 					return false;
 				}
-				// for each X<sub>k</sub> in X<sub>i</sub>.NEIGHBORS -
-				// {X<sub>j</sub>} do
+				// for each X_k in X_i.NEIGHBORS - {X_j} do
 				for (Arc X_k_i : neighborsMinusJ(X.i, X.j, csp)) {
-					// add (X<sub>k</sub>, X<sub>i</sub>) to queue
+					// add (X_k, X_i) to queue
 					queue.add(X_k_i);
 				}
 			}
@@ -86,10 +85,10 @@ public class AC3 implements Predicate<CSP> {
 	// X_i
 	public boolean revise(CSP csp, Arc X) {
 		boolean revised = false;
-		// for each x in D<sub>i</sub> do
+		// for each x in D_i do
 		for (Object x : csp.getDomains().get(X.i).getValues()) {
-			// if no value y in D<sub>j</sub> allows (x, y) to satisfy the
-			// constraint between X<sub>i</sub> and X<sub>j</sub> then
+			// if no value y in D_j allows (x, y) to satisfy the constraint
+			// between X_i and X_j then
 			if (!csp.getDomains().get(X.j).getValues().stream()
 					.anyMatch(y -> X.constraint.getRelation().isMember(new Object[] { x, y }))) {
 				csp.getDomains().get(X.i).delete(x);
