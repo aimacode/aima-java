@@ -28,6 +28,17 @@ public interface CSP {
 	List<String> getVariables();
 
 	/**
+	 * Lookup the index of a variable.
+	 * 
+	 * @param variable
+	 *            the variable whose index is to be looked up.
+	 * @return the index of the variable.
+	 */
+	default int indexOf(String variable) {
+		return getVariables().indexOf(variable);
+	}
+
+	/**
 	 * 
 	 * @return a set of domains (returned in a list for access and matching to
 	 *         variables convenience, implementation must guarantee Set

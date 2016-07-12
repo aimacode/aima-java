@@ -313,6 +313,18 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
    </tr>
    <tr>
+       <td>6.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/AC-3">AC-3</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/csp/AC3.java">AC3</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr>
        <td>7.?</td>
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/KB-Agent.md">KB-Agent</a></td>
@@ -359,6 +371,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/SATPlan.md">SATPlan</a></td>
        <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/SATPlan.java">SATPlan</a></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
    </tr>
    </tbody>
 </table>

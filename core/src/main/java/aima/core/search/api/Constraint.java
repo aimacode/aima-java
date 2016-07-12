@@ -21,14 +21,13 @@ public interface Constraint {
 		 * @return true if the values are satisfied by the constraint, false
 		 *         otherwise.
 		 */
-		boolean isMember(List<Object> values);
+		boolean isMember(Object[] values);
 
 		/**
-		 * 
 		 * @return an iterator that allows you to enumerate over the values that
 		 *         the variables in the scope of the constraint can take on.
 		 */
-		Iterator<List<Object>> iterator();
+		Iterator<List<Object>> iterator(List<Domain> domainsOfScope);
 	}
 
 	/**
@@ -44,10 +43,18 @@ public interface Constraint {
 	 */
 	Relation getRelation();
 	
+	/**
+	 * 
+	 * @return true if a unary constraint, false otherwise.
+	 */
 	default boolean isUnary() {
 		return getScope().size() == 1;
 	}
 	
+	/**
+	 * 
+	 * @return true if a binary constraint, false otherwise.
+	 */
 	default boolean isBinary() {
 		return getScope().size() == 2;
 	}
