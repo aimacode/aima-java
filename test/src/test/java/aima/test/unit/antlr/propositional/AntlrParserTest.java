@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import main.antlr.aima.extra.logic.propositional.parser.PropositionalLogicLexer;
-import main.antlr.aima.extra.logic.propositional.parser.PropositionalLogicParser;
+import aima.extra.logic.propositional.parser.PropositionalLogicLexer;
+import aima.extra.logic.propositional.parser.PropositionalLogicParser;
 
 @RunWith(Parameterized.class)
 public class AntlrParserTest {
