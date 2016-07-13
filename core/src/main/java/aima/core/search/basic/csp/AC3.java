@@ -89,8 +89,7 @@ public class AC3 implements Predicate<CSP> {
 		for (Object x : csp.getDomains().get(X.i).getValues()) {
 			// if no value y in D_j allows (x, y) to satisfy the constraint
 			// between X_i and X_j then
-			if (!csp.getDomains().get(X.j).getValues().stream()
-					.anyMatch(y -> X.constraint.getRelation().isMember(new Object[] { x, y }))) {
+			if (!csp.getDomains().get(X.j).getValues().stream().anyMatch(y -> X.isMember(new Object[] { x, y }))) {
 				csp.getDomains().get(X.i).delete(x);
 				revised = true;
 			}
@@ -101,13 +100,21 @@ public class AC3 implements Predicate<CSP> {
 	//
 	// Supporting Code
 	public static class Arc {
-		public final Constraint constraint;
 		public final int i, j;
+		//
+		private final Constraint constraint;
+		private final int iScopeIdx, jScopeIdx;
 
-		public Arc(Constraint constraint, int i, int j) {
+		public Arc(CSP csp, Constraint constraint, int i, int j) {
 			this.constraint = constraint;
-			this.i = i; // Note: corresponds to constraint.scope[0]
-			this.j = j; // Note: corresponds to constraint.scope[1]
+			this.i = i;
+			this.j = j;
+			this.iScopeIdx = constraint.getScope().indexOf(csp.getVariables().get(i));
+			this.jScopeIdx = constraint.getScope().indexOf(csp.getVariables().get(j));
+		}
+
+		public boolean isMember(Object[] values) {
+			return constraint.getRelation().isMember(new Object[] { values[iScopeIdx], values[jScopeIdx] });
 		}
 	}
 
@@ -116,7 +123,12 @@ public class AC3 implements Predicate<CSP> {
 
 		for (Constraint c : csp.getConstraints()) {
 			if (c.isBinary()) {
-				allArcs.add(new Arc(c, csp.indexOf(c.getScope().get(0)), csp.indexOf(c.getScope().get(1))));
+				int i = csp.indexOf(c.getScope().get(0));
+				int j = csp.indexOf(c.getScope().get(1));
+				// NOTE: arcs are directed but the constraints can be considered
+				// undirected so you need to add an arc for each direction.
+				allArcs.add(new Arc(csp, c, i, j));
+				allArcs.add(new Arc(csp, c, j, i));
 			}
 		}
 
@@ -126,16 +138,14 @@ public class AC3 implements Predicate<CSP> {
 	public List<Arc> neighborsMinusJ(int i, int j, CSP csp) {
 		List<Arc> neighbors = new ArrayList<>();
 		String varI = csp.getVariables().get(i);
-		String varJ = csp.getVariables().get(j);
 		for (Constraint c : csp.getConstraints()) {
-			if (c.isBinary()) {
-				if (c.getScope().contains(varI) && !c.getScope().contains(varJ)) {
-					String scopeO = c.getScope().get(0);
-					if (scopeO.equals(varI)) {
-						neighbors.add(new Arc(c, i, csp.indexOf(c.getScope().get(1))));
-					} else {
-						neighbors.add(new Arc(c, csp.indexOf(scopeO), i));
-					}
+			if (c.isBinary() && c.getScope().contains(varI)) {
+				int k = csp.indexOf(c.getScope().get(0));
+				if (k == i) {
+					k = csp.indexOf(c.getScope().get(1));
+				}
+				if (k != i && k != j) {
+					neighbors.add(new Arc(csp, c, k, i));
 				}
 			}
 		}
