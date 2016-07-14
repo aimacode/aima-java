@@ -35,11 +35,11 @@ public class AntlrParserTest {
 			{ true, "~(A & B) => C" },
 			{ true, "~(A & B) => (C)" },
 			{ true, "(~~(A & B) => (C))" },
-			/*
-			{ false, " A & B C " }, 
-			{ false, " ~~A & & B " }, 
-			{ false, "(A & B) ( A | B) " },
-			*/
+			{ true, "(A & B) ( A | B) " },
+			
+			//invalid sentences
+			{ false, " ~~A & & B " },
+			//{ false, " A & B C " },
 		});
 	}
 
