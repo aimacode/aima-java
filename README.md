@@ -321,7 +321,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
     <tr>
        <td>6.?</td>
        <td>??</td>
-       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Backtracking-Search.md">AC-3</a></td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Backtracking-Search.md">Backtracking-Search</a></td>
        <td><a href="core/src/main/java/aima/core/search/basic/csp/BacktrackingSearch.java">BacktrackingSearch</a></td>
    </tr>  
    <tr>
