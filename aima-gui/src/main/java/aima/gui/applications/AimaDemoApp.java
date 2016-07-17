@@ -1,5 +1,6 @@
 package aima.gui.applications;
 
+import aima.gui.applications.robotics.MonteCarloLocalizationApp;
 import aima.gui.applications.search.csp.MapColoringApp;
 import aima.gui.applications.search.games.ConnectFourApp;
 import aima.gui.applications.search.games.EightPuzzleApp;
@@ -38,7 +39,9 @@ public class AimaDemoApp {
 		frame.addApp(TicTacToeApp.class);
 		frame.addApp(ConnectFourApp.class);
 		frame.addApp(MapColoringApp.class);
-
+		
+		frame.addApp(MonteCarloLocalizationApp.class);
+		
 		frame.addDemo(TrivialVacuumDemo.class);
 		
 		frame.addDemo(EightPuzzleDemo.class);
