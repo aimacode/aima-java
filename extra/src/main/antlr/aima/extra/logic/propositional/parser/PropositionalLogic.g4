@@ -24,11 +24,11 @@ parse: sentence* EOF;
 sentence
     : bracketedsentence
     | atomicsentence
-    | NOT sentence
-    |<assoc=right> sentence AND sentence
-    |<assoc=right> sentence OR sentence
-    |<assoc=right> sentence IMPLICATION sentence
-    |<assoc=right> sentence BICONDITIONAL sentence
+    | op=NOT right=sentence
+    |<assoc=right> left=sentence op=AND right=sentence
+    |<assoc=right> left=sentence op=OR right=sentence
+    |<assoc=right> left=sentence op=IMPLICATION right=sentence
+    |<assoc=right> left=sentence op=BICONDITIONAL right=sentence
     ;
 
 bracketedsentence
