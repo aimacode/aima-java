@@ -6,9 +6,6 @@ import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 
-/**
- * Error handler which throws exception on any parsing error.
- */
 public class ExceptionThrowingErrorHandler extends DefaultErrorStrategy {
 	@Override
 	public void recover(Parser recognizer, RecognitionException e) {
