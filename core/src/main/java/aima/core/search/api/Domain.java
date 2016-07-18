@@ -13,7 +13,7 @@ import java.util.List;
 public interface Domain {
 	/**
 	 * 
-	 * @return the set if allowed values in the domain.
+	 * @return the set of allowed values in the domain.
 	 */
 	List<Object> getValues();
 

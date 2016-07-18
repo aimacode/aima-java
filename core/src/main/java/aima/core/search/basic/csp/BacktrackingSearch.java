@@ -1,5 +1,7 @@
 package aima.core.search.basic.csp;
 
+import java.util.List;
+
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
 import aima.core.search.api.SearchForAssignmentFunction;
@@ -15,7 +17,7 @@ import aima.core.search.api.SearchForAssignmentFunction;
  * 
  * function BACKTRACK(assignment, csp) returns a solution, or failure
  *    if assignment is complete then return assignment
- *    var &larr; SELECT-UNASSIGNED-VARIABLE(csp)
+ *    var &larr; SELECT-UNASSIGNED-VARIABLE(assignment, csp)
  *    for each value in ORDER-DOMAIN-VALUES(var, assignment, csp) do
  *       if value is consistent with assignment then
  *          add {var = value} to assignment
@@ -25,7 +27,8 @@ import aima.core.search.api.SearchForAssignmentFunction;
  *             result &larr; BACKTRACK(assignment, csp)
  *             if result &ne; failure then
  *                return result
- *       remove {var = value} and inferences from assignment
+ *             remove inferences from assignment
+ *          remove {var = value} from assignment
  *    return failure
  * </code>
  * </pre>
@@ -46,8 +49,76 @@ import aima.core.search.api.SearchForAssignmentFunction;
  */
 public class BacktrackingSearch implements SearchForAssignmentFunction {
 
+	// function BACKTRACKING-SEARCH(csp) returns a solution, or failure
 	@Override
 	public Assignment apply(CSP csp) {
+		// return BACKTRACK({ }, csp)
+		return backtrack(newAssignment(), csp);
+	}
+
+	// function BACKTRACK(assignment, csp) returns a solution, or failure
+	public Assignment backtrack(Assignment assignment, CSP csp) {
+		// if assignment is complete then return assignment
+		if (assignment.isComplete(csp)) {
+			return assignment;
+		}
+		// var <- SELECT-UNASSIGNED-VARIABLE(csp)
+		String var = selectUnassignedVariable(assignment, csp);
+		// for each value in ORDER-DOMAIN-VALUES(var, assignment, csp) do
+		for (Object value : orderDomainValues(var, assignment, csp)) {
+			// if value is consistent with assignment then
+			if (assignment.isConsistent(var, value, csp)) {
+				// add {var = value} to assignment
+				assignment.add(var, value);
+				// inferences <- INFERENCE(csp, var, value)
+				Assignment inferences = inference(csp, var, value);
+				// if inferences != failure then
+				if (inferences != failure()) {
+					// add inferences to assignment
+					assignment.add(inferences);
+					// result <- BACKTRACK(assignment, csp)
+					Assignment result = backtrack(assignment, csp);
+					// if result != failure then
+					if (result != failure()) {
+						// return result
+						return result;
+					}
+					// remove inferences from assignment
+					assignment.remove(inferences, csp);
+				}
+				// remove {var = value} from assignment
+				assignment.remove(var, value);
+			}
+		}
+		// return failure
+		return failure();
+	}
+
+	//
+	// Supporting Code
+	public Assignment newAssignment() {
 		return null; // TODO
+	}
+
+	public Assignment failure() {
+		return null;
+	}
+
+	public String selectUnassignedVariable(Assignment assignment, CSP csp) {
+		// Default implementation returns the first unassigned variable as
+		// specified on the CSP
+		return csp.getVariables().stream().filter(var -> !assignment.getAssignments().keySet().contains(var))
+				.findFirst().get();
+	}
+
+	public List<Object> orderDomainValues(String var, Assignment assignment, CSP csp) {
+		// Default implementation just returns the order of values as specified
+		// on the CSP
+		return csp.getDomains().get(csp.indexOf(var)).getValues();
+	}
+
+	public Assignment inference(CSP csp, String var, Object value) {
+		// Default is no inference.
+		return newAssignment();
 	}
 }
