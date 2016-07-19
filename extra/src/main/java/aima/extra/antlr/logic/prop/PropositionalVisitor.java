@@ -20,7 +20,7 @@ public class PropositionalVisitor extends PropositionalLogicBaseVisitor<Sentence
 				first = false;
 			}
 			else {
-				sentence = new ComplexSentence(Connective.AND, visit(s), sentence);
+				sentence = new ComplexSentence(Connective.AND, sentence, visit(s));
 			}
 		}
 		return sentence;
