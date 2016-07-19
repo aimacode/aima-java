@@ -145,6 +145,31 @@ public class AntlrParserTest {
 	}
 	
 	@Test
+	public void testMultipleSentences() {
+		sentence = parseToSentence("(A & B) (C | D)");
+		expected = prettyPrintF("A & B & (C | D)");
+		Assert.assertTrue(sentence.isAndSentence());
+		Assert.assertEquals(expected, sentence.toString());
+		
+		sentence = parseToSentence("(A & B) (C & D)");
+		expected = prettyPrintF("A & B & C & D");
+		Assert.assertTrue(sentence.isAndSentence());
+		Assert.assertEquals(expected, sentence.toString());
+		
+		sentence = parseToSentence("(A & B) ~(C => D)");
+		expected = prettyPrintF("A & B & ~(C => D)");
+		Assert.assertTrue(sentence.isAndSentence());
+		Assert.assertEquals(expected, sentence.toString());
+		/*
+		sentence = parseToSentence("(A & B) (C | D) (E <=> F) (G & H | I)");
+		expected = prettyPrintF("A & B & (C | D) & (E <=> F) & ( G & H | I)");
+		Assert.assertTrue(sentence.isAndSentence());
+		Assert.assertEquals(expected, sentence.toString());
+		*/
+	}
+	
+	
+	@Test
 	public void testParserException() {
 		/*try {
 			sentence = parseToSentence("");
