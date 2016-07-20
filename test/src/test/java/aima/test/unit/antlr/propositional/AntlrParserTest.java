@@ -8,9 +8,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
-import aima.extra.antlr.logic.prop.PropositionalVisitor;
 import aima.extra.logic.propositional.parser.PropositionalLogicLexer;
 import aima.extra.logic.propositional.parser.PropositionalLogicParser;
+import aima.extra.logic.propositional.parser.PropositionalVisitor;
 
 /*
  * @author Anurag Rai

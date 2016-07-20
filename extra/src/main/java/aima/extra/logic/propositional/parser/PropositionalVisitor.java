@@ -1,4 +1,4 @@
-package aima.extra.antlr.logic.prop;
+package aima.extra.logic.propositional.parser;
 
 import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
