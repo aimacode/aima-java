@@ -18,17 +18,39 @@ public interface Assignment {
 	 */
 	Map<String, Object> getAssignments();
 
-	Object add(String var, Object value);
-
-	boolean add(Assignment assignment);
+	Object add(String var, Object value);	
 
 	boolean remove(String var, Object value);
-	
+
 	boolean reducedDomain(String var, Object value);
-	
+
 	Map<String, List<Object>> getDomainsReducedBy();
 
-	boolean remove(Assignment assignment, CSP csp);
+	boolean add(Assignment assignment);
+	
+	default boolean remove(Assignment assignment, CSP csp) {
+		// Set to true if any changes in this assignment or the CSP occur as a
+		// result
+		// of removing the given assignment's values.
+		boolean removed = false;
+		// Remove the individual var = value assignments
+		for (Map.Entry<String, Object> entry : assignment.getAssignments().entrySet()) {
+			if (remove(entry.getKey(), entry.getValue())) {
+				removed = true;
+			}
+		}
+		// Restore relevant domains
+		for (Map.Entry<String, List<Object>> varDomainReducedBy : assignment.getDomainsReducedBy().entrySet()) {
+			Domain domain = csp.getDomains().get(csp.indexOf(varDomainReducedBy.getKey()));
+			for (Object valueToRestore : varDomainReducedBy.getValue()) {
+				if (domain.restore(valueToRestore)) {
+					removed = true;
+				}
+			}
+		}
+
+		return removed;
+	}
 
 	/**
 	 * Determine if an assignment is complete, where every variable is assigned.
@@ -61,6 +83,8 @@ public interface Assignment {
 
 	default boolean violates(Map<String, Object> assignedValues, CSP csp) {
 		return csp.getConstraints().stream()
+				// An assignment can only violate a constraint if it has values
+				// for all the variables in its scope.
 				.filter(constraint -> assignedValues.keySet().containsAll(constraint.getScope()))
 				.anyMatch(constraint -> {
 					Object[] values = new Object[constraint.getScope().size()];

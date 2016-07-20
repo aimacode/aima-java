@@ -21,7 +21,9 @@ public interface Domain {
 		 * @param value
 		 *            the value deleted from the domain.
 		 */
-		void deleted(Domain domain, Object value);
+		default void deleted(Domain domain, Object value) {
+			// Do nothing - implement if interested in.
+		}
 
 		/**
 		 * Called on registered listeners when a value is restored to the
@@ -32,7 +34,9 @@ public interface Domain {
 		 * @param value
 		 *            the value restored to the domain.
 		 */
-		void restored(Domain domain, Object value);
+		default void restored(Domain domain, Object value) {
+			// Do nothing - implement if interested in.
+		}
 	}
 
 	/**
