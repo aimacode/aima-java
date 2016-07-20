@@ -30,8 +30,7 @@ public interface Assignment {
 	
 	default boolean remove(Assignment assignment, CSP csp) {
 		// Set to true if any changes in this assignment or the CSP occur as a
-		// result
-		// of removing the given assignment's values.
+		// result of removing the given assignment's values.
 		boolean removed = false;
 		// Remove the individual var = value assignments
 		for (Map.Entry<String, Object> entry : assignment.getAssignments().entrySet()) {
