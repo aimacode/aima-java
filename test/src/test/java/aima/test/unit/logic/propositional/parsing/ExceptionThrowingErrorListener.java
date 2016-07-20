@@ -1,4 +1,4 @@
-package aima.test.unit.antlr.propositional;
+package aima.test.unit.logic.propositional.parsing;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
