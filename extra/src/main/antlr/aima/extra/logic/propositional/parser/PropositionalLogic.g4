@@ -19,7 +19,7 @@ GRAMMAR RULES
 =============
 */
 
-parse: sentence* EOF;
+parse: sentence+ EOF;
 
 sentence
     : bracketedsentence
