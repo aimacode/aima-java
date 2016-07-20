@@ -2,9 +2,10 @@ package aima.core.search.basic.support;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import aima.core.search.api.Domain;
 
@@ -14,28 +15,68 @@ import aima.core.search.api.Domain;
  * @author Ciaran O'Reilly
  */
 public class BasicDomain implements Domain {
-	private Set<Object> values = new LinkedHashSet<>();
-	private List<Object> listValues;
-	
-	
+	// Value, visible (true/false)
+	private Map<Object, Boolean> originalValues = new LinkedHashMap<>();
+	// The currently visible values
+	private List<Object> currentValues;
+	private List<Domain.Listener> listeners = new ArrayList<>();
+
 	public BasicDomain(Object[] values) {
 		for (Object value : values) {
-			this.values.add(value);
+			this.originalValues.put(value, true);
 		}
-		this.listValues = Collections.unmodifiableList(new ArrayList<>(this.values));
+		updateCurrentValues();
 	}
-	
+
 	@Override
 	public List<Object> getValues() {
-		return listValues;
+		return currentValues;
 	}
-	
+
 	@Override
 	public boolean delete(Object value) {
-		boolean deleted = values.remove(value);
-		if (deleted) {
-			listValues = Collections.unmodifiableList(new ArrayList<>(values));
+		boolean deleted = false;
+		if (originalValues.containsKey(value)) {
+			// If the previous value is visible then we deleted it on this call
+			if (deleted = originalValues.put(value, false)) {
+				updateCurrentValues();
+				notifyDeleted(value);
+			}
 		}
+
 		return deleted;
-	}	
+	}
+
+	@Override
+	public boolean restore(Object value) {
+		boolean restored = false;
+		if (!originalValues.containsKey(value)) {
+			throw new IllegalArgumentException(
+					"Value=" + value + " is not an original value from this domain: " + originalValues.keySet());
+		} else {
+			// If the previous value is not visible, then we restored it on this
+			// call
+			if (restored = !originalValues.put(value, true)) {
+				updateCurrentValues();
+				notifyRestored(value);
+			}
+		}
+
+		return restored;
+	}
+
+	@Override
+	public List<Domain.Listener> domainListeners() {
+		return listeners;
+	}
+
+	//
+	// PROTECTED
+	protected void updateCurrentValues() {
+		currentValues = Collections.unmodifiableList(this.originalValues.entrySet().stream()
+				// Should be visible
+				.filter(entry -> entry.getValue())
+				// Want the values (not visibility information)
+				.map(entry -> entry.getKey()).collect(Collectors.toList()));
+	}
 }

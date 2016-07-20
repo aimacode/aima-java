@@ -62,7 +62,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		if (assignment.isComplete(csp)) {
 			return assignment;
 		}
-		// var <- SELECT-UNASSIGNED-VARIABLE(csp)
+		// var <- SELECT-UNASSIGNED-VARIABLE(assignment, csp)
 		String var = selectUnassignedVariable(assignment, csp);
 		// for each value in ORDER-DOMAIN-VALUES(var, assignment, csp) do
 		for (Object value : orderDomainValues(var, assignment, csp)) {
