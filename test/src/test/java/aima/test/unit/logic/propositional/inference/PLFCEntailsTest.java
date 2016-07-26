@@ -7,7 +7,6 @@ import org.junit.Test;
 import aima.core.logic.basic.propositional.inference.PLFCEntails;
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
 import aima.extra.logic.propositional.parser.PLParserWrapper;
-import aima.core.logic.basic.common.ParserException;
 
 /**
  * @author Ravi Mohan
@@ -73,7 +72,8 @@ public class PLFCEntailsTest {
 		Assert.assertEquals(true, plfce.plfcEntails(kb, "Q", new PLParserWrapper()));
 	}
 	
-	@Test(expected=ParserException.class)
+	//TODO: Make Exception more specific
+	@Test(expected=Exception.class)
 	public void testParserException() {
 		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A => B");
