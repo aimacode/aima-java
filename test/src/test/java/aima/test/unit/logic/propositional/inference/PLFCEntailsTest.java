@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import aima.core.logic.basic.propositional.inference.PLFCEntails;
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 import aima.core.logic.basic.common.ParserException;
 
 /**
@@ -24,16 +25,16 @@ public class PLFCEntailsTest {
 	
 	@Test
 	public void testModusPonens() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A => B");
 		kb.tell("A");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, "B"));
+		Assert.assertEquals(true, plfce.plfcEntails(kb, "B", new PLParserWrapper()));
 	}
 	
 	@Test
 	public void testPLFCEntails1() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A & B => C");
 		kb.tell("C & D => E");
 		kb.tell("C & F => G");
@@ -41,12 +42,12 @@ public class PLFCEntailsTest {
 		kb.tell("B");
 		kb.tell("D");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, "E"));
+		Assert.assertEquals(true, plfce.plfcEntails(kb, "E", new PLParserWrapper()));
 	}
 	
 	@Test
 	public void testAIMAExample() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("P => Q");
 		kb.tell("L & M => P");
 		kb.tell("B & L => M");
@@ -55,12 +56,12 @@ public class PLFCEntailsTest {
 		kb.tell("A");
 		kb.tell("B");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, "Q"));
+		Assert.assertEquals(true, plfce.plfcEntails(kb, "Q", new PLParserWrapper()));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testKBWithNonDefiniteClauses() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("P => Q");
 		kb.tell("L & M => P");
 		kb.tell("B & L => M");
@@ -69,15 +70,15 @@ public class PLFCEntailsTest {
 		kb.tell("A");
 		kb.tell("B");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, "Q"));
+		Assert.assertEquals(true, plfce.plfcEntails(kb, "Q", new PLParserWrapper()));
 	}
 	
 	@Test(expected=ParserException.class)
 	public void testParserException() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A => B");
 		kb.tell("A");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, "b b"));
+		Assert.assertEquals(true, plfce.plfcEntails(kb, "b b", new PLParserWrapper()));
 	}
 }

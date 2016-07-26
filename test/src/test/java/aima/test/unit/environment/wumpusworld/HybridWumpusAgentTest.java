@@ -19,6 +19,7 @@ import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.WWAction;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * 
@@ -30,7 +31,7 @@ public class HybridWumpusAgentTest {
 	@SuppressWarnings("serial")
 	@Test
 	public void testPlanRoute() {
-		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
+		HybridWumpusAgent hwa = new HybridWumpusAgent(4, new PLParserWrapper());
 		
 		// Should be a NoOp plan as we are already at the goal.
 		Assert.assertEquals(Collections.<WWAction>emptyList(), 
@@ -78,7 +79,7 @@ public class HybridWumpusAgentTest {
 	@SuppressWarnings("serial")
 	@Test
 	public void testPlanShot() {
-		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
+		HybridWumpusAgent hwa = new HybridWumpusAgent(4, new PLParserWrapper());
 		
 		ArrayList<WWAction> a = new ArrayList<>(Arrays.asList(new Shoot()));
 
@@ -115,7 +116,7 @@ public class HybridWumpusAgentTest {
 	
 	@Test
 	public void testGrabAndClimb() {
-		HybridWumpusAgent hwa = new HybridWumpusAgent(2);
+		HybridWumpusAgent hwa = new HybridWumpusAgent(2, new PLParserWrapper());
 		// The gold is in the first square
 		WWAction a = hwa.perceive(new AgentPercept(true, true, true, false, false));
 		Assert.assertTrue(a instanceof Grab);

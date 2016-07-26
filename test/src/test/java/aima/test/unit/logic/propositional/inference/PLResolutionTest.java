@@ -17,6 +17,7 @@ import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
@@ -39,7 +40,7 @@ public class PLResolutionTest {
 
 	public PLResolutionTest(boolean discardTautologies) {
 		this.resolution = new PLResolution(discardTautologies);
-		parser = new PLParser();
+		parser = new PLParserWrapper();
 	}
 
 	@Test
@@ -104,13 +105,13 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolve1() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("(B11 => ~P11) & B11");
 
 		String alpha = "P11";
 		Sentence query = parser.parse("P11");
 		//test alpha as String
-		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(false, resolution.plResolution(kb, query));
 		
@@ -118,73 +119,73 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolve2() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A & B");
 
 		String alpha = "B";
 		Sentence query = parser.parse("B");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve3() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("(B11 => ~P11) & B11");
 
 		String alpha = "~P11";
 		Sentence query = parser.parse("~P11");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve4() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A | B");
 
 		String alpha = "B";
 		Sentence query = parser.parse("B");
 		//test alpha as String
-		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolve5() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("(B11 => ~P11) & B11");
 
 		String alpha = "~B11";
 		Sentence query = parser.parse("~B11");
 		//test alpha as String
-		Assert.assertEquals(false, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 	
 	@Test
 	public void testPLResolve6() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		// e.g. from AIMA3e pg. 254
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
 
 		String alpha = "~P21";
 		Sentence query = parser.parse("~P21");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 	
 	@Test
 	public void testPLResolve7() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("P");
 		kb.tell("P => Q");
 		kb.tell("(P => Q) => (Q => R)");
@@ -192,7 +193,7 @@ public class PLResolutionTest {
 		String alpha = "R";
 		Sentence query = parser.parse("R");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
@@ -200,21 +201,21 @@ public class PLResolutionTest {
 	@Test
 	public void testMultipleClauseResolution() {
 		// test (and fix) suggested by Huy Dinh. Thanks Huy!
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
 		
 		String alpha = "B";
 		Sentence query = parser.parse("B");
 		//test alpha as String
 		// false as KB says nothing about B
-		Assert.assertEquals(false, resolution.plResolution(kb, alpha)); 
+		Assert.assertEquals(false, resolution.plResolution(kb, alpha, new PLParserWrapper())); 
 		//test alpha as Sentence
 		Assert.assertEquals(false, resolution.plResolution(kb, query));
 	}
 
 	@Test
 	public void testPLResolutionWithChadCarfBugReportData() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("B12 <=> P11 | P13 | P22 | P02");
 		kb.tell("B21 <=> P20 | P22 | P31 | P11");
 		kb.tell("B01 <=> P00 | P02 | P11");
@@ -227,14 +228,14 @@ public class PLResolutionTest {
 		String alpha = "P00";
 		Sentence query = parser.parse("P00");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}
 	
 	@Test
 	public void testPLResolutionSucceedsWithChadCarffsBugReport2() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("B10 <=> P11 | P20 | P00");
 		kb.tell("B01 <=> P00 | P02 | P11");
 		kb.tell("B21 <=> P20 | P22 | P31 | P11");
@@ -247,7 +248,7 @@ public class PLResolutionTest {
 		String alpha = "P00";
 		Sentence query = parser.parse("P00");
 		//test alpha as String
-		Assert.assertEquals(true, resolution.plResolution(kb, alpha));
+		Assert.assertEquals(true, resolution.plResolution(kb, alpha, new PLParserWrapper()));
 		//test alpha as Sentence
 		Assert.assertEquals(true, resolution.plResolution(kb, query));
 	}

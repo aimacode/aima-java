@@ -10,6 +10,7 @@ import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.SymbolCollector;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
@@ -20,7 +21,7 @@ public class SymbolCollectorTest {
 
 	@Before
 	public void setUp() {
-		parser = new PLParser();
+		parser = new PLParserWrapper();
 	}
 
 	@Test

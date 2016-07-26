@@ -23,6 +23,7 @@ import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.basic.propositional.visitors.SymbolCollector;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
@@ -44,7 +45,7 @@ public class DPLLTest {
 
 	public DPLLTest(DPLL dpll) {
 		this.dpll   = dpll;
-		this.parser = new PLParser();
+		this.parser = new PLParserWrapper();
 	}
 
 	@Test
@@ -86,7 +87,7 @@ public class DPLLTest {
 
 	@Test
 	public void testDPLLSucceedsWithChadCarffsBugReport() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 
 		kb.tell("B12 <=> P11 | P13 | P22 | P02");
 		kb.tell("B21 <=> P20 | P22 | P31 | P11");
@@ -109,7 +110,7 @@ public class DPLLTest {
 
 	@Test
 	public void testDPLLSucceedsWithChadCarffsBugReport2() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("B10 <=> P11 | P20 | P00");
 		kb.tell("B01 <=> P00 | P02 | P11");
 		kb.tell("B21 <=> P20 | P22 | P31 | P11");
@@ -142,7 +143,7 @@ public class DPLLTest {
 
 	@Test
 	public void testDoesNotKnow() {
-		BasicKnowledgeBase kb = new BasicKnowledgeBase();
+		BasicKnowledgeBase kb = new BasicKnowledgeBase(new PLParserWrapper());
 		kb.tell("A");
 
 		Assert.assertFalse(dpll.isEntailed(kb, parser.parse("B")));

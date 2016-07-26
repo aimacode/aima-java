@@ -21,6 +21,7 @@ import aima.core.environment.wumpusworld.action.WWAction;
 import aima.core.logic.api.propositional.DPLL;
 import aima.core.logic.basic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.basic.propositional.inference.OptimizedDPLL;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class WumpusKnowledgeBaseTest {
 	
 	@Test
 	public void testAskCurrentPosition() {	
-		WumpusKnowledgeBase<WWAction> KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2); // Create very small cave in order to make inference for tests faster.
+		WumpusKnowledgeBase<WWAction> KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper()); // Create very small cave in order to make inference for tests faster.
 		// NOTE: in the 2x2 cave for this set of assertion tests, 
 		// we are going to have no pits and the wumpus in [2,2]
 		// this needs to be correctly set up in order to keep the KB consistent.
@@ -93,26 +94,26 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase<WWAction> KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1));}}, KB.askSafeRooms(t));
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(true, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(false, true, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(true, true, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 	}
 	
 	@Test
 	public void testAskGlitter() {
-		WumpusKnowledgeBase<WWAction> KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2); 
+		WumpusKnowledgeBase<WWAction> KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper()); 
 		step(KB, new AgentPercept(false, false, false, false, false), 0);
 		Assert.assertFalse(KB.askGlitter(0));
 		step(KB, new AgentPercept(false, false, false, false, false), 1);
@@ -129,7 +130,7 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase<WWAction> KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askUnvisitedRooms(t));
 		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST)), t); // Move agent to [2,1]		
@@ -145,15 +146,15 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase<WWAction> KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(2,2));}}, KB.askPossibleWumpusRooms(t));	
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(true, false, false, false, false), t); 		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2, 1));}}, KB.askPossibleWumpusRooms(t));		
 
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 3);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 3, new PLParserWrapper());
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,3)); add(new Room(2,2)); add(new Room(2,3)); add(new Room(3,1)); add(new Room(3,2)); add(new Room(3,3));}}, KB.askPossibleWumpusRooms(t));
 		KB.makeActionSentence(new Forward(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST)), t); // Move agent to [2,1]		
@@ -165,11 +166,11 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase<WWAction> KB;
 		int t = 0;
 		
-		KB = new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB = new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(false, false, false, false, false), t);		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2,1));}}, KB.askNotUnsafeRooms(t));	
 		
-		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2);
+		KB =  new WumpusKnowledgeBase<WWAction>(dpll, 2, new PLParserWrapper());
 		step(KB, new AgentPercept(true, false, false, false, false), t); 		
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askNotUnsafeRooms(t));		
 	}
@@ -177,7 +178,7 @@ public class WumpusKnowledgeBaseTest {
 	@Test
 	public void testExampleInSection7_2_described_pg268_AIMA3e() {
 		// Make smaller in order to reduce the inference time required, this still covers all the relevant rooms for the example
-		WumpusKnowledgeBase<WWAction> KB = new WumpusKnowledgeBase<WWAction>(dpll, 3); 
+		WumpusKnowledgeBase<WWAction> KB = new WumpusKnowledgeBase<WWAction>(dpll, 3, new PLParserWrapper()); 
 		int t = 0;
 		// 0
 		step(KB, new AgentPercept(false, false, false, false, false), t);

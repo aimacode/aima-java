@@ -73,8 +73,8 @@ public class PLResolution {
 	 *            the query, a sentence in propositional logic.
 	 * @return true if KB |= &alpha;, false otherwise.
 	 */
-	public boolean plResolution(KnowledgeBase kb, String queryString) {
-		PLParser parser = new PLParser();
+	public boolean plResolution(KnowledgeBase kb, String queryString, PLParser plparser) {
+		PLParser parser = plparser;
 		Sentence alpha = parser.parse(queryString);
 		return plResolution(kb, alpha);
 	}

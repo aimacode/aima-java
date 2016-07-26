@@ -38,8 +38,8 @@ public interface DPLL {
 	 *            a string representing a sentence in propositional logic.
 	 * @return true if the sentence is satisfiable, false otherwise.
 	 */
-	default boolean dpllSatisfiable(String s) {
-		PLParser parser = new PLParser();
+	default boolean dpllSatisfiable(String s, PLParser plparser) {
+		PLParser parser = plparser;
 		Sentence sentence = parser.parse(s);
 		return dpllSatisfiable(sentence);
 	}

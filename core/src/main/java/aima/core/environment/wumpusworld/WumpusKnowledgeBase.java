@@ -14,6 +14,7 @@ import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.logic.api.propositional.DPLL;
 import aima.core.logic.basic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
+import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.basic.propositional.parsing.ast.Connective;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
@@ -55,8 +56,8 @@ public class WumpusKnowledgeBase<A> extends BasicKnowledgeBase {
 	private int caveYDimension;
 	private DPLL dpll;
 
-	public WumpusKnowledgeBase(int caveXandYDimensions) {
-		this(new OptimizedDPLL(), caveXandYDimensions);
+	public WumpusKnowledgeBase(int caveXandYDimensions, PLParser plparser) {
+		this(new OptimizedDPLL(), caveXandYDimensions, plparser);
 	}
 
 	/**
@@ -69,8 +70,8 @@ public class WumpusKnowledgeBase<A> extends BasicKnowledgeBase {
 	 *            x and y dimensions of the wumpus world's cave.
 	 * 
 	 */
-	public WumpusKnowledgeBase(DPLL dpll, int caveXandYDimensions) {
-		super();
+	public WumpusKnowledgeBase(DPLL dpll, int caveXandYDimensions, PLParser plparser) {
+		super(plparser);
 
 		this.dpll = dpll;
 

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.basic.propositional.kb.BasicKnowledgeBase;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
@@ -15,7 +16,7 @@ public class BasicKnowledgeBaseTest {
 
 	@Before
 	public void setUp() {
-		kb = new BasicKnowledgeBase();
+		kb = new BasicKnowledgeBase(new PLParserWrapper());
 	}
 
 	@Test

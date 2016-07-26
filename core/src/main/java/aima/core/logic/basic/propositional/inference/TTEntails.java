@@ -64,9 +64,9 @@ public class TTEntails {
 	 * @return the answer to the specified question using the TT-Entails
 	 *         algorithm.
 	 */
-	public boolean ttEntails(KnowledgeBase kb, String queryString) {
+	public boolean ttEntails(KnowledgeBase kb, String queryString, PLParser plparser) {
 		
-		PLParser parser = new PLParser();
+		PLParser parser = plparser;
 		Sentence alpha = parser.parse(queryString);
 		return ttEntails(kb, alpha);
 	}

@@ -8,6 +8,7 @@ import aima.core.logic.basic.propositional.kb.data.Model;
 import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
@@ -23,7 +24,7 @@ public class ModelTest {
 
 	@Before
 	public void setUp() {
-		parser = new PLParser();
+		parser = new PLParserWrapper();
 		trueSentence = (Sentence) parser.parse("true");
 		falseSentence = (Sentence) parser.parse("false");
 		andSentence = (Sentence) parser.parse("(P  &  Q)");

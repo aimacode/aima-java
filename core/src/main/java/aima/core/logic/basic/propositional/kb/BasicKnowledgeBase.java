@@ -26,11 +26,12 @@ public class BasicKnowledgeBase implements KnowledgeBase {
 	private List<Sentence>         sentences = new ArrayList<Sentence>();
 	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.<Clause>emptySet());
 	private Set<PropositionSymbol> symbols   = new LinkedHashSet<PropositionSymbol>();
-	private PLParser               parser    = new PLParser();
-
-	public BasicKnowledgeBase() {
+	private PLParser               parser;
+	
+	public BasicKnowledgeBase(PLParser plparser) {
+		parser = plparser;
 	}
-
+	
 	@Override
 	public void tell(String aSentence) {
 		tell((Sentence) parser.parse(aSentence));	

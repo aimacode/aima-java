@@ -71,8 +71,8 @@ public class PLFCEntails {
 	 * @throws IllegalArgumentException
 	 *             if KB contains any non-definite clauses.
 	 */
-	public boolean plfcEntails(KnowledgeBase kb, String query) {
-		PLParser parser = new PLParser();
+	public boolean plfcEntails(KnowledgeBase kb, String query, PLParser plparser) {
+		PLParser parser = plparser;
 		PropositionSymbol q = (PropositionSymbol) parser.parse(query);
 		return plfcEntails(kb, q);
 	}

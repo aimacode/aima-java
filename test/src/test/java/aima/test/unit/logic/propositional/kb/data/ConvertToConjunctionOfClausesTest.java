@@ -8,12 +8,13 @@ import aima.core.logic.basic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.logic.basic.propositional.parsing.ast.Sentence;
 import aima.core.logic.basic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.extra.logic.propositional.parser.PLParserWrapper;
 
 /**
  * @author Ravi Mohan
  */
 public class ConvertToConjunctionOfClausesTest {
-	private PLParser parser = new PLParser();
+	private PLParser parser = new PLParserWrapper();
 
 	@Before
 	public void setUp() {

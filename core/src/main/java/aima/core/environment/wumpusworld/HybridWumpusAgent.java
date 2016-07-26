@@ -15,6 +15,7 @@ import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.environment.wumpusworld.action.WWAction;
+import aima.core.logic.basic.propositional.parsing.PLParser;
 import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.basic.informed.AStarSearch;
 import aima.core.search.basic.support.BasicProblem;
@@ -301,13 +302,13 @@ public class HybridWumpusAgent implements Agent<WWAction, AgentPercept> {
 	//
 	// SUPPORTING CODE
 	//
-	public HybridWumpusAgent() {
+	public HybridWumpusAgent(PLParser plparser) {
 		// i.e. default is a 4x4 world as depicted in figure 7.2
-		this(4);
+		this(4, plparser);
 	}
 
-	public HybridWumpusAgent(int caveXandYDimensions) {
-		kb = new WumpusKnowledgeBase<WWAction>(caveXandYDimensions);
+	public HybridWumpusAgent(int caveXandYDimensions, PLParser plparser) {
+		kb = new WumpusKnowledgeBase<WWAction>(caveXandYDimensions, plparser);
 	}
 
 }
