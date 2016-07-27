@@ -1,5 +1,6 @@
 package aima.core.search.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +55,16 @@ public interface Domain {
 	 *         false otherwise.
 	 */
 	boolean delete(Object value);
+	
+	default boolean reduceDomainTo(Object value) {
+		boolean reducedTo = false;
+		
+		List<Object> valuesToDelete = new ArrayList<>(getValues());
+		if (reducedTo = valuesToDelete.remove(value)) {
+			valuesToDelete.forEach(val -> delete(val));
+		}
+		return reducedTo;
+	}
 
 	/**
 	 * Restore a value to the domain.

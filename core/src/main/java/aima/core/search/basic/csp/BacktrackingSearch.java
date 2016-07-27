@@ -1,10 +1,14 @@
 package aima.core.search.basic.csp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
+import aima.core.search.api.Domain;
 import aima.core.search.api.SearchForAssignmentFunction;
+import aima.core.search.basic.support.BasicAssignment;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Figure ??, Page ??.<br>
@@ -97,7 +101,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 	//
 	// Supporting Code
 	public Assignment newAssignment() {
-		return null; // TODO
+		return new BasicAssignment();
 	}
 
 	public Assignment failure() {
@@ -117,8 +121,31 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		return csp.getDomains().get(csp.indexOf(var)).getValues();
 	}
 
-	public Assignment inference(CSP csp, String var, Object value) {
-		// Default is no inference.
-		return newAssignment();
+	public Assignment inference(CSP csp, String currentVar, Object currentValue) {
+		Assignment inference = newAssignment();
+
+		// Add domain listeners in order to track any changes in the domains
+		// of the CSP with the inferences performed.
+		Map<Domain, Domain.Listener> domainListeners = new HashMap<>();
+		csp.getVariables().forEach(var -> {
+			Domain domain = csp.getDomains().get(csp.indexOf(var));
+			Domain.Listener l = new Domain.Listener() {
+				@Override
+				public void deleted(Domain domain, Object value) {
+					inference.reducedDomain(var, value);
+				}
+			};
+			domain.addDomainListener(l);
+			domainListeners.put(domain, l);
+		});
+
+		// At a minimum we can infer that the domain for the current variable
+		// should be reduced to the current value.
+		csp.getDomains().get(csp.indexOf(currentVar)).reduceDomainTo(currentValue);
+
+		// Ensure the domain listeners are removed after inference is complete.
+		domainListeners.entrySet().forEach(entry -> entry.getKey().removeDomainListener(entry.getValue()));
+
+		return inference;
 	}
 }

@@ -13,45 +13,6 @@ import java.util.Map;
  */
 public interface Assignment {
 	/**
-	 * 
-	 * @return a map of named variables and their corresponding assignments.
-	 */
-	Map<String, Object> getAssignments();
-
-	Object add(String var, Object value);	
-
-	boolean remove(String var, Object value);
-
-	boolean reducedDomain(String var, Object value);
-
-	Map<String, List<Object>> getDomainsReducedBy();
-
-	boolean add(Assignment assignment);
-	
-	default boolean remove(Assignment assignment, CSP csp) {
-		// Set to true if any changes in this assignment or the CSP occur as a
-		// result of removing the given assignment's values.
-		boolean removed = false;
-		// Remove the individual var = value assignments
-		for (Map.Entry<String, Object> entry : assignment.getAssignments().entrySet()) {
-			if (remove(entry.getKey(), entry.getValue())) {
-				removed = true;
-			}
-		}
-		// Restore relevant domains
-		for (Map.Entry<String, List<Object>> varDomainReducedBy : assignment.getDomainsReducedBy().entrySet()) {
-			Domain domain = csp.getDomains().get(csp.indexOf(varDomainReducedBy.getKey()));
-			for (Object valueToRestore : varDomainReducedBy.getValue()) {
-				if (domain.restore(valueToRestore)) {
-					removed = true;
-				}
-			}
-		}
-
-		return removed;
-	}
-
-	/**
 	 * Determine if an assignment is complete, where every variable is assigned.
 	 * 
 	 * @param csp.
@@ -92,5 +53,74 @@ public interface Assignment {
 					}
 					return !constraint.getRelation().isMember(values);
 				});
+	}
+
+	//
+	// Assignment tracking
+	/**
+	 * 
+	 * @return a map of named variables and their corresponding assignments.
+	 */
+	Map<String, Object> getAssignments();
+
+	Object add(String var, Object value);
+
+	boolean remove(String var, Object value);
+
+	//
+	// Domain tracking
+	boolean reducedDomain(String var, Object value);
+
+	boolean restoredDomain(String var, Object value);
+
+	Map<String, List<Object>> getDomainsReducedBy();
+
+	default boolean add(Assignment otherAssignment) {
+		boolean added = false;
+		// Track the assignments from the other assignment
+		for (Map.Entry<String, Object> entry : otherAssignment.getAssignments().entrySet()) {
+			add(entry.getKey(), entry.getValue());
+			added = true;
+		}
+		// Track the domain reductions from the other assignment
+		for (Map.Entry<String, List<Object>> varDomainReducedBy : otherAssignment.getDomainsReducedBy().entrySet()) {
+			String variable = varDomainReducedBy.getKey();
+			for (Object valueToReduce : varDomainReducedBy.getValue()) {
+				if (reducedDomain(variable, valueToReduce)) {
+					added = true;
+				}
+			}
+		}
+		return added;
+	}
+
+	//
+	// Remove the effects of an assignment from this assignment and the
+	// corresponding CSP (in order to restore domains).
+	default boolean remove(Assignment assignment, CSP csp) {
+		// Set to true if any changes in this assignment or the CSP occur as a
+		// result of removing the given assignment's values.
+		boolean removed = false;
+		// Remove the individual var = value assignments
+		for (Map.Entry<String, Object> entry : assignment.getAssignments().entrySet()) {
+			if (remove(entry.getKey(), entry.getValue())) {
+				removed = true;
+			}
+		}
+		// Restore relevant domains
+		for (Map.Entry<String, List<Object>> varDomainReducedBy : assignment.getDomainsReducedBy().entrySet()) {
+			String variable = varDomainReducedBy.getKey();
+			Domain domain = csp.getDomains().get(csp.indexOf(variable));
+			for (Object valueToRestore : varDomainReducedBy.getValue()) {
+				if (restoredDomain(variable, valueToRestore)) {
+					removed = true;
+				}
+				if (domain.restore(valueToRestore)) {
+					removed = true;
+				}
+			}
+		}
+
+		return removed;
 	}
 }
