@@ -1,5 +1,9 @@
 grammar PropositionalLogic;
 
+@header {
+package aima.extra.logic.propositional.parser;
+}
+
 /*
  * Sentence        -> AtomicSentence : ComplexStence
  * AtomicSentence  -> True : False : P : Q : R : ...

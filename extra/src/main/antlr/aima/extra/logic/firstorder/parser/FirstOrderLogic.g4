@@ -1,5 +1,7 @@
 grammar FirstOrderLogic;
-
+@header {
+package aima.extra.logic.firstorder.parser;
+}
 /*
  * Sentence        -> AtomicSentence : ComplexStence
  * AtomicSentence  -> Predicate | Predicate(Term,...) | Term = Term
