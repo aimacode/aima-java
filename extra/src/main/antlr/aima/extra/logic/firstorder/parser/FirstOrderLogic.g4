@@ -20,9 +20,9 @@ package aima.extra.logic.firstorder.parser;
  * Quantifier      -> FORALL
  *                 :  EXISTS
  * 
- * Constant        ->
+ * Constant        -> Starts with upper Case
  * 
- * Variable
+ * Variable        -> Starts with lower Case
  * 
  * Predicate        
  * 
@@ -47,12 +47,11 @@ sentence
     : bracketedsentence
     | atomicsentence
     | op=NOT right=sentence
-    |<assoc=right> left=sentence op=EQUALS right=sentence
     |<assoc=right> left=sentence op=AND right=sentence
     |<assoc=right> left=sentence op=OR right=sentence
     |<assoc=right> left=sentence op=IMPLICATION right=sentence
     |<assoc=right> left=sentence op=BICONDITIONAL right=sentence
-    | quantifier variable+ sentence
+    | quantifier variable (',' variable)* sentence
     ;
 
 bracketedsentence
@@ -61,42 +60,44 @@ bracketedsentence
     ;
 
 atomicsentence
-    : predicate
-    | predicate '(' term (',' term)* ')'
+    : predicate '(' term (',' term)* ')'
     | term EQUALS term
     ;
-
+    
+predicate
+    : UPPERCASE_SYMBOL
+    | LOWERCASE_SYMBOL
+    | QUOTED_SYMBOL
+    ;
+    
 term
 	: function '(' term (',' term)* ')'
 	| constant
 	| variable
 	;
 	
+function
+    : UPPERCASE_SYMBOL
+    | LOWERCASE_SYMBOL
+    | QUOTED_SYMBOL
+    ;
+    
 quantifier
 	: FORALL
 	| EXISTS
 	;
 
 constant 
-    : SYMBOL
+    : UPPERCASE_SYMBOL
+    | NUMBER
     | QUOTED_SYMBOL
     ;
     
 variable
-    : SYMBOL
+    : LOWERCASE_SYMBOL
     | QUOTED_SYMBOL
     ;
-    
-predicate
-    : SYMBOL
-    | QUOTED_SYMBOL
-    ;
-
-function
-    : SYMBOL
-    | QUOTED_SYMBOL
-    ;
-	
+    	
 
 /*
 ===========
@@ -113,16 +114,25 @@ BICONDITIONAL:    '<=>';
 
 FORALL:	          'FORALL';
 EXISTS:	          'EXISTS';
-
-SYMBOL
-    :  INITIAL SUBSEQUENT* 
+    
+LOWERCASE_SYMBOL
+    :  LOWER_CASE_LETTER SUBSEQUENT* 
     |  PECULIAR_IDENTIFIER
     ;
-
+    
+UPPERCASE_SYMBOL
+    :  UPPER_CASE_LETTER SUBSEQUENT* 
+    |  PECULIAR_IDENTIFIER
+    ;
+    
 QUOTED_SYMBOL
     : '"'  (ESCAPE_SEQUENCE | ~('\\' | '"' ) )* '"'
     | '\'' (ESCAPE_SEQUENCE | ~('\\' | '\'') )* '\''
     ;
+
+NUMBER
+	: DIGIT+
+	;
 
 COMMENT
     :   '/*' .*? '*/'    -> channel(HIDDEN) // match anything between /* and */
@@ -136,8 +146,9 @@ WS  :   [ \t\r\n]+ -> skip
     ; // Define whitespace rule, toss it out
 
 // fragments  
-fragment INITIAL : LETTER | SPECIAL_INITIAL;
-fragment LETTER : 'a'..'z' | 'A'..'Z';
+fragment INITIAL : LOWER_CASE_LETTER | UPPER_CASE_LETTER | SPECIAL_INITIAL;
+fragment LOWER_CASE_LETTER : 'a'..'z';
+fragment UPPER_CASE_LETTER : 'A'..'Z';
 fragment SPECIAL_INITIAL : '!' | '@' | '#' | '$' | '%' | ':' | '?' | '^' | '_';
 fragment SUBSEQUENT : INITIAL | DIGIT | SPECIAL_SUBSEQUENT;
 fragment DIGIT : '0'..'9';
