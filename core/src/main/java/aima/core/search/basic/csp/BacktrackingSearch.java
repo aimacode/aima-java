@@ -166,6 +166,16 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		};
 	}
 
+	// Degree Heuristic
+	public static BiFunction<Assignment, CSP, String> getSelectUnassignedVariableUsingHighestDegreeFunction() {
+		return (assignment, csp) -> {
+			return csp.getVariables().stream().filter(var -> !assignment.contains(var))
+					.max(Comparator.comparingLong(var -> csp.getConstraints().stream()
+							.filter(constraint -> constraint.getScope().contains(var)).count()))
+					.get();
+		};
+	}
+
 	public void setSelectUnassignedVariableFunction(BiFunction<Assignment, CSP, String> selectUnassignedVariableFn) {
 		this.selectUnassignedVariableFn = selectUnassignedVariableFn;
 	}
