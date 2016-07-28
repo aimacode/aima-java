@@ -21,7 +21,7 @@ public class BacktrackingSearchTest {
 
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "BacktrackingSearch" } });
+		return Arrays.asList(new Object[][] { { "DefaultBacktrackingSearch" }, {"MRVBacktrackingSearch"}});
 	}
 
 	@Parameter
@@ -30,8 +30,13 @@ public class BacktrackingSearchTest {
 	public Assignment searchForAssignment(CSP csp) {
 		SearchForAssignmentFunction searchFn;
 		switch (searchFunctionName) {
-		case "BacktrackingSearch":
+		case "DefaultBacktrackingSearch":
 			searchFn = new BacktrackingSearch();
+			break;
+		case "MRVBacktrackingSearch":
+			BacktrackingSearch bs = new BacktrackingSearch();
+			bs.setSelectUnassignedVariableFunction(BacktrackingSearch.getSelectUnassignedVariableUsingMRVFunction());
+			searchFn = bs;
 			break;
 		default:
 			throw new IllegalArgumentException(searchFunctionName + " not handled properly.");

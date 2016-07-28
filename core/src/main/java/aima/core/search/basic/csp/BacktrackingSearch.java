@@ -1,5 +1,6 @@
 package aima.core.search.basic.csp;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -153,12 +154,17 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 	// is to choose the next unassigned variable in order {X1, X2, ...}
 	public static BiFunction<Assignment, CSP, String> getSelectUnassignedVariableInOrderFunction() {
 		return (assignment, csp) -> {
-			return csp.getVariables().stream().filter(var -> !assignment.getAssignments().keySet().contains(var))
-					.findFirst().get();
+			return csp.getVariables().stream().filter(var -> !assignment.contains(var)).findFirst().get();
 		};
 	}
 
-	// TODO - MRV - minimum-remaining-values heuristic.
+	// MRV - minimum-remaining-values heuristic.
+	public static BiFunction<Assignment, CSP, String> getSelectUnassignedVariableUsingMRVFunction() {
+		return (assignment, csp) -> {
+			return csp.getVariables().stream().filter(var -> !assignment.contains(var))
+					.min(Comparator.comparingInt(var -> csp.getDomain(var).size())).get();
+		};
+	}
 
 	public void setSelectUnassignedVariableFunction(BiFunction<Assignment, CSP, String> selectUnassignedVariableFn) {
 		this.selectUnassignedVariableFn = selectUnassignedVariableFn;

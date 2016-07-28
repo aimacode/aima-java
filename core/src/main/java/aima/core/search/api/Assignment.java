@@ -70,6 +70,10 @@ public interface Assignment {
 	Object add(String var, Object value);
 
 	boolean remove(String var, Object value);
+	
+	default boolean contains(String var) {
+		return getAssignments().containsKey(var);
+	}
 
 	//
 	// Domain tracking
