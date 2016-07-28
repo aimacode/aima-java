@@ -45,6 +45,15 @@ public interface CSP {
 	 *         semantics)
 	 */
 	List<Domain> getDomains();
+	
+	default Domain getDomain(String variable) {
+		return getDomains().get(indexOf(variable));
+	}
+	
+	
+	default List<Object> getDomainValues(String variable) {
+		return getDomain(variable).getValues();
+	}
 
 	/**
 	 * 

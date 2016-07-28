@@ -61,6 +61,10 @@ public interface Assignment {
 	 * 
 	 * @return a map of named variables and their corresponding assignments.
 	 */
+	default Object getAssignment(String var) {
+		return getAssignments().get(var);
+	}
+	
 	Map<String, Object> getAssignments();
 
 	Object add(String var, Object value);
@@ -110,7 +114,7 @@ public interface Assignment {
 		// Restore relevant domains
 		for (Map.Entry<String, List<Object>> varDomainReducedBy : assignment.getDomainsReducedBy().entrySet()) {
 			String variable = varDomainReducedBy.getKey();
-			Domain domain = csp.getDomains().get(csp.indexOf(variable));
+			Domain domain = csp.getDomain(variable);
 			for (Object valueToRestore : varDomainReducedBy.getValue()) {
 				if (restoredDomain(variable, valueToRestore)) {
 					removed = true;
@@ -122,5 +126,39 @@ public interface Assignment {
 		}
 
 		return removed;
+	}
+
+	/**
+	 * Execute a Runnable's run() method once this Assignment has registered
+	 * itself as a listener to all of the domains on the CSP given. Once the
+	 * Runnable's run() method is complete this Assignment will deregister
+	 * itself as a listener on all of the CSP's domains.
+	 * 
+	 * @param csp
+	 *            the CSP whose domains are to be listened to for changes.
+	 * @param executionBlockRunner
+	 *            the Runnable whose run() method is to be called once the
+	 *            Assignment has registered itself as a listener on all of the
+	 *            CSP's domains.
+	 */
+	default void executeInCSPListenerBlock(CSP csp, Runnable executionBlockRunner) {
+		// Add domain listeners in order to track any changes in the domains
+		// of the CSP
+		final Map<Domain, Domain.Listener> domainListeners = new HashMap<>();
+		csp.getVariables().forEach(var -> {
+			Domain domain = csp.getDomain(var);
+			Domain.Listener l = new Domain.Listener() {
+				@Override
+				public void deleted(Domain domain, Object value) {
+					reducedDomain(var, value);
+				}
+			};
+			domain.addDomainListener(l);
+			domainListeners.put(domain, l);
+		});
+
+		executionBlockRunner.run();
+
+		domainListeners.entrySet().forEach(entry -> entry.getKey().removeDomainListener(entry.getValue()));
 	}
 }

@@ -1,12 +1,10 @@
 package aima.core.search.basic.csp;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.function.BiFunction;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
-import aima.core.search.api.Domain;
 import aima.core.search.api.SearchForAssignmentFunction;
 import aima.core.search.basic.support.BasicAssignment;
 
@@ -100,6 +98,30 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 	//
 	// Supporting Code
+	@FunctionalInterface
+	public interface OrderDomainValuesFunction {
+		List<Object> apply(String var, Assignment assignment, CSP csp);
+	}
+
+	@FunctionalInterface
+	public interface InferenceFunction {
+		Assignment apply(CSP csp, String currentVar, Object currentValue);
+	}
+
+	private BiFunction<Assignment, CSP, String> selectUnassignedVariableFn;
+	private OrderDomainValuesFunction orderDomainValuesFn;
+	private InferenceFunction inferenceFn;
+
+	public BacktrackingSearch() {
+	}
+
+	public BacktrackingSearch(BiFunction<Assignment, CSP, String> selectUnassignedVariableFn,
+			OrderDomainValuesFunction orderDomainValuesFn, InferenceFunction inferenceFn) {
+		setSelectUnassignedVariableFunction(selectUnassignedVariableFn);
+		setOrderDomainValuesFunction(orderDomainValuesFn);
+		setInferenceFunction(inferenceFn);
+	}
+
 	public Assignment newAssignment() {
 		return new BasicAssignment();
 	}
@@ -109,43 +131,72 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 	}
 
 	public String selectUnassignedVariable(Assignment assignment, CSP csp) {
-		// Default implementation returns the first unassigned variable as
-		// specified on the CSP
-		return csp.getVariables().stream().filter(var -> !assignment.getAssignments().keySet().contains(var))
-				.findFirst().get();
+		return getSelectUnassignedVariableFunction().apply(assignment, csp);
 	}
 
 	public List<Object> orderDomainValues(String var, Assignment assignment, CSP csp) {
-		// Default implementation just returns the order of values as specified
-		// on the CSP
-		return csp.getDomains().get(csp.indexOf(var)).getValues();
+		return getOrderDomainValuesFunction().apply(var, assignment, csp);
 	}
 
 	public Assignment inference(CSP csp, String currentVar, Object currentValue) {
-		Assignment inference = newAssignment();
+		return getInferenceFunction().apply(csp, currentVar, currentValue);
+	}
 
-		// Add domain listeners in order to track any changes in the domains
-		// of the CSP with the inferences performed.
-		Map<Domain, Domain.Listener> domainListeners = new HashMap<>();
-		csp.getVariables().forEach(var -> {
-			Domain domain = csp.getDomains().get(csp.indexOf(var));
-			Domain.Listener l = new Domain.Listener() {
-				@Override
-				public void deleted(Domain domain, Object value) {
-					inference.reducedDomain(var, value);
-				}
+	public BiFunction<Assignment, CSP, String> getSelectUnassignedVariableFunction() {
+		if (selectUnassignedVariableFn == null) {
+			selectUnassignedVariableFn = getSelectUnassignedVariableInOrderFunction();
+		}
+		return selectUnassignedVariableFn;
+	}
+
+	// The simplest strategy for SELECT-UNASSIGNED-VARIABLE.
+	// is to choose the next unassigned variable in order {X1, X2, ...}
+	public static BiFunction<Assignment, CSP, String> getSelectUnassignedVariableInOrderFunction() {
+		return (assignment, csp) -> {
+			return csp.getVariables().stream().filter(var -> !assignment.getAssignments().keySet().contains(var))
+					.findFirst().get();
+		};
+	}
+
+	// TODO - MRV - minimum-remaining-values heuristic.
+
+	public void setSelectUnassignedVariableFunction(BiFunction<Assignment, CSP, String> selectUnassignedVariableFn) {
+		this.selectUnassignedVariableFn = selectUnassignedVariableFn;
+	}
+
+	public OrderDomainValuesFunction getOrderDomainValuesFunction() {
+		if (orderDomainValuesFn == null) {
+			orderDomainValuesFn = (var, assignment, csp) -> {
+				// Default implementation just returns the order of values as
+				// specified on the CSP
+				return csp.getDomainValues(var);
 			};
-			domain.addDomainListener(l);
-			domainListeners.put(domain, l);
-		});
+		}
+		return orderDomainValuesFn;
+	}
 
-		// At a minimum we can infer that the domain for the current variable
-		// should be reduced to the current value.
-		csp.getDomains().get(csp.indexOf(currentVar)).reduceDomainTo(currentValue);
+	public void setOrderDomainValuesFunction(OrderDomainValuesFunction orderDomainValuesFn) {
+		this.orderDomainValuesFn = orderDomainValuesFn;
+	}
 
-		// Ensure the domain listeners are removed after inference is complete.
-		domainListeners.entrySet().forEach(entry -> entry.getKey().removeDomainListener(entry.getValue()));
+	public InferenceFunction getInferenceFunction() {
+		if (inferenceFn == null) {
+			inferenceFn = (CSP csp, String currentVar, Object currentValue) -> {
+				Assignment inferenceAssignments = newAssignment();
 
-		return inference;
+				inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
+					// At a minimum we can infer that the domain for the current
+					// variable should be reduced to the current value.
+					csp.getDomain(currentVar).reduceDomainTo(currentValue);
+				});
+
+				return inferenceAssignments;
+			};
+		}
+		return inferenceFn;
+	}
+
+	public void setInferenceFunction(InferenceFunction inferenceFn) {
+		this.inferenceFn = inferenceFn;
 	}
 }
