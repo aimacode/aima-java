@@ -20,6 +20,10 @@ public class BasicAssignment implements Assignment {
 	public BasicAssignment() {
 	}
 	
+	public BasicAssignment(Assignment toCopyAssignment) {
+		add(toCopyAssignment);
+	}
+	
 	//
 	// Assignment tracking
 	@Override

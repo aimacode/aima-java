@@ -22,7 +22,7 @@ public class BacktrackingSearchTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
 		return Arrays.asList(new Object[][] { { "DefaultBacktrackingSearch" }, { "MRVBacktrackingSearch" },
-				{ "DegreeBacktrackingSearch" } });
+				{ "DegreeBacktrackingSearch" }, { "LCVBacktrackingSearch" } });
 	}
 
 	@Parameter
@@ -34,6 +34,7 @@ public class BacktrackingSearchTest {
 		case "DefaultBacktrackingSearch":
 		case "MRVBacktrackingSearch":
 		case "DegreeBacktrackingSearch":
+		case "LCVBacktrackingSearch":
 			BacktrackingSearch bs = new BacktrackingSearch();
 			switch (searchFunctionName) {
 			case "MRVBacktrackingSearch":
@@ -44,6 +45,9 @@ public class BacktrackingSearchTest {
 			case "DegreeBacktrackingSearch":
 				bs.setSelectUnassignedVariableFunction(
 						BacktrackingSearch.getSelectUnassignedVariableUsingHighestDegreeFunction());
+				break;
+			case "LCVBacktrackingSearch":
+				bs.setOrderDomainValuesFunction(BacktrackingSearch.getOrderDomainValuesInOrderUsingLCVFunction());
 				break;
 			}
 			searchFn = bs;
@@ -59,7 +63,7 @@ public class BacktrackingSearchTest {
 	public void testMapColoringTerritoriesOfAustraliaCSP() {
 		CSP csp = CSPFactory.mapColoringTerritoriesOfAustraliaCSP();
 
-		Assignment ans = searchForAssignment(csp);	
+		Assignment ans = searchForAssignment(csp);
 
 		Assert.assertTrue(ans.isComplete(csp));
 		Assert.assertNotEquals(ans.getAssignment("SA"), ans.getAssignment("WA"));

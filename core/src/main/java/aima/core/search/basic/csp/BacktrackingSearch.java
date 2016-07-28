@@ -1,13 +1,17 @@
 package aima.core.search.basic.csp;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
 import aima.core.search.api.SearchForAssignmentFunction;
 import aima.core.search.basic.support.BasicAssignment;
+import aima.core.search.basic.support.BasicCSPUtil;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Figure ??, Page ??.<br>
@@ -150,7 +154,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		return selectUnassignedVariableFn;
 	}
 
-	// The simplest strategy for SELECT-UNASSIGNED-VARIABLE.
+	// The simplest strategy for SELECT-UNASSIGNED-VARIABLE
 	// is to choose the next unassigned variable in order {X1, X2, ...}
 	public static BiFunction<Assignment, CSP, String> getSelectUnassignedVariableInOrderFunction() {
 		return (assignment, csp) -> {
@@ -182,13 +186,36 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 	public OrderDomainValuesFunction getOrderDomainValuesFunction() {
 		if (orderDomainValuesFn == null) {
-			orderDomainValuesFn = (var, assignment, csp) -> {
-				// Default implementation just returns the order of values as
-				// specified on the CSP
-				return csp.getDomainValues(var);
-			};
+			orderDomainValuesFn = getOrderDomainValuesInOrderFunction();
 		}
 		return orderDomainValuesFn;
+	}
+
+	// The simplest strategy for ORDER-DOMAIN-VALUES
+	// is to choose the values in the order the are defined on the CSP
+	public static OrderDomainValuesFunction getOrderDomainValuesInOrderFunction() {
+		return (var, assignment, csp) -> {
+			return csp.getDomainValues(var);
+		};
+	}
+
+	// LCV - least-constraining-value heuristic
+	public static OrderDomainValuesFunction getOrderDomainValuesInOrderUsingLCVFunction() {
+		return (var, assignment, csp) -> {
+			// Note: compute the number of neighboring conflict counts once and
+			// cache the results as the call to getNumberNeigboringConflicts()
+			// could be relatively expensive and called multiple times for
+			// the same variable if used inside of the sort() call - i.e. when
+			// comparing individual values with each other.
+			Map<Object, Integer> valueNumConflictsLookup = new HashMap<>();
+			for (Object value : csp.getDomainValues(var)) {
+				valueNumConflictsLookup.put(value,
+						BasicCSPUtil.getNumberNeigboringConflicts(var, value, csp, assignment));
+			}
+			List<Object> orderedValues = new ArrayList<>(csp.getDomainValues(var));
+			orderedValues.sort(Comparator.comparingInt(value -> valueNumConflictsLookup.get(value)));
+			return orderedValues;
+		};
 	}
 
 	public void setOrderDomainValuesFunction(OrderDomainValuesFunction orderDomainValuesFn) {

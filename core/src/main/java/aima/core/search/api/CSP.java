@@ -1,6 +1,8 @@
 package aima.core.search.api;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Section ??, Page
@@ -62,4 +64,18 @@ public interface CSP {
 	 *         must guarantee Set semantics).
 	 */
 	List<Constraint> getConstraints();
+	
+	default Set<String> getNeighbors(String variable) {
+		Set<String> neighbors = new LinkedHashSet<>();
+		
+		for (Constraint constraint : getConstraints()) {
+			if (constraint.getScope().contains(variable)) {
+				neighbors.addAll(constraint.getScope());
+			}
+		}
+		// Ensure the variable itself is not considered as a variable.
+		neighbors.remove(variable);
+		
+		return neighbors;
+	}
 }
