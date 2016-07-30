@@ -1,6 +1,9 @@
 package aima.core.search.api;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,13 +67,27 @@ public interface Assignment {
 	default Object getAssignment(String var) {
 		return getAssignments().get(var);
 	}
-	
+
+	default Map<String, List<Object>> getAllowedAssignments(CSP csp, Collection<String> variables) {
+		Map<String, List<Object>> allowedAssignments = new LinkedHashMap<>();
+		for (String var : variables) {
+			List<Object> allowed = new ArrayList<>();
+			if (contains(var)) {
+				allowed.add(getAssignment(var));
+			} else {
+				allowed.addAll(csp.getDomainValues(var));
+			}
+			allowedAssignments.put(var, allowed);
+		}
+		return allowedAssignments;
+	}
+
 	Map<String, Object> getAssignments();
 
 	Object add(String var, Object value);
 
 	boolean remove(String var, Object value);
-	
+
 	default boolean contains(String var) {
 		return getAssignments().containsKey(var);
 	}

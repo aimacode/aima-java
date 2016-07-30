@@ -3,6 +3,7 @@ package aima.core.search.api;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Section ??, Page
@@ -47,12 +48,11 @@ public interface CSP {
 	 *         semantics)
 	 */
 	List<Domain> getDomains();
-	
+
 	default Domain getDomain(String variable) {
 		return getDomains().get(indexOf(variable));
 	}
-	
-	
+
 	default List<Object> getDomainValues(String variable) {
 		return getDomain(variable).getValues();
 	}
@@ -64,18 +64,36 @@ public interface CSP {
 	 *         must guarantee Set semantics).
 	 */
 	List<Constraint> getConstraints();
-	
+
+	/**
+	 * 
+	 * @return true if any of the domains are empty.
+	 */
+	default boolean isInconsistent() {
+		return getDomains().stream().anyMatch(domain -> domain.size() == 0);
+	}
+
+	/**
+	 * Get a set of neighboring variables.
+	 * 
+	 * @param variable
+	 *            the variable whose neighbors are sought.
+	 * @return the set of neighboring variables (including the input variable).
+	 */
 	default Set<String> getNeighbors(String variable) {
 		Set<String> neighbors = new LinkedHashSet<>();
-		
+
 		for (Constraint constraint : getConstraints()) {
 			if (constraint.getScope().contains(variable)) {
 				neighbors.addAll(constraint.getScope());
 			}
 		}
-		// Ensure the variable itself is not considered as a variable.
-		neighbors.remove(variable);
-		
+
 		return neighbors;
+	}
+
+	default List<Constraint> getNeighboringConstraints(String variable) {
+		return getConstraints().stream().filter(constraint -> constraint.getScope().contains(variable))
+				.collect(Collectors.toList());
 	}
 }

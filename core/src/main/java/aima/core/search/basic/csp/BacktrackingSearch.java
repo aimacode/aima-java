@@ -3,15 +3,20 @@ package aima.core.search.basic.csp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
+import aima.core.search.api.Constraint;
 import aima.core.search.api.SearchForAssignmentFunction;
 import aima.core.search.basic.support.BasicAssignment;
 import aima.core.search.basic.support.BasicCSPUtil;
+import aima.core.util.collect.CartesianProduct;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Figure ??, Page ??.<br>
@@ -28,7 +33,7 @@ import aima.core.search.basic.support.BasicCSPUtil;
  *    for each value in ORDER-DOMAIN-VALUES(var, assignment, csp) do
  *       if value is consistent with assignment then
  *          add {var = value} to assignment
- *          inferences &larr; INFERENCE(csp, var, value)
+ *          inferences &larr; INFERENCE(csp, assignment, var, value)
  *          if inferences &ne; failure then
  *             add inferences to assignment
  *             result &larr; BACKTRACK(assignment, csp)
@@ -77,8 +82,8 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 			if (assignment.isConsistent(var, value, csp)) {
 				// add {var = value} to assignment
 				assignment.add(var, value);
-				// inferences <- INFERENCE(csp, var, value)
-				Assignment inferences = inference(csp, var, value);
+				// inferences <- INFERENCE(csp, assignment, var, value)
+				Assignment inferences = inference(csp, assignment, var, value);
 				// if inferences != failure then
 				if (inferences != failure()) {
 					// add inferences to assignment
@@ -110,7 +115,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 	@FunctionalInterface
 	public interface InferenceFunction {
-		Assignment apply(CSP csp, String currentVar, Object currentValue);
+		Assignment apply(CSP csp, Assignment currentAssignment, String currentVar, Object currentValue);
 	}
 
 	private BiFunction<Assignment, CSP, String> selectUnassignedVariableFn;
@@ -143,8 +148,8 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		return getOrderDomainValuesFunction().apply(var, assignment, csp);
 	}
 
-	public Assignment inference(CSP csp, String currentVar, Object currentValue) {
-		return getInferenceFunction().apply(csp, currentVar, currentValue);
+	public Assignment inference(CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) {
+		return getInferenceFunction().apply(csp, currentAssignment, currentVar, currentValue);
 	}
 
 	public BiFunction<Assignment, CSP, String> getSelectUnassignedVariableFunction() {
@@ -224,19 +229,111 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 	public InferenceFunction getInferenceFunction() {
 		if (inferenceFn == null) {
-			inferenceFn = (CSP csp, String currentVar, Object currentValue) -> {
-				Assignment inferenceAssignments = newAssignment();
-
-				inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
-					// At a minimum we can infer that the domain for the current
-					// variable should be reduced to the current value.
-					csp.getDomain(currentVar).reduceDomainTo(currentValue);
-				});
-
-				return inferenceAssignments;
-			};
+			inferenceFn = getInferenceNoneFunction();
 		}
 		return inferenceFn;
+	}
+
+	// No inference whatsoever occurs.
+	public static InferenceFunction getInferenceNoneFunction() {
+		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
+			return new BasicAssignment();
+		};
+	}
+
+	// A trivial inference is that we can infer that the domain for the current
+	// variable should be reduced to the current value.
+	public static InferenceFunction getInferenceCurrentDomainReducedToValueFunction() {
+		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
+			Assignment inferenceAssignments = new BasicAssignment();
+
+			inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
+				csp.getDomain(currentVar).reduceDomainTo(currentValue);
+			});
+
+			return inferenceAssignments;
+		};
+	}
+
+	// Forward Checking - whenever a variable X is assigned, the
+	// forward-checking process establishes arc consistency for it: for each
+	// unassigned variable Y that is connected to X by a constraint, delete from
+	// Y's domain any value that is inconsistent with the value chosen for X.
+	public static InferenceFunction getInferenceForwardCheckingFunction() {
+		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
+			final Assignment inferenceAssignments = new BasicAssignment();
+
+			inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
+				// First reduce the current variables domain to the given value
+				csp.getDomain(currentVar).reduceDomainTo(currentValue);
+
+				// Collect the unassigned neighbor variables.
+				Set<String> neighborVariables = csp.getNeighbors(currentVar);
+				List<String> unassignedNeighborVariables = neighborVariables.stream()
+						.filter(nvar -> !currentAssignment.contains(nvar)).collect(Collectors.toList());
+
+				// Determine the constraints covered by the unassigned
+				// neighboring set of variables
+				List<Constraint> unassignedNeighboringConstraints = csp.getNeighboringConstraints(currentVar).stream()
+						.filter(constraint -> constraint.getScope().stream()
+								.anyMatch(scopeVar -> unassignedNeighborVariables.contains(scopeVar)))
+						.collect(Collectors.toList());
+
+				Map<String, List<Object>> allowedAssignments = currentAssignment.getAllowedAssignments(csp,
+						neighborVariables);
+
+				// Determine which unassigned values conflict and remove them
+				// from the domains
+				List<List<? extends Object>> possibleValues = new ArrayList<>();
+				for (Constraint constraint : unassignedNeighboringConstraints) {
+					// Collect the possible values for each variable in
+					// the contraint's scope
+					possibleValues.clear();
+					constraint.getScope().forEach(scopeVar -> {
+						possibleValues.add(allowedAssignments.get(scopeVar));
+					});
+					// For each combination of possible values, count
+					// the # that are not a member of the constraint's
+					// relation (i.e. the # of possible conflicts).
+					Iterator<Object[]> allowedValuesIt = new CartesianProduct<Object>(Object.class, possibleValues)
+							.iterator();
+					while (allowedValuesIt.hasNext()) {
+						Object[] values = allowedValuesIt.next();
+						if (!constraint.getRelation().isMember(values)) {
+							for (int i = 0; i < values.length; i++) {
+								String scopeVar = constraint.getScope().get(i);
+								if (unassignedNeighborVariables.contains(scopeVar)) {
+									csp.getDomain(scopeVar).delete(values[i]);
+								}
+							}
+						}
+					}
+				}
+			});
+
+			if (csp.isInconsistent()) {
+				return null; // indicate failure
+			}
+			return inferenceAssignments;
+		};
+	}
+
+	public static InferenceFunction getInferenceMACFunction() {
+		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
+			Assignment inferenceAssignments = new BasicAssignment();
+
+			inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
+				// First reduce the current variables domain to the given value
+				csp.getDomain(currentVar).reduceDomainTo(currentValue);
+
+				// TODO
+			});
+
+			if (csp.isInconsistent()) {
+				return null; // indicate failure
+			}
+			return inferenceAssignments;
+		};
 	}
 
 	public void setInferenceFunction(InferenceFunction inferenceFn) {

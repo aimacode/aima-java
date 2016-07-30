@@ -69,6 +69,11 @@ public class BasicDomain implements Domain {
 	public List<Domain.Listener> domainListeners() {
 		return listeners;
 	}
+	
+	@Override
+	public String toString() {
+		return currentValues.toString();
+	}
 
 	//
 	// PROTECTED

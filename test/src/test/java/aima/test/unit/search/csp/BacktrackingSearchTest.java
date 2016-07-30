@@ -22,7 +22,10 @@ public class BacktrackingSearchTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
 		return Arrays.asList(new Object[][] { { "DefaultBacktrackingSearch" }, { "MRVBacktrackingSearch" },
-				{ "DegreeBacktrackingSearch" }, { "LCVBacktrackingSearch" } });
+				{ "DegreeBacktrackingSearch" }, { "LCVBacktrackingSearch" },
+				{ "CurrentDomainReducedToValueInferenceBackTrackingSearch" },
+				{ "ForwardCheckingInferenceBackTrackingSearch" },
+				{ "ForwardCheckingInferenceAndMRVBackTrackingSearch" } });
 	}
 
 	@Parameter
@@ -35,12 +38,14 @@ public class BacktrackingSearchTest {
 		case "MRVBacktrackingSearch":
 		case "DegreeBacktrackingSearch":
 		case "LCVBacktrackingSearch":
+		case "CurrentDomainReducedToValueInferenceBackTrackingSearch":
+		case "ForwardCheckingInferenceBackTrackingSearch":
+		case "ForwardCheckingInferenceAndMRVBackTrackingSearch":
 			BacktrackingSearch bs = new BacktrackingSearch();
 			switch (searchFunctionName) {
 			case "MRVBacktrackingSearch":
 				bs.setSelectUnassignedVariableFunction(
 						BacktrackingSearch.getSelectUnassignedVariableUsingMRVFunction());
-
 				break;
 			case "DegreeBacktrackingSearch":
 				bs.setSelectUnassignedVariableFunction(
@@ -48,6 +53,17 @@ public class BacktrackingSearchTest {
 				break;
 			case "LCVBacktrackingSearch":
 				bs.setOrderDomainValuesFunction(BacktrackingSearch.getOrderDomainValuesInOrderUsingLCVFunction());
+				break;
+			case "CurrentDomainReducedToValueInferenceBackTrackingSearch":
+				bs.setInferenceFunction(BacktrackingSearch.getInferenceCurrentDomainReducedToValueFunction());
+				break;
+			case "ForwardCheckingInferenceBackTrackingSearch":
+				bs.setInferenceFunction(BacktrackingSearch.getInferenceForwardCheckingFunction());
+				break;
+			case "ForwardCheckingInferenceAndMRVBackTrackingSearch":
+				bs.setInferenceFunction(BacktrackingSearch.getInferenceForwardCheckingFunction());
+				bs.setSelectUnassignedVariableFunction(
+						BacktrackingSearch.getSelectUnassignedVariableUsingMRVFunction());
 				break;
 			}
 			searchFn = bs;

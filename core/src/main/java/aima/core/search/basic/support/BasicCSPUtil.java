@@ -2,12 +2,9 @@ package aima.core.search.basic.support;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
@@ -32,26 +29,14 @@ public class BasicCSPUtil {
 
 		// Get all of the neighboring variables along with the input variable
 		// So we can identify constraints that are covered by their scope
-		Set<String> neighborVariables = new LinkedHashSet<>(csp.getNeighbors(variable));
-		neighborVariables.add(variable);
+		Set<String> neighborVariables = csp.getNeighbors(variable);
 
 		// Determine the constraints covered by the neighboring set of variables
-		List<Constraint> neighboringConstraints = csp.getConstraints().stream()
-				.filter(constraint -> neighborVariables.containsAll(constraint.getScope()))
-				.collect(Collectors.toList());
+		List<Constraint> neighboringConstraints = csp.getNeighboringConstraints(variable);
 
 		// Based on the assignment and neighboring values, determine the set of
 		// allowed assignments for each variable.
-		Map<String, List<Object>> allowedAssignments = new LinkedHashMap<>();
-		for (String var : neighborVariables) {
-			List<Object> allowed = new ArrayList<>();
-			if (assignment.contains(var)) {
-				allowed.add(assignment.getAssignment(var));
-			} else {
-				allowed.addAll(csp.getDomainValues(var));
-			}
-			allowedAssignments.put(var, allowed);
-		}
+		Map<String, List<Object>> allowedAssignments = assignment.getAllowedAssignments(csp, neighborVariables);
 
 		// Determine the # of conflicts
 		List<List<? extends Object>> possibleValues = new ArrayList<>();

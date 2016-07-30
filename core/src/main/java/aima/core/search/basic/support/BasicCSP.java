@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import aima.core.search.api.CSP;
 import aima.core.search.api.Constraint;
@@ -52,5 +53,16 @@ public class BasicCSP implements CSP {
 	@Override
 	public List<Constraint> getConstraints() {
 		return constraints;
+	}
+	
+	@Override
+	public String toString() {
+		StringJoiner sj = new StringJoiner(", ", "{", "}");
+		
+		for (int i = 0; i < variables.size(); i++) {
+			sj.add(getVariables().get(i)+"="+getDomains().get(i));
+		}
+		
+		return sj.toString();
 	}
 }
