@@ -25,7 +25,8 @@ public class BacktrackingSearchTest {
 				{ "DegreeBacktrackingSearch" }, { "LCVBacktrackingSearch" },
 				{ "CurrentDomainReducedToValueInferenceBackTrackingSearch" },
 				{ "ForwardCheckingInferenceBackTrackingSearch" },
-				{ "ForwardCheckingInferenceAndMRVBackTrackingSearch" } });
+				{ "ForwardCheckingInferenceAndMRVBackTrackingSearch" },
+				{ "MACInferenceBackTrackingSearch" }});
 	}
 
 	@Parameter
@@ -41,6 +42,7 @@ public class BacktrackingSearchTest {
 		case "CurrentDomainReducedToValueInferenceBackTrackingSearch":
 		case "ForwardCheckingInferenceBackTrackingSearch":
 		case "ForwardCheckingInferenceAndMRVBackTrackingSearch":
+		case "MACInferenceBackTrackingSearch":
 			BacktrackingSearch bs = new BacktrackingSearch();
 			switch (searchFunctionName) {
 			case "MRVBacktrackingSearch":
@@ -64,6 +66,9 @@ public class BacktrackingSearchTest {
 				bs.setInferenceFunction(BacktrackingSearch.getInferenceForwardCheckingFunction());
 				bs.setSelectUnassignedVariableFunction(
 						BacktrackingSearch.getSelectUnassignedVariableUsingMRVFunction());
+				break;
+			case "MACInferenceBackTrackingSearch":
+				bs.setInferenceFunction(BacktrackingSearch.getInferenceMACFunction());
 				break;
 			}
 			searchFn = bs;

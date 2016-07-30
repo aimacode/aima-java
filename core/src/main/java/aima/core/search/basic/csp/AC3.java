@@ -61,6 +61,10 @@ public class AC3 implements Predicate<CSP> {
 		// local variables: queue, a queue of arcs,
 		// initially all the arcs in csp
 		Queue<Arc> queue = allArcs(csp);
+		return test(csp, queue);
+	}
+
+	public boolean test(CSP csp, Queue<Arc> queue) {
 		// while queue is not empty do
 		while (!queue.isEmpty()) {
 			// (X_i, X_j) = REMOVE-FIRST(queue)
@@ -118,7 +122,7 @@ public class AC3 implements Predicate<CSP> {
 		}
 	}
 
-	public Queue<Arc> allArcs(CSP csp) {
+	public static Queue<Arc> allArcs(CSP csp) {
 		Queue<Arc> allArcs = new LinkedList<>();
 
 		for (Constraint c : csp.getConstraints()) {
@@ -133,6 +137,27 @@ public class AC3 implements Predicate<CSP> {
 		}
 
 		return allArcs;
+	}
+
+	// Maintaining Arc Consistency (MAC) - start with only the arcs (Xj, Xi) for
+	// all Xj that are unassigned variables that are neighbors of Xi.
+	public static Queue<Arc> macArcs(CSP csp, String varX, List<String> unassignedNeighborsOfX) {
+		Queue<Arc> macArcs = new LinkedList<>();
+
+		int i = csp.indexOf(varX);
+		for (Constraint c : csp.getNeighboringConstraints(varX)) {
+			if (c.isBinary()) {
+				String varJ = c.getScope().get(0);
+				if (varJ.equals(varX)) {
+					varJ = c.getScope().get(1);
+				}
+				if (unassignedNeighborsOfX.contains(varJ)) {
+					macArcs.add(new Arc(csp, c, csp.indexOf(varJ), i));
+				}
+			}
+		}
+
+		return macArcs;
 	}
 
 	public List<Arc> neighborsMinusJ(int i, int j, CSP csp) {

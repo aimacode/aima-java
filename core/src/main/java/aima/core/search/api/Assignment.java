@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Each state in a CSP is defined by an assignment. An assignment assigns values
@@ -90,6 +91,11 @@ public interface Assignment {
 
 	default boolean contains(String var) {
 		return getAssignments().containsKey(var);
+	}
+	
+	default List<String> getUnassignedNeigbors(CSP csp, String var) {
+		return csp.getNeighbors(var).stream().filter(nvar -> !nvar.equals(var) && !contains(nvar))
+				.collect(Collectors.toList());
 	}
 
 	//

@@ -269,8 +269,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 				// Collect the unassigned neighbor variables.
 				Set<String> neighborVariables = csp.getNeighbors(currentVar);
-				List<String> unassignedNeighborVariables = neighborVariables.stream()
-						.filter(nvar -> !currentAssignment.contains(nvar)).collect(Collectors.toList());
+				List<String> unassignedNeighborVariables = currentAssignment.getUnassignedNeigbors(csp, currentVar);
 
 				// Determine the constraints covered by the unassigned
 				// neighboring set of variables
@@ -318,17 +317,22 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 		};
 	}
 
+	// Maintaining Arc Consistency (MAC)
 	public static InferenceFunction getInferenceMACFunction() {
 		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
 			Assignment inferenceAssignments = new BasicAssignment();
-
+			
 			inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
 				// First reduce the current variables domain to the given value
 				csp.getDomain(currentVar).reduceDomainTo(currentValue);
 
-				// TODO
+				// NOTE: AC3 causes side effects to occur to the CSP's domains.
+				new AC3().test(csp,
+						AC3.macArcs(csp, currentVar, currentAssignment.getUnassignedNeigbors(csp, currentVar)));
 			});
 
+			// If AC3 failed, the CSP will be inconsistent as a 0 domain
+			// will have been detected by AC3.
 			if (csp.isInconsistent()) {
 				return null; // indicate failure
 			}
