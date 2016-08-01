@@ -3,7 +3,6 @@ package aima.core.search.basic.csp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +15,7 @@ import aima.core.search.api.Constraint;
 import aima.core.search.api.SearchForAssignmentFunction;
 import aima.core.search.basic.support.BasicAssignment;
 import aima.core.search.basic.support.BasicCSPUtil;
-import aima.core.util.collect.CartesianProduct;
+import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Ed.): Figure ??, Page ??.<br>
@@ -291,22 +290,19 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 					constraint.getScope().forEach(scopeVar -> {
 						possibleValues.add(allowedAssignments.get(scopeVar));
 					});
-					// For each combination of possible values, count
-					// the # that are not a member of the constraint's
-					// relation (i.e. the # of possible conflicts).
-					Iterator<Object[]> allowedValuesIt = new CartesianProduct<Object>(Object.class, possibleValues)
-							.iterator();
-					while (allowedValuesIt.hasNext()) {
-						Object[] values = allowedValuesIt.next();
-						if (!constraint.getRelation().isMember(values)) {
-							for (int i = 0; i < values.length; i++) {
+					// For each permutation of possible arguments,
+					// reduce the domains of those arguments that do
+					// not satisfy the given constraints.
+					Util.permuteArguments(Object.class, possibleValues, (Object[] args) -> {
+						if (!constraint.getRelation().isMember(args)) {
+							for (int i = 0; i < args.length; i++) {
 								String scopeVar = constraint.getScope().get(i);
 								if (unassignedNeighborVariables.contains(scopeVar)) {
-									csp.getDomain(scopeVar).delete(values[i]);
+									csp.getDomain(scopeVar).delete(args[i]);
 								}
 							}
 						}
-					}
+					});
 				}
 			});
 
@@ -321,7 +317,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 	public static InferenceFunction getInferenceMACFunction() {
 		return (CSP csp, Assignment currentAssignment, String currentVar, Object currentValue) -> {
 			Assignment inferenceAssignments = new BasicAssignment();
-			
+
 			inferenceAssignments.executeInCSPListenerBlock(csp, () -> {
 				// First reduce the current variables domain to the given value
 				csp.getDomain(currentVar).reduceDomainTo(currentValue);

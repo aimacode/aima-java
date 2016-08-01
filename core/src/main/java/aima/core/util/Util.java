@@ -1,8 +1,12 @@
 package aima.core.util;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+
+import aima.core.util.collect.CartesianProduct;
 
 /**
  * @author Ravi Mohan
@@ -49,7 +53,7 @@ public class Util {
 
 		return set;
 	}
-	
+
 	public static double[] normalize(double[] probDist) {
 		int len = probDist.length;
 		double total = 0.0;
@@ -65,5 +69,13 @@ public class Util {
 		}
 
 		return normalized;
+	}
+
+	public static <T> void permuteArguments(Class<T> argumentType, List<List<T>> individualArgumentValues,
+			Consumer<T[]> argConsumer) {
+		Iterator<T[]> argsIt = new CartesianProduct<T>(argumentType, individualArgumentValues).iterator();
+		while (argsIt.hasNext()) {
+			argConsumer.accept(argsIt.next());
+		}
 	}
 }

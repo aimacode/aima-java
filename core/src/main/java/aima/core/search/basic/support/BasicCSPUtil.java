@@ -1,15 +1,15 @@
 package aima.core.search.basic.support;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import aima.core.search.api.Assignment;
 import aima.core.search.api.CSP;
 import aima.core.search.api.Constraint;
-import aima.core.util.collect.CartesianProduct;
+import aima.core.util.Util;
 
 /**
  * Some basic utility routines for CSPs.
@@ -20,7 +20,7 @@ import aima.core.util.collect.CartesianProduct;
 public class BasicCSPUtil {
 	public static int getNumberNeigboringConflicts(String variable, Object value, CSP csp,
 			Assignment currentAssignment) {
-		int nconflicts = 0;
+		AtomicInteger nconflicts = new AtomicInteger(0);
 
 		// Use a local assignment and update to have the currently set value for
 		// the input variable
@@ -47,17 +47,16 @@ public class BasicCSPUtil {
 			constraint.getScope().forEach(scopeVar -> {
 				possibleValues.add(allowedAssignments.get(scopeVar));
 			});
-			// For each combination of possible values, count
+			// For each permutation of possible arguments, count
 			// the # that are not a member of the constraint's
 			// relation (i.e. the # of possible conflicts).
-			Iterator<Object[]> allowedValuesIt = new CartesianProduct<Object>(Object.class, possibleValues).iterator();
-			while (allowedValuesIt.hasNext()) {
-				if (!constraint.getRelation().isMember(allowedValuesIt.next())) {
-					nconflicts++;
+			Util.permuteArguments(Object.class, possibleValues, (Object[] args) -> {
+				if (!constraint.getRelation().isMember(args)) {
+					nconflicts.incrementAndGet();
 				}
-			}
+			});
 		}
 
-		return nconflicts;
+		return nconflicts.get();
 	}
 }
