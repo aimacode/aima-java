@@ -28,9 +28,7 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 	private int[] radices;
 	private MixedRadixInterval mri;
 	// For access efficiency we will access the elements from a
-	// contiguous 2d array. However, this will waste memory depending
-	// on the difference between the max and min dimension lengths
-	// that can exist.
+	// contiguous 2d array.
 	private T[][] dimensions;
 
 	@SuppressWarnings("unchecked")
@@ -50,8 +48,9 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 			this.radices[i] = dimensions.get(i).size();
 		}
 		this.mri = new MixedRadixInterval(this.radices);
-		this.dimensions = (T[][]) Array.newInstance(elementBaseType, radices.length,
-				IntStream.of(radices).max().getAsInt());
+		// NOTE: the sizes of the 2nd dimension can vary so we will only set the first dimension
+		// size first.
+		this.dimensions = (T[][]) Array.newInstance(elementBaseType, radices.length, 0);
 		AtomicInteger currentDimension = new AtomicInteger(-1);
 		dimensions.forEach(dimension -> {
 			int dimensionIdx = currentDimension.incrementAndGet();
@@ -62,6 +61,8 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 			// base type.
 			List<T> typeSafeDimension = Collections.checkedList(new ArrayList<>(), elementBaseType);
 			typeSafeDimension.addAll(dimension);
+			// Assign the correctly sized second dimension.
+			this.dimensions[dimensionIdx] = (T[]) Array.newInstance(elementBaseType, typeSafeDimension.size());
 			for (int i = 0; i < typeSafeDimension.size(); i++) {
 				this.dimensions[dimensionIdx][i] = typeSafeDimension.get(i);
 			}
