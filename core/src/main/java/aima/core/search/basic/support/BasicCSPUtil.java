@@ -39,7 +39,7 @@ public class BasicCSPUtil {
 		Map<String, List<Object>> allowedAssignments = assignment.getAllowedAssignments(csp, neighborVariables);
 
 		// Determine the # of conflicts
-		List<List<? extends Object>> possibleValues = new ArrayList<>();
+		List<List<Object>> possibleValues = new ArrayList<>();
 		for (Constraint constraint : neighboringConstraints) {
 			// Collect the possible values for each variable in
 			// the contraint's scope

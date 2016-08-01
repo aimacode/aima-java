@@ -283,7 +283,7 @@ public class BacktrackingSearch implements SearchForAssignmentFunction {
 
 				// Determine which unassigned values conflict and remove them
 				// from the domains
-				List<List<? extends Object>> possibleValues = new ArrayList<>();
+				List<List<Object>> possibleValues = new ArrayList<>();
 				for (Constraint constraint : unassignedNeighboringConstraints) {
 					// Collect the possible values for each variable in
 					// the contraint's scope

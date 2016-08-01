@@ -34,7 +34,7 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 	private T[][] dimensions;
 
 	@SuppressWarnings("unchecked")
-	public CartesianProduct(Class<T> elementBaseType, List<List<? extends T>> dimensions) {
+	public CartesianProduct(Class<T> elementBaseType, List<List<T>> dimensions) {
 		Objects.requireNonNull(elementBaseType, "elementBaseType");
 		Objects.requireNonNull(dimensions, "dimensions");
 		if (dimensions.size() == 0) {
@@ -79,8 +79,8 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 	 * @param n
 	 *            the power to raise the dimension by.
 	 */
-	public CartesianProduct(Class<T> elementBaseType, List<? extends T> dimension, int n) {
-		this(elementBaseType, new ArrayList<List<? extends T>>() {
+	public CartesianProduct(Class<T> elementBaseType, List<T> dimension, int n) {
+		this(elementBaseType, new ArrayList<List<T>>() {
 			private static final long serialVersionUID = 1L;
 			{
 				if (n <= 0) {
