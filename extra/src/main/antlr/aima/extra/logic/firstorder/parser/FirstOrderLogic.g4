@@ -51,7 +51,7 @@ sentence
     |<assoc=right> left=sentence op=OR right=sentence
     |<assoc=right> left=sentence op=IMPLICATION right=sentence
     |<assoc=right> left=sentence op=BICONDITIONAL right=sentence
-    | quantifier variable (',' variable)* sentence
+    | QUANTIFIER variable (',' variable)* right=sentence
     ;
 
 bracketedsentence
@@ -61,7 +61,7 @@ bracketedsentence
 
 atomicsentence
     : predicate '(' term (',' term)* ')'
-    | term EQUALS term
+    | left=term EQUALS right=term
     ;
     
 predicate
@@ -82,11 +82,6 @@ function
     | QUOTED_SYMBOL
     ;
     
-quantifier
-	: FORALL
-	| EXISTS
-	;
-
 constant 
     : UPPERCASE_SYMBOL
     | NUMBER
@@ -112,8 +107,10 @@ OR:               '|';
 IMPLICATION:      '=>';
 BICONDITIONAL:    '<=>';
 
-FORALL:	          'FORALL';
-EXISTS:	          'EXISTS';
+QUANTIFIER
+	: FORALL
+	| EXISTS
+	;
     
 LOWERCASE_SYMBOL
     :  LOWER_CASE_LETTER SUBSEQUENT* 
@@ -145,7 +142,11 @@ LINE_COMMENT
 WS  :   [ \t\r\n]+ -> skip
     ; // Define whitespace rule, toss it out
 
-// fragments  
+// fragments 
+
+fragment FORALL : 'FORALL';
+fragment EXISTS:  'EXISTS';
+ 
 fragment INITIAL : LOWER_CASE_LETTER | UPPER_CASE_LETTER | SPECIAL_INITIAL;
 fragment LOWER_CASE_LETTER : 'a'..'z';
 fragment UPPER_CASE_LETTER : 'A'..'Z';
