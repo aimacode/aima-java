@@ -81,17 +81,7 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 	 *            the power to raise the dimension by.
 	 */
 	public CartesianProduct(Class<T> elementBaseType, List<T> dimension, int n) {
-		this(elementBaseType, new ArrayList<List<T>>() {
-			private static final long serialVersionUID = 1L;
-			{
-				if (n <= 0) {
-					throw new IllegalArgumentException("n must be > 0");
-				}
-				for (int i = 0; i < n; i++) {
-					add(dimension);
-				}
-			}
-		});
+		this(elementBaseType, nDimensions(dimension, n));
 	}
 
 	public BigInteger size() {
@@ -182,5 +172,16 @@ public class CartesianProduct<T> implements Iterable<T[]> {
 				currentValues[i] = dimensions[i][numeralValues[i]];
 			}
 		}
+	}
+	
+	private static <T> List<List<T>> nDimensions(List<T> dimension, int n) {
+		if (n <= 0) {
+			throw new IllegalArgumentException("n must be > 0");
+		}
+		List<List<T>> dimensions = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			dimensions.add(dimension);
+		}		
+		return dimensions;
 	}
 }
