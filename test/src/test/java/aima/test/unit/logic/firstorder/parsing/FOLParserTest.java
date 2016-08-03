@@ -166,13 +166,13 @@ public class FOLParserTest {
 		return new Function("EnemyOf", l);
 	}
 
-	private Function getLegsOfFunction() {
-		List<Term> l = new ArrayList<Term>();
-		l.add(new Constant("John"));
-		l.add(new Constant("Saladin"));
-		l.add(new Constant("Richard"));
-		return new Function("LegsOf", l);
-	}
+//	private Function getLegsOfFunction() {
+//		List<Term> l = new ArrayList<Term>();
+//		l.add(new Constant("John"));
+//		l.add(new Constant("Saladin"));
+//		l.add(new Constant("Richard"));
+//		return new Function("LegsOf", l);
+//	}
 
 	private Predicate getKingPredicate(Term t) {
 		List<Term> l = new ArrayList<Term>();
