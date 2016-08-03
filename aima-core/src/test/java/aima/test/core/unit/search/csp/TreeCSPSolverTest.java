@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
@@ -107,6 +108,10 @@ public class TreeCSPSolverTest {
 		csp.setDomain(NSW, colors);
 		csp.setDomain(V, colors);
 		
-		System.out.println(new TreeCSPSolver().solve(csp));
+		TreeCSPSolver treeCSPSolver = new TreeCSPSolver();
+		Assignment assignment = treeCSPSolver.solve(csp);
+		Assert.assertNotNull(assignment);
+		Assert.assertTrue(assignment.isComplete(csp.getVariables()));
+		Assert.assertTrue(assignment.isSolution(csp));
 	}
 }

@@ -9,7 +9,8 @@ import aima.core.util.Util;
 
 /**
  * 
- * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.11, Page 224.<br>
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.11, Page
+ * 224.<br>
  * <br>
  * 
  * <pre>
@@ -28,18 +29,17 @@ import aima.core.util.Util;
  * 			if there is no consistent value then return failure
  * 		return assignment
  * </code>
+ * 
  * <pre>
  * 
- * Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs. If the
- * CSP has a solution, we will find it in linear time; if not, we will detect 
- * a contradiction.
+ * Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs.
+ * If the CSP has a solution, we will find it in linear time; if not, we will
+ * detect a contradiction.
  * 
  * @author Anurag Rai
  * 
  */
 public class TreeCSPSolver extends SolutionStrategy {
-
-	public static int[] parent;
 
 	@Override
 	public Assignment solve(CSP csp) {
@@ -49,7 +49,6 @@ public class TreeCSPSolver extends SolutionStrategy {
 		List<Variable> l = csp.getVariables();
 		// Calculate the size
 		int n = l.size();
-		parent = new int[n];
 		// Select a random root from the List of Vaiables
 		Variable root = Util.selectRandomlyFromList(l);
 		// Sort the variables in topological order
@@ -95,33 +94,16 @@ public class TreeCSPSolver extends SolutionStrategy {
 		return assignment;
 	}
 
-	private boolean makeArcConsistent(Variable xi, Variable xj, Constraint constraint, CSP csp,
-			DomainRestoreInfo info) {
-		boolean revised = false;
-		Assignment assignment = new Assignment();
-		for (Object iValue : csp.getDomain(xi)) {
-			assignment.setAssignment(xi, iValue);
-			boolean consistentExtensionFound = false;
-			for (Object jValue : csp.getDomain(xj)) {
-				assignment.setAssignment(xj, jValue);
-				if (constraint.isSatisfiedWith(assignment)) {
-					consistentExtensionFound = true;
-					break;
-				}
-			}
-			if (!consistentExtensionFound) {
-				info.storeDomainFor(xi, csp.getDomain(xi));
-				csp.removeValueFromDomain(xi, iValue);
-				revised = true;
-			}
-		}
-		return revised;
-	}
+	//
+	// Supporting Code
+	protected int[] parent;
 
 	// Since the graph is a tree, topologicalSort is:
 	// Level order traversal of the tree OR BFS on tree OR Pre-oder
 	protected List<Variable> topologicalSort(CSP csp, List<Variable> l, Variable root) {
-
+		// Track the parents
+		parent = new int[l.size()];
+		
 		List<Variable> result = new ArrayList<>();
 		Queue<Variable> q = new LinkedList<>(); // FIFO-Queue
 
@@ -153,5 +135,28 @@ public class TreeCSPSolver extends SolutionStrategy {
 			}
 		}
 		return result;
+	}
+
+	protected boolean makeArcConsistent(Variable xi, Variable xj, Constraint constraint, CSP csp,
+			DomainRestoreInfo info) {
+		boolean revised = false;
+		Assignment assignment = new Assignment();
+		for (Object iValue : csp.getDomain(xi)) {
+			assignment.setAssignment(xi, iValue);
+			boolean consistentExtensionFound = false;
+			for (Object jValue : csp.getDomain(xj)) {
+				assignment.setAssignment(xj, jValue);
+				if (constraint.isSatisfiedWith(assignment)) {
+					consistentExtensionFound = true;
+					break;
+				}
+			}
+			if (!consistentExtensionFound) {
+				info.storeDomainFor(xi, csp.getDomain(xi));
+				csp.removeValueFromDomain(xi, iValue);
+				revised = true;
+			}
+		}
+		return revised;
 	}
 }
