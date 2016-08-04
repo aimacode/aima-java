@@ -73,6 +73,18 @@ public interface CSP {
 		return getDomains().stream().anyMatch(domain -> domain.size() == 0);
 	}
 
+	default boolean isTree() {
+		// Must be n-1 constraints.
+		if (getConstraints().size() == getVariables().size() - 1) {
+			// All the constraints need to be binary.
+			return getConstraints().stream().allMatch(constraint -> constraint.isBinary())
+					// and all the variables must participate in the constraints
+					&& getConstraints().stream().flatMap(constraint -> constraint.getScope().stream())
+							.collect(Collectors.toSet()).containsAll(getVariables());
+		}
+		return false;
+	}
+
 	/**
 	 * Get a set of neighboring variables.
 	 * 
