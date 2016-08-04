@@ -331,6 +331,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/csp/MinConflicts.java">MinConflicts</a></td>
    </tr>
    <tr>
+       <td>6.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Tree-CSP-Solver.md">Tree-CSP-Solver</a></td>
+       <td><a href="core/src/main/java/aima/core/search/basic/csp/TreeCSPSolver.java">TreeCSPSolver</a></td>
+   </tr>
+   <tr>
        <td></td>
        <td></td>
        <td></td>
