@@ -3,10 +3,10 @@ package aima.gui.fx.demo.search.local;
 import java.util.function.Function;
 
 /**
- * Defines functions for local search experiments and a bounding box to limit the
- * search space and support visualization.
+ * Defines functions for local search experiments and a bounding box to limit
+ * the search space and support visualization.
+ * 
  * @author Ruediger Lunde
- *
  */
 public class Functions {
 	public static double minX = -10;

@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * name-value equation pattern.
  * 
  * @author Ruediger Lunde
- *
  */
 public class Parameter {
 	private String name;

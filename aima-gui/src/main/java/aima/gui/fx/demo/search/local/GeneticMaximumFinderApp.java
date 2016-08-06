@@ -24,7 +24,6 @@ import javafx.scene.paint.Paint;
  * progress shown for each iteration. 
  * 
  * @author Ruediger Lunde
- *
  */
 public class GeneticMaximumFinderApp extends IntegrableApplication {
 

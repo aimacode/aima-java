@@ -18,7 +18,6 @@ import aima.core.search.local.Individual;
  * can be used to find maximums in a mathematical function.
  * 
  * @author Ruediger Lunde
- *
  */
 public class GeneticMaximumFinderProg {
 

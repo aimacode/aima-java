@@ -21,7 +21,6 @@ import javafx.scene.input.MouseButton;
  * the FX Application Thread.
  * 
  * @author Ruediger Lunde
- *
  */
 public class SimulationPaneCtrl {
 

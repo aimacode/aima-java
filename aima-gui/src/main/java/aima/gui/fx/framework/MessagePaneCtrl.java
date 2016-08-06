@@ -11,7 +11,6 @@ import javafx.scene.control.TextArea;
  * log messages and text console applications.
  * 
  * @author Ruediger Lunde
- *
  */
 public class MessagePaneCtrl {
 
@@ -60,6 +59,7 @@ public class MessagePaneCtrl {
 	private class TextAreaOutputStream extends java.io.OutputStream {
 		StringBuffer buffer = new StringBuffer();
 		String eol = System.getProperty("line.separator");
+
 		@Override
 		public void write(int b) throws java.io.IOException {
 			buffer.append(new char[] { (char) b });
@@ -67,7 +67,7 @@ public class MessagePaneCtrl {
 				writeBuffer();
 			}
 		}
-		
+
 		private void writeBuffer() {
 			if (Platform.isFxApplicationThread())
 				append(buffer.toString());
@@ -77,12 +77,12 @@ public class MessagePaneCtrl {
 			}
 			buffer = new StringBuffer();
 		}
-		
+
 		@Override
 		public void flush() throws IOException {
 			writeBuffer();
 			super.flush();
 		}
-		
+
 	}
 }

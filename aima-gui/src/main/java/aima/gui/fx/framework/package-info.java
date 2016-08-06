@@ -8,8 +8,9 @@
  * common window. Such an integrated application, which allows to switch between
  * different demonstration applications and simple console applications at
  * runtime, can easily be created by means of another builder called
- * {@link IntegratedAppPaneBuilder}. Note that controller classes containing GUI
- * logic (often called code-behind files) are marked by <code>Ctrl</code>.
+ * {@link IntegratedAppPaneBuilder}. Note that names of controller classes
+ * containing GUI logic (often called code-behind files) end with
+ * <code>Ctrl</code>.
  * 
  * @author Ruediger Lunde
  */

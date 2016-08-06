@@ -9,14 +9,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
- * Controller class which provides functionality for using a canvas as function plotter.
+ * Controller class which provides functionality for using a canvas as function
+ * plotter.
+ * 
  * @author Ruediger Lunde
- *
  */
 public class FunctionPlotterCtrl {
 	private Canvas canvas;
 	private Optional<Function<Double, Double>> function = Optional.empty();
-	private double minX; 
+	private double minX;
 	private double maxX = 1;
 	private double minY;
 	private double maxY = 1;
@@ -43,7 +44,7 @@ public class FunctionPlotterCtrl {
 		this.maxY = maxY;
 
 	}
-	
+
 	public void update() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -51,9 +52,9 @@ public class FunctionPlotterCtrl {
 		gc.setStroke(Color.GRAY);
 		gc.strokeLine(0.01 * canvas.getWidth(), yToScreen(0), canvas.getWidth() * 0.99, yToScreen(0));
 		gc.strokeLine(xToScreen(0), 0.01 * canvas.getHeight(), xToScreen(0), 0.99 * canvas.getHeight());
-		gc.strokeLine(xToScreen(1), yToScreen(0)-5, xToScreen(1), yToScreen(0)+5);
-		gc.strokeLine(xToScreen(0)-5, yToScreen(1), xToScreen(0)+5, yToScreen(1));
-		
+		gc.strokeLine(xToScreen(1), yToScreen(0) - 5, xToScreen(1), yToScreen(0) + 5);
+		gc.strokeLine(xToScreen(0) - 5, yToScreen(1), xToScreen(0) + 5, yToScreen(1));
+
 		if (function.isPresent()) {
 			gc.setStroke(Color.BLACK);
 			double lastVal = function.get().apply(minX);
@@ -80,11 +81,11 @@ public class FunctionPlotterCtrl {
 
 	/* Returns pixel width. */
 	public double getDeltaX() {
-		return (maxX - minX) / canvas.getWidth(); 
+		return (maxX - minX) / canvas.getWidth();
 	}
-	
+
 	private double yToScreen(double y) {
-		return (1.1 - (y - minY) / (maxY-minY)) * canvas.getHeight() * 0.8;
+		return (1.1 - (y - minY) / (maxY - minY)) * canvas.getHeight() * 0.8;
 	}
 
 	private double screenToX(double xScreen) {

@@ -24,6 +24,12 @@ import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 
+/**
+ * Console application which demonstrates how different search algorithms
+ * solve the n-queens problem.
+ * 
+ * @author Ruediger Lunde
+ */
 public class NQueensSearchProg {
 	private int boardSize = 8;
 	public int populationSize = 10;

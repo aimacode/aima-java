@@ -24,7 +24,6 @@ import javafx.stage.Stage;
  * property management.
  * 
  * @author Ruediger Lunde
- *
  */
 public class IntegratedAppPaneCtrl {
 

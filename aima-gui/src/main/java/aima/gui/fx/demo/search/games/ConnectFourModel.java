@@ -14,7 +14,6 @@ import aima.core.search.framework.Metrics;
  * informed about every state change.
  * 
  * @author Ruediger Lunde
- * 
  */
 public class ConnectFourModel extends Observable {
 	private ConnectFourGame game;

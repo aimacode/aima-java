@@ -24,6 +24,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Integrated application which provides access to all JavaFX demos which are
+ * currently available in the AIMA-GUI project.
+ * 
+ * @author Ruediger Lunde
+ */
 public class IntegratedAimaApp extends Application {
 
 	public static void main(String[] args) {

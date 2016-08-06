@@ -12,7 +12,6 @@ import javafx.stage.Stage;
  * into a common main window.
  * 
  * @author Ruediger Lunde
- *
  */
 public abstract class IntegrableApplication extends Application {
 

@@ -23,7 +23,6 @@ import javafx.scene.text.Font;
  * you need, and then get the result with {@link #getResultFor}.
  * 
  * @author Ruediger Lunde
- *
  */
 public class SimulationPaneBuilder {
 

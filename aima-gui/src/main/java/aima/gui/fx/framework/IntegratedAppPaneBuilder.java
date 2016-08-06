@@ -22,7 +22,6 @@ import javafx.stage.Stage;
  * scene of a stage.
  * 
  * @author Ruediger Lunde
- *
  */
 public class IntegratedAppPaneBuilder {
 

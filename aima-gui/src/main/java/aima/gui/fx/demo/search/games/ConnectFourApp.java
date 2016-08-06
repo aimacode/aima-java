@@ -19,7 +19,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-
 /**
  * Starter of the JavaFX version of the Connect Four game with integrated
  * artificial intelligence player. It uses Minimax search with Alpha-Beta
@@ -27,7 +26,6 @@ import javafx.scene.shape.Circle;
  * constraints.
  * 
  * @author Ruediger Lunde
- * 
  */
 public class ConnectFourApp extends IntegrableApplication {
 

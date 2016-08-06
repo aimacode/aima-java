@@ -18,7 +18,6 @@ import javafx.scene.shape.Polygon;
  * state view for the N-Queens problem.
  * 
  * @author Ruediger Lunde
- *
  */
 public class NQueensViewCtrl {
 
