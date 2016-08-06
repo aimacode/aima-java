@@ -1,4 +1,4 @@
-package aima.gui.applications.search.csp;
+package aima.gui.swing.demo.search.csp;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,7 +13,7 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
-import aima.gui.framework.EmptyEnvironmentView;
+import aima.gui.swing.framework.EmptyEnvironmentView;
 
 /**
  * Cooperates with a {@link CSPEnvironment} and visualizes its state.

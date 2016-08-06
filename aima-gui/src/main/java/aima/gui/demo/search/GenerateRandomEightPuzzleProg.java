@@ -9,7 +9,7 @@ import aima.core.environment.eightpuzzle.EightPuzzleBoard;
  * 
  */
 
-public class GenerateRandomEightPuzzleBoard {
+public class GenerateRandomEightPuzzleProg {
 	public static void main(String[] args) {
 		Random r = new Random();
 		EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 0, 1, 2, 3,

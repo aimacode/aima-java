@@ -40,7 +40,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class FolDemo {
+public class FolProg {
 	public static void main(String[] args) {
 		unifierDemo();
 		fOL_fcAskDemo();

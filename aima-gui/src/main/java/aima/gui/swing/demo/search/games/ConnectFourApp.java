@@ -1,4 +1,4 @@
-package aima.gui.applications.search.games;
+package aima.gui.swing.demo.search.games;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

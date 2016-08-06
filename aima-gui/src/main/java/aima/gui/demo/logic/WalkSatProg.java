@@ -9,7 +9,7 @@ import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
  * @author Ravi Mohan
  * 
  */
-public class WalkSatDemo {
+public class WalkSatProg {
 	public static void main(String[] args) {
 		System.out.println("\nWalkSatDemo\n");
 		KnowledgeBase kb = new KnowledgeBase();

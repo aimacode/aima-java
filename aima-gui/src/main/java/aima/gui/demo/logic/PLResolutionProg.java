@@ -8,7 +8,7 @@ import aima.core.logic.propositional.parsing.PLParser;
  * @author Ravi Mohan
  * 
  */
-public class PLResolutionDemo {
+public class PLResolutionProg {
 	private static PLResolution plr = new PLResolution();
 
 	public static void main(String[] args) {

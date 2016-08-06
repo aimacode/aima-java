@@ -13,7 +13,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
-import aima.gui.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.OsmMap;

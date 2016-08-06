@@ -1,4 +1,4 @@
-package aima.gui.applications.search.map;
+package aima.gui.swing.demo.search.map;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -7,9 +7,9 @@ import aima.core.agent.Agent;
 import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.MessageLogger;
-import aima.gui.framework.SimulationThread;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.MessageLogger;
+import aima.gui.swing.framework.SimulationThread;
 
 /**
  * Provides a useful base class for agent application controller implementations

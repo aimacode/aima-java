@@ -16,7 +16,7 @@ import aima.core.search.csp.SolutionStrategy;
  * @author Ruediger Lunde
  */
 
-public class MapColoringCSPDemo {
+public class MapColoringCSPProg {
 	public static void main(String[] args) {
 		CSP csp = new MapCSP();
 		StepCounter stepCounter = new StepCounter();

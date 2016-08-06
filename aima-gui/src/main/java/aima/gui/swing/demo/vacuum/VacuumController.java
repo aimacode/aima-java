@@ -1,4 +1,4 @@
-package aima.gui.applications.vacuum;
+package aima.gui.swing.demo.vacuum;
 
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
@@ -14,10 +14,10 @@ import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
 import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.SimulationThread;
-import aima.gui.framework.MessageLogger;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.MessageLogger;
+import aima.gui.swing.framework.SimulationThread;
 
 /**
  * Defines how to react on user button events.

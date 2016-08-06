@@ -1,4 +1,4 @@
-package aima.gui.applications.search.map;
+package aima.gui.swing.demo.search.map;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import aima.core.agent.EnvironmentState;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.util.datastructure.Point2D;
-import aima.gui.framework.EmptyEnvironmentView;
+import aima.gui.swing.framework.EmptyEnvironmentView;
 
 /**
  * General graphical environment view implementation for map agent

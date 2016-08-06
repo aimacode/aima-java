@@ -42,7 +42,7 @@ import aima.core.util.MockRandomizer;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class ProbabilityDemo {
+public class ProbabilityProg {
 	// Note: You should increase this to 1000000+
 	// in order to get answers from the approximate
 	// algorithms (i.e. Rejection, Likelihood and Gibbs)

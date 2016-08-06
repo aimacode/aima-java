@@ -8,7 +8,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * @author Ravi Mohan
  * 
  */
-public class PLFCEntailsDemo {
+public class PLFCEntailsProg {
 	private static PLFCEntails plfce = new PLFCEntails();
 
 	public static void main(String[] args) {

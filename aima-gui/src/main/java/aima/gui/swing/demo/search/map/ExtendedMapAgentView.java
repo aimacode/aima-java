@@ -1,4 +1,4 @@
-package aima.gui.applications.search.map;
+package aima.gui.swing.demo.search.map;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

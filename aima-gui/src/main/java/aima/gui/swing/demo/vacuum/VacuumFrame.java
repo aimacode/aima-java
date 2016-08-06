@@ -1,6 +1,6 @@
-package aima.gui.applications.vacuum;
+package aima.gui.swing.demo.vacuum;
 
-import aima.gui.framework.AgentAppFrame;
+import aima.gui.swing.framework.AgentAppFrame;
 
 /**
  * Adds some selectors to the base class and adjusts its size.

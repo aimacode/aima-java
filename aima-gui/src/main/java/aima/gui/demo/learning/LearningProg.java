@@ -36,7 +36,7 @@ import aima.core.probability.mdp.impl.ModifiedPolicyEvaluation;
 import aima.core.util.JavaRandomizer;
 import aima.core.util.Util;
 
-public class LearningDemo {
+public class LearningProg {
 	public static void main(String[] args) {
 
 		// Chapter 18

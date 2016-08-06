@@ -25,7 +25,7 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
  * 
  */
 
-public class EightPuzzleDemo {
+public class EightPuzzleProg {
 	static EightPuzzleBoard boardWithThreeMoveSolution = new EightPuzzleBoard(
 			new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });;
 

@@ -2,8 +2,8 @@ package aimax.osm.applications;
 
 import java.util.Locale;
 
-import aima.gui.applications.AimaDemoApp;
-import aima.gui.applications.AimaDemoFrame;
+import aima.gui.swing.demo.AimaDemoApp;
+import aima.gui.swing.demo.AimaDemoFrame;
 
 /**
  * The all-in-one demo application including all apps and

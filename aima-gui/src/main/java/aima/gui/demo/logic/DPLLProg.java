@@ -7,7 +7,7 @@ import aima.core.logic.propositional.parsing.PLParser;
  * @author Ravi Mohan
  * 
  */
-public class DPLLDemo {
+public class DPLLProg {
 	private static DPLLSatisfiable dpll = new DPLLSatisfiable();
 
 	public static void main(String[] args) {

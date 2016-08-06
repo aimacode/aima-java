@@ -1,4 +1,4 @@
-package aima.gui.applications.vacuum;
+package aima.gui.swing.demo.vacuum;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,7 +12,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.gui.framework.EmptyEnvironmentView;
+import aima.gui.swing.framework.EmptyEnvironmentView;
 
 /**
  * Displays the informations provided by a <code>VacuumEnvironment</code> on a

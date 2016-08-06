@@ -1,4 +1,4 @@
-package aima.gui.framework;
+package aima.gui.swing.framework;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

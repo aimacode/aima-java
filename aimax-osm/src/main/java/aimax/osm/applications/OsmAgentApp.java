@@ -6,9 +6,9 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.SimpleAgentApp;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.SimpleAgentApp;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.impl.DefaultMapBuilder;

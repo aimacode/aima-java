@@ -1,4 +1,4 @@
-package aima.gui.applications.search.csp;
+package aima.gui.swing.demo.search.csp;
 
 import java.awt.Color;
 import java.util.LinkedList;
@@ -13,12 +13,12 @@ import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.MapCSP;
 import aima.core.search.csp.MinConflictsStrategy;
 import aima.core.search.csp.SolutionStrategy;
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppEnvironmentView;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.MessageLogger;
-import aima.gui.framework.SimpleAgentApp;
-import aima.gui.framework.SimulationThread;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.MessageLogger;
+import aima.gui.swing.framework.SimpleAgentApp;
+import aima.gui.swing.framework.SimulationThread;
 
 /**
  * Application which demonstrates basic constraint algorithms based on map

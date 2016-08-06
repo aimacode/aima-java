@@ -1,4 +1,4 @@
-package aima.gui.framework;
+package aima.gui.swing.framework;
 
 /**
  * Simple interface for message logging.

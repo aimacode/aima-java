@@ -1,4 +1,4 @@
-package aima.gui.applications.search.map;
+package aima.gui.swing.demo.search.map;
 
 import java.util.ArrayList;
 
@@ -10,11 +10,11 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.datastructure.Point2D;
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppEnvironmentView;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.MessageLogger;
-import aima.gui.framework.SimpleAgentApp;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.MessageLogger;
+import aima.gui.swing.framework.SimpleAgentApp;
 
 /**
  * Demo example of a route finding agent application with GUI. The main method

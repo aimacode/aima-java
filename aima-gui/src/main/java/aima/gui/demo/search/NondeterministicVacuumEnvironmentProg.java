@@ -18,7 +18,7 @@ import aima.core.search.nondeterministic.NondeterministicProblem;
  * 
  * @author Andrew Brown
  */
-public class NondeterministicVacuumEnvironmentDemo {
+public class NondeterministicVacuumEnvironmentProg {
 	public static void main(String[] args) {
 		System.out.println("NON-DETERMINISTIC-VACUUM-ENVIRONMENT DEMO");
 		System.out.println("");

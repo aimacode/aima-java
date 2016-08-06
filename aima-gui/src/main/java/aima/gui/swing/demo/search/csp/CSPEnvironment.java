@@ -1,4 +1,4 @@
-package aima.gui.applications.search.csp;
+package aima.gui.swing.demo.search.csp;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;

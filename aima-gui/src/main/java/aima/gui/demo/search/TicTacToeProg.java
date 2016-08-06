@@ -13,7 +13,7 @@ import aima.core.util.datastructure.XYLocation;
  * 
  * @author Ruediger Lunde
  */
-public class TicTacToeDemo {
+public class TicTacToeProg {
 	public static void main(String[] args) {
 		System.out.println("TIC-TAC-TOE DEMO");
 		System.out.println("");

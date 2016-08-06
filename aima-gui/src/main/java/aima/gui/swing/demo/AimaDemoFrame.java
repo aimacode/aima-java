@@ -1,4 +1,4 @@
-package aima.gui.applications;
+package aima.gui.swing.demo;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -13,7 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import aima.gui.framework.MessageLoggerPanel;
+import aima.gui.swing.framework.MessageLoggerPanel;
 
 /**
  * Provides a simple frame for starting agent applications and console program
@@ -25,8 +25,8 @@ public class AimaDemoFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	protected JMenuBar menubar = new JMenuBar();
-	JMenu appMenu = new JMenu("Applications");
-	JMenu demoMenu = new JMenu("Demos");
+	JMenu appsMenu = new JMenu("Apps");
+	JMenu progsMenu = new JMenu("Progs");
 	MessageLoggerPanel textPanel = new MessageLoggerPanel();
 	JComponent currPanel;
 	PrintStream outStream;
@@ -36,8 +36,8 @@ public class AimaDemoFrame extends JFrame {
 		setTitle("Artificial Intelligence a Modern Approach 3rd ed. Java Demos (AIMA3e-Java)");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menubar);
-		menubar.add(appMenu);
-		menubar.add(demoMenu);
+		menubar.add(appsMenu);
+		menubar.add(progsMenu);
 		outStream = System.out;
 	}
 
@@ -47,24 +47,24 @@ public class AimaDemoFrame extends JFrame {
 	 * method.
 	 */
 	public void addApp(Class<?> appClass) {
-		JMenuItem item = addAppToMenu(appMenu, appClass);
+		JMenuItem item = addDemoToMenu(appsMenu, appClass);
 		item.addActionListener(new AppStarter(appClass));
 	}
 
 	/**
-	 * Adds a new console program demo to the menu. The class is expected to be
+	 * Adds a new console application demo to the menu. The class is expected to be
 	 * part of a package and to provide a static main method.
 	 */
-	public void addDemo(Class<?> demoClass) {
-		JMenuItem item = addAppToMenu(demoMenu, demoClass);
-		item.addActionListener(new DemoStarter(demoClass));
+	public void addProg(Class<?> demoClass) {
+		JMenuItem item = addDemoToMenu(progsMenu, demoClass);
+		item.addActionListener(new ProgStarter(demoClass));
 	}
 
 	/**
-	 * Adds a new agent application / console program demo to the specified
+	 * Adds a new demo (agent application or console application) to the specified
 	 * menu.
 	 */
-	private JMenuItem addAppToMenu(JMenu menu, Class<?> demoClass) {
+	private JMenuItem addDemoToMenu(JMenu menu, Class<?> demoClass) {
 		JMenuItem item = new JMenuItem(demoClass.getSimpleName());
 		JMenu subMenu = null;
 		String packageName = demoClass.getPackage().getName();
@@ -102,7 +102,7 @@ public class AimaDemoFrame extends JFrame {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent ev) {
 			try {
 				if (currPanel != null)
 					getContentPane().remove(currPanel);
@@ -122,14 +122,14 @@ public class AimaDemoFrame extends JFrame {
 	}
 
 	/**
-	 * Implements an action listener which starts a console program demo.
+	 * Implements an action listener which starts a console application demo.
 	 * 
 	 * @author Ruediger Lunde
 	 */
-	protected class DemoStarter implements ActionListener {
+	protected class ProgStarter implements ActionListener {
 		Class<?> demoClass;
 
-		DemoStarter(Class<?> dc) {
+		ProgStarter(Class<?> dc) {
 			demoClass = dc;
 		}
 

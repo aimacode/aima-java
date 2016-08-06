@@ -1,7 +1,7 @@
 package aimax.osm.routing.agent;
 
-import aima.gui.applications.search.map.MapAgentFrame;
-import aima.gui.applications.search.map.SearchFactory;
+import aima.gui.swing.demo.search.map.MapAgentFrame;
+import aima.gui.swing.demo.search.map.SearchFactory;
 
 /**
  * Simple frame for running map agents in maps defined by OSM data.

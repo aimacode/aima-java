@@ -1,26 +1,26 @@
-package aima.gui.applications;
+package aima.gui.swing.demo;
 
-import aima.gui.applications.search.csp.MapColoringApp;
-import aima.gui.applications.search.games.ConnectFourApp;
-import aima.gui.applications.search.games.EightPuzzleApp;
-import aima.gui.applications.search.games.NQueensApp;
-import aima.gui.applications.search.games.TicTacToeApp;
-import aima.gui.applications.search.map.RouteFindingAgentApp;
-import aima.gui.applications.vacuum.VacuumApp;
-import aima.gui.demo.agent.TrivialVacuumDemo;
-import aima.gui.demo.learning.LearningDemo;
-import aima.gui.demo.logic.DPLLDemo;
-import aima.gui.demo.logic.FolDemo;
-import aima.gui.demo.logic.PLFCEntailsDemo;
-import aima.gui.demo.logic.PLResolutionDemo;
-import aima.gui.demo.logic.TTEntailsDemo;
-import aima.gui.demo.logic.WalkSatDemo;
-import aima.gui.demo.probability.ProbabilityDemo;
-import aima.gui.demo.search.EightPuzzleDemo;
-import aima.gui.demo.search.MapColoringCSPDemo;
-import aima.gui.demo.search.NQueensDemo;
-import aima.gui.demo.search.NondeterministicVacuumEnvironmentDemo;
-import aima.gui.demo.search.TicTacToeDemo;
+import aima.gui.demo.agent.TrivialVacuumProg;
+import aima.gui.demo.learning.LearningProg;
+import aima.gui.demo.logic.DPLLProg;
+import aima.gui.demo.logic.FolProg;
+import aima.gui.demo.logic.PLFCEntailsProg;
+import aima.gui.demo.logic.PLResolutionProg;
+import aima.gui.demo.logic.TTEntailsProg;
+import aima.gui.demo.logic.WalkSatProg;
+import aima.gui.demo.probability.ProbabilityProg;
+import aima.gui.demo.search.EightPuzzleProg;
+import aima.gui.demo.search.MapColoringCSPProg;
+import aima.gui.demo.search.NQueensProg;
+import aima.gui.demo.search.NondeterministicVacuumEnvironmentProg;
+import aima.gui.demo.search.TicTacToeProg;
+import aima.gui.swing.demo.search.csp.MapColoringApp;
+import aima.gui.swing.demo.search.games.ConnectFourApp;
+import aima.gui.swing.demo.search.games.EightPuzzleApp;
+import aima.gui.swing.demo.search.games.NQueensApp;
+import aima.gui.swing.demo.search.games.TicTacToeApp;
+import aima.gui.swing.demo.search.map.RouteFindingAgentApp;
+import aima.gui.swing.demo.vacuum.VacuumApp;
 
 /**
  * The all-in-one demo application. Shows everything within one frame.
@@ -39,24 +39,24 @@ public class AimaDemoApp {
 		frame.addApp(ConnectFourApp.class);
 		frame.addApp(MapColoringApp.class);
 
-		frame.addDemo(TrivialVacuumDemo.class);
+		frame.addProg(TrivialVacuumProg.class);
 		
-		frame.addDemo(EightPuzzleDemo.class);
-		frame.addDemo(TicTacToeDemo.class);
-		frame.addDemo(NQueensDemo.class);
-		frame.addDemo(MapColoringCSPDemo.class);
-		frame.addDemo(NondeterministicVacuumEnvironmentDemo.class);
+		frame.addProg(EightPuzzleProg.class);
+		frame.addProg(TicTacToeProg.class);
+		frame.addProg(NQueensProg.class);
+		frame.addProg(MapColoringCSPProg.class);
+		frame.addProg(NondeterministicVacuumEnvironmentProg.class);
 
-		frame.addDemo(TTEntailsDemo.class);
-		frame.addDemo(PLFCEntailsDemo.class);
-		frame.addDemo(PLResolutionDemo.class);
-		frame.addDemo(DPLLDemo.class);
-		frame.addDemo(WalkSatDemo.class);
-		frame.addDemo(FolDemo.class);
+		frame.addProg(TTEntailsProg.class);
+		frame.addProg(PLFCEntailsProg.class);
+		frame.addProg(PLResolutionProg.class);
+		frame.addProg(DPLLProg.class);
+		frame.addProg(WalkSatProg.class);
+		frame.addProg(FolProg.class);
 
-		frame.addDemo(ProbabilityDemo.class);
+		frame.addProg(ProbabilityProg.class);
 
-		frame.addDemo(LearningDemo.class);
+		frame.addProg(LearningProg.class);
 	}
 
 	/** Starts the demo. */

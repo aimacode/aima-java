@@ -1,4 +1,4 @@
-package aima.gui.framework;
+package aima.gui.swing.framework;
 
 /**
  * Provides the base class for all controller implementations.

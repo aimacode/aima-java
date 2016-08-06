@@ -1,9 +1,9 @@
-package aima.gui.applications.vacuum;
+package aima.gui.swing.demo.vacuum;
 
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppEnvironmentView;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.SimpleAgentApp;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.SimpleAgentApp;
 
 /**
  * Simple graphical application for experiments with vacuum cleaner agents. It

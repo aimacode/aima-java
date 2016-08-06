@@ -13,7 +13,7 @@ import aima.core.environment.vacuum.VacuumEnvironment;
  * 
  * @author Ruediger Lunde
  */
-public class TrivialVacuumDemo {
+public class TrivialVacuumProg {
 	public static void main(String[] args) {
 		// create environment with random state of cleaning.
 		Environment env = new VacuumEnvironment();

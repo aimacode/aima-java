@@ -6,7 +6,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
  * @author Ravi Mohan
  * 
  */
-public class TTEntailsDemo {
+public class TTEntailsProg {
 	public static void main(String[] args) {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("B12 <=> P11 | P13 | P22 | P02");

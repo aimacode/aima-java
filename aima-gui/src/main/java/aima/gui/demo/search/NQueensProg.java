@@ -36,7 +36,7 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
  * 
  */
 
-public class NQueensDemo {
+public class NQueensProg {
 
 	private static final int boardSize = 8;
 

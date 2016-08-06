@@ -1,4 +1,4 @@
-package aima.gui.applications.search.games;
+package aima.gui.swing.demo.search.games;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -39,12 +39,12 @@ import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
-import aima.gui.framework.AgentAppController;
-import aima.gui.framework.AgentAppEnvironmentView;
-import aima.gui.framework.AgentAppFrame;
-import aima.gui.framework.MessageLogger;
-import aima.gui.framework.SimpleAgentApp;
-import aima.gui.framework.SimulationThread;
+import aima.gui.swing.framework.AgentAppController;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.swing.framework.MessageLogger;
+import aima.gui.swing.framework.SimpleAgentApp;
+import aima.gui.swing.framework.SimulationThread;
 
 /**
  * Graphical n-queens game application. It demonstrates the performance of
