@@ -82,7 +82,7 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public EnvironmentState executeAction(Agent agent, Action action) {
+	public void executeAction(Agent agent, Action action) {
 		if (!action.isNoOp()) {
 			Cell<Double> s = currentState.getAgentLocation(agent);
 			double probabilityChoice = r.nextDouble();
@@ -103,8 +103,6 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 				throw new IllegalStateException("Failed to simulate the action="+action+" correctly from s="+s);
 			}
 		}
-
-		return currentState;
 	}
 
 	@Override

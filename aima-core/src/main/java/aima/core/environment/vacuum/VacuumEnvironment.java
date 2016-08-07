@@ -71,7 +71,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public EnvironmentState executeAction(Agent a, Action agentAction) {
+	public void executeAction(Agent a, Action agentAction) {
 
 		if (ACTION_MOVE_RIGHT == agentAction) {
 			envState.setAgentLocation(a, LOCATION_B);
@@ -91,8 +91,6 @@ public class VacuumEnvironment extends AbstractEnvironment {
 			// the agent generates a NoOp.
 			isDone = true;
 		}
-
-		return envState;
 	}
 
 	@Override

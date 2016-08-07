@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.nqueens.AttackingPairsHeuristic;
@@ -370,7 +369,7 @@ public class NQueensApp extends SimpleAgentApp {
 		 * Executes the provided action and returns null.
 		 */
 		@Override
-		public EnvironmentState executeAction(Agent agent, Action action) {
+		public void executeAction(Agent agent, Action action) {
 			if (action instanceof QueenAction) {
 				QueenAction act = (QueenAction) action;
 				XYLocation loc = new XYLocation(act.getX(), act.getY());
@@ -383,13 +382,6 @@ public class NQueensApp extends SimpleAgentApp {
 				if (agent == null)
 					updateEnvironmentViewsAgentActed(agent, action);
 			}
-			return null;
-		}
-
-		/** Returns null. */
-		@Override
-		public EnvironmentState getCurrentState() {
-			return null;
 		}
 
 		/** Returns null. */

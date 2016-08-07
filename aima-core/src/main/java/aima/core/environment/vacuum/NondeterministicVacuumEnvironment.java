@@ -2,7 +2,6 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 
 /**
  * Create the erratic vacuum world from page 134, AIMA3e. In the erratic vacuum
@@ -38,13 +37,9 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
 
     /**
      * Execute the agent action
-     *
-     * @param a
-     * @param agentAction
-     * @return the environment state after the action is executed.
      */
     @Override
-    public EnvironmentState executeAction(Agent a, Action agentAction) {
+    public void executeAction(Agent a, Action agentAction) {
         if (ACTION_MOVE_RIGHT == agentAction) {
             envState.setAgentLocation(a, LOCATION_B);
             updatePerformanceMeasure(a, -1);
@@ -72,6 +67,5 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
         } else if (agentAction.isNoOp()) {
             isDone = true;
         }
-        return envState;
     }
 }

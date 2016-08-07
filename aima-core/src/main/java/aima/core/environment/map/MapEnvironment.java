@@ -44,7 +44,7 @@ public class MapEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public EnvironmentState executeAction(Agent agent, Action a) {
+	public void executeAction(Agent agent, Action a) {
 
 		if (!a.isNoOp()) {
 			MoveToAction act = (MoveToAction) a;
@@ -57,8 +57,6 @@ public class MapEnvironment extends AbstractEnvironment {
 						act.getToLocation(), currTD + distance);
 			}
 		}
-
-		return state;
 	}
 
 	@Override

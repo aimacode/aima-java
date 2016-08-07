@@ -36,9 +36,9 @@ public class XYEnvironment extends AbstractEnvironment {
 		return envState;
 	}
 
+	/** Does nothing (don't ask me why...). */
 	@Override
-	public EnvironmentState executeAction(Agent a, Action action) {
-		return envState;
+	public void executeAction(Agent a, Action action) {
 	}
 
 	@Override
@@ -50,8 +50,7 @@ public class XYEnvironment extends AbstractEnvironment {
 		moveObjectToAbsoluteLocation(eo, loc);
 	}
 
-	public void moveObjectToAbsoluteLocation(EnvironmentObject eo,
-			XYLocation loc) {
+	public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
 		// Ensure the object is not already at a location
 		envState.moveObjectToAbsoluteLocation(eo, loc);
 
@@ -119,14 +118,12 @@ class XYEnvironmentState implements EnvironmentState {
 		this.height = height;
 		for (int h = 1; h <= height; h++) {
 			for (int w = 1; w <= width; w++) {
-				objsAtLocation.put(new XYLocation(h, w),
-						new LinkedHashSet<EnvironmentObject>());
+				objsAtLocation.put(new XYLocation(h, w), new LinkedHashSet<EnvironmentObject>());
 			}
 		}
 	}
 
-	public void moveObjectToAbsoluteLocation(EnvironmentObject eo,
-			XYLocation loc) {
+	public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
 		// Ensure is not already at another location
 		for (Set<EnvironmentObject> eos : objsAtLocation.values()) {
 			if (eos.remove(eo)) {
@@ -180,13 +177,9 @@ class XYEnvironmentState implements EnvironmentState {
 	//
 	// PRIVATE METHODS
 	//
-	private boolean withinRadius(int radius, XYLocation agentLocation,
-			XYLocation objectLocation) {
-		int xdifference = agentLocation.getXCoOrdinate()
-				- objectLocation.getXCoOrdinate();
-		int ydifference = agentLocation.getYCoOrdinate()
-				- objectLocation.getYCoOrdinate();
-		return Math.sqrt((xdifference * xdifference)
-				+ (ydifference * ydifference)) <= radius;
+	private boolean withinRadius(int radius, XYLocation agentLocation, XYLocation objectLocation) {
+		int xdifference = agentLocation.getXCoOrdinate() - objectLocation.getXCoOrdinate();
+		int ydifference = agentLocation.getYCoOrdinate() - objectLocation.getYCoOrdinate();
+		return Math.sqrt((xdifference * xdifference) + (ydifference * ydifference)) <= radius;
 	}
 }

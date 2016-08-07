@@ -2,7 +2,6 @@ package aima.gui.swing.demo.search.csp;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.search.csp.Assignment;
@@ -32,7 +31,7 @@ public class CSPEnvironment extends AbstractEnvironment {
 
 	/** Executes the provided action and returns null. */
 	@Override
-	public EnvironmentState executeAction(Agent agent, Action action) {
+	public void executeAction(Agent agent, Action action) {
 		if (action instanceof StateChangeAction) {
 			StateChangeAction a = (StateChangeAction) action;
 			if (a.updateCSP())
@@ -42,13 +41,6 @@ public class CSPEnvironment extends AbstractEnvironment {
 			if (agent == null)
 				updateEnvironmentViewsAgentActed(agent, action);
 		}
-		return null;
-	}
-
-	/** Returns null. */
-	@Override
-	public EnvironmentState getCurrentState() {
-		return null;
 	}
 
 	/** Returns null. */

@@ -38,11 +38,15 @@ public abstract class AbstractEnvironment implements Environment,
 	// PRUBLIC METHODS
 	//
 
+	/** Default implementation returns null. */
+	public EnvironmentState getCurrentState() {
+		return null;
+	}
+	
 	//
 	// Methods to be implemented by subclasses.
-	public abstract EnvironmentState getCurrentState();
 
-	public abstract EnvironmentState executeAction(Agent agent, Action action);
+	public abstract void executeAction(Agent agent, Action action);
 
 	public abstract Percept getPerceptSeenBy(Agent anAgent);
 
