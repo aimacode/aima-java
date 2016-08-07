@@ -42,7 +42,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	public final static String PARAM_LAMBDA = "lambda";
 	public final static String PARAM_MAX_ITER = "maxIter";
 
-	private FunctionPlotterCtrl funcPlotterCtrl;
+	protected FunctionPlotterCtrl funcPlotterCtrl;
 	private SimulationPaneCtrl simPaneCtrl;
 
 	private Random random = new Random();
@@ -64,7 +64,19 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		Canvas canvas = new Canvas();
 		funcPlotterCtrl = new FunctionPlotterCtrl(canvas);
 		funcPlotterCtrl.setLimits(Functions.minX, Functions.maxX, Functions.minY, Functions.maxY);
+		Parameter[] params = createParameters();
+		
+		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		builder.defineParameters(params);
+		builder.defineStateView(canvas);
+		builder.defineInitMethod(this::initialize);
+		builder.defineSimMethod(this::simulate);
+		simPaneCtrl = builder.getResultFor(root);
+		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 1);
+		return root;
+	}
 
+	protected Parameter[] createParameters() {
 		Parameter p1 = new Parameter(PARAM_FUNC_SELECT);
 		p1.setValues(Functions.f1, Functions.f2, Functions.f3);
 		p1.setValueNames("f1", "f2", "f3");
@@ -74,17 +86,11 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		p3.setDefaultValueIndex(1);
 		Parameter p4 = new Parameter(PARAM_MAX_ITER, 100, 500, 1000);
 		p4.setDefaultValueIndex(1);
-
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
-		builder.defineParameters(p1, p2, p3, p4);
-		builder.defineStateView(canvas);
-		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
-		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 1);
-		return root;
+		return new Parameter[] {p1, p2, p3, p4};
 	}
-
+	
+	
+	
 	/** Displays the selected function on the state view. */
 	@SuppressWarnings("unchecked")
 	@Override

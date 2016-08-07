@@ -58,19 +58,24 @@ public class NQueensSearchApp extends IntegrableApplication {
 		StackPane stateView = new StackPane();
 		stateViewCtrl = new NQueensViewCtrl(stateView);
 
-		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "Hill Climbing", "Simulated Annealing",
-				"Genetic Algorithm");
-		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
-		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
+		Parameter[] params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
-		builder.defineParameters(p1, p2, p3);
+		builder.defineParameters(params);
 		builder.defineStateView(stateView);
 		builder.defineInitMethod(this::initialize);
 		builder.defineSimMethod(this::simulate);
 		simPaneCtrl = builder.getResultFor(root);
 
 		return root;
+	}
+	
+	protected Parameter[] createParameters() {
+		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "Hill Climbing", "Simulated Annealing",
+				"Genetic Algorithm");
+		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
+		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
+		return new Parameter[] {p1, p2, p3};
 	}
 
 	/** Displays the selected function on the state view. */
