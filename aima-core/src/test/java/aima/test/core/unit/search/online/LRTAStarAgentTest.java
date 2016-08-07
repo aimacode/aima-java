@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
@@ -44,8 +44,7 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
@@ -58,8 +57,7 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("F"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
@@ -74,8 +72,7 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction(), hf);
 		me.addAgent(agent, "A");
@@ -95,12 +92,11 @@ public class LRTAStarAgentTest {
 			envChanges.append(msg).append("->");
 		}
 
-		public void agentAdded(Agent agent, EnvironmentState state) {
+		public void agentAdded(Agent agent, Environment source) {
 			// Nothing.
 		}
 
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState state) {
+		public void agentActed(Agent agent, Action action, Environment source) {
 			envChanges.append(action).append("->");
 		}
 	}

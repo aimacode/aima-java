@@ -9,7 +9,7 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.swing.framework.EmptyEnvironmentView;
@@ -21,29 +21,28 @@ import aima.gui.swing.framework.EmptyEnvironmentView;
  * @author Ruediger Lunde
  */
 public class VacuumView extends EmptyEnvironmentView {
-	
+
 	private static final long serialVersionUID = 1L;
 	private Hashtable<Agent, Action> lastActions = new Hashtable<Agent, Action>();
-	
+
 	@Override
-	public void agentActed(Agent agent, Action action,
-			EnvironmentState resultingState) {
+	public void agentActed(Agent agent, Action action, Environment source) {
 		lastActions.put(agent, action);
 		String prefix = "";
 		if (env.getAgents().size() > 1)
 			prefix = "A" + env.getAgents().indexOf(agent) + ": ";
 		notify(prefix + action.toString());
-		super.agentActed(agent, action, resultingState);
+		super.agentActed(agent, action, source);
 	}
-	
+
 	protected VacuumEnvironment getVacuumEnv() {
 		return (VacuumEnvironment) env;
 	}
-	
+
 	/**
-	 * Creates a 2D-graphics showing the agent in its environment. Locations
-	 * are represented as rectangles, dirt as grey background color, and the
-	 * agent as red Pacman.
+	 * Creates a 2D-graphics showing the agent in its environment. Locations are
+	 * represented as rectangles, dirt as grey background color, and the agent
+	 * as red Pacman.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -65,15 +64,14 @@ public class VacuumView extends EmptyEnvironmentView {
 			if (agent != null) {
 				Action action = lastActions.get(agent);
 				g2.setColor(Color.RED);
-				if (action == null || !((DynamicAction) action).getAttribute("name").equals("Suck")) 
-					g2.fillArc(x(11 * i + 2), y(2), scale(6), scale(6),
-							200, 320);
+				if (action == null || !((DynamicAction) action).getAttribute("name").equals("Suck"))
+					g2.fillArc(x(11 * i + 2), y(2), scale(6), scale(6), 200, 320);
 				else
 					g2.fillOval(x(11 * i + 2), y(2), scale(6), scale(6));
 			}
 		}
 	}
-	
+
 	/** Returns the names of all locations used. */
 	protected List<String> getLocations() {
 		List<String> result = new ArrayList<String>();
@@ -86,14 +84,13 @@ public class VacuumView extends EmptyEnvironmentView {
 
 	/** Checks whether the specified location is dirty. */
 	protected boolean isDirty(String location) {
-		return VacuumEnvironment.LocationState.Dirty == getVacuumEnv()
-				.getLocationState(location);
+		return VacuumEnvironment.LocationState.Dirty == getVacuumEnv().getLocationState(location);
 	}
 
 	/**
 	 * Checks whether an agent is currently at the specified location and
 	 * returns one of them if any.
-	 * */
+	 */
 	protected Agent getAgent(Object location) {
 		VacuumEnvironment e = getVacuumEnv();
 		for (Agent a : e.getAgents())
@@ -102,4 +99,3 @@ public class VacuumView extends EmptyEnvironmentView {
 		return null;
 	}
 }
-

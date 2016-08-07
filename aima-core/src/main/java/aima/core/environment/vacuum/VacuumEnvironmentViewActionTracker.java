@@ -2,7 +2,7 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 
 public class VacuumEnvironmentViewActionTracker implements EnvironmentView {
@@ -18,11 +18,11 @@ public class VacuumEnvironmentViewActionTracker implements EnvironmentView {
 		// Do nothing by default.
 	}
 
-	public void agentAdded(Agent agent, EnvironmentState state) {
+	public void agentAdded(Agent agent, Environment source) {
 		// Do nothing by default.
 	}
 
-	public void agentActed(Agent agent, Action action, EnvironmentState state) {
+	public void agentActed(Agent agent, Action action, Environment source) {
 		actions.append(action);
 	}
 

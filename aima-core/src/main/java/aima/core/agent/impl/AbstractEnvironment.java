@@ -100,8 +100,8 @@ public abstract class AbstractEnvironment implements Environment,
 		for (Agent agent : agents) {
 			if (agent.isAlive()) {
 				Action anAction = agent.execute(getPerceptSeenBy(agent));
-				EnvironmentState es = executeAction(agent, anAction);
-				updateEnvironmentViewsAgentActed(agent, anAction, es);
+				executeAction(agent, anAction);
+				updateEnvironmentViewsAgentActed(agent, anAction);
 			}
 		}
 		createExogenousChange();
@@ -166,14 +166,13 @@ public abstract class AbstractEnvironment implements Environment,
 
 	protected void updateEnvironmentViewsAgentAdded(Agent agent) {
 		for (EnvironmentView view : views) {
-			view.agentAdded(agent, getCurrentState());
+			view.agentAdded(agent, this);
 		}
 	}
 
-	protected void updateEnvironmentViewsAgentActed(Agent agent, Action action,
-			EnvironmentState state) {
+	protected void updateEnvironmentViewsAgentActed(Agent agent, Action action) {
 		for (EnvironmentView view : views) {
-			view.agentActed(agent, action, state);
+			view.agentActed(agent, action, this);
 		}
 	}
 }

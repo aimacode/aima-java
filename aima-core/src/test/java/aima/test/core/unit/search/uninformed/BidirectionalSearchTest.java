@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapAgent;
@@ -338,11 +338,11 @@ public class BidirectionalSearchTest {
 			envChanges.append(msg).append(":");
 		}
 
-		public void agentAdded(Agent agent, EnvironmentState state) {
+		public void agentAdded(Agent agent, Environment source) {
 			// Nothing.
 		}
 
-		public void agentActed(Agent agent, Action action, EnvironmentState state) {
+		public void agentActed(Agent agent, Action action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}

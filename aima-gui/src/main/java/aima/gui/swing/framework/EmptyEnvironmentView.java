@@ -5,20 +5,19 @@ import java.awt.Color;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentState;
 import aima.core.util.datastructure.Point2D;
 
 /**
  * Simple graphical environment view without content but with some useful
- * transformation features. The transformation features allow to scale
- * and translate 2D world coordinates into view coordinates. When creating
+ * transformation features. The transformation features allow to scale and
+ * translate 2D world coordinates into view coordinates. When creating
  * subclasses, it should normally be sufficient to override the method
  * {@link #paintComponent(java.awt.Graphics)}.
  * 
  * @author Ruediger Lunde
  */
 public class EmptyEnvironmentView extends AgentAppEnvironmentView {
-	
+
 	private static final long serialVersionUID = 1L;
 	private int borderTop = 10;
 	private int borderLeft = 10;
@@ -45,8 +44,7 @@ public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 	 * transformation is able to display everything within this bounding box
 	 * without scrolling.
 	 */
-	public void adjustTransformation(double minXW, double minYW, double maxXW,
-			double maxYW) {
+	public void adjustTransformation(double minXW, double minYW, double maxXW, double maxYW) {
 		// adjust coordinates relative to the left upper corner of the graph
 		// area
 		double scaleX = 1f;
@@ -91,16 +89,14 @@ public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 		super.setEnvironment(env);
 		repaint();
 	}
-	
 
 	@Override
-	public void agentActed(Agent agent, Action action,
-			EnvironmentState resultingState) {
+	public void agentActed(Agent agent, Action action, Environment source) {
 		repaint();
 	}
 
 	@Override
-	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+	public void agentAdded(Agent agent, Environment source) {
 		repaint();
 	}
 

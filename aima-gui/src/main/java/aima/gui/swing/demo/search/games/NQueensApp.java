@@ -68,24 +68,16 @@ public class NQueensApp extends SimpleAgentApp {
 	}
 
 	static {
-		addSearchAlgorithm("Depth First Search (Graph Search)",
-				new DepthFirstSearch(new GraphSearch()));
-		addSearchAlgorithm("Breadth First Search (Tree Search)",
-				new BreadthFirstSearch(new TreeSearch()));
-		addSearchAlgorithm("Breadth First Search (Graph Search)",
-				new BreadthFirstSearch(new GraphSearch()));
-		addSearchAlgorithm("Depth Limited Search (8)",
-				new DepthLimitedSearch(8));
-		addSearchAlgorithm("Iterative Deepening Search",
-				new IterativeDeepeningSearch());
+		addSearchAlgorithm("Depth First Search (Graph Search)", new DepthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Breadth First Search (Tree Search)", new BreadthFirstSearch(new TreeSearch()));
+		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch(8));
+		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
-				new AStarSearch(new GraphSearch(),
-						new AttackingPairsHeuristic()));
-		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch(
-				new AttackingPairsHeuristic()));
+				new AStarSearch(new GraphSearch(), new AttackingPairsHeuristic()));
+		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch(new AttackingPairsHeuristic()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new AttackingPairsHeuristic(),
-						new Scheduler(20, 0.045, 1000)));
+				new SimulatedAnnealingSearch(new AttackingPairsHeuristic(), new Scheduler(20, 0.045, 1000)));
 	}
 
 	/** Returns a <code>NQueensView</code> instance. */
@@ -130,14 +122,10 @@ public class NQueensApp extends SimpleAgentApp {
 		public NQueensFrame() {
 			setTitle("N-Queens Application");
 			setSelectors(new String[] { ENV_SEL, PROBLEM_SEL, SEARCH_SEL },
-					new String[] { "Select Environment",
-							"Select Problem Formulation", "Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "4 Queens", "8 Queens",
-					"16 Queens", "32 Queens" }, 1);
-			setSelectorItems(PROBLEM_SEL, new String[] { "Incremental",
-					"Complete-State" }, 0);
-			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES
-					.toArray(new String[] {}), 0);
+					new String[] { "Select Environment", "Select Problem Formulation", "Select Search" });
+			setSelectorItems(ENV_SEL, new String[] { "4 Queens", "8 Queens", "16 Queens", "32 Queens" }, 1);
+			setSelectorItems(PROBLEM_SEL, new String[] { "Incremental", "Complete-State" }, 0);
+			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[] {}), 0);
 			setEnvView(new NQueensView());
 			setSize(800, 600);
 		}
@@ -147,8 +135,7 @@ public class NQueensApp extends SimpleAgentApp {
 	 * Displays the informations provided by a <code>NQueensEnvironment</code>
 	 * on a panel.
 	 */
-	protected static class NQueensView extends AgentAppEnvironmentView
-			implements ActionListener {
+	protected static class NQueensView extends AgentAppEnvironmentView implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 		protected int currSize = -1;
@@ -164,14 +151,13 @@ public class NQueensApp extends SimpleAgentApp {
 
 		/** Agent value null indicates a user initiated action. */
 		@Override
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState resultingState) {
+		public void agentActed(Agent agent, Action action, Environment source) {
 			showState();
 			notify((agent == null ? "User: " : "") + action.toString());
 		}
 
 		@Override
-		public void agentAdded(Agent agent, EnvironmentState resultingState) {
+		public void agentAdded(Agent agent, Environment source) {
 			showState();
 		}
 
@@ -188,9 +174,7 @@ public class NQueensApp extends SimpleAgentApp {
 				for (int i = 0; i < currSize * currSize; i++) {
 					JButton square = new JButton("");
 					square.setMargin(new Insets(0, 0, 0, 0));
-					square
-							.setBackground((i % currSize) % 2 == (i / currSize) % 2 ? Color.WHITE
-									: Color.LIGHT_GRAY);
+					square.setBackground((i % currSize) % 2 == (i / currSize) % 2 ? Color.WHITE : Color.LIGHT_GRAY);
 					square.addActionListener(this);
 					squareButtons[i] = square;
 					add(square);
@@ -198,14 +182,11 @@ public class NQueensApp extends SimpleAgentApp {
 			}
 			for (int i = 0; i < currSize * currSize; i++)
 				squareButtons[i].setText("");
-			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN, Math.min(
-					getWidth(), getHeight())
-					* 3 / 4 / currSize);
+			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN,
+					Math.min(getWidth(), getHeight()) * 3 / 4 / currSize);
 			for (XYLocation loc : board.getQueenPositions()) {
-				JButton square = squareButtons[loc.getXCoOrdinate()
-						+ loc.getYCoOrdinate() * currSize];
-				square.setForeground(board.isSquareUnderAttack(loc) ? Color.RED
-						: Color.BLACK);
+				JButton square = squareButtons[loc.getXCoOrdinate() + loc.getYCoOrdinate() * currSize];
+				square.setForeground(board.isSquareUnderAttack(loc) ? Color.RED : Color.BLACK);
 				square.setFont(f);
 				square.setText("Q");
 			}
@@ -283,17 +264,14 @@ public class NQueensApp extends SimpleAgentApp {
 				agent = null;
 			}
 			if (agent == null) {
-				int pSel = frame.getSelection().getIndex(
-						NQueensFrame.PROBLEM_SEL);
-				int sSel = frame.getSelection().getIndex(
-						NQueensFrame.SEARCH_SEL);
+				int pSel = frame.getSelection().getIndex(NQueensFrame.PROBLEM_SEL);
+				int sSel = frame.getSelection().getIndex(NQueensFrame.SEARCH_SEL);
 				ActionsFunction af;
 				if (pSel == 0)
 					af = NQueensFunctionFactory.getIActionsFunction();
 				else
 					af = NQueensFunctionFactory.getCActionsFunction();
-				Problem problem = new Problem(env.getBoard(), af,
-						NQueensFunctionFactory.getResultFunction(),
+				Problem problem = new Problem(env.getBoard(), af, NQueensFunctionFactory.getResultFunction(),
 						new NQueensGoalTest());
 				Search search = SEARCH_ALGOS.get(sSel);
 				agent = new SearchAgent(problem, search);
@@ -304,12 +282,9 @@ public class NQueensApp extends SimpleAgentApp {
 		/** Checks whether simulation can be started. */
 		@Override
 		public boolean isPrepared() {
-			int problemSel = frame.getSelection().getIndex(
-					NQueensFrame.PROBLEM_SEL);
-			return problemSel == 1
-					|| (agent == null || !agent.isDone())
-					&& (!boardDirty || env.getBoard()
-							.getNumberOfQueensOnBoard() == 0);
+			int problemSel = frame.getSelection().getIndex(NQueensFrame.PROBLEM_SEL);
+			return problemSel == 1 || (agent == null || !agent.isDone())
+					&& (!boardDirty || env.getBoard().getNumberOfQueensOnBoard() == 0);
 		}
 
 		/** Starts simulation. */
@@ -406,7 +381,7 @@ public class NQueensApp extends SimpleAgentApp {
 				else if (act.getName() == QueenAction.MOVE_QUEEN)
 					board.moveQueenTo(loc);
 				if (agent == null)
-					updateEnvironmentViewsAgentActed(agent, action, null);
+					updateEnvironmentViewsAgentActed(agent, action);
 			}
 			return null;
 		}

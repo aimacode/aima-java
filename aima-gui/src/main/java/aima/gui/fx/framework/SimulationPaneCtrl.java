@@ -65,13 +65,18 @@ public class SimulationPaneCtrl {
 		setState(State.READY);
 	}
 
-	public Object getParamValue(String paramName) {
-		int idx = Parameter.indexOf(params, paramName);
+	public int getParamValueIndex(String paramName) {
 		int valIdx = -1;
-		if (idx != -1)
-			valIdx = paramCombos.get(idx).getSelectionModel().getSelectedIndex();
+		int paramIdx = Parameter.indexOf(params, paramName);
+		if (paramIdx != -1)
+			valIdx = paramCombos.get(paramIdx).getSelectionModel().getSelectedIndex();
 		if (valIdx == -1)
 			throw new IllegalStateException("No selected value for parameter " + paramName);
+		return valIdx;
+	}
+	
+	public Object getParamValue(String paramName) {
+		int valIdx = getParamValueIndex(paramName);
 		return Parameter.find(params, paramName).get().getValues().get(valIdx);
 	}
 

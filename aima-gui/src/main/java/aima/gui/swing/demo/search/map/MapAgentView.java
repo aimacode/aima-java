@@ -7,17 +7,16 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.util.datastructure.Point2D;
 import aima.gui.swing.framework.EmptyEnvironmentView;
 
 /**
- * General graphical environment view implementation for map agent
- * applications. This view requires the used environment
- * to be of type {@link MapEnvironment}. All agents are tracked but
- * only the track of the first agent is shown.
+ * General graphical environment view implementation for map agent applications.
+ * This view requires the used environment to be of type {@link MapEnvironment}.
+ * All agents are tracked but only the track of the first agent is shown.
  * 
  * @author Ruediger Lunde
  */
@@ -25,12 +24,12 @@ public class MapAgentView extends EmptyEnvironmentView {
 
 	private static final long serialVersionUID = 1L;
 	/** Stores for each agent the locations, it has already visited. */
-	private final Hashtable<Agent,List<String>> agentTracks = new Hashtable<Agent,List<String>>();
+	private final Hashtable<Agent, List<String>> agentTracks = new Hashtable<Agent, List<String>>();
 
 	protected MapEnvironment getMapEnv() {
 		return (MapEnvironment) env;
 	}
-	
+
 	/** Returns a list of all already visited agent locations. */
 	public List<String> getTrack(Agent agent) {
 		return agentTracks.get(agent);
@@ -40,15 +39,14 @@ public class MapAgentView extends EmptyEnvironmentView {
 	public void clearTracks() {
 		agentTracks.clear();
 	}
-	
-	
+
 	/**
 	 * Reacts on environment changes and updates the agent tracks.
 	 */
 	@Override
-	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+	public void agentAdded(Agent agent, Environment source) {
 		updateTracks();
-		super.agentAdded(agent, resultingState);
+		super.agentAdded(agent, source);
 	}
 
 	/**
@@ -56,7 +54,7 @@ public class MapAgentView extends EmptyEnvironmentView {
 	 * is always send to the message logger as string.
 	 */
 	@Override
-	public void agentActed(Agent agent, Action command, EnvironmentState state) {
+	public void agentActed(Agent agent, Action command, Environment source) {
 		MapEnvironment mEnv = getMapEnv();
 		String msg = "";
 		if (mEnv.getAgents().size() > 1)
@@ -67,8 +65,8 @@ public class MapAgentView extends EmptyEnvironmentView {
 	}
 
 	/**
-	 * Clears the panel, displays the map, the current agent locations,
-	 * and the track of the first agent.
+	 * Clears the panel, displays the map, the current agent locations, and the
+	 * track of the first agent.
 	 */
 	@Override
 	public void paintComponent(java.awt.Graphics g) {
@@ -99,11 +97,11 @@ public class MapAgentView extends EmptyEnvironmentView {
 					aTrack = new ArrayList<String>();
 					agentTracks.put(a, aTrack);
 				}
-				if (aTrack.isEmpty() || !aTrack.get(aTrack.size()-1).equals(aLoc))
+				if (aTrack.isEmpty() || !aTrack.get(aTrack.size() - 1).equals(aLoc))
 					aTrack.add(aLoc);
 			}
 	}
-	
+
 	/** Returns the locations of all agents. */
 	protected List<String> getAgentLocs() {
 		List<String> result = new ArrayList<String>();
@@ -112,10 +110,10 @@ public class MapAgentView extends EmptyEnvironmentView {
 			result.add(mEnv.getAgentLocation(a));
 		return result;
 	}
-	
+
 	/**
-	 * Adjusts offsets and scale so that the whole map fits on the view
-	 * without scrolling.
+	 * Adjusts offsets and scale so that the whole map fits on the view without
+	 * scrolling.
 	 */
 	private void adjustTransformation() {
 		Map map = getMapEnv().getMap();

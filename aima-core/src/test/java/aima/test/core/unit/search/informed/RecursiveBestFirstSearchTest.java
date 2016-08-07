@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapAgent;
@@ -39,14 +39,12 @@ public class RecursiveBestFirstSearchTest {
 		HeuristicFunction heuristicFunction = new HeuristicFunction() {
 			public double h(Object state) {
 				Point2D pt1 = aMap.getPosition((String) state);
-				Point2D pt2 = aMap
-						.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 				return pt1.distance(pt2);
 			}
 		};
 
-		recursiveBestFirstSearch = new RecursiveBestFirstSearch(
-				new AStarEvaluationFunction(heuristicFunction));
+		recursiveBestFirstSearch = new RecursiveBestFirstSearch(new AStarEvaluationFunction(heuristicFunction));
 		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch(
 				new AStarEvaluationFunction(heuristicFunction), true);
 	}
@@ -80,7 +78,7 @@ public class RecursiveBestFirstSearchTest {
 				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
 				envChanges.toString());
 	}
-	
+
 	@Test
 	public void testAIMA3eAradNeamtA() {
 		MapEnvironment me = new MapEnvironment(aMap);
@@ -95,8 +93,7 @@ public class RecursiveBestFirstSearchTest {
 				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:Action[name==moveTo, location==Urziceni]:Action[name==moveTo, location==Vaslui]:Action[name==moveTo, location==Iasi]:Action[name==moveTo, location==Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=12:METRIC[nodesExpanded]=340208:Action[name==NoOp]:",
 				envChanges.toString());
 	}
-	
-	
+
 	@Test
 	public void testAIMA3eAradNeamtB() {
 		MapEnvironment me = new MapEnvironment(aMap);
@@ -118,12 +115,11 @@ public class RecursiveBestFirstSearchTest {
 			envChanges.append(msg).append(":");
 		}
 
-		public void agentAdded(Agent agent, EnvironmentState state) {
+		public void agentAdded(Agent agent, Environment source) {
 			// Nothing.
 		}
 
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState state) {
+		public void agentActed(Agent agent, Action action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}
