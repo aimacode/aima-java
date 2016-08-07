@@ -19,7 +19,7 @@ import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
-import aima.gui.fx.views.EnvironmentTextViewCtrl;
+import aima.gui.fx.views.VacuumEnvironmentViewCtrl;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -41,7 +41,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 	public final static String PARAM_AGENT = "Agent";
 
 	private SimulationPaneCtrl simPaneCtrl;
-	private EnvironmentTextViewCtrl envViewCtrl;
+	private VacuumEnvironmentViewCtrl envViewCtrl;
 	protected VacuumEnvironment env = null;
 	protected AbstractAgent agent = null;
 
@@ -63,7 +63,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 		BorderPane root = new BorderPane();
 
 		StackPane envView = new StackPane();
-		envViewCtrl = new EnvironmentTextViewCtrl(envView);
+		envViewCtrl = new VacuumEnvironmentViewCtrl(envView);
 
 		Parameter[] params = createParameters();
 
@@ -114,11 +114,11 @@ public class VacuumAgentApp extends IntegrableApplication {
 			break;
 		}
 		if (env != null && agent != null) {
+			envViewCtrl.setLocations(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LOCATION_B);
 			env.addEnvironmentView(envViewCtrl);
 			env.addAgent(agent);
 			if (agent instanceof NondeterministicVacuumAgent) {
 				// Set the problem now for this kind of agent
-				// set the problem and agent
 				((NondeterministicVacuumAgent) agent).setProblem(createNondeterministicProblem());
 			}
 		}
@@ -128,10 +128,10 @@ public class VacuumAgentApp extends IntegrableApplication {
 	public void simulate() {
 		while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 			env.step();
-			simPaneCtrl.setStatus("Performance: " + env.getPerformanceMeasure(agent));
+			simPaneCtrl.setStatus("Performance=" + env.getPerformanceMeasure(agent));
 			simPaneCtrl.waitAfterStep();
 		}
-		envViewCtrl.notify("Performance: " + env.getPerformanceMeasure(agent));
+		envViewCtrl.notify("Performance=" + env.getPerformanceMeasure(agent));
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import aima.gui.demo.search.MapColoringCSPProg;
 import aima.gui.demo.search.NQueensProg;
 import aima.gui.demo.search.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.search.TicTacToeProg;
+import aima.gui.fx.demo.agent.VacuumAgentApp;
 import aima.gui.fx.demo.search.NQueensSearchApp;
 import aima.gui.fx.demo.search.NQueensSearchProg;
 import aima.gui.fx.demo.search.games.ConnectFourApp;
@@ -52,6 +53,8 @@ public class IntegratedAimaApp extends Application {
 		builder.registerApp(GeneticMaximumFinderApp.class);
 		builder.registerApp(NQueensSearchApp.class);
 		builder.registerApp(ConnectFourApp.class);
+
+		builder.registerApp(VacuumAgentApp.class);
 
 		builder.registerProg(GeneticMaximumFinderProg.class);
 		builder.registerProg(NQueensSearchProg.class);
