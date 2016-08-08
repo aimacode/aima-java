@@ -21,8 +21,8 @@ import javafx.scene.shape.ArcType;
 
 /**
  * Environment view controller class which is specialized for vacuum
- * environments. Adds a vacuum environment state view to the text-based view of
- * the {@link SimpleEnvironmentViewCtrl}.
+ * environments. It adds a vacuum environment state view to the text-based view
+ * of the {@link SimpleEnvironmentViewCtrl}.
  * 
  * @author Ruediger Lunde
  */

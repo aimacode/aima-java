@@ -31,6 +31,7 @@ public class SimpleEnvironmentViewCtrl implements EnvironmentView {
 	public SimpleEnvironmentViewCtrl(StackPane parent) {
 		splitPane = new SplitPane();
 		textArea = new TextArea();
+		textArea.setMinWidth(0.0);
 		splitPane.getItems().add(textArea);
 		parent.getChildren().add(splitPane);
 	}

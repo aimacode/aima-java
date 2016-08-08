@@ -15,8 +15,8 @@ import javafx.stage.Stage;
  */
 public abstract class IntegrableApplication extends Application {
 
-	protected double defaultWidth = 900;
-	protected double defaultHeight = 600;
+	protected double defaultWidth = 1200;
+	protected double defaultHeight = 800;
 	
 	@Override
 	public final void start(Stage primaryStage) throws Exception {

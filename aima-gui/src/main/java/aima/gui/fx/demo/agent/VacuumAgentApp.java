@@ -85,7 +85,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 		return new Parameter[] { p1, p2 };
 	}
 
-	/** Displays the selected function on the state view. */
+	/** Is called after each parameter selection change. */
 	@Override
 	public void initialize() {
 		switch (simPaneCtrl.getParamValueIndex(PARAM_ENV)) {

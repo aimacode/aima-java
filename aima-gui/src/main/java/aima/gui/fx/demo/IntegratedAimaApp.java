@@ -13,6 +13,7 @@ import aima.gui.demo.search.NQueensProg;
 import aima.gui.demo.search.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.search.TicTacToeProg;
 import aima.gui.fx.demo.agent.VacuumAgentApp;
+import aima.gui.fx.demo.agent.map.RouteFindingAgentApp;
 import aima.gui.fx.demo.search.NQueensSearchApp;
 import aima.gui.fx.demo.search.NQueensSearchProg;
 import aima.gui.fx.demo.search.games.ConnectFourApp;
@@ -43,7 +44,7 @@ public class IntegratedAimaApp extends Application {
 		defineContent(builder);
 		BorderPane root = new BorderPane();
 		builder.getResultFor(root, primaryStage);
-		primaryStage.setScene(new Scene(root, 900, 600));
+		primaryStage.setScene(new Scene(root, 1200, 800));
 		primaryStage.show();
 	}
 
@@ -55,7 +56,8 @@ public class IntegratedAimaApp extends Application {
 		builder.registerApp(ConnectFourApp.class);
 
 		builder.registerApp(VacuumAgentApp.class);
-
+		builder.registerApp(RouteFindingAgentApp.class);
+		
 		builder.registerProg(GeneticMaximumFinderProg.class);
 		builder.registerProg(NQueensSearchProg.class);
 
