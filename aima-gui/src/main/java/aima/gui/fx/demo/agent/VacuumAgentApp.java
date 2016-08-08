@@ -19,6 +19,7 @@ import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
 import aima.gui.fx.views.VacuumEnvironmentViewCtrl;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -41,7 +42,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 	public final static String PARAM_AGENT = "Agent";
 
 	private SimulationPaneCtrl simPaneCtrl;
-	private VacuumEnvironmentViewCtrl envViewCtrl;
+	private SimpleEnvironmentViewCtrl envViewCtrl;
 	protected VacuumEnvironment env = null;
 	protected AbstractAgent agent = null;
 
@@ -114,7 +115,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 			break;
 		}
 		if (env != null && agent != null) {
-			envViewCtrl.setLocations(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LOCATION_B);
+			envViewCtrl.initialize(env);
 			env.addEnvironmentView(envViewCtrl);
 			env.addAgent(agent);
 			if (agent instanceof NondeterministicVacuumAgent) {

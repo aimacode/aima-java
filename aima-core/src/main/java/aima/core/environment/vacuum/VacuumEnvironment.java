@@ -1,5 +1,7 @@
 package aima.core.environment.vacuum;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import aima.core.agent.Action;
@@ -65,9 +67,12 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		envState = new VacuumEnvironmentState(locAState, locBState);
 	}
 
-	@Override
 	public EnvironmentState getCurrentState() {
 		return envState;
+	}
+	
+	public List<String> getLocations() {
+		return Arrays.asList(LOCATION_A, LOCATION_B);
 	}
 
 	@Override
@@ -97,7 +102,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		if (anAgent instanceof NondeterministicVacuumAgent) {
     		// Note: implements FullyObservableVacuumEnvironmentPercept
-    		return new VacuumEnvironmentState(this.envState);
+    		return envState.clone();
     	}
 		String agentLocation = envState.getAgentLocation(anAgent);
 		return new LocalVacuumEnvironmentPercept(agentLocation,

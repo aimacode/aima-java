@@ -2,7 +2,6 @@ package aima.core.environment.map;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicPercept;
@@ -36,11 +35,6 @@ public class MapEnvironment extends AbstractEnvironment {
 
 	public Double getAgentTravelDistance(Agent a) {
 		return state.getAgentTravelDistance(a);
-	}
-
-	@Override
-	public EnvironmentState getCurrentState() {
-		return state;
 	}
 
 	@Override

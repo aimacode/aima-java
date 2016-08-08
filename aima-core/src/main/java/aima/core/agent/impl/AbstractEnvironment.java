@@ -11,7 +11,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentObject;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
@@ -37,11 +36,6 @@ public abstract class AbstractEnvironment implements Environment,
 	//
 	// PRUBLIC METHODS
 	//
-
-	/** Default implementation returns null. */
-	public EnvironmentState getCurrentState() {
-		return null;
-	}
 	
 	//
 	// Methods to be implemented by subclasses.

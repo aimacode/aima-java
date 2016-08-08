@@ -31,11 +31,6 @@ public class XYEnvironment extends AbstractEnvironment {
 		envState = new XYEnvironmentState(width, height);
 	}
 
-	@Override
-	public EnvironmentState getCurrentState() {
-		return envState;
-	}
-
 	/** Does nothing (don't ask me why...). */
 	@Override
 	public void executeAction(Agent a, Action action) {

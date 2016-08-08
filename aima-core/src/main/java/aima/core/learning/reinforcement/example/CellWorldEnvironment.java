@@ -5,7 +5,6 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.cellworld.Cell;
@@ -74,11 +73,6 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 			currentState.setAgentLocation(a, startingCell);
 		}
 		stepUntilDone();
-	}
-
-	@Override
-	public EnvironmentState getCurrentState() {
-		return currentState;
 	}
 
 	@Override
