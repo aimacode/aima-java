@@ -1,7 +1,5 @@
 package aima.gui.fx.demo.search;
 
-import java.util.Arrays;
-
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.search.framework.Metrics;
