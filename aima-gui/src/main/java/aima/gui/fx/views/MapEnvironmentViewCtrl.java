@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
 	protected Pane envStateView;
-	protected Map map;
+	protected MapEnvironment env;
 	protected String goal;
 	protected List<String> track;
 	protected double scale = 1;
@@ -39,11 +39,11 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 		splitPane.setDividerPosition(0, 0.7);
 		splitPane.setStyle("-fx-background-color: white");
 		envStateView.setMinWidth(0.0);
-		envStateView.widthProperty().addListener((obs, o, n) -> adjustTransform());
-		envStateView.heightProperty().addListener((obs, o, n) -> adjustTransform());
+		envStateView.widthProperty().addListener((obs, o, n) -> update());
+		envStateView.heightProperty().addListener((obs, o, n) -> update());
 		track = new ArrayList<String>();
 	}
-	
+
 	public void setGoal(String goal) {
 		this.goal = goal;
 	}
@@ -51,7 +51,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	@Override
 	public void initialize(Environment env) {
 		if (env instanceof MapEnvironment) {
-			map = ((MapEnvironment) env).getMap();
+			this.env = (MapEnvironment) env;
 			track.clear();
 		}
 		super.initialize(env);
@@ -59,10 +59,14 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
 	@Override
 	protected void updateEnvStateView(Environment env) {
-		envStateView.getChildren().clear();
-		if (env instanceof MapEnvironment) {
-			MapEnvironment mEnv = (MapEnvironment) env;
+		update();
+	}
+
+	protected void update() {
+		if (env != null) {
 			adjustTransform();
+			envStateView.getChildren().clear();
+			Map map = env.getMap();
 			// print connections
 			for (String loc1 : map.getLocations()) {
 				Point2D pt1 = map.getPosition(loc1);
@@ -74,12 +78,12 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 				}
 			}
 			// print track of first agent
-			if (!mEnv.getAgents().isEmpty()) {
-				String aLoc = mEnv.getAgentLocation(mEnv.getAgents().get(0));
-				if (track.isEmpty() || track.get(track.size()-1) != aLoc)
+			if (!env.getAgents().isEmpty()) {
+				String aLoc = env.getAgentLocation(env.getAgents().get(0));
+				if (track.isEmpty() || track.get(track.size() - 1) != aLoc)
 					track.add(aLoc);
 				for (int i = 1; i < track.size(); i++) {
-					Point2D pt1 = map.getPosition(track.get(i-1));
+					Point2D pt1 = map.getPosition(track.get(i - 1));
 					Point2D pt2 = map.getPosition(track.get(i));
 					Shape line = new Line(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY());
 					line.setStroke(Color.RED);
@@ -90,14 +94,14 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 			// print locations
 			for (String loc : map.getLocations()) {
 				Point2D point = map.getPosition(loc);
-				Text text = new Text(point.getX() + 5, point.getY() + 10, loc);
+				Text text = new Text(point.getX() + 10 / scale, point.getY(), loc);
 				text.setFont(new Font(12.0 / scale));
 				envStateView.getChildren().add(text);
 				envStateView.getChildren().add(new Circle(point.getX(), point.getY(), 2 / scale));
 			}
 			// print agent locations
-			for (Agent agent : mEnv.getAgents()) {
-				String loc = mEnv.getAgentLocation(agent);
+			for (Agent agent : env.getAgents()) {
+				String loc = env.getAgentLocation(agent);
 				if (loc != null) {
 					Point2D pt = map.getPosition(loc);
 					envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 8 / scale, Color.RED));
@@ -112,26 +116,24 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	}
 
 	private void adjustTransform() {
-		if (map != null) {
-			double xMin = Double.POSITIVE_INFINITY;
-			double xMax = Double.NEGATIVE_INFINITY;
-			double yMin = Double.POSITIVE_INFINITY;
-			double yMax = Double.NEGATIVE_INFINITY;
-			for (String loc : map.getLocations()) {
-				Point2D point = map.getPosition(loc);
-				xMin = Math.min(xMin, point.getX());
-				xMax = Math.max(xMax, point.getX());
-				yMin = Math.min(yMin, point.getY());
-				yMax = Math.max(yMax, point.getY());
-			}
-			scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
-					(envStateView.getHeight() - 60) / (yMax - yMin));
-
-			envStateView.setScaleY(scale);
-			envStateView.setTranslateX((scale * (envStateView.getWidth() - xMin - xMax) / 2.0 - 30));
-			envStateView.setTranslateY((scale * (envStateView.getHeight() - yMin - yMax) / 2.0 - 10));
-			envStateView.setScaleX(scale);
-			envStateView.setScaleY(scale);
+		double xMin = Double.POSITIVE_INFINITY;
+		double xMax = Double.NEGATIVE_INFINITY;
+		double yMin = Double.POSITIVE_INFINITY;
+		double yMax = Double.NEGATIVE_INFINITY;
+		for (String loc : env.getMap().getLocations()) {
+			Point2D point = env.getMap().getPosition(loc);
+			xMin = Math.min(xMin, point.getX());
+			xMax = Math.max(xMax, point.getX());
+			yMin = Math.min(yMin, point.getY());
+			yMax = Math.max(yMax, point.getY());
 		}
+		scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
+				(envStateView.getHeight() - 60) / (yMax - yMin));
+
+		envStateView.setScaleY(scale);
+		envStateView.setTranslateX((scale * (envStateView.getWidth() - xMin - xMax) / 2.0 - 30));
+		envStateView.setTranslateY((scale * (envStateView.getHeight() - yMin - yMax) / 2.0 - 10));
+		envStateView.setScaleX(scale);
+		envStateView.setScaleY(scale);
 	}
 }
