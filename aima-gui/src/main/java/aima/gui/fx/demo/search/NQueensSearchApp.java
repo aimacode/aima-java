@@ -1,5 +1,7 @@
 package aima.gui.fx.demo.search;
 
+import java.util.Arrays;
+
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.search.framework.Metrics;
@@ -75,6 +77,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 				"Genetic Algorithm");
 		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
 		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
+		p3.setDependency(PARAM_STRATEGY, "Hill Climbing", "Simulated Annealing");
 		return new Parameter[] {p1, p2, p3};
 	}
 

@@ -58,9 +58,9 @@ public class Parameter {
 	 * Indicates that this parameter is only relevant, if one of the specified
 	 * values has been assigned to another parameter.
 	 */
-	public void setDependency(String paramName, List<String> values) {
+	public void setDependency(String paramName, String... values) {
 		dependsOnParam = paramName;
-		dependsOnValues = values;
+		dependsOnValues = Arrays.asList(values);
 	}
 
 	public String getName() {

@@ -1,7 +1,6 @@
 package aima.gui.fx.demo.agent.map;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Agent;
@@ -99,21 +98,19 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 				"Australia, from Random");
 		Parameter p2r = new Parameter(PARAM_DESTINATION_R, "to Bucharest", "to Eforie", "to Neamt", "to Random");
 		p2r.setValueNames("to Bucharest", "to Eforie", "to Neamt", "to Random");
-		p2r.setDependency(PARAM_SCENARIO,
-				Arrays.asList("Romania, from Arad", "Romania, from Lugoj", "Romania, from Fagaras"));
+		p2r.setDependency(PARAM_SCENARIO, "Romania, from Arad", "Romania, from Lugoj", "Romania, from Fagaras");
 
 		Parameter p2a = new Parameter(PARAM_DESTINATION_A, "to Port Hedland", "to Albany", "to Melbourne", "to Random");
 		p2a.setValueNames("to Port Hedland", "to Albany", "to Melbourne", "to Random");
-		p2a.setDependency(PARAM_SCENARIO, Arrays.asList("Australia, from Sydney", "Australia, from Random"));
+		p2a.setDependency(PARAM_SCENARIO, "Australia, from Sydney", "Australia, from Random");
 
 		Parameter p3 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p3.setDefaultValueIndex(5);
 		Parameter p4 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
-		p4.setDependency(PARAM_SEARCH,
-				Arrays.asList("Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*"));
+		p4.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
 		Parameter p5 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
-		p5.setDependency(PARAM_SEARCH, Arrays.asList("Greedy Best First", "A*", "Recursive Best First",
-				"Recursive Best First No Loops", "Hill Climbing"));
+		p5.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
+				"Recursive Best First No Loops", "Hill Climbing");
 		p5.setDefaultValueIndex(1);
 		return new Parameter[] { p1, p2r, p2a, p3, p4, p5 };
 	}
