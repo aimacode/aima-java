@@ -75,7 +75,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 				"Genetic Algorithm");
 		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
 		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
-		p3.setDependency(PARAM_STRATEGY, "Hill Climbing", "Simulated Annealing");
+		p3.setDependency(PARAM_STRATEGY, "Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
 		return new Parameter[] {p1, p2, p3};
 	}
 
