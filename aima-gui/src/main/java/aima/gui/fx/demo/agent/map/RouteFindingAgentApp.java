@@ -18,8 +18,7 @@ import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
 import aima.gui.fx.views.MapEnvironmentViewCtrl;
-import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
-import aima.gui.swing.demo.search.map.SearchFactory;
+import aima.gui.swing.demo.agent.map.SearchFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -44,7 +43,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	public static String PARAM_HEURISTIC = "Heuristic";
 
 	private SimulationPaneCtrl simPaneCtrl;
-	private SimpleEnvironmentViewCtrl envViewCtrl;
+	private MapEnvironmentViewCtrl envViewCtrl;
 	protected MapEnvironment env = null;
 	protected Agent agent = null;
 
@@ -65,7 +64,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "Route Finding Agent Application";
+		return "Route Finding Agent App";
 	}
 
 	/**
@@ -165,6 +164,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		agent = new MapAgent(env.getMap(), search, new String[] { goal });
 		env.addAgent(agent, scenario.getInitAgentLocation());
 		env.addEnvironmentView(envViewCtrl);
+		envViewCtrl.setGoal(goal);
 		envViewCtrl.initialize(env);
 	}
 

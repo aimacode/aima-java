@@ -1,4 +1,4 @@
-package aima.gui.swing.demo.vacuum;
+package aima.gui.swing.demo.agent;
 
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;

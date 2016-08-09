@@ -52,7 +52,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "Vacuum Agent Application";
+		return "Vacuum Agent App";
 	}
 
 	/**

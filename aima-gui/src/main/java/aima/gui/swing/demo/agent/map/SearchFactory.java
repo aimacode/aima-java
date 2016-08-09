@@ -1,4 +1,4 @@
-package aima.gui.swing.demo.search.map;
+package aima.gui.swing.demo.agent.map;
 
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.SearchForActions;

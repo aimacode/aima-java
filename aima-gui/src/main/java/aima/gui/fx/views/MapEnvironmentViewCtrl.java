@@ -27,6 +27,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
 	protected Pane envStateView;
 	protected Map map;
+	protected String goal;
 	protected List<String> track;
 
 	public MapEnvironmentViewCtrl(StackPane parent) {
@@ -39,6 +40,10 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 		envStateView.widthProperty().addListener((obs, o, n) -> adjustTransform());
 		envStateView.heightProperty().addListener((obs, o, n) -> adjustTransform());
 		track = new ArrayList<String>();
+	}
+	
+	public void setGoal(String goal) {
+		this.goal = goal;
 	}
 
 	@Override
@@ -92,6 +97,11 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 					Point2D pt = map.getPosition(loc);
 					envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 6, Color.RED));
 				}
+			}
+			// print goal
+			if (goal != null) {
+				Point2D pt = map.getPosition(goal);
+				envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 4, Color.GREEN));
 			}
 			adjustTransform();
 		}

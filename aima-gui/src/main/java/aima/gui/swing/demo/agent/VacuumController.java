@@ -1,4 +1,4 @@
-package aima.gui.swing.demo.vacuum;
+package aima.gui.swing.demo.agent;
 
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;

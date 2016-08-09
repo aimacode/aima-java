@@ -1,5 +1,6 @@
 package aima.gui.fx.demo;
 
+import aima.gui.demo.agent.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.agent.TrivialVacuumProg;
 import aima.gui.demo.logic.DPLLProg;
 import aima.gui.demo.logic.FolProg;
@@ -10,7 +11,6 @@ import aima.gui.demo.logic.WalkSatProg;
 import aima.gui.demo.search.EightPuzzleProg;
 import aima.gui.demo.search.MapColoringCSPProg;
 import aima.gui.demo.search.NQueensProg;
-import aima.gui.demo.search.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.search.TicTacToeProg;
 import aima.gui.fx.demo.agent.VacuumAgentApp;
 import aima.gui.fx.demo.agent.map.RouteFindingAgentApp;

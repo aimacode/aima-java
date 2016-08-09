@@ -13,7 +13,7 @@ import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.datastructure.Point2D;
-import aima.gui.swing.demo.search.map.MapAgentFrame;
+import aima.gui.swing.demo.agent.map.MapAgentFrame;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppFrame;
 import aima.gui.swing.framework.MessageLogger;

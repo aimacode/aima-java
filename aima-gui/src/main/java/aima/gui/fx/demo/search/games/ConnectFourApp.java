@@ -49,7 +49,7 @@ public class ConnectFourApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "Connect Four";
+		return "Connect Four App";
 	}
 
 	@Override

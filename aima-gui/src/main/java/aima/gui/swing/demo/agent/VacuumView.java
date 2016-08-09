@@ -1,4 +1,4 @@
-package aima.gui.swing.demo.vacuum;
+package aima.gui.swing.demo.agent;
 
 import java.awt.Color;
 import java.awt.Graphics;

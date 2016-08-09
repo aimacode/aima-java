@@ -1,5 +1,6 @@
 package aima.gui.swing.demo;
 
+import aima.gui.demo.agent.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.agent.TrivialVacuumProg;
 import aima.gui.demo.learning.LearningProg;
 import aima.gui.demo.logic.DPLLProg;
@@ -12,15 +13,14 @@ import aima.gui.demo.probability.ProbabilityProg;
 import aima.gui.demo.search.EightPuzzleProg;
 import aima.gui.demo.search.MapColoringCSPProg;
 import aima.gui.demo.search.NQueensProg;
-import aima.gui.demo.search.NondeterministicVacuumEnvironmentProg;
 import aima.gui.demo.search.TicTacToeProg;
+import aima.gui.swing.demo.agent.VacuumApp;
+import aima.gui.swing.demo.agent.map.RouteFindingAgentApp;
 import aima.gui.swing.demo.search.csp.MapColoringApp;
 import aima.gui.swing.demo.search.games.ConnectFourApp;
 import aima.gui.swing.demo.search.games.EightPuzzleApp;
 import aima.gui.swing.demo.search.games.NQueensApp;
 import aima.gui.swing.demo.search.games.TicTacToeApp;
-import aima.gui.swing.demo.search.map.RouteFindingAgentApp;
-import aima.gui.swing.demo.vacuum.VacuumApp;
 
 /**
  * The all-in-one demo application. Shows everything within one frame.
