@@ -30,7 +30,6 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	protected MapEnvironment env;
 	protected String goal;
 	protected List<String> track;
-	protected double scale = 1;
 
 	public MapEnvironmentViewCtrl(StackPane parent) {
 		super(parent);
@@ -50,10 +49,9 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
 	@Override
 	public void initialize(Environment env) {
-		if (env instanceof MapEnvironment) {
+		if (env instanceof MapEnvironment)
 			this.env = (MapEnvironment) env;
-			track.clear();
-		}
+		track.clear();
 		super.initialize(env);
 	}
 
@@ -63,9 +61,9 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	}
 
 	protected void update() {
+		envStateView.getChildren().clear();
 		if (env != null) {
-			adjustTransform();
-			envStateView.getChildren().clear();
+			double scale = adjustTransform();
 			Map map = env.getMap();
 			// print connections
 			for (String loc1 : map.getLocations()) {
@@ -115,7 +113,13 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 		}
 	}
 
-	private void adjustTransform() {
+	/**
+	 * Computes transforms (translations and scaling) and applies them to the
+	 * environment state view. Those transforms map location positions in the
+	 * map to screen positions in the viewer pane.
+	 * @return The scale value.
+	 */
+	private double adjustTransform() {
 		double xMin = Double.POSITIVE_INFINITY;
 		double xMax = Double.NEGATIVE_INFINITY;
 		double yMin = Double.POSITIVE_INFINITY;
@@ -127,13 +131,13 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 			yMin = Math.min(yMin, point.getY());
 			yMax = Math.max(yMax, point.getY());
 		}
-		scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
+		double scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
 				(envStateView.getHeight() - 60) / (yMax - yMin));
 
-		envStateView.setScaleY(scale);
 		envStateView.setTranslateX((scale * (envStateView.getWidth() - xMin - xMax) / 2.0 - 30));
 		envStateView.setTranslateY((scale * (envStateView.getHeight() - yMin - yMax) / 2.0 - 10));
 		envStateView.setScaleX(scale);
 		envStateView.setScaleY(scale);
+		return scale;
 	}
 }
