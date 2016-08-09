@@ -19,6 +19,8 @@ public class Parameter {
 	private List<Object> values;
 	private List<String> valueNames;
 	private int defaultValueIndex;
+	private String dependsOnParam;
+	private List<String> dependsOnValues;
 
 	public static Optional<Parameter> find(List<Parameter> params, String paramName) {
 		return params.stream().filter(p -> p.getName().equals(paramName)).findFirst();
@@ -52,6 +54,15 @@ public class Parameter {
 		defaultValueIndex = idx;
 	}
 
+	/**
+	 * Indicates that this parameter is only relevant, if one of the specified
+	 * values has been assigned to another parameter.
+	 */
+	public void setDependency(String paramName, List<String> values) {
+		dependsOnParam = paramName;
+		dependsOnValues = values;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -67,5 +78,12 @@ public class Parameter {
 	public int getDefaultValueIndex() {
 		return defaultValueIndex;
 	}
-
+	
+	public String getDependencyParameter() {
+		return dependsOnParam;
+	}
+	
+	public List<String> getDependencyValues() {
+		return dependsOnValues;
+	}
 }

@@ -1,6 +1,7 @@
 package aima.gui.fx.demo.agent.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Agent;
@@ -37,7 +38,8 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	}
 
 	public static String PARAM_SCENARIO = "Scenario";
-	public static String PARAM_DESTINATION = "Destination";
+	public static String PARAM_DESTINATION_R = "DestinationR";
+	public static String PARAM_DESTINATION_A = "DestinationA";
 	public static String PARAM_SEARCH = "Search";
 	public static String PARAM_Q_SEARCH_IMPL = "QSearch";
 	public static String PARAM_HEURISTIC = "Heuristic";
@@ -92,14 +94,28 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 	protected Parameter[] createParameters() {
 		Parameter p1 = new Parameter(PARAM_SCENARIO, "Romania, from Arad", "Romania, from Lugoj",
-				"Romania, from Fagaras");
-		Parameter p2 = new Parameter(PARAM_DESTINATION, "to Bucharest", "to Eforie", "to Neamt", "to Random");
+				"Romania, from Fagaras", "Australia, from Sydney", "Australia, from Random");
+		p1.setValueNames("Romania, from Arad", "Romania, from Lugoj", "Romania, from Fagaras", "Australia, from Sydney",
+				"Australia, from Random");
+		Parameter p2r = new Parameter(PARAM_DESTINATION_R, "to Bucharest", "to Eforie", "to Neamt", "to Random");
+		p2r.setValueNames("to Bucharest", "to Eforie", "to Neamt", "to Random");
+		p2r.setDependency(PARAM_SCENARIO,
+				Arrays.asList("Romania, from Arad", "Romania, from Lugoj", "Romania, from Fagaras"));
+
+		Parameter p2a = new Parameter(PARAM_DESTINATION_A, "to Port Hedland", "to Albany", "to Melbourne", "to Random");
+		p2a.setValueNames("to Port Hedland", "to Albany", "to Melbourne", "to Random");
+		p2a.setDependency(PARAM_SCENARIO, Arrays.asList("Australia, from Sydney", "Australia, from Random"));
+
 		Parameter p3 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p3.setDefaultValueIndex(5);
 		Parameter p4 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
+		p4.setDependency(PARAM_SEARCH,
+				Arrays.asList("Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*"));
 		Parameter p5 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
+		p5.setDependency(PARAM_SEARCH, Arrays.asList("Greedy Best First", "A*", "Recursive Best First",
+				"Recursive Best First No Loops", "Hill Climbing"));
 		p5.setDefaultValueIndex(1);
-		return new Parameter[] { p1, p2, p3, p4, p5 };
+		return new Parameter[] { p1, p2r, p2a, p3, p4, p5 };
 	}
 
 	/** Is called after each parameter selection change. */
@@ -133,19 +149,36 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		scenario = new Scenario(env, map, agentLoc);
 
 		destinations = new ArrayList<String>();
-		switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION)) {
-		case 0:
-			destinations.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
-			break;
-		case 1:
-			destinations.add(SimplifiedRoadMapOfPartOfRomania.EFORIE);
-			break;
-		case 2:
-			destinations.add(SimplifiedRoadMapOfPartOfRomania.NEAMT);
-			break;
-		case 3:
-			destinations.add(map.randomlyGenerateDestination());
-			break;
+		if (simPaneCtrl.isParamVisible(PARAM_DESTINATION_R)) {
+			switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION_R)) {
+			case 0:
+				destinations.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				break;
+			case 1:
+				destinations.add(SimplifiedRoadMapOfPartOfRomania.EFORIE);
+				break;
+			case 2:
+				destinations.add(SimplifiedRoadMapOfPartOfRomania.NEAMT);
+				break;
+			case 3:
+				destinations.add(map.randomlyGenerateDestination());
+				break;
+			}
+		} else if (simPaneCtrl.isParamVisible(PARAM_DESTINATION_A)) {
+			switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION_A)) {
+			case 0:
+				destinations.add(SimplifiedRoadMapOfAustralia.PORT_HEDLAND);
+				break;
+			case 1:
+				destinations.add(SimplifiedRoadMapOfAustralia.ALBANY);
+				break;
+			case 2:
+				destinations.add(SimplifiedRoadMapOfAustralia.MELBOURNE);
+				break;
+			case 3:
+				destinations.add(map.randomlyGenerateDestination());
+				break;
+			}
 		}
 
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {

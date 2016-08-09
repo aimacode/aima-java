@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -29,6 +30,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	protected Map map;
 	protected String goal;
 	protected List<String> track;
+	protected double scale = 1;
 
 	public MapEnvironmentViewCtrl(StackPane parent) {
 		super(parent);
@@ -60,6 +62,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 		envStateView.getChildren().clear();
 		if (env instanceof MapEnvironment) {
 			MapEnvironment mEnv = (MapEnvironment) env;
+			adjustTransform();
 			// print connections
 			for (String loc1 : map.getLocations()) {
 				Point2D pt1 = map.getPosition(loc1);
@@ -87,23 +90,24 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 			// print locations
 			for (String loc : map.getLocations()) {
 				Point2D point = map.getPosition(loc);
-				envStateView.getChildren().add(new Text(point.getX() + 5, point.getY() + 10, loc));
-				envStateView.getChildren().add(new Circle(point.getX(), point.getY(), 2));
+				Text text = new Text(point.getX() + 5, point.getY() + 10, loc);
+				text.setFont(new Font(12.0 / scale));
+				envStateView.getChildren().add(text);
+				envStateView.getChildren().add(new Circle(point.getX(), point.getY(), 2 / scale));
 			}
 			// print agent locations
 			for (Agent agent : mEnv.getAgents()) {
 				String loc = mEnv.getAgentLocation(agent);
 				if (loc != null) {
 					Point2D pt = map.getPosition(loc);
-					envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 6, Color.RED));
+					envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 8 / scale, Color.RED));
 				}
 			}
 			// print goal
 			if (goal != null) {
 				Point2D pt = map.getPosition(goal);
-				envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 4, Color.GREEN));
+				envStateView.getChildren().add(new Circle(pt.getX(), pt.getY(), 6 / scale, Color.GREEN));
 			}
-			adjustTransform();
 		}
 	}
 
@@ -120,7 +124,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 				yMin = Math.min(yMin, point.getY());
 				yMax = Math.max(yMax, point.getY());
 			}
-			double scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
+			scale = Math.min((envStateView.getWidth() - 150) / (xMax - xMin),
 					(envStateView.getHeight() - 60) / (yMax - yMin));
 
 			envStateView.setScaleY(scale);

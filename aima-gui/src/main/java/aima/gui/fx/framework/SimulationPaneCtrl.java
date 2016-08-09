@@ -17,8 +17,8 @@ import javafx.scene.input.MouseButton;
  * Controller class for simulation panes. It is responsible for maintaining the
  * current parameter settings, the simulation state, the current simulation
  * thread, and for handling events (parameter change events and simulation
- * button events). If not otherwise stated, methods must be called from
- * the FX Application Thread.
+ * button events). If not otherwise stated, methods must be called from the FX
+ * Application Thread.
  * 
  * @author Ruediger Lunde
  */
@@ -74,7 +74,7 @@ public class SimulationPaneCtrl {
 			throw new IllegalStateException("No selected value for parameter " + paramName);
 		return valIdx;
 	}
-	
+
 	public Object getParamValue(String paramName) {
 		int valIdx = getParamValueIndex(paramName);
 		return Parameter.find(params, paramName).get().getValues().get(valIdx);
@@ -86,6 +86,11 @@ public class SimulationPaneCtrl {
 
 	public double getParamAsDouble(String paramName) {
 		return (Double) getParamValue(paramName);
+	}
+	
+	public boolean isParamVisible(String paramName) {
+		int paramIdx = Parameter.indexOf(params, paramName);
+		return paramCombos.get(paramIdx).isVisible();
 	}
 
 	public void setParam(String paramName, int valueIdx) {
@@ -158,6 +163,16 @@ public class SimulationPaneCtrl {
 	private void onParamChanged() {
 		cancelSimulation();
 		setStatus("");
+		// make irrelevant parameters invisible.
+		for (int i = 0; i < params.size(); i++) {
+			String depParam = params.get(i).getDependencyParameter();
+			if (depParam != null) {
+				Parameter para = params.get(i);
+				ComboBox<String> combo = paramCombos.get(i);
+				combo.setVisible(para.getDependencyValues().contains(getParamValue(depParam)));
+			}
+		}
+
 		initMethod.run();
 		setState(State.READY);
 	}
@@ -173,7 +188,7 @@ public class SimulationPaneCtrl {
 			simBtn.setText("Stop");
 		else if (state.get() == State.FINISHED)
 			simBtn.setText("Init");
-		
+
 		boolean disable = state.get() != State.READY && state.get() != State.FINISHED;
 		for (ComboBox<String> combo : paramCombos)
 			if (!combo.getId().equals(PARAM_SIM_SPEED))
@@ -198,7 +213,7 @@ public class SimulationPaneCtrl {
 			cancelSimulation();
 		}
 	}
-	
+
 	private void runSimulation() {
 		try {
 			setState(State.RUNNING);
