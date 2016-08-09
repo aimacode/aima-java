@@ -61,6 +61,7 @@ public class SimulationPaneCtrl {
 			if (ev.getButton() == MouseButton.SECONDARY)
 				setParamValue(PARAM_SIM_SPEED, Integer.MAX_VALUE);
 		});
+		updateParamVisibility();
 		state.addListener((obs, o, n) -> onStateChanged());
 		setState(State.READY);
 	}
@@ -163,16 +164,7 @@ public class SimulationPaneCtrl {
 	private void onParamChanged() {
 		cancelSimulation();
 		setStatus("");
-		// make irrelevant parameters invisible.
-		for (int i = 0; i < params.size(); i++) {
-			String depParam = params.get(i).getDependencyParameter();
-			if (depParam != null) {
-				Parameter para = params.get(i);
-				ComboBox<String> combo = paramCombos.get(i);
-				combo.setVisible(para.getDependencyValues().contains(getParamValue(depParam)));
-			}
-		}
-
+		updateParamVisibility();
 		initMethod.run();
 		setState(State.READY);
 	}
@@ -223,5 +215,16 @@ public class SimulationPaneCtrl {
 			e.printStackTrace();
 		}
 		setState(State.FINISHED);
+	}
+	
+	private void updateParamVisibility() {
+		for (int i = 0; i < params.size(); i++) {
+			String depParam = params.get(i).getDependencyParameter();
+			if (depParam != null) {
+				Parameter para = params.get(i);
+				ComboBox<String> combo = paramCombos.get(i);
+				combo.setVisible(para.getDependencyValues().contains(getParamValue(depParam)));
+			}
+		}
 	}
 }
