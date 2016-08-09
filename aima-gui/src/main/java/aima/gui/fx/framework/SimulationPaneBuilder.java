@@ -84,6 +84,7 @@ public class SimulationPaneBuilder {
 				canvas.widthProperty().bind(canvasPane.widthProperty());
 				canvas.heightProperty().bind(canvasPane.heightProperty());
 				pane.setCenter(canvasPane);
+				pane.setStyle("-fx-background-color: white");
 			} else
 				pane.setCenter(stateView.get());
 		}

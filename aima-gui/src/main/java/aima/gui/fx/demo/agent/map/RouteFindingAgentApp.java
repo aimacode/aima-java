@@ -207,7 +207,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 			env.step();
 			simPaneCtrl.waitAfterStep();
 		}
-		simPaneCtrl.setStatus("" + search.getMetrics());
+		simPaneCtrl.setStatus("Search metrics: " + search.getMetrics());
 		envViewCtrl.notify("pathCost=" + search.getMetrics().get("pathCost"));
 	}
 
