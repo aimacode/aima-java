@@ -420,6 +420,10 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 
 #### Chp 6
 
+#### Chp 8
+* Restructure the AST for FOL to have clean parser calls.
+* Auto-populate the domain while parsing in FOL.
+
 ### LATER
 
 #### Chapter 4 'core' module.
