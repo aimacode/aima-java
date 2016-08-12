@@ -5,7 +5,6 @@ import java.util.Set;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.cellworld.Cell;
@@ -77,12 +76,7 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public EnvironmentState getCurrentState() {
-		return currentState;
-	}
-
-	@Override
-	public EnvironmentState executeAction(Agent agent, Action action) {
+	public void executeAction(Agent agent, Action action) {
 		if (!action.isNoOp()) {
 			Cell<Double> s = currentState.getAgentLocation(agent);
 			double probabilityChoice = r.nextDouble();
@@ -103,8 +97,6 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 				throw new IllegalStateException("Failed to simulate the action="+action+" correctly from s="+s);
 			}
 		}
-
-		return currentState;
 	}
 
 	@Override

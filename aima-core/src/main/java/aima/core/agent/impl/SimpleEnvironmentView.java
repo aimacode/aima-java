@@ -2,7 +2,7 @@ package aima.core.agent.impl;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 
 /**
@@ -13,13 +13,12 @@ import aima.core.agent.EnvironmentView;
  */
 public class SimpleEnvironmentView implements EnvironmentView {
 	@Override
-	public void agentActed(Agent agent, Action action,
-			EnvironmentState resultingState) {
+	public void agentActed(Agent agent, Action action, Environment source) {
 		System.out.println("Agent acted: " + action.toString());
 	}
 
 	@Override
-	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+	public void agentAdded(Agent agent, Environment source) {
 		System.out.println("Agent added.");
 	}
 

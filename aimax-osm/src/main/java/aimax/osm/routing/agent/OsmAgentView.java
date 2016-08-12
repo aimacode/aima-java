@@ -10,10 +10,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
-import aima.gui.framework.AgentAppEnvironmentView;
+import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.OsmMap;
@@ -75,7 +75,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * Reacts on environment changes and updates the tracks.
 	 */
 	@Override
-	public void agentAdded(Agent agent, EnvironmentState resultingState) {
+	public void agentAdded(Agent agent, Environment source) {
 		String loc = getMapEnv().getAgentLocation(agent);
 		updateTrack(agent, loc);
 	}
@@ -84,7 +84,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * Reacts on environment changes and updates the tracks.
 	 */
 	@Override
-	public void agentActed(Agent agent, Action command, EnvironmentState state) {
+	public void agentActed(Agent agent, Action command, Environment source) {
 		String msg = "";
 		if (env.getAgents().size() > 1)
 			msg = "A" + env.getAgents().indexOf(agent) + ": ";

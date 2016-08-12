@@ -11,8 +11,7 @@ import java.util.Map;
  * @author Ciaran O'Reilly
  * @author Andrew Brown
  */
-public class VacuumEnvironmentState implements EnvironmentState,
-		FullyObservableVacuumEnvironmentPercept {
+public class VacuumEnvironmentState implements EnvironmentState, FullyObservableVacuumEnvironmentPercept, Cloneable {
 
 	private Map<String, VacuumEnvironment.LocationState> state;
 	private Map<Agent, String> agentLocations;
@@ -36,18 +35,6 @@ public class VacuumEnvironmentState implements EnvironmentState,
 		this();
 		state.put(VacuumEnvironment.LOCATION_A, locAState);
 		state.put(VacuumEnvironment.LOCATION_B, locBState);
-	}
-
-	/**
-	 * Copy Constructor.
-	 * 
-	 * @param toCopyState
-	 *            Vacuum Environment State to copy.
-	 */
-	public VacuumEnvironmentState(VacuumEnvironmentState toCopyState) {
-		this();
-		this.state.putAll(toCopyState.state);
-		this.agentLocations.putAll(toCopyState.agentLocations);
 	}
 
 	@Override
@@ -76,19 +63,15 @@ public class VacuumEnvironmentState implements EnvironmentState,
 	 * @param location
 	 * @param s
 	 */
-	public void setLocationState(String location,
-			VacuumEnvironment.LocationState s) {
+	public void setLocationState(String location, VacuumEnvironment.LocationState s) {
 		state.put(location, s);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof VacuumEnvironmentState) {
-			VacuumEnvironmentState s = (VacuumEnvironmentState) o;
-			if (this.state.equals(s.state)
-					&& this.agentLocations.equals(s.agentLocations)) {
-				return true;
-			}
+	public boolean equals(Object obj) {
+		if (getClass() == obj.getClass()) {
+			VacuumEnvironmentState s = (VacuumEnvironmentState) obj;
+			return state.equals(s.state) && agentLocations.equals(s.agentLocations);
 		}
 		return false;
 	}
@@ -100,15 +83,22 @@ public class VacuumEnvironmentState implements EnvironmentState,
 	 */
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 13 * hash + (this.state != null ? this.state.hashCode() : 0);
-		hash = 53
-				* hash
-				+ (this.agentLocations != null ? this.agentLocations.hashCode()
-						: 0);
-		return hash;
+		return 3 * state.hashCode() + 13 * agentLocations.hashCode();
 	}
 
+	@Override
+	public VacuumEnvironmentState clone() {
+		VacuumEnvironmentState result = null;
+		try {
+			result = (VacuumEnvironmentState) super.clone();
+			result.state = new LinkedHashMap<String, VacuumEnvironment.LocationState>(state);
+			agentLocations = new LinkedHashMap<Agent, String>(agentLocations);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
+	
 	/**
 	 * Returns a string representation of the environment
 	 * 

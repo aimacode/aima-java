@@ -11,7 +11,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentObject;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
@@ -37,12 +36,11 @@ public abstract class AbstractEnvironment implements Environment,
 	//
 	// PRUBLIC METHODS
 	//
-
+	
 	//
 	// Methods to be implemented by subclasses.
-	public abstract EnvironmentState getCurrentState();
 
-	public abstract EnvironmentState executeAction(Agent agent, Action action);
+	public abstract void executeAction(Agent agent, Action action);
 
 	public abstract Percept getPerceptSeenBy(Agent anAgent);
 
@@ -100,8 +98,8 @@ public abstract class AbstractEnvironment implements Environment,
 		for (Agent agent : agents) {
 			if (agent.isAlive()) {
 				Action anAction = agent.execute(getPerceptSeenBy(agent));
-				EnvironmentState es = executeAction(agent, anAction);
-				updateEnvironmentViewsAgentActed(agent, anAction, es);
+				executeAction(agent, anAction);
+				updateEnvironmentViewsAgentActed(agent, anAction);
 			}
 		}
 		createExogenousChange();
@@ -166,14 +164,13 @@ public abstract class AbstractEnvironment implements Environment,
 
 	protected void updateEnvironmentViewsAgentAdded(Agent agent) {
 		for (EnvironmentView view : views) {
-			view.agentAdded(agent, getCurrentState());
+			view.agentAdded(agent, this);
 		}
 	}
 
-	protected void updateEnvironmentViewsAgentActed(Agent agent, Action action,
-			EnvironmentState state) {
+	protected void updateEnvironmentViewsAgentActed(Agent agent, Action action) {
 		for (EnvironmentView view : views) {
-			view.agentActed(agent, action, state);
+			view.agentActed(agent, action, this);
 		}
 	}
 }

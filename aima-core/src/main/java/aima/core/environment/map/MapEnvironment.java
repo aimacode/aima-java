@@ -2,7 +2,6 @@ package aima.core.environment.map;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicPercept;
@@ -39,12 +38,7 @@ public class MapEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public EnvironmentState getCurrentState() {
-		return state;
-	}
-
-	@Override
-	public EnvironmentState executeAction(Agent agent, Action a) {
+	public void executeAction(Agent agent, Action a) {
 
 		if (!a.isNoOp()) {
 			MoveToAction act = (MoveToAction) a;
@@ -57,8 +51,6 @@ public class MapEnvironment extends AbstractEnvironment {
 						act.getToLocation(), currTD + distance);
 			}
 		}
-
-		return state;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
+import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
@@ -38,8 +38,7 @@ public class OnlineDFSAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("A"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -52,8 +51,7 @@ public class OnlineDFSAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("G"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -70,8 +68,7 @@ public class OnlineDFSAgentTest {
 		aMap = new ExtendableMap();
 		aMap.addBidirectionalLink("A", "B", 1.0);
 		MapEnvironment me = new MapEnvironment(aMap);
-		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("X"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "A");
@@ -97,8 +94,7 @@ public class OnlineDFSAgentTest {
 		aMap.addBidirectionalLink("2,3", "1,3", 1.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(
-				MapFunctionFactory.getActionsFunction(aMap),
+		OnlineDFSAgent agent = new OnlineDFSAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
 				new DefaultGoalTest("3,3"), new MapStepCostFunction(aMap)),
 				MapFunctionFactory.getPerceptToStateFunction());
 		me.addAgent(agent, "1,1");
@@ -115,12 +111,11 @@ public class OnlineDFSAgentTest {
 			envChanges.append(msg).append("->");
 		}
 
-		public void agentAdded(Agent agent, EnvironmentState state) {
+		public void agentAdded(Agent agent, Environment source) {
 			// Nothing.
 		}
 
-		public void agentActed(Agent agent, Action action,
-				EnvironmentState state) {
+		public void agentActed(Agent agent, Action action, Environment source) {
 			envChanges.append(action).append("->");
 		}
 	}
