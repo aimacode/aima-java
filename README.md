@@ -117,4 +117,4 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |21.8|844|Q-Learning-Agent|[QLearningAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java)|
 |22.1|871|HITS|---|
 |23.5|894|CYK-Parse|---|
-|25.9|982|Monte-Carlo-Localization|---|
+|25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics/impl/MonteCarloLocalization.java)|
