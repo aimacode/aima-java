@@ -30,15 +30,15 @@ import aima.core.search.framework.problem.Problem;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * <br>
  * This implementation is based on the template method
- * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
- * provides implementations for the needed primitive operations. In contrast to
- * the code above, here, nodes resulting from node expansion are added to the
- * frontier even if nodes with equal states already exist there. This makes it
- * possible to use the implementation also in combination with priority queue
- * frontiers.
+ * {@link QueueSearch#search(Problem, Queue)} of the superclass and provides
+ * implementations for the needed primitive operations. In contrast to the code
+ * above, here, nodes resulting from node expansion are added to the frontier
+ * even if nodes for the same states already exist there. This makes it possible
+ * to use the implementation also in combination with priority queue frontiers.
+ * This implementation avoids linear costs for frontier node removal (compared
+ * to {@link GraphSearchReducedFrontier}) and gets by without node comparator
+ * knowledge.
  * 
- * @author Ravi Mohan
- * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
 public class GraphSearch extends QueueSearch {
@@ -55,13 +55,12 @@ public class GraphSearch extends QueueSearch {
 
 	/**
 	 * Clears the set of explored states and calls the search implementation of
-	 * <code>QueSearch</code>
+	 * {@link QueueSearch}.
 	 */
 	@Override
 	public List<Action> search(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
-		// expandedNodes = new ArrayList<Node>();
 		return super.search(problem, frontier);
 	}
 
@@ -79,30 +78,39 @@ public class GraphSearch extends QueueSearch {
 
 	/**
 	 * Removes the node at the head of the frontier, adds the corresponding
-	 * state to the explored set, and returns the node. As the template method
-	 * (the caller) calls {@link #isFrontierEmpty() before, the resulting node
-	 * state will always be unexplored yet.
+	 * state to the explored set, and returns the node. Leading nodes of already
+	 * explored states are dropped. So the resulting node state will always be
+	 * unexplored yet.
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
 	protected Node removeFromFrontier() {
+		cleanUpFrontier(); // not really necessary because isFrontierEmpty
+							// should be called before...
 		Node result = frontier.remove();
-		// add the node to the explored set
 		explored.add(result.getState());
 		updateMetrics(frontier.size());
 		return result;
 	}
 
 	/**
-	 * Pops nodes of already explored states from the top end of the frontier
+	 * Pops nodes of already explored states from the head of the frontier
 	 * and checks whether there are still some nodes left.
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty() && explored.contains(frontier.element().getState()))
-			frontier.remove();
+		cleanUpFrontier();
 		updateMetrics(frontier.size());
 		return frontier.isEmpty();
+	}
+
+	/**
+	 * Helper method which removes nodes of already explored states from the head
+	 * of the frontier.
+	 */
+	private void cleanUpFrontier() {
+		while (!frontier.isEmpty() && explored.contains(frontier.element().getState()))
+			frontier.remove();
 	}
 }

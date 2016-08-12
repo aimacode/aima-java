@@ -30,7 +30,7 @@ import aima.core.search.framework.problem.Problem;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * <br>
  * This implementation is based on the template method
- * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
+ * {@link QueueSearch#search(Problem, Queue)} of the superclass and
  * provides implementations for the needed primitive operations. It is the most
  * efficient variant of graph search for breadth first search. But don't expect
  * shortest paths in combination with priority queue frontiers.

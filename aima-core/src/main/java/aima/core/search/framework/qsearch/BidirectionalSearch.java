@@ -37,6 +37,12 @@ public class BidirectionalSearch extends QueueSearch {
 	private final static int ORG_P_IDX = 0;
 	private final static int REV_P_IDX = 1;
 
+	/**
+	 * Controls whether all actions of the reverse problem are tested to be
+	 * reversible. This shouldn't be necessary for a correctly implemented
+	 * bidirectional problem. But in case this is not guaranteed, the test is
+	 * helpful to avoid failures.
+	 */
 	private boolean isReverseActionTestEnabled = true;
 
 	// index 0: original problem, index 2: reverse problem
@@ -102,7 +108,7 @@ public class BidirectionalSearch extends QueueSearch {
 
 			// if the node contains a goal state then return the
 			// corresponding solution
-			if (!earlyGoalCheck && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
+			if (!earlyGoalTest && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
 				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
 
 			// expand the chosen node, adding the resulting nodes to the
@@ -112,7 +118,7 @@ public class BidirectionalSearch extends QueueSearch {
 				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, successor) != null) {
 
-					if (earlyGoalCheck
+					if (earlyGoalTest
 							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(successor)) != null)
 						return getSolution(orgP, successor, nodeFromOtherProblem);
 
@@ -146,19 +152,20 @@ public class BidirectionalSearch extends QueueSearch {
 	}
 
 	/**
-	 * Removes the node at the head of the frontier, adds it to the
-	 * corresponding explored map, and returns the node. As the template method
-	 * (the caller) calls {@link #isFrontierEmpty() before, the resulting node
-	 * state will always be unexplored yet.
+	 * Cleans up the head of the frontier, removes the first node of a
+	 * non-explored state from the head of the frontier, adds it to the
+	 * corresponding explored map, and returns the node.
 	 * 
-	 * @return the node at the head of the frontier.
+	 * @return A node of a not yet explored state.
 	 */
 	@Override
 	protected Node removeFromFrontier() {
+		cleanUpFrontier(); // not really necessary because isFrontierEmpty
+							// should be called before...
 		Node result = frontier.remove();
+		updateMetrics(frontier.size());
 		// add the node to the explored set of the corresponding problem
 		setExplored(result);
-		updateMetrics(frontier.size());
 		return result;
 	}
 
@@ -168,11 +175,18 @@ public class BidirectionalSearch extends QueueSearch {
 	 */
 	@Override
 	protected boolean isFrontierEmpty() {
-		while (!frontier.isEmpty() && isExplored(frontier.element())) {
-			frontier.remove();
-			updateMetrics(frontier.size());
-		}
+		cleanUpFrontier();
+		updateMetrics(frontier.size());
 		return frontier.isEmpty();
+	}
+
+	/**
+	 * Helper method which removes nodes of already explored states from the
+	 * head of the frontier.
+	 */
+	private void cleanUpFrontier() {
+		while (!frontier.isEmpty() && isExplored(frontier.element()))
+			frontier.remove();
 	}
 
 	/**

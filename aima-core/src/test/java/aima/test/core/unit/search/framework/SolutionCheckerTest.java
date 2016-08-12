@@ -40,7 +40,7 @@ public class SolutionCheckerTest {
 		Assert.assertEquals(5, agent.getActions().size());
 		Assert.assertEquals("14",
 				agent.getInstrumentation().getProperty("nodesExpanded"));
-		Assert.assertEquals("3", // "1" for GraphSearchReducedFrontier
+		Assert.assertEquals("4", // "1" for GraphSearchReducedFrontier
 				agent.getInstrumentation().getProperty("queueSize"));
 		Assert.assertEquals("7", // "5" for GraphSearchReducedFrontier
 				agent.getInstrumentation().getProperty("maxQueueSize"));

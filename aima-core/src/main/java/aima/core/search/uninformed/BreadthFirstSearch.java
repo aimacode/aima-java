@@ -55,7 +55,7 @@ public class BreadthFirstSearch implements SearchForActions {
 		implementation = impl;
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.
-		implementation.setEarlyGoalCheck(true);
+		implementation.setEarlyGoalTest(true);
 	}
 
 	@Override
