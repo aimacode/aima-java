@@ -21,6 +21,7 @@ import aima.gui.swing.demo.search.games.ConnectFourApp;
 import aima.gui.swing.demo.search.games.EightPuzzleApp;
 import aima.gui.swing.demo.search.games.NQueensApp;
 import aima.gui.swing.demo.search.games.TicTacToeApp;
+import aima.gui.swing.demo.robotics.MonteCarloLocalizationApp;
 
 /**
  * The all-in-one demo application. Shows everything within one frame.
@@ -39,6 +40,8 @@ public class AimaDemoApp {
 		frame.addApp(ConnectFourApp.class);
 		frame.addApp(MapColoringApp.class);
 
+		frame.addApp(MonteCarloLocalizationApp.class);
+		
 		frame.addProg(TrivialVacuumProg.class);
 		
 		frame.addProg(EightPuzzleProg.class);

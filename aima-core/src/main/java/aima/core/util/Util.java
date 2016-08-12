@@ -20,6 +20,8 @@ public class Util {
 	//
 	private static Random _r = new Random();
 
+	private static final double EPSILON = 0.000000000001;
+	
 	/**
 	 * Get the first element from a list.
 	 * 
@@ -250,10 +252,48 @@ public class Util {
 		}
 		return normalized;
 	}
-
-	public static double generateRandomDoubleBetween(double lowerLimit,
-			double upperLimit) {
-
+	
+	/**
+	 * Generates a random double between two limits. Both limits are inclusive.
+	 * @param lowerLimit the lower limit.
+	 * @param upperLimit the upper limit.
+	 * @return a random double bigger or equals {@code lowerLimit} and smaller or equals {@code upperLimit}.
+	 */
+	public static double generateRandomDoubleBetween(double lowerLimit, double upperLimit) {
 		return lowerLimit + ((upperLimit - lowerLimit) * _r.nextDouble());
+	}
+
+	/**
+	 * Generates a random float between two limits. Both limits are inclusive.
+	 * @param lowerLimit the lower limit.
+	 * @param upperLimit the upper limit.
+	 * @return a random float bigger or equals {@code lowerLimit} and smaller or equals {@code upperLimit}.
+	 */
+	public static float generateRandomFloatBetween(float lowerLimit, float upperLimit) {
+		return lowerLimit + ((upperLimit - lowerLimit) * _r.nextFloat());
+	}
+	
+	/**
+	 * Compares two doubles for equality.
+	 * @param a the first double.
+	 * @param b the second double.
+	 * @return true if both doubles contain the same value or the absolute deviation between them is below {@code EPSILON}.
+	 */
+	public static boolean compareDoubles(double a, double b) {
+		if(Double.isNaN(a) && Double.isNaN(b)) return true;
+		if(!Double.isInfinite(a) && !Double.isInfinite(b)) return Math.abs(a-b) <= EPSILON;
+		return a == b;
+	}
+	
+	/**
+	 * Compares two floats for equality.
+	 * @param a the first floats.
+	 * @param b the second floats.
+	 * @return true if both floats contain the same value or the absolute deviation between them is below {@code EPSILON}.
+	 */
+	public static boolean compareFloats(float a, float b) {
+		if(Float.isNaN(a) && Float.isNaN(b)) return true;
+		if(!Float.isInfinite(a) && !Float.isInfinite(b)) return Math.abs(a-b) <= EPSILON;
+		return a == b;
 	}
 }
