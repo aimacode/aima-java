@@ -75,7 +75,7 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 	
 	/**
 	 * This function loads a map input stream into this Cartesian plot. The two streams have to be two different instances to be thread safe.
-	 * param obstacleInput the stream containing the obstacles.
+	 * @param obstacleInput the stream containing the obstacles.
 	 * @param areaInput the stream containing the areas
 	 * @throws Exception thrown by the implementing class of {@link IGroupParser} when calling {@code loadMap}.
 	 */

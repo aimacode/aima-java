@@ -32,6 +32,10 @@ public final class VirtualRobot implements IMclRobot<Angle,SimpleMove,AbstractRa
 		this.map = map;
 	}
 	
+	/**
+	 * Set the angles at which range readings will be performed.
+	 * @param angles the array of angles to read ranges at.
+	 */
 	public void setRangeReadingAngles(Angle[] angles) {
 		this.rangeReadingAngles = angles;
 	}

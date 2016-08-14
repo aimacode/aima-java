@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -257,16 +256,24 @@ public class Settings {
 	
 	/**
 	 * Updates the value for a given key in the GUI from the stored values.
-	 * param key the key on which the GUI will be updated.
+	 * @param key the key on which the GUI will be updated.
 	 */
 	public void updateGuiSetting(String key) {
 		gui.revertSetting(key);
 	}
 	
+	/**
+	 * Returns the width which a setting has.
+	 * @return the width which a setting has.
+	 */
 	public static int getGuiItemWidth() {
 		return Gui.GUI_ITEM_WIDTH;
 	}
 	
+	/**
+	 * Returns the height which a setting should have.
+	 * @return the height which a setting should have.
+	 */
 	public static int getGuiItemHeight() {
 		return Gui.GUI_ITEM_HEIGHT;
 	}
