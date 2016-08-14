@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 /**
  * This class can manage parameters of an application bundled in a single GUI.<br/>
@@ -279,6 +280,20 @@ public class Settings {
 	}
 	
 	/**
+	 * Enables all GUI buttons.
+	 */
+	public void enableGuiButtons() {
+		gui.enableButtons();
+	}
+	
+	/**
+	 * Disables all GUI buttons.
+	 */
+	public void disableGuiButtons() {
+		gui.disableButtons();
+	}
+	
+	/**
 	 * A basic list that supports add and remove operations. All settings listeners in the list can be notified.
 	 * 
 	 * @author Arno von Borries
@@ -389,6 +404,8 @@ public class Settings {
 		private JPanel inScrollPane;
 		private JScrollPane scrollPane;
 		private HashMap<String,KeyPanel> keyPanels = new HashMap<String,KeyPanel>();
+		private JButton btnSave;
+		private JButton btnAbort;
 		
 		/**
 		 * The constructor generates the GUI.
@@ -400,13 +417,14 @@ public class Settings {
 			setTitle("MCL Settings");
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(null);
+			setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 			
 			JPanel btnPanel = new JPanel();
 			btnPanel.setLayout(null);
 			btnPanel.setBackground(new Color(119,136,153));
 			btnPanel.setBounds(0, this.getHeight() - BTN_PANEL_HEIGHT-WINDOW_TITLE_LINE_HEIGHT, this.getWidth(), BTN_PANEL_HEIGHT);
 			
-			JButton btnSave = new JButton("Save");
+			btnSave = new JButton("Save");
 			btnSave.setLayout(null);
 			btnSave.setBounds(this.getWidth()/2 - BTN_WIDTH - COMPONENT_DISTANCE , (btnPanel.getHeight() - BTN_HEIGHT)/2, BTN_WIDTH, BTN_HEIGHT);
 			btnSave.addActionListener(new ActionListener() {
@@ -416,7 +434,7 @@ public class Settings {
 				}
 			});
 			
-			JButton btnAbort = new JButton("Revert");
+			btnAbort = new JButton("Revert");
 			btnAbort.setLayout(null);
 			btnAbort.setBounds(this.getWidth()/2 + COMPONENT_DISTANCE,(btnPanel.getHeight() - BTN_HEIGHT)/2, BTN_WIDTH, BTN_HEIGHT);
 			btnAbort.addActionListener(new ActionListener() {
@@ -482,6 +500,24 @@ public class Settings {
 		 */
 		protected void showGui() {
 			this.setVisible(true);
+		}
+		
+		protected void enableButtons() {
+			btnSave.setEnabled(true);
+			btnAbort.setEnabled(true);
+			for(SpecialSetting special: specials.values()) {
+				if(special instanceof ButtonPanel) ((ButtonPanel) special).enableButton();
+			}
+			setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		}
+		
+		protected void disableButtons() {
+			btnSave.setEnabled(false);
+			btnAbort.setEnabled(false);
+			for(SpecialSetting special: specials.values()) {
+				if(special instanceof ButtonPanel) ((ButtonPanel) special).disableButton();
+			}
+			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
 		
 		/**

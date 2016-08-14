@@ -119,6 +119,16 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 	}
 	
 	/**
+	 * Executes a runnable in the background without freezing the GUI. Therefore it disables and re-enables the GUI's buttons to prevent concurrency.
+	 * @param runnable the code to be run in background.
+	 */
+	public void runInBackground(Runnable runnable) {
+		gui.saveButtonState();
+		gui.enableButtons(gui.buttonStateInit);
+		backgroundThread.execute(runnable);//TODO: enable/disbale buttons!
+	}
+	
+	/**
 	 * The core manages the particle cloud size and issues commands to the robot whilst updating the GUI according to the results of these commands.
 	 * 
 	 */
