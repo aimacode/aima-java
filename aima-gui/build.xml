@@ -28,14 +28,14 @@
 	</target>
 
 	<target name="aima-gui.compile-all" depends="aima-core.compile-all,aima-gui.makedirs">
-		<javac srcdir="${aima-gui.dir.src}/main" 
+		<javac srcdir="${aima-gui.dir.src}/main"
+			excludes="java/aima/gui/fx/**"
 			destdir="${aima-gui.dir.build.bin}/main" 
 			classpathref="aima-gui.classpath"
 			debug="${aima-core.compiler.debug}"
 			debuglevel="${aima-core.compiler.debuglevel}"
 			source="${aima-core.compiler.source}"
-		    target="${aima-core.compiler.target}"
-		/>
+		    target="${aima-core.compiler.target}" />
 	</target>
 
 	<target name="aima-gui.makedocs" depends="aima-gui.compile-all">
