@@ -85,8 +85,8 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		    	if(e.getKeyCode() == KeyEvent.VK_ENTER && angles != null) {
 		    		try{
 		    			//delete the degree sign if it is included in the text:
-		    			if(jTFChangeAngle.getText().contains("°")) {
-		    				jTFChangeAngle.setText(jTFChangeAngle.getText().replace("°", ""));
+		    			if(jTFChangeAngle.getText().contains("\u00BA")) {
+		    				jTFChangeAngle.setText(jTFChangeAngle.getText().replace("\u00BA", ""));
 		    			}
 		    			//if dots and commas are in the text field a NumberFormatException will be thrown
 		    			if(jTFChangeAngle.getText().contains(",") && jTFChangeAngle.getText().contains(".")) {
@@ -104,7 +104,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		    		}
 		    		catch(NumberFormatException e1) {
 		    			JOptionPane.showMessageDialog(null, "Please enter a valid number!");
-		    			jTFChangeAngle.setText(angles[selectedAngleIndex] + "°");
+		    			jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
 		    		}
 		    	}
 		    }
@@ -140,13 +140,13 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 			@Override
 		    public void valueChanged(ListSelectionEvent e) {
 		    	selectedAngleIndex = jTAngles.getSelectedRow();  
-		    	jTFChangeAngle.setText(angles[selectedAngleIndex] + "°");
+		    	jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
 		    	repaint();
 		    }
 		});
 		
 		scrollPane = new JScrollPane(jTAngles, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(340, 5, 100, this.getHeight() - 40);
+		scrollPane.setBounds(340, 5, 100, getHeight() - 40);
 		jTAngles.setBounds(0,0, scrollPane.getWidth(), scrollPane.getHeight());
 		
 		add(btnDeleteAngle);		
@@ -157,7 +157,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		add(scrollPane);
 		
 		for(double angle: angles) {
-			angleModel.add(angle + "°");
+			angleModel.add(angle + "\u00BA");
 		}
 	}
 	
@@ -209,8 +209,8 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		angles[angles.length -1] = 0.0d;
 		angleModel.add(angles[angles.length -1] + "");
 		selectedAngleIndex = angles.length - 1;
-		jTFChangeAngle.setText(angles[selectedAngleIndex] + "°");
-		this.jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT + this.angles.length);
+		jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
+		jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT + angles.length);
 		repaint();
 	}
 	
@@ -223,7 +223,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 			angles = null;
 			jTFChangeAngle.setText("");
 			angleModel.removeValueAt(0);
-			this.jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT +"0");
+			jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT +"0");
 			btnDeleteAngle.setEnabled(false);
 		} else {
 			double[] tmpAngles = new double[angles.length -1];
@@ -237,8 +237,8 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 			angles = tmpAngles;
 			angleModel.removeValueAt(selectedAngleIndex);
 			selectedAngleIndex = 0;
-			jTFChangeAngle.setText(angles[selectedAngleIndex] + "°");
-			this.jLAngleCount.setText("Count of Angles: " + angles.length);
+			jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
+			jLAngleCount.setText("Count of Angles: " + angles.length);
 		}
 		repaint();
 	}
@@ -266,7 +266,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 				drawAngle(g2d, i);
 			}
 			//Selected angle has to be drawn last:
-			g2d.setColor(Color.RED);//green new Color(0, 150 , 0)
+			g2d.setColor(Color.RED);
 			drawAngle(g2d, selectedAngleIndex);
 		}
 	}
@@ -317,7 +317,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	private void updateGui() {
 		angleModel.clear();
 		selectedAngleIndex = 0;
-		jTFChangeAngle.setText(GuiBase.getFormat().format(angles[selectedAngleIndex]) + "°");
+		jTFChangeAngle.setText(GuiBase.getFormat().format(angles[selectedAngleIndex]) + "\u00BA");
 		for(int i = 0; i < angles.length; i++) angleModel.add(angles[i] + "");
 		repaint();
 	}
@@ -327,8 +327,8 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	 * @param angleIndex the index of the angle.
 	 */
 	private void updateGui(int angleIndex) {
-		jTFChangeAngle.setText(GuiBase.getFormat().format(angles[angleIndex]) + "°");
-		angleModel.setValueAt(angleIndex, angles[angleIndex] + "°");
+		jTFChangeAngle.setText(GuiBase.getFormat().format(angles[angleIndex]) + "\u00BA");
+		angleModel.setValueAt(angleIndex, angles[angleIndex] + "\u00BA");
 		repaint();
 	}
 	
@@ -390,7 +390,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 				if(index != -1) {
 					selectedAngleIndex = index;
 					repaint();
-					jTFChangeAngle.setText(angles[selectedAngleIndex] + "°");
+					jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
 				}
 			}   
 	    }
