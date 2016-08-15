@@ -110,7 +110,7 @@ public final class Vector2D {
 	}
 	
 	/**
-	 * Checks whether this vector and another vector are parallel to each other or rotated by 180° to each other.<br/>
+	 * Checks whether this vector and another vector are parallel to each other or rotated by 180 degrees to each other.<br/>
 	 * If one of the vectors is the zero vector this method always returns {@code true}.
 	 * @param op2 the second vector.
 	 * @return {@code true} if the two vectors are parallel.
