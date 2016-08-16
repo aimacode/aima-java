@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import aima.core.probability.bayes.approx.ParticleFiltering;
 import aima.core.robotics.IMcl;
 import aima.core.robotics.IMclMap;
 import aima.core.robotics.IMclRobot;
@@ -16,6 +17,14 @@ import aima.core.robotics.datatypes.IMclVector;
 import aima.core.robotics.datatypes.RobotException;
 
 /**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page TODO.<br>
+ * <br>
+ * 
+ * As stated on page TODO a Monte-Carlo-Localization is an extension of a {@link ParticleFiltering}.
+ * This is true for the functionality but this implementation can not extend the implementation of the ParticleFiltering
+ * as both implementations only contain the actual algorithm as a single method. (Thus it is divided into 4 additonal methods in this class.)
+ * 
+ * 
  * The interface {@link IMcl} that defines the functionality for the Monte-Carlo-Localization is implemented with this class.
  * It is possible to reduce the steps needed for the localization by tweaking the parameters {@code initialParticleCount}, {@code weightCutOff} and {@code maxDistance}.
  * @author Arno von Borries
@@ -122,6 +131,7 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 				particle.setWeight(0.0f);
 			}
 		}
+		//Sum-Normalize values:
 		float previousWeight = 0.0f;
 		for(Particle<P,V,M> particle: particleCloud) {
 			if(particle.getWeight() > weightCutOff) {
