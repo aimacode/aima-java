@@ -49,6 +49,6 @@ public abstract class AbstractRangeReading implements IMclRangeReading<AbstractR
 	
 	@Override
 	public String toString() {
-		return String.format("%.2f", value);
+		return String.format("%.2f", value) + "@" + String.format("%.2f", angle.getDegreeValue()) + "\u00BA";
 	}
 }

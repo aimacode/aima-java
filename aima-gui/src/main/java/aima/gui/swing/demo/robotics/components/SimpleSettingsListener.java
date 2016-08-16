@@ -74,23 +74,30 @@ public final class SimpleSettingsListener extends AbstractSettingsListener {
 	}
 	
 	@Override
-	public void notifySetting(String key, String value) {
-		super.notifySetting(key, value);
-		final double valueNumber = Double.parseDouble(value);
-		if(key.equals(SENSOR_RANGE_KEY)) {
-			robot.setSensorRange(valueNumber);
-		} else if(key.equals(MOVE_ROTATION_NOISE_KEY)) {
-			SimpleMove.setRotationNoise(valueNumber);
-		} else if(key.equals(MOVE_DISTANCE_NOISE_KEY)) {
-			SimpleMove.setMovementNoise(valueNumber);
-		} else if(key.equals(RANGE_READING_NOISE_KEY)) {
-			SimpleRangeReading.setRangeNoise(valueNumber);
-		} else if(key.equals(MIN_MOVE_DISTANCE_KEY)) {
-			robot.setMinMoveDistance(valueNumber);
-		} else if(key.equals(MAX_MOVE_DISTANCE_KEY)) {
-			robot.setMaxMoveDistance(valueNumber);
-		} else if(key.equals(BAD_DELTA_KEY)) {
-			robot.setBadDelta(valueNumber);
+	public boolean notifySetting(String key, String value) {
+		final boolean superCall = super.notifySetting(key, value);
+		try {
+			final double valueNumber = Double.parseDouble(value);
+			if(key.equals(SENSOR_RANGE_KEY)) {
+				robot.setSensorRange(valueNumber);
+			} else if(key.equals(MOVE_ROTATION_NOISE_KEY)) {
+				SimpleMove.setRotationNoise(valueNumber);
+			} else if(key.equals(MOVE_DISTANCE_NOISE_KEY)) {
+				SimpleMove.setMovementNoise(valueNumber);
+			} else if(key.equals(RANGE_READING_NOISE_KEY)) {
+				SimpleRangeReading.setRangeNoise(valueNumber);
+			} else if(key.equals(MIN_MOVE_DISTANCE_KEY)) {
+				robot.setMinMoveDistance(valueNumber);
+			} else if(key.equals(MAX_MOVE_DISTANCE_KEY)) {
+				robot.setMaxMoveDistance(valueNumber);
+			} else if(key.equals(BAD_DELTA_KEY)) {
+				robot.setBadDelta(valueNumber);
+			} else {
+				throw new NumberFormatException();
+			}
+		} catch(NumberFormatException e) {
+			return superCall;
 		}
+		return true;
 	}
 }

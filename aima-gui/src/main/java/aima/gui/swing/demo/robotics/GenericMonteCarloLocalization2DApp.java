@@ -125,7 +125,13 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 	public void runInBackground(Runnable runnable) {
 		gui.saveButtonState();
 		gui.enableButtons(gui.buttonStateInit);
-		backgroundThread.execute(runnable);//TODO: enable/disbale buttons!
+		backgroundThread.execute(new Runnable() {
+			@Override
+			public void run() {
+				runnable.run();
+				gui.enableButtons(gui.previousButtonState);
+			}
+		});
 	}
 	
 	/**
@@ -262,11 +268,19 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		}
 
 		@Override
-		public void notifySetting(String key, String value) {
-			final int valueNumber = Integer.parseInt(value);
-			if(key.equals(AbstractSettingsListener.PARTICLE_COUNT_KEY)) {
-				updateCloudSize(valueNumber);
+		public boolean notifySetting(String key, String value) {
+			if(gui.isVisible()) gui.runNotifyClean.run();
+			try {
+				final int valueNumber = Integer.parseInt(value);
+				if(key.equals(AbstractSettingsListener.PARTICLE_COUNT_KEY)) {
+					updateCloudSize(valueNumber);
+				} else {
+					throw new NumberFormatException();
+				}
+			} catch(NumberFormatException e) {
+				return false;
 			}
+			return true;
 		}
 	}
 	
@@ -376,12 +390,19 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		protected Runnable runClean = new Runnable() {
 			@Override
 			public void run() {
+				runNotifyClean.run();
+				core.generateParticles();
+				enableButtons(gui.buttonStateNormal);
+			}
+		};
+		protected Runnable runNotifyClean = new Runnable() {
+			@Override
+			public void run() {
 				movesModel.clear();
 				md.clearMap();
-				core.generateParticles();
+				jTMoves.setRowHeight(1);
 				localizationResult.setText("Result:");
 				jtARangeReading.setText("");
-				enableButtons(gui.buttonStateNormal);
 			}
 		};
 		
@@ -389,7 +410,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		private double mapHeight = 1.0d;
 		private double translateX = 0.0d;
 		private double translateY = 0.0d;
-		
+		private int moveRowHeight;
+		private int horizontalScrollValue;
+		private int verticalScrollValue;
 		/**
 		 * Creates all components and action listeners for the GUI.
 		 */
@@ -493,11 +516,13 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			
 			md = new MapDrawer();
 			
-			jSliderZoom = new JSlider(1, 100);
+			jSliderZoom = new JSlider(1, 200);
             jSliderZoom.setValue(1);
             jSliderZoom.addChangeListener(new ChangeListener() { 
             	@Override
                 public void stateChanged(ChangeEvent e) {
+            		horizontalScrollValue = horizontalScroll.getValue();
+            		verticalScrollValue = verticalScroll.getValue();
                 	md.scaleMap();
                  }
              });
@@ -527,7 +552,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			jTMoves = new JTable(movesModel);
 			jTMoves.setFillsViewportHeight(true);
 			movesScrollPane = new JScrollPane(jTMoves, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			jTMoves.setRowHeight((int) (jTMoves.getRowHeight() * 2.5d));
+			moveRowHeight = jTMoves.getRowHeight();
             
 			enableButtons(buttonStateStart);
 			for(JButton button:buttons) leftPanel.add(button);
@@ -575,6 +600,8 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					jSliderZoom.setBounds(0, horizontalScroll.getY() + MAP_CLEARANCE, md.getWidth(), MAP_CLEARANCE - CLEARANCE);
 					
 					//Invalidate the values: Scrollbars only repaint on a change of these values!
+					horizontalScrollValue = horizontalScroll.getValue();
+					verticalScrollValue = verticalScroll.getValue();
 					horizontalScroll.setValues(-1, 0, -1, -1);
 					verticalScroll.setValues(-1, 0, -1, -1);
 					md.scaleMap();
@@ -613,6 +640,8 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 				GuiBase.showMessageBox("Map size could not be calculated!");
 				return;
 			}
+			horizontalScrollValue = 0;
+			verticalScrollValue = 0;
 			md.drawMap();
 			md.scaleMap();
 			enableButtons(buttonStateNormal);
@@ -669,6 +698,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 * @param move the move to be displayed.
 		 */
 		protected void displayMove(final M move) {
+			final int size = move.toString().split("<BR>").length;
+			final int rowHeight = (int) (size * 1.25d * moveRowHeight);
+			if(rowHeight > jTMoves.getRowHeight()) jTMoves.setRowHeight(rowHeight);
 			movesModel.add("<HTML>" + move.toString() + "</HTML>");
 		}
 		
@@ -884,7 +916,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 				} else {
 					minScaleFactor = calcXScaleFactor - 0.0005d;
 				}
-				realScaleFactor = jSliderZoom.getValue() == 1 ? minScaleFactor : jSliderZoom.getValue();
+				realScaleFactor = jSliderZoom.getValue() == 1 ? minScaleFactor : jSliderZoom.getValue() / 10 + 1;
 				double realMapWidth = mapWidth * realScaleFactor;
 				double realMapHeight = mapHeight * realScaleFactor;
 				scrollListener.setNotify(false);
@@ -893,16 +925,16 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					horizontalScroll.setValues(0,0,0,0);
 				} else {
 					realMapWidth *= 1.2d;
-					horizontalScroll.setValues((int) (horizontalScroll.getValue() + getWidth() > realMapWidth ? realMapWidth - getWidth() : horizontalScroll.getValue()), getWidth(), 0, (int) realMapWidth);
-					horizontalScroll.setEnabled(true);
+					horizontalScroll.setValues((int) (horizontalScrollValue + getWidth() > realMapWidth ? realMapWidth - getWidth() : horizontalScrollValue), getWidth(), 0, (int) realMapWidth);
+					if(!horizontalScroll.isEnabled()) horizontalScroll.setEnabled(true);
 				}
 				if(realMapHeight <= getHeight()) {
 					verticalScroll.setEnabled(false);
 					verticalScroll.setValues(0,0,0,0);
 				} else {
 					realMapHeight *= 1.2d;
-					verticalScroll.setValues((int) (verticalScroll.getValue() + getHeight() > realMapHeight ? realMapHeight - getHeight() : verticalScroll.getValue()), getHeight(), 0, (int) realMapHeight);
-					verticalScroll.setEnabled(true);
+					verticalScroll.setValues((int) (verticalScrollValue + getHeight() > realMapHeight ? realMapHeight - getHeight() : verticalScrollValue), getHeight(), 0, (int) realMapHeight);
+					if(!verticalScroll.isEnabled()) verticalScroll.setEnabled(true);
 				}
 				scrollListener.setNotify(true);
 	        	repaint();
@@ -915,7 +947,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					Graphics2D g2d = (Graphics2D) gra;
 					g2d.translate(translateX*realScaleFactor-horizontalScroll.getValue(),translateY*realScaleFactor-verticalScroll.getValue());
 					g2d.scale(realScaleFactor, realScaleFactor);
-					//draw the map:
+					//Draw the map:
 					Iterator<IGeometric2D> areaIterator = map.getAreas();
 					Iterator<IGeometric2D> obstacleIterator = map.getObstacles();
 					while (areaIterator.hasNext()) {

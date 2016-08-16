@@ -128,7 +128,7 @@ public class GuiBase {
 	}
 	
 	/**
-	 * Shows a message box without blocking.
+	 * Shows a message box with a OK button without blocking.
 	 * @param message the string to be displayed.
 	 */
 	public static void showMessageBox(final String message) {
@@ -136,7 +136,7 @@ public class GuiBase {
 	}
 	
 	/**
-	 * Show a message box.
+	 * Show a message box without blocking.
 	 * @param message the message to be shown.
 	 * @param buttonVisible true if the OK button should be visible.
 	 */

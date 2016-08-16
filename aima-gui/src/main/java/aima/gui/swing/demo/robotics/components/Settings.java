@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
+import aima.gui.swing.demo.robotics.util.GuiBase;
+
 /**
  * This class can manage parameters of an application bundled in a single GUI.<br/>
  * A single parameter is described by a set of strings. The first string is the value, which will be saved to and restored from a file and displayed in a text field.
@@ -305,8 +307,12 @@ public class Settings {
 		private LinkedList<ISettingsListener> listeners = new LinkedList<ISettingsListener>();
 		
 		private void notify(String key, String value) {
+			boolean success = true;
 			for(ISettingsListener listener: listeners) {
-				listener.notifySetting(key, value);
+				success = listener.notifySetting(key, value) ? success : false;
+			}
+			if(!success) {
+				GuiBase.showMessageBox("A setting may be mallformed.");
 			}
 		}
 		
@@ -333,8 +339,9 @@ public class Settings {
 		 * This method will be called to notify the settings listener.
 		 * @param key the key to which the value belongs.
 		 * @param value the value that (may have) changed.
+		 * @return false if the setting was not used.
 		 */
-		public void notifySetting(String key, String value);
+		public boolean notifySetting(String key, String value);
 	}
 	
 	/**
@@ -450,7 +457,7 @@ public class Settings {
 			
 			scrollPane = new JScrollPane(inScrollPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			scrollPane.setBounds(0,0,this.getWidth() - WINDOW_TITLE_LINE_WIDTH , this.getHeight()- btnPanel.getHeight() - WINDOW_TITLE_LINE_HEIGHT);
-			
+
 			getContentPane().add(btnPanel);
 			getContentPane().add(scrollPane);
 			btnPanel.add(btnSave);

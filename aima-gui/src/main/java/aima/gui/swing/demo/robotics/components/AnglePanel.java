@@ -18,7 +18,6 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -41,9 +40,11 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	private static final long serialVersionUID = 1L;
 	private static final String ANGLES_KEY = "ANGLES";
 	private static final String JL_ANGLE_TEXT ="Selected Angle:";
-	private static final String JL_NUMBER_OF_ANGELS_TEXT = "Number of Angles: ";
+	private static final String JL_NUMBER_OF_ANGLES_TEXT = "Angle Count: ";
 	private static final String BTN_ADD_ANGLE_TEXT = "Add Angle";
 	private static final String BTN_DELETE_ANGLE_TEXT = "Delete Angle";
+	private static final String BTN_SHIFT_ANGLE_CREATE = "Add Angle";
+	private static final String TEXT_SHIFT_ANGLE = "Shift Angle by:";
 	private static final String ANGLES_COLUMN_NAME = "Angles";
 	private static final int RADIUS = 75;
 	
@@ -56,6 +57,9 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	private JButton btnAddAngle;
 	private JScrollPane scrollPane;
 	private JButton btnDeleteAngle;
+	private JTextField jTShiftValueAngle;
+	private JButton btnShiftAngleCreate;
+	private JLabel jLShiftAngle;
 	private ListTableModel angleModel = new ListTableModel(ANGLES_COLUMN_NAME);
 	private JTable jTAngles;
 	private int selectedAngleIndex;
@@ -84,33 +88,43 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		    public void keyPressed(KeyEvent e) {
 		    	if(e.getKeyCode() == KeyEvent.VK_ENTER && angles != null) {
 		    		try{
-		    			//delete the degree sign if it is included in the text:
-		    			if(jTFChangeAngle.getText().contains("\u00BA")) {
-		    				jTFChangeAngle.setText(jTFChangeAngle.getText().replace("\u00BA", ""));
-		    			}
-		    			//if dots and commas are in the text field a NumberFormatException will be thrown
-		    			if(jTFChangeAngle.getText().contains(",") && jTFChangeAngle.getText().contains(".")) {
-		    				throw new NumberFormatException();
-		    			}
-		    			//if the number contains only a comma it will be replaced with a dot
-		    			if(jTFChangeAngle.getText().contains(",")) {
-		    				jTFChangeAngle.setText(jTFChangeAngle.getText().replace(",", "."));
-		    			}
-		    			double ang = Double.parseDouble(jTFChangeAngle.getText());
-		    			angles[selectedAngleIndex] = ang % 360;
-		    			if(angles[selectedAngleIndex] > 180.0d) angles[selectedAngleIndex] -= 360.0d;
-		    			else if(angles[selectedAngleIndex] < -180.0d) angles[selectedAngleIndex] += 360.0d;
+		    			angles[selectedAngleIndex] = validateInput(jTFChangeAngle);
 		    			updateGui(selectedAngleIndex);
 		    		}
-		    		catch(NumberFormatException e1) {
-		    			JOptionPane.showMessageDialog(null, "Please enter a valid number!");
+		    		catch(NumberFormatException f) {
+		    			GuiBase.showMessageBox("Please enter a valid number!");
 		    			jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
 		    		}
 		    	}
 		    }
 		});
 		
-		jLAngleCount = new JLabel(JL_NUMBER_OF_ANGELS_TEXT + "0");
+		jTShiftValueAngle = new JTextField();
+		jTShiftValueAngle.setLayout(null);
+		jTShiftValueAngle.setBounds(5, 220, 100, 20);
+		
+		btnShiftAngleCreate = new JButton(BTN_SHIFT_ANGLE_CREATE);
+		btnShiftAngleCreate.setLayout(null);
+		btnShiftAngleCreate.setBounds(5, 245, 100, 30);
+		btnShiftAngleCreate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					final double ang = validateInput(jTShiftValueAngle);
+					final double angleValue = angles[selectedAngleIndex];
+					addAngle();
+					angles[selectedAngleIndex] = angleValue + ang;
+					updateGui(selectedAngleIndex);
+				} catch(NumberFormatException e) {
+					GuiBase.showMessageBox("Please enter a valid number!");
+				}
+			}
+		});
+		jLShiftAngle = new JLabel(TEXT_SHIFT_ANGLE);
+		jLShiftAngle.setLayout(null);
+		jLShiftAngle.setBounds(5 , 195 , 100, 20);
+		
+		jLAngleCount = new JLabel(JL_NUMBER_OF_ANGLES_TEXT + "0");
 		jLAngleCount.setBounds(8,60 + jTFChangeAngle.getHeight(), 100, 30);
 		jLAngleCount.setLayout(null);
 		
@@ -155,10 +169,32 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		add(jTFChangeAngle);
 		add(btnAddAngle);
 		add(scrollPane);
-		
+		add(btnShiftAngleCreate);
+		add(jTShiftValueAngle);
+		add(jLShiftAngle);
 		for(double angle: angles) {
 			angleModel.add(angle + "\u00BA");
 		}
+	}
+	
+	private double validateInput(JTextField textField) {
+		//delete the degree sign if it is included in the text:
+		if(textField.getText().contains("\u00BA")) {
+			textField.setText(textField.getText().replace("\u00BA", ""));
+		}
+		//if dots and commas are in the text field a NumberFormatException will be thrown
+		if(textField.getText().contains(",") && textField.getText().contains(".")) {
+			throw new NumberFormatException();
+		}
+		//if the number contains only a comma it will be replaced with a dot
+		if(textField.getText().contains(",")) {
+			textField.setText(textField.getText().replace(",", "."));
+		}
+		double ang = Double.parseDouble(jTShiftValueAngle.getText());
+		ang = ang % 360;
+		if(ang > 180.0d) ang -= 360.0d;
+		else if(ang < -180.0d) ang += 360.0d;
+		return ang;
 	}
 	
 	/**
@@ -210,7 +246,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		angleModel.add(angles[angles.length -1] + "");
 		selectedAngleIndex = angles.length - 1;
 		jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
-		jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT + angles.length);
+		jLAngleCount.setText(JL_NUMBER_OF_ANGLES_TEXT + angles.length);
 		repaint();
 	}
 	
@@ -223,7 +259,7 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 			angles = null;
 			jTFChangeAngle.setText("");
 			angleModel.removeValueAt(0);
-			jLAngleCount.setText(JL_NUMBER_OF_ANGELS_TEXT +"0");
+			jLAngleCount.setText(JL_NUMBER_OF_ANGLES_TEXT +"0");
 			btnDeleteAngle.setEnabled(false);
 		} else {
 			double[] tmpAngles = new double[angles.length -1];
@@ -318,7 +354,8 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		angleModel.clear();
 		selectedAngleIndex = 0;
 		jTFChangeAngle.setText(GuiBase.getFormat().format(angles[selectedAngleIndex]) + "\u00BA");
-		for(int i = 0; i < angles.length; i++) angleModel.add(angles[i] + "");
+		for(int i = 0; i < angles.length; i++) angleModel.add(angles[i] + "\u00BA");
+		jLAngleCount.setText(JL_NUMBER_OF_ANGLES_TEXT + angleModel.getRowCount());
 		repaint();
 	}
 	

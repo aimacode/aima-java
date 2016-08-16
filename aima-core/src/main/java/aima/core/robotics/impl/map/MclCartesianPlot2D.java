@@ -168,8 +168,7 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 
 	@Override
 	public R rayCast(P pose) {
-		final double angle = pose.getHeading();
-		Ray2D ray = new Ray2D(new Point2D(pose.getX(), pose.getY()), new Vector2D(Math.cos(angle),Math.sin(angle)));
+		Ray2D ray = new Ray2D(new Point2D(pose.getX(), pose.getY()), Vector2D.calculateFromPolar(1, -pose.getHeading()));
 		return rangeReadingFactory.getRangeReading(obstacles.rayCast(ray));
 	}
 

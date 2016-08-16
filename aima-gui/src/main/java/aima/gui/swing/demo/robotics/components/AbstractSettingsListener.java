@@ -79,16 +79,23 @@ public abstract class AbstractSettingsListener implements ISettingsListener {
 	}
 	
 	@Override
-	public void notifySetting(String key, String value) {
-		final double valueNumber = Double.parseDouble(value);
-		if(key.equals(REMEMBER_FACTOR_KEY)) {
-			mcl.setRememberFactor(valueNumber);
-		} else if(key.equals(SENSOR_RANGE_KEY)) {
-			map.setSensorRange(valueNumber);
-		} else if(key.equals(MIN_WEIGHT_KEY)) {
-			mcl.setWeightCutOff(valueNumber);
-		} else if(key.equals(MAX_DISTANCE_KEY)) {
-			mcl.setMaxDistance(valueNumber);
+	public boolean notifySetting(String key, String value) {
+		try {
+			final double valueNumber = Double.parseDouble(value);
+			if(key.equals(REMEMBER_FACTOR_KEY)) {
+				mcl.setRememberFactor(valueNumber);
+			} else if(key.equals(SENSOR_RANGE_KEY)) {
+				map.setSensorRange(valueNumber);
+			} else if(key.equals(MIN_WEIGHT_KEY)) {
+				mcl.setWeightCutOff(valueNumber);
+			} else if(key.equals(MAX_DISTANCE_KEY)) {
+				mcl.setMaxDistance(valueNumber);
+			} else {
+				throw new NumberFormatException();
+			}
+		} catch(NumberFormatException e) {
+			return false;
 		}
+		return true;
 	}
 }

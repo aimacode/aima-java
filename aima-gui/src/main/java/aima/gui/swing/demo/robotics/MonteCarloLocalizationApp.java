@@ -54,10 +54,15 @@ public class MonteCarloLocalizationApp {
 		File settingsFile = args.length > 0 ? new File(args[0]) : DEFAULT_SETTINGS_FILE;
 		MonteCarloLocalizationApp app = new MonteCarloLocalizationApp(settingsFile);
 		app.constructApplicationFrame();
+		app.notifyAllListeners();
 		app.show();
 		
 	}
 	
+	protected void notifyAllListeners() {
+		settingsGui.notifyAllListeners();
+	}
+
 	/**
 	 * Loads the provided settings file into a new {@link Settings} object.
 	 * @param settingsFile the file containing the settings to be loaded. 
@@ -81,7 +86,6 @@ public class MonteCarloLocalizationApp {
 		settingsGui = buildSettings(settingsFile);
 		initialize();
 		robotGui.loadSettings(settingsGui);
-		settingsGui.notifyAllListeners();
 		settingsGui.buildGui();
 	}
 	
@@ -112,9 +116,7 @@ public class MonteCarloLocalizationApp {
 		try {
 			map.loadMap(this.getClass().getResourceAsStream("virtual_environment.svg"),this.getClass().getResourceAsStream("virtual_environment.svg"));
 			app.gui.createMap();//bad style.
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { }
 	}
 	
 	/**
