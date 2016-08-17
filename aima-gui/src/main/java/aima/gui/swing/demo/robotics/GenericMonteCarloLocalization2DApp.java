@@ -225,6 +225,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			gui.displayParticles();
 			return mcl.getPose();
 		}
+		
 		/**
 		 * Called upon pressing "Auto Locate". This performs the individual steps of the Monte-Carlo-Localization algorithm looped one after the other until 
 		 * the terminating condition is met, that is, the robot is located with sufficient accuracy. 
@@ -553,7 +554,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			jTMoves.setFillsViewportHeight(true);
 			movesScrollPane = new JScrollPane(jTMoves, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			moveRowHeight = jTMoves.getRowHeight();
-            
+			
 			enableButtons(buttonStateStart);
 			for(JButton button:buttons) leftPanel.add(button);
 			leftPanel.add(localizationResult);
@@ -591,6 +592,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					
 					movesScrollPane.setBounds(0, jtARangeReading.getY() + jtARangeReading.getHeight() + CLEARANCE, rightPanel.getWidth(), rightPanel.getHeight() / 2 - CLEARANCE);
 					jTMoves.setSize(movesScrollPane.getWidth(), movesScrollPane.getHeight());
+					movesScrollPane.getVerticalScrollBar().setValue(movesScrollPane.getVerticalScrollBar().getMaximum()-movesScrollPane.getVerticalScrollBar().getVisibleAmount());
 					
 					md.setSize(centerPanel.getWidth() - MAP_CLEARANCE, centerPanel.getHeight() - 2 * MAP_CLEARANCE - CLEARANCE);
 					
@@ -702,6 +704,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			final int rowHeight = (int) (size * 1.25d * moveRowHeight);
 			if(rowHeight > jTMoves.getRowHeight()) jTMoves.setRowHeight(rowHeight);
 			movesModel.add("<HTML>" + move.toString() + "</HTML>");
+			movesScrollPane.getVerticalScrollBar().setValue(movesScrollPane.getVerticalScrollBar().getMaximum()-movesScrollPane.getVerticalScrollBar().getVisibleAmount());
 		}
 		
 		/**

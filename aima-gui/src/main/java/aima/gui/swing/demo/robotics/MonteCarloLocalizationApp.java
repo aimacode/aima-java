@@ -56,7 +56,6 @@ public class MonteCarloLocalizationApp {
 		app.constructApplicationFrame();
 		app.notifyAllListeners();
 		app.show();
-		
 	}
 	
 	protected void notifyAllListeners() {
@@ -70,14 +69,23 @@ public class MonteCarloLocalizationApp {
 	 */
 	protected static Settings buildSettings(File settingsFile) {
 		Settings settingsGui = new Settings();
-		if(settingsFile.isFile() && settingsFile.canRead()) {
-			settingsGui.loadSettings(settingsFile);
+		if(settingsFile != null) {
+			if(settingsFile.isFile() && settingsFile.canRead()) {
+				settingsGui.loadSettings(settingsFile);
+			}
 		}
 		return settingsGui;
 	}
 	
 	/**
-	 * @param settingsFile the file containing the settings for this Monte-Carlo-Localization.
+	 * This Constructor creates a application that does not loads settings from or saves settings to a file.
+	 */
+	public MonteCarloLocalizationApp() {
+		this(null);
+	}
+	
+	/**
+	 * @param settingsFile the file containing the settings for this Monte-Carlo-Localization. To that file the settings will be stored when exiting the application.
 	 */
 	public MonteCarloLocalizationApp(File settingsFile) {
 		GuiBase.activateSystemStyle();
@@ -136,7 +144,7 @@ public class MonteCarloLocalizationApp {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				robotGui.saveSettings(settingsGui);
-				settingsGui.saveSettings(settingsFile);
+				if(settingsFile != null) settingsGui.saveSettings(settingsFile);
 				robotGui.destructRobot();
 			}
 		});
