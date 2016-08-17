@@ -53,9 +53,17 @@
 			resolveLink="true"/>
 		</javadoc>
 		<antcall target="aima-gui.rename-javadoc"></antcall>
+		<jar destfile="${aima-gui.dir.build.release}/aima-gui-javadoc.jar">
+			<manifest>
+		    	<attribute name="Implementation-Title" value="AIMA-GUI" />
+		        <attribute name="Implementation-Version" value="${aima-gui.version}" />
+		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
+		    </manifest>
+			<fileset dir="${aima-gui.dir.build.doc}/javadoc"/>
+		</jar>
 	</target>
 	
-	<target name="aima-gui.release" depends="aima-gui.clean,aima-gui.makedirs,aima-core.release,aima-gui.compile-all, aima-gui.makedocs">
+	<target name="aima-gui.release" depends="aima-gui.clean,aima-gui.makedirs,aima-core.release,aima-gui.compile-all">
 		<jar destfile="${aima-gui.dir.build.release}/aima-gui.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-core.jar" />
@@ -65,7 +73,6 @@
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
 		    </manifest>
 			<fileset dir="${aima-gui.dir.build.bin}/main" />
-			<fileset dir="${aima-gui.dir.build.doc}"/>
 		</jar>
 	</target>
 	
@@ -89,7 +96,7 @@
 				<propertyregex property="aima-gui.rename-javadoc.top-path" override="true" input="${aima-gui.rename-javadoc.file-content}" regexp="(\.\.\/)+" select="\0" />
 				<replaceregexp file="@{file}" flags="g">
 			    	<regexp pattern="file:\/.+?\/javadoc" />
-			    	<substitution expression="\.\.\/\.\.\/\.\.\/${aima-gui.rename-javadoc.top-path}aima-core.jar\!\/"/>
+			    	<substitution expression="\.\.\/\.\.\/${aima-gui.rename-javadoc.top-path}aima-core-javadoc.jar\!"/>
 			    </replaceregexp>
 			</sequential>
 		</for>
