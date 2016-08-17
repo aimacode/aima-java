@@ -45,6 +45,7 @@
 		</path>
 		<javadoc destdir="${aima-gui.dir.build.doc}/javadoc" 
 			packagenames="aima.*"
+			excludepackagenames="aima.gui.fx.*"
 			sourcepathref="aima-gui.javadoc.src" />
 	</target>
 	

@@ -122,7 +122,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 	 * Executes a runnable in the background without freezing the GUI. Therefore it disables and re-enables the GUI's buttons to prevent concurrency.
 	 * @param runnable the code to be run in background.
 	 */
-	public void runInBackground(Runnable runnable) {
+	public void runInBackground(final Runnable runnable) {
 		gui.saveButtonState();
 		gui.enableButtons(gui.buttonStateInit);
 		backgroundThread.execute(new Runnable() {
