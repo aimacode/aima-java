@@ -3,6 +3,7 @@ package aima.core.logic.basic.firstorder.parsing.ast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringJoiner;
 
 import aima.core.logic.basic.firstorder.parsing.FOLVisitor;
 
@@ -89,20 +90,12 @@ public class Predicate implements AtomicSentence {
 		if (null == stringRep) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(predicateName);
-			sb.append("(");
-
-			boolean first = true;
+			StringJoiner sj = new StringJoiner(",", "(", ")");
 			for (Term t : terms) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append(",");
-				}
-				sb.append(t.toString());
+				sj.add(t.toString());
 			}
-
-			sb.append(")");
-			stringRep = sb.toString();
+			stringRep = sb.toString() + sj.toString();
+			return stringRep;
 		}
 
 		return stringRep;
