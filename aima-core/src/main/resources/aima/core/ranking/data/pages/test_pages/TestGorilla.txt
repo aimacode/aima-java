@@ -1,0 +1,24 @@
+title: TestGorilla
+mock location: /wiki/TestGorilla
+
+Article/Page Content: 
+
+Keyword String 1: A gorilla is an animal, closely related to a human. At least more closed related than a sock is.
+
+Keyword String 2: Gorillas are very large, heavy and strong. A gorilla could really mess you up if it pleased.
+
+Keyword String 3: One recently died because of some lax parenting.
+
+Links:
+
+*Valid*
+< href="/wiki/TestAnimal"
+< href="/wiki/TestThing" >
+href="/wiki/TestLiving"
+href="/wiki/TestMan"
+
+
+*Invalid/Different Format*
+
+ref="/wiki/TestGorillasInTheMist"
+hhhhhreffff="/wiki/TestJaneGoodall"

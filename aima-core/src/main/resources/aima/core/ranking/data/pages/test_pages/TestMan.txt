@@ -1,0 +1,20 @@
+title: TestMan
+mock location: /wiki/TestMan 
+
+Article/Page Content: 
+
+Keyword String 1: A man is a male human. 
+Keyword String 2: Like most other male mammals, a man inherits an X from his mom and a Y from his dad. 
+Keyword String 3: Young male humans are sometimes called boys, and after transitioning through adolescence into *manhood*, is called a man.
+
+Links:
+
+*Valid*
+< href="/wiki/TestThing" >
+href="/wiki/TestBoy"
+href="/wiki/TestLiving"
+href="/wiki/TestMan" 
+href="TestGorilla" // not a valid outlink for \wiki\testGorilla
+
+
+*Invalid/Different Format*

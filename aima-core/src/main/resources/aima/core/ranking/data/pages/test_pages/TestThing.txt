@@ -1,0 +1,23 @@
+title: TestThing
+mock location: /wiki/TestThing
+
+Article/Page Content: 
+
+Keyword String 1: Things are pretty much objects, subject to observation by *subjects*. 
+Keyword String 2: Animals are things, as they are certainly observable by people, and people are subjects.
+Keyword String 3: Inanimate objects, non-living objects, are also things. A teapot is a thing, and so is a movie. A painting is a thing, as is a dollar or a coin. 
+Keyword String 4: The notion of a thing can also be so broad as to include objects which are not material, such as the state of death, or the feeling of happiness.
+
+
+Links:
+
+*Valid*
+< href="/wiki/TestAnimal" >
+< hre
+
+href="/wiki/TestLiving"
+href="/wiki/TestObject"
+href="/wiki/TestTe"
+
+
+*Invalid/Different Format*
