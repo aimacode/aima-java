@@ -1,0 +1,15 @@
+title: TestMovie
+mock location: /wiki/TestMovie
+
+Article/Page Content: 
+
+Keyword String 1: A series a still images which when shown on a screen in rapid succession, creates the illusion of a moving animated screen. 
+Keyword String 2: Movies are for entertainment
+
+Links:
+
+*Valid*
+
+No outlinks
+
+*Invalid/Different Format*
