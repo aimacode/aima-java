@@ -1,8 +1,11 @@
 package aima.gui.swing.demo.robotics.components;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,8 +19,11 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -35,7 +41,7 @@ import aima.gui.swing.demo.robotics.util.ListTableModel;
  * @author Jan Phillip Kretzschmar
  * @author Andreas Walscheid
  */
-public class AnglePanel extends Settings.SpecialSetting implements MouseListener  {
+public class AnglePanel extends Settings.SpecialSetting  {
 	
 	private static final long serialVersionUID = 1L;
 	private static final String ANGLES_KEY = "ANGLES";
@@ -43,23 +49,15 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	private static final String JL_NUMBER_OF_ANGLES_TEXT = "Angle Count: ";
 	private static final String BTN_ADD_ANGLE_TEXT = "Add Angle";
 	private static final String BTN_DELETE_ANGLE_TEXT = "Delete Angle";
-	private static final String BTN_SHIFT_ANGLE_CREATE = "Add Angle";
 	private static final String TEXT_SHIFT_ANGLE = "Shift Angle by:";
 	private static final String ANGLES_COLUMN_NAME = "Angles";
 	private static final int RADIUS = 75;
 	
-	private final int circleCenterX;
-	private final int circleCenterY;
-	
-	private JLabel jLAngle;
 	private JLabel jLAngleCount;
-	private JTextField jTFChangeAngle; 
-	private JButton btnAddAngle;
-	private JScrollPane scrollPane;
+	private JTextField jTFChangeAngle;
 	private JButton btnDeleteAngle;
 	private JTextField jTShiftValueAngle;
-	private JButton btnShiftAngleCreate;
-	private JLabel jLShiftAngle;
+	private CirclePanel circlePanel;
 	private ListTableModel angleModel = new ListTableModel(ANGLES_COLUMN_NAME);
 	private JTable jTAngles;
 	private int selectedAngleIndex;
@@ -70,19 +68,14 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 	/**
 	 * Default constructor with no parameters.
 	 */
-	public AnglePanel() {
-		setSize(Settings.getGuiItemWidth(), Settings.getGuiItemHeight()*8);
-		circleCenterX = getWidth() / 2;
-		circleCenterY = getHeight() / 2;
+	public AnglePanel(String title) {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		JLabel jLTitle = new JLabel(title);
+		jLTitle.setBorder(GuiBase.getClearanceBorder());
 		
-		addMouseListener(this);
-		jLAngle = new JLabel(JL_ANGLE_TEXT);
-		jLAngle.setBounds(5, 5, 100, 30);
-		jLAngle.setLayout(null);
-		
+		//leftPanel:
+		JLabel jLAngle = new JLabel(JL_ANGLE_TEXT);
 		jTFChangeAngle = new JTextField();
-		jTFChangeAngle.setBounds(5, 35, 100, 30);
-		jTFChangeAngle.setLayout(null);
 		jTFChangeAngle.addKeyListener(new KeyAdapter() {
 			@Override
 		    public void keyPressed(KeyEvent e) {
@@ -98,14 +91,24 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		    	}
 		    }
 		});
-		
+		jLAngleCount = new JLabel(JL_NUMBER_OF_ANGLES_TEXT + "0");
+		JButton btnAddAngle = new JButton(BTN_ADD_ANGLE_TEXT);
+		btnAddAngle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				addAngle();
+			}
+		});
+		JButton btnDeleteAngle = new JButton(BTN_DELETE_ANGLE_TEXT);
+		btnDeleteAngle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				deleteAngle();
+			}
+		});
+		JLabel jLShiftAngle = new JLabel(TEXT_SHIFT_ANGLE);
 		jTShiftValueAngle = new JTextField();
-		jTShiftValueAngle.setLayout(null);
-		jTShiftValueAngle.setBounds(5, 220, 100, 20);
-		
-		btnShiftAngleCreate = new JButton(BTN_SHIFT_ANGLE_CREATE);
-		btnShiftAngleCreate.setLayout(null);
-		btnShiftAngleCreate.setBounds(5, 245, 100, 30);
+		JButton btnShiftAngleCreate = new JButton(BTN_ADD_ANGLE_TEXT);
 		btnShiftAngleCreate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -120,34 +123,25 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 				}
 			}
 		});
-		jLShiftAngle = new JLabel(TEXT_SHIFT_ANGLE);
-		jLShiftAngle.setLayout(null);
-		jLShiftAngle.setBounds(5 , 195 , 100, 20);
 		
-		jLAngleCount = new JLabel(JL_NUMBER_OF_ANGLES_TEXT + "0");
-		jLAngleCount.setBounds(8,60 + jTFChangeAngle.getHeight(), 100, 30);
-		jLAngleCount.setLayout(null);
+		JPanel leftPanel = new JPanel();
+		leftPanel.setBorder(GuiBase.getClearanceBorder());
+		//leftPanel.setPreferredSize(new Dimension(100,1));
+		leftPanel.setLayout(new GridLayout(0,1,GuiBase.getClearance(),GuiBase.getClearance()));
+		leftPanel.add(jLAngle);
+		leftPanel.add(jTFChangeAngle);
+		leftPanel.add(jLAngleCount);
+		leftPanel.add(btnAddAngle);
+		leftPanel.add(btnDeleteAngle);
+		leftPanel.add(jLShiftAngle);
+		leftPanel.add(jTShiftValueAngle);
+		leftPanel.add(btnShiftAngleCreate);
 		
-		btnAddAngle = new JButton(BTN_ADD_ANGLE_TEXT);
-		btnAddAngle.setLayout(null);
-		btnAddAngle.setBounds(5, 115, 100, 30);
-		btnAddAngle.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				addAngle();
-			}
-		});
+		//circlePanel:
+		circlePanel = new CirclePanel(); 
+		circlePanel.setBorder(GuiBase.getClearanceBorder());
 		
-		btnDeleteAngle = new JButton(BTN_DELETE_ANGLE_TEXT);
-		btnDeleteAngle.setLayout(null);
-		btnDeleteAngle.setBounds(5, 150, 100, 30);
-		btnDeleteAngle.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				deleteAngle();
-			}
-		});
-		
+		//rightPanel:
 		jTAngles = new JTable(angleModel);
 		jTAngles.setFillsViewportHeight(true);
 		jTAngles.getSelectionModel().addListSelectionListener( new ListSelectionListener() {
@@ -159,19 +153,28 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		    }
 		});
 		
-		scrollPane = new JScrollPane(jTAngles, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(340, 5, 100, getHeight() - 40);
-		jTAngles.setBounds(0,0, scrollPane.getWidth(), scrollPane.getHeight());
+		JScrollPane scrollPane = new JScrollPane(jTAngles, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		add(btnDeleteAngle);		
-		add(jLAngle);
-		add(jLAngleCount);
-		add(jTFChangeAngle);
-		add(btnAddAngle);
-		add(scrollPane);
-		add(btnShiftAngleCreate);
-		add(jTShiftValueAngle);
-		add(jLShiftAngle);
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBorder(GuiBase.getClearanceBorder());
+		rightPanel.setPreferredSize(new Dimension(100,1));
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		rightPanel.add(scrollPane);
+		
+		//Put all panels together:
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBorder(BorderFactory.createLineBorder(GuiBase.getTextColor(), 1));
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setAlignmentX(LEFT_ALIGNMENT);
+		jLTitle.setLabelFor(mainPanel);
+		
+		mainPanel.add(leftPanel, BorderLayout.WEST);
+		mainPanel.add(circlePanel, BorderLayout.CENTER);
+		mainPanel.add(rightPanel, BorderLayout.EAST);
+		
+		add(jLTitle);
+		add(mainPanel);
+		
 		for(double angle: angles) {
 			angleModel.add(angle + "\u00BA");
 		}
@@ -279,74 +282,6 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		repaint();
 	}
 	
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(GuiBase.getTextColor());
-		
-		//paints a coordinate system and draws a circle 
-		//around the zero point
-		g2d.drawOval(circleCenterX - RADIUS,circleCenterY - RADIUS, 2 * RADIUS, 2 * RADIUS);
-		g2d.drawLine(circleCenterX - (int) (1.5 * RADIUS), circleCenterY, circleCenterX + (int) (1.5 * RADIUS), circleCenterY);
-		g2d.drawLine(circleCenterX, circleCenterY - (int) (1.5 * RADIUS),circleCenterX, circleCenterY + (int) (1.5 * RADIUS));
-	
-		//paints every angle on the circular track
-		if(angles != null) {
-			int i=0;
-			for(; i < selectedAngleIndex; i++) {
-				drawAngle(g2d, i);
-			}
-			i++;
-			for(; i < angles.length; i++) {
-				drawAngle(g2d, i);
-			}
-			//Selected angle has to be drawn last:
-			g2d.setColor(Color.RED);
-			drawAngle(g2d, selectedAngleIndex);
-		}
-	}
-
-	/**
-	 * Draws an angle onto the provided {@link Graphics2D}.
-	 * @param g2d the graphics of this panel onto which will be drawn.
-	 * @param i the index of the angle to be drawn.
-	 */
-	private void drawAngle(Graphics2D g2d, int i) {
-		final int xCircle = (int) (circleCenterX + RADIUS * Math.cos(Math.toRadians(angles[i])));
-		final int yCircle = (int) (circleCenterY + RADIUS * Math.sin(Math.toRadians(angles[i])));
-		g2d.drawLine(circleCenterX, circleCenterY, xCircle, flipY(yCircle));
-		g2d.fillOval(xCircle - 10, flipY(yCircle) - 10, 20, 20);
-	}
-	
-	/**
-	 * Flips the y value from a Cartesian coordinate system into a java coordinate system.
-	 * @param y the Y-coordinate form a Cartesian coordinate system.
-	 * @return the Y-coordinate for the coordinate system in java.
-	 */
-	private int flipY(int y) {
-		return getHeight() -  y;
-	}
-	
-	/**
-	 * Derives the index of the angle which was clicked on from the given mouse coordinates.
-	 * If it is not found -1 will be returned.
-	 * @param mouseX the X-Coordinate of the mouse pointer.
-	 * @param mouseY the Y-Coordinate of the mouse pointer.
-	 * @return the index of the clicked angle.
-	 */
-	private int findAngleIndex(int mouseX, int mouseY) {
-		for(int i = 0; i < angles.length; i++) {
-			int xCircle = (int) (circleCenterX + RADIUS * Math.cos(Math.toRadians(angles[i])));
-			int yCircle = (int) (circleCenterY + RADIUS * Math.sin(Math.toRadians(angles[i])));
-			yCircle = flipY(yCircle);
-			if((mouseX <= xCircle + 10 && mouseX >= xCircle - 10) && (mouseY <= yCircle + 10 && mouseY >= yCircle - 10)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
 	/**
 	 * Updates all GUI components.
 	 */
@@ -417,34 +352,6 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		}
 		previousAngles = angles;
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		//At a double mouse click, the index of the clicked angle is searched for. If an index is found, the angle is marked with selectedAngleIndex.
-		if(arg0.getClickCount() == 2) {			
-			if(angles != null) {
-				final int index = findAngleIndex(arg0.getX() , arg0.getY());
-				if(index != -1) {
-					selectedAngleIndex = index;
-					repaint();
-					jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
-				}
-			}   
-	    }
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) { }
-
-	@Override
-	public void mouseExited(MouseEvent arg0) { }
-
-	@Override
-	public void mousePressed(MouseEvent arg0) { }
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) { }
 	
 	/**
 	 * Defines the method infrastructure of any and all possible and legal implementations of a ChangeListener which can be registered in an {@link AnglePanel}.
@@ -455,5 +362,107 @@ public class AnglePanel extends Settings.SpecialSetting implements MouseListener
 		 * @param angles the array of {@link Angle}.
 		 */
 		public void notify(Angle[] angles);
+	}
+	
+	/**
+	 * A simple drawing all angles onto a circle / polar coordinate system. 
+	 */
+	private class CirclePanel extends JPanel implements MouseListener {
+		
+		private static final long serialVersionUID = 1L;
+
+		private int centerX;
+		private int centerY;
+		
+		private CirclePanel() {
+			addMouseListener(this);
+		}
+		
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setColor(GuiBase.getTextColor());
+			
+			centerX = (int) (getWidth() / 2);
+			centerY = (int) (getHeight() / 2);
+			
+			//paints a coordinate system and draws a circle 
+			//around the zero point
+			g2d.drawOval(centerX - RADIUS, centerY - RADIUS, 2 * RADIUS, 2 * RADIUS);
+			g2d.drawLine(centerX - (int) (1.5 * RADIUS), centerY, centerX + (int) (1.5 * RADIUS), centerY);
+			g2d.drawLine(centerX, centerY - (int) (1.5 * RADIUS), centerX, centerY + (int) (1.5 * RADIUS));
+		
+			//paints every angle on the circular track
+			if(angles != null) {
+				int i=0;
+				for(; i < selectedAngleIndex; i++) {
+					drawAngle(g2d, i);
+				}
+				i++;
+				for(; i < angles.length; i++) {
+					drawAngle(g2d, i);
+				}
+				//Selected angle has to be drawn last:
+				g2d.setColor(Color.RED);
+				drawAngle(g2d, selectedAngleIndex);
+			}
+		}
+		
+		/**
+		 * Draws an angle onto the provided {@link Graphics2D}.
+		 * @param g2d the graphics of this panel onto which will be drawn.
+		 * @param i the index of the angle to be drawn.
+		 */
+		private void drawAngle(Graphics2D g2d, int i) {
+			final int xCircle = (int) (centerX + RADIUS * Math.cos(Math.toRadians(angles[i])));
+			final int yCircle = (int) (centerY + RADIUS * Math.sin(Math.toRadians(angles[i])));
+			g2d.drawLine(getWidth() / 2, getHeight() / 2, xCircle, flipY(yCircle));
+			g2d.fillOval(xCircle - 10, flipY(yCircle) - 10, 20, 20);
+		}
+		
+		/**
+		 * Flips the y value from a Cartesian coordinate system into a java coordinate system.
+		 * @param y the Y-coordinate form a Cartesian coordinate system.
+		 * @return the Y-coordinate for the coordinate system in java.
+		 */
+		private int flipY(int y) {
+			return getHeight() -  y;
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			//At a double mouse click, the index of the clicked angle is searched for. If an index is found, the angle is marked with selectedAngleIndex.
+			if(arg0.getClickCount() == 2) {			
+				if(angles != null) {
+					int i = 0;
+					for(; i < angles.length; i++) {
+						int xCircle = (int) (centerX + RADIUS * Math.cos(Math.toRadians(angles[i])));
+						int yCircle = (int) (centerY + RADIUS * Math.sin(Math.toRadians(angles[i])));
+						yCircle = flipY(yCircle);
+						if((arg0.getX() <= xCircle + 10 && arg0.getX() >= xCircle - 10) && (arg0.getY() <= yCircle + 10 && arg0.getY() >= yCircle - 10)) {
+							break;
+						}
+					}
+					if(i < angles.length) {
+						selectedAngleIndex = i;
+						repaint();
+						jTFChangeAngle.setText(angles[selectedAngleIndex] + "\u00BA");
+					}
+				}   
+		    }
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent arg0) { }
+
+		@Override
+		public void mouseExited(MouseEvent arg0) { }
+
+		@Override
+		public void mousePressed(MouseEvent arg0) { }
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) { }
 	}
 }

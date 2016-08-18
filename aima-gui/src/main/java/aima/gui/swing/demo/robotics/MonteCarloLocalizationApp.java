@@ -39,7 +39,7 @@ public class MonteCarloLocalizationApp {
 
 	protected static final File DEFAULT_SETTINGS_FILE = new File(System.getProperty("user.dir"),"mcl_settings.cache");
 	protected static final String RANGE_READING_ANGLES_KEY = "RANGE_READING_ANGLES";
-	
+	protected static final String RANGE_READING_ANGLES_TITLE = "Range reading angles";
 	protected Settings settingsGui;
 	protected IRobotGui robotGui;
 	protected GenericMonteCarloLocalization2DApp<?,?,?> app;
@@ -53,7 +53,7 @@ public class MonteCarloLocalizationApp {
 	public static void main(String[] args) {
 		File settingsFile = args.length > 0 ? new File(args[0]) : DEFAULT_SETTINGS_FILE;
 		MonteCarloLocalizationApp app = new MonteCarloLocalizationApp(settingsFile);
-		app.constructApplicationFrame();
+		app.constructBasicApplicationFrame();
 		app.notifyAllListeners();
 		app.show();
 	}
@@ -105,7 +105,7 @@ public class MonteCarloLocalizationApp {
 		SimpleSettingsListener settingsListener = new SimpleSettingsListener(settingsGui);
 		settingsListener.createSettings();
 		
-		AnglePanel angles = new AnglePanel();
+		AnglePanel angles = new AnglePanel(RANGE_READING_ANGLES_TITLE);
 		settingsGui.registerSpecialSetting(RANGE_READING_ANGLES_KEY, angles);
 		
 		MclCartesianPlot2D<SimplePose, SimpleMove, AbstractRangeReading> map = new MclCartesianPlot2D<SimplePose,SimpleMove,AbstractRangeReading>(new SVGGroupParser(),new SVGGroupParser(),new SimplePoseFactory(),new SimpleRangeReadingFactory());
@@ -119,12 +119,6 @@ public class MonteCarloLocalizationApp {
 		settingsListener.setMap(map);
 		settingsListener.setMcl(mcl);
 		settingsListener.setRobot(robot);
-		
-		//Load the virtual environment resource:
-		try {
-			map.loadMap(this.getClass().getResourceAsStream("virtual_environment.svg"),this.getClass().getResourceAsStream("virtual_environment.svg"));
-			app.gui.createMap();//bad style.
-		} catch (Exception e) { }
 	}
 	
 	/**
@@ -135,10 +129,34 @@ public class MonteCarloLocalizationApp {
 	}
 	
 	/**
-	 * Creates the {@code JFrame} of the application, registers a window listener and returns the {@code JFrame}.
+	 * Creates the {@code JFrame} for the {@link AimaDemoApp}. {@code constructBasicApplicationFrame} should be called in any other case. 
 	 * @return the main frame of the application.
 	 */
 	public JFrame constructApplicationFrame() {
+		JFrame frame = constructBasicApplicationFrame();
+		//Load the virtual environment resource:
+		try {
+			app.map.loadMap(this.getClass().getResourceAsStream("virtual_environment.svg"),this.getClass().getResourceAsStream("virtual_environment.svg"));
+			app.settingsGui.notifyAllListeners();
+			app.gui.createMap();
+			app.gui.enableButtons(app.gui.buttonStateNormal);
+			/* This is bad style.
+			 * On the other hand this is the only situation in which the GUI
+			 * is modified from outside of GenericMonteCarloLocalization to load a map from the resources.
+			 */
+		} catch (Exception e) {
+			/* A Exception may be thrown when this example program is not launched from within a jar file.
+			 * This happens because the ClassLoader does not find the requested resource.
+			 */
+		}
+		return frame;
+	}
+	
+	/**
+	 * Creates the {@code JFrame} for the application. A window listener is registered. 
+	 * @return the main frame of the application.
+	 */
+	public JFrame constructBasicApplicationFrame() {
 		JFrame frame = app.constructApplicationFrame();
 		frame.addWindowListener(new WindowAdapter() {
 			@Override

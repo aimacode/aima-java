@@ -1,8 +1,12 @@
 package aima.gui.swing.demo.robotics.components;
 
+import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import aima.gui.swing.demo.robotics.util.GuiBase;
 /**
  * A GUI panel that allows the user to set a value for a given key.
  * 
@@ -14,10 +18,7 @@ import javax.swing.JTextField;
 public class KeyPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	private static final int COMPONENT_DISTANCE = 5;
-	private static final float KEY_TITLE_LABEL_WIDTH_PERCENT = 0.5f;
 	
-	private JLabel jLKeyTitle;
 	private JTextField jTFValue;
 	
 	/**
@@ -25,18 +26,17 @@ public class KeyPanel extends JPanel {
 	 * @param value the value of the key.
 	 */
 	public KeyPanel(String keyTitle, String value) {
-		setSize(Settings.getGuiItemWidth(), Settings.getGuiItemHeight());
-		jLKeyTitle = new JLabel(keyTitle);
-		jLKeyTitle.setLayout(null);
+		setBorder(GuiBase.getClearanceBorder());
+		setLayout(new GridLayout(1,2,GuiBase.getClearance(),GuiBase.getClearance()));
+		
+		JLabel jLKeyTitle = new JLabel(keyTitle);
 		jLKeyTitle.setText(keyTitle);
-		jLKeyTitle.setBounds(COMPONENT_DISTANCE ,COMPONENT_DISTANCE , (int) (getWidth() * KEY_TITLE_LABEL_WIDTH_PERCENT  - 2 * COMPONENT_DISTANCE) , getHeight() - 2 * COMPONENT_DISTANCE);
 		jTFValue = new JTextField();
-		jTFValue.setLayout(null);
 		jTFValue.setText(value);
-		jTFValue.setBounds((int) (getWidth() * KEY_TITLE_LABEL_WIDTH_PERCENT + COMPONENT_DISTANCE) , COMPONENT_DISTANCE, (int) (getWidth() * (1 - KEY_TITLE_LABEL_WIDTH_PERCENT) - 2 * COMPONENT_DISTANCE), getHeight() - 2 * COMPONENT_DISTANCE);
+		jLKeyTitle.setLabelFor(jTFValue);
+		
 		add(jLKeyTitle);
 		add(jTFValue);
-		setVisible(true);
 	}
 	
 	/**

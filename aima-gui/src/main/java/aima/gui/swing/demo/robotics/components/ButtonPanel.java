@@ -1,11 +1,15 @@
 package aima.gui.swing.demo.robotics.components;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import aima.gui.swing.demo.robotics.components.Settings.SpecialSetting;
+import aima.gui.swing.demo.robotics.util.GuiBase;
 
 /**
  * A button panel is a {@link SpecialSetting} containing a single button on which a {@link ActionListener} can be registered.
@@ -25,12 +29,19 @@ public class ButtonPanel extends SpecialSetting {
 	 * @param actionListener the action listener which will be registered on the button.
 	 */
 	public ButtonPanel(String title, ActionListener actionListener) {
-		setSize(Settings.getGuiItemWidth(), Settings.getGuiItemHeight());
+		setLayout(new BorderLayout());
 		button = new JButton(title);
-		button.setLayout(null);
-		button.setBounds(getWidth() / 2 - title.length() * 4, getHeight() / 2 - 15, title.length() * 8, 30);
+		button.setBorder(GuiBase.getClearanceBorder());
 		button.addActionListener(actionListener);
-		add(button);
+		button.setAlignmentX(CENTER_ALIGNMENT);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel.add(button);
+		buttonPanel.add(GuiBase.getClearanceComp());
+		buttonPanel.add(button);
+		
+		add(buttonPanel, BorderLayout.CENTER);
 	}
 	
 	/**

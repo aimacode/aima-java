@@ -1,7 +1,8 @@
 package aima.gui.swing.demo.robotics.components;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -266,22 +268,6 @@ public class Settings {
 	}
 	
 	/**
-	 * Returns the width which a setting has.
-	 * @return the width which a setting has.
-	 */
-	public static int getGuiItemWidth() {
-		return Gui.GUI_ITEM_WIDTH;
-	}
-	
-	/**
-	 * Returns the height which a setting should have.
-	 * @return the height which a setting should have.
-	 */
-	public static int getGuiItemHeight() {
-		return Gui.GUI_ITEM_HEIGHT;
-	}
-	
-	/**
 	 * Enables all GUI buttons.
 	 */
 	public void enableGuiButtons() {
@@ -358,6 +344,8 @@ public class Settings {
 	 */
 	@SuppressWarnings("serial")
 	public static abstract class SpecialSetting extends JPanel {
+		
+		
 		/**
 		 * Loads values from the provided key value storage that have been saved before. 
 		 * @param values the {@link Properties} which contains all values that have been stored.
@@ -394,20 +382,9 @@ public class Settings {
 	protected class Gui extends JFrame {
 		
 		private static final long serialVersionUID = 1L;
-		private static final int GUI_WIDTH = 500; 
-		private static final int GUI_HEIGHT = 600; 
-		private static final int GUI_ITEM_WIDTH = 450;
-		private static final int GUI_ITEM_HEIGHT = 35;
-		private static final int BTN_PANEL_HEIGHT = 60;
-		private static final int WINDOW_TITLE_LINE_HEIGHT = 28;
-		private static final int WINDOW_TITLE_LINE_WIDTH = 6;
-		private static final int COMPONENT_DISTANCE = 5;
-		private static final int BTN_WIDTH = GUI_WIDTH / 4;
-		private static final int BTN_HEIGHT = BTN_PANEL_HEIGHT - 4 * COMPONENT_DISTANCE;
-		private static final int COMPONENT_DISTANCE_PANEL_X = 10;
-		private static final int COMPONENT_DISTANCE_PANEL_Y = 15;
+
+		private final Dimension guiSize = new Dimension(500, 600);
 		
-		private int nextYPosition = 15;
 		private JPanel inScrollPane;
 		private JScrollPane scrollPane;
 		private HashMap<String,KeyPanel> keyPanels = new HashMap<String,KeyPanel>();
@@ -419,31 +396,25 @@ public class Settings {
 		 * The GUI contains a save button, a revert button and a scroll-able field where the setting are stored.
 		 */
 		protected Gui() {
-			setSize(new Dimension(GUI_WIDTH, GUI_HEIGHT));
+			setSize(guiSize);
 			setResizable(false);
 			setTitle("MCL Settings");
-			setLocationRelativeTo(null);
-			getContentPane().setLayout(null);
 			setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 			
-			JPanel btnPanel = new JPanel();
-			btnPanel.setLayout(null);
-			btnPanel.setBackground(new Color(119,136,153));
-			btnPanel.setBounds(0, this.getHeight() - BTN_PANEL_HEIGHT-WINDOW_TITLE_LINE_HEIGHT, this.getWidth(), BTN_PANEL_HEIGHT);
+			//scrollPane:
+			inScrollPane = new JPanel();
+			inScrollPane.setLayout(new BoxLayout(inScrollPane,BoxLayout.Y_AXIS));
+			scrollPane = new JScrollPane(inScrollPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			
+			//btnPanel:
 			btnSave = new JButton("Save");
-			btnSave.setLayout(null);
-			btnSave.setBounds(this.getWidth()/2 - BTN_WIDTH - COMPONENT_DISTANCE , (btnPanel.getHeight() - BTN_HEIGHT)/2, BTN_WIDTH, BTN_HEIGHT);
 			btnSave.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					save();
 				}
 			});
-			
 			btnAbort = new JButton("Revert");
-			btnAbort.setLayout(null);
-			btnAbort.setBounds(this.getWidth()/2 + COMPONENT_DISTANCE,(btnPanel.getHeight() - BTN_HEIGHT)/2, BTN_WIDTH, BTN_HEIGHT);
 			btnAbort.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -451,17 +422,36 @@ public class Settings {
 				}
 			});
 			
-			inScrollPane = new JPanel();
-			inScrollPane.setLayout(null);
-			inScrollPane.setPreferredSize(new Dimension(this.getWidth()- WINDOW_TITLE_LINE_WIDTH - 19, 1200));
+			//Apply same size to both buttons:
+			Dimension saveDimension = btnSave.getPreferredSize();
+			Dimension abortDimension = btnAbort.getPreferredSize();
+			Dimension bothDimension = new Dimension(
+				(int) ((saveDimension.getWidth() > abortDimension.getWidth() ? saveDimension.getWidth() : abortDimension.getWidth()) * 2),
+				(int) ((saveDimension.getHeight() > abortDimension.getHeight() ? saveDimension.getHeight() : abortDimension.getHeight()) * 2)
+			);
+			btnSave.setPreferredSize(bothDimension);
+			btnAbort.setPreferredSize(bothDimension);
 			
-			scrollPane = new JScrollPane(inScrollPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			scrollPane.setBounds(0,0,this.getWidth() - WINDOW_TITLE_LINE_WIDTH , this.getHeight()- btnPanel.getHeight() - WINDOW_TITLE_LINE_HEIGHT);
-
-			getContentPane().add(btnPanel);
-			getContentPane().add(scrollPane);
+			JPanel btnPanel = new JPanel();
+			btnPanel.setLayout(new FlowLayout());
 			btnPanel.add(btnSave);
+			btnPanel.add(GuiBase.getClearanceComp());
 			btnPanel.add(btnAbort);
+			btnPanel.setAlignmentX(CENTER_ALIGNMENT);
+			
+			JPanel outerBtnPanel = new JPanel();
+			outerBtnPanel.setLayout(new BoxLayout(outerBtnPanel,BoxLayout.Y_AXIS));
+			outerBtnPanel.add(GuiBase.getClearanceComp());
+			outerBtnPanel.add(btnPanel);
+			outerBtnPanel.add(GuiBase.getClearanceComp());
+			
+			//Put panels together:
+			JPanel contentPanel = new JPanel();
+			contentPanel.setLayout(new BorderLayout());
+			contentPanel.add(scrollPane, BorderLayout.CENTER);
+			contentPanel.add(outerBtnPanel, BorderLayout.SOUTH);
+			
+			add(contentPanel, BorderLayout.CENTER);
 		}
 
 		/**
@@ -474,32 +464,17 @@ public class Settings {
 				String name = names.get(key);
 				if(name != null) {
 					String value = values.getProperty(key);
-					keyPanels.put(key,createKeyPanelOnWindow(name, value));
+					KeyPanel keyPanel = new KeyPanel(name, value);
+					keyPanel.setAlignmentX(LEFT_ALIGNMENT);
+					keyPanel.setMaximumSize(guiSize);
+					inScrollPane.add(keyPanel);
+					keyPanels.put(key,keyPanel);
 				} else {
 					SpecialSetting special = specials.get(key);
-					special.setLayout(null);
-					special.setLocation(COMPONENT_DISTANCE_PANEL_X, nextYPosition);
+					special.setAlignmentX(LEFT_ALIGNMENT);
 					inScrollPane.add(special);
-					nextYPosition = nextYPosition + special.getHeight() + COMPONENT_DISTANCE_PANEL_Y;
 				}
 			}
-			if(nextYPosition > scrollPane.getHeight()) inScrollPane.setPreferredSize(new Dimension(inScrollPane.getWidth(), nextYPosition));
-		}
-		
-		/**
-		 * Creates a {@link KeyPanel} for the given values.
-		 * The key panel's coordinates are set automatically.
-		 * @param name the name of the key.
-		 * @param value the value of the key.
-		 * @return a positioned key panel. 
-		 */
-		protected KeyPanel createKeyPanelOnWindow(String name, String value) {
-			KeyPanel keyPanel = new KeyPanel(name, value);
-			keyPanel.setLayout(null);
-			keyPanel.setLocation(COMPONENT_DISTANCE_PANEL_X, nextYPosition);
-			inScrollPane.add(keyPanel);
-			nextYPosition = nextYPosition + keyPanel.getHeight() + COMPONENT_DISTANCE_PANEL_Y;
-			return keyPanel;
 		}
 		
 		/**

@@ -1,10 +1,14 @@
 package aima.gui.swing.demo.robotics;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -289,27 +294,23 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 	 * The main application {@code JFrame}.
 	 */
 	protected class MclGui extends JFrame {
+		
 		private static final long serialVersionUID = 1L;
 		private static final int WINDOW_WIDTH = 800;
 		private static final int WINDOW_HEIGHT = 500;
-		private static final int CLEARANCE = 5;
-		private static final float BUTTON_HEIGHT_BREAK = 1.0f / 16.0f; 
-		private static final int MAP_CLEARANCE = 20;
-		private static final float PANEL_SIZE_PERCENT = 1.0f / 6.0f;
+		
+		protected final boolean[] buttonStateStart  = {true,  true,  false, false, false, false, false, true};
+		protected final boolean[] buttonStateNormal = {true,  true,  true,  true,  true,  true,  true,  true};
+		protected final boolean[] buttonStateInit   = {false, false, false, false, false, false, false, true};
+		protected final boolean[] buttonStateAuto   = {false, false, false, false, false, true,  false, true};
+		
+		private final int clearance = GuiBase.getClearance();
 		private final String autoLocateTitle = "Auto Locate";
 		private final String autoLocateStopTitle = "Stop";
-		private final boolean[] buttonStateStart  = {true,  true,  false, false, false, false, false, true};
-		private final boolean[] buttonStateNormal = {true,  true,  true,  true,  true,  true,  true,  true};
-		private final boolean[] buttonStateInit   = {false, false, false, false, false, false, false, true};
-		private final boolean[] buttonStateAuto   = {false, false, false, false, false, true,  false, true};
 		
-		protected JPanel leftPanel;
-		protected JPanel centerPanel;
-		protected JPanel rightPanel;
 		protected JButton[] buttons;
 		protected boolean[] previousButtonState;
 		protected JLabel localizationResult;
-		protected JLabel jLRangeReading;
 		protected JTextArea jtARangeReading;
 		protected ListTableModel movesModel;
 		protected JTable jTMoves;
@@ -319,6 +320,15 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		protected JScrollBar verticalScroll;
 		protected ScrollListener scrollListener = new ScrollListener();
 		protected MapDrawer md;
+		
+		private double mapWidth = 1.0d;
+		private double mapHeight = 1.0d;
+		private double translateX = 0.0d;
+		private double translateY = 0.0d;
+		private int moveRowHeight;
+		private int horizontalScrollValue;
+		private int verticalScrollValue;
+		
 		/**
 		 * Called upon pressing "Initialize Robot".
 		 */
@@ -402,35 +412,23 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 				movesModel.clear();
 				md.clearMap();
 				jTMoves.setRowHeight(1);
-				localizationResult.setText("Result:");
+				localizationResult.setText("<HTML>Result: <BR><BR></HTML>");
 				jtARangeReading.setText("");
 			}
 		};
-		
-		private double mapWidth = 1.0d;
-		private double mapHeight = 1.0d;
-		private double translateX = 0.0d;
-		private double translateY = 0.0d;
-		private int moveRowHeight;
-		private int horizontalScrollValue;
-		private int verticalScrollValue;
+
 		/**
 		 * Creates all components and action listeners for the GUI.
 		 */
 		protected void buildPanels() {
-			setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+			setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 			setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-			setTitle("Monte-Carlo-Localization");
-			getContentPane().setLayout(null);
+			setTitle("AIMA3e-Java: Monte-Carlo-Localization");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
-			leftPanel = new JPanel();
-			leftPanel.setLayout(null);
-			leftPanel.setBackground(new Color(119,136,153));
-			
+			//leftPanel:
 			buttons = new JButton[8];
 			previousButtonState = new boolean[buttons.length];
-			
 			buttons[0] = new JButton(IRobotGui.DEFAULT_BUTTON_STRING);
 			buttons[0].addActionListener(new ActionListener() {
 				@Override
@@ -507,16 +505,23 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					settingsGui.show();
 				}
 			});
-			for(JButton button:buttons) button.setLayout(null);
+			enableButtons(buttonStateStart);
+			localizationResult = new JLabel("<HTML>Result: <BR><BR></HTML>");
 			
-			localizationResult = new JLabel("Result: ");
-			localizationResult.setLayout(null);
+			JPanel leftPanel = new JPanel();
+			leftPanel.setBorder(GuiBase.getClearanceBorder());
+			leftPanel.setLayout(new GridLayout(0,1,clearance,clearance));
+			for(JButton button:buttons) leftPanel.add(button);
+			leftPanel.add(localizationResult);
 			
-			centerPanel = new JPanel();
-			centerPanel.setLayout(null);
-			
+			//centerPanel:
 			md = new MapDrawer();
-			
+			verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
+            verticalScroll.setEnabled(false);
+            verticalScroll.addAdjustmentListener(scrollListener);
+            horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL);
+            horizontalScroll.setEnabled(false);
+            horizontalScroll.addAdjustmentListener(scrollListener);
 			jSliderZoom = new JSlider(1, 200);
             jSliderZoom.setValue(1);
             jSliderZoom.addChangeListener(new ChangeListener() { 
@@ -524,88 +529,85 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
                 public void stateChanged(ChangeEvent e) {
             		horizontalScrollValue = horizontalScroll.getValue();
             		verticalScrollValue = verticalScroll.getValue();
-                	md.scaleMap();
-                 }
-             });
-            jSliderZoom.setLayout(null);
-            
-            horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL);
-            horizontalScroll.setEnabled(false);
-            horizontalScroll.addAdjustmentListener(scrollListener);
-            horizontalScroll.setLayout(null);
-            verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
-            verticalScroll.setEnabled(false);
-            verticalScroll.addAdjustmentListener(scrollListener);
-            verticalScroll.setLayout(null);
+            		md.scaleMap();
+            	}
+            });
 			
-			rightPanel = new JPanel();
-			rightPanel.setLayout(null);
+			JPanel centerPanel = new JPanel();
+			centerPanel.setBorder(GuiBase.getClearanceBorder());
+			centerPanel.setLayout(new GridBagLayout());
+			GridBagConstraints c = new GridBagConstraints();
+			c.gridx = 0;
+			c.gridy = 0;
+			c.weightx = 1;
+			c.weighty = 1;
+			c.fill = GridBagConstraints.BOTH;
+			centerPanel.add(md, c);
+			c.gridx = 1;
+			c.gridy = 0;
+			c.weightx = 0;
+			c.weighty = 0;
+			c.fill = GridBagConstraints.VERTICAL;
+			centerPanel.add(verticalScroll, c);
+			c.gridx = 0;
+			c.gridy = 1;
+			c.weightx = 1;
+			c.weighty = 0;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			centerPanel.add(horizontalScroll, c);
+			c.gridx = 0;
+			c.gridy = 2;
+			c.weightx = 1;
+			c.weighty = 0;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			centerPanel.add(jSliderZoom, c);
 			
-			jLRangeReading = new JLabel("Range Reading:");
-			jLRangeReading.setLayout(null);
+			//rightPanel:
+			JLabel jLRangeReading = new JLabel("Range Reading:");
 			jtARangeReading = new JTextArea();
-			jtARangeReading.setLayout(null);
 			jtARangeReading.setEditable(false);
 			jtARangeReading.setLineWrap(true);
 			jtARangeReading.setWrapStyleWord(true);
-			
+			jtARangeReading.setAlignmentX(LEFT_ALIGNMENT);
+			jLRangeReading.setLabelFor(jtARangeReading);
 			movesModel = new ListTableModel("Moves");
 			jTMoves = new JTable(movesModel);
 			jTMoves.setFillsViewportHeight(true);
 			movesScrollPane = new JScrollPane(jTMoves, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			moveRowHeight = jTMoves.getRowHeight();
 			
-			enableButtons(buttonStateStart);
-			for(JButton button:buttons) leftPanel.add(button);
-			leftPanel.add(localizationResult);
-			leftPanel.setLocation(CLEARANCE, CLEARANCE);
+			JPanel rangeReadingPanel = new JPanel();
+			rangeReadingPanel.setLayout(new BoxLayout(rangeReadingPanel, BoxLayout.Y_AXIS));
+			rangeReadingPanel.add(jLRangeReading);
+			rangeReadingPanel.add(GuiBase.getClearanceComp());
+			rangeReadingPanel.add(jtARangeReading);
 			
-			centerPanel.add(md);
-			centerPanel.add(verticalScroll);
-			centerPanel.add(horizontalScroll);
-			centerPanel.add(jSliderZoom);
-			
+			JPanel rightPanel = new JPanel();
+			rightPanel.setBorder(GuiBase.getClearanceBorder());
+			rightPanel.setPreferredSize(new Dimension(170,1));
+			rightPanel.setLayout(new GridLayout(0,1,clearance,clearance));
+			rightPanel.add(rangeReadingPanel);
 			rightPanel.add(movesScrollPane);
-			rightPanel.add(jtARangeReading);
-			rightPanel.add(jLRangeReading);
 			
-			getContentPane().add(leftPanel);
-			getContentPane().add(centerPanel);
-			getContentPane().add(rightPanel);
+			//Put all panels together:
+			JPanel mainPanel = new JPanel();
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(leftPanel, BorderLayout.WEST);
+			mainPanel.add(centerPanel, BorderLayout.CENTER);
+			mainPanel.add(rightPanel, BorderLayout.EAST);
+			getContentPane().add(mainPanel, BorderLayout.CENTER);
 			
-			
-			
-			addComponentListener(new ComponentListener() {
+			//Listen for resizes on the center panel:
+			centerPanel.addComponentListener(new ComponentListener() {
 				@Override
 				public void componentResized(ComponentEvent e) {
-					leftPanel.setSize((int) ((getWidth() - getInsets().left - getInsets().right) * PANEL_SIZE_PERCENT) - CLEARANCE, getHeight() - 2 * CLEARANCE - getInsets().top - getInsets().bottom);
-					centerPanel.setBounds(leftPanel.getWidth() + 2 * CLEARANCE, CLEARANCE, (getWidth() - getInsets().left - getInsets().right) - 2 * leftPanel.getWidth() - 4 * CLEARANCE, leftPanel.getHeight());
-					rightPanel.setBounds(centerPanel.getX() + centerPanel.getWidth() + CLEARANCE, CLEARANCE, leftPanel.getWidth(), leftPanel.getHeight());	
-					
-					final int buttonHeight = (int) (leftPanel.getHeight() * BUTTON_HEIGHT_BREAK);
-					for(int i=0; i < buttons.length; i++) buttons[i].setBounds(0, i * (buttonHeight + CLEARANCE), leftPanel.getWidth(), buttonHeight);
-					
-					localizationResult.setBounds(0 , buttons[buttons.length - 1].getY() + buttons[buttons.length - 1].getHeight() + CLEARANCE, leftPanel.getWidth(), 60);
-					
-					jLRangeReading.setSize(rightPanel.getWidth(), 20);
-					jtARangeReading.setBounds(0, CLEARANCE + jLRangeReading.getHeight(), rightPanel.getWidth(), rightPanel.getHeight() / 2 - CLEARANCE - jLRangeReading.getHeight());
-					
-					movesScrollPane.setBounds(0, jtARangeReading.getY() + jtARangeReading.getHeight() + CLEARANCE, rightPanel.getWidth(), rightPanel.getHeight() / 2 - CLEARANCE);
-					jTMoves.setSize(movesScrollPane.getWidth(), movesScrollPane.getHeight());
 					movesScrollPane.getVerticalScrollBar().setValue(movesScrollPane.getVerticalScrollBar().getMaximum()-movesScrollPane.getVerticalScrollBar().getVisibleAmount());
-					
-					md.setSize(centerPanel.getWidth() - MAP_CLEARANCE, centerPanel.getHeight() - 2 * MAP_CLEARANCE - CLEARANCE);
-					
-					horizontalScroll.setBounds(0, md.getHeight() + CLEARANCE, md.getWidth(), MAP_CLEARANCE - CLEARANCE);
-					verticalScroll.setBounds(md.getWidth() + CLEARANCE, 0, MAP_CLEARANCE - CLEARANCE, md.getHeight());
-					
-					jSliderZoom.setBounds(0, horizontalScroll.getY() + MAP_CLEARANCE, md.getWidth(), MAP_CLEARANCE - CLEARANCE);
-					
 					//Invalidate the values: Scrollbars only repaint on a change of these values!
 					horizontalScrollValue = horizontalScroll.getValue();
 					verticalScrollValue = verticalScroll.getValue();
 					horizontalScroll.setValues(-1, 0, -1, -1);
 					verticalScroll.setValues(-1, 0, -1, -1);
+					//Recalculate all scale Factors of the map:
 					md.scaleMap();
 				}
 				@Override
@@ -722,7 +724,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		protected void displayResult(P result) {
 			if(result != null) {
 				String resultOutputString = "( " + GuiBase.getFormat().format(result.getX()) + " | " + GuiBase.getFormat().format(result.getY()) + " )";
-				localizationResult.setText("<HTML>Result:<BR>" + resultOutputString + "</HTML>");
+				localizationResult.setText("<HTML>Result: <BR>" + resultOutputString + "</HTML>");
 				md.showResult(result);
 			} else {
 				core.successGuiWaiting();

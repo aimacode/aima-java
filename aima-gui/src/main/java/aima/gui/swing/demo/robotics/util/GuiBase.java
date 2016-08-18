@@ -2,11 +2,14 @@ package aima.gui.swing.demo.robotics.util;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -14,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 /**
  * This class manages the look and feel for the whole application.<br/>
@@ -32,6 +36,7 @@ public class GuiBase {
 	private static final Color TEXT_COLOR = Color.WHITE;
 	private static final Color BACKGROUND_COLOR = new Color(119,136,153);
 	private static final Color AREA_COLOR = new Color(147,221,255);
+	private static final int CLEARANCE = 5;
 	
 	private static JDialog MESSAGE_BOX = null;
 	private static JLabel MESSAGE_LABEL;
@@ -96,6 +101,30 @@ public class GuiBase {
 	 */
 	public static Color getAreaColor() {
 		return AREA_COLOR;
+	}
+	
+	/**
+	 * Returns the clearance that has to be used between any graphical elements to maintain a uniform look and feel.
+	 * @return the clearance that has to be used.
+	 */
+	public static int getClearance() {
+		return CLEARANCE;
+	}
+	
+	/**
+	 * Returns a invisible {@link Component} that can be used to maintain a uniform clearance between any graphical elements.
+	 * @return a invisible clearance {@link Component}.
+	 */
+	public static Component getClearanceComp() {
+		return Box.createRigidArea(new Dimension(CLEARANCE,CLEARANCE));
+	}
+	
+	/**
+	 * Returns a {@link Border} that can be used to maintain a uniform clearance between any graphical elements.
+	 * @return a invisible clearance {@link Border}.
+	 */
+	public static Border getClearanceBorder() {
+		return BorderFactory.createEmptyBorder(CLEARANCE,CLEARANCE,CLEARANCE,CLEARANCE);
 	}
 	
 	/**
