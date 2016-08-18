@@ -1,0 +1,21 @@
+title: TestTeapot
+mock location: /wiki/TestTeapot
+
+Article/Page Content: 
+
+Keyword String 1: A teapot is not alive. It it made of non living materials.
+Keyword String 2: A teapot is used for dispensing liquid, typically tea and coffee.
+Keyword String 3: If a teapot is being used to dispense coffee, then it may be called a coffee pot. Vice Versa
+
+Keyword String 4: A teapot is a thing.
+
+Links:
+
+*Valid*
+< href="/wiki/TestThing">
+
+
+*Invalid/Different Format*
+
+hraf="/wiki/TestMan"
+hrefff="/wikidd/TestDog" ??

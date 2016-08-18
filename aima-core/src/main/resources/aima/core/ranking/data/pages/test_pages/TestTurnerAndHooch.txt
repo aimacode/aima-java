@@ -1,0 +1,23 @@
+title: TestTurnerAndHooch
+mock location: /wiki/TestTurnerAndHooch
+
+Article/Page Content: 
+
+Keyword String 1: Turner And Hooch is a 1989 detective comedy file starring Tom Hanks (Turner) and a dog Beasley (Hooch).
+
+Keyword String 2: Hooch is a dog people.
+Keyword String 3: Turner And Hooch released after a similiar movie, K-9, and became more popular.
+
+Links:
+
+*Valid*
+< href="/wiki/TestDog" >
+< href="/wiki/TestMan" >
+  href="/wiki/TestMovie" >
+
+href="/wiki/TestTomHanks"
+
+
+*Invalid/Different Format*
+
+hraf="/wiki/TestK-9" << broken link
