@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Subjectivity - Wikipedia, the free encyclopedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Subjectivity","wgTitle":"Subjectivity","wgCurRevisionId":700071159,"wgRevisionId":700071159,"wgArticleId":615724,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Ontology","Philosophy of history","Philosophy of science","Political philosophy","Self","Subjective experience"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Subjectivity","wgRelevantArticleId":615724,"wgRequestId":"V3@-tApAADIAAAw3ZgEAAABM","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgFlaggedRevsParams":{"tags":{"status":{"levels":1,"quality":2,"pristine":3}}},"wgStableRevisionId":null,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikipedia","wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgWikibaseItemId":"Q1139554","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0});mw.loader.implement("user.options",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","ext.centralauth.centralautologin","mmv.head","ext.visualEditor.desktopArticleTarget.init","ext.uls.init","ext.uls.interface","ext.quicksurveys.init","mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","ext.centralNotice.bannerController","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.cite.styles%7Cext.gadget.DRN-wizard%2CReferenceTooltips%2Ccharinsert%2Cfeatured-articles-links%2CrefToolbar%2Cswitcher%2Cteahouse%7Cext.tmh.thumbnail.styles%7Cext.uls.nojs%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.raggett%2CsectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="generator" content="MediaWiki 1.28.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Subjectivity"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Subjectivity&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=Subjectivity&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="copyright" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Subjectivity"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Subjectivity rootpage-Subjectivity skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Subjectivity</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div role="note" class="hatnote">For other uses, see <a href="/wiki/Subjectivity_(disambiguation)" class="mw-redirect mw-disambig" title="Subjectivity (disambiguation)">Subjectivity (disambiguation)</a>.</div>
+<p><b>Subjectivity</b> is a central <a href="/wiki/Philosophical" class="mw-redirect" title="Philosophical">philosophical</a> concept, related to <a href="/wiki/Consciousness" title="Consciousness">consciousness</a>, <a href="/wiki/Agency_(philosophy)" title="Agency (philosophy)">agency</a>, <a href="/wiki/Personhood" title="Personhood">personhood</a>, <a href="/wiki/Reality" title="Reality">reality</a>, and <a href="/wiki/Truth" title="Truth">truth</a>, which has been variously defined by sources. Three common definitions include that subjectivity is the quality or condition of:</p>
+<ul>
+<li>Something being a <i><a href="/wiki/Subject_(philosophy)" title="Subject (philosophy)">subject</a></i>, narrowly meaning an individual who possesses conscious experiences, such as perspectives, feelings, beliefs, and desires.<sup id="cite_ref-solomon_1-0" class="reference"><a href="#cite_note-solomon-1">[1]</a></sup></li>
+<li>Something being a <i>subject</i>, broadly meaning an entity that has <a href="/wiki/Agency_(philosophy)" title="Agency (philosophy)">agency</a>, meaning that it acts upon or wields power over some other entity (an <i><a href="/wiki/Object_(philosophy)" title="Object (philosophy)">object</a></i>).</li>
+<li>Some information, idea, situation, or physical thing considered true only from the perspective of a <a href="/wiki/Subject_(philosophy)" title="Subject (philosophy)">subject</a> or subjects.</li>
+</ul>
+<p>These various definitions of subjectivity are sometimes joined together in philosophy. The term is most commonly used as an explanation for that which influences, informs, and biases people's judgments about truth or reality; it is the collection of the perceptions, experiences, expectations, personal or cultural understanding, and beliefs specific to a person. It is often used in contrast to the term <a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">objectivity</a>,<sup id="cite_ref-solomon_1-1" class="reference"><a href="#cite_note-solomon-1">[1]</a></sup> which is described as a view of truth or reality which is free of any individual's influence.</p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Society"><span class="tocnumber">1</span> <span class="toctext">Society</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Self"><span class="tocnumber">2</span> <span class="toctext">Self</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#See_also"><span class="tocnumber">3</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#References"><span class="tocnumber">4</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Further_reading"><span class="tocnumber">5</span> <span class="toctext">Further reading</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#External_links"><span class="tocnumber">6</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="Society">Society</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=1" title="Edit section: Society">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Subjectivity is an inherently social mode that comes about through innumerable interactions within society. As much as subjectivity is a process of individuation, it is equally a process of socialization, the individual never being isolated in a self-contained environment, but endlessly engaging in interaction with the surrounding world. Culture is a living totality of the subjectivity of any given society constantly undergoing transformation. Subjectivity is both shaped by it and shapes it in turn, but also by other things like the economy, political institutions, communities, as well as the natural world.</p>
+<p>Though the boundaries of societies and their cultures are indefinable and arbitrary, the subjectivity inherent in each one is palatable and can be recognized as distinct from others. Subjectivity is in part a particular experience or organization of <a href="/wiki/Reality" title="Reality">reality</a>, which includes how one views and interacts with humanity, objects, consciousness, and nature, so the difference between different cultures brings about an alternate experience of existence that forms life in a different manner. A common effect on an individual of this disjunction between subjectivities is <a href="/wiki/Culture_shock" title="Culture shock">culture shock</a>, where the subjectivity of the other culture is considered alien and possibly incomprehensible or even hostile.</p>
+<p><a href="/wiki/Political_subjectivity" title="Political subjectivity">Political subjectivity</a> is an emerging concept in social sciences and humanities. Political subjectivity is a reference to the deep embeddedness of subjectivity in the socially intertwined systems of power and meaning. "Politicality," writes <a rel="nofollow" class="external text" href="http://artsandscience.usask.ca/profile/SRahimi">Sadeq Rahimi</a> in <i><a rel="nofollow" class="external text" href="http://www.routledgementalhealth.com/books/details/9781138840829/">Meaning, Madness and Political Subjectivity</a></i>, "is not an added aspect of the subject, but indeed the mode of being of the subject, that is, precisely what the subject <i>is</i>."<sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup></p>
+<h2><span class="mw-headline" id="Self">Self</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=2" title="Edit section: Self">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Subjectivity presupposes a subject, one that experiences all the phenomena that make up and produce subjectivity. The subject is the form of an existing being while subjectivity is the content, and the process of subjectivation is the alteration of what it means to be that subject. It is a classic <a href="/wiki/Philosophy_of_self" title="Philosophy of self">philosophical question</a> of whether the self, or the subject, is a transient or permanent aspect of existence. Whatever the answer to the problem, it can be said that subjectivity, which is the way that the subject expresses itself, constantly undergoes change, though still retains constant characteristics, depending on the subject who has the potential to affect their subjectivity. This is true, that subjectivity is constantly undergoing change, because what makes up our psychic experience is a wide range of perceptions, sensations, emotions, thoughts and beliefs, that, through the passage of time, and our relation to space, constantly generate transformation in terms of our subjective relation to the world.</p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=3" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="noprint portal tright" style="border:solid #aaa 1px;margin:0.5em 0 0.5em 1em">
+<table style="background:#f9f9f9;font-size:85%;line-height:110%;max-width:175px">
+<tr style="vertical-align:middle">
+<td style="text-align:center"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/18px-Socrates.png" width="18" height="28" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/27px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/36px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></td>
+<td style="padding:0 0.2em;vertical-align:middle;font-style:italic;font-weight:bold"><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr style="vertical-align:middle">
+<td style="text-align:center"><a href="/wiki/File:Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/7/73/Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png/32px-Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png" width="32" height="24" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/7/73/Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png/48px-Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/73/Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png/64px-Nicolas_P._Rougier%27s_rendering_of_the_human_brain.png 2x" data-file-width="800" data-file-height="600" /></a></td>
+<td style="padding:0 0.2em;vertical-align:middle;font-style:italic;font-weight:bold"><a href="/wiki/Portal:Thinking" title="Portal:Thinking">Thinking portal</a></td>
+</tr>
+</table>
+</div>
+<ul>
+<li><a href="/wiki/Dogma" title="Dogma">Dogma</a></li>
+<li><a href="/wiki/Intersubjectivity" title="Intersubjectivity">Intersubjectivity</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology (philosophy)</a></li>
+<li><a href="/wiki/Phenomenology_(psychology)" title="Phenomenology (psychology)">Phenomenology (psychology)</a></li>
+<li><a href="/wiki/Political_subjectivity" title="Political subjectivity">Political subjectivity</a></li>
+<li><a href="/wiki/Q_methodology" title="Q methodology">Q methodology</a></li>
+<li><a href="/wiki/Subject_(philosophy)" title="Subject (philosophy)">Subject (philosophy)</a></li>
+<li><i><a href="/wiki/Philosophy_of_S%C3%B8ren_Kierkegaard#Subjectivity" title="Philosophy of Søren Kierkegaard">Truth is Subjectivity</a></i>, an existential interpretation of subjectivity by <a href="/wiki/S%C3%B8ren_Kierkegaard" title="Søren Kierkegaard">Søren Kierkegaard</a></li>
+</ul>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=4" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist" style="list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-solomon-1"><span class="mw-cite-backlink">^ <a href="#cite_ref-solomon_1-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-solomon_1-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text"><a href="/wiki/Robert_C._Solomon" title="Robert C. Solomon">Solomon, Robert C.</a> "Subjectivity," in Honderich, Ted. <i><a href="/wiki/Oxford_Companion_to_Philosophy" class="mw-redirect" title="Oxford Companion to Philosophy">Oxford Companion to Philosophy</a> (Oxford University Press, 2005), p.900.</i></span></li>
+<li id="cite_note-2"><span class="mw-cite-backlink"><b><a href="#cite_ref-2">^</a></b></span> <span class="reference-text"><cite id="Rahimi" class="citation book">Rahimi, Sadeq (2015). <a rel="nofollow" class="external text" href="http://www.routledgementalhealth.com/books/details/9781138840829/"><i>Meaning, Madness and Political Subjectivity: A Study of Schizophrenia and Culture in Turkey</i></a>. Oxford &amp; New York: Routledge. p.&#160;8. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/1138840823" title="Special:BookSources/1138840823">1138840823</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ASubjectivity&amp;rft.aufirst=Sadeq&amp;rft.aulast=Rahimi&amp;rft.btitle=Meaning%2C+Madness+and+Political+Subjectivity%3A+A+Study+of+Schizophrenia+and+Culture+in+Turkey&amp;rft.date=2015&amp;rft.genre=book&amp;rft_id=http%3A%2F%2Fwww.routledgementalhealth.com%2Fbooks%2Fdetails%2F9781138840829%2F&amp;rft.isbn=1138840823&amp;rft.pages=8&amp;rft.place=Oxford+%26+New+York&amp;rft.pub=Routledge&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+</ol>
+</div>
+<h2><span class="mw-headline" id="Further_reading">Further reading</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=5" title="Edit section: Further reading">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li>Beiser,Frederick C. (2002). <i>German Idealism: The Struggle Against Subjectivism, 1781-1801</i>. Harvard University Press.</li>
+<li><a href="/wiki/Ned_Block" title="Ned Block">Block, Ned</a>; Flanagan, Owen J.; &amp; Gzeldere, Gven (Eds.) <i>The Nature of Consciousness: Philosophical Debates</i>. Cambridge, MA: MIT Press. <a href="/wiki/Special:BookSources/9780262522106" class="internal mw-magiclink-isbn">ISBN 978-0-262-52210-6</a></li>
+<li>Bowie, Andrew (1990). <i>Aesthetics and Subjectivity&#160;: From Kant to Nietzsche</i>. Manchester: Manchester University Press.</li>
+<li>Dallmayr, Winfried Reinhard (1981). <i>Twilight of Subjectivity: Contributions to a Post-Individualist Theory Politics</i>. Amherst, MA: <a href="/wiki/University_of_Massachusetts_Press" title="University of Massachusetts Press">University of Massachusetts Press</a>.</li>
+<li>Ellis, C. &amp; Flaherty, M. (1992). <i>Investigating Subjectivity: Research on Lived Experience</i>. Newbury Park, CA: Sage. <a href="/wiki/Special:BookSources/9780803944961" class="internal mw-magiclink-isbn">ISBN 978-0-8039-4496-1</a></li>
+<li>Farrell, Frank B. (1994). <i>Subjectivity, Realism, and Postmodernism: The Recovery of the World in Recent Philosophy</i>. Cambridge - New York: Cambridge University Press.</li>
+<li>Johnson, Daniel. (2003). <i>On Truth As Subjectivity In Kierkegaard's</i> Concluding Unscientific Postscript. Quodlibet Journal: Volume 5 Number 2-3, July 2003.</li>
+<li>Lauer, Quentin (1958). <i>The Triumph of Subjectivity: An Introduction to Transcendental Phenomenology</i>. Fordham University Press.</li>
+</ul>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Subjectivity&amp;action=edit&amp;section=6" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="mbox-small plainlinks sistersitebox" style="border:1px solid #aaa;background-color:#f9f9f9">
+<tr>
+<td class="mbox-image"><a href="/wiki/File:Wiktionary-logo-v2.svg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/40px-Wiktionary-logo-v2.svg.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/60px-Wiktionary-logo-v2.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/80px-Wiktionary-logo-v2.svg.png 2x" data-file-width="391" data-file-height="391" /></a></td>
+<td class="mbox-text plainlist">Look up <i><b><a href="//en.wiktionary.org/wiki/Subjectivity" class="extiw" title="wiktionary:Subjectivity">Subjectivity</a></b></i> in Wiktionary, the free dictionary.</td>
+</tr>
+</table>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1266
+Cached time: 20160705002901
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.080 seconds
+Real time usage: 0.112 seconds
+Preprocessor visited node count: 274/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 4976/2097152 bytes
+Template argument size: 128/2097152 bytes
+Highest expansion depth: 8/40
+Expensive parser function count: 0/500
+Lua time usage: 0.031/10.000 seconds
+Lua memory usage: 1.58 MB/50 MB
+Number of Wikibase entities loaded: 0-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   94.131      1 - -total
+ 44.61%   41.994      1 - Template:Reflist
+ 35.29%   33.219      1 - Template:Cite_book
+ 28.01%   26.367      1 - Template:Other_uses
+ 12.69%   11.946      1 - Template:Wiktionary
+ 11.29%   10.631      1 - Template:Portal
+ 10.10%    9.506      1 - Template:Sister_project
+  7.86%    7.395      1 - Template:Side_box
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:615724-0!*!0!!en!4!* and timestamp 20160705002901 and revision id 700071159
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Subjectivity&amp;oldid=700071159">https://en.wikipedia.org/w/index.php?title=Subjectivity&amp;oldid=700071159</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Ontology" title="Category:Ontology">Ontology</a></li><li><a href="/wiki/Category:Philosophy_of_history" title="Category:Philosophy of history">Philosophy of history</a></li><li><a href="/wiki/Category:Philosophy_of_science" title="Category:Philosophy of science">Philosophy of science</a></li><li><a href="/wiki/Category:Political_philosophy" title="Category:Political philosophy">Political philosophy</a></li><li><a href="/wiki/Category:Self" title="Category:Self">Self</a></li><li><a href="/wiki/Category:Subjective_experience" title="Category:Subjective experience">Subjective experience</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Subjectivity" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Subjectivity" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Subjectivity"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Subjectivity"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Subjectivity" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Subjectivity&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Subjectivity&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Subjectivity" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Subjectivity" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Subjectivity&amp;oldid=700071159" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Subjectivity&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q1139554" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Subjectivity&amp;id=700071159" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Subjectivity">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Subjectivity&amp;returnto=Subjectivity&amp;oldid=700071159&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Subjectivity&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D8%B0%D8%A7%D8%AA%D9%8A%D8%A9_(%D8%B9%D9%84%D9%85)" title="ذاتية (علم) – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-ca"><a href="//ca.wikipedia.org/wiki/Subjectivitat" title="Subjectivitat – Catalan" lang="ca" hreflang="ca">Català</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/Subjektivit%C3%A4t" title="Subjektivität – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-et"><a href="//et.wikipedia.org/wiki/Subjektiivsus" title="Subjektiivsus – Estonian" lang="et" hreflang="et">Eesti</a></li><li class="interlanguage-link interwiki-es"><a href="//es.wikipedia.org/wiki/Subjetividad" title="Subjetividad – Spanish" lang="es" hreflang="es">Español</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Subjectivit%C3%A9" title="Subjectivité – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-hi"><a href="//hi.wikipedia.org/wiki/%E0%A4%B5%E0%A5%8D%E0%A4%AF%E0%A4%95%E0%A5%8D%E0%A4%A4%E0%A4%BF%E0%A4%AA%E0%A4%B0%E0%A4%95%E0%A4%A4%E0%A4%BE" title="व�?यक�?तिपरकता – Hindi" lang="hi" hreflang="hi">हिन�?दी</a></li><li class="interlanguage-link interwiki-is"><a href="//is.wikipedia.org/wiki/Hugl%C3%A6gni" title="Huglægni – Icelandic" lang="is" hreflang="is">�?slenska</a></li><li class="interlanguage-link interwiki-he"><a href="//he.wikipedia.org/wiki/%D7%A1%D7%95%D7%91%D7%99%D7%99%D7%A7%D7%98%D7%99%D7%91%D7%99%D7%95%D7%AA" title="סובייקטיביות – Hebrew" lang="he" hreflang="he">עברית</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Subjectiviteit" title="Subjectiviteit – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-no"><a href="//no.wikipedia.org/wiki/Subjektivitet" title="Subjektivitet – Norwegian" lang="no" hreflang="no">Norsk bokmål</a></li><li class="interlanguage-link interwiki-uz"><a href="//uz.wikipedia.org/wiki/Subyektivlik" title="Subyektivlik – Uzbek" lang="uz" hreflang="uz">Oʻzbekcha/ўзбекча</a></li><li class="interlanguage-link interwiki-pt"><a href="//pt.wikipedia.org/wiki/Subjetividade" title="Subjetividade – Portuguese" lang="pt" hreflang="pt">Português</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%A1%D1%83%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D1%8C" title="Субъективно�?ть – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-sl"><a href="//sl.wikipedia.org/wiki/Subjektivnost" title="Subjektivnost – Slovenian" lang="sl" hreflang="sl">Slovenš�?ina</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%A1%D1%83%D0%B1%D1%98%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D1%81%D1%82" title="Субјективно�?т – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Subjektivnost" title="Subjektivnost – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Subjektiivisuus" title="Subjektiivisuus – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Subjektivitet" title="Subjektivitet – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-th"><a href="//th.wikipedia.org/wiki/%E0%B8%AD%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B8%B4%E0%B8%AA%E0%B8%B1%E0%B8%A2" title="อัตวิสัย – Thai" lang="th" hreflang="th">ไทย</a></li><li class="interlanguage-link interwiki-tr"><a href="//tr.wikipedia.org/wiki/%C3%96znellik" title="Öznellik – Turkish" lang="tr" hreflang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%A1%D1%83%D0%B1%27%D1%94%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C" title="Суб'єктивні�?ть – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-zh"><a href="//zh.wikipedia.org/wiki/%E4%B8%BB%E8%A7%80" title="主觀 – Chinese" lang="zh" hreflang="zh">中文</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q1139554#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 16 January 2016, at 06:01.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Subjectivity&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","mmv.bootstrap.autostart","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":92,"wgHostname":"mw1020"});});</script>
+	</body>
+</html>

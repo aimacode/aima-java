@@ -1,0 +1,26 @@
+title: TestDog
+mock location: /wiki/TestDog
+
+Article/Page Content: 
+
+Keyword String 1: Dogs have four legs 
+Keyword String 2: Dogs have fur. It can be a variety of colours: red, orange, black, brown, white, or pink.
+Keyword String 3: Some varieties are kept as pets in people's houses. 
+Keyword String 4: Dogs like to eat meat of the bone, though they are typically served dried dog food. 
+Keyword String 5: Dogs are alive. That is to say, they are living things, like lizards and humans.
+Keyword String 6: It is said the a dog is "a man's best friend". Interestingly, a girl's best friend is sometimes said to be a diamond.
+Keyword String 7: Here are a few famous dog's: Lassie, Spot, Hooch.
+
+Links:
+
+*Valid*
+<a href="/wiki/TestAnimal"> A Tag </a>
+< href="/wiki/TestThing" >
+< href="/wiki/TestMan" > 
+< href="/wiki/TestTurnerAndHooch" > <> <>
+
+href="/wiki/TestLiving"
+href="/wiki/TestPet"		href="/wiki/TestMeat"
+
+
+*Invalid/Different Format*
