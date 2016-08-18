@@ -1,19 +1,19 @@
 package aima.core.nlp.ranking;
 
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class RunHITS {
 	
 	public static void main( String[] args ) {	
 		List<Page> result;
 		// build page table 
-		Hashtable<String,Page> pageTable = PagesDataset.loadDefaultPages();
+		Map<String,Page> pageTable = PagesDataset.loadDefaultPages();
 		// Create HITS Ranker 
 		HITS hits = new HITS(pageTable);
 		// run hits
 		System.out.println("Ranking...");
-		result = hits.rank("man is");
+		result = hits.hits("man is");
 		// report results
 		System.out.println("Ranking Finished.");
 		hits.report(result);

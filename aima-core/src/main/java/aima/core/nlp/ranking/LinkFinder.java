@@ -1,7 +1,7 @@
 package aima.core.nlp.ranking;
 
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public interface LinkFinder {
 	
@@ -12,7 +12,7 @@ public interface LinkFinder {
 	 * @param page
 	 * @return
 	 */
-	public List<String> getOutlinks( Page page );
+	List<String> getOutlinks( Page page );
 	
 	/**
 	 * Take a Page object and return its inlinks (who links to it) as a list of strings.
@@ -20,6 +20,6 @@ public interface LinkFinder {
 	 * @param pageTable
 	 * @return
 	 */
-	public List<String> getInlinks( Page page, Hashtable<String,Page> pageTable );
+	List<String> getInlinks( Page page, Map<String,Page> pageTable );
 
 }

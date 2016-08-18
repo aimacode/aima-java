@@ -3,9 +3,8 @@ package aima.test.core.unit.nlp.rank;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import aima.core.nlp.ranking.PagesDataset;
 
 public class TestPagesDataset {
 	
-	Hashtable<String,Page> pageTable;
+	Map<String,Page> pageTable;
 	// resource folder of .txt files to test with
 	String testFilesFolderPath = "src/main/resources/aima/core/ranking/data/pages/test_pages";
 	

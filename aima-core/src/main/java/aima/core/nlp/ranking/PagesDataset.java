@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class PagesDataset {
@@ -15,11 +16,11 @@ public class PagesDataset {
 	
 	private static WikiLinkFinder wlf;
 	
-	public static Hashtable<String,Page> loadDefaultPages() {
+	public static Map<String,Page> loadDefaultPages() {
 		return loadPages(wikiPagesFolderPath);
 	}
 	
-	public static Hashtable<String, Page> loadTestPages() {
+	public static Map<String, Page> loadTestPages() {
 		return loadPages(testFilesFolderPath);
 	}
 
@@ -32,9 +33,9 @@ public class PagesDataset {
 	 * @return a hashtable of Page objects, accessed by article name 
 	 * (which is a location for wikipedia: \wiki\*article name*)
 	 */
-	public static Hashtable<String,Page> loadPages( String folderPath) {
+	public static Map<String,Page> loadPages( String folderPath) {
 	
-		Hashtable<String,Page> pageTable = new Hashtable<String,Page>();
+		Map<String,Page> pageTable = new Hashtable<String,Page>();
 		Page currPage;
 		File[] listOfFiles;
 		wlf = new WikiLinkFinder();
@@ -68,7 +69,7 @@ public class PagesDataset {
 		return p;
 	}
 	
-	public static Hashtable<String,Page> determineAllInlinks( Hashtable<String,Page> pageTable ) {
+	public static Map<String,Page> determineAllInlinks( Map<String,Page> pageTable ) {
 		Page currPage;
 		Set<String> keySet = pageTable.keySet();
 		Iterator<String> keySetIterator = keySet.iterator();

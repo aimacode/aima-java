@@ -3,7 +3,7 @@ package aima.test.core.unit.nlp.rank;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class testHITS {
 	
 	@Before
 	public void setUp() {
-		Hashtable<String,Page> pageTable = PagesDataset.loadTestPages();
+		Map<String,Page> pageTable = PagesDataset.loadTestPages();
 		hits = new HITS(pageTable);
 	}
 
@@ -46,9 +46,6 @@ public class testHITS {
 		// hub total will be 9 + 4 + 1 + 0 = 14
 		// authority total will 4 + 9 + 16 + 100 = 129
 		double p1HubNorm = 0.214285; double p2HubNorm = 0.142857;
-		double p3HubNorm = 1/14; double p4HubNorm = 0/14;
-		double p1AuthNorm = 2/129; double p2AuthNorm = 3/129;
-		double p3AuthNorm = 4/129; double p4AuthNorm = 10/129;
 		hits.normalize(pages);
 		assertEquals( "Out of tolerance", p1HubNorm, pages.get(0).hub, 0.02); 
 		assertEquals( "Out of tolerance", pages.get(1).hub, p2HubNorm, 0.02 );
@@ -73,9 +70,8 @@ public class testHITS {
 	public void testGetAveDelta() {
 		double[] one = {0,1,2,3,4,5}; 
 		double[] two = {0.5,1.5,2.5,3.5,4.5,5.5};
-		hits.prevAuthVals = one;
 		
-		double aveDelta = hits.getAveDelta(hits.prevAuthVals, two);
+		double aveDelta = hits.getAveDelta(one, two);
 		assertEquals( aveDelta, 0.5, 0 );
 	}
 }

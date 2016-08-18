@@ -1,9 +1,9 @@
 package aima.core.nlp.ranking;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +33,7 @@ public class WikiLinkFinder implements LinkFinder {
 	}
 
 	@Override
-	public List<String> getInlinks(Page target, Hashtable<String, Page> pageTable) {
+	public List<String> getInlinks(Page target, Map<String, Page> pageTable) {
 		
 		String location = target.getLocation().toLowerCase(); // make comparison case insensitive
 		List<String> inlinks = new ArrayList<String>(); // initialise a list for the inlinks

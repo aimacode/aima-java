@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 871.<br>
@@ -16,14 +15,14 @@ import java.util.concurrent.TimeUnit;
  * 
  * <pre>
  * function HITS(query) returns pages (with hub and authority numbers)
- *   pages <- EXPAND-PAGES(RELEVANT-PAGES(query))
+ *   pages &larr; EXPAND-PAGES(RELEVANT-PAGES(query))
  *   for each p in pages do 
- *   	p.AUTHORITY <- 1
- *   	p.HUB <- 1
+ *   	p.AUTHORITY &larr; 1
+ *   	p.HUB &larr; 1
  *   repeat until convergence do
  *   	for each p in pages do
- *   		p.AUTHORITY <- SUM<sub>i</sub> INLINK<sub>i</sub>(p).HUB
- *   		p.HUB <- SUM<sub>i</sub> OUTLINK<sub>i</sub>(p).AUTHORITY
+ *   		p.AUTHORITY &larr; &Sigma<sub>i</sub> INLINK<sub>i</sub>(p).HUB
+ *   		p.HUB &larr; &Sigma<sub>i</sub> OUTLINK<sub>i</sub>(p).AUTHORITY
  *   	NORMALIZE(pages)
  *   return pages
  * </pre>
@@ -40,46 +39,44 @@ import java.util.concurrent.TimeUnit;
  */
 public class HITS {
 
-	final int RANK_HISTORY_DEPTH = 3;
-	final double DELTA_TOLERANCE = 0.05; // somewhat arbitrary
-	Page[] pagesIndex;
-	Hashtable<String,Page> pagesTable;
+	final int RANK_HISTORY_DEPTH;
+	final double DELTA_TOLERANCE; // somewhat arbitrary
+	Map<String,Page> pTable; 
 	// DETECT CONVERGENCE VARS
-    public double[] prevAuthVals;
-    public double[] prevHubVals;
-	public double prevAveHubDelta = 0;
-	public double prevAveAuthDelta = 0; 
+    double[] prevAuthVals;
+    double[] prevHubVals;
+	double prevAveHubDelta = 0;
+	double prevAveAuthDelta = 0; 
 	////////////////////////////
     
     // TODO: Improve the convergence detection functionality
+    public HITS( Map<String,Page> pTable, int rank_hist_depth, double delta_tolerance ) {
+    	this.pTable = pTable;
+    	this.RANK_HISTORY_DEPTH = rank_hist_depth;
+    	this.DELTA_TOLERANCE = delta_tolerance;
+    	
+    }
     
-    public HITS( Hashtable<String,Page> pTable ) {
-    	this.pagesTable = pTable;
+    public HITS( Map<String, Page> pTable ) {
+    	this( pTable, 3, 0.05);
     }
 	
-	public List<Page> rank( String query ) { 
+    // function HITS(query) returns pages with hub and authority number
+	public List<Page> hits( String query ) { 
 		List<Page> pages;
-		pages = expandPages( relevantPages( query, pagesTable ), pagesTable );
+		pages = expandPages( relevantPages( query ));
 		// for each p in pages
-		for( int i=0; i < pages.size(); i++ ) { 
-			Page p = pages.get(i);
+		for( Page p: pages ) { 
 			p.authority = 1;
 			p.hub = 1; 
 		}
 		while( !convergence( pages ) ) {
 			// for each p in pages do
-			for( int i=0; i < pages.size(); i++ ) {
-				Page p = pages.get(i);
+			for( Page p : pages ) {
 				p.authority = SumInlinkHubScore( p );
 				p.hub       = SumOutlinkAuthorityScore( p );
 			}
 			normalize(pages);
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		return pages;
 		
@@ -91,11 +88,9 @@ public class HITS {
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	public List<Page> relevantPages( String query, Hashtable<String,Page> pTable ) {
+	public List<Page> relevantPages( String query ) {
 		List<Page> relevantPages = new ArrayList<Page>();
-		Iterator<String> it = pTable.keySet().iterator();
-		while(it.hasNext()) {
-			Page p = pTable.get(it.next());
+		for( Page p: pTable.values()) {
 			if( matches( query, p.getContent() )) {
 				relevantPages.add(p);
 			}
@@ -121,7 +116,7 @@ public class HITS {
 	 * @param pages
 	 * @return
 	 */
-	public List<Page> expandPages( List<Page> pages, Hashtable<String,Page> pTable ) {
+	public List<Page> expandPages( List<Page> pages ) {
 		
 		List<Page> expandedPages = new ArrayList<Page>();
 		Set<String> inAndOutLinks = new HashSet<String>();
@@ -160,14 +155,13 @@ public class HITS {
 	 */
 	public List<Page> normalize( List<Page> pages ) {
 		double hubTotal = 0; double authTotal = 0;
-		for( int i=0; i < pages.size(); i++) {
+		for( Page p: pages) {
 			// Sum Hub scores over all pages
-			hubTotal += Math.pow(pages.get(i).hub, 2);
+			hubTotal += Math.pow(p.hub, 2);
 			// Sum Authority scores over all pages
-			authTotal += Math.pow(pages.get(i).authority, 2);		}
+			authTotal += Math.pow(p.authority, 2);		}
 		// divide all hub and authority scores for all pages
-		for( int i=0; i < pages.size(); i++) {
-			Page p = pages.get(i);
+		for( Page p: pages ) {
 			if( hubTotal > 0 ) { p.hub /= hubTotal; } 
 			else { p.hub = 0; }
 			if( authTotal > 0 ) { p.authority /= authTotal; }
@@ -187,7 +181,7 @@ public class HITS {
 		List<String> inLinks = page.getInlinks();
 		double hubScore = 0;
 		for( int i=0; i < inLinks.size(); i++ ) {
-			Page inLink = pagesTable.get(inLinks.get(i));
+			Page inLink = pTable.get(inLinks.get(i));
 			if( inLink != null ) {
 				hubScore += inLink.hub;
 			}
@@ -210,7 +204,7 @@ public class HITS {
 		List<String> outLinks = page.getOutlinks();
 		double authScore = 0;
 		for( int i=0; i < outLinks.size(); i++ ) {
-			Page outLink = pagesTable.get(outLinks.get(i));
+			Page outLink = pTable.get(outLinks.get(i));
 			if( outLink != null ) {
 				authScore += outLink.authority;
 			}
@@ -302,6 +296,10 @@ public class HITS {
 		return maxAuthority;
 	}
 	
+	/**
+	 * Organize the list of pages according to their descending Hub scores.
+	 * @param result
+	 */
 	public void sortHub( List<Page> result ) {
 		Collections.sort(result, new Comparator<Page>() {
 	        public int compare(Page p1, Page p2) {
@@ -316,6 +314,10 @@ public class HITS {
 	    });
 	}
 	
+	/**
+	 * Organize the list of pages according to their descending Authority Scores
+	 * @param result
+	 */
 	public void sortAuthority( List<Page> result ) {
 		Collections.sort(result, new Comparator<Page>() {
 	        public int compare(Page p1, Page p2) {
@@ -330,6 +332,10 @@ public class HITS {
 	    });
 	}
 	
+	/**
+	 * Simple console display of HITS Algorithm results.
+	 * @param result
+	 */
 	public void report( List<Page> result ) {
 		
 		// Print Pages out ranked by highest authority
