@@ -46,8 +46,8 @@ public final class SimpleSettingsListener extends AbstractSettingsListener {
 		settingsGui.registerSetting(PARTICLE_COUNT_KEY, "Particle count", "2000");
 		settingsGui.registerSetting(MIN_WEIGHT_KEY, "Min. particle weight", "0.0");
 		settingsGui.registerSetting(MAX_DISTANCE_KEY, "Max. particle distance", "25.0");
-		
 		settingsGui.registerSetting(SENSOR_RANGE_KEY, "Max. sensor range", "800.0");
+		
 		settingsGui.registerSetting(MOVE_ROTATION_NOISE_KEY, "Move rotation noise (rad)", "0.3647");
 		settingsGui.registerSetting(MOVE_DISTANCE_NOISE_KEY, "Move distance noise", "20.7188");
 		settingsGui.registerSetting(RANGE_READING_NOISE_KEY, "Range reading noise", "0.4486");

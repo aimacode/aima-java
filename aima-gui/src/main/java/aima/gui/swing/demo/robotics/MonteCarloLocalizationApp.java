@@ -21,10 +21,10 @@ import aima.gui.swing.demo.robotics.simple.SimpleRangeReading;
 import aima.gui.swing.demo.robotics.simple.SimpleRangeReadingFactory;
 import aima.gui.swing.demo.robotics.simple.SimpleSettingsListener;
 import aima.gui.swing.demo.robotics.simple.VirtualRobot;
+import aima.gui.swing.demo.robotics.simple.VirtualRobotGui;
 import aima.gui.swing.framework.util.GuiBase;
 import aima.gui.swing.demo.robotics.components.IRobotGui;
 import aima.gui.swing.demo.robotics.components.Settings;
-import aima.gui.swing.demo.robotics.components.VirtualRobotGui;
 
 /**
  * Provides the {@link GenericMonteCarloLocalization2DApp} for the simple environment in {@code aima.gui.swing.demo.robotics.simple}.
