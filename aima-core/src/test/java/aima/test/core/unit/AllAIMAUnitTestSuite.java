@@ -8,7 +8,6 @@ import aima.test.core.unit.environment.EnvironmentTestSuite;
 import aima.test.core.unit.learning.LearningTestSuite;
 import aima.test.core.unit.logic.LogicTestSuite;
 import aima.test.core.unit.probability.ProbabilityTestSuite;
-import aima.test.core.unit.robotics.RoboticsTestSuite;
 import aima.test.core.unit.search.SearchTestSuite;
 import aima.test.core.unit.util.UtilTestSuite;
 import aima.test.core.unit.util.math.geom.GeometryTestSuite;
@@ -16,6 +15,6 @@ import aima.test.core.unit.util.math.geom.GeometryTestSuite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ AgentTestSuite.class, EnvironmentTestSuite.class,
 		LearningTestSuite.class, LogicTestSuite.class,
-		ProbabilityTestSuite.class, RoboticsTestSuite.class, SearchTestSuite.class, UtilTestSuite.class, GeometryTestSuite.class })
+		ProbabilityTestSuite.class, SearchTestSuite.class, UtilTestSuite.class, GeometryTestSuite.class })
 public class AllAIMAUnitTestSuite {
 }

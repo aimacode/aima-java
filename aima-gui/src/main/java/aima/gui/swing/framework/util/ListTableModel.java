@@ -1,4 +1,4 @@
-package aima.gui.swing.demo.robotics.util;
+package aima.gui.swing.framework.util;
 
 import java.util.ArrayList;
 

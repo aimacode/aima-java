@@ -1,4 +1,4 @@
-package aima.core.robotics.impl.simple;
+package aima.gui.swing.demo.robotics.simple;
 
 import aima.core.robotics.impl.datatypes.Angle;
 import aima.core.robotics.impl.datatypes.IPose2D;

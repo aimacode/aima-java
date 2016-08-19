@@ -1,12 +1,11 @@
-package aima.gui.swing.demo.robotics.components;
+package aima.gui.swing.demo.robotics.simple;
 
-import aima.core.robotics.impl.simple.SimpleMove;
-import aima.core.robotics.impl.simple.SimpleRangeReading;
-import aima.core.robotics.impl.simple.VirtualRobot;
 import aima.gui.swing.demo.robotics.GenericMonteCarloLocalization2DApp;
+import aima.gui.swing.demo.robotics.components.AbstractSettingsListener;
+import aima.gui.swing.demo.robotics.components.Settings;
 
 /**
- * This settings listener is used for the environment in {@code aima.core.robotics.impl.simple}.
+ * This settings listener is used for the environment in {@code aima.gui.swing.demo.robotics.simple}.
  * It applies all setting changes in the settings GUI on the corresponding parameters except the particle count which is managed internally in the {@link GenericMonteCarloLocalization2DApp}.
  * It is extending the {@link AbstractSettingsListener}.
  * 
@@ -45,9 +44,8 @@ public final class SimpleSettingsListener extends AbstractSettingsListener {
 	@Override
 	public void createSettings() {
 		settingsGui.registerSetting(PARTICLE_COUNT_KEY, "Particle count", "2000");
-		settingsGui.registerSetting(REMEMBER_FACTOR_KEY, "Remember factor", "0.8");
 		settingsGui.registerSetting(MIN_WEIGHT_KEY, "Min. particle weight", "0.0");
-		settingsGui.registerSetting(MAX_DISTANCE_KEY, "Max. particle distance", "15.0");
+		settingsGui.registerSetting(MAX_DISTANCE_KEY, "Max. particle distance", "25.0");
 		
 		settingsGui.registerSetting(SENSOR_RANGE_KEY, "Max. sensor range", "800.0");
 		settingsGui.registerSetting(MOVE_ROTATION_NOISE_KEY, "Move rotation noise (rad)", "0.3647");
@@ -79,7 +77,7 @@ public final class SimpleSettingsListener extends AbstractSettingsListener {
 		try {
 			final double valueNumber = Double.parseDouble(value);
 			if(key.equals(SENSOR_RANGE_KEY)) {
-				robot.setSensorRange(valueNumber);
+				SimpleRangeReading.setSensorRange(valueNumber);
 			} else if(key.equals(MOVE_ROTATION_NOISE_KEY)) {
 				SimpleMove.setRotationNoise(valueNumber);
 			} else if(key.equals(MOVE_DISTANCE_NOISE_KEY)) {
@@ -91,7 +89,7 @@ public final class SimpleSettingsListener extends AbstractSettingsListener {
 			} else if(key.equals(MAX_MOVE_DISTANCE_KEY)) {
 				robot.setMaxMoveDistance(valueNumber);
 			} else if(key.equals(BAD_DELTA_KEY)) {
-				robot.setBadDelta(valueNumber);
+				SimpleRangeReading.setBadDelta(valueNumber);
 			} else {
 				throw new NumberFormatException();
 			}

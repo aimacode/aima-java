@@ -1,4 +1,4 @@
-package aima.core.robotics.impl.simple;
+package aima.gui.swing.demo.robotics.simple;
 
 import aima.core.robotics.impl.map.IPoseFactory;
 import aima.core.util.Util;

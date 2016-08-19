@@ -1,4 +1,4 @@
-package aima.core.robotics.impl.simple;
+package aima.gui.swing.demo.robotics.simple;
 
 import aima.core.robotics.IMclRobot;
 import aima.core.robotics.impl.datatypes.AbstractRangeReading;
@@ -19,8 +19,6 @@ public final class VirtualRobot implements IMclRobot<Angle,SimpleMove,AbstractRa
 
 	private double maxMoveDistance; 
 	private double minMoveDistance;
-	private double badDelta;
-	private double sensorRange;
 	private Angle[] rangeReadingAngles;
 	private MclCartesianPlot2D<SimplePose,SimpleMove,AbstractRangeReading> map;
 	private SimplePose pose;
@@ -57,22 +55,6 @@ public final class VirtualRobot implements IMclRobot<Angle,SimpleMove,AbstractRa
 	}
 	
 	/**
-	 * Sets the delta between two range readings, above which a weight of zero is calculated.
-	 * @param badDelta the worst acceptable delta.
-	 */
-	public void setBadDelta(double badDelta) {
-		this.badDelta = badDelta;
-	}
-	
-	/**
-	 * Sets the sensor range that the virtual robot can measure at most.
-	 * @param sensorRange the range of the robot's sensor.
-	 */
-	public void setSensorRange(double sensorRange) {
-		this.sensorRange = sensorRange;
-	}
-	
-	/**
 	 * Moves the robot to a new random position on the map.
 	 */
 	public void setRandomPose() {
@@ -96,21 +78,6 @@ public final class VirtualRobot implements IMclRobot<Angle,SimpleMove,AbstractRa
 			ranges[i] = new SimpleRangeReading(ranges[i].getValue(), rangeReadingAngles[i]);
 		}
 		return ranges;
-	}
-
-	@Override
-	public float calculateWeight(AbstractRangeReading robotRange, AbstractRangeReading mapRange) {
-		if(robotRange.getValue() < 0 || mapRange.getValue() < 0) return 0;
-		if(Double.isInfinite(robotRange.getValue()) && Double.isInfinite(mapRange.getValue())) return 1;
-		final double robotValue;
-		if(Double.isInfinite(robotRange.getValue()) || robotRange.getValue() > sensorRange) robotValue = sensorRange;
-		else robotValue = robotRange.getValue();
-		final double mapValue;
-		if(Double.isInfinite(mapRange.getValue()) || mapRange.getValue() > sensorRange) mapValue = sensorRange;
-		else mapValue = mapRange.getValue();
-		final double delta = Math.abs(robotValue - mapValue);
-		if(delta > badDelta) return 0.0f;
-		return (float) (1.0d - delta / badDelta);
 	}
 	
 	/**
