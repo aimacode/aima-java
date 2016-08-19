@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 	
-	<property name="aima-gui.run" value="aima.gui.applications.AimaDemoApp" />
+	<property name="aima-gui.run" value="aima.gui.swing.demo.AimaDemoApp" />
 	
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />
@@ -73,6 +73,7 @@
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
 		    </manifest>
 			<fileset dir="${aima-gui.dir.build.bin}/main" />
+			<fileset dir="${aima-gui.dir.src}/main/resources" />
 		</jar>
 	</target>
 	
