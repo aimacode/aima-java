@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
-import aima.gui.swing.demo.robotics.util.GuiBase;
+import aima.gui.swing.framework.util.GuiBase;
 
 /**
  * This class can manage parameters of an application bundled in a single GUI.<br/>

@@ -9,12 +9,10 @@ import aima.gui.swing.demo.robotics.components.Settings.ISettingsListener;
  * This abstract settings listener can be used for a basic set of settings. It applies all setting changes in the settings GUI onto the corresponding parameters.<br/>
  * The keys
  * <ul>
- * <li>{@code REMEMBER_FACTOR_KEY}</li>
  * <li>{@code SENSOR_RANGE_KEY}</li>
  * <li>{@code MIN_WEIGHT_KEY}</li>
- * <li>{@code MAX_DISTANCE_KEY}</li>
  * </ul>
- * have to be registered when using this settings listener. Keep in mind that {@code PARTICLE_COUNT_KEY} may have to be set, too, for {@link GenericMonteCarloLocalization2DApp}.
+ * have to be registered when using this settings listener. Keep in mind that {@code PARTICLE_COUNT_KEY} and {@code MAX_DISTANCE_KEY} may have to be set, too, for {@link GenericMonteCarloLocalization2DApp}.
  * @author Arno von Borries
  * @author Jan Phillip Kretzschmar
  * @author Andreas Walscheid
@@ -25,7 +23,6 @@ public abstract class AbstractSettingsListener implements ISettingsListener {
 
 	public static final String PARTICLE_COUNT_KEY = "PARTICLE_COUNT";
 	public static final String MAP_FILE_KEY = "MAP_FILE";
-	public static final String REMEMBER_FACTOR_KEY = "REMEMBER_FACTOR";
 	public static final String SENSOR_RANGE_KEY = "SENSOR_RANGE";
 	public static final String MIN_WEIGHT_KEY = "MIN_WEIGHT";
 	public static final String MAX_DISTANCE_KEY = "MAX_DISTANCE";
@@ -65,31 +62,23 @@ public abstract class AbstractSettingsListener implements ISettingsListener {
 	/**
 	 * Registers {@code this} object as a listener for:
 	 * <ul>
-	 * <li>{@code REMEMBER_FACTOR_KEY}</li>
 	 * <li>{@code SENSOR_RANGE_KEY}</li>
 	 * <li>{@code MIN_WEIGHT_KEY}</li>
-	 * <li>{@code MAX_DISTANCE_KEY}</li>
 	 * </ul>
 	 */
 	protected void registerAbstractListener() {
-		settingsGui.registerListener(REMEMBER_FACTOR_KEY, this);
 		settingsGui.registerListener(SENSOR_RANGE_KEY, this);
 		settingsGui.registerListener(MIN_WEIGHT_KEY, this);
-		settingsGui.registerListener(MAX_DISTANCE_KEY, this);
 	}
 	
 	@Override
 	public boolean notifySetting(String key, String value) {
 		try {
 			final double valueNumber = Double.parseDouble(value);
-			if(key.equals(REMEMBER_FACTOR_KEY)) {
-				mcl.setRememberFactor(valueNumber);
-			} else if(key.equals(SENSOR_RANGE_KEY)) {
+			if(key.equals(SENSOR_RANGE_KEY)) {
 				map.setSensorRange(valueNumber);
 			} else if(key.equals(MIN_WEIGHT_KEY)) {
 				mcl.setWeightCutOff(valueNumber);
-			} else if(key.equals(MAX_DISTANCE_KEY)) {
-				mcl.setMaxDistance(valueNumber);
 			} else {
 				throw new NumberFormatException();
 			}

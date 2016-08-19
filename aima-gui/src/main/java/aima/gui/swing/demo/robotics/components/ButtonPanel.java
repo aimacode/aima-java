@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import aima.gui.swing.demo.robotics.components.Settings.SpecialSetting;
-import aima.gui.swing.demo.robotics.util.GuiBase;
+import aima.gui.swing.framework.util.GuiBase;
 
 /**
  * A button panel is a {@link SpecialSetting} containing a single button on which a {@link ActionListener} can be registered.

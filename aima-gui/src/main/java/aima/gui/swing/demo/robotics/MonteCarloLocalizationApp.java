@@ -10,23 +10,24 @@ import aima.core.robotics.impl.MonteCarloLocalization;
 import aima.core.robotics.impl.datatypes.AbstractRangeReading;
 import aima.core.robotics.impl.datatypes.Angle;
 import aima.core.robotics.impl.map.MclCartesianPlot2D;
-import aima.core.robotics.impl.simple.SimpleMove;
-import aima.core.robotics.impl.simple.SimplePose;
-import aima.core.robotics.impl.simple.SimplePoseFactory;
-import aima.core.robotics.impl.simple.SimpleRangeReading;
-import aima.core.robotics.impl.simple.SimpleRangeReadingFactory;
-import aima.core.robotics.impl.simple.VirtualRobot;
+import aima.core.util.JavaRandomizer;
 import aima.core.util.math.geom.SVGGroupParser;
 import aima.gui.swing.demo.robotics.components.AnglePanel;
 import aima.gui.swing.demo.robotics.components.AnglePanel.ChangeListener;
+import aima.gui.swing.demo.robotics.simple.SimpleMove;
+import aima.gui.swing.demo.robotics.simple.SimplePose;
+import aima.gui.swing.demo.robotics.simple.SimplePoseFactory;
+import aima.gui.swing.demo.robotics.simple.SimpleRangeReading;
+import aima.gui.swing.demo.robotics.simple.SimpleRangeReadingFactory;
+import aima.gui.swing.demo.robotics.simple.SimpleSettingsListener;
+import aima.gui.swing.demo.robotics.simple.VirtualRobot;
+import aima.gui.swing.framework.util.GuiBase;
 import aima.gui.swing.demo.robotics.components.IRobotGui;
 import aima.gui.swing.demo.robotics.components.Settings;
-import aima.gui.swing.demo.robotics.components.SimpleSettingsListener;
 import aima.gui.swing.demo.robotics.components.VirtualRobotGui;
-import aima.gui.swing.demo.robotics.util.GuiBase;
 
 /**
- * Provides the {@link GenericMonteCarloLocalization2DApp} for the simple environment in {@code aima.core.robotics.impl.simple}.
+ * Provides the {@link GenericMonteCarloLocalization2DApp} for the simple environment in {@code aima.gui.swing.demo.robotics.simple}.
  * This environment is intended for a {@link VirtualRobot}.<br/>
  * It can be used for other 2D environments by overriding {@code initialize()} and using a main method with the inheriting class.
  * 
@@ -112,7 +113,7 @@ public class MonteCarloLocalizationApp {
 		VirtualRobot robot = new VirtualRobot(map);
 		robotGui = new VirtualRobotGui(robot);
 		
-		MonteCarloLocalization<SimplePose,Angle,SimpleMove,AbstractRangeReading> mcl = new MonteCarloLocalization<SimplePose, Angle, SimpleMove, AbstractRangeReading>(map, robot);
+		MonteCarloLocalization<SimplePose,Angle,SimpleMove,AbstractRangeReading> mcl = new MonteCarloLocalization<SimplePose, Angle, SimpleMove, AbstractRangeReading>(map, new JavaRandomizer());
 		app = new GenericMonteCarloLocalization2DApp<SimplePose,SimpleMove,SimpleRangeReading>(mcl, map, robot, robotGui, settingsGui);
 		
 		angles.setChangeListener((ChangeListener) robotGui);

@@ -19,8 +19,10 @@ public interface IMclRangeReading<R extends IMclRangeReading<R,V>, V extends IMc
 	 */
 	public V getAngle();
 	/**
-	 * Generates noise onto the range reading to mask errors in measuring the range.
-	 * @return a new range reading onto which noise has been added.
+	 * The range sensor noise model.
+	 * Calculates a weight between 0 and 1 that specifies how similar the given range readings is to this range reading.
+	 * @param secondRange the second range to be weighted against.
+	 * @return a weight between 0 and 1.
 	 */
-	public R addRangeNoise();
+	double calculateWeight(R secondRange);
 }

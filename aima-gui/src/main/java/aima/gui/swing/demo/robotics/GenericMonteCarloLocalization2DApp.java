@@ -18,8 +18,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -44,20 +44,19 @@ import aima.core.robotics.IMclRobot;
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.RobotException;
 import aima.core.robotics.impl.MonteCarloLocalization;
-import aima.core.robotics.impl.Particle;
 import aima.core.robotics.impl.datatypes.AbstractRangeReading;
 import aima.core.robotics.impl.datatypes.Angle;
 import aima.core.robotics.impl.datatypes.IPose2D;
 import aima.core.robotics.impl.map.MclCartesianPlot2D;
-import aima.core.robotics.impl.simple.VirtualRobot;
 import aima.core.util.math.geom.shapes.IGeometric2D;
 import aima.core.util.math.geom.shapes.Rect2D;
 import aima.gui.swing.demo.robotics.components.AbstractSettingsListener;
 import aima.gui.swing.demo.robotics.components.IRobotGui;
 import aima.gui.swing.demo.robotics.components.Settings;
-import aima.gui.swing.demo.robotics.util.GraphicsTransfer2D;
-import aima.gui.swing.demo.robotics.util.GuiBase;
-import aima.gui.swing.demo.robotics.util.ListTableModel;
+import aima.gui.swing.demo.robotics.simple.VirtualRobot;
+import aima.gui.swing.framework.util.GraphicsTransfer2D;
+import aima.gui.swing.framework.util.GuiBase;
+import aima.gui.swing.framework.util.ListTableModel;
 
 /**
  * This generic class provides a graphical user interface for the {@link MonteCarloLocalization} in a two-dimensional environment.<br/>
@@ -105,6 +104,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		String mapPath = settingsGui.getSetting(AbstractSettingsListener.MAP_FILE_KEY);
 		if(mapPath != null) this.lastMapFile = new File(mapPath);
 		this.settingsGui.registerListener(AbstractSettingsListener.PARTICLE_COUNT_KEY, this.core);
+		this.settingsGui.registerListener(AbstractSettingsListener.MAX_DISTANCE_KEY, this.core);
 	}
 	
 	/**
@@ -145,26 +145,14 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 	 */
 	protected class MclCore implements Runnable, Settings.ISettingsListener  {
 		
+		private static final int stepPause = 100;//ms
+		
 		private JButton button;
-		private Semaphore guiNotify = new Semaphore(0);
 		private Semaphore runningLock = new Semaphore(1);
 		private boolean running = false;
-		
-		private void waitGui() {
-			try {
-				guiNotify.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		private void clearGuiWaiting() {
-			guiNotify.drainPermits();
-		}
-
-		private void successGuiWaiting() {
-			if(guiNotify.availablePermits() == 0) guiNotify.release();
-		}
+		private double maxParticleDistance;
+		private int cloudSize;
+		private Set<P> samples;
 
 		private void setButton(JButton button) {
 			this.button = button;
@@ -193,42 +181,34 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		}
 		
 		private synchronized void updateCloudSize(int size) {
-			mcl.setParticleCount(size);
+			cloudSize = size;
 			if(map.isLoaded()) { 
-				mcl.generateCloud();
-				gui.displayParticles();
+				samples = mcl.generateCloud(cloudSize);
+				gui.displaySamples(samples);
 			}
 		}
 		
 		private synchronized void generateParticles() {
-			mcl.generateCloud();
-			gui.displayParticles();
+			samples = mcl.generateCloud(cloudSize);
+			gui.displaySamples(samples);
 		}
 		
-		private synchronized void move() throws RobotException {
+		private synchronized void step() throws RobotException, NullPointerException {
 			M move = robot.performMove();
 			if(move == null) {
 				throw new NullPointerException();
 			}
-			mcl.applyMove(move);
-			gui.displayMove(move);
-			gui.displayParticles();
-		}
-		
-		private synchronized void rangeReading() throws RobotException {
 			AbstractRangeReading[] rangeReadings = robot.getRangeReadings();
 			if(rangeReadings == null) {
 				throw new NullPointerException();
 			}
-			mcl.weightParticles(rangeReadings);
+			samples = mcl.localize(samples, move, rangeReadings);
+			P result = map.checkDistanceOfPoses(samples, maxParticleDistance);
+			
+			gui.displayMove(move);
 			gui.displayRangeReadings(rangeReadings);
-			gui.displayParticles();
-		}
-		
-		private synchronized P resample() {
-			mcl.resampleParticles();
-			gui.displayParticles();
-			return mcl.getPose();
+			gui.displaySamples(samples);
+			gui.displayResult(result);
 		}
 		
 		/**
@@ -237,25 +217,15 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 */
 		@Override
 		public void run() {
-			clearGuiWaiting();
-			P result = null;
 			try {
-				while(result == null) {
-					//1. Move the Robot:
-					move();
-					waitGui();
-					if(!running) break;
-					//2. WeightParticles through the ranges:
-					rangeReading();
-					waitGui();
-					if(!running) break;
-					//3. Reselection of particles:
-					result = resample();
-					waitGui();
-					if(!running) break;
+				while(running) {
+					step();
+					try{
+						Thread.sleep(stepPause);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				gui.displayResult(result);
-				waitGui();
 			} catch (NullPointerException e) {
 				/*A NullPointerException may happen if the robot wasn't initialized before.*/
 				robotGui.notifyInitialize();
@@ -277,12 +247,14 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		public boolean notifySetting(String key, String value) {
 			if(gui.isVisible()) gui.runNotifyClean.run();
 			try {
-				final int valueNumber = Integer.parseInt(value);
 				if(key.equals(AbstractSettingsListener.PARTICLE_COUNT_KEY)) {
-					updateCloudSize(valueNumber);
+					updateCloudSize(Integer.parseInt(value));
+				} else if(key.equals(AbstractSettingsListener.MAX_DISTANCE_KEY)) {
+					maxParticleDistance = Double.parseDouble(value);
 				} else {
 					throw new NumberFormatException();
 				}
+			
 			} catch(NumberFormatException e) {
 				return false;
 			}
@@ -299,10 +271,10 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		private static final int WINDOW_WIDTH = 800;
 		private static final int WINDOW_HEIGHT = 500;
 		
-		protected final boolean[] buttonStateStart  = {true,  true,  false, false, false, false, false, true};
-		protected final boolean[] buttonStateNormal = {true,  true,  true,  true,  true,  true,  true,  true};
-		protected final boolean[] buttonStateInit   = {false, false, false, false, false, false, false, true};
-		protected final boolean[] buttonStateAuto   = {false, false, false, false, false, true,  false, true};
+		protected final boolean[] buttonStateStart  = {true,  true,  false, false, false, true};
+		protected final boolean[] buttonStateNormal = {true,  true,  true,  true,  true,  true};
+		protected final boolean[] buttonStateInit   = {false, false, false, false, false, true};
+		protected final boolean[] buttonStateAuto   = {false, false, false, true,  false, true};
 		
 		private final int clearance = GuiBase.getClearance();
 		private final String autoLocateTitle = "Auto Locate";
@@ -345,53 +317,19 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 */
 		protected MapLoader mapLoader = new MapLoader();
 		/**
-		 * Called upon pressing "Move".
+		 * Called upon pressing "Step".
 		 */
-		protected Runnable runMove = new Runnable() {
+		protected Runnable runStep = new Runnable() {
 			@Override
 			public void run() {
 				try {
-					core.clearGuiWaiting();
-					core.move();
-					core.waitGui();
+					core.step();
 				} catch(NullPointerException e) {
 					/*A NullPointerException may happen if the robot wasn't initialized before.*/
 					robotGui.notifyInitialize();
 				} catch(RobotException e) {
 					/*A RobotException may be thrown if the robot disconnected for some reason.*/
 				}
-				enableButtons(gui.buttonStateNormal);
-			}
-		};
-		/**
-		 * Called upon pressing "Range Reading".
-		 */
-		protected Runnable runRangeReading = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					core.clearGuiWaiting();
-					core.rangeReading();
-					core.waitGui();
-				} catch(NullPointerException e) {
-					/*A NullPointerException may happen if the robot wasn't initialized before.*/
-					robotGui.notifyInitialize();
-				} catch(RobotException e) {
-					/*A RobotException may be thrown if the robot disconnected for some reason.*/
-				}
-				enableButtons(gui.buttonStateNormal);
-			}
-		};
-		/**
-		 * Called upon pressing "Resample".
-		 */
-		protected Runnable runResample = new Runnable() {
-			@Override
-			public void run() {
-				core.clearGuiWaiting();
-				P result = core.resample();
-				core.waitGui();
-				gui.displayResult(result);
 				enableButtons(gui.buttonStateNormal);
 			}
 		};
@@ -410,9 +348,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			@Override
 			public void run() {
 				movesModel.clear();
+				clearResult();
 				md.clearMap();
 				jTMoves.setRowHeight(1);
-				localizationResult.setText("<HTML>Result: <BR><BR></HTML>");
 				jtARangeReading.setText("");
 			}
 		};
@@ -427,7 +365,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			//leftPanel:
-			buttons = new JButton[8];
+			buttons = new JButton[6];
 			previousButtonState = new boolean[buttons.length];
 			buttons[0] = new JButton(IRobotGui.DEFAULT_BUTTON_STRING);
 			buttons[0].addActionListener(new ActionListener() {
@@ -447,32 +385,16 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					backgroundThread.execute(mapLoader);
 				}
 			});
-			buttons[2] = new JButton("Move");
+			buttons[2] = new JButton("Step");
 			buttons[2].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					enableButtons(gui.buttonStateInit);
-					backgroundThread.execute(runMove);
+					backgroundThread.execute(runStep);
 				}
 			});
-			buttons[3] = new JButton("Range Reading");
+			buttons[3] = new JButton(autoLocateTitle);
 			buttons[3].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					enableButtons(gui.buttonStateInit);
-					backgroundThread.execute(runRangeReading);
-				}
-			});
-			buttons[4] = new JButton("Resample");
-			buttons[4].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					enableButtons(gui.buttonStateInit);
-					backgroundThread.execute(runResample);
-				}
-			});
-			buttons[5] = new JButton(autoLocateTitle);
-			buttons[5].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					if(!core.isRunning()) {
@@ -490,16 +412,16 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					}
 				}
 			});
-			buttons[6] = new JButton("Clear GUI");
-			buttons[6].addActionListener(new ActionListener() {
+			buttons[4] = new JButton("Clear GUI");
+			buttons[4].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					enableButtons(gui.buttonStateInit);
 					backgroundThread.execute(runClean);
 				}
 			});
-			buttons[7] = new JButton("Settings");
-			buttons[7].addActionListener(new ActionListener() {
+			buttons[5] = new JButton("Settings");
+			buttons[5].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					settingsGui.show();
@@ -568,26 +490,42 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			jtARangeReading.setEditable(false);
 			jtARangeReading.setLineWrap(true);
 			jtARangeReading.setWrapStyleWord(true);
-			jtARangeReading.setAlignmentX(LEFT_ALIGNMENT);
-			jLRangeReading.setLabelFor(jtARangeReading);
-			movesModel = new ListTableModel("Moves");
-			jTMoves = new JTable(movesModel);
-			jTMoves.setFillsViewportHeight(true);
-			movesScrollPane = new JScrollPane(jTMoves, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			moveRowHeight = jTMoves.getRowHeight();
+			JScrollPane rangeReadingScrollPane = new JScrollPane(jtARangeReading);
+			rangeReadingScrollPane.setAlignmentX(LEFT_ALIGNMENT);
+			jLRangeReading.setLabelFor(rangeReadingScrollPane);
 			
 			JPanel rangeReadingPanel = new JPanel();
 			rangeReadingPanel.setLayout(new BoxLayout(rangeReadingPanel, BoxLayout.Y_AXIS));
 			rangeReadingPanel.add(jLRangeReading);
 			rangeReadingPanel.add(GuiBase.getClearanceComp());
-			rangeReadingPanel.add(jtARangeReading);
+			rangeReadingPanel.add(rangeReadingScrollPane);
+			
+			movesModel = new ListTableModel("Moves:");
+			JLabel jLMoves = new JLabel(movesModel.getColumnName(0));
+			jTMoves = new JTable(movesModel) {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void configureEnclosingScrollPane() { }
+			};
+			movesScrollPane = new JScrollPane(jTMoves, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			jTMoves.setFillsViewportHeight(true);
+			moveRowHeight = jTMoves.getRowHeight();
+			movesScrollPane.setAlignmentX(LEFT_ALIGNMENT);
+			jLMoves.setLabelFor(movesScrollPane);
+			
+			JPanel movesPanel = new JPanel();
+			movesPanel.setLayout(new BoxLayout(movesPanel, BoxLayout.Y_AXIS));
+			movesPanel.add(jLMoves);
+			movesPanel.add(GuiBase.getClearanceComp());
+			movesPanel.add(movesScrollPane);
 			
 			JPanel rightPanel = new JPanel();
 			rightPanel.setBorder(GuiBase.getClearanceBorder());
 			rightPanel.setPreferredSize(new Dimension(170,1));
 			rightPanel.setLayout(new GridLayout(0,1,clearance,clearance));
 			rightPanel.add(rangeReadingPanel);
-			rightPanel.add(movesScrollPane);
+			rightPanel.add(movesPanel);
 			
 			//Put all panels together:
 			JPanel mainPanel = new JPanel();
@@ -710,10 +648,10 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		}
 		
 		/**
-		 * Displays the particle cloud on the map.
+		 * Displays the sample cloud on the map.
 		 */
-		protected void displayParticles() {	
-			md.drawParticles(mcl.getParticles());
+		protected void displaySamples(Set<P> samples) {	
+			md.drawParticles(samples);
 			
 		}
 
@@ -727,8 +665,14 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 				localizationResult.setText("<HTML>Result: <BR>" + resultOutputString + "</HTML>");
 				md.showResult(result);
 			} else {
-				core.successGuiWaiting();
+				clearResult();
 			}
+		}
+		
+		//TODO
+		protected void clearResult() {
+			md.clearResult();
+			localizationResult.setText("<HTML>Result: <BR><BR></HTML>");
 		}
 		
 		/**
@@ -817,19 +761,17 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		}
 		
 		/**
-		 * This class is a panel where the map, the particles and the robot are displayed.
+		 * This class is a panel where the map, the samples and the robot are displayed.
 		 */
 		protected class MapDrawer extends JPanel {
 			
 			private static final long serialVersionUID = 1L;
 			private static final int POSE_WIDTH = 4;
 			private static final int POSE_HEIGHT = 4;
-			private static final int RESULT_WIDTH = 10;
-			private static final int RESULT_HEIGHT = 10;
 			
 			private boolean robotInitialized = false;
 			private boolean mapLoaded = false;
-			private ArrayList<Particle<P, Angle, M>> particles;
+			private Set<P> samples;
 			private P locResult;
 			private boolean gotResult = false;
 			private double minScaleFactor = 1.0d;
@@ -862,18 +804,17 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			 * Deletes everything but the map data from the panel.
 			 */
 			protected void clearMap() {
-	        	particles = null;
+	        	samples = null;
 	        	gotResult = false;
 	        	repaint();
 	        }
 	        
 	        /**
-	         * Draws the particle cloud.
-	         * @param particles the {@code ArrayList} containing the particles.
+	         * Draws the sample cloud.
+	         * @param samples the {@code Set} containing the samples.
 	         */
-	        @SuppressWarnings("unchecked")
-	        protected void drawParticles(final ArrayList<Particle<P, Angle, M>> particles) {
-	        	this.particles = (ArrayList<Particle<P, Angle, M>>) particles.clone();
+	        protected void drawParticles(Set<P> samples) {
+	        	this.samples = samples;
 	        	repaint();
 	        }
 	    	
@@ -965,16 +906,15 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 						g2d.draw(shape);
 						g2d.fill(shape);
 					}
-					if(particles != null) {
-						//Draw the particles onto the map:
-						for (Particle<P, Angle, M> p: particles) {
-							//Color goes from red to green according to the weight:
-							g2d.setColor(Color.getHSBColor(p.getWeight() / 3.0f, 1.0f, 1.0f));
-							g2d.fillOval((int) p.getPose().getX() - POSE_WIDTH/2, (int) p.getPose().getY() - POSE_HEIGHT/2, POSE_WIDTH, POSE_HEIGHT);
-							final double h = p.getPose().getHeading();
-							final int x2 = (int) (p.getPose().getX() + POSE_WIDTH * Math.cos(h));
-							final int y2 = (int) (p.getPose().getY() + POSE_HEIGHT * Math.sin(h));
-							g2d.drawLine((int) p.getPose().getX(), (int) p.getPose().getY(), x2, y2);
+					if(samples != null) {
+						//Draw the samples onto the map:
+						for (P sample: samples) {
+							g2d.setColor(Color.GREEN);
+							g2d.fillOval((int) sample.getX() - POSE_WIDTH/2, (int) sample.getY() - POSE_HEIGHT/2, POSE_WIDTH, POSE_HEIGHT);
+							final double h = sample.getHeading();
+							final int x2 = (int) (sample.getX() + POSE_WIDTH * Math.cos(h));
+							final int y2 = (int) (sample.getY() + POSE_HEIGHT * Math.sin(h));
+							g2d.drawLine((int) sample.getX(), (int) sample.getY(), x2, y2);
 						}
 					}
 					if(robotInitialized && robot instanceof VirtualRobot) {
@@ -983,10 +923,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 					}
 					if(gotResult) {
 						g2d.setColor(Color.BLUE);
-						g2d.drawOval((int) locResult.getX() - RESULT_WIDTH / 2, (int) locResult.getY() - RESULT_HEIGHT / 2, RESULT_WIDTH, RESULT_HEIGHT);
+						g2d.drawOval((int) (locResult.getX() - core.maxParticleDistance / 2), (int) (locResult.getY() - core.maxParticleDistance / 2), (int) core.maxParticleDistance, (int) core.maxParticleDistance);
 					}
 				}
-				core.successGuiWaiting();
 			}
 		}
 	}

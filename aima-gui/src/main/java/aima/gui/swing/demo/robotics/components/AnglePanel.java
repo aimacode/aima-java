@@ -31,8 +31,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import aima.core.robotics.impl.datatypes.Angle;
-import aima.gui.swing.demo.robotics.util.GuiBase;
-import aima.gui.swing.demo.robotics.util.ListTableModel;
+import aima.gui.swing.framework.util.GuiBase;
+import aima.gui.swing.framework.util.ListTableModel;
 /**
  * This class is a panel where the user can set angles for whatever use you may find entertaining and/or productive.
  * One can add to, edit and delete these angles.

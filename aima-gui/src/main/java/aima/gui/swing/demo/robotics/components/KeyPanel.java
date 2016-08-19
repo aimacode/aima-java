@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import aima.gui.swing.demo.robotics.util.GuiBase;
+import aima.gui.swing.framework.util.GuiBase;
 /**
  * A GUI panel that allows the user to set a value for a given key.
  * 

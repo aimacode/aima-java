@@ -1,20 +1,21 @@
 package aima.core.robotics.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import aima.core.probability.bayes.approx.ParticleFiltering;
+import aima.core.probability.domain.FiniteIntegerDomain;
+import aima.core.probability.util.ProbUtil;
+import aima.core.probability.util.RandVar;
 import aima.core.robotics.IMcl;
 import aima.core.robotics.IMclMap;
-import aima.core.robotics.IMclRobot;
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.IMclPose;
 import aima.core.robotics.datatypes.IMclRangeReading;
 import aima.core.robotics.datatypes.IMclVector;
-import aima.core.robotics.datatypes.RobotException;
+import aima.core.util.Randomizer;
+import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page TODO.<br>
@@ -38,42 +39,21 @@ import aima.core.robotics.datatypes.RobotException;
  */
 public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends IMclVector, M extends IMclMove<M>, R extends IMclRangeReading<R,V>> implements IMcl<P,V,M,R> {
 	
+	private static final String SAMPLE_INDEXES_NAME = "SAMPLE_INDEXES";
+	
 	private final IMclMap<P,V,M,R> map;
-	private final IMclRobot<V,M,R> robot;
+	private final Randomizer randomizer;
 	
-	private int particleCount;
-	private double rememberFactor;
+	private RandVar sampleIndexes;
 	private double weightCutOff;
-	private double maxDistance;
-	
-	private boolean isSorted = true;
-	private ArrayList<Particle<P,V,M>> particleCloud;
-	private Random randomGenerator;
 	
 	/**
+	 * TODO
 	 * @param map an instance of a class implementing {@link IMclMap}.
-	 * @param robot an instance of a class implementing {@link IMclRobot}.
 	 */
-	public MonteCarloLocalization(IMclMap<P,V,M,R> map, IMclRobot<V,M,R> robot) {
+	public MonteCarloLocalization(IMclMap<P,V,M,R> map, Randomizer randomizer) {
 		this.map = map;
-		this.robot = robot;
-		this.randomGenerator = new Random();
-	}
-	
-	/**
-	 * Sets the initial size of the particle cloud.
-	 * @param particleCount the number of elements in the particle cloud.
-	 */
-	public void setParticleCount(int particleCount) {
-		this.particleCount = particleCount;
-	}
-	
-	/**
-	 * Sets the factor by which the cloud shrinks each time.
-	 * @param rememberFactor the factor that is used to calculate the new size of the particle cloud.
-	 */
-	public void setRememberFactor(double rememberFactor) {
-		this.rememberFactor = rememberFactor; 
+		this.randomizer = randomizer;
 	}
 	
 	/**
@@ -83,147 +63,76 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	public void setWeightCutOff(double cutOff) {
 		this.weightCutOff = cutOff;
 	}
-	
-	/**
-	 * Sets the maximum distance between the particles to localize successfully.
-	 * @param maxDistance the distance between the particle with the highest weight and the particle with the lowest weight has to fall below for the algorithm to finish.
-	 */ 
-	public void setMaxDistance(double maxDistance) {
-		this.maxDistance = maxDistance;
-	}
-	
-	/**
-	 * Used for displaying the particles.
-	 * @return the particle cloud including all particles.
-	 */
-	public final ArrayList<Particle<P, V, M>> getParticles() {
-		return particleCloud;
-	}
-	
-	@Override
-	public void generateCloud() {
-		this.particleCloud = new ArrayList<Particle<P,V,M>>(particleCount);
-		for(int i=0;i<particleCount;i++) {
-			this.particleCloud.add(new Particle<P,V,M>(map.randomPose()));
+	//TODO
+	protected Set<P> applyMove(Set<P> samples, M move) {
+		Set<P> newSamples = new LinkedHashSet<P>();
+		for(P sample: samples) {
+			newSamples.add(sample.applyMovement(move));
 		}
-		isSorted = true;
+		return newSamples;
 	}
-	
-	@Override
-	public void applyMove(M move) {
-		for(Particle<P,V,M> particle: particleCloud) {
-			particle.setPose(particle.getPose().applyMovement(move.generateNoise()));
-		}
-	}
-	
-	@Override
-	public void weightParticles(R[] rangeReadings) {
-		isSorted = false;
-		float totalWeight = 0.0f;
-		for(Particle<P,V,M> particle: particleCloud) {
-			if(map.isPoseValid(particle.getPose())) {
-				particle.setWeight(1.0f);
+	//TODO
+	protected double[] weightSamples(Set<P> samples, R[] rangeReadings) {
+		Iterator<P> samplesIterator = samples.iterator();
+		double[] w = new double[samples.size()];
+		for(int j=0;j<samples.size();j++) {
+			P sample = samplesIterator.next();
+			if(map.isPoseValid(sample)) {
+				w[j] = 1.0d;
 				for(int i=0;i<rangeReadings.length;i++) {
-					particle.setWeight(particle.getWeight() * robot.calculateWeight(rangeReadings[i].addRangeNoise(), map.rayCast(particle.getPose().addAngle(rangeReadings[i].getAngle()))));
+					w[j] = w[j] * rangeReadings[i].calculateWeight(map.rayCast(sample.addAngle(rangeReadings[i].getAngle())));
 				}
-				if(particle.getWeight() > weightCutOff) totalWeight += particle.getWeight();
 			} else {
-				particle.setWeight(0.0f);
+				w[j] = 0.0d;
 			}
 		}
-		//Sum-Normalize values:
-		float previousWeight = 0.0f;
-		for(Particle<P,V,M> particle: particleCloud) {
-			if(particle.getWeight() > weightCutOff) {
-				previousWeight += (particle.getWeight() / totalWeight);
-				particle.setWeight(previousWeight);
-			}
-		}
-	}
-	
-	@Override
-	public void resampleParticles() {
-		if(!isSorted) Collections.sort(particleCloud);
-		final int newParticleCount = (int) (particleCloud.size() * rememberFactor);
-		while(!particleCloud.isEmpty()) {
-			Particle<P, V, M> particle = particleCloud.get(0);
-			if(particle.getWeight() <= weightCutOff) particleCloud.remove(0);
-			else break;
-		}
-		if(particleCloud.isEmpty() || newParticleCount == 0) generateCloud(); //If all particleCloud are below weightCutOff, generate a new set of Particles, as we are lost.
-		else {
-			List<Particle<P, V, M>> oldParticles = particleCloud;
-			//WEIGHTED SAMPLE WITH REPLACEMENT:
-			particleCloud = new ArrayList<Particle<P,V,M>>(newParticleCount);
-			for(int i=0; i < newParticleCount; i++) {
-				final float rand = randomGenerator.nextFloat();
-				int j = 0;
-				while(j < oldParticles.size() && rand > oldParticles.get(j).getWeight()) j++;
-				if(j < oldParticles.size()) particleCloud.add(oldParticles.get(j).clone());
-				else particleCloud.add(oldParticles.get(oldParticles.size() - 1).clone());
-			}
-			isSorted = false;
-		}
-	}
-	
-	@Override
-	public P getPose() {
-		if(!isSorted) Collections.sort(particleCloud);
-		isSorted = true;
-		Particle<P,V,M> first = particleCloud.get(0);
-		double maxDistance = 0.0d;
-		for(Particle<P, V, M> p:particleCloud) {
-			double distance = first.getPose().distanceTo(p.getPose());
-			maxDistance = distance > maxDistance ? distance : maxDistance;
-		}
-		if(maxDistance <= this.maxDistance) return map.getAverage(new PoseIterator(), particleCloud.size());
-		return null;
-	}
-
-	@Override
-	public P localize() {
-		P result = null;
-		try {
-			while(true) {
-				applyMove(robot.performMove());
-				weightParticles(robot.getRangeReadings());
-				result = getPose();
-				if(result != null) break;
-				resampleParticles();
-			}
-		} catch (RobotException e) {
-			e.printStackTrace();
-		}
-		return result;
+		return w;
 	}
 	
 	/**
-	 * A simple implementation of the {@link Iterator} interface over the poses in the particles in the cloud.
-	 * The remove operation is not permitted nor implemented on this iterator.
-	 * 
-	 * @author Arno von Borries
-	 * @author Jan Phillip Kretzschmar
-	 * @author Andreas Walscheid
-	 *
+	 * TODO
+	 * Taken {@code weightedSampleWithReplacement} out of {@link ParticleFiltering} and extended by a minimum weight.
+	 * @param samples the samples to be re-sampled.
+	 * @param w the probability distribution on the samples.
+	 * @return the new set of samples.
 	 */
-	private class PoseIterator implements Iterator<P> {
-
-		private int index = 0;
-		
-		@Override
-		public boolean hasNext() {
-			return index < particleCloud.size();
+	@SuppressWarnings("unchecked")
+	protected Set<P> extendedWeightedSampleWithReplacement(Set<P> samples, double[] w) {
+		int i = 0;
+		for(;i<samples.size();i++) {
+			if(w[i] > weightCutOff) break;
 		}
-
-		@Override
-		public P next() {
-			return hasNext() ? particleCloud.get(index++).getPose() : null;
+		if(i >= samples.size()) return generateCloud(samples.size()); /*If all particleCloud are below weightCutOff, generate a new set of samples, as we are lost.*/
+		/*WEIGHTED-SAMPLE-WITH-REPLACEMENT:*/
+		double[] normalizedW = Util.normalize(w);
+		Set<P> newSamples = new LinkedHashSet<P>();
+		Object[] array = samples.toArray(new Object[0]);
+		for(i=0; i < samples.size(); i++) {
+			final int selectedSample = (Integer) ProbUtil.sample(randomizer.nextDouble(),sampleIndexes,normalizedW);
+			newSamples.add(( (P) array[selectedSample]).clone());
 		}
-
-		/**
-		 * The remove operation is not permitted on the pose cloud as it would make the correspondent particle useless.
-		 */
-		@Override
-		public void remove() { }
+		return newSamples;
+	}
+	
+	@Override
+	public Set<P> generateCloud(int sampleCount) {
+		Set<P>samples = new LinkedHashSet<P>();
+		Integer[] indexes = new Integer[sampleCount];
+		for(int i=0;i<sampleCount;i++) {
+			samples.add(map.randomPose());
+			indexes[i] = i;
+		}
+		sampleIndexes = new RandVar(SAMPLE_INDEXES_NAME, new FiniteIntegerDomain(indexes));
+		return samples;
+	}
+	
+	@Override
+	public Set<P> localize(Set<P> samples, M move, R[] rangeReadings) {
+		if(samples == null) return null;/*initialization phase = call generateCloud*/
+		Set<P> newSamples = applyMove(samples, move);/*motion model*/
+		double[] w = weightSamples(newSamples, rangeReadings);/*range sensor noise model*/
+		newSamples = extendedWeightedSampleWithReplacement(newSamples, w);
+		return newSamples;
+				
 	}
 }

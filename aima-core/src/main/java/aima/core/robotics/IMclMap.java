@@ -1,7 +1,5 @@
 package aima.core.robotics;
 
-import java.util.Iterator;
-
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.IMclPose;
 import aima.core.robotics.datatypes.IMclRangeReading;
@@ -37,12 +35,4 @@ public interface IMclMap<P extends IMclPose<P,V,M>, V extends IMclVector, M exte
 	 * @return true if the pose is valid.
 	 */
 	boolean isPoseValid(P pose);
-	
-	/**
-	 * Calculates a centered pose for the given cloud of poses.
-	 * @param poseIterator an iterator over the poses in the cloud. The remove operation is not permitted on this iterator as it would make the correspondent particle useless.
-	 * @param cloudSize the number of elements in the cloud.
-	 * @return a new pose that is in the center of the cloud.
-	 */
-	P getAverage(Iterator<P> poseIterator, int cloudSize);
 }

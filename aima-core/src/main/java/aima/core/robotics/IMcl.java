@@ -1,5 +1,7 @@
 package aima.core.robotics;
 
+import java.util.Set;
+
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.IMclPose;
 import aima.core.robotics.datatypes.IMclRangeReading;
@@ -7,7 +9,7 @@ import aima.core.robotics.datatypes.IMclVector;
 
 /**
  * This interface defines the basic operations of the Monte-Carlo-Localization algorithm.<br/>
- * 
+ *  TODO
  * The algorithm can be used through the function {@code localize()}.<br/>
  * Otherwise the algorithm can be used step by step using these functions:
  * <ol>
@@ -29,31 +31,13 @@ import aima.core.robotics.datatypes.IMclVector;
  */
 public interface IMcl<P extends IMclPose<P,V,M>, V extends IMclVector, M extends IMclMove<M>, R extends IMclRangeReading<R,V>> {
 	/**
-	 * Generates a new cloud of particles.
+	 * Generates a new cloud of samples. TODO
 	 */
-	public void generateCloud();
+	public Set<P> generateCloud(int sampleCount);
+	
 	/**
-	 * Applies a movement (or sequence of movements) which the robot performed to every particle in the cloud. 
-	 * @param move the move the robot performed.
+	 * Runs the MCL algorithm. TODO
+	 * @return the set of samples for the next time step.
 	 */
-	public void applyMove(M move);
-	/**
-	 * Weights every particle in the cloud based on a range noise model as specified in {@link IMclRobot}. 
-	 * @param rangeReadings a set of range readings by which the particles will be weighted.
-	 */
-	public void weightParticles(R[] rangeReadings);
-	/**
-	 * As specified by the AIMA 3rd edition MCL algorithm, this always re-samples the particles in the cloud using the Weighted-Sample-With-Replacement method. 
-	 */
-	public void resampleParticles();
-	/**
-	 * Verifies whether a sufficiently accurate pose has been established. 
-	 * @return the found pose. {code null} if none was found.  
-	 */
-	public P getPose();
-	/**
-	 * Runs the MCL algorithm looped until the pose of the robot has been established. 
-	 * @return the found pose. {@code null} if none was found.
-	 */
-	public P localize();
+	public Set<P> localize(Set<P> samples, M move, R[] rangeReadings);
 }

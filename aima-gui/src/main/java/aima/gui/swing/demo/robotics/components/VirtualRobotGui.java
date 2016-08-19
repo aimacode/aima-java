@@ -1,8 +1,8 @@
 package aima.gui.swing.demo.robotics.components;
 
 import aima.core.robotics.impl.datatypes.Angle;
-import aima.core.robotics.impl.simple.VirtualRobot;
-import aima.gui.swing.demo.robotics.util.GuiBase;
+import aima.gui.swing.demo.robotics.simple.VirtualRobot;
+import aima.gui.swing.framework.util.GuiBase;
 
 /**
  * An implementation of {@link IRobotGui} for {@link VirtualRobot}.<br/>

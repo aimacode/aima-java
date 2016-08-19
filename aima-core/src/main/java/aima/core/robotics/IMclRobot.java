@@ -24,13 +24,6 @@ public interface IMclRobot<V extends IMclVector, M extends IMclMove<M>, R extend
 	 */
 	R[] getRangeReadings() throws RobotException;
 	/**
-	 * Calculates a weight between 0 and 1 that specifies how similar two given range readings are to each other.
-	 * @param firstRange the first range to be weighted against.
-	 * @param secondRange the second range to be weighted against.
-	 * @return a weight between 0 and 1.
-	 */
-	float calculateWeight(R firstRange, R secondRange);
-	/**
 	 * Causes the robot to perform a movement.
 	 * @return the move the robot performed.
 	 * @throws RobotException thrown if the move was not successful.

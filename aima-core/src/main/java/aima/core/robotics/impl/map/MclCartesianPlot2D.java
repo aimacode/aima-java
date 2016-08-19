@@ -2,6 +2,7 @@ package aima.core.robotics.impl.map;
 
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Set;
 
 import aima.core.robotics.IMclMap;
 import aima.core.robotics.datatypes.IMclMove;
@@ -72,6 +73,28 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 		obstacles.setRayRange(sensorRange);
 		areas.setRayRange(sensorRange);
 	}
+	//TODO
+	public P checkDistanceOfPoses(Set<P> samples, double maxDistance) {
+		double maxDistanceSamples = 0.0d;
+		for(P first: samples) {
+			for(P second: samples) {
+				double distance = first.distanceTo(second);
+				maxDistanceSamples = distance > maxDistanceSamples ? distance : maxDistanceSamples;
+			}
+		}
+		if(maxDistanceSamples <= maxDistance) {
+			double averageX = 0.0d;
+			double averageY = 0.0d;
+			double averageHeading = 0.0d;
+			for(P sample: samples) {
+				averageX += sample.getX() / samples.size();
+				averageY += sample.getY() / samples.size();
+				averageHeading += sample.getHeading() / samples.size();
+			}
+			return poseFactory.getPose(new Point2D(averageX,averageY),averageHeading);
+		}
+		return null;
+	}
 	
 	/**
 	 * This function loads a map input stream into this Cartesian plot. The two streams have to be two different instances to be thread safe.
@@ -116,7 +139,7 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 		if(obstaclesException != null) throw obstaclesException;
 		if(areasException != null) throw areasException;
 	}
-			
+		
 	/**
 	 * Returns an iterator over the obstacle polygons.
 	 * @return an iterator over the obstacle polygons.
@@ -177,19 +200,5 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 		if(!poseFactory.isHeadingValid(pose)) return false;
 		Point2D point = new Point2D(pose.getX(),pose.getY());
 		return areas.isPointInsideBorderShape(point) && !obstacles.isPointInsideShape(point);
-	}
-
-	@Override
-	public P getAverage(Iterator<P> poseIterator, int cloudSize) {
-		double averageX = 0.0d;
-		double averageY = 0.0d;
-		double averageHeading = 0.0d;
-		while(poseIterator.hasNext()) {
-			P pose = poseIterator.next();
-			averageX += pose.getX() / cloudSize;
-			averageY += pose.getY() / cloudSize;
-			averageHeading += pose.getHeading() / cloudSize;
-		}
-		return poseFactory.getPose(new Point2D(averageX,averageY),averageHeading);
 	}
 }
