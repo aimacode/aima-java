@@ -5,6 +5,6 @@
 	<property file="${aima3e-java.basedir}/build.properties"/> 
 
 	<target name="test">
-		<ant dir="${path.to.aima-core.project}/" target="aima-core.test-all" />
+		<ant dir="${path.to.aima-core.project}/" target="aima-core.test-all" inheritAll="false" useNativeBasedir="true" />
         </target>	
 </project>
