@@ -73,7 +73,14 @@ public final class MclCartesianPlot2D<P extends IPose2D<P,M>,M extends IMclMove<
 		obstacles.setRayRange(sensorRange);
 		areas.setRayRange(sensorRange);
 	}
-	//TODO
+
+	/**
+	 * Calculate the maximum distance between all samples and compare it to {@code maxDistance}.
+	 * If it is smaller or equals to {@code maxDistance} the mean is returned. {@code null} otherwise.
+	 * @param samples the set of samples to be checked against.
+	 * @param maxDistance the maxDistance that the cloud should have to return a mean.
+	 * @return the mean of the samples or {@code null}.
+	 */
 	public P checkDistanceOfPoses(Set<P> samples, double maxDistance) {
 		double maxDistanceSamples = 0.0d;
 		for(P first: samples) {

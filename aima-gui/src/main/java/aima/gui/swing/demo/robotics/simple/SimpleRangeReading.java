@@ -58,7 +58,10 @@ public final class SimpleRangeReading extends AbstractRangeReading {
 		super(value, angle);
 	}
 	
-	//TODO
+	/**
+	 * Generates noise onto the range reading.
+	 * @return a new range reading with noise applied.
+	 */
 	public AbstractRangeReading addRangeNoise() {
 		if(Double.isInfinite(getValue())) return this;
 		final double adaptedRangeReading = Util.generateRandomDoubleBetween(getValue() - RANGE_NOISE, getValue() + RANGE_NOISE);

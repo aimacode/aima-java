@@ -1,4 +1,4 @@
-package aima.core.robotics.impl;
+package aima.core.robotics;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -8,8 +8,6 @@ import aima.core.probability.bayes.approx.ParticleFiltering;
 import aima.core.probability.domain.FiniteIntegerDomain;
 import aima.core.probability.util.ProbUtil;
 import aima.core.probability.util.RandVar;
-import aima.core.robotics.IMcl;
-import aima.core.robotics.IMclMap;
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.IMclPose;
 import aima.core.robotics.datatypes.IMclRangeReading;
@@ -18,16 +16,28 @@ import aima.core.util.Randomizer;
 import aima.core.util.Util;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): page TODO.<br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 982.<br>
  * <br>
  * 
- * As stated on page TODO a Monte-Carlo-Localization is an extension of a {@link ParticleFiltering}.
+ * <pre>
+ * function MONTE-CARLO-LOCALIZATION(a, z, N, P(X'|X, v, w), P(z|z*), m) returns a set of samples for the next time step
+ * inputs: a, robot velocities v and w
+ *         z, range scan z<sub>1</sub>,..., z<sub>M</sub>
+ *         P(X'|X,v,w), motion model
+ *         P(z|z*), range sensor noise model
+ *         m, 2D map of the environment
+ * persistent: S, a vector of samples of size N
+ * local variables: W, a vector of weights of size N
+ *                  S', a temporary vector of particles of size N
+ * </pre>
+ * 
+ * Figure 25.9 A Monte-Carlo-Localization algorithm using a range-scan sensor model with independent noise.
+ * The Monte-Carlo-Localization is an extension of a {@link ParticleFiltering} as stated on page 982.
  * This is true for the functionality but this implementation can not extend the implementation of the ParticleFiltering
- * as both implementations only contain the actual algorithm as a single method. (Thus it is divided into 4 additonal methods in this class.)
+ * as both implementations only contain the actual algorithm as a single method.
  * 
+ * It is possible to reduce the steps needed for the localization by tweaking the parameters {@code particleCount}, {@code weightCutOff} and {@code maxDistance}.
  * 
- * The interface {@link IMcl} that defines the functionality for the Monte-Carlo-Localization is implemented with this class.
- * It is possible to reduce the steps needed for the localization by tweaking the parameters {@code initialParticleCount}, {@code weightCutOff} and {@code maxDistance}.
  * @author Arno von Borries
  * @author Jan Phillip Kretzschmar
  * @author Andreas Walscheid
@@ -37,7 +47,7 @@ import aima.core.util.Util;
  * @param <M> a movement (or sequence of movements) of the robot implementing {@link IMclMove}. 
  * @param <R> a range measurement implementing {@link IMclRangeReading}.
  */
-public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends IMclVector, M extends IMclMove<M>, R extends IMclRangeReading<R,V>> implements IMcl<P,V,M,R> {
+public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends IMclVector, M extends IMclMove<M>, R extends IMclRangeReading<R,V>> {
 	
 	private static final String SAMPLE_INDEXES_NAME = "SAMPLE_INDEXES";
 	
@@ -48,8 +58,8 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	private double weightCutOff;
 	
 	/**
-	 * TODO
 	 * @param map an instance of a class implementing {@link IMclMap}.
+	 * @param randomizer a {@link Randomizer} that is used for re-sampling.
 	 */
 	public MonteCarloLocalization(IMclMap<P,V,M,R> map, Randomizer randomizer) {
 		this.map = map;
@@ -63,7 +73,13 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	public void setWeightCutOff(double cutOff) {
 		this.weightCutOff = cutOff;
 	}
-	//TODO
+	
+	/**
+	 * Applies a move to the samples, creating a new {@link Set}.
+	 * @param samples the samples the move will be applied to.
+	 * @param move the move to be applied to the samples.
+	 * @return a new set of size N containing the moved samples.
+	 */
 	protected Set<P> applyMove(Set<P> samples, M move) {
 		Set<P> newSamples = new LinkedHashSet<P>();
 		for(P sample: samples) {
@@ -71,7 +87,13 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 		}
 		return newSamples;
 	}
-	//TODO
+	
+	/**
+	 * Weights the samples by a given vector of range scans.
+	 * @param samples the samples to be weighted.
+	 * @param rangeReadings the vector containing all range scans.
+	 * @return a vector of weights of size N.
+	 */
 	protected double[] weightSamples(Set<P> samples, R[] rangeReadings) {
 		Iterator<P> samplesIterator = samples.iterator();
 		double[] w = new double[samples.size()];
@@ -90,7 +112,6 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	}
 	
 	/**
-	 * TODO
 	 * Taken {@code weightedSampleWithReplacement} out of {@link ParticleFiltering} and extended by a minimum weight.
 	 * @param samples the samples to be re-sampled.
 	 * @param w the probability distribution on the samples.
@@ -114,11 +135,15 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 		return newSamples;
 	}
 	
-	@Override
-	public Set<P> generateCloud(int sampleCount) {
+	/**
+	 * This method is the initialization phase of the algorithm. It has to be called to generate a set of samples of count N.
+	 * @param N the count of samples.
+	 * @return a set containing N samples.
+	 */
+	public Set<P> generateCloud(int N) {
 		Set<P>samples = new LinkedHashSet<P>();
-		Integer[] indexes = new Integer[sampleCount];
-		for(int i=0;i<sampleCount;i++) {
+		Integer[] indexes = new Integer[N];
+		for(int i=0;i<N;i++) {
 			samples.add(map.randomPose());
 			indexes[i] = i;
 		}
@@ -126,7 +151,13 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 		return samples;
 	}
 	
-	@Override
+	/**
+	 * Executes the Monte-Carlo-Localization for the given parameters.
+	 * @param samples the sample cloud.
+	 * @param move the move to be applied to the cloud.
+	 * @param rangeReadings the range scan that has been performed after the move has ended.
+	 * @return a new Set containing updated samples.
+	 */
 	public Set<P> localize(Set<P> samples, M move, R[] rangeReadings) {
 		if(samples == null) return null;/*initialization phase = call generateCloud*/
 		Set<P> newSamples = applyMove(samples, move);/*motion model*/

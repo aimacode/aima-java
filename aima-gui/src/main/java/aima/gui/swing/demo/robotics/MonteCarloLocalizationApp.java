@@ -6,7 +6,7 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
-import aima.core.robotics.impl.MonteCarloLocalization;
+import aima.core.robotics.MonteCarloLocalization;
 import aima.core.robotics.impl.datatypes.AbstractRangeReading;
 import aima.core.robotics.impl.datatypes.Angle;
 import aima.core.robotics.impl.map.MclCartesianPlot2D;

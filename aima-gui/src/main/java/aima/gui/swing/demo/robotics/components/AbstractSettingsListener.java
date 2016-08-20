@@ -1,6 +1,6 @@
 package aima.gui.swing.demo.robotics.components;
 
-import aima.core.robotics.impl.MonteCarloLocalization;
+import aima.core.robotics.MonteCarloLocalization;
 import aima.core.robotics.impl.map.MclCartesianPlot2D;
 import aima.gui.swing.demo.robotics.GenericMonteCarloLocalization2DApp;
 import aima.gui.swing.demo.robotics.components.Settings.ISettingsListener;

@@ -41,9 +41,9 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import aima.core.robotics.IMclRobot;
+import aima.core.robotics.MonteCarloLocalization;
 import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.RobotException;
-import aima.core.robotics.impl.MonteCarloLocalization;
 import aima.core.robotics.impl.datatypes.AbstractRangeReading;
 import aima.core.robotics.impl.datatypes.Angle;
 import aima.core.robotics.impl.datatypes.IPose2D;
@@ -669,7 +669,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 			}
 		}
 		
-		//TODO
+		/**
+		 * Clears the result that may has been set.
+		 */
 		protected void clearResult() {
 			md.clearResult();
 			localizationResult.setText("<HTML>Result: <BR><BR></HTML>");

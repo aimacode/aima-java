@@ -4,7 +4,6 @@ import aima.core.robotics.datatypes.IMclMove;
 import aima.core.robotics.datatypes.IMclRangeReading;
 import aima.core.robotics.datatypes.IMclVector;
 import aima.core.robotics.datatypes.RobotException;
-import aima.core.robotics.impl.MonteCarloLocalization;
 /**
  * This interface defines functionality a robotic agent has to implement in order to localize itself via {@link MonteCarloLocalization}. 
  * 
