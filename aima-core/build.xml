@@ -70,17 +70,9 @@
 			packagenames="aima.*"
 			sourcepathref="aima-core.javadoc.src"
 		    overview="${aima-core.dir.src}/main/javadoc/overview.html" />
-		<jar destfile="${aima-core.dir.build.release}/aima-core-javadoc.jar">
-			<manifest>
-				<attribute name="Implementation-Title" value="AIMA-CORE" />
-		        <attribute name="Implementation-Version" value="${aima-core.version}" />
-		        <attribute name="AIMA-CORE-Version" value="${aima-core.version}" />
-		    </manifest>
-			<fileset dir="${aima-core.dir.build.doc}/javadoc"/>
-		</jar>
 	</target>
 
-	<target name="aima-core.release" depends="aima-core.clean,aima-core.makedirs,aima-core.test-all,aima-core.makedocs">
+	<target name="aima-core.release" depends="aima-core.clean,aima-core.makedirs,aima-core.test-all">
 		<jar destfile="${aima-core.dir.build.release}/aima-core.jar">
 			<manifest>
 		    	<attribute name="Implementation-Title" value="AIMA-CORE" />
@@ -89,7 +81,6 @@
 		    </manifest>
 			<fileset dir="${aima-core.dir.build.bin}/main" />
 			<fileset dir="${aima-core.dir.src}/main/resources" excludes="**/*.git, .gitignore" />
-			<fileset dir="${aima-core.dir.build.doc}"/>
 		</jar>
 	</target>
 		
