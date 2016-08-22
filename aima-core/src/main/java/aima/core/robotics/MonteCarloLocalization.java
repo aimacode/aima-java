@@ -34,20 +34,20 @@ import aima.core.util.Util;
  * Figure 25.9 A Monte-Carlo-Localization algorithm using a range-scan sensor model with independent noise.
  * The Monte-Carlo-Localization is an extension of a {@link ParticleFiltering} as stated on page 982.
  * This is true for the functionality but this implementation can not extend the implementation of the ParticleFiltering
- * as both implementations only contain the actual algorithm as a single method.<br/>
- * <br/>
+ * as both implementations only contain the actual algorithm as a single method.
+ * <br/><br/>
  * The update cycle of the algorithm is executed by the method {@code localize} for the given set of samples, move and vector of range readings.
  * Before calling this method, a set of samples can be generated through the method {@code generateCloud}, which represents the initialization phase of the pseudocode, for the given size N.
  * This removes the need of specifying the size N on every call of {@code localize} as this information is already contained in the set itself.
- * The method {@code localize} is divided into these three parts implemented each by a single method:
+ * The method {@code localize} is divided into these two parts implemented each by a single method:
  * <ol>
  * <li>{@code applyMove} represents the first line of the update cycle. It moves all samples according to the move / motion model.</li>
  * <li>{@code weightSamples} represents the second to second last line of the update cycle. A vector of weights is created by this method for the given range scans by comparing every range scan to a ray cast with the correspondent sample through the range sensor noise model.</li>
- * <li>{@code extendedWeightedSampleWithReplacement} represents the last line of the update cycle. It is a WEIGHTED-SAMPLE-WITH-REPLACEMENT with the addition of a cutoff value. All particles having a weight below this cutoff are ignored.</li>
  * </ol>
- * <br/>
+ * The WEIGHTED-SAMPLE-WITH-REPLACEMENT is implemented by the method {@code extendedWeightedSampleWithReplacement}. This implementation contains the addition of a cutoff value. All particles having a weight below this cutoff are ignored.
+ * <br/><br/>
  * It is possible to reduce the steps needed for the localization by tweaking the  sample count and the parameter {@code cutOff}.
- * 
+ * <br/><br/>
  * @author Arno von Borries
  * @author Jan Phillip Kretzschmar
  * @author Andreas Walscheid
