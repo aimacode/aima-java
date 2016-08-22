@@ -43,8 +43,12 @@ import aima.gui.swing.framework.util.ListTableModel;
  */
 public class AnglePanel extends Settings.SpecialSetting  {
 	
+	/**
+	 * The default key that is used to store the angles in the properties file when using the convenience constructor {@code AnglePanel(String title)}.
+	 */
+	public static final String DEFAULT_ANGLES_KEY = "ANGLES";
+	
 	private static final long serialVersionUID = 1L;
-	private static final String ANGLES_KEY = "ANGLES";
 	private static final String JL_ANGLE_TEXT ="Selected Angle:";
 	private static final String JL_NUMBER_OF_ANGLES_TEXT = "Angle Count: ";
 	private static final String BTN_ADD_ANGLE_TEXT = "Add Angle";
@@ -53,6 +57,7 @@ public class AnglePanel extends Settings.SpecialSetting  {
 	private static final String ANGLES_COLUMN_NAME = "Angles";
 	private static final int RADIUS = 75;
 	
+	private final String anglesKey;
 	private JLabel jLAngleCount;
 	private JTextField jTFChangeAngle;
 	private JButton btnDeleteAngle;
@@ -66,9 +71,20 @@ public class AnglePanel extends Settings.SpecialSetting  {
 	private ChangeListener listener;
 	
 	/**
-	 * Default constructor with no parameters.
+	 * Convenience constructor using a default key for the properties file.
+	 * @param title the title of the angle panel.
 	 */
 	public AnglePanel(String title) {
+		this(DEFAULT_ANGLES_KEY, title);
+	}
+	
+	/**
+	 * Default constructor with no parameters.
+	 * @param key the key identifying the angles in the properties.
+	 * @param title the title of the angle panel.
+	 */
+	public AnglePanel(String key, String title) {
+		anglesKey = key;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JLabel jLTitle = new JLabel(title);
 		jLTitle.setBorder(GuiBase.getClearanceBorder());
@@ -306,7 +322,7 @@ public class AnglePanel extends Settings.SpecialSetting  {
 	
 	@Override
 	public void loadSettings(Properties values) {
-		String saveString = values.getProperty(ANGLES_KEY);
+		String saveString = values.getProperty(anglesKey);
 		if(saveString != null) {
 			try {
 				ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(saveString.getBytes()));
@@ -330,7 +346,7 @@ public class AnglePanel extends Settings.SpecialSetting  {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(saveString != null) values.put(ANGLES_KEY, saveString);
+		if(saveString != null) values.put(anglesKey, saveString);
 	}
 
 	@Override
