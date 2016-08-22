@@ -17,7 +17,7 @@ public interface IMclRangeReading<R extends IMclRangeReading<R,V>, V extends IMc
 	 * Returns the vector by which the robot was rotated for this range reading.
 	 * @return the vector by which the robot was rotated for this range reading.
 	 */
-	public V getAngle();
+	V getAngle();
 	/**
 	 * The range sensor noise model.
 	 * Calculates a weight between 0 and 1 that specifies how similar the given range readings is to this range reading.

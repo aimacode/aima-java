@@ -20,7 +20,7 @@ public interface IPoseFactory<P extends IPose2D<P,M>,M extends IMclMove<M>> {
 	 * @param point the 2D coordinates of the new pose.
 	 * @return the new pose.
 	 */
-	public P getPose(Point2D point);
+	P getPose(Point2D point);
 
 	/**
 	 * Creates a new instance of {@code <P>} for the given parameters.<br/>
@@ -29,12 +29,12 @@ public interface IPoseFactory<P extends IPose2D<P,M>,M extends IMclMove<M>> {
 	 * @param heading the heading of the pose. This heading may be invalid. Based on the given environment this can be corrected or ignored.
 	 * @return the new pose.
 	 */
-	public P getPose(Point2D point, double heading);
+	P getPose(Point2D point, double heading);
 	
 	/**
 	 * Checks whether the heading of a pose is valid.
 	 * @param pose the pose to be checked.
 	 * @return true if the heading is valid.
 	 */
-	public boolean isHeadingValid(P pose);
+	boolean isHeadingValid(P pose);
 }

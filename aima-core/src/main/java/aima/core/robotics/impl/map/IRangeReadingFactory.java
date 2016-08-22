@@ -17,5 +17,5 @@ public interface IRangeReadingFactory<R extends AbstractRangeReading> {
 	 * @param value the value of the new range reading.
 	 * @return the new range reading.
 	 */
-	public R getRangeReading(double value);
+	R getRangeReading(double value);
 }

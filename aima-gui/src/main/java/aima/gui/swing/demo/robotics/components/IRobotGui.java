@@ -14,7 +14,7 @@ public interface IRobotGui {
 	/**
 	 * The string that is shown in the connect button by default.
 	 */
-	public String DEFAULT_BUTTON_STRING = "Initialize Robot";
+	String DEFAULT_BUTTON_STRING = "Initialize Robot";
 	/**
 	 * Lets the robot class connect with or initialize/reset the actual robot. 
 	 * @return true if the robot is ready for use.

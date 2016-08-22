@@ -25,5 +25,5 @@ public interface IGroupParser {
 	 * @throws Exception if an error is found while parsing the input.
 	 * @return the constructed list of geometric shapes.
 	 */
-	public ArrayList<IGeometric2D> parse(InputStream input, String groupID) throws Exception;
+	ArrayList<IGeometric2D> parse(InputStream input, String groupID) throws Exception;
 }

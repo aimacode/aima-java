@@ -18,13 +18,13 @@ public interface IPose2D<P extends IPose2D<P,M>,M extends IMclMove<M>> extends I
 	/**
 	 * @return the X coordinate of the pose.
 	 */
-	public double getX();
+	double getX();
 	/**
 	 * @return the Y coordinate of the pose.
 	 */
-	public double getY();
+	double getY();
 	/**
 	 * @return the heading of the pose in radians.
 	 */
-	public double getHeading();
+	double getHeading();
 }
