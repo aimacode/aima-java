@@ -7,7 +7,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapEnvironment;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
