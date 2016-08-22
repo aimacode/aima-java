@@ -34,9 +34,19 @@ import aima.core.util.Util;
  * Figure 25.9 A Monte-Carlo-Localization algorithm using a range-scan sensor model with independent noise.
  * The Monte-Carlo-Localization is an extension of a {@link ParticleFiltering} as stated on page 982.
  * This is true for the functionality but this implementation can not extend the implementation of the ParticleFiltering
- * as both implementations only contain the actual algorithm as a single method.
- * 
- * It is possible to reduce the steps needed for the localization by tweaking the parameters {@code particleCount}, {@code weightCutOff} and {@code maxDistance}.
+ * as both implementations only contain the actual algorithm as a single method.<br/>
+ * <br/>
+ * The update cycle of the algorithm is executed by the method {@code localize} for the given set of samples, move and vector of range readings.
+ * Before calling this method, a set of samples can be generated through the method {@code generateCloud}, which represents the initialization phase of the pseudocode, for the given size N.
+ * This removes the need of specifying the size N on every call of {@code localize} as this information is already contained in the set itself.
+ * The method {@code localize} is divided into these three parts implemented each by a single method:
+ * <ol>
+ * <li>{@code applyMove} represents the first line of the update cycle. It moves all samples according to the move / motion model.</li>
+ * <li>{@code weightSamples} represents the second to second last line of the update cycle. A vector of weights is created by this method for the given range scans by comparing every range scan to a ray cast with the correspondent sample through the range sensor noise model.</li>
+ * <li>{@code extendedWeightedSampleWithReplacement} represents the last line of the update cycle. It is a WEIGHTED-SAMPLE-WITH-REPLACEMENT with the addition of a cutoff value. All particles having a weight below this cutoff are ignored.</li>
+ * </ol>
+ * <br/>
+ * It is possible to reduce the steps needed for the localization by tweaking the  sample count and the parameter {@code cutOff}.
  * 
  * @author Arno von Borries
  * @author Jan Phillip Kretzschmar
@@ -130,7 +140,7 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 		Object[] array = samples.toArray(new Object[0]);
 		for(i=0; i < samples.size(); i++) {
 			final int selectedSample = (Integer) ProbUtil.sample(randomizer.nextDouble(),sampleIndexes,normalizedW);
-			newSamples.add(( (P) array[selectedSample]).clone());
+			newSamples.add(((P) array[selectedSample]).clone());
 		}
 		return newSamples;
 	}
@@ -152,11 +162,11 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	}
 	
 	/**
-	 * Executes the Monte-Carlo-Localization for the given parameters.
+	 * Executes the update cycle of the Monte-Carlo-Localization for the given parameters.
 	 * @param samples the sample cloud.
 	 * @param move the move to be applied to the cloud.
 	 * @param rangeReadings the range scan that has been performed after the move has ended.
-	 * @return a new Set containing updated samples.
+	 * @return a new Set containing updated samples. {@code null} is returned if {@code samples} is {@code null}.
 	 */
 	public Set<P> localize(Set<P> samples, M move, R[] rangeReadings) {
 		if(samples == null) return null;/*initialization phase = call generateCloud*/
@@ -164,6 +174,5 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 		double[] w = weightSamples(newSamples, rangeReadings);/*range sensor noise model*/
 		newSamples = extendedWeightedSampleWithReplacement(newSamples, w);
 		return newSamples;
-				
 	}
 }
