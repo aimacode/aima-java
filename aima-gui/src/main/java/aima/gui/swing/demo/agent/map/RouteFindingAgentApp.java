@@ -9,7 +9,7 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;

@@ -6,7 +6,7 @@ import java.util.List;
 
 import aima.core.util.Util;
 import aima.core.util.datastructure.LabeledGraph;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 
 /**
  * Implements a map with locations, distance labeled links between the

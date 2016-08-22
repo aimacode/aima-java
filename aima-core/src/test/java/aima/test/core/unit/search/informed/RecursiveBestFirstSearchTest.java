@@ -15,7 +15,7 @@ import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 
 /**
  * @author Ciaran O'Reilly
