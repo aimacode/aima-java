@@ -3,6 +3,8 @@ package aima.extra.logic.firstorder.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.tree.ParseTree;
+
 import aima.core.logic.basic.firstorder.Connectors;
 import aima.core.logic.basic.firstorder.parsing.ast.ConnectedSentence;
 import aima.core.logic.basic.firstorder.parsing.ast.Constant;
@@ -15,12 +17,20 @@ import aima.core.logic.basic.firstorder.parsing.ast.TermEquality;
 import aima.core.logic.basic.firstorder.parsing.ast.FOLNode;
 import aima.core.logic.basic.firstorder.parsing.ast.Function;
 import aima.core.logic.basic.firstorder.parsing.ast.Variable;
+import aima.extra.logic.firstorder.parser.FirstOrderLogicParser;
 import aima.extra.logic.firstorder.parser.FirstOrderLogicParser.SentenceContext;
 import aima.extra.logic.firstorder.parser.FirstOrderLogicParser.TermContext;
 import aima.extra.logic.firstorder.parser.FirstOrderLogicParser.VariableContext;
 
 public class FirstOrderVisitor extends FirstOrderLogicBaseVisitor<FOLNode> {
 	
+	FirstOrderLogicParser parser;
+
+	public FOLNode visit(ParseTree tree, FirstOrderLogicParser parser) {
+		this.parser = parser;
+		return visit(tree);
+	}
+
 	@Override
 	public FOLNode visitParse(FirstOrderLogicParser.ParseContext ctx) { 
 		Sentence sentence = null;
@@ -96,6 +106,7 @@ public class FirstOrderVisitor extends FirstOrderLogicBaseVisitor<FOLNode> {
 			for (TermContext t : ctx.term() ) {
 				terms.add((Term) visit(t));
 			}
+			parser.addPredicate(ctx.predicate().getText());
 			predicate = new Predicate(ctx.predicate().getText(), terms);
 			sentence = predicate;
 		}
@@ -119,6 +130,7 @@ public class FirstOrderVisitor extends FirstOrderLogicBaseVisitor<FOLNode> {
 			for (TermContext t : ctx.term() ) {
 				terms.add((Term) visit(t));
 			}
+			parser.addFunction(ctx.function().getText());
 			function = new Function(ctx.function().getText(), terms);
 			return function;
 		}
@@ -138,6 +150,7 @@ public class FirstOrderVisitor extends FirstOrderLogicBaseVisitor<FOLNode> {
 
 	@Override
 	public FOLNode visitConstant(FirstOrderLogicParser.ConstantContext ctx) {
+		parser.addConstant(ctx.getText());
 		return new Constant(ctx.getText());
 	}
 
