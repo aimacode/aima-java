@@ -1,7 +1,9 @@
 package aima.test.unit.logic.firstorder.parsing;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -10,6 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
 import org.junit.Test;
 
+import aima.core.logic.basic.firstorder.domain.FOLDomain;
 import aima.core.logic.basic.firstorder.parsing.ast.ConnectedSentence;
 import aima.core.logic.basic.firstorder.parsing.ast.Constant;
 import aima.core.logic.basic.firstorder.parsing.ast.FOLNode;
@@ -30,7 +33,9 @@ import aima.extra.logic.firstorder.parser.FirstOrderVisitor;
  * @author Anurag Rai
  */
 public class FOLParserTest {
-
+	
+	FirstOrderLogicParser parser;
+	
 	@Test
 	public void testAtomicSentenceTrueParse() {
 		FOLNode v = parseToSentence("King(John)");
@@ -52,6 +57,20 @@ public class FOLParserTest {
 		NotSentence ns = (NotSentence) parseToSentence("~ BrotherOf(John) = EnemyOf(Saladin)");
 		Assert.assertEquals(ns.getNegated(),
 				new TermEquality(getBrotherOfFunction(new Constant("John")), getEnemyOfFunction()));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		functions.add("BrotherOf");
+		functions.add("EnemyOf");
+		Set<String> predicate  = new HashSet<>();
+		Set<String> constants  = new HashSet<>();
+		constants.add("John");
+		constants.add("Saladin");
+		
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 
 	@Test
@@ -71,6 +90,19 @@ public class FOLParserTest {
 		Sentence ps = (Sentence) parseToSentence("(~ BrotherOf(John) = EnemyOf(Saladin))");
 		Assert.assertEquals(ps,
 				new NotSentence(new TermEquality(getBrotherOfFunction(new Constant("John")), getEnemyOfFunction())));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		functions.add("BrotherOf");
+		functions.add("EnemyOf");
+		Set<String> predicate  = new HashSet<>();
+		Set<String> constants  = new HashSet<>();
+		constants.add("John");
+		constants.add("Saladin");
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 
 	@Test
@@ -94,6 +126,20 @@ public class FOLParserTest {
 						new ConnectedSentence("&", getKingPredicate(new Constant("John")),
 								new NotSentence(getKingPredicate(new Constant("Richard")))),
 						getKingPredicate(new Constant("Saladin"))));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		Set<String> predicate  = new HashSet<>();
+		predicate.add("King");
+		Set<String> constants  = new HashSet<>();
+		constants.add("John");
+		constants.add("Richard");
+		constants.add("Saladin");
+		
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 
 	@Test
@@ -102,6 +148,17 @@ public class FOLParserTest {
 		List<Variable> vars = new ArrayList<Variable>();
 		vars.add(new Variable("x"));
 		Assert.assertEquals(qs, new QuantifiedSentence("FORALL", vars, getKingPredicate(new Variable("x"))));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		Set<String> predicate  = new HashSet<>();
+		predicate.add("King");
+		Set<String> constants  = new HashSet<>();
+		
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 
 	@Test
@@ -113,6 +170,18 @@ public class FOLParserTest {
 		ConnectedSentence cse = new ConnectedSentence("&", getKingPredicate(new Variable("x")),
 				new TermEquality(getBrotherOfFunction(new Variable("x")), new Variable("y")));
 		Assert.assertEquals(qs, new QuantifiedSentence("EXISTS", vars, cse));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		functions.add("BrotherOf");
+		Set<String> predicate  = new HashSet<>();
+		predicate.add("King");
+		Set<String> constants  = new HashSet<>();
+		
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 
 	@Test
@@ -124,6 +193,18 @@ public class FOLParserTest {
 		ConnectedSentence cse = new ConnectedSentence("&", getKingPredicate(new Variable("x")),
 				new TermEquality(getBrotherOfFunction(new Variable("x")), new Variable("y")));
 		Assert.assertEquals(qs, new QuantifiedSentence("EXISTS", vars, cse));
+		
+		//checking auto-population of domain after parsing
+		FOLDomain domain = parser.getDomain();
+		Set<String> functions  = new HashSet<>();
+		functions.add("BrotherOf");
+		Set<String> predicate  = new HashSet<>();
+		predicate.add("King");
+		Set<String> constants  = new HashSet<>();
+		
+		Assert.assertEquals(domain.getFunctions(),functions);
+		Assert.assertEquals(domain.getPredicates(),predicate);
+		Assert.assertEquals(domain.getConstants(),constants);
 	}
 	/*
 	 * @Test public void testParseMultiArityFunctionEquality() {
@@ -144,13 +225,12 @@ public class FOLParserTest {
 	//
 		
 	private FOLNode parseToSentence(String stringToBeParsed) {
-		ANTLRInputStream input = new ANTLRInputStream(stringToBeParsed);
-		FirstOrderLogicLexer lexer = new FirstOrderLogicLexer(input);
+		FirstOrderLogicLexer lexer = new FirstOrderLogicLexer(new ANTLRInputStream(stringToBeParsed));
 		TokenStream tokens = new CommonTokenStream(lexer);
-		FirstOrderLogicParser parser = new FirstOrderLogicParser(tokens);
+		parser = new FirstOrderLogicParser(tokens);
 
 		ParseTree tree = parser.parse();
-		FOLNode node = new FirstOrderVisitor().visit(tree);
+		FOLNode node = new FirstOrderVisitor().visit(tree, parser);
 		return node;
 	}
 
