@@ -603,13 +603,12 @@ public class UnifierTest {
 	}
 	
 	private Sentence parseToSentence(String stringToBeParsed) {
-		ANTLRInputStream input = new ANTLRInputStream(stringToBeParsed);
-		FirstOrderLogicLexer lexer = new FirstOrderLogicLexer(input);
+		FirstOrderLogicLexer lexer = new FirstOrderLogicLexer(new ANTLRInputStream(stringToBeParsed));
 		TokenStream tokens = new CommonTokenStream(lexer);
 		FirstOrderLogicParser parser = new FirstOrderLogicParser(tokens);
 
 		ParseTree tree = parser.parse();
-		Sentence node = (Sentence) new FirstOrderVisitor().visit(tree);
+		Sentence node = (Sentence) new FirstOrderVisitor().visit(tree, parser);
 		return node;
 	}
 }
