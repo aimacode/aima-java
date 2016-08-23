@@ -1,6 +1,40 @@
 grammar FirstOrderLogic;
 @header {
 package aima.extra.logic.firstorder.parser;
+import aima.core.logic.basic.firstorder.domain.*;   
+}
+
+@parser::members {
+private FOLDomain domain;
+
+public void setDomain(FOLDomain domain) {
+    this.domain = domain;
+}
+
+public FOLDomain getDomain() {
+    return this.domain;
+}
+
+public void addConstant(String constant) {
+	if( domain == null ) {
+		domain = new FOLDomain();
+	}
+    domain.addConstant(constant);
+}
+
+public void addPredicate(String predicate) {
+	if( domain == null ) {
+		domain = new FOLDomain();
+	}
+    domain.addPredicate(predicate);
+}
+
+public void addFunction(String function) {
+	if( domain == null ) {
+		domain = new FOLDomain();
+	}
+    domain.addFunction(function);
+}
 }
 /*
  * Sentence        -> AtomicSentence : ComplexStence
