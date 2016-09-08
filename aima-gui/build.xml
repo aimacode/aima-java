@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 	
-	<property name="aima-gui.run" value="aima.gui.applications.AimaDemoApp" />
+	<property name="aima-gui.run" value="aima.gui.swing.demo.AimaDemoApp" />
 	
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />
@@ -28,24 +28,25 @@
 	</target>
 
 	<target name="aima-gui.compile-all" depends="aima-core.compile-all,aima-gui.makedirs">
-		<javac srcdir="${aima-gui.dir.src}/main" 
+		<javac srcdir="${aima-gui.dir.src}/main"
 			destdir="${aima-gui.dir.build.bin}/main" 
 			classpathref="aima-gui.classpath"
 			debug="${aima-core.compiler.debug}"
 			debuglevel="${aima-core.compiler.debuglevel}"
 			source="${aima-core.compiler.source}"
-		    target="${aima-core.compiler.target}"
-		/>
+		    target="${aima-core.compiler.target}" />
 	</target>
 
-	<target name="aima-gui.makedocs" depends="aima-gui.compile-all">
+	<target name="aima-gui.makedocs" depends="aima-gui.compile-all, aima-core.makedocs">
 		<path id="aima-gui.javadoc.src">
 			<pathelement path="${aima-gui.dir.src}/main/java" />
 			<pathelement path="${aima-gui.dir.src}/main/javadoc" />
 		</path>
-		<javadoc destdir="${aima-gui.dir.build.doc}/javadoc" 
+		<javadoc access="protected" author="true" 
+			destdir="${aima-gui.dir.build.doc}/javadoc" 
 			packagenames="aima.*"
-			sourcepathref="aima-gui.javadoc.src" />
+			sourcepathref="aima-gui.javadoc.src" >
+		</javadoc>
 	</target>
 	
 	<target name="aima-gui.release" depends="aima-gui.clean,aima-gui.makedirs,aima-core.release,aima-gui.compile-all">
@@ -57,19 +58,18 @@
 		        <attribute name="Implementation-Version" value="${aima-gui.version}" />
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />
 		    </manifest>
-			 <fileset dir="${aima-gui.dir.build.bin}/main" />
+			<fileset dir="${aima-gui.dir.build.bin}/main" />
+			<fileset dir="${aima-gui.dir.src}/main/resources" />
 		</jar>
 	</target>
 	
 	<target name="aima-gui.run" depends="aima-gui.compile-all">
 	    <java fork="true" classname="${aima-gui.run}">
 	        <classpath refid="aima-gui.classpath" />
-	           
 	        <jvmarg value="-Xms128m" />
 	        <jvmarg value="-Xmx1024m" />
 	    </java>
 	</target>
-
-	<target name="aima-gui.all" depends="aima-gui.release,aima-gui.makedocs">
-	</target>
+	
+	<target name="aima-gui.all" depends="aima-gui.release,aima-gui.makedocs"> </target>
 </project>

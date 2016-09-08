@@ -7,7 +7,7 @@ import java.util.List;
 
 import aima.core.environment.map.Map;
 import aima.core.environment.map.Scenario;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 /**
  * Extends the <code>MapAgentView</code> by visualization of
  * scenario, destination, and agent map information.

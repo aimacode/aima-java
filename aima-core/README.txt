@@ -1,7 +1,7 @@
 = AIMA-CORE =
 
 == Requirements ==
-# JDK 1.7 - is the baseline JDK against which this project is developed. 
+# JDK 1.8 - is the baseline JDK against which this project is developed. 
 
 == Current Release: 0.11.1-Chp7-Complete ==
 0.11.1-Chp7-Complete : Mar 15 2015 :<br>

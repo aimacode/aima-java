@@ -5,7 +5,7 @@ import java.awt.Color;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 
 /**
  * Simple graphical environment view without content but with some useful

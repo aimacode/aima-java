@@ -79,8 +79,8 @@
 		        <attribute name="Implementation-Version" value="${aima-core.version}" />
 		        <attribute name="AIMA-CORE-Version" value="${aima-core.version}" />
 		    </manifest>
-			 <fileset dir="${aima-core.dir.build.bin}/main" />
-			 <fileset dir="${aima-core.dir.src}/main/resources" excludes="**/*.git, .gitignore" />
+			<fileset dir="${aima-core.dir.build.bin}/main" />
+			<fileset dir="${aima-core.dir.src}/main/resources" excludes="**/*.git, .gitignore" />
 		</jar>
 	</target>
 		

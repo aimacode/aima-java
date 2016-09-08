@@ -1,6 +1,6 @@
 package aima.core.environment.map;
 
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 
 /**
  * @author Ruediger Lunde

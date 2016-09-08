@@ -1,4 +1,4 @@
-# ![](https://github.com/aimacode/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 7+) [![Build Status](https://travis-ci.org/aimacode/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/aimacode/aima-java)
+# ![](https://github.com/aimacode/aima-java/blob/gh-pages/aima3e/images/aima3e.jpg)AIMA3e-Java (JDK 8+) [![Build Status](https://travis-ci.org/aimacode/aima-java.svg?branch=AIMA3e)](https://travis-ci.org/aimacode/aima-java)
 Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~russell/) and [Norvig's](http://www.norvig.com/) [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/). You can use this in conjunction with a course on AI, or for study on your own. We're loooking for [solid contributors](https://github.com/aimacode/aima-java/wiki/AIMAJava-Contributing) to help.
 
 ### Getting Started Links 
@@ -117,4 +117,4 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |21.8|844|Q-Learning-Agent|[QLearningAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java)|
 |22.1|871|HITS|[HITS](/aima-core/src/main/java/aima/core/nlp/ranking/HITS.java)|
 |23.5|894|CYK-Parse|[CYK](/aima-core/src/main/java/aima/core/nlp/parsing/CYK.java)|
-|25.9|982|Monte-Carlo-Localization|---|
+|25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics/MonteCarloLocalization.java)|

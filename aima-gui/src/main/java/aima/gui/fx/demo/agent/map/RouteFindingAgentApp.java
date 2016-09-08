@@ -12,7 +12,7 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.CancelableThread;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
