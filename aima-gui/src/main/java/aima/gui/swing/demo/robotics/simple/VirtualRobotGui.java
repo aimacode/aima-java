@@ -4,7 +4,6 @@ import aima.core.robotics.impl.datatypes.Angle;
 import aima.gui.swing.demo.robotics.components.AnglePanel;
 import aima.gui.swing.demo.robotics.components.IRobotGui;
 import aima.gui.swing.demo.robotics.components.Settings;
-import aima.gui.swing.demo.robotics.components.AnglePanel.ChangeListener;
 import aima.gui.swing.framework.util.GuiBase;
 
 /**

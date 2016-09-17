@@ -484,6 +484,9 @@ public class Settings {
 			this.setVisible(true);
 		}
 		
+		/**
+		 * Enables all buttons that are registered in the Settings.
+		 */
 		protected void enableButtons() {
 			btnSave.setEnabled(true);
 			btnAbort.setEnabled(true);
@@ -493,6 +496,9 @@ public class Settings {
 			setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		}
 		
+		/**
+		 * Disables all buttons that are registered in the Settings.
+		 */
 		protected void disableButtons() {
 			btnSave.setEnabled(false);
 			btnAbort.setEnabled(false);

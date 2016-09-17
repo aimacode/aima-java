@@ -93,7 +93,7 @@ public final class MonteCarloLocalization<P extends IMclPose<P,V,M>, V extends I
 	protected Set<P> applyMove(Set<P> samples, M move) {
 		Set<P> newSamples = new LinkedHashSet<P>();
 		for(P sample: samples) {
-			newSamples.add(sample.applyMovement(move));
+			newSamples.add(sample.applyMovement(move.generateNoise()));
 		}
 		return newSamples;
 	}

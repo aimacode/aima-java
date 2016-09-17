@@ -428,7 +428,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 				}
 			});
 			enableButtons(buttonStateStart);
-			localizationResult = new JLabel("<HTML>Result: <BR><BR></HTML>");
+			localizationResult = new JLabel("<HTML>Result: <BR><BR><BR></HTML>");
 			
 			JPanel leftPanel = new JPanel();
 			leftPanel.setBorder(GuiBase.getClearanceBorder());
@@ -649,6 +649,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		
 		/**
 		 * Displays the sample cloud on the map.
+		 * @param samples the set of samples to be displayed.
 		 */
 		protected void displaySamples(Set<P> samples) {	
 			md.drawParticles(samples);
@@ -661,7 +662,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 */
 		protected void displayResult(P result) {
 			if(result != null) {
-				String resultOutputString = "( " + GuiBase.getFormat().format(result.getX()) + " | " + GuiBase.getFormat().format(result.getY()) + " )";
+				String resultOutputString = "X: " + GuiBase.getFormat().format(result.getX()) + ",<BR>Y: " + GuiBase.getFormat().format(result.getY());
 				localizationResult.setText("<HTML>Result: <BR>" + resultOutputString + "</HTML>");
 				md.showResult(result);
 			} else {
@@ -674,7 +675,7 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 */
 		protected void clearResult() {
 			md.clearResult();
-			localizationResult.setText("<HTML>Result: <BR><BR></HTML>");
+			localizationResult.setText("<HTML>Result: <BR><BR><BR></HTML>");
 		}
 		
 		/**
