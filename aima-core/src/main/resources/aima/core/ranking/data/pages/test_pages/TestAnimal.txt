@@ -1,0 +1,28 @@
+title: TestAnimal
+mock location: /wiki/TestAnimal
+
+Article/Page Content: 
+
+Keyword String 1: Animals are organisms of the kingom *Animalia*.
+Keyword String 2: All animals are motile. This means the can move spontaneously and independently at some point.
+Keyword String 3: Animals are divided into various sub-groups, which include vertebrates, molluscs, insects etc.
+
+Keyword String 4: The following are all animals: A dog, a cat, a tiger, a moth, a man, a woman, a gorilla, a chimp, a snake, a crab, a jellyfish.
+
+Keyword String 5: Some animals have four legs, some have two, some have eight, insects have six
+Keyword String 6: Some animals have scales, some have fur, some have neither.
+Keyword String 7: All animals are living things. That is to say, they are alive for time.
+
+Links:
+
+*Valid*
+< href="/wiki/TestDog" >
+< href="/wiki/TestCat" >
+< href="/wiki/TestInsect" >
+< href="/wiki/TestThing" >
+
+href="/wiki/TestLiving"
+href="/wiki/TestMan" href="TestGorilla"
+
+
+*Invalid/Different Format*

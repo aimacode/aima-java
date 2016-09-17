@@ -1,0 +1,1599 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Social philosophy - Wikipedia, the free encyclopedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Social_philosophy","wgTitle":"Social philosophy","wgCurRevisionId":712166878,"wgRevisionId":712166878,"wgArticleId":586276,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Articles lacking sources from August 2013","All articles lacking sources","Articles needing cleanup from April 2013","All pages needing cleanup","Articles with sections that need to be turned into prose from April 2013","Wikipedia articles with GND identifiers","Social philosophy","Systems theory","Interdisciplinary subfields of sociology"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Social_philosophy","wgRelevantArticleId":586276,"wgRequestId":"V37s3ApAMF0AAGB4JaMAAAAA","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgFlaggedRevsParams":{"tags":{"status":{"levels":1,"quality":2,"pristine":3}}},"wgStableRevisionId":null,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikipedia","wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgWikibaseItemId":"Q180592","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0});mw.loader.implement("user.options",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","ext.centralauth.centralautologin","mmv.head","ext.visualEditor.desktopArticleTarget.init","ext.uls.init","ext.uls.interface","ext.quicksurveys.init","mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","ext.centralNotice.bannerController","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.cite.styles%7Cext.gadget.DRN-wizard%2CReferenceTooltips%2Ccharinsert%2Cfeatured-articles-links%2CrefToolbar%2Cswitcher%2Cteahouse%7Cext.tmh.thumbnail.styles%7Cext.uls.nojs%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.raggett%2CsectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="generator" content="MediaWiki 1.28.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Social_philosophy"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Social_philosophy&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=Social_philosophy&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="copyright" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Social_philosophy"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Social_philosophy rootpage-Social_philosophy skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Social philosophy</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table class="metadata plainlinks ambox ambox-content ambox-Unreferenced" role="presentation">
+<tr>
+<td class="mbox-image">
+<div style="width:52px"><a href="/wiki/File:Question_book-new.svg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/50px-Question_book-new.svg.png" width="50" height="39" srcset="//upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/75px-Question_book-new.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/100px-Question_book-new.svg.png 2x" data-file-width="512" data-file-height="399" /></a></div>
+</td>
+<td class="mbox-text"><span class="mbox-text-span">This article <b>does not <a href="/wiki/Wikipedia:Citing_sources" title="Wikipedia:Citing sources">cite</a> any <a href="/wiki/Wikipedia:Verifiability" title="Wikipedia:Verifiability">sources</a></b>. <span class="hide-when-compact">Please help <a class="external text" href="//en.wikipedia.org/w/index.php?title=Social_philosophy&amp;action=edit">improve this article</a> by <a href="/wiki/Help:Introduction_to_referencing_with_Wiki_Markup/1" title="Help:Introduction to referencing with Wiki Markup/1">adding citations to reliable sources</a>. Unsourced material may be challenged and <a href="/wiki/Wikipedia:Verifiability#Burden_of_evidence" title="Wikipedia:Verifiability">removed</a>.</span> <small><i>(August 2013)</i></small> <small class="hide-when-compact"><i>(<a href="/wiki/Help:Maintenance_template_removal" title="Help:Maintenance template removal">Learn how and when to remove this template message</a>)</i></small></span></td>
+</tr>
+</table>
+<table class="vertical-navbox nowraplinks plainlist" style="float:right;clear:right;width:22.0em;margin:0 0 1.0em 1.0em;background:#f9f9f9;border:1px solid #aaa;padding:0.2em;border-spacing:0.4em 0;text-align:center;line-height:1.4em;font-size:88%">
+<tr>
+<td style="padding-top:0.4em;line-height:1.2em">Part of <a href="/wiki/Category:Philosophy" title="Category:Philosophy">a series</a> on</td>
+</tr>
+<tr>
+<th style="padding:0.2em 0.4em 0.2em;padding-top:0;font-size:145%;line-height:1.2em;font-size:200%;font-weight:normal;padding-bottom:0.15em;"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></th>
+</tr>
+<tr>
+<td style="padding:0.2em 0 0.4em"><a href="/wiki/File:Philbar_3.png" class="image" title="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes"><img alt="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes" src="//upload.wikimedia.org/wikipedia/commons/c/cf/Philbar_3.png" width="220" height="151" data-file-width="220" data-file-height="151" /></a>
+<div style="padding-top:0.2em;line-height:1.2em;white-space:nowrap;border-bottom:1px #aaa solid;">
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a></li>
+</ul>
+</div>
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Buddha" class="mw-redirect" title="Buddha">Buddha</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophers" title="Category:Philosophers">Philosophers</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/List_of_aestheticians" title="List of aestheticians">Aestheticians</a></li>
+<li><a href="/wiki/List_of_epistemologists" title="List of epistemologists">Epistemologists</a></li>
+<li><a href="/wiki/List_of_ethicists" title="List of ethicists">Ethicists</a></li>
+<li><a href="/wiki/List_of_logicians" title="List of logicians">Logicians</a></li>
+<li><a href="/wiki/List_of_metaphysicians" title="List of metaphysicians">Metaphysicians</a></li>
+<li><a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">Social and political philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_traditions" title="Category:Philosophical traditions">Traditions</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></li>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelian</a></li>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian</a></li>
+<li><a href="/wiki/Continental_philosophy" title="Continental philosophy">Continental</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+<li><a href="/wiki/Jewish_Philosophy" class="mw-redirect" title="Jewish Philosophy">Jewish</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonic</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy_by_period" title="Category:Philosophy by period">Periods</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_literature" title="Category:Philosophical literature">Literature</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Category:Aesthetics_literature" title="Category:Aesthetics literature">Aesthetics</a></li>
+<li><a href="/wiki/Category:Epistemology_literature" title="Category:Epistemology literature">Epistemology</a></li>
+<li><a href="/wiki/Category:Ethics_literature" title="Category:Ethics literature">Ethics</a></li>
+<li><a href="/wiki/Category:Logic_literature" title="Category:Logic literature">Logic</a></li>
+<li><a href="/wiki/Category:Metaphysics_literature" title="Category:Metaphysics literature">Metaphysics</a></li>
+<li><a href="/wiki/Category:Political_philosophy_literature" title="Category:Political philosophy literature">Political philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Branches_of_philosophy" title="Category:Branches of philosophy">Branches</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Philosophy_of_law" title="Philosophy of law">Legal philosophy</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Political philosophy</a></li>
+<li><strong class="selflink">Social philosophy</strong></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy-related_lists" title="Category:Philosophy-related lists">Lists</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Theories</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;">Miscellaneous</th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Philosopher" title="Philosopher">Philosopher</a></li>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="padding:0.3em 0.4em 0.3em;font-weight:bold;border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;border-top:1px solid #aaa;border-bottom:1px solid #aaa;"><span class="metadata"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/10px-Socrates.png" width="10" height="16" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/15px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/21px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></span> <a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr>
+<td style="text-align:right;font-size:115%;padding-top: 0.6em;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_sidebar" title="Template:Philosophy sidebar"><abbr title="View this template">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_sidebar" title="Template talk:Philosophy sidebar"><abbr title="Discuss this template">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_sidebar&amp;action=edit"><abbr title="Edit this template">e</abbr></a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+<p><b>Social philosophy</b> is the study of questions about <a href="/wiki/Social_behavior" title="Social behavior">social behavior</a> and interpretations of society and social institutions in terms of ethical values rather than empirical relations.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup> Social philosophers place new emphasis on understanding the social contexts for political, legal, moral, and cultural questions, and to the development of novel theoretical frameworks, from social ontology to care ethics to cosmopolitan theories of democracy, human rights, gender equity and global justice.<sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup></p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Subdisciplines"><span class="tocnumber">1</span> <span class="toctext">Subdisciplines</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Relevant_issues_in_social_philosophy"><span class="tocnumber">2</span> <span class="toctext">Relevant issues in social philosophy</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Social_philosophers"><span class="tocnumber">3</span> <span class="toctext">Social philosophers</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#References"><span class="tocnumber">5</span> <span class="toctext">References</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="Subdisciplines">Subdisciplines</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Social_philosophy&amp;action=edit&amp;section=1" title="Edit section: Subdisciplines">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>There is often a considerable overlap between the questions addressed by social philosophy and <a href="/wiki/Ethics" title="Ethics">ethics</a> or <a href="/wiki/Value_theory" title="Value theory">value theory</a>. Other forms of social philosophy include <a href="/wiki/Political_philosophy" title="Political philosophy">political philosophy</a> and <a href="/wiki/Jurisprudence" title="Jurisprudence">jurisprudence</a>, which are largely concerned with the societies of <a href="/wiki/State_(polity)" title="State (polity)">state</a> and <a href="/wiki/Government" title="Government">government</a> and their functioning.</p>
+<p>Social philosophy, ethics, and political philosophy all share intimate connections with other disciplines in the <a href="/wiki/Social_sciences" class="mw-redirect" title="Social sciences">social sciences</a>. In turn, the social sciences themselves are of focal interest to the <a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">philosophy of social science</a>.</p>
+<p>The <a href="/wiki/Philosophy_of_language" title="Philosophy of language">philosophy of language</a> and <a href="/wiki/Social_epistemology" title="Social epistemology">social epistemology</a> are subfields which overlap in significant ways with social philosophy.</p>
+<h2><span class="mw-headline" id="Relevant_issues_in_social_philosophy">Relevant issues in social philosophy</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Social_philosophy&amp;action=edit&amp;section=2" title="Edit section: Relevant issues in social philosophy">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="metadata plainlinks ambox ambox-style ambox-Prose" role="presentation">
+<tr>
+<td class="mbox-image">
+<div style="width:52px"><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/f/f2/Edit-clear.svg/40px-Edit-clear.svg.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/en/thumb/f/f2/Edit-clear.svg/60px-Edit-clear.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/f/f2/Edit-clear.svg/80px-Edit-clear.svg.png 2x" data-file-width="48" data-file-height="48" /></div>
+</td>
+<td class="mbox-text"><span class="mbox-text-span">This section <b>is in a list format that may be better presented using <a href="/wiki/Wikipedia:Proseline" title="Wikipedia:Proseline">prose</a>.</b> <span class="hide-when-compact">You can help by converting this section to prose, if <a href="/wiki/Wikipedia:Embedded_list" class="mw-redirect" title="Wikipedia:Embedded list">appropriate</a>. <a href="/wiki/Help:Editing" title="Help:Editing">Editing help</a> is available.</span> <small><i>(April 2013)</i></small></span></td>
+</tr>
+</table>
+<p>Some topics dealt with by social philosophy are:</p>
+<ul>
+<li><a href="/wiki/Human_agency" class="mw-redirect" title="Human agency">Agency</a> and <a href="/wiki/Free_will" title="Free will">free will</a></li>
+<li>The <a href="/wiki/Will_to_power" title="Will to power">will to power</a></li>
+<li><a href="/wiki/Accountability" title="Accountability">Accountability</a></li>
+<li><a href="/wiki/Speech_acts" class="mw-redirect" title="Speech acts">Speech acts</a></li>
+<li><a href="/wiki/Situational_ethics" title="Situational ethics">Situational ethics</a></li>
+<li><a href="/wiki/Modernism" title="Modernism">Modernism</a> and <a href="/wiki/Postmodernism" title="Postmodernism">Postmodernism</a></li>
+<li><a href="/wiki/Individualism" title="Individualism">Individualism</a></li>
+<li><a href="/wiki/Crowd" title="Crowd">Crowds</a></li>
+<li><a href="/wiki/Property" title="Property">Property</a></li>
+<li><a href="/wiki/Rights" title="Rights">Rights</a></li>
+<li><a href="/wiki/Authority" title="Authority">Authority</a></li>
+<li><a href="/wiki/Ideologies" class="mw-redirect" title="Ideologies">Ideologies</a></li>
+<li><a href="/wiki/Cultural_criticism" class="mw-redirect" title="Cultural criticism">Cultural criticism</a></li>
+</ul>
+<h2><span class="mw-headline" id="Social_philosophers">Social philosophers</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Social_philosophy&amp;action=edit&amp;section=3" title="Edit section: Social philosophers">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>A list of philosophers that have concerned themselves, although most of them not exclusively, with social philosophy:</p>
+<div class="div-col columns column-width" style="-moz-column-width: 20em; -webkit-column-width: 20em; column-width: 20em;">
+<ul>
+<li><a href="/wiki/Socrates" title="Socrates">Socrates</a></li>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Chanakya" title="Chanakya">Chanakya</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Thiruvalluvar" title="Thiruvalluvar">Thiruvalluvar</a></li>
+<li><a href="/wiki/Thomas_Hobbes" title="Thomas Hobbes">Thomas Hobbes</a></li>
+<li><a href="/wiki/Jean-Jacques_Rousseau" title="Jean-Jacques Rousseau">Jean-Jacques Rousseau</a></li>
+<li><a href="/wiki/John_Locke" title="John Locke">John Locke</a></li>
+<li><a href="/wiki/Jeremy_Bentham" title="Jeremy Bentham">Jeremy Bentham</a></li>
+<li><a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">John Stuart Mill</a></li>
+<li><a href="/wiki/Georg_Wilhelm_Hegel" class="mw-redirect" title="Georg Wilhelm Hegel">Georg Wilhelm Hegel</a></li>
+<li><a href="/wiki/Herbert_Spencer" title="Herbert Spencer">Herbert Spencer</a></li>
+<li><a href="/wiki/Henry_George" title="Henry George">Henry George</a></li>
+<li><a href="/wiki/Karl_Marx" title="Karl Marx">Karl Marx</a></li>
+<li><a href="/wiki/Friedrich_Engels" title="Friedrich Engels">Friedrich Engels</a></li>
+<li><a href="/wiki/Pierre-Joseph_Proudhon" title="Pierre-Joseph Proudhon">Pierre-Joseph Proudhon</a></li>
+<li><a href="/wiki/Mikhail_Bakunin" title="Mikhail Bakunin">Mikhail Bakunin</a></li>
+<li><a href="/wiki/Peter_Kropotkin" title="Peter Kropotkin">Peter Kropotkin</a></li>
+<li><a href="/wiki/Marshall_McLuhan" title="Marshall McLuhan">Marshall McLuhan</a></li>
+<li><a href="/wiki/%C3%89mile_Durkheim" title="Émile Durkheim">Émile Durkheim</a></li>
+<li><a href="/wiki/Max_Weber" title="Max Weber">Max Weber</a></li>
+<li><a href="/wiki/Sigmund_Freud" title="Sigmund Freud">Sigmund Freud</a></li>
+<li><a href="/wiki/Carl_Jung" title="Carl Jung">Carl Jung</a></li>
+<li><a href="/wiki/John_Zerzan" title="John Zerzan">John Zerzan</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Friedrich Nietzsche</a></li>
+<li><a href="/wiki/Theodor_Adorno" class="mw-redirect" title="Theodor Adorno">Theodor Adorno</a></li>
+<li><a href="/wiki/Walter_Benjamin" title="Walter Benjamin">Walter Benjamin</a></li>
+<li><a href="/wiki/Karl_Raimund_Popper" class="mw-redirect" title="Karl Raimund Popper">Karl Raimund Popper</a></li>
+<li><a href="/wiki/Georg_Luk%C3%A1cs" class="mw-redirect" title="Georg Lukács">Georg Lukács</a></li>
+<li><a href="/wiki/Antonie_Pannekoek" title="Antonie Pannekoek">Antonie Pannekoek</a></li>
+<li><a href="/wiki/Simone_de_Beauvoir" title="Simone de Beauvoir">Simone de Beauvoir</a></li>
+<li><a href="/wiki/Michel_Foucault" title="Michel Foucault">Michel Foucault</a></li>
+<li><a href="/wiki/Erving_Goffman" title="Erving Goffman">Erving Goffman</a></li>
+<li><a href="/wiki/Noam_Chomsky" title="Noam Chomsky">Noam Chomsky</a></li>
+<li><a href="/wiki/Jean_Baudrillard" title="Jean Baudrillard">Jean Baudrillard</a></li>
+<li><a href="/wiki/Cornelius_Castoriadis" title="Cornelius Castoriadis">Cornelius Castoriadis</a></li>
+<li><a href="/wiki/Guy_Debord" title="Guy Debord">Guy Debord</a></li>
+<li><a href="/wiki/Ivan_Illich" title="Ivan Illich">Ivan Illich</a></li>
+<li><a href="/wiki/Terry_Eagleton" title="Terry Eagleton">Terry Eagleton</a></li>
+<li><a href="/wiki/Sheila_Rowbotham" title="Sheila Rowbotham">Sheila Rowbotham</a></li>
+<li><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a></li>
+<li><a href="/wiki/Herbert_Marcuse" title="Herbert Marcuse">Herbert Marcuse</a></li>
+<li><a href="/wiki/Max_Horkheimer" title="Max Horkheimer">Max Horkheimer</a></li>
+<li><a href="/wiki/Emmanuel_Levinas" title="Emmanuel Levinas">Emmanuel Levinas</a></li>
+<li><a href="/wiki/Erich_Fromm" title="Erich Fromm">Erich Fromm</a></li>
+<li><a href="/wiki/Fred_Poch%C3%A9" title="Fred Poché">Fred Poché</a></li>
+<li><a href="/wiki/Adolfo_S%C3%A1nchez_V%C3%A1zquez" title="Adolfo Sánchez Vázquez">Adolfo Sánchez Vázquez</a></li>
+<li><a href="/wiki/Alfred_Schmidt_(philosopher)" title="Alfred Schmidt (philosopher)">Alfred Schmidt</a></li>
+<li><a href="/wiki/Slavoj_%C5%BDi%C5%BEek" title="Slavoj Žižek">Slavoj Žižek</a></li>
+<li><a href="/wiki/Hannah_Arendt" title="Hannah Arendt">Hannah Arendt</a></li>
+<li><a href="/wiki/Huey_P._Newton" title="Huey P. Newton">Huey P. Newton</a></li>
+</ul>
+</div>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Social_philosophy&amp;action=edit&amp;section=4" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="noprint portal tright" style="border:solid #aaa 1px;margin:0.5em 0 0.5em 1em">
+<table style="background:#f9f9f9;font-size:85%;line-height:110%;max-width:175px">
+<tr style="vertical-align:middle">
+<td style="text-align:center"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/18px-Socrates.png" width="18" height="28" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/27px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/36px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></td>
+<td style="padding:0 0.2em;vertical-align:middle;font-style:italic;font-weight:bold"><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr style="vertical-align:middle">
+<td style="text-align:center"><a href="/wiki/File:P_derecho.svg" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/8/82/P_derecho.svg/31px-P_derecho.svg.png" width="31" height="28" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/8/82/P_derecho.svg/47px-P_derecho.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/8/82/P_derecho.svg/62px-P_derecho.svg.png 2x" data-file-width="400" data-file-height="360" /></a></td>
+<td style="padding:0 0.2em;vertical-align:middle;font-style:italic;font-weight:bold"><a href="/wiki/Portal:Social_and_political_philosophy" title="Portal:Social and political philosophy">Social and political philosophy portal</a></td>
+</tr>
+</table>
+</div>
+<ul>
+<li><a href="/wiki/List_of_basic_sociology_topics" class="mw-redirect" title="List of basic sociology topics">List of basic sociology topics</a></li>
+<li><a href="/wiki/Sociological_paradigms" class="mw-redirect" title="Sociological paradigms">Sociological paradigms</a></li>
+<li><a href="/wiki/Sociology" title="Sociology">Sociology</a></li>
+<li><a href="/wiki/Social_simulation" title="Social simulation">Social simulation</a></li>
+<li><a href="/wiki/Social_theory" title="Social theory">Social theory</a></li>
+</ul>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Social_philosophy&amp;action=edit&amp;section=5" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist" style="list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-1">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external free" href="http://www.merriam-webster.com/dictionary/social%20philosophy">http://www.merriam-webster.com/dictionary/social%20philosophy</a></span></li>
+<li id="cite_note-2"><span class="mw-cite-backlink"><b><a href="#cite_ref-2">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external free" href="http://onlinelibrary.wiley.com/journal/10.1111/(ISSN)1467-9833/homepage/ProductInformation.html">http://onlinelibrary.wiley.com/journal/10.1111/(ISSN)1467-9833/homepage/ProductInformation.html</a></span></li>
+</ol>
+</div>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_topics" title="Template:Philosophy topics"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_topics" title="Template talk:Philosophy topics"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_topics&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_academic_disciplines#Philosophy" class="mw-redirect" title="List of academic disciplines">Branches</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Traditional</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Philosophy of</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Art</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_culture" title="Philosophy of culture">Culture</a></li>
+<li><a href="/wiki/Philosophy_of_design" title="Philosophy of design">Design</a></li>
+<li><a href="/wiki/Philosophy_of_music" title="Philosophy of music">Music</a></li>
+<li><a href="/wiki/Philosophy_of_film" title="Philosophy of film">Film</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Ontology" title="Ontology">Being</a></li>
+<li><a href="/wiki/Philosophy_of_business" title="Philosophy of business">Business</a></li>
+<li><a href="/wiki/Philosophy_of_color" title="Philosophy of color">Color</a></li>
+<li><a href="/wiki/Cosmology_(Philosophy)" class="mw-redirect" title="Cosmology (Philosophy)">Cosmos</a></li>
+<li><a href="/wiki/Philosophy_of_dialogue" title="Philosophy of dialogue">Dialogue</a></li>
+<li><a href="/wiki/Philosophy_of_education" title="Philosophy of education">Education</a></li>
+<li><a href="/wiki/Environmental_philosophy" title="Environmental philosophy">Environment</a></li>
+<li><a href="/wiki/Philosophy_of_futility" title="Philosophy of futility">Futility</a></li>
+<li><a href="/wiki/Philosophy_of_happiness" title="Philosophy of happiness">Happiness</a></li>
+<li><a href="/wiki/Philosophy_of_healthcare" title="Philosophy of healthcare">Healthcare</a></li>
+<li><a href="/wiki/Philosophy_of_history" title="Philosophy of history">History</a></li>
+<li><a href="/wiki/Philosophical_anthropology" title="Philosophical anthropology">Human nature</a></li>
+<li><a href="/wiki/Theories_of_humor" title="Theories of humor">Humor</a></li>
+<li><a href="/wiki/Philosophy_of_feminism" class="mw-redirect" title="Philosophy of feminism">Feminism</a></li>
+<li><a href="/wiki/Philosophy_of_language" title="Philosophy of language">Language</a></li>
+<li><a href="/wiki/Philosophy_and_literature" title="Philosophy and literature">Literature</a></li>
+<li><a href="/wiki/Philosophy_of_mathematics" title="Philosophy of mathematics">Mathematics</a></li>
+<li><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a>
+<ul>
+<li><a href="/wiki/Pain_(philosophy)" title="Pain (philosophy)">Pain</a></li>
+<li><a href="/wiki/Philosophy_of_psychology" title="Philosophy of psychology">Psychology</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Metaphilosophy" title="Metaphilosophy">Philosophy</a></li>
+<li><a href="/wiki/Philosophy_of_religion" title="Philosophy of religion">Religion</a></li>
+<li><a href="/wiki/Philosophy_of_science" title="Philosophy of science">Science</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_physics" title="Philosophy of physics">Physics</a></li>
+<li><a href="/wiki/Philosophy_of_chemistry" title="Philosophy of chemistry">Chemistry</a></li>
+<li><a href="/wiki/Philosophy_of_biology" title="Philosophy of biology">Biology</a></li>
+<li><a href="/wiki/Philosophy_of_geography" title="Philosophy of geography">Geography</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_sex" title="Philosophy of sex">Sexuality</a></li>
+<li><a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">Social science</a>
+<ul>
+<li><a href="/wiki/Philosophy_and_economics" title="Philosophy and economics">Economics</a></li>
+<li><a href="/wiki/Justice" title="Justice">Justice</a></li>
+<li><a href="/wiki/Jurisprudence" title="Jurisprudence">Law</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Politics</a></li>
+<li><strong class="selflink">Society</strong></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_space_and_time" title="Philosophy of space and time">Space and time</a></li>
+<li><a href="/wiki/Philosophy_of_sport" title="Philosophy of sport">Sport</a></li>
+<li><a href="/wiki/Philosophy_of_technology" title="Philosophy of technology">Technology</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_artificial_intelligence" title="Philosophy of artificial intelligence">Artificial intelligence</a></li>
+<li><a href="/wiki/Philosophy_of_computer_science" title="Philosophy of computer science">Computer science</a></li>
+<li><a href="/wiki/Philosophy_of_engineering" title="Philosophy of engineering">Engineering</a></li>
+<li><a href="/wiki/Philosophy_of_information" title="Philosophy of information">Information</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_war" title="Philosophy of war">War</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools of thought</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/History_of_philosophy" class="mw-redirect" title="History of philosophy">By era</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a>
+<ul>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Renaissance_philosophy" title="Renaissance philosophy">Renaissance</a></li>
+<li><a href="/wiki/Early_modern_philosophy" title="Early modern philosophy">Early modern</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Agriculturalism" title="Agriculturalism">Agriculturalism</a></li>
+<li><a href="/wiki/Confucianism" title="Confucianism">Confucianism</a></li>
+<li><a href="/wiki/Legalism_(Chinese_philosophy)" title="Legalism (Chinese philosophy)">Legalism</a></li>
+<li><a href="/wiki/School_of_Names" title="School of Names">Logicians</a></li>
+<li><a href="/wiki/Mohism" title="Mohism">Mohism</a></li>
+<li><a href="/wiki/School_of_Naturalists" title="School of Naturalists">Chinese naturalism</a></li>
+<li><a href="/wiki/Xuanxue" title="Xuanxue">Neotaoism</a></li>
+<li><a href="/wiki/Taoism" title="Taoism">Taoism</a></li>
+<li><a href="/wiki/Yangism" title="Yangism">Yangism</a></li>
+<li><a href="/wiki/Zen" title="Zen">Zen</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greco-</a><a href="/wiki/Hellenistic_philosophy" title="Hellenistic philosophy">Roman</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelianism</a></li>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Cynicism_(philosophy)" title="Cynicism (philosophy)">Cynicism</a></li>
+<li><a href="/wiki/Cyrenaics" title="Cyrenaics">Cyrenaics</a></li>
+<li><a href="/wiki/Eleatics" title="Eleatics">Eleatics</a></li>
+<li><a href="/wiki/Eretrian_school" title="Eretrian school">Eretrian school</a></li>
+<li><a href="/wiki/Epicureanism" title="Epicureanism">Epicureanism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Ionian_School_(philosophy)" title="Ionian School (philosophy)">Ionian</a>
+<ul>
+<li><a href="/wiki/Ephesian_school" title="Ephesian school">Ephesian</a></li>
+<li><a href="/wiki/Milesian_school" title="Milesian school">Milesian</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Megarian_school" title="Megarian school">Megarian school</a></li>
+<li><a href="/wiki/Neoplatonism" title="Neoplatonism">Neoplatonism</a></li>
+<li><a href="/wiki/Peripatetic_school" title="Peripatetic school">Peripatetic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonism</a></li>
+<li><a href="/wiki/Pluralist_school" title="Pluralist school">Pluralism</a></li>
+<li><a href="/wiki/Pre-Socratic_philosophy" title="Pre-Socratic philosophy">Presocratic</a></li>
+<li><a href="/wiki/Pyrrhonism" title="Pyrrhonism">Pyrrhonism</a></li>
+<li><a href="/wiki/Pythagoreanism" title="Pythagoreanism">Pythagoreanism</a></li>
+<li><a href="/wiki/Neopythagoreanism" title="Neopythagoreanism">Neopythagoreanism</a></li>
+<li><a href="/wiki/Sophism" title="Sophism">Sophism</a></li>
+<li><a href="/wiki/Stoicism" title="Stoicism">Stoicism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/C%C4%81rv%C4%81ka" class="mw-redirect" title="C�?rv�?ka">C�?rv�?ka</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Persian</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mazdak#Mazdakism" title="Mazdak">Mazdakism</a></li>
+<li><a href="/wiki/Zoroastrianism" title="Zoroastrianism">Zoroastrianism</a></li>
+<li><a href="/wiki/Zurvanism" title="Zurvanism">Zurvanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/European_philosophy" class="mw-redirect" title="European philosophy">European</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian philosophy</a></li>
+<li><a href="/wiki/Scholasticism" title="Scholasticism">Scholasticism</a></li>
+<li><a href="/wiki/Thomism" title="Thomism">Thomism</a></li>
+<li><a href="/wiki/Renaissance_humanism" title="Renaissance humanism">Renaissance humanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">East Asian</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Korean_Confucianism" title="Korean Confucianism">Korean Confucianism</a></li>
+<li><a href="/wiki/Edo_Neo-Confucianism" title="Edo Neo-Confucianism">Edo Neo-Confucianism</a></li>
+<li><a href="/wiki/Neo-Confucianism" title="Neo-Confucianism">Neo-Confucianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Indian</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Dvaita" title="Dvaita">Dvaita</a></li>
+<li><a href="/wiki/Navya-Ny%C4%81ya" title="Navya-Ny�?ya">Navya-Ny�?ya</a></li>
+<li><a href="/wiki/Vishishtadvaita" title="Vishishtadvaita">Vishishtadvaita</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Averroism" title="Averroism">Averroism</a></li>
+<li><a href="/wiki/Avicenna#Avicennian_philosophy" title="Avicenna">Avicennism</a></li>
+<li><a href="/wiki/Illuminationism#Persian_school_of_Illuminationism" title="Illuminationism">Persian Illuminationism</a></li>
+<li><a href="/wiki/Ilm_al-Kalam" class="mw-redirect" title="Ilm al-Kalam">Ilm al-Kalam</a></li>
+<li><a href="/wiki/Sufi_philosophy" title="Sufi philosophy">Sufi</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Jewish_philosophy" title="Jewish philosophy">Jewish</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Judeo-Islamic_philosophies_(800%E2%80%931400)" title="Judeo-Islamic philosophies (800–1400)">Judeo-Islamic</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">People</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Cartesianism" title="Cartesianism">Cartesianism</a></li>
+<li><a href="/wiki/Kantianism" title="Kantianism">Kantianism</a></li>
+<li><a href="/wiki/Neo-Kantianism" title="Neo-Kantianism">Neo-Kantianism</a></li>
+<li><a href="/wiki/Hegelianism" title="Hegelianism">Hegelianism</a></li>
+<li><a href="/wiki/Marxist_philosophy" title="Marxist philosophy">Marxism</a></li>
+<li><a href="/wiki/Spinozism" title="Spinozism">Spinozism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Idea" title="Idea">Ideal</a>&#160;/ <a href="/wiki/Matter_(philosophy)" title="Matter (philosophy)">Material</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a>
+<ul>
+<li><a href="/wiki/Absolute_idealism" title="Absolute idealism">Absolute</a></li>
+<li><a href="/wiki/British_idealism" title="British idealism">British</a></li>
+<li><a href="/wiki/German_idealism" title="German idealism">German</a></li>
+<li><a href="/wiki/Objective_idealism" title="Objective idealism">Objective</a></li>
+<li><a href="/wiki/Subjective_idealism" title="Subjective idealism">Subjective</a></li>
+<li><a href="/wiki/Transcendental_idealism" title="Transcendental idealism">Transcendental</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Classical_realism" class="mw-redirect" title="Classical realism">Classical realism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Reductionism" title="Reductionism">Reductionism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a></li>
+<li><a href="/wiki/Utilitarianism" title="Utilitarianism">Utilitarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anarchism" title="Anarchism">Anarchism</a></li>
+<li><a href="/wiki/Collectivism" title="Collectivism">Collectivism</a></li>
+<li><a href="/wiki/New_Confucianism" title="New Confucianism">New Confucianism</a></li>
+<li><a href="/wiki/Conservatism" title="Conservatism">Conservatism</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Historicism" title="Historicism">Historicism</a></li>
+<li><a href="/wiki/Holism" title="Holism">Holism</a></li>
+<li><a href="/wiki/Humanism" title="Humanism">Humanism</a></li>
+<li><a href="/wiki/Individualism" title="Individualism">Individualism</a></li>
+<li><a href="/wiki/Kokugaku" title="Kokugaku">Kokugaku</a></li>
+<li><a href="/wiki/Classical_liberalism" title="Classical liberalism">Liberalism</a></li>
+<li><a href="/wiki/Modernism" title="Modernism">Modernism</a></li>
+<li><a href="/wiki/Natural_Law" class="mw-redirect" title="Natural Law">Natural Law</a></li>
+<li><a href="/wiki/Nihilism" title="Nihilism">Nihilism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a></li>
+<li><a href="/wiki/Neo-Scholasticism" title="Neo-Scholasticism">Neo-Scholasticism</a></li>
+<li><a href="/wiki/Social_contract" title="Social contract">Social contract</a></li>
+<li><a href="/wiki/Socialism" title="Socialism">Socialism</a></li>
+<li><a href="/wiki/Transcendentalism" title="Transcendentalism">Transcendentalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Applied_ethics" title="Applied ethics">Applied ethics</a></li>
+<li><a href="/wiki/Analytical_feminism" title="Analytical feminism">Analytic feminism</a></li>
+<li><a href="/wiki/Analytical_Marxism" title="Analytical Marxism">Analytical Marxism</a></li>
+<li><a href="/wiki/Communitarianism" title="Communitarianism">Communitarianism</a></li>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Critical_rationalism" title="Critical rationalism">Critical rationalism</a></li>
+<li><a href="/wiki/Experimental_philosophy" title="Experimental philosophy">Experimental philosophy</a></li>
+<li><a href="/wiki/Falsifiability" title="Falsifiability">Falsificationism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a>&#160;/ <a href="/wiki/Coherentism" title="Coherentism">Coherentism</a></li>
+<li><a href="/wiki/Generative_linguistics" class="mw-redirect" title="Generative linguistics">Generative linguistics</a></li>
+<li><a href="/wiki/Internalism_and_externalism" title="Internalism and externalism">Internalism and Externalism</a></li>
+<li><a href="/wiki/Logical_positivism" title="Logical positivism">Logical positivism</a></li>
+<li><a href="/wiki/Legal_positivism" title="Legal positivism">Legal positivism</a></li>
+<li><a href="/wiki/Normative_ethics" title="Normative ethics">Normative ethics</a></li>
+<li><a href="/wiki/Meta-ethics" title="Meta-ethics">Meta-ethics</a></li>
+<li><a href="/wiki/Moral_realism" title="Moral realism">Moral realism</a></li>
+<li><a href="/wiki/Virtue_ethics#Contemporary_.27aretaic_turn.27" title="Virtue ethics">Neo-Aristotelian</a></li>
+<li><a href="/wiki/Naturalized_epistemology" title="Naturalized epistemology">Quinean naturalism</a></li>
+<li><a href="/wiki/Ordinary_language_philosophy" title="Ordinary language philosophy">Ordinary language philosophy</a></li>
+<li><a href="/wiki/Postanalytic_philosophy" title="Postanalytic philosophy">Postanalytic philosophy</a></li>
+<li><a href="/wiki/Quietism_(philosophy)" title="Quietism (philosophy)">Quietism</a></li>
+<li><a href="/wiki/John_Rawls" title="John Rawls">Rawlsian</a></li>
+<li><a href="/wiki/Reformed_epistemology" title="Reformed epistemology">Reformed epistemology</a></li>
+<li><a href="/wiki/Systemics" title="Systemics">Systemics</a></li>
+<li><a href="/wiki/Scientism" title="Scientism">Scientism</a></li>
+<li><a href="/wiki/Scientific_realism" title="Scientific realism">Scientific realism</a></li>
+<li><a href="/wiki/Scientific_skepticism" title="Scientific skepticism">Scientific skepticism</a></li>
+<li><a href="/wiki/Utilitarianism#Twentieth-century_developments" title="Utilitarianism">Contemporary utilitarianism</a></li>
+<li><a href="/wiki/Vienna_Circle" title="Vienna Circle">Vienna Circle</a></li>
+<li><a href="/wiki/Ludwig_Wittgenstein" title="Ludwig Wittgenstein">Wittgensteinian</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Continental_philosophy" title="Continental philosophy">Continental</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Critical_theory" title="Critical theory">Critical theory</a></li>
+<li><a href="/wiki/Deconstruction" title="Deconstruction">Deconstruction</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Feminist_philosophy" title="Feminist philosophy">Feminist</a></li>
+<li><a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a></li>
+<li><a href="/wiki/New_Historicism" title="New Historicism">New Historicism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Neo-Marxism" title="Neo-Marxism">Neo-Marxism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Postmodern_philosophy" title="Postmodern philosophy">Postmodernism</a></li>
+<li><a href="/wiki/Post-structuralism" title="Post-structuralism">Post-structuralism</a></li>
+<li><a href="/wiki/Social_constructionism" title="Social constructionism">Social constructionism</a></li>
+<li><a href="/wiki/Structuralism" title="Structuralism">Structuralism</a></li>
+<li><a href="/wiki/Western_Marxism" title="Western Marxism">Western Marxism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Kyoto_School" title="Kyoto School">Kyoto School</a></li>
+<li><a href="/wiki/Objectivism_(Ayn_Rand)" title="Objectivism (Ayn Rand)">Objectivism</a></li>
+<li><a href="/wiki/Russian_cosmism" title="Russian cosmism">Russian cosmism</a></li>
+<li><i><a href="/wiki/List_of_philosophies" title="List of philosophies">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">Positions</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Formalism_(art)" title="Formalism (art)">Formalism</a></li>
+<li><a href="/wiki/Institutional_theory_of_art" class="mw-redirect" title="Institutional theory of art">Institutionalism</a></li>
+<li><a href="/wiki/Aesthetic_emotions" title="Aesthetic emotions">Aesthetic response</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ethics" title="Ethics">Ethics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Deontology" class="mw-redirect" title="Deontology">Deontology</a></li>
+<li><a href="/wiki/Virtue_ethics" title="Virtue ethics">Virtue</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Free_will" title="Free will">Free will</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Compatibilism" title="Compatibilism">Compatibilism</a></li>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Libertarianism_(metaphysics)" title="Libertarianism (metaphysics)">Libertarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Metaphysical_naturalism" title="Metaphysical naturalism">Naturalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Constructivist_epistemology" title="Constructivist epistemology">Constructivism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Epistemological_idealism" title="Epistemological idealism">Idealism</a></li>
+<li><a href="/wiki/Epistemological_particularism" title="Epistemological particularism">Particularism</a></li>
+<li><a href="/wiki/Fideism" title="Fideism">Fideism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a>&#160;/ <a href="/wiki/Reasonism" title="Reasonism">Reasonism</a></li>
+<li><a href="/wiki/Philosophical_skepticism#Epistemology_and_skepticism" title="Philosophical skepticism">Skepticism</a></li>
+<li><a href="/wiki/Solipsism" title="Solipsism">Solipsism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Behaviorism" title="Behaviorism">Behaviorism</a></li>
+<li><a href="/wiki/Emergentism" title="Emergentism">Emergentism</a></li>
+<li><a href="/wiki/Eliminative_materialism" title="Eliminative materialism">Eliminativism</a></li>
+<li><a href="/wiki/Epiphenomenalism" title="Epiphenomenalism">Epiphenomenalism</a></li>
+<li><a href="/wiki/Functionalism_(philosophy_of_mind)" title="Functionalism (philosophy of mind)">Functionalism</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivism</a></li>
+<li><a href="/wiki/Subjectivism" title="Subjectivism">Subjectivism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Norm_(philosophy)" title="Norm (philosophy)">Normativity</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Moral_absolutism" title="Moral absolutism">Absolutism</a></li>
+<li><a href="/wiki/Moral_particularism" title="Moral particularism">Particularism</a></li>
+<li><a href="/wiki/Relativism" title="Relativism">Relativism</a></li>
+<li><a href="/wiki/Moral_nihilism" title="Moral nihilism">Nihilism</a></li>
+<li><a href="/wiki/Moral_skepticism" title="Moral skepticism">Skepticism</a></li>
+<li><a href="/wiki/Moral_universalism" title="Moral universalism">Universalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ontology" title="Ontology">Ontology</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><a href="/wiki/Event_(philosophy)" title="Event (philosophy)">Event</a></li>
+<li><a href="/wiki/Process_philosophy" title="Process philosophy">Process</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Reality" title="Reality">Reality</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anti-realism" title="Anti-realism">Anti-realism</a></li>
+<li><a href="/wiki/Conceptualism" title="Conceptualism">Conceptualism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Nominalism" title="Nominalism">Nominalism</a></li>
+<li><a href="/wiki/Physicalism" title="Physicalism">Physicalism</a></li>
+<li><a href="/wiki/Philosophical_realism" title="Philosophical realism">Realism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">
+<div class="hlist">
+<ul>
+<li>Philosophy by region</li>
+<li>Philosophy-related lists</li>
+<li>Miscellaneous</li>
+</ul>
+</div>
+</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">By region</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Ethiopian_philosophy" title="Ethiopian philosophy">Ethiopian</a></li>
+<li><a href="/wiki/Aztec_philosophy" title="Aztec philosophy">Aztec</a></li>
+<li><a href="/wiki/Indigenous_American_philosophy" title="Indigenous American philosophy">Native America</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Ancient_Egyptian_philosophy" title="Ancient Egyptian philosophy">Egyptian</a></li>
+<li><a href="/wiki/Czech_philosophy" title="Czech philosophy">Czech</a></li>
+<li><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></li>
+<li><a href="/wiki/Indonesian_philosophy" title="Indonesian philosophy">Indonesian</a></li>
+<li><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Iranian</a></li>
+<li><a href="/wiki/Japanese_philosophy" title="Japanese philosophy">Japanese</a></li>
+<li><a href="/wiki/Korean_philosophy" title="Korean philosophy">Korean</a></li>
+<li><a href="/wiki/Vietnamese_philosophy" title="Vietnamese philosophy">Vietnam</a></li>
+<li><a href="/wiki/Pakistani_philosophy" title="Pakistani philosophy">Pakistani</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+<li><a href="/wiki/American_philosophy" title="American philosophy">American</a></li>
+<li><a href="/wiki/Australian_philosophy" title="Australian philosophy">Australian</a></li>
+<li><a href="/wiki/British_philosophy" title="British philosophy">British</a></li>
+<li><a href="/wiki/Danish_philosophy" title="Danish philosophy">Danish</a></li>
+<li><a href="/wiki/French_philosophy" title="French philosophy">French</a></li>
+<li><a href="/wiki/German_philosophy" title="German philosophy">German</a></li>
+<li><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greek</a></li>
+<li><a href="/wiki/Italian_philosophy" title="Italian philosophy">Italian</a></li>
+<li><a href="/wiki/Polish_philosophy" class="mw-redirect" title="Polish philosophy">Polish</a></li>
+<li><a href="/wiki/Romanian_philosophy" title="Romanian philosophy">Romanian</a></li>
+<li><a href="/wiki/Russian_philosophy" class="mw-redirect" title="Russian philosophy">Russian</a></li>
+<li><a href="/wiki/Slovene_philosophy" class="mw-redirect" title="Slovene philosophy">Slovene</a></li>
+<li><a href="/wiki/Turkish_philosophy" title="Turkish philosophy">Turkish</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Lists</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+<li><a href="/wiki/Philosophical_movement" title="Philosophical movement">Movements</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Miscellaneous</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+<li><a href="/wiki/Sage_(philosophy)" title="Sage (philosophy)">Sage (philosophy)</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Portal</a></li>
+<li><a href="/wiki/Category:Philosophy" title="Category:Philosophy">Category</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Social_and_political_philosophy" title="Template:Social and political philosophy"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Social_and_political_philosophy" title="Template talk:Social and political philosophy"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Social_and_political_philosophy&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><strong class="selflink">Social</strong> and <a href="/wiki/Political_philosophy" title="Political philosophy">political philosophy</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">Philosophers</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Saul_Alinsky" title="Saul Alinsky">Alinsky</a></li>
+<li><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a></li>
+<li><a href="/wiki/Augustine_of_Hippo" title="Augustine of Hippo">Augustine</a></li>
+<li><a href="/wiki/Sri_Aurobindo" title="Sri Aurobindo">Aurobindo</a></li>
+<li><a href="/wiki/Thomas_Aquinas" title="Thomas Aquinas">Aquinas</a></li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+<li><a href="/wiki/Joxe_Azurmendi" title="Joxe Azurmendi">Azurmendi</a></li>
+<li><a href="/wiki/Alain_Badiou" title="Alain Badiou">Badiou</a></li>
+<li><a href="/wiki/Mikhail_Bakunin" title="Mikhail Bakunin">Bakunin</a></li>
+<li><a href="/wiki/Jean_Baudrillard" title="Jean Baudrillard">Baudrillard</a></li>
+<li><a href="/wiki/Alain_de_Benoist" title="Alain de Benoist">Benoist</a></li>
+<li><a href="/wiki/Jeremy_Bentham" title="Jeremy Bentham">Bentham</a></li>
+<li><a href="/wiki/Isaiah_Berlin" title="Isaiah Berlin">Berlin</a></li>
+<li><a href="/wiki/Louis_Gabriel_Ambroise_de_Bonald" title="Louis Gabriel Ambroise de Bonald">Bonald</a></li>
+<li><a href="/wiki/Bernard_Bosanquet_(philosopher)" title="Bernard Bosanquet (philosopher)">Bosanquet</a></li>
+<li><a href="/wiki/Edmund_Burke" title="Edmund Burke">Burke</a></li>
+<li><a href="/wiki/Albert_Camus" title="Albert Camus">Camus</a></li>
+<li><a href="/wiki/Chanakya" title="Chanakya">Chanakya</a></li>
+<li><a href="/wiki/Noam_Chomsky" title="Noam Chomsky">Chomsky</a></li>
+<li><a href="/wiki/Cicero" title="Cicero">Cicero</a></li>
+<li><a href="/wiki/Auguste_Comte" title="Auguste Comte">Comte</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Guy_Debord" title="Guy Debord">Debord</a></li>
+<li><a href="/wiki/Milovan_%C4%90ilas" class="mw-redirect" title="Milovan �?ilas">�?ilas</a></li>
+<li><a href="/wiki/%C3%89mile_Durkheim" title="Émile Durkheim">Durkheim</a></li>
+<li><a href="/wiki/Friedrich_Engels" title="Friedrich Engels">Engels</a></li>
+<li><a href="/wiki/Michel_Foucault" title="Michel Foucault">Foucault</a></li>
+<li><a href="/wiki/Charles_Fourier" title="Charles Fourier">Fourier</a></li>
+<li><a href="/wiki/Mahatma_Gandhi" title="Mahatma Gandhi">Gandhi</a></li>
+<li><a href="/wiki/Arnold_Gehlen" title="Arnold Gehlen">Gehlen</a></li>
+<li><a href="/wiki/Giovanni_Gentile" title="Giovanni Gentile">Gentile</a></li>
+<li><a href="/wiki/Al-Ghazali" title="Al-Ghazali">Al-Ghazali</a></li>
+<li><a href="/wiki/Antonio_Gramsci" title="Antonio Gramsci">Gramsci</a></li>
+<li><a href="/wiki/Hugo_Grotius" title="Hugo Grotius">Grotius</a></li>
+<li><a href="/wiki/J%C3%BCrgen_Habermas" title="Jürgen Habermas">Habermas</a></li>
+<li><a href="/wiki/Han_Fei" title="Han Fei">Han Fei</a></li>
+<li><a href="/wiki/Thomas_Hobbes" title="Thomas Hobbes">Hobbes</a></li>
+<li><a href="/wiki/David_Hume" title="David Hume">Hume</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant</a></li>
+<li><a href="/wiki/Russell_Kirk" title="Russell Kirk">Kirk</a></li>
+<li><a href="/wiki/Peter_Kropotkin" title="Peter Kropotkin">Kropotkin</a></li>
+<li><a href="/wiki/Gustave_Le_Bon" title="Gustave Le Bon">Le Bon</a></li>
+<li><a href="/wiki/Pierre_Guillaume_Fr%C3%A9d%C3%A9ric_le_Play" title="Pierre Guillaume Frédéric le Play">Le Play</a></li>
+<li><a href="/wiki/Gottfried_Wilhelm_Leibniz" title="Gottfried Wilhelm Leibniz">Leibniz</a></li>
+<li><a href="/wiki/John_Locke" title="John Locke">Locke</a></li>
+<li><a href="/wiki/Rosa_Luxemburg" title="Rosa Luxemburg">Luxemburg</a></li>
+<li><a href="/wiki/Niccol%C3%B2_Machiavelli" title="Niccolò Machiavelli">Machiavelli</a></li>
+<li><a href="/wiki/Joseph_de_Maistre" title="Joseph de Maistre">Maistre</a></li>
+<li><a href="/wiki/Nicolas_Malebranche" title="Nicolas Malebranche">Malebranche</a></li>
+<li><a href="/wiki/Herbert_Marcuse" title="Herbert Marcuse">Marcuse</a></li>
+<li><a href="/wiki/Jacques_Maritain" title="Jacques Maritain">Maritain</a></li>
+<li><a href="/wiki/Marsilius_of_Padua" title="Marsilius of Padua">Marsilius</a></li>
+<li><a href="/wiki/Karl_Marx" title="Karl Marx">Marx</a></li>
+<li><a href="/wiki/Mencius" title="Mencius">Mencius</a></li>
+<li><a href="/wiki/Robert_Michels" title="Robert Michels">Michels</a></li>
+<li><a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">Mill</a></li>
+<li><a href="/wiki/Montesquieu" title="Montesquieu">Montesquieu</a></li>
+<li><a href="/wiki/Justus_M%C3%B6ser" title="Justus Möser">Möser</a></li>
+<li><a href="/wiki/Mozi" title="Mozi">Mozi</a></li>
+<li><a href="/wiki/Muhammad" title="Muhammad">Muhammad</a></li>
+<li><a href="/wiki/Antonio_Negri" title="Antonio Negri">Negri</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a></li>
+<li><a href="/wiki/Robert_Nozick" title="Robert Nozick">Nozick</a></li>
+<li><a href="/wiki/Michael_Oakeshott" title="Michael Oakeshott">Oakeshott</a></li>
+<li><a href="/wiki/Jos%C3%A9_Ortega_y_Gasset" title="José Ortega y Gasset">Ortega</a></li>
+<li><a href="/wiki/Vilfredo_Pareto" title="Vilfredo Pareto">Pareto</a></li>
+<li><a href="/wiki/Philip_Pettit" title="Philip Pettit">Pettit</a></li>
+<li><a href="/wiki/John_Plamenatz" title="John Plamenatz">Plamenatz</a></li>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Karl_Polanyi" title="Karl Polanyi">Polanyi</a></li>
+<li><a href="/wiki/Karl_Popper" title="Karl Popper">Popper</a></li>
+<li><a href="/wiki/Ayn_Rand" title="Ayn Rand">Rand</a></li>
+<li><a href="/wiki/John_Rawls" title="John Rawls">Rawls</a></li>
+<li><a href="/wiki/Ernest_Renan" title="Ernest Renan">Renan</a></li>
+<li><a href="/wiki/Murray_Rothbard" title="Murray Rothbard">Rothbard</a></li>
+<li><a href="/wiki/Jean-Jacques_Rousseau" title="Jean-Jacques Rousseau">Rousseau</a></li>
+<li><a href="/wiki/Josiah_Royce" title="Josiah Royce">Royce</a></li>
+<li><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Russell</a></li>
+<li><a href="/wiki/George_Santayana" title="George Santayana">Santayana</a></li>
+<li><a href="/wiki/Prabhat_Ranjan_Sarkar" title="Prabhat Ranjan Sarkar">Sarkar</a></li>
+<li><a href="/wiki/Jean-Paul_Sartre" title="Jean-Paul Sartre">Sartre</a></li>
+<li><a href="/wiki/Carl_Schmitt" title="Carl Schmitt">Schmitt</a></li>
+<li><a href="/wiki/John_Searle" title="John Searle">Searle</a></li>
+<li><a href="/wiki/Shang_Yang" title="Shang Yang">Shang</a></li>
+<li><a href="/wiki/Adam_Smith" title="Adam Smith">Smith</a></li>
+<li><a href="/wiki/Werner_Sombart" title="Werner Sombart">Sombart</a></li>
+<li><a href="/wiki/Othmar_Spann" title="Othmar Spann">Spann</a></li>
+<li><a href="/wiki/Herbert_Spencer" title="Herbert Spencer">Spencer</a></li>
+<li><a href="/wiki/Ugo_Spirito" title="Ugo Spirito">Spirito</a></li>
+<li><a href="/wiki/Max_Stirner" title="Max Stirner">Stirner</a></li>
+<li><a href="/wiki/Leo_Strauss" title="Leo Strauss">Strauss</a></li>
+<li><a href="/wiki/Hippolyte_Taine" title="Hippolyte Taine">Taine</a></li>
+<li><a href="/wiki/Charles_Taylor_(philosopher)" title="Charles Taylor (philosopher)">Taylor</a></li>
+<li><a href="/wiki/Henry_David_Thoreau" title="Henry David Thoreau">Thoreau</a></li>
+<li><a href="/wiki/Vivekananda" class="mw-redirect" title="Vivekananda">Vivekananda</a></li>
+<li><a href="/wiki/Voltaire" title="Voltaire">Voltaire</a></li>
+<li><a href="/wiki/Michael_Walzer" title="Michael Walzer">Walzer</a></li>
+<li><a href="/wiki/Slavoj_%C5%BDi%C5%BEek" title="Slavoj Žižek">Žižek</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Category:Social_theories" title="Category:Social theories">Social theories</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Vaisheshika" title="Vaisheshika">Vaisheshika</a></li>
+<li><a href="/wiki/Anarchism" title="Anarchism">Anarchism</a></li>
+<li><a href="/wiki/Authoritarianism" title="Authoritarianism">Authoritarianism</a></li>
+<li><a href="/wiki/Collectivism" title="Collectivism">Collectivism</a></li>
+<li><a href="/wiki/Communism" title="Communism">Communism</a></li>
+<li><a href="/wiki/Communitarianism" title="Communitarianism">Communitarianism</a></li>
+<li><a href="/wiki/Conflict_theories" title="Conflict theories">Conflict theories</a></li>
+<li><a href="/wiki/Confucianism" title="Confucianism">Confucianism</a></li>
+<li><a href="/wiki/Consensus_theory" title="Consensus theory">Consensus theory</a></li>
+<li><a href="/wiki/Conservatism" title="Conservatism">Conservatism</a></li>
+<li><a href="/wiki/Contractualism" title="Contractualism">Contractualism</a></li>
+<li><a href="/wiki/Culturalism" title="Culturalism">Culturalism</a></li>
+<li><a href="/wiki/Fascism" title="Fascism">Fascism</a></li>
+<li><a href="/wiki/Feminist_political_theory" title="Feminist political theory">Feminist political theory</a></li>
+<li><a href="/wiki/Gandhism" title="Gandhism">Gandhism</a></li>
+<li><a href="/wiki/Individualism" title="Individualism">Individualism</a></li>
+<li><a href="/wiki/Legalism_(Chinese_philosophy)" title="Legalism (Chinese philosophy)">Legalism</a></li>
+<li><a href="/wiki/Liberalism" title="Liberalism">Liberalism</a></li>
+<li><a href="/wiki/Libertarianism" title="Libertarianism">Libertarianism</a></li>
+<li><a href="/wiki/Mohism" title="Mohism">Mohism</a></li>
+<li><a href="/wiki/National_liberalism" title="National liberalism">National liberalism</a></li>
+<li><a href="/wiki/Republicanism" title="Republicanism">Republicanism</a></li>
+<li><a href="/wiki/Social_constructionism" title="Social constructionism">Social constructionism</a></li>
+<li><a href="/wiki/Social_constructivism" title="Social constructivism">Social constructivism</a></li>
+<li><a href="/wiki/Social_Darwinism" title="Social Darwinism">Social Darwinism</a></li>
+<li><a href="/wiki/Social_determinism" title="Social determinism">Social determinism</a></li>
+<li><a href="/wiki/Socialism" title="Socialism">Socialism</a></li>
+<li><a href="/wiki/Utilitarianism" title="Utilitarianism">Utilitarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Social concepts</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Civil_disobedience" title="Civil disobedience">Civil disobedience</a></li>
+<li><a href="/wiki/Democracy" title="Democracy">Democracy</a></li>
+<li><a href="/wiki/Four_occupations" title="Four occupations">Four occupations</a></li>
+<li><a href="/wiki/Justice" title="Justice">Justice</a></li>
+<li><a href="/wiki/Law" title="Law">Law</a></li>
+<li><a href="/wiki/Mandate_of_Heaven" title="Mandate of Heaven">Mandate of Heaven</a></li>
+<li><a href="/wiki/Peace" title="Peace">Peace</a></li>
+<li><a href="/wiki/Property" title="Property">Property</a></li>
+<li><a href="/wiki/Revolution" title="Revolution">Revolution</a></li>
+<li><a href="/wiki/Rights" title="Rights">Rights</a></li>
+<li><a href="/wiki/Social_contract" title="Social contract">Social contract</a></li>
+<li><a href="/wiki/Society" title="Society">Society</a></li>
+<li><a href="/wiki/War" title="War">War</a></li>
+<li><b><a href="/wiki/Index_of_social_and_political_philosophy_articles" title="Index of social and political philosophy articles">more...</a></b></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Related articles</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Jurisprudence" title="Jurisprudence">Jurisprudence</a></li>
+<li><a href="/wiki/Philosophy_and_economics" title="Philosophy and economics">Philosophy and economics</a></li>
+<li><a href="/wiki/Philosophy_of_education" title="Philosophy of education">Philosophy of education</a></li>
+<li><a href="/wiki/Philosophy_of_history" title="Philosophy of history">Philosophy of history</a></li>
+<li><a href="/wiki/Philosophy_of_love" title="Philosophy of love">Philosophy of love</a></li>
+<li><a href="/wiki/Philosophy_of_sex" title="Philosophy of sex">Philosophy of sex</a></li>
+<li><a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">Philosophy of social science</a></li>
+<li><a href="/wiki/Social_epistemology" title="Social epistemology">Social epistemology</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Category:Social_philosophy" title="Category:Social philosophy">Category</a></li>
+<li><a href="/wiki/Portal:Social_and_political_philosophy" title="Portal:Social and political philosophy">Portal</a></li>
+<li><a href="/wiki/Wikipedia:WikiProject_Philosophy/Social_and_political" title="Wikipedia:WikiProject Philosophy/Social and political">Task Force</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Help:Authority_control" title="Help:Authority control">Authority control</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><span style="white-space:nowrap;"><a href="/wiki/Integrated_Authority_File" title="Integrated Authority File">GND</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://d-nb.info/gnd/4055876-9">4055876-9</a></span></span></li>
+<li><span style="white-space:nowrap;"><a href="/wiki/National_Diet_Library" title="National Diet Library">NDL</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://id.ndl.go.jp/auth/ndlna/00571920">00571920</a></span></span></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1025
+Cached time: 20160705101115
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.367 seconds
+Real time usage: 0.468 seconds
+Preprocessor visited node count: 1590/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 218521/2097152 bytes
+Template argument size: 20946/2097152 bytes
+Highest expansion depth: 16/40
+Expensive parser function count: 3/500
+Lua time usage: 0.119/10.000 seconds
+Lua memory usage: 2.45 MB/50 MB
+Number of Wikibase entities loaded: 1-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  286.704      1 - -total
+ 33.66%   96.517      1 - Template:Philosophy_topics
+ 31.61%   90.631      1 - Template:Navbox_with_collapsible_groups
+ 24.83%   71.196      9 - Template:Navbox
+ 24.44%   70.081      1 - Template:Unreferenced
+ 18.74%   53.726      2 - Template:Ambox
+ 13.48%   38.660      1 - Template:Philosophy_sidebar
+ 12.33%   35.357      1 - Template:Sidebar_with_collapsible_lists
+ 10.53%   30.202      1 - Template:Authority_control
+  4.39%   12.595      3 - Template:Hlist
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:586276-0!*!0!!en!4!* and timestamp 20160705101114 and revision id 712166878
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Social_philosophy&amp;oldid=712166878">https://en.wikipedia.org/w/index.php?title=Social_philosophy&amp;oldid=712166878</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Social_philosophy" title="Category:Social philosophy">Social philosophy</a></li><li><a href="/wiki/Category:Systems_theory" title="Category:Systems theory">Systems theory</a></li><li><a href="/wiki/Category:Interdisciplinary_subfields_of_sociology" title="Category:Interdisciplinary subfields of sociology">Interdisciplinary subfields of sociology</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_lacking_sources_from_August_2013" title="Category:Articles lacking sources from August 2013">Articles lacking sources from August 2013</a></li><li><a href="/wiki/Category:All_articles_lacking_sources" title="Category:All articles lacking sources">All articles lacking sources</a></li><li><a href="/wiki/Category:Articles_needing_cleanup_from_April_2013" title="Category:Articles needing cleanup from April 2013">Articles needing cleanup from April 2013</a></li><li><a href="/wiki/Category:All_pages_needing_cleanup" title="Category:All pages needing cleanup">All pages needing cleanup</a></li><li><a href="/wiki/Category:Articles_with_sections_that_need_to_be_turned_into_prose_from_April_2013" title="Category:Articles with sections that need to be turned into prose from April 2013">Articles with sections that need to be turned into prose from April 2013</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_GND_identifiers" title="Category:Wikipedia articles with GND identifiers">Wikipedia articles with GND identifiers</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Social+philosophy" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Social+philosophy" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Social_philosophy"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Social_philosophy"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Social_philosophy" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Social_philosophy&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Social_philosophy&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Social_philosophy" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Social_philosophy" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Social_philosophy&amp;oldid=712166878" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Social_philosophy&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q180592" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Social_philosophy&amp;id=712166878" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Social+philosophy">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Social+philosophy&amp;returnto=Social+philosophy&amp;oldid=712166878&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Social_philosophy&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Social_philosophy" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D9%81%D9%84%D8%B3%D9%81%D8%A9_%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%D8%A9" title="�?لس�?ة اجتماعية – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-bg"><a href="//bg.wikipedia.org/wiki/%D0%A1%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Социална фило�?офи�? – Bulgarian" lang="bg" hreflang="bg">Българ�?ки</a></li><li class="interlanguage-link interwiki-ca"><a href="//ca.wikipedia.org/wiki/Filosofia_social" title="Filosofia social – Catalan" lang="ca" hreflang="ca">Català</a></li><li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Soci%C3%A1ln%C3%AD_filosofie" title="Sociální filosofie – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/Sozialphilosophie" title="Sozialphilosophie – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-es"><a href="//es.wikipedia.org/wiki/Filosof%C3%ADa_social" title="Filosofía social – Spanish" lang="es" hreflang="es">Español</a></li><li class="interlanguage-link interwiki-fa"><a href="//fa.wikipedia.org/wiki/%D9%81%D9%84%D8%B3%D9%81%D9%87_%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%DB%8C" title="�?لس�?ه اجتماعی – Persian" lang="fa" hreflang="fa">�?ارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Philosophie_sociale" title="Philosophie sociale – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-gl"><a href="//gl.wikipedia.org/wiki/Filosof%C3%ADa_social" title="Filosofía social – Galician" lang="gl" hreflang="gl">Galego</a></li><li class="interlanguage-link interwiki-ko"><a href="//ko.wikipedia.org/wiki/%EC%82%AC%ED%9A%8C%EC%B2%A0%ED%95%99" title="사회철학 – Korean" lang="ko" hreflang="ko">한국어</a></li><li class="interlanguage-link interwiki-hy"><a href="//hy.wikipedia.org/wiki/%D5%8D%D5%B8%D6%81%D5%AB%D5%A1%D5%AC%D5%A1%D5%AF%D5%A1%D5%B6_%D6%83%D5%AB%D5%AC%D5%AB%D5%BD%D5%B8%D6%83%D5%A1%D5%B5%D5%B8%D6%82%D5%A9%D5%B5%D5%B8%D6%82%D5%B6" title="�?ո�?իալական փիլիսոփայություն – Armenian" lang="hy" hreflang="hy">Հայերեն</a></li><li class="interlanguage-link interwiki-is"><a href="//is.wikipedia.org/wiki/F%C3%A9lagsleg_heimspeki" title="Félagsleg heimspeki – Icelandic" lang="is" hreflang="is">�?slenska</a></li><li class="interlanguage-link interwiki-it"><a href="//it.wikipedia.org/wiki/Filosofia_sociale" title="Filosofia sociale – Italian" lang="it" hreflang="it">Italiano</a></li><li class="interlanguage-link interwiki-ky"><a href="//ky.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BE%D0%BC%D0%B4%D1%83%D0%BA_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Коомдук фило�?офи�? – Kyrgyz" lang="ky" hreflang="ky">Кыргызча</a></li><li class="interlanguage-link interwiki-la"><a href="//la.wikipedia.org/wiki/Philosophia_socialis" title="Philosophia socialis – Latin" lang="la" hreflang="la">Latina</a></li><li class="interlanguage-link interwiki-lv"><a href="//lv.wikipedia.org/wiki/Soci%C4%81l%C4%81_filozofija" title="Soci�?l�? filozofija – Latvian" lang="lv" hreflang="lv">Latviešu</a></li><li class="interlanguage-link interwiki-lt"><a href="//lt.wikipedia.org/wiki/Socialin%C4%97_filosofija" title="Socialinė filosofija – Lithuanian" lang="lt" hreflang="lt">Lietuvių</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%9E%D0%BF%D1%88%D1%82%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84%D0%B8%D1%98%D0%B0" title="Опште�?твена филозофија – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Sociale_filosofie" title="Sociale filosofie – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="//ja.wikipedia.org/wiki/%E7%A4%BE%E4%BC%9A%E5%93%B2%E5%AD%A6" title="社会哲学 – Japanese" lang="ja" hreflang="ja">日本語</a></li><li class="interlanguage-link interwiki-no"><a href="//no.wikipedia.org/wiki/Sosialfilosofi" title="Sosialfilosofi – Norwegian" lang="no" hreflang="no">Norsk bokmål</a></li><li class="interlanguage-link interwiki-nn"><a href="//nn.wikipedia.org/wiki/Sosialfilosofi" title="Sosialfilosofi – Norwegian Nynorsk" lang="nn" hreflang="nn">Norsk nynorsk</a></li><li class="interlanguage-link interwiki-uz"><a href="//uz.wikipedia.org/wiki/Ijtimoiy_falsafa" title="Ijtimoiy falsafa – Uzbek" lang="uz" hreflang="uz">Oʻzbekcha/ўзбекча</a></li><li class="interlanguage-link interwiki-pl"><a href="//pl.wikipedia.org/wiki/Filozofia_spo%C5%82eczna" title="Filozofia społeczna – Polish" lang="pl" hreflang="pl">Polski</a></li><li class="interlanguage-link interwiki-pt"><a href="//pt.wikipedia.org/wiki/Filosofia_social" title="Filosofia social – Portuguese" lang="pt" hreflang="pt">Português</a></li><li class="interlanguage-link interwiki-ro"><a href="//ro.wikipedia.org/wiki/Filozofie_social%C4%83" title="Filozofie socială – Romanian" lang="ro" hreflang="ro">Română</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Социальна�? фило�?офи�? – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-sk"><a href="//sk.wikipedia.org/wiki/Soci%C3%A1lna_filozofia" title="Sociálna filozofia – Slovak" lang="sk" hreflang="sk">Sloven�?ina</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%A1%D0%BE%D1%86%D0%B8%D1%98%D0%B0%D0%BB%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84%D0%B8%D1%98%D0%B0" title="Социјална филозофија – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Socijalna_filozofija" title="Socijalna filozofija – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Yhteiskuntafilosofia" title="Yhteiskuntafilosofia – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Socialfilosofi" title="Socialfilosofi – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-tr"><a href="//tr.wikipedia.org/wiki/Toplum_felsefesi" title="Toplum felsefesi – Turkish" lang="tr" hreflang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%A1%D0%BE%D1%86%D1%96%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0_%D1%84%D1%96%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D1%96%D1%8F" title="Соціальна філо�?офі�? – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-vi"><a href="//vi.wikipedia.org/wiki/Tri%E1%BA%BFt_h%E1%BB%8Dc_x%C3%A3_h%E1%BB%99i" title="Triết h�?c xã hội – Vietnamese" lang="vi" hreflang="vi">Tiếng Việt</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q180592#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 27 March 2016, at 11:39.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Social_philosophy&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","mmv.bootstrap.autostart","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":69,"wgHostname":"mw1258"});});</script>
+	</body>
+</html>

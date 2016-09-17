@@ -1,0 +1,16 @@
+title: TestLiving
+mock location: /wiki/TestLiving
+
+Article/Page Content: 
+
+Keyword String 1: Living things include animals and plants.
+
+
+Links:
+
+*Valid*
+< href="/wiki/TestAnimal" >
+< href="/wiki/TestMan" > 
+
+
+*Invalid/Different Format*

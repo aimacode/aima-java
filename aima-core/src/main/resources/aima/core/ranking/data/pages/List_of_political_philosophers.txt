@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>List of political philosophers - Wikipedia, the free encyclopedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"List_of_political_philosophers","wgTitle":"List of political philosophers","wgCurRevisionId":723210949,"wgRevisionId":723210949,"wgArticleId":2162094,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Political philosophers","Lists of philosophers"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"List_of_political_philosophers","wgRelevantArticleId":2162094,"wgRequestId":"V3-TSwpAICsAABodNgYAAAAE","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgFlaggedRevsParams":{"tags":{"status":{"levels":1,"quality":2,"pristine":3}}},"wgStableRevisionId":null,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikipedia","wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgWikibaseItemId":"Q3066274","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0});mw.loader.implement("user.options",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","ext.centralauth.centralautologin","ext.visualEditor.desktopArticleTarget.init","ext.uls.init","ext.uls.interface","ext.quicksurveys.init","mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","ext.centralNotice.bannerController","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.gadget.DRN-wizard%2CReferenceTooltips%2Ccharinsert%2Cfeatured-articles-links%2CrefToolbar%2Cswitcher%2Cteahouse%7Cext.tmh.thumbnail.styles%7Cext.uls.nojs%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.raggett%2CsectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="generator" content="MediaWiki 1.28.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/List_of_political_philosophers"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=List_of_political_philosophers&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=List_of_political_philosophers&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="copyright" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/List_of_political_philosophers"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-List_of_political_philosophers rootpage-List_of_political_philosophers skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">List of political philosophers</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div role="note" class="hatnote">See also: <a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">List of social and political philosophers</a></div>
+<p>This is a <b>list of political philosophers</b>, including some who may be better known for their work in other areas of philosophy. Note, however, that the list is for people who are <i>principally</i> philosophers. The philosophers are listed in order by year of birth to show rough direction of influences and of development of political thought. See also, <a href="/wiki/Political_philosophy" title="Political philosophy">Political philosophy</a>.</p>
+<p><b>Ancient, medieval and early modern</b></p>
+<div class="div-col columns column-width" style="-moz-column-width: 25em; -webkit-column-width: 25em; column-width: 25em;">
+<ul>
+<li><a href="/wiki/Hammurabi" title="Hammurabi">Hammurabi</a> (died c. 1750 BCE)</li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a> (551–479 BCE)</li>
+<li><a href="/wiki/Socrates" title="Socrates">Socrates</a> (470–399 BCE)</li>
+<li><a href="/wiki/Mozi" title="Mozi">Mozi</a> (470–390 BCE)</li>
+<li><a href="/wiki/Xenophon" title="Xenophon">Xenophon</a> (427–355 BCE)</li>
+<li><a href="/wiki/Plato" title="Plato">Plato</a> (427–347 BCE)</li>
+<li><a href="/wiki/Diogenes_of_Sinope" title="Diogenes of Sinope">Diogenes of Sinope</a> (412–323 BCE)</li>
+<li><a href="/wiki/Aeschines" title="Aeschines">Aeschines</a> (389–314 BCE)</li>
+<li><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a> (384–322 BCE)</li>
+<li><a href="/wiki/Mencius" title="Mencius">Mencius</a> (372–289 BCE)</li>
+<li><a href="/wiki/Chanakya" title="Chanakya">Chanakya</a> (350–283 BCE)</li>
+<li><a href="/wiki/Xun_Zi" class="mw-redirect" title="Xun Zi">Xun Zi</a> (310–237 BCE)</li>
+<li><a href="/wiki/Thiruvalluvar" title="Thiruvalluvar">Thiruvalluvar</a> (c. 200 BCE–c. 30 BCE)</li>
+<li><a href="/wiki/Han_Feizi" title="Han Feizi">Han Feizi</a> (?–233 BCE)</li>
+<li><a href="/wiki/Cicero" title="Cicero">Cicero</a> (106–43 BCE)</li>
+<li><a href="/wiki/Pliny_the_Younger" title="Pliny the Younger">Pliny the Younger</a> (63–113 CE)</li>
+<li><a href="/wiki/Augustine_of_Hippo" title="Augustine of Hippo">Saint Augustine</a> (354–430 CE)</li>
+<li><a href="/wiki/Muhammad_al-Shaybani" title="Muhammad al-Shaybani">Muhammad al-Shaybani</a> (749–805)</li>
+<li><a href="/wiki/Al-Farabi" title="Al-Farabi">Al-Farabi</a> (870–950)</li>
+<li><a href="/wiki/Ghazali" title="Ghazali">Ghazali</a> (1058–1111)</li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes (Ibn Rushd)</a> (1126–1198)</li>
+<li><a href="/wiki/Al-Mawardi" title="Al-Mawardi">Al-Mawardi</a> (972–1058)</li>
+<li><a href="/wiki/Maimonides" title="Maimonides">Maimonides</a> (1135–1204)</li>
+<li><a href="/wiki/St._Thomas_Aquinas" class="mw-redirect" title="St. Thomas Aquinas">St. Thomas Aquinas</a> (1225–1274)</li>
+<li><a href="/wiki/Ibn_Taymiyyah" title="Ibn Taymiyyah">Ibn Taymiyyah</a> (1263–1328)</li>
+<li><a href="/wiki/Marsilius_of_Padua" title="Marsilius of Padua">Marsilius of Padua</a> (1270–1342)</li>
+<li><a href="/wiki/William_of_Ockham" title="William of Ockham">William of Ockham</a> (1285–1349)</li>
+<li><a href="/wiki/Ibn_Khaldun" title="Ibn Khaldun">Ibn Khaldun</a> (1332–1406)</li>
+<li><a href="/wiki/Christine_de_Pizan" title="Christine de Pizan">Christine de Pizan</a> (1363–1434)</li>
+<li><a href="/wiki/Niccol%C3%B2_Machiavelli" title="Niccolò Machiavelli">Niccolò Machiavelli</a> (1469–1527)</li>
+<li><a href="/wiki/Martin_Luther" title="Martin Luther">Martin Luther</a> (1483–1546)</li>
+<li><a href="/wiki/Thomas_Muntzer" class="mw-redirect" title="Thomas Muntzer">Thomas Muntzer</a> (1490–1525)</li>
+<li><a href="/wiki/John_Calvin" title="John Calvin">John Calvin</a> (1509–1564)</li>
+<li><a href="/wiki/Richard_Hooker_(theologian)" class="mw-redirect" title="Richard Hooker (theologian)">Richard Hooker</a> (1554–1600)</li>
+</ul>
+</div>
+<p><b>Modern (born pre-19th century)</b></p>
+<div class="div-col columns column-width" style="-moz-column-width: 25em; -webkit-column-width: 25em; column-width: 25em;">
+<ul>
+<li><a href="/wiki/Jean_Bodin" title="Jean Bodin">Jean Bodin</a> (1530–1596)</li>
+<li><a href="/wiki/Farkas_Kovacs%C3%B3czy" title="Farkas Kovacsóczy">Farkas Kovacsóczy</a> (1540–1594)</li>
+<li><a href="/wiki/Francis_Bacon" title="Francis Bacon">Francis Bacon</a> (1561–1626)</li>
+<li><a href="/wiki/Hugo_Grotius" title="Hugo Grotius">Hugo Grotius</a> (1583–1645)</li>
+<li><a href="/wiki/Thomas_Hobbes" title="Thomas Hobbes">Thomas Hobbes</a> (1588–1679)</li>
+<li><a href="/wiki/Gerrard_Winstanley" title="Gerrard Winstanley">Gerrard Winstanley</a> (1609-1676)</li>
+<li><a href="/wiki/James_Harrington_(author)" title="James Harrington (author)">James Harrington</a> (1611–1677)</li>
+<li><a href="/wiki/John_Locke" title="John Locke">John Locke</a> (1632–1704)</li>
+<li><a href="/wiki/Baruch_Spinoza" title="Baruch Spinoza">Baruch Spinoza</a> (1632–1677)</li>
+<li><a href="/wiki/Montesquieu" title="Montesquieu">Montesquieu</a> (1689–1755)</li>
+<li><a href="/wiki/Voltaire" title="Voltaire">François-Marie Arouet (Voltaire)</a> (1694–1778)</li>
+<li>Shah Waliullah (1703–1763)</li>
+<li><a href="/wiki/Muhammad_ibn_Abd_al-Wahhab" title="Muhammad ibn Abd al-Wahhab">Muhammad ibn Abd al-Wahhab</a> (1703–1792)</li>
+<li><a href="/wiki/David_Hume" title="David Hume">David Hume</a> (1711–1776)</li>
+<li><a href="/wiki/Frederick_the_Great" title="Frederick the Great">Frederick the Great (Frederick II)</a> (1712–1786)</li>
+<li><a href="/wiki/Jean-Jacques_Rousseau" title="Jean-Jacques Rousseau">Jean-Jacques Rousseau</a> (1712–1788)</li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a> (1724–1804)</li>
+<li><a href="/wiki/William_Blackstone" title="William Blackstone">William Blackstone</a> (1723–1780)</li>
+<li><a href="/wiki/Adam_Smith" title="Adam Smith">Adam Smith</a> (1723–1790)</li>
+<li><a href="/wiki/Edmund_Burke" title="Edmund Burke">Edmund Burke</a> (1729–1797)</li>
+<li><a href="/wiki/Thomas_Paine" title="Thomas Paine">Thomas Paine</a> (1737–1809)</li>
+<li><a href="/wiki/Thomas_Jefferson" title="Thomas Jefferson">Thomas Jefferson</a> (1743–1826)</li>
+<li><a href="/wiki/Jeremy_Bentham" title="Jeremy Bentham">Jeremy Bentham</a> (1748–1832)</li>
+<li><a href="/wiki/James_Madison" title="James Madison">James Madison</a> (1751–1836)</li>
+<li><a href="/wiki/William_Godwin" title="William Godwin">William Godwin</a> (1756–1836)</li>
+<li><a href="/wiki/Mary_Wollstonecraft" title="Mary Wollstonecraft">Mary Wollstonecraft</a> (1759–1797)</li>
+<li><a href="/wiki/Henri_de_Saint-Simon" class="mw-redirect" title="Henri de Saint-Simon">Henri de Saint-Simon</a> (1760–1825)</li>
+<li><a href="/wiki/Thomas_Robert_Malthus" title="Thomas Robert Malthus">Thomas Robert Malthus</a> (1766–1834)</li>
+<li><a href="/wiki/Benjamin_Constant" title="Benjamin Constant">Benjamin Constant</a> (1767–1830)</li>
+<li><a href="/wiki/Georg_W._F._Hegel" class="mw-redirect" title="Georg W. F. Hegel">Georg W. F. Hegel</a> (1770–1831)</li>
+<li><a href="/wiki/David_Ricardo" title="David Ricardo">David Ricardo</a> (1772–1823)</li>
+<li><a href="/wiki/Charles_Fourier" title="Charles Fourier">Charles Fourier</a> (1772–1837)</li>
+<li><a href="/wiki/James_Mill" title="James Mill">James Mill</a> (1773–1836)</li>
+<li><a href="/wiki/Arthur_Schopenhauer" title="Arthur Schopenhauer">Arthur Schopenhauer</a> (1788–1860)</li>
+<li><a href="/wiki/Thomas_Carlyle" title="Thomas Carlyle">Thomas Carlyle</a> (1795–1881)</li>
+<li><a href="/wiki/Auguste_Comte" title="Auguste Comte">Auguste Comte</a> (1798–1857)</li>
+</ul>
+</div>
+<p><b>Born in 19th century</b></p>
+<div class="div-col columns column-width" style="-moz-column-width: 25em; -webkit-column-width: 25em; column-width: 25em;">
+<ul>
+<li><a href="/wiki/Al-Nahda" title="Al-Nahda">Rifa' al-Tahtawi</a> (1801–1873)</li>
+<li><a href="/wiki/Ludwig_Andreas_Feuerbach" class="mw-redirect" title="Ludwig Andreas Feuerbach">Ludwig Andreas Feuerbach</a> (1804–1872)</li>
+<li><a href="/wiki/Alexis_de_Tocqueville" title="Alexis de Tocqueville">Alexis de Tocqueville</a> (1805–1859)</li>
+<li><a href="/wiki/Max_Stirner" title="Max Stirner">Max Stirner</a> (1806–1856)</li>
+<li><a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">John Stuart Mill</a> (1806–1873)</li>
+<li><a href="/wiki/Simion_B%C4%83rnu%C8%9Biu" title="Simion Bărnuțiu">Simion Bărnuțiu</a> (1808–1864)</li>
+<li><a href="/wiki/Pierre-Joseph_Proudhon" title="Pierre-Joseph Proudhon">Pierre-Joseph Proudhon</a> (1809–1865)</li>
+<li><a href="/wiki/S%C3%B8ren_Kierkegaard" title="Søren Kierkegaard">Søren Kierkegaard</a> (1813–1855)</li>
+<li><a href="/wiki/Mikhail_Bakunin" title="Mikhail Bakunin">Mikhail Bakunin</a> (1814–1876)</li>
+<li><a href="/wiki/Henry_David_Thoreau" title="Henry David Thoreau">Henry David Thoreau</a> (1817–1862)</li>
+<li><a href="/wiki/Karl_Marx" title="Karl Marx">Karl Marx</a> (1818–1883)</li>
+<li><a href="/wiki/Sir_Syed_Ahmad_Khan" class="mw-redirect" title="Sir Syed Ahmad Khan">Sir Syed Ahmad Khan</a> (1818–1898)</li>
+<li><a href="/wiki/Friedrich_Engels" title="Friedrich Engels">Friedrich Engels</a> (1820–1895)</li>
+<li><a href="/wiki/Herbert_Spencer" title="Herbert Spencer">Herbert Spencer</a> (1820–1903)</li>
+<li><a href="/wiki/Thomas_Hill_Green" title="Thomas Hill Green">Thomas Hill Green</a> (1836–1882)</li>
+<li><a href="/wiki/William_Graham_Sumner" title="William Graham Sumner">William Graham Sumner</a> (1840–1910)</li>
+<li><a href="/wiki/Peter_Kropotkin" title="Peter Kropotkin">Peter Kropotkin</a> (1842–1921)</li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Friedrich Nietzsche</a> (1844–1900)</li>
+<li><a href="/wiki/Georges_Sorel" title="Georges Sorel">Georges Sorel</a> (1847–1922)</li>
+<li><a href="/wiki/Eduard_Bernstein" title="Eduard Bernstein">Eduard Bernstein</a> (1850–1932)</li>
+<li><a href="/wiki/Thorstein_Bunde_Veblen" class="mw-redirect" title="Thorstein Bunde Veblen">Thorstein Bunde Veblen</a> (1857–1929)</li>
+<li><a href="/wiki/John_Dewey" title="John Dewey">John Dewey</a> (1859–1952)</li>
+<li><a href="/wiki/Max_Weber" title="Max Weber">Max Weber</a> (1864–1920)</li>
+<li><a href="/wiki/Sun_Yat-sen" title="Sun Yat-sen">Sun Yat-sen</a> (1866–1925)</li>
+<li><a href="/wiki/Benedetto_Croce" title="Benedetto Croce">Benedetto Croce</a> (1866–1952)</li>
+<li>Mohandas Karam Chand <a href="/wiki/Gandhi" class="mw-redirect" title="Gandhi">Gandhi</a> (1869–1948)</li>
+<li><a href="/wiki/Rosa_Luxemburg" title="Rosa Luxemburg">Rosa Luxemburg</a> (1870–1919)</li>
+<li><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a> (1872–1970)</li>
+<li><a href="/wiki/Giovanni_Gentile" title="Giovanni Gentile">Giovanni Gentile</a> (1875–1944)</li>
+<li><a href="/wiki/Muhammad_Iqbal" title="Muhammad Iqbal">Muhammad Iqbal</a> (1877–1938)</li>
+<li><a href="/wiki/Muhammad_Asad" title="Muhammad Asad">Muhammad Asad</a> (1900–1992)</li>
+<li><a href="/wiki/Pantaleo_Carabellese" title="Pantaleo Carabellese">Pantaleo Carabellese</a> (1877–1948)</li>
+<li><a href="/wiki/Martin_Buber" title="Martin Buber">Martin Buber</a> (1878–1965)</li>
+<li><a href="/wiki/Otto_Bauer" title="Otto Bauer">Otto Bauer</a> (1881–1938)</li>
+<li><a href="/wiki/Georg_Luk%C3%A1cs" class="mw-redirect" title="Georg Lukács">Georg Lukács</a> (1885–1971)</li>
+<li><a href="/wiki/Sergio_Panunzio" title="Sergio Panunzio">Sergio Panunzio</a> (1886–1944)</li>
+<li><a href="/wiki/Karl_Pol%C3%A1nyi" class="mw-redirect" title="Karl Polányi">Karl Polányi</a> (1886–1964)</li>
+<li><a href="/wiki/Carl_Schmitt" title="Carl Schmitt">Carl Schmitt</a> (1888–1985)</li>
+<li><a href="/wiki/Martin_Heidegger" title="Martin Heidegger">Martin Heidegger</a> (1889–1976)</li>
+<li><a href="/wiki/Antonio_Gramsci" title="Antonio Gramsci">Antonio Gramsci</a> (1891–1937)</li>
+<li><a href="/wiki/Walter_Benjamin" title="Walter Benjamin">Walter Benjamin</a> (1892–1940)</li>
+<li><a href="/wiki/Herman_Dooyeweerd" title="Herman Dooyeweerd">Herman Dooyeweerd</a> (1894–1977)</li>
+<li><a href="/wiki/Max_Horkheimer" title="Max Horkheimer">Max Horkheimer</a> (1895–1973)</li>
+<li><a href="/wiki/Wilhelm_Reich" title="Wilhelm Reich">Wilhelm Reich</a> (1897–1957)</li>
+<li><a href="/wiki/Herbert_Marcuse" title="Herbert Marcuse">Herbert Marcuse</a> (1898–1979)</li>
+<li><a href="/wiki/Leo_Strauss" title="Leo Strauss">Leo Strauss</a> (1899–1973)</li>
+<li><a href="/wiki/Alfred_Sohn-Rethel" title="Alfred Sohn-Rethel">Alfred Sohn-Rethel</a> (1899–1990)</li>
+<li><a href="/wiki/Friedrich_Hayek" title="Friedrich Hayek">Friedrich Hayek</a> (1899–1992)</li>
+<li><a href="/wiki/Bhimrao_Ambedkar" class="mw-redirect" title="Bhimrao Ambedkar">Bhimrao Ambedkar</a>(1891–1956)</li>
+<li><a href="/wiki/Julius_Evola" title="Julius Evola">Julius Evola</a> (1898–1974)</li>
+</ul>
+</div>
+<p><b>Born in 20th century</b></p>
+<div class="div-col columns column-width" style="-moz-column-width: 25em; -webkit-column-width: 25em; column-width: 25em;">
+<ul>
+<li><a href="/wiki/Erich_Fromm" title="Erich Fromm">Erich Fromm</a> (1900–1980)</li>
+<li><a href="/wiki/Michael_Oakeshott" title="Michael Oakeshott">Michael Oakeshott</a> (1901–1990)</li>
+<li><a href="/wiki/Karl_Popper" title="Karl Popper">Karl Popper</a> (1902–1994)</li>
+<li><a href="/wiki/Theodor_Adorno" class="mw-redirect" title="Theodor Adorno">Theodor Adorno</a> (1903–1969)</li>
+<li><a href="/wiki/Ayn_Rand" title="Ayn Rand">Ayn Rand</a> (1905–1982)</li>
+<li><a href="/wiki/Raymond_Aron" title="Raymond Aron">Raymond Aron</a> (1905–1983)</li>
+<li><a href="/wiki/Jean-Paul_Sartre" title="Jean-Paul Sartre">Jean-Paul Sartre</a> (1905–1980)</li>
+<li><a href="/wiki/Hannah_Arendt" title="Hannah Arendt">Hannah Arendt</a> (1906–1975)</li>
+<li><a href="/wiki/Sayyid_Qutb" title="Sayyid Qutb">Sayyid Qutb</a> (1906–1966)</li>
+<li><a href="/wiki/Simone_Weil" title="Simone Weil">Simone Weil</a> (1909–1943)</li>
+<li><a href="/wiki/Isaiah_Berlin" title="Isaiah Berlin">Isaiah Berlin</a> (1909–1997)</li>
+<li><a href="/wiki/Norberto_Bobbio" title="Norberto Bobbio">Norberto Bobbio</a> (1909–2004)</li>
+<li><a href="/wiki/Albert_Camus" title="Albert Camus">Albert Camus</a> (1913–1960)</li>
+<li><a href="/wiki/Roland_Barthes" title="Roland Barthes">Roland Barthes</a> (1915–1980)</li>
+<li><a href="/wiki/Fazlur_Rahman_Malik" title="Fazlur Rahman Malik">Fazlur Rahman Malik</a> (1919–1988)</li>
+<li><a href="/wiki/Louis_Althusser" title="Louis Althusser">Louis Althusser</a> (1918–1990)</li>
+<li><a href="/wiki/Murray_Bookchin" title="Murray Bookchin">Murray Bookchin</a> (1921–2006)</li>
+<li><a href="/wiki/John_Rawls" title="John Rawls">John Rawls</a> (1921–2002)</li>
+<li><a href="/wiki/Cornelius_Castoriadis" title="Cornelius Castoriadis">Cornelius Castoriadis</a> (1922–1997)</li>
+<li><a href="/wiki/Sheldon_S._Wolin" class="mw-redirect" title="Sheldon S. Wolin">Sheldon S. Wolin</a> (1922–)</li>
+<li><a href="/wiki/Frantz_Fanon" title="Frantz Fanon">Frantz Fanon</a> (1925–1961)</li>
+<li><a href="/wiki/Gilles_Deleuze" title="Gilles Deleuze">Gilles Deleuze</a> (1925–1995)</li>
+<li><a href="/wiki/Murray_Rothbard" title="Murray Rothbard">Murray Rothbard</a> (1926–1995)</li>
+<li><a href="/wiki/Michel_Foucault" title="Michel Foucault">Michel Foucault</a> (1926–1984)</li>
+<li><a href="/wiki/Judith_Shklar" class="mw-redirect" title="Judith Shklar">Judith Shklar</a> (1928–1992)</li>
+<li><a href="/wiki/Jean_Baudrillard" title="Jean Baudrillard">Jean Baudrillard</a> (1929–2007)</li>
+<li><a href="/wiki/J%C3%BCrgen_Habermas" title="Jürgen Habermas">Jürgen Habermas</a> (1929–)</li>
+<li><a href="/wiki/Bernard_Williams" title="Bernard Williams">Bernard Williams</a> (1929–2003)</li>
+<li><a href="/wiki/F%C3%A9lix_Guattari" title="Félix Guattari">Félix Guattari</a> (1930–1992)</li>
+<li><a href="/wiki/Ronald_Dworkin" title="Ronald Dworkin">Ronald Dworkin</a> (1931–2013)</li>
+<li><a href="/wiki/Charles_Taylor_(philosopher)" title="Charles Taylor (philosopher)">Charles Taylor</a> (1931–)</li>
+<li><a href="/wiki/Guy_Debord" title="Guy Debord">Guy Debord</a> (1931–1994)</li>
+<li><a href="/wiki/Harvey_C._Mansfield" class="mw-redirect" title="Harvey C. Mansfield">Harvey C. Mansfield</a> (1932–)</li>
+<li><a href="/wiki/Antonio_Negri" title="Antonio Negri">Antonio Negri</a> (1933–)</li>
+<li><a href="/wiki/Fredric_Jameson" title="Fredric Jameson">Fredric Jameson</a> (1934–)</li>
+<li><a href="/wiki/Wendell_Berry" title="Wendell Berry">Wendell Berry</a> (1934–)</li>
+<li><a href="/wiki/Michael_Walzer" title="Michael Walzer">Michael Walzer</a> (1935–)</li>
+<li><a href="/wiki/Thomas_Nagel" title="Thomas Nagel">Thomas Nagel</a> (1937–)</li>
+<li><a href="/wiki/William_E._Connolly" title="William E. Connolly">William E. Connolly</a> (1938–)</li>
+<li><a href="/wiki/Robert_Nozick" title="Robert Nozick">Robert Nozick</a> (1938–2002)</li>
+<li><a href="/wiki/Douglas_W._Rae" title="Douglas W. Rae">Douglas W. Rae</a> (1939–)</li>
+<li><a href="/wiki/Takis_Fotopoulos" title="Takis Fotopoulos">Takis Fotopoulos</a> (1940–)</li>
+<li><a href="/wiki/Jacques_Ranci%C3%A8re" title="Jacques Rancière">Jacques Rancière</a> (1940–)</li>
+<li><a href="/wiki/Joxe_Azurmendi" title="Joxe Azurmendi">Joxe Azurmendi</a> (1941–)</li>
+<li><a href="/wiki/%C3%89tienne_Balibar" title="Étienne Balibar">Étienne Balibar</a> (1942–)</li>
+<li><a href="/wiki/Lorenzo_Pe%C3%B1a" title="Lorenzo Peña">Lorenzo Peña</a> (1944–)</li>
+<li><a href="/wiki/Giacomo_Marramao" title="Giacomo Marramao">Giacomo Marramao</a> (1946–)</li>
+<li><a href="/wiki/James_Tully_(philosopher)" title="James Tully (philosopher)">James Tully</a> (1946–)</li>
+<li><a href="/wiki/Slavoj_%C5%BDi%C5%BEek" title="Slavoj Žižek">Slavoj Žižek</a> (1947–)</li>
+<li><a href="/wiki/Judith_Butler" title="Judith Butler">Judith Butler</a> (1956–)</li>
+<li><a href="/wiki/Rae_Helen_Langton" title="Rae Helen Langton">Rae Helen Langton</a> (1961–)</li>
+</ul>
+</div>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1249
+Cached time: 20160701153454
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.058 seconds
+Real time usage: 0.081 seconds
+Preprocessor visited node count: 149/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 1342/2097152 bytes
+Template argument size: 96/2097152 bytes
+Highest expansion depth: 5/40
+Expensive parser function count: 0/500
+Lua time usage: 0.007/10.000 seconds
+Lua memory usage: 520 KB/50 MB
+Number of Wikibase entities loaded: 0-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   41.052      1 - -total
+ 52.59%   21.591      1 - Template:See_also
+ 32.14%   13.196      4 - Template:Colbegin
+ 12.94%    5.314      4 - Template:Colend
+  5.27%    2.163      4 - Template:Column-width
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:2162094-0!*!0!*!*!*!* and timestamp 20160701153454 and revision id 723210949
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=List_of_political_philosophers&amp;oldid=723210949">https://en.wikipedia.org/w/index.php?title=List_of_political_philosophers&amp;oldid=723210949</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Political_philosophers" title="Category:Political philosophers">Political philosophers</a></li><li><a href="/wiki/Category:Lists_of_philosophers" title="Category:Lists of philosophers">Lists of philosophers</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=List+of+political+philosophers" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=List+of+political+philosophers" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/List_of_political_philosophers"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:List_of_political_philosophers"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/List_of_political_philosophers" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=List_of_political_philosophers&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=List_of_political_philosophers&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/List_of_political_philosophers" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/List_of_political_philosophers" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=List_of_political_philosophers&amp;oldid=723210949" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=List_of_political_philosophers&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q3066274" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=List_of_political_philosophers&amp;id=723210949" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=List+of+political+philosophers">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=List+of+political+philosophers&amp;returnto=List+of+political+philosophers&amp;oldid=723210949&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=List_of_political_philosophers&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Seznam_politick%C3%BDch_filosof%C5%AF" title="Seznam politických filosofů – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Liste_de_philosophes_politiques" title="Liste de philosophes politiques – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BD%D0%B0_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D1%87%D0%BA%D0%B8_%D1%84%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84%D0%B8" title="Спи�?ок на политички филозофи – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-tl"><a href="//tl.wikipedia.org/wiki/Talaan_ng_mga_pilosopong_pampolitika" title="Talaan ng mga pilosopong pampolitika – Tagalog" lang="tl" hreflang="tl">Tagalog</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q3066274#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 1 June 2016, at 18:05.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=List_of_political_philosophers&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":70,"wgHostname":"mw1173"});});</script>
+	</body>
+</html>

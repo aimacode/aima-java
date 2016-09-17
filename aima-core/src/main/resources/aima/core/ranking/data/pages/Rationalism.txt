@@ -1,0 +1,982 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Rationalism - Wikipedia, the free encyclopedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Rationalism","wgTitle":"Rationalism","wgCurRevisionId":724297574,"wgRevisionId":724297574,"wgArticleId":63753,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Articles containing Ancient Greek-language text","All articles with unsourced statements","Articles with unsourced statements from June 2015","Wikipedia articles with GND identifiers","Epistemological theories","Rationalism","Justification","History of philosophy","Philosophical movements","Internalism and externalism"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Rationalism","wgRelevantArticleId":63753,"wgRequestId":"V3@kHQpAADcAAHQMNskAAAGO","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgFlaggedRevsParams":{"tags":{"status":{"levels":1,"quality":2,"pristine":3}}},"wgStableRevisionId":null,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikipedia","wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgWikibaseItemId":"Q483024","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0});mw.loader.implement("user.options",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","ext.centralauth.centralautologin","ext.visualEditor.desktopArticleTarget.init","ext.uls.init","ext.uls.interface","ext.quicksurveys.init","mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","ext.centralNotice.bannerController","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.cite.styles%7Cext.gadget.DRN-wizard%2CReferenceTooltips%2Ccharinsert%2Cfeatured-articles-links%2CrefToolbar%2Cswitcher%2Cteahouse%7Cext.tmh.thumbnail.styles%7Cext.uls.nojs%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.raggett%2CsectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="generator" content="MediaWiki 1.28.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Rationalism"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Rationalism&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=Rationalism&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="copyright" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Rationalism"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Rationalism rootpage-Rationalism skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Rationalism</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div role="note" class="hatnote">This article is about the philosophical method, position, theory, or view. For other uses, see <a href="/wiki/Rationalism_(disambiguation)" class="mw-disambig" title="Rationalism (disambiguation)">Rationalism (disambiguation)</a>.</div>
+<div role="note" class="hatnote">Not to be confused with <a href="/wiki/Rationality" title="Rationality">rationality</a> or <a href="/wiki/Rationalization_(sociology)" title="Rationalization (sociology)">rationalization (sociology)</a>.</div>
+<p>In <a href="/wiki/Epistemology" title="Epistemology">epistemology</a>, <b>rationalism</b> is the view that "regards <a href="/wiki/Reason" title="Reason">reason</a> as the chief source and test of knowledge"<sup id="cite_ref-Encyclopedia_Britannica:_Rationalism_1-0" class="reference"><a href="#cite_note-Encyclopedia_Britannica:_Rationalism-1">[1]</a></sup> or "any view appealing to reason as a source of knowledge or justification".<sup id="cite_ref-Lacey_286_2-0" class="reference"><a href="#cite_note-Lacey_286-2">[2]</a></sup> More formally, rationalism is defined as a <a href="/wiki/Methodology" title="Methodology">methodology</a> or a <a href="/wiki/Theory" title="Theory">theory</a> "in which the criterion of the truth is not sensory but intellectual and <a href="/wiki/Deductive" class="mw-redirect" title="Deductive">deductive</a>".<sup id="cite_ref-Bourke_263_3-0" class="reference"><a href="#cite_note-Bourke_263-3">[3]</a></sup></p>
+<p>In an old controversy, rationalism was opposed to <a href="/wiki/Empiricism" title="Empiricism">empiricism</a>, where the rationalists believed that reality has an intrinsically logical structure. Because of this, the rationalists argued that certain truths exist and that the intellect can directly grasp these truths. That is to say, rationalists asserted that certain rational principles exist in logic, mathematics, ethics, and metaphysics that are so fundamentally true that denying them causes one to fall into contradiction. The rationalists had such a high confidence in reason that empirical proof and physical evidence were regarded as unnecessary to ascertain certain truths – in other words, "there are significant ways in which our concepts and knowledge are gained independently of sense experience".<sup id="cite_ref-Rationalism_vs._Empiricism_4-0" class="reference"><a href="#cite_note-Rationalism_vs._Empiricism-4">[4]</a></sup></p>
+<p>Different degrees of emphasis on this method or theory lead to a range of rationalist standpoints, from the moderate position "that reason has precedence over other ways of acquiring knowledge" to the more extreme position that reason is "the unique path to knowledge".<sup id="cite_ref-Audi_771_5-0" class="reference"><a href="#cite_note-Audi_771-5">[5]</a></sup> Given a pre-modern understanding of reason, rationalism is identical to <a href="/wiki/Philosophy" title="Philosophy">philosophy</a>, the <a href="/wiki/Socrates" title="Socrates">Socratic</a> life of inquiry, or the zetetic (<a href="/wiki/Skepticism" title="Skepticism">skeptical</a>) clear interpretation of authority (open to the underlying or essential cause of things as they appear to our sense of certainty). In recent decades, <a href="/wiki/Leo_Strauss" title="Leo Strauss">Leo Strauss</a> sought to revive "Classical Political Rationalism" as a discipline that understands the task of reasoning, not as foundational, but as <a href="/wiki/Maieutics" class="mw-redirect" title="Maieutics">maieutic</a>.</p>
+<p>In <a href="/wiki/Politics" title="Politics">politics</a>, Rationalism, since the <a href="/wiki/Age_of_Enlightenment" title="Age of Enlightenment">Enlightenment</a>, historically emphasized a "politics of reason" centered upon <a href="/wiki/Rational_choice" class="mw-redirect" title="Rational choice">rational choice</a>, <a href="/wiki/Utilitarianism" title="Utilitarianism">utilitarianism</a>, <a href="/wiki/Secularism" title="Secularism">secularism</a>, and <a href="/wiki/Irreligion" title="Irreligion">irreligion</a><sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup>&#160;– the latter aspect's <a href="/wiki/Antitheism" title="Antitheism">antitheism</a> later ameliorated by utilitarian adoption of pluralistic rationalist methods practicable regardless of religious or irreligious ideology.<sup id="cite_ref-7" class="reference"><a href="#cite_note-7">[7]</a></sup><sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup></p>
+<p>In this regard, the philosopher <a href="/wiki/John_Cottingham" title="John Cottingham">John Cottingham</a><sup id="cite_ref-9" class="reference"><a href="#cite_note-9">[9]</a></sup> noted how rationalism, a <a href="/wiki/Methodology" title="Methodology">methodology</a>, became socially conflated with <a href="/wiki/Atheism" title="Atheism">atheism</a>, a <a href="/wiki/Worldview" class="mw-redirect" title="Worldview">worldview</a>:</p>
+<blockquote class="templatequote">
+<p>In the past, particularly in the 17th and 18th centuries, the term 'rationalist' was often used to refer to free thinkers of an anti-clerical and anti-religious outlook, and for a time the word acquired a distinctly pejorative force (thus in 1670 Sanderson spoke disparagingly of 'a mere rationalist, that is to say in plain English an atheist of the late edition...'). The use of the label 'rationalist' to characterize a world outlook which has no place for the supernatural is becoming less popular today; terms like '<a href="/wiki/Secular_humanist" class="mw-redirect" title="Secular humanist">humanist</a>' or '<a href="/wiki/Materialism" title="Materialism">materialist</a>' seem largely to have taken its place. But the old usage still survives.</p>
+</blockquote>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Philosophical_usage"><span class="tocnumber">1</span> <span class="toctext">Philosophical usage</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Theory_of_justification"><span class="tocnumber">1.1</span> <span class="toctext">Theory of justification</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Theses_of_rationalism"><span class="tocnumber">1.2</span> <span class="toctext">Theses of rationalism</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#The_intuition.2Fdeduction_thesis"><span class="tocnumber">1.2.1</span> <span class="toctext">The intuition/deduction thesis</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#The_innate_knowledge_thesis"><span class="tocnumber">1.2.2</span> <span class="toctext">The innate knowledge thesis</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#The_innate_concept_thesis"><span class="tocnumber">1.2.3</span> <span class="toctext">The innate concept thesis</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#The_other_two_theses"><span class="tocnumber">1.2.4</span> <span class="toctext">The other two theses</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Background"><span class="tocnumber">2</span> <span class="toctext">Background</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#History"><span class="tocnumber">3</span> <span class="toctext">History</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Rationalist_philosophy_from_antiquity"><span class="tocnumber">3.1</span> <span class="toctext">Rationalist philosophy from antiquity</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#Pythagoras_.28570.E2.80.93495_BCE.29"><span class="tocnumber">3.1.1</span> <span class="toctext">Pythagoras (570–495 BCE)</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Plato_.28427.E2.80.93347_BCE.29"><span class="tocnumber">3.1.2</span> <span class="toctext">Plato (427–347 BCE)</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Aristotle_.28384.E2.80.93322_BCE.29"><span class="tocnumber">3.1.3</span> <span class="toctext">Aristotle (384–322 BCE)</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#Post-Aristotle"><span class="tocnumber">3.1.4</span> <span class="toctext">Post-Aristotle</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-15"><a href="#Classical_rationalism"><span class="tocnumber">3.2</span> <span class="toctext">Classical rationalism</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#Ren.C3.A9_Descartes_.281596.E2.80.931650.29"><span class="tocnumber">3.2.1</span> <span class="toctext">René Descartes (1596–1650)</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Baruch_Spinoza_.281632.E2.80.931677.29"><span class="tocnumber">3.2.2</span> <span class="toctext">Baruch Spinoza (1632–1677)</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#Gottfried_Leibniz_.281646.E2.80.931716.29"><span class="tocnumber">3.2.3</span> <span class="toctext">Gottfried Leibniz (1646–1716)</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#Immanuel_Kant_.281724.E2.80.931804.29"><span class="tocnumber">3.2.4</span> <span class="toctext">Immanuel Kant (1724–1804)</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-20"><a href="#Contemporary_rationalism"><span class="tocnumber">3.3</span> <span class="toctext">Contemporary rationalism</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-21"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#References"><span class="tocnumber">5</span> <span class="toctext">References</span></a>
+<ul>
+<li class="toclevel-2 tocsection-23"><a href="#Citations"><span class="tocnumber">5.1</span> <span class="toctext">Citations</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Primary_sources"><span class="tocnumber">5.2</span> <span class="toctext">Primary sources</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Secondary_sources"><span class="tocnumber">5.3</span> <span class="toctext">Secondary sources</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="#External_links"><span class="tocnumber">6</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="Philosophical_usage">Philosophical usage</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=1" title="Edit section: Philosophical usage">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Rationalism is often contrasted with <a href="/wiki/Empiricism" title="Empiricism">empiricism</a>. Taken very broadly these views are not mutually exclusive, since a philosopher can be both rationalist and empiricist.<sup id="cite_ref-Lacey_286_2-1" class="reference"><a href="#cite_note-Lacey_286-2">[2]</a></sup> Taken to extremes, the empiricist view holds that all ideas come to us <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a posteriori</i></a>, that is to say, through experience; either through the external senses or through such inner sensations as pain and gratification. The empiricist essentially believes that knowledge is based on or derived directly from experience. The rationalist believes we come to knowledge <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a priori</i></a>&#160;– through the use of logic&#160;– and is thus independent of sensory experience. In other words, as <a href="/wiki/Galen_Strawson" title="Galen Strawson">Galen Strawson</a> once wrote, "you can see that it is true just lying on your couch. You don't have to get up off your couch and go outside and examine the way things are in the physical world. You don't have to do any science."<sup id="cite_ref-10" class="reference"><a href="#cite_note-10">[10]</a></sup> Between both philosophies, the issue at hand is the fundamental source of human knowledge and the proper techniques for verifying what we think we know. Whereas both philosophies are under the umbrella of <a href="/wiki/Epistemology" title="Epistemology">epistemology</a>, their argument lies in the understanding of the warrant, which is under the wider epistemic umbrella of the <a href="/wiki/Theory_of_justification" title="Theory of justification">theory of justification</a>.</p>
+<h3><span class="mw-headline" id="Theory_of_justification">Theory of justification</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=2" title="Edit section: Theory of justification">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Theory_of_justification" title="Theory of justification">Theory of justification</a></div>
+<p>The theory of justification is the part of <a href="/wiki/Epistemology" title="Epistemology">epistemology</a> that attempts to understand the justification of <a href="/wiki/Propositions" class="mw-redirect" title="Propositions">propositions</a> and <a href="/wiki/Belief" title="Belief">beliefs</a>. Epistemologists are concerned with various epistemic features of belief, which include the ideas of <a href="/wiki/Formal_proof" title="Formal proof">justification</a>, warrant, <a href="/wiki/Rationality" title="Rationality">rationality</a>, and <a href="/wiki/Probability" title="Probability">probability</a>. Of these four terms, the term that has been most widely used and discussed by the early 21st century is "warrant". Loosely speaking, justification is the reason that someone (probably) holds a belief.</p>
+<p>If "A" makes a claim, and "B" then casts doubt on it, "A"'s next move would normally be to provide justification. The precise method one uses to provide justification is where the lines are drawn between rationalism and empiricism (among other philosophical views). Much of the debate in these fields are focused on <a href="/wiki/Philosophical_analysis" title="Philosophical analysis">analyzing</a> the nature of knowledge and how it relates to connected notions such as <a href="/wiki/Truth" title="Truth">truth</a>, <a href="/wiki/Belief" title="Belief">belief</a>, and <a href="/wiki/Formal_proof" title="Formal proof">justification</a>.</p>
+<h3><span class="mw-headline" id="Theses_of_rationalism">Theses of rationalism</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=3" title="Edit section: Theses of rationalism">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>At its core, rationalism consists of three basic claims. For one to consider themselves a rationalist, they must adopt at least one of these three claims: The Intuition/Deduction Thesis, The Innate Knowledge Thesis, or The Innate Concept Thesis. In addition, rationalists can choose to adopt the claims of Indispensability of Reason and or the Superiority of Reason – although one can be a rationalist without adopting either thesis.</p>
+<h4><span class="mw-headline" id="The_intuition.2Fdeduction_thesis">The intuition/deduction thesis</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=4" title="Edit section: The intuition/deduction thesis">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main articles: <a href="/wiki/Intuition_(philosophy)" class="mw-redirect" title="Intuition (philosophy)">Intuition (philosophy)</a> and <a href="/wiki/Deductive_reasoning" title="Deductive reasoning">Deductive reasoning</a></div>
+<p>Rationale: <i>"Some propositions in a particular subject area, S, are knowable by us by intuition alone; still others are knowable by being deduced from intuited propositions."</i><sup id="cite_ref-The_Intuition.2FDeduction_Thesis_11-0" class="reference"><a href="#cite_note-The_Intuition.2FDeduction_Thesis-11">[11]</a></sup></p>
+<p>Generally speaking, intuition is <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a priori</i></a> knowledge or experiential belief characterized by its immediacy; a form of rational insight. We simply just "see" something in such a way as to give us a warranted belief. Beyond that, the nature of intuition is hotly debated.</p>
+<p>In the same way, generally speaking, deduction is the process of <a href="/wiki/Reasoning" class="mw-redirect" title="Reasoning">reasoning</a> from one or more general <a href="/wiki/Premise" title="Premise">premises</a> to reach a logically certain conclusion. Using valid <a href="/wiki/Argument" title="Argument">arguments</a>, we can deduce from intuited premises.</p>
+<p>For example, when we combine both concepts, we can intuit that the number three is prime and that it is greater than two. We then deduce from this knowledge that there is a prime number greater than two. Thus, it can be said that intuition and deduction combined to provide us with <i>a priori</i> knowledge – we gained this knowledge independently of sense experience.</p>
+<p>Empiricists such as <a href="/wiki/David_Hume" title="David Hume">David Hume</a> have been willing to accept this thesis for describing the relationships among our own concepts.<sup id="cite_ref-The_Intuition.2FDeduction_Thesis_11-1" class="reference"><a href="#cite_note-The_Intuition.2FDeduction_Thesis-11">[11]</a></sup> In this sense, empiricists argue that we are allowed to intuit and deduce truths from knowledge that has been obtained <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a posteriori</i></a>.</p>
+<p>By injecting different subjects into the Intuition/Deduction thesis, we are able to generate different arguments. Most rationalists agree <a href="/wiki/Mathematics" title="Mathematics">mathematics</a> is knowable by applying the intuition and deduction. Some go further to include <a href="/wiki/Ethics" title="Ethics">ethical truths</a> into the category of things knowable by intuition and deduction. Furthermore, some rationalists also claim <a href="/wiki/Metaphysics" title="Metaphysics">metaphysics</a> is knowable in this thesis.</p>
+<p>In addition to different subjects, rationalists sometimes vary the strength of their claims by adjusting their understanding of the warrant. Some rationalists understand warranted beliefs to be beyond even the slightest doubt; others are more conservative and understand the warrant to be belief beyond a reasonable doubt.</p>
+<p>Rationalists also have different understanding and claims involving the connection between intuition and truth. Some rationalists claim that intuition is infallible and that anything we intuit to be true is as such. More contemporary rationalists accept that intuition is not always a source of certain knowledge&#160;– thus allowing for the possibility of a deceiver who might cause the rationalist to intuit a false proposition in the same way a third party could cause the rationalist to have perceptions of nonexistent objects.</p>
+<p>Naturally, the more subjects the rationalists claim to be knowable by the Intuition/Deduction thesis, the more certain they are of their warranted beliefs, and the more strictly they adhere to the infallibility of intuition, the more controversial their truths or claims and the more radical their rationalism.<sup id="cite_ref-The_Intuition.2FDeduction_Thesis_11-2" class="reference"><a href="#cite_note-The_Intuition.2FDeduction_Thesis-11">[11]</a></sup></p>
+<p>To argue in favor of this thesis, <a href="/wiki/Gottfried_Wilhelm_Leibniz" title="Gottfried Wilhelm Leibniz">Gottfried Wilhelm Leibniz</a>, a prominent German philosopher, says, "The senses, although they are necessary for all our actual knowledge, are not sufficient to give us the whole of it, since the senses never give anything but instances, that is to say particular or individual truths. Now all the instances which confirm a general truth, however numerous they may be, are not sufficient to establish the universal necessity of this same truth, for it does not follow that what happened before will happen in the same way again. … From which it appears that necessary truths, such as we find in pure mathematics, and particularly in arithmetic and geometry, must have principles whose proof does not depend on instances, nor consequently on the testimony of the senses, although without the senses it would never have occurred to us to think of them…"<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[12]</a></sup></p>
+<h4><span class="mw-headline" id="The_innate_knowledge_thesis">The innate knowledge thesis</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=5" title="Edit section: The innate knowledge thesis">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>Rationale: <i>"We have knowledge of some truths in a particular subject area, S, as part of our rational nature."</i><sup id="cite_ref-The_Innate_Knowledge_Thesis_13-0" class="reference"><a href="#cite_note-The_Innate_Knowledge_Thesis-13">[13]</a></sup></p>
+<p>The Innate Knowledge thesis is similar to the Intuition/Deduction thesis in the regard that both theses claim <a href="/wiki/Knowledge" title="Knowledge">knowledge</a> is gained <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a priori</i></a>. The two theses go their separate ways when describing how that knowledge is gained. As the name, and the rationale, suggests, the Innate Knowledge thesis claims knowledge is simply part of our rational nature. Experiences can trigger a process that allows this knowledge to come into our consciousness, but the experiences don't provide us with the knowledge itself. The knowledge has been with us since the beginning and the experience simply brought into focus, in the same way a photographer can bring the background of a picture into focus by changing the aperture of the lens. The background was always there, just not in focus.</p>
+<p>This thesis targets a problem with the nature of inquiry originally postulated by <a href="/wiki/Plato" title="Plato">Plato</a> in <i><a href="/wiki/Meno" title="Meno">Meno</a></i>. Here, Plato asks about inquiry; how do we gain knowledge of a theorem in geometry? We inquire into the matter. Yet, knowledge by inquiry seems impossible.<sup id="cite_ref-14" class="reference"><a href="#cite_note-14">[14]</a></sup> In other words, "If we already have the knowledge, there is no place for inquiry. If we lack the knowledge, we don't know what we are seeking and cannot recognize it when we find it. Either way we cannot gain knowledge of the theorem by inquiry. Yet, we do know some theorems."<sup id="cite_ref-The_Innate_Knowledge_Thesis_13-1" class="reference"><a href="#cite_note-The_Innate_Knowledge_Thesis-13">[13]</a></sup> The Innate Knowledge thesis offers a solution to this <a href="/wiki/Paradox" title="Paradox">paradox</a>. By claiming that knowledge is already with us, either <a href="/wiki/Consciousness" title="Consciousness">consciously</a> or <a href="/wiki/Unconscious_mind" title="Unconscious mind">unconsciously</a>, a rationalist claims we don't really "learn" things in the traditional usage of the word, but rather that we simply bring to light what we already know.</p>
+<h4><span class="mw-headline" id="The_innate_concept_thesis">The innate concept thesis</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=6" title="Edit section: The innate concept thesis">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>Rationale: <i>"We have some of the concepts we employ in a particular subject area, S, as part of our rational nature."</i><sup id="cite_ref-The_Innate_Concept_Thesis_15-0" class="reference"><a href="#cite_note-The_Innate_Concept_Thesis-15">[15]</a></sup></p>
+<p>Similar to the Innate Knowledge thesis, the Innate Concept thesis suggests that some concepts are simply part of our rational nature. These concepts are <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a priori</i></a> in nature and sense experience is irrelevant to determining the nature of these concepts (though, sense experience can help bring the concepts to our <a href="/wiki/Consciousness" title="Consciousness">conscious mind</a>).</p>
+<p>Some philosophers, such as <a href="/wiki/John_Locke" title="John Locke">John Locke</a> (who is considered one of the most influential thinkers of the <a href="/wiki/Age_of_Enlightenment" title="Age of Enlightenment">Enlightenment</a> and an <a href="/wiki/Empiricism" title="Empiricism">empiricist</a>) argue that the Innate Knowledge thesis and the Innate Concept thesis are the same.<sup id="cite_ref-16" class="reference"><a href="#cite_note-16">[16]</a></sup> Other philosophers, such as <a href="/wiki/Peter_Carruthers_(philosopher)" title="Peter Carruthers (philosopher)">Peter Carruthers</a>, argue that the two theses are distinct from one another. As with the other theses covered under rationalisms' umbrella, the types and number of concepts a philosopher claims to be innate, the more controversial and radical their position; "the more a concept seems removed from experience and the mental operations we can perform on experience the more plausibly it may be claimed to be innate. Since we do not experience perfect triangles but do experience pains, our concept of the former is a more promising candidate for being innate than our concept of the latter.<sup id="cite_ref-The_Innate_Concept_Thesis_15-1" class="reference"><a href="#cite_note-The_Innate_Concept_Thesis-15">[15]</a></sup></p>
+<p>In his book, <i><a href="/wiki/Meditations_on_First_Philosophy" title="Meditations on First Philosophy">Meditations on First Philosophy</a></i>,<sup id="cite_ref-17" class="reference"><a href="#cite_note-17">[17]</a></sup> <a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">René Descartes</a> postulates three classifications for our <a href="/wiki/Idea" title="Idea">ideas</a> when he says, "Among my ideas, some appear to be innate, some to be adventitious, and others to have been invented by me. My understanding of what a thing is, what truth is, and what thought is, seems to derive simply from my own nature. But my hearing a noise, as I do now, or seeing the sun, or feeling the fire, comes from things which are located outside me, or so I have hitherto judged. Lastly, <a href="/wiki/Siren_(mythology)" title="Siren (mythology)">siren</a>s, <a href="/wiki/Hippogriff" title="Hippogriff">hippogriffs</a> and the like are my own invention."<sup id="cite_ref-18" class="reference"><a href="#cite_note-18">[18]</a></sup></p>
+<p>Adventitious ideas are those concepts that we gain through sense experiences, ideas such as the sensation of heat, because they originate from outside sources; transmitting their own likeness rather than something else and something you simply cannot <a href="/wiki/Will_(philosophy)" title="Will (philosophy)">will</a> away. Ideas invented by us, such as those found in <a href="/wiki/Mythology" title="Mythology">mythology</a>, <a href="/wiki/Legend" title="Legend">legends</a>, and <a href="/wiki/Fairy_tale" title="Fairy tale">fairy tales</a> are created by us from other ideas we possess. Lastly, innate ideas, such as our ideas of <a href="/wiki/Perfection" title="Perfection">perfection</a>, are those ideas we have as a result of mental processes that are beyond what experience can directly or indirectly provide.</p>
+<p><a href="/wiki/Gottfried_Wilhelm_Leibniz" title="Gottfried Wilhelm Leibniz">Gottfried Wilhelm Leibniz</a> defends the idea of innate concepts by suggesting the mind plays a role in determining the nature of concepts, to explain this, he likens the mind to a block of marble in the <i><a href="/wiki/New_Essays_on_Human_Understanding" title="New Essays on Human Understanding">New Essays on Human Understanding</a></i>, "This is why I have taken as an illustration a block of veined marble, rather than a wholly uniform block or blank tablets, that is to say what is called tabula rasa in the language of the philosophers. For if the soul were like those blank tablets, truths would be in us in the same way as the figure of Hercules is in a block of marble, when the marble is completely indifferent whether it receives this or some other figure. But if there were veins in the stone which marked out the figure of Hercules rather than other figures, this stone would be more determined thereto, and Hercules would be as it were in some manner innate in it, although labour would be needed to uncover the veins, and to clear them by polishing, and by cutting away what prevents them from appearing. It is in this way that ideas and truths are innate in us, like natural inclinations and dispositions, natural habits or potentialities, and not like activities, although these potentialities are always accompanied by some activities which correspond to them, though they are often imperceptible."<sup id="cite_ref-19" class="reference"><a href="#cite_note-19">[19]</a></sup></p>
+<h4><span class="mw-headline" id="The_other_two_theses">The other two theses</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=7" title="Edit section: The other two theses">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>The three aforementioned theses of Intuition/Deduction, Innate Knowledge, and Innate Concept are the cornerstones of rationalism. To be considered a rationalist, one must adopt at least one of those three claims. The following two theses are traditionally adopted by rationalists, but they aren't essential to the rationalist's position.</p>
+<p><b>The Indispensability of Reason Thesis</b> has the following rationale, "The knowledge we gain in subject area, <i>S</i>, by intuition and deduction, as well as the ideas and instances of knowledge in <i>S</i> that are innate to us, could not have been gained by us through sense experience."<sup id="cite_ref-Encyclopedia_Britannica:_Rationalism_1-1" class="reference"><a href="#cite_note-Encyclopedia_Britannica:_Rationalism-1">[1]</a></sup> In short, this thesis claims that experience cannot provide what we gain from reason.</p>
+<p><b>The Superiority of Reason Thesis</b> has the following rationale, '"The knowledge we gain in subject area <i>S</i> by intuition and deduction or have innately is superior to any knowledge gained by sense experience".<sup id="cite_ref-Encyclopedia_Britannica:_Rationalism_1-2" class="reference"><a href="#cite_note-Encyclopedia_Britannica:_Rationalism-1">[1]</a></sup> In other words, this thesis claims reason is superior to experience as a source for knowledge.</p>
+<p>In addition to the following claims, rationalists often adopt similar stances on other aspects of philosophy. Most rationalists reject skepticism for the areas of knowledge they claim are knowable <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>a priori</i></a>. Naturally, when you claim some truths are innately known to us, one must reject skepticism in relation to those truths. Especially for rationalists who adopt the Intuition/Deduction thesis, the idea of epistemic foundationalism tends to crop up. This is the view that we know some truths without basing our belief in them on any others and that we then use this foundational knowledge to know more truths.<sup id="cite_ref-Encyclopedia_Britannica:_Rationalism_1-3" class="reference"><a href="#cite_note-Encyclopedia_Britannica:_Rationalism-1">[1]</a></sup></p>
+<h2><span class="mw-headline" id="Background">Background</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=8" title="Edit section: Background">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Rationalism - as an appeal to human reason as a way of obtaining knowledge - has a philosophical history dating from antiquity. The <a href="/wiki/Analytic_philosophy" title="Analytic philosophy">analytical</a> nature of much of philosophical enquiry, the awareness of apparently <a href="/wiki/A_priori_knowledge" class="mw-redirect" title="A priori knowledge">a priori</a> domains of knowledge such as mathematics, combined with the emphasis of obtaining knowledge through the use of rational faculties (commonly rejecting, for example, direct <a href="/wiki/Revelation" title="Revelation">revelation</a>) have made rationalist themes very prevalent in the history of philosophy.</p>
+<p>Since the Enlightenment, rationalism is usually associated with the introduction of mathematical methods into philosophy as seen in the works of <a href="/wiki/Descartes" class="mw-redirect" title="Descartes">Descartes</a>, <a href="/wiki/Gottfried_Wilhelm_Leibniz" title="Gottfried Wilhelm Leibniz">Leibniz</a>, and <a href="/wiki/Spinoza" class="mw-redirect" title="Spinoza">Spinoza</a>.<sup id="cite_ref-Bourke_263_3-1" class="reference"><a href="#cite_note-Bourke_263-3">[3]</a></sup> This is commonly called <b>continental rationalism</b>, because it was predominant in the continental schools of Europe, whereas in Britain <a href="/wiki/Empiricism" title="Empiricism">empiricism</a> dominated.</p>
+<p>Even then, the distinction between rationalists and empiricists was drawn at a later period and would not have been recognized by the philosophers involved. Also, the distinction between the two philosophies is not as clear-cut as is sometimes suggested; for example, Descartes and Locke have similar views about the nature of human ideas.<sup id="cite_ref-Rationalism_vs._Empiricism_4-1" class="reference"><a href="#cite_note-Rationalism_vs._Empiricism-4">[4]</a></sup></p>
+<p>Proponents of some varieties of rationalism argue that, starting with foundational basic principles, like the axioms of <a href="/wiki/Geometry" title="Geometry">geometry</a>, one could <a href="/wiki/Deductive_reasoning" title="Deductive reasoning">deductively</a> derive the rest of all possible knowledge. The philosophers who held this view most clearly were <a href="/wiki/Baruch_Spinoza" title="Baruch Spinoza">Baruch Spinoza</a> and <a href="/wiki/Gottfried_Leibniz" class="mw-redirect" title="Gottfried Leibniz">Gottfried Leibniz</a>, whose attempts to grapple with the epistemological and metaphysical problems raised by Descartes led to a development of the fundamental approach of rationalism. Both Spinoza and Leibniz asserted that, <i>in principle</i>, all knowledge, including scientific knowledge, could be gained through the use of reason alone, though they both observed that this was not possible <i>in practice</i> for human beings except in specific areas such as <a href="/wiki/Mathematics" title="Mathematics">mathematics</a>. On the other hand, Leibniz admitted in his book <i><a href="/wiki/Monadology" title="Monadology">Monadology</a></i> that "we are all mere <a href="/wiki/Empirics" class="mw-redirect" title="Empirics">Empirics</a> in three fourths of our actions."<sup id="cite_ref-Audi_771_5-1" class="reference"><a href="#cite_note-Audi_771-5">[5]</a></sup></p>
+<h2><span class="mw-headline" id="History">History</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=9" title="Edit section: History">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Rationalist_philosophy_from_antiquity">Rationalist philosophy from antiquity</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=10" title="Edit section: Rationalist philosophy from antiquity">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Because of the complicated nature of rationalist thinking, the nature of philosophy, and the understanding that humans are aware of knowledge available only through the use of rational thought, many of the great philosophers from antiquity laid down the foundation for rationalism though they themselves weren't rationalists as we understand the concept today.</p>
+<h4><span class="mw-headline" id="Pythagoras_.28570.E2.80.93495_BCE.29">Pythagoras (570–495 BCE)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=11" title="Edit section: Pythagoras (570–495 BCE)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Pythagoras" title="Pythagoras">Pythagoras</a></div>
+<p>Pythagoras was one of the first Western philosophers to stress rationalist insight.<sup id="cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-0" class="reference"><a href="#cite_note-Epistemological_rationalism_in_ancient_philosophies-20">[20]</a></sup> He is often revered as a great <a href="/wiki/Mathematician" title="Mathematician">mathematician</a>, <a href="/wiki/Mysticism" title="Mysticism">mystic</a> and <a href="/wiki/Scientist" title="Scientist">scientist</a>, but he is best known for the <a href="/wiki/Pythagorean_theorem" title="Pythagorean theorem">Pythagorean theorem</a>, which bears his name, and for discovering the mathematical relationship between the length of strings on lute bear and the pitches of the notes. Pythagoras "believed these harmonies reflected the ultimate nature of reality. He summed up the implied metaphysical rationalism in the words "All is number". It is probable that he had caught the rationalist's vision, later seen by <a href="/wiki/Galileo_Galilei" title="Galileo Galilei">Galileo</a> (1564–1642), of a world governed throughout by mathematically formulable laws".<sup id="cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-1" class="reference"><a href="#cite_note-Epistemological_rationalism_in_ancient_philosophies-20">[20]</a></sup> It has been said that he was the first man to call himself a philosopher, or lover of wisdom,<sup id="cite_ref-21" class="reference"><a href="#cite_note-21">[21]</a></sup></p>
+<h4><span class="mw-headline" id="Plato_.28427.E2.80.93347_BCE.29">Plato (427–347 BCE)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=12" title="Edit section: Plato (427–347 BCE)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Plato" title="Plato">Plato</a></div>
+<p>Plato also held rational insight to a very high standard, as is seen in his works such as <a href="/wiki/Meno" title="Meno">Meno</a> and <a href="/wiki/The_Republic_(Plato)" class="mw-redirect" title="The Republic (Plato)">The Republic</a>. Plato taught on the <a href="/wiki/Theory_of_Forms" title="Theory of Forms">Theory of Forms</a> (or the Theory of Ideas)<sup id="cite_ref-22" class="reference"><a href="#cite_note-22">[22]</a></sup><sup id="cite_ref-23" class="reference"><a href="#cite_note-23">[23]</a></sup><sup id="cite_ref-24" class="reference"><a href="#cite_note-24">[24]</a></sup> which asserts that non-material abstract (but <a href="/wiki/Ousia" title="Ousia">substantial</a>) forms (or ideas), and not the material world of change <a href="/wiki/Allegory_of_the_cave" class="mw-redirect" title="Allegory of the cave">known to us through sensation</a>, possess the highest and most fundamental kind of reality.<sup id="cite_ref-25" class="reference"><a href="#cite_note-25">[25]</a></sup> Plato's forms are accessible only to reason and not to sense.<sup id="cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-2" class="reference"><a href="#cite_note-Epistemological_rationalism_in_ancient_philosophies-20">[20]</a></sup> In fact, it is said that Plato admired reason, especially in <a href="/wiki/Geometry" title="Geometry">geometry</a>, so highly that he had the phrase "Let no one ignorant of geometry enter" inscribed over the door to his academy.<sup id="cite_ref-26" class="reference"><a href="#cite_note-26">[26]</a></sup></p>
+<h4><span class="mw-headline" id="Aristotle_.28384.E2.80.93322_BCE.29">Aristotle (384–322 BCE)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=13" title="Edit section: Aristotle (384–322 BCE)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Aristotle" title="Aristotle">Aristotle</a></div>
+<p><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a> has a process of reasoning similar to that of Plato's, though he ultimately disagreed with the specifics of Plato's forms. Aristotle's great contribution to rationalist thinking comes from his use of <a href="/wiki/Syllogism" title="Syllogism">syllogistic</a> logic. Aristotle defines syllogism as "a discourse in which certain (specific) things having been supposed, something different from the things supposed results of necessity because these things are so."<sup id="cite_ref-27" class="reference"><a href="#cite_note-27">[27]</a></sup> Despite this very general definition, Aristotle limits himself to categorical syllogisms which consist of three <a href="/wiki/Categorical_proposition" title="Categorical proposition">categorical propositions</a> in his work <i><a href="/wiki/Prior_Analytics" title="Prior Analytics">Prior Analytics</a></i>.<sup id="cite_ref-28" class="reference"><a href="#cite_note-28">[28]</a></sup> These included categorical <a href="/wiki/Modal_logic" title="Modal logic">modal</a> syllogisms.<sup id="cite_ref-29" class="reference"><a href="#cite_note-29">[29]</a></sup></p>
+<h4><span class="mw-headline" id="Post-Aristotle">Post-Aristotle</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=14" title="Edit section: Post-Aristotle">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>Though the three great Greek philosophers disagreed with one another on specific points, they all agreed that rational thought could bring to light knowledge that was self-evident – information that humans otherwise couldn't know without the use of reason. After Aristotle's death, Western rationalistic thought was generally characterized by its application to theology, such as in the works of the Islamic philosopher <a href="/wiki/Avicenna" title="Avicenna">Avicenna</a> and Jewish philosopher and theologian <a href="/wiki/Maimonides" title="Maimonides">Maimonides</a>. One notable event in the Western timelime was the philosophy of St. <a href="/wiki/Thomas_Aquinas" title="Thomas Aquinas">Thomas Aquinas</a> who attempted to merge Greek rationalism and Christian revelation in the thirteenth-century.<sup id="cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-3" class="reference"><a href="#cite_note-Epistemological_rationalism_in_ancient_philosophies-20">[20]</a></sup></p>
+<h3><span class="mw-headline" id="Classical_rationalism">Classical rationalism</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=15" title="Edit section: Classical rationalism">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<h4><span class="mw-headline" id="Ren.C3.A9_Descartes_.281596.E2.80.931650.29">René Descartes (1596–1650)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=16" title="Edit section: René Descartes (1596–1650)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">René Descartes</a></div>
+<p>Descartes was the first of the modern rationalists and has been dubbed the 'Father of Modern Philosophy.' Much subsequent <a href="/wiki/Western_philosophy" title="Western philosophy">Western philosophy</a> is a response to his writings,<sup id="cite_ref-30" class="reference"><a href="#cite_note-30">[30]</a></sup><sup id="cite_ref-31" class="reference"><a href="#cite_note-31">[31]</a></sup><sup id="cite_ref-Britannica_32-0" class="reference"><a href="#cite_note-Britannica-32">[32]</a></sup> which are studied closely to this day.</p>
+<p>Descartes thought that only knowledge of eternal truths&#160;–  including the truths of mathematics, and the epistemological and metaphysical foundations of the sciences&#160;–  could be attained by reason alone; other knowledge, the knowledge of physics, required experience of the world, aided by the <a href="/wiki/Scientific_method" title="Scientific method">scientific method</a>. He also argued that although <a href="/wiki/Dream" title="Dream">dreams</a> appear as real as <a href="/wiki/Empirical_evidence" title="Empirical evidence">sense experience</a>, these dreams cannot provide persons with knowledge. Also, since conscious sense experience can be the cause of illusions, then sense experience itself can be doubtable. As a result, Descartes deduced that a rational pursuit of truth should doubt every belief about reality. He elaborated these beliefs in such works as <i><a href="/wiki/Discourse_on_Method" class="mw-redirect" title="Discourse on Method">Discourse on Method</a></i>, <i><a href="/wiki/Meditations_on_First_Philosophy" title="Meditations on First Philosophy">Meditations on First Philosophy</a></i>, and <i><a href="/wiki/Principles_of_Philosophy" title="Principles of Philosophy">Principles of Philosophy</a></i>. Descartes developed a method to attain truths according to which nothing that cannot be recognised by the intellect (or <a href="/wiki/Reason" title="Reason">reason</a>) can be classified as knowledge. These truths are gained "without any sensory experience," according to Descartes. Truths that are attained by reason are broken down into elements that intuition can grasp, which, through a purely deductive process, will result in clear truths about reality.</p>
+<p>Descartes therefore argued, as a result of his method, that reason alone determined knowledge, and that this could be done independently of the senses. For instance, his famous dictum, <i><a href="/wiki/Cogito_ergo_sum" title="Cogito ergo sum">cogito ergo sum</a></i> or "I think, therefore I am", is a conclusion reached <i><a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori">a priori</a></i> i.e., prior to any kind of experience on the matter. The simple meaning is that doubting one's existence, in and of itself, proves that an "I" exists to do the thinking. In other words, doubting one's own doubting is absurd.<sup id="cite_ref-Epistemological_rationalism_in_modern_philosophies_33-0" class="reference"><a href="#cite_note-Epistemological_rationalism_in_modern_philosophies-33">[33]</a></sup> This was, for Descartes, an irrefutable principle upon which to ground all forms of other knowledge. Descartes posited a metaphysical <a href="/wiki/Cartesian_dualism" class="mw-redirect" title="Cartesian dualism">dualism</a>, distinguishing between the substances of the human body ("<i>res extensa</i>") and the <a href="/wiki/Mind" title="Mind">mind</a> or soul ("<i>res cogitans</i>"). This crucial distinction would be left unresolved and lead to what is known as the <a href="/wiki/Mind-body_problem" class="mw-redirect" title="Mind-body problem">mind-body problem</a>, since the two substances in the Cartesian system are independent of each other and irreducible.</p>
+<h4><span class="mw-headline" id="Baruch_Spinoza_.281632.E2.80.931677.29">Baruch Spinoza (1632–1677)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=17" title="Edit section: Baruch Spinoza (1632–1677)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Philosophy_of_Spinoza" class="mw-redirect" title="Philosophy of Spinoza">Philosophy of Spinoza</a></div>
+<p>The philosophy of <a href="/wiki/Baruch_Spinoza" title="Baruch Spinoza">Baruch Spinoza</a> is a systematic, logical, rational philosophy developed in seventeenth-century <a href="/wiki/Europe" title="Europe">Europe</a>.<sup id="cite_ref-tws9904_34-0" class="reference"><a href="#cite_note-tws9904-34">[34]</a></sup><sup id="cite_ref-tws07dec212_35-0" class="reference"><a href="#cite_note-tws07dec212-35">[35]</a></sup><sup id="cite_ref-tws07dec211_36-0" class="reference"><a href="#cite_note-tws07dec211-36">[36]</a></sup> Spinoza's philosophy is a system of ideas constructed upon basic building blocks with an internal consistency with which he tried to answer life's major questions and in which he proposed that "God exists only philosophically."<sup id="cite_ref-tws07dec211_36-1" class="reference"><a href="#cite_note-tws07dec211-36">[36]</a></sup><sup id="cite_ref-tws908_37-0" class="reference"><a href="#cite_note-tws908-37">[37]</a></sup> He was heavily influenced by <a href="/wiki/Descartes" class="mw-redirect" title="Descartes">Descartes</a>,<sup id="cite_ref-tws07dec114_38-0" class="reference"><a href="#cite_note-tws07dec114-38">[38]</a></sup> <a href="/wiki/Euclid" title="Euclid">Euclid</a><sup id="cite_ref-tws908_37-1" class="reference"><a href="#cite_note-tws908-37">[37]</a></sup> and <a href="/wiki/Thomas_Hobbes" title="Thomas Hobbes">Thomas Hobbes</a>,<sup id="cite_ref-tws07dec114_38-1" class="reference"><a href="#cite_note-tws07dec114-38">[38]</a></sup> as well as theologians in the Jewish philosophical tradition such as <a href="/wiki/Maimonides" title="Maimonides">Maimonides</a>.<sup id="cite_ref-tws07dec114_38-2" class="reference"><a href="#cite_note-tws07dec114-38">[38]</a></sup> But his work was in many respects a departure from the <a href="/wiki/Judeo-Christian" title="Judeo-Christian">Judeo-Christian</a> tradition. Many of Spinoza's ideas continue to vex thinkers today and many of his principles, particularly regarding the <a href="/wiki/Emotions" class="mw-redirect" title="Emotions">emotions</a>, have implications for modern approaches to <a href="/wiki/Psychology" title="Psychology">psychology</a>. To this day, many important thinkers have found Spinoza's "geometrical method"<sup id="cite_ref-tws07dec211_36-2" class="reference"><a href="#cite_note-tws07dec211-36">[36]</a></sup> difficult to comprehend: <a href="/wiki/Goethe" class="mw-redirect" title="Goethe">Goethe</a> admitted that he found this concept confusing<sup class="noprint Inline-Template Template-Fact" style="white-space:nowrap;">[<i><a href="/wiki/Wikipedia:Citation_needed" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (June 2015)">citation needed</span></a></i>]</sup>. His <i><a href="/wiki/Masterpiece" title="Masterpiece">magnum opus</a></i>, <i><a href="/wiki/Ethics_(Spinoza)" title="Ethics (Spinoza)">Ethics</a></i>, contains unresolved obscurities and has a forbidding mathematical structure modeled on Euclid's geometry.<sup id="cite_ref-tws908_37-2" class="reference"><a href="#cite_note-tws908-37">[37]</a></sup> Spinoza's philosophy attracted believers such as <a href="/wiki/Albert_Einstein" title="Albert Einstein">Albert Einstein</a><sup id="cite_ref-tws9903_39-0" class="reference"><a href="#cite_note-tws9903-39">[39]</a></sup> and much intellectual attention.<sup id="cite_ref-tws9902_40-0" class="reference"><a href="#cite_note-tws9902-40">[40]</a></sup><sup id="cite_ref-tws9910_41-0" class="reference"><a href="#cite_note-tws9910-41">[41]</a></sup><sup id="cite_ref-tws9901_42-0" class="reference"><a href="#cite_note-tws9901-42">[42]</a></sup><sup id="cite_ref-tws9908_43-0" class="reference"><a href="#cite_note-tws9908-43">[43]</a></sup><sup id="cite_ref-tws9906_44-0" class="reference"><a href="#cite_note-tws9906-44">[44]</a></sup></p>
+<h4><span class="mw-headline" id="Gottfried_Leibniz_.281646.E2.80.931716.29">Gottfried Leibniz (1646–1716)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=18" title="Edit section: Gottfried Leibniz (1646–1716)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Gottfried_Leibniz" class="mw-redirect" title="Gottfried Leibniz">Gottfried Leibniz</a></div>
+<p>Leibniz was the last of the great Rationalists who contributed heavily to other fields such as <a href="/wiki/Metaphysics" title="Metaphysics">metaphysics</a>, <a href="/wiki/Epistemology" title="Epistemology">epistemology</a>, <a href="/wiki/Logic" title="Logic">logic</a>, <a href="/wiki/Mathematics" title="Mathematics">mathematics</a>, <a href="/wiki/Physics" title="Physics">physics</a>, <a href="/wiki/Jurisprudence" title="Jurisprudence">jurisprudence</a>, and the <a href="/wiki/Philosophy_of_religion" title="Philosophy of religion">philosophy of religion</a>; he is also considered to be one of the last "universal geniuses".<sup id="cite_ref-Gottfried_Wilhelm_Leibniz_45-0" class="reference"><a href="#cite_note-Gottfried_Wilhelm_Leibniz-45">[45]</a></sup> He did not develop his system, however, independently of these advances. Leibniz rejected Cartesian dualism and denied the existence of a material world. In Leibniz's view there are infinitely many simple substances, which he called "<a href="/wiki/Monadology" title="Monadology">monads</a>" (possibly taking the term from the work of <a href="/wiki/Anne_Conway,_Viscountess_Conway" class="mw-redirect" title="Anne Conway, Viscountess Conway">Anne Conway</a>).</p>
+<p>Leibniz developed his theory of monads in response to both Descartes and <a href="/wiki/Spinoza" class="mw-redirect" title="Spinoza">Spinoza</a>, because the rejection of their visions forced him to arrive at his own solution. Monads are the fundamental unit of reality, according to Leibniz, constituting both inanimate and animate objects. These units of reality represent the universe, though they are not subject to the laws of causality or space (which he called "<a href="/wiki/Well-founded_phenomenon" title="Well-founded phenomenon">well-founded phenomena</a>"). Leibniz, therefore, introduced his principle of <a href="/wiki/Pre-established_harmony" title="Pre-established harmony">pre-established harmony</a> to account for apparent causality in the world.</p>
+<h4><span class="mw-headline" id="Immanuel_Kant_.281724.E2.80.931804.29">Immanuel Kant (1724–1804)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=19" title="Edit section: Immanuel Kant (1724–1804)">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div role="note" class="hatnote">Main article: <a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a></div>
+<p>Kant is one of the central figures of modern <a href="/wiki/Philosophy" title="Philosophy">philosophy</a>, and set the terms by which all subsequent thinkers have had to grapple. He argued that human perception structures natural laws, and that reason is the source of morality. His thought continues to hold a major influence in contemporary thought, especially in fields such as metaphysics, epistemology, ethics, political philosophy, and aesthetics.<sup id="cite_ref-46" class="reference"><a href="#cite_note-46">[46]</a></sup></p>
+<p>Kant named his brand of epistemology "<a href="/wiki/Transcendental_Idealism" class="mw-redirect" title="Transcendental Idealism">Transcendental Idealism</a>", and he first laid out these views in his famous work <i><a href="/wiki/Critique_of_Pure_Reason" title="Critique of Pure Reason">The Critique of Pure Reason</a></i>. In it he argued that there were fundamental problems with both rationalist and empiricist dogma. To the rationalists he argued, broadly, that pure reason is flawed when it goes beyond its limits and claims to know those things that are necessarily beyond the realm of all possible experience: the <a href="/wiki/Existence_of_God" title="Existence of God">existence of God</a>, free will, and the immortality of the human soul. Kant referred to these objects as "The Thing in Itself" and goes on to argue that their status as objects beyond all possible experience by definition means we cannot know them. To the empiricist he argued that while it is correct that experience is fundamentally necessary for human knowledge, reason is necessary for processing that experience into coherent thought. He therefore concludes that both reason and experience are necessary for human knowledge. In the same way, Kant also argued that it was wrong to regard thought as mere analysis. In Kant's views, <a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori">a priori</a> concepts do exist, but if they are to lead to the amplification of knowledge, they must be brought into relation with empirical data".<sup id="cite_ref-47" class="reference"><a href="#cite_note-47">[47]</a></sup></p>
+<h3><span class="mw-headline" id="Contemporary_rationalism">Contemporary rationalism</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=20" title="Edit section: Contemporary rationalism">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Rationalism has become a rarer label <i>tout court</i> of philosophers today; rather many different kinds of specialised rationalisms are identified. For example, <a href="/wiki/Robert_Brandom" title="Robert Brandom">Robert Brandom</a> has appropriated the terms <a href="/w/index.php?title=Rationalist_expressivism&amp;action=edit&amp;redlink=1" class="new" title="Rationalist expressivism (page does not exist)">rationalist expressivism</a> and <a href="/w/index.php?title=Rationalist_pragmatism&amp;action=edit&amp;redlink=1" class="new" title="Rationalist pragmatism (page does not exist)">rationalist pragmatism</a> as labels for aspects of his programme in <i>Articulating Reasons</i>, and identified <a href="/w/index.php?title=Linguistic_rationalism&amp;action=edit&amp;redlink=1" class="new" title="Linguistic rationalism (page does not exist)">linguistic rationalism</a>, the claim that the content of propositions "are essentially what can serve as both premises and conclusions of inferences", as a key thesis of <a href="/wiki/Wilfred_Sellars" class="mw-redirect" title="Wilfred Sellars">Wilfred Sellars</a>.<sup id="cite_ref-48" class="reference"><a href="#cite_note-48">[48]</a></sup></p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=21" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="div-col columns column-width" style="-moz-column-width: 15em; -webkit-column-width: 15em; column-width: 15em;">
+<ul>
+<li><a href="/wiki/17th-century_philosophy" title="17th-century philosophy">17th-century philosophy</a></li>
+<li><a href="/wiki/Cartesianism" title="Cartesianism">Cartesianism</a></li>
+<li><a href="/wiki/Cartesian_linguistics" title="Cartesian linguistics">Cartesian linguistics</a></li>
+<li><a href="/wiki/Cult_of_reason" class="mw-redirect" title="Cult of reason">Cult of reason</a></li>
+<li><a href="/wiki/Critical_rationalism" title="Critical rationalism">Critical rationalism</a></li>
+<li><a href="/wiki/Cynicism_(philosophy)" title="Cynicism (philosophy)">Cynicism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Higher_criticism" class="mw-redirect" title="Higher criticism">Higher criticism</a></li>
+<li><a href="/wiki/Humanism" title="Humanism">Humanism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a></li>
+<li><a href="/wiki/Innatism" title="Innatism">Innatism</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a></li>
+<li><a href="/wiki/Logical_positivism" title="Logical positivism">Logical positivism</a></li>
+<li><a href="/wiki/Logical_truth" title="Logical truth">Logical truth</a></li>
+<li><a href="/wiki/Natural_philosophy" title="Natural philosophy">Natural philosophy</a></li>
+<li><a href="/wiki/Nature_versus_nurture" title="Nature versus nurture">Nature versus nurture</a></li>
+<li><a href="/wiki/Nominalism" title="Nominalism">Nominalism</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivity (philosophy)</a></li>
+<li><a href="/wiki/Objectivity_(science)" title="Objectivity (science)">Objectivity (science)</a></li>
+<li><a href="/wiki/Panrationalism" title="Panrationalism">Panrationalism</a></li>
+<li><a href="/wiki/Philosophical_realism" title="Philosophical realism">Philosophical realism</a></li>
+<li><a href="/wiki/Philosophy_of_Spinoza" class="mw-redirect" title="Philosophy of Spinoza">Philosophy of Spinoza</a></li>
+<li><a href="/wiki/Poverty_of_the_stimulus" title="Poverty of the stimulus">Poverty of the stimulus</a></li>
+<li><a href="/wiki/Platonic_realism" title="Platonic realism">Platonic realism</a></li>
+<li><a href="/wiki/Pluralistic_Rationalism" class="mw-redirect" title="Pluralistic Rationalism">Pluralistic Rationalism</a></li>
+<li><a href="/wiki/Psychological_nativism" title="Psychological nativism">Psychological nativism</a></li>
+<li><a href="/wiki/Rationalist_International" title="Rationalist International">Rationalist International</a></li>
+<li><a href="/wiki/Rational_mysticism" title="Rational mysticism">Rational mysticism</a></li>
+<li><a href="/wiki/Rationality_and_power" class="mw-redirect" title="Rationality and power">Rationality and power</a></li>
+<li><a href="/wiki/Tabula_rasa" title="Tabula rasa">Tabula rasa</a></li>
+</ul>
+</div>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=22" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Citations">Citations</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=23" title="Edit section: Citations">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div class="reflist columns references-column-count references-column-count-2" style="-moz-column-count: 2; -webkit-column-count: 2; column-count: 2; list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-Encyclopedia_Britannica:_Rationalism-1"><span class="mw-cite-backlink">^ <a href="#cite_ref-Encyclopedia_Britannica:_Rationalism_1-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Encyclopedia_Britannica:_Rationalism_1-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-Encyclopedia_Britannica:_Rationalism_1-2"><sup><i><b>c</b></i></sup></a> <a href="#cite_ref-Encyclopedia_Britannica:_Rationalism_1-3"><sup><i><b>d</b></i></sup></a></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.britannica.com/EBchecked/topic/492034/rationalism">Encyclopedia Britannica: Rationalism</a></span></li>
+<li id="cite_note-Lacey_286-2"><span class="mw-cite-backlink">^ <a href="#cite_ref-Lacey_286_2-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Lacey_286_2-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Lacey, A.R. (1996), A Dictionary of Philosophy, 1st edition, Routledge and Kegan Paul, 1976. 2nd edition, 1986. 3rd edition, Routledge, London, UK, 1996. p. 286</span></li>
+<li id="cite_note-Bourke_263-3"><span class="mw-cite-backlink">^ <a href="#cite_ref-Bourke_263_3-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Bourke_263_3-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Bourke, Vernon J., "Rationalism," p. 263 in Runes (1962).</span></li>
+<li id="cite_note-Rationalism_vs._Empiricism-4"><span class="mw-cite-backlink">^ <a href="#cite_ref-Rationalism_vs._Empiricism_4-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Rationalism_vs._Empiricism_4-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Stanford Encyclopedia of Philosophy, <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/rationalism-empiricism/">Rationalism vs. Empiricism</a> First published August 19, 2004; substantive revision March 31, 2013 cited on May 20, 2013.</span></li>
+<li id="cite_note-Audi_771-5"><span class="mw-cite-backlink">^ <a href="#cite_ref-Audi_771_5-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Audi_771_5-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Audi, Robert, The Cambridge Dictionary of Philosophy, Cambridge University Press, Cambridge, UK, 1995. 2nd edition, 1999, p. 771.</span></li>
+<li id="cite_note-6"><span class="mw-cite-backlink"><b><a href="#cite_ref-6">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://faculty.isi.org/catalog/resource/view/id/678">Oakeshott, Michael,"Rationalism in Politics," <i>The Cambridge Journal</i> 1947, vol. 1</a> Retrieved 2013-01-13.</span></li>
+<li id="cite_note-7"><span class="mw-cite-backlink"><b><a href="#cite_ref-7">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://usj.sagepub.com/content/43/5-6/863.abstract">Boyd, Richard, "The Value of Civility?," <i>Urban Studies Journal</i>, May 2006, vol. 43 (no. 5–6), pp. 863–78</a> Retrieved 2013-01-13.</span></li>
+<li id="cite_note-8"><span class="mw-cite-backlink"><b><a href="#cite_ref-8">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.factcheck.org"><i>FactCheck.org</i></a>. Retrieved 2013-01-13.</span></li>
+<li id="cite_note-9"><span class="mw-cite-backlink"><b><a href="#cite_ref-9">^</a></b></span> <span class="reference-text">Cottingham, John. 1984. Rationalism. Paladi/Granada</span></li>
+<li id="cite_note-10"><span class="mw-cite-backlink"><b><a href="#cite_ref-10">^</a></b></span> <span class="reference-text">Sommers (2003), p. 15.</span></li>
+<li id="cite_note-The_Intuition.2FDeduction_Thesis-11"><span class="mw-cite-backlink">^ <a href="#cite_ref-The_Intuition.2FDeduction_Thesis_11-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-The_Intuition.2FDeduction_Thesis_11-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-The_Intuition.2FDeduction_Thesis_11-2"><sup><i><b>c</b></i></sup></a></span> <span class="reference-text">Stanford Encyclopedia of Philosophy, <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/rationalism-empiricism/#2">The Intuition/Deduction Thesis</a> First published August 19, 2004; substantive revision March 31, 2013 cited on May 20, 2013.</span></li>
+<li id="cite_note-12"><span class="mw-cite-backlink"><b><a href="#cite_ref-12">^</a></b></span> <span class="reference-text">1704, Gottfried Leibniz Preface, pp. 150–151</span></li>
+<li id="cite_note-The_Innate_Knowledge_Thesis-13"><span class="mw-cite-backlink">^ <a href="#cite_ref-The_Innate_Knowledge_Thesis_13-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-The_Innate_Knowledge_Thesis_13-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Stanford Encyclopedia of Philosophy, <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/rationalism-empiricism/#3">The Innate Knowledge Thesis</a> First published August 19, 2004; substantive revision March 31, 2013 cited on May 20, 2013.</span></li>
+<li id="cite_note-14"><span class="mw-cite-backlink"><b><a href="#cite_ref-14">^</a></b></span> <span class="reference-text">Meno, 80d–e</span></li>
+<li id="cite_note-The_Innate_Concept_Thesis-15"><span class="mw-cite-backlink">^ <a href="#cite_ref-The_Innate_Concept_Thesis_15-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-The_Innate_Concept_Thesis_15-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text">Stanford Encyclopedia of Philosophy, <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/rationalism-empiricism/#4">The Innate Concept Thesis</a> First published August 19, 2004; substantive revision March 31, 2013 cited on May 20, 2013.</span></li>
+<li id="cite_note-16"><span class="mw-cite-backlink"><b><a href="#cite_ref-16">^</a></b></span> <span class="reference-text">Locke, Concerning Human Understanding, Book I, Ch. III, par. 20</span></li>
+<li id="cite_note-17"><span class="mw-cite-backlink"><b><a href="#cite_ref-17">^</a></b></span> <span class="reference-text"><cite class="citation book">Cottingham, J., ed. (April 1996) [1986]. <a rel="nofollow" class="external text" href="https://books.google.com/books?id=yMwiTTpwasgC&amp;printsec=frontcover"><i>Meditations on First Philosophy With Selections from the Objections and Replies</i></a> (revised ed.). Cambridge University Press. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/978-0-521-55818-1" title="Special:BookSources/978-0-521-55818-1">978-0-521-55818-1</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.btitle=Meditations+on+First+Philosophy+With+Selections+from+the+Objections+and+Replies&amp;rft.date=1996-04&amp;rft.edition=revised&amp;rft.genre=book&amp;rft_id=https%3A%2F%2Fbooks.google.com%2Fbooks%3Fid%3DyMwiTTpwasgC%26printsec%3Dfrontcover&amp;rft.isbn=978-0-521-55818-1&amp;rft.pub=Cambridge+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span>&#160;–The original <i>Meditations</i>, translated, in its entirety.</span></li>
+<li id="cite_note-18"><span class="mw-cite-backlink"><b><a href="#cite_ref-18">^</a></b></span> <span class="reference-text">René Descartes AT VII 37–8; CSM II 26</span></li>
+<li id="cite_note-19"><span class="mw-cite-backlink"><b><a href="#cite_ref-19">^</a></b></span> <span class="reference-text">Gottfried Wilhelm Leibniz, 1704, New Essays on human Understanding, Preface, p. 153</span></li>
+<li id="cite_note-Epistemological_rationalism_in_ancient_philosophies-20"><span class="mw-cite-backlink">^ <a href="#cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-2"><sup><i><b>c</b></i></sup></a> <a href="#cite_ref-Epistemological_rationalism_in_ancient_philosophies_20-3"><sup><i><b>d</b></i></sup></a></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.britannica.com/EBchecked/topic/492034/rationalism/68592/History-of-rationalism">Encyclopedia Britannia: Epistemological rationalism in ancient philosophies</a></span></li>
+<li id="cite_note-21"><span class="mw-cite-backlink"><b><a href="#cite_ref-21">^</a></b></span> <span class="reference-text"><a href="/wiki/Cicero" title="Cicero">Cicero</a>, <i><a href="/wiki/Tusculan_Disputations" class="mw-redirect" title="Tusculan Disputations">Tusculan Disputations</a></i>, 5.3.8–9 = <a href="/wiki/Heraclides_Ponticus" title="Heraclides Ponticus">Heraclides Ponticus</a> fr. 88 Wehrli, <a href="/wiki/Diogenes_La%C3%ABrtius" title="Diogenes Laërtius">Diogenes Laërtius</a> 1.12, 8.8, <a href="/wiki/Iamblichus" title="Iamblichus">Iamblichus</a> <i>VP</i> 58. Burkert attempted to discredit this ancient tradition, but it has been defended by C.J. De Vogel, <i>Pythagoras and Early Pythagoreanism</i> (1966), pp. 97–102, and C. Riedweg, <i>Pythagoras: His Life, Teaching, And Influence</i> (2005), p. 92.</span></li>
+<li id="cite_note-22"><span class="mw-cite-backlink"><b><a href="#cite_ref-22">^</a></b></span> <span class="reference-text">Modern English textbooks and translations prefer "theory of Form" to "theory of Ideas," but the latter has a long and respected tradition starting with Cicero and continuing in German philosophy until present, and some English philosophers prefer this in English too. See W D Ross, Plato's Theory of Ideas (1951) and <a rel="nofollow" class="external text" href="http://www.philosophyprofessor.com/philosophies/platos-theory-of-forms.php">this</a> reference site.</span></li>
+<li id="cite_note-23"><span class="mw-cite-backlink"><b><a href="#cite_ref-23">^</a></b></span> <span class="reference-text">The name of this aspect of Plato's thought is not modern and has not been extracted from certain dialogues by modern scholars. The term was used at least as early as <a href="/wiki/Diogenes_Laertius" class="mw-redirect" title="Diogenes Laertius">Diogenes Laertius</a>, who called it (Plato's) "Theory of Forms:" <span lang="grc" xml:lang="grc">Πλάτων �?ν τῇ πε�?ὶ τῶν ἰδεῶν ὑπολήψει</span>...., <cite class="citation encyclopaedia">"Plato". <i>Lives of Eminent Philosophers</i>. Book III. pp.&#160;Paragraph 15.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Plato&amp;rft.btitle=Lives+of+Eminent+Philosophers&amp;rft.genre=bookitem&amp;rft.pages=Paragraph+15&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-24"><span class="mw-cite-backlink"><b><a href="#cite_ref-24">^</a></b></span> <span class="reference-text">Plato uses many different words for what is traditionally called <i>form</i> in English translations and <i>idea</i> in German and Latin translations (Cicero). These include <i>idéa</i>, <i>morphē</i>, <i>eîdos</i>, and <i>parádeigma</i>, but also <i>génos</i>, <i>phýsis</i>, and <i><a href="/wiki/Ousia" title="Ousia">ousía</a></i>. He also uses expressions such as <i>to x auto</i>, "the x itself" or <i>kath' auto</i> "in itself." See Christian Schäfer: <i>Idee/Form/Gestalt/Wesen</i>, in <i>Platon-Lexikon</i>, Darmstadt 2007, p. 157.</span></li>
+<li id="cite_note-25"><span class="mw-cite-backlink"><b><a href="#cite_ref-25">^</a></b></span> <span class="reference-text"><i>Forms (usually given a capital F) were properties or essences of things, treated as non-material abstract, but substantial, entities. They were eternal, changeless, supremely real, and independent of ordinary objects that had their being and properties by 'participating' in them.</i> <a rel="nofollow" class="external text" href="http://www.philosophyprofessor.com/philosophies/platos-theory-of-forms.php">Plato's theory of forms (or ideas)</a></span></li>
+<li id="cite_note-26"><span class="mw-cite-backlink"><b><a href="#cite_ref-26">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://plato-dialogues.org/faq/faq009.htm">Frequently Asked Questions about Plato</a> – <a rel="nofollow" class="external text" href="http://plato-dialogues.org/suzanne.htm">Bernard SUZANNE</a></span></li>
+<li id="cite_note-27"><span class="mw-cite-backlink"><b><a href="#cite_ref-27">^</a></b></span> <span class="reference-text"><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a>, Prior Analytics<i>, 24b18–20</i></span></li>
+<li id="cite_note-28"><span class="mw-cite-backlink"><b><a href="#cite_ref-28">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external autonumber" href="http://plato.stanford.edu/entries/logic-ancient/#SynSemSen">[1]</a> Stanford Encyclopedia of Philosophy: <i>Ancient Logic</i> Aristotle Non-Modal Syllogistic</span></li>
+<li id="cite_note-29"><span class="mw-cite-backlink"><b><a href="#cite_ref-29">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external autonumber" href="http://plato.stanford.edu/entries/logic-ancient/#ModLog">[2]</a> Stanford Encyclopedia of Philosophy: <i>Ancient Logic</i> Aristotle Modal Logic</span></li>
+<li id="cite_note-30"><span class="mw-cite-backlink"><b><a href="#cite_ref-30">^</a></b></span> <span class="reference-text"><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a> (2004) <a rel="nofollow" class="external text" href="https://books.google.com/books?id=Ey94E3sOMA0C&amp;pg=PA516"><i>History of western philosophy</i></a> pp. 511, 516–17</span></li>
+<li id="cite_note-31"><span class="mw-cite-backlink"><b><a href="#cite_ref-31">^</a></b></span> <span class="reference-text">Heidegger [1938] (2002) p. 76 "Descartes... that which he himself founded... modern (and that means, at the same time, Western) metaphysics."</span></li>
+<li id="cite_note-Britannica-32"><span class="mw-cite-backlink"><b><a href="#cite_ref-Britannica_32-0">^</a></b></span> <span class="reference-text"><cite class="citation journal"><a href="/wiki/Richard_Watson_(philosopher)" title="Richard Watson (philosopher)">Watson, Richard A.</a> (31 March 2012). <a rel="nofollow" class="external text" href="http://www.britannica.com/EBchecked/topic/158787/Rene-Descartes">"René Descartes"</a>. <i>Encyclopædia Britannica</i> (Encyclopædia Britannica Online. Encyclopædia Britannica Inc)<span class="reference-accessdate">. Retrieved <span class="nowrap">31 March</span> 2012</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Ren%C3%A9+Descartes&amp;rft.aufirst=Richard+A.&amp;rft.aulast=Watson&amp;rft.date=2012-03-31&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fwww.britannica.com%2FEBchecked%2Ftopic%2F158787%2FRene-Descartes&amp;rft.jtitle=Encyclop%C3%A6dia+Britannica&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-Epistemological_rationalism_in_modern_philosophies-33"><span class="mw-cite-backlink"><b><a href="#cite_ref-Epistemological_rationalism_in_modern_philosophies_33-0">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.britannica.com/EBchecked/topic/492034/rationalism/68594/Epistemological-rationalism-in-modern-philosophies">Encyclopedia Britannia: Epistemological rationalism in modern philosophies</a></span></li>
+<li id="cite_note-tws9904-34"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9904_34-0">^</a></b></span> <span class="reference-text"><cite class="citation news">Lisa Montanarelli (book reviewer) (January 8, 2006). <a rel="nofollow" class="external text" href="http://www.sfgate.com/cgi-bin/article.cgi?f=/c/a/2006/01/08/RVGO9GEOKH1.DTL">"Spinoza stymies 'God's attorney'&#160;– Stewart argues the secular world was at stake in Leibniz face off"</a>. San Francisco Chronicle<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Spinoza+stymies+%27God%27s+attorney%27+%93+Stewart+argues+the+secular+world+was+at+stake+in+Leibniz+face+off&amp;rft.au=Lisa+Montanarelli+%28book+reviewer%29&amp;rft.date=2006-01-08&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fwww.sfgate.com%2Fcgi-bin%2Farticle.cgi%3Ff%3D%2Fc%2Fa%2F2006%2F01%2F08%2FRVGO9GEOKH1.DTL&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws07dec212-35"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws07dec212_35-0">^</a></b></span> <span class="reference-text"><cite class="citation web">Kelley L. Ross (1999). <a rel="nofollow" class="external text" href="http://www.friesian.com/spinoza.htm">"Baruch Spinoza (1632–1677)"</a>. History of Philosophy As I See It<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-12-07</span></span>. <q>While for Spinoza all is God and all is Nature, the active/passive dualism enables us to restore, if we wish, something more like the traditional terms. Natura Naturans is the most God-like side of God, eternal, unchanging, and invisible, while Natura Naturata is the most Nature-like side of God, transient, changing, and visible.</q></cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.au=Kelley+L.+Ross&amp;rft.btitle=Baruch+Spinoza+%281632%931677%29&amp;rft.date=1999&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.friesian.com%2Fspinoza.htm&amp;rft.pub=History+of+Philosophy+As+I+See+It&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws07dec211-36"><span class="mw-cite-backlink">^ <a href="#cite_ref-tws07dec211_36-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-tws07dec211_36-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-tws07dec211_36-2"><sup><i><b>c</b></i></sup></a></span> <span class="reference-text"><cite class="citation news">Anthony Gottlieb (July 18, 1999). <a rel="nofollow" class="external text" href="http://www.times.com/books/99/07/18/reviews/990718.18gottlit.html">"God Exists, Philosophically"</a>. The New York Times: Books<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-12-07</span></span>. <q>Spinoza, a Dutch Jewish thinker of the 17th century, not only preached a philosophy of tolerance and benevolence but actually succeeded in living it. He was reviled in his own day and long afterward for his supposed atheism, yet even his enemies were forced to admit that he lived a saintly life.</q></cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=God+Exists%2C+Philosophically&amp;rft.au=Anthony+Gottlieb&amp;rft.date=1999-07-18&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fwww.times.com%2Fbooks%2F99%2F07%2F18%2Freviews%2F990718.18gottlit.html&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws908-37"><span class="mw-cite-backlink">^ <a href="#cite_ref-tws908_37-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-tws908_37-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-tws908_37-2"><sup><i><b>c</b></i></sup></a></span> <span class="reference-text"><cite class="citation news">ANTHONY GOTTLIEB (2009-09-07). <a rel="nofollow" class="external text" href="http://www.nytimes.com/books/99/07/18/reviews/990718.18gottlit.html">"God Exists, Philosophically (review of "Spinoza: A Life" by Steven Nadler)"</a>. The New York Times&#160;– Books<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-07</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=God+Exists%2C+Philosophically+%28review+of+%22Spinoza%3A+A+Life%22+by+Steven+Nadler%29&amp;rft.au=ANTHONY+GOTTLIEB&amp;rft.date=2009-09-07&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fwww.nytimes.com%2Fbooks%2F99%2F07%2F18%2Freviews%2F990718.18gottlit.html&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws07dec114-38"><span class="mw-cite-backlink">^ <a href="#cite_ref-tws07dec114_38-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-tws07dec114_38-1"><sup><i><b>b</b></i></sup></a> <a href="#cite_ref-tws07dec114_38-2"><sup><i><b>c</b></i></sup></a></span> <span class="reference-text"><cite class="citation news">Michael LeBuffe (book reviewer) (2006-11-05). <a rel="nofollow" class="external text" href="http://ndpr.nd.edu/review.cfm?id=8004">"Spinoza's Ethics: An Introduction, by Steven Nadler"</a>. University of Notre Dame<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-12-07</span></span>. <q>Spinoza's Ethics is a recent addition to Cambridge's Introductions to Key Philosophical Texts, a series developed for the purpose of helping readers with no specific background knowledge to begin the study of important works of Western philosophy...</q></cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Spinoza%27s+Ethics%3A+An+Introduction%2C+by+Steven+Nadler&amp;rft.au=Michael+LeBuffe+%28book+reviewer%29&amp;rft.date=2006-11-05&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fndpr.nd.edu%2Freview.cfm%3Fid%3D8004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9903-39"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9903_39-0">^</a></b></span> <span class="reference-text"><cite class="citation news"><a rel="nofollow" class="external text" href="http://select.nytimes.com/gst/abstract.html?res=F10B1EFC3E54167A93C7AB178FD85F4D8285F9">"EINSTEIN BELIEVES IN "SPINOZA'S GOD"; Scientist Defines His Faith in Reply, to Cablegram From Rabbi Here. SEES A DIVINE ORDER But Says Its Ruler Is Not Concerned "Wit Fates and Actions of Human Beings.<span style="padding-right:0.2em;">"</span>"</a>. The New York Times. April 25, 1929<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=EINSTEIN+BELIEVES+IN+%22SPINOZA%27S+GOD%22%3B+Scientist+Defines+His+Faith+in+Reply%2C+to+Cablegram+From+Rabbi+Here.+SEES+A+DIVINE+ORDER+But+Says+Its+Ruler+Is+Not+Concerned+%22Wit+Fates+and+Actions+of+Human+Beings.%22&amp;rft.date=1929-04-25&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fselect.nytimes.com%2Fgst%2Fabstract.html%3Fres%3DF10B1EFC3E54167A93C7AB178FD85F4D8285F9&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9902-40"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9902_40-0">^</a></b></span> <span class="reference-text"><cite class="citation news">Hutchison, Percy (November 20, 1932). <a rel="nofollow" class="external text" href="http://select.nytimes.com/gst/abstract.html?res=F40A14F83A5513738DDDA90A94D9415B828FF1D3">"Spinoza, "God-Intoxicated Man"; Three Books Which Mark the Three Hundredth Anniversary of the Philosopher's Birth BLESSED SPINOZA. A Biography. By Lewis Browne. 319 pp. New York: Macmillan. SPINOZA. Liberator of God and Man. By Benjamin De Casseres, 145 pp. New York: E.Wickham Sweetland. SPINOZA THE BIOSOPHER. By Frederick Kettner. Introduction by Nicholas Roerich, New Era Library. 255 pp. New York: Roerich Museum Press. Spinoza"</a>. The New York Times<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Spinoza%2C+%22God-Intoxicated+Man%22%3B+Three+Books+Which+Mark+the+Three+Hundredth+Anniversary+of+the+Philosopher%27s+Birth+BLESSED+SPINOZA.+A+Biography.+By+Lewis+Browne.+319+pp.+New+York%3A+Macmillan.+SPINOZA.+Liberator+of+God+and+Man.+By+Benjamin+De+Casseres%2C+145+pp.+New+York%3A+E.Wickham+Sweetland.+SPINOZA+THE+BIOSOPHER.+By+Frederick+Kettner.+Introduction+by+Nicholas+Roerich%2C+New+Era+Library.+255+pp.+New+York%3A+Roerich+Museum+Press.+Spinoza&amp;rft.aufirst=Percy&amp;rft.aulast=Hutchison&amp;rft.date=1932-11-20&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fselect.nytimes.com%2Fgst%2Fabstract.html%3Fres%3DF40A14F83A5513738DDDA90A94D9415B828FF1D3&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9910-41"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9910_41-0">^</a></b></span> <span class="reference-text"><cite class="citation news"><a rel="nofollow" class="external text" href="http://select.nytimes.com/gst/abstract.html?res=F60D1EFF395C147A93C3A81789D95F438285F9">"Spinoza's First Biography Is Recovered; THE OLDEST BIOGRAPHY OF SPINOZA. Edited with Translations, Introduction, Annotations, &amp;c., by A. Wolf. 196 pp. New York: Lincoln Macveagh. The Dial Press."</a>. The New York Times. December 11, 1927<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Spinoza%27s+First+Biography+Is+Recovered%3B+THE+OLDEST+BIOGRAPHY+OF+SPINOZA.+Edited+with+Translations%2C+Introduction%2C+Annotations%2C+%26c.%2C+by+A.+Wolf.+196+pp.+New+York%3A+Lincoln+Macveagh.+The+Dial+Press.&amp;rft.date=1927-12-11&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fselect.nytimes.com%2Fgst%2Fabstract.html%3Fres%3DF60D1EFF395C147A93C3A81789D95F438285F9&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9901-42"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9901_42-0">^</a></b></span> <span class="reference-text"><cite class="citation news">IRWIN EDMAN (July 22, 1934). <a rel="nofollow" class="external text" href="http://select.nytimes.com/gst/abstract.html?res=FB0610FC395D13728DDDAB0A94DF405B848FF1D3">"The Unique and Powerful Vision of Baruch Spinoza; Professor Wolfson's Long-Awaited Book Is a Work of Illuminating Scholarship. (Book review) THE PHILOSOPHY OF SPINOZA. By Henry Austryn Wolfson"</a>. The New York Times<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=The+Unique+and+Powerful+Vision+of+Baruch+Spinoza%3B+Professor+Wolfson%27s+Long-Awaited+Book+Is+a+Work+of+Illuminating+Scholarship.+%28Book+review%29+THE+PHILOSOPHY+OF+SPINOZA.+By+Henry+Austryn+Wolfson&amp;rft.au=IRWIN+EDMAN&amp;rft.date=1934-07-22&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fselect.nytimes.com%2Fgst%2Fabstract.html%3Fres%3DFB0610FC395D13728DDDAB0A94DF405B848FF1D3&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9908-43"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9908_43-0">^</a></b></span> <span class="reference-text"><cite class="citation news">Cummings, M E (September 8, 1929). <a rel="nofollow" class="external text" href="http://pqasb.pqarchiver.com/latimes/access/370934682.html?dids=370934682:370934682&amp;FMT=ABS&amp;FMTS=ABS:AI&amp;type=historic&amp;date=Sep+08%2C+1929&amp;author=&amp;pub=Los+Angeles+Times&amp;desc=ROTH+EVALUATES+SPINOZA&amp;pqatl=google">"ROTH EVALUATES SPINOZA"</a>. Los Angeles Times<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=ROTH+EVALUATES+SPINOZA&amp;rft.aufirst=M+E&amp;rft.aulast=Cummings&amp;rft.date=1929-09-08&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fpqasb.pqarchiver.com%2Flatimes%2Faccess%2F370934682.html%3Fdids%3D370934682%3A370934682%26FMT%3DABS%26FMTS%3DABS%3AAI%26type%3Dhistoric%26date%3DSep%2B08%252C%2B1929%26author%3D%26pub%3DLos%2BAngeles%2BTimes%26desc%3DROTH%2BEVALUATES%2BSPINOZA%26pqatl%3Dgoogle&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tws9906-44"><span class="mw-cite-backlink"><b><a href="#cite_ref-tws9906_44-0">^</a></b></span> <span class="reference-text"><cite class="citation news">SOCIAL NEWS BOOKS (November 25, 1932). <a rel="nofollow" class="external text" href="http://select.nytimes.com/gst/abstract.html?res=F30D13F6355516738DDDAC0A94D9415B828FF1D3">"TRIBUTE TO SPINOZA PAID BY EDUCATORS; Dr. Robinson Extols Character of Philosopher, 'True to the Eternal Light Within Him.' HAILED AS 'GREAT REBEL'; De Casseres Stresses Individualism of Man Whose Tercentenary Is Celebrated at Meeting."</a>. The New York Times<span class="reference-accessdate">. Retrieved <span class="nowrap">2009-09-08</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=TRIBUTE+TO+SPINOZA+PAID+BY+EDUCATORS%3B+Dr.+Robinson+Extols+Character+of+Philosopher%2C+%27True+to+the+Eternal+Light+Within+Him.%27+HAILED+AS+%27GREAT+REBEL%27%3B+De+Casseres+Stresses+Individualism+of+Man+Whose+Tercentenary+Is+Celebrated+at+Meeting.&amp;rft.au=SOCIAL+NEWS+BOOKS&amp;rft.date=1932-11-25&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fselect.nytimes.com%2Fgst%2Fabstract.html%3Fres%3DF30D13F6355516738DDDAC0A94D9415B828FF1D3&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-Gottfried_Wilhelm_Leibniz-45"><span class="mw-cite-backlink"><b><a href="#cite_ref-Gottfried_Wilhelm_Leibniz_45-0">^</a></b></span> <span class="reference-text">Stanford Encyclopedia of Philosophy: <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/leibniz/">Gottfried Wilhelm Leibniz</a>.</span></li>
+<li id="cite_note-46"><span class="mw-cite-backlink"><b><a href="#cite_ref-46">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/kant/">"Immanuel Kant (Stanford Encyclopedia of Philosophy)"</a>. Plato.stanford.edu. 20 May 2010<span class="reference-accessdate">. Retrieved <span class="nowrap">2011-10-22</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.btitle=Immanuel+Kant+%28Stanford+Encyclopedia+of+Philosophy%29&amp;rft.date=2010-05-20&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fplato.stanford.edu%2Fentries%2Fkant%2F&amp;rft.pub=Plato.stanford.edu&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-47"><span class="mw-cite-backlink"><b><a href="#cite_ref-47">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://abyss.uoregon.edu/~js/glossary/rationalism.html">Excerpt from the Encyclopedia Britannica</a></span></li>
+<li id="cite_note-48"><span class="mw-cite-backlink"><b><a href="#cite_ref-48">^</a></b></span> <span class="reference-text"><i>Articulating reasons</i>, 2000. Harvard University Press.</span></li>
+</ol>
+</div>
+<h3><span class="mw-headline" id="Primary_sources">Primary sources</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=24" title="Edit section: Primary sources">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">Descartes, René</a> (1637), <i><a href="/wiki/Discourse_on_Method" class="mw-redirect" title="Discourse on Method">Discourse on Method</a></i>.</li>
+<li><a href="/wiki/Baruch_Spinoza" title="Baruch Spinoza">Spinoza, Baruch</a> (1677), <i><a href="/wiki/Ethics_(Spinoza)" title="Ethics (Spinoza)">Ethics</a></i>.</li>
+<li><a href="/wiki/Gottfried_Leibniz" class="mw-redirect" title="Gottfried Leibniz">Leibniz, Gottfried</a> (1714), <i><a href="/wiki/Monadology" title="Monadology">Monadology</a></i>.</li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant, Immanuel</a> (1781/1787), <i><a href="/wiki/Critique_of_Pure_Reason" title="Critique of Pure Reason">Critique of Pure Reason</a></i>.</li>
+</ul>
+<h3><span class="mw-headline" id="Secondary_sources">Secondary sources</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=25" title="Edit section: Secondary sources">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><a href="/wiki/Robert_Audi" title="Robert Audi">Audi, Robert</a> (ed., 1999), <i>The Cambridge Dictionary of Philosophy</i>, <a href="/wiki/Cambridge_University_Press" title="Cambridge University Press">Cambridge University Press</a>, Cambridge, UK, 1995. 2nd edition, 1999.</li>
+<li><a href="/wiki/Simon_Blackburn" title="Simon Blackburn">Blackburn, Simon</a> (1996), <i>The Oxford Dictionary of Philosophy</i>, <a href="/wiki/Oxford_University_Press" title="Oxford University Press">Oxford University Press</a>, Oxford, UK, 1994. Paperback edition with new Chronology, 1996.</li>
+<li><a href="/wiki/Vernon_J._Bourke" class="mw-redirect" title="Vernon J. Bourke">Bourke, Vernon J.</a> (1962), "Rationalism," p.&#160;263 in Runes (1962).</li>
+<li><cite class="citation book"><a href="/wiki/Louis_Fischer" title="Louis Fischer">Fischer, Louis</a> (1997). <i>The Life of Mahatma Gandhi</i>. <a href="/wiki/Harper_Collins" class="mw-redirect" title="Harper Collins">Harper Collins</a>. pp.&#160;306–07. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/0-00-638887-6" title="Special:BookSources/0-00-638887-6">0-00-638887-6</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.aufirst=Louis&amp;rft.aulast=Fischer&amp;rft.btitle=The+Life+of+Mahatma+Gandhi&amp;rft.date=1997&amp;rft.genre=book&amp;rft.isbn=0-00-638887-6&amp;rft.pages=306-07&amp;rft.pub=Harper+Collins&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li>Lacey, A.R. (1996), <i>A Dictionary of Philosophy</i>, 1st edition, Routledge and Kegan Paul, 1976. 2nd edition, 1986. 3rd edition, Routledge, London, UK, 1996.</li>
+<li><a href="/wiki/Dagobert_D._Runes" title="Dagobert D. Runes">Runes, Dagobert D.</a> (ed., 1962), <i>Dictionary of Philosophy</i>, Littlefield, Adams, and Company, Totowa, NJ.</li>
+<li><cite class="citation book">Baird, Forrest E.; Walter Kaufmann (2008). <i>From Plato to Derrida</i>. Upper Saddle River, New Jersey: Pearson Prentice Hall. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/0-13-158591-6" title="Special:BookSources/0-13-158591-6">0-13-158591-6</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.aufirst=Forrest+E.&amp;rft.aulast=Baird&amp;rft.au=Walter+Kaufmann&amp;rft.btitle=From+Plato+to+Derrida&amp;rft.date=2008&amp;rft.genre=book&amp;rft.isbn=0-13-158591-6&amp;rft.place=Upper+Saddle+River%2C+New+Jersey&amp;rft.pub=Pearson+Prentice+Hall&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+</ul>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Rationalism&amp;action=edit&amp;section=26" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><cite class="citation encyclopaedia"><a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/rationalism-empiricism">"Rationalism vs. Empiricism"</a>. <i><a href="/wiki/Stanford_Encyclopedia_of_Philosophy" title="Stanford Encyclopedia of Philosophy">Stanford Encyclopedia of Philosophy</a></i>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Rationalism+vs.+Empiricism&amp;rft.btitle=Stanford+Encyclopedia+of+Philosophy&amp;rft.genre=bookitem&amp;rft_id=http%3A%2F%2Fplato.stanford.edu%2Fentries%2Frationalism-empiricism&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><a rel="nofollow" class="external text" href="http://philpapers.org/browse/rationalism">Rationalism</a> at <a href="/wiki/PhilPapers" title="PhilPapers">PhilPapers</a></li>
+<li><a rel="nofollow" class="external text" href="https://inpho.cogs.indiana.edu/taxonomy/2382">Rationalism</a> at the <a href="/wiki/Indiana_Philosophy_Ontology_Project" title="Indiana Philosophy Ontology Project">Indiana Philosophy Ontology Project</a></li>
+<li><cite class="citation encyclopaedia">Homan, Matthew. <a rel="nofollow" class="external text" href="http://www.iep.utm.edu/cont-rat">"Continental Rationalism"</a>. <i><a href="/wiki/Internet_Encyclopedia_of_Philosophy" title="Internet Encyclopedia of Philosophy">Internet Encyclopedia of Philosophy</a></i>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Continental+Rationalism&amp;rft.aufirst=Matthew&amp;rft.aulast=Homan&amp;rft.btitle=Internet+Encyclopedia+of+Philosophy&amp;rft.genre=bookitem&amp;rft_id=http%3A%2F%2Fwww.iep.utm.edu%2Fcont-rat&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite class="citation encyclopaedia">Lennon, Thomas M.; Dea, Shannon. <a rel="nofollow" class="external text" href="http://plato.stanford.edu/entries/continental-rationalism">"Continental Rationalism"</a>. <i><a href="/wiki/Stanford_Encyclopedia_of_Philosophy" title="Stanford Encyclopedia of Philosophy">Stanford Encyclopedia of Philosophy</a></i>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ARationalism&amp;rft.atitle=Continental+Rationalism&amp;rft.au=Dea%2C+Shannon&amp;rft.aufirst=Thomas+M.&amp;rft.aulast=Lennon&amp;rft.btitle=Stanford+Encyclopedia+of+Philosophy&amp;rft.genre=bookitem&amp;rft_id=http%3A%2F%2Fplato.stanford.edu%2Fentries%2Fcontinental-rationalism&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li>John F. Hurst (1867), <i><a rel="nofollow" class="external text" href="http://www.gutenberg.org/etext/19397">History of Rationalism Embracing a Survey of the Present State of Protestant Theology</a></i></li>
+</ul>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_of_science" title="Template:Philosophy of science"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_of_science" title="Template talk:Philosophy of science"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_of_science&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><a href="/wiki/Philosophy_of_science" title="Philosophy of science">Philosophy of science</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Concepts</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Philosophical_analysis" title="Philosophical analysis">Analysis</a></li>
+<li><a href="/wiki/Analytic%E2%80%93synthetic_distinction" title="Analytic–synthetic distinction">Analytic–synthetic distinction</a></li>
+<li><a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori"><i>A priori</i> and <i>a posteriori</i></a></li>
+<li><a href="/wiki/Causality" title="Causality">Causality</a></li>
+<li><a href="/wiki/Commensurability_(philosophy_of_science)" title="Commensurability (philosophy of science)">Commensurability</a></li>
+<li><a href="/wiki/Consilience" title="Consilience">Consilience</a></li>
+<li><a href="/wiki/Construct_(philosophy)" title="Construct (philosophy)">Construct</a></li>
+<li><a href="/wiki/Creative_synthesis" title="Creative synthesis">Creative synthesis</a></li>
+<li><a href="/wiki/Demarcation_problem" title="Demarcation problem">Demarcation problem</a></li>
+<li><a href="/wiki/Empirical_evidence" title="Empirical evidence">Empirical evidence</a></li>
+<li><a href="/wiki/Explanatory_power" title="Explanatory power">Explanatory power</a></li>
+<li><a href="/wiki/Fact" title="Fact">Fact</a></li>
+<li><a href="/wiki/Falsifiability" title="Falsifiability">Falsifiability</a></li>
+<li><a href="/wiki/Feminist_method" title="Feminist method">Feminist method</a></li>
+<li><i><a href="/wiki/Ignoramus_et_ignorabimus" title="Ignoramus et ignorabimus">Ignoramus et ignorabimus</a></i></li>
+<li><a href="/wiki/Inductive_reasoning" title="Inductive reasoning">Inductive reasoning</a></li>
+<li><a href="/wiki/Intertheoretic_reduction" title="Intertheoretic reduction">Intertheoretic reduction</a></li>
+<li><a href="/wiki/Inquiry" title="Inquiry">Inquiry</a></li>
+<li><a href="/wiki/Nature_(philosophy)" title="Nature (philosophy)">Nature</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivity</a></li>
+<li><a href="/wiki/Observation" title="Observation">Observation</a></li>
+<li><a href="/wiki/Paradigm" title="Paradigm">Paradigm</a></li>
+<li><a href="/wiki/Problem_of_induction" title="Problem of induction">Problem of induction</a></li>
+<li><a href="/wiki/Scientific_law" title="Scientific law">Scientific law</a></li>
+<li><a href="/wiki/Scientific_method" title="Scientific method">Scientific method</a></li>
+<li><a href="/wiki/Scientific_revolution" title="Scientific revolution">Scientific revolution</a></li>
+<li><a href="/wiki/Scientific_theory" title="Scientific theory">Scientific theory</a></li>
+<li><a href="/wiki/Testability" title="Testability">Testability</a></li>
+<li><a href="/wiki/Theory_choice" title="Theory choice">Theory choice</a></li>
+<li><a href="/wiki/Theory-ladenness" title="Theory-ladenness">Theory-ladenness</a></li>
+<li><a href="/wiki/Underdetermination" title="Underdetermination">Underdetermination</a></li>
+<li><a href="/wiki/Unity_of_science" title="Unity of science">Unity of science</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em"><a href="/wiki/Category:Metatheory_of_science" title="Category:Metatheory of science">Metatheory<br />
+of science</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Coherentism" title="Coherentism">Coherentism</a></li>
+<li><a href="/wiki/Confirmation_holism" title="Confirmation holism">Confirmation holism</a></li>
+<li><a href="/wiki/Constructive_empiricism" title="Constructive empiricism">Constructive empiricism</a></li>
+<li><a href="/wiki/Constructive_realism" title="Constructive realism">Constructive realism</a></li>
+<li><a href="/wiki/Constructivist_epistemology" title="Constructivist epistemology">Constructivist epistemology</a></li>
+<li><a href="/wiki/Contextualism" title="Contextualism">Contextualism</a></li>
+<li><a href="/wiki/Conventionalism" title="Conventionalism">Conventionalism</a></li>
+<li>{<a href="/wiki/Deductive-nomological_model" title="Deductive-nomological model">Deductive-nomological model</a></li>
+<li><a href="/wiki/Hypothetico-deductive_model" title="Hypothetico-deductive model">Hypothetico-deductive model</a></li>
+<li><a href="/wiki/Inductionism" title="Inductionism">Inductionism</a>}</li>
+<li><a href="/wiki/Epistemological_anarchism" title="Epistemological anarchism">Epistemological anarchism</a></li>
+<li><a href="/wiki/Fallibilism" title="Fallibilism">Fallibilism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Instrumentalism" title="Instrumentalism">Instrumentalism</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Model-dependent_realism" title="Model-dependent realism">Model-dependent realism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Physicalism" title="Physicalism">Physicalism</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a>-<a href="/wiki/Reductionism" title="Reductionism">Reductionism</a>-<a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><strong class="selflink">Rationalism</strong>&#160;/ <a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Received_view_of_theories" title="Received view of theories">Received view</a>&#160;/ <a href="/wiki/Semantic_view_of_theories" title="Semantic view of theories">Semantic view of theories</a></li>
+<li><a href="/wiki/Scientific_realism" title="Scientific realism">Scientific realism</a>&#160;/ <a href="/wiki/Anti-realism" title="Anti-realism">Anti-realism</a></li>
+<li><a href="/wiki/Scientific_essentialism" title="Scientific essentialism">Scientific essentialism</a></li>
+<li><a href="/wiki/Scientific_formalism" title="Scientific formalism">Scientific formalism</a></li>
+<li><a href="/wiki/Scientific_skepticism" title="Scientific skepticism">Scientific skepticism</a></li>
+<li><a href="/wiki/Scientism" title="Scientism">Scientism</a></li>
+<li><a href="/wiki/Structuralism_(philosophy_of_science)" title="Structuralism (philosophy of science)">Structuralism</a></li>
+<li><a href="/wiki/Uniformitarianism" title="Uniformitarianism">Uniformitarianism</a></li>
+<li><a href="/wiki/Vitalism" title="Vitalism">Vitalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Philosophy of</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Philosophy_of_physics" title="Philosophy of physics">Physics</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_thermal_and_statistical_physics" title="Philosophy of thermal and statistical physics">thermal and statistical</a></li>
+<li><a href="/wiki/Philosophy_of_motion" title="Philosophy of motion">Motion</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_chemistry" title="Philosophy of chemistry">Chemistry</a></li>
+<li><a href="/wiki/Philosophy_of_biology" title="Philosophy of biology">Biology</a></li>
+<li><a href="/wiki/Philosophy_of_environment" title="Philosophy of environment">Environment</a></li>
+<li><a href="/wiki/Philosophy_of_geography" title="Philosophy of geography">Geography</a></li>
+<li><a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">Social science</a></li>
+<li><a href="/wiki/Philosophy_of_technology" title="Philosophy of technology">Technology</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_engineering" title="Philosophy of engineering">Engineering</a></li>
+<li><a href="/wiki/Philosophy_of_artificial_intelligence" title="Philosophy of artificial intelligence">Artificial intelligence</a></li>
+<li><a href="/wiki/Philosophy_of_computer_science" title="Philosophy of computer science">Computer science</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_information" title="Philosophy of information">Information</a></li>
+<li><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a></li>
+<li><a href="/wiki/Philosophy_of_psychology" title="Philosophy of psychology">Psychology</a></li>
+<li><a href="/wiki/Philosophy_of_perception" title="Philosophy of perception">Perception</a></li>
+<li><a href="/wiki/Philosophy_of_space_and_time" title="Philosophy of space and time">Space and time</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em"><a href="/wiki/Index_of_philosophy_of_science_articles" title="Index of philosophy of science articles">Related topics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Alchemy" title="Alchemy">Alchemy</a></li>
+<li><a href="/wiki/Criticism_of_science" title="Criticism of science">Criticism of science</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Faith_and_rationality" title="Faith and rationality">Faith and rationality</a></li>
+<li><a href="/wiki/History_and_philosophy_of_science" title="History and philosophy of science">History and philosophy of science</a></li>
+<li><a href="/wiki/History_of_science" title="History of science">History of science</a></li>
+<li><a href="/wiki/History_of_evolutionary_thought" title="History of evolutionary thought">History of evolutionary thought</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Pseudoscience" title="Pseudoscience">Pseudoscience</a></li>
+<li><a href="/wiki/Relationship_between_religion_and_science" title="Relationship between religion and science">Relationship between religion and science</a></li>
+<li><a href="/wiki/Rhetoric_of_science" title="Rhetoric of science">Rhetoric of science</a></li>
+<li><a href="/wiki/Sociology_of_scientific_knowledge" title="Sociology of scientific knowledge">Sociology of scientific knowledge</a></li>
+<li><a href="/wiki/Sociology_of_scientific_ignorance" title="Sociology of scientific ignorance">Sociology of scientific ignorance</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_philosophers_of_science" title="List of philosophers of science">Philosophers of science</a> by era</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Ancient</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a></li>
+<li><a href="/wiki/Stoicism" title="Stoicism">Stoicism</a></li>
+<li><a href="/wiki/Epicureanism" title="Epicureanism">Epicurians</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Medieval</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+<li><a href="/wiki/Avicenna" title="Avicenna">Avicenna</a></li>
+<li><a href="/wiki/Roger_Bacon" title="Roger Bacon">Roger Bacon</a></li>
+<li><a href="/wiki/William_of_Ockham" title="William of Ockham">William of Ockham</a></li>
+<li><a href="/wiki/Hugh_of_Saint_Victor" title="Hugh of Saint Victor">Hugh of Saint Victor</a></li>
+<li><a href="/wiki/Dominicus_Gundissalinus" title="Dominicus Gundissalinus">Dominicus Gundissalinus</a></li>
+<li><a href="/wiki/Robert_Kilwardby" title="Robert Kilwardby">Robert Kilwardby</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Early modern</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Francis_Bacon" title="Francis Bacon">Francis Bacon</a></li>
+<li><a href="/wiki/Thomas_Hobbes" title="Thomas Hobbes">Thomas Hobbes</a></li>
+<li><a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">René Descartes</a></li>
+<li><a href="/wiki/Galileo_Galilei" title="Galileo Galilei">Galileo Galilei</a></li>
+<li><a href="/wiki/Pierre_Gassendi" title="Pierre Gassendi">Pierre Gassendi</a></li>
+<li><a href="/wiki/Isaac_Newton" title="Isaac Newton">Isaac Newton</a></li>
+<li><a href="/wiki/David_Hume" title="David Hume">David Hume</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Classical modern</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a></li>
+<li><a href="/wiki/Friedrich_Wilhelm_Joseph_Schelling" title="Friedrich Wilhelm Joseph Schelling">Friedrich Schelling</a></li>
+<li><a href="/wiki/Auguste_Comte" title="Auguste Comte">Auguste Comte</a></li>
+<li><a href="/wiki/William_Whewell" title="William Whewell">William Whewell</a></li>
+<li><a href="/wiki/Wilhelm_Windelband" title="Wilhelm Windelband">Wilhelm Windelband</a></li>
+<li><a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">John Stuart Mill</a></li>
+<li><a href="/wiki/Herbert_Spencer" title="Herbert Spencer">Herbert Spencer</a></li>
+<li><a href="/wiki/Pierre_Duhem" title="Pierre Duhem">Pierre Duhem</a></li>
+<li><a href="/wiki/Henri_Poincar%C3%A9" title="Henri Poincaré">Henri Poincaré</a></li>
+<li><a href="/wiki/Wilhelm_Wundt" title="Wilhelm Wundt">Wilhelm Wundt</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:7.5em">Late modern</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Albert_Einstein" title="Albert Einstein">Albert Einstein</a></li>
+<li><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a></li>
+<li><a href="/wiki/Alfred_North_Whitehead" title="Alfred North Whitehead">Alfred North Whitehead</a></li>
+<li><a href="/wiki/Rudolf_Carnap" title="Rudolf Carnap">Rudolf Carnap</a></li>
+<li><a href="/wiki/Willard_Van_Orman_Quine" title="Willard Van Orman Quine">W. V. O. Quine</a></li>
+<li><a href="/wiki/Bas_van_Fraassen" title="Bas van Fraassen">Bas van Fraassen</a></li>
+<li><a href="/wiki/Carl_Gustav_Hempel" title="Carl Gustav Hempel">Carl Gustav Hempel</a></li>
+<li><a href="/wiki/Charles_Sanders_Peirce" title="Charles Sanders Peirce">Charles Sanders Peirce</a></li>
+<li><a href="/wiki/Daniel_Dennett" title="Daniel Dennett">Daniel Dennett</a></li>
+<li><a href="/wiki/Hans_Reichenbach" title="Hans Reichenbach">Hans Reichenbach</a></li>
+<li><a href="/wiki/Ian_Hacking" title="Ian Hacking">Ian Hacking</a></li>
+<li><a href="/wiki/Imre_Lakatos" title="Imre Lakatos">Imre Lakatos</a></li>
+<li><a href="/wiki/J%C3%BCrgen_Habermas" title="Jürgen Habermas">Jürgen Habermas</a></li>
+<li><a href="/wiki/Karl_Pearson" title="Karl Pearson">Karl Pearson</a></li>
+<li><a href="/wiki/Karl_Popper" title="Karl Popper">Karl Popper</a></li>
+<li><a href="/wiki/Larry_Laudan" title="Larry Laudan">Larry Laudan</a></li>
+<li><a href="/wiki/Michael_Polanyi" title="Michael Polanyi">Michael Polanyi</a></li>
+<li><a href="/wiki/Otto_Neurath" title="Otto Neurath">Otto Neurath</a></li>
+<li><a href="/wiki/Paul_Feyerabend" title="Paul Feyerabend">Paul Feyerabend</a></li>
+<li><a href="/wiki/Thomas_Kuhn" title="Thomas Kuhn">Thomas Kuhn</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Portal:Philosophy_of_science" title="Portal:Philosophy of science">Portal</a></li>
+<li><a href="/wiki/Category:Philosophy_of_science" title="Category:Philosophy of science">Category</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Epistemology" title="Template:Epistemology"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Epistemology" title="Template talk:Epistemology"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Epistemology&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/List_of_epistemologists" title="List of epistemologists">Epistemologists</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Thomas_Aquinas" title="Thomas Aquinas">Thomas Aquinas</a></li>
+<li><a href="/wiki/Augustine_of_Hippo" title="Augustine of Hippo">Augustine of Hippo</a></li>
+<li><a href="/wiki/William_Alston" title="William Alston">William Alston</a></li>
+<li><a href="/wiki/Robert_Audi" title="Robert Audi">Robert Audi</a></li>
+<li><a href="/wiki/A._J._Ayer" title="A. J. Ayer">A. J. Ayer</a></li>
+<li><a href="/wiki/George_Berkeley" title="George Berkeley">George Berkeley</a></li>
+<li><a href="/wiki/Laurence_BonJour" title="Laurence BonJour">Laurence BonJour</a></li>
+<li><a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">René Descartes</a></li>
+<li><a href="/wiki/Edmund_Gettier" title="Edmund Gettier">Edmund Gettier</a></li>
+<li><a href="/wiki/Alvin_Goldman" title="Alvin Goldman">Alvin Goldman</a></li>
+<li><a href="/wiki/Nelson_Goodman" title="Nelson Goodman">Nelson Goodman</a></li>
+<li><a href="/wiki/Paul_Grice" title="Paul Grice">Paul Grice</a></li>
+<li><a href="/wiki/David_Hume" title="David Hume">David Hume</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a></li>
+<li><a href="/wiki/S%C3%B8ren_Kierkegaard" title="Søren Kierkegaard">Søren Kierkegaard</a></li>
+<li><a href="/wiki/Saul_Kripke" title="Saul Kripke">Saul Kripke</a></li>
+<li><a href="/wiki/David_Lewis_(philosopher)" title="David Lewis (philosopher)">David Lewis</a></li>
+<li><a href="/wiki/John_Locke" title="John Locke">John Locke</a></li>
+<li><a href="/wiki/G._E._Moore" title="G. E. Moore">G. E. Moore</a></li>
+<li><a href="/wiki/Robert_Nozick" title="Robert Nozick">Robert Nozick</a></li>
+<li><a href="/wiki/Alvin_Plantinga" title="Alvin Plantinga">Alvin Plantinga</a></li>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Hilary_Putnam" title="Hilary Putnam">Hilary Putnam</a></li>
+<li><a href="/wiki/Thomas_Reid" title="Thomas Reid">Thomas Reid</a></li>
+<li><a href="/wiki/Gilbert_Ryle" title="Gilbert Ryle">Gilbert Ryle</a></li>
+<li><a href="/wiki/P._F._Strawson" title="P. F. Strawson">P. F. Strawson</a></li>
+<li><a href="/wiki/Willard_Van_Orman_Quine" title="Willard Van Orman Quine">Willard Van Orman Quine</a></li>
+<li><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a></li>
+<li><a href="/wiki/Timothy_Williamson" title="Timothy Williamson">Timothy Williamson</a></li>
+<li><a href="/wiki/Ludwig_Wittgenstein" title="Ludwig Wittgenstein">Ludwig Wittgenstein</a></li>
+<li><a href="/wiki/Nicholas_Wolterstorff" title="Nicholas Wolterstorff">Nicholas Wolterstorff</a></li>
+<li><a href="/wiki/Vienna_Circle" title="Vienna Circle">Vienna Circle</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Category:Epistemological_theories" title="Category:Epistemological theories">Theories</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Coherentism" title="Coherentism">Coherentism</a></li>
+<li><a href="/wiki/Constructivist_epistemology" title="Constructivist epistemology">Constructivist epistemology</a></li>
+<li><a href="/wiki/Contextualism" title="Contextualism">Contextualism</a></li>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Evolutionary_epistemology" title="Evolutionary epistemology">Evolutionary epistemology</a></li>
+<li><a href="/wiki/Fallibilism" title="Fallibilism">Fallibilism</a></li>
+<li><a href="/wiki/Feminist_epistemology" title="Feminist epistemology">Feminist epistemology</a></li>
+<li><a href="/wiki/Fideism" title="Fideism">Fideism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Genetic_epistemology" title="Genetic epistemology">Genetic epistemology</a></li>
+<li><a href="/wiki/Holism" title="Holism">Holism</a></li>
+<li><a href="/wiki/Infinitism" title="Infinitism">Infinitism</a></li>
+<li><a href="/wiki/Innatism" title="Innatism">Innatism</a></li>
+<li><a href="/wiki/Internalism_and_externalism" title="Internalism and externalism">Internalism and externalism</a></li>
+<li><a href="/wiki/Na%C3%AFve_realism" title="Naïve realism">Naïve realism</a></li>
+<li><a href="/wiki/Naturalized_epistemology" title="Naturalized epistemology">Naturalized epistemology</a></li>
+<li><a href="/wiki/Phenomenalism" title="Phenomenalism">Phenomenalism</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a></li>
+<li><a href="/wiki/Reductionism" title="Reductionism">Reductionism</a></li>
+<li><a href="/wiki/Reliabilism" title="Reliabilism">Reliabilism</a></li>
+<li><a href="/wiki/Representative_realism" class="mw-redirect" title="Representative realism">Representative realism</a></li>
+<li><strong class="selflink">Rationalism</strong></li>
+<li><a href="/wiki/Philosophical_skepticism" title="Philosophical skepticism">Skepticism</a></li>
+<li><a href="/wiki/Theory_of_Forms" title="Theory of Forms">Theory of Forms</a></li>
+<li><a href="/wiki/Transcendental_idealism" title="Transcendental idealism">Transcendental idealism</a></li>
+<li><a href="/wiki/Uniformitarianism" title="Uniformitarianism">Uniformitarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Category:Concepts_in_epistemology" title="Category:Concepts in epistemology">Concepts</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/A_priori_and_a_posteriori" title="A priori and a posteriori">A priori knowledge</a></li>
+<li><a href="/wiki/Philosophical_analysis" title="Philosophical analysis">Analysis</a></li>
+<li><a href="/wiki/Analytic%E2%80%93synthetic_distinction" title="Analytic–synthetic distinction">Analytic–synthetic distinction</a></li>
+<li><a href="/wiki/Belief" title="Belief">Belief</a></li>
+<li><a href="/wiki/Causality" title="Causality">Causality</a></li>
+<li><a href="/wiki/Common_sense" title="Common sense">Common sense</a></li>
+<li><a href="/wiki/Descriptive_knowledge" title="Descriptive knowledge">Descriptive knowledge</a></li>
+<li><a href="/wiki/Exploratory_thought" title="Exploratory thought">Exploratory thought</a></li>
+<li><a href="/wiki/Gettier_problem" title="Gettier problem">Gettier problem</a></li>
+<li><a href="/wiki/Theory_of_justification" title="Theory of justification">Justification</a></li>
+<li><a href="/wiki/Knowledge" title="Knowledge">Knowledge</a></li>
+<li><a href="/wiki/Inductive_reasoning" title="Inductive reasoning">Induction</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivity</a></li>
+<li><a href="/wiki/Problem_of_induction" title="Problem of induction">Problem of induction</a></li>
+<li><a href="/wiki/Problem_of_other_minds" title="Problem of other minds">Problem of other minds</a></li>
+<li><a href="/wiki/Perception" title="Perception">Perception</a></li>
+<li><a href="/wiki/Proposition" title="Proposition">Proposition</a></li>
+<li><a href="/wiki/Regress_argument" title="Regress argument">Regress argument</a></li>
+<li><a href="/wiki/Simplicity" title="Simplicity">Simplicity</a></li>
+<li><a href="/wiki/Speculative_reason" title="Speculative reason">Speculative reason</a></li>
+<li><a href="/wiki/Truth" title="Truth">Truth</a></li>
+<li><i><a href="/wiki/Index_of_epistemology_articles" title="Index of epistemology articles">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Related articles</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Outline_of_epistemology" title="Outline of epistemology">Outline of epistemology</a></li>
+<li><a href="/wiki/Alethiology" title="Alethiology">Alethiology</a></li>
+<li><a href="/wiki/Faith_and_rationality" title="Faith and rationality">Faith and rationality</a></li>
+<li><a href="/wiki/Formal_epistemology" title="Formal epistemology">Formal epistemology</a></li>
+<li><a href="/wiki/Meta-epistemology" title="Meta-epistemology">Meta-epistemology</a></li>
+<li><a href="/wiki/Philosophy_of_perception" title="Philosophy of perception">Philosophy of perception</a></li>
+<li><a href="/wiki/Philosophy_of_science" title="Philosophy of science">Philosophy of science</a></li>
+<li><a href="/wiki/Social_epistemology" title="Social epistemology">Social epistemology</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Portal:Epistemology" title="Portal:Epistemology">Portal</a></li>
+<li><a href="/wiki/Category:Epistemology" title="Category:Epistemology">Category</a></li>
+<li><a href="/wiki/Wikipedia:WikiProject_Philosophy/Epistemology" title="Wikipedia:WikiProject Philosophy/Epistemology">Task Force</a></li>
+<li><a href="/wiki/Category:Philosophy_stubs" title="Category:Philosophy stubs">Stubs</a></li>
+<li><a href="/wiki/Wikipedia_talk:WikiProject_Philosophy" title="Wikipedia talk:WikiProject Philosophy">Discussion</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Help:Authority_control" title="Help:Authority control">Authority control</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><span style="white-space:nowrap;"><a href="/wiki/Integrated_Authority_File" title="Integrated Authority File">GND</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://d-nb.info/gnd/4129164-5">4129164-5</a></span></span></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1254
+Cached time: 20160705101248
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.378 seconds
+Real time usage: 0.486 seconds
+Preprocessor visited node count: 2828/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 111919/2097152 bytes
+Template argument size: 11683/2097152 bytes
+Highest expansion depth: 11/40
+Expensive parser function count: 2/500
+Lua time usage: 0.145/10.000 seconds
+Lua memory usage: 4.43 MB/50 MB
+Number of Wikibase entities loaded: 1-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  392.321      1 - -total
+ 36.18%  141.937      1 - Template:Reflist
+ 12.91%   50.648      1 - Template:Citation_needed
+ 11.71%   45.928      1 - Template:Fix
+ 11.03%   43.269      3 - Template:Cite_book
+ 10.10%   39.644      1 - Template:Philosophy_of_science
+  9.92%   38.899     10 - Template:Cite_news
+  9.43%   36.982      1 - Template:Navbox_with_collapsible_sections
+  8.93%   35.025      3 - Template:Category_handler
+  5.80%   22.758      1 - Template:Authority_control
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:63753-0!*!0!!en!*!* and timestamp 20160705101248 and revision id 724297574
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Rationalism&amp;oldid=724297574">https://en.wikipedia.org/w/index.php?title=Rationalism&amp;oldid=724297574</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Epistemological_theories" title="Category:Epistemological theories">Epistemological theories</a></li><li><a href="/wiki/Category:Rationalism" title="Category:Rationalism">Rationalism</a></li><li><a href="/wiki/Category:Justification" title="Category:Justification">Justification</a></li><li><a href="/wiki/Category:History_of_philosophy" title="Category:History of philosophy">History of philosophy</a></li><li><a href="/wiki/Category:Philosophical_movements" title="Category:Philosophical movements">Philosophical movements</a></li><li><a href="/wiki/Category:Internalism_and_externalism" title="Category:Internalism and externalism">Internalism and externalism</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_containing_Ancient_Greek-language_text" title="Category:Articles containing Ancient Greek-language text">Articles containing Ancient Greek-language text</a></li><li><a href="/wiki/Category:All_articles_with_unsourced_statements" title="Category:All articles with unsourced statements">All articles with unsourced statements</a></li><li><a href="/wiki/Category:Articles_with_unsourced_statements_from_June_2015" title="Category:Articles with unsourced statements from June 2015">Articles with unsourced statements from June 2015</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_GND_identifiers" title="Category:Wikipedia articles with GND identifiers">Wikipedia articles with GND identifiers</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Rationalism" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Rationalism" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Rationalism"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Rationalism"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Rationalism" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Rationalism&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Rationalism&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Rationalism" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Rationalism" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Rationalism&amp;oldid=724297574" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Rationalism&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q483024" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Rationalism&amp;id=724297574" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Rationalism">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Rationalism&amp;returnto=Rationalism&amp;oldid=724297574&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Rationalism&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Rationalism" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D8%B9%D9%82%D9%84%D8%A7%D9%86%D9%8A%D8%A9_(%D9%81%D9%84%D8%B3%D9%81%D8%A9)" title="عقلانية (�?لس�?ة) – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-az"><a href="//az.wikipedia.org/wiki/Rasionalizm" title="Rasionalizm – Azerbaijani" lang="az" hreflang="az">Azərbaycanca</a></li><li class="interlanguage-link interwiki-bn"><a href="//bn.wikipedia.org/wiki/%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%E0%A6%BF%E0%A6%AC%E0%A6%BE%E0%A6%A6" title="য�?ক�?তিবাদ – Bengali" lang="bn" hreflang="bn">বাংলা</a></li><li class="interlanguage-link interwiki-zh-min-nan"><a href="//zh-min-nan.wikipedia.org/wiki/L%C3%AD-s%C3%A8ng_ch%C3%BA-g%C4%AB" title="Lí-sèng chú-gī – Chinese (Min Nan)" lang="zh-min-nan" hreflang="zh-min-nan">Bân-lâm-gú</a></li><li class="interlanguage-link interwiki-bg"><a href="//bg.wikipedia.org/wiki/%D0%A0%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D1%8A%D0%BC" title="Рационализъм – Bulgarian" lang="bg" hreflang="bg">Българ�?ки</a></li><li class="interlanguage-link interwiki-bs"><a href="//bs.wikipedia.org/wiki/Racionalizam" title="Racionalizam – Bosnian" lang="bs" hreflang="bs">Bosanski</a></li><li class="interlanguage-link interwiki-ca"><a href="//ca.wikipedia.org/wiki/Racionalisme_(filosofia)" title="Racionalisme (filosofia) – Catalan" lang="ca" hreflang="ca">Català</a></li><li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Racionalismus" title="Racionalismus – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-cy"><a href="//cy.wikipedia.org/wiki/Rhesymoliaeth" title="Rhesymoliaeth – Welsh" lang="cy" hreflang="cy">Cymraeg</a></li><li class="interlanguage-link interwiki-da"><a href="//da.wikipedia.org/wiki/Rationalisme" title="Rationalisme – Danish" lang="da" hreflang="da">Dansk</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/Rationalismus" title="Rationalismus – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-et"><a href="//et.wikipedia.org/wiki/Ratsionalism" title="Ratsionalism – Estonian" lang="et" hreflang="et">Eesti</a></li><li class="interlanguage-link interwiki-el"><a href="//el.wikipedia.org/wiki/%CE%A1%CE%B1%CF%83%CE%B9%CE%BF%CE%BD%CE%B1%CE%BB%CE%B9%CF%83%CE%BC%CF%8C%CF%82" title="Ρασιοναλισμός – Greek" lang="el" hreflang="el">Ελληνικά</a></li><li class="interlanguage-link interwiki-es"><a href="//es.wikipedia.org/wiki/Racionalismo" title="Racionalismo – Spanish" lang="es" hreflang="es">Español</a></li><li class="interlanguage-link interwiki-eo"><a href="//eo.wikipedia.org/wiki/Raciismo" title="Raciismo – Esperanto" lang="eo" hreflang="eo">Esperanto</a></li><li class="interlanguage-link interwiki-eu"><a href="//eu.wikipedia.org/wiki/Arrazionalismo" title="Arrazionalismo – Basque" lang="eu" hreflang="eu">Euskara</a></li><li class="interlanguage-link interwiki-fa"><a href="//fa.wikipedia.org/wiki/%D8%AE%D8%B1%D8%AF%DA%AF%D8%B1%D8%A7%DB%8C%DB%8C" title="خردگرایی – Persian" lang="fa" hreflang="fa">�?ارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Rationalisme" title="Rationalisme – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-gl"><a href="//gl.wikipedia.org/wiki/Racionalismo" title="Racionalismo – Galician" lang="gl" hreflang="gl">Galego</a></li><li class="interlanguage-link interwiki-gan"><a href="//gan.wikipedia.org/wiki/%E7%90%86%E6%80%A7%E4%B8%BB%E7%BE%A9" title="�?�性主義 – Gan Chinese" lang="gan" hreflang="gan">贛語</a></li><li class="interlanguage-link interwiki-ko"><a href="//ko.wikipedia.org/wiki/%ED%95%A9%EB%A6%AC%EB%A1%A0" title="합리론 – Korean" lang="ko" hreflang="ko">한국어</a></li><li class="interlanguage-link interwiki-hi"><a href="//hi.wikipedia.org/wiki/%E0%A4%B5%E0%A4%BF%E0%A4%B5%E0%A5%87%E0%A4%95%E0%A4%B5%E0%A4%BE%E0%A4%A6" title="विवेकवाद – Hindi" lang="hi" hreflang="hi">हिन�?दी</a></li><li class="interlanguage-link interwiki-hr"><a href="//hr.wikipedia.org/wiki/Racionalizam" title="Racionalizam – Croatian" lang="hr" hreflang="hr">Hrvatski</a></li><li class="interlanguage-link interwiki-id"><a href="//id.wikipedia.org/wiki/Rasionalisme" title="Rasionalisme – Indonesian" lang="id" hreflang="id">Bahasa Indonesia</a></li><li class="interlanguage-link interwiki-is"><a href="//is.wikipedia.org/wiki/R%C3%B6khyggja" title="Rökhyggja – Icelandic" lang="is" hreflang="is">�?slenska</a></li><li class="interlanguage-link interwiki-it"><a href="//it.wikipedia.org/wiki/Razionalismo" title="Razionalismo – Italian" lang="it" hreflang="it">Italiano</a></li><li class="interlanguage-link interwiki-he"><a href="//he.wikipedia.org/wiki/%D7%A8%D7%A6%D7%99%D7%95%D7%A0%D7%9C%D7%99%D7%96%D7%9D" title="רציונליז�? – Hebrew" lang="he" hreflang="he">עברית</a></li><li class="interlanguage-link interwiki-ka"><a href="//ka.wikipedia.org/wiki/%E1%83%A0%E1%83%90%E1%83%AA%E1%83%98%E1%83%9D%E1%83%9C%E1%83%90%E1%83%9A%E1%83%98%E1%83%96%E1%83%9B%E1%83%98" title="რ�?ცი�?ნ�?ლიზმი – Georgian" lang="ka" hreflang="ka">ქ�?რთული</a></li><li class="interlanguage-link interwiki-ku"><a href="//ku.wikipedia.org/wiki/Rasyonal%C3%AEzm" title="Rasyonalîzm – Kurdish" lang="ku" hreflang="ku">Kurdî</a></li><li class="interlanguage-link interwiki-la"><a href="//la.wikipedia.org/wiki/Rationalismus" title="Rationalismus – Latin" lang="la" hreflang="la">Latina</a></li><li class="interlanguage-link interwiki-lv"><a href="//lv.wikipedia.org/wiki/Racion%C4%81lisms" title="Racion�?lisms – Latvian" lang="lv" hreflang="lv">Latviešu</a></li><li class="interlanguage-link interwiki-lt"><a href="//lt.wikipedia.org/wiki/Racionalizmas" title="Racionalizmas – Lithuanian" lang="lt" hreflang="lt">Lietuvių</a></li><li class="interlanguage-link interwiki-hu"><a href="//hu.wikipedia.org/wiki/Racionalizmus" title="Racionalizmus – Hungarian" lang="hu" hreflang="hu">Magyar</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%A0%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D0%BC" title="Рационализам – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-ml"><a href="//ml.wikipedia.org/wiki/%E0%B4%AF%E0%B5%81%E0%B4%95%E0%B5%8D%E0%B4%A4%E0%B4%BF%E0%B4%B5%E0%B4%BE%E0%B4%A6%E0%B4%82" title="യ�?ക�?തിവാദം – Malayalam" lang="ml" hreflang="ml">മലയാളം</a></li><li class="interlanguage-link interwiki-arz"><a href="//arz.wikipedia.org/wiki/%D8%A7%D9%84%D8%B9%D9%82%D9%84%D8%A7%D9%86%D9%8A%D9%87" title="العقلانيه – Egyptian Arabic" lang="arz" hreflang="arz">مصرى</a></li><li class="interlanguage-link interwiki-ms"><a href="//ms.wikipedia.org/wiki/Rasionalisme" title="Rasionalisme – Malay" lang="ms" hreflang="ms">Bahasa Melayu</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Rationalisme" title="Rationalisme – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="//ja.wikipedia.org/wiki/%E7%90%86%E6%80%A7%E4%B8%BB%E7%BE%A9" title="�?�性主義 – Japanese" lang="ja" hreflang="ja">日本語</a></li><li class="interlanguage-link interwiki-no"><a href="//no.wikipedia.org/wiki/Rasjonalisme" title="Rasjonalisme – Norwegian" lang="no" hreflang="no">Norsk bokmål</a></li><li class="interlanguage-link interwiki-nn"><a href="//nn.wikipedia.org/wiki/Rasjonalisme" title="Rasjonalisme – Norwegian Nynorsk" lang="nn" hreflang="nn">Norsk nynorsk</a></li><li class="interlanguage-link interwiki-oc"><a href="//oc.wikipedia.org/wiki/Racionalisme" title="Racionalisme – Occitan" lang="oc" hreflang="oc">Occitan</a></li><li class="interlanguage-link interwiki-uz"><a href="//uz.wikipedia.org/wiki/Ratsionalizm" title="Ratsionalizm – Uzbek" lang="uz" hreflang="uz">Oʻzbekcha/ўзбекча</a></li><li class="interlanguage-link interwiki-jam"><a href="//jam.wikipedia.org/wiki/Rashanalizim" title="Rashanalizim – Jamaican Creole English" lang="jam" hreflang="jam">Patois</a></li><li class="interlanguage-link interwiki-pl"><a href="//pl.wikipedia.org/wiki/Racjonalizm_filozoficzny" title="Racjonalizm filozoficzny – Polish" lang="pl" hreflang="pl">Polski</a></li><li class="interlanguage-link interwiki-pt"><a href="//pt.wikipedia.org/wiki/Racionalismo" title="Racionalismo – Portuguese" lang="pt" hreflang="pt">Português</a></li><li class="interlanguage-link interwiki-ro"><a href="//ro.wikipedia.org/wiki/Ra%C8%9Bionalism" title="Raționalism – Romanian" lang="ro" hreflang="ro">Română</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC_(%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F)" title="Рационализм (фило�?офи�?) – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-simple"><a href="//simple.wikipedia.org/wiki/Rationalism" title="Rationalism – Simple English" lang="simple" hreflang="simple">Simple English</a></li><li class="interlanguage-link interwiki-sk"><a href="//sk.wikipedia.org/wiki/Racionalizmus_(filozofia)" title="Racionalizmus (filozofia) – Slovak" lang="sk" hreflang="sk">Sloven�?ina</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%A0%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D0%BC" title="Рационализам – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Racionalizam" title="Racionalizam – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Rationalismi_(tietoteoria)" title="Rationalismi (tietoteoria) – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Rationalism" title="Rationalism – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-ta"><a href="//ta.wikipedia.org/wiki/%E0%AE%AA%E0%AE%95%E0%AF%81%E0%AE%A4%E0%AF%8D%E0%AE%A4%E0%AE%B1%E0%AE%BF%E0%AE%B5%E0%AE%BF%E0%AE%AF%E0%AE%AE%E0%AF%8D" title="பக�?த�?தறிவியம�? – Tamil" lang="ta" hreflang="ta">தமிழ�?</a></li><li class="interlanguage-link interwiki-tr"><a href="//tr.wikipedia.org/wiki/Ak%C4%B1lc%C4%B1l%C4%B1k" title="Akılcılık – Turkish" lang="tr" hreflang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%A0%D0%B0%D1%86%D1%96%D0%BE%D0%BD%D0%B0%D0%BB%D1%96%D0%B7%D0%BC" title="Раціоналізм – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-vi"><a href="//vi.wikipedia.org/wiki/Ch%E1%BB%A7_ngh%C4%A9a_duy_l%C3%BD" title="Chủ nghĩa duy lý – Vietnamese" lang="vi" hreflang="vi">Tiếng Việt</a></li><li class="interlanguage-link interwiki-war"><a href="//war.wikipedia.org/wiki/Rasyonalismo" title="Rasyonalismo – Waray" lang="war" hreflang="war">Winaray</a></li><li class="interlanguage-link interwiki-yi"><a href="//yi.wikipedia.org/wiki/%D7%A8%D7%90%D7%A6%D7%99%D7%90%D7%A0%D7%90%D7%9C%D7%99%D7%96%D7%9D" title="ר�?צי�?נ�?ליז�? – Yiddish" lang="yi" hreflang="yi">ייִדיש</a></li><li class="interlanguage-link interwiki-zh"><a href="//zh.wikipedia.org/wiki/%E7%90%86%E6%80%A7%E4%B8%BB%E4%B9%89" title="�?�性主义 – Chinese" lang="zh" hreflang="zh">中文</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q483024#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 8 June 2016, at 10:16.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Rationalism&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":104,"wgHostname":"mw1025"});});</script>
+	</body>
+</html>

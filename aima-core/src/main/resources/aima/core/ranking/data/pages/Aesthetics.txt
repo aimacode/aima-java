@@ -1,0 +1,1600 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Aesthetics - Wikipedia, the free encyclopedia</title>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Aesthetics rootpage-Aesthetics skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Aesthetics</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div role="note" class="hatnote">"Aesthetic" redirects here. For the 19th century art movement, see <a href="/wiki/Aestheticism" title="Aestheticism">Aestheticism</a>.</div>
+<table class="metadata plainlinks ambox ambox-content ambox-Refimprove" role="presentation">
+<tr>
+<td class="mbox-image">
+<div style="width:52px"><a href="/wiki/File:Question_book-new.svg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/50px-Question_book-new.svg.png" width="50" height="39" srcset="//upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/75px-Question_book-new.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/100px-Question_book-new.svg.png 2x" data-file-width="512" data-file-height="399" /></a></div>
+</td>
+<td class="mbox-text"><span class="mbox-text-span">This article <b>needs additional citations for <a href="/wiki/Wikipedia:Verifiability" title="Wikipedia:Verifiability">verification</a></b>. <span class="hide-when-compact">Please help <a class="external text" href="//en.wikipedia.org/w/index.php?title=Aesthetics&amp;action=edit">improve this article</a> by <a href="/wiki/Help:Introduction_to_referencing_with_Wiki_Markup/1" title="Help:Introduction to referencing with Wiki Markup/1">adding citations to reliable sources</a>. Unsourced material may be challenged and removed.</span> <small><i>(April 2016)</i></small> <small class="hide-when-compact"><i>(<a href="/wiki/Help:Maintenance_template_removal" title="Help:Maintenance template removal">Learn how and when to remove this template message</a>)</i></small></span></td>
+</tr>
+</table>
+<table class="vertical-navbox nowraplinks plainlist" style="float:right;clear:right;width:22.0em;margin:0 0 1.0em 1.0em;background:#f9f9f9;border:1px solid #aaa;padding:0.2em;border-spacing:0.4em 0;text-align:center;line-height:1.4em;font-size:88%">
+<tr>
+<td style="padding-top:0.4em;line-height:1.2em">Part of <a href="/wiki/Category:Philosophy" title="Category:Philosophy">a series</a> on</td>
+</tr>
+<tr>
+<th style="padding:0.2em 0.4em 0.2em;padding-top:0;font-size:145%;line-height:1.2em;font-size:200%;font-weight:normal;padding-bottom:0.15em;"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></th>
+</tr>
+<tr>
+<td style="padding:0.2em 0 0.4em"><a href="/wiki/File:Philbar_3.png" class="image" title="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes"><img alt="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes" src="//upload.wikimedia.org/wikipedia/commons/c/cf/Philbar_3.png" width="220" height="151" data-file-width="220" data-file-height="151" /></a>
+<div style="padding-top:0.2em;line-height:1.2em;white-space:nowrap;border-bottom:1px #aaa solid;">
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a></li>
+</ul>
+</div>
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Buddha" class="mw-redirect" title="Buddha">Buddha</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophers" title="Category:Philosophers">Philosophers</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/List_of_aestheticians" title="List of aestheticians">Aestheticians</a></li>
+<li><a href="/wiki/List_of_epistemologists" title="List of epistemologists">Epistemologists</a></li>
+<li><a href="/wiki/List_of_ethicists" title="List of ethicists">Ethicists</a></li>
+<li><a href="/wiki/List_of_logicians" title="List of logicians">Logicians</a></li>
+<li><a href="/wiki/List_of_metaphysicians" title="List of metaphysicians">Metaphysicians</a></li>
+<li><a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">Social and political philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_traditions" title="Category:Philosophical traditions">Traditions</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></li>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelian</a></li>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian</a></li>
+<li><a href="/wiki/Continental_philosophy" title="Continental philosophy">Continental</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+<li><a href="/wiki/Jewish_Philosophy" class="mw-redirect" title="Jewish Philosophy">Jewish</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonic</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy_by_period" title="Category:Philosophy by period">Periods</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_literature" title="Category:Philosophical literature">Literature</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Category:Aesthetics_literature" title="Category:Aesthetics literature">Aesthetics</a></li>
+<li><a href="/wiki/Category:Epistemology_literature" title="Category:Epistemology literature">Epistemology</a></li>
+<li><a href="/wiki/Category:Ethics_literature" title="Category:Ethics literature">Ethics</a></li>
+<li><a href="/wiki/Category:Logic_literature" title="Category:Logic literature">Logic</a></li>
+<li><a href="/wiki/Category:Metaphysics_literature" title="Category:Metaphysics literature">Metaphysics</a></li>
+<li><a href="/wiki/Category:Political_philosophy_literature" title="Category:Political philosophy literature">Political philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Branches_of_philosophy" title="Category:Branches of philosophy">Branches</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><strong class="selflink">Aesthetics</strong></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Philosophy_of_law" title="Philosophy of law">Legal philosophy</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Political philosophy</a></li>
+<li><a href="/wiki/Social_philosophy" title="Social philosophy">Social philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy-related_lists" title="Category:Philosophy-related lists">Lists</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Theories</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;">Miscellaneous</th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Philosopher" title="Philosopher">Philosopher</a></li>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="padding:0.3em 0.4em 0.3em;font-weight:bold;border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;border-top:1px solid #aaa;border-bottom:1px solid #aaa;"><span class="metadata"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/10px-Socrates.png" width="10" height="16" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/15px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/21px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></span> <a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr>
+<td style="text-align:right;font-size:115%;padding-top: 0.6em;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_sidebar" title="Template:Philosophy sidebar"><abbr title="View this template">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_sidebar" title="Template talk:Philosophy sidebar"><abbr title="Discuss this template">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_sidebar&amp;action=edit"><abbr title="Edit this template">e</abbr></a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+<p><b>Aesthetics</b>, or the <a href="/wiki/Philosophy" title="Philosophy">philosophy</a> of art, is the study of beauty and taste. It is about interpreting works of art and art movements or theories. The term aesthetic is also used to designate a particular style, for example the "<a href="/wiki/Chess_aesthetics" title="Chess aesthetics">chess aesthetics</a>", the "<a href="/wiki/Japanese_aesthetics" title="Japanese aesthetics">japanese aesthetics</a>".</p>
+<p>As well as being applied to art, aesthetics can also be applied to cultural objects. Aesthetic design principles include ornamentation, edge delineation, texture, flow, solemnity, symmetry, color, granularity, the interaction of sunlight and shadows, transcendence, and harmony.</p>
+<p>The word aesthetic is also an adjective and adverb relating to <a href="/wiki/Cosmetology" title="Cosmetology">cosmetology</a> and medicine, as in <a href="/wiki/Aesthetic_medicine" title="Aesthetic medicine">aesthetic medicine</a>.</p>
+<p>Also spelt <i>æsthetics</i> and <i>esthetics</i>, the word is derived from the <a href="/wiki/Ancient_Greek" title="Ancient Greek">Ancient Greek</a> αἰσθητικός (<i>aisthetikos</i>, meaning "esthetic, sensitive, sentient, pertaining to sense perception"), which in turn was derived from αἰσθάνομαι (<i>aisthanomai</i>, meaning "I perceive, feel, sense").<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup></p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#History_of_aesthetics_in_western_philosophy"><span class="tocnumber">1</span> <span class="toctext">History of aesthetics in western philosophy</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Scientific_analysis_of_aesthetics"><span class="tocnumber">2</span> <span class="toctext">Scientific analysis of aesthetics</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Aesthetic_systems"><span class="tocnumber">3</span> <span class="toctext">Aesthetic systems</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Japanese_aesthetics"><span class="tocnumber">3.1</span> <span class="toctext">Japanese aesthetics</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Indian_aesthetics"><span class="tocnumber">3.2</span> <span class="toctext">Indian aesthetics</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Chess_aesthetics"><span class="tocnumber">3.3</span> <span class="toctext">Chess aesthetics</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Music_aesthetics"><span class="tocnumber">3.4</span> <span class="toctext">Music aesthetics</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Mathematical_beauty"><span class="tocnumber">3.5</span> <span class="toctext">Mathematical beauty</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#References"><span class="tocnumber">5</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#External_links"><span class="tocnumber">6</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="History_of_aesthetics_in_western_philosophy">History of aesthetics in western philosophy</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=1" title="Edit section: History of aesthetics in western philosophy">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright">
+<div class="thumbinner" style="width:222px;"><a href="/wiki/File:Aesthetica.png" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Aesthetica.png/220px-Aesthetica.png" width="220" height="352" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Aesthetica.png/330px-Aesthetica.png 1.5x, //upload.wikimedia.org/wikipedia/commons/9/9a/Aesthetica.png 2x" data-file-width="383" data-file-height="613" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:Aesthetica.png" class="internal" title="Enlarge"></a></div>
+<a href="/wiki/Alexander_Gottlieb_Baumgarten" title="Alexander Gottlieb Baumgarten">Alexander Gottlieb Baumgarten</a>'s Aesthetica</div>
+</div>
+</div>
+<div role="note" class="hatnote">See also: <a href="/wiki/History_of_aesthetics_before_the_20th_century" title="History of aesthetics before the 20th century">History of aesthetics before the 20th century</a></div>
+<p>The idea of the aesthetic developed from the idea of <a href="/wiki/Taste_(sociology)" title="Taste (sociology)">taste</a> and beauty. Before the early 1700s, thinkers developed general theories of proportion and harmony, detailed most specifically in architecture and music. An extended, philosophical reflection on aesthetics emerged with the widening of leisure activities in the eighteenth century.<sup id="cite_ref-:0_2-0" class="reference"><a href="#cite_note-:0-2">[2]</a></sup></p>
+<p>In the 1700s, <a href="/wiki/Edmund_Burke" title="Edmund Burke">Edmund Burke</a> and <a href="/wiki/David_Hume" title="David Hume">David Hume</a> tried to explain aesthetic concepts such as beauty with <a href="/wiki/Empirical_evidence" title="Empirical evidence">empirical evidence</a>, by connecting them with typical individuals' responses. They sought a basis for an objectivity of personal reactions.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup></p>
+<p>In the 1800s psychologist <a href="/wiki/Wilhelm_Wundt" title="Wilhelm Wundt">Wilhelm Wundt</a> showed that interest is generally related to complexity of stimulus. To arouse interest an object should be neither boringly simple nor overly complex; thus complexity could be an objective measure. It is now known, for instance, that judgments of facial beauty in humans are a matter of averageness and symmetry.<sup id="cite_ref-:0_2-1" class="reference"><a href="#cite_note-:0-2">[2]</a></sup></p>
+<p>The analysis of individual experience and behavior based on <a href="/wiki/Experiment" title="Experiment">experiment</a> is a central part of <a href="/wiki/Experimental_aesthetics" title="Experimental aesthetics">experimental aesthetics</a>, a field founded by <a href="/wiki/Gustav_Theodor_Fechner" class="mw-redirect" title="Gustav Theodor Fechner">Gustav Theodor Fechner</a> in the 1800s.</p>
+<p><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a> insisted that aesthetic concepts are essentially subjective, but have some objectivity since feelings of pleasure and pain can be universal responses to certain stimuli.</p>
+<p>Recently theorists have been interested in ways that aesthetic concepts are constructed out of social mores and practices. Evaluations of beauty may well be linked to desirability, economic, political, or moral value. One might judge a <a href="/wiki/Lamborghini" title="Lamborghini">Lamborghini</a> to be beautiful partly because it is desirable as a status symbol, or we might judge it to be repulsive partly because it signifies for us over-consumption and offends our political or moral values.<sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup></p>
+<p>As late as 1912 it was normal in the West to assume that all art aims at beauty, and thus that anything that wasn't trying to be beautiful couldn't count as art. The <a href="/wiki/Cubism" title="Cubism">cubists</a>, <a href="/wiki/Dada" title="Dada">dadaists</a>, <a href="/wiki/Igor_Stravinsky" title="Igor Stravinsky">Stravinsky</a>, and many later <a href="/wiki/Art_movement" title="Art movement">art movements</a> struggled against this conception that beauty was central to the definition of art, with such success that, according to <a href="/wiki/Danto" class="mw-redirect" title="Danto">Danto</a>, "Beauty had disappeared not only from the advanced art of the 1960s but from the advanced philosophy of art of that decade as well."</p>
+<p>In the 1930s, <a href="/wiki/Walter_Benjamin" title="Walter Benjamin">Walter Benjamin</a>, in his essay <a href="/wiki/The_Work_of_Art_in_the_Age_of_Mechanical_Reproduction" title="The Work of Art in the Age of Mechanical Reproduction">The Work of Art in the Age of Mechanical Reproduction</a>, argued that, in the absence of any traditional, ritualistic value, art in the age of mechanical reproduction would inherently be based on the practice of politics. <a href="/wiki/John_Berger" title="John Berger">John Berger</a> continued in this direction with <a href="/wiki/Ways_of_Seeing" title="Ways of Seeing">Ways of Seeing</a>, in which he criticizes traditional Western cultural aesthetics by raising questions about hidden ideologies in visual images.</p>
+<p>In 1946, <a href="/wiki/W._K._Wimsatt" class="mw-redirect" title="W. K. Wimsatt">William K. Wimsatt</a> and <a href="/wiki/Monroe_Beardsley" title="Monroe Beardsley">Monroe Beardsley</a> published the essay <a href="/wiki/Intentional_Fallacy" class="mw-redirect" title="Intentional Fallacy">The Intentional Fallacy</a>, in which they argued strongly against the relevance of an <a href="/wiki/Authorial_intentionality" class="mw-redirect" title="Authorial intentionality">author's intention</a>, or "intended meaning" in the analysis of a literary work. For Wimsatt and Beardsley, the words on the page were all that mattered; importation of meanings from outside the text was considered irrelevant, and potentially distracting. In another essay, "<a href="/wiki/Affective_fallacy" title="Affective fallacy">The Affective Fallacy</a>," which served as a kind of sister essay to "The Intentional Fallacy", Wimsatt and Beardsley also discounted the reader's personal/emotional reaction to a literary work as a valid means of analyzing a text. This fallacy would later be repudiated by theorists from the <a href="/wiki/Reader-response" class="mw-redirect" title="Reader-response">reader-response</a> school of literary theory. Ironically, one of the leading theorists from this school, <a href="/wiki/Stanley_Fish" title="Stanley Fish">Stanley Fish</a>, was himself trained by New Critics. Fish criticizes Wimsatt and Beardsley in his essay "Literature in the Reader" (1970).<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup></p>
+<p>In 1959 <a href="/wiki/Frank_Sibley_(philosopher)" title="Frank Sibley (philosopher)">Frank Sibley</a> wrote that aesthetic concepts were not rule- or condition-governed, but required a heightened form of perception, which one might call taste, sensitivity, or judgment.</p>
+<h2><span class="mw-headline" id="Scientific_analysis_of_aesthetics">Scientific analysis of aesthetics</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=2" title="Edit section: Scientific analysis of aesthetics">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright">
+<div class="thumbinner" style="width:222px;"><a href="/wiki/File:Mandel_zoom_00_mandelbrot_set.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/220px-Mandel_zoom_00_mandelbrot_set.jpg" width="220" height="165" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/330px-Mandel_zoom_00_mandelbrot_set.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/440px-Mandel_zoom_00_mandelbrot_set.jpg 2x" data-file-width="2560" data-file-height="1920" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:Mandel_zoom_00_mandelbrot_set.jpg" class="internal" title="Enlarge"></a></div>
+Initial image of a <a href="/wiki/Mandelbrot_set" title="Mandelbrot set">Mandelbrot set</a> zoom sequence with continuously colored environment</div>
+</div>
+</div>
+<p>In the 1990s, <a href="/wiki/J%C3%BCrgen_Schmidhuber" title="Jürgen Schmidhuber">Jürgen Schmidhuber</a> described an algorithmic theory of beauty which takes the <a href="/wiki/Subjectivity" title="Subjectivity">subjectivity</a> of the observer into account and postulates: among several observations classified as comparable by a given subjective observer, the aesthetically most pleasing one is the one with the shortest description, given the observer's previous knowledge and his particular method for encoding the data. This is closely related to the principles of <a href="/wiki/Algorithmic_information_theory" title="Algorithmic information theory">algorithmic information theory</a> and <a href="/wiki/Minimum_description_length" title="Minimum description length">minimum description length</a>. For example: <a href="/wiki/Mathematical_beauty" title="Mathematical beauty">mathematical beauty</a>. Another example describes an aesthetically pleasing human face whose proportions can be described with very little information, drawing inspiration from less detailed 15th century proportion studies by <a href="/wiki/Leonardo_da_Vinci" title="Leonardo da Vinci">Leonardo da Vinci</a> and <a href="/wiki/Albrecht_D%C3%BCrer" title="Albrecht Dürer">Albrecht Dürer</a>. Schmidhuber's theory explicitly distinguishes between what is beauty and what is interesting, stating that the latter corresponds to the <a href="/wiki/First_derivative" class="mw-redirect" title="First derivative">first derivative</a> of subjectively perceived beauty. The premise is that any observer continually tries to improve the predictability and compressibility of the observations by discovering regularities such as repetitions and <a href="/wiki/Symmetry" title="Symmetry">symmetry</a> and <a href="/wiki/Self-similarity" title="Self-similarity">self-similarity</a>.</p>
+<p>Mathematical considerations, such as symmetry and <a href="/wiki/Complexity" title="Complexity">complexity</a>, are used for analysis in theoretical aesthetics. The fact that judgments of beauty and judgments of truth both are influenced by <a href="/wiki/Processing_fluency" title="Processing fluency">processing fluency</a> has been presented as an explanation for why beauty is sometimes equated with truth.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup> Recent research found that people use beauty as an indication for truth in mathematical pattern tasks.<sup id="cite_ref-7" class="reference"><a href="#cite_note-7">[7]</a></sup></p>
+<p>Computer scientists have attempted to develop automated methods to infer aesthetic quality of images. Typically, these approaches follow a <a href="/wiki/Machine_learning" title="Machine learning">machine learning</a> approach, where large numbers of manually rated photographs are used to teach a computer about what visual properties are of relevance to aesthetic quality. The Acquine engine, developed at <a href="/wiki/Penn_State_University" class="mw-redirect" title="Penn State University">Penn State University</a>, rates natural photographs uploaded by users.<sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup> There have also been relatively successful attempts with regard to chess and music.<sup id="cite_ref-9" class="reference"><a href="#cite_note-9">[9]</a></sup></p>
+<p>In <a href="/wiki/Evolutionary_aesthetics" title="Evolutionary aesthetics">Evolutionary aesthetics</a>, the basic aesthetic preferences of humans are argued to be a product of evolutionary adaptations.<sup id="cite_ref-10" class="reference"><a href="#cite_note-10">[10]</a></sup> For example, body symmetry may be valued in <a href="/wiki/Physical_attractiveness" title="Physical attractiveness">physical attractiveness</a> because it may indicate good health.</p>
+<h2><span class="mw-headline" id="Aesthetic_systems">Aesthetic systems</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=3" title="Edit section: Aesthetic systems">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Japanese_aesthetics">Japanese aesthetics</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=4" title="Edit section: Japanese aesthetics">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div class="thumb tright">
+<div class="thumbinner" style="width:122px;"><a href="/wiki/File:Sunriseatsojiji.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/6/63/Sunriseatsojiji.jpg/120px-Sunriseatsojiji.jpg" width="120" height="180" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/en/thumb/6/63/Sunriseatsojiji.jpg/180px-Sunriseatsojiji.jpg 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/6/63/Sunriseatsojiji.jpg/240px-Sunriseatsojiji.jpg 2x" data-file-width="2000" data-file-height="3008" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:Sunriseatsojiji.jpg" class="internal" title="Enlarge"></a></div>
+<a href="/wiki/S%C5%8Dji-ji" title="S�?ji-ji">S�?ji-ji</a>, of the <a href="/wiki/Soto_Zen" class="mw-redirect" title="Soto Zen">Soto Zen</a> school</div>
+</div>
+</div>
+<p>The study of <a href="/wiki/Japanese_aesthetics" title="Japanese aesthetics">Japanese aesthetics</a> only started a little over two hundred years ago in the West. The Japanese aesthetic is a set of ancient ideals which underpin much of Japanese cultural and aesthetic norms for what is considered tasteful or beautiful. While seen as a philosophy in Western societies, the concept of aesthetics in Japan is seen as an integral part of daily life.</p>
+<h3><span class="mw-headline" id="Indian_aesthetics">Indian aesthetics</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=5" title="Edit section: Indian aesthetics">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p><a href="/wiki/Indian_aesthetics" title="Indian aesthetics">Indian aesthetics</a> evolved with an emphasis on inducing special spiritual or philosophical states in the audience, or with representing them as <a href="/wiki/Symbol" title="Symbol">symbols</a>.</p>
+<h3><span class="mw-headline" id="Chess_aesthetics">Chess aesthetics</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=6" title="Edit section: Chess aesthetics">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p><a href="/wiki/Chess_aesthetics" title="Chess aesthetics">Chess aesthetics</a>, or beauty in chess is appreciated by both players and <a href="/wiki/Chess_composer" title="Chess composer">chess composers</a>. In some tournaments there are prizes for brilliancy (not just for winning a match). There are books published featuring chess problems or puzzles that emphasize their aesthetic aspect. Factors about a game or move sequence (also referred to as a <a href="/wiki/Combination_(chess)" title="Combination (chess)">combination</a>) that might cause it to be regarded as 'brilliant' include: expediency, disguise, sacrifice, correctness, preparation, paradox, unity, and originality.</p>
+<h3><span class="mw-headline" id="Music_aesthetics">Music aesthetics</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=7" title="Edit section: Music aesthetics">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>In the pre-modern tradition, the <a href="/wiki/Aesthetics_of_music" title="Aesthetics of music">aesthetics of music</a> explored the mathematical and cosmological dimensions of rhythmic and harmonic organization. In the eighteenth century, focus shifted to the experience of hearing music, and thus to questions about its beauty and human enjoyment.</p>
+<h3><span class="mw-headline" id="Mathematical_beauty">Mathematical beauty</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=8" title="Edit section: Mathematical beauty">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Mathematicians consider <a href="/wiki/Mathematical_beauty" title="Mathematical beauty">mathematical beauty</a> to be a desirable quality in their work. Comparisons are often made with music and poetry.</p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=9" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a href="/wiki/Classificatory_disputes_about_art" title="Classificatory disputes about art">Classificatory disputes about art</a></li>
+<li><a href="/wiki/Elegance" title="Elegance">Elegance</a></li>
+</ul>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=10" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist" style="list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-1">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://www.etymonline.com/index.php?term=aesthetic">"Online Etymology Dictionary"</a>. <i>www.etymonline.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-02-01</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.atitle=Online+Etymology+Dictionary&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.etymonline.com%2Findex.php%3Fterm%3Daesthetic&amp;rft.jtitle=www.etymonline.com&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-:0-2"><span class="mw-cite-backlink">^ <a href="#cite_ref-:0_2-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-:0_2-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://www.iep.utm.edu/aestheti/">"Aesthetics | Internet Encyclopedia of Philosophy"</a>. <i>www.iep.utm.edu</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-02-01</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.atitle=Aesthetics+%7C+Internet+Encyclopedia+of+Philosophy&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.iep.utm.edu%2Faestheti%2F&amp;rft.jtitle=www.iep.utm.edu&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-3"><span class="mw-cite-backlink"><b><a href="#cite_ref-3">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://www.rep.routledge.com/articles/aesthetic-concepts">"Aesthetic concepts"</a>. <i>www.rep.routledge.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-02-04</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.atitle=Aesthetic+concepts&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fwww.rep.routledge.com%2Farticles%2Faesthetic-concepts&amp;rft.jtitle=www.rep.routledge.com&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-4"><span class="mw-cite-backlink"><b><a href="#cite_ref-4">^</a></b></span> <span class="reference-text">Korsmeyer, Carolyn ed. <i>Aesthetics: The Big Questions</i> 1998</span></li>
+<li id="cite_note-5"><span class="mw-cite-backlink"><b><a href="#cite_ref-5">^</a></b></span> <span class="reference-text">Leitch, Vincent B. , et al., eds. <i>The Norton Anthology of Theory and Criticism</i>. New York: W. W. Norton &amp; Company, 2001.</span></li>
+<li id="cite_note-6"><span class="mw-cite-backlink"><b><a href="#cite_ref-6">^</a></b></span> <span class="reference-text">Reber, R, <a href="/wiki/Norbert_Schwarz" title="Norbert Schwarz">Schwarz, N</a>, Winkielman, P: "Processing fluency and aesthetic pleasure: Is beauty in the perceiver's processing experience?", <i>Personality and Social Psychology Review</i>, 8(4):364-382</span></li>
+<li id="cite_note-7"><span class="mw-cite-backlink"><b><a href="#cite_ref-7">^</a></b></span> <span class="reference-text">Reber, R, Brun, M, Mitterndorfer, K: "The use of heuristics in intuitive mathematical judgment", <i>Psychonomic Bulletin &amp; Review</i>, 15(6):1174–1178</span></li>
+<li id="cite_note-8"><span class="mw-cite-backlink"><b><a href="#cite_ref-8">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://acquine.alipr.com">"Aesthetic Quality Inference Engine - Instant Impersonal Assessment of Photos"</a>. Penn State University. <a rel="nofollow" class="external text" href="https://web.archive.org/web/20090509101935/http://acquine.alipr.com/">Archived</a> from the original on 9 May 2009<span class="reference-accessdate">. Retrieved <span class="nowrap">21 June</span> 2009</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.btitle=Aesthetic+Quality+Inference+Engine+-+Instant+Impersonal+Assessment+of+Photos&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Facquine.alipr.com&amp;rft.pub=Penn+State+University&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-9"><span class="mw-cite-backlink"><b><a href="#cite_ref-9">^</a></b></span> <span class="reference-text">Manaris, B., Roos, P., Penousal, M., Krehbiel, D., Pellicoro, L. and Romero, J.; A Corpus-Based Hybrid Approach to Music Analysis and Composition; Proceedings of 22nd Conference on Artificial Intelligence (AAAI-07); Vancouver, BC; 839-845 2007.</span></li>
+<li id="cite_note-10"><span class="mw-cite-backlink"><b><a href="#cite_ref-10">^</a></b></span> <span class="reference-text"><cite class="citation book">Shimura, Arthur P.; Palmer, Stephen E. (January 2012). <i>Aesthetic Science: Connecting Minds, Brains, and Experience</i>. Oxford University Press. p.&#160;279.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.aufirst=Arthur+P.&amp;rft.aulast=Shimura&amp;rft.au=Palmer%2C+Stephen+E.&amp;rft.btitle=Aesthetic+Science%3A+Connecting+Minds%2C+Brains%2C+and+Experience&amp;rft.date=2012-01&amp;rft.genre=book&amp;rft.pages=279&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+</ol>
+</div>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Aesthetics&amp;action=edit&amp;section=11" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><cite class="citation encyclopaedia"><a rel="nofollow" class="external text" href="http://www.iep.utm.edu/aestheti">"Aesthetics"</a>. <i><a href="/wiki/Internet_Encyclopedia_of_Philosophy" title="Internet Encyclopedia of Philosophy">Internet Encyclopedia of Philosophy</a></i>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AAesthetics&amp;rft.atitle=Aesthetics&amp;rft.btitle=Internet+Encyclopedia+of+Philosophy&amp;rft.genre=bookitem&amp;rft_id=http%3A%2F%2Fwww.iep.utm.edu%2Faestheti&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><a rel="nofollow" class="external text" href="http://www.saylor.org/site/wp-content/uploads/2011/12/Module-1.pdf">Washington State Board for Community &amp; Technical Colleges: Introduction to Aesthetics</a></li>
+<li><a rel="nofollow" class="external text" href="http://cycleback.files.wordpress.com/2014/05/art_perception_cycleback1.pdf">Art Perception</a> Complete pdf version of art historian David Cycleback's book.</li>
+</ul>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Aesthetics" title="Template:Aesthetics"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Aesthetics" title="Template talk:Aesthetics"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Aesthetics&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><strong class="selflink">Aesthetics</strong></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Philosophers</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Abhinavagupta" title="Abhinavagupta">Abhinavagupta</a></li>
+<li><a href="/wiki/Theodor_W._Adorno" title="Theodor W. Adorno">Theodor W. Adorno</a></li>
+<li><a href="/wiki/Leon_Battista_Alberti" title="Leon Battista Alberti">Leon Battista Alberti</a></li>
+<li><a href="/wiki/Thomas_Aquinas" title="Thomas Aquinas">Thomas Aquinas</a></li>
+<li><a href="/wiki/Hans_Urs_von_Balthasar" title="Hans Urs von Balthasar">Hans Urs von Balthasar</a></li>
+<li><a href="/wiki/Alexander_Gottlieb_Baumgarten" title="Alexander Gottlieb Baumgarten">Alexander Gottlieb Baumgarten</a></li>
+<li><a href="/wiki/Clive_Bell" title="Clive Bell">Clive Bell</a></li>
+<li><a href="/wiki/Bernard_Bosanquet_(philosopher)" title="Bernard Bosanquet (philosopher)">Bernard Bosanquet</a></li>
+<li><a href="/wiki/Edward_Bullough" title="Edward Bullough">Edward Bullough</a></li>
+<li><a href="/wiki/R._G._Collingwood" title="R. G. Collingwood">R. G. Collingwood</a></li>
+<li><a href="/wiki/Ananda_Coomaraswamy" title="Ananda Coomaraswamy">Ananda Coomaraswamy</a></li>
+<li><a href="/wiki/Arthur_Danto" title="Arthur Danto">Arthur Danto</a></li>
+<li><a href="/wiki/John_Dewey" title="John Dewey">John Dewey</a></li>
+<li><a href="/wiki/Denis_Diderot" title="Denis Diderot">Denis Diderot</a></li>
+<li><a href="/wiki/Hubert_Dreyfus" title="Hubert Dreyfus">Hubert Dreyfus</a></li>
+<li><a href="/wiki/Curt_John_Ducasse" title="Curt John Ducasse">Curt John Ducasse</a></li>
+<li><a href="/wiki/Thierry_de_Duve" title="Thierry de Duve">Thierry de Duve</a></li>
+<li><a href="/wiki/Roger_Fry" title="Roger Fry">Roger Fry</a></li>
+<li><a href="/wiki/Nelson_Goodman" title="Nelson Goodman">Nelson Goodman</a></li>
+<li><a href="/wiki/Clement_Greenberg" title="Clement Greenberg">Clement Greenberg</a></li>
+<li><a href="/wiki/Georg_Wilhelm_Friedrich_Hegel" title="Georg Wilhelm Friedrich Hegel">Georg Hegel</a></li>
+<li><a href="/wiki/Martin_Heidegger" title="Martin Heidegger">Martin Heidegger</a></li>
+<li><a href="/wiki/David_Hume" title="David Hume">David Hume</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a></li>
+<li><a href="/wiki/Paul_Klee" title="Paul Klee">Paul Klee</a></li>
+<li><a href="/wiki/Susanne_Langer" title="Susanne Langer">Susanne Langer</a></li>
+<li><a href="/wiki/Theodor_Lipps" title="Theodor Lipps">Theodor Lipps</a></li>
+<li><a href="/wiki/Gy%C3%B6rgy_Luk%C3%A1cs" title="György Lukács">György Lukács</a></li>
+<li><a href="/wiki/Jean-Fran%C3%A7ois_Lyotard" title="Jean-François Lyotard">Jean-François Lyotard</a></li>
+<li><a href="/wiki/Joseph_Margolis" title="Joseph Margolis">Joseph Margolis</a></li>
+<li><a href="/wiki/Jacques_Maritain" title="Jacques Maritain">Jacques Maritain</a></li>
+<li><a href="/wiki/Thomas_Munro_(art_historian)" title="Thomas Munro (art historian)">Thomas Munro</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Friedrich Nietzsche</a></li>
+<li><a href="/wiki/Jos%C3%A9_Ortega_y_Gasset" title="José Ortega y Gasset">José Ortega y Gasset</a></li>
+<li><a href="/wiki/Dewitt_H._Parker" title="Dewitt H. Parker">Dewitt H. Parker</a></li>
+<li><a href="/wiki/Stephen_Pepper" title="Stephen Pepper">Stephen Pepper</a></li>
+<li><a href="/wiki/David_Prall" title="David Prall">David Prall</a></li>
+<li><a href="/wiki/Ayn_Rand" title="Ayn Rand">Ayn Rand</a></li>
+<li><a href="/wiki/George_Lansing_Raymond" title="George Lansing Raymond">George Lansing Raymond</a></li>
+<li><a href="/wiki/I._A._Richards" title="I. A. Richards">I. A. Richards</a></li>
+<li><a href="/wiki/George_Santayana" title="George Santayana">George Santayana</a></li>
+<li><a href="/wiki/Friedrich_Schiller" title="Friedrich Schiller">Friedrich Schiller</a></li>
+<li><a href="/wiki/Arthur_Schopenhauer" title="Arthur Schopenhauer">Arthur Schopenhauer</a></li>
+<li><a href="/wiki/Roger_Scruton" title="Roger Scruton">Roger Scruton</a></li>
+<li><a href="/wiki/Irving_Singer" title="Irving Singer">Irving Singer</a></li>
+<li><a href="/wiki/Rabindranath_Tagore" title="Rabindranath Tagore">Rabindranath Tagore</a></li>
+<li><a href="/wiki/Giorgio_Vasari" title="Giorgio Vasari">Giorgio Vasari</a></li>
+<li><a href="/wiki/Morris_Weitz" title="Morris Weitz">Morris Weitz</a></li>
+<li><a href="/wiki/Johann_Joachim_Winckelmann" title="Johann Joachim Winckelmann">Johann Joachim Winckelmann</a></li>
+<li><a href="/wiki/Richard_Wollheim" title="Richard Wollheim">Richard Wollheim</a></li>
+<li><i><a href="/wiki/List_of_aestheticians" title="List of aestheticians">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Theories</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Classicism" title="Classicism">Classicism</a></li>
+<li><a href="/wiki/Evolutionary_aesthetics" title="Evolutionary aesthetics">Evolutionary aesthetics</a></li>
+<li><a href="/wiki/Historicism_(art)" title="Historicism (art)">Historicism</a></li>
+<li><a href="/wiki/Modernism" title="Modernism">Modernism</a></li>
+<li><a href="/wiki/New_Classical_architecture" title="New Classical architecture">New Classical</a></li>
+<li><a href="/wiki/Postmodernism" title="Postmodernism">Postmodernism</a></li>
+<li><a href="/wiki/Psychoanalytic_theory" title="Psychoanalytic theory">Psychoanalytic theory</a></li>
+<li><a href="/wiki/Romanticism" title="Romanticism">Romanticism</a></li>
+<li><a href="/wiki/Symbolism_(arts)" title="Symbolism (arts)">Symbolism</a></li>
+<li><i><a href="/wiki/List_of_art_movements" title="List of art movements">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Concepts</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Aesthetic_emotions" title="Aesthetic emotions">Aesthetic emotions</a></li>
+<li><a href="/wiki/Aesthetic_interpretation" title="Aesthetic interpretation">Aesthetic interpretation</a></li>
+<li><a href="/wiki/Art_manifesto" title="Art manifesto">Art manifesto</a></li>
+<li><a href="/wiki/Avant-garde" title="Avant-garde">Avant-garde</a></li>
+<li><a href="/wiki/Beauty" title="Beauty">Beauty</a></li>
+<li><a href="/wiki/Boredom" title="Boredom">Boredom</a></li>
+<li><a href="/wiki/Camp_(style)" title="Camp (style)">Camp</a></li>
+<li><a href="/wiki/Comedy" title="Comedy">Comedy</a></li>
+<li><a href="/wiki/Creativity" title="Creativity">Creativity</a></li>
+<li><a href="/wiki/Cuteness" title="Cuteness">Cuteness</a></li>
+<li><a href="/wiki/Disgust" title="Disgust">Disgust</a></li>
+<li><a href="/wiki/Ecstasy_(philosophy)" title="Ecstasy (philosophy)">Ecstasy</a></li>
+<li><a href="/wiki/Elegance" title="Elegance">Elegance</a></li>
+<li><a href="/wiki/Entertainment" title="Entertainment">Entertainment</a></li>
+<li><a href="/wiki/Eroticism" title="Eroticism">Eroticism</a></li>
+<li><a href="/wiki/Gaze" title="Gaze">Gaze</a></li>
+<li><a href="/wiki/Harmony" title="Harmony">Harmony</a></li>
+<li><a href="/wiki/Judgement" title="Judgement">Judgement</a></li>
+<li><a href="/wiki/Kama" title="Kama">Kama</a></li>
+<li><a href="/wiki/Kitsch" title="Kitsch">Kitsch</a></li>
+<li><a href="/wiki/Life_imitating_art" title="Life imitating art">Life imitating art</a></li>
+<li><a href="/wiki/Magnificence_(history_of_ideas)" title="Magnificence (history of ideas)">Magnificence</a></li>
+<li><a href="/wiki/Mimesis" title="Mimesis">Mimesis</a></li>
+<li><a href="/wiki/Perception" title="Perception">Perception</a></li>
+<li><a href="/wiki/Quality_(philosophy)" title="Quality (philosophy)">Quality</a></li>
+<li><a href="/wiki/Indian_aesthetics" title="Indian aesthetics">Rasa</a></li>
+<li><a href="/wiki/Reverence_(emotion)" title="Reverence (emotion)">Reverence</a></li>
+<li><a href="/wiki/Style_(visual_arts)" title="Style (visual arts)">Style</a></li>
+<li><a href="/wiki/Sublime_(philosophy)" title="Sublime (philosophy)">Sublime</a></li>
+<li><a href="/wiki/Taste_(sociology)" title="Taste (sociology)">Taste</a></li>
+<li><a href="/wiki/Work_of_art" title="Work of art">Work of art</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group">Related topics</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Aesthetics_of_music" title="Aesthetics of music">Aesthetics of music</a></li>
+<li><a href="/wiki/Applied_aesthetics" title="Applied aesthetics">Applied aesthetics</a></li>
+<li><a href="/wiki/Architecture" title="Architecture">Architecture</a></li>
+<li><a href="/wiki/Art" title="Art">Art</a></li>
+<li><a href="/wiki/Arts_criticism" title="Arts criticism">Arts criticism</a></li>
+<li><a href="/wiki/Feminist_aesthetics" title="Feminist aesthetics">Feminist aesthetics</a></li>
+<li><a href="/wiki/Gastronomy" title="Gastronomy">Gastronomy</a></li>
+<li><a href="/wiki/History_of_painting" title="History of painting">History of painting</a></li>
+<li><a href="/wiki/Humour" title="Humour">Humour</a></li>
+<li><a href="/wiki/Japanese_aesthetics" title="Japanese aesthetics">Japanese aesthetics</a></li>
+<li><a href="/wiki/Literary_merit" title="Literary merit">Literary merit</a></li>
+<li><a href="/wiki/Mathematical_beauty" title="Mathematical beauty">Mathematical beauty</a></li>
+<li><a href="/wiki/Mathematics_and_architecture" title="Mathematics and architecture">Mathematics and architecture</a></li>
+<li><a href="/wiki/Mathematics_and_art" title="Mathematics and art">Mathematics and art</a></li>
+<li><a href="/wiki/Music_theory" title="Music theory">Music theory</a></li>
+<li><a href="/wiki/Neuroesthetics" title="Neuroesthetics">Neuroesthetics</a></li>
+<li><a href="/wiki/Painting" title="Painting">Painting</a></li>
+<li><a href="/wiki/Patterns_in_nature" title="Patterns in nature">Patterns in nature</a></li>
+<li><a href="/wiki/Philosophy_of_design" title="Philosophy of design">Philosophy of design</a></li>
+<li><a href="/wiki/Philosophy_of_film" title="Philosophy of film">Philosophy of film</a></li>
+<li><a href="/wiki/Philosophy_of_music" title="Philosophy of music">Philosophy of music</a></li>
+<li><a href="/wiki/Poetry" title="Poetry">Poetry</a></li>
+<li><a href="/wiki/Sculpture" title="Sculpture">Sculpture</a></li>
+<li><a href="/wiki/Theory_of_painting" title="Theory of painting">Theory of painting</a></li>
+<li><a href="/wiki/Theory_of_art" title="Theory of art">Theory of art</a></li>
+<li><a href="/wiki/Tragedy" title="Tragedy">Tragedy</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Index_of_aesthetics_articles" title="Index of aesthetics articles">Index of aesthetics articles</a></li>
+<li><a href="/wiki/Category:Aesthetics" title="Category:Aesthetics">Category</a></li>
+<li><a href="/wiki/Portal:Aesthetics" title="Portal:Aesthetics">Portal</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_topics" title="Template:Philosophy topics"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_topics" title="Template talk:Philosophy topics"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_topics&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_academic_disciplines#Philosophy" class="mw-redirect" title="List of academic disciplines">Branches</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Traditional</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><strong class="selflink">Aesthetics</strong></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Philosophy of</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><strong class="selflink">Art</strong>
+<ul>
+<li><a href="/wiki/Philosophy_of_culture" title="Philosophy of culture">Culture</a></li>
+<li><a href="/wiki/Philosophy_of_design" title="Philosophy of design">Design</a></li>
+<li><a href="/wiki/Philosophy_of_music" title="Philosophy of music">Music</a></li>
+<li><a href="/wiki/Philosophy_of_film" title="Philosophy of film">Film</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Ontology" title="Ontology">Being</a></li>
+<li><a href="/wiki/Philosophy_of_business" title="Philosophy of business">Business</a></li>
+<li><a href="/wiki/Philosophy_of_color" title="Philosophy of color">Color</a></li>
+<li><a href="/wiki/Cosmology_(Philosophy)" class="mw-redirect" title="Cosmology (Philosophy)">Cosmos</a></li>
+<li><a href="/wiki/Philosophy_of_dialogue" title="Philosophy of dialogue">Dialogue</a></li>
+<li><a href="/wiki/Philosophy_of_education" title="Philosophy of education">Education</a></li>
+<li><a href="/wiki/Environmental_philosophy" title="Environmental philosophy">Environment</a></li>
+<li><a href="/wiki/Philosophy_of_futility" title="Philosophy of futility">Futility</a></li>
+<li><a href="/wiki/Philosophy_of_happiness" title="Philosophy of happiness">Happiness</a></li>
+<li><a href="/wiki/Philosophy_of_healthcare" title="Philosophy of healthcare">Healthcare</a></li>
+<li><a href="/wiki/Philosophy_of_history" title="Philosophy of history">History</a></li>
+<li><a href="/wiki/Philosophical_anthropology" title="Philosophical anthropology">Human nature</a></li>
+<li><a href="/wiki/Theories_of_humor" title="Theories of humor">Humor</a></li>
+<li><a href="/wiki/Philosophy_of_feminism" class="mw-redirect" title="Philosophy of feminism">Feminism</a></li>
+<li><a href="/wiki/Philosophy_of_language" title="Philosophy of language">Language</a></li>
+<li><a href="/wiki/Philosophy_and_literature" title="Philosophy and literature">Literature</a></li>
+<li><a href="/wiki/Philosophy_of_mathematics" title="Philosophy of mathematics">Mathematics</a></li>
+<li><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a>
+<ul>
+<li><a href="/wiki/Pain_(philosophy)" title="Pain (philosophy)">Pain</a></li>
+<li><a href="/wiki/Philosophy_of_psychology" title="Philosophy of psychology">Psychology</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Metaphilosophy" title="Metaphilosophy">Philosophy</a></li>
+<li><a href="/wiki/Philosophy_of_religion" title="Philosophy of religion">Religion</a></li>
+<li><a href="/wiki/Philosophy_of_science" title="Philosophy of science">Science</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_physics" title="Philosophy of physics">Physics</a></li>
+<li><a href="/wiki/Philosophy_of_chemistry" title="Philosophy of chemistry">Chemistry</a></li>
+<li><a href="/wiki/Philosophy_of_biology" title="Philosophy of biology">Biology</a></li>
+<li><a href="/wiki/Philosophy_of_geography" title="Philosophy of geography">Geography</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_sex" title="Philosophy of sex">Sexuality</a></li>
+<li><a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">Social science</a>
+<ul>
+<li><a href="/wiki/Philosophy_and_economics" title="Philosophy and economics">Economics</a></li>
+<li><a href="/wiki/Justice" title="Justice">Justice</a></li>
+<li><a href="/wiki/Jurisprudence" title="Jurisprudence">Law</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Politics</a></li>
+<li><a href="/wiki/Social_philosophy" title="Social philosophy">Society</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_space_and_time" title="Philosophy of space and time">Space and time</a></li>
+<li><a href="/wiki/Philosophy_of_sport" title="Philosophy of sport">Sport</a></li>
+<li><a href="/wiki/Philosophy_of_technology" title="Philosophy of technology">Technology</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_artificial_intelligence" title="Philosophy of artificial intelligence">Artificial intelligence</a></li>
+<li><a href="/wiki/Philosophy_of_computer_science" title="Philosophy of computer science">Computer science</a></li>
+<li><a href="/wiki/Philosophy_of_engineering" title="Philosophy of engineering">Engineering</a></li>
+<li><a href="/wiki/Philosophy_of_information" title="Philosophy of information">Information</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_war" title="Philosophy of war">War</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools of thought</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/History_of_philosophy" class="mw-redirect" title="History of philosophy">By era</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a>
+<ul>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Renaissance_philosophy" title="Renaissance philosophy">Renaissance</a></li>
+<li><a href="/wiki/Early_modern_philosophy" title="Early modern philosophy">Early modern</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Agriculturalism" title="Agriculturalism">Agriculturalism</a></li>
+<li><a href="/wiki/Confucianism" title="Confucianism">Confucianism</a></li>
+<li><a href="/wiki/Legalism_(Chinese_philosophy)" title="Legalism (Chinese philosophy)">Legalism</a></li>
+<li><a href="/wiki/School_of_Names" title="School of Names">Logicians</a></li>
+<li><a href="/wiki/Mohism" title="Mohism">Mohism</a></li>
+<li><a href="/wiki/School_of_Naturalists" title="School of Naturalists">Chinese naturalism</a></li>
+<li><a href="/wiki/Xuanxue" title="Xuanxue">Neotaoism</a></li>
+<li><a href="/wiki/Taoism" title="Taoism">Taoism</a></li>
+<li><a href="/wiki/Yangism" title="Yangism">Yangism</a></li>
+<li><a href="/wiki/Zen" title="Zen">Zen</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greco-</a><a href="/wiki/Hellenistic_philosophy" title="Hellenistic philosophy">Roman</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelianism</a></li>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Cynicism_(philosophy)" title="Cynicism (philosophy)">Cynicism</a></li>
+<li><a href="/wiki/Cyrenaics" title="Cyrenaics">Cyrenaics</a></li>
+<li><a href="/wiki/Eleatics" title="Eleatics">Eleatics</a></li>
+<li><a href="/wiki/Eretrian_school" title="Eretrian school">Eretrian school</a></li>
+<li><a href="/wiki/Epicureanism" title="Epicureanism">Epicureanism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Ionian_School_(philosophy)" title="Ionian School (philosophy)">Ionian</a>
+<ul>
+<li><a href="/wiki/Ephesian_school" title="Ephesian school">Ephesian</a></li>
+<li><a href="/wiki/Milesian_school" title="Milesian school">Milesian</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Megarian_school" title="Megarian school">Megarian school</a></li>
+<li><a href="/wiki/Neoplatonism" title="Neoplatonism">Neoplatonism</a></li>
+<li><a href="/wiki/Peripatetic_school" title="Peripatetic school">Peripatetic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonism</a></li>
+<li><a href="/wiki/Pluralist_school" title="Pluralist school">Pluralism</a></li>
+<li><a href="/wiki/Pre-Socratic_philosophy" title="Pre-Socratic philosophy">Presocratic</a></li>
+<li><a href="/wiki/Pyrrhonism" title="Pyrrhonism">Pyrrhonism</a></li>
+<li><a href="/wiki/Pythagoreanism" title="Pythagoreanism">Pythagoreanism</a></li>
+<li><a href="/wiki/Neopythagoreanism" title="Neopythagoreanism">Neopythagoreanism</a></li>
+<li><a href="/wiki/Sophism" title="Sophism">Sophism</a></li>
+<li><a href="/wiki/Stoicism" title="Stoicism">Stoicism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/C%C4%81rv%C4%81ka" class="mw-redirect" title="C�?rv�?ka">C�?rv�?ka</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Persian</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mazdak#Mazdakism" title="Mazdak">Mazdakism</a></li>
+<li><a href="/wiki/Zoroastrianism" title="Zoroastrianism">Zoroastrianism</a></li>
+<li><a href="/wiki/Zurvanism" title="Zurvanism">Zurvanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/European_philosophy" class="mw-redirect" title="European philosophy">European</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian philosophy</a></li>
+<li><a href="/wiki/Scholasticism" title="Scholasticism">Scholasticism</a></li>
+<li><a href="/wiki/Thomism" title="Thomism">Thomism</a></li>
+<li><a href="/wiki/Renaissance_humanism" title="Renaissance humanism">Renaissance humanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">East Asian</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Korean_Confucianism" title="Korean Confucianism">Korean Confucianism</a></li>
+<li><a href="/wiki/Edo_Neo-Confucianism" title="Edo Neo-Confucianism">Edo Neo-Confucianism</a></li>
+<li><a href="/wiki/Neo-Confucianism" title="Neo-Confucianism">Neo-Confucianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Indian</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Dvaita" title="Dvaita">Dvaita</a></li>
+<li><a href="/wiki/Navya-Ny%C4%81ya" title="Navya-Ny�?ya">Navya-Ny�?ya</a></li>
+<li><a href="/wiki/Vishishtadvaita" title="Vishishtadvaita">Vishishtadvaita</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Averroism" title="Averroism">Averroism</a></li>
+<li><a href="/wiki/Avicenna#Avicennian_philosophy" title="Avicenna">Avicennism</a></li>
+<li><a href="/wiki/Illuminationism#Persian_school_of_Illuminationism" title="Illuminationism">Persian Illuminationism</a></li>
+<li><a href="/wiki/Ilm_al-Kalam" class="mw-redirect" title="Ilm al-Kalam">Ilm al-Kalam</a></li>
+<li><a href="/wiki/Sufi_philosophy" title="Sufi philosophy">Sufi</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Jewish_philosophy" title="Jewish philosophy">Jewish</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Judeo-Islamic_philosophies_(800%E2%80%931400)" title="Judeo-Islamic philosophies (800–1400)">Judeo-Islamic</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">People</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Cartesianism" title="Cartesianism">Cartesianism</a></li>
+<li><a href="/wiki/Kantianism" title="Kantianism">Kantianism</a></li>
+<li><a href="/wiki/Neo-Kantianism" title="Neo-Kantianism">Neo-Kantianism</a></li>
+<li><a href="/wiki/Hegelianism" title="Hegelianism">Hegelianism</a></li>
+<li><a href="/wiki/Marxist_philosophy" title="Marxist philosophy">Marxism</a></li>
+<li><a href="/wiki/Spinozism" title="Spinozism">Spinozism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Idea" title="Idea">Ideal</a>&#160;/ <a href="/wiki/Matter_(philosophy)" title="Matter (philosophy)">Material</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a>
+<ul>
+<li><a href="/wiki/Absolute_idealism" title="Absolute idealism">Absolute</a></li>
+<li><a href="/wiki/British_idealism" title="British idealism">British</a></li>
+<li><a href="/wiki/German_idealism" title="German idealism">German</a></li>
+<li><a href="/wiki/Objective_idealism" title="Objective idealism">Objective</a></li>
+<li><a href="/wiki/Subjective_idealism" title="Subjective idealism">Subjective</a></li>
+<li><a href="/wiki/Transcendental_idealism" title="Transcendental idealism">Transcendental</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Classical_realism" class="mw-redirect" title="Classical realism">Classical realism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Reductionism" title="Reductionism">Reductionism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a></li>
+<li><a href="/wiki/Utilitarianism" title="Utilitarianism">Utilitarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anarchism" title="Anarchism">Anarchism</a></li>
+<li><a href="/wiki/Collectivism" title="Collectivism">Collectivism</a></li>
+<li><a href="/wiki/New_Confucianism" title="New Confucianism">New Confucianism</a></li>
+<li><a href="/wiki/Conservatism" title="Conservatism">Conservatism</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Historicism" title="Historicism">Historicism</a></li>
+<li><a href="/wiki/Holism" title="Holism">Holism</a></li>
+<li><a href="/wiki/Humanism" title="Humanism">Humanism</a></li>
+<li><a href="/wiki/Individualism" title="Individualism">Individualism</a></li>
+<li><a href="/wiki/Kokugaku" title="Kokugaku">Kokugaku</a></li>
+<li><a href="/wiki/Classical_liberalism" title="Classical liberalism">Liberalism</a></li>
+<li><a href="/wiki/Modernism" title="Modernism">Modernism</a></li>
+<li><a href="/wiki/Natural_Law" class="mw-redirect" title="Natural Law">Natural Law</a></li>
+<li><a href="/wiki/Nihilism" title="Nihilism">Nihilism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a></li>
+<li><a href="/wiki/Neo-Scholasticism" title="Neo-Scholasticism">Neo-Scholasticism</a></li>
+<li><a href="/wiki/Social_contract" title="Social contract">Social contract</a></li>
+<li><a href="/wiki/Socialism" title="Socialism">Socialism</a></li>
+<li><a href="/wiki/Transcendentalism" title="Transcendentalism">Transcendentalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Applied_ethics" title="Applied ethics">Applied ethics</a></li>
+<li><a href="/wiki/Analytical_feminism" title="Analytical feminism">Analytic feminism</a></li>
+<li><a href="/wiki/Analytical_Marxism" title="Analytical Marxism">Analytical Marxism</a></li>
+<li><a href="/wiki/Communitarianism" title="Communitarianism">Communitarianism</a></li>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Critical_rationalism" title="Critical rationalism">Critical rationalism</a></li>
+<li><a href="/wiki/Experimental_philosophy" title="Experimental philosophy">Experimental philosophy</a></li>
+<li><a href="/wiki/Falsifiability" title="Falsifiability">Falsificationism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a>&#160;/ <a href="/wiki/Coherentism" title="Coherentism">Coherentism</a></li>
+<li><a href="/wiki/Generative_linguistics" class="mw-redirect" title="Generative linguistics">Generative linguistics</a></li>
+<li><a href="/wiki/Internalism_and_externalism" title="Internalism and externalism">Internalism and Externalism</a></li>
+<li><a href="/wiki/Logical_positivism" title="Logical positivism">Logical positivism</a></li>
+<li><a href="/wiki/Legal_positivism" title="Legal positivism">Legal positivism</a></li>
+<li><a href="/wiki/Normative_ethics" title="Normative ethics">Normative ethics</a></li>
+<li><a href="/wiki/Meta-ethics" title="Meta-ethics">Meta-ethics</a></li>
+<li><a href="/wiki/Moral_realism" title="Moral realism">Moral realism</a></li>
+<li><a href="/wiki/Virtue_ethics#Contemporary_.27aretaic_turn.27" title="Virtue ethics">Neo-Aristotelian</a></li>
+<li><a href="/wiki/Naturalized_epistemology" title="Naturalized epistemology">Quinean naturalism</a></li>
+<li><a href="/wiki/Ordinary_language_philosophy" title="Ordinary language philosophy">Ordinary language philosophy</a></li>
+<li><a href="/wiki/Postanalytic_philosophy" title="Postanalytic philosophy">Postanalytic philosophy</a></li>
+<li><a href="/wiki/Quietism_(philosophy)" title="Quietism (philosophy)">Quietism</a></li>
+<li><a href="/wiki/John_Rawls" title="John Rawls">Rawlsian</a></li>
+<li><a href="/wiki/Reformed_epistemology" title="Reformed epistemology">Reformed epistemology</a></li>
+<li><a href="/wiki/Systemics" title="Systemics">Systemics</a></li>
+<li><a href="/wiki/Scientism" title="Scientism">Scientism</a></li>
+<li><a href="/wiki/Scientific_realism" title="Scientific realism">Scientific realism</a></li>
+<li><a href="/wiki/Scientific_skepticism" title="Scientific skepticism">Scientific skepticism</a></li>
+<li><a href="/wiki/Utilitarianism#Twentieth-century_developments" title="Utilitarianism">Contemporary utilitarianism</a></li>
+<li><a href="/wiki/Vienna_Circle" title="Vienna Circle">Vienna Circle</a></li>
+<li><a href="/wiki/Ludwig_Wittgenstein" title="Ludwig Wittgenstein">Wittgensteinian</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Continental_philosophy" title="Continental philosophy">Continental</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Critical_theory" title="Critical theory">Critical theory</a></li>
+<li><a href="/wiki/Deconstruction" title="Deconstruction">Deconstruction</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Feminist_philosophy" title="Feminist philosophy">Feminist</a></li>
+<li><a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a></li>
+<li><a href="/wiki/New_Historicism" title="New Historicism">New Historicism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Neo-Marxism" title="Neo-Marxism">Neo-Marxism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Postmodern_philosophy" title="Postmodern philosophy">Postmodernism</a></li>
+<li><a href="/wiki/Post-structuralism" title="Post-structuralism">Post-structuralism</a></li>
+<li><a href="/wiki/Social_constructionism" title="Social constructionism">Social constructionism</a></li>
+<li><a href="/wiki/Structuralism" title="Structuralism">Structuralism</a></li>
+<li><a href="/wiki/Western_Marxism" title="Western Marxism">Western Marxism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Kyoto_School" title="Kyoto School">Kyoto School</a></li>
+<li><a href="/wiki/Objectivism_(Ayn_Rand)" title="Objectivism (Ayn Rand)">Objectivism</a></li>
+<li><a href="/wiki/Russian_cosmism" title="Russian cosmism">Russian cosmism</a></li>
+<li><i><a href="/wiki/List_of_philosophies" title="List of philosophies">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">Positions</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><strong class="selflink">Aesthetics</strong></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Formalism_(art)" title="Formalism (art)">Formalism</a></li>
+<li><a href="/wiki/Institutional_theory_of_art" class="mw-redirect" title="Institutional theory of art">Institutionalism</a></li>
+<li><a href="/wiki/Aesthetic_emotions" title="Aesthetic emotions">Aesthetic response</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ethics" title="Ethics">Ethics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Deontology" class="mw-redirect" title="Deontology">Deontology</a></li>
+<li><a href="/wiki/Virtue_ethics" title="Virtue ethics">Virtue</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Free_will" title="Free will">Free will</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Compatibilism" title="Compatibilism">Compatibilism</a></li>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Libertarianism_(metaphysics)" title="Libertarianism (metaphysics)">Libertarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Metaphysical_naturalism" title="Metaphysical naturalism">Naturalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Constructivist_epistemology" title="Constructivist epistemology">Constructivism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Epistemological_idealism" title="Epistemological idealism">Idealism</a></li>
+<li><a href="/wiki/Epistemological_particularism" title="Epistemological particularism">Particularism</a></li>
+<li><a href="/wiki/Fideism" title="Fideism">Fideism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a>&#160;/ <a href="/wiki/Reasonism" title="Reasonism">Reasonism</a></li>
+<li><a href="/wiki/Philosophical_skepticism#Epistemology_and_skepticism" title="Philosophical skepticism">Skepticism</a></li>
+<li><a href="/wiki/Solipsism" title="Solipsism">Solipsism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Behaviorism" title="Behaviorism">Behaviorism</a></li>
+<li><a href="/wiki/Emergentism" title="Emergentism">Emergentism</a></li>
+<li><a href="/wiki/Eliminative_materialism" title="Eliminative materialism">Eliminativism</a></li>
+<li><a href="/wiki/Epiphenomenalism" title="Epiphenomenalism">Epiphenomenalism</a></li>
+<li><a href="/wiki/Functionalism_(philosophy_of_mind)" title="Functionalism (philosophy of mind)">Functionalism</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivism</a></li>
+<li><a href="/wiki/Subjectivism" title="Subjectivism">Subjectivism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Norm_(philosophy)" title="Norm (philosophy)">Normativity</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Moral_absolutism" title="Moral absolutism">Absolutism</a></li>
+<li><a href="/wiki/Moral_particularism" title="Moral particularism">Particularism</a></li>
+<li><a href="/wiki/Relativism" title="Relativism">Relativism</a></li>
+<li><a href="/wiki/Moral_nihilism" title="Moral nihilism">Nihilism</a></li>
+<li><a href="/wiki/Moral_skepticism" title="Moral skepticism">Skepticism</a></li>
+<li><a href="/wiki/Moral_universalism" title="Moral universalism">Universalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ontology" title="Ontology">Ontology</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><a href="/wiki/Event_(philosophy)" title="Event (philosophy)">Event</a></li>
+<li><a href="/wiki/Process_philosophy" title="Process philosophy">Process</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Reality" title="Reality">Reality</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anti-realism" title="Anti-realism">Anti-realism</a></li>
+<li><a href="/wiki/Conceptualism" title="Conceptualism">Conceptualism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Nominalism" title="Nominalism">Nominalism</a></li>
+<li><a href="/wiki/Physicalism" title="Physicalism">Physicalism</a></li>
+<li><a href="/wiki/Philosophical_realism" title="Philosophical realism">Realism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">
+<div class="hlist">
+<ul>
+<li>Philosophy by region</li>
+<li>Philosophy-related lists</li>
+<li>Miscellaneous</li>
+</ul>
+</div>
+</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">By region</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Ethiopian_philosophy" title="Ethiopian philosophy">Ethiopian</a></li>
+<li><a href="/wiki/Aztec_philosophy" title="Aztec philosophy">Aztec</a></li>
+<li><a href="/wiki/Indigenous_American_philosophy" title="Indigenous American philosophy">Native America</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Ancient_Egyptian_philosophy" title="Ancient Egyptian philosophy">Egyptian</a></li>
+<li><a href="/wiki/Czech_philosophy" title="Czech philosophy">Czech</a></li>
+<li><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></li>
+<li><a href="/wiki/Indonesian_philosophy" title="Indonesian philosophy">Indonesian</a></li>
+<li><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Iranian</a></li>
+<li><a href="/wiki/Japanese_philosophy" title="Japanese philosophy">Japanese</a></li>
+<li><a href="/wiki/Korean_philosophy" title="Korean philosophy">Korean</a></li>
+<li><a href="/wiki/Vietnamese_philosophy" title="Vietnamese philosophy">Vietnam</a></li>
+<li><a href="/wiki/Pakistani_philosophy" title="Pakistani philosophy">Pakistani</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+<li><a href="/wiki/American_philosophy" title="American philosophy">American</a></li>
+<li><a href="/wiki/Australian_philosophy" title="Australian philosophy">Australian</a></li>
+<li><a href="/wiki/British_philosophy" title="British philosophy">British</a></li>
+<li><a href="/wiki/Danish_philosophy" title="Danish philosophy">Danish</a></li>
+<li><a href="/wiki/French_philosophy" title="French philosophy">French</a></li>
+<li><a href="/wiki/German_philosophy" title="German philosophy">German</a></li>
+<li><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greek</a></li>
+<li><a href="/wiki/Italian_philosophy" title="Italian philosophy">Italian</a></li>
+<li><a href="/wiki/Polish_philosophy" class="mw-redirect" title="Polish philosophy">Polish</a></li>
+<li><a href="/wiki/Romanian_philosophy" title="Romanian philosophy">Romanian</a></li>
+<li><a href="/wiki/Russian_philosophy" class="mw-redirect" title="Russian philosophy">Russian</a></li>
+<li><a href="/wiki/Slovene_philosophy" class="mw-redirect" title="Slovene philosophy">Slovene</a></li>
+<li><a href="/wiki/Turkish_philosophy" title="Turkish philosophy">Turkish</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Lists</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+<li><a href="/wiki/Philosophical_movement" title="Philosophical movement">Movements</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Miscellaneous</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+<li><a href="/wiki/Sage_(philosophy)" title="Sage (philosophy)">Sage (philosophy)</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Portal</a></li>
+<li><a href="/wiki/Category:Philosophy" title="Category:Philosophy">Category</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="noprint navbox" style="background-color:#f9f9f9;border:1px solid #aaa;clear:both;margin-bottom:0.5em;margin-top:0.5em">
+<tr>
+<td style="width:175px"><span style="font-size:125%"><b><a href="/wiki/Portal:Contents/Portals" title="Portal:Contents/Portals">Portals</a></b></span><br />
+<span style="font-size:90%">Access related topics</span></td>
+<td>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><a href="/wiki/File:Morning_Glory_Flower_square.jpg" class="image"><img alt="Morning Glory Flower square.jpg" src="//upload.wikimedia.org/wikipedia/en/thumb/f/ff/Morning_Glory_Flower_square.jpg/30px-Morning_Glory_Flower_square.jpg" width="30" height="30" srcset="//upload.wikimedia.org/wikipedia/en/thumb/f/ff/Morning_Glory_Flower_square.jpg/45px-Morning_Glory_Flower_square.jpg 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/f/ff/Morning_Glory_Flower_square.jpg/60px-Morning_Glory_Flower_square.jpg 2x" data-file-width="1816" data-file-height="1816" /></a></td>
+<td style="width:125px;text-align:left"><i><b><a href="/wiki/Portal:Aesthetics" title="Portal:Aesthetics">Aesthetics portal</a></b></i></td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><a href="/wiki/File:Nuvola_apps_package_graphics.png" class="image"><img alt="Nuvola apps package graphics.png" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nuvola_apps_package_graphics.png/30px-Nuvola_apps_package_graphics.png" width="30" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nuvola_apps_package_graphics.png/45px-Nuvola_apps_package_graphics.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nuvola_apps_package_graphics.png/60px-Nuvola_apps_package_graphics.png 2x" data-file-width="128" data-file-height="128" /></a></td>
+<td style="width:125px;text-align:left"><i><b><a href="/wiki/Portal:Arts" title="Portal:Arts">Arts portal</a></b></i></td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><a href="/wiki/File:Socrates.png" class="image"><img alt="Socrates.png" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/19px-Socrates.png" width="19" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/29px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/39px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></td>
+<td style="width:125px;text-align:left"><i><b><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></b></i></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr /></td>
+</tr>
+<tr>
+<td style="width:175px"><span style="font-size:90%">Find out more on Wikipedia's</span><br />
+<span style="font-size:125%"><b><a href="/wiki/Wikipedia:Wikimedia_sister_projects" title="Wikipedia:Wikimedia sister projects">Sister projects</a></b></span></td>
+<td>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/22px-Commons-logo.svg.png" width="22" height="30" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/33px-Commons-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/45px-Commons-logo.svg.png 2x" data-file-width="1024" data-file-height="1376" /></td>
+<td style="width:125px;text-align:left"><a href="//commons.wikimedia.org/wiki/Special:Search/Category:Aesthetics" class="extiw" title="commons:Special:Search/Category:Aesthetics">Media</a><br />
+from Commons</td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/30px-Wiktionary-logo-v2.svg.png" width="30" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/45px-Wiktionary-logo-v2.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/60px-Wiktionary-logo-v2.svg.png 2x" data-file-width="391" data-file-height="391" /></td>
+<td style="width:125px;text-align:left"><a href="//en.wiktionary.org/wiki/Special:Search/Aesthetics#English" class="extiw" title="wiktionary:Special:Search/Aesthetics">Definitions</a><br />
+from Wiktionary</td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/30px-Wikibooks-logo.svg.png" width="30" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/45px-Wikibooks-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/60px-Wikibooks-logo.svg.png 2x" data-file-width="300" data-file-height="300" /></td>
+<td style="width:125px;text-align:left"><a href="//en.wikibooks.org/wiki/Special:Search/Category:Aesthetics" class="extiw" title="wikibooks:Special:Search/Category:Aesthetics">Textbooks</a><br />
+from Wikibooks</td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/25px-Wikiquote-logo.svg.png" width="25" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/38px-Wikiquote-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/51px-Wikiquote-logo.svg.png 2x" data-file-width="300" data-file-height="355" /></td>
+<td style="width:125px;text-align:left"><a href="//en.wikiquote.org/wiki/Special:Search/Aesthetics" class="extiw" title="wikiquote:Special:Search/Aesthetics">Quotations</a><br />
+from Wikiquote</td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/29px-Wikisource-logo.svg.png" width="29" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/43px-Wikisource-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/57px-Wikisource-logo.svg.png 2x" data-file-width="410" data-file-height="430" /></td>
+<td style="width:125px;text-align:left"><a href="//en.wikisource.org/wiki/Special:Search/Category:Aesthetics" class="extiw" title="wikisource:Special:Search/Category:Aesthetics">Source texts</a><br />
+from Wikisource</td>
+</tr>
+</table>
+<table role="presentation" style="float:left;padding:0px 5px">
+<tr>
+<td><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wikiversity-logo.svg/30px-Wikiversity-logo.svg.png" width="30" height="24" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wikiversity-logo.svg/45px-Wikiversity-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wikiversity-logo.svg/60px-Wikiversity-logo.svg.png 2x" data-file-width="1000" data-file-height="800" /></td>
+<td style="width:125px;text-align:left"><a href="//en.wikiversity.org/wiki/Special:Search/Topic:Philosophy_of_art" class="extiw" title="wikiversity:Special:Search/Topic:Philosophy of art">Learning resources</a><br />
+from Wikiversity</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Help:Authority_control" title="Help:Authority control">Authority control</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><span style="white-space:nowrap;"><a href="/wiki/Integrated_Authority_File" title="Integrated Authority File">GND</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://d-nb.info/gnd/4000626-8">4000626-8</a></span></span></li>
+<li><span style="white-space:nowrap;"><a href="/wiki/National_Diet_Library" title="National Diet Library">NDL</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://id.ndl.go.jp/auth/ndlna/00560659">00560659</a></span></span></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<!--
+NewPP limit report
+Parsed by mw1183
+Cached time: 20160708123337
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.424 seconds
+Real time usage: 0.549 seconds
+Preprocessor visited node count: 1955/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 223730/2097152 bytes
+Template argument size: 21012/2097152 bytes
+Highest expansion depth: 16/40
+Expensive parser function count: 3/500
+Lua time usage: 0.161/10.000 seconds
+Lua memory usage: 4.98 MB/50 MB
+Number of Wikibase entities loaded: 1-->
+
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  382.403      1 - -total
+ 23.48%   89.770      1 - Template:Reflist
+ 17.60%   67.307      1 - Template:Philosophy_topics
+ 16.71%   63.917      4 - Template:Cite_web
+ 16.53%   63.227      1 - Template:Navbox_with_collapsible_groups
+ 15.73%   60.137      9 - Template:Navbox
+ 10.96%   41.925      1 - Template:Moresources
+ 10.50%   40.171      1 - Template:Philosophy_sidebar
+  9.54%   36.499      1 - Template:Sidebar_with_collapsible_lists
+  9.13%   34.896      1 - Template:Ambox
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:2130-0!*!0!!en!4!* and timestamp 20160708123337 and revision id 728769466
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Aesthetics&amp;oldid=728769466">https://en.wikipedia.org/w/index.php?title=Aesthetics&amp;oldid=728769466</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Aesthetics" title="Category:Aesthetics">Aesthetics</a></li><li><a href="/wiki/Category:Axiology" title="Category:Axiology">Axiology</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_needing_additional_references_from_April_2016" title="Category:Articles needing additional references from April 2016">Articles needing additional references from April 2016</a></li><li><a href="/wiki/Category:All_articles_needing_additional_references" title="Category:All articles needing additional references">All articles needing additional references</a></li><li><a href="/wiki/Category:Use_dmy_dates_from_July_2012" title="Category:Use dmy dates from July 2012">Use dmy dates from July 2012</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_GND_identifiers" title="Category:Wikipedia articles with GND identifiers">Wikipedia articles with GND identifiers</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Aesthetics" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Aesthetics" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Aesthetics"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Aesthetics"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Aesthetics" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Aesthetics&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Aesthetics&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Aesthetics" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Aesthetics" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Aesthetics&amp;oldid=728769466" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Aesthetics&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q35986" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Aesthetics&amp;id=728769466" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Aesthetics">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Aesthetics&amp;returnto=Aesthetics&amp;oldid=728769466&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Aesthetics&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Aesthetics" hreflang="en">Wikimedia Commons</a></li><li class="wb-otherproject-link wb-otherproject-wikiquote"><a href="https://en.wikiquote.org/wiki/Aesthetics" hreflang="en">Wikiquote</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-af"><a href="//af.wikipedia.org/wiki/Estetika" title="Estetika – Afrikaans" lang="af" hreflang="af">Afrikaans</a></li><li class="interlanguage-link interwiki-als"><a href="//als.wikipedia.org/wiki/%C3%84sthetik" title="Ästhetik – Alemannisch" lang="als" hreflang="als">Alemannisch</a></li><li class="interlanguage-link interwiki-am"><a href="//am.wikipedia.org/wiki/%E1%88%A5%E1%8A%90_%E1%8B%8D%E1%89%A0%E1%89%B5" title="ሥ�? �?በት – Amharic" lang="am" hreflang="am">አማርኛ</a></li><li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D8%AC%D9%85%D8%A7%D9%84%D9%8A%D8%A7%D8%AA" title="جماليات – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-az"><a href="//az.wikipedia.org/wiki/Estetika" title="Estetika – Azerbaijani" lang="az" hreflang="az">Azərbaycanca</a></li><li class="interlanguage-link interwiki-bn"><a href="//bn.wikipedia.org/wiki/%E0%A6%A8%E0%A6%A8%E0%A7%8D%E0%A6%A6%E0%A6%A8%E0%A6%A4%E0%A6%A4%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%AC" title="নন�?দনতত�?ত�?ব – Bengali" lang="bn" hreflang="bn">বাংলা</a></li><li class="interlanguage-link interwiki-zh-min-nan"><a href="//zh-min-nan.wikipedia.org/wiki/B%C3%AD-ha%CC%8Dk" title="Bí-ha�?k – Chinese (Min Nan)" lang="zh-min-nan" hreflang="zh-min-nan">Bân-lâm-gú</a></li><li class="interlanguage-link interwiki-be"><a href="//be.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D1%8D%D1%82%D1%8B%D0%BA%D0%B0" title="Э�?т�?тыка – Belarusian" lang="be" hreflang="be">Белару�?ка�?</a></li><li class="interlanguage-link interwiki-be-x-old"><a href="//be-x-old.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D1%8D%D1%82%D1%8B%D0%BA%D0%B0" title="Э�?т�?тыка – белару�?ка�? (тарашкевіца)‎" lang="be-x-old" hreflang="be-x-old">Белару�?ка�? (тарашкевіца)‎</a></li><li class="interlanguage-link interwiki-bg"><a href="//bg.wikipedia.org/wiki/%D0%95%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Е�?тетика – Bulgarian" lang="bg" hreflang="bg">Българ�?ки</a></li><li class="interlanguage-link interwiki-bs"><a href="//bs.wikipedia.org/wiki/Estetika" title="Estetika – Bosnian" lang="bs" hreflang="bs">Bosanski</a></li><li class="interlanguage-link interwiki-ca"><a href="//ca.wikipedia.org/wiki/Est%C3%A8tica" title="Estètica – Catalan" lang="ca" hreflang="ca">Català</a></li><li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Estetika" title="Estetika – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-cy"><a href="//cy.wikipedia.org/wiki/Estheteg" title="Estheteg – Welsh" lang="cy" hreflang="cy">Cymraeg</a></li><li class="interlanguage-link interwiki-da"><a href="//da.wikipedia.org/wiki/%C3%86stetik" title="Æstetik – Danish" lang="da" hreflang="da">Dansk</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/%C3%84sthetik" title="Ästhetik – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-et"><a href="//et.wikipedia.org/wiki/Esteetika" title="Esteetika – Estonian" lang="et" hreflang="et">Eesti</a></li><li class="interlanguage-link interwiki-el"><a href="//el.wikipedia.org/wiki/%CE%91%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE" title="Αισθητική – Greek" lang="el" hreflang="el">Ελληνικά</a></li><li class="interlanguage-link interwiki-es"><a href="//es.wikipedia.org/wiki/Est%C3%A9tica" title="Estética – Spanish" lang="es" hreflang="es">Español</a></li><li class="interlanguage-link interwiki-eo"><a href="//eo.wikipedia.org/wiki/Estetiko" title="Estetiko – Esperanto" lang="eo" hreflang="eo">Esperanto</a></li><li class="interlanguage-link interwiki-eu"><a href="//eu.wikipedia.org/wiki/Estetika" title="Estetika – Basque" lang="eu" hreflang="eu">Euskara</a></li><li class="interlanguage-link interwiki-fa"><a href="//fa.wikipedia.org/wiki/%D8%B2%DB%8C%D8%A8%D8%A7%DB%8C%DB%8C%E2%80%8C%D8%B4%D9%86%D8%A7%D8%B3%DB%8C" title="زیبایی‌شناسی – Persian" lang="fa" hreflang="fa">�?ارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Esth%C3%A9tique" title="Esthétique – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-gl"><a href="//gl.wikipedia.org/wiki/Est%C3%A9tica" title="Estética – Galician" lang="gl" hreflang="gl">Galego</a></li><li class="interlanguage-link interwiki-gan"><a href="//gan.wikipedia.org/wiki/%E7%BE%8E%E5%AD%B8" title="美學 – Gan Chinese" lang="gan" hreflang="gan">贛語</a></li><li class="interlanguage-link interwiki-gu"><a href="//gu.wikipedia.org/wiki/%E0%AA%B8%E0%AB%8C%E0%AA%82%E0%AA%A6%E0%AA%B0%E0%AB%8D%E0%AA%AF_%E0%AA%B6%E0%AA%BE%E0%AA%B8%E0%AB%8D%E0%AA%A4%E0%AB%8D%E0%AA%B0" title="સૌંદર�?ય શાસ�?ત�?ર – Gujarati" lang="gu" hreflang="gu">ગ�?જરાતી</a></li><li class="interlanguage-link interwiki-ko"><a href="//ko.wikipedia.org/wiki/%EB%AF%B8%ED%95%99" title="미학 – Korean" lang="ko" hreflang="ko">한국어</a></li><li class="interlanguage-link interwiki-hy"><a href="//hy.wikipedia.org/wiki/%D4%B7%D5%BD%D5%A9%D5%A5%D5%BF%D5%AB%D5%AF%D5%A1" title="Էսթետիկա – Armenian" lang="hy" hreflang="hy">Հայերեն</a></li><li class="interlanguage-link interwiki-hi"><a href="//hi.wikipedia.org/wiki/%E0%A4%B8%E0%A5%8C%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AF%E0%A4%B6%E0%A4%BE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8D%E0%A4%B0" title="सौन�?दर�?यशास�?त�?र – Hindi" lang="hi" hreflang="hi">हिन�?दी</a></li><li class="interlanguage-link interwiki-hr"><a href="//hr.wikipedia.org/wiki/Estetika" title="Estetika – Croatian" lang="hr" hreflang="hr">Hrvatski</a></li><li class="interlanguage-link interwiki-io"><a href="//io.wikipedia.org/wiki/Estetiko" title="Estetiko – Ido" lang="io" hreflang="io">Ido</a></li><li class="interlanguage-link interwiki-id"><a href="//id.wikipedia.org/wiki/Estetika" title="Estetika – Indonesian" lang="id" hreflang="id">Bahasa Indonesia</a></li><li class="interlanguage-link interwiki-ia"><a href="//ia.wikipedia.org/wiki/Esthetica" title="Esthetica – Interlingua" lang="ia" hreflang="ia">Interlingua</a></li><li class="interlanguage-link interwiki-is"><a href="//is.wikipedia.org/wiki/Fagurfr%C3%A6%C3%B0i" title="Fagurfræði – Icelandic" lang="is" hreflang="is">�?slenska</a></li><li class="interlanguage-link interwiki-it"><a href="//it.wikipedia.org/wiki/Estetica" title="Estetica – Italian" lang="it" hreflang="it">Italiano</a></li><li class="interlanguage-link interwiki-he"><a href="//he.wikipedia.org/wiki/%D7%90%D7%A1%D7%AA%D7%98%D7%99%D7%A7%D7%94" title="�?סתטיקה – Hebrew" lang="he" hreflang="he">עברית</a></li><li class="interlanguage-link interwiki-jv"><a href="//jv.wikipedia.org/wiki/%C3%88st%C3%A8tika" title="Èstètika – Javanese" lang="jv" hreflang="jv">Basa Jawa</a></li><li class="interlanguage-link interwiki-kn"><a href="//kn.wikipedia.org/wiki/%E0%B2%B8%E0%B3%8C%E0%B2%82%E0%B2%A6%E0%B2%B0%E0%B3%8D%E0%B2%AF%E0%B2%B6%E0%B2%BE%E0%B2%B8%E0%B3%8D%E0%B2%A4%E0%B3%8D%E0%B2%B0" title="ಸೌಂದರ�?ಯಶಾಸ�?ತ�?ರ – Kannada" lang="kn" hreflang="kn">ಕನ�?ನಡ</a></li><li class="interlanguage-link interwiki-ka"><a href="//ka.wikipedia.org/wiki/%E1%83%94%E1%83%A1%E1%83%97%E1%83%94%E1%83%A2%E1%83%98%E1%83%99%E1%83%90" title="ესთეტიკ�? – Georgian" lang="ka" hreflang="ka">ქ�?რთული</a></li><li class="interlanguage-link interwiki-kk"><a href="//kk.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Э�?тетика – Kazakh" lang="kk" hreflang="kk">Қазақша</a></li><li class="interlanguage-link interwiki-ku"><a href="//ku.wikipedia.org/wiki/Estet%C3%AEk" title="Estetîk – Kurdish" lang="ku" hreflang="ku">Kurdî</a></li><li class="interlanguage-link interwiki-ky"><a href="//ky.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Э�?тетика – Kyrgyz" lang="ky" hreflang="ky">Кыргызча</a></li><li class="interlanguage-link interwiki-la"><a href="//la.wikipedia.org/wiki/Aesthetica" title="Aesthetica – Latin" lang="la" hreflang="la">Latina</a></li><li class="interlanguage-link interwiki-lv"><a href="//lv.wikipedia.org/wiki/Est%C4%93tika" title="Estētika – Latvian" lang="lv" hreflang="lv">Latviešu</a></li><li class="interlanguage-link interwiki-lb"><a href="//lb.wikipedia.org/wiki/Esthetik" title="Esthetik – Luxembourgish" lang="lb" hreflang="lb">Lëtzebuergesch</a></li><li class="interlanguage-link interwiki-lt"><a href="//lt.wikipedia.org/wiki/Estetika" title="Estetika – Lithuanian" lang="lt" hreflang="lt">Lietuvių</a></li><li class="interlanguage-link interwiki-lij"><a href="//lij.wikipedia.org/wiki/Estetica" title="Estetica – Ligurian" lang="lij" hreflang="lij">Ligure</a></li><li class="interlanguage-link interwiki-jbo"><a href="//jbo.wikipedia.org/wiki/mleske" title="mleske – Lojban" lang="jbo" hreflang="jbo">La .lojban.</a></li><li class="interlanguage-link interwiki-hu"><a href="//hu.wikipedia.org/wiki/Eszt%C3%A9tika" title="Esztétika – Hungarian" lang="hu" hreflang="hu">Magyar</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%95%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Е�?тетика – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-ml"><a href="//ml.wikipedia.org/wiki/%E0%B4%B8%E0%B5%97%E0%B4%A8%E0%B5%8D%E0%B4%A6%E0%B4%B0%E0%B5%8D%E0%B4%AF%E0%B4%B6%E0%B4%BE%E0%B4%B8%E0%B5%8D%E0%B4%A4%E0%B5%8D%E0%B4%B0%E0%B4%82" title="സൗന�?ദര�?യശാസ�?ത�?രം – Malayalam" lang="ml" hreflang="ml">മലയാളം</a></li><li class="interlanguage-link interwiki-mr"><a href="//mr.wikipedia.org/wiki/%E0%A4%B8%E0%A5%8C%E0%A4%82%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AF%E0%A4%B6%E0%A4%BE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8D%E0%A4%B0" title="सौंदर�?यशास�?त�?र – Marathi" lang="mr" hreflang="mr">मराठी</a></li><li class="interlanguage-link interwiki-ms"><a href="//ms.wikipedia.org/wiki/Estetik" title="Estetik – Malay" lang="ms" hreflang="ms">Bahasa Melayu</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Esthetica" title="Esthetica – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ne"><a href="//ne.wikipedia.org/wiki/%E0%A4%B8%E0%A5%8C%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AF%E0%A4%B6%E0%A4%BE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8D%E0%A4%B0" title="सौन�?दर�?यशास�?त�?र – Nepali" lang="ne" hreflang="ne">नेपाली</a></li><li class="interlanguage-link interwiki-new"><a href="//new.wikipedia.org/wiki/%E0%A4%B8%E0%A5%8C%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AF_%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%B6%E0%A4%A8" title="सौन�?दर�?य दर�?शन – Newari" lang="new" hreflang="new">नेपाल भाषा</a></li><li class="interlanguage-link interwiki-ja"><a href="//ja.wikipedia.org/wiki/%E7%BE%8E%E5%AD%A6" title="美学 – Japanese" lang="ja" hreflang="ja">日本語</a></li><li class="interlanguage-link interwiki-no"><a href="//no.wikipedia.org/wiki/Estetikk" title="Estetikk – Norwegian" lang="no" hreflang="no">Norsk bokmål</a></li><li class="interlanguage-link interwiki-nn"><a href="//nn.wikipedia.org/wiki/Estetikk" title="Estetikk – Norwegian Nynorsk" lang="nn" hreflang="nn">Norsk nynorsk</a></li><li class="interlanguage-link interwiki-uz"><a href="//uz.wikipedia.org/wiki/Estetika" title="Estetika – Uzbek" lang="uz" hreflang="uz">Oʻzbekcha/ўзбекча</a></li><li class="interlanguage-link interwiki-pa"><a href="//pa.wikipedia.org/wiki/%E0%A8%B8%E0%A9%81%E0%A8%B9%E0%A8%9C_%E0%A8%B8%E0%A8%BC%E0%A8%BE%E0%A8%B8%E0%A8%A4%E0%A8%B0" title="ਸ�?ਹਜ ਸ਼ਾਸਤਰ – Punjabi" lang="pa" hreflang="pa">ਪੰਜਾਬੀ</a></li><li class="interlanguage-link interwiki-jam"><a href="//jam.wikipedia.org/wiki/Estetix" title="Estetix – Jamaican Creole English" lang="jam" hreflang="jam">Patois</a></li><li class="interlanguage-link interwiki-pms"><a href="//pms.wikipedia.org/wiki/Est%C3%A9tica" title="Estética – Piedmontese" lang="pms" hreflang="pms">Piemontèis</a></li><li class="interlanguage-link interwiki-pl"><a href="//pl.wikipedia.org/wiki/Estetyka" title="Estetyka – Polish" lang="pl" hreflang="pl">Polski</a></li><li class="interlanguage-link interwiki-pt"><a href="//pt.wikipedia.org/wiki/Est%C3%A9tica" title="Estética – Portuguese" lang="pt" hreflang="pt">Português</a></li><li class="interlanguage-link interwiki-ro"><a href="//ro.wikipedia.org/wiki/Estetic%C4%83" title="Estetică – Romanian" lang="ro" hreflang="ro">Română</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Э�?тетика – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-sah"><a href="//sah.wikipedia.org/wiki/%D0%AD%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Э�?тетика – Sakha" lang="sah" hreflang="sah">Саха тыла</a></li><li class="interlanguage-link interwiki-sq"><a href="//sq.wikipedia.org/wiki/Estetika" title="Estetika – Albanian" lang="sq" hreflang="sq">Shqip</a></li><li class="interlanguage-link interwiki-scn"><a href="//scn.wikipedia.org/wiki/Est%C3%A8tica" title="Estètica – Sicilian" lang="scn" hreflang="scn">Sicilianu</a></li><li class="interlanguage-link interwiki-simple"><a href="//simple.wikipedia.org/wiki/Aesthetics" title="Aesthetics – Simple English" lang="simple" hreflang="simple">Simple English</a></li><li class="interlanguage-link interwiki-sk"><a href="//sk.wikipedia.org/wiki/Estetika" title="Estetika – Slovak" lang="sk" hreflang="sk">Sloven�?ina</a></li><li class="interlanguage-link interwiki-sl"><a href="//sl.wikipedia.org/wiki/Estetika" title="Estetika – Slovenian" lang="sl" hreflang="sl">Slovenš�?ina</a></li><li class="interlanguage-link interwiki-ckb"><a href="//ckb.wikipedia.org/wiki/%D8%AC%D9%88%D8%A7%D9%86%DB%8C%D9%86%D8%A7%D8%B3%DB%8C" title="جوانیناسی – Central Kurdish" lang="ckb" hreflang="ckb">کوردیی ناوەندی</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%95%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Е�?тетика – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Estetika" title="Estetika – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Estetiikka" title="Estetiikka – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Estetik" title="Estetik – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-tl"><a href="//tl.wikipedia.org/wiki/Estetika" title="Estetika – Tagalog" lang="tl" hreflang="tl">Tagalog</a></li><li class="interlanguage-link interwiki-ta"><a href="//ta.wikipedia.org/wiki/%E0%AE%85%E0%AE%B4%E0%AE%95%E0%AE%BF%E0%AE%AF%E0%AE%B2%E0%AF%8D" title="அழகியல�? – Tamil" lang="ta" hreflang="ta">தமிழ�?</a></li><li class="interlanguage-link interwiki-th"><a href="//th.wikipedia.org/wiki/%E0%B8%AA%E0%B8%B8%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A8%E0%B8%B2%E0%B8%AA%E0%B8%95%E0%B8%A3%E0%B9%8C" title="สุนทรียศาสตร์ – Thai" lang="th" hreflang="th">ไทย</a></li><li class="interlanguage-link interwiki-tg"><a href="//tg.wikipedia.org/wiki/%D0%97%D0%B5%D0%B1%D0%BE%D0%B8%D1%88%D0%B8%D0%BD%D0%BE%D1%81%D3%A3" title="Зебоишино�?ӣ – Tajik" lang="tg" hreflang="tg">Тоҷикӣ</a></li><li class="interlanguage-link interwiki-tr"><a href="//tr.wikipedia.org/wiki/Estetik" title="Estetik – Turkish" lang="tr" hreflang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%95%D1%81%D1%82%D0%B5%D1%82%D0%B8%D0%BA%D0%B0" title="Е�?тетика – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-ur"><a href="//ur.wikipedia.org/wiki/%D8%AC%D9%85%D8%A7%D9%84%DB%8C%D8%A7%D8%AA" title="جمالیات – Urdu" lang="ur" hreflang="ur">اردو</a></li><li class="interlanguage-link interwiki-vi"><a href="//vi.wikipedia.org/wiki/M%E1%BB%B9_h%E1%BB%8Dc" title="Mỹ h�?c – Vietnamese" lang="vi" hreflang="vi">Tiếng Việt</a></li><li class="interlanguage-link interwiki-fiu-vro"><a href="//fiu-vro.wikipedia.org/wiki/Esteetiga" title="Esteetiga – Võro" lang="fiu-vro" hreflang="fiu-vro">Võro</a></li><li class="interlanguage-link interwiki-war"><a href="//war.wikipedia.org/wiki/Estetika" title="Estetika – Waray" lang="war" hreflang="war">Winaray</a></li><li class="interlanguage-link interwiki-yi"><a href="//yi.wikipedia.org/wiki/%D7%A2%D7%A1%D7%98%D7%A2%D7%98%D7%99%D7%A7" title="עסטעטיק – Yiddish" lang="yi" hreflang="yi">ייִדיש</a></li><li class="interlanguage-link interwiki-zh-yue"><a href="//zh-yue.wikipedia.org/wiki/%E7%BE%8E%E5%AD%B8" title="美學 – Cantonese" lang="zh-yue" hreflang="zh-yue">粵語</a></li><li class="interlanguage-link interwiki-zh"><a href="//zh.wikipedia.org/wiki/%E7%BE%8E%E5%AD%A6" title="美学 – Chinese" lang="zh" hreflang="zh">中文</a></li><li class="interlanguage-link interwiki-mai"><a href="//mai.wikipedia.org/wiki/%E0%A4%B8%E0%A5%8C%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AF%E0%A4%B6%E0%A4%BE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8D%E0%A4%B0" title="सौन�?दर�?यशास�?त�?र – Maithili" lang="mai" hreflang="mai">मैथिली</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q35986#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 7 July 2016, at 14:39.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Aesthetics&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","mmv.bootstrap.autostart","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":651,"wgHostname":"mw1183"});});</script>
+	</body>
+</html>

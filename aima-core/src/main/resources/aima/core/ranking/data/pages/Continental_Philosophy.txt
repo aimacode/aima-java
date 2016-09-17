@@ -1,0 +1,1522 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Continental philosophy - Wikipedia, the free encyclopedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Continental_philosophy","wgTitle":"Continental philosophy","wgCurRevisionId":725853030,"wgRevisionId":725853030,"wgArticleId":309641,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["All articles with specifically marked weasel-worded phrases","Articles with specifically marked weasel-worded phrases from September 2011","Articles with DMOZ links","Continental philosophy","Philosophical movements","Philosophical traditions","Contemporary philosophy","20th-century philosophy","Western philosophy","Post-structuralism","Postmodernism","Critical theory"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Continental_philosophy","wgRelevantArticleId":309641,"wgRequestId":"V3@GywpAEK4AAGhQkqIAAABK","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgFlaggedRevsParams":{"tags":{"status":{"levels":1,"quality":2,"pristine":3}}},"wgStableRevisionId":null,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikipedia","wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgWikibaseItemId":"Q59104","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0});mw.loader.implement("user.options",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","ext.centralauth.centralautologin","mmv.head","ext.visualEditor.desktopArticleTarget.init","ext.uls.init","ext.uls.interface","ext.quicksurveys.init","mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","ext.centralNotice.bannerController","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.cite.styles%7Cext.gadget.DRN-wizard%2CReferenceTooltips%2Ccharinsert%2Cfeatured-articles-links%2CrefToolbar%2Cswitcher%2Cteahouse%7Cext.tmh.thumbnail.styles%7Cext.uls.nojs%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.raggett%2CsectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="generator" content="MediaWiki 1.28.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Continental_philosophy"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Continental_philosophy&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=Continental_philosophy&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="copyright" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Continental_philosophy"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Continental_philosophy rootpage-Continental_philosophy skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Continental philosophy</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table class="vertical-navbox nowraplinks plainlist" style="float:right;clear:right;width:22.0em;margin:0 0 1.0em 1.0em;background:#f9f9f9;border:1px solid #aaa;padding:0.2em;border-spacing:0.4em 0;text-align:center;line-height:1.4em;font-size:88%">
+<tr>
+<td style="padding-top:0.4em;line-height:1.2em">Part of <a href="/wiki/Category:Philosophy" title="Category:Philosophy">a series</a> on</td>
+</tr>
+<tr>
+<th style="padding:0.2em 0.4em 0.2em;padding-top:0;font-size:145%;line-height:1.2em;font-size:200%;font-weight:normal;padding-bottom:0.15em;"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></th>
+</tr>
+<tr>
+<td style="padding:0.2em 0 0.4em"><a href="/wiki/File:Philbar_3.png" class="image" title="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes"><img alt="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes" src="//upload.wikimedia.org/wikipedia/commons/c/cf/Philbar_3.png" width="220" height="151" data-file-width="220" data-file-height="151" /></a>
+<div style="padding-top:0.2em;line-height:1.2em;white-space:nowrap;border-bottom:1px #aaa solid;">
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a></li>
+</ul>
+</div>
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Buddha" class="mw-redirect" title="Buddha">Buddha</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophers" title="Category:Philosophers">Philosophers</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/List_of_aestheticians" title="List of aestheticians">Aestheticians</a></li>
+<li><a href="/wiki/List_of_epistemologists" title="List of epistemologists">Epistemologists</a></li>
+<li><a href="/wiki/List_of_ethicists" title="List of ethicists">Ethicists</a></li>
+<li><a href="/wiki/List_of_logicians" title="List of logicians">Logicians</a></li>
+<li><a href="/wiki/List_of_metaphysicians" title="List of metaphysicians">Metaphysicians</a></li>
+<li><a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">Social and political philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_traditions" title="Category:Philosophical traditions">Traditions</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></li>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelian</a></li>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian</a></li>
+<li><strong class="selflink">Continental</strong></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+<li><a href="/wiki/Jewish_Philosophy" class="mw-redirect" title="Jewish Philosophy">Jewish</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonic</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy_by_period" title="Category:Philosophy by period">Periods</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_literature" title="Category:Philosophical literature">Literature</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Category:Aesthetics_literature" title="Category:Aesthetics literature">Aesthetics</a></li>
+<li><a href="/wiki/Category:Epistemology_literature" title="Category:Epistemology literature">Epistemology</a></li>
+<li><a href="/wiki/Category:Ethics_literature" title="Category:Ethics literature">Ethics</a></li>
+<li><a href="/wiki/Category:Logic_literature" title="Category:Logic literature">Logic</a></li>
+<li><a href="/wiki/Category:Metaphysics_literature" title="Category:Metaphysics literature">Metaphysics</a></li>
+<li><a href="/wiki/Category:Political_philosophy_literature" title="Category:Political philosophy literature">Political philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Branches_of_philosophy" title="Category:Branches of philosophy">Branches</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Philosophy_of_law" title="Philosophy of law">Legal philosophy</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Political philosophy</a></li>
+<li><a href="/wiki/Social_philosophy" title="Social philosophy">Social philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy-related_lists" title="Category:Philosophy-related lists">Lists</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Theories</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;">Miscellaneous</th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Philosopher" title="Philosopher">Philosopher</a></li>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="padding:0.3em 0.4em 0.3em;font-weight:bold;border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;border-top:1px solid #aaa;border-bottom:1px solid #aaa;"><span class="metadata"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/10px-Socrates.png" width="10" height="16" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/15px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/21px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></span> <a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr>
+<td style="text-align:right;font-size:115%;padding-top: 0.6em;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_sidebar" title="Template:Philosophy sidebar"><abbr title="View this template">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_sidebar" title="Template talk:Philosophy sidebar"><abbr title="Discuss this template">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_sidebar&amp;action=edit"><abbr title="Edit this template">e</abbr></a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+<p><b>Continental philosophy</b> is a set of 19th- and 20th-century philosophical traditions from <a href="/wiki/Continental_Europe" title="Continental Europe">mainland Europe</a>.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup><sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup> This sense of the term originated among English-speaking philosophers in the second half of the 20th century, who used it to refer to a range of thinkers and traditions outside the <a href="/wiki/Analytic_philosophy" title="Analytic philosophy">analytic movement</a>. Continental philosophy includes the following movements: <a href="/wiki/German_idealism" title="German idealism">German idealism</a>, <a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">phenomenology</a>, <a href="/wiki/Existentialism" title="Existentialism">existentialism</a> (and its antecedents, such as the thought of <a href="/wiki/S%C3%B8ren_Kierkegaard" title="Søren Kierkegaard">Kierkegaard</a> and <a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a>), <a href="/wiki/Hermeneutics" title="Hermeneutics">hermeneutics</a>, <a href="/wiki/Structuralism" title="Structuralism">structuralism</a>, <a href="/wiki/Post-structuralism" title="Post-structuralism">post-structuralism</a>, <a href="/wiki/Feminism_in_France" title="Feminism in France">French feminism</a>, <a href="/wiki/Psychoanalytic_theory" title="Psychoanalytic theory">psychoanalytic theory</a>, and the <a href="/wiki/Critical_theory" title="Critical theory">critical theory</a> of the <a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a> and related branches of <a href="/wiki/Western_Marxism" title="Western Marxism">Western Marxism</a>.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup></p>
+<p>It is difficult to identify non-trivial claims that would be common to all the preceding philosophical movements. The term "continental philosophy", like "analytic philosophy", lacks clear definition and may mark merely a <a href="/wiki/Family_resemblance" title="Family resemblance">family resemblance</a> across disparate philosophical views. <a href="/wiki/Simon_Glendinning" title="Simon Glendinning">Simon Glendinning</a> has suggested that the term was originally more pejorative than descriptive, functioning as a label for types of western philosophy rejected or disliked by analytic philosophers.<sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup> Nonetheless, <a href="/wiki/Michael_E._Rosen" title="Michael E. Rosen">Michael E. Rosen</a> has ventured to identify common themes that typically characterize continental philosophy.<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup></p>
+<ul>
+<li>First, continental philosophers generally reject the view that the <a href="/wiki/Natural_science" title="Natural science">natural sciences</a> are the only or most accurate way of understanding natural phenomena. This contrasts with many analytic philosophers who consider their inquiries as continuous with, or subordinate to, those of the natural sciences. Continental philosophers often argue that science depends upon a "pre-theoretical substrate of experience" (a version of <a href="/wiki/Kantianism" title="Kantianism">Kantian</a> conditions of possible experience or the phenomenological "<a href="/wiki/Lifeworld" title="Lifeworld">lifeworld</a>") and that scientific methods are inadequate to fully understand such conditions of intelligibility.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup></li>
+<li>Second, continental philosophy usually considers these conditions of possible experience as variable: determined at least partly by factors such as context, space and time, language, culture, or history. Thus continental philosophy tends toward <a href="/wiki/Historicism" title="Historicism">historicism</a> (or <a href="/wiki/Historicity_(philosophy)" title="Historicity (philosophy)">Historicity</a>). Where analytic philosophy tends to treat philosophy in terms of discrete problems, capable of being analyzed apart from their historical origins (much as scientists consider the history of science inessential to scientific inquiry), continental philosophy typically suggests that "philosophical argument cannot be divorced from the textual and contextual conditions of its historical emergence".<sup id="cite_ref-7" class="reference"><a href="#cite_note-7">[7]</a></sup></li>
+<li>Third, continental philosophy typically holds that human agency can change these conditions of possible experience: "if human experience is a contingent creation, then it can be recreated in other ways".<sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup> Thus continental philosophers tend to take a strong interest in the unity of theory and practice, and often see their philosophical inquiries as closely related to personal, moral, or political transformation. This tendency is very clear in the Marxist tradition ("<a href="/wiki/Theses_on_Feuerbach" title="Theses on Feuerbach">philosophers have only <i>interpreted</i> the world, in various ways; the point, however, is to <i>change</i> it</a>"), but is also central in existentialism and post-structuralism.</li>
+<li>A final characteristic trait of continental philosophy is an emphasis on <a href="/wiki/Metaphilosophy" title="Metaphilosophy">metaphilosophy</a>. In the wake of the development and success of the natural sciences, continental philosophers have often sought to redefine the method and nature of philosophy.<sup id="cite_ref-9" class="reference"><a href="#cite_note-9">[9]</a></sup> In some cases (such as German idealism or phenomenology), this manifests as a renovation of the traditional view that philosophy is the first, foundational, <i>a priori</i> science. In other cases (such as hermeneutics, critical theory, or structuralism), it is held that philosophy investigates a domain that is irreducibly cultural or practical. And some continental philosophers (such as Kierkegaard, Nietzsche, the later <a href="/wiki/Martin_Heidegger" title="Martin Heidegger">Heidegger</a>, or <a href="/wiki/Jacques_Derrida" title="Jacques Derrida">Derrida</a>) doubt whether any conception of philosophy can coherently achieve its stated goals.</li>
+</ul>
+<p>Ultimately, the foregoing themes derive from a broadly Kantian thesis that knowledge, experience, and reality are bound and shaped by conditions best understood through philosophical reflection rather than exclusively empirical inquiry.<sup id="cite_ref-10" class="reference"><a href="#cite_note-10">[10]</a></sup></p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#The_term"><span class="tocnumber">1</span> <span class="toctext">The term</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#History"><span class="tocnumber">2</span> <span class="toctext">History</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Recent_Anglo-American_developments"><span class="tocnumber">3</span> <span class="toctext">Recent Anglo-American developments</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Significant_works"><span class="tocnumber">4</span> <span class="toctext">Significant works</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Notes"><span class="tocnumber">6</span> <span class="toctext">Notes</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#References"><span class="tocnumber">7</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#External_links"><span class="tocnumber">8</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="The_term">The term</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=1" title="Edit section: The term">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>The term "continental philosophy," in the above sense, was first widely used by English-speaking philosophers to describe university courses in the 1970s, emerging as a collective name for the philosophies then widespread in France and Germany, such as phenomenology, existentialism, structuralism, and post-structuralism.<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[11]</a></sup></p>
+<p>However, the term (and its approximate sense) can be found at least as early as 1840, in <a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">John Stuart Mill</a>'s 1840 essay on <a href="/wiki/Samuel_Taylor_Coleridge" title="Samuel Taylor Coleridge">Coleridge</a>, where Mill contrasts the Kantian-influenced thought of "Continental philosophy" and "Continental philosophers" with the English empiricism of <a href="/wiki/Jeremy_Bentham" title="Jeremy Bentham">Bentham</a> and the 18th century generally.<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[12]</a></sup> This notion gained prominence in the early 20th century as figures such as <a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a> and <a href="/wiki/G.E._Moore" class="mw-redirect" title="G.E. Moore">G.E. Moore</a> advanced a vision of philosophy closely allied with natural science, progressing through logical analysis. This tradition, which has come to be known broadly as "analytic philosophy", became dominant in Britain and America from roughly 1930 onward. Russell and Moore made a dismissal of <a href="/wiki/Hegelianism" title="Hegelianism">Hegelianism</a> and its philosophical relatives a distinctive part of their new movement.<sup id="cite_ref-13" class="reference"><a href="#cite_note-13">[13]</a></sup> Commenting on the history of the distinction in 1945, Russell distinguished "two schools of philosophy, which may be broadly distinguished as the Continental and the British respectively", a division he saw as operative "from the time of Locke".<sup id="cite_ref-14" class="reference"><a href="#cite_note-14">[14]</a></sup></p>
+<p>Since the 1970s, however, many philosophers in America and Britain have taken interest in continental philosophers since Kant, and the philosophical traditions in many European countries have similarly incorporated many aspects of the "analytic" movement. Self-described analytic philosophy flourishes in France, including philosophers such as <a href="/wiki/Jules_Vuillemin" title="Jules Vuillemin">Jules Vuillemin</a>, <a href="/wiki/Vincent_Descombes" title="Vincent Descombes">Vincent Descombes</a>, <a href="/wiki/Gilles_Gaston_Granger" class="mw-redirect" title="Gilles Gaston Granger">Gilles Gaston Granger</a>, <a href="/wiki/Fran%C3%A7ois_Recanati" title="François Recanati">François Recanati</a>, and <a href="/wiki/Pascal_Engel" title="Pascal Engel">Pascal Engel</a>. Likewise, self-described "continental philosophers" can be found in philosophy departments in the United Kingdom, North America, and Australia,<sup id="cite_ref-15" class="reference"><a href="#cite_note-15">[15]</a></sup> and some well-known analytic philosophers claim to conduct better scholarship on continental philosophy than self-identified programs in continental philosophy, particularly at the level of graduate education.<sup id="cite_ref-16" class="reference"><a href="#cite_note-16">[16]</a></sup> "Continental philosophy" is thus defined in terms of a family of philosophical traditions and influences rather than a geographic distinction.</p>
+<h2><span class="mw-headline" id="History">History</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=2" title="Edit section: History">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>The history of continental philosophy (taken in its narrower sense) is usually thought to begin with <a href="/wiki/German_idealism" title="German idealism">German idealism</a>.<sup id="cite_ref-17" class="reference"><a href="#cite_note-17">[17]</a></sup> Led by figures like <a href="/wiki/Fichte" class="mw-redirect" title="Fichte">Fichte</a>, <a href="/wiki/Friedrich_Wilhelm_Joseph_Schelling" title="Friedrich Wilhelm Joseph Schelling">Schelling</a>, and later <a href="/wiki/Hegel" class="mw-redirect" title="Hegel">Hegel</a>, German idealism developed out of the work of <a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a> in the 1780s and 1790s and was closely linked with <a href="/wiki/Romanticism" title="Romanticism">romanticism</a> and the revolutionary politics of the <a href="/wiki/Age_of_Enlightenment" title="Age of Enlightenment">Enlightenment</a>. Besides the central figures listed above, important contributors to German idealism also included <a href="/wiki/Friedrich_Heinrich_Jacobi" title="Friedrich Heinrich Jacobi">Friedrich Heinrich Jacobi</a>, <a href="/wiki/Gottlob_Ernst_Schulze" title="Gottlob Ernst Schulze">Gottlob Ernst Schulze</a>, <a href="/wiki/Karl_Leonhard_Reinhold" title="Karl Leonhard Reinhold">Karl Leonhard Reinhold</a>, and <a href="/wiki/Friedrich_Schleiermacher" title="Friedrich Schleiermacher">Friedrich Schleiermacher</a>.</p>
+<p>As the institutional roots of "continental philosophy" in many cases directly descend from those of phenomenology,<sup id="cite_ref-18" class="reference"><a href="#cite_note-18">[18]</a></sup> <a href="/wiki/Edmund_Husserl" title="Edmund Husserl">Edmund Husserl</a> has always been a canonical figure in continental philosophy. Nonetheless, Husserl is also a respected subject of study in the analytic tradition.<sup id="cite_ref-19" class="reference"><a href="#cite_note-19">[19]</a></sup> Husserl's notion of a <a href="/wiki/Noema" title="Noema">noema</a>, the non-psychological content of thought, his correspondence with <a href="/wiki/Gottlob_Frege" title="Gottlob Frege">Gottlob Frege</a>, and his investigations into the nature of logic continue to generate interest among analytic philosophers.</p>
+<p><a href="/wiki/Jos%C3%A9_Guilherme_Merquior" title="José Guilherme Merquior">J. G. Merquior</a><sup id="cite_ref-20" class="reference"><a href="#cite_note-20">[20]</a></sup> argued that a distinction between analytic and continental philosophies can be first clearly identified with <a href="/wiki/Henri_Bergson" title="Henri Bergson">Henri Bergson</a> (1859–1941), whose wariness of science and elevation of <a href="/wiki/Intuition_(Bergson)" title="Intuition (Bergson)">intuition</a> paved the way for <a href="/wiki/Existentialism" title="Existentialism">existentialism</a>. Merquior wrote: "the most prestigious philosophizing in France took a very dissimilar path [from the Anglo-Germanic analytic schools]. One might say it all began with Henri Bergson."</p>
+<p>An illustration of some important differences between "analytic" and "continental" styles of philosophy can be found in <a href="/wiki/Rudolf_Carnap" title="Rudolf Carnap">Rudolf Carnap</a>'s "Elimination of Metaphysics through Logical Analysis of Language" (Originally published in 1932 as "Überwindung der Metaphysik durch Logische Analyse der Sprache"), a paper some observers<sup class="noprint Inline-Template" style="white-space:nowrap;">[<i><a href="/wiki/Wikipedia:Manual_of_Style/Words_to_watch#Unsupported_attributions" title="Wikipedia:Manual of Style/Words to watch"><span title="The material near this tag possibly uses too-vague attribution or weasel words. (September 2011)">who?</span></a></i>]</sup> have described as particularly polemical. Carnap's paper argues that Heidegger's lecture "What Is Metaphysics?" violates logical syntax to create nonsensical pseudo-statements.<sup id="cite_ref-21" class="reference"><a href="#cite_note-21">[21]</a></sup> Moreover, Carnap claimed that many German metaphysicians of the era were similar to Heidegger in writing statements that were not merely false, but devoid of any meaning.</p>
+<p>With the rise of <a href="/wiki/Nazism" title="Nazism">Nazism</a>, many of Germany's philosophers, especially those of Jewish descent or leftist or liberal political sympathies (such as many in the <a href="/wiki/Vienna_Circle" title="Vienna Circle">Vienna Circle</a> and the <a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a>), fled to the English-speaking world. Those philosophers who remained—if they remained in academia at all—had to reconcile themselves to <a href="/wiki/Nazi" class="mw-redirect" title="Nazi">Nazi</a> control of the universities. Others, such as <a href="/wiki/Martin_Heidegger" title="Martin Heidegger">Martin Heidegger</a>, among the most prominent German philosophers to stay in Germany, embraced Nazism when it came to power.</p>
+<p>Both before and after <a href="/wiki/World_War_II" title="World War II">World War II</a> there was a growth of interest in German philosophy in <a href="/wiki/France" title="France">France</a>. A new interest in communism translated into an interest in Marx and Hegel, who became for the first time studied extensively in the politically conservative French university system of the <a href="/wiki/French_Third_Republic" title="French Third Republic">Third Republic</a>. At the same time the phenomenological philosophy of Husserl and Heidegger became increasingly influential, perhaps owing to its resonances with French philosophies which placed great stock in the first-person perspective (an idea found in divergent forms such as <a href="/wiki/Cartesianism" title="Cartesianism">Cartesianism</a>, spiritualism, and Bergsonism). Most important in this popularization of phenomenology was the author and philosopher <a href="/wiki/Jean-Paul_Sartre" title="Jean-Paul Sartre">Jean-Paul Sartre</a>, who called his philosophy <a href="/wiki/Existentialism" title="Existentialism">existentialism</a>. (See <a href="/wiki/20th-century_French_philosophy" title="20th-century French philosophy">20th-century French philosophy</a>.) Another major strain of continental thought is <a href="/wiki/Structuralism" title="Structuralism">structuralism</a>/<a href="/wiki/Post-structuralism" title="Post-structuralism">post-structuralism</a>. Influenced by the <a href="/wiki/Structural_linguistics" title="Structural linguistics">structural linguistics</a> of <a href="/wiki/Ferdinand_de_Saussure" title="Ferdinand de Saussure">Ferdinand de Saussure</a>, French anthropologists such as <a href="/wiki/Claude_L%C3%A9vi-Strauss" title="Claude Lévi-Strauss">Claude Lévi-Strauss</a> began to apply the structural paradigm to the humanities. In the 1960s and '70s, post-structuralists developed various critiques of structuralism. Post-structuralist thinkers include <a href="/wiki/Jacques_Lacan" title="Jacques Lacan">Jacques Lacan</a>, <a href="/wiki/Jacques_Derrida" title="Jacques Derrida">Jacques Derrida</a>, <a href="/wiki/Michel_Foucault" title="Michel Foucault">Michel Foucault</a> and <a href="/wiki/Gilles_Deleuze" title="Gilles Deleuze">Gilles Deleuze</a>.</p>
+<h2><span class="mw-headline" id="Recent_Anglo-American_developments">Recent Anglo-American developments</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=3" title="Edit section: Recent Anglo-American developments">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>From the early 20th century until the 1960s, continental philosophers were only intermittently discussed in British and American universities, despite an influx of continental philosophers, particularly <a href="/wiki/German_Jews" class="mw-redirect" title="German Jews">German Jewish</a> students of Nietzsche and Heidegger, to the United States on account of the persecution of the Jews and later <a href="/wiki/World_War_II" title="World War II">World War II</a>; <a href="/wiki/Hannah_Arendt" title="Hannah Arendt">Hannah Arendt</a>, <a href="/wiki/Leo_Strauss" title="Leo Strauss">Leo Strauss</a>, <a href="/wiki/Theodor_W._Adorno" title="Theodor W. Adorno">Theodor W. Adorno</a>, and <a href="/wiki/Walter_Kaufmann_(philosopher)" title="Walter Kaufmann (philosopher)">Walter Kaufmann</a> are probably the most notable of this wave, arriving in the late 1930s and early 1940s. However, philosophy departments began offering courses in continental philosophy in the late 1960s and 1970s. With the rise of postmodernism in the 1970s and 1980s, some British and American philosophers became more vocally opposed to the methods and conclusions of continental philosophers. For example, <a href="/wiki/John_Searle" title="John Searle">John Searle</a><sup id="cite_ref-22" class="reference"><a href="#cite_note-22">[22]</a></sup> criticized Derrida's <a href="/wiki/Deconstruction" title="Deconstruction">deconstruction</a> for "obvious and manifest intellectual weaknesses." Later, <a href="/wiki/Barry_Smith_(academic_and_ontologist)" class="mw-redirect" title="Barry Smith (academic and ontologist)">Barry Smith</a> and assorted signatories protested against the award of an honorary degree to Derrida by <a href="/wiki/Cambridge_University" class="mw-redirect" title="Cambridge University">Cambridge University</a>.<sup id="cite_ref-BarrySmithEtAl_23-0" class="reference"><a href="#cite_note-BarrySmithEtAl-23">[23]</a></sup></p>
+<p>American university departments in literature, the fine arts, film, sociology, and political theory have increasingly incorporated ideas and arguments from continental philosophers into their curricula and research. Continental Philosophy features prominently in a number of British and Irish Philosophy departments, for instance at the University of Essex, Warwick, Sussex and Dundee, Manchester Metropolitan, Kingston University, Staffordshire University and University College Dublin, and in North American Philosophy departments, including the University of Hawai'i at M�?noa, Boston College, Stony Brook University (SUNY), Vanderbilt University, DePaul University, Villanova University, the University of Guelph, The New School, Pennsylvania State University, University of Oregon, Emory University, Duquesne University, the University of Memphis, <a href="/wiki/University_of_King%27s_College" title="University of King's College">University of King's College</a>, and Loyola University Chicago. The most prominent organization for continental philosophy in the United States is the <a href="/wiki/Society_for_Phenomenology_and_Existential_Philosophy" title="Society for Phenomenology and Existential Philosophy">Society for Phenomenology and Existential Philosophy</a> (known as SPEP).<sup id="cite_ref-24" class="reference"><a href="#cite_note-24">[24]</a></sup></p>
+<p>The rise of <a href="/wiki/Alfred_North_Whitehead" title="Alfred North Whitehead">Alfred North Whitehead</a>'s <a href="/wiki/Process_philosophy" title="Process philosophy">process philosophy</a> can be interpreted both as a prophylactic and a therapeutic movement: on the one hand, Whitehead's life and thought show that analytic rigor and speculative imagination can work together; on the other hand, Whiteheadian scholarship has sometimes provided bridges between these fields.<sup id="cite_ref-25" class="reference"><a href="#cite_note-25">[25]</a></sup></p>
+<h2><span class="mw-headline" id="Significant_works">Significant works</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=4" title="Edit section: Significant works">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="div-col columns column-count column-count-2" style="-moz-column-count: 2; -webkit-column-count: 2; column-count: 2;">
+<ul>
+<li><i><a href="/wiki/A_Cyborg_Manifesto" title="A Cyborg Manifesto">A Cyborg Manifesto</a></i></li>
+<li><i><a href="/w/index.php?title=After_Theory&amp;action=edit&amp;redlink=1" class="new" title="After Theory (page does not exist)">After Theory</a></i></li>
+<li><i><a href="/w/index.php?title=A_Theory_of_Feelings&amp;action=edit&amp;redlink=1" class="new" title="A Theory of Feelings (page does not exist)">A Theory of Feelings</a></i></li>
+<li><i><a href="/wiki/A_Thousand_Plateaus:_Capitalism_and_Schizophrenia" class="mw-redirect" title="A Thousand Plateaus: Capitalism and Schizophrenia">A Thousand Plateaus: Capitalism and Schizophrenia</a></i></li>
+<li><i><a href="/wiki/Anti-Oedipus:_Capitalism_and_Schizophrenia" class="mw-redirect" title="Anti-Oedipus: Capitalism and Schizophrenia">Anti-Oedipus: Capitalism and Schizophrenia</a></i></li>
+<li><i><a href="/w/index.php?title=Being_and_Event&amp;action=edit&amp;redlink=1" class="new" title="Being and Event (page does not exist)">Being and Event</a></i></li>
+<li><i><a href="/wiki/Being_and_Nothingness" title="Being and Nothingness">Being and Nothingness</a></i></li>
+<li><i><a href="/wiki/Being_and_Time" title="Being and Time">Being and Time</a></i></li>
+<li><i><a href="/wiki/Blindness_and_Insight" class="mw-redirect" title="Blindness and Insight">Blindness and Insight</a></i></li>
+<li><i><a href="/wiki/Dialectic_of_Enlightenment" title="Dialectic of Enlightenment">Dialectic of Enlightenment</a></i></li>
+<li><i><a href="/wiki/Difference_and_Repetition" title="Difference and Repetition">Difference and Repetition</a></i></li>
+<li><i><a href="/wiki/Escape_from_Freedom" title="Escape from Freedom">Escape from Freedom</a></i></li>
+<li><i><a href="/wiki/Eros_and_Civilization" title="Eros and Civilization">Eros and Civilization</a></i></li>
+<li><i><a href="/w/index.php?title=Finite_Being_and_Eternal_Being&amp;action=edit&amp;redlink=1" class="new" title="Finite Being and Eternal Being (page does not exist)">Finite Being and Eternal Being</a></i></li>
+<li><i><a href="/wiki/Gender_Trouble" title="Gender Trouble">Gender Trouble</a></i></li>
+<li><i><a href="/wiki/Madness_and_Civilization" title="Madness and Civilization">Madness and Civilization</a></i></li>
+<li><i><a href="/wiki/Minima_Moralia" title="Minima Moralia">Minima Moralia</a></i></li>
+<li><i><a href="/wiki/Mythologies_(book)" title="Mythologies (book)">Mythologies</a></i></li>
+<li><i><a href="/wiki/Negative_Dialectics" title="Negative Dialectics">Negative Dialectics</a></i></li>
+<li><i><a href="/wiki/History_and_Class_Consciousness" title="History and Class Consciousness">History and Class Consciousness</a></i></li>
+<li><i><a href="/w/index.php?title=Homo_Sacer_(book)&amp;action=edit&amp;redlink=1" class="new" title="Homo Sacer (book) (page does not exist)">Homo Sacer</a></i></li>
+<li><i><a href="/wiki/I_and_Thou" title="I and Thou">I and Thou</a></i></li>
+<li><i><a href="/wiki/Ideology_and_Ideological_State_Apparatuses" title="Ideology and Ideological State Apparatuses">Ideology and Ideological State Apparatuses</a></i></li>
+<li><i>Illuminations</i></li>
+<li><i><a href="/wiki/One-Dimensional_Man" title="One-Dimensional Man">One-Dimensional Man</a></i></li>
+<li><i><a href="/wiki/Of_Grammatology" title="Of Grammatology">Of Grammatology</a></i></li>
+<li><i><a href="/wiki/Prison_Notebooks" title="Prison Notebooks">Prison Notebooks</a></i></li>
+<li><i><a href="/wiki/Phenomenology_of_Perception" title="Phenomenology of Perception">Phenomenology of Perception</a></i></li>
+<li><i><a href="/wiki/Philosophy_of_Symbolic_Forms" class="mw-redirect" title="Philosophy of Symbolic Forms">Philosophy of Symbolic Forms</a></i></li>
+<li><i><a href="/wiki/Reading_Capital" title="Reading Capital">Reading Capital</a></i></li>
+<li><i><a href="/wiki/Simulacra_and_Simulation" title="Simulacra and Simulation">Simulacra and Simulation</a></i></li>
+<li><i><a href="/wiki/Society_of_the_Spectacle" class="mw-redirect" title="Society of the Spectacle">Society of the Spectacle</a></i></li>
+<li><i><a href="/wiki/The_History_of_Sexuality" title="The History of Sexuality">The History of Sexuality</a></i></li>
+<li><i><a href="/wiki/The_Human_Condition_(book)" title="The Human Condition (book)">The Human Condition</a></i></li>
+<li><i><a href="/wiki/The_Myth_of_Sisyphus" title="The Myth of Sisyphus">The Myth of Sisyphus</a></i></li>
+<li><i><a href="/wiki/The_Order_of_Things" title="The Order of Things">The Order of Things</a></i></li>
+<li><i><a href="/wiki/The_Poetics_of_Space" title="The Poetics of Space">The Poetics of Space</a></i></li>
+<li><i><a href="/wiki/The_Postmodern_Condition" title="The Postmodern Condition">The Postmodern Condition</a></i></li>
+<li><i><a href="/wiki/The_Second_Sex" title="The Second Sex">The Second Sex</a></i></li>
+<li><i><a href="/w/index.php?title=The_Third_Body&amp;action=edit&amp;redlink=1" class="new" title="The Third Body (page does not exist)">The Third Body</a></i></li>
+<li><i><a href="/w/index.php?title=Time_and_Narrative&amp;action=edit&amp;redlink=1" class="new" title="Time and Narrative (page does not exist)">Time and Narrative</a></i></li>
+<li><i><a href="/wiki/Totality_and_Infinity" title="Totality and Infinity">Totality and Infinity</a></i></li>
+<li><i><a href="/wiki/Truth_and_Method" title="Truth and Method">Truth and Method</a></i></li>
+</ul>
+</div>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=5" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="div-col columns column-count column-count-2" style="-moz-column-count: 2; -webkit-column-count: 2; column-count: 2;">
+<ul>
+<li><a href="/wiki/Existential_Thomism" class="mw-redirect" title="Existential Thomism">Existential Thomism</a></li>
+<li><a href="/wiki/Index_of_continental_philosophy_articles" title="Index of continental philosophy articles">Index of continental philosophy articles</a></li>
+<li><a href="/wiki/Non-philosophy" title="Non-philosophy">Non-philosophy</a></li>
+<li><a href="/wiki/Speculative_realism" title="Speculative realism">Speculative realism</a></li>
+</ul>
+</div>
+<h2><span class="mw-headline" id="Notes">Notes</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=6" title="Edit section: Notes">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist references-column-width" style="-moz-column-width: 30em; -webkit-column-width: 30em; column-width: 30em; list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-1">^</a></b></span> <span class="reference-text"><a href="#CITEREFLeiter2007">Leiter 2007</a>, p.&#160;2: "As a first approximation, we might say that philosophy in Continental Europe in the nineteenth and twentieth centuries is best understood as a connected weave of traditions, some of which overlap, but no one of which dominates all the others."</span></li>
+<li id="cite_note-2"><span class="mw-cite-backlink"><b><a href="#cite_ref-2">^</a></b></span> <span class="reference-text"><cite id="CITEREFCritchley1998" class="citation">Critchley, Simon (1998), "Introduction: what is continental philosophy?", in Critchley, Simon; Schroder, William, <i>A Companion to Continental Philosophy</i>, Blackwell Companions to Philosophy, Malden, MA: Blackwell Publishing Ltd, p.&#160;4</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.atitle=Introduction%3A+what+is+continental+philosophy%3F&amp;rft.aufirst=Simon&amp;rft.aulast=Critchley&amp;rft.btitle=A+Companion+to+Continental+Philosophy&amp;rft.date=1998&amp;rft.genre=bookitem&amp;rft.pages=4&amp;rft.place=Malden%2C+MA&amp;rft.pub=Blackwell+Publishing+Ltd&amp;rft.series=Blackwell+Companions+to+Philosophy&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span>.</span></li>
+<li id="cite_note-3"><span class="mw-cite-backlink"><b><a href="#cite_ref-3">^</a></b></span> <span class="reference-text">The above list includes only those movements common to both lists compiled by <a href="#CITEREFCritchley2001">Critchley 2001</a>, p.&#160;13 and <a href="#CITEREFGlendinning2006">Glendinning 2006</a>, pp.&#160;58–65</span></li>
+<li id="cite_note-4"><span class="mw-cite-backlink"><b><a href="#cite_ref-4">^</a></b></span> <span class="reference-text"><a href="#CITEREFGlendinning2006">Glendinning 2006</a>, p.&#160;12.</span></li>
+<li id="cite_note-5"><span class="mw-cite-backlink"><b><a href="#cite_ref-5">^</a></b></span> <span class="reference-text">The following list of four traits is adapted from <cite id="CITEREFRosen" class="citation">Rosen, Michael, "Continental Philosophy from Hegel", in Grayling, A.C., <i>Philosophy 2: Further through the Subject</i>, p.&#160;665</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.atitle=Continental+Philosophy+from+Hegel&amp;rft.aufirst=Michael&amp;rft.aulast=Rosen&amp;rft.btitle=Philosophy+2%3A+Further+through+the+Subject&amp;rft.genre=bookitem&amp;rft.pages=665&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-6"><span class="mw-cite-backlink"><b><a href="#cite_ref-6">^</a></b></span> <span class="reference-text"><a href="#CITEREFCritchley2001">Critchley 2001</a>, p.&#160;115.</span></li>
+<li id="cite_note-7"><span class="mw-cite-backlink"><b><a href="#cite_ref-7">^</a></b></span> <span class="reference-text"><a href="#CITEREFCritchley2001">Critchley 2001</a>, p.&#160;57.</span></li>
+<li id="cite_note-8"><span class="mw-cite-backlink"><b><a href="#cite_ref-8">^</a></b></span> <span class="reference-text"><a href="#CITEREFCritchley2001">Critchley 2001</a>, p.&#160;64.</span></li>
+<li id="cite_note-9"><span class="mw-cite-backlink"><b><a href="#cite_ref-9">^</a></b></span> <span class="reference-text"><a href="#CITEREFLeiter2007">Leiter 2007</a>, p.&#160;4: "While forms of philosophical naturalism have been dominant in Anglophone philosophy, the vast majority of authors within the Continental traditions insist on the distinctiveness of philosophical methods and their priority to those of the natural sciences."</span></li>
+<li id="cite_note-10"><span class="mw-cite-backlink"><b><a href="#cite_ref-10">^</a></b></span> <span class="reference-text">Continental philosophers usually identify such conditions with the transcendental subject or self: <a href="#CITEREFSolomon1988">Solomon 1988</a>, p.&#160;6, "It is with Kant that philosophical claims about the self attain new and remarkable proportions. The self becomes not just the focus of attention but the entire subject-matter of philosophy. The self is not just another entity in the world, but in an important sense it creates the world, and the reflecting self does not just know itself, but in knowing itself knows all selves, and the structure of any and every possible self."</span></li>
+<li id="cite_note-11"><span class="mw-cite-backlink"><b><a href="#cite_ref-11">^</a></b></span> <span class="reference-text"><a href="#CITEREFCritchley2001">Critchley 2001</a>, p.&#160;38.</span></li>
+<li id="cite_note-12"><span class="mw-cite-backlink"><b><a href="#cite_ref-12">^</a></b></span> <span class="reference-text"><cite class="citation book"><a href="/wiki/John_Stuart_Mill" title="John Stuart Mill">Mill, John Stuart</a> (1950). <i>On Bentham and Coleridge</i>. Harper Torchbooks. New York: Harper &amp; Row. pp.&#160;104, 133, 155.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=John+Stuart&amp;rft.aulast=Mill&amp;rft.btitle=On+Bentham+and+Coleridge&amp;rft.date=1950&amp;rft.genre=book&amp;rft.pages=104%2C+133%2C+155&amp;rft.place=New+York&amp;rft.pub=Harper+%26+Row&amp;rft.series=Harper+Torchbooks&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-13"><span class="mw-cite-backlink"><b><a href="#cite_ref-13">^</a></b></span> <span class="reference-text"><cite class="citation book"><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Russell, Bertrand</a> (1959). <i>My Philosophical Development</i>. London: Allen &amp; Unwin. p.&#160;62. <q>Hegelians had all kinds of arguments to prove this or that was not 'real'. Number, space, time, matter, were all professedly convicted of being self-contradictory. Nothing was real, so we were assured, except the Absolute, which could think only of itself since there was nothing else for it to think of and which thought eternally the sort of things that idealist philosophers thought in their books.</q></cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Bertrand&amp;rft.aulast=Russell&amp;rft.btitle=My+Philosophical+Development&amp;rft.date=1959&amp;rft.genre=book&amp;rft.pages=62&amp;rft.place=London&amp;rft.pub=Allen+%26+Unwin&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-14"><span class="mw-cite-backlink"><b><a href="#cite_ref-14">^</a></b></span> <span class="reference-text">B. Russell, <i>A History of Western Philosophy</i>, (Simon &amp; Schuster, 1945), p. 643 and 641. Russell proposes the following broad points of distinction between Continental and British types of philosophy: (1) in method, <a href="/wiki/Deductive_system" class="mw-redirect" title="Deductive system">deductive system</a>-building vs. piecemeal induction; (2) in metaphysics, rationalist theology vs. metaphysical agnosticism; (3) in ethics, non-naturalist deontology vs. naturalist hedonism; and (4) in politics, authoritarianism vs. liberalism. Ibid., pp. 643-647.</span></li>
+<li id="cite_note-15"><span class="mw-cite-backlink"><b><a href="#cite_ref-15">^</a></b></span> <span class="reference-text">See, e.g., Walter Brogan and James Risser (eds.), <i>American Continental Philosophy: A Reader</i> (Indiana University Press, 2000).</span></li>
+<li id="cite_note-16"><span class="mw-cite-backlink"><b><a href="#cite_ref-16">^</a></b></span> <span class="reference-text"><a href="/wiki/Brian_Leiter" title="Brian Leiter">Brian Leiter</a> is most commonly associated with such claims.</span></li>
+<li id="cite_note-17"><span class="mw-cite-backlink"><b><a href="#cite_ref-17">^</a></b></span> <span class="reference-text"><a href="#CITEREFCritchley2001">Critchley 2001</a> and <a href="#CITEREFSolomon1988">Solomon 1988</a> date the origins of continental philosophy a generation earlier, to the work of <a href="/wiki/Jean-Jacques_Rousseau" title="Jean-Jacques Rousseau">Jean-Jacques Rousseau</a></span></li>
+<li id="cite_note-18"><span class="mw-cite-backlink"><b><a href="#cite_ref-18">^</a></b></span> <span class="reference-text">E.g., the largest academic organization devoted to furthering the study of continental philosophy is the Society for Phenomenology and Existential Philosophy.</span></li>
+<li id="cite_note-19"><span class="mw-cite-backlink"><b><a href="#cite_ref-19">^</a></b></span> <span class="reference-text">Kenny, Anthony (ed). <i>The Oxford Illustrated History of Western Philosophy</i>. <a href="/wiki/Special:BookSources/0192854402" class="internal mw-magiclink-isbn">ISBN 0-19-285440-2</a></span></li>
+<li id="cite_note-20"><span class="mw-cite-backlink"><b><a href="#cite_ref-20">^</a></b></span> <span class="reference-text">Merquior, J.G. (1987). <i>Foucault</i> (<a href="/wiki/Fontana_Modern_Masters" title="Fontana Modern Masters">Fontana Modern Masters</a> series), University of California Press, <a href="/wiki/Special:BookSources/0520060628" class="internal mw-magiclink-isbn">ISBN 0-520-06062-8</a>.</span></li>
+<li id="cite_note-21"><span class="mw-cite-backlink"><b><a href="#cite_ref-21">^</a></b></span> <span class="reference-text">Gregory, Wanda T. <a rel="nofollow" class="external text" href="http://www.unt.edu/csph/Vol_01_winter00/torres-gregory_art.htm">Heidegger, Carnap and Quine at the Crossroads of Language</a>, and Abraham D. Stone. <a rel="nofollow" class="external text" href="http://people.ucsc.edu/~abestone/papers/uberwindung.pdf">Heidegger and Carnap on the Overcoming of Metaphysics</a></span></li>
+<li id="cite_note-22"><span class="mw-cite-backlink"><b><a href="#cite_ref-22">^</a></b></span> <span class="reference-text">Searle, John R. <a rel="nofollow" class="external text" href="http://free--expression.blogspot.com/2007/10/john-searle-on-derrida.html">"Word Turned Upside Down."</a> New York Times Review of Books, Volume 30, Number 16 · October 27, 1983.</span></li>
+<li id="cite_note-BarrySmithEtAl-23"><span class="mw-cite-backlink"><b><a href="#cite_ref-BarrySmithEtAl_23-0">^</a></b></span> <span class="reference-text">Barry Smith et al. <i><a rel="nofollow" class="external text" href="http://courses.nus.edu.sg/course/elljwp/againstdsdegree.htm">Open letter against Derrida receiving an honorary doctorate from Cambridge University</a></i> , <i>The Times</i> (London), Saturday 9 May 1992</span></li>
+<li id="cite_note-24"><span class="mw-cite-backlink"><b><a href="#cite_ref-24">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.spep.org">Society for Phenomenology and Existential Philosophy</a></span></li>
+<li id="cite_note-25"><span class="mw-cite-backlink"><b><a href="#cite_ref-25">^</a></b></span> <span class="reference-text">See <a href="/wiki/Michel_Weber" title="Michel Weber">Michel Weber</a>, «&#160;<a rel="nofollow" class="external text" href="http://www.academia.edu/1873862/_Much_Ado_About_Duckspeak_2011_">Much Ado About Duckspeak</a>&#160;», <i>Balkan Journal of Philosophy</i>, Vol. 3, Issue 1, 2011, pp. 135-142; «&#160;<a rel="nofollow" class="external text" href="http://www.academia.edu/1873854/_Whiteheads_creative_advance_from_formal_to_existential_ontology_2011_">Whitehead's creative advance from formal to existential ontology</a>&#160;», <i>Logique et Analyse</i>, 54/214, juin 2011, Special Issue on Whitehead’s Early Work, pp. 127-133.</span></li>
+</ol>
+</div>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=7" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><cite class="citation book"><a href="/wiki/Babette_Babich" title="Babette Babich">Babich, Babette</a> (2003). <i>"On the Analytic-Continental Divide in Philosophy: Nietzsche’s Lying Truth, Heidegger’s Speaking Language, and Philosophy." In: C. G. Prado, ed., A House Divided: Comparing Analytic and Continental Philosophy</i>. Amherst, NY: Prometheus/Humanity Books. pp.&#160;63–103.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Babette&amp;rft.aulast=Babich&amp;rft.btitle=%22On+the+Analytic-Continental+Divide+in+Philosophy%3A+Nietzsche%99s+Lying+Truth%2C+Heidegger%99s+Speaking+Language%2C+and+Philosophy.%22+In%3A+C.+G.+Prado%2C+ed.%2C+A+House+Divided%3A+Comparing+Analytic+and+Continental+Philosophy&amp;rft.date=2003&amp;rft.genre=book&amp;rft.pages=63-103&amp;rft.place=Amherst%2C+NY&amp;rft.pub=Prometheus%2FHumanity+Books&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFCritchley2001" class="citation book"><a href="/wiki/Simon_Critchley" title="Simon Critchley">Critchley, Simon</a> (2001). <i>Continental Philosophy: A Very Short Introduction</i>. Oxford; New York: Oxford University Press. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/0-19-285359-7" title="Special:BookSources/0-19-285359-7">0-19-285359-7</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Simon&amp;rft.aulast=Critchley&amp;rft.btitle=Continental+Philosophy%3A+A+Very+Short+Introduction&amp;rft.date=2001&amp;rft.genre=book&amp;rft.isbn=0-19-285359-7&amp;rft.place=Oxford%3B+New+York&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFCutrofello2005" class="citation book">Cutrofello, Andrew (2005). <i>Continental Philosophy: A Contemporary Introduction</i>. Routledge Contemporary Introductions to Philosophy. New York; Abingdon: Routledge Taylor &amp; Francis Group.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Andrew&amp;rft.aulast=Cutrofello&amp;rft.btitle=Continental+Philosophy%3A+A+Contemporary+Introduction&amp;rft.date=2005&amp;rft.genre=book&amp;rft.place=New+York%3B+Abingdon&amp;rft.pub=Routledge+Taylor+%26+Francis+Group&amp;rft.series=Routledge+Contemporary+Introductions+to+Philosophy&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFGendinning2006" class="citation book">Glendinning, Simon (2006). <i>The idea of continental philosophy: a philosophical chronicle</i>. Edinburgh: Edinburgh University Press Ltd.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Simon&amp;rft.aulast=Glendinning&amp;rft.btitle=The+idea+of+continental+philosophy%3A+a+philosophical+chronicle&amp;rft.date=2006&amp;rft.genre=book&amp;rft.place=Edinburgh&amp;rft.pub=Edinburgh+University+Press+Ltd&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFLeiter2007" class="citation book">Leiter, Brian; Rosen, Michael, eds. (2007). <i>The Oxford Handbook of Continental Philosophy</i>. Oxford; New York: Oxford University Press.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.btitle=The+Oxford+Handbook+of+Continental+Philosophy&amp;rft.date=2007&amp;rft.genre=book&amp;rft.place=Oxford%3B+New+York&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFSchrift2010" class="citation book">Schrift, Alan D. (2010). <i>The History of Continental Philosophy</i>. Chicago; Illinois: University of Chicago Press Press.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Alan+D.&amp;rft.aulast=Schrift&amp;rft.btitle=The+History+of+Continental+Philosophy&amp;rft.date=2010&amp;rft.genre=book&amp;rft.place=Chicago%3B+Illinois&amp;rft.pub=University+of+Chicago+Press+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFSolomon1988" class="citation book"><a href="/wiki/Robert_C._Solomon" title="Robert C. Solomon">Solomon, Robert C.</a> (1988). <i>Continental philosophy since 1750: the rise and fall of the self</i>. Oxford; New York: Oxford University Press.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Robert+C.&amp;rft.aulast=Solomon&amp;rft.btitle=Continental+philosophy+since+1750%3A+the+rise+and+fall+of+the+self&amp;rft.date=1988&amp;rft.genre=book&amp;rft.place=Oxford%3B+New+York&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+<li><cite id="CITEREFKenny2007" class="citation book">Kenny, Anthony (2007). <i>A New History of Western Philosophy, Volume IV: Philosophy in the Modern World</i>. New York: Oxford University Press.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AContinental+philosophy&amp;rft.aufirst=Anthony&amp;rft.aulast=Kenny&amp;rft.btitle=A+New+History+of+Western+Philosophy%2C+Volume+IV%3A+Philosophy+in+the+Modern+World&amp;rft.date=2007&amp;rft.genre=book&amp;rft.place=New+York&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></li>
+</ul>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit&amp;section=8" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a rel="nofollow" class="external text" href="https://www.dmoz.org/Society/Philosophy/Continental_Philosophy/">Continental philosophy</a> at <a href="/wiki/DMOZ" title="DMOZ">DMOZ</a></li>
+</ul>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_topics" title="Template:Philosophy topics"><abbr title="View this template" style=";;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_topics" title="Template talk:Philosophy topics"><abbr title="Discuss this template" style=";;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_topics&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_academic_disciplines#Philosophy" class="mw-redirect" title="List of academic disciplines">Branches</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Traditional</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Philosophy of</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Art</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_culture" title="Philosophy of culture">Culture</a></li>
+<li><a href="/wiki/Philosophy_of_design" title="Philosophy of design">Design</a></li>
+<li><a href="/wiki/Philosophy_of_music" title="Philosophy of music">Music</a></li>
+<li><a href="/wiki/Philosophy_of_film" title="Philosophy of film">Film</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Ontology" title="Ontology">Being</a></li>
+<li><a href="/wiki/Philosophy_of_business" title="Philosophy of business">Business</a></li>
+<li><a href="/wiki/Philosophy_of_color" title="Philosophy of color">Color</a></li>
+<li><a href="/wiki/Cosmology_(Philosophy)" class="mw-redirect" title="Cosmology (Philosophy)">Cosmos</a></li>
+<li><a href="/wiki/Philosophy_of_dialogue" title="Philosophy of dialogue">Dialogue</a></li>
+<li><a href="/wiki/Philosophy_of_education" title="Philosophy of education">Education</a></li>
+<li><a href="/wiki/Environmental_philosophy" title="Environmental philosophy">Environment</a></li>
+<li><a href="/wiki/Philosophy_of_futility" title="Philosophy of futility">Futility</a></li>
+<li><a href="/wiki/Philosophy_of_happiness" title="Philosophy of happiness">Happiness</a></li>
+<li><a href="/wiki/Philosophy_of_healthcare" title="Philosophy of healthcare">Healthcare</a></li>
+<li><a href="/wiki/Philosophy_of_history" title="Philosophy of history">History</a></li>
+<li><a href="/wiki/Philosophical_anthropology" title="Philosophical anthropology">Human nature</a></li>
+<li><a href="/wiki/Theories_of_humor" title="Theories of humor">Humor</a></li>
+<li><a href="/wiki/Philosophy_of_feminism" class="mw-redirect" title="Philosophy of feminism">Feminism</a></li>
+<li><a href="/wiki/Philosophy_of_language" title="Philosophy of language">Language</a></li>
+<li><a href="/wiki/Philosophy_and_literature" title="Philosophy and literature">Literature</a></li>
+<li><a href="/wiki/Philosophy_of_mathematics" title="Philosophy of mathematics">Mathematics</a></li>
+<li><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a>
+<ul>
+<li><a href="/wiki/Pain_(philosophy)" title="Pain (philosophy)">Pain</a></li>
+<li><a href="/wiki/Philosophy_of_psychology" title="Philosophy of psychology">Psychology</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Metaphilosophy" title="Metaphilosophy">Philosophy</a></li>
+<li><a href="/wiki/Philosophy_of_religion" title="Philosophy of religion">Religion</a></li>
+<li><a href="/wiki/Philosophy_of_science" title="Philosophy of science">Science</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_physics" title="Philosophy of physics">Physics</a></li>
+<li><a href="/wiki/Philosophy_of_chemistry" title="Philosophy of chemistry">Chemistry</a></li>
+<li><a href="/wiki/Philosophy_of_biology" title="Philosophy of biology">Biology</a></li>
+<li><a href="/wiki/Philosophy_of_geography" title="Philosophy of geography">Geography</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_sex" title="Philosophy of sex">Sexuality</a></li>
+<li><a href="/wiki/Philosophy_of_social_science" title="Philosophy of social science">Social science</a>
+<ul>
+<li><a href="/wiki/Philosophy_and_economics" title="Philosophy and economics">Economics</a></li>
+<li><a href="/wiki/Justice" title="Justice">Justice</a></li>
+<li><a href="/wiki/Jurisprudence" title="Jurisprudence">Law</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Politics</a></li>
+<li><a href="/wiki/Social_philosophy" title="Social philosophy">Society</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_space_and_time" title="Philosophy of space and time">Space and time</a></li>
+<li><a href="/wiki/Philosophy_of_sport" title="Philosophy of sport">Sport</a></li>
+<li><a href="/wiki/Philosophy_of_technology" title="Philosophy of technology">Technology</a>
+<ul>
+<li><a href="/wiki/Philosophy_of_artificial_intelligence" title="Philosophy of artificial intelligence">Artificial intelligence</a></li>
+<li><a href="/wiki/Philosophy_of_computer_science" title="Philosophy of computer science">Computer science</a></li>
+<li><a href="/wiki/Philosophy_of_engineering" title="Philosophy of engineering">Engineering</a></li>
+<li><a href="/wiki/Philosophy_of_information" title="Philosophy of information">Information</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Philosophy_of_war" title="Philosophy of war">War</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%"><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools of thought</a></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/History_of_philosophy" class="mw-redirect" title="History of philosophy">By era</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a>
+<ul>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Renaissance_philosophy" title="Renaissance philosophy">Renaissance</a></li>
+<li><a href="/wiki/Early_modern_philosophy" title="Early modern philosophy">Early modern</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Agriculturalism" title="Agriculturalism">Agriculturalism</a></li>
+<li><a href="/wiki/Confucianism" title="Confucianism">Confucianism</a></li>
+<li><a href="/wiki/Legalism_(Chinese_philosophy)" title="Legalism (Chinese philosophy)">Legalism</a></li>
+<li><a href="/wiki/School_of_Names" title="School of Names">Logicians</a></li>
+<li><a href="/wiki/Mohism" title="Mohism">Mohism</a></li>
+<li><a href="/wiki/School_of_Naturalists" title="School of Naturalists">Chinese naturalism</a></li>
+<li><a href="/wiki/Xuanxue" title="Xuanxue">Neotaoism</a></li>
+<li><a href="/wiki/Taoism" title="Taoism">Taoism</a></li>
+<li><a href="/wiki/Yangism" title="Yangism">Yangism</a></li>
+<li><a href="/wiki/Zen" title="Zen">Zen</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greco-</a><a href="/wiki/Hellenistic_philosophy" title="Hellenistic philosophy">Roman</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelianism</a></li>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Cynicism_(philosophy)" title="Cynicism (philosophy)">Cynicism</a></li>
+<li><a href="/wiki/Cyrenaics" title="Cyrenaics">Cyrenaics</a></li>
+<li><a href="/wiki/Eleatics" title="Eleatics">Eleatics</a></li>
+<li><a href="/wiki/Eretrian_school" title="Eretrian school">Eretrian school</a></li>
+<li><a href="/wiki/Epicureanism" title="Epicureanism">Epicureanism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Ionian_School_(philosophy)" title="Ionian School (philosophy)">Ionian</a>
+<ul>
+<li><a href="/wiki/Ephesian_school" title="Ephesian school">Ephesian</a></li>
+<li><a href="/wiki/Milesian_school" title="Milesian school">Milesian</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Megarian_school" title="Megarian school">Megarian school</a></li>
+<li><a href="/wiki/Neoplatonism" title="Neoplatonism">Neoplatonism</a></li>
+<li><a href="/wiki/Peripatetic_school" title="Peripatetic school">Peripatetic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonism</a></li>
+<li><a href="/wiki/Pluralist_school" title="Pluralist school">Pluralism</a></li>
+<li><a href="/wiki/Pre-Socratic_philosophy" title="Pre-Socratic philosophy">Presocratic</a></li>
+<li><a href="/wiki/Pyrrhonism" title="Pyrrhonism">Pyrrhonism</a></li>
+<li><a href="/wiki/Pythagoreanism" title="Pythagoreanism">Pythagoreanism</a></li>
+<li><a href="/wiki/Neopythagoreanism" title="Neopythagoreanism">Neopythagoreanism</a></li>
+<li><a href="/wiki/Sophism" title="Sophism">Sophism</a></li>
+<li><a href="/wiki/Stoicism" title="Stoicism">Stoicism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/C%C4%81rv%C4%81ka" class="mw-redirect" title="C�?rv�?ka">C�?rv�?ka</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Persian</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mazdak#Mazdakism" title="Mazdak">Mazdakism</a></li>
+<li><a href="/wiki/Zoroastrianism" title="Zoroastrianism">Zoroastrianism</a></li>
+<li><a href="/wiki/Zurvanism" title="Zurvanism">Zurvanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/European_philosophy" class="mw-redirect" title="European philosophy">European</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian philosophy</a></li>
+<li><a href="/wiki/Scholasticism" title="Scholasticism">Scholasticism</a></li>
+<li><a href="/wiki/Thomism" title="Thomism">Thomism</a></li>
+<li><a href="/wiki/Renaissance_humanism" title="Renaissance humanism">Renaissance humanism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">East Asian</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Korean_Confucianism" title="Korean Confucianism">Korean Confucianism</a></li>
+<li><a href="/wiki/Edo_Neo-Confucianism" title="Edo Neo-Confucianism">Edo Neo-Confucianism</a></li>
+<li><a href="/wiki/Neo-Confucianism" title="Neo-Confucianism">Neo-Confucianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Indian</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Dvaita" title="Dvaita">Dvaita</a></li>
+<li><a href="/wiki/Navya-Ny%C4%81ya" title="Navya-Ny�?ya">Navya-Ny�?ya</a></li>
+<li><a href="/wiki/Vishishtadvaita" title="Vishishtadvaita">Vishishtadvaita</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Averroism" title="Averroism">Averroism</a></li>
+<li><a href="/wiki/Avicenna#Avicennian_philosophy" title="Avicenna">Avicennism</a></li>
+<li><a href="/wiki/Illuminationism#Persian_school_of_Illuminationism" title="Illuminationism">Persian Illuminationism</a></li>
+<li><a href="/wiki/Ilm_al-Kalam" class="mw-redirect" title="Ilm al-Kalam">Ilm al-Kalam</a></li>
+<li><a href="/wiki/Sufi_philosophy" title="Sufi philosophy">Sufi</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Jewish_philosophy" title="Jewish philosophy">Jewish</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Judeo-Islamic_philosophies_(800%E2%80%931400)" title="Judeo-Islamic philosophies (800–1400)">Judeo-Islamic</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">People</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Cartesianism" title="Cartesianism">Cartesianism</a></li>
+<li><a href="/wiki/Kantianism" title="Kantianism">Kantianism</a></li>
+<li><a href="/wiki/Neo-Kantianism" title="Neo-Kantianism">Neo-Kantianism</a></li>
+<li><a href="/wiki/Hegelianism" title="Hegelianism">Hegelianism</a></li>
+<li><a href="/wiki/Marxist_philosophy" title="Marxist philosophy">Marxism</a></li>
+<li><a href="/wiki/Spinozism" title="Spinozism">Spinozism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><span style="font-size:90%;"><a href="/wiki/Idea" title="Idea">Ideal</a>&#160;/ <a href="/wiki/Matter_(philosophy)" title="Matter (philosophy)">Material</a></span></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a>
+<ul>
+<li><a href="/wiki/Absolute_idealism" title="Absolute idealism">Absolute</a></li>
+<li><a href="/wiki/British_idealism" title="British idealism">British</a></li>
+<li><a href="/wiki/German_idealism" title="German idealism">German</a></li>
+<li><a href="/wiki/Objective_idealism" title="Objective idealism">Objective</a></li>
+<li><a href="/wiki/Subjective_idealism" title="Subjective idealism">Subjective</a></li>
+<li><a href="/wiki/Transcendental_idealism" title="Transcendental idealism">Transcendental</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Classical_realism" class="mw-redirect" title="Classical realism">Classical realism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Reductionism" title="Reductionism">Reductionism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a></li>
+<li><a href="/wiki/Utilitarianism" title="Utilitarianism">Utilitarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anarchism" title="Anarchism">Anarchism</a></li>
+<li><a href="/wiki/Collectivism" title="Collectivism">Collectivism</a></li>
+<li><a href="/wiki/New_Confucianism" title="New Confucianism">New Confucianism</a></li>
+<li><a href="/wiki/Conservatism" title="Conservatism">Conservatism</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a></li>
+<li><a href="/wiki/Historicism" title="Historicism">Historicism</a></li>
+<li><a href="/wiki/Holism" title="Holism">Holism</a></li>
+<li><a href="/wiki/Humanism" title="Humanism">Humanism</a></li>
+<li><a href="/wiki/Individualism" title="Individualism">Individualism</a></li>
+<li><a href="/wiki/Kokugaku" title="Kokugaku">Kokugaku</a></li>
+<li><a href="/wiki/Classical_liberalism" title="Classical liberalism">Liberalism</a></li>
+<li><a href="/wiki/Modernism" title="Modernism">Modernism</a></li>
+<li><a href="/wiki/Natural_Law" class="mw-redirect" title="Natural Law">Natural Law</a></li>
+<li><a href="/wiki/Nihilism" title="Nihilism">Nihilism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Positivism" title="Positivism">Positivism</a></li>
+<li><a href="/wiki/Neo-Scholasticism" title="Neo-Scholasticism">Neo-Scholasticism</a></li>
+<li><a href="/wiki/Social_contract" title="Social contract">Social contract</a></li>
+<li><a href="/wiki/Socialism" title="Socialism">Socialism</a></li>
+<li><a href="/wiki/Transcendentalism" title="Transcendentalism">Transcendentalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Applied_ethics" title="Applied ethics">Applied ethics</a></li>
+<li><a href="/wiki/Analytical_feminism" title="Analytical feminism">Analytic feminism</a></li>
+<li><a href="/wiki/Analytical_Marxism" title="Analytical Marxism">Analytical Marxism</a></li>
+<li><a href="/wiki/Communitarianism" title="Communitarianism">Communitarianism</a></li>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Critical_rationalism" title="Critical rationalism">Critical rationalism</a></li>
+<li><a href="/wiki/Experimental_philosophy" title="Experimental philosophy">Experimental philosophy</a></li>
+<li><a href="/wiki/Falsifiability" title="Falsifiability">Falsificationism</a></li>
+<li><a href="/wiki/Foundationalism" title="Foundationalism">Foundationalism</a>&#160;/ <a href="/wiki/Coherentism" title="Coherentism">Coherentism</a></li>
+<li><a href="/wiki/Generative_linguistics" class="mw-redirect" title="Generative linguistics">Generative linguistics</a></li>
+<li><a href="/wiki/Internalism_and_externalism" title="Internalism and externalism">Internalism and Externalism</a></li>
+<li><a href="/wiki/Logical_positivism" title="Logical positivism">Logical positivism</a></li>
+<li><a href="/wiki/Legal_positivism" title="Legal positivism">Legal positivism</a></li>
+<li><a href="/wiki/Normative_ethics" title="Normative ethics">Normative ethics</a></li>
+<li><a href="/wiki/Meta-ethics" title="Meta-ethics">Meta-ethics</a></li>
+<li><a href="/wiki/Moral_realism" title="Moral realism">Moral realism</a></li>
+<li><a href="/wiki/Virtue_ethics#Contemporary_.27aretaic_turn.27" title="Virtue ethics">Neo-Aristotelian</a></li>
+<li><a href="/wiki/Naturalized_epistemology" title="Naturalized epistemology">Quinean naturalism</a></li>
+<li><a href="/wiki/Ordinary_language_philosophy" title="Ordinary language philosophy">Ordinary language philosophy</a></li>
+<li><a href="/wiki/Postanalytic_philosophy" title="Postanalytic philosophy">Postanalytic philosophy</a></li>
+<li><a href="/wiki/Quietism_(philosophy)" title="Quietism (philosophy)">Quietism</a></li>
+<li><a href="/wiki/John_Rawls" title="John Rawls">Rawlsian</a></li>
+<li><a href="/wiki/Reformed_epistemology" title="Reformed epistemology">Reformed epistemology</a></li>
+<li><a href="/wiki/Systemics" title="Systemics">Systemics</a></li>
+<li><a href="/wiki/Scientism" title="Scientism">Scientism</a></li>
+<li><a href="/wiki/Scientific_realism" title="Scientific realism">Scientific realism</a></li>
+<li><a href="/wiki/Scientific_skepticism" title="Scientific skepticism">Scientific skepticism</a></li>
+<li><a href="/wiki/Utilitarianism#Twentieth-century_developments" title="Utilitarianism">Contemporary utilitarianism</a></li>
+<li><a href="/wiki/Vienna_Circle" title="Vienna Circle">Vienna Circle</a></li>
+<li><a href="/wiki/Ludwig_Wittgenstein" title="Ludwig Wittgenstein">Wittgensteinian</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;"><strong class="selflink">Continental</strong></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Critical_theory" title="Critical theory">Critical theory</a></li>
+<li><a href="/wiki/Deconstruction" title="Deconstruction">Deconstruction</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Feminist_philosophy" title="Feminist philosophy">Feminist</a></li>
+<li><a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a></li>
+<li><a href="/wiki/New_Historicism" title="New Historicism">New Historicism</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Neo-Marxism" title="Neo-Marxism">Neo-Marxism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Postmodern_philosophy" title="Postmodern philosophy">Postmodernism</a></li>
+<li><a href="/wiki/Post-structuralism" title="Post-structuralism">Post-structuralism</a></li>
+<li><a href="/wiki/Social_constructionism" title="Social constructionism">Social constructionism</a></li>
+<li><a href="/wiki/Structuralism" title="Structuralism">Structuralism</a></li>
+<li><a href="/wiki/Western_Marxism" title="Western Marxism">Western Marxism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.6em;font-weight: normal;">Other</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Kyoto_School" title="Kyoto School">Kyoto School</a></li>
+<li><a href="/wiki/Objectivism_(Ayn_Rand)" title="Objectivism (Ayn Rand)">Objectivism</a></li>
+<li><a href="/wiki/Russian_cosmism" title="Russian cosmism">Russian cosmism</a></li>
+<li><i><a href="/wiki/List_of_philosophies" title="List of philosophies">more...</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">Positions</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Formalism_(art)" title="Formalism (art)">Formalism</a></li>
+<li><a href="/wiki/Institutional_theory_of_art" class="mw-redirect" title="Institutional theory of art">Institutionalism</a></li>
+<li><a href="/wiki/Aesthetic_emotions" title="Aesthetic emotions">Aesthetic response</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ethics" title="Ethics">Ethics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Consequentialism" title="Consequentialism">Consequentialism</a></li>
+<li><a href="/wiki/Deontology" class="mw-redirect" title="Deontology">Deontology</a></li>
+<li><a href="/wiki/Virtue_ethics" title="Virtue ethics">Virtue</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Free_will" title="Free will">Free will</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Compatibilism" title="Compatibilism">Compatibilism</a></li>
+<li><a href="/wiki/Determinism" title="Determinism">Determinism</a></li>
+<li><a href="/wiki/Libertarianism_(metaphysics)" title="Libertarianism (metaphysics)">Libertarianism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Atomism" title="Atomism">Atomism</a></li>
+<li><a href="/wiki/Dualism" title="Dualism">Dualism</a></li>
+<li><a href="/wiki/Monism" title="Monism">Monism</a></li>
+<li><a href="/wiki/Metaphysical_naturalism" title="Metaphysical naturalism">Naturalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Constructivist_epistemology" title="Constructivist epistemology">Constructivism</a></li>
+<li><a href="/wiki/Empiricism" title="Empiricism">Empiricism</a></li>
+<li><a href="/wiki/Epistemological_idealism" title="Epistemological idealism">Idealism</a></li>
+<li><a href="/wiki/Epistemological_particularism" title="Epistemological particularism">Particularism</a></li>
+<li><a href="/wiki/Fideism" title="Fideism">Fideism</a></li>
+<li><a href="/wiki/Rationalism" title="Rationalism">Rationalism</a>&#160;/ <a href="/wiki/Reasonism" title="Reasonism">Reasonism</a></li>
+<li><a href="/wiki/Philosophical_skepticism#Epistemology_and_skepticism" title="Philosophical skepticism">Skepticism</a></li>
+<li><a href="/wiki/Solipsism" title="Solipsism">Solipsism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Philosophy_of_mind" title="Philosophy of mind">Mind</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Behaviorism" title="Behaviorism">Behaviorism</a></li>
+<li><a href="/wiki/Emergentism" title="Emergentism">Emergentism</a></li>
+<li><a href="/wiki/Eliminative_materialism" title="Eliminative materialism">Eliminativism</a></li>
+<li><a href="/wiki/Epiphenomenalism" title="Epiphenomenalism">Epiphenomenalism</a></li>
+<li><a href="/wiki/Functionalism_(philosophy_of_mind)" title="Functionalism (philosophy of mind)">Functionalism</a></li>
+<li><a href="/wiki/Objectivity_(philosophy)" title="Objectivity (philosophy)">Objectivism</a></li>
+<li><a href="/wiki/Subjectivism" title="Subjectivism">Subjectivism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Norm_(philosophy)" title="Norm (philosophy)">Normativity</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Moral_absolutism" title="Moral absolutism">Absolutism</a></li>
+<li><a href="/wiki/Moral_particularism" title="Moral particularism">Particularism</a></li>
+<li><a href="/wiki/Relativism" title="Relativism">Relativism</a></li>
+<li><a href="/wiki/Moral_nihilism" title="Moral nihilism">Nihilism</a></li>
+<li><a href="/wiki/Moral_skepticism" title="Moral skepticism">Skepticism</a></li>
+<li><a href="/wiki/Moral_universalism" title="Moral universalism">Universalism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Ontology" title="Ontology">Ontology</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Action_theory_(philosophy)" title="Action theory (philosophy)">Action</a></li>
+<li><a href="/wiki/Event_(philosophy)" title="Event (philosophy)">Event</a></li>
+<li><a href="/wiki/Process_philosophy" title="Process philosophy">Process</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em"><a href="/wiki/Reality" title="Reality">Reality</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Anti-realism" title="Anti-realism">Anti-realism</a></li>
+<li><a href="/wiki/Conceptualism" title="Conceptualism">Conceptualism</a></li>
+<li><a href="/wiki/Idealism" title="Idealism">Idealism</a></li>
+<li><a href="/wiki/Materialism" title="Materialism">Materialism</a></li>
+<li><a href="/wiki/Naturalism_(philosophy)" title="Naturalism (philosophy)">Naturalism</a></li>
+<li><a href="/wiki/Nominalism" title="Nominalism">Nominalism</a></li>
+<li><a href="/wiki/Physicalism" title="Physicalism">Physicalism</a></li>
+<li><a href="/wiki/Philosophical_realism" title="Philosophical realism">Realism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-even" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";"><span style="float:left;width:6em">&#160;</span>
+<div style="font-size:114%">
+<div class="hlist">
+<ul>
+<li>Philosophy by region</li>
+<li>Philosophy-related lists</li>
+<li>Miscellaneous</li>
+</ul>
+</div>
+</div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">By region</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Ethiopian_philosophy" title="Ethiopian philosophy">Ethiopian</a></li>
+<li><a href="/wiki/Aztec_philosophy" title="Aztec philosophy">Aztec</a></li>
+<li><a href="/wiki/Indigenous_American_philosophy" title="Indigenous American philosophy">Native America</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Ancient_Egyptian_philosophy" title="Ancient Egyptian philosophy">Egyptian</a></li>
+<li><a href="/wiki/Czech_philosophy" title="Czech philosophy">Czech</a></li>
+<li><a href="/wiki/Indian_philosophy" title="Indian philosophy">Indian</a></li>
+<li><a href="/wiki/Indonesian_philosophy" title="Indonesian philosophy">Indonesian</a></li>
+<li><a href="/wiki/Iranian_philosophy" title="Iranian philosophy">Iranian</a></li>
+<li><a href="/wiki/Japanese_philosophy" title="Japanese philosophy">Japanese</a></li>
+<li><a href="/wiki/Korean_philosophy" title="Korean philosophy">Korean</a></li>
+<li><a href="/wiki/Vietnamese_philosophy" title="Vietnamese philosophy">Vietnam</a></li>
+<li><a href="/wiki/Pakistani_philosophy" title="Pakistani philosophy">Pakistani</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+<li><a href="/wiki/American_philosophy" title="American philosophy">American</a></li>
+<li><a href="/wiki/Australian_philosophy" title="Australian philosophy">Australian</a></li>
+<li><a href="/wiki/British_philosophy" title="British philosophy">British</a></li>
+<li><a href="/wiki/Danish_philosophy" title="Danish philosophy">Danish</a></li>
+<li><a href="/wiki/French_philosophy" title="French philosophy">French</a></li>
+<li><a href="/wiki/German_philosophy" title="German philosophy">German</a></li>
+<li><a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greek</a></li>
+<li><a href="/wiki/Italian_philosophy" title="Italian philosophy">Italian</a></li>
+<li><a href="/wiki/Polish_philosophy" class="mw-redirect" title="Polish philosophy">Polish</a></li>
+<li><a href="/wiki/Romanian_philosophy" title="Romanian philosophy">Romanian</a></li>
+<li><a href="/wiki/Russian_philosophy" class="mw-redirect" title="Russian philosophy">Russian</a></li>
+<li><a href="/wiki/Slovene_philosophy" class="mw-redirect" title="Slovene philosophy">Slovene</a></li>
+<li><a href="/wiki/Turkish_philosophy" title="Turkish philosophy">Turkish</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Lists</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Schools</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+<li><a href="/wiki/Philosophical_movement" title="Philosophical movement">Movements</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:6.8em">Miscellaneous</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+<li><a href="/wiki/Sage_(philosophy)" title="Sage (philosophy)">Sage (philosophy)</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2">
+<div>
+<ul>
+<li><a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Portal</a></li>
+<li><a href="/wiki/Category:Philosophy" title="Category:Philosophy">Category</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style="background:#ffaaaa;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Continental_philosophy" title="Template:Continental philosophy"><abbr title="View this template" style="background:#ffaaaa;;;background:none transparent;border:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Continental_philosophy" title="Template talk:Continental philosophy"><abbr title="Discuss this template" style="background:#ffaaaa;;;background:none transparent;border:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Continental_philosophy&amp;action=edit"><abbr title="Edit this template" style="background:#ffaaaa;;;background:none transparent;border:none;">e</abbr></a></li>
+</ul>
+</div>
+<div style="font-size:114%"><strong class="selflink">Continental philosophy</strong></div>
+</th>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#ffaaaa;"><a href="/wiki/Category:Continental_philosophers" title="Category:Continental philosophers">Philosophers</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Theodor_W._Adorno" title="Theodor W. Adorno">Theodor W. Adorno</a></li>
+<li><a href="/wiki/Giorgio_Agamben" title="Giorgio Agamben">Giorgio Agamben</a></li>
+<li><a href="/wiki/Louis_Althusser" title="Louis Althusser">Louis Althusser</a></li>
+<li><a href="/wiki/Hannah_Arendt" title="Hannah Arendt">Hannah Arendt</a></li>
+<li><a href="/wiki/Joxe_Azurmendi" title="Joxe Azurmendi">Joxe Azurmendi</a></li>
+<li><a href="/wiki/Gaston_Bachelard" title="Gaston Bachelard">Gaston Bachelard</a></li>
+<li><a href="/wiki/Alain_Badiou" title="Alain Badiou">Alain Badiou</a></li>
+<li><a href="/wiki/Roland_Barthes" title="Roland Barthes">Roland Barthes</a></li>
+<li><a href="/wiki/Georges_Bataille" title="Georges Bataille">Georges Bataille</a></li>
+<li><a href="/wiki/Jean_Baudrillard" title="Jean Baudrillard">Jean Baudrillard</a></li>
+<li><a href="/wiki/Zygmunt_Bauman" title="Zygmunt Bauman">Zygmunt Bauman</a></li>
+<li><a href="/wiki/Simone_de_Beauvoir" title="Simone de Beauvoir">Simone de Beauvoir</a></li>
+<li><a href="/wiki/Henri_Bergson" title="Henri Bergson">Henri Bergson</a></li>
+<li><a href="/wiki/Maurice_Blanchot" title="Maurice Blanchot">Maurice Blanchot</a></li>
+<li><a href="/wiki/Pierre_Bourdieu" title="Pierre Bourdieu">Pierre Bourdieu</a></li>
+<li><a href="/wiki/Judith_Butler" title="Judith Butler">Judith Butler</a></li>
+<li><a href="/wiki/Albert_Camus" title="Albert Camus">Albert Camus</a></li>
+<li><a href="/wiki/Ernst_Cassirer" title="Ernst Cassirer">Ernst Cassirer</a></li>
+<li><a href="/wiki/Cornelius_Castoriadis" title="Cornelius Castoriadis">Cornelius Castoriadis</a></li>
+<li><a href="/wiki/Gilles_Deleuze" title="Gilles Deleuze">Gilles Deleuze</a></li>
+<li><a href="/wiki/Jacques_Derrida" title="Jacques Derrida">Jacques Derrida</a></li>
+<li><a href="/wiki/Hubert_Dreyfus" title="Hubert Dreyfus">Hubert Dreyfus</a></li>
+<li><a href="/wiki/Terry_Eagleton" title="Terry Eagleton">Terry Eagleton</a></li>
+<li><a href="/wiki/Johann_Gottlieb_Fichte" title="Johann Gottlieb Fichte">Johann Fichte</a></li>
+<li><a href="/wiki/Michel_Foucault" title="Michel Foucault">Michel Foucault</a></li>
+<li><a href="/wiki/Frankfurt_School" title="Frankfurt School">Frankfurt School</a></li>
+<li><a href="/wiki/Hans-Georg_Gadamer" title="Hans-Georg Gadamer">Hans-Georg Gadamer</a></li>
+<li><a href="/wiki/Antonio_Gramsci" title="Antonio Gramsci">Antonio Gramsci</a></li>
+<li><a href="/wiki/J%C3%BCrgen_Habermas" title="Jürgen Habermas">Jürgen Habermas</a></li>
+<li><a href="/wiki/Georg_Wilhelm_Friedrich_Hegel" title="Georg Wilhelm Friedrich Hegel">Georg Hegel</a></li>
+<li><a href="/wiki/Martin_Heidegger" title="Martin Heidegger">Martin Heidegger</a></li>
+<li><a href="/wiki/Edmund_Husserl" title="Edmund Husserl">Edmund Husserl</a></li>
+<li><a href="/wiki/Roman_Ingarden" title="Roman Ingarden">Roman Ingarden</a></li>
+<li><a href="/wiki/Karl_Jaspers" title="Karl Jaspers">Karl Jaspers</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a></li>
+<li><a href="/wiki/S%C3%B8ren_Kierkegaard" title="Søren Kierkegaard">Søren Kierkegaard</a></li>
+<li><a href="/wiki/Alexandre_Koj%C3%A8ve" title="Alexandre Kojève">Alexandre Kojève</a></li>
+<li><a href="/wiki/Leszek_Ko%C5%82akowski" title="Leszek Kołakowski">Leszek Kołakowski</a></li>
+<li><a href="/wiki/Jacques_Lacan" title="Jacques Lacan">Jacques Lacan</a></li>
+<li><a href="/wiki/Fran%C3%A7ois_Laruelle" title="François Laruelle">François Laruelle</a></li>
+<li><a href="/wiki/Claude_L%C3%A9vi-Strauss" title="Claude Lévi-Strauss">Claude Lévi-Strauss</a></li>
+<li><a href="/wiki/Emmanuel_Levinas" title="Emmanuel Levinas">Emmanuel Levinas</a></li>
+<li><a href="/wiki/Jean-Fran%C3%A7ois_Lyotard" title="Jean-François Lyotard">Jean-François Lyotard</a></li>
+<li><a href="/wiki/Gabriel_Marcel" title="Gabriel Marcel">Gabriel Marcel</a></li>
+<li><a href="/wiki/Maurice_Merleau-Ponty" title="Maurice Merleau-Ponty">Maurice Merleau-Ponty</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Friedrich Nietzsche</a></li>
+<li><a href="/wiki/Paul_Ric%C5%93ur" title="Paul Ricœur">Paul Ricœur</a></li>
+<li><a href="/wiki/Avital_Ronell" title="Avital Ronell">Avital Ronell</a></li>
+<li><a href="/wiki/Jean-Paul_Sartre" title="Jean-Paul Sartre">Jean-Paul Sartre</a></li>
+<li><a href="/wiki/Friedrich_Wilhelm_Joseph_Schelling" title="Friedrich Wilhelm Joseph Schelling">Friedrich Schelling</a></li>
+<li><a href="/wiki/Carl_Schmitt" title="Carl Schmitt">Carl Schmitt</a></li>
+<li><a href="/wiki/Arthur_Schopenhauer" title="Arthur Schopenhauer">Arthur Schopenhauer</a></li>
+<li><a href="/wiki/Peter_Sloterdijk" title="Peter Sloterdijk">Peter Sloterdijk</a></li>
+<li><a href="/wiki/Slavoj_%C5%BDi%C5%BEek" title="Slavoj Žižek">Slavoj Žižek</a></li>
+<li><a href="/wiki/Index_of_continental_philosophy_articles" title="Index of continental philosophy articles"><b>more...</b></a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#ffaaaa;"><a href="/wiki/Category:Philosophical_theories" title="Category:Philosophical theories">Theories</a></th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/German_idealism" title="German idealism">German idealism</a></li>
+<li><a href="/wiki/Hegelianism" title="Hegelianism">Hegelianism</a></li>
+<li><a href="/wiki/Critical_theory" title="Critical theory">Critical theory</a></li>
+<li><a href="/wiki/Psychoanalytic_theory" title="Psychoanalytic theory">Psychoanalytic theory</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Structuralism" title="Structuralism">Structuralism</a></li>
+<li><a href="/wiki/Postmodernism" title="Postmodernism">Postmodernism</a></li>
+<li><a href="/wiki/Post-structuralism" title="Post-structuralism">Poststructuralism</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#ffaaaa;">Concepts</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Angst" title="Angst">Angst</a></li>
+<li><a href="/wiki/Authenticity_(philosophy)" title="Authenticity (philosophy)">Authenticity</a></li>
+<li><a href="/wiki/Being_in_itself" title="Being in itself">Being in itself</a></li>
+<li><a href="/wiki/Boredom" title="Boredom">Boredom</a></li>
+<li><a href="/wiki/Dasein" title="Dasein">Dasein</a></li>
+<li><a href="/wiki/Diff%C3%A9rance" title="Différance">Différance</a></li>
+<li><a href="/wiki/Difference_(philosophy)" title="Difference (philosophy)">Difference</a></li>
+<li><a href="/wiki/Existential_crisis" title="Existential crisis">Existential crisis</a></li>
+<li><a href="/wiki/Facticity" title="Facticity">Facticity</a></li>
+<li><a href="/wiki/Intersubjectivity" title="Intersubjectivity">Intersubjectivity</a></li>
+<li><a href="/wiki/Ontic" title="Ontic">Ontic</a></li>
+<li><a href="/wiki/Other" title="Other">Other</a></li>
+<li><a href="/wiki/Self-deception" title="Self-deception">Self-deception</a></li>
+<li><a href="/wiki/Trace_(deconstruction)" title="Trace (deconstruction)">Trace</a></li>
+<li><a href="/wiki/Index_of_continental_philosophy_articles" title="Index of continental philosophy articles"><b>more...</b></a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#ffaaaa;">Related articles</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Kantianism" title="Kantianism">Kantianism</a></li>
+<li><a href="/wiki/Phenomenology_(philosophy)" title="Phenomenology (philosophy)">Phenomenology</a></li>
+<li><a href="/wiki/Hermeneutics" title="Hermeneutics">Hermeneutics</a></li>
+<li><a href="/wiki/Deconstruction" title="Deconstruction">Deconstruction</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr style="height:2px">
+<td colspan="2"></td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="2" style="background:#ffaaaa;">
+<div>
+<ul>
+<li><a href="/wiki/Category:Continental_philosophy" title="Category:Continental philosophy">Category</a></li>
+<li><a href="/wiki/Wikipedia:WikiProject_Philosophy/Continental" title="Wikipedia:WikiProject Philosophy/Continental">Task force</a></li>
+<li><a href="/wiki/Category:Philosophy_stubs" title="Category:Philosophy stubs">Stubs</a></li>
+<li><a href="/wiki/Wikipedia_talk:WikiProject_Philosophy" title="Wikipedia talk:WikiProject Philosophy">Discussion</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1023
+Cached time: 20160704191631
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.619 seconds
+Real time usage: 0.727 seconds
+Preprocessor visited node count: 2374/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 232121/2097152 bytes
+Template argument size: 27370/2097152 bytes
+Highest expansion depth: 16/40
+Expensive parser function count: 1/500
+Lua time usage: 0.225/10.000 seconds
+Lua memory usage: 4.42 MB/50 MB
+Number of Wikibase entities loaded: 0-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  487.937      1 - -total
+ 32.57%  158.907      1 - Template:Reflist
+ 19.38%   94.578      1 - Template:Philosophy_topics
+ 18.37%   89.657      1 - Template:Navbox_with_collapsible_groups
+ 15.01%   73.249      9 - Template:Navbox
+ 15.01%   73.220     10 - Template:Cite_book
+ 13.98%   68.234      1 - Template:Who
+ 13.05%   63.658      2 - Template:Citation
+ 12.48%   60.892      1 - Template:Fix
+ 12.17%   59.363      1 - Template:Philosophy_sidebar
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:309641-0!*!0!!en!4!* and timestamp 20160704191630 and revision id 725853030
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Continental_philosophy&amp;oldid=725853030">https://en.wikipedia.org/w/index.php?title=Continental_philosophy&amp;oldid=725853030</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Continental_philosophy" title="Category:Continental philosophy">Continental philosophy</a></li><li><a href="/wiki/Category:Philosophical_movements" title="Category:Philosophical movements">Philosophical movements</a></li><li><a href="/wiki/Category:Philosophical_traditions" title="Category:Philosophical traditions">Philosophical traditions</a></li><li><a href="/wiki/Category:Contemporary_philosophy" title="Category:Contemporary philosophy">Contemporary philosophy</a></li><li><a href="/wiki/Category:20th-century_philosophy" title="Category:20th-century philosophy">20th-century philosophy</a></li><li><a href="/wiki/Category:Western_philosophy" title="Category:Western philosophy">Western philosophy</a></li><li><a href="/wiki/Category:Post-structuralism" title="Category:Post-structuralism">Post-structuralism</a></li><li><a href="/wiki/Category:Postmodernism" title="Category:Postmodernism">Postmodernism</a></li><li><a href="/wiki/Category:Critical_theory" title="Category:Critical theory">Critical theory</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:All_articles_with_specifically_marked_weasel-worded_phrases" title="Category:All articles with specifically marked weasel-worded phrases">All articles with specifically marked weasel-worded phrases</a></li><li><a href="/wiki/Category:Articles_with_specifically_marked_weasel-worded_phrases_from_September_2011" title="Category:Articles with specifically marked weasel-worded phrases from September 2011">Articles with specifically marked weasel-worded phrases from September 2011</a></li><li><a href="/wiki/Category:Articles_with_DMOZ_links" title="Category:Articles with DMOZ links">Articles with DMOZ links</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Continental+philosophy" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Continental+philosophy" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Continental_philosophy"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Continental_philosophy"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Continental_philosophy" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Continental_philosophy&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Continental_philosophy&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Continental_philosophy" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Continental_philosophy" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Continental_philosophy&amp;oldid=725853030" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Continental_philosophy&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q59104" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Continental_philosophy&amp;id=725853030" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Continental+philosophy">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Continental+philosophy&amp;returnto=Continental+philosophy&amp;oldid=725853030&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Continental_philosophy&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Continental_philosophy" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-af"><a href="//af.wikipedia.org/wiki/Kontinentale_filosofie" title="Kontinentale filosofie – Afrikaans" lang="af" hreflang="af">Afrikaans</a></li><li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D8%A7%D9%84%D9%81%D9%84%D8%B3%D9%81%D8%A9_%D8%A7%D9%84%D9%82%D8%A7%D8%B1%D9%8A%D8%A9" title="ال�?لس�?ة القارية – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-az"><a href="//az.wikipedia.org/wiki/Qit%C9%99_f%C9%99ls%C9%99f%C9%99si" title="Qitə fəlsəfəsi – Azerbaijani" lang="az" hreflang="az">Azərbaycanca</a></li><li class="interlanguage-link interwiki-bg"><a href="//bg.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Континентална фило�?офи�? – Bulgarian" lang="bg" hreflang="bg">Българ�?ки</a></li><li class="interlanguage-link interwiki-ca"><a href="//ca.wikipedia.org/wiki/Filosofia_continental" title="Filosofia continental – Catalan" lang="ca" hreflang="ca">Català</a></li><li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Kontinent%C3%A1ln%C3%AD_filosofie" title="Kontinentální filosofie – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-da"><a href="//da.wikipedia.org/wiki/Kontinental_filosofi" title="Kontinental filosofi – Danish" lang="da" hreflang="da">Dansk</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/Kontinentalphilosophie" title="Kontinentalphilosophie – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-et"><a href="//et.wikipedia.org/wiki/Kontinentaalfilosoofia" title="Kontinentaalfilosoofia – Estonian" lang="et" hreflang="et">Eesti</a></li><li class="interlanguage-link interwiki-es"><a href="//es.wikipedia.org/wiki/Filosof%C3%ADa_continental" title="Filosofía continental – Spanish" lang="es" hreflang="es">Español</a></li><li class="interlanguage-link interwiki-fa"><a href="//fa.wikipedia.org/wiki/%D9%81%D9%84%D8%B3%D9%81%D9%87_%D9%82%D8%A7%D8%B1%D9%87%E2%80%8C%D8%A7%DB%8C" title="�?لس�?ه قاره‌ای – Persian" lang="fa" hreflang="fa">�?ارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Philosophie_continentale" title="Philosophie continentale – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-ko"><a href="//ko.wikipedia.org/wiki/%EB%8C%80%EB%A5%99_%EC%B2%A0%ED%95%99" title="대륙 철학 – Korean" lang="ko" hreflang="ko">한국어</a></li><li class="interlanguage-link interwiki-hy"><a href="//hy.wikipedia.org/wiki/%D5%84%D5%A1%D5%B5%D6%80%D6%81%D5%A1%D5%B4%D5%A1%D6%84%D5%A1%D5%B5%D5%AB%D5%B6_%D6%83%D5%AB%D5%AC%D5%AB%D5%BD%D5%B8%D6%83%D5%A1%D5%B5%D5%B8%D6%82%D5%A9%D5%B5%D5%B8%D6%82%D5%B6" title="Մայր�?ամաքային փիլիսոփայություն – Armenian" lang="hy" hreflang="hy">Հայերեն</a></li><li class="interlanguage-link interwiki-hr"><a href="//hr.wikipedia.org/wiki/Kontinentalna_filozofija" title="Kontinentalna filozofija – Croatian" lang="hr" hreflang="hr">Hrvatski</a></li><li class="interlanguage-link interwiki-is"><a href="//is.wikipedia.org/wiki/Meginlandsheimspeki" title="Meginlandsheimspeki – Icelandic" lang="is" hreflang="is">�?slenska</a></li><li class="interlanguage-link interwiki-it"><a href="//it.wikipedia.org/wiki/Filosofia_continentale" title="Filosofia continentale – Italian" lang="it" hreflang="it">Italiano</a></li><li class="interlanguage-link interwiki-he"><a href="//he.wikipedia.org/wiki/%D7%A4%D7%99%D7%9C%D7%95%D7%A1%D7%95%D7%A4%D7%99%D7%94_%D7%A7%D7%95%D7%A0%D7%98%D7%99%D7%A0%D7%A0%D7%98%D7%9C%D7%99%D7%AA" title="פילוסופיה קונטיננטלית – Hebrew" lang="he" hreflang="he">עברית</a></li><li class="interlanguage-link interwiki-kk"><a href="//kk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D0%B4%D1%8B_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Континенталды фило�?офи�? – Kazakh" lang="kk" hreflang="kk">Қазақша</a></li><li class="interlanguage-link interwiki-la"><a href="//la.wikipedia.org/wiki/Philosophia_continentalis" title="Philosophia continentalis – Latin" lang="la" hreflang="la">Latina</a></li><li class="interlanguage-link interwiki-hu"><a href="//hu.wikipedia.org/wiki/Kontinent%C3%A1lis_filoz%C3%B3fia" title="Kontinentális filozófia – Hungarian" lang="hu" hreflang="hu">Magyar</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84%D0%B8%D1%98%D0%B0" title="Континентална филозофија – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Continentale_filosofie" title="Continentale filosofie – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="//ja.wikipedia.org/wiki/%E5%A4%A7%E9%99%B8%E5%93%B2%E5%AD%A6" title="大陸哲学 – Japanese" lang="ja" hreflang="ja">日本語</a></li><li class="interlanguage-link interwiki-no"><a href="//no.wikipedia.org/wiki/Kontinental_filosofi" title="Kontinental filosofi – Norwegian" lang="no" hreflang="no">Norsk bokmål</a></li><li class="interlanguage-link interwiki-pl"><a href="//pl.wikipedia.org/wiki/Filozofia_kontynentalna" title="Filozofia kontynentalna – Polish" lang="pl" hreflang="pl">Polski</a></li><li class="interlanguage-link interwiki-pt"><a href="//pt.wikipedia.org/wiki/Filosofia_continental" title="Filosofia continental – Portuguese" lang="pt" hreflang="pt">Português</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F" title="Континентальна�? фило�?офи�? – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-ckb"><a href="//ckb.wikipedia.org/wiki/%D9%81%DB%95%D9%84%D8%B3%DB%95%D9%81%DB%95%DB%8C_%DA%A9%DB%8C%D8%B4%D9%88%DB%95%D8%B1%DB%8C" title="�?ەلسە�?ەی کیشوەری – Central Kurdish" lang="ckb" hreflang="ckb">کوردیی ناوەندی</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D0%BD%D0%B0_%D1%84%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84%D0%B8%D1%98%D0%B0" title="Континентална филозофија – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Kontinentalna_filozofija" title="Kontinentalna filozofija – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Mannermainen_filosofia" title="Mannermainen filosofia – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Kontinental_filosofi" title="Kontinental filosofi – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-tl"><a href="//tl.wikipedia.org/wiki/Pilosopiyang_pangkontinente" title="Pilosopiyang pangkontinente – Tagalog" lang="tl" hreflang="tl">Tagalog</a></li><li class="interlanguage-link interwiki-tr"><a href="//tr.wikipedia.org/wiki/K%C4%B1ta_felsefesi" title="Kıta felsefesi – Turkish" lang="tr" hreflang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0_%D1%84%D1%96%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D1%96%D1%8F" title="Континентальна філо�?офі�? – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-zh"><a href="//zh.wikipedia.org/wiki/%E6%AD%90%E9%99%B8%E5%93%B2%E5%AD%B8" title="�?陸哲學 – Chinese" lang="zh" hreflang="zh">中文</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q59104#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 18 June 2016, at 08:34.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Continental_philosophy&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","mmv.bootstrap.autostart","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":97,"wgHostname":"mw1219"});});</script>
+	</body>
+</html>

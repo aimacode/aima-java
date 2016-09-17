@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8"/>
+<title>Philosopher - Wikipedia, the free encyclopedia</title>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Philosopher rootpage-Philosopher skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Philosopher</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div role="note" class="hatnote">See also: <a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Lists of philosophers</a></div>
+<div class="thumb tright">
+<div class="thumbinner" style="width:302px;"><a href="/wiki/File:The_School_of_Athens.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/18/The_School_of_Athens.jpg/300px-The_School_of_Athens.jpg" width="300" height="162" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/18/The_School_of_Athens.jpg/450px-The_School_of_Athens.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/18/The_School_of_Athens.jpg/600px-The_School_of_Athens.jpg 2x" data-file-width="768" data-file-height="415" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:The_School_of_Athens.jpg" class="internal" title="Enlarge"></a></div>
+<i><a href="/wiki/The_School_of_Athens" title="The School of Athens">The School of Athens</a></i>, by <a href="/wiki/Raphael" title="Raphael">Raphael</a>, depicting the central figures of <a href="/wiki/Plato" title="Plato">Plato</a> and <a href="/wiki/Aristotle" title="Aristotle">Aristotle</a>, and other ancient philosophers exchanging their knowledge.</div>
+</div>
+</div>
+<table class="vertical-navbox nowraplinks plainlist" style="float:right;clear:right;width:22.0em;margin:0 0 1.0em 1.0em;background:#f9f9f9;border:1px solid #aaa;padding:0.2em;border-spacing:0.4em 0;text-align:center;line-height:1.4em;font-size:88%">
+<tr>
+<td style="padding-top:0.4em;line-height:1.2em">Part of <a href="/wiki/Category:Philosophy" title="Category:Philosophy">a series</a> on</td>
+</tr>
+<tr>
+<th style="padding:0.2em 0.4em 0.2em;padding-top:0;font-size:145%;line-height:1.2em;font-size:200%;font-weight:normal;padding-bottom:0.15em;"><a href="/wiki/Philosophy" title="Philosophy">Philosophy</a></th>
+</tr>
+<tr>
+<td style="padding:0.2em 0 0.4em"><a href="/wiki/File:Philbar_3.png" class="image" title="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes"><img alt="Left to right: Plato, Kant, Nietzsche, Buddha, Confucius, Averroes" src="//upload.wikimedia.org/wikipedia/commons/c/cf/Philbar_3.png" width="220" height="151" data-file-width="220" data-file-height="151" /></a>
+<div style="padding-top:0.2em;line-height:1.2em;white-space:nowrap;border-bottom:1px #aaa solid;">
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Plato" title="Plato">Plato</a></li>
+<li><a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Kant</a></li>
+<li><a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Nietzsche</a></li>
+</ul>
+</div>
+<div class="hlist">
+<ul>
+<li><a href="/wiki/Buddha" class="mw-redirect" title="Buddha">Buddha</a></li>
+<li><a href="/wiki/Confucius" title="Confucius">Confucius</a></li>
+<li><a href="/wiki/Averroes" title="Averroes">Averroes</a></li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophers" title="Category:Philosophers">Philosophers</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/List_of_aestheticians" title="List of aestheticians">Aestheticians</a></li>
+<li><a href="/wiki/List_of_epistemologists" title="List of epistemologists">Epistemologists</a></li>
+<li><a href="/wiki/List_of_ethicists" title="List of ethicists">Ethicists</a></li>
+<li><a href="/wiki/List_of_logicians" title="List of logicians">Logicians</a></li>
+<li><a href="/wiki/List_of_metaphysicians" title="List of metaphysicians">Metaphysicians</a></li>
+<li><a href="/wiki/List_of_social_and_political_philosophers" title="List of social and political philosophers">Social and political philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_traditions" title="Category:Philosophical traditions">Traditions</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/African_philosophy" title="African philosophy">African</a></li>
+<li><a href="/wiki/Analytic_philosophy" title="Analytic philosophy">Analytic</a></li>
+<li><a href="/wiki/Aristotelianism" title="Aristotelianism">Aristotelian</a></li>
+<li><a href="/wiki/Buddhist_philosophy" title="Buddhist philosophy">Buddhist</a></li>
+<li><a href="/wiki/Chinese_philosophy" title="Chinese philosophy">Chinese</a></li>
+<li><a href="/wiki/Christian_philosophy" title="Christian philosophy">Christian</a></li>
+<li><a href="/wiki/Continental_philosophy" title="Continental philosophy">Continental</a></li>
+<li><a href="/wiki/Existentialism" title="Existentialism">Existentialism</a></li>
+<li><a href="/wiki/Hindu_philosophy" title="Hindu philosophy">Hindu</a></li>
+<li><a href="/wiki/Jain_philosophy" title="Jain philosophy">Jain</a></li>
+<li><a href="/wiki/Jewish_Philosophy" class="mw-redirect" title="Jewish Philosophy">Jewish</a></li>
+<li><a href="/wiki/Pragmatism" title="Pragmatism">Pragmatism</a></li>
+<li><a href="/wiki/Eastern_philosophy" title="Eastern philosophy">Eastern</a></li>
+<li><a href="/wiki/Islamic_philosophy" title="Islamic philosophy">Islamic</a></li>
+<li><a href="/wiki/Platonism" title="Platonism">Platonic</a></li>
+<li><a href="/wiki/Western_philosophy" title="Western philosophy">Western</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy_by_period" title="Category:Philosophy by period">Periods</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Ancient_philosophy" title="Ancient philosophy">Ancient</a></li>
+<li><a href="/wiki/Medieval_philosophy" title="Medieval philosophy">Medieval</a></li>
+<li><a href="/wiki/Modern_philosophy" title="Modern philosophy">Modern</a></li>
+<li><a href="/wiki/Contemporary_philosophy" title="Contemporary philosophy">Contemporary</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophical_literature" title="Category:Philosophical literature">Literature</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Category:Aesthetics_literature" title="Category:Aesthetics literature">Aesthetics</a></li>
+<li><a href="/wiki/Category:Epistemology_literature" title="Category:Epistemology literature">Epistemology</a></li>
+<li><a href="/wiki/Category:Ethics_literature" title="Category:Ethics literature">Ethics</a></li>
+<li><a href="/wiki/Category:Logic_literature" title="Category:Logic literature">Logic</a></li>
+<li><a href="/wiki/Category:Metaphysics_literature" title="Category:Metaphysics literature">Metaphysics</a></li>
+<li><a href="/wiki/Category:Political_philosophy_literature" title="Category:Political philosophy literature">Political philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Branches_of_philosophy" title="Category:Branches of philosophy">Branches</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Aesthetics" title="Aesthetics">Aesthetics</a></li>
+<li><a href="/wiki/Epistemology" title="Epistemology">Epistemology</a></li>
+<li><a href="/wiki/Ethics" title="Ethics">Ethics</a></li>
+<li><a href="/wiki/Philosophy_of_law" title="Philosophy of law">Legal philosophy</a></li>
+<li><a href="/wiki/Logic" title="Logic">Logic</a></li>
+<li><a href="/wiki/Metaphysics" title="Metaphysics">Metaphysics</a></li>
+<li><a href="/wiki/Political_philosophy" title="Political philosophy">Political philosophy</a></li>
+<li><a href="/wiki/Social_philosophy" title="Social philosophy">Social philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;"><a href="/wiki/Category:Philosophy-related_lists" title="Category:Philosophy-related lists">Lists</a></th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><a href="/wiki/Index_of_philosophy" title="Index of philosophy">Index</a></li>
+<li><a href="/wiki/Outline_of_philosophy" title="Outline of philosophy">Outline</a></li>
+<li><a href="/wiki/List_of_years_in_philosophy" title="List of years in philosophy">Years</a></li>
+<li><a href="/wiki/List_of_unsolved_problems_in_philosophy" title="List of unsolved problems in philosophy">Problems</a></li>
+<li><a href="/wiki/List_of_important_publications_in_philosophy" title="List of important publications in philosophy">Publications</a></li>
+<li><a href="/wiki/List_of_philosophies" title="List of philosophies">Theories</a></li>
+<li><a href="/wiki/Glossary_of_philosophy" title="Glossary of philosophy">Glossary</a></li>
+<li><a href="/wiki/Lists_of_philosophers" title="Lists of philosophers">Philosophers</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<th style="padding:0.1em;font-size:105%;padding-bottom:0;">Miscellaneous</th>
+</tr>
+<tr>
+<td class="hlist" style="padding:0 0.1em 0.4em;padding:0 0 0.6em;">
+<ul>
+<li><strong class="selflink">Philosopher</strong></li>
+<li><a href="/wiki/Women_in_philosophy" title="Women in philosophy">Women in philosophy</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="padding:0.3em 0.4em 0.3em;font-weight:bold;border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;border-top:1px solid #aaa;border-bottom:1px solid #aaa;"><span class="metadata"><a href="/wiki/File:Socrates.png" class="image"><img alt="Portal icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/10px-Socrates.png" width="10" height="16" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/15px-Socrates.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Socrates.png/21px-Socrates.png 2x" data-file-width="326" data-file-height="500" /></a></span> <a href="/wiki/Portal:Philosophy" title="Portal:Philosophy">Philosophy portal</a></td>
+</tr>
+<tr>
+<td style="text-align:right;font-size:115%;padding-top: 0.6em;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Philosophy_sidebar" title="Template:Philosophy sidebar"><abbr title="View this template">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Philosophy_sidebar" title="Template talk:Philosophy sidebar"><abbr title="Discuss this template">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Philosophy_sidebar&amp;action=edit"><abbr title="Edit this template">e</abbr></a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+<p>A <b>philosopher</b> is someone who practices <a href="/wiki/Philosophy" title="Philosophy">philosophy</a>, which involves <a href="/wiki/Reason" title="Reason">rational</a> inquiry into areas that are outside of either <a href="/wiki/Theology" title="Theology">theological</a> <a href="/wiki/Dogma" title="Dogma">dogma</a> or <a href="/wiki/Science" title="Science">science</a>.<sup id="cite_ref-RussellHistory10_1-0" class="reference"><a href="#cite_note-RussellHistory10-1">[1]</a></sup> The term "philosopher" comes from the <a href="/wiki/Ancient_Greek" title="Ancient Greek">Ancient Greek</a> <span lang="grc" xml:lang="grc">φιλόσοφος</span> (<i>philosophos</i>) meaning "lover of wisdom". Its origination has been ascribed to the Greek thinker <a href="/wiki/Pythagoras" title="Pythagoras">Pythagoras</a>.<sup id="cite_ref-tufts_2-0" class="reference"><a href="#cite_note-tufts-2">[2]</a></sup></p>
+<p>In the <a href="/wiki/Classics" title="Classics">classical</a> sense, a philosopher was someone who lived according to a certain way of life, focusing on resolving <a href="/wiki/Meaning_of_life" title="Meaning of life">existential questions</a> about the <a href="/wiki/Human_condition" title="Human condition">human condition</a>, and not someone who discourses upon theories or comments upon authors.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup> Typically, these particular brands of philosophy are <a href="/wiki/Hellenistic_philosophy" title="Hellenistic philosophy">Hellenistic</a> ones and those who most arduously commit themselves to this lifestyle may be considered philosophers.</p>
+<p>In a modern sense, a philosopher is an <a href="/wiki/Intellectual" title="Intellectual">intellectual</a> who has contributed in one or more branches of philosophy, such as <a href="/wiki/Aesthetics" title="Aesthetics">aesthetics</a>, <a href="/wiki/Ethics" title="Ethics">ethics</a>, <a href="/wiki/Epistemology" title="Epistemology">epistemology</a>, <a href="/wiki/Logic" title="Logic">logic</a>, <a href="/wiki/Metaphysics" title="Metaphysics">metaphysics</a>, <a href="/wiki/Social_theory" title="Social theory">social theory</a>, and <a href="/wiki/Political_philosophy" title="Political philosophy">political philosophy</a>. A philosopher may also be one who worked in the <a href="/wiki/Humanities" title="Humanities">humanities</a> or other sciences which have since split from philosophy proper over the centuries, such as <a href="/wiki/The_arts" title="The arts">the arts</a>, <a href="/wiki/History" title="History">history</a>, <a href="/wiki/Economics" title="Economics">economics</a>, <a href="/wiki/Sociology" title="Sociology">sociology</a>, <a href="/wiki/Psychology" title="Psychology">psychology</a>, <a href="/wiki/Linguistics" title="Linguistics">linguistics</a>, <a href="/wiki/Anthropology" title="Anthropology">anthropology</a>, <a href="/wiki/Theology" title="Theology">theology</a>, and <a href="/wiki/Politics" title="Politics">politics</a>.<sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup></p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#History"><span class="tocnumber">1</span> <span class="toctext">History</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Ancient_Greece_and_Rome"><span class="tocnumber">1.1</span> <span class="toctext">Ancient Greece and Rome</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href="#Transition"><span class="tocnumber">1.1.1</span> <span class="toctext">Transition</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-4"><a href="#Medieval_era"><span class="tocnumber">1.2</span> <span class="toctext">Medieval era</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Early_Modern_era"><span class="tocnumber">1.3</span> <span class="toctext">Early Modern era</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Modern_academia"><span class="tocnumber">1.4</span> <span class="toctext">Modern academia</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Prizes_in_philosophy"><span class="tocnumber">2</span> <span class="toctext">Prizes in philosophy</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#See_also"><span class="tocnumber">3</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#References"><span class="tocnumber">4</span> <span class="toctext">References</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="History">History</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=1" title="Edit section: History">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div role="note" class="hatnote">This section is about the history of philosophers as an occupation. For a history of philosophy in general, see <a href="/wiki/History_of_philosophy" class="mw-redirect" title="History of philosophy">History of philosophy</a>.</div>
+<h3><span class="mw-headline" id="Ancient_Greece_and_Rome">Ancient Greece and Rome</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=2" title="Edit section: Ancient Greece and Rome">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The separation of philosophy and science from theology began in Greece during the <a href="/wiki/6th_century_BC" title="6th century BC">6th century BC</a>.<sup id="cite_ref-RussellHistory11_5-0" class="reference"><a href="#cite_note-RussellHistory11-5">[5]</a></sup> <a href="/wiki/Thales" title="Thales">Thales</a>, an astronomer and mathematician, was considered by Aristotle to be the first philosopher of the <a href="/wiki/Ancient_Greek_philosophy" title="Ancient Greek philosophy">Greek tradition</a>.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup></p>
+<p>While <a href="/wiki/Pythagoras" title="Pythagoras">Pythagoras</a> coined the word, the first known elaboration on the topic was conducted by <a href="/wiki/Plato" title="Plato">Plato</a>. In his <i><a href="/wiki/Symposium_(Plato)" title="Symposium (Plato)">Symposium</a></i>, he concludes that Love is that which lacks the object it seeks. Therefore, the philosopher is one who seeks wisdom; if he attains wisdom, he would be a <a href="/wiki/Sage_(philosophy)" title="Sage (philosophy)">sage</a>. Therefore, the philosopher in antiquity was one who lives in the constant pursuit of wisdom, and living in accordance to that wisdom.<sup id="cite_ref-7" class="reference"><a href="#cite_note-7">[7]</a></sup> Disagreements arose as to what living philosophically entailed. These disagreements gave rise to different <a href="/wiki/Hellenistic_philosophy" title="Hellenistic philosophy">Hellenistic schools of philosophy</a>. In consequence, the ancient philosopher thought in a tradition.<sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup> As the ancient world became schism by philosophical debate, the competition lay in living in manner that would transform his whole way of living in the world.<sup id="cite_ref-9" class="reference"><a href="#cite_note-9">[9]</a></sup></p>
+<p>Among the last of these philosophers was <a href="/wiki/Marcus_Aurelius" title="Marcus Aurelius">Marcus Aurelius</a>, who is widely regarded as a philosopher in the modern sense, but personally refused to call himself by such a title, since he had a <a href="/wiki/Duty" title="Duty">duty</a> to live as an <a href="/wiki/List_of_Roman_emperors" title="List of Roman emperors">emperor</a>.<sup id="cite_ref-10" class="reference"><a href="#cite_note-10">[10]</a></sup></p>
+<h4><span class="mw-headline" id="Transition">Transition</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=3" title="Edit section: Transition">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>According to the <a href="/wiki/Classicist" class="mw-redirect" title="Classicist">Classicist</a> <a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, the modern conception of a philosopher and philosophy developed predominately through three changes:</p>
+<p>The first is the natural inclination of the philosophical mind. Philosophy is a tempting discipline which can easily carry away the individual in analyzing the universe and abstract theory.<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[11]</a></sup></p>
+<p>The second is the historical change through the Medieval era. With the rise of Christianity, the philosophical way of life was adopted by its theology. Thus, philosophy was divided between a way of life and the conceptual, logical, physical and metaphysical materials to justify that way of life. Philosophy was then the servant to theology.<sup id="cite_ref-Hadot32_12-0" class="reference"><a href="#cite_note-Hadot32-12">[12]</a></sup></p>
+<p>The third is the sociological need with the development of the university. The modern university requires professionals to teach. Maintaining itself requires teaching future professionals to replace the current faculty. Therefore, the discipline degrades into a technical language reserved for specialists, completely eschewing its original conception as a way of life.<sup id="cite_ref-Hadot32_12-1" class="reference"><a href="#cite_note-Hadot32-12">[12]</a></sup></p>
+<h3><span class="mw-headline" id="Medieval_era">Medieval era</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=4" title="Edit section: Medieval era">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>In the fourth century, the word philosopher began to designate a man or woman who led a monastic life. <a href="/wiki/Gregory_of_Nyssa" title="Gregory of Nyssa">Gregory of Nyssa</a>, for example, describes how his sister <a href="/wiki/Macrina_the_Younger" title="Macrina the Younger">Macrina</a> persuaded <a href="/wiki/Emmelia_of_Caesarea" title="Emmelia of Caesarea">their mother</a> to forsake "the distractions of material life" for a life of philosophy.<sup id="cite_ref-13" class="reference"><a href="#cite_note-13">[13]</a></sup></p>
+<p>Later during the <a href="/wiki/Middle_Ages" title="Middle Ages">Middle Ages</a>, persons who engaged with <a href="/wiki/Alchemy" title="Alchemy">alchemy</a> was called a philosopher - thus, the <a href="/wiki/Philosopher%27s_Stone" class="mw-redirect" title="Philosopher's Stone">Philosopher's Stone</a>.<sup id="cite_ref-14" class="reference"><a href="#cite_note-14">[14]</a></sup></p>
+<h3><span class="mw-headline" id="Early_Modern_era">Early Modern era</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=5" title="Edit section: Early Modern era">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<table class="rquote floatright" role="presentation" style="border-collapse:collapse; border-style:none; float:right; margin:0.5em 0.75em; width:33%;">
+<tr style="text-align:left; vertical-align:top;">
+<td style="color:#b2b7f2; font-size:3.3em; font-family:'Times New Roman',serif; font-weight:bold; padding:4px 2px 2px; width:0.5em; line-height: 1em;">“</td>
+<td style="padding:0 10px;"><i>Generally speaking, university philosophy is mere fencing in front of a mirror. In the last analysis, its goal is to give students opinions which are to the liking of the minister who hands out the Chairs... As a result, this state-financed philosophy makes a joke of philosophy. And yet, if there is one thing desirable in this world, it is to see a ray of light fall onto the darkness of our lives, shedding some kind of light on the mysterious enigma of our existence.</i></td>
+<td style="color:#b2b7f2; font-size:3.3em; font-family:'Times New Roman',serif; font-weight:bold; padding:4px 2px 2px; text-align:right; vertical-align:bottom; width:0.5em; line-height: 1em;">�?</td>
+</tr>
+<tr>
+<td class="rquotecite" colspan="3" style="padding-top:10px; font-size:smaller; line-height:1em; text-align:right;"><cite>—&#160;<a href="/wiki/Arthur_Schopenhauer" title="Arthur Schopenhauer">Arthur Schopenhauer</a></cite></td>
+</tr>
+</table>
+<p>Many philosophers still emerged from the Classical tradition, as saw their philosophy as a way of life. Among the most notable are <a href="/wiki/Ren%C3%A9_Descartes" title="René Descartes">René Descartes</a>, <a href="/wiki/Baruch_Spinoza" title="Baruch Spinoza">Baruch Spinoza</a>, <a href="/wiki/Nicolas_Malebranche" title="Nicolas Malebranche">Nicolas Malebranche</a>, and <a href="/wiki/Gottfried_Wilhelm_Leibniz" title="Gottfried Wilhelm Leibniz">Gottfried Wilhelm Leibniz</a>. With the rise of the university, the modern conception of philosophy became more prominent. Many of the esteemed philosophers of the eighteenth century and onward have attended, taught, and developed their works in university. Early examples include: <a href="/wiki/Immanuel_Kant" title="Immanuel Kant">Immanuel Kant</a>, <a href="/wiki/Johann_Gottlieb_Fichte" title="Johann Gottlieb Fichte">Johann Gottlieb Fichte</a>, <a href="/wiki/Friedrich_Wilhelm_Joseph_Schelling" title="Friedrich Wilhelm Joseph Schelling">Friedrich Wilhelm Joseph Schelling</a>, and <a href="/wiki/Georg_Wilhelm_Friedrich_Hegel" title="Georg Wilhelm Friedrich Hegel">Georg Wilhelm Friedrich Hegel</a>.<sup id="cite_ref-15" class="reference"><a href="#cite_note-15">[15]</a></sup></p>
+<p>After these individuals, the Classical conception had all but died with the exceptions of <a href="/wiki/Arthur_Schopenhauer" title="Arthur Schopenhauer">Arthur Schopenhauer</a> and <a href="/wiki/Friedrich_Nietzsche" title="Friedrich Nietzsche">Friedrich Nietzsche</a>. The last considerable figure in philosophy to not have followed a strict and orthodox academic regime was <a href="/wiki/Ludwig_Wittgenstein" title="Ludwig Wittgenstein">Ludwig Wittgenstein</a>.<sup id="cite_ref-16" class="reference"><a href="#cite_note-16">[16]</a></sup></p>
+<h3><span class="mw-headline" id="Modern_academia">Modern academia</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=6" title="Edit section: Modern academia">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>In the modern era, those attaining advanced degrees in philosophy often choose to stay in careers within the educational system. According to a 1993 study by the <a href="/wiki/United_States_National_Research_Council" class="mw-redirect" title="United States National Research Council">National Research Council</a> (as reported by the <a href="/wiki/American_Philosophical_Association" title="American Philosophical Association">American Philosophical Association</a>), 77.1% of the 7,900 holders of a <a href="/wiki/Doctor_of_Philosophy" title="Doctor of Philosophy">Ph.D.</a> in philosophy who responded were employed in educational institutions (<a href="/wiki/Academia" title="Academia">academia</a>). Outside of academia, philosophers may employ their writing and reasoning skills in other careers, such as <a href="/wiki/Medicine" title="Medicine">medicine</a><sup class="noprint Inline-Template" style="white-space:nowrap;">[<i><a href="/wiki/Wikipedia:Vagueness" title="Wikipedia:Vagueness"><span title="This information is too vague. (November 2015)">vague</span></a></i>]</sup>, <a href="/wiki/Bioethics" title="Bioethics">bioethics</a>, <a href="/wiki/Business" title="Business">business</a>, <a href="/wiki/Publishing" title="Publishing">publishing</a>, <a href="/wiki/Free-lance_writing" class="mw-redirect" title="Free-lance writing">free-lance writing</a>, <a href="/wiki/Media_(communication)" title="Media (communication)">media</a>, and <a href="/wiki/Law" title="Law">law</a>.<sup id="cite_ref-APA-nonacademic_17-0" class="reference"><a href="#cite_note-APA-nonacademic-17">[17]</a></sup></p>
+<h2><span class="mw-headline" id="Prizes_in_philosophy">Prizes in philosophy</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=7" title="Edit section: Prizes in philosophy">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div role="note" class="hatnote">Main page: <a href="/wiki/Category:Philosophy_awards" title="Category:Philosophy awards">Category:Philosophy awards</a></div>
+<p>Various prizes in philosophy exist. Among the most prominent are:</p>
+<ul>
+<li><a href="/wiki/Kyoto_Prize_in_Arts_and_Philosophy" title="Kyoto Prize in Arts and Philosophy">Kyoto Prize in Arts and Philosophy</a></li>
+<li><a href="/wiki/Rolf_Schock_Prizes" title="Rolf Schock Prizes">Rolf Schock Prizes</a></li>
+<li><a href="/wiki/Avicenna_Prize" title="Avicenna Prize">Avicenna Prize</a></li>
+</ul>
+<p>Certain esteemed philosophers, such as <a href="/wiki/Henri_Bergson" title="Henri Bergson">Henri Bergson</a>, <a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Bertrand Russell</a>, <a href="/wiki/Albert_Camus" title="Albert Camus">Albert Camus</a>, and <a href="/wiki/Jean-Paul_Sartre" title="Jean-Paul Sartre">Jean-Paul Sartre</a>, have also won the <a href="/wiki/Nobel_Prize_in_Literature" title="Nobel Prize in Literature">Nobel Prize in Literature</a>.</p>
+<p>The John W. <a href="/wiki/Kluge_Prize" title="Kluge Prize">Kluge Prize</a> for the Study of Humanity, created by the <a href="/wiki/Library_of_Congress" title="Library of Congress">Library of Congress</a> to recognize work not covered by the <a href="/wiki/Nobel_Prize" title="Nobel Prize">Nobel Prizes</a>, was given to philosophers <a href="/wiki/Leszek_Ko%C5%82akowski" title="Leszek Kołakowski">Leszek Kołakowski</a> in 2003, <a href="/wiki/Paul_Ricoeur" class="mw-redirect" title="Paul Ricoeur">Paul Ricoeur</a> in 2004, and <a href="/wiki/J%C3%BCrgen_Habermas" title="Jürgen Habermas">Jürgen Habermas</a> and <a href="/wiki/Charles_Taylor_(philosopher)" title="Charles Taylor (philosopher)">Charles Taylor</a> in 2015.<sup id="cite_ref-18" class="reference"><a href="#cite_note-18">[18]</a></sup></p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=8" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a href="/wiki/Sage_(philosophy)" title="Sage (philosophy)">Sage (philosophy)</a></li>
+</ul>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Philosopher&amp;action=edit&amp;section=9" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="metadata plainlinks mbox-small" style="padding:0.25em 0.5em 0.5em 0.75em;border:1px solid #aaa;background:#f9f9f9;">
+<tr>
+<td colspan="2" style="padding-bottom:0.75em;border-bottom:1px solid #aaa;text-align:center;">
+<div style="clear:both;">Find more about<br />
+<b>Philosopher</b><br />
+at Wikipedia's <a href="/wiki/Wikipedia:Wikimedia_sister_projects" title="Wikipedia:Wikimedia sister projects">sister projects</a></div>
+</td>
+</tr>
+<tr style="height:25px;">
+<td style="padding-top:0.75em;"><a href="//en.wiktionary.org/wiki/Special:Search/Philosopher" title="Search Wiktionary"><img alt="Search Wiktionary" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/25px-Wiktionary-logo-v2.svg.png" width="25" height="25" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/38px-Wiktionary-logo-v2.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiktionary-logo-v2.svg/50px-Wiktionary-logo-v2.svg.png 2x" data-file-width="391" data-file-height="391" /></a></td>
+<td style="padding-top:0.75em;"><a href="//en.wiktionary.org/wiki/Special:Search/Philosopher" class="extiw" title="wikt:Special:Search/Philosopher">Definitions</a> from Wiktionary</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//commons.wikimedia.org/wiki/Special:Search/Philosopher" title="Search Commons"><img alt="Search Commons" src="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/18px-Commons-logo.svg.png" width="18" height="25" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/28px-Commons-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/37px-Commons-logo.svg.png 2x" data-file-width="1024" data-file-height="1376" /></a></td>
+<td><a href="//commons.wikimedia.org/wiki/Special:Search/Philosopher" class="extiw" title="c:Special:Search/Philosopher">Media</a> from Commons</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//en.wikinews.org/wiki/Special:Search/Philosopher" title="Search Wikinews"><img alt="Search Wikinews" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/24/Wikinews-logo.svg/25px-Wikinews-logo.svg.png" width="25" height="14" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/24/Wikinews-logo.svg/38px-Wikinews-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/24/Wikinews-logo.svg/50px-Wikinews-logo.svg.png 2x" data-file-width="759" data-file-height="415" /></a></td>
+<td><a href="//en.wikinews.org/wiki/Special:Search/Philosopher" class="extiw" title="n:Special:Search/Philosopher">News</a> from Wikinews</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//en.wikiquote.org/wiki/Special:Search/Philosopher" title="Search Wikiquote"><img alt="Search Wikiquote" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/21px-Wikiquote-logo.svg.png" width="21" height="25" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/32px-Wikiquote-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/42px-Wikiquote-logo.svg.png 2x" data-file-width="300" data-file-height="355" /></a></td>
+<td><a href="//en.wikiquote.org/wiki/Special:Search/Philosopher" class="extiw" title="q:Special:Search/Philosopher">Quotations</a> from Wikiquote</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//en.wikisource.org/wiki/Special:Search/Philosopher" title="Search Wikisource"><img alt="Search Wikisource" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/24px-Wikisource-logo.svg.png" width="24" height="25" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/36px-Wikisource-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wikisource-logo.svg/48px-Wikisource-logo.svg.png 2x" data-file-width="410" data-file-height="430" /></a></td>
+<td><a href="//en.wikisource.org/wiki/Special:Search/Philosopher" class="extiw" title="s:Special:Search/Philosopher">Texts</a> from Wikisource</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//en.wikibooks.org/wiki/Special:Search/Philosopher" title="Search Wikibooks"><img alt="Search Wikibooks" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/25px-Wikibooks-logo.svg.png" width="25" height="25" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/38px-Wikibooks-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikibooks-logo.svg/50px-Wikibooks-logo.svg.png 2x" data-file-width="300" data-file-height="300" /></a></td>
+<td><a href="//en.wikibooks.org/wiki/Special:Search/Philosopher" class="extiw" title="b:Special:Search/Philosopher">Textbooks</a> from Wikibooks</td>
+</tr>
+<tr style="height:25px;">
+<td><a href="//en.wikiversity.org/wiki/Special:Search/Philosopher" title="Search Wikiversity"><img alt="Search Wikiversity" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Wikiversity-logo-en.svg/25px-Wikiversity-logo-en.svg.png" width="25" height="23" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Wikiversity-logo-en.svg/38px-Wikiversity-logo-en.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Wikiversity-logo-en.svg/50px-Wikiversity-logo-en.svg.png 2x" data-file-width="1000" data-file-height="900" /></a></td>
+<td><a href="//en.wikiversity.org/wiki/Special:Search/Philosopher" class="extiw" title="v:Special:Search/Philosopher">Learning resources</a> from Wikiversity</td>
+</tr>
+</table>
+<div class="reflist columns references-column-count references-column-count-2" style="-moz-column-count: 2; -webkit-column-count: 2; column-count: 2; list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-RussellHistory10-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-RussellHistory10_1-0">^</a></b></span> <span class="reference-text"><cite class="citation book"><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Russell, Bertrand</a> (1946). <a rel="nofollow" class="external text" href="https://archive.org/details/westernphilosoph035502mbp"><i>A History of Western Philosophy</i></a>. Great Britain: George Allen and Unwin Ltd. p.&#160;10<span class="reference-accessdate">. Retrieved <span class="nowrap">31 March</span> 2016</span> – via Internet Archive.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.aufirst=Bertrand&amp;rft.aulast=Russell&amp;rft.btitle=A+History+of+Western+Philosophy&amp;rft.date=1946&amp;rft.genre=book&amp;rft_id=https%3A%2F%2Farchive.org%2Fdetails%2Fwesternphilosoph035502mbp&amp;rft.pages=10&amp;rft.place=Great+Britain&amp;rft.pub=George+Allen+and+Unwin+Ltd&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-tufts-2"><span class="mw-cite-backlink"><b><a href="#cite_ref-tufts_2-0">^</a></b></span> <span class="reference-text"><a rel="nofollow" class="external text" href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0057:entry=filo/sofos"><span lang="grc" xml:lang="grc">φιλόσοφος</span></a>. <a href="/wiki/Henry_Liddell" title="Henry Liddell">Liddell, Henry George</a>; <a href="/wiki/Robert_Scott_(philologist)" title="Robert Scott (philologist)">Scott, Robert</a>; <i><a href="/wiki/A_Greek%E2%80%93English_Lexicon" title="A Greek–English Lexicon">A Greek–English Lexicon</a></i> at the <a href="/wiki/Perseus_Project" title="Perseus Project">Perseus Project</a></span></li>
+<li id="cite_note-3"><span class="mw-cite-backlink"><b><a href="#cite_ref-3">^</a></b></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>The Inner Citadel</i>. pg. 4</span></li>
+<li id="cite_note-4"><span class="mw-cite-backlink"><b><a href="#cite_ref-4">^</a></b></span> <span class="reference-text"><cite class="citation book">Shook, John R., ed. (2010). <a rel="nofollow" class="external text" href="http://www.oxfordreference.com/view/10.1093/acref/9780199754663.001.0001/acref-9780199754663-miscMatter-0004"><i>Dictionary of Modern American philosophers</i></a> (online ed.). New York: Oxford University Press. p.&#160;Introduction. <a href="/wiki/Digital_object_identifier" title="Digital object identifier">doi</a>:<a rel="nofollow" class="external text" href="//dx.doi.org/10.1093%2Facref%2F9780199754663.001.0001">10.1093/acref/9780199754663.001.0001</a>. <a href="/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&#160;<a href="/wiki/Special:BookSources/9780199754663" title="Special:BookSources/9780199754663">9780199754663</a>. <a href="/wiki/OCLC" title="OCLC">OCLC</a>&#160;<a rel="nofollow" class="external text" href="//www.worldcat.org/oclc/686766412">686766412</a>. <span style="font-size:90%; color:#555">(subscription required (<span title="Sources are not required to be available online. Online sources do not have to be freely available. The site may require a paid subscription." style="border-bottom:1px dotted;cursor:help">help</span>))</span>. <q>The label of “philosopher�? has been broadly applied in this Dictionary to intellectuals who have made philosophical contributions regardless of <a href="/wiki/Academia" title="Academia">academic</a> career or professional title. The wide scope of philosophical activity across the time-span of this Dictionary would now be classed among the various humanities and social sciences which gradually separated from philosophy over the last one hundred and fifty years. Many figures included were not academic philosophers but did work at the philosophical foundations of such fields as pedagogy, rhetoric, the arts, history, politics, economics, sociology, psychology, linguistics, anthropology, religion, and theology. Philosophy proper is heavily represented, of course, encompassing the traditional areas of metaphysics, ontology, epistemology, logic, ethics, social/political theory, and aesthetics, along with the narrower fields of philosophy of science, philosophy of mind, philosophy of language, philosophy of law, applied ethics, philosophy of religion, and so forth</q></cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.btitle=Dictionary+of+Modern+American+philosophers&amp;rft.date=2010&amp;rft.edition=online&amp;rft.genre=book&amp;rft_id=http%3A%2F%2Fwww.oxfordreference.com%2Fview%2F10.1093%2Facref%2F9780199754663.001.0001%2Facref-9780199754663-miscMatter-0004&amp;rft_id=info%3Adoi%2F10.1093%2Facref%2F9780199754663.001.0001&amp;rft_id=info%3Aoclcnum%2F686766412&amp;rft.isbn=9780199754663&amp;rft.pages=Introduction&amp;rft.place=New+York&amp;rft.pub=Oxford+University+Press&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-RussellHistory11-5"><span class="mw-cite-backlink"><b><a href="#cite_ref-RussellHistory11_5-0">^</a></b></span> <span class="reference-text"><cite class="citation book"><a href="/wiki/Bertrand_Russell" title="Bertrand Russell">Russell, Bertrand</a> (1946). <a rel="nofollow" class="external text" href="https://archive.org/details/westernphilosoph035502mbp"><i>A History of Western Philosophy</i></a>. Great Britain: George Allen and Unwin Ltd. p.&#160;11<span class="reference-accessdate">. Retrieved <span class="nowrap">31 March</span> 2016</span> – via Internet Archive.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.aufirst=Bertrand&amp;rft.aulast=Russell&amp;rft.btitle=A+History+of+Western+Philosophy&amp;rft.date=1946&amp;rft.genre=book&amp;rft_id=https%3A%2F%2Farchive.org%2Fdetails%2Fwesternphilosoph035502mbp&amp;rft.pages=11&amp;rft.place=Great+Britain&amp;rft.pub=George+Allen+and+Unwin+Ltd&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-6"><span class="mw-cite-backlink"><b><a href="#cite_ref-6">^</a></b></span> <span class="reference-text"><a href="/wiki/Aristotle" title="Aristotle">Aristotle</a>, Metaphysics Alpha, 983b18.</span></li>
+<li id="cite_note-7"><span class="mw-cite-backlink"><b><a href="#cite_ref-7">^</a></b></span> <span class="reference-text">That is to say philosophically - <a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 27: Introduction: <i>Pierre Hadot and the Spiritual Phenomenon of Ancient Philosophy</i> by Arnold I. Davidson. Citing Hadot, 'Presentation au College International de Philosophie,' p. 4.</span></li>
+<li id="cite_note-8"><span class="mw-cite-backlink"><b><a href="#cite_ref-8">^</a></b></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 5: Introduction: <i>Pierre Hadot and the Spiritual Phenomenon of Ancient Philosophy</i> by Arnold I. Davidson. Citing Hadot, 'Theologie, exegese, revelation' p. 22</span></li>
+<li id="cite_note-9"><span class="mw-cite-backlink"><b><a href="#cite_ref-9">^</a></b></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 30: Introduction: <i>Pierre Hadot and the Spiritual Phenomenon of Ancient Philosophy</i> by Arnold I. Davidson. Citing Hadot, Dictionnaire des philosophes antiques, p. 13</span></li>
+<li id="cite_note-10"><span class="mw-cite-backlink"><b><a href="#cite_ref-10">^</a></b></span> <span class="reference-text"><a href="//en.wikisource.org/wiki/Meditations#THE_EIGHTH_BOOK" class="extiw" title="wikisource:Meditations">Wikisource:Meditations#THE EIGHTH BOOK</a></span></li>
+<li id="cite_note-11"><span class="mw-cite-backlink"><b><a href="#cite_ref-11">^</a></b></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 31: Introduction: <i>Pierre Hadot and the Spiritual Phenomenon of Ancient Philosophy</i> by Arnold I. Davidson. Citing Hadot, 'Presentation au College International de Philosophie,' p.7</span></li>
+<li id="cite_note-Hadot32-12"><span class="mw-cite-backlink">^ <a href="#cite_ref-Hadot32_12-0"><sup><i><b>a</b></i></sup></a> <a href="#cite_ref-Hadot32_12-1"><sup><i><b>b</b></i></sup></a></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 32: Introduction: <i>Pierre Hadot and the Spiritual Phenomenon of Ancient Philosophy</i> by Arnold I. Davidson.</span></li>
+<li id="cite_note-13"><span class="mw-cite-backlink"><b><a href="#cite_ref-13">^</a></b></span> <span class="reference-text"><i>Readings in World Christian History</i> (2013), p. 147, 149</span></li>
+<li id="cite_note-14"><span class="mw-cite-backlink"><b><a href="#cite_ref-14">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://www.etymonline.com/index.php?term=philosopher&amp;allowed_in_frame=0">"Online Etymology Dictionary"</a>. <i>etymonline.com</i>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.atitle=Online+Etymology+Dictionary&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.etymonline.com%2Findex.php%3Fterm%3Dphilosopher%26allowed_in_frame%3D0&amp;rft.jtitle=etymonline.com&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-15"><span class="mw-cite-backlink"><b><a href="#cite_ref-15">^</a></b></span> <span class="reference-text"><a href="/wiki/Pierre_Hadot" title="Pierre Hadot">Pierre Hadot</a>, <i>Philosophy as a Way of Life</i>, trans. Michael Chase. Blackwell Publishing, 1995. pg. 271: <i>Philosophy as a Way of Life</i></span></li>
+<li id="cite_note-16"><span class="mw-cite-backlink"><b><a href="#cite_ref-16">^</a></b></span> <span class="reference-text"><a href="/wiki/A._C._Grayling" title="A. C. Grayling">A. C. Grayling</a>. Wittgenstein: A Very Short Introduction. Oxford University Press, 2001. pg. 15</span></li>
+<li id="cite_note-APA-nonacademic-17"><span class="mw-cite-backlink"><b><a href="#cite_ref-APA-nonacademic_17-0">^</a></b></span> <span class="reference-text"><cite class="citation web">APA Committee on Non-Academic Careers (June 1999). <a rel="nofollow" class="external text" href="http://www.apaonline.org/?page=nonacademic">"A non-academic career?"</a> (3rd ed.). <a href="/wiki/American_Philosophical_Association" title="American Philosophical Association">American Philosophical Association</a><span class="reference-accessdate">. Retrieved <span class="nowrap">May 24,</span> 2014</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.au=APA+Committee+on+Non-Academic+Careers&amp;rft.btitle=A+non-academic+career%3F&amp;rft.date=1999-06&amp;rft.edition=3rd&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.apaonline.org%2F%3Fpage%3Dnonacademic&amp;rft.pub=American+Philosophical+Association&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-18"><span class="mw-cite-backlink"><b><a href="#cite_ref-18">^</a></b></span> <span class="reference-text"><cite class="citation news">Schuessler, Jennifer (11 August 2015). <a rel="nofollow" class="external text" href="http://go.galegroup.com/ps/i.do?id=GALE%7CA425090082&amp;v=2.1&amp;u=lom_macombtgps&amp;it=r&amp;p=SPN.SP00&amp;sw=w&amp;asid=45e28c97a72942b9dbf9c3e8db3e298d">"Philosophers to Share $1.5 Million Kluge Prize"</a>. New York Times. p.&#160;C3(L)<span class="reference-accessdate">. Retrieved <span class="nowrap">6 April</span> 2016</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3APhilosopher&amp;rft.atitle=Philosophers+to+Share+%241.5+Million+Kluge+Prize&amp;rft.aufirst=Jennifer&amp;rft.aulast=Schuessler&amp;rft.date=2015-08-11&amp;rft.genre=article&amp;rft_id=http%3A%2F%2Fgo.galegroup.com%2Fps%2Fi.do%3Fid%3DGALE%257CA425090082%26v%3D2.1%26u%3Dlom_macombtgps%26it%3Dr%26p%3DSPN.SP00%26sw%3Dw%26asid%3D45e28c97a72942b9dbf9c3e8db3e298d&amp;rft.pages=C3%28L%29&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+</ol>
+</div>
+<table class="navbox" style="border-spacing:0">
+<tr>
+<td style="padding:2px">
+<table class="nowraplinks hlist navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="row" class="navbox-group"><a href="/wiki/Help:Authority_control" title="Help:Authority control">Authority control</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><span style="white-space:nowrap;"><a href="/wiki/Library_of_Congress_Control_Number" title="Library of Congress Control Number">LCCN</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://id.loc.gov/authorities/subjects/sh85100836">sh85100836</a></span></span></li>
+<li><span style="white-space:nowrap;"><a href="/wiki/Integrated_Authority_File" title="Integrated Authority File">GND</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://d-nb.info/gnd/4045790-4">4045790-4</a></span></span></li>
+<li><span style="white-space:nowrap;"><a href="/wiki/Biblioth%C3%A8que_nationale_de_France" title="Bibliothèque nationale de France">BNF</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://catalogue.bnf.fr/ark:/12148/cb119331025">cb119331025</a> <a rel="nofollow" class="external text" href="http://data.bnf.fr/ark:/12148/cb119331025">(data)</a></span></span></li>
+<li><span style="white-space:nowrap;"><a href="/wiki/National_Diet_Library" title="National Diet Library">NDL</a>: <span class="uid"><a rel="nofollow" class="external text" href="http://id.ndl.go.jp/auth/ndlna/00572947">00572947</a></span></span></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<!--
+NewPP limit report
+Parsed by mw1237
+Cached time: 20160705101729
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.208 seconds
+Real time usage: 0.307 seconds
+Preprocessor visited node count: 1219/1000000
+Preprocessor generated node count: 0/1500000
+Post�?expand include size: 41101/2097152 bytes
+Template argument size: 1191/2097152 bytes
+Highest expansion depth: 13/40
+Expensive parser function count: 2/500
+Lua time usage: 0.081/10.000 seconds
+Lua memory usage: 3.1 MB/50 MB
+Number of Wikibase entities loaded: 1-->
+
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  248.933      1 - -total
+ 33.46%   83.296      1 - Template:Reflist
+ 17.46%   43.458      3 - Template:Cite_book
+ 13.28%   33.064      3 - Template:Category_handler
+ 12.89%   32.078      2 - Template:Lang
+ 11.43%   28.465      1 - Template:Philosophy_sidebar
+ 10.90%   27.140      1 - Template:Vague
+ 10.75%   26.756      1 - Template:Authority_control
+ 10.51%   26.165      1 - Template:Sidebar_with_collapsible_lists
+  9.18%   22.848      1 - Template:See_also
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:23276-0!*!0!!en!4!* and timestamp 20160705101729 and revision id 725461164
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Philosopher&amp;oldid=725461164">https://en.wikipedia.org/w/index.php?title=Philosopher&amp;oldid=725461164</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Humanities_occupations" title="Category:Humanities occupations">Humanities occupations</a></li><li><a href="/wiki/Category:Philosophers" title="Category:Philosophers">Philosophers</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_containing_Ancient_Greek-language_text" title="Category:Articles containing Ancient Greek-language text">Articles containing Ancient Greek-language text</a></li><li><a href="/wiki/Category:Pages_containing_links_to_subscription-only_content" title="Category:Pages containing links to subscription-only content">Pages containing links to subscription-only content</a></li><li><a href="/wiki/Category:All_Wikipedia_articles_needing_clarification" title="Category:All Wikipedia articles needing clarification">All Wikipedia articles needing clarification</a></li><li><a href="/wiki/Category:Wikipedia_articles_needing_clarification_from_November_2015" title="Category:Wikipedia articles needing clarification from November 2015">Wikipedia articles needing clarification from November 2015</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_LCCN_identifiers" title="Category:Wikipedia articles with LCCN identifiers">Wikipedia articles with LCCN identifiers</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_GND_identifiers" title="Category:Wikipedia articles with GND identifiers">Wikipedia articles with GND identifiers</a></li><li><a href="/wiki/Category:Wikipedia_articles_with_BNF_identifiers" title="Category:Wikipedia articles with BNF identifiers">Wikipedia articles with BNF identifiers</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Philosopher" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Philosopher" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Philosopher"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Philosopher"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Philosopher" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Philosopher&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Philosopher&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Philosopher" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Philosopher" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Philosopher&amp;oldid=725461164" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Philosopher&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q4964182" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Philosopher&amp;id=725461164" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Philosopher">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Philosopher&amp;returnto=Philosopher&amp;oldid=725461164&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Philosopher&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Philosophers" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="//ar.wikipedia.org/wiki/%D9%81%D9%8A%D9%84%D8%B3%D9%88%D9%81" title="�?يلسو�? – Arabic" lang="ar" hreflang="ar">العربية</a></li><li class="interlanguage-link interwiki-an"><a href="//an.wikipedia.org/wiki/Filosofo" title="Filosofo – Aragonese" lang="an" hreflang="an">Aragonés</a></li><li class="interlanguage-link interwiki-az"><a href="//az.wikipedia.org/wiki/Filosof" title="Filosof – Azerbaijani" lang="az" hreflang="az">Azərbaycanca</a></li><li class="interlanguage-link interwiki-bn"><a href="//bn.wikipedia.org/wiki/%E0%A6%A6%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%B6%E0%A6%A8%E0%A6%BF%E0%A6%95" title="দার�?শনিক – Bengali" lang="bn" hreflang="bn">বাংলা</a></li><li class="interlanguage-link interwiki-be"><a href="//be.wikipedia.org/wiki/%D0%A4%D1%96%D0%BB%D0%BE%D1%81%D0%B0%D1%84%D1%8B" title="Філо�?афы – Belarusian" lang="be" hreflang="be">Белару�?ка�?</a></li><li class="interlanguage-link interwiki-be-x-old"><a href="//be-x-old.wikipedia.org/wiki/%D0%A4%D1%96%D0%BB%D1%91%D0%B7%D0%B0%D1%84" title="Філёзаф – белару�?ка�? (тарашкевіца)‎" lang="be-x-old" hreflang="be-x-old">Белару�?ка�? (тарашкевіца)‎</a></li><li class="interlanguage-link interwiki-bh"><a href="//bh.wikipedia.org/wiki/%E0%A4%A6%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B6%E0%A4%A8%E0%A4%BF%E0%A4%95" title="दार�?शनिक – भोजप�?री" lang="bh" hreflang="bh">भोजप�?री</a></li><li class="interlanguage-link interwiki-bg"><a href="//bg.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84" title="Фило�?оф – Bulgarian" lang="bg" hreflang="bg">Българ�?ки</a></li><li class="interlanguage-link interwiki-bar"><a href="//bar.wikipedia.org/wiki/Philosoph" title="Philosoph – Bavarian" lang="bar" hreflang="bar">Boarisch</a></li><li class="interlanguage-link interwiki-cs"><a href="//cs.wikipedia.org/wiki/Filosof" title="Filosof – Czech" lang="cs" hreflang="cs">Čeština</a></li><li class="interlanguage-link interwiki-de"><a href="//de.wikipedia.org/wiki/Philosoph" title="Philosoph – German" lang="de" hreflang="de">Deutsch</a></li><li class="interlanguage-link interwiki-et"><a href="//et.wikipedia.org/wiki/Filosoof" title="Filosoof – Estonian" lang="et" hreflang="et">Eesti</a></li><li class="interlanguage-link interwiki-eo"><a href="//eo.wikipedia.org/wiki/Filozofo" title="Filozofo – Esperanto" lang="eo" hreflang="eo">Esperanto</a></li><li class="interlanguage-link interwiki-eu"><a href="//eu.wikipedia.org/wiki/Filosofo" title="Filosofo – Basque" lang="eu" hreflang="eu">Euskara</a></li><li class="interlanguage-link interwiki-fa"><a href="//fa.wikipedia.org/wiki/%D9%81%DB%8C%D9%84%D8%B3%D9%88%D9%81" title="�?یلسو�? – Persian" lang="fa" hreflang="fa">�?ارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="//fr.wikipedia.org/wiki/Philosophe" title="Philosophe – French" lang="fr" hreflang="fr">Français</a></li><li class="interlanguage-link interwiki-fy"><a href="//fy.wikipedia.org/wiki/Filosoof" title="Filosoof – Western Frisian" lang="fy" hreflang="fy">Frysk</a></li><li class="interlanguage-link interwiki-ko"><a href="//ko.wikipedia.org/wiki/%EC%B2%A0%ED%95%99%EC%9E%90" title="철학�? – Korean" lang="ko" hreflang="ko">한국어</a></li><li class="interlanguage-link interwiki-hy"><a href="//hy.wikipedia.org/wiki/%D5%93%D5%AB%D5%AC%D5%AB%D5%BD%D5%B8%D6%83%D5%A1" title="Փիլիսոփա – Armenian" lang="hy" hreflang="hy">Հայերեն</a></li><li class="interlanguage-link interwiki-hi"><a href="//hi.wikipedia.org/wiki/%E0%A4%A6%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B6%E0%A4%A8%E0%A4%BF%E0%A4%95" title="दार�?शनिक – Hindi" lang="hi" hreflang="hi">हिन�?दी</a></li><li class="interlanguage-link interwiki-he"><a href="//he.wikipedia.org/wiki/%D7%A4%D7%99%D7%9C%D7%95%D7%A1%D7%95%D7%A3" title="פילוסוף – Hebrew" lang="he" hreflang="he">עברית</a></li><li class="interlanguage-link interwiki-kk"><a href="//kk.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84" title="Фило�?оф – Kazakh" lang="kk" hreflang="kk">Қазақша</a></li><li class="interlanguage-link interwiki-sw"><a href="//sw.wikipedia.org/wiki/Mwanafalsafa" title="Mwanafalsafa – Swahili" lang="sw" hreflang="sw">Kiswahili</a></li><li class="interlanguage-link interwiki-ku"><a href="//ku.wikipedia.org/wiki/F%C3%AElozof" title="Fîlozof – Kurdish" lang="ku" hreflang="ku">Kurdî</a></li><li class="interlanguage-link interwiki-li"><a href="//li.wikipedia.org/wiki/Filosoof" title="Filosoof – Limburgish" lang="li" hreflang="li">Limburgs</a></li><li class="interlanguage-link interwiki-mk"><a href="//mk.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84" title="Филозоф – Macedonian" lang="mk" hreflang="mk">Македон�?ки</a></li><li class="interlanguage-link interwiki-nah"><a href="//nah.wikipedia.org/wiki/Tlazohmatiliztl%C4%81catl" title="Tlazohmatiliztl�?catl – N�?huatl" lang="nah" hreflang="nah">N�?huatl</a></li><li class="interlanguage-link interwiki-nl"><a href="//nl.wikipedia.org/wiki/Filosoof" title="Filosoof – Dutch" lang="nl" hreflang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="//ja.wikipedia.org/wiki/%E5%93%B2%E5%AD%A6%E8%80%85" title="哲学者 – Japanese" lang="ja" hreflang="ja">日本語</a></li><li class="interlanguage-link interwiki-oc"><a href="//oc.wikipedia.org/wiki/Filos%C3%B2f" title="Filosòf – Occitan" lang="oc" hreflang="oc">Occitan</a></li><li class="interlanguage-link interwiki-pa"><a href="//pa.wikipedia.org/wiki/%E0%A8%A6%E0%A8%BE%E0%A8%B0%E0%A8%B8%E0%A8%BC%E0%A8%A8%E0%A8%BF%E0%A8%95" title="ਦਾਰਸ਼ਨਿਕ – Punjabi" lang="pa" hreflang="pa">ਪੰਜਾਬੀ</a></li><li class="interlanguage-link interwiki-pnb"><a href="//pnb.wikipedia.org/wiki/%D9%81%D9%84%D8%B3%D9%81%DB%8C" title="�?لس�?ی – Western Punjabi" lang="pnb" hreflang="pnb">پنجابی</a></li><li class="interlanguage-link interwiki-qu"><a href="//qu.wikipedia.org/wiki/Yachay_wayllukuq" title="Yachay wayllukuq – Quechua" lang="qu" hreflang="qu">Runa Simi</a></li><li class="interlanguage-link interwiki-ru"><a href="//ru.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84" title="Фило�?оф – Russian" lang="ru" hreflang="ru">Ру�?�?кий</a></li><li class="interlanguage-link interwiki-sco"><a href="//sco.wikipedia.org/wiki/Filosopher" title="Filosopher – Scots" lang="sco" hreflang="sco">Scots</a></li><li class="interlanguage-link interwiki-stq"><a href="//stq.wikipedia.org/wiki/Philosoph" title="Philosoph – Saterland Frisian" lang="stq" hreflang="stq">Seeltersk</a></li><li class="interlanguage-link interwiki-simple"><a href="//simple.wikipedia.org/wiki/Philosopher" title="Philosopher – Simple English" lang="simple" hreflang="simple">Simple English</a></li><li class="interlanguage-link interwiki-sk"><a href="//sk.wikipedia.org/wiki/Filozof" title="Filozof – Slovak" lang="sk" hreflang="sk">Sloven�?ina</a></li><li class="interlanguage-link interwiki-ckb"><a href="//ckb.wikipedia.org/wiki/%D9%81%DB%95%DB%8C%D9%84%DB%95%D8%B3%D9%88%D9%88%D9%81" title="�?ەیلەسوو�? – Central Kurdish" lang="ckb" hreflang="ckb">کوردیی ناوەندی</a></li><li class="interlanguage-link interwiki-sr"><a href="//sr.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D0%B7%D0%BE%D1%84" title="Филозоф – Serbian" lang="sr" hreflang="sr">Срп�?ки / srpski</a></li><li class="interlanguage-link interwiki-sh"><a href="//sh.wikipedia.org/wiki/Filozof" title="Filozof – Serbo-Croatian" lang="sh" hreflang="sh">Srpskohrvatski / �?рп�?кохрват�?ки</a></li><li class="interlanguage-link interwiki-fi"><a href="//fi.wikipedia.org/wiki/Filosofi" title="Filosofi – Finnish" lang="fi" hreflang="fi">Suomi</a></li><li class="interlanguage-link interwiki-sv"><a href="//sv.wikipedia.org/wiki/Filosof" title="Filosof – Swedish" lang="sv" hreflang="sv">Svenska</a></li><li class="interlanguage-link interwiki-tt"><a href="//tt.wikipedia.org/wiki/%D0%A4%D3%99%D0%BB%D1%81%D3%99%D1%84%D3%99%D1%87%D0%B5" title="Фәл�?әфәче – Tatar" lang="tt" hreflang="tt">Татарча/tatarça</a></li><li class="interlanguage-link interwiki-th"><a href="//th.wikipedia.org/wiki/%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B1%E0%B8%8A%E0%B8%8D%E0%B8%B2" title="นั�?ปรัช�?า – Thai" lang="th" hreflang="th">ไทย</a></li><li class="interlanguage-link interwiki-uk"><a href="//uk.wikipedia.org/wiki/%D0%A4%D1%96%D0%BB%D0%BE%D1%81%D0%BE%D1%84" title="Філо�?оф – Ukrainian" lang="uk" hreflang="uk">Україн�?ька</a></li><li class="interlanguage-link interwiki-vi"><a href="//vi.wikipedia.org/wiki/Tri%E1%BA%BFt_gia" title="Triết gia – Vietnamese" lang="vi" hreflang="vi">Tiếng Việt</a></li><li class="interlanguage-link interwiki-diq"><a href="//diq.wikipedia.org/wiki/Filozof" title="Filozof – Zazaki" lang="diq" hreflang="diq">Zazaki</a></li><li class="interlanguage-link interwiki-zh"><a href="//zh.wikipedia.org/wiki/%E5%93%B2%E5%AD%B8%E5%AE%B6" title="哲學家 – Chinese" lang="zh" hreflang="zh">中文</a></li><li class="uls-p-lang-dummy"><a href="#"></a></li>					</ul>
+				<div class='after-portlet after-portlet-lang'><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q4964182#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 15 June 2016, at 20:09.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="//wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="//wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Philosopher&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","user":"ready"});mw.loader.load(["ext.cite.a11y","mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.eventLogging.subscriber","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.switcher","ext.gadget.featured-articles-links","mmv.bootstrap.autostart","ext.visualEditor.targetLoader","ext.wikimediaEvents","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage"]);});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":83,"wgHostname":"mw1177"});});</script>
+	</body>
+</html>

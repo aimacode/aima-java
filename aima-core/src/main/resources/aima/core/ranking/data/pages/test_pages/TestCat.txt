@@ -1,0 +1,23 @@
+title: TestCat
+mock location: /wiki/TestCat
+
+Article/Page Content: 
+
+Keyword String 1: Cats have four legs 
+Keyword String 2: Cats have fur. It can be a variety of colours: red, orange, black, brown, white ... 
+Keyword String 3: Some varieties are kept as pets in people's houses. 
+Keyword String 4: Cats stereotypically drink milk. Milk is actually a sub-optimal food for cats.
+Keyword String 4: Cats are alive. That is to say, they are living things, like dogs and humans.
+
+Links:
+
+*Valid*
+< href="/wiki/TestDog" >
+<a href="/wiki/TestAnimal"> A Tag </a>
+< href="/wiki/TestThing" >
+
+href="/wiki/TestLiving"
+href="/wiki/TestPet"		href="/wiki/TestMilk"
+
+
+*Invalid/Different Format*

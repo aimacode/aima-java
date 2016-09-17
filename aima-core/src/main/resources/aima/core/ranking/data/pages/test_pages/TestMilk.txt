@@ -1,0 +1,19 @@
+title: TestMilk
+mock location: /wiki/TestMilk
+
+Article/Page Content: 
+
+Keyword String 1: Milk is a drink, often put in coffee or tea.
+Keyword String 2: Milk is thought to be loved by cats, but milk is actually not particularly good for cats.
+
+Keyword String 3: Milk goes in tea. Tea goes in a teapot. Let's link to Teapot below
+
+Links:
+
+*Valid*
+
+< href="/wiki/TestCat" >
+< href="/wiki/TestTeapot"?
+
+
+*Invalid/Different Format*
