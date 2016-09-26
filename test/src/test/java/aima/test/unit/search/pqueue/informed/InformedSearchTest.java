@@ -9,6 +9,7 @@ import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.informed.AStarSearch;
+import aima.core.search.basic.informed.RecursiveBestFirstSearch;
 import aima.core.util.datastructure.Point2D;
 
 import org.junit.Assert;
@@ -26,12 +27,14 @@ import java.util.function.ToDoubleFunction;
 @RunWith(Parameterized.class)
 public class InformedSearchTest {
 
+  private static final String A_STAR = "AStarSearch";
+  private static final String RBFS = "RecursiveBestFirstSearch";
+
   @Parameters(name = "{index}: {0}")
   public static Collection<Object[]> implementations() {
     return Arrays.asList(new Object[][] {
-        // TODO RecursiveBestFirstSearch
-        // { "RecursiveBestFirstSearch" },
-        { "AStarSearch" }
+        {RBFS},
+        {A_STAR}
     });
   }
 
@@ -41,8 +44,10 @@ public class InformedSearchTest {
   public <A, S> List<A> searchForActions(Problem<A, S> problem, ToDoubleFunction<Node<A, S>>
       hf) {
     SearchForActionsFunction<A, S> searchForActionsFunction;
-    if ("AStarSearch".equals(searchFunctionName)) {
+    if (A_STAR.equals(searchFunctionName)) {
       searchForActionsFunction = new AStarSearch<>(hf);
+    } else if (RBFS.equals(searchFunctionName)) {
+      searchForActionsFunction = new RecursiveBestFirstSearch<>(hf);
     } else {
       throw new UnsupportedOperationException();
     }
