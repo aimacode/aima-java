@@ -63,7 +63,7 @@ public class InformedSearchTest {
     Problem<GoAction, InState> problem = ProblemFactory
         .getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation, goal);
     assertEquals(Arrays.asList((String) null),
-      searchForActions(problem, new MyHeuristicFunction(goal)));
+      searchForActions(problem, new StraightLineDistanceHeuristic(goal)));
 
     goal = SimplifiedRoadMapOfPartOfRomania.BUCHAREST;
     problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation, goal);
@@ -73,15 +73,15 @@ public class InformedSearchTest {
             new GoAction(SimplifiedRoadMapOfPartOfRomania.RIMNICU_VILCEA),
             new GoAction(SimplifiedRoadMapOfPartOfRomania.PITESTI),
             new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
-        searchForActions(problem, new MyHeuristicFunction(goal)));
+        searchForActions(problem, new StraightLineDistanceHeuristic(goal)));
   }
 
-  private class MyHeuristicFunction implements ToDoubleFunction<Node<GoAction, InState>> {
+  private class StraightLineDistanceHeuristic implements ToDoubleFunction<Node<GoAction, InState>> {
 
     private final Map2D map = new SimplifiedRoadMapOfPartOfRomania();
     private final String[] goals;
 
-    MyHeuristicFunction(String... goals) {
+    StraightLineDistanceHeuristic(String... goals) {
       this.goals = goals;
     }
 
@@ -95,12 +95,15 @@ public class InformedSearchTest {
           .map(goal -> {
             Point2D currentPosition = map.getPosition(state.getLocation());
             Point2D goalPosition = map.getPosition(goal);
-            return manhattanDistanceOf(currentPosition, goalPosition);
+            return distanceOf(currentPosition, goalPosition);
           }).min(Double::compareTo).orElse(Double.MAX_VALUE);
     }
 
-    private double manhattanDistanceOf(Point2D p1, Point2D p2) {
-      return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getX() - p2.getY());
+    private double distanceOf(Point2D p1, Point2D p2) {
+      return Math.sqrt(
+          (p1.getX() - p2.getX()) *  (p1.getX() - p2.getX()) +
+          (p1.getY() - p2.getY()) *  (p1.getY() - p2.getY())
+      );
     }
   }
 }
