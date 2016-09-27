@@ -87,17 +87,13 @@ public class InformedSearchTest {
 
     @Override
     public double applyAsDouble(Node<GoAction, InState> node) {
-      return g(node) + h(node);
+      return h(node.state());
     }
 
-    private double g(Node<GoAction, InState> node) {
-      return node.pathCost();
-    }
-
-    private double h(Node<GoAction, InState> node) {
+    private double h(InState state) {
       return Arrays.stream(goals)
           .map(goal -> {
-            Point2D currentPosition = map.getPosition(node.state().getLocation());
+            Point2D currentPosition = map.getPosition(state.getLocation());
             Point2D goalPosition = map.getPosition(goal);
             return manhattanDistanceOf(currentPosition, goalPosition);
           }).min(Double::compareTo).orElse(Double.MAX_VALUE);
