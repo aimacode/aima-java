@@ -9,7 +9,7 @@ import aima.core.util.Util;
  * @author R. Lunde
  * @author Mike Stampone
  */
-public final class Point2D implements Cloneable {
+public class Point2D implements Cloneable {
 	
 	private double x;
 	private double y;

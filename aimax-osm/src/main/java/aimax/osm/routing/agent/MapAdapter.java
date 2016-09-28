@@ -6,7 +6,7 @@ import java.util.List;
 
 import aima.core.environment.map.Map;
 import aima.core.util.Util;
-import aima.core.util.datastructure.Point2D;
+import aima.core.util.math.geom.shapes.Point2D;
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.OsmMap;
