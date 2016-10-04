@@ -21,6 +21,7 @@ import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VEWorldState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.Problem;
 import aima.core.search.api.ResultFunction;
@@ -51,7 +52,24 @@ public class ProblemFactory {
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
-	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
+  public static BidirectionalProblem<GoAction, InState> romaniaRoadMapProblem(
+      String initialLocation, final String... goalLocations) {
+    final SimplifiedRoadMapOfPartOfRomania romania = new SimplifiedRoadMapOfPartOfRomania();
+    final Set<String> locationSet = new HashSet<>(romania.getLocations());
+    if (!locationSet.contains(initialLocation)) {
+      throw new IllegalArgumentException(
+          "Initial State " + initialLocation + " is not a member of the state space.");
+    }
+    for (String goalLocation : goalLocations) {
+      if (!locationSet.contains(goalLocation)) {
+        throw new IllegalArgumentException(
+            "Goal location " + goalLocation + " is not a member of the state space.");
+      }
+    }
+    return new BidirectionalRomaniaProblem(initialLocation, goalLocations);
+  }
+
+  public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
 			final VELocalState... leftToRightLocalStates) {
 		// These actions are legal in all states
 		final List<String> allActions = new ArrayList<>();
@@ -165,7 +183,7 @@ public class ProblemFactory {
 
 	/**
 	 * A simple discrete function problem based on Figure 4.1 from AIMA3e
-	 * 
+	 *
 	 * @param xInitialStateValue
 	 *            x's initial value.
 	 * @param goalIsGlobalMaximum
