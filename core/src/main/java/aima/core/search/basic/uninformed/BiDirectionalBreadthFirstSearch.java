@@ -164,8 +164,7 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
   }
 
   private SimpleEntry<Node<A, S>, Node<A, S>> meetingNodes(Node<A, S> leaf, Queue<Node<A, S>>
-      otherFrontier, boolean
-                                                               forward) {
+      otherFrontier, boolean forward) {
     Node<A, S> nodeWithEqualState = findNodeWithEqualState(leaf, otherFrontier, forward);
     boolean nodesMeet = nodeWithEqualState != null;
     if (nodesMeet) {
