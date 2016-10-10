@@ -131,7 +131,6 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
 
   /**
    * add a new node to the frontier if the state is not explored
-   *
    * @return true when the new node reaches one of the other searchDirections branch
    */
   private SimpleEntry<Node<A, S>, Node<A, S>> meetingNodes(Set<S> exploredStates,
@@ -178,7 +177,7 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
   }
 
   /**
-   * merge the notes of a path from the start with a reversed path originating from the goal by
+   * merge the startNode with the one originating from the goal by
    * applying the necessary actions to get one node to the root state of the other
    */
   public Node<A, S> buildResultPath(Node<A, S> fromStartNode, Node<A, S> fromGoalNode,
@@ -247,9 +246,6 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
     history = timeLine;
   }
 
-  /**
-   * Helper class to make use of parallel processing with streams
-   */
   private class SearchDirection {
     final Set<S> exploredStates;
     final Queue<Node<A, S>> otherFrontier;
@@ -258,8 +254,8 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
 
     /**
      * @param exploredStates    remembers all explored states from this direction
-     * @param otherFrontier     remembers all explored states from an other direction
-     * @param frontier          frontierNodes of the other direction to check against
+     * @param otherFrontier     frontierNodes of the other direction to check against
+     * @param frontier          our frontier
      * @param forwardOrBackward indicator if a solution path needs to be reversed
      */
     SearchDirection(Set<S> exploredStates, Queue<Node<A, S>> otherFrontier, Queue<Node<A, S>>
