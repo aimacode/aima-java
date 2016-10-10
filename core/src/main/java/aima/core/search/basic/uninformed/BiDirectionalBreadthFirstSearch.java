@@ -113,8 +113,6 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
 
     rememberEvent("expand " + nodeToExpand.state(), searchDirection.forwardOrBackward);
     return actions.parallelStream()
-        // first filter for an action which leads to an leaf getting to an explored node of the
-        // other tree
         .map(action -> meetingNodes(exploredStates, frontier, otherFrontier,
             newLeafNode(problem, nodeToExpand, action), searchDirection.forwardOrBackward))
         .filter(o -> o != null)
