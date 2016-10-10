@@ -10,7 +10,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * @param <S> the states
  * @param <A> action attempted from this state
- * using a {@link SimpleEntry} as key to the executed actions, can be ordered later
  * @author wormi
  */
 

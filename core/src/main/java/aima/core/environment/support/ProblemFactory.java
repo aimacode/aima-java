@@ -22,9 +22,9 @@ import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VEWorldState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.Problem;
-import aima.core.search.api.DefinedGoalStatesProblem;
 import aima.core.search.api.ResultFunction;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.datastructure.Pair;
@@ -53,13 +53,13 @@ public class ProblemFactory {
         Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
   }
 
-  public static DefinedGoalStatesProblem<GoAction, InState> romaniaRoadMapProblem(
-      String initialState, final String... goalLocations) {
+  public static BidirectionalProblem<GoAction, InState> romaniaRoadMapProblem(
+      String initialLocation, final String... goalLocations) {
     final SimplifiedRoadMapOfPartOfRomania romania = new SimplifiedRoadMapOfPartOfRomania();
     final Set<String> locationSet = new HashSet<>(romania.getLocations());
-    if (!locationSet.contains(initialState)) {
+    if (!locationSet.contains(initialLocation)) {
       throw new IllegalArgumentException(
-          "Initial State " + initialState + " is not a member of the state space.");
+          "Initial State " + initialLocation + " is not a member of the state space.");
     }
     for (String goalLocation : goalLocations) {
       if (!locationSet.contains(goalLocation)) {
@@ -67,44 +67,7 @@ public class ProblemFactory {
             "Goal location " + goalLocation + " is not a member of the state space.");
       }
     }
-    return new DefinedGoalStatesProblem<GoAction, InState>() {
-      @Override
-      public List<InState> goalStates() {
-        return Arrays.stream(goalLocations).map(InState::new).collect(Collectors.toList());
-      }
-
-      @Override
-      public List<GoAction> actions(InState inState) {
-        return Map2DFunctionFactory.getActionsFunction(romania).actions(inState);
-      }
-
-      @Override
-      public boolean isGoalState(InState state) {
-        for (InState inState : goalStates()) {
-          if (inState.getLocation().equals(state.getLocation())){
-            return true;
-          }
-        }
-        return false;
-      }
-
-      @Override
-      public InState initialState() {
-        return new InState(initialState);
-      }
-
-      @Override
-      public InState result(InState inState, GoAction goAction) {
-        return Map2DFunctionFactory.getResultFunction(romania).result
-            (inState, goAction);
-      }
-
-      @Override
-      public double stepCost(InState inState, GoAction goAction, InState sPrime) {
-        return Map2DFunctionFactory.getStepCostFunction(romania).stepCost
-            (inState, goAction, sPrime);
-      }
-    };
+    return new BidirectionalRomaniaProblem(initialLocation, goalLocations);
   }
 
   public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,

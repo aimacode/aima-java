@@ -2,6 +2,7 @@ package aima.test.unit.search.uninformed;
 
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
+import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
@@ -52,7 +53,7 @@ public class BiDirectionalBreadthFirstSearchTest {
 
     BiDirectionalBreadthFirstSearch<GoAction, InState> biBFS = new BiDirectionalBreadthFirstSearch<>();
     Node<GoAction, InState> node = biBFS.buildResultPath(asr, pr, romaniaRoadMapProblem(ARAD,
-        RIMNICU_VILCEA));
+        RIMNICU_VILCEA).getOriginalProblem());
     assertEquals(new InState(PITESTI), node.state());
     assertEquals(new InState(RIMNICU_VILCEA), node.parent().state());
     assertEquals(new InState(SIBIU), node.parent().parent().state());
@@ -60,13 +61,12 @@ public class BiDirectionalBreadthFirstSearchTest {
     assertEquals(null, node.parent().parent().parent().parent());
   }
 
-  private <A, S> List<A> searchSolutions(Problem<A, S> problem) {
+  private <A, S> List<A> searchSolutions(BidirectionalProblem<A, S> problem) {
     SearchForActionsFunction<A, S> searchForActionsFunction = new BiDirectionalBreadthFirstSearch<>();
     return searchForActionsFunction.apply(problem);
   }
 
-  private <A, S> List<A> searchSolution(Problem<A, S> problem,
-                                        StateActionTimeLine<String, String> timeLine) {
+  private <A, S> List<A> searchSolution(Problem<A, S> problem, StateActionTimeLine<String, String> timeLine) {
     BiDirectionalBreadthFirstSearch<A, S> biBfs= new BiDirectionalBreadthFirstSearch<>();
     biBfs.register(timeLine);
     return biBfs.apply(problem);
