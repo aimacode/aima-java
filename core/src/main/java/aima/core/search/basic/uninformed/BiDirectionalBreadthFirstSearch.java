@@ -5,7 +5,6 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchController;
-import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
 import aima.core.search.basic.support.StateActionTimeLine;
@@ -34,7 +33,7 @@ import java.util.concurrent.ForkJoinPool;
  * @param <A> actions to take
  * @param <S> states which exist
  */
-public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
+public class BiDirectionalBreadthFirstSearch<A, S> {
 
   private NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
   private SearchController<A, S> searchController = new BasicSearchController<>();
@@ -45,7 +44,7 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
    * @param biDirectionalProblem to solve
    * @return list of actions to solve the problem
    */
-  public List<A> apply(BidirectionalProblem<A, S> biDirectionalProblem) throws ExecutionException,
+  public List<A> findSolution(BidirectionalProblem<A, S> biDirectionalProblem) throws ExecutionException,
       InterruptedException {
 
     // build everything needed for the two searches
@@ -223,7 +222,7 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
     return new ConcurrentLinkedQueue<>();
   }
 
-  public Set<S> concurrentStateSet() {
+  private Set<S> concurrentStateSet() {
     return new ConcurrentSkipListSet<S>() {
       @Override
       public Comparator<? super S> comparator() {
@@ -238,15 +237,6 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
 
   public List<A> solution(Node<A, S> child) {
     return searchController.solution(child);
-  }
-
-  @Override
-  public List<A> apply(Problem problem) {
-    try {
-      return apply((BidirectionalProblem<A, S>) problem);
-    } catch (ExecutionException | InterruptedException e) {
-      throw new RuntimeException(e);
-    }
   }
 
   public void register(StateActionTimeLine<String, String> timeLine) {
@@ -265,7 +255,7 @@ public class BiDirectionalBreadthFirstSearch<A, S> implements SearchForActionsFu
      * @param otherFrontier     frontierNodes of the other direction to check against
      * @param frontier          our frontier
      * @param forwardOrBackward indicator if a solution path needs to be reversed
-     * @param problem
+     * @param problem           to solve
      */
     SearchDirection(Set<S> exploredStates, Queue<Node<A, S>> otherFrontier, Queue<Node<A, S>>
         frontier, boolean forwardOrBackward, Problem<A, S> problem) {

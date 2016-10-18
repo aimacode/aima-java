@@ -4,8 +4,6 @@ import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
 import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.Node;
-import aima.core.search.api.Problem;
-import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.support.StateActionTimeLine;
 import aima.core.search.basic.uninformed.BiDirectionalBreadthFirstSearch;
 import org.junit.Assert;
@@ -15,6 +13,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 
 import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.*;
 import static aima.core.environment.support.ProblemFactory.romaniaRoadMapProblem;
@@ -28,10 +27,10 @@ public class BiDirectionalBreadthFirstSearchTest {
     InState s0 = new InState("0");
     InState s1 = new InState("1");
     InState s2 = new InState("2");
-    Node node0 = new MyTestNode(s0);
-    Node node1 = new MyTestNode(s1);
-    Node node2 = new MyTestNode(s2);
-    Queue<Node<InState, GoAction>> fifoQueue = new BiDirectionalBreadthFirstSearch<InState, GoAction>()
+    Node<GoAction, InState> node0 = new MyTestNode(s0);
+    Node<GoAction, InState> node1 = new MyTestNode(s1);
+    Node<GoAction, InState> node2 = new MyTestNode(s2);
+    Queue<Node<GoAction, InState>> fifoQueue = new BiDirectionalBreadthFirstSearch<GoAction, InState>()
         .newFIFOQueue();
     fifoQueue.add(node0);
     fifoQueue.add(node1);
@@ -61,15 +60,18 @@ public class BiDirectionalBreadthFirstSearchTest {
     assertEquals(null, node.parent().parent().parent().parent());
   }
 
-  private <A, S> List<A> searchSolutions(BidirectionalProblem<A, S> problem) {
-    SearchForActionsFunction<A, S> searchForActionsFunction = new BiDirectionalBreadthFirstSearch<>();
-    return searchForActionsFunction.apply(problem);
+  private List<GoAction> searchSolutions(BidirectionalProblem<GoAction, InState> problem) {
+    return searchSolution(problem, null);
   }
 
-  private <A, S> List<A> searchSolution(Problem<A, S> problem, StateActionTimeLine<String, String> timeLine) {
-    BiDirectionalBreadthFirstSearch<A, S> biBfs= new BiDirectionalBreadthFirstSearch<>();
+  private List<GoAction> searchSolution(BidirectionalProblem<GoAction, InState> problem, StateActionTimeLine<String, String> timeLine) {
+    BiDirectionalBreadthFirstSearch<GoAction, InState> biBfs= new BiDirectionalBreadthFirstSearch<>();
     biBfs.register(timeLine);
-    return biBfs.apply(problem);
+    try {
+      return biBfs.findSolution(problem);
+    } catch (ExecutionException | InterruptedException e) {
+      throw new RuntimeException((e));
+    }
   }
 
   @Test
