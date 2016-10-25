@@ -1,39 +1,32 @@
 grammar FirstOrderLogic;
 @header {
 package aima.extra.logic.firstorder.parser;
-import aima.core.logic.basic.firstorder.domain.*;   
 }
 
 @parser::members {
-private FOLDomain domain;
+private aima.core.logic.basic.firstorder.domain.FOLDomain domain;
 
-public void setDomain(FOLDomain domain) {
-    this.domain = domain;
+public void setDomain(aima.core.logic.basic.firstorder.domain.FOLDomain domain) {
+	this.domain = domain;
 }
 
-public FOLDomain getDomain() {
-    return this.domain;
+public aima.core.logic.basic.firstorder.domain.FOLDomain getDomain() {
+	if (domain == null) {
+		domain = new aima.core.logic.basic.firstorder.domain.FOLDomain();
+	}
+	return this.domain;
 }
 
 public void addConstant(String constant) {
-	if( domain == null ) {
-		domain = new FOLDomain();
-	}
-    domain.addConstant(constant);
+	getDomain().addConstant(constant);
 }
 
 public void addPredicate(String predicate) {
-	if( domain == null ) {
-		domain = new FOLDomain();
-	}
-    domain.addPredicate(predicate);
+	getDomain().addPredicate(predicate);
 }
 
 public void addFunction(String function) {
-	if( domain == null ) {
-		domain = new FOLDomain();
-	}
-    domain.addFunction(function);
+	getDomain().addFunction(function);
 }
 }
 /*
