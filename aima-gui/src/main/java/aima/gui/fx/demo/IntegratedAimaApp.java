@@ -1,5 +1,6 @@
 package aima.gui.fx.demo;
 
+import aima.gui.fx.demo.search.MapColoringApp;
 import aima.gui.prog.agent.NondeterministicVacuumEnvironmentProg;
 import aima.gui.prog.agent.TrivialVacuumProg;
 import aima.gui.prog.logic.DPLLProg;
@@ -57,6 +58,7 @@ public class IntegratedAimaApp extends Application {
 
 		builder.registerApp(VacuumAgentApp.class);
 		builder.registerApp(RouteFindingAgentApp.class);
+		builder.registerApp(MapColoringApp.class);
 		
 		builder.registerProg(GeneticMaximumFinderProg.class);
 		builder.registerProg(NQueensSearchProg.class);

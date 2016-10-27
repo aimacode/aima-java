@@ -79,7 +79,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		return new Parameter[] {p1, p2, p3};
 	}
 
-	/** Displays the selected function on the state view. */
+	/** Displays the initialized board on the state view. */
 	@Override
 	public void initialize() {
 		experiment.setBoardSize(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
