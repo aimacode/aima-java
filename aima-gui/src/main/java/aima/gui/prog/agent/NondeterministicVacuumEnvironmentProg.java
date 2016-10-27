@@ -1,4 +1,4 @@
-package aima.gui.demo.agent;
+package aima.gui.prog.agent;
 
 import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
 import aima.core.environment.vacuum.NondeterministicVacuumAgent;
