@@ -14,7 +14,7 @@ import aima.gui.prog.search.MapColoringCSPProg;
 import aima.gui.prog.search.NQueensProg;
 import aima.gui.prog.search.TicTacToeProg;
 import aima.gui.fx.demo.agent.VacuumAgentApp;
-import aima.gui.fx.demo.agent.map.RouteFindingAgentApp;
+import aima.gui.fx.demo.agent.RouteFindingAgentApp;
 import aima.gui.fx.demo.search.NQueensSearchApp;
 import aima.gui.fx.demo.search.NQueensSearchProg;
 import aima.gui.fx.demo.search.games.ConnectFourApp;
