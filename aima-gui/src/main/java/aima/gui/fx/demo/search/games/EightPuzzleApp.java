@@ -43,7 +43,7 @@ import java.util.Random;
 
 /**
  * Integrable application which demonstrates how different search strategies
- * solve the N-Queens problem.
+ * solve the Eight Puzzle problem.
  *
  * @author Ruediger Lunde
  *

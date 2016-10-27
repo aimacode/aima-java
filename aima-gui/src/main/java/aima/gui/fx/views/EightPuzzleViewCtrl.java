@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 
 /**
  * Controller class which provides functionality for using a stack pane as a
- * state view for the Eight Puzzle game.
+ * state view for the Eight Puzzle problem.
  *
  * @author Ruediger Lunde
  */
