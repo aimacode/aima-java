@@ -127,9 +127,9 @@ public class BinaryCspViewCtrl {
     }
 
     /**
-     * Computes transforms (translations and scaling) and applies them to the
-     * environment state view. Those transforms map location positions in the
-     * map to screen positions in the viewer pane.
+     * Computes transforms (translations and scaling) and applies them to the environment state view. Those transforms
+     * map logical positions to screen positions in the viewer pane. The purpose is to show the graphical state
+     * representation as large as possible.
      *
      * @return The scale value.
      */
@@ -145,11 +145,11 @@ public class BinaryCspViewCtrl {
             yMin = Math.min(yMin, point.getY());
             yMax = Math.max(yMax, point.getY());
         }
-        double scale = Math.min((pane.getWidth() - 150) / (xMax - xMin + 60),
-                (pane.getHeight() - 100) / (yMax - yMin + 60));
+        double scale = Math.min(pane.getWidth() / (xMax - xMin + 300),
+                pane.getHeight() / (yMax - yMin + 150));
 
-        pane.setTranslateX((scale * (pane.getWidth() - xMin - xMax) / 2.0 - 30));
-        pane.setTranslateY((scale * (pane.getHeight() - yMin - yMax) / 2.0 - 30));
+        pane.setTranslateX((scale * (pane.getWidth() - xMin - xMax) / 2.0));
+        pane.setTranslateY((scale * (pane.getHeight() - yMin - yMax) / 2.0));
         pane.setScaleX(scale);
         pane.setScaleY(scale);
         return scale;

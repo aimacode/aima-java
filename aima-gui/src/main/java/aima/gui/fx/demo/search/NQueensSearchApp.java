@@ -1,9 +1,12 @@
 package aima.gui.fx.demo.search;
 
+import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
+import aima.core.search.informed.AStarSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -15,11 +18,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.util.Arrays;
+
 
 /**
  * Integrable application which demonstrates how different search strategies
  * solve the N-Queens problem.
- * 
+ *
  * @author Ruediger Lunde
  *
  */
@@ -69,10 +74,10 @@ public class NQueensSearchApp extends IntegrableApplication {
 
 		return root;
 	}
-	
+
 	protected Parameter[] createParameters() {
-		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "Hill Climbing", "Simulated Annealing",
-				"Genetic Algorithm");
+		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "A* search (attacking pair heuristic)",
+                "Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
 		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
 		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
 		p3.setDependency(PARAM_STRATEGY, "Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
@@ -85,7 +90,8 @@ public class NQueensSearchApp extends IntegrableApplication {
 		experiment.setBoardSize(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		Config config;
-		if (strategy.equals("Depth-First Search") || strategy.equals("Genetic Algorithm"))
+		if (Arrays.asList("Depth-First Search", "A* search (attacking pair heuristic)", "Genetic Algorithm")
+                .contains(strategy))
 			config = Config.EMPTY;
 		else if (simPaneCtrl.getParamValue(PARAM_INIT_CONFIG).equals("Random"))
 			config = Config.QUEEN_IN_EVERY_COL;
@@ -105,6 +111,8 @@ public class NQueensSearchApp extends IntegrableApplication {
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		if (strategy.equals("Depth-First Search"))
 			experiment.startExperiment(new DepthFirstSearch(new TreeSearch()));
+        else if (strategy.equals("A* search (attacking pair heuristic)"))
+            experiment.startExperiment(new AStarSearch(new GraphSearch(), new AttackingPairsHeuristic()));
 		else if (strategy.equals("Hill Climbing"))
 			experiment.startHillClimbingExperiment();
 		else if (strategy.equals("Simulated Annealing"))

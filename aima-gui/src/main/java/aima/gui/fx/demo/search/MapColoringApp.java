@@ -6,7 +6,6 @@ import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
 import aima.gui.fx.views.BinaryCspViewCtrl;
-import aima.gui.fx.views.NQueensViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
