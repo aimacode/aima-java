@@ -32,8 +32,8 @@ public class VacuumEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	protected List<String> locations;
 	private Agent agentInAction;
 
-	public VacuumEnvironmentViewCtrl(StackPane parent) {
-		super(parent);
+	public VacuumEnvironmentViewCtrl(StackPane viewRoot) {
+		super(viewRoot);
 		envStateView = new GridPane();
 		envStateView.setHgap(20);
 		RowConstraints rowCons = new RowConstraints();

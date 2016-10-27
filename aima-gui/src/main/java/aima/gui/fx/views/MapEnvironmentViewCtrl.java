@@ -31,8 +31,8 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	protected String goal;
 	protected List<String> track;
 
-	public MapEnvironmentViewCtrl(StackPane parent) {
-		super(parent);
+	public MapEnvironmentViewCtrl(StackPane viewRoot) {
+		super(viewRoot);
 		envStateView = new Pane();
 		splitPane.getItems().add(0, envStateView);
 		splitPane.setDividerPosition(0, 0.7);

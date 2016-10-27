@@ -28,11 +28,11 @@ public class NQueensViewCtrl {
 	 * Adds a grid pane to the provided pane and creates a controller class
 	 * instance which is responsible for queen symbol positioning on the grid.
 	 */
-	public NQueensViewCtrl(StackPane pane) {
-		pane.getChildren().add(gridPane);
-		pane.setAlignment(Pos.BOTTOM_CENTER);
-		gridPane.maxWidthProperty().bind(Bindings.min(pane.widthProperty(), pane.heightProperty()).subtract(20));
-		gridPane.maxHeightProperty().bind(Bindings.min(pane.widthProperty(), pane.heightProperty()).subtract(10));
+	public NQueensViewCtrl(StackPane viewRoot) {
+		viewRoot.getChildren().add(gridPane);
+		viewRoot.setAlignment(Pos.BOTTOM_CENTER);
+		gridPane.maxWidthProperty().bind(Bindings.min(viewRoot.widthProperty(), viewRoot.heightProperty()).subtract(20));
+		gridPane.maxHeightProperty().bind(Bindings.min(viewRoot.widthProperty(), viewRoot.heightProperty()).subtract(10));
 	}
 
 	/** Updates the view. */

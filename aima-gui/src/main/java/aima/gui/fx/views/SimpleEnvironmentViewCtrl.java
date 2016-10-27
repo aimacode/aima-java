@@ -28,12 +28,12 @@ public class SimpleEnvironmentViewCtrl implements EnvironmentView {
 	 * an environment view which prints messages about environment changes on
 	 * the text area.
 	 */
-	public SimpleEnvironmentViewCtrl(StackPane parent) {
+	public SimpleEnvironmentViewCtrl(StackPane viewRoot) {
 		splitPane = new SplitPane();
 		textArea = new TextArea();
 		textArea.setMinWidth(0.0);
 		splitPane.getItems().add(textArea);
-		parent.getChildren().add(splitPane);
+		viewRoot.getChildren().add(splitPane);
 	}
 
 	public void initialize(Environment env) {
