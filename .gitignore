@@ -3,3 +3,6 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# ignore IntelliJ project files
+.idea
