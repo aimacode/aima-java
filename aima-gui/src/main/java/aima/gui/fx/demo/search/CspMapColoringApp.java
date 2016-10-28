@@ -184,8 +184,7 @@ public class CspMapColoringApp extends IntegrableApplication {
      */
     public void simulate() {
         stepCounter = 0;
-        Assignment result = strategy.solve(csp.copyDomains());
-        updateStateView(csp, result);
+        strategy.solve(csp.copyDomains());
     }
 
     /**
