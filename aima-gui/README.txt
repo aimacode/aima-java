@@ -6,7 +6,7 @@ This project contains graphical applications and command line demos, which
 demonstrate the use of some of the aima-core project features. Currently, it
 focuses on search algorithms and agent concepts. Application class names end
 with "App" and command line demo class names end with "Prog". 
-Simple demo console applications can be found in package aima.gui.demo.
+Simple demo console applications can be found in package aima.gui.prog.
 Graphical demo applications are available based on JavaFX (package aima.gui.fx.demo) and
 Swing (package aima.gui.swing.demo). Each platform-specific root package contains an
 integrated application providing access to all integrable demos. The individual demos are placed
