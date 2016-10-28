@@ -7,7 +7,10 @@ import aima.core.search.framework.Metrics;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.AStarSearch;
+import aima.core.search.informed.GreedyBestFirstSearch;
+import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
+import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
@@ -71,16 +74,22 @@ public class NQueensSearchApp extends IntegrableApplication {
 		builder.defineInitMethod(this::initialize);
 		builder.defineSimMethod(this::simulate);
 		simPaneCtrl = builder.getResultFor(root);
+		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 1);
 
 		return root;
 	}
 
 	protected Parameter[] createParameters() {
-		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "A* search (attacking pair heuristic)",
-                "Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
-		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 8, 16, 32, 64);
+		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "Breadth-First Search",
+				"Iterative Deepening Search",
+				"Greedy Best-First Search (attacking pair heuristic)", "A* search (attacking pair heuristic)",
+				"Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
+		Parameter p2 = new Parameter(PARAM_BOARD_SIZE, 4, 8, 16, 32, 64);
+		p2.setDefaultValueIndex(1);
 		Parameter p3 = new Parameter(PARAM_INIT_CONFIG, "FirstRow", "Random");
-		p3.setDependency(PARAM_STRATEGY, "Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
+		p3.setDependency(PARAM_STRATEGY, "Iterative Deepening Search",
+				"Greedy Best-First Search (attacking pair heuristic)", "A* search (attacking pair heuristic)",
+				"Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
 		return new Parameter[] {p1, p2, p3};
 	}
 
@@ -90,7 +99,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		experiment.setBoardSize(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		Config config;
-		if (Arrays.asList("Depth-First Search", "A* search (attacking pair heuristic)", "Genetic Algorithm")
+		if (Arrays.asList("Depth-First Search", "Breadth-First Search", "Genetic Algorithm")
                 .contains(strategy))
 			config = Config.EMPTY;
 		else if (simPaneCtrl.getParamValue(PARAM_INIT_CONFIG).equals("Random"))
@@ -111,6 +120,12 @@ public class NQueensSearchApp extends IntegrableApplication {
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		if (strategy.equals("Depth-First Search"))
 			experiment.startExperiment(new DepthFirstSearch(new TreeSearch()));
+		else if (strategy.equals("Breadth-First Search"))
+			experiment.startExperiment(new BreadthFirstSearch(new TreeSearch()));
+		else if (strategy.equals("Iterative Deepening Search"))
+			experiment.startExperiment(new IterativeDeepeningSearch());
+		else if (strategy.equals("Greedy Best-First Search (attacking pair heuristic)"))
+			experiment.startExperiment(new GreedyBestFirstSearch(new GraphSearch(), new AttackingPairsHeuristic()));
         else if (strategy.equals("A* search (attacking pair heuristic)"))
             experiment.startExperiment(new AStarSearch(new GraphSearch(), new AttackingPairsHeuristic()));
 		else if (strategy.equals("Hill Climbing"))

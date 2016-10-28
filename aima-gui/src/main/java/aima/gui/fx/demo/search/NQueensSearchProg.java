@@ -92,8 +92,13 @@ public class NQueensSearchProg {
 		search.getNodeExpander()
 				.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
 
-		Problem problem = new Problem(board, NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
+		Problem problem = null;
+		if (board.getNumberOfQueensOnBoard() == 0)
+			problem = new Problem(board, NQueensFunctionFactory.getIActionsFunction(),
+					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
+		else
+			problem = new Problem(board, NQueensFunctionFactory.getCActionsFunction(),
+					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 		List<Action> actions = search.search(problem);
 		for (Action action : actions)
 			board = (NQueensBoard) NQueensFunctionFactory.getResultFunction().result(board, action);
