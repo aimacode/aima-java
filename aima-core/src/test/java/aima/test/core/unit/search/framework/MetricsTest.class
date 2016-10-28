@@ -17,31 +17,35 @@ public class MetricsTest {
     }
 
     @Test
-    public void testGetInt() throws Exception {
+    public void testGetInt() {
         int x = 893597823;
         metrics.set("abcd",x);
-        assertEquals(123, metrics.getInt("abcd"));
+        assertEquals(x, metrics.getInt("abcd"));
+        assertNotEquals(1234,metrics.getInt("abcd"));
     }
 
     @Test
-    public void testGetDouble() throws Exception {
+    public void testGetDouble() {
         double x = 1231397235234.48467865326;
         metrics.set("abcd",x);
         assertEquals(x, metrics.getDouble("abcd"),0);
+        assertNotEquals(1234.56789,metrics.getDouble("abcd"),0);
     }
 
     @Test
-    public void testGetLong() throws Exception {
+    public void testGetLong() {
         long x = 893597823;
         metrics.set("abcd",x);
         assertEquals(x, metrics.getLong("abcd"));
+        assertNotEquals(841356458,metrics.getLong("abcd"));
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testGet() {
         int x = 123;
         metrics.set("abcd",x);
         assertEquals("123", metrics.get("abcd"));
+        assertNotEquals("1234",metrics.get("abcd"));
     }
 
 }
