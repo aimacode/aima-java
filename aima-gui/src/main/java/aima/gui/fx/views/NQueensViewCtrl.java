@@ -36,7 +36,7 @@ public class NQueensViewCtrl {
 	}
 
 	/** Updates the view. */
-	public void updateBoard(NQueensBoard board) {
+	public void update(NQueensBoard board) {
 		int size = board.getSize();
 		if (queens.length != size * size) {
 			gridPane.getChildren().clear();

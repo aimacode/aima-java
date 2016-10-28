@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
  */
 public class EightPuzzleViewCtrl {
 
-    private GridPane gridPane = new GridPane();
     private Button[] tileBtns = new Button[9];
     private EightPuzzleBoard board;
 
@@ -29,8 +28,9 @@ public class EightPuzzleViewCtrl {
      * instance which is responsible for Eight Puzzle tile positioning on the grid.
      */
     public EightPuzzleViewCtrl(StackPane viewRoot) {
+        GridPane gridPane = new GridPane();
         viewRoot.getChildren().add(gridPane);
-        viewRoot.setAlignment(Pos.BOTTOM_CENTER);
+        viewRoot.setAlignment(Pos.CENTER);
         gridPane.maxWidthProperty().bind(Bindings.min(viewRoot.widthProperty(), viewRoot.heightProperty()).subtract(20));
         gridPane.maxHeightProperty().bind(Bindings.min(viewRoot.widthProperty(), viewRoot.heightProperty()).subtract(10));
         RowConstraints c1 = new RowConstraints();
@@ -43,7 +43,7 @@ public class EightPuzzleViewCtrl {
             gridPane.getRowConstraints().add(c1);
             gridPane.getColumnConstraints().add(c2);
         }
-        Font font = Font.font(30);
+        Font font = Font.font(40);
         for (int i = 0; i < 9; i++) {
             Button btn = new Button();
             btn.setOnAction(this::handleButtonEvent);

@@ -98,7 +98,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		else
 			config = Config.QUEENS_IN_FIRST_ROW;
 		experiment.initExperiment(config);
-		stateViewCtrl.updateBoard(experiment.getBoard());
+		stateViewCtrl.update(experiment.getBoard());
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 	 * Must be called by the GUI thread!
 	 */
 	private void updateStateViewLater(NQueensBoard board, Metrics metrics) {
-		stateViewCtrl.updateBoard(board);
+		stateViewCtrl.update(board);
 		simPaneCtrl.setStatus(metrics.toString());
 	}
 }

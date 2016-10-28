@@ -2,6 +2,7 @@ package aima.gui.fx.demo;
 
 import aima.gui.fx.demo.search.MapColoringApp;
 import aima.gui.fx.demo.search.games.EightPuzzleApp;
+import aima.gui.fx.demo.search.games.TicTacToeApp;
 import aima.gui.prog.agent.NondeterministicVacuumEnvironmentProg;
 import aima.gui.prog.agent.TrivialVacuumProg;
 import aima.gui.prog.logic.DPLLProg;
@@ -52,15 +53,21 @@ public class IntegratedAimaApp extends Application {
 
 	protected void defineContent(IntegratedAppPaneBuilder builder) {
 		builder.defineTitle("Integrated FX AIMA App");
-		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
-		builder.registerApp(GeneticMaximumFinderApp.class);
-		builder.registerApp(NQueensSearchApp.class);
-		builder.registerApp(EightPuzzleApp.class);
-		builder.registerApp(ConnectFourApp.class);
 
 		builder.registerApp(VacuumAgentApp.class);
 		builder.registerApp(RouteFindingAgentApp.class);
+
 		builder.registerApp(MapColoringApp.class);
+		builder.registerApp(NQueensSearchApp.class);
+
+		builder.registerApp(EightPuzzleApp.class);
+		builder.registerApp(ConnectFourApp.class);
+		builder.registerApp(TicTacToeApp.class);
+
+		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
+		builder.registerApp(GeneticMaximumFinderApp.class);
+
+
 		
 		builder.registerProg(GeneticMaximumFinderProg.class);
 		builder.registerProg(NQueensSearchProg.class);
