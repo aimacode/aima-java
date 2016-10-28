@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Ruediger Lunde
  */
-public class BinaryCspViewCtrl {
+public class CspViewCtrl {
     protected Pane pane;
     protected CSP csp;
     protected Assignment assignment;
@@ -35,7 +35,7 @@ public class BinaryCspViewCtrl {
      */
     protected Hashtable<Object, Color> colorMapping = new Hashtable<Object, Color>();
 
-    public BinaryCspViewCtrl(StackPane viewRoot) {
+    public CspViewCtrl(StackPane viewRoot) {
         pane = new Pane();
         viewRoot.getChildren().add(pane);
         viewRoot.setStyle("-fx-background-color: white");
@@ -106,12 +106,12 @@ public class BinaryCspViewCtrl {
             label += " = " + value;
             fillColor = colorMapping.get(value);
         }
-        Circle circle = new Circle(pos.getX(), pos.getY(), 30);
+        Circle circle = new Circle(pos.getX(), pos.getY(), 20);
         circle.setStroke(Color.BLACK);
         circle.setFill(fillColor != null ? fillColor : Color.WHITE);
-        Text t1 = new Text(pos.getX(), pos.getY(), label);
+        Text t1 = new Text(pos.getX() + 25, pos.getY(), label);
         t1.setTextOrigin(VPos.CENTER);
-        Text t2 = new Text(pos.getX(), pos.getY() + 50, csp.getDomain(var).toString());
+        Text t2 = new Text(pos.getX(), pos.getY() + 40, csp.getDomain(var).toString());
         pane.getChildren().addAll(circle, t1, t2);
     }
 

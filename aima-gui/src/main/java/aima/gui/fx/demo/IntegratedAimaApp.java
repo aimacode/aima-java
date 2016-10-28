@@ -1,6 +1,6 @@
 package aima.gui.fx.demo;
 
-import aima.gui.fx.demo.search.MapColoringApp;
+import aima.gui.fx.demo.search.CspMapColoringApp;
 import aima.gui.fx.demo.search.games.EightPuzzleApp;
 import aima.gui.fx.demo.search.games.TicTacToeApp;
 import aima.gui.prog.agent.NondeterministicVacuumEnvironmentProg;
@@ -57,7 +57,7 @@ public class IntegratedAimaApp extends Application {
 		builder.registerApp(VacuumAgentApp.class);
 		builder.registerApp(RouteFindingAgentApp.class);
 
-		builder.registerApp(MapColoringApp.class);
+		builder.registerApp(CspMapColoringApp.class);
 		builder.registerApp(NQueensSearchApp.class);
 
 		builder.registerApp(EightPuzzleApp.class);

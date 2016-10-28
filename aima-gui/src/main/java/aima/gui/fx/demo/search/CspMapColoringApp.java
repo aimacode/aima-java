@@ -5,7 +5,7 @@ import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
-import aima.gui.fx.views.BinaryCspViewCtrl;
+import aima.gui.fx.views.CspViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
  *
  * @author Ruediger Lunde
  */
-public class MapColoringApp extends IntegrableApplication {
+public class CspMapColoringApp extends IntegrableApplication {
 
     public static void main(String[] args) {
         launch(args);
@@ -28,19 +28,19 @@ public class MapColoringApp extends IntegrableApplication {
     public final static String PARAM_MAP = "map";
     public final static String PARAM_STRATEGY = "strategy";
 
-    private BinaryCspViewCtrl stateViewCtrl;
+    private CspViewCtrl stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
 
     private CSP csp;
     private SolutionStrategy strategy;
     private int stepCounter;
 
-    public MapColoringApp() {
+    public CspMapColoringApp() {
     }
 
     @Override
     public String getTitle() {
-        return "Map Coloring App";
+        return "CSP Map Coloring App";
     }
 
     /**
@@ -52,7 +52,7 @@ public class MapColoringApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         StackPane stateView = new StackPane();
-        stateViewCtrl = new BinaryCspViewCtrl(stateView);
+        stateViewCtrl = new CspViewCtrl(stateView);
 
         Parameter[] params = createParameters();
 
@@ -203,7 +203,9 @@ public class MapColoringApp extends IntegrableApplication {
     private void updateStateViewLater(CSP csp, Assignment assignment) {
         stateViewCtrl.update(csp, assignment);
         String txt1 = "Step " + stepCounter + ": ";
-        String txt2 = assignment != null ? assignment.toString() : "Domain reduced";
+        String txt2 = "Domain reduced";
+        if (assignment != null)
+            txt2 = assignment.toString() + (assignment.isSolution(csp) ? " (Solution)" : "");
         simPaneCtrl.setStatus(txt1 + txt2);
     }
 }
