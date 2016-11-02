@@ -8,6 +8,7 @@ import aima.core.search.api.SearchController;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.function.ToDoubleFunction;
+import java.util.stream.Collectors;
 
 /**
  * solves a {@link aima.core.search.api.BidirectionalProblem} with different {@link Strategy}
@@ -33,8 +35,10 @@ public class BidirectionalSearch<A, S> {
   private final ToDoubleFunction<Node<A, S>> backwardHeuristicFunction;
   private NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
   private SearchController<A, S> searchController = new BasicSearchController<>();
+  private StateActionTimeLine timeLine;
 
-  public BidirectionalSearch(String forwardStrategy, String backwardStrategy,
+  public BidirectionalSearch(String forwardStrategy,
+                             String backwardStrategy,
                              ToDoubleFunction<Node<A, S>> forwardHeuristicFunction,
                              ToDoubleFunction<Node<A, S>> backwardHeuristicFunction
   ) {
@@ -42,6 +46,17 @@ public class BidirectionalSearch<A, S> {
     this.backwardStrategy = backwardStrategy;
     this.forwardHeuristicFunction = forwardHeuristicFunction;
     this.backwardHeuristicFunction = backwardHeuristicFunction;
+  }
+
+  public BidirectionalSearch(String strategy,
+                             ToDoubleFunction<Node<A, S>> forwardHeuristicFunction,
+                             ToDoubleFunction<Node<A, S>> backwardHeuristicFunction
+  ) {
+    this(strategy, strategy, forwardHeuristicFunction, backwardHeuristicFunction);
+  }
+
+  public BidirectionalSearch(String strategy) {
+    this(strategy, null, null);
   }
 
   public List<A> findSolution(BidirectionalProblem<A, S> bidirectionalProblem)
@@ -57,9 +72,11 @@ public class BidirectionalSearch<A, S> {
     final S initialState = originalProblem.initialState();
     Node<A, S> startNode = newRootNode(initialState, 0);
     fromStartFrontier.add(startNode);
+    exploredFromStart.add(startNode.state());
     reverseProblems.forEach(problem -> {
       final S state = problem.initialState();
       fromGoalFrontier.add(newRootNode(state, 0));
+      exploredFromGoal.add(state);
     });
 
     // build Searches
@@ -82,6 +99,8 @@ public class BidirectionalSearch<A, S> {
           // the whole work is done here, expand the node, add and remove frontier nodes and check
           // if our parallel searches meet and calculate the resulting path
           while (nextNodeFromFrontier != null) {
+            remember((searchDirection.forwardOrBackward ? "->" : "<-") + " check " +
+                nextNodeFromFrontier.state());
             Node<A, S> nodeToExpand = nextNodeFromFrontier;
             Optional<SimpleEntry<Node<A, S>, Node<A, S>>> _solution =
                 findMeetingNodes(problem, searchDirection, nodeToExpand);
@@ -89,11 +108,13 @@ public class BidirectionalSearch<A, S> {
               return solution(buildResultPath(_solution.get().getKey(), _solution.get().getValue(),
                   problem));
             }
+            remember((searchDirection.forwardOrBackward ? "->" : "<-") + " remove from frontier " +
+                nodeToExpand.state());
             searchDirection.frontier.remove(nodeToExpand);
             nextNodeFromFrontier = searchDirection.frontier.peek();
           }
           return null;
-        }).filter(result -> result != null).findFirst().orElse(failure());
+        }).filter(result -> result != null).findFirst().orElse(null);
 
     // limit concurrency to two threads
     ForkJoinPool forkJoinPool = new ForkJoinPool(2);
@@ -143,20 +164,25 @@ public class BidirectionalSearch<A, S> {
     return searchController.solution(child);
   }
 
-  private Node<A, S> findNodeWithEqualState(Node<A, S> leaf, Queue<Node<A, S>> otherFrontier,
-                                            boolean direction) {
-    return otherFrontier.parallelStream()
+  private Node<A, S> findNodeWithEqualState(Node<A, S> leaf, Queue<Node<A, S>> otherFrontier) {
+    Set<Node> nodes = new HashSet<>();
+    nodes.addAll(otherFrontier);
+    // check parents too, in case the searches overrun each other
+    nodes.addAll(otherFrontier.stream().map(Node::parent).collect(Collectors.toList()));
+    return nodes.stream()
+        .filter(node -> node != null)
         .filter(node -> node.state().equals(leaf.state()))
         .findFirst()
         .orElse(null);
   }
 
   private SimpleEntry<Node<A, S>, Node<A, S>> meetingNodes(Node<A, S> leaf, Queue<Node<A, S>>
-      otherFrontier, boolean forward) {
-    Node<A, S> nodeWithEqualState = findNodeWithEqualState(leaf, otherFrontier, forward);
+      otherFrontier, boolean direction) {
+    Node<A, S> nodeWithEqualState = findNodeWithEqualState(leaf, otherFrontier);
     boolean nodesMeet = nodeWithEqualState != null;
     if (nodesMeet) {
-      if (forward) {
+      remember((direction ? "->" : "<-") + " found meeting in " + leaf.state());
+      if (direction) {
         return new SimpleEntry<>(leaf, nodeWithEqualState);
       } else {
         return new SimpleEntry<>(nodeWithEqualState, leaf);
@@ -192,16 +218,16 @@ public class BidirectionalSearch<A, S> {
     return result;
   }
 
-  private Optional<SimpleEntry<Node<A, S>, Node<A, S>>> findMeetingNodes(Problem<A, S> problem,
-                                                                         SearchDirection searchDirection,
-                                                                         Node<A, S> nodeToExpand) {
+  private Optional<SimpleEntry<Node<A, S>, Node<A, S>>> findMeetingNodes(
+      Problem<A, S> problem, SearchDirection searchDirection, Node<A, S> nodeToExpand
+  ) {
     Queue<Node<A, S>> frontier = searchDirection.frontier;
     List<A> actions = problem.actions(nodeToExpand.state());
     Set<S> exploredStates = searchDirection.exploredStates;
     Queue<Node<A, S>> otherFrontier = searchDirection.otherFrontier;
 
     return actions.parallelStream()
-        .map(action -> meetingNodes(exploredStates, frontier, otherFrontier,
+        .map(action -> addToFrontierCheckMeeting(exploredStates, frontier, otherFrontier,
             newLeafNode(problem, nodeToExpand, action), searchDirection.forwardOrBackward))
         .filter(o -> o != null)
         .findFirst();
@@ -212,12 +238,12 @@ public class BidirectionalSearch<A, S> {
    *
    * @return true when the new node reaches one of the other searchDirections branch
    */
-  private SimpleEntry<Node<A, S>, Node<A, S>> meetingNodes(Set<S> exploredStates,
-                                                           Queue<Node<A, S>> thisFrontier,
-                                                           Queue<Node<A, S>> otherFrontier,
-                                                           Node<A, S> leaf,
-                                                           boolean direction) {
+  private SimpleEntry<Node<A, S>, Node<A, S>> addToFrontierCheckMeeting(
+      Set<S> exploredStates, Queue<Node<A, S>> thisFrontier, Queue<Node<A, S>> otherFrontier,
+      Node<A, S> leaf, boolean direction
+  ) {
     if (!exploredStates.contains(leaf.state())) {
+      remember((direction ? "->" : "<-") + " add to frontier " + leaf.state());
       thisFrontier.add(leaf);
     }
     if (exploredStates.contains(leaf.state())) {
@@ -228,6 +254,12 @@ public class BidirectionalSearch<A, S> {
     return meetingNodes(leaf, otherFrontier, direction);
   }
 
+  private void remember(String message) {
+    if (timeLine != null) {
+      timeLine.add(message);
+    }
+  }
+
   private Node<A, S> newLeafNode(Problem<A, S> problem, Node<A, S>
       node, A action) {
     return nodeFactory.newChildNode(problem, node, action);
@@ -235,6 +267,10 @@ public class BidirectionalSearch<A, S> {
 
   public Queue<Node<A, S>> newFIFOQueue() {
     return new ConcurrentLinkedQueue<>();
+  }
+
+  public void setTimeLine(StateActionTimeLine timeLine) {
+    this.timeLine = timeLine;
   }
 
 
