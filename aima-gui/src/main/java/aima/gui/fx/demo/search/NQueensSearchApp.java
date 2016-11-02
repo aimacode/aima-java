@@ -80,7 +80,8 @@ public class NQueensSearchApp extends IntegrableApplication {
 	}
 
 	protected Parameter[] createParameters() {
-		Parameter p1 = new Parameter(PARAM_STRATEGY, "Depth-First Search", "Breadth-First Search",
+		Parameter p1 = new Parameter(PARAM_STRATEGY,
+				"Depth-First Search (incremental)", "Breadth-First Search (incremental)",
 				"Iterative Deepening Search",
 				"Greedy Best-First Search (attacking pair heuristic)", "A* search (attacking pair heuristic)",
 				"Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
@@ -99,7 +100,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		experiment.setBoardSize(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		Config config;
-		if (Arrays.asList("Depth-First Search", "Breadth-First Search", "Genetic Algorithm")
+		if (Arrays.asList("Depth-First Search (incremental)", "Breadth-First Search (incremental)", "Genetic Algorithm")
                 .contains(strategy))
 			config = Config.EMPTY;
 		else if (simPaneCtrl.getParamValue(PARAM_INIT_CONFIG).equals("Random"))
@@ -118,9 +119,9 @@ public class NQueensSearchApp extends IntegrableApplication {
 	/** Starts the experiment. */
 	public void simulate() {
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
-		if (strategy.equals("Depth-First Search"))
+		if (strategy.equals("Depth-First Search (incremental)"))
 			experiment.startExperiment(new DepthFirstSearch(new TreeSearch()));
-		else if (strategy.equals("Breadth-First Search"))
+		else if (strategy.equals("Breadth-First Search (incremental)"))
 			experiment.startExperiment(new BreadthFirstSearch(new TreeSearch()));
 		else if (strategy.equals("Iterative Deepening Search"))
 			experiment.startExperiment(new IterativeDeepeningSearch());
