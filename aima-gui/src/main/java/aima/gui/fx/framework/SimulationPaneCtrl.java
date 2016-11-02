@@ -211,8 +211,11 @@ public class SimulationPaneCtrl {
 			setState(State.RUNNING);
 			simMethod.run();
 		} catch (Exception e) {
-			setStatus("Sorry, something went wrong during simulation.");
+			setStatus("Sorry, something went wrong during simulation: " + e.getClass().getSimpleName());
 			e.printStackTrace();
+		} catch (Error e) {
+			setStatus("Sorry, something went totally wrong during simulation: " + e.getClass().getSimpleName());
+			throw e;
 		}
 		setState(State.FINISHED);
 	}
