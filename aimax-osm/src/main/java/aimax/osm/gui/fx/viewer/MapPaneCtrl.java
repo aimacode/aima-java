@@ -1,15 +1,24 @@
 package aimax.osm.gui.fx.viewer;
 
 import aimax.osm.data.OsmMap;
+import aimax.osm.data.entities.EntityAttribute;
+import aimax.osm.data.entities.MapEntity;
+import aimax.osm.data.entities.MapNode;
+import aimax.osm.data.entities.WayRef;
 import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.viewer.AbstractEntityRenderer;
 import aimax.osm.viewer.CoordTransformer;
 import aimax.osm.viewer.UnifiedMapDrawer;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by rlunde on 28.10.2016.
@@ -125,6 +134,10 @@ public class MapPaneCtrl {
                 getMap().addMarker(tr.lat((int) event.getY()), tr.lon((int) event.getX()));
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 getMap().clearMarkersAndTracks();
+            } else if (event.getButton() == MouseButton.MIDDLE) {
+                MapNode mNode = getRenderer().getNextNode((int) event.getX(), (int) event.getY());
+                if (mNode != null)
+                    showMapEntityInfoDialog(mNode, true);
             }
         }
     }
@@ -157,4 +170,60 @@ public class MapPaneCtrl {
             else
                 zoom(0.7f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);
     }
+
+
+
+    /**
+     * Finds the visible entity next to the specified view coordinates and shows
+     * informations about it.
+     *
+     * @param debug
+     *            Enables a more detailed view.
+     */
+    private void showMapEntityInfoDialog(MapEntity entity, boolean debug) {
+        List<MapEntity> entities = new ArrayList<MapEntity>();
+        if (entity.getName() != null || entity.getAttributes().length > 0
+                || debug)
+            entities.add(entity);
+        if (entity instanceof MapNode) {
+            MapNode mNode = (MapNode) entity;
+            for (WayRef ref : mNode.getWayRefs()) {
+                MapEntity me = ref.getWay();
+                if (me.getName() != null || me.getAttributes().length > 0
+                        || debug)
+                    entities.add(me);
+            }
+        }
+        boolean done = false;
+        for (int i = 0; i < entities.size() && !done; i++) {
+            MapEntity me = entities.get(i);
+            String header = (me.getName() != null) ? me.getName() : "";
+            String content = "";
+            if (debug)
+                header += " (" + ((me instanceof MapNode) ? "Node " : "Way ")
+                        + me.getId() + ")";
+            if (me instanceof MapNode) {
+                content = "Lat: " + ((MapNode) me).getLat() + " Lon: " +
+                        ((MapNode) me).getLon() + " ";
+            }
+            if (me.getAttributes().length > 0) {
+                EntityAttribute[] atts = me.getAttributes();
+                content += "Attributs: ";
+                for (int j = 0; j < atts.length; j++) {
+                    content += atts[j].getKey() + "=" + atts[j].getValue() + " ";
+                }
+
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Map Entity Info");
+            alert.setHeaderText(header);
+            alert.setContentText(content);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (!result.isPresent())
+                break;
+        }
+    }
+
+
 }

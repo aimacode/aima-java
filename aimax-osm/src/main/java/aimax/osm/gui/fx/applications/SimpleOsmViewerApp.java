@@ -1,13 +1,7 @@
 package aimax.osm.gui.fx.applications;
 
 import aimax.osm.data.DataResource;
-import aimax.osm.data.MapBuilder;
-import aimax.osm.data.OsmMap;
-import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.gui.fx.viewer.FXImageBuilder;
-import aimax.osm.reader.Bz2OsmReader;
-import aimax.osm.reader.MapReader;
-import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.UnifiedMapDrawer;
 import javafx.application.Application;
 import javafx.scene.Group;

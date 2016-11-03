@@ -29,7 +29,7 @@ public class RoutePlannerApp implements ActionListener {
 	public final static String ROUTE_TRACK_NAME = "Route";
 
 	protected MapViewFrame frame;
-	protected JComboBox<String> waySelection;
+	protected JComboBox<String> taskSelection;
 	protected JButton calcButton;
 	protected RouteCalculator routeCalculator;
 
@@ -43,9 +43,9 @@ public class RoutePlannerApp implements ActionListener {
 		routeCalculator = createRouteCalculator();
 		JToolBar toolbar = frame.getToolbar();
 		toolbar.addSeparator();
-		waySelection = new JComboBox<String>(
-				routeCalculator.getWaySelectionOptions());
-		toolbar.add(waySelection);
+		taskSelection = new JComboBox<String>(
+				routeCalculator.getTaskSelectionOptions());
+		toolbar.add(taskSelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");
 		calcButton.addActionListener(this);
@@ -87,7 +87,7 @@ public class RoutePlannerApp implements ActionListener {
 		if (e.getSource() == calcButton) {
 			OsmMap map = frame.getMap();
 			List<Position> positions = routeCalculator.calculateRoute(
-					map.getMarkers(), map, waySelection.getSelectedIndex());
+					map.getMarkers(), map, taskSelection.getSelectedIndex());
 			frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
 		}
 	}

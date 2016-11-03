@@ -25,7 +25,7 @@ import aimax.osm.data.entities.MapNode;
 public class RouteCalculator {
 
 	/** Returns the names of all supported way selection options. */
-	public String[] getWaySelectionOptions() {
+	public String[] getTaskSelectionOptions() {
 		return new String[] { "Distance", "Distance (Car)", "Distance (Bike)" };
 	}
 
@@ -42,23 +42,23 @@ public class RouteCalculator {
 	 *            start, last node as finish, all others as via nodes.
 	 * @param map
 	 *            The information source.
-	 * @param waySelection
+	 * @param taskSelection
 	 *            Number, indicating which kinds of ways are relevant.
 	 */
 	public List<Position> calculateRoute(List<MapNode> markers, OsmMap map,
-			int waySelection) {
+			int taskSelection) {
 		List<Position> result = new ArrayList<Position>();
 		try {
-			MapWayFilter wayFilter = createMapWayFilter(map, waySelection);
-			boolean ignoreOneways = (waySelection == 0);
+			MapWayFilter wayFilter = createMapWayFilter(map, taskSelection);
+			boolean ignoreOneways = (taskSelection == 0);
 			List<MapNode[]> pNodeList = subdivideProblem(markers, map, wayFilter);
 			for (int i = 0; i < pNodeList.size()
 					&& !CancelableThread.currIsCanceled(); i++) {
 				Problem problem = createProblem(pNodeList.get(i), map, wayFilter,
-						ignoreOneways, waySelection);
+						ignoreOneways, taskSelection);
 				HeuristicFunction hf = createHeuristicFunction(pNodeList.get(i),
-						waySelection);
-				Search search = createSearch(hf, waySelection);
+						taskSelection);
+				Search search = createSearch(hf, taskSelection);
 				List<Action> actions = search.search(problem);
 				if (actions.isEmpty())
 					break;
@@ -80,10 +80,10 @@ public class RouteCalculator {
 	}
 
 	/** Factory method, responsible for way filter creation. */
-	protected MapWayFilter createMapWayFilter(OsmMap map, int waySelection) {
-		if (waySelection == 1)
+	protected MapWayFilter createMapWayFilter(OsmMap map, int taskSelection) {
+		if (taskSelection == 1)
 			return MapWayAttFilter.createCarWayFilter();
-		else if (waySelection == 2)
+		else if (taskSelection == 2)
 			return MapWayAttFilter.createBicycleWayFilter();
 		else
 			return MapWayAttFilter.createAnyWayFilter();
@@ -111,19 +111,19 @@ public class RouteCalculator {
 
 	/** Factory method, responsible for problem creation. */
 	protected Problem createProblem(MapNode[] pNodes, OsmMap map,
-			MapWayFilter wayFilter, boolean ignoreOneways, int waySelection) {
+			MapWayFilter wayFilter, boolean ignoreOneways, int taskSelection) {
 		return new RouteFindingProblem(pNodes[0], pNodes[1], wayFilter,
 				ignoreOneways);
 	}
 
 	/** Factory method, responsible for heuristic function creation. */
 	protected HeuristicFunction createHeuristicFunction(MapNode[] pNodes,
-			int waySelection) {
+			int taskSelection) {
 		return new OsmSldHeuristicFunction(pNodes[1]);
 	}
 	
 	/** Factory method, responsible for search creation. */
-	protected Search createSearch(HeuristicFunction hf, int waySelection) {
+	protected Search createSearch(HeuristicFunction hf, int taskSelection) {
 		return new AStarSearch(new GraphSearch(), hf);
 	}
 }

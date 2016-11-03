@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * Shows a map of the city of Ulm with pan and zoom functionality (mouse drag, mouse wheel, arrow keys,
  * plus and minus keys). Set markers with Mouse-Left and remove them with Mouse-Right. Symbols can be changed in size
- * by zooming with Ctrl-Button pressed.
+ * by zooming with Ctrl-Button pressed. Information about special map entities can be obtained by Mouse-Middle.
  *
  * @author Ruediger Lunde
  */

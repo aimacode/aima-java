@@ -98,7 +98,7 @@ public class MiniNaviApp implements ActionListener {
 		toolbar.add(gpsCombo);
 
 		waySelection = new JComboBox<String>(
-				routeCalculator.getWaySelectionOptions());
+				routeCalculator.getTaskSelectionOptions());
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
 		calcButton = new JButton("Calculate Route");

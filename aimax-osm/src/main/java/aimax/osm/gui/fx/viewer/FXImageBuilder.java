@@ -136,7 +136,7 @@ public class FXImageBuilder implements UnifiedImageBuilder<Canvas> {
 	}
 
 	private void initStroke() {
-		gc.setLineWidth(1);
+		//gc.setLineWidth(1);
 		gc.setLineDashes(null);
 		gc.setLineJoin(StrokeLineJoin.ROUND);
 	}
