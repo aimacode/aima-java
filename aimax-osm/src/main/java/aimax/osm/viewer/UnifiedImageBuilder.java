@@ -7,7 +7,10 @@ package aimax.osm.viewer;
  * @author Daniel Wonnenberg
  *
  */
-public interface UnifiedImageBuilder {
+public interface UnifiedImageBuilder<IMG_TYPE> {
+
+	/** Should be called first! */
+	public void initialize(IMG_TYPE image);
 
 	/** Returns the width of the image under construction. */
 	public int getWidth();
@@ -54,7 +57,7 @@ public interface UnifiedImageBuilder {
 	 * Finishes a drawing process
 	 * @return The fully drawn Image.
 	 */
-	public abstract Object getResult();
+	public abstract IMG_TYPE getResult();
 
 	/**
 	 * Sets the color for the following drawing action.

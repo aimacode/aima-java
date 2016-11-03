@@ -24,8 +24,8 @@ import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.UColor;
-import aimax.osm.viewer.swing.MapViewPane;
-import aimax.osm.viewer.swing.MapViewPopup;
+import aimax.osm.gui.swing.viewer.MapViewPane;
+import aimax.osm.gui.swing.viewer.MapViewPopup;
 
 /**
  * Visualizes agent positions and movements in an OSM map. It is assumed that

@@ -12,7 +12,7 @@ The framework provides interfaces for central parts of the system and additional
 example implementations. In the current version, the fundamental data structures
 for nodes, ways, and the map itself can be replaced. The framework supports experiments
 with different implementations to optimize routing and also to integrate a database
-version of the map representation. The application <code>aimax.osm.applications.MiniNaviApp</code>
+version of the map representation. The application <code>aimax.osm.gui.swing.applications.MiniNaviApp</code>
 demonstrates how to plug the components together and provides means to integrate and test
 own versions of the needed components.
 
@@ -42,7 +42,7 @@ cities like Berlin can be loaded and displayed without any problem if enough
 heap space is provided (VM argument -Xmx500M).
 
 Getting started: Run one of the applications in the
-<code>aimax.osm.applications</code> package. If no map is displayed
+<code>aimax.osm.gui.swing.applications</code> package. If no map is displayed
 by default, make sure that the main/resource folder is included 
 in the build path of your project, recompile and start again.
 Then, place the mouse inside the map viewer pane. Try mouse-left, mouse-right,
@@ -128,17 +128,17 @@ Under the release/ directory you should find three jar files, aima-core.jar, aim
 Ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * java -jar aimax-osm.jar
    + this will run the default OsmAimaDemoApp, this allows you to run applications and demos from the aima-gui project as well as some of the applications provided in this project.
- * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerApp
    + just the plain viewer (not dependent on AIMA)
- * java -classpath aimax-osm.jar aimax.osm.applications.OsmViewerPlusApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerPlusApp
    + demonstrates, how to configure and extend the viewer
- * java -classpath aimax-osm.jar aimax.osm.applications.RoutePlannerApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.RoutePlannerApp
    + uses aima-core search functionality for routing in OSM maps
- * java -classpath aimax-osm.jar aimax.osm.applications.OsmAgentApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmAgentApp
    + lets map agents from aima-core act in map environments which are defined by OSM data 
- * java -classpath aimax-osm.jar aimax.osm.applications.SearchDemoOsmAgentApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp
    + visualizes simulated search space exploration of different search strategies
- * java -classpath aimax-osm.jar aimax.osm.applications.MiniNaviApp
+ * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.MiniNaviApp
    + provides a base for car navigation system development
 
 It is recommended to start the applications with VM argument -Xmx500m (or higher value) and

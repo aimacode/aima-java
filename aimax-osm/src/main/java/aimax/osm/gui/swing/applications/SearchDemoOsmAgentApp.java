@@ -1,4 +1,4 @@
-package aimax.osm.applications;
+package aimax.osm.gui.swing.applications;
 
 import java.util.HashSet;
 import java.util.List;
