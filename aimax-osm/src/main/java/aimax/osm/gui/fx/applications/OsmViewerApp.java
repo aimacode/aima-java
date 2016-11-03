@@ -3,19 +3,19 @@ package aimax.osm.gui.fx.applications;
 import aimax.osm.data.DataResource;
 import aimax.osm.gui.fx.viewer.MapPaneCtrl;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.Locale;
 
-import static javafx.scene.paint.Color.*;
-
 /**
- * Created by rlunde on 03.11.2016.
+ * Shows a map of the city of Ulm with pan and zoom functionality (mouse drag, mouse wheel, arrow keys,
+ * plus and minus keys). Set markers with Mouse-Left and remove them with Mouse-Right. Symbols can be changed in size
+ * by zooming with Ctrl-Button pressed.
+ *
+ * @author Ruediger Lunde
  */
 public class OsmViewerApp extends Application {
     public static void main(String[] args) {
@@ -36,7 +36,6 @@ public class OsmViewerApp extends Application {
 
         BorderPane root = new BorderPane();
         root.setCenter(mapPane);
-        root.setBottom(new Button("XYZ"));
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setTitle("Osm Viewer App");

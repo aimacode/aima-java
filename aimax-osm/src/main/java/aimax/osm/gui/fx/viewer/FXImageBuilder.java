@@ -92,7 +92,7 @@ public class FXImageBuilder implements UnifiedImageBuilder<Canvas> {
 
 	@Override
 	public void drawString(String text, int x, int y) {
-		gc.strokeText(text, x, y);
+		gc.fillText(text, x, y);
 
 	}
 
@@ -107,7 +107,6 @@ public class FXImageBuilder implements UnifiedImageBuilder<Canvas> {
 				color.getBlue(), color.getAlpha() / 255.0));
 		gc.setFill(Color.rgb(color.getRed(), color.getGreen(),
 				color.getBlue(), color.getAlpha() / 255.0));
-
 	}
 
 	@Override
@@ -117,7 +116,7 @@ public class FXImageBuilder implements UnifiedImageBuilder<Canvas> {
 			dash = new float[] { width * 2f };
 		}
 		gc.setLineWidth(width);
-		gc.setLineDashes(new double[] {5, 5});
+		gc.setLineDashes(new double[] {10, 10});
 		gc.setLineJoin(StrokeLineJoin.ROUND);
 	}
 
