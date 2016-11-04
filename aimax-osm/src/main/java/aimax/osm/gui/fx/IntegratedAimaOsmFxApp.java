@@ -2,6 +2,7 @@ package aimax.osm.gui.fx;
 
 import aima.gui.fx.demo.IntegratedAimaFxApp;
 import aima.gui.fx.framework.IntegratedAppPaneBuilder;
+import aimax.osm.gui.fx.applications.OsmRouteFindingAgentApp;
 import aimax.osm.gui.fx.applications.OsmRoutePlannerApp;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
  * 
  * @author Ruediger Lunde
  */
-public class IntegratedOsmAimaFxApp extends Application {
+public class IntegratedAimaOsmFxApp extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -23,7 +24,7 @@ public class IntegratedOsmAimaFxApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		IntegratedAppPaneBuilder builder = new IntegratedAppPaneBuilder();
-		builder.defineTitle("Integrated OSM AIMA FX App");
+		builder.defineTitle("Integrated AIMA OSM FX App");
 		defineContent(builder);
 		BorderPane root = new BorderPane();
 		builder.getResultFor(root, primaryStage);
@@ -35,6 +36,7 @@ public class IntegratedOsmAimaFxApp extends Application {
 		IntegratedAimaFxApp.defineContent(builder);
 
 		builder.registerApp(OsmRoutePlannerApp.class);
+		builder.registerApp(OsmRouteFindingAgentApp.class);
 	}
 
 }

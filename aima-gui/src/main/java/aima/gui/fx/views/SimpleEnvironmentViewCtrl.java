@@ -7,7 +7,10 @@ import aima.core.agent.EnvironmentView;
 import javafx.application.Platform;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.Observable;
 
 /**
  * Controller class for a simple environment view. It logs informations about
@@ -18,7 +21,7 @@ import javafx.scene.layout.StackPane;
  * @author Ruediger Lunde
  *
  */
-public class SimpleEnvironmentViewCtrl implements EnvironmentView {
+public class SimpleEnvironmentViewCtrl extends Observable implements EnvironmentView {
 
 	protected SplitPane splitPane;
 	protected TextArea textArea;
@@ -36,6 +39,12 @@ public class SimpleEnvironmentViewCtrl implements EnvironmentView {
 		viewRoot.getChildren().add(splitPane);
 	}
 
+	public SimpleEnvironmentViewCtrl(StackPane viewRoot, Pane envStateView, double dividerPos) {
+		this(viewRoot);
+		splitPane.getItems().add(0, envStateView);
+		splitPane.setDividerPosition(0, dividerPos);
+	}
+
 	public void initialize(Environment env) {
 		if (!textArea.getText().isEmpty())
 			textArea.appendText("\n");
@@ -43,11 +52,14 @@ public class SimpleEnvironmentViewCtrl implements EnvironmentView {
 	}
 	
 	/**
-	 * Should not be called from an FX application thread.
+	 * Can be called from every thread.
 	 */
 	@Override
 	public void notify(String msg) {
-		Platform.runLater(() -> textArea.appendText("\n" + msg));
+		if (Platform.isFxApplicationThread())
+			textArea.appendText("\n" + msg);
+		else
+			Platform.runLater(() -> textArea.appendText("\n" + msg));
 	}
 
 	/**
@@ -74,9 +86,9 @@ public class SimpleEnvironmentViewCtrl implements EnvironmentView {
 	}
 
 	/**
-	 * Is called after agent actions. This implementation does nothing.
+	 * Is called after agent actions. This implementation just notifies all observers.
 	 */
 	protected void updateEnvStateView(Environment env) {
-
+		this.notifyObservers();
 	}
 }

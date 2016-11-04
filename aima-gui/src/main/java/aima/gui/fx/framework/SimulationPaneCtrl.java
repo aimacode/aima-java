@@ -2,6 +2,7 @@ package aima.gui.fx.framework;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import aima.core.util.CancelableThread;
 import javafx.application.Platform;
@@ -92,6 +93,12 @@ public class SimulationPaneCtrl {
 	public boolean isParamVisible(String paramName) {
 		int paramIdx = Parameter.indexOf(params, paramName);
 		return paramCombos.get(paramIdx).isVisible();
+	}
+
+	/** Call this only for parameters which do not depend on other parameters! */
+	public void setParamDisable(String paramName, boolean value) {
+		int paramIdx = Parameter.indexOf(params, paramName);
+		paramCombos.get(paramIdx).setDisable(value);
 	}
 
 	public void setParam(String paramName, int valueIdx) {

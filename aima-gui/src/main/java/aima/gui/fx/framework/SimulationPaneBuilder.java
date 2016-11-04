@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -28,6 +29,7 @@ public class SimulationPaneBuilder {
 
 	protected List<Parameter> parameters = new ArrayList<Parameter>();
 	protected Optional<Node> stateView = Optional.empty();
+	/** Should return true if initialization was successful. */
 	protected Optional<Runnable> initMethod = Optional.empty();
 	protected Optional<Runnable> simMethod = Optional.empty();
 
