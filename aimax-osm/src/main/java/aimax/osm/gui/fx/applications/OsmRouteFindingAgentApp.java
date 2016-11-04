@@ -136,7 +136,6 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 				break;
 		}
 
-
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
 			heuristic = new H1();
@@ -188,6 +187,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 	/** Starts the experiment. */
 	public void simulate() {
 		if (initAgents()) {
+            env.notifyViews("Using " + simPaneCtrl.getParamValue(PARAM_SEARCH));
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
@@ -203,7 +203,15 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 	}
 
 
-
+    private void updateTrack(Agent agent) {
+        MapAdapter map = (MapAdapter) env.getMap();
+        MapNode node = map.getWayNode(env.getAgentLocation(agent));
+        if (node != null) {
+            int aIdx = env.getAgents().indexOf(agent);
+            map.getOsmMap().addToTrack("Track" + aIdx,
+                    new Position(node.getLat(), node.getLon()));
+        }
+    }
 
 	// helper classes...
 
@@ -248,17 +256,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
         @Override
         public void agentActed(Agent agent, Action command, Environment source) {
             if (command instanceof MoveToAction) {
-                Platform.runLater(() -> updateTrack(agent, env.getAgentLocation(agent)));
-            }
-        }
-
-        private void updateTrack(Agent agent, String location) {
-            MapAdapter map = (MapAdapter) env.getMap();
-            MapNode node = map.getWayNode(location);
-            if (node != null) {
-                int aIdx = env.getAgents().indexOf(agent);
-                map.getOsmMap().addToTrack("Track" + aIdx,
-                        new Position(node.getLat(), node.getLon()));
+                Platform.runLater(() -> updateTrack(agent));
             }
         }
     }
