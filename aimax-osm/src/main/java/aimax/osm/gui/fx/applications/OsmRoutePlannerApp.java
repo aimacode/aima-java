@@ -40,7 +40,7 @@ public class OsmRoutePlannerApp extends IntegrableApplication {
 
     @Override
     public String getTitle() {
-        return "OSM Route Planner";
+        return "OSM Route Planner App";
     }
 
     /**

@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-gui.project}/build.xml"/>
 	
-	<property name="aimax-osm.run" value="aimax.osm.gui.swing.applications.OsmAimaDemoApp" />
+	<property name="aimax-osm.run" value="aimax.osm.gui.swing.IntegratedAimaOsmApp" />
 	
 	<path id="aimax-osm.classpath">
 		<path refid="aima-gui.classpath" />

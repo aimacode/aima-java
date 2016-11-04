@@ -1,6 +1,7 @@
 package aima.gui.swing.demo.agent.map;
 
 import aima.gui.swing.framework.AgentAppFrame;
+import aima.gui.util.SearchFactory;
 
 /**
  * Universal frame for experiments with route planning agents. It configures the

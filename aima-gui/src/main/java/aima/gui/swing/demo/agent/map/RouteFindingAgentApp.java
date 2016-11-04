@@ -15,6 +15,7 @@ import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimpleAgentApp;
+import aima.gui.util.SearchFactory;
 
 /**
  * Demo example of a route finding agent application with GUI. The main method

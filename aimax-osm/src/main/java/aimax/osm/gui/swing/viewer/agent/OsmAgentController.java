@@ -1,4 +1,4 @@
-package aimax.osm.routing.agent;
+package aimax.osm.gui.swing.viewer.agent;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -16,12 +16,13 @@ import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.swing.demo.agent.map.MapAgentFrame;
-import aima.gui.swing.demo.agent.map.SearchFactory;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimulationThread;
+import aima.gui.util.SearchFactory;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.routing.MapAdapter;
 
 /**
  * Controller for graphical OSM map agent applications.

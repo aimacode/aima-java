@@ -14,10 +14,10 @@ import aimax.osm.data.MapBuilder;
 import aimax.osm.data.impl.DefaultMapBuilder;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
-import aimax.osm.routing.agent.OsmAgentController;
-import aimax.osm.routing.agent.OsmAgentFrame;
-import aimax.osm.routing.agent.OsmAgentView;
-import aimax.osm.routing.agent.MapAdapter;
+import aimax.osm.gui.swing.viewer.agent.OsmAgentController;
+import aimax.osm.gui.swing.viewer.agent.OsmAgentFrame;
+import aimax.osm.gui.swing.viewer.agent.OsmAgentView;
+import aimax.osm.routing.MapAdapter;
 
 /**
  * Demonstrates, how the OSM map viewer can be integrated into a graphical

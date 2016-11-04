@@ -28,7 +28,7 @@ import aima.gui.swing.demo.robotics.MonteCarloLocalizationApp;
  * 
  * @author Ruediger Lunde
  */
-public class AimaDemoApp {
+public class IntegratedAimaApp {
 
 	/** Registers agent applications and console program demos. */
 	public static void registerDemos(AimaDemoFrame frame) {

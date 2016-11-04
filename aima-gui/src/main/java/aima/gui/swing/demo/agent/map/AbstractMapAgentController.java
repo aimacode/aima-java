@@ -10,6 +10,7 @@ import aima.core.environment.map.Scenario;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimulationThread;
+import aima.gui.util.SearchFactory;
 
 /**
  * Provides a useful base class for agent application controller implementations

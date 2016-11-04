@@ -1,4 +1,4 @@
-package aima.gui.fx.demo.agent;
+package aima.gui.util;
 
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.SearchForActions;

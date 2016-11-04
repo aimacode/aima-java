@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 	
-	<property name="aima-gui.run" value="aima.gui.swing.demo.AimaDemoApp" />
+	<property name="aima-gui.run" value="aima.gui.swing.demo.IntegratedAimaApp" />
 	
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />

@@ -1,16 +1,7 @@
-package aima.gui.fx.demo.agent;
-
-import java.util.ArrayList;
-import java.util.List;
+package aimax.osm.gui.fx.applications;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.AdaptableHeuristicFunction;
-import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.Scenario;
-import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.*;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -22,6 +13,9 @@ import aima.gui.util.SearchFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Integrable application which demonstrates how different kinds of search
@@ -64,9 +58,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	}
 
 	@Override
-	public String getTitle() {
-		return "Route Finding Agent App";
-	}
+	public String getTitle() { return "Route Finding Agent App"; }
 
 	/**
 	 * Defines state view, parameters, and call-back functions and calls the

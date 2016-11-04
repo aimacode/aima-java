@@ -1,9 +1,12 @@
-package aimax.osm.gui.swing.applications;
+package aimax.osm.gui.swing;
 
 import java.util.Locale;
 
-import aima.gui.swing.demo.AimaDemoApp;
+import aima.gui.swing.demo.IntegratedAimaApp;
 import aima.gui.swing.demo.AimaDemoFrame;
+import aimax.osm.gui.swing.applications.OsmAgentApp;
+import aimax.osm.gui.swing.applications.RoutePlannerApp;
+import aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp;
 
 /**
  * The all-in-one demo application including all apps and
@@ -12,7 +15,7 @@ import aima.gui.swing.demo.AimaDemoFrame;
  * 
  * @author Ruediger Lunde
  */
-public class OsmAimaDemoApp {
+public class IntegratedAimaOsmApp {
 
 	/** Registers agent applications and console program demos. */
 	public static void registerDemos(AimaDemoFrame frame) {
@@ -26,7 +29,7 @@ public class OsmAimaDemoApp {
 		Locale.setDefault(Locale.US);
 		AimaDemoFrame frame = new AimaDemoFrame();
 		frame.setTitle("AIMA3e Java Demos with OSM");
-		AimaDemoApp.registerDemos(frame);
+		IntegratedAimaApp.registerDemos(frame);
 		registerDemos(frame);
 		frame.setSize(1000, 700);
 		frame.setVisible(true);

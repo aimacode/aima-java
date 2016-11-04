@@ -1,4 +1,4 @@
-package aimax.osm.routing.agent;
+package aimax.osm.routing;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +15,7 @@ import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.WayRef;
 import aimax.osm.routing.OsmActionsFunction.OneWayMode;
+import aimax.osm.routing.PointLatLon;
 
 /**
  * Adapter class which provides an aima-core <code>Map</code> interface for
