@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,11 @@ public class MapPaneCtrl {
 
     public void loadMap(InputStream stream) {
         mapDrawer.loadMap(stream);
+        scaleToFit = true;
+    }
+
+    public void loadMap(File file) {
+        mapDrawer.loadMap(file);
         scaleToFit = true;
     }
 

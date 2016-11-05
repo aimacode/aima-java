@@ -8,6 +8,7 @@ import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -45,6 +46,14 @@ public class UnifiedMapDrawer<IMAGE_TYPE> {
         builder.setEntityClassifier(new MapStyleFactory().createDefaultClassifier());
         MapReader mapReader = new Bz2OsmReader();
         mapReader.readMap(stream, builder);
+        builder.buildMap();
+    }
+
+    public void loadMap(File file) {
+        MapBuilder builder = map.getBuilder();
+        builder.setEntityClassifier(new MapStyleFactory().createDefaultClassifier());
+        MapReader mapReader = new Bz2OsmReader();
+        mapReader.readMap(file, builder);
         builder.buildMap();
     }
 
