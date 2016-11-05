@@ -36,12 +36,12 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		launch(args);
 	}
 
-	public static String PARAM_SCENARIO = "Scenario";
-	public static String PARAM_DESTINATION_R = "DestinationR";
-	public static String PARAM_DESTINATION_A = "DestinationA";
-	public static String PARAM_SEARCH = "Search";
-	public static String PARAM_Q_SEARCH_IMPL = "QSearch";
-	public static String PARAM_HEURISTIC = "Heuristic";
+	public static String PARAM_SCENARIO = "scenario";
+	public static String PARAM_DESTINATION_R = "destinationR";
+	public static String PARAM_DESTINATION_A = "destinationA";
+	public static String PARAM_SEARCH = "search";
+	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
+	public static String PARAM_HEURISTIC = "heuristic";
 
 	private SimulationPaneCtrl simPaneCtrl;
 	private MapEnvironmentViewCtrl envViewCtrl;

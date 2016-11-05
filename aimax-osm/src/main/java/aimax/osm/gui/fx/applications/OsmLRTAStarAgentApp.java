@@ -47,9 +47,9 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		launch(args);
 	}
 
-	public static String PARAM_WAY_SELECTION = "WaySelection";
-	public static String PARAM_Q_SEARCH_IMPL = "QSearch";
-	public static String PARAM_HEURISTIC = "Heuristic";
+	public static String PARAM_WAY_SELECTION = "waySelection";
+	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
+	public static String PARAM_HEURISTIC = "heuristic";
     public static String TRACK_NAME = "Track";
 
 	private MapPaneCtrl mapPaneCtrl;

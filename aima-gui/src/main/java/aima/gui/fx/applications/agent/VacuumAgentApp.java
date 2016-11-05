@@ -38,8 +38,8 @@ public class VacuumAgentApp extends IntegrableApplication {
 		launch(args);
 	}
 
-	public final static String PARAM_ENV = "Environment";
-	public final static String PARAM_AGENT = "Agent";
+	public final static String PARAM_ENV = "environment";
+	public final static String PARAM_AGENT = "agent";
 
 	private SimulationPaneCtrl simPaneCtrl;
 	private SimpleEnvironmentViewCtrl envViewCtrl;

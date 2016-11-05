@@ -60,10 +60,10 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 		launch(args);
 	}
 
-	public static String PARAM_WAY_SELECTION = "WaySelection";
-	public static String PARAM_SEARCH = "Search";
-	public static String PARAM_Q_SEARCH_IMPL = "QSearch";
-	public static String PARAM_HEURISTIC = "Heuristic";
+	public static String PARAM_WAY_SELECTION = "waySelection";
+	public static String PARAM_SEARCH = "search";
+	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
+	public static String PARAM_HEURISTIC = "heuristic";
     public static String TRACK_NAME = "Track";
 
 	private MapPaneCtrl mapPaneCtrl;
