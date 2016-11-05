@@ -2,8 +2,8 @@ package aimax.osm.gui.swing;
 
 import java.util.Locale;
 
-import aima.gui.swing.demo.IntegratedAimaApp;
-import aima.gui.swing.demo.AimaDemoFrame;
+import aima.gui.swing.applications.IntegratedAimaApp;
+import aima.gui.swing.applications.AimaDemoFrame;
 import aimax.osm.gui.swing.applications.OsmAgentApp;
 import aimax.osm.gui.swing.applications.RoutePlannerApp;
 import aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp;

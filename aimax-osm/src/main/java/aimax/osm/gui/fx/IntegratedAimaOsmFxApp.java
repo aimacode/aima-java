@@ -1,6 +1,6 @@
 package aimax.osm.gui.fx;
 
-import aima.gui.fx.demo.IntegratedAimaFxApp;
+import aima.gui.fx.applications.IntegratedAimaFxApp;
 import aima.gui.fx.framework.IntegratedAppPaneBuilder;
 import aimax.osm.gui.fx.applications.OsmLRTAStarAgentApp;
 import aimax.osm.gui.fx.applications.OsmRouteFindingAgentApp;
@@ -11,8 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * Integrated application which provides access to all JavaFX demos which are
- * currently available in the AIMA-GUI project.
+ * Integrated application which provides access to all JavaFX applications (...App) and command line demos (...Demo)
+ * which are currently available in the AIMA-GUI and AIMA-OSM project.
  * 
  * @author Ruediger Lunde
  */

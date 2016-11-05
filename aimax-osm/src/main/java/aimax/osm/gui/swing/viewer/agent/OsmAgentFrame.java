@@ -1,6 +1,6 @@
 package aimax.osm.gui.swing.viewer.agent;
 
-import aima.gui.swing.demo.agent.map.MapAgentFrame;
+import aima.gui.swing.applications.agent.map.MapAgentFrame;
 import aima.gui.util.SearchFactory;
 
 /**
