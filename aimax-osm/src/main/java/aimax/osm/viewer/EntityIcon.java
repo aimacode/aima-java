@@ -15,7 +15,7 @@ public abstract class EntityIcon {
 		return size;
 	}
 
-	public abstract void draw(UnifiedImageBuilder imageBdr, int x, int y,
+	public abstract void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 			float displayFactor);
 
 	// ///////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ public abstract class EntityIcon {
 			symColor = sym;
 		}
 
-		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
+		public void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);
@@ -119,7 +119,7 @@ public abstract class EntityIcon {
 			this.fillColor = fill;
 		}
 
-		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
+		public void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			imageBdr.setColor(lineColor);
@@ -149,7 +149,7 @@ public abstract class EntityIcon {
 			this.fillColor = fill;
 		}
 
-		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
+		public void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);
@@ -183,7 +183,7 @@ public abstract class EntityIcon {
 			this.fillColor = fill;
 		}
 
-		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
+		public void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);
@@ -222,7 +222,7 @@ public abstract class EntityIcon {
 			fillColor = fill;
 		}
 
-		public void draw(UnifiedImageBuilder imageBdr, int x, int y,
+		public void draw(UnifiedImageBuilder<?> imageBdr, int x, int y,
 				float displayFactor) {
 			int dsize = Math.round(size * displayFactor);
 			int offset = Math.round(size * displayFactor / 2f);

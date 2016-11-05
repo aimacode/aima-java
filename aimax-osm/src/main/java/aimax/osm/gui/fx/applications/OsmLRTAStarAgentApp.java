@@ -1,13 +1,18 @@
 package aimax.osm.gui.fx.applications;
 
+import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.List;
+
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.*;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchForActions;
+import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.BidirectionalMapProblem;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -17,30 +22,16 @@ import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
-import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
-import aima.gui.util.SearchFactory;
 import aimax.osm.data.DataResource;
-import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.Position;
-import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
-import aimax.osm.data.entities.MapWay;
 import aimax.osm.gui.fx.viewer.MapPaneCtrl;
-import aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp;
 import aimax.osm.routing.MapAdapter;
-import aimax.osm.viewer.DefaultEntityRenderer;
-import aimax.osm.viewer.DefaultEntityViewInfo;
-import aimax.osm.viewer.MapStyleFactory;
-import aimax.osm.viewer.UColor;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
-import java.text.DecimalFormat;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Integrable application which demonstrates how different kinds of search

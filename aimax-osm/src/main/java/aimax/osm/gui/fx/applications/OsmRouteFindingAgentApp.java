@@ -1,10 +1,18 @@
 package aimax.osm.gui.fx.applications;
 
+import java.util.HashSet;
+import java.util.List;
+
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.*;
+import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.BidirectionalMapProblem;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchForActions;
@@ -37,10 +45,6 @@ import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Integrable application which demonstrates how different kinds of search

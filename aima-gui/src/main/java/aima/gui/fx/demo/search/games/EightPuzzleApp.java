@@ -1,44 +1,35 @@
 package aima.gui.fx.demo.search.games;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
-import aima.core.environment.nqueens.AttackingPairsHeuristic;
-import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
-import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
-import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.CancelableThread;
-import aima.gui.fx.demo.search.NQueensSearchProg;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
 import aima.gui.fx.views.EightPuzzleViewCtrl;
-import aima.gui.fx.views.NQueensViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -125,7 +116,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 	protected Parameter[] createParameters() {
 		Parameter p1 = new Parameter(PARAM_INIT_CONF, "Three Moves", "Medium", "Extreme", "Random");
-		Parameter p2 = new Parameter(PARAM_STRATEGY, (String[]) SEARCH_NAMES.toArray(new String[] {}));
+		Parameter p2 = new Parameter(PARAM_STRATEGY, (Object[]) SEARCH_NAMES.toArray(new String[] {}));
 		return new Parameter[] {p1, p2};
 	}
 

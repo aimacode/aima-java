@@ -82,6 +82,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	}
 	
 	/** Displays the selected function on the state view. */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize() {
 		funcPlotterCtrl.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
@@ -93,6 +94,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	}
 
 	/** Starts the experiment. */
+	@SuppressWarnings("unchecked")
 	public void simulate() {
 		experiment = new GeneticMaximumFinderProg();
 		experiment.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));

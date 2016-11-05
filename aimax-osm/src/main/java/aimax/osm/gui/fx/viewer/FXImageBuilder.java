@@ -111,12 +111,8 @@ public class FXImageBuilder implements UnifiedImageBuilder<Canvas> {
 
 	@Override
 	public void setLineStyle(boolean dashed, float width) {
-		float dash[] = null;
-		if (dashed) {
-			dash = new float[] { width * 2f };
-		}
 		gc.setLineWidth(width);
-		gc.setLineDashes(new double[] {10, 10});
+		gc.setLineDashes(new double[] {width * 2, width * 2});
 		gc.setLineJoin(StrokeLineJoin.ROUND);
 	}
 

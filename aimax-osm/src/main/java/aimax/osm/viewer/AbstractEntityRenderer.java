@@ -17,7 +17,7 @@ import aimax.osm.data.entities.Track;
  * 
  */
 public abstract class AbstractEntityRenderer implements EntityVisitor {
-	protected UnifiedImageBuilder imageBdr;
+	protected UnifiedImageBuilder<?> imageBdr;
 	/** Is responsible for world to view coordinate transformations. */
 	protected CoordTransformer transformer;
 	protected WayNodeProvider wnProvider;
@@ -58,7 +58,7 @@ public abstract class AbstractEntityRenderer implements EntityVisitor {
 	}
 
 	/** Resets the renderer. */
-	public void initForRendering(UnifiedImageBuilder imageBdr, CoordTransformer transformer,
+	public void initForRendering(UnifiedImageBuilder<?> imageBdr, CoordTransformer transformer,
 			WayNodeProvider wnProvider) {
 		this.imageBdr = imageBdr;
 		this.transformer = transformer;

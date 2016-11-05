@@ -2,7 +2,6 @@ package aima.gui.fx.framework;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
 import aima.core.util.CancelableThread;
 import javafx.application.Platform;

@@ -54,7 +54,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 	/** Clears all buffers and prepares rendering. */
 	@Override
-	public void initForRendering(UnifiedImageBuilder imageBdr,
+	public void initForRendering(UnifiedImageBuilder<?> imageBdr,
 			CoordTransformer transformer, WayNodeProvider wnProvider) {
 		super.initForRendering(imageBdr, transformer, wnProvider);
 		wayNodeHash.clear();
@@ -261,7 +261,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	}
 
 	/** Prints a line or fills an area. */
-	protected void printLine(UnifiedImageBuilder imageBdr, List<MapNode> nodes,
+	protected void printLine(UnifiedImageBuilder<?> imageBdr, List<MapNode> nodes,
 			DefaultEntityViewInfo pInfo, boolean asArea, boolean asOneway,
 			NameInfo textInfo) {
 		// count++;
@@ -407,7 +407,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	}
 
 	/** Prints a point of interest. */
-	protected void printPoint(UnifiedImageBuilder imageBdr, MapNode node,
+	protected void printPoint(UnifiedImageBuilder<?> imageBdr, MapNode node,
 			DefaultEntityViewInfo pInfo, UColor nameColor) {
 		int x = transformer.x(node.getLon());
 		int y = transformer.y(node.getLat());
