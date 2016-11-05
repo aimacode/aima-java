@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 
 /**
  * Builder for integrated applications. To create an integrated application,
- * just create a builder, define a title, register apps (integrable
- * applications) and progs (console applications) and place the result into a
+ * just create a builder, define a title, register apps (integrable JavaFX
+ * applications) and demos (command line applications) and place the result into a
  * scene of a stage.
  * 
  * @author Ruediger Lunde
@@ -27,7 +27,7 @@ public class IntegratedAppPaneBuilder {
 
 	private MenuBar menuBar = new MenuBar();
 	private Menu appsMenu = new Menu("Apps");
-	private Menu progsMenu = new Menu("Progs");
+	private Menu demosMenu = new Menu("Demos");
 	private String title = "";
 
 	private IntegratedAppPaneCtrl paneCtrl;
@@ -46,7 +46,7 @@ public class IntegratedAppPaneBuilder {
 
 		Menu fileMenu = new Menu("File");
 		fileMenu.getItems().addAll(incScaleItem, decScaleItem, exitItem);
-		menuBar.getMenus().addAll(fileMenu, appsMenu, progsMenu);
+		menuBar.getMenus().addAll(fileMenu, appsMenu, demosMenu);
 		menuBar.styleProperty().bind(Bindings.concat("-fx-font-size: ",
 				paneCtrl.scaleProperty().multiply(Font.getDefault().getSize()).asString()));
 	}
@@ -66,7 +66,7 @@ public class IntegratedAppPaneBuilder {
 		final IntegratedAppPaneCtrl ctrl = paneCtrl;
 		MenuItem item = new MenuItem(progClass.getSimpleName());
 		item.setOnAction(ev -> ctrl.startProg(progClass));
-		addToMenu(progsMenu, progClass.getPackage().getName(), item);
+		addToMenu(demosMenu, progClass.getPackage().getName(), item);
 	}
 
 	/**
