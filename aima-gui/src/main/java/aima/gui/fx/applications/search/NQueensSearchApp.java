@@ -43,10 +43,10 @@ public class NQueensSearchApp extends IntegrableApplication {
 
 	private NQueensViewCtrl stateViewCtrl;
 	private SimulationPaneCtrl simPaneCtrl;
-	private NQueensSearchProg experiment;
+	private NQueensSearchDemo experiment;
 
 	public NQueensSearchApp() {
-		experiment = new NQueensSearchProg();
+		experiment = new NQueensSearchDemo();
 		experiment.addProgressTracer(this::updateStateView);
 	}
 

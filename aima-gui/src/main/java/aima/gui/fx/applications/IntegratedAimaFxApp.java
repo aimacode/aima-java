@@ -18,10 +18,10 @@ import aima.gui.demo.search.TicTacToeDemo;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.search.NQueensSearchApp;
-import aima.gui.fx.applications.search.NQueensSearchProg;
+import aima.gui.fx.applications.search.NQueensSearchDemo;
 import aima.gui.fx.applications.search.games.ConnectFourApp;
 import aima.gui.fx.applications.search.local.GeneticMaximumFinderApp;
-import aima.gui.fx.applications.search.local.GeneticMaximumFinderProg;
+import aima.gui.fx.applications.search.local.GeneticMaximumFinderDemo;
 import aima.gui.fx.applications.search.local.SimulatedAnnealingMaximumFinderApp;
 import aima.gui.fx.framework.IntegratedAppPaneBuilder;
 import javafx.application.Application;
@@ -66,8 +66,8 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
 		
-		builder.registerProg(GeneticMaximumFinderProg.class);
-		builder.registerProg(NQueensSearchProg.class);
+		builder.registerProg(GeneticMaximumFinderDemo.class);
+		builder.registerProg(NQueensSearchDemo.class);
 
 		builder.registerProg(TrivialVacuumDemo.class);
 

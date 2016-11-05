@@ -38,7 +38,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	
 	protected FunctionPlotterCtrl funcPlotterCtrl;
 	private SimulationPaneCtrl simPaneCtrl;
-	private GeneticMaximumFinderProg experiment;
+	private GeneticMaximumFinderDemo experiment;
 
 	@Override
 	public String getTitle() {
@@ -96,7 +96,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	/** Starts the experiment. */
 	@SuppressWarnings("unchecked")
 	public void simulate() {
-		experiment = new GeneticMaximumFinderProg();
+		experiment = new GeneticMaximumFinderDemo();
 		experiment.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
 		experiment.setMutationProb(simPaneCtrl.getParamAsDouble(PARAM_MUT_PROB));
 		experiment.setPopulationSize(simPaneCtrl.getParamAsInt(PARAM_POPULATION));

@@ -14,12 +14,12 @@ import aima.core.search.local.GeneticAlgorithmForNumbers;
 import aima.core.search.local.Individual;
 
 /**
- * Console application which demonstrates how the generic algorithm for numbers
+ * Command line demo which demonstrates how the generic algorithm for numbers
  * can be used to find maximums in a mathematical function.
  * 
  * @author Ruediger Lunde
  */
-public class GeneticMaximumFinderProg {
+public class GeneticMaximumFinderDemo {
 
 	private Function<Double, Double> func = Functions.f1;
 	private double mutProb = 0.2;
@@ -31,8 +31,8 @@ public class GeneticMaximumFinderProg {
 
 	public static void main(String[] args) {
 		System.out.println("Genetic Maximum Finder Experiment (f1, mutProb=0.2) -->");
-		GeneticMaximumFinderProg prog = new GeneticMaximumFinderProg();
-		prog.startExperiment(prog::printGeneration);
+		GeneticMaximumFinderDemo demo = new GeneticMaximumFinderDemo();
+		demo.startExperiment(demo::printGeneration);
 		System.out.println("Experiment finished.");
 	}
 	

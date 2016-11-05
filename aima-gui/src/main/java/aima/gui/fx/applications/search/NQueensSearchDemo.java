@@ -25,12 +25,12 @@ import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 
 /**
- * Console application which demonstrates how different search algorithms
+ * Command line demo which demonstrates how different search algorithms
  * solve the n-queens problem.
  * 
  * @author Ruediger Lunde
  */
-public class NQueensSearchProg {
+public class NQueensSearchDemo {
 	private int boardSize = 8;
 	public int populationSize = 10;
 	public double mutationProbability = 0.2;
@@ -45,31 +45,31 @@ public class NQueensSearchProg {
 	private List<ProgressTracer> progressTracers = new ArrayList<>();
 
 	public static void main(String[] args) {
-		NQueensSearchProg prog = new NQueensSearchProg();
+		NQueensSearchDemo demo = new NQueensSearchDemo();
 		// prog.setBoardSize(32);
-		prog.addProgressTracer(prog::printProgress);
+		demo.addProgressTracer(demo::printProgress);
 
-		System.out.println("NQueens depth-first search experiment (boardSize=" + prog.boardSize + ") -->");
-		prog.initExperiment(Config.EMPTY);
-		prog.startExperiment(new DepthFirstSearch(new TreeSearch()));
-		prog.printResult();
+		System.out.println("NQueens depth-first search experiment (boardSize=" + demo.boardSize + ") -->");
+		demo.initExperiment(Config.EMPTY);
+		demo.startExperiment(new DepthFirstSearch(new TreeSearch()));
+		demo.printResult();
 
-		System.out.println("NQueens hill climbing search experiment (boardSize=" + prog.boardSize + ") -->");
-		prog.initExperiment(Config.QUEENS_IN_FIRST_ROW);
-		prog.startHillClimbingExperiment();
-		prog.printResult();
+		System.out.println("NQueens hill climbing search experiment (boardSize=" + demo.boardSize + ") -->");
+		demo.initExperiment(Config.QUEENS_IN_FIRST_ROW);
+		demo.startHillClimbingExperiment();
+		demo.printResult();
 
-		System.out.println("NQueens simulated annealing experiment (boardSize=" + prog.boardSize + ", maxIterations="
-				+ prog.maxIterations + ") -->");
-		prog.initExperiment(Config.QUEENS_IN_FIRST_ROW);
-		prog.startSimulatedAnnealingExperiment();
-		prog.printResult();
+		System.out.println("NQueens simulated annealing experiment (boardSize=" + demo.boardSize + ", maxIterations="
+				+ demo.maxIterations + ") -->");
+		demo.initExperiment(Config.QUEENS_IN_FIRST_ROW);
+		demo.startSimulatedAnnealingExperiment();
+		demo.printResult();
 
-		System.out.println("NQueens genetic algorithm experiment (boardSize=" + prog.boardSize + ", popSize="
-				+ prog.populationSize + ", mutProb=" + prog.mutationProbability + ") -->");
-		prog.initExperiment(Config.EMPTY);
-		prog.startGenAlgoExperiment(false);
-		prog.printResult();
+		System.out.println("NQueens genetic algorithm experiment (boardSize=" + demo.boardSize + ", popSize="
+				+ demo.populationSize + ", mutProb=" + demo.mutationProbability + ") -->");
+		demo.initExperiment(Config.EMPTY);
+		demo.startGenAlgoExperiment(false);
+		demo.printResult();
 	}
 
 	public void setBoardSize(int size) {
