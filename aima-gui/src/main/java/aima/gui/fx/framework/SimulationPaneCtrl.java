@@ -221,7 +221,7 @@ public class SimulationPaneCtrl {
 			e.printStackTrace();
 		} catch (Error e) {
 			setStatus("Sorry, something went totally wrong during simulation: " + e.getClass().getSimpleName());
-			throw e;
+			e.printStackTrace();
 		}
 		setState(State.FINISHED);
 	}
