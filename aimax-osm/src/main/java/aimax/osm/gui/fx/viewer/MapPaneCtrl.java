@@ -169,6 +169,10 @@ public class MapPaneCtrl {
                 multiplyDisplayFactorWith(1.0f/1.5f);
             else
                 zoom(0.7f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);
+        else
+            return;
+        event.consume();
+        currCanvas.requestFocus(); // hack...
     }
 
 
