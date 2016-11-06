@@ -32,10 +32,10 @@ New personal map styles can be created quite easily. See classes
 can be achieved.
 
 Routing functionality is based on the AIMA-CORE library.
-All dependencies to the AIMA libraries are encapsulated in the routing
-sub-package and the applications using functionality from that package.
-So the viewer classes can also be used as stand-alone library
-for building general OSM applications.
+All dependencies from the AIMA libraries are encapsulated in the routing
+sub-package (search algorithms) and the gui sub-package (JavaFX/Swing-based framework).
+So all other packages can also be used as stand-alone library for building general OSM
+applications.
 
 In the current version, relation entities are still ignored and the size
 of the map when using the default representation should be limited to about 

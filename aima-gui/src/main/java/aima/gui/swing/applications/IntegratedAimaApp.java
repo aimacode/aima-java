@@ -30,8 +30,8 @@ import aima.gui.swing.applications.robotics.MonteCarloLocalizationApp;
  */
 public class IntegratedAimaApp {
 
-	/** Registers agent applications and console program demos. */
-	public static void registerDemos(AimaDemoFrame frame) {
+	/** Registers agent applications and command line demos. */
+	public static void defineContent(AimaDemoFrame frame) {
 		frame.addApp(VacuumApp.class);
 		frame.addApp(RouteFindingAgentApp.class);
 		frame.addApp(EightPuzzleApp.class);
@@ -62,10 +62,10 @@ public class IntegratedAimaApp {
 		frame.addDemo(LearningDemo.class);
 	}
 
-	/** Starts the demo. */
+	/** Starts the application. */
 	public static void main(String[] args) {
 		AimaDemoFrame frame = new AimaDemoFrame();
-		registerDemos(frame);
+		defineContent(frame);
 		frame.setSize(1000, 700);
 		frame.setVisible(true);
 	}

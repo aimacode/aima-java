@@ -11,8 +11,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * Integrated application which provides access to all JavaFX applications (...App) and command line demos (...Demo)
- * which are currently available in the AIMA-GUI and AIMA-OSM project.
+ * Integrated application which provides access to all JavaFX applications
+ * (...App) and command line demos (...Demo) which are currently available in
+ * the AIMA-GUI and AIMA-OSM project.
  * 
  * @author Ruediger Lunde
  */
@@ -25,7 +26,7 @@ public class IntegratedAimaOsmFxApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		IntegratedAppPaneBuilder builder = new IntegratedAppPaneBuilder();
-		builder.defineTitle("Integrated AIMA OSM FX App");
+		builder.defineTitle("Integrated AIMA3e OSM FX App");
 		defineContent(builder);
 		BorderPane root = new BorderPane();
 		builder.getResultFor(root, primaryStage);

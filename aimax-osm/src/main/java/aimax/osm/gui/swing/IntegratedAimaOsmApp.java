@@ -17,20 +17,20 @@ import aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp;
  */
 public class IntegratedAimaOsmApp {
 
-	/** Registers agent applications and console program demos. */
-	public static void registerDemos(AimaDemoFrame frame) {
+	/** Registers agent applications and command line demos. */
+	public static void defineContent(AimaDemoFrame frame) {
 		frame.addApp(RoutePlannerApp.class);
 		frame.addApp(OsmAgentApp.class);
 		frame.addApp(SearchDemoOsmAgentApp.class);
 	}
 	
-	/** Starts the demo. */
+	/** Starts the application. */
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		AimaDemoFrame frame = new AimaDemoFrame();
-		frame.setTitle("AIMA3e Java Demos with OSM");
-		IntegratedAimaApp.registerDemos(frame);
-		registerDemos(frame);
+		frame.setTitle("Integrated AIMA3e OSM App");
+		IntegratedAimaApp.defineContent(frame);
+		defineContent(frame);
 		frame.setSize(1000, 700);
 		frame.setVisible(true);
 	}

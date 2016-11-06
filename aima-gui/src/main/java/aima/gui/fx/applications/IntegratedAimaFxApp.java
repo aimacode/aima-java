@@ -32,8 +32,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * Integrated application which provides access to all JavaFX applications (...App) and command line demos (...Demo)
- * which are currently available in the AIMA-GUI project.
+ * Integrated application which provides access to all JavaFX applications
+ * (...App) and command line demos (...Demo) which are currently available in
+ * the AIMA-GUI project.
  *
  * @author Ruediger Lunde
  */
@@ -46,7 +47,7 @@ public class IntegratedAimaFxApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		IntegratedAppPaneBuilder builder = new IntegratedAppPaneBuilder();
-		builder.defineTitle("Integrated AIMA FX App");
+		builder.defineTitle("Integrated AIMA3e FX App");
 		defineContent(builder);
 		BorderPane root = new BorderPane();
 		builder.getResultFor(root, primaryStage);
@@ -68,10 +69,10 @@ public class IntegratedAimaFxApp extends Application {
 
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
-		
+
 		builder.registerDemo(CspNQueensDemo.class);
 		builder.registerDemo(GeneticMaximumFinderDemo.class);
-		
+
 		builder.registerDemo(NQueensSearchDemo.class);
 		builder.registerDemo(TrivialVacuumDemo.class);
 		builder.registerDemo(EightPuzzleDemo.class);

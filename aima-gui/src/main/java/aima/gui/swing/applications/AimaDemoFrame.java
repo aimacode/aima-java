@@ -16,8 +16,7 @@ import javax.swing.JMenuItem;
 import aima.gui.swing.framework.MessageLoggerPanel;
 
 /**
- * Provides a simple frame for starting agent applications and console program
- * demos.
+ * Provides a simple frame for starting agent applications and command line demos.
  * 
  * @author Ruediger Lunde
  */
@@ -57,17 +56,17 @@ public class AimaDemoFrame extends JFrame {
 	 */
 	public void addDemo(Class<?> demoClass) {
 		JMenuItem item = addDemoToMenu(demosMenu, demoClass);
-		item.addActionListener(new ProgStarter(demoClass));
+		item.addActionListener(new DemoStarter(demoClass));
 	}
 
 	/**
-	 * Adds a new demo (agent application or console application) to the specified
+	 * Adds a new program (agent application or command line demo) to the specified
 	 * menu.
 	 */
-	private JMenuItem addDemoToMenu(JMenu menu, Class<?> demoClass) {
-		JMenuItem item = new JMenuItem(demoClass.getSimpleName());
+	private JMenuItem addDemoToMenu(JMenu menu, Class<?> progClass) {
+		JMenuItem item = new JMenuItem(progClass.getSimpleName());
 		JMenu subMenu = null;
-		String packageName = demoClass.getPackage().getName();
+		String packageName = progClass.getPackage().getName();
 		Component[] menuComps = menu.getMenuComponents();
 		int i;
 		for (i = 0; i < menuComps.length; i++) {
@@ -122,14 +121,14 @@ public class AimaDemoFrame extends JFrame {
 	}
 
 	/**
-	 * Implements an action listener which starts a console application demo.
+	 * Implements an action listener which starts a command line demo.
 	 * 
 	 * @author Ruediger Lunde
 	 */
-	protected class ProgStarter implements ActionListener {
+	protected class DemoStarter implements ActionListener {
 		Class<?> demoClass;
 
-		ProgStarter(Class<?> dc) {
+		DemoStarter(Class<?> dc) {
 			demoClass = dc;
 		}
 
