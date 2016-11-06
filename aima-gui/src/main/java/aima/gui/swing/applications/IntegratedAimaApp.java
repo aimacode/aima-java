@@ -42,24 +42,24 @@ public class IntegratedAimaApp {
 
 		frame.addApp(MonteCarloLocalizationApp.class);
 		
-		frame.addProg(TrivialVacuumDemo.class);
+		frame.addDemo(TrivialVacuumDemo.class);
 		
-		frame.addProg(EightPuzzleDemo.class);
-		frame.addProg(TicTacToeDemo.class);
-		frame.addProg(NQueensDemo.class);
-		frame.addProg(MapColoringCspDemo.class);
-		frame.addProg(NondeterministicVacuumEnvironmentDemo.class);
+		frame.addDemo(EightPuzzleDemo.class);
+		frame.addDemo(TicTacToeDemo.class);
+		frame.addDemo(NQueensDemo.class);
+		frame.addDemo(MapColoringCspDemo.class);
+		frame.addDemo(NondeterministicVacuumEnvironmentDemo.class);
 
-		frame.addProg(TTEntailsDemo.class);
-		frame.addProg(PlFcEntailsDemo.class);
-		frame.addProg(PlResolutionDemo.class);
-		frame.addProg(DpllDemo.class);
-		frame.addProg(WalkSatDemo.class);
-		frame.addProg(FolDemo.class);
+		frame.addDemo(TTEntailsDemo.class);
+		frame.addDemo(PlFcEntailsDemo.class);
+		frame.addDemo(PlResolutionDemo.class);
+		frame.addDemo(DpllDemo.class);
+		frame.addDemo(WalkSatDemo.class);
+		frame.addDemo(FolDemo.class);
 
-		frame.addProg(ProbabilityDemo.class);
+		frame.addDemo(ProbabilityDemo.class);
 
-		frame.addProg(LearningDemo.class);
+		frame.addDemo(LearningDemo.class);
 	}
 
 	/** Starts the demo. */

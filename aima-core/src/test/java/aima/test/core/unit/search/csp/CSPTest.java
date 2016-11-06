@@ -10,8 +10,8 @@ import org.junit.Test;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
-import aima.core.search.csp.NotEqualConstraint;
 import aima.core.search.csp.Variable;
+import aima.core.search.csp.examples.NotEqualConstraint;
 
 /**
  * @author Ruediger Lunde

@@ -1,8 +1,5 @@
 package aima.gui.fx.applications;
 
-import aima.gui.fx.applications.search.CspMapColoringApp;
-import aima.gui.fx.applications.search.games.EightPuzzleApp;
-import aima.gui.fx.applications.search.games.TicTacToeApp;
 import aima.gui.demo.agent.NondeterministicVacuumEnvironmentDemo;
 import aima.gui.demo.agent.TrivialVacuumDemo;
 import aima.gui.demo.logic.DpllDemo;
@@ -15,11 +12,16 @@ import aima.gui.demo.search.EightPuzzleDemo;
 import aima.gui.demo.search.MapColoringCspDemo;
 import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
-import aima.gui.fx.applications.agent.VacuumAgentApp;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
+import aima.gui.fx.applications.agent.VacuumAgentApp;
+import aima.gui.fx.applications.search.CspMapColoringApp;
+import aima.gui.fx.applications.search.CspNQueensApp;
+import aima.gui.fx.applications.search.CspNQueensDemo;
 import aima.gui.fx.applications.search.NQueensSearchApp;
 import aima.gui.fx.applications.search.NQueensSearchDemo;
 import aima.gui.fx.applications.search.games.ConnectFourApp;
+import aima.gui.fx.applications.search.games.EightPuzzleApp;
+import aima.gui.fx.applications.search.games.TicTacToeApp;
 import aima.gui.fx.applications.search.local.GeneticMaximumFinderApp;
 import aima.gui.fx.applications.search.local.GeneticMaximumFinderDemo;
 import aima.gui.fx.applications.search.local.SimulatedAnnealingMaximumFinderApp;
@@ -57,6 +59,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(RouteFindingAgentApp.class);
 
 		builder.registerApp(CspMapColoringApp.class);
+		builder.registerApp(CspNQueensApp.class);
 		builder.registerApp(NQueensSearchApp.class);
 
 		builder.registerApp(EightPuzzleApp.class);
@@ -66,27 +69,26 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
 		
-		builder.registerProg(GeneticMaximumFinderDemo.class);
-		builder.registerProg(NQueensSearchDemo.class);
+		builder.registerDemo(CspNQueensDemo.class);
+		builder.registerDemo(GeneticMaximumFinderDemo.class);
+		
+		builder.registerDemo(NQueensSearchDemo.class);
+		builder.registerDemo(TrivialVacuumDemo.class);
+		builder.registerDemo(EightPuzzleDemo.class);
+		builder.registerDemo(TicTacToeDemo.class);
+		builder.registerDemo(NQueensDemo.class);
+		builder.registerDemo(MapColoringCspDemo.class);
+		builder.registerDemo(NondeterministicVacuumEnvironmentDemo.class);
 
-		builder.registerProg(TrivialVacuumDemo.class);
+		builder.registerDemo(TTEntailsDemo.class);
+		builder.registerDemo(PlFcEntailsDemo.class);
+		builder.registerDemo(PlResolutionDemo.class);
+		builder.registerDemo(DpllDemo.class);
+		builder.registerDemo(WalkSatDemo.class);
+		builder.registerDemo(FolDemo.class);
 
-		builder.registerProg(EightPuzzleDemo.class);
-		builder.registerProg(TicTacToeDemo.class);
-		builder.registerProg(NQueensDemo.class);
-		builder.registerProg(MapColoringCspDemo.class);
-		builder.registerProg(NondeterministicVacuumEnvironmentDemo.class);
-
-		builder.registerProg(TTEntailsDemo.class);
-		builder.registerProg(PlFcEntailsDemo.class);
-		builder.registerProg(PlResolutionDemo.class);
-		builder.registerProg(DpllDemo.class);
-		builder.registerProg(WalkSatDemo.class);
-		builder.registerProg(FolDemo.class);
-
-		// builder.registerProg(ProbabilityProg.class); // to slow.
-
-		// builder.registerProg(LearningProg.class); // to slow.
+		// builder.registerDemo(ProbabilityProg.class); // to slow.
+		// builder.registerDemo(LearningProg.class); // to slow.
 	}
 
 }

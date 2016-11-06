@@ -7,8 +7,8 @@ import org.junit.Test;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
-import aima.core.search.csp.MapCSP;
 import aima.core.search.csp.MinConflictsStrategy;
+import aima.core.search.csp.examples.MapCSP;
 
 /**
  * @author Ravi Mohan

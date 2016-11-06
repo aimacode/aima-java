@@ -26,7 +26,7 @@ public class AimaDemoFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	protected JMenuBar menubar = new JMenuBar();
 	JMenu appsMenu = new JMenu("Apps");
-	JMenu progsMenu = new JMenu("Progs");
+	JMenu demosMenu = new JMenu("Demos");
 	MessageLoggerPanel textPanel = new MessageLoggerPanel();
 	JComponent currPanel;
 	PrintStream outStream;
@@ -37,7 +37,7 @@ public class AimaDemoFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menubar);
 		menubar.add(appsMenu);
-		menubar.add(progsMenu);
+		menubar.add(demosMenu);
 		outStream = System.out;
 	}
 
@@ -52,11 +52,11 @@ public class AimaDemoFrame extends JFrame {
 	}
 
 	/**
-	 * Adds a new console application demo to the menu. The class is expected to be
+	 * Adds a new command line demo to the menu. The class is expected to be
 	 * part of a package and to provide a static main method.
 	 */
-	public void addProg(Class<?> demoClass) {
-		JMenuItem item = addDemoToMenu(progsMenu, demoClass);
+	public void addDemo(Class<?> demoClass) {
+		JMenuItem item = addDemoToMenu(demosMenu, demoClass);
 		item.addActionListener(new ProgStarter(demoClass));
 	}
 

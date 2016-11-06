@@ -62,11 +62,11 @@ public class IntegratedAppPaneBuilder {
 		addToMenu(appsMenu, appClass.getPackage().getName(), item);
 	}
 
-	public void registerProg(Class<?> progClass) {
+	public void registerDemo(Class<?> demoClass) {
 		final IntegratedAppPaneCtrl ctrl = paneCtrl;
-		MenuItem item = new MenuItem(progClass.getSimpleName());
-		item.setOnAction(ev -> ctrl.startProg(progClass));
-		addToMenu(demosMenu, progClass.getPackage().getName(), item);
+		MenuItem item = new MenuItem(demoClass.getSimpleName());
+		item.setOnAction(ev -> ctrl.startProg(demoClass));
+		addToMenu(demosMenu, demoClass.getPackage().getName(), item);
 	}
 
 	/**

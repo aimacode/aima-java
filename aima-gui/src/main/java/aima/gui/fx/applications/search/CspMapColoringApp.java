@@ -1,6 +1,7 @@
 package aima.gui.fx.applications.search;
 
 import aima.core.search.csp.*;
+import aima.core.search.csp.examples.MapCSP;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;

@@ -11,9 +11,9 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
-import aima.core.search.csp.NotEqualConstraint;
 import aima.core.search.csp.TreeCSPSolver;
 import aima.core.search.csp.Variable;
+import aima.core.search.csp.examples.NotEqualConstraint;
 
 public class TreeCSPSolverTest {
 	private static final Variable WA = new Variable("wa");
