@@ -208,7 +208,7 @@ public class EightPuzzleBoard {
 	private int getPositionOf(int val) {
 		for (int i = 0; i < 9; i++) {
 			if (state[i] == val) {
-				return i
+				return i;
 			}
 		}
 		return -1;
