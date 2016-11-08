@@ -8,6 +8,7 @@ import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.MinConflictsStrategy;
 import aima.core.search.csp.SolutionStrategy;
 import aima.core.search.csp.examples.NQueensCSP;
+import aima.core.search.framework.Metrics;
 
 public class CspNQueensDemo {
 	public static void main(String[] args) {
@@ -62,12 +63,12 @@ public class CspNQueensDemo {
 			domainCount = 0;
 		}
 		
-		public String getResults() {
-			StringBuffer result = new StringBuffer();
-			result.append("assignment changes: " + assignmentCount);
+		public Metrics getResults() {
+			Metrics result = new Metrics();
+			result.set("assignmentChanges", assignmentCount);
 			if (domainCount != 0)
-				result.append(", domain changes: " + domainCount);
-			return result.toString();
+				result.set("domainChanges", domainCount);
+			return result;
 		}
 	}
 }

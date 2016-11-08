@@ -16,6 +16,7 @@ import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
+import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
@@ -64,16 +65,16 @@ public class EightPuzzleApp extends IntegrableApplication {
 				new BreadthFirstSearch(new BidirectionalSearch()));
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
-		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
+		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeuristic)",
 				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
-		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
+		addSearchAlgorithm("Greedy Best First Search (ManhattanHeuristic)",
 				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
-		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
+		addSearchAlgorithm("AStar Search (MisplacedTileHeuristic)",
 				new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
-		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
+		addSearchAlgorithm("AStar Search (ManhattanHeuristic)",
 				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
-		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction()));
+		addSearchAlgorithm("Simulated Annealing Search (ManhattanHeuristic)",
+				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction(), new Scheduler(20, 0.05, 200)));
 	}
 
 
@@ -178,7 +179,9 @@ public class EightPuzzleApp extends IntegrableApplication {
 				board.moveGapLeft();
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
-			updateStateView(null);
+			Metrics m = new Metrics();
+			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().h(board));
+			updateStateView(m);
 			if (CancelableThread.currIsCanceled())
 				break;
 			simPaneCtrl.waitAfterStep();

@@ -1,5 +1,7 @@
 package aima.core.search.csp;
 
+import aima.core.util.CancelableThread;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 215.<br>
  * <br>
@@ -51,7 +53,7 @@ public class BacktrackingStrategy extends SolutionStrategy {
 	private Assignment recursiveBackTrackingSearch(CSP csp,
 			Assignment assignment) {
 		Assignment result = null;
-		if (assignment.isComplete(csp.getVariables())) {
+		if (assignment.isComplete(csp.getVariables()) || CancelableThread.currIsCanceled()) {
 			result = assignment;
 		} else {
 			Variable var = selectUnassignedVariable(assignment, csp);
