@@ -1,5 +1,8 @@
 package aima.gui.fx.applications.agent;
 
+import java.util.Arrays;
+import java.util.List;
+
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
@@ -66,7 +69,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 		StackPane envView = new StackPane();
 		envViewCtrl = new VacuumEnvironmentViewCtrl(envView);
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -78,11 +81,11 @@ public class VacuumAgentApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_ENV, "A/B Deterministic Environment", "A/B Non-Deterministic Environment");
 		Parameter p2 = new Parameter(PARAM_AGENT, "TableDrivenVacuumAgent", "ReflexVacuumAgent",
 				"SimpleReflexVacuumAgent", "ModelBasedReflexVacuumAgent", "NondeterministicVacuumAgent");
-		return new Parameter[] { p1, p2 };
+		return Arrays.asList(p1, p2);
 	}
 
 	/** Is called after each parameter selection change. */

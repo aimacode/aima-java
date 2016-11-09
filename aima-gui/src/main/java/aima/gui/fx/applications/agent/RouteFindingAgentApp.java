@@ -1,12 +1,19 @@
 package aima.gui.fx.applications.agent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.*;
+import aima.core.environment.map.AdaptableHeuristicFunction;
+import aima.core.environment.map.ExtendableMap;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.Scenario;
+import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
+import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.util.CancelableThread;
-import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
@@ -73,7 +80,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		StackPane envView = new StackPane();
 		envViewCtrl = new MapEnvironmentViewCtrl(envView);
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -85,7 +92,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_SCENARIO, "Romania, from Arad", "Romania, from Lugoj",
 				"Romania, from Fagaras", "Australia, from Sydney", "Australia, from Random");
 		p1.setValueNames("Romania, from Arad", "Romania, from Lugoj", "Romania, from Fagaras", "Australia, from Sydney",
@@ -107,7 +114,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		p5.setDefaultValueIndex(1);
 		p5.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
 				"Recursive Best First No Loops", "Hill Climbing");
-		return new Parameter[] { p1, p2r, p2a, p3, p4, p5 };
+		return Arrays.asList(p1, p2r, p2a, p3, p4, p5);
 	}
 
 	/** Is called after each parameter selection change. */

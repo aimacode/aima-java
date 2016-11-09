@@ -1,5 +1,6 @@
 package aimax.osm.gui.fx.applications;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 	public Pane createRootPane() {
 		BorderPane root = new BorderPane();
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		StackPane mapPane = new StackPane();
 		mapPaneCtrl = new MapPaneCtrl(mapPane);
@@ -110,7 +111,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 		return root;
 	}
 
-	private Parameter[] createParameters() {
+	private List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
 		Parameter p2 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p2.setDefaultValueIndex(5);
@@ -121,7 +122,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
         p4.setDefaultValueIndex(1);
 		p4.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
 				"Recursive Best First No Loops", "Hill Climbing");
-		return new Parameter[] { p1, p2, p3, p4 };
+		return Arrays.asList(p1, p2, p3, p4);
 	}
 
 	/** Is called after each parameter selection change. */

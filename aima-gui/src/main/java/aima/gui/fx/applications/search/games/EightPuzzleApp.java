@@ -1,6 +1,7 @@
 package aima.gui.fx.applications.search.games;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -103,7 +104,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 		StackPane stateView = new StackPane();
 		stateViewCtrl = new EightPuzzleViewCtrl(stateView);
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -115,10 +116,10 @@ public class EightPuzzleApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_INIT_CONF, "Three Moves", "Medium", "Extreme", "Random");
 		Parameter p2 = new Parameter(PARAM_STRATEGY, (Object[]) SEARCH_NAMES.toArray(new String[] {}));
-		return new Parameter[] {p1, p2};
+		return Arrays.asList(p1, p2);
 	}
 
 	/** Displays the initialized board on the state view. */

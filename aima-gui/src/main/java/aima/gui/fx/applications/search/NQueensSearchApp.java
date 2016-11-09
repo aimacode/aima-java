@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -66,7 +67,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		StackPane stateView = new StackPane();
 		stateViewCtrl = new NQueensViewCtrl(stateView);
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -79,7 +80,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_STRATEGY,
 				"Depth-First Search (incremental)", "Breadth-First Search (incremental)",
 				"Iterative Deepening Search",
@@ -91,7 +92,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		p3.setDependency(PARAM_STRATEGY, "Iterative Deepening Search",
 				"Greedy Best-First Search (attacking pair heuristic)", "A* search (attacking pair heuristic)",
 				"Hill Climbing", "Simulated Annealing", "Genetic Algorithm");
-		return new Parameter[] {p1, p2, p3};
+		return Arrays.asList(p1, p2, p3);
 	}
 
 	/** Displays the initialized board on the state view. */

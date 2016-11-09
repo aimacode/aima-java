@@ -1,5 +1,8 @@
 package aima.gui.fx.applications.search;
 
+import java.util.Arrays;
+import java.util.List;
+
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
@@ -65,7 +68,7 @@ public class CspNQueensApp extends IntegrableApplication {
 		StackPane stateView = new StackPane();
 		stateViewCtrl = new NQueensViewCtrl(stateView);
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -78,7 +81,7 @@ public class CspNQueensApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_STRATEGY,
 				"Min-Conflicts", "Backtracking");
 		Parameter p2 = new Parameter(PARAM_MRV, true, false);
@@ -91,7 +94,7 @@ public class CspNQueensApp extends IntegrableApplication {
 		p5.setDependency(PARAM_STRATEGY, "Backtracking");
 		Parameter p6 = new Parameter(PARAM_BOARD_SIZE, 4, 8, 16, 32, 64);
 		p6.setDefaultValueIndex(1);
-		return new Parameter[] {p1, p2, p3, p4, p5, p6};
+		return Arrays.asList(p1, p2, p3, p4, p5, p6);
 	}
 
 	/** Displays the initialized board on the state view. */

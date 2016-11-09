@@ -1,6 +1,8 @@
 package aima.gui.fx.applications.search.local;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -56,7 +58,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 		Canvas canvas = new Canvas();
 		funcPlotterCtrl = new FunctionPlotterCtrl(canvas);
 		funcPlotterCtrl.setLimits(Functions.minX, Functions.maxX, Functions.minY, Functions.maxY);
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 		
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -68,7 +70,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 		return root;
 	}
 	
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_FUNC_SELECT);
 		p1.setValues(Functions.f1, Functions.f2, Functions.f3);
 		p1.setValueNames("f1", "f2", "f3");
@@ -78,7 +80,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 		p3.setDefaultValueIndex(2);
 		Parameter p4 = new Parameter(PARAM_MAX_ITER, 100, 200, 400);
 		p4.setDefaultValueIndex(0);
-		return new Parameter[] {p1, p2, p3, p4};
+		return Arrays.asList(p1, p2, p3, p4);
 	}
 	
 	/** Displays the selected function on the state view. */

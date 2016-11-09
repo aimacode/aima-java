@@ -1,6 +1,6 @@
 package aimax.osm.gui.fx.applications;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Action;
@@ -35,7 +35,7 @@ import javafx.scene.layout.StackPane;
 
 /**
  * Integrable application which demonstrates how the Learning Real-Time A*
- * (LRTA*) search algorithm perform an a route finding scenario based on a real
+ * (LRTA*) search algorithm performs in a route finding scenario based on a real
  * OSM map.
  *
  * @author Ruediger Lunde
@@ -49,26 +49,18 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 
 	public static String PARAM_WAY_SELECTION = "waySelection";
 	public static String PARAM_HEURISTIC = "heuristic";
-    public static String TRACK_NAME = "Track";
+	public static String TRACK_NAME = "Track";
 
 	private MapPaneCtrl mapPaneCtrl;
-	private SimulationPaneCtrl simPaneCtrl;
+	protected SimulationPaneCtrl simPaneCtrl;
 
 	protected MapAdapter map;
 	protected MapEnvironment env;
-	/** Heuristic function to be used when performing informed search. */
-	protected AdaptableHeuristicFunction heuristic;
-
-    /**
-     * Stores those states (Strings with map node ids), whose corresponding
-     * search nodes have been expanded during the last search. Quick and dirty
-     * solution...
-     */
-    private static final HashSet<Object> visitedStates = new HashSet<Object>();
-
 
 	@Override
-	public String getTitle() { return "OSM LRTA* Agent App"; }
+	public String getTitle() {
+		return "OSM LRTA* Agent App";
+	}
 
 	/**
 	 * Defines state view, parameters, and call-back functions and calls the
@@ -78,7 +70,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	public Pane createRootPane() {
 		BorderPane root = new BorderPane();
 
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 
 		StackPane mapPane = new StackPane();
 		mapPaneCtrl = new MapPaneCtrl(mapPane);
@@ -95,11 +87,11 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
 		Parameter p2 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
 		p2.setDefaultValueIndex(1);
-		return new Parameter[] { p1, p2 };
+		return Arrays.asList(p1, p2);
 	}
 
 	/** Is called after each parameter selection change. */
@@ -107,62 +99,56 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	public void initialize() {
 		map = new MapAdapter(mapPaneCtrl.getMap());
 		switch (simPaneCtrl.getParamValueIndex(PARAM_WAY_SELECTION)) {
-			case 0:
-				map.setMapWayFilter(MapWayAttFilter.createAnyWayFilter());
-				map.ignoreOneways(true);
-				break;
-			case 1:
-				map.setMapWayFilter(MapWayAttFilter.createCarWayFilter());
-				map.ignoreOneways(false);
-				break;
-			case 2:
-				map.setMapWayFilter(MapWayAttFilter.createBicycleWayFilter());
-				map.ignoreOneways(false);
-				break;
+		case 0:
+			map.setMapWayFilter(MapWayAttFilter.createAnyWayFilter());
+			map.ignoreOneways(true);
+			break;
+		case 1:
+			map.setMapWayFilter(MapWayAttFilter.createCarWayFilter());
+			map.ignoreOneways(false);
+			break;
+		case 2:
+			map.setMapWayFilter(MapWayAttFilter.createBicycleWayFilter());
+			map.ignoreOneways(false);
+			break;
 		}
+		map.getOsmMap().clearTrack(TRACK_NAME);
+	}
 
+	/**
+	 * Factory method which creates a new agent based on the current parameter
+	 * settings.
+	 */
+	protected Agent createAgent(String goal) {
+		AdaptableHeuristicFunction heuristic;
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
-			case 0:
-				heuristic = MapFunctionFactory.getZeroHeuristicFunction();
-				break;
-			default:
-				heuristic = MapFunctionFactory.getSLDHeuristicFunction();
+		case 0:
+			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
+			break;
+		default:
+			heuristic = MapFunctionFactory.getSLDHeuristicFunction(goal, map);
 		}
-
-        map.getOsmMap().clearTrack(TRACK_NAME);
-	}
-
-	/** Creates a new agent and adds them to the current environment. */
-	protected void initEnvironment(String[] locations) {
-
-		heuristic.adaptToGoal(locations[1], map);
-
-		Problem p = new BidirectionalMapProblem(map, null, locations[1]);
-		OnlineSearchProblem osp = new OnlineSearchProblem(
-				p.getActionsFunction(), p.getGoalTest(),
+		Problem p = new BidirectionalMapProblem(map, null, goal);
+		OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
 				p.getStepCostFunction());
-		Agent agent = new LRTAStarAgent(osp,
-				MapFunctionFactory.getPerceptToStateFunction(), heuristic);
-
-		env = new MapEnvironment(map);
-		env.addAgent(agent, locations[0]);
+		return new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 	}
-
 
 	/** Starts the experiment. */
 	public void simulate() {
-        List<MapNode> markers = map.getOsmMap().getMarkers();
-        if (markers.size() < 2) {
-            simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
-        } else {
+		List<MapNode> markers = map.getOsmMap().getMarkers();
+		if (markers.size() < 2) {
+			simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
+		} else {
 			String[] locations = new String[markers.size()];
 			for (int i = 0; i < markers.size(); i++) {
 				MapNode node = markers.get(i);
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations[i] = map.getNearestLocation(pt);
 			}
-		    initEnvironment(locations);
+			env = new MapEnvironment(map);
 			env.addEnvironmentView(new TrackUpdater());
+			env.addAgent(createAgent(locations[1]), locations[0]);
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
@@ -175,45 +161,43 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		simPaneCtrl.cancelSimulation();
 	}
 
-
 	/** Visualizes agent positions. Call from simulation thread. */
-    private void updateTrack(Agent agent, Metrics metrics) {
-        MapAdapter map = (MapAdapter) env.getMap();
-        MapNode node = map.getWayNode(env.getAgentLocation(agent));
-        if (node != null) {
-            Platform.runLater(() -> map.getOsmMap().addToTrack(TRACK_NAME,
-                    new Position(node.getLat(), node.getLon()))
-            );
-        }
+	private void updateTrack(Agent agent, Metrics metrics) {
+		MapAdapter map = (MapAdapter) env.getMap();
+		MapNode node = map.getWayNode(env.getAgentLocation(agent));
+		if (node != null) {
+			Platform.runLater(() -> map.getOsmMap().addToTrack(TRACK_NAME, new Position(node.getLat(), node.getLon())));
+		}
 		simPaneCtrl.setStatus(metrics.toString());
-    }
+	}
 
 	// helper classes...
 
 	class TrackUpdater implements EnvironmentView {
 		int actionCounter = 0;
 
-        @Override
-        public void notify(String msg) { }
+		@Override
+		public void notify(String msg) {
+		}
 
-        @Override
-        public void agentAdded(Agent agent, Environment source) {
+		@Override
+		public void agentAdded(Agent agent, Environment source) {
 			updateTrack(agent, new Metrics());
 		}
 
-        /**
-         * Reacts on environment changes and updates the tracks.
-         */
-        @Override
-        public void agentActed(Agent agent, Action command, Environment source) {
-            if (command instanceof MoveToAction) {
+		/**
+		 * Reacts on environment changes and updates the tracks.
+		 */
+		@Override
+		public void agentActed(Agent agent, Action command, Environment source) {
+			if (command instanceof MoveToAction) {
 				Metrics metrics = new Metrics();
 				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
 				if (travelDistance != null)
 					metrics.set("travelDistance[km]", travelDistance);
 				metrics.set("actions", ++actionCounter);
-                updateTrack(agent, metrics);
-            }
-        }
-    }
+				updateTrack(agent, metrics);
+			}
+		}
+	}
 }

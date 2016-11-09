@@ -1,6 +1,16 @@
 package aima.gui.fx.applications.search;
 
-import aima.core.search.csp.*;
+import java.util.Arrays;
+import java.util.List;
+
+import aima.core.search.csp.Assignment;
+import aima.core.search.csp.BacktrackingStrategy;
+import aima.core.search.csp.CSP;
+import aima.core.search.csp.CSPStateListener;
+import aima.core.search.csp.Domain;
+import aima.core.search.csp.ImprovedBacktrackingStrategy;
+import aima.core.search.csp.MinConflictsStrategy;
+import aima.core.search.csp.SolutionStrategy;
 import aima.core.search.csp.examples.MapCSP;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -55,7 +65,7 @@ public class CspMapColoringApp extends IntegrableApplication {
         StackPane stateView = new StackPane();
         stateViewCtrl = new CspViewCtrl(stateView);
 
-        Parameter[] params = createParameters();
+        List<Parameter> params = createParameters();
 
         SimulationPaneBuilder builder = new SimulationPaneBuilder();
         builder.defineParameters(params);
@@ -67,7 +77,7 @@ public class CspMapColoringApp extends IntegrableApplication {
         return root;
     }
 
-    protected Parameter[] createParameters() {
+    protected List<Parameter> createParameters() {
         Parameter p1 = new Parameter(PARAM_MAP, "Map of Australia",
                 "Map of Australia NSW=BLUE (for LCV)",
                 "Map of Australia WA=RED (for LCV)");
@@ -79,7 +89,7 @@ public class CspMapColoringApp extends IntegrableApplication {
                 "Backtracking + AC3",
                 "Backtracking + AC3 + MRV & DEG + LCV",
                 "Min-Conflicts (50)");
-        return new Parameter[]{p1, p2};
+        return Arrays.asList(p1, p2);
     }
 
     /**

@@ -1,6 +1,8 @@
 package aima.gui.fx.applications.search.local;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -64,7 +66,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		Canvas canvas = new Canvas();
 		funcPlotterCtrl = new FunctionPlotterCtrl(canvas);
 		funcPlotterCtrl.setLimits(Functions.minX, Functions.maxX, Functions.minY, Functions.maxY);
-		Parameter[] params = createParameters();
+		List<Parameter> params = createParameters();
 		
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
@@ -76,7 +78,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_FUNC_SELECT);
 		p1.setValues(Functions.f1, Functions.f2, Functions.f3);
 		p1.setValueNames("f1", "f2", "f3");
@@ -86,7 +88,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		p3.setDefaultValueIndex(1);
 		Parameter p4 = new Parameter(PARAM_MAX_ITER, 100, 500, 1000);
 		p4.setDefaultValueIndex(1);
-		return new Parameter[] {p1, p2, p3, p4};
+		return Arrays.asList(p1, p2, p3, p4);
 	}
 	
 	
