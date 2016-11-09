@@ -9,20 +9,20 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.AdaptableHeuristicFunction;
-import aima.core.environment.map.BidirectionalMapProblem;
+import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
+import aima.core.search.framework.SearchForActions;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.SimulationPaneBuilder;
 import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
+import aima.gui.util.SearchFactory;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.Position;
@@ -35,24 +35,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
- * Integrable application which demonstrates how the Learning Real-Time A*
- * (LRTA*) search algorithm performs in a route finding scenario based on a real
- * OSM map. This GUI does not provide a text pane beside the map view.
+ * Simple OSM route finding agent application which can be used as base class
+ * for more advanced OSM agent applications.
  *
  * @author Ruediger Lunde
  *
  */
-public class OsmLRTAStarAgentApp extends IntegrableApplication {
+public class SimpleOsmAgentApp extends IntegrableApplication {
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	public static String PARAM_WAY_SELECTION = "waySelection";
+	public static String PARAM_SEARCH = "search";
+	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
 	public static String PARAM_HEURISTIC = "heuristic";
 	public static String TRACK_NAME = "Track";
 
 	protected MapPaneCtrl mapPaneCtrl;
+	protected SimpleEnvironmentViewCtrl envViewCtrl;
 	protected SimulationPaneCtrl simPaneCtrl;
 
 	protected MapAdapter map;
@@ -60,26 +62,34 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "OSM LRTA* Agent App";
+		return "Simple OSM Agent App";
 	}
-	
+
 	/** Loads a map of the city of Ulm, Germany. Override to change the map. */
 	protected void loadMap() {
 		mapPaneCtrl.loadMap(DataResource.getULMFileResource());
 	}
-	
+
+	/** Defines the parameters to be shown in the simulation pane tool bar. */
 	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
-		Parameter p2 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
-		p2.setDefaultValueIndex(1);
-		return Arrays.asList(p1, p2);
+		Parameter p2 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
+		p2.setDefaultValueIndex(5);
+		Parameter p3 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
+		p3.setDefaultValueIndex(1);
+		p3.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
+		Parameter p4 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
+		p4.setDefaultValueIndex(1);
+		p4.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
+				"Recursive Best First No Loops", "Hill Climbing");
+		return Arrays.asList(p1, p2, p3, p4);
 	}
-	
+
 	/**
-	 * Factory method which creates a new agent based on the current parameter
-	 * settings.
+	 * Factory method which creates a search strategy based on the current
+	 * parameter settings.
 	 */
-	protected Agent createAgent(List<String> locations) {
+	protected SearchForActions createSearch(List<String> locations) {
 		AdaptableHeuristicFunction heuristic;
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
@@ -88,12 +98,18 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		default:
 			heuristic = MapFunctionFactory.getSLDHeuristicFunction(locations.get(1), map);
 		}
-		Problem p = new BidirectionalMapProblem(map, null, locations.get(1));
-		OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
-				p.getStepCostFunction());
-		return new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+		return SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 	}
-	
+
+	/**
+	 * Factory method which creates a new agent based on the current parameter
+	 * settings.
+	 */
+	protected Agent createAgent(SearchForActions search, List<String> locations) {
+		return new MapAgent(map, envViewCtrl::notify, search, new String[] { locations.get(1) });
+	}
+
 	/**
 	 * Defines state view, parameters, and call-back functions and calls the
 	 * simulation pane builder to create layout and controller objects.
@@ -107,9 +123,12 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		StackPane mapPane = new StackPane();
 		mapPaneCtrl = new MapPaneCtrl(mapPane);
 		loadMap();
+		StackPane envView = new StackPane();
+		envViewCtrl = new SimpleEnvironmentViewCtrl(envView, mapPane, 0.75);
+
 		SimulationPaneBuilder builder = new SimulationPaneBuilder();
 		builder.defineParameters(params);
-		builder.defineStateView(mapPane);
+		builder.defineStateView(envView);
 		builder.defineInitMethod(this::initialize);
 		builder.defineSimMethod(this::simulate);
 		simPaneCtrl = builder.getResultFor(root);
@@ -155,14 +174,19 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
-			Agent agent = createAgent(locations);
+			SearchForActions search = createSearch(locations);
+			Agent agent = createAgent(search, locations);
 			env = new MapEnvironment(map);
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
+			if (simPaneCtrl.getParam(PARAM_SEARCH).isPresent())
+				env.notifyViews("Using " + simPaneCtrl.getParamValue(PARAM_SEARCH));
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
 			}
+			envViewCtrl.notify("");
+			// simPaneCtrl.setStatus(search.getMetrics().toString());
 		}
 	}
 
@@ -187,7 +211,9 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		int actionCounter = 0;
 
 		@Override
-		public void notify(String msg) {}
+		public void notify(String msg) {
+			envViewCtrl.notify(msg);
+		}
 
 		@Override
 		public void agentAdded(Agent agent, Environment source) {

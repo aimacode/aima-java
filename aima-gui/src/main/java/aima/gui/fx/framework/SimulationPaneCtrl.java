@@ -66,6 +66,10 @@ public class SimulationPaneCtrl {
 		setState(State.READY);
 	}
 
+	public Optional<Parameter> getParam(String paramName) {
+		return Parameter.find(params, paramName);
+	}
+	
 	public int getParamValueIndex(String paramName) {
 		int valIdx = -1;
 		int paramIdx = Parameter.indexOf(params, paramName);

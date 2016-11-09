@@ -91,16 +91,13 @@ public class MapAgent extends SimpleProblemSolvingAgent {
 
 	@Override
 	protected List<Action> search(Problem problem) {
-		List<Action> actions = new ArrayList<Action>();
+		List<Action> result = new ArrayList<Action>();
 		try {
-			List<Action> sactions = search.search(problem);
-			for (Action action : sactions) {
-				actions.add(action);
-			}
+			result.addAll(search.search(problem));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return actions;
+		return result;
 	}
 
 	@Override
