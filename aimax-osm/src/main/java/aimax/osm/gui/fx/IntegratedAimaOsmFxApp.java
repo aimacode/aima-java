@@ -41,5 +41,4 @@ public class IntegratedAimaOsmFxApp extends Application {
 		builder.registerApp(OsmRouteFindingAgentApp.class);
 		builder.registerApp(OsmLRTAStarAgentApp.class);
 	}
-
 }

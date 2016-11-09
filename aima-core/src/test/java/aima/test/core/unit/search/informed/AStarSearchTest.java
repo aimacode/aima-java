@@ -15,7 +15,6 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.environment.map.StraightLineDistanceHeuristicFunction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
@@ -70,7 +69,7 @@ public class AStarSearchTest {
 				new MapStepCostFunction(romaniaMap));
 
 		Search search = new AStarSearch(new GraphSearch(),
-				new StraightLineDistanceHeuristicFunction(
+				MapFunctionFactory.getSLDHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
 
@@ -93,7 +92,7 @@ public class AStarSearchTest {
 				new MapStepCostFunction(romaniaMap));
 
 		Search search = new AStarSearch(new TreeSearch(),
-				new StraightLineDistanceHeuristicFunction(
+				MapFunctionFactory.getSLDHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert.assertEquals(
@@ -118,7 +117,7 @@ public class AStarSearchTest {
 				new MapStepCostFunction(romaniaMap));
 
 		Search search = new AStarSearch(new GraphSearch(),
-				new StraightLineDistanceHeuristicFunction(
+				MapFunctionFactory.getSLDHeuristicFunction(
 						SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert.assertEquals(

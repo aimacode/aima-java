@@ -7,18 +7,10 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.AdaptableHeuristicFunction;
-import aima.core.environment.map.BidirectionalMapProblem;
-import aima.core.environment.map.MapAgent;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.MapFunctionFactory;
-import aima.core.environment.map.MoveToAction;
+import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -75,14 +67,14 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 	/** Search method to be used. */
 	private SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
-	protected AdaptableHeuristicFunction heuristic;
+	private AdaptableHeuristicFunction heuristic;
 
     /**
      * Stores those states (Strings with map node ids), whose corresponding
      * search nodes have been expanded during the last search. Quick and dirty
      * solution...
      */
-    static final HashSet<Object> visitedStates = new HashSet<Object>();
+    private static final HashSet<Object> visitedStates = new HashSet<Object>();
 
 
 	@Override
@@ -118,7 +110,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 		return root;
 	}
 
-	protected Parameter[] createParameters() {
+	private Parameter[] createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
 		Parameter p2 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p2.setDefaultValueIndex(5);
@@ -126,9 +118,9 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 		p3.setDefaultValueIndex(1);
 		p3.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
 		Parameter p4 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
+        p4.setDefaultValueIndex(1);
 		p4.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
 				"Recursive Best First No Loops", "Hill Climbing");
-		p4.setDefaultValueIndex(1);
 		return new Parameter[] { p1, p2, p3, p4 };
 	}
 
@@ -152,12 +144,12 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 		}
 
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
-		case 0:
-			heuristic = new H1();
-			break;
-		default:
-			heuristic = new H2();
-		}
+            case 0:
+                heuristic = MapFunctionFactory.getZeroHeuristicFunction();
+                break;
+            default:
+                heuristic = MapFunctionFactory.getSLDHeuristicFunction();
+        }
 		search = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
 				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
@@ -172,32 +164,17 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 	}
 
 	/** Creates a new agent and adds them to the current environment. */
-	protected void initAgent(List<MapNode> markers) {
-		String[] locs = new String[markers.size()];
+	private void initEnvironment(List<MapNode> markers) {
+		String[] locations = new String[markers.size()];
 		for (int i = 0; i < markers.size(); i++) {
 			MapNode node = markers.get(i);
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
-			locs[i] = map.getNearestLocation(pt);
+			locations[i] = map.getNearestLocation(pt);
 		}
-		heuristic.adaptToGoal(locs[1], map);
+		heuristic.adaptToGoal(locations[1], map);
         env = new MapEnvironment(map);
-		Agent agent = null;
-		int idx = 0;
-		switch (idx) {
-			case 0:
-				agent = new MapAgent(map, env, search, new String[] { locs[1] });
-				break;
-			case 1:
-				Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-				OnlineSearchProblem osp = new OnlineSearchProblem(
-						p.getActionsFunction(), p.getGoalTest(),
-						p.getStepCostFunction());
-				agent = new LRTAStarAgent(osp,
-						MapFunctionFactory.getPerceptToStateFunction(), heuristic);
-				break;
-		}
-        env.addEnvironmentView(new TrackUpdater());
-		env.addAgent(agent, locs[0]);
+		Agent agent = new MapAgent(map, env, search, new String[] { locations[1] });
+		env.addAgent(agent, locations[0]);
 	}
 
 
@@ -207,14 +184,15 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
         if (markers.size() < 2) {
             simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
         } else {
-		    initAgent(markers);
+		    initEnvironment(markers);
+            env.addEnvironmentView(new TrackUpdater());
             env.notifyViews("Using " + simPaneCtrl.getParamValue(PARAM_SEARCH));
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
 			}
 			envViewCtrl.notify("");
-            simPaneCtrl.setStatus("Search metrics: " + search.getMetrics());
+            simPaneCtrl.setStatus(search.getMetrics().toString());
 		}
 	}
 
@@ -237,34 +215,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
 
 	// helper classes...
 
-	/**
-	 * Returns always the heuristic value 0.
-	 */
-	static class H1 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
-		}
-	}
-
-	/**
-	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
-	 * as location names and uses the straight-line distance between them as
-	 * heuristic value.
-	 */
-	static class H2 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			double result = 0.0;
-			Point2D pt1 = map.getPosition((String) state);
-			Point2D pt2 = map.getPosition((String) goal);
-			if (pt1 != null && pt2 != null)
-				result = pt1.distance(pt2);
-			return result;
-		}
-	}
-
-	class TrackUpdater implements EnvironmentView {
+	private class TrackUpdater implements EnvironmentView {
 
         @Override
         public void notify(String msg) { envViewCtrl.notify(msg); }
@@ -307,6 +258,7 @@ public class OsmRouteFindingAgentApp extends IntegrableApplication {
     /** Demonstrates how to choose a color for a certain track. */
     private EntityClassifier<EntityViewInfo> createEntityClassifier() {
         MapStyleFactory msf = new MapStyleFactory();
+        // define colors for tracks
         EntityClassifier<EntityViewInfo> eClassifier = msf
                 .createDefaultClassifier();
         eClassifier.addRule("track_type", TRACK_NAME, msf

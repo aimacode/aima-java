@@ -11,7 +11,6 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.environment.map.StraightLineDistanceHeuristicFunction;
 import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
@@ -84,7 +83,7 @@ public class GreedyBestFirstSearchTest {
 				new DefaultGoalTest(SimplifiedRoadMapOfPartOfRomania.BUCHAREST), new MapStepCostFunction(romaniaMap));
 
 		Search search = new GreedyBestFirstSearch(new TreeSearch(),
-				new StraightLineDistanceHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+				MapFunctionFactory.getSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert.assertEquals(
 				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
@@ -103,7 +102,7 @@ public class GreedyBestFirstSearchTest {
 				new DefaultGoalTest(SimplifiedRoadMapOfPartOfRomania.BUCHAREST), new MapStepCostFunction(romaniaMap));
 
 		Search search = new GreedyBestFirstSearch(new GraphSearch(),
-				new StraightLineDistanceHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+				MapFunctionFactory.getSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert.assertEquals(
 				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",

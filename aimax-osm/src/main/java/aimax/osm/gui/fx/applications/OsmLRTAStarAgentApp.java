@@ -1,6 +1,5 @@
 package aimax.osm.gui.fx.applications;
 
-import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -34,9 +34,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
- * Integrable application which demonstrates how different kinds of search
- * algorithms perform an a route finding scenario based on a real OSM map.
- * Map locations corresponding to expanded nodes are highlighted in green.
+ * Integrable application which demonstrates how the Learning Real-Time A*
+ * (LRTA*) search algorithm perform an a route finding scenario based on a real
+ * OSM map.
  *
  * @author Ruediger Lunde
  *
@@ -48,15 +48,14 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	}
 
 	public static String PARAM_WAY_SELECTION = "waySelection";
-	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
 	public static String PARAM_HEURISTIC = "heuristic";
     public static String TRACK_NAME = "Track";
 
 	private MapPaneCtrl mapPaneCtrl;
 	private SimulationPaneCtrl simPaneCtrl;
 
-	private MapAdapter map;
-	private MapEnvironment env;
+	protected MapAdapter map;
+	protected MapEnvironment env;
 	/** Heuristic function to be used when performing informed search. */
 	protected AdaptableHeuristicFunction heuristic;
 
@@ -65,7 +64,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
      * search nodes have been expanded during the last search. Quick and dirty
      * solution...
      */
-    static final HashSet<Object> visitedStates = new HashSet<Object>();
+    private static final HashSet<Object> visitedStates = new HashSet<Object>();
 
 
 	@Override
@@ -123,36 +122,30 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		}
 
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
-		case 0:
-			heuristic = new H1();
-			break;
-		default:
-			heuristic = new H2();
+			case 0:
+				heuristic = MapFunctionFactory.getZeroHeuristicFunction();
+				break;
+			default:
+				heuristic = MapFunctionFactory.getSLDHeuristicFunction();
 		}
 
         map.getOsmMap().clearTrack(TRACK_NAME);
 	}
 
 	/** Creates a new agent and adds them to the current environment. */
-	protected void initAgent(List<MapNode> markers) {
-		String[] locs = new String[markers.size()];
-		for (int i = 0; i < markers.size(); i++) {
-			MapNode node = markers.get(i);
-			Point2D pt = new Point2D(node.getLon(), node.getLat());
-			locs[i] = map.getNearestLocation(pt);
-		}
-		heuristic.adaptToGoal(locs[1], map);
-        env = new MapEnvironment(map);
+	protected void initEnvironment(String[] locations) {
 
-		Problem p = new BidirectionalMapProblem(map, null, locs[1]);
+		heuristic.adaptToGoal(locations[1], map);
+
+		Problem p = new BidirectionalMapProblem(map, null, locations[1]);
 		OnlineSearchProblem osp = new OnlineSearchProblem(
 				p.getActionsFunction(), p.getGoalTest(),
 				p.getStepCostFunction());
 		Agent agent = new LRTAStarAgent(osp,
 				MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 
-        env.addEnvironmentView(new TrackUpdater());
-		env.addAgent(agent, locs[0]);
+		env = new MapEnvironment(map);
+		env.addAgent(agent, locations[0]);
 	}
 
 
@@ -162,16 +155,17 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
         if (markers.size() < 2) {
             simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
         } else {
-		    initAgent(markers);
+			String[] locations = new String[markers.size()];
+			for (int i = 0; i < markers.size(); i++) {
+				MapNode node = markers.get(i);
+				Point2D pt = new Point2D(node.getLon(), node.getLat());
+				locations[i] = map.getNearestLocation(pt);
+			}
+		    initEnvironment(locations);
+			env.addEnvironmentView(new TrackUpdater());
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
-			}
-			Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
-			if (travelDistance != null) {
-				DecimalFormat f = new DecimalFormat("#0.0");
-				simPaneCtrl.setStatus("Travel distance: "
-						+ f.format(travelDistance) + "km");
 			}
 		}
 	}
@@ -183,7 +177,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 
 
 	/** Visualizes agent positions. Call from simulation thread. */
-    private void updateTrack(Agent agent) {
+    private void updateTrack(Agent agent, Metrics metrics) {
         MapAdapter map = (MapAdapter) env.getMap();
         MapNode node = map.getWayNode(env.getAgentLocation(agent));
         if (node != null) {
@@ -191,45 +185,20 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
                     new Position(node.getLat(), node.getLon()))
             );
         }
+		simPaneCtrl.setStatus(metrics.toString());
     }
 
 	// helper classes...
 
-	/**
-	 * Returns always the heuristic value 0.
-	 */
-	static class H1 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
-		}
-	}
-
-	/**
-	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
-	 * as location names and uses the straight-line distance between them as
-	 * heuristic value.
-	 */
-	static class H2 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			double result = 0.0;
-			Point2D pt1 = map.getPosition((String) state);
-			Point2D pt2 = map.getPosition((String) goal);
-			if (pt1 != null && pt2 != null)
-				result = pt1.distance(pt2);
-			return result;
-		}
-	}
-
 	class TrackUpdater implements EnvironmentView {
+		int actionCounter = 0;
 
         @Override
         public void notify(String msg) { }
 
         @Override
         public void agentAdded(Agent agent, Environment source) {
-			updateTrack(agent);
+			updateTrack(agent, new Metrics());
 		}
 
         /**
@@ -238,7 +207,12 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
         @Override
         public void agentActed(Agent agent, Action command, Environment source) {
             if (command instanceof MoveToAction) {
-                updateTrack(agent);
+				Metrics metrics = new Metrics();
+				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
+				if (travelDistance != null)
+					metrics.set("travelDistance[km]", travelDistance);
+				metrics.set("actions", ++actionCounter);
+                updateTrack(agent, metrics);
             }
         }
     }

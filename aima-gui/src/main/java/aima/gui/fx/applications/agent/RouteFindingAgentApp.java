@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.AdaptableHeuristicFunction;
-import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.Scenario;
-import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.*;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -107,11 +101,12 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		Parameter p3 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p3.setDefaultValueIndex(5);
 		Parameter p4 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
+		p4.setDefaultValueIndex(1);
 		p4.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
 		Parameter p5 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
+		p5.setDefaultValueIndex(1);
 		p5.setDependency(PARAM_SEARCH, "Greedy Best First", "A*", "Recursive Best First",
 				"Recursive Best First No Loops", "Hill Climbing");
-		p5.setDefaultValueIndex(1);
 		return new Parameter[] { p1, p2r, p2a, p3, p4, p5 };
 	}
 
@@ -180,12 +175,11 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
-			heuristic = new H1();
+			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
 			break;
 		default:
-			heuristic = new H2();
+			heuristic = MapFunctionFactory.getSLDHeuristicFunction(destinations.get(0), scenario.getAgentMap());
 		}
-		heuristic.adaptToGoal(destinations.get(0), scenario.getAgentMap());
 
 		search = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
 				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
@@ -204,41 +198,12 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 			env.step();
 			simPaneCtrl.waitAfterStep();
 		}
-		simPaneCtrl.setStatus("Search metrics: " + search.getMetrics());
+		simPaneCtrl.setStatus(search.getMetrics().toString());
 		envViewCtrl.notify("pathCost=" + search.getMetrics().get("pathCost"));
 	}
 
 	@Override
 	public void finalize() {
 		simPaneCtrl.cancelSimulation();
-	}
-
-	// helper classes...
-
-	/**
-	 * Returns always the heuristic value 0.
-	 */
-	static class H1 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
-		}
-	}
-
-	/**
-	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
-	 * as location names and uses the straight-line distance between them as
-	 * heuristic value.
-	 */
-	static class H2 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			double result = 0.0;
-			Point2D pt1 = map.getPosition((String) state);
-			Point2D pt2 = map.getPosition((String) goal);
-			if (pt1 != null && pt2 != null)
-				result = pt1.distance(pt2);
-			return result;
-		}
 	}
 }
