@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
  * @author Ruediger Lunde
  *
  */
-public class OsmRouteFindingAgentApp extends SimpleOsmAgentApp {
+public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 
 	public static void main(String[] args) {
 		launch(args);

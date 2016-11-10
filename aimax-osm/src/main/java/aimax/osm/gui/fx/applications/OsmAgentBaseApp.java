@@ -36,12 +36,14 @@ import javafx.scene.layout.StackPane;
 
 /**
  * Simple OSM route finding agent application which can be used as base class
- * for more advanced OSM agent applications.
+ * for more advanced OSM agent applications. For example, by overriding some of
+ * the factory methods, it is easy to add parameters and change agent as well as
+ * environment implementations.
  *
  * @author Ruediger Lunde
  *
  */
-public class SimpleOsmAgentApp extends IntegrableApplication {
+public class OsmAgentBaseApp extends IntegrableApplication {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -62,7 +64,7 @@ public class SimpleOsmAgentApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "Simple OSM Agent App";
+		return "OSM Agent Base App";
 	}
 
 	/** Loads a map of the city of Ulm, Germany. Override to change the map. */
@@ -108,6 +110,14 @@ public class SimpleOsmAgentApp extends IntegrableApplication {
 	 */
 	protected Agent createAgent(SearchForActions search, List<String> locations) {
 		return new MapAgent(map, envViewCtrl::notify, search, new String[] { locations.get(1) });
+	}
+
+	/**
+	 * Factory method which creates a new environment based on the current
+	 * parameter settings.
+	 */
+	protected MapEnvironment createEnvironment() {
+		return new MapEnvironment(map);
 	}
 
 	/**
@@ -176,7 +186,7 @@ public class SimpleOsmAgentApp extends IntegrableApplication {
 			}
 			SearchForActions search = createSearch(locations);
 			Agent agent = createAgent(search, locations);
-			env = new MapEnvironment(map);
+			env = createEnvironment();
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
 			if (simPaneCtrl.getParam(PARAM_SEARCH).isPresent())

@@ -5,7 +5,7 @@ import aima.gui.fx.framework.IntegratedAppPaneBuilder;
 import aimax.osm.gui.fx.applications.OsmLRTAStarAgentApp;
 import aimax.osm.gui.fx.applications.OsmRouteFindingAgentApp;
 import aimax.osm.gui.fx.applications.OsmRoutePlannerApp;
-import aimax.osm.gui.fx.applications.SimpleOsmAgentApp;
+import aimax.osm.gui.fx.applications.OsmAgentBaseApp;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -39,7 +39,7 @@ public class IntegratedAimaOsmFxApp extends Application {
 		IntegratedAimaFxApp.defineContent(builder);
 
 		builder.registerApp(OsmRoutePlannerApp.class);
-		builder.registerApp(SimpleOsmAgentApp.class);
+		builder.registerApp(OsmAgentBaseApp.class);
 		builder.registerApp(OsmRouteFindingAgentApp.class);
 		builder.registerApp(OsmLRTAStarAgentApp.class);
 	}
