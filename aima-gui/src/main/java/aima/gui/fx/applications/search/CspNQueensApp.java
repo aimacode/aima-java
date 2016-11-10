@@ -24,10 +24,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-
 /**
- * Integrable application which demonstrates how different search strategies
- * solve the N-Queens problem.
+ * Integrable application which demonstrates how different CSP solution
+ * strategies solve the N-Queens problem.
  *
  * @author Ruediger Lunde
  *
@@ -43,7 +42,7 @@ public class CspNQueensApp extends IntegrableApplication {
 	public final static String PARAM_DEG = "deg";
 	public final static String PARAM_AC3 = "ac3";
 	public final static String PARAM_LCV = "lcv";
-	
+
 	public final static String PARAM_BOARD_SIZE = "boardSize";
 
 	private NQueensViewCtrl stateViewCtrl;
@@ -54,7 +53,7 @@ public class CspNQueensApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "CSP N-Queens FX App";
+		return "CSP N-Queens App";
 	}
 
 	/**
@@ -82,8 +81,7 @@ public class CspNQueensApp extends IntegrableApplication {
 	}
 
 	protected List<Parameter> createParameters() {
-		Parameter p1 = new Parameter(PARAM_STRATEGY,
-				"Min-Conflicts", "Backtracking");
+		Parameter p1 = new Parameter(PARAM_STRATEGY, "Min-Conflicts", "Backtracking");
 		Parameter p2 = new Parameter(PARAM_MRV, true, false);
 		Parameter p3 = new Parameter(PARAM_DEG, true, false);
 		Parameter p4 = new Parameter(PARAM_AC3, true, false);
@@ -109,7 +107,7 @@ public class CspNQueensApp extends IntegrableApplication {
 			boolean deg = (Boolean) simPaneCtrl.getParamValue(PARAM_DEG);
 			boolean ac3 = (Boolean) simPaneCtrl.getParamValue(PARAM_AC3);
 			boolean lcv = (Boolean) simPaneCtrl.getParamValue(PARAM_LCV);
-			solver = new ImprovedBacktrackingStrategy(mrv, deg, ac3, lcv); 
+			solver = new ImprovedBacktrackingStrategy(mrv, deg, ac3, lcv);
 		}
 		solver.addCSPStateListener(progressAnalyzer);
 		progressAnalyzer.reset();
@@ -131,7 +129,7 @@ public class CspNQueensApp extends IntegrableApplication {
 		}
 		simPaneCtrl.setStatus(progressAnalyzer.getResults().toString());
 	}
-	
+
 	private NQueensBoard getBoard(Assignment assignment) {
 		NQueensBoard board = new NQueensBoard(csp.getVariables().size());
 		for (Variable var : assignment.getVariables()) {
@@ -150,22 +148,22 @@ public class CspNQueensApp extends IntegrableApplication {
 		Platform.runLater(() -> stateViewCtrl.update(board));
 		simPaneCtrl.waitAfterStep();
 	}
-	
+
 	protected class ProgressAnalyzer implements CSPStateListener {
 		private int assignmentCount = 0;
 		private int domainCount = 0;
-		
+
 		@Override
 		public void stateChanged(Assignment assignment, CSP csp) {
 			updateStateView(getBoard(assignment));
 			++assignmentCount;
 		}
-		
+
 		@Override
 		public void stateChanged(CSP csp) {
 			++domainCount;
 		}
-		
+
 		public void reset() {
 			assignmentCount = 0;
 			domainCount = 0;
@@ -179,5 +177,4 @@ public class CspNQueensApp extends IntegrableApplication {
 			return result;
 		}
 	}
-	
 }
