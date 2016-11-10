@@ -1,6 +1,5 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Node;
 
@@ -14,14 +13,17 @@ import aima.core.search.framework.Node;
  * @author Ciaran O'Reilly
  * 
  */
-public class GreedyBestFirstEvaluationFunction implements EvaluationFunction {
-
-	private HeuristicFunction hf = null;
+public class GreedyBestFirstEvaluationFunction extends HeuristicEvaluationFunction {
 
 	public GreedyBestFirstEvaluationFunction(HeuristicFunction hf) {
 		this.hf = hf;
 	}
 
+	/** Note: Do not forget to heuristic function before starting the search! */
+	public GreedyBestFirstEvaluationFunction() {
+	}
+
+	@Override
 	public double f(Node n) {
 		// f(n) = h(n)
 		return hf.h(n.getState());

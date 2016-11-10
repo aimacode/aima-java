@@ -106,6 +106,10 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 		return actions;
 	}
 
+	public EvaluationFunction getEvaluationFunction() {
+		return evaluationFunction;
+	}
+	
 	@Override
 	public NodeExpander getNodeExpander() {
 		return nodeExpander;

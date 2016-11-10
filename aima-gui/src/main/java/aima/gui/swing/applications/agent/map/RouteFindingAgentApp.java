@@ -2,14 +2,14 @@ package aima.gui.swing.applications.agent.map;
 
 import java.util.ArrayList;
 
-import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.Scenario;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.util.math.geom.shapes.Point2D;
+import aima.core.search.framework.HeuristicFunction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -20,7 +20,7 @@ import aima.gui.util.SearchFactory;
 /**
  * Demo example of a route finding agent application with GUI. The main method
  * starts a map agent frame and supports runtime experiments. This
- * implementation is based on the {@link aima.core.environment.map.MapAgent} and
+ * implementation is based on the {@link aima.core.environment.map.SimpleMapAgent} and
  * the {@link aima.core.environment.map.MapEnvironment}. It can be used as a
  * code template for creating new applications with different specialised kinds
  * of agents and environments.
@@ -193,17 +193,17 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		 * based on straight-line distance computation.
 		 */
 		@Override
-		protected AdaptableHeuristicFunction createHeuristic(int heuIdx) {
-			AdaptableHeuristicFunction ahf = null;
+		protected HeuristicFunction createHeuristic(int heuIdx) {
+			HeuristicFunction hf = null;
 			switch (heuIdx) {
 			case 0:
-				ahf = new H1();
+				hf = MapFunctionFactory.getZeroHeuristicFunction();
 				break;
 			default:
-				ahf = new H2();
+				hf = MapFunctionFactory.getSLDHeuristicFunction(destinations.get(0), scenario
+						.getAgentMap());
 			}
-			return ahf.adaptToGoal(destinations.get(0), scenario
-					.getAgentMap());
+			return hf;
 		}
 
 		/**
@@ -217,35 +217,8 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 			}
 			MapEnvironment env = scenario.getEnv();
 			String goal = destinations.get(0);
-			MapAgent agent = new MapAgent(env.getMap(), env, search, new String[] { goal });
+			SimpleMapAgent agent = new SimpleMapAgent(env.getMap(), env, search, new String[] { goal });
 			env.addAgent(agent, scenario.getInitAgentLocation());
-		}
-	}
-
-	/**
-	 * Returns always the heuristic value 0.
-	 */
-	static class H1 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
-		}
-	}
-
-	/**
-	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
-	 * as location names and uses the straight-line distance between them as
-	 * heuristic value.
-	 */
-	static class H2 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			double result = 0.0;
-			Point2D pt1 = map.getPosition((String) state);
-			Point2D pt2 = map.getPosition((String) goal);
-			if (pt1 != null && pt2 != null)
-				result = pt1.distance(pt2);
-			return result;
 		}
 	}
 

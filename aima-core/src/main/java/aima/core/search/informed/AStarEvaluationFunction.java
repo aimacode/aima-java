@@ -1,6 +1,5 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PathCostFunction;
@@ -18,14 +17,20 @@ import aima.core.search.framework.PathCostFunction;
  * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class AStarEvaluationFunction implements EvaluationFunction {
+public class AStarEvaluationFunction extends HeuristicEvaluationFunction {
 
-	private PathCostFunction gf = new PathCostFunction();
-	private HeuristicFunction hf = null;
+	private PathCostFunction gf;
 
 	public AStarEvaluationFunction(HeuristicFunction hf) {
 		this.hf = hf;
+		this.gf = new PathCostFunction();
+	}
+
+	/** Note: Do not forget to heuristic function before starting the search! */
+	public AStarEvaluationFunction() {
+		this.gf = new PathCostFunction();
 	}
 
 	/**
@@ -36,6 +41,7 @@ public class AStarEvaluationFunction implements EvaluationFunction {
 	 *            a node
 	 * @return g(n) + h(n)
 	 */
+	@Override
 	public double f(Node n) {
 		// f(n) = g(n) + h(n)
 		return gf.g(n) + hf.h(n.getState());

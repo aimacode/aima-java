@@ -9,7 +9,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.search.framework.qsearch.GraphSearchReducedFrontier;
 import aima.core.search.uninformed.UniformCostSearch;
@@ -39,7 +39,7 @@ public class MapAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -52,7 +52,7 @@ public class MapAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "D" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -67,7 +67,7 @@ public class MapAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		UniformCostSearch ucSearch = new UniformCostSearch(new GraphSearchReducedFrontier());
 
-		MapAgent ma = new MapAgent(me.getMap(), me, ucSearch, new String[] { "D" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, ucSearch, new String[] { "D" });
 
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -81,7 +81,7 @@ public class MapAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(), new String[] { "A" });
 		me.addAgent(ma, "E");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();

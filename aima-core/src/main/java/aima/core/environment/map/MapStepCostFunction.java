@@ -36,7 +36,7 @@ public class MapStepCostFunction implements StepCostFunction {
 			return constantCost;
 		}
 
-		return new Double(distance);
+		return distance;
 	}
 
 	// END-StepCostFunction

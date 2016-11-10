@@ -8,11 +8,11 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.util.CancelableThread;
@@ -92,7 +92,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	 * parameter settings.
 	 */
 	protected SearchForActions createSearch(List<String> locations) {
-		AdaptableHeuristicFunction heuristic;
+		HeuristicFunction heuristic;
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
 			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
@@ -109,7 +109,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	 * settings.
 	 */
 	protected Agent createAgent(SearchForActions search, List<String> locations) {
-		return new MapAgent(map, envViewCtrl::notify, search, new String[] { locations.get(1) });
+		return new MapAgent(map, search, locations.get(1), envViewCtrl::notify);
 	}
 
 	/**

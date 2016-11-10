@@ -7,6 +7,7 @@ import java.util.Set;
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.ResultFunction;
@@ -36,19 +37,14 @@ public class MapFunctionFactory {
 		return resultFunction;
 	}
 
-	/** Returns an adaptable heuristic based on straight line distance computation. Don't forget to call
-	 * {@link AdaptableHeuristicFunction#adaptToGoal(Object, Map)} before use! */
-	public static AdaptableHeuristicFunction getSLDHeuristicFunction() {
-		return new StraightLineDistanceHeuristicFunction();
-	}
 
 	/** Returns an adaptable heuristic based on straight line distance computation. */
-	public static AdaptableHeuristicFunction getSLDHeuristicFunction(Object goal, Map map) {
+	public static HeuristicFunction getSLDHeuristicFunction(Object goal, Map map) {
 		return new StraightLineDistanceHeuristicFunction(goal, map);
 	}
 
 	/** Returns a heuristic which always returns zero. More optimism is not possible. */
-	public static AdaptableHeuristicFunction getZeroHeuristicFunction() {
+	public static HeuristicFunction getZeroHeuristicFunction() {
 		return new ZeroHeuristicFunction();
 	}
 
@@ -106,11 +102,9 @@ public class MapFunctionFactory {
 	}
 
 
-	private static class StraightLineDistanceHeuristicFunction extends
-			AdaptableHeuristicFunction {
-
-		public StraightLineDistanceHeuristicFunction() {
-		}
+	private static class StraightLineDistanceHeuristicFunction implements HeuristicFunction {
+		private Object goal;
+		private Map map;
 
 		public StraightLineDistanceHeuristicFunction(Object goal, Map map) {
 			this.goal = goal;
@@ -128,8 +122,7 @@ public class MapFunctionFactory {
 		}
 	}
 
-	private static class ZeroHeuristicFunction extends
-			AdaptableHeuristicFunction {
+	private static class ZeroHeuristicFunction implements HeuristicFunction {
 
 		public double h(Object state) {
 			return 0.0;

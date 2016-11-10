@@ -5,7 +5,7 @@ import java.util.List;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
-import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander.NodeListener;
@@ -17,6 +17,7 @@ import aima.gui.swing.applications.agent.map.MapAgentFrame;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppFrame;
 import aima.gui.swing.framework.MessageLogger;
+import aima.gui.util.SearchFactory;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -90,12 +91,6 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 		public void prepare(String changedSelector) {
 			super.prepare(changedSelector);
 			visitedStates.clear();
-			search.getNodeExpander().addNodeListener(new NodeListener() {
-				@Override
-				public void onNodeExpanded(Node node) {
-					visitedStates.add(node.getState());
-				}
-			});
 		}
 
 		/** Creates new agents and adds them to the current environment. */
@@ -112,12 +107,21 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locs[i] = map.getNearestLocation(pt);
 			}
-			heuristic.adaptToGoal(locs[1], map);
-			Agent agent = null;
 			MapAgentFrame.SelectionState state = frame.getSelection();
+			heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL), locs[1]);
+			search = SearchFactory.getInstance().createSearch(state.getIndex(MapAgentFrame.SEARCH_SEL),
+					state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
+			search.getNodeExpander().addNodeListener(new NodeListener() {
+				@Override
+				public void onNodeExpanded(Node node) {
+					visitedStates.add(node.getState());
+				}
+			});
+			
+			Agent agent = null;
 			switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 			case 0:
-				agent = new MapAgent(map, env, search, new String[] { locs[1] });
+				agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
 				break;
 			case 1:
 				Problem p = new BidirectionalMapProblem(map, null, locs[1]);

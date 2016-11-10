@@ -6,7 +6,7 @@
  * implements this interface and adds functionality for
  * creation and modification. It maintains named locations with
  * coordinates and links between them.
- * The <code>MapEnvironment</code> enables a <code>MapAgent</code>
+ * The <code>MapEnvironment</code> enables a <code>SimpleMapAgent</code>
  * to travel through a world whose topology is described by a map.
  * Adaptable heuristic functions let the agent modify the
  * heuristic function with respect to the current goal. Standardized

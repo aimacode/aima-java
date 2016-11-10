@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.BidirectionalMapProblem;
-import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.SimpleMapAgent;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
@@ -36,7 +36,7 @@ public class OsmAgentController extends AgentAppController {
 	/** Search method to be used. */
 	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
-	protected AdaptableHeuristicFunction heuristic;
+	protected HeuristicFunction heuristic;
 
 	protected List<String> markedLocations;
 	protected boolean isPrepared;
@@ -74,11 +74,6 @@ public class OsmAgentController extends AgentAppController {
 			map.ignoreOneways(false);
 			break;
 		}
-
-		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
-		search = SearchFactory.getInstance().createSearch(
-				state.getIndex(MapAgentFrame.SEARCH_SEL),
-				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 		frame.getEnvView().setEnvironment(env);
 		isPrepared = true;
 	}
@@ -95,14 +90,14 @@ public class OsmAgentController extends AgentAppController {
 	 * Returns the trivial zero function or a simple heuristic which is based on
 	 * straight-line distance computation.
 	 */
-	protected AdaptableHeuristicFunction createHeuristic(int heuIdx) {
-		AdaptableHeuristicFunction ahf = null;
+	protected HeuristicFunction createHeuristic(int heuIdx, String goal) {
+		HeuristicFunction ahf = null;
 		switch (heuIdx) {
 		case 0:
-			ahf = new H1();
+			ahf = MapFunctionFactory.getZeroHeuristicFunction();
 			break;
 		default:
-			ahf = new H2();
+			ahf = MapFunctionFactory.getSLDHeuristicFunction(goal, map);
 		}
 		return ahf;
 	}
@@ -113,11 +108,11 @@ public class OsmAgentController extends AgentAppController {
 	 */
 	@Override
 	public void run(MessageLogger logger) {
+		if (env.getAgents().isEmpty())
+			initAgents(logger);
 		logger.log("<simulation-protocol>");
 		logger.log("search: " + search.getClass().getName());
 		logger.log("heuristic: " + heuristic.getClass().getName());
-		if (env.getAgents().isEmpty())
-			initAgents(logger);
 		try {
 			while (!env.isDone() && !frame.simulationPaused()) {
 				Thread.sleep(sleepTime);
@@ -152,20 +147,21 @@ public class OsmAgentController extends AgentAppController {
 			Point2D pt = new Point2D(node.getLon(), node.getLat());
 			locs[i] = map.getNearestLocation(pt);
 		}
-		heuristic.adaptToGoal(locs[1], map);
-		Agent agent = null;
 		MapAgentFrame.SelectionState state = frame.getSelection();
+		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL), locs[1]);
+		search = SearchFactory.getInstance().createSearch(state.getIndex(MapAgentFrame.SEARCH_SEL),
+				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
+		
+		Agent agent = null;
 		switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			agent = new MapAgent(map, env, search, new String[] { locs[1] });
+			agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
 			break;
 		case 1:
 			Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-			OnlineSearchProblem osp = new OnlineSearchProblem(
-					p.getActionsFunction(), p.getGoalTest(),
+			OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
 					p.getStepCostFunction());
-			agent = new LRTAStarAgent(osp,
-					MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+			agent = new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
 			break;
 		}
 		env.addAgent(agent, locs[0]);
@@ -184,47 +180,14 @@ public class OsmAgentController extends AgentAppController {
 			statusMsg.append("Task completed");
 			List<Agent> agents = env.getAgents();
 			if (agents.size() == 1) {
-				Double travelDistance = env.getAgentTravelDistance(agents
-						.get(0));
+				Double travelDistance = env.getAgentTravelDistance(agents.get(0));
 				if (travelDistance != null) {
 					DecimalFormat f = new DecimalFormat("#0.0");
-					statusMsg.append("; travel distance: "
-							+ f.format(travelDistance) + "km");
+					statusMsg.append("; travel distance: " + f.format(travelDistance) + "km");
 				}
 			}
 			statusMsg.append(".");
 			frame.setStatus(statusMsg.toString());
-		}
-	}
-
-	// //////////////////////////////////////////////////////////
-	// local classes
-
-	/**
-	 * Returns always the heuristic value 0.
-	 */
-	static class H1 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
-		}
-	}
-
-	/**
-	 * A simple heuristic which interprets <code>state</code> and {@link #goal}
-	 * as location names and uses the straight-line distance between them as
-	 * heuristic value.
-	 */
-	static class H2 extends AdaptableHeuristicFunction {
-
-		public double h(Object state) {
-			double result = 0.0;
-			Point2D pt1 = map.getPosition((String) state);
-			Point2D pt2 = map.getPosition((String) goal);
-			if (pt1 != null && pt2 != null)
-				result = pt1.distance(pt2);
-			// System.out.println(state + ": " + result);
-			return result;
 		}
 	}
 }

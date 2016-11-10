@@ -7,7 +7,7 @@ import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicPercept;
 
 /**
- * Represents the environment a MapAgent can navigate.
+ * Represents the environment a SimpleMapAgent can navigate.
  * 
  * @author Ciaran O'Reilly
  * 

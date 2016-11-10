@@ -7,7 +7,7 @@ import org.junit.Test;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.DynAttributeNames;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.uninformed.UniformCostSearch;
@@ -19,7 +19,7 @@ import aima.core.search.uninformed.UniformCostSearch;
 public class MapEnvironmentTest {
 	MapEnvironment me;
 
-	MapAgent ma;
+	SimpleMapAgent ma;
 
 	@Before
 	public void setUp() {
@@ -31,7 +31,7 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new MapAgent(me.getMap(), me, new UniformCostSearch(),
+		ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
 				new String[] { "A" });
 	}
 
@@ -57,9 +57,9 @@ public class MapEnvironmentTest {
 
 	@Test
 	public void testTwoAgentsSupported() {
-		MapAgent ma1 = new MapAgent(me.getMap(), me, new UniformCostSearch(),
+		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
 				new String[] { "A" });
-		MapAgent ma2 = new MapAgent(me.getMap(), me, new UniformCostSearch(),
+		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
 				new String[] { "A" });
 
 		me.addAgent(ma1, "A");

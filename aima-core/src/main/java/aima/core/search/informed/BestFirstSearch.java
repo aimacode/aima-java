@@ -23,6 +23,8 @@ import aima.core.search.framework.qsearch.QueueSearch;
  */
 public class BestFirstSearch extends PrioritySearch {
 
+	private final EvaluationFunction evalFunc;
+	
 	/**
 	 * Constructs a best first search from a specified search problem and
 	 * evaluation function.
@@ -36,14 +38,19 @@ public class BestFirstSearch extends PrioritySearch {
 	 */
 	public BestFirstSearch(QueueSearch impl, EvaluationFunction ef) {
 		super(impl, createComparator(ef));
+		evalFunc = ef;
 	}
 
+	public EvaluationFunction getEvaluationFunction() {
+		return evalFunc;
+	}
+	
 	private static Comparator<Node> createComparator(final EvaluationFunction ef) {
 		return new Comparator<Node>() {
 			public int compare(Node n1, Node n2) {
-				Double f1 = ef.f(n1);
-				Double f2 = ef.f(n2);
-				return f1.compareTo(f2);
+				double f1 = ef.f(n1);
+				double f2 = ef.f(n2);
+				return Double.compare(f1, f2);
 			}
 		};
 	}

@@ -9,7 +9,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
@@ -42,7 +42,7 @@ public class BidirectionalSearchTest {
 		ExtendableMap aMap = new ExtendableMap();
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -61,7 +61,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "A" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -79,7 +79,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("A", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "B" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -98,7 +98,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "C" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -118,7 +118,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("C", "D", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "D" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "D" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -136,7 +136,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("A", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "B" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -155,7 +155,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("B", "C", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "C" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -177,7 +177,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("D", "E", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "E" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "E" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -195,7 +195,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("B", "A", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "B" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -214,7 +214,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("C", "B", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "C" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -234,7 +234,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("E", "D", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "E" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "E" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -264,7 +264,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("B", "H", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "H" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "H" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -292,7 +292,7 @@ public class BidirectionalSearchTest {
 		aMap.addUnidirectionalLink("E", "A", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "F" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "F" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();
@@ -323,7 +323,7 @@ public class BidirectionalSearchTest {
 		aMap.addBidirectionalLink("D", "F", 5.0);
 
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, search, new String[] { "F" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "F" });
 		me.addAgent(ma, "A");
 		me.addEnvironmentView(new BDSEnvironmentView());
 		me.stepUntilDone();

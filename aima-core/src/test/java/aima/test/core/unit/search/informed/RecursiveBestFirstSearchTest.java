@@ -9,7 +9,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.Map;
-import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.HeuristicFunction;
@@ -52,7 +52,7 @@ public class RecursiveBestFirstSearchTest {
 	@Test
 	public void testStartingAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearch,
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
@@ -67,7 +67,7 @@ public class RecursiveBestFirstSearchTest {
 	@Test
 	public void testAIMA3eFigure3_27() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearch,
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -82,7 +82,7 @@ public class RecursiveBestFirstSearchTest {
 	@Test
 	public void testAIMA3eAradNeamtA() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearch,
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
@@ -97,7 +97,7 @@ public class RecursiveBestFirstSearchTest {
 	@Test
 	public void testAIMA3eAradNeamtB() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		MapAgent ma = new MapAgent(me.getMap(), me, recursiveBestFirstSearchAvoidingLoops,
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearchAvoidingLoops,
 				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);

@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.Scenario;
+import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -59,7 +59,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	/** Search method to be used. */
 	protected aima.core.search.framework.Search search;
 	/** Heuristic function to be used when performing informed search. */
-	protected AdaptableHeuristicFunction heuristic;
+	protected HeuristicFunction heuristic;
 
 	public RouteFindingAgentApp() {
 	}
@@ -192,7 +192,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		String goal = destinations.get(0);
-		agent = new MapAgent(env.getMap(), search, new String[] { goal });
+		agent = new SimpleMapAgent(env.getMap(), search, new String[] { goal });
 		env.addAgent(agent, scenario.getInitAgentLocation());
 		env.addEnvironmentView(envViewCtrl);
 		envViewCtrl.setGoal(goal);

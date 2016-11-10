@@ -8,11 +8,11 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
-import aima.core.environment.map.AdaptableHeuristicFunction;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
+import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
@@ -80,7 +80,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	 * settings.
 	 */
 	protected Agent createAgent(List<String> locations) {
-		AdaptableHeuristicFunction heuristic;
+		HeuristicFunction heuristic;
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
 			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
