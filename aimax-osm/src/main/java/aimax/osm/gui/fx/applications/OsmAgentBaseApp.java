@@ -176,7 +176,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	public void simulate() {
 		List<MapNode> markers = map.getOsmMap().getMarkers();
 		if (markers.size() < 2) {
-			simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
+			simPaneCtrl.setStatus("Error: Please set at least two markers with mouse-left.");
 		} else {
 			List<String> locations = new ArrayList<String>(markers.size());
 			for (int i = 0; i < markers.size(); i++) {

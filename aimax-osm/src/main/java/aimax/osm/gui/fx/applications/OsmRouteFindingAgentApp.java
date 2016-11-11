@@ -3,9 +3,14 @@ package aimax.osm.gui.fx.applications;
 import java.util.HashSet;
 import java.util.List;
 
+import aima.core.agent.Agent;
+import aima.core.environment.map.MapAgent;
+import aima.core.environment.map.MapFunctionFactory;
+import aima.core.search.framework.HeuristicFunctionFactory;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchForActions;
+import aima.gui.util.SearchFactory;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
@@ -19,8 +24,10 @@ import javafx.scene.layout.Pane;
 
 /**
  * Integrable application which demonstrates how different kinds of search
- * algorithms perform an a route finding scenario based on a real OSM map. Map
- * locations corresponding to expanded nodes are highlighted in green.
+ * algorithms perform in a route finding scenario based on a real OSM map. This
+ * implementation extends <code>OsmAgentBaseApp</code> by two aspects: Map
+ * locations corresponding to expanded nodes are highlighted in green. The user
+ * can define several goals by placing more then two markers on the map.
  *
  * @author Ruediger Lunde
  *
@@ -57,13 +64,27 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	}
 
 	/**
+	 * The method is called after each parameter selection change. This
+	 * implementation clears visited states of the last simulation run, prepares
+	 * the map for different kinds of vehicles and clears the currently
+	 * displayed track.
+	 */
+	@Override
+	public void initialize() {
+		visitedStates.clear();
+		super.initialize();
+	}
+
+	/**
 	 * Factory method which creates a search strategy based on the current
-	 * parameter settings. Here, a node expander is added to visualize
-	 * progress during search.
+	 * parameter settings. Here, a listener is added to the node expander to
+	 * visualize progress during search. A dummy heuristic function is used
+	 * because the agent will replace it anyway.
 	 */
 	@Override
 	protected SearchForActions createSearch(List<String> locations) {
-		SearchForActions result = super.createSearch(locations);
+		SearchForActions result = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), MapFunctionFactory.getZeroHeuristicFunction());
 		result.getNodeExpander().addNodeListener(new NodeExpander.NodeListener() {
 			@Override
 			public void onNodeExpanded(Node node) {
@@ -72,6 +93,20 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 		});
 		visitedStates.clear();
 		return result;
+	}
+
+	/**
+	 * Factory method which creates a new agent based on the current parameter
+	 * settings. The agent is provided with a heuristic function factory to
+	 * adapt to different goals.
+	 */
+	protected Agent createAgent(SearchForActions search, List<String> locations) {
+		HeuristicFunctionFactory hfFactory;
+		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
+			hfFactory = (goal) -> MapFunctionFactory.getZeroHeuristicFunction();
+		else
+			hfFactory = (goal) -> MapFunctionFactory.getSLDHeuristicFunction(goal, map);
+		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hfFactory);
 	}
 
 	// helper classes...

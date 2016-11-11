@@ -31,20 +31,20 @@ import aima.core.search.informed.RecursiveBestFirstSearch;
  */
 public class MapAgent extends ProblemSolvingAgent {
 
-	protected Map map = null;
-	protected DynamicState state = new DynamicState();
+	protected final Map map;
+	protected final DynamicState state = new DynamicState();
+	protected final List<String> goals = new ArrayList<String>();
+	protected int currGoalIdx = -1;
 
 	// possibly null...
-	private EnvironmentViewNotifier notifier = null;
+	protected EnvironmentViewNotifier notifier = null;
 	private Search search = null;
 	private HeuristicFunctionFactory hfFactory;
-	protected String[] goals = null;
-	protected int currGoalIdx = 0;
 
 	public MapAgent(Map map, Search search, String goal) {
 		this.map = map;
 		this.search = search;
-		this.goals = new String[] { goal };
+		goals.add(goal);
 	}
 
 	public MapAgent(Map map, Search search, String goal, EnvironmentViewNotifier notifier) {
@@ -52,19 +52,18 @@ public class MapAgent extends ProblemSolvingAgent {
 		this.notifier = notifier;
 	}
 
-	public MapAgent(Map map, Search search, String[] goals) {
+	public MapAgent(Map map, Search search, List<String> goals) {
 		this.map = map;
 		this.search = search;
-		this.goals = new String[goals.length];
-		System.arraycopy(goals, 0, this.goals, 0, goals.length);
+		this.goals.addAll(goals);
 	}
 
-	public MapAgent(Map map, Search search, String[] goals, EnvironmentViewNotifier notifier) {
+	public MapAgent(Map map, Search search, List<String> goals, EnvironmentViewNotifier notifier) {
 		this(map, search, goals);
 		this.notifier = notifier;
 	}
 
-	public MapAgent(Map map, Search search, String[] goals, EnvironmentViewNotifier notifier,
+	public MapAgent(Map map, Search search, List<String> goals, EnvironmentViewNotifier notifier,
 			HeuristicFunctionFactory hfFactory) {
 		this(map, search, goals, notifier);
 		this.hfFactory = hfFactory;
@@ -76,17 +75,15 @@ public class MapAgent extends ProblemSolvingAgent {
 	@Override
 	protected State updateState(Percept p) {
 		DynamicPercept dp = (DynamicPercept) p;
-
 		state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
-
 		return state;
 	}
 
 	@Override
 	protected Object formulateGoal() {
 		Object goal = null;
-		if (currGoalIdx < goals.length) {
-			goal = goals[currGoalIdx++];
+		if (currGoalIdx < goals.size() - 1) {
+			goal = goals.get(++currGoalIdx);
 			if (notifier != null)
 				notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
 						+ "), Goal=In(" + goal + ")");
@@ -129,9 +126,8 @@ public class MapAgent extends ProblemSolvingAgent {
 				ef = ((BestFirstSearch) search).getEvaluationFunction();
 			else if (search instanceof RecursiveBestFirstSearch)
 				ef = ((RecursiveBestFirstSearch) search).getEvaluationFunction();
-			if (ef instanceof HeuristicEvaluationFunction) {
+			if (ef instanceof HeuristicEvaluationFunction)
 				((HeuristicEvaluationFunction) ef).setHeuristicFunction(hfFactory.createHeuristicFunction(goal));
-			}
 		}
 	}
 }
