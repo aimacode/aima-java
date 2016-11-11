@@ -1,9 +1,7 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.List;
 import java.util.Queue;
 
-import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
@@ -42,8 +40,8 @@ public abstract class QueueSearch {
 
 	/**
 	 * Receives a problem and a queue implementing the search strategy and
-	 * computes a list of actions which transform the initial state into a goal
-	 * state. This template method provides a base for tree and graph search
+	 * computes a node referencing a goal state, if such a state was found.
+	 * This template method provides a base for tree and graph search
 	 * implementations. It can be customized by overriding some primitive
 	 * operations, especially {@link #addToFrontier(Node)},
 	 * {@link #removeFromFrontier()}, and {@link #isFrontierEmpty()}.
@@ -53,11 +51,9 @@ public abstract class QueueSearch {
 	 * @param frontier
 	 *            the data structure for nodes that are waiting to be expanded
 	 * 
-	 * @return a list of actions to the goal if the goal was found, a list
-	 *         containing a single NoOp Action if already at the goal, or an
-	 *         empty list if the goal could not be found.
+	 * @return a node referencing a goal state, if the goal was found, otherwise null;
 	 */
-	public List<Action> search(Problem problem, Queue<Node> frontier) {
+	public Node search(Problem problem, Queue<Node> frontier) {
 		this.frontier = frontier;
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
@@ -85,7 +81,7 @@ public abstract class QueueSearch {
 			}
 		}
 		// if the frontier is empty then return failure
-		return SearchUtils.failure();
+		return null;
 	}
 
 	/**
@@ -148,8 +144,8 @@ public abstract class QueueSearch {
 		}
 	}
 
-	private List<Action> getSolution(Node node) {
+	private Node getSolution(Node node) {
 		metrics.set(METRIC_PATH_COST, node.getPathCost());
-		return SearchUtils.getSequenceOfActions(node);
+		return node;
 	}
 }

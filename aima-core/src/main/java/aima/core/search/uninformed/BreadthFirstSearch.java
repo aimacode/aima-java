@@ -8,6 +8,8 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.SearchForStates;
+import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
@@ -43,7 +45,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class BreadthFirstSearch implements SearchForActions {
+public class BreadthFirstSearch implements SearchForActions, SearchForStates {
 
 	private final QueueSearch implementation;
 
@@ -60,7 +62,16 @@ public class BreadthFirstSearch implements SearchForActions {
 
 	@Override
 	public List<Action> search(Problem p) {
-		return implementation.search(p, QueueFactory.<Node>createFifoQueue());
+		implementation.getNodeExpander().useParentLinks(true);
+		Node node = implementation.search(p, QueueFactory.<Node>createFifoQueue());
+		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+	}
+	
+	@Override
+	public Object searchState(Problem p) {
+		implementation.getNodeExpander().useParentLinks(false);
+		Node node = implementation.search(p, QueueFactory.<Node>createFifoQueue());
+		return node == null ? null : node.getState();
 	}
 
 	@Override

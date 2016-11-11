@@ -9,7 +9,6 @@ import java.util.Queue;
 import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.BidirectionalProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
@@ -80,9 +79,10 @@ public class BidirectionalSearch extends QueueSearch {
 	 *         containing a single NoOp Action if already at the goal, or an
 	 *         empty list if the goal could not be found.
 	 */
-	public List<Action> search(Problem problem, Queue<Node> frontier) {
+	public Node search(Problem problem, Queue<Node> frontier) {
 		assert (problem instanceof BidirectionalProblem);
-
+		
+		nodeExpander.useParentLinks(true); // bidirectional search needs parents!
 		this.frontier = frontier;
 		clearInstrumentation();
 		explored.get(ORG_P_IDX).clear();
@@ -127,7 +127,7 @@ public class BidirectionalSearch extends QueueSearch {
 			}
 		}
 		// if the frontier is empty then return failure
-		return SearchUtils.failure();
+		return null;
 	}
 
 	/**
@@ -190,15 +190,16 @@ public class BidirectionalSearch extends QueueSearch {
 	}
 
 	/**
-	 * Computes a list of actions by appending the list of actions corresponding
-	 * to the provided node of the original problem and in reverse order the
-	 * list of actions corresponding to the provided node of the reverse
-	 * problem. Note that both nodes must be linked to the same state. Success
-	 * is not guaranteed if some actions cannot be reversed.
+	 * Computes a node whose sequence of recursive parents corresponds to a
+	 * sequence of actions which leads from the initial state of the original
+	 * problem to the state of node1 and then to the initial state of the
+	 * reverse problem, following reverse actions to parents of node2. Note that
+	 * both nodes must be linked to the same state. Success is not guaranteed if
+	 * some actions cannot be reversed.
 	 */
-	private List<Action> getSolution(Problem orgP, ExtendedNode node1, ExtendedNode node2) {
+	private Node getSolution(Problem orgP, ExtendedNode node1, ExtendedNode node2) {
 		assert node1.getState().equals(node2.getState());
-
+		
 		Node orgNode = node1.getProblemIndex() == ORG_P_IDX ? node1 : node2;
 		Node revNode = node1.getProblemIndex() == REV_P_IDX ? node1 : node2;
 
@@ -210,11 +211,11 @@ public class BidirectionalSearch extends QueueSearch {
 				orgNode = nodeExpander.createNode(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else {
-				return SearchUtils.failure();
+				return null;
 			}
 		}
 		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());
-		return SearchUtils.getSequenceOfActions(orgNode);
+		return orgNode;
 	}
 
 	/**

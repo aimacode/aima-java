@@ -1,11 +1,9 @@
 package aima.core.search.framework.qsearch;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.problem.Problem;
@@ -58,7 +56,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 * <code>QueSearch</code>
 	 */
 	@Override
-	public List<Action> search(Problem problem, Queue<Node> frontier) {
+	public Node search(Problem problem, Queue<Node> frontier) {
 		// Initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();

@@ -8,6 +8,8 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.SearchForStates;
+import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
@@ -25,19 +27,28 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ruediger Lunde
  * 
  */
-public class DepthFirstSearch implements SearchForActions {
+public class DepthFirstSearch implements SearchForActions, SearchForStates {
 
 	QueueSearch implementation;
 
 	public DepthFirstSearch(QueueSearch impl) {
-		this.implementation = impl;
+		implementation = impl;
 	}
 
 	@Override
 	public List<Action> search(Problem p) {
-		return implementation.search(p, QueueFactory.<Node>createLifoQueue());
+		implementation.getNodeExpander().useParentLinks(true);
+		Node node = implementation.search(p, QueueFactory.<Node>createLifoQueue());
+		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
-
+	
+	@Override
+	public Object searchState(Problem p) {
+		implementation.getNodeExpander().useParentLinks(false);
+		Node node = implementation.search(p, QueueFactory.<Node>createLifoQueue());
+		return node == null ? null : node.getState();
+	}
+	
 	@Override
 	public NodeExpander getNodeExpander() {
 		return implementation.getNodeExpander();

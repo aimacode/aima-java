@@ -16,7 +16,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
-public class PrioritySearch implements SearchForActions {
+public class PrioritySearch implements SearchForActions, SearchForStates {
 	private final QueueSearch implementation;
 	private final Comparator<Node> comparator;
 
@@ -27,7 +27,16 @@ public class PrioritySearch implements SearchForActions {
 
 	@Override
 	public List<Action> search(Problem p) {
-		return implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		implementation.getNodeExpander().useParentLinks(true);
+		Node node = implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+	}
+	
+	@Override
+	public Object searchState(Problem p) {
+		implementation.getNodeExpander().useParentLinks(false);
+		Node node = implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		return node == null ? null : node.getState();
 	}
 
 	public Comparator<Node> getComparator() {

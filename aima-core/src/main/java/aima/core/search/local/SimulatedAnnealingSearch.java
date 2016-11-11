@@ -1,6 +1,5 @@
 package aima.core.search.local;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -96,7 +95,7 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	public List<Action> search(Problem p) {
 		nodeExpander.useParentLinks(true);
 		Node node = searchNode(p);
-		return node == null ? Collections.emptyList() : SearchUtils.getSequenceOfActions(node);
+		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
