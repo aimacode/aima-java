@@ -12,8 +12,8 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SolutionChecker;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -25,21 +25,19 @@ public class SolutionCheckerTest {
 	public void testMultiGoalProblem() throws Exception {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem problem = new Problem(SimplifiedRoadMapOfPartOfRomania.ARAD,
-				MapFunctionFactory.getActionsFunction(romaniaMap),
-				MapFunctionFactory.getResultFunction(), new DualMapGoalTest(
-						SimplifiedRoadMapOfPartOfRomania.BUCHAREST,
+				MapFunctionFactory.getActionsFunction(romaniaMap), MapFunctionFactory.getResultFunction(),
+				new DualMapGoalTest(SimplifiedRoadMapOfPartOfRomania.BUCHAREST,
 						SimplifiedRoadMapOfPartOfRomania.HIRSOVA),
 				new MapStepCostFunction(romaniaMap));
 
-		Search search = new BreadthFirstSearch(new GraphSearch());
+		SearchForActions search = new BreadthFirstSearch(new GraphSearch());
 
 		SearchAgent agent = new SearchAgent(problem, search);
 		Assert.assertEquals(
 				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest], Action[name==moveTo, location==Urziceni], Action[name==moveTo, location==Hirsova]]",
 				agent.getActions().toString());
 		Assert.assertEquals(5, agent.getActions().size());
-		Assert.assertEquals("14",
-				agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("14", agent.getInstrumentation().getProperty("nodesExpanded"));
 		Assert.assertEquals("4", // "1" for GraphSearchReducedFrontier
 				agent.getInstrumentation().getProperty("queueSize"));
 		Assert.assertEquals("7", // "5" for GraphSearchReducedFrontier

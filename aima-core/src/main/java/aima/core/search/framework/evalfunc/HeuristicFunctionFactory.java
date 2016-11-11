@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.evalfunc;
 
 /**
  * A heuristic function factory creates a heuristic function for a given goal.

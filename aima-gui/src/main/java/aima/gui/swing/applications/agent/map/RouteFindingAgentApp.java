@@ -9,7 +9,7 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;

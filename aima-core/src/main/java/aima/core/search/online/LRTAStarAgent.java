@@ -7,8 +7,8 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.PerceptToStateFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**

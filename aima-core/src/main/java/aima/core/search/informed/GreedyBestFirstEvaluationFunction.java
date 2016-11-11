@@ -1,7 +1,7 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Node;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>

@@ -19,6 +19,20 @@ import aima.core.search.framework.problem.StepCostFunction;
  */
 public class NodeExpander {
 
+	protected boolean useParentLinks = true;
+
+	/**
+	 * Modifies {@link #useParentLinks} and returns this node expander. When
+	 * using local search to search for states, parent links are not needed and
+	 * lead to unnecessary memory consumption.
+	 * 
+	 * @return
+	 */
+	public NodeExpander useParentLinks(boolean state) {
+		useParentLinks = state;
+		return this;
+	}
+
 	///////////////////////////////////////////////////////////////////////
 	// expanding nodes
 
@@ -32,10 +46,12 @@ public class NodeExpander {
 	/**
 	 * Computes the path cost for getting from the root node state via the
 	 * parent node state to the specified state, creates a new node for the
-	 * specified state, adds it as child of the provided parent, and returns it.
+	 * specified state, adds it as child of the provided parent (if
+	 * {@link #useParentLinks} is true), and returns it.
 	 */
 	public Node createNode(Object state, Node parent, Action action, double stepCost) {
-		return new Node(state, parent, action, parent.getPathCost() + stepCost);
+		Node p = useParentLinks ? parent : null;
+		return new Node(state, p, action, parent.getPathCost() + stepCost);
 	}
 
 	/**
@@ -63,28 +79,19 @@ public class NodeExpander {
 			double stepCost = stepCostFunction.c(node.getState(), action, successorState);
 			successors.add(createNode(successorState, node, action, stepCost));
 		}
-		for (NodeListener listener : nodeListeners)
-			listener.onNodeExpanded(node);
+		notifyNodeListeners(node);
 		counter++;
 		return successors;
 	}
 
 	///////////////////////////////////////////////////////////////////////
-	// progress tracing and statistical data
-
-	/** Interface for progress Tracers */
-	public static interface NodeListener {
-		void onNodeExpanded(Node node);
-	}
+	// progress tracing
 
 	/**
 	 * All node listeners added to this list get informed whenever a node is
 	 * expanded.
 	 */
 	private List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
-
-	/** Counts the number of {@link #expand(Node, Problem)} calls. */
-	private int counter;
 
 	/**
 	 * Adds a listener to the list of node listeners. It is informed whenever a
@@ -93,6 +100,22 @@ public class NodeExpander {
 	public void addNodeListener(NodeListener listener) {
 		nodeListeners.add(listener);
 	}
+
+	protected void notifyNodeListeners(Node node) {
+		for (NodeListener listener : nodeListeners)
+			listener.onNodeExpanded(node);
+	}
+
+	/** Interface for progress Tracers */
+	public static interface NodeListener {
+		void onNodeExpanded(Node node);
+	}
+
+	///////////////////////////////////////////////////////////////////////
+	// statistical data
+
+	/** Counts the number of {@link #expand(Node, Problem)} calls. */
+	protected int counter;
 
 	/**
 	 * Resets the counter for {@link #expand(Node, Problem)} calls.

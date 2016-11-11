@@ -18,7 +18,7 @@
  * <br>
  * To support arbitrary combinations of different strategies for (A) and (B),
  * the bridge pattern is used here. Different abstractions of search (so called
- * search strategies) are provided as specializations of {@link Search} and
+ * search strategies) are provided as specializations of {@link SearchForActions} and
  * especially {@link PrioritySearch}. Most of them delegate the work to some
  * {@link aima.core.search.framework.qsearch.QueueSearch} implementation. The
  * most important concrete implementations are TreeSearch, GraphSearch, and

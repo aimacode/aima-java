@@ -39,8 +39,8 @@ import java.util.Set;
  * goal state in all circumstances. (The notation [x | l] refers to the list
  * formed by adding object x to the front of the list l.)<br>
  * <br>
- * Note: Unfortunately, this class cannot implement the interface Search
- * (core.search.framework.Search) because Search.search() returns a list of
+ * Note: Unfortunately, this class cannot implement the interface SearchForActions
+ * (core.search.framework.SearchForActions) because SearchForActions.search() returns a list of
  * Actions to perform, whereas a nondeterministic search must return a Plan.
  * 
  * @author Andrew Brown

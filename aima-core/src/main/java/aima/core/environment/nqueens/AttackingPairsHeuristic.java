@@ -1,6 +1,6 @@
 package aima.core.environment.nqueens;
 
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 
 /**
  * Estimates the distance to goal by the number of attacking pairs of queens on

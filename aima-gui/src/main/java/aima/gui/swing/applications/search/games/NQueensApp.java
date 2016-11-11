@@ -23,8 +23,8 @@ import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
 import aima.core.environment.nqueens.QueenAction;
-import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -58,18 +58,21 @@ public class NQueensApp extends SimpleAgentApp {
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
 	/** List of supported search algorithms. */
-	protected static List<Search> SEARCH_ALGOS = new ArrayList<Search>();
+	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<SearchForActions>();
 
 	/** Adds a new item to the list of supported search algorithms. */
-	public static void addSearchAlgorithm(String name, Search algo) {
+	public static void addSearchAlgorithm(String name, SearchForActions algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
 
 	static {
-		addSearchAlgorithm("Depth First Search (Graph Search)", new DepthFirstSearch(new GraphSearch()));
-		addSearchAlgorithm("Breadth First Search (Tree Search)", new BreadthFirstSearch(new TreeSearch()));
-		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Depth First Search (Graph Search)",
+				new DepthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Breadth First Search (Tree Search)",
+				new BreadthFirstSearch(new TreeSearch()));
+		addSearchAlgorithm("Breadth First Search (Graph Search)",
+				new BreadthFirstSearch(new GraphSearch()));
 		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch(8));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
@@ -272,7 +275,7 @@ public class NQueensApp extends SimpleAgentApp {
 					af = NQueensFunctionFactory.getCActionsFunction();
 				Problem problem = new Problem(env.getBoard(), af, NQueensFunctionFactory.getResultFunction(),
 						new NQueensGoalTest());
-				Search search = SEARCH_ALGOS.get(sSel);
+				SearchForActions search = SEARCH_ALGOS.get(sSel);
 				agent = new SearchAgent(problem, search);
 				env.addAgent(agent);
 			}

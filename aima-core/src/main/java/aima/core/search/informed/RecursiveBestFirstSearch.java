@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.evalfunc.EvaluationFunction;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 

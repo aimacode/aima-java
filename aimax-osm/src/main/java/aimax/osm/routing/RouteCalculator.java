@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.util.CancelableThread;
-import aimax.osm.data.OsmMap;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.MapWayFilter;
+import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 
@@ -58,7 +58,7 @@ public class RouteCalculator {
 						ignoreOneways, taskSelection);
 				HeuristicFunction hf = createHeuristicFunction(pNodeList.get(i),
 						taskSelection);
-				Search search = createSearch(hf, taskSelection);
+				SearchForActions search = createSearch(hf, taskSelection);
 				List<Action> actions = search.search(problem);
 				if (actions.isEmpty())
 					break;
@@ -123,7 +123,7 @@ public class RouteCalculator {
 	}
 	
 	/** Factory method, responsible for search creation. */
-	protected Search createSearch(HeuristicFunction hf, int taskSelection) {
+	protected SearchForActions createSearch(HeuristicFunction hf, int taskSelection) {
 		return new AStarSearch(new GraphSearch(), hf);
 	}
 }

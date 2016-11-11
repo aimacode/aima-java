@@ -9,9 +9,9 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
-import aima.core.search.framework.Search;
+import aima.core.environment.map.SimpleMapAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 
@@ -24,7 +24,7 @@ public class BidirectionalSearchTest {
 	StringBuffer envChanges;
 
 	BidirectionalSearch bidirectionalSearch;
-	Search search;
+	SearchForActions search;
 
 	@Before
 	public void setUp() {

@@ -1,6 +1,6 @@
 package aimax.osm.routing;
 
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 

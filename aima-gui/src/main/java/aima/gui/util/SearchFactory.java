@@ -1,7 +1,7 @@
 package aima.gui.util;
 
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.GraphSearchBFS;

@@ -22,8 +22,8 @@ import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
-import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -53,16 +53,17 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
 	/** List of supported search algorithms. */
-	protected static List<Search> SEARCH_ALGOS = new ArrayList<Search>();
+	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<SearchForActions>();
 
 	/** Adds a new item to the list of supported search algorithms. */
-	public static void addSearchAlgorithm(String name, Search algo) {
+	public static void addSearchAlgorithm(String name, SearchForActions algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
 
 	static {
-		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Breadth First Search (Graph Search)",
+				new BreadthFirstSearch(new GraphSearch()));
 		addSearchAlgorithm("Breadth First Search (Bidirectional Search)",
 				new BreadthFirstSearch(new BidirectionalSearch()));
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
@@ -119,7 +120,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		public EightPuzzleFrame() {
 			setTitle("Eight Puzzle Application");
-			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] { "Select Environment", "Select Search" });
+			setSelectors(new String[] { ENV_SEL, SEARCH_SEL },
+					new String[] { "Select Environment", "Select Search" });
 			setSelectorItems(ENV_SEL, new String[] { "Three Moves", "Medium", "Extreme", "Random" }, 0);
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[] {}), 0);
 			setEnvView(new EightPuzzleView());
@@ -272,7 +274,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			if (agent == null) {
 				int pSel = frame.getSelection().getIndex(EightPuzzleFrame.SEARCH_SEL);
 				Problem problem = new BidirectionalEightPuzzleProblem(env.getBoard());
-				Search search = SEARCH_ALGOS.get(pSel);
+				SearchForActions search = SEARCH_ALGOS.get(pSel);
 				agent = new SearchAgent(problem, search);
 				env.addAgent(agent);
 			}

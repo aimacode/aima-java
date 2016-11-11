@@ -12,7 +12,8 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -57,7 +58,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	 */
 	protected List<String> destinations;
 	/** Search method to be used. */
-	protected aima.core.search.framework.Search search;
+	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
 	protected HeuristicFunction heuristic;
 

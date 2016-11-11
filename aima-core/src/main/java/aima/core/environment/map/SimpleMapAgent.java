@@ -10,14 +10,15 @@ import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 
 /**
  * Note: This implementation should be used with one predefined goal only or
- * with uninformed search. As the heuristic of the used search algorithm is never
- * changed, estimates for the second (or randomly created goal) will be wrong.
+ * with uninformed search. As the heuristic of the used search algorithm is
+ * never changed, estimates for the second (or randomly created goal) will be
+ * wrong.
  * 
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
@@ -30,29 +31,29 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent {
 
 	// possibly null...
 	private EnvironmentViewNotifier notifier = null;
-	private Search search = null;
+	private SearchForActions search = null;
 	private String[] goals = null;
 	private int goalTestPos = 0;
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, Search search) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search) {
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, Search search, int maxGoalsToFormulate) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search, int maxGoalsToFormulate) {
 		super(maxGoalsToFormulate);
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, Search search, String[] goals) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search, String[] goals) {
 		this(map, search, goals);
 		this.notifier = notifier;
 	}
 
-	public SimpleMapAgent(Map map, Search search, String[] goals) {
+	public SimpleMapAgent(Map map, SearchForActions search, String[] goals) {
 		super(goals.length);
 		this.map = map;
 		this.search = search;

@@ -1,8 +1,8 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.EvaluationFunction;
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.evalfunc.EvaluationFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 
 /**
  * Informed search algorithms use special evaluation functions which are based

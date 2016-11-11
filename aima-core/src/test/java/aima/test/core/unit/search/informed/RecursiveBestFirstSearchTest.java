@@ -12,7 +12,7 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.util.math.geom.shapes.Point2D;

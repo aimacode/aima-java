@@ -6,6 +6,7 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 

@@ -14,8 +14,8 @@ import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGenAlgoUtil;
 import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -61,7 +61,7 @@ public class NQueensDemo {
 		try {
 			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-			Search search = new DepthLimitedSearch(boardSize);
+			SearchForActions search = new DepthLimitedSearch(boardSize);
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -76,7 +76,7 @@ public class NQueensDemo {
 			System.out.println("\nNQueensDemo BFS -->");
 			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-			Search search = new BreadthFirstSearch(new TreeSearch());
+			SearchForActions search = new BreadthFirstSearch(new TreeSearch());
 			SearchAgent agent2 = new SearchAgent(problem, search);
 			printActions(agent2.getActions());
 			printInstrumentation(agent2.getInstrumentation());
@@ -91,7 +91,7 @@ public class NQueensDemo {
 		try {
 			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-			Search search = new DepthFirstSearch(new GraphSearch());
+			SearchForActions search = new DepthFirstSearch(new GraphSearch());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -105,7 +105,7 @@ public class NQueensDemo {
 		try {
 			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-			Search search = new IterativeDeepeningSearch();
+			SearchForActions search = new IterativeDeepeningSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
 
 			System.out.println();

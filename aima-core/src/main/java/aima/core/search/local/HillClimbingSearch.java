@@ -1,15 +1,16 @@
 package aima.core.search.local;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import aima.core.agent.Action;
-import aima.core.search.framework.HeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.SearchForStates;
 import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
 
@@ -38,7 +39,7 @@ import aima.core.util.CancelableThread;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class HillClimbingSearch implements SearchForActions {
+public class HillClimbingSearch implements SearchForActions, SearchForStates {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
@@ -68,6 +69,21 @@ public class HillClimbingSearch implements SearchForActions {
 		this.nodeExpander = nodeExpander;
 	}
 
+	@Override
+	public List<Action> search(Problem p) {
+		nodeExpander.useParentLinks(true);
+		Node node = searchNode(p);
+		return node == null ? Collections.emptyList() : SearchUtils.getSequenceOfActions(node);
+	}
+	
+	@Override
+	public Object searchState(Problem p) {
+		nodeExpander.useParentLinks(false);
+		Node node = searchNode(p);
+		return node == null ? null : node.getState();
+	}
+	
+	
 	/**
 	 * Returns a list of actions to the local maximum if the local maximum was
 	 * found, a list containing a single NoOp Action if already at the local
@@ -82,7 +98,7 @@ public class HillClimbingSearch implements SearchForActions {
 	 *         user.
 	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
-	public List<Action> search(Problem p) {
+	public Node searchNode(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -100,12 +116,12 @@ public class HillClimbingSearch implements SearchForActions {
 			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
 				if (SearchUtils.isGoalState(p, current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				return SearchUtils.getSequenceOfActions(current);
+				return current;
 			}
 			// current <- neighbor
 			current = neighbor;
 		}
-		return new ArrayList<Action>();
+		return null;
 	}
 	
 	/**

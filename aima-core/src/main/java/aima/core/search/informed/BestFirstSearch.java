@@ -2,9 +2,9 @@ package aima.core.search.informed;
 
 import java.util.Comparator;
 
-import aima.core.search.framework.EvaluationFunction;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
+import aima.core.search.framework.evalfunc.EvaluationFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**

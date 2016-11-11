@@ -6,7 +6,8 @@ import java.util.List;
 import aima.core.agent.Agent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
-import aima.core.search.framework.HeuristicFunction;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimulationThread;
@@ -29,7 +30,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	 */
 	protected List<String> destinations;
 	/** Search method to be used. */
-	protected aima.core.search.framework.Search search;
+	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
 	protected HeuristicFunction heuristic;
 	/** Is the scenario up to date? */

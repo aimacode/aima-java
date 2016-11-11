@@ -10,10 +10,10 @@ import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.EvaluationFunction;
-import aima.core.search.framework.HeuristicFunctionFactory;
 import aima.core.search.framework.ProblemSolvingAgent;
-import aima.core.search.framework.Search;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.EvaluationFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunctionFactory;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.BestFirstSearch;
 import aima.core.search.informed.HeuristicEvaluationFunction;
@@ -38,32 +38,32 @@ public class MapAgent extends ProblemSolvingAgent {
 
 	// possibly null...
 	protected EnvironmentViewNotifier notifier = null;
-	private Search search = null;
+	private SearchForActions search = null;
 	private HeuristicFunctionFactory hfFactory;
 
-	public MapAgent(Map map, Search search, String goal) {
+	public MapAgent(Map map, SearchForActions search, String goal) {
 		this.map = map;
 		this.search = search;
 		goals.add(goal);
 	}
 
-	public MapAgent(Map map, Search search, String goal, EnvironmentViewNotifier notifier) {
+	public MapAgent(Map map, SearchForActions search, String goal, EnvironmentViewNotifier notifier) {
 		this(map, search, goal);
 		this.notifier = notifier;
 	}
 
-	public MapAgent(Map map, Search search, List<String> goals) {
+	public MapAgent(Map map, SearchForActions search, List<String> goals) {
 		this.map = map;
 		this.search = search;
 		this.goals.addAll(goals);
 	}
 
-	public MapAgent(Map map, Search search, List<String> goals, EnvironmentViewNotifier notifier) {
+	public MapAgent(Map map, SearchForActions search, List<String> goals, EnvironmentViewNotifier notifier) {
 		this(map, search, goals);
 		this.notifier = notifier;
 	}
 
-	public MapAgent(Map map, Search search, List<String> goals, EnvironmentViewNotifier notifier,
+	public MapAgent(Map map, SearchForActions search, List<String> goals, EnvironmentViewNotifier notifier,
 			HeuristicFunctionFactory hfFactory) {
 		this(map, search, goals, notifier);
 		this.hfFactory = hfFactory;
