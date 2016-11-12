@@ -16,11 +16,12 @@ import aima.core.search.framework.qsearch.QueueSearch;
 public class GreedyBestFirstSearch extends BestFirstSearch {
 
 	/**
-	 * Constructs a greedy best-first search from the specified search problem
-	 * and heuristic function.
+	 * Constructs a greedy best-first search from a specified search space
+	 * exploration strategy and a heuristic function.
 	 * 
 	 * @param impl
-	 *            a search space exploration strategy.
+	 *            a search space exploration strategy (e.g. TreeSearch,
+	 *            GraphSearch).
 	 * @param hf
 	 *            a heuristic function <em>h(n)</em>, which estimates the
 	 *            cheapest path from the state at node <em>n</em> to a goal

@@ -22,11 +22,11 @@ import aima.core.search.framework.qsearch.QueueSearch;
 public class AStarSearch extends BestFirstSearch {
 
 	/**
-	 * Constructs an A* search from the specified search problem and heuristic
-	 * function
+	 * Constructs an A* search from a specified search space exploration
+	 * strategy and a heuristic function.
 	 * 
 	 * @param impl
-	 *            a search space exploration strategy.
+	 *            a search space exploration strategy (e.g. TreeSearch, GraphSearch).
 	 * @param hf
 	 *            a heuristic function <em>h(n)</em>, which estimates the cost
 	 *            of the cheapest path from the state at node <em>n</em> to a
