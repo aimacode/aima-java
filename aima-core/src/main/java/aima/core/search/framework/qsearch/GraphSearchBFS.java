@@ -28,7 +28,7 @@ import aima.core.search.framework.problem.Problem;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * <br>
  * This implementation is based on the template method
- * {@link QueueSearch#search(Problem, Queue)} of the superclass and
+ * {@link QueueSearch#findNode(Problem, Queue)} of the superclass and
  * provides implementations for the needed primitive operations. It is the most
  * efficient variant of graph search for breadth first search. But don't expect
  * shortest paths in combination with priority queue frontiers.
@@ -56,11 +56,11 @@ public class GraphSearchBFS extends QueueSearch {
 	 * <code>QueSearch</code>
 	 */
 	@Override
-	public Node search(Problem problem, Queue<Node> frontier) {
+	public Node findNode(Problem problem, Queue<Node> frontier) {
 		// Initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();
-		return super.search(problem, frontier);
+		return super.findNode(problem, frontier);
 	}
 
 	/**

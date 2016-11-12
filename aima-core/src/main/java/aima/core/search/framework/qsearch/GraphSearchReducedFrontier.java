@@ -33,7 +33,7 @@ import aima.core.search.framework.problem.Problem;
  * 
  * <br>
  * This implementation is based on the template method
- * {@link QueueSearch#search(Problem, Queue)} of the superclass and provides
+ * {@link QueueSearch#findNode(Problem, Queue)} of the superclass and provides
  * implementations for the needed primitive operations. It implements a special
  * version of graph search which keeps the frontier short by focusing on the
  * best node for each state only. It should only be used in combination with
@@ -65,13 +65,13 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * state map and calls the inherited version of search.
 	 */
 	@Override
-	public Node search(Problem problem, Queue<Node> frontier) {
+	public Node findNode(Problem problem, Queue<Node> frontier) {
 		// initialize the explored set to be empty
 		if (frontier instanceof PriorityQueue<?>)
 			nodeComparator = ((PriorityQueue<Node>) frontier).comparator();
 		explored.clear();
 		frontierNodeLookup.clear();
-		return super.search(problem, frontier);
+		return super.findNode(problem, frontier);
 	}
 
 	public Comparator<? super Node> getNodeComparator() {

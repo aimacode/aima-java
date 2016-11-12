@@ -79,7 +79,7 @@ public class BidirectionalSearch extends QueueSearch {
 	 *         containing a single NoOp Action if already at the goal, or an
 	 *         empty list if the goal could not be found.
 	 */
-	public Node search(Problem problem, Queue<Node> frontier) {
+	public Node findNode(Problem problem, Queue<Node> frontier) {
 		assert (problem instanceof BidirectionalProblem);
 		
 		nodeExpander.useParentLinks(true); // bidirectional search needs parents!

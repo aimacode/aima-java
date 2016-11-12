@@ -36,16 +36,16 @@ public class DepthFirstSearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
 		implementation.getNodeExpander().useParentLinks(true);
-		Node node = implementation.search(p, QueueFactory.<Node>createLifoQueue());
+		Node node = implementation.findNode(p, QueueFactory.<Node>createLifoQueue());
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
-	public Object searchState(Problem p) {
+	public Object findState(Problem p) {
 		implementation.getNodeExpander().useParentLinks(false);
-		Node node = implementation.search(p, QueueFactory.<Node>createLifoQueue());
+		Node node = implementation.findNode(p, QueueFactory.<Node>createLifoQueue());
 		return node == null ? null : node.getState();
 	}
 	

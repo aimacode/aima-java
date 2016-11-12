@@ -26,16 +26,16 @@ public class PrioritySearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
 		implementation.getNodeExpander().useParentLinks(true);
-		Node node = implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		Node node = implementation.findNode(p, QueueFactory.<Node>createPriorityQueue(comparator));
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
-	public Object searchState(Problem p) {
+	public Object findState(Problem p) {
 		implementation.getNodeExpander().useParentLinks(false);
-		Node node = implementation.search(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		Node node = implementation.findNode(p, QueueFactory.<Node>createPriorityQueue(comparator));
 		return node == null ? null : node.getState();
 	}
 

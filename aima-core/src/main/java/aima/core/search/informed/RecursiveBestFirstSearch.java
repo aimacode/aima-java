@@ -86,7 +86,7 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
 		List<Action> actions = new ArrayList<Action>();
 		explored.clear();
 

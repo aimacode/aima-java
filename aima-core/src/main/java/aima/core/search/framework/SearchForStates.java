@@ -21,7 +21,7 @@ public interface SearchForStates {
 	 * 
 	 * @return a state.
 	 */
-	Object searchState(Problem p);
+	Object findState(Problem p);
 	
 	/**
 	 * Returns all the metrics of the search.

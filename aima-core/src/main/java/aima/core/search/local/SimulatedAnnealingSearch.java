@@ -92,21 +92,21 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	}
 	
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
 		nodeExpander.useParentLinks(true);
-		Node node = searchNode(p);
+		Node node = findNode(p);
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
-	public Object searchState(Problem p) {
+	public Object findState(Problem p) {
 		nodeExpander.useParentLinks(false);
-		Node node = searchNode(p);
+		Node node = findNode(p);
 		return node == null ? null : node.getState();
 	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
-	public Node searchNode(Problem p) {
+	public Node findNode(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;

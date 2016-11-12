@@ -4,10 +4,13 @@ import java.util.List;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.SearchForStates;
+import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.Problem;
+import aima.core.util.CancelableThread;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
@@ -30,12 +33,9 @@ import aima.core.search.framework.problem.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class IterativeDeepeningSearch implements SearchForActions {
+public class IterativeDeepeningSearch implements SearchForActions, SearchForStates {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
-
-	// Not infinity, but will do, :-)
-	private final static int INFINITY = Integer.MAX_VALUE;
 
 	private final NodeExpander nodeExpander;
 	private final Metrics metrics;
@@ -53,19 +53,33 @@ public class IterativeDeepeningSearch implements SearchForActions {
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
+		nodeExpander.useParentLinks(true);
+		Node node = findNode(p);
+		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+	}
+
+	@Override
+	public Object findState(Problem p) {
+		nodeExpander.useParentLinks(false);
+		Node node = findNode(p);
+		return node == null ? null : node.getState();
+	}
+	
+	// Java 8: Use Optional<Node> as return value...
+	private Node findNode(Problem p) {
 		clearInstrumentation();
 		// for depth = 0 to infinity do
-		for (int i = 0; i <= INFINITY; i++) {
+		for (int i = 0; !CancelableThread.currIsCanceled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
 			DepthLimitedSearch dls = new DepthLimitedSearch(i, nodeExpander);
-			List<Action> result = dls.search(p);
+			Node result = dls.findNode(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
-			if (!dls.isCutOff(result))
+			if (result != DepthLimitedSearch.CUTOFF_NODE)
 				return result;
 		}
-		return SearchUtils.failure();
+		return null;
 	}
 
 	@Override

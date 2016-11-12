@@ -9,6 +9,7 @@ import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctionFactory;
 import aima.core.environment.nqueens.NQueensGoalTest;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SearchUtils;
@@ -33,9 +34,8 @@ public class DepthLimitedSearchTest {
 		Problem problem = new Problem(new NQueensBoard(8), NQueensFunctionFactory.getIActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 		DepthLimitedSearch search = new DepthLimitedSearch(1);
-		SearchAgent agent = new SearchAgent(problem, search);
-		List<Action> actions = agent.getActions();
-		Assert.assertEquals(true, search.isCutOff(actions));
+		Node result = search.findNode(problem);
+		Assert.assertEquals(true, result == DepthLimitedSearch.CUTOFF_NODE);
 	}
 
 	@Test

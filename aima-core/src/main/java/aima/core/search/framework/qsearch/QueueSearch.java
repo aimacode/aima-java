@@ -53,7 +53,7 @@ public abstract class QueueSearch {
 	 * 
 	 * @return a node referencing a goal state, if the goal was found, otherwise null;
 	 */
-	public Node search(Problem problem, Queue<Node> frontier) {
+	public Node findNode(Problem problem, Queue<Node> frontier) {
 		this.frontier = frontier;
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem

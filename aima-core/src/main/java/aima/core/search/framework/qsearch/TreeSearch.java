@@ -24,7 +24,7 @@ import aima.core.search.framework.problem.Problem;
  * 
  * <br>
  * This implementation is based on the template method
- * {@link #search(Problem, Queue)} from superclass {@link QueueSearch} and
+ * {@link #findNode(Problem, Queue)} from superclass {@link QueueSearch} and
  * provides implementations for the needed primitive operations.
  * 
  * @author Ravi Mohan

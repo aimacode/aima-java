@@ -170,7 +170,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 		Problem problem = new BidirectionalEightPuzzleProblem(board);
 		SearchForActions search = SEARCH_ALGOS.get(strategyIdx);
-		List<Action> actions = search.search(problem);
+		List<Action> actions = search.findActions(problem);
 		for (Action action : actions) {
 			if (action == EightPuzzleBoard.UP)
 				board.moveGapUp();

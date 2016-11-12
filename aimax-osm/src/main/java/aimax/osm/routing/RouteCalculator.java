@@ -59,7 +59,7 @@ public class RouteCalculator {
 				HeuristicFunction hf = createHeuristicFunction(pNodeList.get(i),
 						taskSelection);
 				SearchForActions search = createSearch(hf, taskSelection);
-				List<Action> actions = search.search(problem);
+				List<Action> actions = search.findActions(problem);
 				if (actions.isEmpty())
 					break;
 				for (Object action : actions) {

@@ -102,7 +102,7 @@ public class MapAgent extends ProblemSolvingAgent {
 	protected List<Action> search(Problem problem) {
 		List<Action> result = new ArrayList<Action>();
 		try {
-			result.addAll(search.search(problem));
+			result.addAll(search.findActions(problem));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

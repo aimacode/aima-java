@@ -69,14 +69,14 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
-	public List<Action> search(Problem p) {
+	public List<Action> findActions(Problem p) {
 		nodeExpander.useParentLinks(true);
 		Node node = searchNode(p);
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
-	public Object searchState(Problem p) {
+	public Object findState(Problem p) {
 		nodeExpander.useParentLinks(false);
 		Node node = searchNode(p);
 		return node == null ? null : node.getState();

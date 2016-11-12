@@ -117,7 +117,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 				simPaneCtrl.getParamAsDouble(PARAM_LAMBDA), simPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
 		search = new SimulatedAnnealingSearch(s -> 1 - func.apply((Double) s), scheduler);
 		search.getNodeExpander().addNodeListener(n -> updateStateView(n.getState()));
-		search.search(problem);
+		search.findActions(problem);
 		updateStateView(search.getLastSearchState());
 	}
 
