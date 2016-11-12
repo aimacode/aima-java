@@ -8,10 +8,9 @@ import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
- * Maintains a {@link QueueSearch} implementation and a node comparator. Search
- * is performed by creating a priority queue based on the given comparator and
- * feeding it to the QueueSearch implementation which finally controls the
- * simulated search space exploration.
+ * Performs search by creating a priority queue based on a given
+ * <code>Comparator</code> and feeding it to a given <code>QueueSearch</code>
+ * implementation which finally controls the simulated search space exploration.
  * 
  * @author Ravi Mohan
  * @author Ruediger Lunde
@@ -31,7 +30,7 @@ public class PrioritySearch implements SearchForActions, SearchForStates {
 		Node node = implementation.findNode(p, QueueFactory.<Node>createPriorityQueue(comparator));
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
-	
+
 	@Override
 	public Object findState(Problem p) {
 		implementation.getNodeExpander().useParentLinks(false);
@@ -47,7 +46,7 @@ public class PrioritySearch implements SearchForActions, SearchForStates {
 	public NodeExpander getNodeExpander() {
 		return implementation.getNodeExpander();
 	}
-	
+
 	@Override
 	public Metrics getMetrics() {
 		return implementation.getMetrics();

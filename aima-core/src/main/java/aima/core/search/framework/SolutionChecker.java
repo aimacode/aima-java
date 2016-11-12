@@ -6,8 +6,8 @@ import aima.core.agent.Action;
 import aima.core.search.framework.problem.GoalTest;
 
 /**
- * A specialization of the GoalTest interface so that it is possible to check
- * the solution once a Goal has been identified to determine if it is
+ * A specialization of the <code>GoalTest<code> interface so that it is possible
+ * to check the solution once a goal has been identified to determine if it is
  * acceptable. This allows you to continue searching for alternative solutions
  * without having to restart the search.<br>
  * <br>
