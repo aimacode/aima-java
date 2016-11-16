@@ -39,7 +39,7 @@ public class CSPEnvironment extends AbstractEnvironment {
 			if (a.updateAssignment())
 				assignment = a.getAssignment();
 			if (agent == null)
-				updateEnvironmentViewsAgentActed(agent, action);
+				notifyEnvironmentViews(agent, action);
 		}
 	}
 

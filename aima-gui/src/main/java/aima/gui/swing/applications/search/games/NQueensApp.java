@@ -383,7 +383,7 @@ public class NQueensApp extends SimpleAgentApp {
 				else if (act.getName() == QueenAction.MOVE_QUEEN)
 					board.moveQueenTo(loc);
 				if (agent == null)
-					updateEnvironmentViewsAgentActed(agent, action);
+					notifyEnvironmentViews(agent, action);
 			}
 		}
 

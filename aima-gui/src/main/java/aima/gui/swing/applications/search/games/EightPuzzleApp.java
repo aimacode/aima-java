@@ -372,7 +372,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
 			if (agent == null)
-				updateEnvironmentViewsAgentActed(agent, action);
+				notifyEnvironmentViews(agent, action);
 		}
 
 		/** Returns null. */
