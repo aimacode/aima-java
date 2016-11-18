@@ -3,18 +3,30 @@
 by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
 This project provides a framework for building intelligent Open Street Map
-(OSM) data applications. It was originally designed to validate and test agent
-and search concepts from the AIMA library in an interesting, non-trivial
-application area. Meanwhile, it provides a framework for building small
-navigation systems. Two GUIs are provided:
-One based on JavaFX (package <code>aimax.osm.gui.fx</code>) and the other based on
-Swing (package <code>aimax.osm.gui.swing</code>).
+(OSM) data applications. It was designed to validate and test agent
+and search concepts from the AIMA library in a non-trivial
+application area and provide an interesting coding environment for student
+projects. Typical programming challenges include:
+# Extend the `OsmRoutePlannerApp` and provide additional options, e.g. to optimize
+time for a driver, to optimize fun for a cyclist, ...
+# Extend the `OsmLRTAStarAgentApp` and add variants of the original LRTAStar-based
+agent which try to perform better than the original in this special environment, e.g.
+by increasing greediness.
+# Extend the `OsmAgentBaseApp` and add a new agent which is able to react on unforeseen
+events, e.g. on a road blocking defined by additional markers.
+# Develop an agent which plans the Saturday morning shopping tour for you. Try to
+create an optimal tour (the typical greedy TSP implementation is not that challenging...).
 
-The framework provides interfaces for central parts of the system and additionally
-example implementations. In the current version, the fundamental data structures
+Two GUIs are provided: One is based on JavaFX (package `aimax.osm.gui.fx`) and the other based on
+Swing (package `aimax.osm.gui.swing`). The FX GUI ist newer, more elegant, and
+more focused on AIMA concepts evaluation. The Swing GUI provides more functionality including
+a toolbox for building small navigation systems.
+
+The framework provides interfaces for central parts of a map visualization system and
+additionally example implementations. Fundamental data structures
 for nodes, ways, and the map itself can be replaced. The framework supports experiments
 with different implementations to optimize routing and also to integrate a database
-version of the map representation. The application <code>aimax.osm.gui.swing.applications.MiniNaviApp</code>
+version of the map representation. The application `aimax.osm.gui.swing.applications.MiniNaviApp`
 demonstrates how to plug the components together and provides means to integrate and test
 own versions of the needed components.
 
@@ -27,13 +39,13 @@ Classification and abstraction of map entities as well as their
 visual appearance within the drawn map are controlled by declarative
 rendering rules. They can be replaced or configured at runtime.
 New personal map styles can be created quite easily. See classes
-<code>aimax.osm.viewer.MapStyleFactory</code> and
-<code>aimax.osm.gui.swing.applications.OsmViewerPlusApp</code> for ideas how that
+`aimax.osm.viewer.MapStyleFactory` and
+`aimax.osm.gui.swing.applications.OsmViewerPlusApp` for ideas how that
 can be achieved.
 
 Routing functionality is based on the AIMA-CORE library.
 All dependencies from the AIMA libraries are encapsulated in the routing
-sub-package (search algorithms) and the gui sub-package (JavaFX/Swing-based framework).
+sub-package (search algorithms) and the gui sub-package (JavaFX/Swing-based frameworks).
 So all other packages can also be used as stand-alone library for building general OSM
 applications.
 
@@ -44,9 +56,9 @@ cities like Berlin can be loaded and displayed without any problem if enough
 heap space is provided (VM argument -Xmx500M).
 
 Getting started: Run one of the applications in the
-<code>aimax.osm.gui.fx.applications</code> or
-<code>aimax.osm.gui.swing.applications</code> package. If no map is displayed
-by default, make sure that the main/resource folder is included 
+`aimax.osm.gui.fx.applications` or `aimax.osm.gui.swing.applications` package,
+or use the corresponding integrated applications one package level up. If no map is
+displayed by default, make sure that the main/resource folder is included
 in the build path of your project, recompile and start again.
 Then, place the mouse inside the map viewer pane. Try mouse-left, mouse-middle,
 mouse-right, mouse-drag, ctrl-mouse-left, plus button, minus button, shift-plus, shift-minus,

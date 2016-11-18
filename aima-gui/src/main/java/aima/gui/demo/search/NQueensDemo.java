@@ -77,12 +77,11 @@ public class NQueensDemo {
 			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
 					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 			SearchForActions search = new BreadthFirstSearch(new TreeSearch());
-			SearchAgent agent2 = new SearchAgent(problem, search);
-			printActions(agent2.getActions());
-			printInstrumentation(agent2.getInstrumentation());
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
+			SearchAgent agent = new SearchAgent(problem, search);
+			printActions(agent.getActions());
+			printInstrumentation(agent.getInstrumentation());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -40,8 +40,7 @@ For examples of how to use the various algorithms and supporting classes, look a
 
 == Notes on Search ==
 
-To solve a problem with (non CSP )Search .
-  # you need to write five classes:
+To solve a problem with (non CSP )Search you need to write five classes:
 	# a class that represents the Problem state. This class is independent of the framework and does NOT need to subclass anything. Let us, for the rest of these instruction, assume you are going to solve the NQueens problem. So in this step you need to write something like aima.core.environment.nqueens.NQueensBoard. 
 	# an implementation of the aima.core.search.framework.GoalTest interface. This implements only a single function ---boolean isGoalState(Object state); The parameter state is an instance of the class you created in  step 1-a above. For the NQueensProblem you would need to write something like aima.core.environment.nqueens.NQueensGoalTest.
 	# an implementation of the aima.core.search.framework.ActionsFunction interface. This generates the allowable actions from a particular state. An example is aima.core.environment.nqueens.NQueensFunctionFactory.NQActionsFunction.
@@ -56,55 +55,25 @@ To actually search you need to
   # instantiate a SearchAgent and 
   # print any actions and metrics 
 
-A good example (from the NQueens Demo ) is: 
+A good example (from the NQueens Demo) is:
 {{{
 	private static void nQueensWithBreadthFirstSearch() {
-		try {
-			System.out.println("\nNQueensDemo BFS -->");
-			Problem problem = new Problem(new NQueensBoard(8),
-					NQueensFunctionFactory.getActionsFunction(),
-					NQueensFunctionFactory.getResultFunction(),
-					new NQueensGoalTest());
-			Search search = new BreadthFirstSearch(new TreeSearch());
-			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
-			printInstrumentation(agent.getInstrumentation());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	}
+    		try {
+    			System.out.println("\nNQueensDemo BFS -->");
+    			Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
+    					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
+    			SearchForActions search = new BreadthFirstSearch(new TreeSearch());
+    			SearchAgent agent = new SearchAgent(problem, search);
+    			printActions(agent.getActions());
+    			printInstrumentation(agent.getInstrumentation());
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
 }}}
 
-
-== Search Inheritance Trees ==
-
-There are two inheritance trees in Search. One deals with the "mechanism" of search.
-
-This inheritance hierarchy looks like this:
-
- ||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/NodeExpander.java NodeExpander] (encapsulates the Node expansion mechanism)||---||---||
- ||---|| [http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/QueueSearch.java QueueSearch]||---||
- ||---||---||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/GraphSearch.java GraphSearch]||
- ||---||---||[http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/TreeSearch.java TreeSearch]||
-
-The second tree deals with the search instances you can use to solve a problem. These implement the aima.core.search.framework.Search interface.
-
-||Search||---||---||---||
-||---||BreadthFirstSearch||---||---||
-||---||DepthFirstSearch||---||---||
-||---||HillClimbingSearch||---||---||
-||---||PrioritySearch||---||---||
-||---||---||BestFirstSearch||---||
-
-etc...
-
-So if you see a declaration like 
-"SimulatedAnnealingSearch extends NodeExpander implements Search" , do not be confused.
-	
-the  superclass ([http://aima-java.googlecode.com/svn/trunk/aima-core/src/main/java/aima/core/search/framework/NodeExpander.java NodeExpander]) provides the mechanism of the search and the interface (Search) makes it suitable for use in solving actual problems.
-
-Searches like DepthFirstSearch which need to be used as a search (so implementing the Search interface) and can be configured with either GraphSearch or TreeSearch (the mechanism) have a  constructor like
-	 public DepthFirstSearch(QueueSearch search).
+For further information about code design, see the [Wiki] (https://github.com/aimacode/aima-java/wiki).
 
 == Logic Notes ==
 To use First Order Logic, first you need to create an instance of aima.core.logic.fol.domain.FOLDomain which collects the FOL Constants, Prredicates, and Function etc... that you use to solve a particular problem.
@@ -116,11 +85,13 @@ FOLParser parser = new FOLParser(weaponsDomain);
 
 the basic design of all the logic code is that the parser creates a Composite (Design Patterns by Gamma, et al) parse tree over which various Visitors (Design Patterns by Gamma, et al) traverse. The key difference between the Visitor elucidated in the GOF book and the code is that in the former the visit() methods have a void visit(ConcreteNode) signature while the visitors used in the logic code have a Object visit(ConcreteNode,Object arg) signature. This makes testing easier and allows some recursive code that is hard with the former .
 
+
 == Probability Notes ==
 
 I have tried to make the code stick very closely to Dr.Norvig's' pseudo-code. Looking at the tests will reveal how to use the code. 
 
-==LearningNotes==
+
+== LearningNotes ==
 
 === Main Classes and responsibilities ===
 A <DataSet> is a collection of <Example>s. Wherever you see "examples" in plural in the text, the code uses a DataSet. This makes it easy to aggregate operations that work on collections of examples in one place.
