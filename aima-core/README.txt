@@ -73,7 +73,7 @@ A good example (from the NQueens Demo) is:
     }
 }}}
 
-For further information about code design, see the [Wiki] (https://github.com/aimacode/aima-java/wiki).
+For further information about code design, see the [https://github.com/aimacode/aima-java/wiki Wiki].
 
 == Logic Notes ==
 To use First Order Logic, first you need to create an instance of aima.core.logic.fol.domain.FOLDomain which collects the FOL Constants, Prredicates, and Function etc... that you use to solve a particular problem.

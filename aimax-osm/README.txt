@@ -99,17 +99,13 @@ for details.
 
 == OSM Maps ==
 
-Example maps can be downloaded from the AIMA project website, example-osm-maps.zip :
-
-http://code.google.com/p/aima-java/downloads/list
-
-All provided example maps have been created based on data published at:
+The provided example map has been created based on data published at:
 http://download.geofabrik.de/osm/
 
 Smaller maps from servers like geofabrik or cloudmade can be loaded into the viewer
 directly, especially, if enough heap space is provided (e.g. VM argument -Xmx1500M).
-Additionally, parts of larger maps can be loaded into the viewer applications by
-holding <ctrl> while pressing the load map button and specifying a bounding box.
+Additionally (Swing GUI only!), parts of larger maps can be loaded into the viewer applications
+by holding <ctrl> while pressing the load map button and specifying a bounding box.
 If two markers are set in the currently visible map, their values are used to define
 the bounding box for the next map to load. The coordinates can also be specified in
 text form. The easiest way to obtain the needed latitude and longitude bounds is to
