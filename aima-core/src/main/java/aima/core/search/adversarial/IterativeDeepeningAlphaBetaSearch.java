@@ -42,11 +42,11 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	 * @param game
 	 *            The game.
 	 * @param utilMin
-	 *            Supports early termination in situations with a safe winner.
-	 *            If not known negative infinity will do.
+	 *            Supports evaluation of non-terminal states and early termination in
+	 *            situations with a safe winner.
 	 * @param utilMax
-	 *            Supports early termination in situations with a safe winner.
-	 *            If not known positive infinity will do.
+	 *            Supports evaluation of non-terminal states and early termination in
+	 *            situations with a safe winner.
 	 * @param time
 	 *            Maximal computation time in seconds.
 	 */
