@@ -29,8 +29,9 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	protected double utilMax;
 	protected double utilMin;
 	protected int currDepthLimit;
-	private boolean heuristicEvaluationUsed; // indicates that non-terminal nodes
-											// have been evaluated.
+	private boolean heuristicEvaluationUsed; // indicates that non-terminal
+												// nodes
+												// have been evaluated.
 	private Timer timer;
 	private boolean logEnabled;
 
@@ -42,10 +43,12 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	 * @param game
 	 *            The game.
 	 * @param utilMin
-	 *            Supports evaluation of non-terminal states and early termination in
+	 *            Utility value of worst state for this player. Supports
+	 *            evaluation of non-terminal states and early termination in
 	 *            situations with a safe winner.
 	 * @param utilMax
-	 *            Supports evaluation of non-terminal states and early termination in
+	 *            Utility value of best state for this player. Supports
+	 *            evaluation of non-terminal states and early termination in
 	 *            situations with a safe winner.
 	 * @param time
 	 *            Maximal computation time in seconds.
@@ -61,11 +64,13 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	 * @param game
 	 *            The game.
 	 * @param utilMin
-	 *            Supports early termination in situations with a safe winner.
-	 *            If not known negative infinity will do.
+	 *            Utility value of worst state for this player. Supports
+	 *            evaluation of non-terminal states and early termination in
+	 *            situations with a safe winner.
 	 * @param utilMax
-	 *            Supports early termination in situations with a safe winner.
-	 *            If not known positive infinity will do.
+	 *            Utility value of best state for this player. Supports
+	 *            evaluation of non-terminal states and early termination in
+	 *            situations with a safe winner.
 	 * @param time
 	 *            Maximal computation time in seconds.
 	 */
@@ -82,9 +87,10 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	}
 
 	/**
-	 * Template method controlling the search. It is based on iterative deepening and tries to make
-	 * to a good decision in limited time. Credit goes to Behi Monsio who had the idea of ordering
-	 * actions by utility in subsequent depth-limited search runs.
+	 * Template method controlling the search. It is based on iterative
+	 * deepening and tries to make to a good decision in limited time. Credit
+	 * goes to Behi Monsio who had the idea of ordering actions by utility in
+	 * subsequent depth-limited search runs.
 	 */
 	@Override
 	public ACTION makeDecision(STATE state) {
@@ -121,7 +127,6 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 						break; // exit from iterative deepening loop
 				}
 			}
-
 		} while (!timer.timeOutOccured() && heuristicEvaluationUsed);
 		return results.get(0);
 	}
