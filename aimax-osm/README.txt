@@ -67,13 +67,10 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-== Current Release: 2.0.3-AIMAX-OSM Small Improvements == 
-2.0.3-AIMAX-OSM Small Improvements : 10 Aug 2014 :<br>
-   * One way arrows added.
-   * Map renderer is now platform independent. Can also be used for Android. Beta Version!
-   * Extendability of RouteCalculator improved.
-   * Minor problem with closed ways fixed.
-   * Double buffering problem in map view fixed.
+== Current Release: 2.1.0-AIMAX-OSM JavaFX GUIs Added == 
+2.1.0-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 :<br>
+   * JavaFX GUIs Added.
+   * Reverse map problem generation improved.
    * Minor documentation improvements.
 
 == Keywords ==
@@ -157,6 +154,14 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+2.0.3-AIMAX-OSM Small Improvements : 10 Aug 2014 :<br>
+   * One way arrows added.
+   * Map renderer is now platform independent. Can also be used for Android. Beta Version!
+   * Extendability of RouteCalculator improved.
+   * Minor problem with closed ways fixed.
+   * Double buffering problem in map view fixed.
+   * Minor documentation improvements.
+   
 2.0.2-AIMAX-OSM Minor Documentation Cleanup : 08 Jan 2012 :<br>
    * Minor documentation improvements.
    

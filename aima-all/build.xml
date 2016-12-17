@@ -38,7 +38,7 @@
 			<fileset dir="${aimax-osm.dir.build.release}" />
 		</copy>
 		
-		<zip destfile="${aima-all.dir.build.release}/aima-java-${aima-all.version}.zip" 
+		<zip destfile="${aima-all.dir.build.release}/aima3e-java-${aima-all.version}.zip" 
 			basedir="${aima-all.dir.build.release}">
 		</zip>
 	</target>

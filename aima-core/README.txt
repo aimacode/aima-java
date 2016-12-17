@@ -3,15 +3,11 @@
 == Requirements ==
 # JDK 1.8 - is the baseline JDK against which this project is developed. 
 
-== Current Release: 0.11.1-Chp7-Complete ==
-0.11.1-Chp7-Complete : Mar 15 2015 :<br>
-  * Fixed Issue 33, Add implementation of - Fig 7.22 SATPlan
-  * Improved performance of DPLL implementation and added an alternative implementation that uses a couple
-    of trivial optimizations to improve performance by about 40% over the default DPLL implementation
-    that matches the description in the book.
-  * New DPLL interface added to allow people to experiment with different implementations in order to try
-    out performance enhancement ideas from the book and other sources.
-  * Added tests for and corrected defects found in the HybridWumpusAgent and WumpusKnowledgeBase implementations.
+== Current Release: 0.12.0-Search-Improvements ==
+0.12.0-Search-Improvements : Dec 18 2016 :<br>
+  * Improvements/Simplifications across search related APIs.
+  * Complete set of algorithms for Chapters 22, 23 and 25 added.
+  * Moved from JDK-7 to 8 as the baseline for further development.
  
 = Details =
 
@@ -113,6 +109,15 @@ The Perceptron and DecisionTreeLearners work on *numerized datasets*. If you int
 2. Learners all implement the Learner interface with 3 methods, train, predict and test. If you want to add a new type of Learner (a partitioning Decision Tree learner perhaps?) you need to implement this interface.
 
 = Change History (Update in reverse chronological order) =
+0.11.1-Chp7-Complete : Mar 15 2015 :<br>
+  * Fixed Issue 33, Add implementation of - Fig 7.22 SATPlan
+  * Improved performance of DPLL implementation and added an alternative implementation that uses a couple
+    of trivial optimizations to improve performance by about 40% over the default DPLL implementation
+    that matches the description in the book.
+  * New DPLL interface added to allow people to experiment with different implementations in order to try
+    out performance enhancement ideas from the book and other sources.
+  * Added tests for and corrected defects found in the HybridWumpusAgent and WumpusKnowledgeBase implementations.
+  
 0.11.0-Chp7-Rewrite : 10 Aug 2014 :<br>
   * Rewrite of the algorithms in Chapter 7 to more closely map to pseudo-code
     in book and to resolve outstanding issues.

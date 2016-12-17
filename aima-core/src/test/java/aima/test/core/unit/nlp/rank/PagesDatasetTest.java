@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import aima.core.nlp.ranking.Page;
@@ -26,6 +27,7 @@ public class PagesDatasetTest {
 		assertEquals( PagesDataset.getPageName(fileTwo), "/wiki/pathtwo");
 	}
 	
+	@Ignore("testFilesFolderPath currently breaks portability")
 	@Test
 	public void testLoadPages() {
 		String folderPath = testFilesFolderPath;
@@ -34,6 +36,7 @@ public class PagesDatasetTest {
 		assertTrue( pageTable.containsKey("/wiki/TestMan".toLowerCase()));
 	}
 	
+	@Ignore("testFilesFolderPath currently breaks portability")
 	@Test
 	public void testLoadPagesInlinks() {
 		String folderPath = testFilesFolderPath;
@@ -47,6 +50,7 @@ public class PagesDatasetTest {
 																	"/wiki/testturnerandhooch")));	
 	}
 
+	@Ignore("testFilesFolderPath currently breaks portability")
 	@Test
 	public void testLoadFileText() {
 		String testFilePath = "TestMan.txt";

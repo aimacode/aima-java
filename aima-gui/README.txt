@@ -16,9 +16,15 @@ They use different frameworks (sub-package framework) and also differ in functio
 == Requirements ==
 # Depends on the aima-core project. 
 
-== Current Release: 1.0.9-AIMA-GUI Chp 7 Rewrite Support ==
-1.0.9-Chp 7 Rewrite Support : 10 Aug 2014 :<br>
-  * Updated to work with the latest version of aima-core (0.11.0).
+== Current Release: 1.1.0-AIMA-GUI JavaFX GUIs Added ==
+1.1.0-JavaFX GUIs Added : 18 Dec 2016 :<br>
+  * Java FX based GUIs added.
+  * Simulated Annealing, FX based, Application Added.
+  * Genetic Algorithm, FX based, Application Added.
+  * Updated to work with the latest version of aima-core (0.12.0).
+      * Search Framework improvements.
+      * Bidirectional Search options added to GUI demo applications.
+  * Monte Carlo Localization (MCL), Swing based, Application Added.
   
 == Running the GUIs and Command Line Demos ==
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
@@ -55,6 +61,9 @@ The following command line demos can be run as well:
  
 
 = Change History (Update in reverse chronological order) =
+1.0.9-Chp 7 Rewrite Support : 10 Aug 2014 :<br>
+  * Updated to work with the latest version of aima-core (0.11.0).
+  
 1.0.8-AIMA-GUI And Or Search Supported : 09 Oct 2012 :<br>
   * Updated to work with the latest version of aima-core (0.10.5).
   
