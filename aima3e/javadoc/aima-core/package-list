@@ -40,6 +40,11 @@ aima.core.logic.propositional.kb.data
 aima.core.logic.propositional.parsing
 aima.core.logic.propositional.parsing.ast
 aima.core.logic.propositional.visitors
+aima.core.nlp.data.grammars
+aima.core.nlp.data.lexicons
+aima.core.nlp.parsing
+aima.core.nlp.parsing.grammars
+aima.core.nlp.ranking
 aima.core.probability
 aima.core.probability.bayes
 aima.core.probability.bayes.approx
@@ -59,9 +64,17 @@ aima.core.probability.proposition
 aima.core.probability.temporal
 aima.core.probability.temporal.generic
 aima.core.probability.util
+aima.core.robotics
+aima.core.robotics.datatypes
+aima.core.robotics.impl.datatypes
+aima.core.robotics.impl.map
 aima.core.search.adversarial
 aima.core.search.csp
+aima.core.search.csp.examples
 aima.core.search.framework
+aima.core.search.framework.evalfunc
+aima.core.search.framework.problem
+aima.core.search.framework.qsearch
 aima.core.search.informed
 aima.core.search.local
 aima.core.search.nondeterministic
@@ -70,3 +83,5 @@ aima.core.search.uninformed
 aima.core.util
 aima.core.util.datastructure
 aima.core.util.math
+aima.core.util.math.geom
+aima.core.util.math.geom.shapes
