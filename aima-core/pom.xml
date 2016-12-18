@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>AIMA-Java Core</name>
-	<version>0.12.0</version>
+	<version>3.0.0</version>
 	<groupId>com.googlecode.aima-java</groupId>
 	<artifactId>aima-core</artifactId>
 

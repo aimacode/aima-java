@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-core.project}/build.xml"/>
 	
-	<property name="aima-gui.run" value="aima.gui.swing.applications.IntegratedAimaApp" />
+	<property name="aima-gui.run" value="aima.gui.fx.applications.IntegratedAimaFxApp" />
 	
 	<path id="aima-gui.classpath">
 		<path refid="aima-core.classpath" />
@@ -53,7 +53,7 @@
 		<jar destfile="${aima-gui.dir.build.release}/aima-gui.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-core.jar" />
-				<attribute name="Main-Class" value="aima.gui.applications.AimaDemoApp" />
+				<attribute name="Main-Class" value="aima.gui.fx.applications.IntegratedAimaFxApp" />
 		    	<attribute name="Implementation-Title" value="AIMA-GUI" />
 		        <attribute name="Implementation-Version" value="${aima-gui.version}" />
 		        <attribute name="AIMA-GUI-Version" value="${aima-gui.version}" />

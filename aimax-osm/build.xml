@@ -6,7 +6,7 @@
 
 	<import file="${path.to.aima-gui.project}/build.xml"/>
 	
-	<property name="aimax-osm.run" value="aimax.osm.gui.swing.IntegratedAimaOsmApp" />
+	<property name="aimax-osm.run" value="aimax.osm.gui.fx.IntegratedAimaOsmFxApp" />
 	
 	<path id="aimax-osm.classpath">
 		<path refid="aima-gui.classpath" />
@@ -53,7 +53,7 @@
 		<jar destfile="${aimax-osm.dir.build.release}/aimax-osm.jar">
 			<manifest>
 				<attribute name="Class-Path" value="aima-gui.jar commons-compress-1.1.jar" />
-				<attribute name="Main-Class" value="aimax.osm.gui.swing.applications.OsmViewerApp" />
+				<attribute name="Main-Class" value="aimax.osm.gui.fx.IntegratedAimaOsmFxApp" />
 		    	<attribute name="Implementation-Title" value="AIMAX-OSM" />
 		        <attribute name="Implementation-Version" value="${aimax-osm.version}" />
 		        <attribute name="AIMAX-OSM-Version" value="${aimax-osm.version}" />

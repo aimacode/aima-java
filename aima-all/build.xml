@@ -24,7 +24,7 @@
 	
 	<target name="aima-all.release" depends="aima-all.makedirs,aima-core.release,aima-gui.release,aimax-osm.release">
 		<copy todir="${aima-all.dir.build.release}/aima-core">
-			<fileset dir="${path.to.aima-core.project}" excludes="**/*.git, .gitignore, build/, bin/" />
+			<fileset dir="${path.to.aima-core.project}" excludes="**/*.git, .gitignore, build/, bin/, target/" />
 		</copy>
 		<copy todir="${aima-all.dir.build.release}/aima-gui">
 			<fileset dir="${path.to.aima-gui.project}" excludes="**/*.git, .gitignore, build/ bin/" />

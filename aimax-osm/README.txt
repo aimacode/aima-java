@@ -67,11 +67,9 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-== Current Release: 2.1.0-AIMAX-OSM JavaFX GUIs Added == 
-2.1.0-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 :<br>
-   * JavaFX GUIs Added.
-   * Reverse map problem generation improved.
-   * Minor documentation improvements.
+== Current Release: 2.1.1-AIMAX-OSM JavaFX GUIs Added == 
+2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 :<br>
+  * Fixed Jar to launch JavaFX Integrated App by default.
 
 == Keywords ==
 
@@ -154,6 +152,11 @@ program argument -screensize=xx (with xx screen size in inch)
 
   
 = Change History (Update in reverse chronological order) =
+2.1.0-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 :<br>
+   * JavaFX GUIs Added.
+   * Reverse map problem generation improved.
+   * Minor documentation improvements.
+   
 2.0.3-AIMAX-OSM Small Improvements : 10 Aug 2014 :<br>
    * One way arrows added.
    * Map renderer is now platform independent. Can also be used for Android. Beta Version!
