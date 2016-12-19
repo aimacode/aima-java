@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp  spec="6.0+"  codebase="http://aimacode.github.io/aima-java/aima3e"  href="aimax-osm-IntegratedAimaOsmSwingApp.jnlp">  
+  <information>    
+    <title>AIMA and OSM Unified Swing Demo Application</title>
+    <description>AIMA and OSM Unified Swing Demo Application</description>      
+    <vendor>AIMA3e-Java Open Source Project</vendor>    
+    <homepage href="https://github.com/aimacode/aima-java"/> 
+    <icon href="images/aima3e.jpg"/>
+    <icon kind="splash" href="images/aima3ebig.jpg"/>
+    <offline-allowed/>
+  </information>  
+  <security>      
+    <all-permissions/>
+  </security>  
+  <resources>    
+    <j2se version="1.8+"/>     
+    <jar href="jars/aima-core.jar"/>  
+    <jar href="jars/aima-gui.jar"/>
+    <jar href="jars/aimax-osm.jar"/> 
+    <jar href="jars/commons-compress-1.1.jar"/>
+  </resources>  
+  <application-desc main-class="aimax.osm.gui.swing.IntegratedAimaOsmApp" />
+</jnlp> 
