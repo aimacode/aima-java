@@ -21,37 +21,41 @@ They use different frameworks (sub-package framework) and also differ in functio
   * Fixed Jar to launch JavaFX Integrated App by default.
   
 == Running the GUIs and Command Line Demos ==
-Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar, ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
+Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar,
+ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * java -jar aima-gui.jar
-   + this will run the default AimaDemoApp, this allows you to run all other applications from a central location as well as all of the current command line demos.
- 
- * java -classpath aima-gui.jar aima.gui.swing.demo.vacuum.VacuumApp
+   + this will run the default IntegratedAimaFxApp. It allows you to run all other JavaFX applications from a central location as well as all of the current command line demos.
+* java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp
+   + this will run the Swing version of the integrated AIMA application.
+
+JavaFX and SWing demo applications can be started directly. Here, only the Swing versions are listed: 
+ * java -classpath aima-gui.jar aima.gui.swing.applications.vacuum.VacuumApp
    + provides a demo of the different agents described in Chapter 2 for tackling the Vacuum World.
-  * java -classpath aima-gui.jar aima.gui.swing.demo.search.games.EightPuzzleApp
+  * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.EightPuzzleApp
    + provides a demo of the different search algorithms described in Chapter 3 and 4.
- * java -classpath aima-gui.jar aima.gui.swing.demo.search.games.NQueensApp
+ * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.NQueensApp
    + provides a demo of the different search algorithms described in Chapter 3 and 4.
- * java -classpath aima-gui.jar aima.gui.swing.demo.search.games.TicTacToeApp
+ * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.TicTacToeApp
    + provides a demo of the different search algorithms described in Chapter 5.
- * java -classpath aima-gui.jar aima.gui.swing.demo.search.map.RouteFindingAgentApp
+ * java -classpath aima-gui.jar aima.gui.swing.applications.search.map.RouteFindingAgentApp
    + provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
- * java -classpath aima-gui.jar aima.gui.swing.demo.search.csp.MapColoringApp
+ * java -classpath aima-gui.jar aima.gui.swing.applications.search.csp.MapColoringApp
    + provides a demo of the different csp algorithms described in Chapters 6.
  
 The following command line demos can be run as well:
- * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumProg
- * java -classpath aima-gui.jar aima.gui.demo.learning.LearningProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.DPLLProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.FolProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.PLFCEntailsProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.PLResolutionProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.TTEntailsProg
- * java -classpath aima-gui.jar aima.gui.demo.logic.WalkSatProg
- * java -classpath aima-gui.jar aima.gui.demo.probability.ProbabilityProg
- * java -classpath aima-gui.jar aima.gui.demo.search.CSPProg
- * java -classpath aima-gui.jar aima.gui.demo.search.EightPuzzleProg
- * java -classpath aima-gui.jar aima.gui.demo.search.NQueensProg
- * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeProg
+ * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo
+ * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.DPLLDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.FolDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.PLFCEntailsDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.PLResolutionDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.TTEntailsDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.WalkSatDemo
+ * java -classpath aima-gui.jar aima.gui.demo.probability.ProbabilityDemo
+ * java -classpath aima-gui.jar aima.gui.demo.search.CSPDemo
+ * java -classpath aima-gui.jar aima.gui.demo.search.EightPuzzleDemo
+ * java -classpath aima-gui.jar aima.gui.demo.search.NQueensDemo
+ * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo
  
 
 = Change History (Update in reverse chronological order) =
