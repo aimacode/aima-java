@@ -28,7 +28,7 @@ ensure these are on your CLASSPATH, the different GUI programs that can be run u
 * java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp
    + this will run the Swing version of the integrated AIMA application.
 
-JavaFX and SWing demo applications can be started directly. Here, only the Swing versions are listed: 
+JavaFX and Swing demo applications can be started directly. Here, only the Swing versions are listed: 
  * java -classpath aima-gui.jar aima.gui.swing.applications.vacuum.VacuumApp
    + provides a demo of the different agents described in Chapter 2 for tackling the Vacuum World.
   * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.EightPuzzleApp
