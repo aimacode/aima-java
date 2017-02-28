@@ -16,7 +16,7 @@ If you just want to use the classes, all you need to do is put the aima-core.jar
 If you want to rebuild from the source, run the unit tests etc.., follow these instructions:
 
 To build from the command line:
-  # Ensure you have [http://ant.apache.org/ ant] installed.
+  # Ensure you have [http://ant.apache.org/ ant] and java installed .
   # Download the release archive.
   # Unzip
   # Go to the aima-core directory
