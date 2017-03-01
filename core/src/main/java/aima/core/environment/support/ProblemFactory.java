@@ -30,7 +30,7 @@ import aima.core.util.datastructure.Pair;
 public class ProblemFactory {
 
 	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomaniaProblem(String initialState,
-			final String... goalLocations) {
+																						final String... goalLocations) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
 		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
 		if (!locationSet.contains(initialState)) {
@@ -48,6 +48,21 @@ public class ProblemFactory {
 				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
 				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
 				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocations),
+				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
+	}
+
+	public static Problem<GoAction, InState> getSimpleBidirectionalSearchProblem(String initialState, final String goalLocations) {
+		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
+		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
+		if (!locationSet.contains(initialState)) {
+			throw new IllegalArgumentException(
+					"Initial State " + initialState + " is not a member of the state space.");
+		}
+		return new BasicProblem<>(new InState(initialState),
+				new InState(goalLocations),
+				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocations),
+				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
+				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
