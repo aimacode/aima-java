@@ -3,6 +3,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 
 ### Getting Started Links 
   * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
+  * [Interested in Contributing](https://github.com/aimacode/aima-java/wiki/AIMAJava-Contributing)
   * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup).
   * [Demo Applications that can be run from your browser](http://aimacode.github.io/aima-java/aima3e/aima3ejavademos.html).
   * [Comments on architecture and design] (https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-%26-Design).
