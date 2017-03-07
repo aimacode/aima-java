@@ -1,19 +1,12 @@
 package aima.core.search.informed;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import aima.core.agent.Action;
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.*;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
-import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
+
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page
@@ -50,7 +43,7 @@ import aima.core.search.framework.problem.Problem;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class RecursiveBestFirstSearch implements SearchForActions {
+public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
@@ -58,7 +51,7 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 
 	private static final Double INFINITY = Double.MAX_VALUE;
 
-	private final EvaluationFunction evaluationFunction;
+	private final EvaluationFunction evalFunc;
 	private boolean avoidLoops;
 	private final NodeExpander nodeExpander;
 	
@@ -76,12 +69,18 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 	}
 	
 	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops, NodeExpander nodeExpander) {
-		evaluationFunction = ef;
+		evalFunc = ef;
 		this.avoidLoops = avoidLoops;
 		this.nodeExpander = nodeExpander;
 		metrics = new Metrics();
 	}
-	
+
+	/** Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}. */
+	@Override
+	public void setHeuristicFunction(HeuristicFunction hf) {
+		if (evalFunc instanceof HeuristicEvaluationFunction)
+			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
+	}
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
@@ -94,7 +93,7 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
 		Node n = nodeExpander.createRootNode(p.getInitialState());
-		SearchResult sr = rbfs(p, n, evaluationFunction.f(n), INFINITY, 0);
+		SearchResult sr = rbfs(p, n, evalFunc.f(n), INFINITY, 0);
 		if (sr.hasSolution()) {
 			Node s = sr.getSolutionNode();
 			actions = SearchUtils.getSequenceOfActions(s);
@@ -104,10 +103,6 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 		// Empty List can indicate already at Goal
 		// or unable to find valid set of actions
 		return actions;
-	}
-
-	public EvaluationFunction getEvaluationFunction() {
-		return evaluationFunction;
 	}
 	
 	@Override
@@ -161,7 +156,7 @@ public class RecursiveBestFirstSearch implements SearchForActions {
 		int size = successors.size();
 		for (int s = 0; s < size; s++) {
 			// s.f <- max(s.g + s.h, node.f)
-			f[s] = Math.max(evaluationFunction.f(successors.get(s)), node_f);
+			f[s] = Math.max(evalFunc.f(successors.get(s)), node_f);
 		}
 
 		// repeat

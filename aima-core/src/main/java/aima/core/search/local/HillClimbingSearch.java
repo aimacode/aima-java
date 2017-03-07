@@ -1,17 +1,12 @@
 package aima.core.search.local;
 
-import java.util.List;
-
 import aima.core.agent.Action;
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SearchForStates;
-import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.*;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
+
+import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page
@@ -38,7 +33,7 @@ import aima.core.util.CancelableThread;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class HillClimbingSearch implements SearchForActions, SearchForStates {
+public class HillClimbingSearch implements SearchForActions, SearchForStates, Informed {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
@@ -69,6 +64,11 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
+	public void setHeuristicFunction(HeuristicFunction hf) {
+		this.hf = hf;
+	}
+
+	@Override
 	public List<Action> findActions(Problem p) {
 		nodeExpander.useParentLinks(true);
 		Node node = searchNode(p);
@@ -81,8 +81,7 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates {
 		Node node = searchNode(p);
 		return node == null ? null : node.getState();
 	}
-	
-	
+
 	/**
 	 * Returns a list of actions to the local maximum if the local maximum was
 	 * found, a list containing a single NoOp Action if already at the local

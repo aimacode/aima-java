@@ -85,12 +85,7 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	protected SearchForActions createSearch(List<String> locations) {
 		SearchForActions result = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
 				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), MapFunctionFactory.getZeroHeuristicFunction());
-		result.getNodeExpander().addNodeListener(new NodeExpander.NodeListener() {
-			@Override
-			public void onNodeExpanded(Node node) {
-				visitedStates.add(node.getState());
-			}
-		});
+		result.getNodeExpander().addNodeListener(node -> visitedStates.add(node.getState()));
 		visitedStates.clear();
 		return result;
 	}

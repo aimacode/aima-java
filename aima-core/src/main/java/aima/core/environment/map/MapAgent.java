@@ -1,15 +1,12 @@
 package aima.core.environment.map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
+import aima.core.search.framework.Informed;
 import aima.core.search.framework.ProblemSolvingAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
@@ -18,6 +15,10 @@ import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.BestFirstSearch;
 import aima.core.search.informed.HeuristicEvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Variant of {@link aima.core.environment.map.SimpleMapAgent} which works
@@ -120,14 +121,8 @@ public class MapAgent extends ProblemSolvingAgent {
 	}
 
 	private void modifyHeuristicFunction(Object goal) {
-		if (hfFactory != null) {
-			EvaluationFunction ef = null;
-			if (search instanceof BestFirstSearch)
-				ef = ((BestFirstSearch) search).getEvaluationFunction();
-			else if (search instanceof RecursiveBestFirstSearch)
-				ef = ((RecursiveBestFirstSearch) search).getEvaluationFunction();
-			if (ef instanceof HeuristicEvaluationFunction)
-				((HeuristicEvaluationFunction) ef).setHeuristicFunction(hfFactory.createHeuristicFunction(goal));
+		if (hfFactory != null && search instanceof Informed) {
+			((Informed) search).setHeuristicFunction(hfFactory.createHeuristicFunction(goal));
 		}
 	}
 }

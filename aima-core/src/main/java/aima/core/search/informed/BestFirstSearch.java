@@ -2,9 +2,11 @@ package aima.core.search.informed;
 
 import java.util.Comparator;
 
+import aima.core.search.framework.Informed;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.PrioritySearch;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
+import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
@@ -21,7 +23,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class BestFirstSearch extends PrioritySearch {
+public class BestFirstSearch extends PrioritySearch implements Informed {
 
 	private final EvaluationFunction evalFunc;
 	
@@ -41,8 +43,11 @@ public class BestFirstSearch extends PrioritySearch {
 		evalFunc = ef;
 	}
 
-	public EvaluationFunction getEvaluationFunction() {
-		return evalFunc;
+	/** Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}. */
+	@Override
+	public void setHeuristicFunction(HeuristicFunction hf) {
+		if (evalFunc instanceof HeuristicEvaluationFunction)
+			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
 	}
 	
 	private static Comparator<Node> createComparator(final EvaluationFunction ef) {
