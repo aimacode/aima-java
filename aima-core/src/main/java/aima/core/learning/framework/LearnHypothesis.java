@@ -5,15 +5,15 @@ import aima.core.learning.knowledge.Hypothesis;
 /**
  * made by allen
  */
-public interface Learn_Hypothesis {
+public interface LearnHypothesis {
 
     /**
      * @param complexity the complexity for the model of the hypothesis
-     * @param training_sample the dataset for the hypothesis to be based on
+     * @param trainingSample the dataset for the hypothesis to be based on
      *
      * @return returns hypothesis
      */
-    Hypothesis make_hypothesis(int complexity, DataSet training_sample);
+    Hypothesis makeHypothesis(int complexity, DataSet trainingSample);
 
     /**
      * @param hypothesis the hypothesis to use
@@ -21,6 +21,6 @@ public interface Learn_Hypothesis {
      *
      * @return a double representing the error value
      */
-    double error_rate(Object hypothesis, DataSet sample);
+    double errorRate(Object hypothesis, DataSet sample);
 
 }
