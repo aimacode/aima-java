@@ -45,9 +45,9 @@ JavaFX and Swing demo applications can be started directly. Here, only the Swing
 The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo
  * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.DPLLDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.DpllDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.FolDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.PLFCEntailsDemo
+ * java -classpath aima-gui.jar aima.gui.demo.logic.PlFcEntailsDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.PLResolutionDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.TTEntailsDemo
  * java -classpath aima-gui.jar aima.gui.demo.logic.WalkSatDemo
