@@ -201,20 +201,21 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	
 	@Override
 	public String toString() {
-		String output = "";
-		output += "Variables:  ";
-		for( int i=0; i < this.vars.size(); i++ ) {
-			output+= this.vars.get(i) + ", ";
-		}
-		output+= '\n';
-		output += "Terminals:  ";
-		for( int i=0; i < this.terminals.size(); i++ ) {
-			output+= this.terminals.get(i) + ", ";
-		}
-		output+= '\n';
-		for( int i=0; i < this.rules.size(); i++ ) {
-			output += this.rules.get(i).toString() + '\n';
-		}
-		return output;
+		StringBuilder output = new StringBuilder();
+
+		output.append("Variables:  ");
+
+		this.vars.forEach(var -> output.append(var).append(", "));
+
+		output.append('\n');
+		output.append("Terminals:  ");
+
+		this.terminals.forEach(terminal -> output.append(terminal).append(", "));
+
+		output.append('\n');
+
+		this.rules.forEach(rule -> output.append(rule.toString()).append('\n'));
+
+		return output.toString();
 	}
 }

@@ -208,19 +208,25 @@ public class MapPaneCtrl {
         for (int i = 0; i < entities.size() && !done; i++) {
             MapEntity me = entities.get(i);
             String header = (me.getName() != null) ? me.getName() : "";
-            String content = "";
+            StringBuilder content = new StringBuilder();
             if (debug)
                 header += " (" + ((me instanceof MapNode) ? "Node " : "Way ")
                         + me.getId() + ")";
             if (me instanceof MapNode) {
-                content = "Lat: " + ((MapNode) me).getLat() + " Lon: " +
-                        ((MapNode) me).getLon() + " ";
+                content.append("Lat: ")
+                        .append(((MapNode) me).getLat())
+                        .append(" Lon: ")
+                        .append(((MapNode) me).getLon())
+                        .append(" ");
             }
             if (me.getAttributes().length > 0) {
                 EntityAttribute[] atts = me.getAttributes();
-                content += "Attributs: ";
-                for (int j = 0; j < atts.length; j++) {
-                    content += atts[j].getKey() + "=" + atts[j].getValue() + " ";
+                content.append("Attributs: ");
+                for (EntityAttribute att : atts) {
+                    content.append(att.getKey())
+                            .append("=")
+                            .append(att.getValue())
+                            .append(" ");
                 }
 
             }
@@ -228,7 +234,7 @@ public class MapPaneCtrl {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Map Entity Info");
             alert.setHeaderText(header);
-            alert.setContentText(content);
+            alert.setContentText(content.toString());
             Optional<ButtonType> result = alert.showAndWait();
             if (!result.isPresent())
                 break;

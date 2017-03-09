@@ -81,15 +81,20 @@ public class Rule {
 	
 	@Override 
 	public String toString() {
-		String output = "";
-		for( int i=0; i < lhs.size(); i++) {
-			output += lhs.get(i);
+		StringBuilder output = new StringBuilder();
+
+		for (String lh : lhs) {
+			output.append(lh);
 		}
-		output += " -> ";
-		for( int i=0; i < rhs.size(); i++) {
-			output += rhs.get(i);
-		}	
-		output += " " + String.valueOf(PROB);
-		return output;
+
+		output.append(" -> ");
+
+		for (String rh : rhs) {
+			output.append(rh);
+		}
+
+		output.append(" ").append(String.valueOf(PROB));
+
+		return output.toString();
 	}
 }
