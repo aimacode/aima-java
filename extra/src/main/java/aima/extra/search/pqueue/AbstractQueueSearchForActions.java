@@ -1,8 +1,13 @@
 package aima.extra.search.pqueue;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+import java.util.PriorityQueue;
 import java.util.function.Supplier;
-
+import java.util.Comparator;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
