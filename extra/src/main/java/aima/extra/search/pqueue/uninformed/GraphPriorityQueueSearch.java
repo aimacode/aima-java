@@ -1,6 +1,7 @@
 package aima.extra.search.pqueue.uninformed;
 
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -45,19 +46,19 @@ public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForAction
 		// node <- a node with STATE = problem.INITIAL-STATE
 		Node<A, S> node = newRootNode(problem.initialState());
 		// frontier <- a priority queue, with node as the only element
-		Queue<Node<A, S>> frontier = newFrontier(node);
-		// explored <- an empty set
+        PriorityQueue<Node<A, S>> pqFrontier = newFrontierPriority(node, getNodeComparator());
+        // explored <- an empty set
 		Set<S> explored = newExploredSet();
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) {
-				return failure();
+            if (pqFrontier.isEmpty()) {
+                return failure();
 			}
 			// node <- POP(frontier) // chooses the highest priority node in
 			// frontier
-			node = frontier.remove();
-			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+            node = pqFrontier.remove();
+            // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 			if (isGoalState(node, problem)) {
 				return solution(node);
 			}
@@ -68,16 +69,16 @@ public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForAction
 				// child <- CHILD-NODE(problem, node, action)
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in explored or frontier then
-				boolean childStateInFrontier = containsState(frontier, child.state());
-				if (!(childStateInFrontier || explored.contains(child.state()))) {
+                boolean childStateInFrontier = containsState(pqFrontier, child.state());
+                if (!(childStateInFrontier || explored.contains(child.state()))) {
 					// frontier <- INSERT(child, frontier)
-					frontier.add(child);
-				} // else if child.STATE is in frontier with lower priority then
+                    pqFrontier.add(child);
+                } // else if child.STATE is in frontier with lower priority then
 				else if (childStateInFrontier
-						&& removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
-					// replace that frontier node with child
-					frontier.add(child);
-				}
+                        && removedNodeFromFrontierWithSameStateAndLowerPriority(child, pqFrontier)) {
+                    // replace that frontier node with child
+                    pqFrontier.add(child);
+                }
 			}
 		}
 		return failure();

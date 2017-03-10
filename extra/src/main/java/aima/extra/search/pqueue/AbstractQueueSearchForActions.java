@@ -1,10 +1,6 @@
 package aima.extra.search.pqueue;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 import aima.core.search.api.Node;
@@ -101,8 +97,16 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		return frontier;
 	}
 
-	public boolean loopDo() {
-		return getSearchController().isExecuting();
+    public PriorityQueue<Node<A, S>> newFrontierPriority(Node<A, S> initialNode, Comparator<Node<A, S>> comparator) {
+        PriorityQueue<Node<A, S>> frontier = new PriorityQueue<>();
+        frontier.add(initialNode);
+        // Track if this is supported by the underlying implementation
+        frontierSupportsStateContainmentCheck = frontier.contains(initialNode.state());
+        return frontier;
+    }
+
+    public boolean loopDo() {
+        return getSearchController().isExecuting();
 	}
 
 	public Set<S> newExploredSet() {
@@ -129,10 +133,10 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 		return frontier.contains(state);
 	}
 
-	public boolean removedNodeFromFrontierWithSameStateAndLowerPriority(Node<A, S> child, Queue<Node<A, S>> frontier) {
-		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
-		// NOTE: by Java's PriorityQueue convention, nodes that compare lower
-		// (i.e. cost) have a higher priority.
-		return frontier.removeIf(n -> child.state().equals(n.state()) && getNodeComparator().compare(child, n) < 0);
-	}
+    public boolean removedNodeFromFrontierWithSameStateAndLowerPriority(Node<A, S> child, PriorityQueue<Node<A, S>> pqFrontier) {
+        // NOTE: Not very efficient (i.e. linear in the size of the frontier)
+        // NOTE: by Java's PriorityQueue convention, nodes that compare lower
+        // (i.e. cost) have a higher priority.
+        return pqFrontier.removeIf(n -> child.state().equals(n.state()));
+    }
 }
