@@ -102,7 +102,7 @@ public class PagesDataset {
 
 	public static String loadFileText(File folder, File file) {
 
-		String pageContent = "";
+		StringBuilder pageContent = new StringBuilder();
 		BufferedReader br = null;
 
 		// repeat for all files
@@ -114,7 +114,7 @@ public class PagesDataset {
 			br = new BufferedReader(new FileReader(folderPath + File.separator + fileName));
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				pageContent += sCurrentLine;
+				pageContent.append(sCurrentLine);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,7 +127,7 @@ public class PagesDataset {
 			}
 		}
 
-		return pageContent;
+		return pageContent.toString();
 	} // end loadFileText()
 
 	// TODO:

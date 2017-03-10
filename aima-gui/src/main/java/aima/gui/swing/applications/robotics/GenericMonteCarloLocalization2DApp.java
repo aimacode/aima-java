@@ -630,9 +630,9 @@ public class GenericMonteCarloLocalization2DApp<P extends IPose2D<P,M>,M extends
 		 * @param rangeReadings the range readings to be displayed.
 		 */
 		protected void displayRangeReadings(AbstractRangeReading[] rangeReadings) {
-			String ranges = "";
-			for(AbstractRangeReading rangeReading: rangeReadings) ranges +=  rangeReading.toString() + "\n";
-			jtARangeReading.setText(ranges);
+			StringBuilder ranges = new StringBuilder();
+			for(AbstractRangeReading rangeReading: rangeReadings) ranges.append(rangeReading.toString()).append("\n");
+			jtARangeReading.setText(ranges.toString());
 		}
 		
 		/**
