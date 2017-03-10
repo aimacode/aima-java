@@ -2,6 +2,7 @@ package aima.gui.fx.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
@@ -78,7 +79,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 			// print track of first agent
 			if (!env.getAgents().isEmpty()) {
 				String aLoc = env.getAgentLocation(env.getAgents().get(0));
-				if (track.isEmpty() || track.get(track.size() - 1) != aLoc)
+				if (track.isEmpty() || !Objects.equals(track.get(track.size() - 1), aLoc))
 					track.add(aLoc);
 				for (int i = 1; i < track.size(); i++) {
 					Point2D pt1 = map.getPosition(track.get(i - 1));
