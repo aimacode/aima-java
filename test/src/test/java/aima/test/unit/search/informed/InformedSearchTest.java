@@ -3,6 +3,7 @@ package aima.test.unit.search.informed;
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
 import aima.core.environment.map2d.Map2D;
+import aima.core.environment.map2d.Map2DFunctionFactory;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Node;
@@ -10,7 +11,6 @@ import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.informed.AStarSearch;
 import aima.core.search.basic.informed.RecursiveBestFirstSearch;
-import aima.core.util.datastructure.Point2D;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -53,13 +53,13 @@ public class InformedSearchTest {
 
 	@Test
 	public void testSimplifiedRoadMapOfPartOfRomania() {
-
+		Map2D map = new SimplifiedRoadMapOfPartOfRomania();
 		String initialLocation = SimplifiedRoadMapOfPartOfRomania.ARAD;
 		String goal = initialLocation;
 
 		Problem<GoAction, InState> problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation,
 				goal);
-		assertEquals(Arrays.asList((String) null), searchForActions(problem, new StraightLineDistanceHeuristic(goal)));
+		assertEquals(Arrays.asList((String) null), searchForActions(problem, new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, goal)));
 
 		goal = SimplifiedRoadMapOfPartOfRomania.BUCHAREST;
 		problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation, goal);
@@ -68,34 +68,6 @@ public class InformedSearchTest {
 						new GoAction(SimplifiedRoadMapOfPartOfRomania.RIMNICU_VILCEA),
 						new GoAction(SimplifiedRoadMapOfPartOfRomania.PITESTI),
 						new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
-				searchForActions(problem, new StraightLineDistanceHeuristic(goal)));
-	}
-
-	private class StraightLineDistanceHeuristic implements ToDoubleFunction<Node<GoAction, InState>> {
-
-		private final Map2D map = new SimplifiedRoadMapOfPartOfRomania();
-		private final String[] goals;
-
-		StraightLineDistanceHeuristic(String... goals) {
-			this.goals = goals;
-		}
-
-		@Override
-		public double applyAsDouble(Node<GoAction, InState> node) {
-			return h(node.state());
-		}
-
-		private double h(InState state) {
-			return Arrays.stream(goals).map(goal -> {
-				Point2D currentPosition = map.getPosition(state.getLocation());
-				Point2D goalPosition = map.getPosition(goal);
-				return distanceOf(currentPosition, goalPosition);
-			}).min(Double::compareTo).orElse(Double.MAX_VALUE);
-		}
-
-		private double distanceOf(Point2D p1, Point2D p2) {
-			return Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
-					+ (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
-		}
+				searchForActions(problem, new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, goal)));
 	}
 }
