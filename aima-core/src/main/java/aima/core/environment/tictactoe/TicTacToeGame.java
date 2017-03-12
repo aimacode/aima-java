@@ -1,6 +1,7 @@
 package aima.core.environment.tictactoe;
 
 import java.util.List;
+import java.util.Objects;
 
 import aima.core.search.adversarial.Game;
 import aima.core.util.datastructure.XYLocation;
@@ -52,7 +53,7 @@ public class TicTacToeGame implements Game<TicTacToeState, XYLocation, String> {
 	public double getUtility(TicTacToeState state, String player) {
 		double result = state.getUtility();
 		if (result != -1) {
-			if (player == TicTacToeState.O)
+			if (Objects.equals(player, TicTacToeState.O))
 				result = 1 - result;
 		} else {
 			throw new IllegalArgumentException("State is not terminal.");

@@ -2,6 +2,7 @@ package aima.core.environment.connectfour;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import aima.core.search.adversarial.Game;
 
@@ -54,7 +55,7 @@ public class ConnectFourGame implements Game<ConnectFourState, Integer, String> 
 	 */
 	public int getPlayerNum(String player) {
 		for (int i = 0; i < players.length; i++)
-			if (players[i] == player)
+			if (Objects.equals(players[i], player))
 				return i+1;
 		throw new IllegalArgumentException("Wrong player number.");
 	}
@@ -84,7 +85,7 @@ public class ConnectFourGame implements Game<ConnectFourState, Integer, String> 
 	public double getUtility(ConnectFourState state, String player) {
 		double result = state.getUtility();
 		if (result != -1) {
-			if (player == players[1])
+			if (Objects.equals(player, players[1]))
 				result = 1 - result;
 		} else {
 			throw new IllegalArgumentException("State is not terminal.");
