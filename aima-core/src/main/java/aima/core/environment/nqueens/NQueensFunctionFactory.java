@@ -2,6 +2,7 @@ package aima.core.environment.nqueens;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Objects; 
 
 import aima.core.agent.Action;
 import aima.core.search.framework.problem.ActionsFunction;
@@ -109,11 +110,11 @@ public class NQueensFunctionFactory {
 				NQueensBoard board = (NQueensBoard) s;
 				NQueensBoard newBoard = new NQueensBoard(board.getSize());
 				newBoard.setBoard(board.getQueenPositions());
-				if (qa.getName() == QueenAction.PLACE_QUEEN)
+				if (Objects.equals(qa.getName(), QueenAction.PLACE_QUEEN))
 					newBoard.addQueenAt(qa.getLocation());
-				else if (qa.getName() == QueenAction.REMOVE_QUEEN)
+				else if (Objects.equals(qa.getName(), QueenAction.REMOVE_QUEEN))
 					newBoard.removeQueenFrom(qa.getLocation());
-				else if (qa.getName() == QueenAction.MOVE_QUEEN)
+				else if (Objects.equals(qa.getName(), QueenAction.MOVE_QUEEN))
 					newBoard.moveQueenTo(qa.getLocation());
 				s = newBoard;
 			}
