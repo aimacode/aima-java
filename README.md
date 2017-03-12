@@ -404,7 +404,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
 * Uniform-Cost-Search NoOp case and need for small constant.
-* Add Bidirectional Search implementation.
+* Add more Bidirectional Search implementations.
 * GraphPriorityQueueSearch and TreePriorityQueueSearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority (i.e. AbstractQueueSearchForActions.removedNodeFromFrontierWithSameStateAndLowerPriority()).
