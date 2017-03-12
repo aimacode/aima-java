@@ -3,8 +3,8 @@ package aima.test.unit.search.uninformed;
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
-import aima.core.search.api.Problem;
-import aima.core.search.api.SearchForActionsFunction;
+import aima.core.search.api.BidirectionalProblem;
+import aima.core.search.api.SearchForActionsBidirectionallyFunction;
 import aima.core.search.basic.uninformed.BidirectionalSearch;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by manthan on 1/3/17.
+ * @author manthan.
  */
 @RunWith(Parameterized.class)
 public class BidirectionalSearchTest {
@@ -28,8 +28,8 @@ public class BidirectionalSearchTest {
     @Parameterized.Parameter
     public String searchFunctionName;
 
-    public <A, S> List<A> searchForActions(Problem<A, S> problem) {
-        SearchForActionsFunction<A, S> searchForActionsFunction = new BidirectionalSearch<A, S>();
+    public <A, S> List<A> searchForActions(BidirectionalProblem<A, S> problem) {
+        SearchForActionsBidirectionallyFunction<A, S> searchForActionsFunction = new BidirectionalSearch<A, S>();
         return searchForActionsFunction.apply(problem);
     }
 
@@ -44,6 +44,11 @@ public class BidirectionalSearchTest {
                         new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS)),
                 searchForActions(ProblemFactory.getSimpleBidirectionalSearchProblem(
                         SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST)));
+        Assert.assertEquals(
+                Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.ARAD)),
+                searchForActions(ProblemFactory.getSimpleBidirectionalSearchProblem(
+                        SimplifiedRoadMapOfPartOfRomania.SIBIU, SimplifiedRoadMapOfPartOfRomania.TIMISOARA)));
+
     }
 
 }

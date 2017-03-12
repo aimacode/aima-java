@@ -2,6 +2,7 @@ package aima.core.search.basic.support;
 
 import java.util.function.ToDoubleFunction;
 
+import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
@@ -48,6 +49,14 @@ public class BasicNodeFactory<A, S> implements NodeFactory<A, S> {
 		S sPrime = problem.result(parent.state(), action);
 		return new BasicNode<>(sPrime, parent, action,
 				parent.pathCost() + problem.stepCost(parent.state(), action, sPrime));
+	}
+
+	@Override
+	public Node<A, S> newChildNodeForBidirectionalSearch(BidirectionalProblem<A, S> problem, Node<A, S> parent, A action) {
+		S sPrime = problem.result(parent.state(), action);
+		return new BasicNode<>(sPrime, parent, action,
+				parent.pathCost() + problem.stepCost(parent.state(), action, sPrime));
+
 	}
 
 	@Override
