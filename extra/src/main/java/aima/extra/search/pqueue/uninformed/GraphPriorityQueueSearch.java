@@ -6,7 +6,7 @@ import java.util.Set;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
-import aima.extra.search.pqueue.AbstractQueueSearchForActions;
+import aima.extra.search.pqueue.AbstractPriorityQueueSearchForActions;
 import aima.extra.search.pqueue.QueueSearchForActions;
 
 /**
@@ -37,7 +37,7 @@ import aima.extra.search.pqueue.QueueSearchForActions;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphPriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S>
+public class GraphPriorityQueueSearch<A, S> extends AbstractPriorityQueueSearchForActions<A, S>
 		implements QueueSearchForActions.DoesStateContainmentCheckingOnFrontier {
 	// function GRAPH-PRIORITY-SEARCH((problem) returns a solution, or failure
 	@Override

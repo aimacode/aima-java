@@ -6,7 +6,7 @@ import java.util.Set;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
-import aima.extra.search.pqueue.AbstractQueueSearchForActions;
+import aima.extra.search.pqueue.AbstractPriorityQueueSearchForActions;
 
 /**
  * <pre>
@@ -42,7 +42,7 @@ import aima.extra.search.pqueue.AbstractQueueSearchForActions;
  * @author Ruediger Lunde
  * @author Ciaran O'Reilly
  */
-public class GraphRLPriorityQueueSearch<A, S> extends AbstractQueueSearchForActions<A, S> {
+public class GraphRLPriorityQueueSearch<A, S> extends AbstractPriorityQueueSearchForActions<A, S> {
 	// function GRAPH-RL-PRIORITY-QUEUE-SEARCH(problem) returns a solution, or
 	// failure
 	@Override

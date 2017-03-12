@@ -51,16 +51,24 @@ public abstract class AbstractQueueSearchForActions<A, S> implements QueueSearch
 	@Override
 	public Supplier<Queue<Node<A, S>>> getFrontierSupplier() {
 		if (frontierSupplier == null) {
-			if (this instanceof QueueSearchForActions.DoesStateContainmentCheckingOnFrontier) {
-				// Basic frontier queue supports doing containment checking of a node's state.
-				frontierSupplier = BasicFrontierQueue::new;
+			if (this instanceof QueueSearchForActions.DoesStateContainmentCheckingOnFrontier) {				
+				frontierSupplier = getDefaultFrontierSupplierWithStateContainmentCheckingSupport();
 			}
-			else {
-				// Otherwise the standard java queue implementation is all that is needed by default.
-				frontierSupplier = LinkedList::new;
+			else {				
+				frontierSupplier = getDefaultFrontierSupplierWithoutStateContainmentCheckingSupport();
 			}
 		}
 		return frontierSupplier;
+	}
+	
+	public Supplier<Queue<Node<A, S>>> getDefaultFrontierSupplierWithStateContainmentCheckingSupport() {
+		// Basic frontier queue supports doing containment checking of a node's state.
+		return BasicFrontierQueue::new;
+	}
+	
+	public Supplier<Queue<Node<A, S>>> getDefaultFrontierSupplierWithoutStateContainmentCheckingSupport() {
+		// Otherwise the standard java queue implementation is all that is needed by default.
+		return LinkedList::new;
 	}
 
 	@Override
