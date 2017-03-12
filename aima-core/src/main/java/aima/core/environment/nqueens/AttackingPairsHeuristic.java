@@ -10,7 +10,7 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  */
 public class AttackingPairsHeuristic implements HeuristicFunction {
 
-	public double h(Object state) {
+	public int h(Object state) {
 		NQueensBoard board = (NQueensBoard) state;
 		return board.getNumberOfAttackingPairs();
 	}
