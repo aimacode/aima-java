@@ -32,11 +32,8 @@ public class InState implements Comparable<InState> {
 
 	@Override
 	public int compareTo(InState o) {
-		if (getLocation() == null) {
-			return -1;
-		}
-		if (o.getLocation() == null) {
-			return 1;
+		if (getLocation() == null || o.getLocation() == null) {
+			throw new NullPointerException();
 		}
 		return getLocation().compareTo(o.getLocation());
 	}
