@@ -1,5 +1,20 @@
 package aima.core.environment.support;
 
+import aima.core.environment.map2d.GoAction;
+import aima.core.environment.map2d.InState;
+import aima.core.environment.map2d.Map2DFunctionFactory;
+import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.vacuum.VELocalState;
+import aima.core.environment.vacuum.VEWorldState;
+import aima.core.environment.vacuum.VacuumEnvironment;
+import aima.core.search.api.ActionsFunction;
+import aima.core.search.api.BidirectionalProblem;
+import aima.core.search.api.GoalTestPredicate;
+import aima.core.search.api.Problem;
+import aima.core.search.api.ResultFunction;
+import aima.core.search.basic.support.BasicProblem;
+import aima.core.util.datastructure.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,20 +27,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.stream.IntStream;
-
-import aima.core.environment.map2d.GoAction;
-import aima.core.environment.map2d.InState;
-import aima.core.environment.map2d.Map2DFunctionFactory;
-import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.environment.vacuum.VELocalState;
-import aima.core.environment.vacuum.VEWorldState;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.search.api.ActionsFunction;
-import aima.core.search.api.GoalTestPredicate;
-import aima.core.search.api.Problem;
-import aima.core.search.api.ResultFunction;
-import aima.core.search.basic.support.BasicProblem;
-import aima.core.util.datastructure.Pair;
 
 public class ProblemFactory {
 
@@ -51,7 +52,22 @@ public class ProblemFactory {
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
-	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
+  public static BidirectionalProblem<GoAction, InState> getBidirectionalRomaniaRoadMapProblem(
+      String initialLocation, final String goalLocation) {
+    final SimplifiedRoadMapOfPartOfRomania romania = new SimplifiedRoadMapOfPartOfRomania();
+    final Set<String> locationSet = new HashSet<>(romania.getLocations());
+    if (!locationSet.contains(initialLocation)) {
+      throw new IllegalArgumentException(
+          "Initial State " + initialLocation + " is not a member of the state space.");
+    }
+		if (!locationSet.contains(goalLocation)) {
+			throw new IllegalArgumentException(
+					"Goal location " + goalLocation + " is not a member of the state space.");
+		}
+    return new BidirectionalRomaniaProblem(initialLocation, goalLocation);
+  }
+
+  public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
 			final VELocalState... leftToRightLocalStates) {
 		// These actions are legal in all states
 		final List<String> allActions = new ArrayList<>();
@@ -165,7 +181,7 @@ public class ProblemFactory {
 
 	/**
 	 * A simple discrete function problem based on Figure 4.1 from AIMA3e
-	 * 
+	 *
 	 * @param xInitialStateValue
 	 *            x's initial value.
 	 * @param goalIsGlobalMaximum

@@ -42,7 +42,7 @@ public class BasicNode<A, S> implements Node<A, S> {
 	public double pathCost() {
 		return pathCost;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner(", ", "Node(", ")");

@@ -1,6 +1,6 @@
 package aima.core.environment.map2d;
 
-public class InState {
+public class InState implements Comparable<InState> {
 	private String location;
 
 	public InState(String location) {
@@ -27,5 +27,17 @@ public class InState {
 	@Override
 	public String toString() {
 		return "In("+getLocation()+")";
+	}
+
+
+	@Override
+	public int compareTo(InState o) {
+		if (getLocation() == null) {
+			return -1;
+		}
+		if (o.getLocation() == null) {
+			return 1;
+		}
+		return getLocation().compareTo(o.getLocation());
 	}
 }
