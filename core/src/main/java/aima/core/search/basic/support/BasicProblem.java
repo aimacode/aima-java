@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class BasicProblem<A, S> implements Problem<A, S>, BidirectionalProblem<A, S>, NondeterministicProblem<A, S>, OnlineSearchProblem<A, S> {
 	private S initialState;
-	private S finalState;
 	private Problem<A, S> reverseProblem;
 	private ActionsFunction<A, S> actionsFn;
 	private ResultFunction<A, S> resultFn;
@@ -50,11 +49,9 @@ public class BasicProblem<A, S> implements Problem<A, S>, BidirectionalProblem<A
 		this.initialState = initialState;
 		this.actionsFn = actionsFn;
 		this.resultFn = resultFn;
-		this.finalState = finalState;
 		this.stepCostFn = stepCostFn;
 		this.goalTestPredicate = goalTestPredicate;
 		this.reverseProblem = new BasicProblem<>(finalState, actionsFn, resultFn, goalTestPredicate, stepCostFn);
-
 	}
 
 	// NondeterministicProblem constructor
