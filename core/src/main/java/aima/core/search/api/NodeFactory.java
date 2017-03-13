@@ -20,8 +20,6 @@ public interface NodeFactory<A, S> {
 
 	Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> parent, A action);
 
-	Node<A, S> newChildNodeForBidirectionalSearch(BidirectionalProblem<A, S> problem, Node<A, S> parent, A action);
-
 	ToDoubleFunction<Node<A, S>> getNodeCostFunction();
 
 	void setNodeCostFunction(ToDoubleFunction<Node<A, S>> nodeCostFunction);

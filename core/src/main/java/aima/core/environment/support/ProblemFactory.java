@@ -24,7 +24,6 @@ import aima.core.search.api.ActionsFunction;
 import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.Problem;
 import aima.core.search.api.ResultFunction;
-import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.datastructure.Pair;
 
@@ -52,19 +51,23 @@ public class ProblemFactory {
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
-	public static BidirectionalProblem<GoAction, InState> getSimpleBidirectionalSearchProblem(String initialState, final String goalLocation) {
+	public static Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> getSimpleBidirectionalSearchProblem(String initialState, final String goalLocation) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
 		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
 		if (!locationSet.contains(initialState)) {
 			throw new IllegalArgumentException(
 					"Initial State " + initialState + " is not a member of the state space.");
 		}
-		return new BasicProblem<>(new InState(initialState),
-				new InState(goalLocation),
-				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+		return new Pair<>(new BasicProblem<>(new InState(initialState),
 				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
 				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
-				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
+				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)),
+				new BasicProblem<>(new InState(goalLocation),
+						Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
+						Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
+						Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+						Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)));
 	}
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,

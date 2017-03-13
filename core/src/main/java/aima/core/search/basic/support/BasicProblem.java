@@ -1,6 +1,5 @@
 package aima.core.search.basic.support;
 
-import aima.core.search.api.BidirectionalProblem;
 import aima.core.search.api.NondeterministicProblem;
 import aima.core.search.api.OnlineSearchProblem;
 import aima.core.search.api.Problem;
@@ -17,9 +16,8 @@ import java.util.List;
  *
  * @author Ciaran O'Reilly
  */
-public class BasicProblem<A, S> implements Problem<A, S>, BidirectionalProblem<A, S>, NondeterministicProblem<A, S>, OnlineSearchProblem<A, S> {
+public class BasicProblem<A, S> implements Problem<A, S>, NondeterministicProblem<A, S>, OnlineSearchProblem<A, S> {
 	private S initialState;
-	private Problem<A, S> reverseProblem;
 	private ActionsFunction<A, S> actionsFn;
 	private ResultFunction<A, S> resultFn;
 	private ResultsFunction<A, S> resultsFn;
@@ -41,17 +39,6 @@ public class BasicProblem<A, S> implements Problem<A, S>, BidirectionalProblem<A
 		this.resultFn = resultFn;
 		this.goalTestPredicate = goalTestPredicate;
 		this.stepCostFn = stepCostFn;
-	}
-
-	// BidirectionalProblem constructor(Reverse Problem)
-	public BasicProblem(S initialState, S finalState, GoalTestPredicate<S> goalTestPredicate, ActionsFunction<A, S> actionsFn, ResultFunction<A, S> resultFn,
-						StepCostFunction<A, S> stepCostFn) {
-		this.initialState = initialState;
-		this.actionsFn = actionsFn;
-		this.resultFn = resultFn;
-		this.stepCostFn = stepCostFn;
-		this.goalTestPredicate = goalTestPredicate;
-		this.reverseProblem = new BasicProblem<>(finalState, actionsFn, resultFn, goalTestPredicate, stepCostFn);
 	}
 
 	// NondeterministicProblem constructor
@@ -115,13 +102,4 @@ public class BasicProblem<A, S> implements Problem<A, S>, BidirectionalProblem<A
 		return stepCostFn.stepCost(s, a, sPrime);
 	}
 
-	@Override
-	public Problem<A, S> getOriginalProblem() {
-		return this;
-	}
-
-	@Override
-	public Problem<A, S> getReverseProblem() {
-		return reverseProblem;
-	}
 }
