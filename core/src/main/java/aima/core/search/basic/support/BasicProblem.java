@@ -1,15 +1,14 @@
 package aima.core.search.basic.support;
 
-import java.util.List;
-
-import aima.core.search.api.ActionsFunction;
-import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.NondeterministicProblem;
 import aima.core.search.api.OnlineSearchProblem;
 import aima.core.search.api.Problem;
+import aima.core.search.api.ActionsFunction;
 import aima.core.search.api.ResultFunction;
-import aima.core.search.api.ResultsFunction;
+import aima.core.search.api.GoalTestPredicate;
 import aima.core.search.api.StepCostFunction;
+import aima.core.search.api.ResultsFunction;
+import java.util.List;
 
 /**
  * Basic implementation of the Problem, NondeterministicProblem, and
@@ -102,4 +101,5 @@ public class BasicProblem<A, S> implements Problem<A, S>, NondeterministicProble
 	public double stepCost(S s, A a, S sPrime) {
 		return stepCostFn.stepCost(s, a, sPrime);
 	}
+
 }

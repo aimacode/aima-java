@@ -30,7 +30,7 @@ import aima.core.util.datastructure.Pair;
 public class ProblemFactory {
 
 	public static Problem<GoAction, InState> getSimplifiedRoadMapOfPartOfRomaniaProblem(String initialState,
-			final String... goalLocations) {
+																						final String... goalLocations) {
 		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
 		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
 		if (!locationSet.contains(initialState)) {
@@ -49,6 +49,25 @@ public class ProblemFactory {
 				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
 				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocations),
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
+	}
+
+	public static Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> getSimpleBidirectionalSearchProblem(String initialState, final String goalLocation) {
+		final SimplifiedRoadMapOfPartOfRomania simplifidRoadMapOfPartOfRomania = new SimplifiedRoadMapOfPartOfRomania();
+		final Set<String> locationSet = new HashSet<>(simplifidRoadMapOfPartOfRomania.getLocations());
+		if (!locationSet.contains(initialState)) {
+			throw new IllegalArgumentException(
+					"Initial State " + initialState + " is not a member of the state space.");
+		}
+		return new Pair<>(new BasicProblem<>(new InState(initialState),
+				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
+				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
+				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)),
+				new BasicProblem<>(new InState(goalLocation),
+						Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
+						Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
+						Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+						Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)));
 	}
 
 	public static Problem<String, VEWorldState> getSimpleVacuumWorldProblem(String inInitialLocation,
