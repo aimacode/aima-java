@@ -4,7 +4,6 @@ import aima.core.search.api.*;
 import aima.core.search.basic.support.BasicFrontierQueue;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
-import aima.core.util.datastructure.Pair;
 
 import java.util.Collections;
 import java.util.List;
