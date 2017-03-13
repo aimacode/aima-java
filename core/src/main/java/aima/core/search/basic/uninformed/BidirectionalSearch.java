@@ -26,9 +26,7 @@ import java.util.HashSet;
 public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionallyFunction<A, S> {
 
     @Override
-    public List<A> apply(Pair<Problem<A, S>, Problem<A, S>> problem) {
-        Problem<A,S> originalProblem=problem.getFirst();
-        Problem<A,S> reverseProblem=problem.getSecond();
+    public List<A> apply(Problem<A, S> originalProblem, Problem<A, S> reverseProblem) {
         Node<A, S> node = newRootNode(originalProblem.initialState(), 0);
         if (originalProblem.isGoalState(node.state())) {
             return solution(node);

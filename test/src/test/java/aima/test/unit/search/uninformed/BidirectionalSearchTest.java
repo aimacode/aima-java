@@ -1,6 +1,7 @@
 package aima.test.unit.search.uninformed;
 
 import aima.core.environment.map2d.GoAction;
+import aima.core.environment.map2d.InState;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Problem;
@@ -29,27 +30,29 @@ public class BidirectionalSearchTest {
     @Parameterized.Parameter
     public String searchFunctionName;
 
-    public <A, S> List<A> searchForActions(Pair<Problem<A, S>, Problem<A, S>> problem) {
+    public <A, S> List<A> searchForActions(Problem<A, S> originalProblem, Problem<A, S> reverseProblem) {
         SearchForActionsBidirectionallyFunction<A, S> searchForActionsFunction = new BidirectionalSearch<A, S>();
-        return searchForActionsFunction.apply(problem);
+        return searchForActionsFunction.apply(originalProblem, reverseProblem);
     }
 
     @Test
     public void testBidirectionalSearch() {
-        Assert.assertEquals(Arrays.asList((String) null),
-                searchForActions(ProblemFactory.getSimpleBidirectionalSearchProblem(
-                        SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.ARAD)));
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest1 = ProblemFactory.getSimpleBidirectionalSearchProblem(
+                SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.ARAD);
+        Assert.assertEquals(Arrays.asList((String) null), searchForActions(problemPairtest1.getFirst(), problemPairtest1.getSecond()));
         //Result will contain all intermediate nodes excluding initial and final nodes.
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest2 = ProblemFactory.getSimpleBidirectionalSearchProblem(
+                SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
         Assert.assertEquals(
                 Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
                         new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS)),
-                searchForActions(ProblemFactory.getSimpleBidirectionalSearchProblem(
-                        SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST)));
+                searchForActions(problemPairtest2.getFirst(), problemPairtest2.getSecond()));
+
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest3 = ProblemFactory.getSimpleBidirectionalSearchProblem(
+                SimplifiedRoadMapOfPartOfRomania.SIBIU, SimplifiedRoadMapOfPartOfRomania.TIMISOARA);
         Assert.assertEquals(
                 Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.ARAD)),
-                searchForActions(ProblemFactory.getSimpleBidirectionalSearchProblem(
-                        SimplifiedRoadMapOfPartOfRomania.SIBIU, SimplifiedRoadMapOfPartOfRomania.TIMISOARA)));
-
+                searchForActions(problemPairtest3.getFirst(), problemPairtest3.getSecond()));
     }
 
 }
