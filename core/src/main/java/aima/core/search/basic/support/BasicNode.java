@@ -42,14 +42,17 @@ public class BasicNode<A, S> implements Node<A, S> {
 	public double pathCost() {
 		return pathCost;
 	}
-	
+
+	/**
+	 * @return json like representation of the node with its parents, recursively till root node
+	 */
 	@Override
 	public String toString() {
-		StringJoiner sj = new StringJoiner(", ", "Node(", ")");
-		sj.add(state.toString());
-		sj.add(parent == null ? "null" : parent.state().toString());
-		sj.add(action == null ? "null" : action.toString());
-		sj.add(""+pathCost);
+		StringJoiner sj = new StringJoiner(", ", "{", "}");
+		sj.add("parent: " + (parent == null ? "null" : parent.toString()));
+		sj.add("state: '" + state.toString() + "'");
+		sj.add("fromAction: " + (action == null ? "null" : "'" + action.toString() + "'"));
+		sj.add("withPathCost: "+pathCost);
 		return sj.toString();
 	}
 
@@ -59,7 +62,7 @@ public class BasicNode<A, S> implements Node<A, S> {
 		this(state, null, null, pathCost);
 	}
 
-	BasicNode(S state, Node<A, S> parent, A action, double pathCost) {
+	public BasicNode(S state, Node<A, S> parent, A action, double pathCost) {
 		this.state = state;
 		this.parent = parent;
 		this.action = action;
