@@ -11,7 +11,6 @@ import aima.core.probability.domain.ArbitraryTokenDomain;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.util.ProbUtil;
 import aima.core.probability.util.RandVar;
-import jdk.nashorn.internal.ir.CatchNode;
 
 public class ProbUtilTest {
 
