@@ -117,4 +117,17 @@ public class ProbUtilTest {
 		Assert.assertArrayEquals(new int[] { 1, 3, 5, 7, 9, 11 },
 				ProbUtil.indexesOfValue(vars, 2, event));
 	}
+	
+	@Test 
+	public void test_randomVariableName() {
+		String names[] = {null, "a ", " b", "_A1", "B\ta\t\nf", "B___\n?", "Aa \tb c d e", "12asb", "33", "-A\t\b", "-_-"};
+		for (String name : names) {
+			try {
+				ProbUtil.checkValidRandomVariableName(name);
+				Assert.fail("Invalid name string not caught!");
+			} catch (Exception e) {
+				;
+			}
+		}
+	}
 }
