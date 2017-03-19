@@ -11,6 +11,7 @@ import aima.core.probability.domain.ArbitraryTokenDomain;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.util.ProbUtil;
 import aima.core.probability.util.RandVar;
+import jdk.nashorn.internal.ir.CatchNode;
 
 public class ProbUtilTest {
 
@@ -116,5 +117,18 @@ public class ProbUtilTest {
 		event.put(Z, Boolean.FALSE);
 		Assert.assertArrayEquals(new int[] { 1, 3, 5, 7, 9, 11 },
 				ProbUtil.indexesOfValue(vars, 2, event));
+	}
+	
+	@Test 
+	public void test_randomVariableName() {
+		String names[] = {null, "a ", " b", "_A1", "B\ta\t\nf", "B___\n?", "Aa \tb c d e", "12asb", "33", "A\t\b"};
+		for (String name : names) {
+			try {
+				ProbUtil.checkValidRandomVariableName(name);
+				Assert.fail("Invalid name string not caught!");
+			} catch (Exception e) {
+				;
+			}
+		}
 	}
 }
