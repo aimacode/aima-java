@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
  * @author manthan
  */
 @FunctionalInterface
-public interface SearchForActionsBidirectionallyFunction<A, S> extends BiFunction<Problem<A, S>, Problem<A, S>, List<A>> {
+public interface SearchForActionsBidirectionallyFunction<A, S> extends BiFunction<Problem<A, S>, Problem<A, S>, BidirectionalActions<A>> {
     @Override
-    List<A> apply(Problem<A, S> originalProblem, Problem<A, S> reverseProblem);
+    BidirectionalActions<A> apply(Problem<A, S> originalProblem, Problem<A, S> reverseProblem);
 }
