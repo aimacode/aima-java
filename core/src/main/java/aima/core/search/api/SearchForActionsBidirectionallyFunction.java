@@ -1,6 +1,5 @@
 package aima.core.search.api;
 
-import java.util.List;
 import java.util.function.BiFunction;
 
 /**
