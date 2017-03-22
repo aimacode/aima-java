@@ -24,17 +24,16 @@ public class ProbUtil {
 	 */
 	public static void checkValidRandomVariableName(String name)
 			throws IllegalArgumentException {
-		if (null == name || name.trim().length() == 0
-				|| name.trim().length() != name.length() || name.contains(" ")) {
+		if (!name.matches("[A-Za-z0-9-_]+")) {
 			throw new IllegalArgumentException(
-					"Name of RandomVariable must be specified and contain no leading, trailing or embedded spaces.");
+					"Name of RandomVariable must be specified and contain no leading, trailing or embedded spaces or special characters.");
 		}
-		if (name.substring(0, 1).toLowerCase().equals(name.substring(0, 1))) {
+		if (!name.matches("^[A-Z].*")) {
 			throw new IllegalArgumentException(
 					"Name must start with a leading upper case letter.");
 		}
 	}
-
+	
 	/**
 	 * Calculated the expected size of a ProbabilityTable for the provided
 	 * random variables.
