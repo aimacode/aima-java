@@ -3,7 +3,6 @@ package aima.test.unit.search.adversarial;
 import java.util.Arrays;
 import java.util.Collection;
 
-import aima.extra.search.uninformed.IterativeDeepeningAlphaBetaSearch;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +23,7 @@ import aima.core.search.api.TerminalTestPredicate;
 import aima.core.search.basic.adversarial.AlphaBetaSearch;
 import aima.core.search.basic.adversarial.MinimaxDecision;
 import aima.core.search.basic.support.BasicGame;
+import aima.extra.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 
 @RunWith(Parameterized.class)
 public class SearchForAdversarialActionFunctionTest {

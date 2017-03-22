@@ -1,4 +1,4 @@
-package aima.extra.search.uninformed;
+package aima.extra.search.adversarial;
 
 import aima.core.search.api.Game;
 import aima.core.search.api.SearchForAdversarialActionFunction;
