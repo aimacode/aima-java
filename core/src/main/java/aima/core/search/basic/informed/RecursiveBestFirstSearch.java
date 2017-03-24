@@ -52,7 +52,7 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
 		// return RBFS(problem, MAKE-NODE(problem.INITIAL-STATE), infinity)
-		return rbfs(problem, new SuccessorNode(nodeFactory.newRootNode(problem.initialState()), this::h),
+		return rbfs(problem, newRootNode(problem.initialState(), 0),
 				Double.POSITIVE_INFINITY).result();
 	}
 
@@ -60,19 +60,19 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 	// a new f-cost limit
 	public Result rbfs(Problem<A, S> problem, SuccessorNode node, double f_limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (searchController.isGoalState(node.n, problem)) {
-			return new Result(searchController.solution(node.n));
+		if (problem.isGoalState(node.state())) {
+			return new Result(solution(node));
 		}
 		// successors <- []
 		List<SuccessorNode> successors = new ArrayList<>();
 		// for each action in problem.ACTION(node.STATE) do
-		for (A action : problem.actions(node.n.state())) {
+		for (A action : problem.actions(node.state())) {
 			// add CHILD-NODE(problem, node, action) into successors
-			successors.add(new SuccessorNode(nodeFactory.newChildNode(problem, node.n, action), this::h));
+			successors.add(newChildNode(problem, node, action));
 		}
 		// if successors is empty then return failure, infinity
 		if (successors.isEmpty()) {
-			return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
+			return new Result(failure(), Double.POSITIVE_INFINITY);
 		}
 		// for each s in successors do // update f with value from previous
 		// search, if any
@@ -83,13 +83,13 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 		// loop do
 		do {
 			// best <- the lowest f-value node in successors
-			SuccessorNode best = successors.stream().min(Comparator.comparingDouble(s -> s.f)).get();
+			SuccessorNode best = getLowestFValueNode(successors);
 			// if best.f > f_limit then return failure, best.f
 			if (best.f > f_limit) {
-				return new Result(searchController.failure(), best.f);
+				return new Result(failure(), best.f);
 			}
 			// alternative <- the second-lowest f-value among successors
-			double alternative = successors.size() > 1 ? successors.get(1).f : best.f;
+			double alternative = getSecondLowestFValue(successors);
 			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
 			Result result = rbfs(problem, best, Math.min(f_limit, alternative));
 			best.f = result.newFCostLimit;
@@ -97,8 +97,8 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 			if (!result.isFailure()) {
 				return result;
 			}
-		} while (searchController.isExecuting());
-		return new Result(searchController.failure(), Double.POSITIVE_INFINITY);
+		} while (isExecuting());
+		return new Result(failure(), Double.POSITIVE_INFINITY);
 	}
 
 	//
@@ -106,7 +106,7 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 	private ToDoubleFunction<Node<A, S>> h;
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
-
+	
 	public RecursiveBestFirstSearch(ToDoubleFunction<Node<A, S>> h) {
 		this(h, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}
@@ -122,6 +122,48 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 		return h.applyAsDouble(node);
 	}
 
+	public List<A> failure() {
+		return searchController.failure();
+	}
+
+	public List<A> solution(Node<A, S> node) {
+		return searchController.solution(node);
+	}
+	
+	public SuccessorNode newRootNode(S initialState, double pathCost) {
+		return new SuccessorNode(nodeFactory.newRootNode(initialState), this::h);
+	}
+
+	public SuccessorNode newChildNode(Problem<A, S> problem, SuccessorNode node, A action) {
+		return new SuccessorNode(nodeFactory.newChildNode(problem, node.n, action), this::h);
+	}
+	
+	public SuccessorNode getLowestFValueNode(List<SuccessorNode> nodes) {
+		return nodes.stream().min(Comparator.comparingDouble(s -> s.f)).get();
+	}
+
+	public double getSecondLowestFValue(List<SuccessorNode> nodes) {
+		
+		if(nodes.size() < 2)
+			return nodes.get(0).f;
+		
+		double lowest = Double.POSITIVE_INFINITY, secondLowest = Double.POSITIVE_INFINITY;
+		for(SuccessorNode node : nodes) {
+			if(node.f < lowest) {
+				secondLowest = lowest;
+				lowest = node.f;
+			}
+			else if(node.f < secondLowest) {
+				secondLowest = node.f;
+			}
+		}
+		return secondLowest;
+	}
+	
+	public boolean isExecuting() {
+		return searchController.isExecuting();
+	}
+	
 	class Result {
 		List<A> result;
 		boolean issolution;
@@ -151,7 +193,7 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 		}
 	}
 
-	class SuccessorNode {
+	class SuccessorNode implements Node<A, S>{
 		Node<A, S> n;
 		double g;
 		double h;
@@ -162,6 +204,26 @@ public class RecursiveBestFirstSearch<A, S> implements SearchForActionsFunction<
 			this.g = node.pathCost();
 			this.h = h.apply(node);
 			this.f = g + this.h;
+		}
+
+		@Override
+		public S state() {
+			return n.state();
+		}
+
+		@Override
+		public Node<A, S> parent() {
+			return n.parent();
+		}
+
+		@Override
+		public A action() {
+			return n.action();
+		}
+
+		@Override
+		public double pathCost() {
+			return n.pathCost();
 		}
 	}
 }
