@@ -42,7 +42,7 @@ public class Print2DMap {
     }
 
     final String fullQualifiedClassName = Print2DMap.class.getPackage().getName() + "." + args[0];
-    Class c= Class.forName(fullQualifiedClassName);
+    Class<?> c = Class.forName(fullQualifiedClassName);
     Map2D mapFromClassPath = (Map2D) c.newInstance();
 
     calculateDimensions(mapFromClassPath);
