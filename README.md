@@ -199,7 +199,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td>Bidirectional search</td>
        <td>
-           <a href="extra/src/main/java/aima/core/search/basic/uninformed/BidirectionalSearch.java">BidirectionalSearch</a>
+           <a href="core/src/main/java/aima/core/search/basic/uninformed/BidirectionalSearch.java">BidirectionalSearch</a>
        </td>
    </tr>   
    <tr>
