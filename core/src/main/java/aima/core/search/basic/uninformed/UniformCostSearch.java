@@ -1,17 +1,13 @@
 package aima.core.search.basic.uninformed;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchController;
 import aima.core.search.api.SearchForActionsFunction;
+import aima.core.search.basic.support.BasicFrontierQueue;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
 
@@ -104,7 +100,7 @@ public class UniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
 	}
 
 	public Queue<Node<A, S>> newPriorityQueueOrderedByPathCost(Node<A, S> initialNode) {
-		Queue<Node<A, S>> frontier = new PriorityQueue<>(Comparator.comparingDouble(Node::pathCost));
+		Queue<Node<A, S>> frontier = new BasicFrontierQueue<A,S>(() -> new PriorityQueue<>(Comparator.comparingDouble(Node::pathCost)), HashMap::new);
 		frontier.add(initialNode);
 		return frontier;
 	}
@@ -122,8 +118,7 @@ public class UniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
 	}
 
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {
-		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
-		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(state));
+		return frontier.contains(state);
 	}
 
 	public boolean removedNodeFromFrontierWithSameStateAndHigherPathCost(Node<A, S> child, Queue<Node<A, S>> frontier) {
