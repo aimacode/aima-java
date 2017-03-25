@@ -1,6 +1,12 @@
 package aima.core.search.basic.uninformed;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.HashMap;
 
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
