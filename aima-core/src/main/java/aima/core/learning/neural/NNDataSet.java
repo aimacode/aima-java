@@ -29,7 +29,7 @@ public abstract class NNDataSet {
 	/*
 	 * a copy from which examples are drawn.
 	 */
-	private List<NNExample> presentlyProcessed = new ArrayList<NNExample>();;
+	private List<NNExample> presentlyProcessed = new ArrayList<NNExample>();
 
 	/*
 	 * list of mean Values for all components of raw data set

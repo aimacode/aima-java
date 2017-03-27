@@ -47,9 +47,9 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
-	};
-	
-	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
+	}
+
+    public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_TEMPERATURE = "temp";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 	

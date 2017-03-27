@@ -35,6 +35,6 @@ public class MapEvent {
 	
 	/** Describes the kind of change. */
 	public enum Type {
-		MAP_NEW, MAP_MODIFIED, MARKER_ADDED, MARKER_REMOVED, TRACK_MODIFIED, MAP_CLEARED;
+		MAP_NEW, MAP_MODIFIED, MARKER_ADDED, MARKER_REMOVED, TRACK_MODIFIED, MAP_CLEARED
 	}
 }

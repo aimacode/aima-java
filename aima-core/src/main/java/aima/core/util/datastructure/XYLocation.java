@@ -10,9 +10,9 @@ package aima.core.util.datastructure;
 public class XYLocation {
 	public enum Direction {
 		North, South, East, West
-	};
+	}
 
-	int xCoOrdinate, yCoOrdinate;
+    int xCoOrdinate, yCoOrdinate;
 
 	/**
 	 * Constructs and initializes a location at the specified (<em>x</em>,

@@ -20,8 +20,8 @@ import aimax.osm.data.entities.WayRef;
  */
 public class OsmActionsFunction implements ActionsFunction {
 
-	public static enum OneWayMode {IGNORE, TRAVEL_FORWARD, TRAVEL_BACKWARDS}; 
-	
+	public static enum OneWayMode {IGNORE, TRAVEL_FORWARD, TRAVEL_BACKWARDS}
+
 	protected MapWayFilter filter;
 	private OneWayMode oneWayMode;
 	/**
