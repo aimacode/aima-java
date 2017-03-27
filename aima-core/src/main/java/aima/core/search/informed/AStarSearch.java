@@ -1,6 +1,5 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.Informed;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
