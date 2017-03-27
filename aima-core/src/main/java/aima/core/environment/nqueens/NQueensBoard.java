@@ -18,7 +18,7 @@ public class NQueensBoard {
 	/** Parameters for initialization. */
 	public static enum Config {
 		EMPTY, QUEENS_IN_FIRST_ROW, QUEEN_IN_EVERY_COL
-	};
+	}
 
 	/**
 	 * X---> increases left to right with zero based index Y increases top to

@@ -37,8 +37,8 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
-	};
-	
+	}
+
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 

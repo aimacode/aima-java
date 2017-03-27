@@ -35,9 +35,9 @@ public class VacuumEnvironment extends AbstractEnvironment {
 
 	public enum LocationState {
 		Clean, Dirty
-	};
+	}
 
-	//
+    //
 	protected VacuumEnvironmentState envState = null;
 	protected boolean isDone = false;
 
