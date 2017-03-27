@@ -136,7 +136,7 @@ public enum Connective {
 	private final String symbol;
 	private final int precedence;
 
-	private Connective(String symbol, int precedence) {
+	Connective(String symbol, int precedence) {
 		this.symbol = symbol;
 		this.precedence = precedence;
 	}
