@@ -51,19 +51,14 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
         Map<S, Node<A, S>> exploredFront = newExploredMap(node.state());
         Map<S, Node<A, S>> exploredBack = newExploredMap(revNode.state());
 
-        while (!front.isEmpty() || !back.isEmpty()) {
+        while (!front.isEmpty() && !back.isEmpty()) {
 
-            if (front.isEmpty() || back.isEmpty()) {
-                this.previousMeetingOfTwoFrontiers = null;
-                bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
-                return bidirectionalActions;
-            }
             // Existence of path is checked from both ends of the problem.
             if (isSolution(pathExistsBidirectional(front, exploredFront, exploredBack, originalProblem), true)) {
                 bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
                 return bidirectionalActions;
             }
-            if (isSolution(pathExistsBidirectional(back, exploredBack, exploredFront, originalProblem), false)) {
+            if (isSolution(pathExistsBidirectional(back, exploredBack, exploredFront, reverseProblem), false)) {
                 bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
                 return bidirectionalActions;
             }
