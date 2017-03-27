@@ -201,7 +201,9 @@ public class SVGGroupParser implements IGroupParser {
 						try {
 							ty = parseNumber(matcher2.group(i));
 							i++;
-						} catch(NumberFormatException e) { }
+						} catch(NumberFormatException e) {
+							e.printStackTrace();
+						}
 						result = result.multiply(TransformMatrix2D.translate(tx, ty));
 					} else if(matcher2.group(i).equalsIgnoreCase(SCALE_TRANSFORM)) {
 						double sx = parseNumber(matcher2.group(++i));
@@ -210,7 +212,9 @@ public class SVGGroupParser implements IGroupParser {
 						try {
 							sy = parseNumber(matcher2.group(i));
 							i++;
-						} catch(NumberFormatException e) { }
+						} catch(NumberFormatException e) {
+							e.printStackTrace();
+						}
 						result = result.multiply(TransformMatrix2D.scale(sx, sy));
 					} else if(matcher2.group(i).equalsIgnoreCase(ROTATE_TRANSFORM)) {
 						double angle = Math.toRadians(parseNumber(matcher2.group(++i)));
@@ -222,7 +226,9 @@ public class SVGGroupParser implements IGroupParser {
 							i++;
 							cy = parseNumber(matcher2.group(i));
 							i++;
-						} catch(NumberFormatException e) { }
+						} catch(NumberFormatException e) {
+							e.printStackTrace();
+						}
 						if(cx != 0 && cy != 0) {
 							result = result.multiply(TransformMatrix2D.translate(cx,cy));
 						}

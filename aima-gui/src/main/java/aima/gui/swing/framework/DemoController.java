@@ -62,6 +62,7 @@ public class DemoController extends AgentAppController {
 				logger.log(i + " ...");
 			}
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		isPrepared = frame.simulationPaused();
 	}
@@ -78,6 +79,7 @@ public class DemoController extends AgentAppController {
 			Thread.sleep(2000);
 			logger.log("ready");
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

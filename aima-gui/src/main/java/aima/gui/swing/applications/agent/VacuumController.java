@@ -98,7 +98,9 @@ public class VacuumController extends AgentAppController {
 				Thread.sleep(500);
 				env.step();
 			}
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		logger.log("Performance: "
 				+ env.getPerformanceMeasure(agent));
 		logger.log("</simulation-log>\n");
