@@ -16,7 +16,7 @@ import aima.core.util.datastructure.XYLocation;
 public class NQueensBoard {
 
 	/** Parameters for initialization. */
-	public static enum Config {
+	public enum Config {
 		EMPTY, QUEENS_IN_FIRST_ROW, QUEEN_IN_EVERY_COL
 	}
 

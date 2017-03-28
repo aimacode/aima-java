@@ -53,7 +53,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 	protected static class RouteFindingAgentFrame extends MapAgentFrame {
 		private static final long serialVersionUID = 1L;
 
-		public static enum MapType {
+		public enum MapType {
 			ROMANIA, AUSTRALIA
 		};
 

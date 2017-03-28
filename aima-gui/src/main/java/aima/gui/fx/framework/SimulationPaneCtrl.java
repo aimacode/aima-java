@@ -24,7 +24,7 @@ import javafx.scene.input.MouseButton;
  */
 public class SimulationPaneCtrl {
 
-	public static enum State {
+	public enum State {
 		READY, RUNNING, FINISHED, PAUSED, CANCELED
 	}
 

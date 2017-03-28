@@ -22,7 +22,7 @@ public class AgentPosition {
 		
 		private final String name;
 		
-		private Orientation(String name) {
+		Orientation(String name) {
 			this.name = name;
 		}
 	}
