@@ -6,6 +6,8 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 
+import java.util.Objects;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.8, page 48.<br>
  * <br>
@@ -39,11 +41,11 @@ public class ReflexVacuumAgent extends AbstractAgent {
 						.getLocationState()) {
 					return VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (VacuumEnvironment.LOCATION_A == vep
-						.getAgentLocation()) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, vep
+                        .getAgentLocation())) {
 					return VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (VacuumEnvironment.LOCATION_B == vep
-						.getAgentLocation()) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, vep
+						.getAgentLocation())) {
 					// else if location = B then return Left
 					return VacuumEnvironment.ACTION_MOVE_LEFT;
 				}

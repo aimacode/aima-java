@@ -3,6 +3,7 @@ package aima.core.nlp.parsing.grammars;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A derivation rule that is contained within a grammar. This rule is probabilistic, in that it 
@@ -65,7 +66,7 @@ public class Rule {
 			return false;
 		}
 		for( int i=0; i < sentForm.size(); i++ ) {
-			if( this.rhs.get(i) != sentForm.get(i)) {
+			if(!Objects.equals(this.rhs.get(i), sentForm.get(i))) {
 				return false;
 			}
 		}

@@ -1,6 +1,7 @@
 package aima.core.environment.vacuum;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import aima.core.agent.Action;
@@ -43,7 +44,7 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 				state.setAttribute(ATTRIBUTE_CURRENT_STATE,
 						vep.getLocationState());
 				// Keep track of the state of the different locations
-				if (VacuumEnvironment.LOCATION_A == vep.getAgentLocation()) {
+				if (Objects.equals(VacuumEnvironment.LOCATION_A, vep.getAgentLocation())) {
 					state.setAttribute(ATTRIBUTE_STATE_LOCATION_A,
 							vep.getLocationState());
 				} else {

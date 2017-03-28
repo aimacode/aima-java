@@ -3,6 +3,7 @@ package aima.core.environment.tictactoe;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import aima.core.util.datastructure.XYLocation;
 
@@ -29,7 +30,7 @@ public class TicTacToeState implements Cloneable {
 	}
 	
 	public boolean isEmpty(int col, int row) {
-		return board[getAbsPosition(col, row)] == EMPTY;
+		return Objects.equals(board[getAbsPosition(col, row)], EMPTY);
 	}
 
 	public String getValue(int col, int row) {
@@ -45,16 +46,16 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	public void mark(int col, int row) {
-		if (utility == -1 && getValue(col, row) == EMPTY) {
+		if (utility == -1 && Objects.equals(getValue(col, row), EMPTY)) {
 			board[getAbsPosition(col, row)] = playerToMove;
 			analyzeUtility();
-			playerToMove = (playerToMove == X ? O : X);
+			playerToMove = (Objects.equals(playerToMove, X) ? O : X);
 		}
 	}
 
 	private void analyzeUtility() {
 		if (lineThroughBoard()) {
-			utility = (playerToMove == X ? 1 : 0);
+			utility = (Objects.equals(playerToMove, X) ? 1 : 0);
 		} else if (getNumberOfMarkedPositions() == 9) {
 			utility = 0.5;
 		}
@@ -67,7 +68,7 @@ public class TicTacToeState implements Cloneable {
 	private boolean isAnyRowComplete() {
 		for (int row = 0; row < 3; row++) {
 			String val = getValue(0, row);
-			if (val != EMPTY && val == getValue(1, row) && val == getValue(2, row)) {
+			if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(1, row)) && Objects.equals(val, getValue(2, row))) {
 				return true;
 			}
 		}
@@ -77,7 +78,7 @@ public class TicTacToeState implements Cloneable {
 	private boolean isAnyColumnComplete() {
 		for (int col = 0; col < 3; col++) {
 			String val = getValue(col, 0);
-			if (val != EMPTY && val == getValue(col, 1) && val == getValue(col, 2)) {
+			if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(col, 1)) && Objects.equals(val, getValue(col, 2))) {
 				return true;
 			}
 		}
@@ -87,11 +88,11 @@ public class TicTacToeState implements Cloneable {
 	private boolean isAnyDiagonalComplete() {
 		boolean retVal = false;
 		String val = getValue(0, 0);
-		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 2)) {
+		if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(1, 1)) && Objects.equals(val, getValue(2, 2))) {
 			return true;
 		}
 		val = getValue(0, 2);
-		if (val != EMPTY && val == getValue(1, 1) && val == getValue(2, 0)) {
+		if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(1, 1)) && Objects.equals(val, getValue(2, 0))) {
 			return true;
 		}
 		return retVal;
@@ -138,7 +139,7 @@ public class TicTacToeState implements Cloneable {
 		if (anObj != null && anObj.getClass() == getClass()) {
 			TicTacToeState anotherState = (TicTacToeState) anObj;
 			for (int i = 0; i < 9; i++) {
-				if (board[i] != anotherState.board[i]) {
+				if (!Objects.equals(board[i], anotherState.board[i])) {
 					return false;
 				}
 			}
