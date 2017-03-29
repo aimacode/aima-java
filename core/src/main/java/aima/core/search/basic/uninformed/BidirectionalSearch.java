@@ -63,7 +63,7 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
                 bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
                 return bidirectionalActions;
             }
-            if (isSolution(pathExistsBidirectional(back, exploredBack, exploredFront, originalProblem), false)) {
+            if (isSolution(pathExistsBidirectional(back, exploredBack, exploredFront, reverseProblem), false)) {
                 bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
                 return bidirectionalActions;
             }
