@@ -28,7 +28,7 @@ import java.util.Queue;
  * @author manthan
  */
 public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionallyFunction<A, S> {
-	private BidirectionalActions<A> bidirectionalActions;
+    private BidirectionalActions<A> bidirectionalActions;
     private List<A> fromInitialStatePartList = new ArrayList<>();
     private List<A> fromGoalStatePartList = new ArrayList<>();
     private Node<A, S> previousMeetingOfTwoFrontiers;
@@ -97,8 +97,8 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
     	
     	//if queue is not empty then there is a node to be explored
     	if (!queue.isEmpty()) {
-    		//exploring the first node in the queue
-    		//next -> first node from queue
+    	    //exploring the first node in the queue
+    	    //next -> first node from queue
             Node<A, S> next = queue.remove();
             //performing the action on next
             //till its all child has not been explored
@@ -107,8 +107,8 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
                 Node<A, S> child = newChildNode(problem, next, action);
                 //if child node is in exploredBack map
                 if (exploredBack.containsKey(child.state())) {
-                	//child node is found in exploredBack
-                	//meeting point of two frontiers
+                    //child node is found in exploredBack
+                    //meeting point of two frontiers
                     this.previousMeetingOfTwoFrontiers = next;
                     this.nextNodeToBeEvaluated = exploredBack.get(child.state());
                     return child;
@@ -117,7 +117,7 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
             	//then perform following action
                 if (!(exploredFront.containsKey(child.state()) || queue.contains(child.state()))) {
                 	
-                	//check if it is a goal state
+                    //check if it is a goal state
                     if (problem.isGoalState(child.state())) {
                     	//setting meeting point -> next node
                         this.previousMeetingOfTwoFrontiers = next;
@@ -143,7 +143,7 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
     	//solutionNode is a node which is checked whether it is a meeting of two frontiers or not
     	//if solutionNode is not null 
         if (solutionNode != null) {
-        	//then it is the meeting of the two frontiers
+            //then it is the meeting of the two frontiers
             this.meetingOfTwoFrontiers = solutionNode;
             this.fromFront = fromFront;
             return true;
