@@ -66,7 +66,7 @@ public class GraphRLPriorityQueueSearch<A, S> extends AbstractPriorityQueueSearc
 			}
 			// until node.STATE not in explored /* ensures not already visited
 			// by higher priority node */
-			while (!explored.contains(node.state()));
+			while (explored.contains(node.state()));
 
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 			if (isGoalState(node, problem)) {

@@ -30,7 +30,7 @@ public class UniformCostSearchTest {
         return Arrays.asList(new Object[][]{
         	{"core.UniformCostSearch"}, 
         	{"extra.UniformCostQueueSearch.graph"}, 
-// TODO - fails       	{"extra.UniformCostQueueSearch.graphrl"}, 
+         	{"extra.UniformCostQueueSearch.graphrl"}, 
         	{"extra.UniformCostQueueSearch.tree"}
         });
     }
