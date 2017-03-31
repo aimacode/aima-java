@@ -5,19 +5,19 @@ import java.util.List;
 /**
  * @author manthan.
  */
-public interface BidirectionalActions<A> {
+public interface BidirectionalSearchResult<A> {
     /**
      * Path from initial node to meeting node.
      *
      * @return List of actions that from initial state to meeting of two frontiers.
      */
-    List<A> fromInitialStatePart();
+    List<A> fromInitialStateToMeeting();
     /**
      * Path from goal node to meeting node.
      *
      * @return List of actions that from goal state to meeting of two frontiers.
      */
-    List<A> fromGoalStatePart();
+    List<A> fromGoalStateToMeeting();
     /**
      * Path from initial node to goal node.
      *
