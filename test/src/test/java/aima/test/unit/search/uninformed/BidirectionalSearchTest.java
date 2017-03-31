@@ -2,19 +2,28 @@ package aima.test.unit.search.uninformed;
 
 import aima.core.environment.map2d.GoAction;
 import aima.core.environment.map2d.InState;
-import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
-import aima.core.search.api.BidirectionalActions;
+import aima.core.search.api.BidirectionalSearchResult;
 import aima.core.search.api.Problem;
 import aima.core.search.basic.uninformed.BidirectionalSearch;
 import aima.core.util.datastructure.Pair;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.ARAD;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.BUCHAREST;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.FAGARAS;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.ORADEA;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.SIBIU;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.TIMISOARA;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.URZICENI;
+import static aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania.ZERIND;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author manthan.
@@ -29,50 +38,104 @@ public class BidirectionalSearchTest {
     @Parameterized.Parameter
     public String searchFunctionName;
 
-    public <A, S> BidirectionalActions<A> searchForActions(Problem<A, S> originalProblem, Problem<A, S> reverseProblem) {
-        BidirectionalSearch<A, S> searchForActionsFunction = new BidirectionalSearch<A, S>();
-        return searchForActionsFunction.apply(originalProblem, reverseProblem);
+    public <A, S> BidirectionalSearchResult<A> searchForActions(Pair<Problem<A, S>, Problem<A, S>> pair) {
+        BidirectionalSearch<A, S> search = new BidirectionalSearch<>();
+        return search.apply(pair.getFirst(), pair.getSecond());
     }
 
     @Test
-    public void testBidirectionalSearch() {
-        //Result will contain all intermediate nodes excluding initial and final nodes.
+    public void aradToArad() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(ARAD, ARAD);
 
-        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest1 = ProblemFactory.getSimpleBidirectionalSearchProblem(
-                SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.ARAD);
-        Assert.assertEquals(Arrays.asList(), searchForActions(problemPairtest1.getFirst(), problemPairtest1.getSecond()).fromInitialStatePart());
-
-        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest2 = ProblemFactory.getSimpleBidirectionalSearchProblem(
-                SimplifiedRoadMapOfPartOfRomania.TIMISOARA, SimplifiedRoadMapOfPartOfRomania.URZICENI);
-        Assert.assertEquals(
-                Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.ARAD),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS)),
-                searchForActions(problemPairtest2.getFirst(), problemPairtest2.getSecond()).fromInitialStatePart());
-
-        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest3 = ProblemFactory.getSimpleBidirectionalSearchProblem(
-                SimplifiedRoadMapOfPartOfRomania.TIMISOARA, SimplifiedRoadMapOfPartOfRomania.URZICENI);
-        Assert.assertEquals(
-                Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
-                searchForActions(problemPairtest3.getFirst(), problemPairtest3.getSecond()).fromGoalStatePart());
-
-        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest4 = ProblemFactory.getSimpleBidirectionalSearchProblem(
-                SimplifiedRoadMapOfPartOfRomania.TIMISOARA, SimplifiedRoadMapOfPartOfRomania.URZICENI);
-        Assert.assertEquals(
-                Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.ARAD),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST)),
-                searchForActions(problemPairtest4.getFirst(), problemPairtest4.getSecond()).fromInitialStateToGoalState());
-
-        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> problemPairtest5 = ProblemFactory.getSimpleBidirectionalSearchProblem(
-                SimplifiedRoadMapOfPartOfRomania.TIMISOARA, SimplifiedRoadMapOfPartOfRomania.URZICENI);
-        Assert.assertEquals(
-                Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
-                        new GoAction(SimplifiedRoadMapOfPartOfRomania.ARAD)),
-                searchForActions(problemPairtest5.getFirst(), problemPairtest5.getSecond()).fromGoalStateToInitialState());
+        assertEquals(null, searchForActions(pair));
     }
 
+    @Test
+    public void timisoaraToUrziceni() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(TIMISOARA, URZICENI);
+        final List<GoAction> solution = searchForActions(pair).fromInitialStateToGoalState();
+        final List<GoAction> reverse = searchForActions(pair).fromGoalStateToInitialState();
+
+        assertEquals(Arrays.asList(
+            new GoAction(ARAD),
+            new GoAction(SIBIU),
+            new GoAction(FAGARAS),
+            new GoAction(BUCHAREST),
+            new GoAction(URZICENI)),
+            solution);
+        assertEquals(Arrays.asList(
+            new GoAction(BUCHAREST),
+            new GoAction(FAGARAS),
+            new GoAction(SIBIU),
+            new GoAction(ARAD),
+            new GoAction(TIMISOARA)),
+            reverse);
+    }
+
+    @Test
+    public void zerindToSibiu() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(ZERIND, SIBIU);
+        final List<GoAction> solution = searchForActions(pair).fromInitialStateToGoalState();
+
+        assertEquals(Arrays.asList(
+            new GoAction(ORADEA),
+            new GoAction(SIBIU)),
+            solution);
+
+    }
+
+    @Test
+    public void aradToBucharest() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(ARAD, BUCHAREST);
+        final List<GoAction> solution = searchForActions(pair).fromInitialStateToGoalState();
+
+        assertEquals(Arrays.asList(
+            new GoAction(SIBIU),
+            new GoAction(FAGARAS),
+            new GoAction(BUCHAREST)),
+            solution);
+
+    }
+
+    @Test
+    public void aradToSibiu() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(ARAD, SIBIU);
+        final List<GoAction> solution = searchForActions(pair).fromInitialStateToGoalState();
+        final List<GoAction> reverse = searchForActions(pair).fromGoalStateToInitialState();
+
+        assertEquals(Arrays.asList(
+            new GoAction(SIBIU)),
+            solution);
+
+        assertEquals(Arrays.asList(
+            new GoAction(ARAD)),
+            reverse);
+
+    }
+
+    @Test
+    public void aradToFagras() throws Exception {
+        Pair<Problem<GoAction, InState>, Problem<GoAction, InState>> pair =
+            ProblemFactory.getSimpleBidirectionalSearchProblem(ARAD, FAGARAS);
+        final BidirectionalSearchResult<GoAction> result = searchForActions(pair);
+        final List<GoAction> solution = result.fromInitialStateToGoalState();
+        final List<GoAction> reverse = result.fromGoalStateToInitialState();
+
+        assertEquals(Arrays.asList(
+            new GoAction(SIBIU),
+            new GoAction(FAGARAS)),
+            solution);
+
+        assertEquals(Arrays.asList(
+            new GoAction(SIBIU),
+            new GoAction(ARAD)),
+            reverse);
+
+
+    }
 }
