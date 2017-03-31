@@ -128,7 +128,7 @@ public class DecisionTreeLearner implements Learner {
 					}
 				}));
 
-        /* Check value is available in `Optional` */
+        /* Check value is available in Optional */
 		String attributeWithGreatestGain = optAttributeWithGreatestGain.isPresent() ?
 											(String)optAttributeWithGreatestGain.get() :
 											"No String found";

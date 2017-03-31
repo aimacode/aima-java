@@ -47,9 +47,9 @@ public class DataSet {
 		// and add them to the DataSet (ds) to return it afterwards
 		examples.stream().filter(example -> {
 			if (e.equals(example)) {
-				return true;
+				return false;
 			}
-			return false;
+			return true;
 		}).forEach(example -> ds.add(example));
 
 		return ds;

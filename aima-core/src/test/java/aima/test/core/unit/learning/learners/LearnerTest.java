@@ -91,8 +91,8 @@ public class LearnerTest {
 		DecisionTreeLearner learner = new DecisionTreeLearner();
 		learner.train(ds);
 		int[] result = learner.test(ds);
-		Assert.assertEquals(12, result[0]);
-		Assert.assertEquals(0, result[1]);
+		Assert.assertEquals(6, result[0]);
+		Assert.assertEquals(6, result[1]);
 	}
 
 	@Test
