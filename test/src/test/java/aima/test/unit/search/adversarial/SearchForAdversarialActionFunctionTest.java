@@ -23,27 +23,27 @@ import aima.core.search.api.TerminalTestPredicate;
 import aima.core.search.basic.adversarial.AlphaBetaSearch;
 import aima.core.search.basic.adversarial.MinimaxDecision;
 import aima.core.search.basic.support.BasicGame;
+import aima.extra.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 
 @RunWith(Parameterized.class)
 public class SearchForAdversarialActionFunctionTest {
 	@Parameters(name = "{index}: {0}")
 	public static Collection<Object[]> implementations() {
-		return Arrays.asList(new Object[][] { { "MinimaxDecision" },  { "AlphaBetaSearch" } });
+		return Arrays.asList(new Object[][]{{"MinimaxDecision"}, {"AlphaBetaSearch"}, {"IterativeDeepeningAlphaBetaSearch"}});
 	}
 
 	@Parameter
 	public String searchFunctionName;
 
-	public <S, A, P> A searchForAdversarialAction(Game<S, A, P> game) {
-		SearchForAdversarialActionFunction<S, A> searchFn = null;
-		
+	public <S, A, P> A searchForAdversarialAction(Game<S, A, P> game, Integer... params) {
+		SearchForAdversarialActionFunction<S, A> searchFn;
 		if ("MinimaxDecision".equals(searchFunctionName)) {
 			searchFn = new MinimaxDecision<>(game);
-		}
-		else if ("AlphaBetaSearch".equals(searchFunctionName)) {
+		} else if ("AlphaBetaSearch".equals(searchFunctionName)) {
 			searchFn = new AlphaBetaSearch<>(game);
+		} else {
+			searchFn = new IterativeDeepeningAlphaBetaSearch<>(game, params[0], params[1], params[2]);
 		}
-
 		return searchFn.apply(game.initialState());
 	}
 
@@ -111,7 +111,7 @@ public class SearchForAdversarialActionFunctionTest {
 				Map2DFunctionFactory.getActionsFunction(aima3eFig5_2),
 				Map2DFunctionFactory.getResultFunction(aima3eFig5_2), aima3eFig5_2TerminalTestPredicate,
 				aima3eFig5_2UtilityFn);
-		
-		Assert.assertEquals(new GoAction("B"), searchForAdversarialAction(game));
+
+		Assert.assertEquals(new GoAction("B"), searchForAdversarialAction(game, 100, 0, 200));
 	}
 }

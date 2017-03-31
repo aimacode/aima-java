@@ -197,6 +197,14 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>3?</td>
        <td>??</td>
+       <td>Bidirectional search</td>
+       <td>
+           <a href="core/src/main/java/aima/core/search/basic/uninformed/BidirectionalSearch.java">BidirectionalSearch</a>
+       </td>
+   </tr>   
+   <tr>
+       <td>3?</td>
+       <td>??</td>
        <td>Best-First search</td>
        <td>
            <a href="extra/src/main/java/aima/extra/search/pqueue/informed/BestFirstQueueSearch.java">BestFirstQueueSearch</a>
@@ -301,11 +309,21 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/adversarial/MinimaxDecision.java">MinimaxDecision</a></td>
    </tr>
    <tr>
-       <td>5.?</td>
-       <td>??</td>
-       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Alpha-Beta-Search.md">Alpha-Beta-Search</a></td>
+       <td rowspan="3">5.?</td>
+       <td rowspan="3">??</td>
+       <td rowspan="3"><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/Alpha-Beta-Search.md">Alpha-Beta-Search</a></td>
        <td><a href="core/src/main/java/aima/core/search/basic/adversarial/AlphaBetaSearch.java">AlphaBetaSearch</a></td>
    </tr>
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
+       <td>
+       <a href="extra/src/main/java/aima/extra/search/adversarial/IterativeDeepeningAlphaBetaSearch.java">IterativeDeepeningAlphaBetaSearch</a>
+       </td>
+   </tr>   
    <tr>
        <td></td>
        <td></td>
@@ -404,7 +422,6 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 ### CURRENT (Rewrite of chapters 3 to 6) 
 #### Chp 3 
 * Uniform-Cost-Search NoOp case and need for small constant.
-* Add Bidirectional Search implementation.
 * GraphPriorityQueueSearch and TreePriorityQueueSearch potentially 
   need a better mechanism for determining state containment and removal of a node 
   with a lower priority (i.e. AbstractQueueSearchForActions.removedNodeFromFrontierWithSameStateAndLowerPriority()).
@@ -416,13 +433,11 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
 * Online-DFS-Agent - Clarify the need for the additional check `if (!sPrime.equals(result.get(s, a))) {`, which is not present in the pseudocode but required to stop it looping endlessly on certain test problems.
 
 #### Chp 5
-* Implement version of IterativeDeepeningAlphaBetaSearch from aima3e branch in `extra` module.
 
 #### Chp 6
 
 #### Chp 8
 * Restructure the AST for FOL to have clean parser calls.
-* Auto-populate the domain while parsing in FOL.
 
 ### LATER
 
