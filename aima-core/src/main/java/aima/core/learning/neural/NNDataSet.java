@@ -66,11 +66,14 @@ public abstract class NNDataSet {
 		List<List<Double>> rds = new ArrayList<List<Double>>();
 
 		// create raw data set
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				DataResource.class.getResourceAsStream(filename + ".csv")));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			rds.add(exampleFromString(line, ","));
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+				DataResource.class.getResourceAsStream(filename + ".csv")))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				rds.add(exampleFromString(line, ","));
+			}
 		}
 
 		// normalize raw dataset
