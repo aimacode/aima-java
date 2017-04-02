@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.probability.CategoricalDistribution;
-import aima.core.probability.ProbabilityModel;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.approx.GibbsAsk;
