@@ -91,7 +91,9 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 				Thread.sleep(sleepTime);
 				env.step();
 			}
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		logger.log("</simulation-protocol>\n");
 	}
 	

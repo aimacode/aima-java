@@ -71,6 +71,7 @@ public class Settings {
 			input = new FileInputStream(file);
 			values.load(input);
 		} catch (IOException e) {
+			e.printStackTrace();
 			
 		} finally {
 			if(input != null) {

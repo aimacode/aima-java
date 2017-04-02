@@ -138,6 +138,7 @@ public class LearningDemo {
 			System.out.println("\n");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 
 		}
 	}
