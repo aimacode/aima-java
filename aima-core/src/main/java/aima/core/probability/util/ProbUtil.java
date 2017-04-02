@@ -1,5 +1,6 @@
 package aima.core.probability.util;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -205,15 +206,29 @@ public class ProbUtil {
 		FiniteDomain fd = (FiniteDomain) Xi.getRandomVariable().getDomain();
 		double[] X = new double[fd.size()];
 
+		/**
+		 * As we iterate over the domain of a ramdom variable corresponding to Xi
+		 * it is necessary to make the modified values of the variable visible
+		 * to the child nodes of Xi in the computation of the markov blanket
+		 * probabilities. 
+		 */
+		//Copy contents of event to generatedEvent so as to leave event untouched
+		Map<RandomVariable, Object> generatedEvent = new LinkedHashMap<RandomVariable, Object>();
+		for (Map.Entry<RandomVariable, Object> entry : event.entrySet()) {
+	        generatedEvent.put(entry.getKey(), entry.getValue());     
+	    }
+		
 		for (int i = 0; i < fd.size(); i++) {
-			// P(x'<sub>i</sub>|mb(Xi)) =
-			// &alpha;P(x'<sub>i</sub>|parents(X<sub>i</sub>)) *
-			// &prod;<sub>Y<sub>j</sub> &isin; Children(X<sub>i</sub>)</sub>
-			// P(y<sub>j</sub>|parents(Y<sub>j</sub>))
+			/** P(x'<sub>i</sub>|mb(Xi)) =
+			 * &alpha;P(x'<sub>i</sub>|parents(X<sub>i</sub>)) *
+			 * &prod;<sub>Y<sub>j</sub> &isin; Children(X<sub>i</sub>)</sub>
+			 * P(y<sub>j</sub>|parents(Y<sub>j</sub>))
+			 */
+			generatedEvent.put(Xi.getRandomVariable(), fd.getValueAt(i));
 			double cprob = 1.0;
 			for (Node Yj : Xi.getChildren()) {
 				cprob *= Yj.getCPD().getValue(
-						getEventValuesForXiGivenParents(Yj, event));
+						getEventValuesForXiGivenParents(Yj, generatedEvent));
 			}
 			X[i] = Xi.getCPD()
 					.getValue(
