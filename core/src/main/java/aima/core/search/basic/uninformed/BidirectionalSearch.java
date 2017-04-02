@@ -10,9 +10,12 @@ import aima.core.search.basic.support.BasicBidirectionalActions;
 import aima.core.search.basic.support.BasicFrontierQueue;
 import aima.core.search.basic.support.BasicNodeFactory;
 import aima.core.search.basic.support.BasicSearchController;
-
-import java.util.*;
-
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.LinkedList;
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
  * <br>
