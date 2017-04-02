@@ -197,11 +197,14 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
         while (node.parent() != null) {
             actions = problem.actions(node.state());
             Node<A, S> finalNode = node;
-            actions.forEach(action -> {
-                if (finalNode.parent().state().equals(newChildNode(problem, finalNode, action).state())) {
+            double pathCost = Double.POSITIVE_INFINITY;
+            for (A action : actions) {
+                Node<A, S> child = newChildNode(problem, finalNode, action);
+                if (finalNode.parent().state().equals(child.state()) && child.pathCost() < pathCost) {
                     result.add(action);
+                    pathCost = child.pathCost();
                 }
-            });
+            }
             node = node.parent();
         }
         return result;
