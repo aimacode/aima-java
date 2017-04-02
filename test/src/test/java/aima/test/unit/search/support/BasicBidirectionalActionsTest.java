@@ -15,7 +15,9 @@ public class BasicBidirectionalActionsTest {
     public void testBasicBidirectionalActions() {
         List<String> fromInitialStatePartList = Arrays.asList("start", "second", "third");
         List<String> fromGoalStatePartList = Arrays.asList("goal", "fifth", "fourth");
-        BasicBidirectionalActions<String> basicBidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePartList, fromGoalStatePartList);
+        List<String> fromMeetingStateToInitialState = Arrays.asList("third", "second", "start");
+        List<String> fromMeetingStateToGoalState = Arrays.asList("fourth", "fifth", "goal");
+        BasicBidirectionalActions<String> basicBidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePartList, fromGoalStatePartList, fromMeetingStateToInitialState,fromMeetingStateToGoalState);
         Assert.assertEquals(
                 Arrays.asList("start", "second", "third", "fourth", "fifth", "goal"),
                 basicBidirectionalActions.fromInitialStateToGoalState());

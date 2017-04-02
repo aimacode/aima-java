@@ -70,14 +70,16 @@ public class BidirectionalSearchTest {
             new GoAction(ARAD),
             new GoAction(SIBIU),
             new GoAction(FAGARAS),
-            new GoAction(BUCHAREST)),
+            new GoAction(BUCHAREST),
+            new GoAction(URZICENI)),
             solution.fromInitialStateToGoalState());
 
         assertEquals(Arrays.asList(
             new GoAction(BUCHAREST),
             new GoAction(FAGARAS),
             new GoAction(SIBIU),
-            new GoAction(ARAD)),
+            new GoAction(ARAD),
+            new GoAction(TIMISOARA)),
             solution.fromGoalStateToInitialState());
     }
 
