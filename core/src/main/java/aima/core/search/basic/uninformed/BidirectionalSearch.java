@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-
+import java.util.LinkedList;
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
  * <br>
@@ -35,14 +35,16 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
     private Node<A, S> meetingOfTwoFrontiers;
     private Node<A, S> nextNodeToBeEvaluated;
     private boolean fromFront;
+    private Problem<A, S> problem;
     @Override
 
     public BidirectionalActions<A> apply(Problem<A, S> originalProblem, Problem<A, S> reverseProblem) {
+        problem = originalProblem;
         Node<A, S> node = newRootNode(originalProblem.initialState(), 0);
         if (originalProblem.isGoalState(node.state())) {
             this.previousMeetingOfTwoFrontiers = node;
             this.nextNodeToBeEvaluated = null;
-            bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
+            bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart(), fromMeetingStateToInitialState(), fromMeetingStateToGoalState());
             return bidirectionalActions;
         }
         Node<A, S> revNode = newRootNode(reverseProblem.initialState(), 0);
@@ -55,16 +57,16 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
 
             // Existence of path is checked from both ends of the problem.
             if (isSolution(pathExistsBidirectional(front, exploredFront, exploredBack, originalProblem), true)) {
-                bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
+                bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart(), fromMeetingStateToInitialState(), fromMeetingStateToGoalState());
                 return bidirectionalActions;
             }
             if (isSolution(pathExistsBidirectional(back, exploredBack, exploredFront, reverseProblem), false)) {
-                bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
+                bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart(), fromMeetingStateToInitialState(), fromMeetingStateToGoalState());
                 return bidirectionalActions;
             }
         }
         this.previousMeetingOfTwoFrontiers = null;
-        bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart());
+        bidirectionalActions = new BasicBidirectionalActions<>(fromInitialStatePart(), fromGoalStatePart(), fromMeetingStateToInitialState(), fromMeetingStateToGoalState());
         return bidirectionalActions;
     }
 
@@ -166,5 +168,45 @@ public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionall
             fromGoalStatePartList = searchController.solution(this.nextNodeToBeEvaluated);
             return fromGoalStatePartList;
         }
+    }
+
+    private List<A> fromMeetingStateToInitialState() {
+        if (this.previousMeetingOfTwoFrontiers == null || this.nextNodeToBeEvaluated == null)
+            return failure();
+        if (!this.fromFront) {
+            return buildPath(this.nextNodeToBeEvaluated);
+        } else {
+            return buildPath(this.meetingOfTwoFrontiers);
+        }
+    }
+
+    private List<A> fromMeetingStateToGoalState() {
+        if (this.previousMeetingOfTwoFrontiers == null || this.nextNodeToBeEvaluated == null)
+            return failure();
+        if (this.fromFront) {
+            return buildPath(this.nextNodeToBeEvaluated);
+        } else {
+            return buildPath(this.meetingOfTwoFrontiers);
+        }
+    }
+
+    private List<A> buildPath(Node<A, S> node) {
+        LinkedList<A> result = new LinkedList<>();
+        result.add(node.action());
+        List<A> actions;
+        while (node.parent() != null) {
+            actions = problem.actions(node.state());
+            Node<A, S> finalNode = node;
+            double pathCost = Double.POSITIVE_INFINITY;
+            for (A action : actions) {
+                Node<A, S> child = newChildNode(problem, finalNode, action);
+                if (finalNode.parent().state().equals(child.state()) && child.pathCost() < pathCost) {
+                    result.add(action);
+                    pathCost = child.pathCost();
+                }
+            }
+            node = node.parent();
+        }
+        return result;
     }
 }

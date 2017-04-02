@@ -1,6 +1,8 @@
 package aima.core.search.basic.support;
 
 import aima.core.search.api.BidirectionalActions;
+import aima.core.search.api.SearchController;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,10 +15,14 @@ public class BasicBidirectionalActions<A> implements BidirectionalActions<A> {
     private List<A> fromGoalStatePartList = new ArrayList<>();
     private List<A> fromInitialStateToGoalStateList = new ArrayList<>();
     private List<A> fromGoalStateToInitialStateList = new ArrayList<>();
+    private List<A> fromMeetingStateToGoalStateList = new ArrayList<>();
+    private List<A> fromMeetingStateToInitialStateList = new ArrayList<>();
 
-    public BasicBidirectionalActions(List<A> fromInitialStatePartList, List<A> fromGoalStatePartList) {
+    public BasicBidirectionalActions(List<A> fromInitialStatePartList, List<A> fromGoalStatePartList,List<A> fromMeetingStateToInitialStateList,List<A> fromMeetingStateToGoalStateList) {
         this.fromInitialStatePartList = fromInitialStatePartList;
         this.fromGoalStatePartList = fromGoalStatePartList;
+        this.fromMeetingStateToGoalStateList = fromMeetingStateToGoalStateList;
+        this.fromMeetingStateToInitialStateList= fromMeetingStateToInitialStateList;
     }
 
     private void init() {
@@ -36,21 +42,17 @@ public class BasicBidirectionalActions<A> implements BidirectionalActions<A> {
 
     @Override
     public List<A> fromInitialStateToGoalState() {
-        List<A> reversedFromGoalStatePart = new ArrayList<>(fromGoalStatePart());
-        Collections.reverse(reversedFromGoalStatePart);
         init();
         fromInitialStateToGoalStateList.addAll(fromInitialStatePart());
-        fromInitialStateToGoalStateList.addAll(reversedFromGoalStatePart);
+        fromInitialStateToGoalStateList.addAll(fromMeetingStateToGoalStateList);
         return fromInitialStateToGoalStateList;
     }
 
     @Override
     public List<A> fromGoalStateToInitialState() {
-        List<A> reversedFromInitialStatePart = new ArrayList<>(fromInitialStatePart());
-        Collections.reverse(reversedFromInitialStatePart);
         init();
         fromGoalStateToInitialStateList.addAll(fromGoalStatePart());
-        fromGoalStateToInitialStateList.addAll(reversedFromInitialStatePart);
+        fromGoalStateToInitialStateList.addAll(fromMeetingStateToInitialStateList);
         return fromGoalStateToInitialStateList;
     }
 
