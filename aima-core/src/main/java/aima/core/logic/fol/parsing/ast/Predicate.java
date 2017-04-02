@@ -3,6 +3,7 @@ package aima.core.logic.fol.parsing.ast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import aima.core.logic.fol.parsing.FOLVisitor;
 
@@ -68,8 +69,7 @@ public class Predicate implements AtomicSentence {
 			return false;
 		}
 		Predicate p = (Predicate) o;
-		return p.getPredicateName().equals(getPredicateName())
-				&& p.getTerms().equals(getTerms());
+		return p.getPredicateName().equals(getPredicateName()) && p.getTerms().equals(getTerms());
 	}
 
 	@Override
@@ -87,24 +87,12 @@ public class Predicate implements AtomicSentence {
 	@Override
 	public String toString() {
 		if (null == stringRep) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(predicateName);
-			sb.append("(");
-
-			boolean first = true;
-			for (Term t : terms) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append(",");
-				}
-				sb.append(t.toString());
-			}
-
-			sb.append(")");
-			stringRep = sb.toString();
+			stringRep = predicateName + "(" + 
+			            terms.stream()
+			                 .map(t -> t.toString())
+			                 .collect(Collectors.joining(",")) 
+			            + ")";
 		}
-
 		return stringRep;
 	}
 }

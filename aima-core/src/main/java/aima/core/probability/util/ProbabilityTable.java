@@ -1,5 +1,6 @@
 package aima.core.probability.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -523,17 +524,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	@Override
 	public String toString() {
 		if (null == toString) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("<");
-			for (int i = 0; i < values.length; i++) {
-				if (i > 0) {
-					sb.append(", ");
-				}
-				sb.append(values[i]);
-			}
-			sb.append(">");
-
-			toString = sb.toString();
+			toString = "<" + Arrays.toString(values).replace("[", "").replace("]", "") + ">";
 		}
 		return toString;
 	}

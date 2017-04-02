@@ -1,8 +1,10 @@
 package aima.core.search.csp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import aima.core.util.ArrayIterator;
 
@@ -88,15 +90,10 @@ public class Domain implements Iterable<Object> {
 
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("{");
-		boolean comma = false;
-		for (Object value : values) {
-			if (comma)
-				result.append(", ");
-			result.append(value.toString());
-			comma = true;
-		}
-		result.append("}");
-		return result.toString();
+		return "{" + 
+		       Arrays.stream(values)
+		             .map(value -> value.toString())
+		             .collect(Collectors.joining(", ")) 
+		       + "}";
 	}
 }

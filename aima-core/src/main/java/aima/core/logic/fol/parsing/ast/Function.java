@@ -3,6 +3,7 @@ package aima.core.logic.fol.parsing.ast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import aima.core.logic.fol.parsing.FOLVisitor;
 
@@ -70,8 +71,7 @@ public class Function implements Term {
 
 		Function f = (Function) o;
 
-		return f.getFunctionName().equals(getFunctionName())
-				&& f.getTerms().equals(getTerms());
+		return f.getFunctionName().equals(getFunctionName()) && f.getTerms().equals(getTerms());
 	}
 
 	@Override
@@ -89,23 +89,11 @@ public class Function implements Term {
 	@Override
 	public String toString() {
 		if (null == stringRep) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(functionName);
-			sb.append("(");
-
-			boolean first = true;
-			for (Term t : terms) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append(",");
-				}
-				sb.append(t.toString());
-			}
-
-			sb.append(")");
-
-			stringRep = sb.toString();
+			stringRep = functionName + "(" + 
+			            terms.stream()
+			                 .map(t -> t.toString())
+			                 .collect(Collectors.joining(",")) 
+			            + ")";
 		}
 		return stringRep;
 	}

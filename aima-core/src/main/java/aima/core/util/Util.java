@@ -2,6 +2,7 @@ package aima.core.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -197,11 +198,7 @@ public class Util {
 	}
 
 	public static String ntimes(String s, int n) {
-		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < n; i++) {
-			buf.append(s);
-		}
-		return buf.toString();
+		return String.join("", Collections.nCopies(n, s));
 	}
 
 	public static void checkForNanOrInfinity(double d) {
