@@ -3,11 +3,11 @@ package aima.test.unit.util;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import aima.core.learning.Attribute;
+import aima.core.learning.api.Attribute;
 import aima.core.util.ProbabilityUtils;
-import aima.test.unit.data.SingleAttributeDataSet;
-import aima.test.unit.data.SingleAttributeDataSet.FirstAttribute;
-import aima.test.unit.data.SingleAttributeDataSet.ClassAttribute;
+import aima.test.unit.data.CoinTossData;
+import aima.test.unit.data.CoinTossData.FingerCrossed;
+import aima.test.unit.data.CoinTossData.Result;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -19,25 +19,26 @@ public class ProbabilityUtilTest {
   @Test
   public void itShouldCalculateInformationRemainingAsZeroForAttributeWithPerfectSplit() {
     // Given
-    Attribute firstAttribute = SingleAttributeDataSet.specs().getAttribute(FirstAttribute.label());
+    Attribute attribute = CoinTossData.getAttribute(FingerCrossed.label());
     // When
     Double infoRemaining = ProbabilityUtils
-        .infoRemaining(firstAttribute, Arrays.asList(
-            SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.True),
-            SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.True)));
+        .infoRemaining(attribute, Arrays.asList(
+            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
+            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS)));
     // Then
     assertThat(infoRemaining, is(0.0));
   }
 
+
   @Test
   public void itShouldCalculateInformationRemainingAsOneForAttributeWithEqualSplit() {
     // Given
-    Attribute firstAttribute = SingleAttributeDataSet.specs().getAttribute(FirstAttribute.label());
+    Attribute attribute = CoinTossData.getAttribute(FingerCrossed.label());
     // When
     Double infoRemaining = ProbabilityUtils
-        .infoRemaining(firstAttribute, Arrays.asList(
-            SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.True),
-            SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.False)));
+        .infoRemaining(attribute, Arrays.asList(
+            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
+            CoinTossData.createExample(FingerCrossed.YES, Result.TAILS)));
     // Then
     assertThat(infoRemaining, is(1.0));
   }
@@ -45,9 +46,10 @@ public class ProbabilityUtilTest {
   @Test
   public void itShouldCalculateInformationNeededAsZeroForExamplesWithSameClassification() {
     // When
-    Double infoRemaining = ProbabilityUtils.infoNeeded(Arrays.asList(
-        SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.True),
-        SingleAttributeDataSet.createExample(FirstAttribute.VALUE3, ClassAttribute.True)));
+    Double infoRemaining = ProbabilityUtils
+        .infoNeeded(Arrays.asList(
+            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
+            CoinTossData.createExample(FingerCrossed.NO, Result.HEADS)));
     // Then
     assertThat(infoRemaining, is(0.0));
   }
@@ -55,9 +57,10 @@ public class ProbabilityUtilTest {
   @Test
   public void itShouldCalculateInformationNeededAsOneForExamplesWithEqualNumberOfEachClassification() {
     // When
-    Double infoRemaining = ProbabilityUtils.infoNeeded(Arrays.asList(
-        SingleAttributeDataSet.createExample(FirstAttribute.VALUE1, ClassAttribute.False),
-        SingleAttributeDataSet.createExample(FirstAttribute.VALUE3, ClassAttribute.True)));
+    Double infoRemaining = ProbabilityUtils
+        .infoNeeded(Arrays.asList(
+            CoinTossData.createExample(FingerCrossed.YES, Result.TAILS),
+            CoinTossData.createExample(FingerCrossed.NO, Result.HEADS)));
     // Then
     assertThat(infoRemaining, is(1.0));
   }

@@ -1,18 +1,22 @@
 package aima.core.learning;
 
-import aima.core.learning.api.TreeNode;
+import aima.core.learning.api.Attribute;
+import aima.core.learning.api.Example;
+import aima.core.learning.api.Node;
+import aima.core.learning.api.Value;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author shantanusinghal
  */
-public class DecisionNode implements TreeNode {
+public class DecisionNode implements Node {
 
   private Attribute attribute;
-  private Map<String, TreeNode> children = new HashMap<>();
+  private Map<Value, Node> children = new HashMap<>();
 
   public DecisionNode(Attribute attribute) {
     this.attribute = attribute;
@@ -26,11 +30,11 @@ public class DecisionNode implements TreeNode {
    * @throws AssertionError if the {@code value} doesn't match the {@code attribute}
    */
   @Override
-  public void addChild(String value, TreeNode child) {
-    if (!attribute.possibleValues().contains(value)) {
-      throw new AssertionError("Attribute must predicate on a valid value");
-    } else {
+  public void addChild(Value value, Node child) {
+    if (attribute.canHold(value)) {
       children.put(value, child);
+    } else {
+      throw new AssertionError("Attribute must predicate on a valid value");
     }
   }
 
@@ -42,11 +46,14 @@ public class DecisionNode implements TreeNode {
    * @return the predicted value
    */
   @Override
-  public String process(Example example) {
-    String value = example.getValue(attribute);
-    if (value == null)
-      throw new IllegalArgumentException("Example schema doesn't fit the decision tree");
-    return children.get(value).process(example);
+  public Value process(Example example) {
+    Optional<Value> value = example.valueOf(attribute);
+    if (value.isPresent()) {
+      return children.get(value.get()).process(example);
+    } else {
+      throw new IllegalArgumentException(
+          "Node's decision attribute doesn't match the Example schema");
+    }
   }
 
   @Override
@@ -55,7 +62,18 @@ public class DecisionNode implements TreeNode {
   }
 
   @Override
-  public List<TreeNode> getChildren() {
+  public Value getValue() {
+    throw new UnsupportedOperationException(
+        "A decision (interior) node doesn't have a fixed value assigned to it");
+  }
+
+  @Override
+  public Node getChild(Value value) {
+    return children.get(value);
+  }
+
+  @Override
+  public List<Node> getChildren() {
     return new ArrayList<>(children.values());
   }
 

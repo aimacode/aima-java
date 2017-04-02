@@ -1,7 +1,6 @@
 package aima.core.learning.api;
 
 import aima.core.learning.DataSet;
-import aima.core.learning.Example;
 import java.util.Map;
 
 /**
@@ -18,8 +17,8 @@ public interface Classifier {
    * Predicts the class value for given example(s)
    *
    * @param dataSet the collection of examples to be classified
-   * @return a map of examples and their predicted (most likely) class
+   * @return a map of examples and their predicted (most likely) {@link Value}
    */
-  Map<Example, String> predict(DataSet dataSet);
+  Map<Example, Value> predict(DataSet dataSet);
 
 }

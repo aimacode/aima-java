@@ -7,11 +7,18 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
+import aima.core.learning.api.Attribute;
+import aima.core.learning.api.Example;
 import aima.core.learning.api.Learner;
+import aima.core.learning.api.Value;
 import aima.core.util.ProbabilityUtils;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 18.5, page 702. <br>
@@ -60,34 +67,35 @@ public class DecisionTreeLearning implements Learner {
    * @return a boolean decision tree classifier
    */
   private DecisionTree decisionTreeLearning(List<Example> examples, List<Attribute> attributes,
-      List<Example> parentExamples) { List<String> values;
+      List<Example> parentExamples) { List<Value> values;
 
     if (examples.isEmpty()) {
-      return DecisionTree.withNodeValue(
-          pluralityValue(parentExamples));
+      return DecisionTree.withLeafNode(
+          pluralityValueIn(parentExamples));
     }
     else if ((values = getDistinctClassValues(examples)).size() == 1) {
-      return DecisionTree.withNodeValue(values.get(0));
+      return DecisionTree.withLeafNode(values.get(0));
     }
     else if (attributes.isEmpty()) {
-      return DecisionTree.withNodeValue(
-          pluralityValue(examples));
+      return DecisionTree.withLeafNode(
+          pluralityValueIn(examples));
     }
     else {
-      Attribute A = pickMaxFrom( getImportance (examples, attributes) );
+      Attribute A = argmax( getImportance (examples, attributes));
 
-      DecisionTree tree = DecisionTree.withRoot(new DecisionNode(A));
+      DecisionTree tree = DecisionTree.withDecisionNode(A);
 
-      A.possibleValues().forEach(vK -> {
-        List<Example> exs = examples.stream()
-            .filter(e -> e.getValue(A).equals(vK))
-            .collect(toList());
-        List<Attribute> attributesExceptA = attributes
+      A.partitionByValue(examples).forEach(
+        (vK, exs) -> {
+
+          List<Attribute> attributesExceptA = attributes
             .stream()
-            .filter(a -> !a.equals(A))
+            .filter(not(A))
             .collect(toList());
-        DecisionTree subtree = decisionTreeLearning(exs, attributesExceptA, examples);
-        tree.addBranch(vK, subtree);
+
+          DecisionTree subtree = decisionTreeLearning(exs, attributesExceptA, examples);
+
+          tree.addBranch(vK, subtree);
       });
 
       return tree;
@@ -100,13 +108,13 @@ public class DecisionTreeLearning implements Learner {
    * @param examples the list of input instances
    * @return the most common class value
    */
-  private String pluralityValue(List<Example> examples) {
+  private Value pluralityValueIn(List<Example> examples) {
     return examples
         .stream()
-        .collect(groupingBy(Example::getClassValue, counting()))
+        .collect(groupingByClassValueAndCount())
         .entrySet()
         .stream()
-        .max(comparing(Map.Entry::getValue))
+        .max(comparingByEntryValue())
         .get().getKey();
   }
 
@@ -120,24 +128,28 @@ public class DecisionTreeLearning implements Learner {
   private Map<Attribute, Double> getImportance(List<Example> examples, List<Attribute> attributes) {
     return attributes
         .stream()
-        .collect(toMap(identity(), a -> ProbabilityUtils.gain(a, examples)));
+        .collect(asMapOfAttributeToGain(examples));
   }
 
   /**
-   * Selects the attribute key corresponding to the largest value in the map
+   * Selects the key corresponding to the largest value in the map
    *
    * @param map the input map
-   * @return the attribute with largest value
+   * @return the largest valued key of type {@code V}
    */
-  private Attribute pickMaxFrom(Map<Attribute, Double> map) {
-    return map.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+  private <T> T argmax(Map<T, Double> map) {
+    return map
+        .entrySet()
+        .stream()
+        .max(Map.Entry.comparingByValue())
+        .get().getKey();
   }
 
   /**
    * @param examples the set of examples being tested
    * @return a list of distinct class values in the input data
    */
-  private List<String> getDistinctClassValues(List<Example> examples) {
+  private List<Value> getDistinctClassValues(List<Example> examples) {
     return examples
         .stream()
         .map(Example::getClassValue)
@@ -145,5 +157,25 @@ public class DecisionTreeLearning implements Learner {
         .collect(toList());
   }
 
+  /************************** Utility Lambdas [START] **************************/
+
+  private Predicate<Attribute> not(Attribute attr) {
+    return a -> !a.equals(attr);
+  }
+
+  private Comparator<Entry<Value, Long>> comparingByEntryValue() {
+    return comparing(Entry::getValue);
+  }
+
+  private Collector<Example, ?, Map<Value, Long>> groupingByClassValueAndCount() {
+    return groupingBy(Example::getClassValue, counting());
+  }
+
+  private Collector<Attribute, ?, Map<Attribute, Double>> asMapOfAttributeToGain(
+      List<Example> examples) {
+    return toMap(identity(), a -> ProbabilityUtils.gain(a, examples));
+  }
+
+  /************************** Utility Lambdas [END] **************************/
 
 }

@@ -3,8 +3,9 @@ package aima.core.util;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
-import aima.core.learning.Attribute;
-import aima.core.learning.Example;
+import aima.core.learning.api.Attribute;
+import aima.core.learning.api.Example;
+import aima.core.learning.api.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -46,23 +47,19 @@ public class ProbabilityUtils {
   /**
    * Calculates the expected entropy remaining after testing attribute {@code a}
    *
-   * @param a the attribute being tested
+   * @param attribute the attribute being tested
    * @param examples the sample space for testing
    * @return the expected entropy remaining
    */
-  public static Double infoRemaining(Attribute a, List<Example> examples) {
+  public static Double infoRemaining(Attribute attribute, List<Example> examples) {
     double total = examples.size();
-    Map<String, List<Example>> valueToExamplesMap = examples
-        .stream()
-        .collect(groupingBy(e -> e.getValue(a)));
-    return a.possibleValues()
-        .stream()
-        .mapToDouble(val -> {
-          List<Example> matchingExamples = valueToExamplesMap.get(val);
-          return matchingExamples == null ? 0
-              : (matchingExamples.size() / total) * infoNeeded(matchingExamples);
-        })
-        .sum();
+    return examples
+      .stream()
+      .collect(groupingBy(e -> e.valueOf(attribute).orElse(Value.NULL)))
+      .values()
+      .stream()
+      .mapToDouble(exs -> (exs.size() / total) * infoNeeded(exs))
+      .sum();
   }
 
 }

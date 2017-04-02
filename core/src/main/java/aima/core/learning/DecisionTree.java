@@ -3,8 +3,11 @@ package aima.core.learning;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
+import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Classifier;
-import aima.core.learning.api.TreeNode;
+import aima.core.learning.api.Example;
+import aima.core.learning.api.Node;
+import aima.core.learning.api.Value;
 import java.util.Map;
 
 /**
@@ -17,30 +20,30 @@ import java.util.Map;
  */
 public class DecisionTree implements Classifier {
 
-  private TreeNode root;
+  private Node root;
 
-  DecisionTree(TreeNode root) {
+  private DecisionTree(Node root) {
     this.root = root;
   }
 
   /**
-   * Factory method for creating a decision tree
+   * Factory method for creating a decision tree with a {@link DecisionNode} at it's root.
    *
-   * @param root the root {@code Node}
+   * @param attribute the decision attribute for the root node
    * @return an initialized {@code DecisionTree}
    */
-  public static DecisionTree withRoot(TreeNode root) {
-    return new DecisionTree(root);
+  public static DecisionTree withDecisionNode(Attribute attribute) {
+    return new DecisionTree(new DecisionNode(attribute));
   }
 
   /**
    * Factory method for creating a decision tree with a terminating {@link LeafNode} at it's
    * root.
    *
-   * @param value the value for root node
+   * @param value the classification value for the root node
    * @return an initialized {@code DecisionTree}
    */
-  public static DecisionTree withNodeValue(String value) {
+  public static DecisionTree withLeafNode(Value value) {
     return new DecisionTree(new LeafNode(value));
   }
 
@@ -51,21 +54,21 @@ public class DecisionTree implements Classifier {
    * @param subtree the subtree
    * @throws AssertionError if the {@code root} doesn't support this operation
    */
-  public void addBranch(String value, DecisionTree subtree) {
+  public void addBranch(Value value, DecisionTree subtree) {
     try {
       this.root.addChild(value, subtree.getRoot());
     } catch (UnsupportedOperationException e) {
       throw new AssertionError(
-          "[DESIGN-NOTE] We shouldn't be adding branches to value nodes, please verify and make corrections.");
+          "[DESIGN-NOTE] We shouldn't be adding branches to leaf nodes, please verify and make corrections.");
     }
   }
 
-  public TreeNode getRoot() {
+  public Node getRoot() {
     return root;
   }
 
   @Override
-  public Map<Example, String> predict(DataSet dataSet) {
+  public Map<Example, Value> predict(DataSet dataSet) {
     return dataSet.getExamples()
         .stream()
         .collect(toMap(identity(), e -> getRoot().process(e)));

@@ -1,26 +1,29 @@
 package aima.core.learning;
 
+import aima.core.learning.api.Attribute;
+import aima.core.learning.api.Example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Encapsulates a list of examples instances along with the specifications of attribute type and
- * values
+ * Encapsulates a prepared data-set
  *
  * @author shantanusinghal
  */
 public class DataSet {
 
-  private List<Example> examples;
-  private final DataSetSpecs specs;
+  private final List<Example> examples;
+  private final Attribute classAttribute;
+  private final List<Attribute> featureAttributes;
 
-  public DataSet(DataSetSpecs specs) {
-    this.specs = specs;
+  public DataSet(DataSetSpec spec) {
     this.examples = new ArrayList<>();
+    this.featureAttributes = spec.getFeatureAttributes();
+    this.classAttribute = spec.getClassAttribute();
   }
 
-  public DataSet addExamples(Example... examples) {
+  public DataSet withExamples(Example... examples) {
     this.examples.addAll(Arrays.asList(examples));
     return this;
   }
@@ -30,6 +33,7 @@ public class DataSet {
   }
 
   public List<Attribute> getAttributes() {
-    return specs.getAttributes();
+    return featureAttributes;
   }
+
 }

@@ -1,21 +1,24 @@
 package aima.core.learning;
 
-import aima.core.learning.api.TreeNode;
+import aima.core.learning.api.Attribute;
+import aima.core.learning.api.Example;
+import aima.core.learning.api.Node;
+import aima.core.learning.api.Value;
 import java.util.List;
 
 /**
  * @author shantanusinghal
  */
-public class LeafNode implements TreeNode {
+public class LeafNode implements Node {
 
-  private String value;
+  private Value value;
 
-  public LeafNode(String value) {
+  public LeafNode(Value value) {
     this.value = value;
   }
 
   @Override
-  public String process(Example example) {
+  public Value process(Example example) {
     return value;
   }
 
@@ -26,13 +29,24 @@ public class LeafNode implements TreeNode {
   }
 
   @Override
-  public List<TreeNode> getChildren() {
+  public Value getValue() {
+    return value;
+  }
+
+  @Override
+  public Node getChild(Value value) {
     throw new UnsupportedOperationException(
         "A terminating (end) node doesn't have any children");
   }
 
   @Override
-  public void addChild(String value, TreeNode child) {
+  public List<Node> getChildren() {
+    throw new UnsupportedOperationException(
+        "A terminating (end) node doesn't have any children");
+  }
+
+  @Override
+  public void addChild(Value value, Node child) {
     throw new UnsupportedOperationException("Can not add a child node to a terminating (end) node");
   }
 

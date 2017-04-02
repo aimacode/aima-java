@@ -1,16 +1,14 @@
 package aima.test.unit.learning;
 
+import static aima.core.learning.NominalValue.create;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import aima.core.learning.DataSet;
-import aima.core.learning.DecisionNode;
 import aima.core.learning.DecisionTree;
-import aima.test.unit.data.SingleAttributeDataSet;
-import aima.test.unit.data.SingleAttributeDataSet.ClassAttribute;
-import aima.test.unit.data.SingleAttributeDataSet.FirstAttribute;
-import aima.test.unit.data.TwoAttributeDataSet;
+import aima.core.learning.api.Value;
+import aima.test.unit.data.CoinTossData;
+import aima.test.unit.data.CoinTossData.FingerCrossed;
 import org.junit.Test;
 
 /**
@@ -18,28 +16,14 @@ import org.junit.Test;
  */
 public class DecisionTreeTest {
 
-  // Then
-  @Test(expected = IllegalArgumentException.class)
-  public void itShouldNotBeAbleToMakePredictionsOnIncompatibleDataSets() {
-    // Given
-    DecisionTree tree = DecisionTree
-        .withRoot(new DecisionNode(SingleAttributeDataSet.specs().getAttribute(FirstAttribute.label())));
-    // When
-    tree.predict(new DataSet(TwoAttributeDataSet.specs())
-        .addExamples(TwoAttributeDataSet.createExample(
-            TwoAttributeDataSet.FirstAttribute.VALUE1,
-            TwoAttributeDataSet.SecondAttribute.VALUE2,
-            ClassAttribute.False)));
-  }
-
   @Test
   public void itShouldNotAddBranchWithInvalidValue() {
     // Given
     DecisionTree tree = DecisionTree
-        .withRoot(new DecisionNode(SingleAttributeDataSet.specs().getAttribute(FirstAttribute.label())));
+        .withDecisionNode(CoinTossData.specs().getAttribute(FingerCrossed.label()));
     // When
     try {
-      tree.addBranch("Thunderstorm", DecisionTree.withNodeValue("foo"));
+      tree.addBranch(Value.NULL, DecisionTree.withLeafNode(Value.NULL));
     } catch (AssertionError e) {
       // Then
       assertThat(e.getMessage(), equalTo("Attribute must predicate on a valid value"));
@@ -51,10 +35,10 @@ public class DecisionTreeTest {
   @Test
   public void itShouldNotAddBranchToEndNodes() {
     // Given
-    DecisionTree treeWithEndNode = DecisionTree.withNodeValue("foo");
+    DecisionTree treeWithEndNode = DecisionTree.withLeafNode(create("foo"));
     // When
     try {
-      treeWithEndNode.addBranch(FirstAttribute.VALUE3.name(), DecisionTree.withNodeValue("bar"));
+      treeWithEndNode.addBranch(create("bar"), DecisionTree.withLeafNode(create("qux")));
     } catch (AssertionError e) {
       // Then
       assertThat(e.getMessage(), startsWith("[DESIGN-NOTE]"));
@@ -62,5 +46,6 @@ public class DecisionTreeTest {
     }
     throw new AssertionError("Expected exception: java.lang.AssertionError");
   }
+
 
 }

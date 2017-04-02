@@ -1,8 +1,7 @@
 package aima.core.learning.api;
 
-import aima.core.learning.Attribute;
+import aima.core.learning.DecisionNode;
 import aima.core.learning.LeafNode;
-import aima.core.learning.Example;
 import aima.core.learning.NullNode;
 import java.util.List;
 
@@ -11,12 +10,12 @@ import java.util.List;
  *
  * @author shantanusinghal
  */
-public interface TreeNode {
+public interface Node {
 
   /**
    * static final instance with well defined neutral ("null") behavior
    */
-  TreeNode NULL = new NullNode();
+  Node NULL = new NullNode();
 
   /**
    * Return the target value of the input example represented by the path from the root to the leaf,
@@ -26,7 +25,7 @@ public interface TreeNode {
    * @return the predicted class or value
    * @throws UnsupportedOperationException if called on a {@link NullNode}
    */
-  String process(Example example);
+  Value process(Example example);
 
   /**
    * @return the attribute that this node predicates on
@@ -35,10 +34,24 @@ public interface TreeNode {
   Attribute getAttribute();
 
   /**
+   * @return the value at the node
+   * @throws UnsupportedOperationException if called on an {@link DecisionNode} or {@link NullNode}
+   */
+  Value getValue();
+
+  /**
+   * @return the child node predicated on the input value
+   *
+   * @param value the predicate value
+   * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
+   */
+  Node getChild(Value value);
+
+  /**
    * @return a list of child nodes
    * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
    */
-  List<TreeNode> getChildren();
+  List<Node> getChildren();
 
   /**
    * Add a branch to tree with a value that the node attribute predicates on to reach this child
@@ -48,6 +61,6 @@ public interface TreeNode {
    * @param child the child {@code Node}
    * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
    */
-  void addChild(String value, TreeNode child);
+  void addChild(Value value, Node child);
 
 }
