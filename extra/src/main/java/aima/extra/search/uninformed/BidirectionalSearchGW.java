@@ -1,4 +1,4 @@
-package aima.core.search.basic.uninformed;
+package aima.extra.search.uninformed;
 
 import aima.core.search.api.BidirectionalSearchResult;
 import aima.core.search.api.NodeFactory;
@@ -25,9 +25,10 @@ import java.util.Set;
  * The strategy of this search implementation is inspired by the description of
  * the bidirectional search algorithm i.e. Problem is reversed and search is performed from both
  * frontiers.
+ * 
  * @author wormi
  */
-public class BidirectionalSearch<A, S> implements SearchForActionsBidirectionallyFunction<A, S> {
+public class BidirectionalSearchGW<A, S> implements SearchForActionsBidirectionallyFunction<A, S> {
 
 
     @Override
