@@ -47,7 +47,7 @@ public class TreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 			Node<A, S> node = frontier.remove();
 			// if the node contains a goal state then return the corresponding
 			// solution
-			if (problem.isGoalState(node.state())) {
+			if (isGoalState(node, problem)) {
 				return solution(node);
 			}
 			// expand the chosen node, adding the resulting nodes to the
@@ -78,6 +78,10 @@ public class TreeSearch<A, S> implements SearchForActionsFunction<A, S> {
 
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
+	}
+
+	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
+		return searchController.isGoalState(node, problem);
 	}
 
 	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {

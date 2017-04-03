@@ -53,7 +53,7 @@ public class BreadthFirstSearch<A, S> implements SearchForActionsFunction<A, S> 
 		// node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
 		Node<A, S> node = newRootNode(problem.initialState(), 0);
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (problem.isGoalState(node.state())) {
+		if (isGoalState(node, problem)) {
 			return solution(node);
 		}
 		// frontier <- a FIFO queue with node as the only element
@@ -78,7 +78,7 @@ public class BreadthFirstSearch<A, S> implements SearchForActionsFunction<A, S> 
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
 					// if problem.GOAL-TEST(child.STATE) then return
 					// SOLUTION(child)
-					if (problem.isGoalState(child.state())) {
+					if (isGoalState(child, problem)) {
 						return solution(child);
 					}
 					// frontier <- INSERT(child, frontier)
@@ -121,6 +121,10 @@ public class BreadthFirstSearch<A, S> implements SearchForActionsFunction<A, S> 
 
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
+	}
+	
+	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
+		return searchController.isGoalState(node, problem);
 	}
 
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {

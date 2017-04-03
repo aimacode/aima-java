@@ -64,7 +64,7 @@ public class UniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
 			// node <- POP(frontier) // chooses the lowest-cost node in frontier
 			node = frontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-			if (problem.isGoalState(node.state())) {
+			if (isGoalState(node, problem)) {
 				return solution(node);
 			}
 			// add node.STATE to explored
@@ -121,6 +121,10 @@ public class UniformCostSearch<A, S> implements SearchForActionsFunction<A, S> {
 		return searchController.solution(node);
 	}
 
+	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
+		return searchController.isGoalState(node, problem);
+	}
+	
 	public boolean containsState(Queue<Node<A, S>> frontier, S state) {
 		// NOTE: Not very efficient (i.e. linear in the size of the frontier)
 		return frontier.stream().anyMatch(frontierNode -> frontierNode.state().equals(state));

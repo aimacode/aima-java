@@ -47,15 +47,15 @@ public class DepthLimitedTreeSearch<A, S> implements SearchForActionsFunction<A,
 	public List<A> depthLimitedSearch(Problem<A, S> problem, int limit) {
 		// return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem,
 		// limit)
-		return recursiveDLS(nodeFactory.newRootNode(problem.initialState()), problem, limit);
+		return recursiveDLS(newRootNode(problem.initialState()), problem, limit);
 	}
 
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
 	// failure/cutoff
 	public List<A> recursiveDLS(Node<A, S> node, Problem<A, S> problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (searchController.isGoalState(node, problem)) {
-			return searchController.solution(node);
+		if (isGoalState(node, problem)) {
+			return solution(node);
 		} // else if limit = 0 then return cutoff
 		else if (limit == 0) {
 			return getCutoff();
@@ -66,14 +66,14 @@ public class DepthLimitedTreeSearch<A, S> implements SearchForActionsFunction<A,
 			// for each action in problem.ACTIONS(node.STATE) do
 			for (A action : problem.actions(node.state())) {
 				// child <- CHILD-NODE(problem, node, action)
-				Node<A, S> child = nodeFactory.newChildNode(problem, node, action);
+				Node<A, S> child = newChildNode(problem, node, action);
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
 				List<A> result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
 				if (result == getCutoff()) {
 					cutoff_occurred = true;
 				} // else if result != failure then return result
-				else if (result != searchController.failure()) {
+				else if (result != failure()) {
 					return result;
 				}
 			}
@@ -81,7 +81,7 @@ public class DepthLimitedTreeSearch<A, S> implements SearchForActionsFunction<A,
 			if (cutoff_occurred) {
 				return getCutoff();
 			} else {
-				return searchController.failure();
+				return failure();
 			}
 		}
 	}
@@ -92,6 +92,26 @@ public class DepthLimitedTreeSearch<A, S> implements SearchForActionsFunction<A,
 	private SearchController<A, S> searchController;
 	private NodeFactory<A, S> nodeFactory;
 
+	public List<A> failure() {
+		return searchController.failure();
+	}
+
+	public List<A> solution(Node<A, S> node) {
+		return searchController.solution(node);
+	}
+	
+	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
+		return searchController.isGoalState(node, problem);
+	}
+	
+	public Node<A, S> newRootNode(S initialState) {
+		return nodeFactory.newRootNode(initialState);
+	}
+
+	public Node<A, S> newChildNode(Problem<A, S> problem, Node<A, S> node, A action) {
+		return nodeFactory.newChildNode(problem, node, action);
+	}
+	
 	public DepthLimitedTreeSearch(int limit) {
 		this(limit, new BasicSearchController<>(), new BasicNodeFactory<>());
 	}

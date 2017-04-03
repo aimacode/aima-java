@@ -56,7 +56,7 @@ public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 			Node<A, S> node = frontier.remove();
 			// if the node contains a goal state then return the corresponding
 			// solution
-			if (problem.isGoalState(node.state())) {
+			if (isGoalState(node, problem)) {
 				return solution(node);
 			}
 			// add the node to the explored set
@@ -101,6 +101,10 @@ public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 
 	public List<A> solution(Node<A, S> node) {
 		return searchController.solution(node);
+	}
+
+	public boolean isGoalState(Node<A, S> node, Problem<A, S> problem) {
+		return searchController.isGoalState(node, problem);
 	}
 
 	public boolean containsState(Queue<Node<A, S>> frontier, Node<A, S> child) {
