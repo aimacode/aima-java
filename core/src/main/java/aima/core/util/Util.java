@@ -78,4 +78,16 @@ public class Util {
 			argConsumer.accept(argsIt.next());
 		}
 	}
+
+	/**
+	 * Calculates binary logarithm i.e the logarithm to the base 2 of a number
+	 *
+	 * @param n the input number
+	 *
+	 * @return the log base 2
+	 */
+	public static double lg2(double n) {
+		return (Math.log(n) / Math.log(2));
+	}
+
 }
