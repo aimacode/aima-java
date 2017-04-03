@@ -195,13 +195,28 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="core/src/main/java/aima/core/search/basic/uninformed/IterativeDeepeningSearch.java">IterativeDeepeningSearch</a></td>
    </tr>
    <tr>
-       <td>3?</td>
-       <td>??</td>
-       <td>Bidirectional search</td>
+       <td rowspan="4">3?</td>
+       <td rowspan="4">??</td>
+       <td rowspan="4">Bidirectional search</td>
        <td>
-           <a href="core/src/main/java/aima/core/search/basic/uninformed/BidirectionalSearch.java">BidirectionalSearch</a>
+           <!-- TODO -->
+       </td>
+   </tr>  
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
+       <td>
+       <!-- TODO BidirectionalSearchMRS -->
        </td>
    </tr>   
+   <tr>
+       <td>
+       <a href="extra/src/main/java/aima/extra/search/uninformed/BidirectionalSearchGW.java">BidirectionalSearchGW</a>
+       </td>
+   </tr>
    <tr>
        <td>3?</td>
        <td>??</td>
