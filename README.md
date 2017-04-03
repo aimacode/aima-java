@@ -209,7 +209,7 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    </tr>
    <tr>
        <td>
-       <!-- TODO BidirectionalSearchMRS -->
+        <a href="extra/src/main/java/aima/extra/search/uninformed/BidirectionalSearchMRS.java">BidirectionalSearchMRS</a>
        </td>
    </tr>   
    <tr>

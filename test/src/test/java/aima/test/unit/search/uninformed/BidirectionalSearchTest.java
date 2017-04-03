@@ -5,9 +5,11 @@ import aima.core.environment.map2d.InState;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.BidirectionalSearchResult;
 import aima.core.search.api.Problem;
+import aima.core.search.api.SearchForActionsBidirectionallyFunction;
 import aima.core.util.datastructure.Pair;
 import aima.extra.search.uninformed.BidirectionalSearchGW;
 
+import aima.extra.search.uninformed.BidirectionalSearchMRS;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -33,20 +35,23 @@ import static org.junit.Assert.assertEquals;
 public class BidirectionalSearchTest {
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Collection<Object[]> implementations() {
-        return Arrays.asList(new Object[][]{{"BidirectionalSearchGW"}});
+        return Arrays.asList(new Object[][]{{"BidirectionalSearchGW"},{"BidirectionalSearchMRS"}});
     }
 
     @Parameterized.Parameter
     public String searchFunctionName;
 
     public <A, S> BidirectionalSearchResult<A> searchForActions(Pair<Problem<A, S>, Problem<A, S>> pair) {
-        BidirectionalSearchGW<A, S> search;
-        
+        SearchForActionsBidirectionallyFunction<A, S> search;
+
         if (searchFunctionName.equals("BidirectionalSearchGW")) {
         	search = new BidirectionalSearchGW<>();
         }
-        else {
-        	throw new UnsupportedOperationException("Unsupported searchFunctionName="+searchFunctionName);
+        else if(searchFunctionName.equals("BidirectionalSearchMRS")){
+            search = new BidirectionalSearchMRS<>();
+        }
+        else{
+            throw new UnsupportedOperationException("Unsupported searchFunctionName="+searchFunctionName);
         }
         return search.apply(pair.getFirst(), pair.getSecond());
     }
