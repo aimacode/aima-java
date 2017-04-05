@@ -71,11 +71,13 @@ public class AStarSearch<A, S> implements SearchForActionsFunction<A, S> {
 				if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
 					// frontier <- INSERT(child, frontier)
 					frontier.add(child);
-				} // else if child.STATE is in frontier with higher COST then
+				} 
+				//optimality of A*
+				/*// else if child.STATE is in frontier with higher COST then
 				else if (removedNodeFromFrontierWithSameStateAndHigherCost(child, frontier)) {
 					// replace that frontier node with child
 					frontier.add(child);
-				}
+				}*/
 			}
 		}
 	}
