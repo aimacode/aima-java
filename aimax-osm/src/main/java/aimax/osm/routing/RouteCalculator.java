@@ -52,6 +52,7 @@ public class RouteCalculator {
 			MapWayFilter wayFilter = createMapWayFilter(map, taskSelection);
 			boolean ignoreOneways = (taskSelection == 0);
 			List<MapNode[]> pNodeList = subdivideProblem(markers, map, wayFilter);
+			MapNode prevNode = null;
 			for (int i = 0; i < pNodeList.size()
 					&& !CancelableThread.currIsCanceled(); i++) {
 				Problem problem = createProblem(pNodeList.get(i), map, wayFilter,
@@ -65,11 +66,13 @@ public class RouteCalculator {
 				for (Object action : actions) {
 					if (action instanceof OsmMoveAction) {
 						OsmMoveAction a = (OsmMoveAction) action;
-						for (MapNode node : a.getNodes())
-							if (result.isEmpty()
-									|| result.get(result.size() - 1) != node)
+						for (MapNode node : a.getNodes()) {
+							if (result.isEmpty() || prevNode != node) {
 								result.add(new Position(node.getLat(), node
 										.getLon()));
+								prevNode = node;
+							}
+						}
 					}
 				}
 			}
