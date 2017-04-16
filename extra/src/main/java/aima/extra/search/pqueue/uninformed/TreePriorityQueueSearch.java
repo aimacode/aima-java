@@ -1,6 +1,7 @@
 package aima.extra.search.pqueue.uninformed;
 
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 import aima.core.search.api.Node;
@@ -42,16 +43,16 @@ public class TreePriorityQueueSearch<A, S> extends AbstractPriorityQueueSearchFo
 		// node <- a node with STATE = problem.INITIAL-STATE
 		Node<A, S> node = newRootNode(problem.initialState());
 		// frontier <- a priority queue, with node as the only element
-		Queue<Node<A, S>> frontier = newFrontier(node);
+		PriorityQueue<Node<A, S>> pqFrontier = newFrontierPriority(node, getNodeComparator());
 		// loop do
 		while (loopDo()) {
 			// if EMPTY?(frontier) then return failure
-			if (frontier.isEmpty()) {
+			if (pqFrontier.isEmpty()) {
 				return failure();
 			}
 			// node <- POP(frontier) // chooses the highest priority node in
 			// frontier
-			node = frontier.remove();
+			node = pqFrontier.remove();
 			// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 			if (isGoalState(node, problem)) {
 				return solution(node);
@@ -61,15 +62,15 @@ public class TreePriorityQueueSearch<A, S> extends AbstractPriorityQueueSearchFo
 				// child <- CHILD-NODE(problem, node, action)
 				Node<A, S> child = newChildNode(problem, node, action);
 				// if child.STATE is not in frontier then
-				boolean childStateInFrontier = containsState(frontier, child.state());
+				boolean childStateInFrontier = containsState(pqFrontier, child.state());
 				if (!childStateInFrontier) {
 					// frontier <- INSERT(child, frontier)
-					frontier.add(child);
+					pqFrontier.add(child);
 				} // else if child.STATE is in frontier with lower priority then
 				else if (childStateInFrontier
-						&& removedNodeFromFrontierWithSameStateAndLowerPriority(child, frontier)) {
+						&& removedNodeFromFrontierWithSameStateAndLowerPriority(child, pqFrontier)) {
 					// replace that frontier node with child
-					frontier.add(child);
+					pqFrontier.add(child);
 				}
 			}
 		}
