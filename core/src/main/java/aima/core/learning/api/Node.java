@@ -2,8 +2,9 @@ package aima.core.learning.api;
 
 import aima.core.learning.DecisionNode;
 import aima.core.learning.LeafNode;
-import aima.core.learning.NullNode;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Defines the requirements for an object that can be used as a node in a Decision Tree
@@ -13,54 +14,46 @@ import java.util.List;
 public interface Node {
 
   /**
-   * static final instance with well defined neutral ("null") behavior
-   */
-  Node NULL = new NullNode();
-
-  /**
-   * Return the target value of the input example represented by the path from the root to the leaf,
-   * or {@code null} if the decision tree doesn't contain a valid path.
+   * Return the class value of the input example found at a leaf node in it's subtree.
    *
    * @param example the input example
    * @return the predicted class or value
-   * @throws UnsupportedOperationException if called on a {@link NullNode}
    */
-  Value process(Example example);
+  String process(Example example);
 
   /**
    * @return the attribute that this node predicates on
-   * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
+   * @throws UnsupportedOperationException if called on an {@link LeafNode}
    */
   Attribute getAttribute();
 
   /**
    * @return the value at the node
-   * @throws UnsupportedOperationException if called on an {@link DecisionNode} or {@link NullNode}
+   * @throws UnsupportedOperationException if called on an {@link DecisionNode}
    */
-  Value getValue();
+  String getValue();
 
   /**
-   * @return the child node predicated on the input value
-   *
-   * @param value the predicate value
-   * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
+   * @param value the predicate value for the node attribute
+   * @return the child node corresponding to the input value
+   * @throws UnsupportedOperationException if called on an {@link LeafNode}
    */
-  Node getChild(Value value);
+  Optional<Node> getChild(String value);
 
   /**
    * @return a list of child nodes
-   * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
+   * @throws UnsupportedOperationException if called on an {@link LeafNode}
    */
   List<Node> getChildren();
 
   /**
-   * Add a branch to tree with a value that the node attribute predicates on to reach this child
-   * node
+   * Add a branch to tree along with a attribute value predicate that the node tests to follow the
+   * path to this child node.
    *
-   * @param value the predicate value
+   * @param predicate the predicate for testing attribute value
    * @param child the child {@code Node}
-   * @throws UnsupportedOperationException if called on an {@link LeafNode} or {@link NullNode}
+   * @throws UnsupportedOperationException if called on an {@link LeafNode}
    */
-  void addChild(Value value, Node child);
+  void addChild(Predicate<String> predicate, Node child);
 
 }

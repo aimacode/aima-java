@@ -1,53 +1,55 @@
 package aima.core.learning.api;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Defines the requirements for an object that can be used as an attribute in an {@link Example}.
  *
+ * <p>Implemented as an Abstract Class to enforce it's implementations to override the {@link
+ * Object#equals(Object)} and {@link Object#hashCode()} methods.</p>
+ *
  * @author shantanusinghal
  */
-public interface Attribute {
+public abstract class Attribute {
+
+  protected final String name;
+  protected List<Predicate<String>> predicates;
+
+  protected Attribute(String name) {
+    this.name = name;
+  }
 
   /**
    * @return the name of attribute instance.
    */
-  String name();
-
-  /**
-   * Check if specified value is compatible with the attribute instance
-   *
-   * @param value the input value as {@code String}
-   * @return True if it's a valid value and false otherwise.
-   */
-  boolean canHold(String value);
-
-  /**
-   * Check if specified value is compatible with the attribute instance
-   *
-   * @param value the input value as {@code Value}
-   * @return True if it's a valid value and false otherwise.
-   */
-  default boolean canHold(Value value) {
-    return canHold(value.toString());
+  public String name() {
+    return name;
   }
 
   /**
-   * Returns a {@link Value} instance corresponding to the string value specified, if one exists.
-   *
-   * @param value the inptut as {@code String}.
-   * @return a {@link Value} instance wrapped in an {@code Optional}
-   */
-  Optional<Value> valueFor(String value);
-
-  /**
-   * Split examples over the various attribute values.
+   * List of predicates, on the value of this attribute, that best split the given list of examples.
    *
    * @param examples input data to be split by this attribute.
-   * @return a map of values and their corresponding examples.
+   * @return a list of predicates for splitting given examples.
    */
-  Map<Value, List<Example>> partitionByValue(List<Example> examples);
+  public List<Predicate<String>> getPredicates(List<Example> examples) {
+    return predicates == null ? (predicates = initPredicates(examples)) : predicates;
+  }
+
+  @Override
+  public String toString() {
+    return "Attribute{" +
+        "name='" + name + '\'' +
+        '}';
+  }
+
+  abstract protected List<Predicate<String>> initPredicates(List<Example> examples);
+
+  @Override
+  abstract public int hashCode();
+
+  @Override
+  abstract public boolean equals(Object obj);
 
 }

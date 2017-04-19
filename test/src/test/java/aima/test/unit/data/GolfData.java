@@ -1,9 +1,11 @@
 package aima.test.unit.data;
 
-import aima.core.learning.DataSetSpec;
-import aima.core.learning.DataSetSpec.Builder;
+import aima.core.learning.LabeledExample;
+import aima.core.learning.NominalAttribute;
 import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Example;
+import aima.core.learning.data.DataSet;
+import aima.core.learning.data.DataSetBuilder;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -12,62 +14,74 @@ import java.util.HashMap;
  */
 public class GolfData {
 
-  /************************** Attributes as Enums **************************/
+  public static final String TRUE = "TRUE";
+  public static final String FALSE = "FALSE";
 
   public enum Humid {
-    TRUE, FALSE;
-    public static String label() { return "Outlook"; }
-    public static String[] stringValues() {
-      return Arrays.stream(values()).map(v -> v.name()).toArray(String[]::new);
+    TRUE {
+      @Override
+      public String toString() {
+        return GolfData.TRUE;
+      }
+    }, FALSE {
+      @Override
+      public String toString() {
+        return GolfData.FALSE;
+      }
+    };
+    public static Attribute attribute() {
+      return new NominalAttribute("humid", Arrays.asList(GolfData.TRUE, GolfData.FALSE));
     }
   }
 
   public enum Windy {
-    TRUE, FALSE;
-    public static String label() { return "Windy"; }
-    public static String[] stringValues() {
-      return Arrays.stream(values()).map(v -> v.name()).toArray(String[]::new);
+    TRUE {
+      @Override
+      public String toString() {
+        return GolfData.TRUE;
+      }
+    }, FALSE {
+      @Override
+      public String toString() {
+        return GolfData.FALSE;
+      }
+    };
+    public static Attribute attribute() {
+      return new NominalAttribute("windy", Arrays.asList(GolfData.TRUE, GolfData.FALSE));
     }
   }
 
   public enum Play {
-    TRUE, FALSE;
-    public static String label() { return "Play"; }
-    public static String[] stringValues() {
-      return Arrays.stream(values()).map(v -> v.name()).toArray(String[]::new);
+    TRUE {
+      @Override
+      public String toString() {
+        return GolfData.TRUE;
+      }
+    }, FALSE {
+      @Override
+      public String toString() {
+        return GolfData.FALSE;
+      }
+    };
+    public static Attribute attribute() {
+      return new NominalAttribute("play", Arrays.asList(GolfData.TRUE, GolfData.FALSE));
     }
   }
 
-  /************************** Static Utility Methods **************************/
+  private static final DataSetBuilder DATA_SPEC = new DataSetBuilder()
+      .withClassAttribute(Play.attribute())
+      .withFeatureAttribute(Humid.attribute())
+      .withFeatureAttribute(Windy.attribute());
 
-  public static DataSetSpec specs() {
-    return SPEC;
+  public static DataSet set() {
+    return DATA_SPEC.build();
   }
 
-  public static String classAttribute() {
-    return DATA_CLASS_ATTR;
-  }
-
-  public static Attribute getAttribute(String name) {
-    return specs().getAttribute(name);
-  }
-
-  public static Example createExample(final Humid humid, final Windy windy, final Play play) {
-    return specs().buildExample(new HashMap<String, String>() {{
-      put(Humid.label(), humid.name());
-      put(Windy.label(), windy.name());
-      put(Play.label(), play.name());
+  public static Example createExample(Humid humid, Windy windy, Play play) {
+    return new LabeledExample(Play.attribute(), play.name(), new HashMap<Attribute, String>(){{
+      put(Humid.attribute(), humid.toString());
+      put(Windy.attribute(), windy.toString());
     }});
   }
-
-  /*********************** DataSet Configuration as Private Constants ***********************/
-
-  private static final DataSetSpec SPEC = new Builder()
-      .withNominalAttributeWithValues(Humid.label(), Humid.stringValues())
-      .withNominalAttributeWithValues(Windy.label(), Windy.stringValues())
-      .withNominalClassAttributeWithValues(Play.label(), Play.stringValues())
-      .build();
-
-  private static final String DATA_CLASS_ATTR = Play.label();
 
 }

@@ -10,13 +10,14 @@ import static java.util.stream.Collectors.toMap;
 import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Example;
 import aima.core.learning.api.Learner;
-import aima.core.learning.api.Value;
+import aima.core.learning.data.DataSet;
 import aima.core.util.ProbabilityUtils;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
@@ -54,51 +55,59 @@ public class DecisionTreeLearning implements Learner {
 
   @Override
   public DecisionTree train(DataSet dataSet) {
-    return decisionTreeLearning(dataSet.getExamples(), dataSet.getAttributes(),
-        Collections.emptyList());
+    try {
+      return decisionTreeLearning(dataSet.getExamples(), dataSet.getAttributes(),
+          Collections.emptyList());
+    } catch (NoSuchElementException e) {
+      throw new IllegalArgumentException("Decision Tree training requires 'labeled' examples");
+    }
   }
 
   /**
    * The decision-tree learning algorithm
    *
-   * @param examples the labeled training data
+   * @param examples the labeled training examples
    * @param attributes the set of features common across all examples
    * @param parentExamples list of examples used in constructing the node in previous iteration;
    * initially empty
    * @return a boolean decision tree classifier
+   * @throws NoSuchElementException if one of the training {@code examples} doesn't have a label
    */
   private DecisionTree decisionTreeLearning(List<Example> examples, List<Attribute> attributes,
-      List<Example> parentExamples) { Optional<Value> commonValue;
+      List<Example> parentExamples) throws NoSuchElementException {
+    Optional<String> commonValue;
 
     if (examples.isEmpty()) {
       return DecisionTree.withLeafNode(
           pluralityValueIn(parentExamples));
-    }
-    else if ((commonValue = getCommonClassValueIn(examples)).isPresent()) {
+    } else if ((commonValue = getCommonClassValueIn(examples)).isPresent()) {
       return DecisionTree.withLeafNode(
           commonValue.get());
-    }
-    else if (attributes.isEmpty()) {
+    } else if (attributes.isEmpty()) {
       return DecisionTree.withLeafNode(
           pluralityValueIn(examples));
-    }
-    else {
+    } else {
       Attribute A = argmax( getImportance (examples, attributes));
 
       DecisionTree tree = DecisionTree.withDecisionNode(A);
 
-      A.partitionByValue(examples).forEach(
-        (vK, exs) -> {
+      A.getPredicates(examples).forEach(
+        (vK) -> {
+
+          List<Example> exs = examples
+              .stream()
+              .filter(ex -> ex.testAttribute(A, vK))
+              .collect(toList());
 
           List<Attribute> attributesExceptA = attributes
-            .stream()
-            .filter(not(A))
-            .collect(toList());
+              .stream()
+              .filter(not(A))
+              .collect(toList());
 
           DecisionTree subtree = decisionTreeLearning(exs, attributesExceptA, examples);
 
           tree.addBranch(vK, subtree);
-      });
+        });
 
       return tree;
     }
@@ -110,7 +119,7 @@ public class DecisionTreeLearning implements Learner {
    * @param examples the list of input instances
    * @return the most common class value
    */
-  private Value pluralityValueIn(List<Example> examples) {
+  private String pluralityValueIn(List<Example> examples) throws NoSuchElementException {
     return examples
         .stream()
         .collect(groupingByClassValueAndCount())
@@ -139,7 +148,7 @@ public class DecisionTreeLearning implements Learner {
    * @param map the input map
    * @return the largest valued key of type {@code V}
    */
-  private <T> T argmax(Map<T, Double> map) {
+  private <T> T argmax(Map<T, Double> map) throws NoSuchElementException {
     return map
         .entrySet()
         .stream()
@@ -150,35 +159,36 @@ public class DecisionTreeLearning implements Learner {
   /**
    * @param examples the set of examples being tested
    * @return a value representing the common class of all input examples, if one exists
+   * @throws NoSuchElementException if one of the {@code examples} doesn't have a label
    */
-  private Optional<Value> getCommonClassValueIn(List<Example> examples) {
-    List<Value> distinctValues = examples
+  private Optional<String> getCommonClassValueIn(List<Example> examples)
+      throws NoSuchElementException {
+    List<String> distinctValues = examples
         .stream()
-        .map(Example::getClassValue)
+        .map(e -> e.classValue().get())
         .distinct()
         .collect(toList());
     return Optional.ofNullable(distinctValues.size() == 1 ? distinctValues.get(0) : null);
   }
 
-  /************************** Utility Lambdas [START] **************************/
+  /************************** Utility Lambdas **************************/
 
   private Predicate<Attribute> not(Attribute attr) {
     return a -> !a.equals(attr);
   }
 
-  private Comparator<Entry<Value, Long>> comparingByEntryValue() {
+  private Comparator<Entry<String, Long>> comparingByEntryValue() {
     return comparing(Entry::getValue);
   }
 
-  private Collector<Example, ?, Map<Value, Long>> groupingByClassValueAndCount() {
-    return groupingBy(Example::getClassValue, counting());
+  private Collector<Example, ?, Map<String, Long>> groupingByClassValueAndCount()
+      throws NoSuchElementException {
+    return groupingBy(e -> e.classValue().get(), counting());
   }
 
   private Collector<Attribute, ?, Map<Attribute, Double>> asMapOfAttributeToGain(
       List<Example> examples) {
     return toMap(identity(), a -> ProbabilityUtils.gain(a, examples));
   }
-
-  /************************** Utility Lambdas [END] **************************/
 
 }

@@ -3,22 +3,23 @@ package aima.core.learning;
 import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Example;
 import aima.core.learning.api.Node;
-import aima.core.learning.api.Value;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * @author shantanusinghal
  */
 public class LeafNode implements Node {
 
-  private Value value;
+  private String value;
 
-  public LeafNode(Value value) {
+  public LeafNode(String value) {
     this.value = value;
   }
 
   @Override
-  public Value process(Example example) {
+  public String process(Example example) {
     return value;
   }
 
@@ -29,12 +30,12 @@ public class LeafNode implements Node {
   }
 
   @Override
-  public Value getValue() {
+  public String getValue() {
     return value;
   }
 
   @Override
-  public Node getChild(Value value) {
+  public Optional<Node> getChild(String value) {
     throw new UnsupportedOperationException(
         "A terminating (end) node doesn't have any children");
   }
@@ -46,7 +47,7 @@ public class LeafNode implements Node {
   }
 
   @Override
-  public void addChild(Value value, Node child) {
+  public void addChild(Predicate<String> predicate, Node child) {
     throw new UnsupportedOperationException("Can not add a child node to a terminating (end) node");
   }
 

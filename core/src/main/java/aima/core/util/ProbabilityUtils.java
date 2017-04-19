@@ -2,12 +2,14 @@ package aima.core.util;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Example;
-import aima.core.learning.api.Value;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * @author shantanusinghal
@@ -35,12 +37,12 @@ public class ProbabilityUtils {
     double total = examples.size();
     return examples
         .stream()
-        .collect(groupingBy(Example::getClassValue, counting()))
+        .collect(groupingBy(Example::classValue, counting()))
         .values()
         .stream()
         .mapToDouble(Long::doubleValue)
         .map(count -> count / total)
-        .map(prob -> (-1.0 * Util.lg2(prob) * prob))
+        .map(prob -> (-1.0 * MathUtils.lg2(prob) * prob))
         .sum();
   }
 
@@ -52,14 +54,33 @@ public class ProbabilityUtils {
    * @return the expected entropy remaining
    */
   public static Double infoRemaining(Attribute attribute, List<Example> examples) {
-    double total = examples.size();
-    return examples
+      double total = examples.size();
+      List<Predicate<String>> predicates = attribute.getPredicates(examples);
+      return predicates
       .stream()
-      .collect(groupingBy(e -> e.valueOf(attribute).orElse(Value.NULL)))
-      .values()
-      .stream()
+      .map(p -> examples
+          .stream()
+          .filter(e -> {
+              Optional<String> opt = e.valueOf(attribute);
+              return opt.isPresent() ? p.test(opt.get()) : false;
+            })
+          .collect(toList()))
       .mapToDouble(exs -> (exs.size() / total) * infoNeeded(exs))
       .sum();
+    }
+
+  /**
+   * Calculates entropy in an input set with binary class labels.
+   *
+   * @param p number of positive examples
+   * @param n number of negative examples
+   *
+   * @return the entropy of the input set
+   */
+  public static Double entropy(long p, long n) {
+    double fP = p <= 0 ? 0.0 : (double) p / (double) (n + p);
+    double fN = n <= 0 ? 0.0 : (double) n / (double) (n + p);
+    return (-1 * fP * MathUtils.lg2(fP)) + (-1 * fN * MathUtils.lg2(fN));
   }
 
 }

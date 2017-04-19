@@ -1,13 +1,12 @@
 package aima.test.unit.util;
 
+import static aima.test.unit.data.CoinTossData.createExample;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import aima.core.learning.api.Attribute;
 import aima.core.util.ProbabilityUtils;
-import aima.test.unit.data.CoinTossData;
-import aima.test.unit.data.CoinTossData.FingerCrossed;
-import aima.test.unit.data.CoinTossData.Result;
+import aima.test.unit.data.CoinTossData.FingersCrossed;
+import aima.test.unit.data.CoinTossData.TossResult;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -17,50 +16,66 @@ import org.junit.Test;
 public class ProbabilityUtilTest {
 
   @Test
-  public void itShouldCalculateInformationRemainingAsZeroForAttributeWithPerfectSplit() {
-    // Given
-    Attribute attribute = CoinTossData.getAttribute(FingerCrossed.label());
+  public void itShouldCalculateInfoRemainingAsZeroForAttributeWithPerfectSplit() {
     // When
-    Double infoRemaining = ProbabilityUtils
-        .infoRemaining(attribute, Arrays.asList(
-            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
-            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS)));
+    Double infoRemaining = ProbabilityUtils.infoRemaining(
+        FingersCrossed.attribute(),
+        Arrays.asList(
+            createExample(FingersCrossed.YES, TossResult.HEADS),
+            createExample(FingersCrossed.YES, TossResult.HEADS)));
+
     // Then
     assertThat(infoRemaining, is(0.0));
   }
 
-
   @Test
-  public void itShouldCalculateInformationRemainingAsOneForAttributeWithEqualSplit() {
-    // Given
-    Attribute attribute = CoinTossData.getAttribute(FingerCrossed.label());
+  public void itShouldCalculateInfoRemainingAsOneForAttributeWithEqualSplit() {
     // When
-    Double infoRemaining = ProbabilityUtils
-        .infoRemaining(attribute, Arrays.asList(
-            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
-            CoinTossData.createExample(FingerCrossed.YES, Result.TAILS)));
+    Double infoRemaining = ProbabilityUtils.infoRemaining(
+        FingersCrossed.attribute(),
+        Arrays.asList(
+            createExample(FingersCrossed.YES, TossResult.HEADS),
+            createExample(FingersCrossed.YES, TossResult.TAILS)));
+
     // Then
     assertThat(infoRemaining, is(1.0));
   }
 
   @Test
-  public void itShouldCalculateInformationNeededAsZeroForExamplesWithSameClassification() {
+  public void itShouldCalculateInfoRemainingAsWeightedFraction() {
     // When
-    Double infoRemaining = ProbabilityUtils
-        .infoNeeded(Arrays.asList(
-            CoinTossData.createExample(FingerCrossed.YES, Result.HEADS),
-            CoinTossData.createExample(FingerCrossed.NO, Result.HEADS)));
+    Double infoRemaining = ProbabilityUtils.infoRemaining(
+        FingersCrossed.attribute(),
+        Arrays.asList(
+            createExample(FingersCrossed.YES, TossResult.HEADS),
+            createExample(FingersCrossed.YES, TossResult.HEADS),
+            createExample(FingersCrossed.NO, TossResult.HEADS),
+            createExample(FingersCrossed.NO, TossResult.TAILS)));
+
+    // Then
+    assertThat(infoRemaining, is(0.5));
+  }
+
+  @Test
+  public void itShouldCalculateInfoNeededAsZeroForExamplesWithSameClassification() {
+    // When
+    Double infoRemaining = ProbabilityUtils.infoNeeded(
+        Arrays.asList(
+            createExample(FingersCrossed.YES, TossResult.HEADS),
+            createExample(FingersCrossed.NO, TossResult.HEADS)));
+
     // Then
     assertThat(infoRemaining, is(0.0));
   }
 
   @Test
-  public void itShouldCalculateInformationNeededAsOneForExamplesWithEqualNumberOfEachClassification() {
+  public void itShouldCalculateInfoNeededAsOneForExamplesWithEqualNumberOfEachClassification() {
     // When
-    Double infoRemaining = ProbabilityUtils
-        .infoNeeded(Arrays.asList(
-            CoinTossData.createExample(FingerCrossed.YES, Result.TAILS),
-            CoinTossData.createExample(FingerCrossed.NO, Result.HEADS)));
+    Double infoRemaining = ProbabilityUtils.infoNeeded(
+        Arrays.asList(
+            createExample(FingersCrossed.YES, TossResult.TAILS),
+            createExample(FingersCrossed.NO, TossResult.HEADS)));
+
     // Then
     assertThat(infoRemaining, is(1.0));
   }

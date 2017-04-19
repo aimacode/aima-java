@@ -1,10 +1,13 @@
 package aima.test.unit.data;
 
-import aima.core.learning.DataSetSpec;
-import aima.core.learning.DataSetSpec.Builder;
+import aima.core.learning.LabeledExample;
+import aima.core.learning.NominalAttribute;
 import aima.core.learning.api.Attribute;
 import aima.core.learning.api.Example;
+import aima.core.learning.data.DataSet;
+import aima.core.learning.data.DataSetBuilder;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -12,52 +15,61 @@ import java.util.HashMap;
  */
 public class CoinTossData {
 
-  /************************** Attributes as Enums **************************/
+  public static final String YES = "YES";
+  public static final String NO = "NO";
+  public static final String HEADS = "HEADS";
+  public static final String TAILS = "TAILS";
 
-  public enum FingerCrossed {
-    YES, NO;
-    public static String label() { return "Fingers Crossed"; }
-    public static String[] stringValues() {
-      return Arrays.stream(values()).map(v -> v.name()).toArray(String[]::new);
+  public enum FingersCrossed {
+    YES {
+      @Override
+      public String toString() {
+        return CoinTossData.YES;
+      }
+    }, NO {
+      @Override
+      public String toString() {
+        return CoinTossData.NO;
+      }
+    };
+    public static Attribute attribute() {
+      return new NominalAttribute("fingersCrossed", Arrays.asList(CoinTossData.YES, CoinTossData.NO));
     }
   }
 
-  public enum Result {
-    HEADS, TAILS;
-    public static String label() { return "Result"; }
-    public static String[] stringValues() {
-      return Arrays.stream(values()).map(v -> v.name()).toArray(String[]::new);
+  public enum TossResult {
+    HEADS {
+      @Override
+      public String toString() {
+        return CoinTossData.HEADS;
+      }
+    }, TAILS {
+      @Override
+      public String toString() {
+        return CoinTossData.TAILS;
+      }
+    };
+    public static Attribute attribute() {
+      return new NominalAttribute("tossResult", Arrays.asList(CoinTossData.HEADS, CoinTossData.TAILS));
     }
   }
 
-  /************************** Static Utility Methods **************************/
+  private static final DataSetBuilder DATA_SPEC = new DataSetBuilder()
+      .withClassAttribute(TossResult.attribute())
+      .withFeatureAttribute(FingersCrossed.attribute());
 
-  public static DataSetSpec specs() {
-    return SPEC;
+  public static DataSet set() {
+    return DATA_SPEC.build();
   }
 
-  public static String classAttribute() {
-    return DATA_CLASS_ATTR;
+  public static Example createExample(TossResult tossResult) {
+    return new LabeledExample(TossResult.attribute(), tossResult.name(), Collections.emptyMap());
   }
 
-  public static Attribute getAttribute(String name) {
-    return specs().getAttribute(name);
-  }
-
-  public static Example createExample(final FingerCrossed fingerCrossed, final Result result) {
-    return specs().buildExample(new HashMap<String, String>() {{
-      put(FingerCrossed.label(), fingerCrossed.name());
-      put(Result.label(), result.name());
+  public static Example createExample(FingersCrossed fingersCrossed, TossResult tossResult) {
+    return new LabeledExample(TossResult.attribute(), tossResult.name(), new HashMap<Attribute, String>(){{
+      put(FingersCrossed.attribute(), fingersCrossed.toString());
     }});
   }
-
-  /*********************** DataSet Configuration as Private Constants ***********************/
-
-  private static final DataSetSpec SPEC = new Builder()
-      .withNominalAttributeWithValues(FingerCrossed.label(), FingerCrossed.stringValues())
-      .withNominalClassAttributeWithValues(Result.label(), Result.stringValues())
-      .build();
-
-  private static final String DATA_CLASS_ATTR = Result.label();
 
 }

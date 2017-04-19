@@ -1,9 +1,9 @@
 package aima.core.learning.api;
 
-import aima.core.learning.DataSet;
+import aima.core.learning.data.DataSet;
 
 /**
- * Defines the requirements for an object that can be used to train a {@link Classifier}
+ * Defines the requirements for an object that can be used to train a {@link Classifier}.
  *
  * @author shantanusinghal
  */
