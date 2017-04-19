@@ -1,6 +1,7 @@
 package aima.core.logic.fol.kb.data;
 
 import aima.core.logic.fol.parsing.ast.AtomicSentence;
+import aima.core.logic.fol.parsing.ast.Predicate;
 import aima.core.logic.fol.parsing.ast.Term;
 
 /**
@@ -31,6 +32,8 @@ public class Literal {
 		return new Literal(atom, negativeLiteral);
 	}
 
+	public Literal newNegInstance(AtomicSentence atom) { return new Literal(atom, !negativeLiteral); }
+
 	public boolean isPositiveLiteral() {
 		return !negativeLiteral;
 	}
@@ -42,6 +45,9 @@ public class Literal {
 	public AtomicSentence getAtomicSentence() {
 		return atom;
 	}
+
+	//Returns true if other is the negative of this literal, false otherwise
+	public boolean isNegativeOf(Literal oth) { return oth != null && oth.equals(this.newNegInstance(this.atom)); }
 
 	@Override
 	public String toString() {

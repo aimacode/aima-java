@@ -1,8 +1,6 @@
 package aima.core.logic.fol.kb.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Conjunctive Normal Form (CNF) : a conjunction of clauses, where each clause
@@ -38,5 +36,27 @@ public class CNF {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CNF)) {
+			return false;
+		}
+
+		CNF othCnf = (CNF)obj;
+
+		//Convert the lists to sets as we don't care about order
+		Set<Clause> thisSet = new HashSet<>(this.conjunctionOfClauses);
+		Set<Clause> othSet = new HashSet<>(othCnf.conjunctionOfClauses);
+		return thisSet.equals(othSet);
 	}
 }

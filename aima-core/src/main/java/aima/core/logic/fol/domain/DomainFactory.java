@@ -90,4 +90,16 @@ public class DomainFactory {
 		domain.addConstant("Drew");
 		return domain;
 	}
+
+	public static FOLDomain spareTireDomain() {
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("Spare");
+		domain.addConstant("Flat");
+		domain.addConstant("Axle");
+		domain.addConstant("Trunk");
+		domain.addConstant("Ground");
+
+		domain.addPredicate("At");
+		return domain;
+	}
 }
