@@ -213,19 +213,19 @@ public class MapColoringApp extends SimpleAgentApp {
 					break;
 				case 2: // FC
 					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.setInference(ImprovedBacktrackingStrategy
+					iStrategy.set(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
 				case 3: // MRV + FC 
 					iStrategy = new ImprovedBacktrackingStrategy
 					(true, false, false, false);
-					iStrategy.setInference(ImprovedBacktrackingStrategy
+					iStrategy.set(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
 				case 4: // FC + LCV
 					iStrategy = new ImprovedBacktrackingStrategy
 					(false, false, false, true);
-					iStrategy.setInference(ImprovedBacktrackingStrategy
+					iStrategy.set(ImprovedBacktrackingStrategy
 									.Inference.FORWARD_CHECKING);
 					break;
 				case 5: // AC3

@@ -8,7 +8,7 @@ import java.util.List;
 import aima.core.util.datastructure.Pair;
 
 public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
-	protected Selection selectionStrategy = Selection.DEFAULT_ORDER;
+	protected Selection selectionStrategy = Selection.DEFAULT;
 	protected Inference inferenceStrategy = Inference.NONE;
 	protected boolean isLCVHeuristicEnabled;
 
@@ -20,28 +20,31 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	public ImprovedBacktrackingStrategy(boolean enableMRV, boolean enableDeg,
 			boolean enableAC3, boolean enableLCV) {
 		if (enableMRV)
-			setVariableSelection(enableDeg ? Selection.MRV_DEG : Selection.MRV);
+			set(enableDeg ? Selection.MRV_DEG : Selection.MRV);
 		if (enableAC3)
-			setInference(Inference.AC3);
+			set(Inference.AC3);
 		enableLCV(enableLCV);
 	}
 
 	/** Selects the algorithm for SELECT-UNASSIGNED-VARIABLE */
-	public void setVariableSelection(Selection sStrategy) {
+	public ImprovedBacktrackingStrategy set(Selection sStrategy) {
 		selectionStrategy = sStrategy;
+		return this;
 	}
 
 	/** Selects the algorithm for INFERENCE. */
-	public void setInference(Inference iStrategy) {
+	public ImprovedBacktrackingStrategy set(Inference iStrategy) {
 		inferenceStrategy = iStrategy;
+		return this;
 	}
 
 	/**
 	 * Selects the least constraining value heuristic as implementation for
 	 * ORDER-DOMAIN-VALUES.
 	 */
-	public void enableLCV(boolean state) {
+	public ImprovedBacktrackingStrategy enableLCV(boolean state) {
 		isLCVHeuristicEnabled = state;
+		return this;
 	}
 
 	/**
@@ -247,7 +250,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	// two enumerations
 
 	public enum Selection {
-		DEFAULT_ORDER, MRV, MRV_DEG
+		DEFAULT, MRV, MRV_DEG
 	}
 
 	public enum Inference {

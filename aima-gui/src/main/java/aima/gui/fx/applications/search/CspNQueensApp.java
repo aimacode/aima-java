@@ -29,152 +29,160 @@ import javafx.scene.layout.StackPane;
  * strategies solve the N-Queens problem.
  *
  * @author Ruediger Lunde
- *
  */
 public class CspNQueensApp extends IntegrableApplication {
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-	public final static String PARAM_STRATEGY = "strategy";
-	public final static String PARAM_MRV = "mrv";
-	public final static String PARAM_DEG = "deg";
-	public final static String PARAM_AC3 = "ac3";
-	public final static String PARAM_LCV = "lcv";
+    public final static String PARAM_STRATEGY = "strategy";
+    public final static String PARAM_VAR_SELECT = "varSelect";
+    public final static String PARAM_VAL_ORDER = "valOrder";
+    public final static String PARAM_INFERENCE = "inference";
 
-	public final static String PARAM_BOARD_SIZE = "boardSize";
+    public final static String PARAM_BOARD_SIZE = "boardSize";
 
-	private NQueensViewCtrl stateViewCtrl;
-	private SimulationPaneCtrl simPaneCtrl;
-	CSP csp;
-	SolutionStrategy solver;
-	ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
+    private NQueensViewCtrl stateViewCtrl;
+    private SimulationPaneCtrl simPaneCtrl;
+    CSP csp;
+    SolutionStrategy solver;
+    ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
 
-	@Override
-	public String getTitle() {
-		return "CSP N-Queens App";
-	}
+    @Override
+    public String getTitle() {
+        return "CSP N-Queens App";
+    }
 
-	/**
-	 * Defines state view, parameters, and call-back functions and calls the
-	 * simulation pane builder to create layout and controller objects.
-	 */
-	@Override
-	public Pane createRootPane() {
-		BorderPane root = new BorderPane();
+    /**
+     * Defines state view, parameters, and call-back functions and calls the
+     * simulation pane builder to create layout and controller objects.
+     */
+    @Override
+    public Pane createRootPane() {
+        BorderPane root = new BorderPane();
 
-		StackPane stateView = new StackPane();
-		stateViewCtrl = new NQueensViewCtrl(stateView);
+        StackPane stateView = new StackPane();
+        stateViewCtrl = new NQueensViewCtrl(stateView);
 
-		List<Parameter> params = createParameters();
+        List<Parameter> params = createParameters();
 
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
-		builder.defineParameters(params);
-		builder.defineStateView(stateView);
-		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
-		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 0);
+        SimulationPaneBuilder builder = new SimulationPaneBuilder();
+        builder.defineParameters(params);
+        builder.defineStateView(stateView);
+        builder.defineInitMethod(this::initialize);
+        builder.defineSimMethod(this::simulate);
+        simPaneCtrl = builder.getResultFor(root);
+        simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 0);
 
-		return root;
-	}
+        return root;
+    }
 
-	protected List<Parameter> createParameters() {
-		Parameter p1 = new Parameter(PARAM_STRATEGY, "Min-Conflicts", "Backtracking");
-		Parameter p2 = new Parameter(PARAM_MRV, true, false);
-		Parameter p3 = new Parameter(PARAM_DEG, true, false);
-		Parameter p4 = new Parameter(PARAM_AC3, true, false);
-		Parameter p5 = new Parameter(PARAM_LCV, true, false);
-		p2.setDependency(PARAM_STRATEGY, "Backtracking");
-		p3.setDependency(PARAM_STRATEGY, "Backtracking");
-		p4.setDependency(PARAM_STRATEGY, "Backtracking");
-		p5.setDependency(PARAM_STRATEGY, "Backtracking");
-		Parameter p6 = new Parameter(PARAM_BOARD_SIZE, 4, 8, 16, 32, 64);
-		p6.setDefaultValueIndex(1);
-		return Arrays.asList(p1, p2, p3, p4, p5, p6);
-	}
+    protected List<Parameter> createParameters() {
+        Parameter p1 = new Parameter(PARAM_STRATEGY, "Min-Conflicts", "Backtracking");
+        Parameter p2 = new Parameter(PARAM_VAR_SELECT,
+                ImprovedBacktrackingStrategy.Selection.DEFAULT,
+                ImprovedBacktrackingStrategy.Selection.MRV,
+                ImprovedBacktrackingStrategy.Selection.MRV_DEG);
+        Parameter p3 = new Parameter(PARAM_VAL_ORDER, "DEFAULT", "LCV");
+        Parameter p4 = new Parameter(PARAM_INFERENCE,
+                ImprovedBacktrackingStrategy.Inference.NONE,
+                ImprovedBacktrackingStrategy.Inference.FORWARD_CHECKING,
+                ImprovedBacktrackingStrategy.Inference.AC3);
+        p2.setDependency(PARAM_STRATEGY, "Backtracking");
+        p3.setDependency(PARAM_STRATEGY, "Backtracking");
+        p4.setDependency(PARAM_STRATEGY, "Backtracking");
+        Parameter p5 = new Parameter(PARAM_BOARD_SIZE, 4, 8, 16, 32, 64);
+        p5.setDefaultValueIndex(1);
+        return Arrays.asList(p1, p2, p3, p4, p5);
+    }
 
-	/** Displays the initialized board on the state view. */
-	@Override
-	public void initialize() {
-		csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
-		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
-		if (strategy.equals("Min-Conflicts"))
-			solver = new MinConflictsStrategy(1000);
-		else if (strategy.equals("Backtracking")) {
-			boolean mrv = (Boolean) simPaneCtrl.getParamValue(PARAM_MRV);
-			boolean deg = (Boolean) simPaneCtrl.getParamValue(PARAM_DEG);
-			boolean ac3 = (Boolean) simPaneCtrl.getParamValue(PARAM_AC3);
-			boolean lcv = (Boolean) simPaneCtrl.getParamValue(PARAM_LCV);
-			solver = new ImprovedBacktrackingStrategy(mrv, deg, ac3, lcv);
-		}
-		solver.addCSPStateListener(progressAnalyzer);
-		progressAnalyzer.reset();
-		stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
-		simPaneCtrl.setStatus("");
-	}
+    /**
+     * Displays the initialized board on the state view.
+     */
+    @Override
+    public void initialize() {
+        csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
+        Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
+        if (strategy.equals("Min-Conflicts"))
+            solver = new MinConflictsStrategy(1000);
+        else if (strategy.equals("Backtracking")) {
+            ImprovedBacktrackingStrategy.Selection varSelect =
+                    (ImprovedBacktrackingStrategy.Selection) simPaneCtrl.getParamValue(PARAM_VAR_SELECT);
+            ImprovedBacktrackingStrategy.Inference inference =
+                    (ImprovedBacktrackingStrategy.Inference) simPaneCtrl.getParamValue(PARAM_INFERENCE);
+            String valOrder = (String) simPaneCtrl.getParamValue(PARAM_VAL_ORDER);
+            solver = new ImprovedBacktrackingStrategy().set(varSelect).set(inference).enableLCV(valOrder.equals("LCV"));
 
-	@Override
-	public void finalize() {
-		simPaneCtrl.cancelSimulation();
-	}
+        }
+        solver.addCSPStateListener(progressAnalyzer);
+        progressAnalyzer.reset();
+        stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
+        simPaneCtrl.setStatus("");
+    }
 
-	/** Starts the experiment. */
-	public void simulate() {
-		Assignment solution = solver.solve(csp);
-		if (solution != null) {
-			NQueensBoard board = getBoard(solution);
-			stateViewCtrl.update(board);
-		}
-		simPaneCtrl.setStatus(progressAnalyzer.getResults().toString());
-	}
+    @Override
+    public void finalize() {
+        simPaneCtrl.cancelSimulation();
+    }
 
-	private NQueensBoard getBoard(Assignment assignment) {
-		NQueensBoard board = new NQueensBoard(csp.getVariables().size());
-		for (Variable var : assignment.getVariables()) {
-			int col = Integer.parseInt(var.getName().substring(1)) - 1;
-			int row = ((int) assignment.getAssignment(var)) - 1;
-			board.addQueenAt(new XYLocation(col, row));
-		}
-		return board;
-	}
+    /**
+     * Starts the experiment.
+     */
+    public void simulate() {
+        Assignment solution = solver.solve(csp);
+        if (solution != null) {
+            NQueensBoard board = getBoard(solution);
+            stateViewCtrl.update(board);
+        }
+        simPaneCtrl.setStatus(progressAnalyzer.getResults().toString());
+    }
 
-	/**
-	 * Caution: While the background thread should be slowed down, updates of
-	 * the GUI have to be done in the GUI thread!
-	 */
-	private void updateStateView(NQueensBoard board) {
-		Platform.runLater(() -> stateViewCtrl.update(board));
-		simPaneCtrl.waitAfterStep();
-	}
+    private NQueensBoard getBoard(Assignment assignment) {
+        NQueensBoard board = new NQueensBoard(csp.getVariables().size());
+        for (Variable var : assignment.getVariables()) {
+            int col = Integer.parseInt(var.getName().substring(1)) - 1;
+            int row = ((int) assignment.getAssignment(var)) - 1;
+            board.addQueenAt(new XYLocation(col, row));
+        }
+        return board;
+    }
 
-	protected class ProgressAnalyzer implements CSPStateListener {
-		private int assignmentCount = 0;
-		private int domainCount = 0;
+    /**
+     * Caution: While the background thread should be slowed down, updates of
+     * the GUI have to be done in the GUI thread!
+     */
+    private void updateStateView(NQueensBoard board) {
+        Platform.runLater(() -> stateViewCtrl.update(board));
+        simPaneCtrl.waitAfterStep();
+    }
 
-		@Override
-		public void stateChanged(Assignment assignment, CSP csp) {
-			updateStateView(getBoard(assignment));
-			++assignmentCount;
-		}
+    protected class ProgressAnalyzer implements CSPStateListener {
+        private int assignmentCount = 0;
+        private int domainCount = 0;
 
-		@Override
-		public void stateChanged(CSP csp) {
-			++domainCount;
-		}
+        @Override
+        public void stateChanged(Assignment assignment, CSP csp) {
+            updateStateView(getBoard(assignment));
+            ++assignmentCount;
+        }
 
-		public void reset() {
-			assignmentCount = 0;
-			domainCount = 0;
-		}
+        @Override
+        public void stateChanged(CSP csp) {
+            ++domainCount;
+        }
 
-		public Metrics getResults() {
-			Metrics result = new Metrics();
-			result.set("assignmentChanges", assignmentCount);
-			if (domainCount != 0)
-				result.set("domainChanges", domainCount);
-			return result;
-		}
-	}
+        public void reset() {
+            assignmentCount = 0;
+            domainCount = 0;
+        }
+
+        public Metrics getResults() {
+            Metrics result = new Metrics();
+            result.set("assignmentChanges", assignmentCount);
+            if (domainCount != 0)
+                result.set("domainChanges", domainCount);
+            return result;
+        }
+    }
 }
