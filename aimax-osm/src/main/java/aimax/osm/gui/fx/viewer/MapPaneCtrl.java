@@ -151,7 +151,7 @@ public class MapPaneCtrl {
 
     protected void handleScrollEvent(ScrollEvent event) {
         float fac = event.getDeltaY() > 0 ? 1.2f : 1.0f / 1.2f;
-        if (event.isControlDown())
+        if (event.isAltDown())
             multiplyDisplayFactorWith(fac);
         else
             zoom(fac, (int) event.getX(), (int) event.getY());
@@ -167,12 +167,12 @@ public class MapPaneCtrl {
         else if (event.getCode() == KeyCode.DOWN)
             adjust(0, -30);
         else if (event.getCode() == KeyCode.PLUS)
-            if (event.isShiftDown())
+            if (event.isAltDown())
                 multiplyDisplayFactorWith(1.5f);
             else
                 zoom(1.5f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);
         else if (event.getCode() == KeyCode.MINUS)
-            if (event.isShiftDown())
+            if (event.isAltDown())
                 multiplyDisplayFactorWith(1.0f/1.5f);
             else
                 zoom(0.7f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);

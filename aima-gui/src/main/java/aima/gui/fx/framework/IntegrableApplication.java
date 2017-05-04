@@ -17,7 +17,10 @@ public abstract class IntegrableApplication extends Application {
 
 	protected double sceneWidth = 1200;
 	protected double sceneHeight = 800;
-	
+
+	/**
+	 * Template method for starting all integrable applications as stand-alone applications.
+	 */
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle(getTitle());
@@ -26,13 +29,13 @@ public abstract class IntegrableApplication extends Application {
 		initialize();
 	}
 
-	/** Returns the title of the application. */
+	/** Primitive operation, returning the title of the application. */
 	public abstract String getTitle();
 	
-	/** Creates the pane to be used as root of the application's scene. */
+	/** Primitive operation, creating the pane to be used as root of the application's scene. */
 	public abstract Pane createRootPane();
 	
-	/** Defines initialization steps (scene graph has been created and made visible on screen before). */
+	/** Primitive operation, defining initialization steps (scene graph has been created and made visible on screen before). */
 	public abstract void initialize();
 	
 	/**
