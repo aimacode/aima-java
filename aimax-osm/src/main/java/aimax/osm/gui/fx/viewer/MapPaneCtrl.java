@@ -40,11 +40,11 @@ public class MapPaneCtrl {
         pane.widthProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
         pane.heightProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
         pane.setOnMouseEntered(ev -> {if (currCanvas != null) currCanvas.requestFocus();});
-        pane.setOnMousePressed(ev -> handleMouseEvent(ev));
-        pane.setOnMouseDragged(ev -> handleMouseEvent(ev));
-        pane.setOnMouseClicked(ev -> handleMouseEvent(ev));
-        pane.setOnScroll(ev -> handleScrollEvent(ev));
-        pane.setOnKeyPressed(ev -> handleKeyEvent(ev));
+        pane.setOnMousePressed(this::handleMouseEvent);
+        pane.setOnMouseDragged(this::handleMouseEvent);
+        pane.setOnMouseClicked(this::handleMouseEvent);
+        pane.setOnScroll(this::handleScrollEvent);
+        pane.setOnKeyPressed(this::handleKeyEvent);
         pane.setMinSize(0, 0);
     }
 
@@ -146,6 +146,7 @@ public class MapPaneCtrl {
                     showMapEntityInfoDialog(mNode, true);
             }
         }
+        currCanvas.requestFocus(); // hack...
     }
 
     protected void handleScrollEvent(ScrollEvent event) {
@@ -166,12 +167,12 @@ public class MapPaneCtrl {
         else if (event.getCode() == KeyCode.DOWN)
             adjust(0, -30);
         else if (event.getCode() == KeyCode.PLUS)
-            if (event.isControlDown())
+            if (event.isShiftDown())
                 multiplyDisplayFactorWith(1.5f);
             else
                 zoom(1.5f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);
         else if (event.getCode() == KeyCode.MINUS)
-            if (event.isControlDown())
+            if (event.isShiftDown())
                 multiplyDisplayFactorWith(1.0f/1.5f);
             else
                 zoom(0.7f, (int) pane.getWidth() / 2, (int) pane.getHeight() / 2);
@@ -191,7 +192,7 @@ public class MapPaneCtrl {
      *            Enables a more detailed view.
      */
     private void showMapEntityInfoDialog(MapEntity entity, boolean debug) {
-        List<MapEntity> entities = new ArrayList<MapEntity>();
+        List<MapEntity> entities = new ArrayList<>();
         if (entity.getName() != null || entity.getAttributes().length > 0
                 || debug)
             entities.add(entity);
@@ -204,9 +205,7 @@ public class MapPaneCtrl {
                     entities.add(me);
             }
         }
-        boolean done = false;
-        for (int i = 0; i < entities.size() && !done; i++) {
-            MapEntity me = entities.get(i);
+        for (MapEntity me : entities) {
             String header = (me.getName() != null) ? me.getName() : "";
             StringBuilder content = new StringBuilder();
             if (debug)
