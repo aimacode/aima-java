@@ -15,13 +15,13 @@ import javafx.stage.Stage;
  */
 public abstract class IntegrableApplication extends Application {
 
-	protected double defaultWidth = 1200;
-	protected double defaultHeight = 800;
+	protected double sceneWidth = 1200;
+	protected double sceneHeight = 800;
 	
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle(getTitle());
-		primaryStage.setScene(new Scene(createRootPane(), defaultWidth, defaultHeight));
+		primaryStage.setScene(new Scene(createRootPane(), sceneWidth, sceneHeight));
 		primaryStage.show();
 		initialize();
 	}
