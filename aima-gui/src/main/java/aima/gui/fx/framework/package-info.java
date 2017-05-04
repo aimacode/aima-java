@@ -9,7 +9,7 @@
  * common window. Such an integrated application, which allows to switch between
  * different demo applications and simple command line demos at
  * runtime, can easily be created by means of another builder called
- * {@link aima.gui.fx.framework.IntegratedAppPaneBuilder}.
+ * {@link aima.gui.fx.framework.IntegratedAppBuilder}.
  * Note that names of controller classes containing GUI logic (often called
  * code-behind files) end with <code>Ctrl</code>.
  * 

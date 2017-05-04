@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  * Controller class for integrated applications. Integrated applications are
- * built by the {@link IntegratedAppPaneBuilder} and provide access to
+ * built by the {@link IntegratedAppBuilder} and provide access to
  * {@link IntegrableApplication} instances and console applications. This
  * controller class is responsible starting applications, integrating their GUI
  * into the window of the integrated application, title update, and for scale
