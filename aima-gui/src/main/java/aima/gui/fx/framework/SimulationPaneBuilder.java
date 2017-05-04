@@ -96,9 +96,8 @@ public class SimulationPaneBuilder {
 		if (!simMethod.isPresent())
 			throw new IllegalStateException("No simulation method defined.");
 
-		SimulationPaneCtrl result = new SimulationPaneCtrl(parameters, combos, initMethod.get(), simMethod.get(),
+		return new SimulationPaneCtrl(parameters, combos, initMethod.get(), simMethod.get(),
 				simBtn, statusLabel);
-		return result;
 	}
 
 	/**

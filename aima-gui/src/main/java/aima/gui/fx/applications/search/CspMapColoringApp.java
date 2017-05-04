@@ -186,7 +186,7 @@ public class CspMapColoringApp extends IntegrableApplication {
     }
 
     @Override
-    public void finalize() {
+    public void cleanup() {
         simPaneCtrl.cancelSimulation();
     }
 

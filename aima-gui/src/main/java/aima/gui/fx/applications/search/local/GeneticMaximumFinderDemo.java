@@ -27,7 +27,7 @@ public class GeneticMaximumFinderDemo {
 	private int populationSize = 20;
 	private int maxIterations = 100;
 
-	FitnessFunction<Double> fitnessFn;
+	private FitnessFunction<Double> fitnessFn;
 
 	public static void main(String[] args) {
 		System.out.println("Genetic Maximum Finder Experiment (f1, mutProb=0.2) -->");

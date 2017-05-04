@@ -19,7 +19,7 @@ public class ConnectFourModel extends Observable {
 	private ConnectFourGame game;
 	private ConnectFourState currState;
 	Metrics searchMetrics;
-	boolean enableLog;
+	private boolean enableLog;
 	
 
 	public ConnectFourModel() {

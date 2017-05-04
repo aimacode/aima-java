@@ -33,9 +33,9 @@ public class OsmRoutePlannerApp extends IntegrableApplication {
     private ComboBox<String> taskCombo;
     private Button calcBtn;
     private Label statusLabel;
-    MapPaneCtrl mapPaneCtrl;
+    private MapPaneCtrl mapPaneCtrl;
 
-    RouteCalculator routeCalculator;
+    private RouteCalculator routeCalculator;
 
 
     @Override
@@ -98,7 +98,7 @@ public class OsmRoutePlannerApp extends IntegrableApplication {
     }
 
     @Override
-    public void finalize() {
+    public void cleanup() {
         // nothing to do here...
     }
 

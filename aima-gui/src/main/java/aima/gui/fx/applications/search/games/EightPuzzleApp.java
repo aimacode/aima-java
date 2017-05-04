@@ -48,9 +48,9 @@ public class EightPuzzleApp extends IntegrableApplication {
 	}
 
 	/** List of supported search algorithm names. */
-	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
+	protected static List<String> SEARCH_NAMES = new ArrayList<>();
 	/** List of supported search algorithms. */
-	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<SearchForActions>();
+	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<>();
 
 	private EightPuzzleBoard board;
 
@@ -118,7 +118,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_INIT_CONF, "Three Moves", "Medium", "Extreme", "Random");
-		Parameter p2 = new Parameter(PARAM_STRATEGY, (Object[]) SEARCH_NAMES.toArray(new String[] {}));
+		Parameter p2 = new Parameter(PARAM_STRATEGY, (Object[]) SEARCH_NAMES.toArray());
 		return Arrays.asList(p1, p2);
 	}
 
@@ -160,7 +160,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 

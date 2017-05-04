@@ -178,9 +178,8 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 		if (markers.size() < 2) {
 			simPaneCtrl.setStatus("Error: Please set at least two markers with mouse-left.");
 		} else {
-			List<String> locations = new ArrayList<String>(markers.size());
-			for (int i = 0; i < markers.size(); i++) {
-				MapNode node = markers.get(i);
+			List<String> locations = new ArrayList<>(markers.size());
+			for (MapNode node : markers) {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
@@ -201,7 +200,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 
@@ -217,7 +216,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 
 	// helper classes...
 
-	class TrackUpdater implements EnvironmentView {
+	private class TrackUpdater implements EnvironmentView {
 		int actionCounter = 0;
 
 		@Override

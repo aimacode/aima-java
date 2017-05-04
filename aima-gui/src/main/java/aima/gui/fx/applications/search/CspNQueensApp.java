@@ -45,9 +45,9 @@ public class CspNQueensApp extends IntegrableApplication {
 
     private NQueensViewCtrl stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
-    CSP csp;
-    SolutionStrategy solver;
-    ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
+    private CSP csp;
+    private SolutionStrategy solver;
+    private ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
 
     @Override
     public String getTitle() {
@@ -122,7 +122,7 @@ public class CspNQueensApp extends IntegrableApplication {
     }
 
     @Override
-    public void finalize() {
+    public void cleanup() {
         simPaneCtrl.cancelSimulation();
     }
 

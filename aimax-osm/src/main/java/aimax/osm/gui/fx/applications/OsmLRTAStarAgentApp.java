@@ -149,9 +149,8 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		if (markers.size() < 2) {
 			simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
 		} else {
-			List<String> locations = new ArrayList<String>(markers.size());
-			for (int i = 0; i < markers.size(); i++) {
-				MapNode node = markers.get(i);
+			List<String> locations = new ArrayList<>(markers.size());
+			for (MapNode node : markers) {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
@@ -167,7 +166,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 

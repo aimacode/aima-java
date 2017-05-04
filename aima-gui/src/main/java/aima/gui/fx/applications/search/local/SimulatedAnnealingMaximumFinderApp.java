@@ -101,7 +101,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 

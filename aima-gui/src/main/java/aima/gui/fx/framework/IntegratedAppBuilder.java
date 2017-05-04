@@ -78,8 +78,10 @@ public class IntegratedAppBuilder {
 	}
 
 	/**
-	 * Adds a menu bar and a scalable container pane to the provided root pane and
-	 * returns a controller instance containing user interface logic.
+	 * Creates a scene with menu bar and a scalable container pane,
+	 * assigns it to the stage, and returns a controller instance containing
+	 * user interface logic.
+	 * @return A controller class (will seldom be used by the caller).
 	 */
 	public IntegratedAppPaneCtrl getResultFor(Stage stage) {
 
@@ -103,7 +105,7 @@ public class IntegratedAppBuilder {
 		BorderPane root = new BorderPane();
 		root.setTop(menuBar);
 		root.setCenter(appPaneContainer);
-		stage.setScene(new Scene(root, 1200, 800));
+		stage.setScene(new Scene(root, sceneWidth, sceneHeight));
 		// just in case, the builder is called twice...
 		IntegratedAppPaneCtrl result = paneCtrl;
 		paneCtrl = new IntegratedAppPaneCtrl();

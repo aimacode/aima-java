@@ -110,7 +110,7 @@ public class TicTacToeApp extends IntegrableApplication {
     }
 
     @Override
-    public void finalize() {
+    public void cleanup() {
         // nothing to do here...
     }
 

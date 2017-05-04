@@ -64,8 +64,6 @@ public class IntegratedAppPaneCtrl {
 		stopRunningAppsAndDemo();
 		try {
 			currApp = Optional.of(appClass.newInstance());
-			//Method m = appClass.getMethod("createRootPane", new Class[0]);
-			//Pane appPane = (Pane) m.invoke(currApp.get(), (Object[]) null);
 			Pane appPane = currApp.get().createRootPane();
 			pane.setCenter(appPane);
 			updateStageTitle();
@@ -105,7 +103,7 @@ public class IntegratedAppPaneCtrl {
 
 	private void stopRunningAppsAndDemo() {
 		if (currApp.isPresent()) {
-			currApp.get().finalize();
+			currApp.get().cleanup();
 			currApp = Optional.empty();
 		}
 		if (currDemoThread.isPresent()) {

@@ -91,7 +91,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 
@@ -122,7 +122,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 		funcPlotterCtrl.update();
 		if (gen != null) {
 			for (Individual<Double> ind : gen) {
-				Optional<Paint> fill = Optional.empty();
+				Optional<Paint> fill;
 				if (ind.getDescendants() > 0)
 					fill = Optional.of(Color.rgb(Math.max(255 - ind.getDescendants() * 20, 0), 0, 0));
 				else

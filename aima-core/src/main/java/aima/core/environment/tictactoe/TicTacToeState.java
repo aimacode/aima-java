@@ -86,7 +86,6 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	private boolean isAnyDiagonalComplete() {
-		boolean retVal = false;
 		String val = getValue(0, 0);
 		if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(1, 1)) && Objects.equals(val, getValue(2, 2))) {
 			return true;
@@ -95,7 +94,7 @@ public class TicTacToeState implements Cloneable {
 		if (!Objects.equals(val, EMPTY) && Objects.equals(val, getValue(1, 1)) && Objects.equals(val, getValue(2, 0))) {
 			return true;
 		}
-		return retVal;
+		return false;
 	}
 
 	public int getNumberOfMarkedPositions() {
@@ -111,7 +110,7 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	public List<XYLocation> getUnMarkedPositions() {
-		List<XYLocation> result = new ArrayList<XYLocation>();
+		List<XYLocation> result = new ArrayList<>();
 		for (int col = 0; col < 3; col++) {
 			for (int row = 0; row < 3; row++) {
 				if (isEmpty(col, row)) {
@@ -156,14 +155,14 @@ public class TicTacToeState implements Cloneable {
 
 	@Override
 	public String toString() {
-		StringBuilder strBuilder = new StringBuilder();
+		StringBuffer buffer = new StringBuffer();
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				strBuilder.append(getValue(col, row) + " ");
+				buffer.append(getValue(col, row)).append(" ");
 			}
-			strBuilder.append("\n");
+			buffer.append("\n");
 		}
-		return strBuilder.toString();
+		return buffer.toString();
 	}
 
 	//

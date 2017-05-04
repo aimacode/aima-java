@@ -39,5 +39,5 @@ public abstract class IntegrableApplication extends Application {
 	 * Finalization steps to be performed when switching between applications (needed especially in case
 	 * several applications shall be integrated into a common window).
 	 */
-	public abstract void finalize();
+	public abstract void cleanup();
 }

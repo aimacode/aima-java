@@ -33,7 +33,7 @@ public class SimpleOsmViewerApp extends Application {
 
         Locale.setDefault(Locale.US);
 
-        UnifiedMapDrawer<Canvas> mapDrawer = new UnifiedMapDrawer<Canvas>(new FXImageBuilder());
+        UnifiedMapDrawer<Canvas> mapDrawer = new UnifiedMapDrawer<>(new FXImageBuilder());
         mapDrawer.loadMap(DataResource.getULMFileResource());
 
         Canvas canvas = new Canvas(600, 400);

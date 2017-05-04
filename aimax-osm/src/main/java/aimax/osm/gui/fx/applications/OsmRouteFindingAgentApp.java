@@ -40,7 +40,7 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	 * Stores those states (Strings with map node ids), whose corresponding
 	 * search nodes have been expanded during the last search.
 	 */
-	private static final HashSet<Object> visitedStates = new HashSet<Object>();
+	private static final HashSet<Object> visitedStates = new HashSet<>();
 
 	@Override
 	public String getTitle() {

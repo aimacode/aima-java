@@ -148,7 +148,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		}
 		scenario = new Scenario(env, map, agentLoc);
 
-		destinations = new ArrayList<String>();
+		destinations = new ArrayList<>();
 		if (simPaneCtrl.isParamVisible(PARAM_DESTINATION_R)) {
 			switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION_R)) {
 			case 0:
@@ -211,7 +211,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		simPaneCtrl.cancelSimulation();
 	}
 }

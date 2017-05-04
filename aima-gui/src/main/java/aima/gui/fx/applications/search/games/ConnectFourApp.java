@@ -62,10 +62,10 @@ public class ConnectFourApp extends IntegrableApplication {
 		clearBtn = new Button("Clear");
 		clearBtn.setOnAction(ev -> model.initGame());
 
-		strategyCombo = new ComboBox<String>();
+		strategyCombo = new ComboBox<>();
 		strategyCombo.getItems().addAll("Iterative Deepening Alpha-Beta", "Advanced Alpha-Beta");
 		strategyCombo.getSelectionModel().select(0);
-		timeCombo = new ComboBox<String>();
+		timeCombo = new ComboBox<>();
 		timeCombo.getItems().addAll("2sec", "4sec", "6sec", "8sec");
 		timeCombo.getSelectionModel().select(1);
 
@@ -142,7 +142,7 @@ public class ConnectFourApp extends IntegrableApplication {
 	}
 
 	@Override
-	public void finalize() {
+	public void cleanup() {
 		// Nothing to do here...
 	}
 
