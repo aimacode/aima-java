@@ -40,12 +40,12 @@ public class SimulationPaneBuilder {
 		this.stateView = Optional.of(stateView);
 	}
 
-	public final void defineSimMethod(Runnable simMethod) {
-		this.simMethod = Optional.of(simMethod);
-	}
-
 	public final void defineInitMethod(Runnable initMethod) {
 		this.initMethod = Optional.of(initMethod);
+	}
+
+	public final void defineSimMethod(Runnable simMethod) {
+		this.simMethod = Optional.of(simMethod);
 	}
 
 	/**
