@@ -3,6 +3,7 @@ package aima.core.logic.fol.parsing.ast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import aima.core.logic.fol.parsing.FOLVisitor;
 
@@ -18,8 +19,7 @@ public class QuantifiedSentence implements Sentence {
 	private String stringRep = null;
 	private int hashCode = 0;
 
-	public QuantifiedSentence(String quantifier, List<Variable> variables,
-			Sentence quantified) {
+	public QuantifiedSentence(String quantifier, List<Variable> variables, Sentence quantified) {
 		this.quantifier = quantifier;
 		this.variables.addAll(variables);
 		this.quantified = quantified;
@@ -78,9 +78,7 @@ public class QuantifiedSentence implements Sentence {
 			return false;
 		}
 		QuantifiedSentence cs = (QuantifiedSentence) o;
-		return cs.quantifier.equals(quantifier)
-				&& cs.variables.equals(variables)
-				&& cs.quantified.equals(quantified);
+		return cs.quantifier.equals(quantifier) && cs.variables.equals(variables) && cs.quantified.equals(quantified);
 	}
 
 	@Override
@@ -99,15 +97,11 @@ public class QuantifiedSentence implements Sentence {
 	@Override
 	public String toString() {
 		if (null == stringRep) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(quantifier);
-			sb.append(" ");
-			for (Variable v : variables) {
-				sb.append(v.toString());
-				sb.append(" ");
-			}
-			sb.append(quantified.toString());
-			stringRep = sb.toString();
+			stringRep = quantifier + " " + 
+			            variables.stream()
+			                     .map(v -> v.toString())
+			                     .collect(Collectors.joining(" ")) 
+			            + quantified.toString();
 		}
 		return stringRep;
 	}

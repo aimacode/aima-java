@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An assignment assigns values to some or all variables of a CSP.
@@ -89,8 +90,7 @@ public class Assignment {
 	 * respect to the given CSP.
 	 */
 	public boolean isSolution(CSP csp) {
-		return isConsistent(csp.getConstraints())
-				&& isComplete(csp.getVariables());
+		return isConsistent(csp.getConstraints()) && isComplete(csp.getVariables());
 	}
 
 	public Assignment copy() {
@@ -103,15 +103,10 @@ public class Assignment {
 
 	@Override
 	public String toString() {
-		boolean comma = false;
-		StringBuffer result = new StringBuffer("{");
-		for (Variable var : variables) {
-			if (comma)
-				result.append(", ");
-			result.append(var + "=" + variableToValue.get(var));
-			comma = true;
-		}
-		result.append("}");
-		return result.toString();
+		return "{" + 
+		       variables.stream()
+		                .map(var -> var + "=" + variableToValue.get(var))
+		                .collect(Collectors.joining(", ")) 
+		       + "}";
 	}
 }

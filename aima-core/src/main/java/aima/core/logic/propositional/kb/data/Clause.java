@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.SetOps;
@@ -29,11 +30,11 @@ public class Clause {
 	//
 	private Set<PropositionSymbol> cachedPositiveSymbols = new LinkedHashSet<PropositionSymbol>();
 	private Set<PropositionSymbol> cachedNegativeSymbols = new LinkedHashSet<PropositionSymbol>();
-	private Set<PropositionSymbol> cachedSymbols         = new LinkedHashSet<PropositionSymbol>();
+	private Set<PropositionSymbol> cachedSymbols = new LinkedHashSet<PropositionSymbol>();
 	//
 	private Boolean cachedIsTautologyResult = null;
-	private String  cachedStringRep         = null;
-	private int     cachedHashCode          = -1;
+	private String cachedStringRep = null;
+	private int cachedHashCode = -1;
 
 	/**
 	 * Default constructor - i.e. the empty clause, which is 'False'.
@@ -76,17 +77,15 @@ public class Clause {
 				}
 			}
 		}
-		
+
 		cachedSymbols.addAll(cachedPositiveSymbols);
 		cachedSymbols.addAll(cachedNegativeSymbols);
 
 		// Make immutable
 		this.literals = Collections.unmodifiableSet(this.literals);
 		cachedSymbols = Collections.unmodifiableSet(cachedSymbols);
-		cachedPositiveSymbols = Collections
-				.unmodifiableSet(cachedPositiveSymbols);
-		cachedNegativeSymbols = Collections
-				.unmodifiableSet(cachedNegativeSymbols);
+		cachedPositiveSymbols = Collections.unmodifiableSet(cachedPositiveSymbols);
+		cachedNegativeSymbols = Collections.unmodifiableSet(cachedNegativeSymbols);
 	}
 
 	/**
@@ -119,10 +118,10 @@ public class Clause {
 
 	/**
 	 * Determine if a definite clause. A definite clause is a disjunction of
-	 * literals of which <i>exactly one is positive</i>. <q>For example, the
-	 * clause (&not;L<sub>1,1</sub> &or; &not;Breeze &or; B<sub>1,1</sub>) is a
-	 * definite clause, whereas (&not;B<sub>1,1</sub> &or; P<sub>1,2</sub> &or;
-	 * P<sub>2,1</sub>) is not.</q>
+	 * literals of which <i>exactly one is positive</i>.
+	 * <q>For example, the clause (&not;L<sub>1,1</sub> &or; &not;Breeze &or;
+	 * B<sub>1,1</sub>) is a definite clause, whereas (&not;B<sub>1,1</sub> &or;
+	 * P<sub>1,2</sub> &or; P<sub>2,1</sub>) is not.</q>
 	 * 
 	 * 
 	 * @return true if a definite clause, false otherwise.
@@ -184,14 +183,12 @@ public class Clause {
 			}
 			// If we still don't know
 			if (cachedIsTautologyResult == null) {
-				if (SetOps.intersection(cachedPositiveSymbols, cachedNegativeSymbols)
-						.size() > 0) {
+				if (SetOps.intersection(cachedPositiveSymbols, cachedNegativeSymbols).size() > 0) {
 					// We have:
 					// P | ~P
 					// which is always true.
 					cachedIsTautologyResult = true;
-				}
-				else {
+				} else {
 					cachedIsTautologyResult = false;
 				}
 			}
@@ -231,10 +228,11 @@ public class Clause {
 	public Set<Literal> getLiterals() {
 		return literals;
 	}
-	
+
 	/**
 	 * 
-	 * @return the set of symbols from the clause's positive and negative literals.
+	 * @return the set of symbols from the clause's positive and negative
+	 *         literals.
 	 */
 	public Set<PropositionSymbol> getSymbols() {
 		return cachedSymbols;
@@ -259,19 +257,11 @@ public class Clause {
 	@Override
 	public String toString() {
 		if (cachedStringRep == null) {
-			StringBuilder sb = new StringBuilder();
-			boolean first = true;
-			sb.append("{");
-			for (Literal l : literals) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append(", ");
-				}
-				sb.append(l);
-			}
-			sb.append("}");
-			cachedStringRep = sb.toString();
+			cachedStringRep = "{" + 
+			                  literals.stream()
+			                          .map(l -> l.toString())
+			                          .collect(Collectors.joining(", ")) 
+			                  + "}";
 		}
 		return cachedStringRep;
 	}
