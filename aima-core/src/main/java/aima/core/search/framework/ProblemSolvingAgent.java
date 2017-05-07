@@ -12,7 +12,7 @@ import aima.core.util.Util;
 
 /**
  * Modified copy of class
- * {@link aima.search.framework.SimpleProblemSolvingAgent} which can be used for
+ * {@link aima.core.search.framework.SimpleProblemSolvingAgent} which can be used for
  * online search, too. Here, attribute {@link #plan} (original:
  * <code>seq</code>) is protected. Static pseudo code variable state is used in
  * a more general sense including world state as well as agent state aspects.
@@ -48,7 +48,7 @@ import aima.core.util.Util;
 public abstract class ProblemSolvingAgent extends AbstractAgent {
 
 	/** Plan, an action sequence, initially empty. */
-	protected List<Action> plan = new ArrayList<Action>();
+	protected List<Action> plan = new ArrayList<>();
 
 	public ProblemSolvingAgent() {
 	}

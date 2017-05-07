@@ -30,7 +30,7 @@ public class MapAgent extends ProblemSolvingAgent {
 
 	protected final Map map;
 	protected final DynamicState state = new DynamicState();
-	protected final List<String> goals = new ArrayList<String>();
+	protected final List<String> goals = new ArrayList<>();
 	protected int currGoalIdx = -1;
 
 	// possibly null...
