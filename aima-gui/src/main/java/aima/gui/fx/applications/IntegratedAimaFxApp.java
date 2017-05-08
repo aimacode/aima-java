@@ -21,6 +21,7 @@ import aima.gui.fx.applications.search.NQueensSearchApp;
 import aima.gui.fx.applications.search.NQueensSearchDemo;
 import aima.gui.fx.applications.search.games.ConnectFourApp;
 import aima.gui.fx.applications.search.games.EightPuzzleApp;
+import aima.gui.fx.applications.search.games.SimpleSudokuApp;
 import aima.gui.fx.applications.search.games.TicTacToeApp;
 import aima.gui.fx.applications.search.local.GeneticMaximumFinderApp;
 import aima.gui.fx.applications.search.local.GeneticMaximumFinderDemo;
@@ -63,6 +64,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(EightPuzzleApp.class);
 		builder.registerApp(ConnectFourApp.class);
 		builder.registerApp(TicTacToeApp.class);
+		builder.registerApp(SimpleSudokuApp.class);
 
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
