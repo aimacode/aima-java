@@ -13,7 +13,7 @@ import java.util.List;
  * @author Mike Stampone
  */
 public abstract class SolutionStrategy {
-	List<CSPStateListener> listeners = new ArrayList<CSPStateListener>();
+	private List<CSPStateListener> listeners = new ArrayList<>();
 
 	/**
 	 * Adds a CSP state listener to the solution strategy.

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import aima.core.util.datastructure.Pair;
 
@@ -125,7 +126,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 
 	/** Implements the minimum-remaining-values heuristic. */
 	private List<Variable> applyMRVHeuristic(CSP csp, Assignment assignment) {
-		List<Variable> result = new ArrayList<Variable>();
+		List<Variable> result = new ArrayList<>();
 		int mrv = Integer.MAX_VALUE;
 		for (Variable var : csp.getVariables()) {
 			if (!assignment.hasAssignmentFor(var)) {
@@ -145,7 +146,7 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	/** Implements the degree heuristic. */
 	private List<Variable> applyDegreeHeuristic(List<Variable> vars,
 			Assignment assignment, CSP csp) {
-		List<Variable> result = new ArrayList<Variable>();
+		List<Variable> result = new ArrayList<>();
 		int maxDegree = Integer.MIN_VALUE;
 		for (Variable var : vars) {
 			int degree = 0;
@@ -169,23 +170,13 @@ public class ImprovedBacktrackingStrategy extends BacktrackingStrategy {
 	/** Implements the least constraining value heuristic. */
 	private List<Object> applyLeastConstrainingValueHeuristic(Variable var,
 			CSP csp) {
-		List<Pair<Object, Integer>> pairs = new ArrayList<Pair<Object, Integer>>();
+		List<Pair<Object, Integer>> pairs = new ArrayList<>();
 		for (Object value : csp.getDomain(var)) {
 			int num = countLostValues(var, value, csp);
-			pairs.add(new Pair<Object, Integer>(value, num));
+			pairs.add(new Pair<>(value, num));
 		}
-		Collections.sort(pairs, new Comparator<Pair<Object, Integer>>() {
-			@Override
-			public int compare(Pair<Object, Integer> o1,
-					Pair<Object, Integer> o2) {
-				return o1.getSecond() < o2.getSecond() ? -1
-						: o1.getSecond() > o2.getSecond() ? 1 : 0;
-			}
-		});
-		List<Object> result = new ArrayList<Object>();
-		for (Pair<Object, Integer> pair : pairs)
-			result.add(pair.getFirst());
-		return result;
+		Collections.sort(pairs, Comparator.comparing(Pair::getSecond));
+		return pairs.stream().map(Pair::getFirst).collect(Collectors.toList());
 	}
 
 	private int countLostValues(Variable var, Object value, CSP csp) {

@@ -34,18 +34,17 @@ public class CSP {
 
 	/** Creates a new CSP. */
 	public CSP() {
-		variables = new ArrayList<Variable>();
-		domains = new ArrayList<Domain>();
-		constraints = new ArrayList<Constraint>();
-		varIndexHash = new Hashtable<Variable, Integer>();
-		cnet = new Hashtable<Variable, List<Constraint>>();
+		variables = new ArrayList<>();
+		domains = new ArrayList<>();
+		constraints = new ArrayList<>();
+		varIndexHash = new Hashtable<>();
+		cnet = new Hashtable<>();
 	}
 	
 	/** Creates a new CSP. */
 	public CSP(List<Variable> vars) {
 		this();
-		for (Variable v : vars)
-			addVariable(v);
+		vars.forEach(this::addVariable);
 	}
 
 	protected void addVariable(Variable var) {
@@ -54,7 +53,7 @@ public class CSP {
 			variables.add(var);
 			domains.add(emptyDomain);
 			varIndexHash.put(var, variables.size()-1);
-			cnet.put(var, new ArrayList<Constraint>());
+			cnet.put(var, new ArrayList<>());
 		} else {
 			throw new IllegalArgumentException("Variable with same name already exists.");
 		}
@@ -82,7 +81,7 @@ public class CSP {
 	 */
 	public void removeValueFromDomain(Variable var, Object value) {
 		Domain currDomain = getDomain(var);
-		List<Object> values = new ArrayList<Object>(currDomain.size());
+		List<Object> values = new ArrayList<>(currDomain.size());
 		for (Object v : currDomain)
 			if (!v.equals(value))
 				values.add(v);
@@ -129,7 +128,7 @@ public class CSP {
 	public CSP copyDomains() {
 		CSP result = new CSP();
 		result.variables = variables;
-		result.domains = new ArrayList<Domain>(domains.size());
+		result.domains = new ArrayList<>(domains.size());
 		result.domains.addAll(domains);
 		result.constraints = constraints;
 		result.varIndexHash = varIndexHash;

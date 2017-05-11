@@ -1,6 +1,6 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,9 +26,7 @@ public class Domain implements Iterable<Object> {
 	}
 
 	public Domain(Object[] values) {
-		this.values = new Object[values.length];
-		for (int i = 0; i < values.length; i++)
-			this.values[i] = values[i];
+		this.values = Arrays.copyOf(values, values.length);
 	}
 
 	public int size() {
@@ -57,10 +55,7 @@ public class Domain implements Iterable<Object> {
 
 	/** Not very efficient... */
 	public List<Object> asList() {
-		List<Object> result = new ArrayList<Object>();
-		for (Object value : values)
-			result.add(value);
-		return result;
+		return Arrays.asList(values);
 	}
 
 	@Override
@@ -81,14 +76,14 @@ public class Domain implements Iterable<Object> {
 	public int hashCode() {
 		int hash = 9; // arbitrary seed value
 		int multiplier = 13; // arbitrary multiplier value
-		for (int i = 0; i < values.length; i++)
-			hash = hash * multiplier + values[i].hashCode();
+		for (Object value : values)
+			hash = hash * multiplier + value.hashCode();
 		return hash;
 	}
 
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("{");
+		StringBuilder result = new StringBuilder("{");
 		boolean comma = false;
 		for (Object value : values) {
 			if (comma)

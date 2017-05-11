@@ -55,7 +55,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	 */
 	public static <STATE, ACTION, PLAYER> IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> createFor(
 			Game<STATE, ACTION, PLAYER> game, double utilMin, double utilMax, int time) {
-		return new IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER>(game, utilMin, utilMax, time);
+		return new IterativeDeepeningAlphaBetaSearch<>(game, utilMin, utilMax, time);
 	}
 
 	/**
@@ -105,21 +105,21 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 			if (logEnabled)
 				logText = new StringBuffer("depth " + currDepthLimit + ": ");
 			heuristicEvaluationUsed = false;
-			ActionStore<ACTION> newResults = new ActionStore<ACTION>();
+			ActionStore<ACTION> newResults = new ActionStore<>();
 			for (ACTION action : results) {
 				double value = minValue(game.getResult(state, action), player, Double.NEGATIVE_INFINITY,
 						Double.POSITIVE_INFINITY, 1);
-				if (timer.timeOutOccured())
+				if (timer.timeOutOccurred())
 					break; // exit from action loop
 				newResults.add(action, value);
 				if (logEnabled)
-					logText.append(action + "->" + value + " ");
+					logText.append(action).append("->").append(value).append(" ");
 			}
 			if (logEnabled)
 				System.out.println(logText);
 			if (newResults.size() > 0) {
 				results = newResults.actions;
-				if (!timer.timeOutOccured()) {
+				if (!timer.timeOutOccurred()) {
 					if (hasSafeWinner(newResults.utilValues.get(0)))
 						break; // exit from iterative deepening loop
 					else if (newResults.size() > 1
@@ -127,14 +127,14 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 						break; // exit from iterative deepening loop
 				}
 			}
-		} while (!timer.timeOutOccured() && heuristicEvaluationUsed);
+		} while (!timer.timeOutOccurred() && heuristicEvaluationUsed);
 		return results.get(0);
 	}
 
 	// returns an utility value
 	public double maxValue(STATE state, PLAYER player, double alpha, double beta, int depth) {
 		updateMetrics(depth);
-		if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccured()) {
+		if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred()) {
 			return eval(state, player);
 		} else {
 			double value = Double.NEGATIVE_INFINITY;
@@ -152,7 +152,7 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 	// returns an utility value
 	public double minValue(STATE state, PLAYER player, double alpha, double beta, int depth) {
 		updateMetrics(depth);
-		if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccured()) {
+		if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred()) {
 			return eval(state, player);
 		} else {
 			double value = Double.POSITIVE_INFINITY;
@@ -237,27 +237,27 @@ public class IterativeDeepeningAlphaBetaSearch<STATE, ACTION, PLAYER> implements
 		private long startTime;
 
 		Timer(int maxSeconds) {
-			this.duration = 1000l * maxSeconds;
+			this.duration = 1000 * maxSeconds;
 		}
 
 		void start() {
 			startTime = System.currentTimeMillis();
 		}
 
-		boolean timeOutOccured() {
+		boolean timeOutOccurred() {
 			return System.currentTimeMillis() > startTime + duration;
 		}
 	}
 
 	/** Orders actions by utility. */
 	private static class ActionStore<ACTION> {
-		private List<ACTION> actions = new ArrayList<ACTION>();
-		private List<Double> utilValues = new ArrayList<Double>();
+		private List<ACTION> actions = new ArrayList<>();
+		private List<Double> utilValues = new ArrayList<>();
 
 		void add(ACTION action, double utilValue) {
-			int idx;
-			for (idx = 0; idx < actions.size() && utilValue <= utilValues.get(idx); idx++)
-				;
+			int idx = 0;
+			while (idx < actions.size() && utilValue <= utilValues.get(idx))
+				idx++;
 			actions.add(idx, action);
 			utilValues.add(idx, utilValue);
 		}

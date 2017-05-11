@@ -75,7 +75,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 	}
 
 	private List<Variable> getConflictedVariables(Assignment assignment, CSP csp) {
-		List<Variable> result = new ArrayList<Variable>();
+		List<Variable> result = new ArrayList<>();
 		for (Constraint constraint : csp.getConstraints()) {
 			if (!constraint.isSatisfiedWith(assignment))
 				for (Variable var : constraint.getScope())
@@ -90,7 +90,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		List<Constraint> constraints = csp.getConstraints(var);
 		Assignment duplicate = assignment.copy();
 		int minConflict = Integer.MAX_VALUE;
-		List<Object> resultCandidates = new ArrayList<Object>();
+		List<Object> resultCandidates = new ArrayList<>();
 		for (Object value : csp.getDomain(var)) {
 			duplicate.setAssignment(var, value);
 			int currConflict = countConflicts(duplicate, constraints);

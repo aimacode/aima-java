@@ -75,9 +75,9 @@ public class DomainRestoreInfo {
 	}
 
 	public String toString() {
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		for (Pair<Variable, Domain> pair : savedDomains)
-			result.append(pair.getFirst() + "=" + pair.getSecond() + " ");
+			result.append(pair.getFirst()).append("=").append(pair.getSecond()).append(" ");
 		if (emptyDomainObserved)
 			result.append("!");
 		return result.toString();

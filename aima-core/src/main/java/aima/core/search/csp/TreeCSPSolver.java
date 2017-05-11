@@ -67,8 +67,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 						if (makeArcConsistent(l.get(parent[i]), var, constraint, csp, info)) {
 							if (csp.getDomain(l.get(parent[i])).isEmpty()) {
 								info.setEmptyDomainFound(true);
-								assignment = null;
-								return assignment;
+								return null;
 							}
 						}
 					}
@@ -87,8 +86,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 				}
 			}
 			if (!assignment_consistent) {
-				assignment = null;
-				return assignment;
+				return null;
 			}
 		}
 		return assignment;
