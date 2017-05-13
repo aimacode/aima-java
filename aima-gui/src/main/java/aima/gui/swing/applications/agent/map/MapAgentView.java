@@ -8,6 +8,7 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.util.math.geom.shapes.Point2D;
@@ -54,7 +55,7 @@ public class MapAgentView extends EmptyEnvironmentView {
 	 * is always send to the message logger as string.
 	 */
 	@Override
-	public void agentActed(Agent agent, Action command, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
 		MapEnvironment mEnv = getMapEnv();
 		String msg = "";
 		if (mEnv.getAgents().size() > 1)

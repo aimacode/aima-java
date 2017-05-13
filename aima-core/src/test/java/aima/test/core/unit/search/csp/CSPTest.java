@@ -35,8 +35,8 @@ public class CSPTest {
 		variables.add(X);
 		variables.add(Y);
 		variables.add(Z);
-		colors = new Domain(new Object[] { "red", "green", "blue" });
-		animals = new Domain(new Object[] { "cat", "dog" });
+		colors = new Domain("red", "green", "blue");
+		animals = new Domain("cat", "dog");
 	}
 
 	@Test

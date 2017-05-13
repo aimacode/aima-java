@@ -3,6 +3,7 @@ package aima.core.search.csp;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.util.CancelableThread;
 import aima.core.util.Util;
 
 /**
@@ -50,7 +51,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 	public Assignment solve(CSP csp) {
 		Assignment assignment = generateRandomAssignment(csp);
 		fireStateChanged(assignment, csp);
-		for (int i = 0; i < maxSteps; i++) {
+		for (int i = 0; i < maxSteps && !CancelableThread.currIsCanceled(); i++) {
 			if (assignment.isSolution(csp)) {
 				return assignment;
 			} else {

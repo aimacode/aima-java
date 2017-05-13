@@ -5,6 +5,7 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
 import javafx.geometry.Insets;
@@ -66,9 +67,9 @@ public class VacuumEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	}
 
 	@Override
-	public void agentActed(Agent agent, Action action, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		agentInAction = (action == VacuumEnvironment.ACTION_SUCK) ? agent : null;
-		super.agentActed(agent, action, source);
+		super.agentActed(agent, percept, action, source);
 	}
 
 	@Override

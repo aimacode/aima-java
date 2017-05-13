@@ -34,10 +34,12 @@ public interface EnvironmentView {
 	 * 
 	 * @param agent
 	 *            the Agent that performed the Action.
+	 * @param percept
+	 *            the Percept the Agent received from the environment.
 	 * @param action
 	 *            the Action the Agent performed.
 	 * @param source
 	 *            the Environment in which the agent has acted.
 	 */
-	void agentActed(Agent agent, Action action, Environment source);
+	void agentActed(Agent agent, Percept percept, Action action, Environment source);
 }

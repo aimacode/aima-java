@@ -73,7 +73,7 @@ public class AC3Strategy {
 				Queue<Variable> queue = QueueFactory.<Variable>createLifoQueue();
 				queue.add(var);
 				result.storeDomainFor(var, domain);
-				csp.setDomain(var, new Domain(new Object[] { value }));
+				csp.setDomain(var, new Domain(value));
 				reduceDomains(queue, csp, result);
 			}
 		} else {

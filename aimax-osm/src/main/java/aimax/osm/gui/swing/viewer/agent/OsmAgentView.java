@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
@@ -85,7 +86,7 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * Reacts on environment changes and updates the tracks.
 	 */
 	@Override
-	public void agentActed(Agent agent, Action command, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
 		String msg = "";
 		if (env.getAgents().size() > 1)
 			msg = "A" + env.getAgents().indexOf(agent) + ": ";

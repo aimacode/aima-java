@@ -38,8 +38,7 @@ public class CSPEnvironment extends AbstractEnvironment {
 				csp = a.getCSP();
 			if (a.updateAssignment())
 				assignment = a.getAssignment();
-			if (agent == null)
-				notifyEnvironmentViews(agent, action);
+			notifyEnvironmentViews(null, null, action); // Hack!
 		}
 	}
 

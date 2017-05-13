@@ -1,13 +1,10 @@
 package aima.test.core.unit.environment.map;
 
+import aima.core.agent.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.Action;
-import aima.core.agent.Agent;
-import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -100,7 +97,7 @@ public class MapAgentTest {
 			// Nothing
 		}
 
-		public void agentActed(Agent agent, Action action, Environment source) {
+		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}

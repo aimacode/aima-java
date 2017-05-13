@@ -158,16 +158,16 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			showState();
 		}
 
-		/** Agent value null indicates a user initiated action. */
-		@Override
-		public void agentActed(Agent agent, Action action, Environment source) {
-			showState();
-			notify((agent == null ? "User: " : "") + action.toString());
-		}
-
 		@Override
 		public void agentAdded(Agent agent, Environment source) {
 			showState();
+		}
+
+		/** Agent value null indicates a user initiated action. */
+		@Override
+		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+			showState();
+			notify((agent == null ? "User: " : "") + action.toString());
 		}
 
 		/**
@@ -371,8 +371,6 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				board.moveGapLeft();
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
-			if (agent == null)
-				notifyEnvironmentViews(agent, action);
 		}
 
 		/** Returns null. */

@@ -25,13 +25,13 @@ public abstract class AbstractEnvironment implements Environment,
 	// Note: Use LinkedHashSet's in order to ensure order is respected as
 	// provide
 	// access to these elements via List interface.
-	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<EnvironmentObject>();
+	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<>();
 
-	protected Set<Agent> agents = new LinkedHashSet<Agent>();
+	protected Set<Agent> agents = new LinkedHashSet<>();
 
-	protected Set<EnvironmentView> views = new LinkedHashSet<EnvironmentView>();
+	protected Set<EnvironmentView> views = new LinkedHashSet<>();
 
-	protected Map<Agent, Double> performanceMeasures = new LinkedHashMap<Agent, Double>();
+	protected Map<Agent, Double> performanceMeasures = new LinkedHashMap<>();
 
 	//
 	// PRUBLIC METHODS
@@ -97,9 +97,10 @@ public abstract class AbstractEnvironment implements Environment,
 	public void step() {
 		for (Agent agent : agents) {
 			if (agent.isAlive()) {
-				Action anAction = agent.execute(getPerceptSeenBy(agent));
+				Percept percept = getPerceptSeenBy(agent);
+				Action anAction = agent.execute(percept);
 				executeAction(agent, anAction);
-				notifyEnvironmentViews(agent, anAction);
+				notifyEnvironmentViews(agent, percept, anAction);
 			}
 		}
 		createExogenousChange();
@@ -129,7 +130,7 @@ public abstract class AbstractEnvironment implements Environment,
 	public double getPerformanceMeasure(Agent forAgent) {
 		Double pm = performanceMeasures.get(forAgent);
 		if (null == pm) {
-			pm = new Double(0);
+			pm = 0.0;
 			performanceMeasures.put(forAgent, pm);
 		}
 
@@ -168,9 +169,9 @@ public abstract class AbstractEnvironment implements Environment,
 		}
 	}
 
-	protected void notifyEnvironmentViews(Agent agent, Action action) {
+	protected void notifyEnvironmentViews(Agent agent, Percept percept, Action action) {
 		for (EnvironmentView view : views) {
-			view.agentActed(agent, action, this);
+			view.agentActed(agent, percept, action, this);
 		}
 	}
 }

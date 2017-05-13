@@ -20,13 +20,11 @@ public class Domain implements Iterable<Object> {
 	private Object[] values;
 
 	public Domain(List<?> values) {
-		this.values = new Object[values.size()];
-		for (int i = 0; i < values.size(); i++)
-			this.values[i] = values.get(i);
+		this.values = values.toArray();
 	}
 
-	public Domain(Object[] values) {
-		this.values = Arrays.copyOf(values, values.length);
+	public Domain(Object... values) {
+		this.values = values;
 	}
 
 	public int size() {

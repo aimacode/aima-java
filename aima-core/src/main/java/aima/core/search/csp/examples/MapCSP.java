@@ -39,7 +39,7 @@ public class MapCSP extends CSP {
 		addVariable(V);
 		addVariable(T);
 
-		Domain colors = new Domain(new Object[] { RED, GREEN, BLUE });
+		Domain colors = new Domain(RED, GREEN, BLUE);
 
 		for (Variable var : getVariables())
 			setDomain(var, colors);

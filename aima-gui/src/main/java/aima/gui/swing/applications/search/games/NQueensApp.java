@@ -151,16 +151,16 @@ public class NQueensApp extends SimpleAgentApp {
 			showState();
 		}
 
-		/** Agent value null indicates a user initiated action. */
-		@Override
-		public void agentActed(Agent agent, Action action, Environment source) {
-			showState();
-			notify((agent == null ? "User: " : "") + action.toString());
-		}
-
 		@Override
 		public void agentAdded(Agent agent, Environment source) {
 			showState();
+		}
+
+		/** Agent value null indicates a user initiated action. */
+		@Override
+		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+			showState();
+			notify((agent == null ? "User: " : "") + action.toString());
 		}
 
 		/**
@@ -382,8 +382,6 @@ public class NQueensApp extends SimpleAgentApp {
 					board.removeQueenFrom(loc);
 				else if (act.getName() == QueenAction.MOVE_QUEEN)
 					board.moveQueenTo(loc);
-				if (agent == null)
-					notifyEnvironmentViews(agent, action);
 			}
 		}
 

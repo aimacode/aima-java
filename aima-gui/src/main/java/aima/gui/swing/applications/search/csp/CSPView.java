@@ -9,6 +9,7 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
@@ -57,7 +58,7 @@ public class CSPView extends EmptyEnvironmentView {
 
 	/** Agent and resulting state may be null. */
 	@Override
-	public void agentActed(Agent agent, Action action, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		super.agentAdded(agent, source);
 		notify(action.toString());
 	}

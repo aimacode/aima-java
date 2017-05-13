@@ -10,6 +10,7 @@ import java.util.List;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.gui.swing.framework.EmptyEnvironmentView;
@@ -26,13 +27,13 @@ public class VacuumView extends EmptyEnvironmentView {
 	private Hashtable<Agent, Action> lastActions = new Hashtable<Agent, Action>();
 
 	@Override
-	public void agentActed(Agent agent, Action action, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		lastActions.put(agent, action);
 		String prefix = "";
 		if (env.getAgents().size() > 1)
 			prefix = "A" + env.getAgents().indexOf(agent) + ": ";
 		notify(prefix + action.toString());
-		super.agentActed(agent, action, source);
+		super.agentActed(agent, percept, action, source);
 	}
 
 	protected VacuumEnvironment getVacuumEnv() {

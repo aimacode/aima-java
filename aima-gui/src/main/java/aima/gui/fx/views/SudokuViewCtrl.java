@@ -81,6 +81,7 @@ public class SudokuViewCtrl {
         getCombo(col, row).getSelectionModel().select(digit + 9);
     }
 
+    /** Return a digit between 1 and 9 or -1 if no value has been selected yet. */
     public int getDigit(int col, int row) {
         int selIdx = getCombo(col, row).getSelectionModel().getSelectedIndex();
         if (selIdx == 0)

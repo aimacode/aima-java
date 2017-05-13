@@ -5,6 +5,7 @@ import java.awt.Color;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.Percept;
 import aima.core.util.math.geom.shapes.Point2D;
 
 /**
@@ -91,12 +92,12 @@ public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 	}
 
 	@Override
-	public void agentActed(Agent agent, Action action, Environment source) {
+	public void agentAdded(Agent agent, Environment source) {
 		repaint();
 	}
 
 	@Override
-	public void agentAdded(Agent agent, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		repaint();
 	}
 

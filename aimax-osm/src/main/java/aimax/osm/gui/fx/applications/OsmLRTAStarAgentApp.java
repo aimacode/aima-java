@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import aima.core.agent.Action;
-import aima.core.agent.Agent;
-import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.*;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
@@ -197,7 +194,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		 * Reacts on environment changes and updates the tracks.
 		 */
 		@Override
-		public void agentActed(Agent agent, Action command, Environment source) {
+		public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
 			if (command instanceof MoveToAction) {
 				Metrics metrics = new Metrics();
 				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));

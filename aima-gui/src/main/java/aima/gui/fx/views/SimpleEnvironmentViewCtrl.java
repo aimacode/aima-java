@@ -1,9 +1,6 @@
 package aima.gui.fx.views;
 
-import aima.core.agent.Action;
-import aima.core.agent.Agent;
-import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.*;
 import javafx.application.Platform;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
@@ -68,7 +65,8 @@ public class SimpleEnvironmentViewCtrl extends Observable implements Environment
 	@Override
 	public void agentAdded(Agent agent, Environment source) {
 		Platform.runLater(() -> {
-			textArea.appendText("\nAgent added.");
+			int agentId = source.getAgents().indexOf(agent) + 1;
+			textArea.appendText("\nAgent " + agentId + " added.");
 			updateEnvStateView(source);
 		});
 
@@ -78,9 +76,12 @@ public class SimpleEnvironmentViewCtrl extends Observable implements Environment
 	 * Should not be called from an FX application thread.
 	 */
 	@Override
-	public void agentActed(Agent agent, Action action, Environment source) {
+	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		Platform.runLater(() -> {
-			textArea.appendText("\nAgent acted: " + action.toString());
+			int agentId = source.getAgents().indexOf(agent) + 1;
+			textArea.appendText("\nAgent " + agentId + " acted.");
+			textArea.appendText("\n   Percept: " + percept.toString());
+			textArea.appendText("\n   Action: " + action.toString());
 			updateEnvStateView(source);
 		});
 	}

@@ -39,7 +39,7 @@ public class TreeCSPSolverTest {
 		variables.add(Q);
 		variables.add(NSW);
 		variables.add(V);
-		colors = new Domain(new Object[] { "red", "green", "blue" });
+		colors = new Domain("red", "green", "blue");
 	}
 
 	@Test
