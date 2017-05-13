@@ -20,8 +20,7 @@ import java.util.List;
  */
 public class SudokuViewCtrl {
 
-    private GridPane gridPane = new GridPane();
-    private List<ComboBox<String>> combos = new ArrayList(81);
+    private List<ComboBox<String>> combos = new ArrayList<>(81);
 
     /**
      * Adds a grid pane with combo boxes to the provided root pane and returns
@@ -29,6 +28,7 @@ public class SudokuViewCtrl {
      */
     public SudokuViewCtrl(StackPane viewRoot) {
         // create grid layout
+        GridPane gridPane = new GridPane();
         viewRoot.getChildren().add(gridPane);
         viewRoot.setAlignment(Pos.BOTTOM_CENTER);
         gridPane.maxWidthProperty().bind(viewRoot.widthProperty().subtract(20));
