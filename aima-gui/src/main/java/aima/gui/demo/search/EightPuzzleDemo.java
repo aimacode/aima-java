@@ -1,6 +1,5 @@
 package aima.gui.demo.search;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,15 +21,19 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 
 public class EightPuzzleDemo {
-	static EightPuzzleBoard boardWithThreeMoveSolution = new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });;
+	private static EightPuzzleBoard boardWithThreeMoveSolution =
+			new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
 
-	static EightPuzzleBoard random1 = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
+	private static EightPuzzleBoard random1 =
+			new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
 
-	static EightPuzzleBoard extreme = new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
+	private static EightPuzzleBoard extreme =
+			new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
 
 	public static void main(String[] args) {
 		eightPuzzleDLSDemo();
@@ -150,9 +153,8 @@ public class EightPuzzleDemo {
 	}
 
 	private static void printInstrumentation(Properties properties) {
-		Iterator<Object> keys = properties.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = (String) keys.next();
+		for (Object o : properties.keySet()) {
+			String key = (String) o;
 			String property = properties.getProperty(key);
 			System.out.println(key + " : " + property);
 		}
@@ -160,10 +162,7 @@ public class EightPuzzleDemo {
 	}
 
 	private static void printActions(List<Action> actions) {
-		for (int i = 0; i < actions.size(); i++) {
-			String action = actions.get(i).toString();
-			System.out.println(action);
-		}
+		for (Action action : actions)
+			System.out.println(action.toString());
 	}
-
 }

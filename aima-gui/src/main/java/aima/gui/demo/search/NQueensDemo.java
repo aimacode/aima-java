@@ -2,7 +2,6 @@ package aima.gui.demo.search;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -154,18 +153,18 @@ public class NQueensDemo {
 		}
 	}
 
-	public static void nQueensGeneticAlgorithmSearch() {
+	private static void nQueensGeneticAlgorithmSearch() {
 		System.out.println("\nNQueensDemo GeneticAlgorithm  -->");
 		try {
 			FitnessFunction<Integer> fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
 			GoalTest goalTest = NQueensGenAlgoUtil.getGoalTest();
 			// Generate an initial population
-			Set<Individual<Integer>> population = new HashSet<Individual<Integer>>();
+			Set<Individual<Integer>> population = new HashSet<>();
 			for (int i = 0; i < 50; i++) {
 				population.add(NQueensGenAlgoUtil.generateRandomIndividual(boardSize));
 			}
 
-			GeneticAlgorithm<Integer> ga = new GeneticAlgorithm<Integer>(boardSize,
+			GeneticAlgorithm<Integer> ga = new GeneticAlgorithm<>(boardSize,
 					NQueensGenAlgoUtil.getFiniteAlphabetForBoardOfSize(boardSize), 0.15);
 
 			// Run for a set amount of time
@@ -201,9 +200,8 @@ public class NQueensDemo {
 	}
 
 	private static void printInstrumentation(Properties properties) {
-		Iterator<Object> keys = properties.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = (String) keys.next();
+		for (Object o : properties.keySet()) {
+			String key = (String) o;
 			String property = properties.getProperty(key);
 			System.out.println(key + " : " + property);
 		}
@@ -211,9 +209,8 @@ public class NQueensDemo {
 	}
 
 	private static void printActions(List<Action> actions) {
-		for (int i = 0; i < actions.size(); i++) {
-			String action = actions.get(i).toString();
-			System.out.println(action);
+		for (Action action : actions) {
+			System.out.println(action.toString());
 		}
 	}
 
