@@ -138,13 +138,14 @@ public class CspViewCtrl {
         double xMax = Double.NEGATIVE_INFINITY;
         double yMin = Double.POSITIVE_INFINITY;
         double yMax = Double.NEGATIVE_INFINITY;
-        for (Variable var : csp.getVariables()) {
-            Point2D point = getPosition(var);
-            xMin = Math.min(xMin, point.getX());
-            xMax = Math.max(xMax, point.getX());
-            yMin = Math.min(yMin, point.getY());
-            yMax = Math.max(yMax, point.getY());
-        }
+        if (csp != null)
+            for (Variable var : csp.getVariables()) {
+                Point2D point = getPosition(var);
+                xMin = Math.min(xMin, point.getX());
+                xMax = Math.max(xMax, point.getX());
+                yMin = Math.min(yMin, point.getY());
+                yMax = Math.max(yMax, point.getY());
+            }
         double scale = Math.min(pane.getWidth() / (xMax - xMin + 300),
                 pane.getHeight() / (yMax - yMin + 150));
 

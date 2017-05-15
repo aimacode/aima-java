@@ -77,7 +77,7 @@ public class CspMapColoringApp extends IntegrableApplication {
                 "Map of Australia NSW=BLUE (for LCV)",
                 "Map of Australia WA=RED (for LCV)");
         Parameter p2 = new Parameter(PARAM_STRATEGY, "Backtracking",
-                "Backtracking + MRV & DEG",
+                "Backtracking + DEG",
                 "Backtracking + Forward Checking",
                 "Backtracking + Forward Checking + MRV",
                 "Backtracking + Forward Checking + LCV",
@@ -125,8 +125,8 @@ public class CspMapColoringApp extends IntegrableApplication {
             case 0:
                 strategy = new BacktrackingStrategy();
                 break;
-            case 1: // MRV + DEG
-                strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg());
+            case 1: // DEG
+                strategy = new BacktrackingStrategy().set(CspHeuristics.deg());
                 break;
             case 2: // FC
                 strategy = new BacktrackingStrategy().set(new ForwardCheckingStrategy());
@@ -140,7 +140,7 @@ public class CspMapColoringApp extends IntegrableApplication {
             case 5: // AC3
                 strategy = new BacktrackingStrategy().set(new AC3Strategy());
                 break;
-            case 6: // MRV + DEG + LCV + AC3
+            case 6: // MRV & DEG + LCV + AC3
                 strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
                         .set(new AC3Strategy());
                 break;
