@@ -12,7 +12,7 @@ import aima.core.search.csp.Variable;
  * 
  * @author Ruediger Lunde
  */
-public class DiffNotEqualConstraint implements Constraint {
+public class DiffNotEqualConstraint implements Constraint<Variable, Integer> {
 
 	private Variable var1;
 	private Variable var2;
@@ -34,12 +34,9 @@ public class DiffNotEqualConstraint implements Constraint {
 	}
 
 	@Override
-	public boolean isSatisfiedWith(Assignment assignment) {
-		Object value1 = assignment.getValue(var1);
-		Object value2 = assignment.getValue(var2);
-		return (value1 == null || value2 == null ||
-				value1 instanceof Integer &&
-				value2 instanceof Integer &&
-				Math.abs((Integer) value1 - (Integer) value2) != diff);
+	public boolean isSatisfiedWith(Assignment<Variable, Integer> assignment) {
+		Integer value1 = assignment.getValue(var1);
+		Integer value2 = assignment.getValue(var2);
+		return (value1 == null || value2 == null || Math.abs(value1 - value2) != diff);
 	}
 }

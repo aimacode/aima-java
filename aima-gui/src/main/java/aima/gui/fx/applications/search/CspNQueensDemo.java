@@ -8,21 +8,21 @@ import aima.core.search.framework.Metrics;
 public class CspNQueensDemo {
 	public static void main(String[] args) {
 		int size = 64;
-		CSP csp = new NQueensCSP(size);
+		CSP<Variable, Integer> csp = new NQueensCSP(size);
 		StepCounter stepCounter = new StepCounter();
-		SolutionStrategy solver;
+		SolutionStrategy<Variable, Integer> solver;
 		
 		System.out.println(size + "-Queens (Min-Conflicts)");
-		solver = new MinConflictsStrategy(1000);
+		solver = new MinConflictsStrategy<>(1000);
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
-		Assignment sol = solver.solve(csp.copyDomains());
+		Assignment<Variable, Integer> sol = solver.solve(csp.copyDomains());
 		System.out.println((sol.isSolution(csp) ? ":-) " : ":-( ") + sol);
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		System.out.println(size + "-Queens (Backtracking + MRV & DEG + LCV + AC3)");
-		solver = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
-				.set(new AC3Strategy());
+		solver = new BacktrackingStrategy<Variable, Integer>().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
+				.set(new AC3Strategy<>());
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));
@@ -32,7 +32,7 @@ public class CspNQueensDemo {
 		size = 16;
 		csp = new NQueensCSP(size);
 		System.out.println(size + "-Queens (Backtracking)");
-		solver = new BacktrackingStrategy();
+		solver = new BacktrackingStrategy<>();
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));
@@ -40,17 +40,17 @@ public class CspNQueensDemo {
 	}
 	
 	
-	protected static class StepCounter implements CspListener {
+	protected static class StepCounter implements CspListener<Variable, Integer> {
 		private int assignmentCount = 0;
 		private int domainCount = 0;
 		
 		@Override
-		public void stateChanged(Assignment assignment, CSP csp) {
+		public void stateChanged(Assignment<Variable, Integer> assignment, CSP<Variable, Integer> csp) {
 			++assignmentCount;
 		}
 		
 		@Override
-		public void stateChanged(CSP csp) {
+		public void stateChanged(CSP<Variable, Integer> csp) {
 			++domainCount;
 		}
 		

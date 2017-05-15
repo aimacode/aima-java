@@ -10,16 +10,16 @@ import aima.core.search.csp.Variable;
  *
  * @author Ruediger Lunde
  */
-public interface InferenceStrategy {
+public interface InferenceStrategy<VAR extends Variable, VAL> {
 
     /**
      * Inference method which is called before backtracking is started.
      */
-    InferenceLog apply(CSP csp);
+    InferenceLog apply(CSP<VAR, VAL> csp);
 
     /**
      * Inference method which is called after the assignment has (recursively) been extended by a value assignment
      * for <code>var</code>.
      */
-    InferenceLog apply(Variable var, Assignment assignment, CSP csp);
+    InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
 }

@@ -19,9 +19,9 @@ import aima.core.util.datastructure.Pair;
  * @author Ruediger Lunde
  * 
  */
-public class DomainLog implements InferenceLog {
-	private List<Pair<Variable, Domain>> savedDomains;
-	private HashSet<Variable> affectedVariables;
+public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, VAL> {
+	private List<Pair<VAR, Domain<VAL>>> savedDomains;
+	private HashSet<VAR> affectedVariables;
 	private boolean emptyDomainObserved;
 
 	public DomainLog() {
@@ -38,7 +38,7 @@ public class DomainLog implements InferenceLog {
 	 * Stores the specified domain for the specified variable if a domain has
 	 * not yet been stored for the variable.
 	 */
-	public void storeDomainFor(Variable var, Domain domain) {
+	public void storeDomainFor(VAR var, Domain<VAL> domain) {
 		if (!affectedVariables.contains(var)) {
 			savedDomains.add(new Pair<>(var, domain));
 			affectedVariables.add(var);
@@ -55,7 +55,7 @@ public class DomainLog implements InferenceLog {
 	 * 
 	 * @return this object, after removing one hashtable.
 	 */
-	public DomainLog compactify() {
+	public DomainLog<VAR, VAL> compactify() {
 		affectedVariables = null;
 		return this;
 	}
@@ -66,8 +66,8 @@ public class DomainLog implements InferenceLog {
 	}
 
 	@Override
-	public void undo(CSP csp) {
-		for (Pair<Variable, Domain> pair : getSavedDomains())
+	public void undo(CSP<VAR, VAL> csp) {
+		for (Pair<VAR, Domain<VAL>> pair : getSavedDomains())
 			csp.setDomain(pair.getFirst(), pair.getSecond());
 	}
 
@@ -76,13 +76,13 @@ public class DomainLog implements InferenceLog {
 		return emptyDomainObserved;
 	}
 
-	public List<Pair<Variable, Domain>> getSavedDomains() {
+	private List<Pair<VAR, Domain<VAL>>> getSavedDomains() {
 		return savedDomains;
 	}
 
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		for (Pair<Variable, Domain> pair : savedDomains)
+		for (Pair<VAR, Domain<VAL>> pair : savedDomains)
 			result.append(pair.getFirst()).append("=").append(pair.getSecond()).append(" ");
 		if (emptyDomainObserved)
 			result.append("!");

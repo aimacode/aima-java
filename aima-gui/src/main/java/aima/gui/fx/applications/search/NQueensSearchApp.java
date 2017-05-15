@@ -101,6 +101,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 		experiment.setBoardSize(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		Config config;
+		//noinspection SuspiciousMethodCalls
 		if (Arrays.asList("Depth-First Search (incremental)", "Breadth-First Search (incremental)", "Genetic Algorithm")
                 .contains(strategy))
 			config = Config.EMPTY;

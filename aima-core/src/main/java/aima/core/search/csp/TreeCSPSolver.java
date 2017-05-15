@@ -38,36 +38,37 @@ import aima.core.util.Util;
  * detect a contradiction.
  * 
  * @author Anurag Rai
+ * @author Ruediger Lunde
  * 
  */
-public class TreeCSPSolver extends SolutionStrategy {
+public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
 
 	@Override
-	public Assignment solve(CSP csp) {
+	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
 
-		Assignment assignment = new Assignment();
+		Assignment<VAR, VAL> assignment = new Assignment<>();
 		// Get the list of Variables from CSP to calculate the size
-		List<Variable> l = csp.getVariables();
+		List<VAR> l = csp.getVariables();
 		// Calculate the size
 		int n = l.size();
 		// Select a random root from the List of Vaiables
-		Variable root = Util.selectRandomlyFromList(l);
+		VAR root = Util.selectRandomlyFromList(l);
 		// Sort the variables in topological order
 		l = topologicalSort(csp, l, root);
 
-		DomainLog info = new DomainLog();
+		DomainLog log = new DomainLog();
 
 		for (int i = n - 1; i >= 1; i--) {
-			Variable var = l.get(i);
+			VAR var = l.get(i);
 			// get constraints to find the parent
-			for (Constraint constraint : csp.getConstraints(var)) {
+			for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
 				if (constraint.getScope().size() == 2) {
 					// if the neighbour is parent
 					if (csp.getNeighbor(var, constraint) == l.get(parent[i])) {
 						// make it Arc Consistent
-						if (makeArcConsistent(l.get(parent[i]), var, constraint, csp, info)) {
+						if (makeArcConsistent(l.get(parent[i]), var, constraint, csp, log)) {
 							if (csp.getDomain(l.get(parent[i])).isEmpty()) {
-								info.setEmptyDomainFound(true);
+								log.setEmptyDomainFound(true);
 								return null;
 							}
 						}
@@ -77,9 +78,9 @@ public class TreeCSPSolver extends SolutionStrategy {
 		}
 		boolean assignment_consistent = false;
 		for (int i = 0; i < n; i++) {
-			Variable var = l.get(i);
+			VAR var = l.get(i);
 			assignment_consistent = false;
-			for (Object value : csp.getDomain(var)) {
+			for (VAL value : csp.getDomain(var)) {
 				assignment.add(var, value);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
 					assignment_consistent = true;
@@ -99,12 +100,12 @@ public class TreeCSPSolver extends SolutionStrategy {
 
 	// Since the graph is a tree, topologicalSort is:
 	// Level order traversal of the tree OR BFS on tree OR Pre-oder
-	protected List<Variable> topologicalSort(CSP csp, List<Variable> l, Variable root) {
+	protected List<VAR> topologicalSort(CSP<VAR, VAL> csp, List<VAR> l, VAR root) {
 		// Track the parents
 		parent = new int[l.size()];
 		
-		List<Variable> result = new ArrayList<>();
-		Queue<Variable> q = new LinkedList<>(); // FIFO-Queue
+		List<VAR> result = new ArrayList<>();
+		Queue<VAR> q = new LinkedList<>(); // FIFO-Queue
 
 		int i = 1;
 		int parent_index = 0;
@@ -117,11 +118,11 @@ public class TreeCSPSolver extends SolutionStrategy {
 
 			while (node_count > 0) {
 
-				Variable var = q.remove();
+				VAR var = q.remove();
 				result.add(var);
 				// for each binary constraint of the Variable
-				for (Constraint constraint : csp.getConstraints(var)) {
-					Variable neighbour = csp.getNeighbor(var, constraint);
+				for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
+					VAR neighbour = csp.getNeighbor(var, constraint);
 					// check if neighbour is root
 					if (result.contains(neighbour))
 						continue;
@@ -136,14 +137,14 @@ public class TreeCSPSolver extends SolutionStrategy {
 		return result;
 	}
 
-	protected boolean makeArcConsistent(Variable xi, Variable xj, Constraint constraint, CSP csp,
-			DomainLog info) {
+	protected boolean makeArcConsistent(VAR xi, VAR xj, Constraint<VAR, VAL> constraint, CSP<VAR, VAL> csp,
+			DomainLog<VAR, VAL> log) {
 		boolean revised = false;
-		Assignment assignment = new Assignment();
-		for (Object iValue : csp.getDomain(xi)) {
+		Assignment<VAR, VAL> assignment = new Assignment<>();
+		for (VAL iValue : csp.getDomain(xi)) {
 			assignment.add(xi, iValue);
 			boolean consistentExtensionFound = false;
-			for (Object jValue : csp.getDomain(xj)) {
+			for (VAL jValue : csp.getDomain(xj)) {
 				assignment.add(xj, jValue);
 				if (constraint.isSatisfiedWith(assignment)) {
 					consistentExtensionFound = true;
@@ -151,7 +152,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 				}
 			}
 			if (!consistentExtensionFound) {
-				info.storeDomainFor(xi, csp.getDomain(xi));
+				log.storeDomainFor(xi, csp.getDomain(xi));
 				csp.removeValueFromDomain(xi, iValue);
 				revised = true;
 			}

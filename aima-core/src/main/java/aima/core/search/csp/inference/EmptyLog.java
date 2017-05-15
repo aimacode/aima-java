@@ -1,14 +1,13 @@
 package aima.core.search.csp.inference;
 
 import aima.core.search.csp.CSP;
+import aima.core.search.csp.Variable;
 
 /**
- * Singleton which represents an empty inference log.
+ * Represents an empty inference log.
  * @author Ruediger Lunde
  */
-public class EmptyLog implements InferenceLog {
-    private static final EmptyLog instance = new EmptyLog();
-    public static EmptyLog instance() { return instance; }
+public class EmptyLog<VAR extends Variable, VAL> implements InferenceLog<VAR, VAL> {
 
     @Override
     public boolean isEmpty() {
@@ -21,6 +20,6 @@ public class EmptyLog implements InferenceLog {
     }
 
     @Override
-    public void undo(CSP csp) {
+    public void undo(CSP<VAR, VAL> csp) {
     }
 }

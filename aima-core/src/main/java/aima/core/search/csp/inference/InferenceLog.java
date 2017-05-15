@@ -1,6 +1,7 @@
 package aima.core.search.csp.inference;
 
 import aima.core.search.csp.CSP;
+import aima.core.search.csp.Variable;
 
 /**
  * Provides information about (1) whether changes have been performed, (2) possibly inferred empty domains , and
@@ -8,8 +9,8 @@ import aima.core.search.csp.CSP;
  *
  * @author Ruediger Lunde
  */
-public interface InferenceLog {
+public interface InferenceLog<VAR extends Variable, VAL> {
     boolean isEmpty();
     boolean inconsistencyFound();
-    void undo(CSP csp);
+    void undo(CSP<VAR, VAL> csp);
 }

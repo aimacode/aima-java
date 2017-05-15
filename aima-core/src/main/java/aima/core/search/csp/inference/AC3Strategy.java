@@ -41,7 +41,7 @@ import aima.core.search.framework.QueueFactory;
  * 
  * @author Ruediger Lunde
  */
-public class AC3Strategy implements InferenceStrategy {
+public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy<VAR, VAL> {
 
 	/**
 	 * Makes a CSP consisting of binary constraints arc-consistent.
@@ -49,10 +49,10 @@ public class AC3Strategy implements InferenceStrategy {
 	 * @return An object which indicates success/failure and contains data to
 	 *         undo the operation.
 	 */
-	public InferenceLog apply(CSP csp) {
-		Queue<Variable> queue = QueueFactory.createLifoQueue();
+	public InferenceLog<VAR, VAL> apply(CSP<VAR, VAL> csp) {
+		Queue<VAR> queue = QueueFactory.createLifoQueue();
 		queue.addAll(csp.getVariables());
-		DomainLog log = new DomainLog();
+		DomainLog<VAR, VAL> log = new DomainLog<>();
 		reduceDomains(queue, csp, log);
 		return log.compactify();
 	}
@@ -65,30 +65,30 @@ public class AC3Strategy implements InferenceStrategy {
 	 * @return An object which indicates success/failure and contains data to
 	 *         undo the operation.
 	 */
-	public InferenceLog apply(Variable var, Assignment assignment, CSP csp) {
-		Domain domain = csp.getDomain(var);
-		Object value = assignment.getValue(var);
+	public InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+		Domain<VAL> domain = csp.getDomain(var);
+		VAL value = assignment.getValue(var);
 		assert domain.contains(value);
-		DomainLog log = new DomainLog();
+		DomainLog<VAR, VAL> log = new DomainLog<>();
 		if (domain.size() > 1) {
-			Queue<Variable> queue = QueueFactory.createLifoQueue();
+			Queue<VAR> queue = QueueFactory.createLifoQueue();
 			queue.add(var);
 			log.storeDomainFor(var, domain);
-			csp.setDomain(var, new Domain(value));
+			csp.setDomain(var, new Domain<>(value));
 			reduceDomains(queue, csp, log);
 		}
 		return log.compactify();
 	}
 
-	private void reduceDomains(Queue<Variable> queue, CSP csp, DomainLog info) {
+	private void reduceDomains(Queue<VAR> queue, CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 		while (!queue.isEmpty()) {
-			Variable var = queue.remove();
-			for (Constraint constraint : csp.getConstraints(var)) {
+			VAR var = queue.remove();
+			for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
 				if (constraint.getScope().size() == 2) {
-					Variable neighbor = csp.getNeighbor(var, constraint);
-					if (revise(neighbor, var, constraint, csp, info)) {
+					VAR neighbor = csp.getNeighbor(var, constraint);
+					if (revise(neighbor, var, constraint, csp, log)) {
 						if (csp.getDomain(neighbor).isEmpty()) {
-							info.setEmptyDomainFound(true);
+							log.setEmptyDomainFound(true);
 							return;
 						}
 						queue.add(neighbor);
@@ -98,14 +98,14 @@ public class AC3Strategy implements InferenceStrategy {
 		}
 	}
 
-	private boolean revise(Variable xi, Variable xj, Constraint constraint,
-			CSP csp, DomainLog info) {
+	private boolean revise(VAR xi, VAR xj, Constraint<VAR, VAL> constraint,
+			CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 		boolean revised = false;
-		Assignment assignment = new Assignment();
-		for (Object iValue : csp.getDomain(xi)) {
+		Assignment<VAR, VAL> assignment = new Assignment<>();
+		for (VAL iValue : csp.getDomain(xi)) {
 			assignment.add(xi, iValue);
 			boolean consistentExtensionFound = false;
-			for (Object jValue : csp.getDomain(xj)) {
+			for (VAL jValue : csp.getDomain(xj)) {
 				assignment.add(xj, jValue);
 				if (constraint.isSatisfiedWith(assignment)) {
 					consistentExtensionFound = true;
@@ -113,7 +113,7 @@ public class AC3Strategy implements InferenceStrategy {
 				}
 			}
 			if (!consistentExtensionFound) {
-				info.storeDomainFor(xi, csp.getDomain(xi));
+				log.storeDomainFor(xi, csp.getDomain(xi));
 				csp.removeValueFromDomain(xi, iValue);
 				revised = true;
 			}

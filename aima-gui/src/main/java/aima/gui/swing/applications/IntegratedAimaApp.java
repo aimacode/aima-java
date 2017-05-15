@@ -16,7 +16,6 @@ import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
 import aima.gui.swing.applications.agent.VacuumApp;
 import aima.gui.swing.applications.agent.map.RouteFindingAgentApp;
-import aima.gui.swing.applications.search.csp.MapColoringApp;
 import aima.gui.swing.applications.search.games.ConnectFourApp;
 import aima.gui.swing.applications.search.games.EightPuzzleApp;
 import aima.gui.swing.applications.search.games.NQueensApp;
@@ -38,7 +37,6 @@ public class IntegratedAimaApp {
 		frame.addApp(NQueensApp.class);
 		frame.addApp(TicTacToeApp.class);
 		frame.addApp(ConnectFourApp.class);
-		frame.addApp(MapColoringApp.class);
 
 		frame.addApp(MonteCarloLocalizationApp.class);
 		

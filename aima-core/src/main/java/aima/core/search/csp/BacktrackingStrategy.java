@@ -11,17 +11,17 @@ import aima.core.search.csp.inference.*;
  *
  * @author Ruediger Lunde
  */
-public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
+public class BacktrackingStrategy<VAR extends Variable, VAL> extends AbstractBacktrackingStrategy<VAR, VAL> {
 
-    private CspHeuristics.VariableSelection varSelectionStrategy;
-    private CspHeuristics.ValueSelection valSelectionStrategy;
-    private InferenceStrategy inferenceStrategy;
+    private CspHeuristics.VariableSelection<VAR, VAL> varSelectionStrategy;
+    private CspHeuristics.ValueSelection<VAR, VAL> valSelectionStrategy;
+    private InferenceStrategy<VAR, VAL> inferenceStrategy;
 
 
     /**
      * Selects the algorithm for SELECT-UNASSIGNED-VARIABLE. Uses the fluent interface design pattern.
      */
-    public BacktrackingStrategy set(CspHeuristics.VariableSelection varStrategy) {
+    public BacktrackingStrategy<VAR, VAL> set(CspHeuristics.VariableSelection<VAR, VAL> varStrategy) {
         varSelectionStrategy = varStrategy;
         return this;
     }
@@ -29,7 +29,7 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
     /**
      * Selects the algorithm for ORDER-DOMAIN-VALUES. Uses the fluent interface design pattern.
      */
-    public BacktrackingStrategy set(CspHeuristics.ValueSelection valStrategy) {
+    public BacktrackingStrategy<VAR, VAL> set(CspHeuristics.ValueSelection<VAR, VAL> valStrategy) {
         valSelectionStrategy = valStrategy;
         return this;
     }
@@ -37,7 +37,7 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
     /**
      * Selects the algorithm for INFERENCE. Uses the fluent interface design pattern.
      */
-    public BacktrackingStrategy set(InferenceStrategy iStrategy) {
+    public BacktrackingStrategy<VAR, VAL> set(InferenceStrategy<VAR, VAL> iStrategy) {
         inferenceStrategy = iStrategy;
         return this;
     }
@@ -45,7 +45,7 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
     /**
      * Applies an initial inference step and then calls the super class implementation.
      */
-    public Assignment solve(CSP csp) {
+    public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
         if (inferenceStrategy != null) {
             InferenceLog log = inferenceStrategy.apply(csp);
             if (!log.isEmpty()) {
@@ -61,8 +61,8 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
      * Primitive operation, selecting a not yet assigned variable.
      */
     @Override
-    protected Variable selectUnassignedVariable(Assignment assignment, CSP csp) {
-        List<Variable> vars = csp.getVariables().stream()
+    protected VAR selectUnassignedVariable(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+        List<VAR> vars = csp.getVariables().stream()
                 .filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
         if (varSelectionStrategy != null)
             vars = varSelectionStrategy.apply(vars, csp);
@@ -73,7 +73,7 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
      * Primitive operation, ordering the domain values of the specified variable.
      */
     @Override
-    protected Iterable<Object> orderDomainValues(Variable var, Assignment assignment, CSP csp) {
+    protected Iterable<VAL> orderDomainValues(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
         if (valSelectionStrategy != null) {
             return valSelectionStrategy.apply(var, assignment, csp);
         } else {
@@ -89,11 +89,11 @@ public class BacktrackingStrategy extends AbstractBacktrackingStrategy {
      * (3) how to restore the domains.
      */
     @Override
-    protected InferenceLog inference(Variable var, Assignment assignment,
-                                  CSP csp) {
+    protected InferenceLog<VAR, VAL> inference(VAR var, Assignment<VAR, VAL> assignment,
+                                  CSP<VAR, VAL> csp) {
         if (inferenceStrategy != null)
             return inferenceStrategy.apply(var, assignment, csp);
         else
-            return EmptyLog.instance();
+            return new EmptyLog<>();
     }
 }

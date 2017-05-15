@@ -41,29 +41,28 @@ import aima.core.util.CancelableThread;
  *
  * @author Ruediger Lunde
  */
-public abstract class AbstractBacktrackingStrategy extends SolutionStrategy {
+public abstract class AbstractBacktrackingStrategy<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
 
     /** Applies a recursive backtracking search to solve the CSP. */
-    public Assignment solve(CSP csp) {
-        return recursiveBackTrackingSearch(csp, new Assignment());
+    public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
+        return recursiveBackTrackingSearch(csp, new Assignment<>());
     }
 
     /**
      * Template method, which can be configured by overriding the three
      * primitive operations below.
      */
-    private Assignment recursiveBackTrackingSearch(CSP csp,
-                                                   Assignment assignment) {
-        Assignment result = null;
+    private Assignment<VAR, VAL> recursiveBackTrackingSearch(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
+        Assignment<VAR, VAL> result = null;
         if (assignment.isComplete(csp.getVariables()) || CancelableThread.currIsCanceled()) {
             result = assignment;
         } else {
-            Variable var = selectUnassignedVariable(assignment, csp);
-            for (Object value : orderDomainValues(var, assignment, csp)) {
+            VAR var = selectUnassignedVariable(assignment, csp);
+            for (VAL value : orderDomainValues(var, assignment, csp)) {
                 assignment.add(var, value);
                 fireStateChanged(assignment, csp);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
-                    InferenceLog log = inference(var, assignment, csp);
+                    InferenceLog<VAR, VAL> log = inference(var, assignment, csp);
                     if (!log.isEmpty())
                         fireStateChanged(csp);
                     if (!log.inconsistencyFound()) {
@@ -82,15 +81,15 @@ public abstract class AbstractBacktrackingStrategy extends SolutionStrategy {
     /**
      * Primitive operation, selecting a not yet assigned variable.
      */
-    protected abstract Variable selectUnassignedVariable(Assignment assignment, CSP csp);
+    protected abstract VAR selectUnassignedVariable(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
 
     /**
      * Primitive operation, ordering the domain values of the specified variable.
      */
-    protected abstract Iterable<Object> orderDomainValues(Variable var, Assignment assignment, CSP csp);
+    protected abstract Iterable<VAL> orderDomainValues(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
 
     /**
      * Primitive operation, which tries to optimize the CSP representation with respect to a new assignment.
      */
-    protected abstract InferenceLog inference(Variable var, Assignment assignment, CSP csp);
+    protected abstract InferenceLog<VAR, VAL> inference(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
 }

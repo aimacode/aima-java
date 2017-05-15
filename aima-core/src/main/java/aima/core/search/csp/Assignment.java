@@ -10,43 +10,43 @@ import java.util.List;
  *
  * @author Ruediger Lunde
  */
-public class Assignment {
+public class Assignment<VAR extends Variable, VAL> {
     /**
      * Contains all assigned variables. Positions reflect the the order in which
      * the variables were assigned to values.
      */
-    private List<Variable> variables;
+    private List<VAR> variables;
     /**
      * Maps variables to their assigned values.
      */
-    private Hashtable<Variable, Object> variableToValue;
+    private Hashtable<VAR, VAL> variableToValue;
 
     public Assignment() {
         variables = new ArrayList<>();
         variableToValue = new Hashtable<>();
     }
 
-    public List<Variable> getVariables() {
+    public List<VAR> getVariables() {
         return Collections.unmodifiableList(variables);
     }
 
-    public Object getValue(Variable var) {
+    public VAL getValue(VAR var) {
         return variableToValue.get(var);
     }
 
-    public void add(Variable var, Object value) {
+    public void add(VAR var, VAL value) {
         if (variableToValue.put(var, value) == null)
             variables.add(var);
     }
 
-    public void remove(Variable var) {
+    public void remove(VAR var) {
         if (contains(var)) {
             variableToValue.remove(var);
             variables.remove(var);
         }
     }
 
-    public boolean contains(Variable var) {
+    public boolean contains(VAR var) {
         return variableToValue.get(var) != null;
     }
 
@@ -54,8 +54,8 @@ public class Assignment {
      * Returns true if this assignment does not violate any constraints of
      * <code>constraints</code>.
      */
-    public boolean isConsistent(List<Constraint> constraints) {
-        for (Constraint cons : constraints)
+    public boolean isConsistent(List<Constraint<VAR, VAL>> constraints) {
+        for (Constraint<VAR, VAL> cons : constraints)
             if (!cons.isSatisfiedWith(this))
                 return false;
         return true;
@@ -65,8 +65,8 @@ public class Assignment {
      * Returns true if this assignment assigns values to every variable of
      * <code>vars</code>.
      */
-    public boolean isComplete(List<Variable> vars) {
-        for (Variable var : vars) {
+    public boolean isComplete(List<VAR> vars) {
+        for (VAR var : vars) {
             if (!contains(var))
                 return false;
         }
@@ -77,14 +77,14 @@ public class Assignment {
      * Returns true if this assignment is consistent as well as complete with
      * respect to the given CSP.
      */
-    public boolean isSolution(CSP csp) {
+    public boolean isSolution(CSP<VAR, VAL> csp) {
         return isConsistent(csp.getConstraints())
                 && isComplete(csp.getVariables());
     }
 
-    public Assignment copy() {
-        Assignment copy = new Assignment();
-        for (Variable var : variables) {
+    public Assignment<VAR, VAL> copy() {
+        Assignment<VAR, VAL> copy = new Assignment<>();
+        for (VAR var : variables) {
             copy.add(var, variableToValue.get(var));
         }
         return copy;
@@ -94,7 +94,7 @@ public class Assignment {
     public String toString() {
         boolean comma = false;
         StringBuilder result = new StringBuilder("{");
-        for (Variable var : variables) {
+        for (VAR var : variables) {
             if (comma)
                 result.append(", ");
             result.append(var).append("=").append(variableToValue.get(var));

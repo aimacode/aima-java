@@ -41,8 +41,8 @@ public class CspNQueensApp extends IntegrableApplication {
 
     private NQueensViewCtrl stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
-    private CSP csp;
-    private SolutionStrategy solver;
+    private CSP<Variable, Integer> csp;
+    private SolutionStrategy<Variable, Integer> solver;
     private ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
 
     @Override
@@ -95,7 +95,7 @@ public class CspNQueensApp extends IntegrableApplication {
         csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
         Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
         if (strategy.equals("Backtracking")) {
-            BacktrackingStrategy bSolver = new BacktrackingStrategy();
+            BacktrackingStrategy<Variable, Integer> bSolver = new BacktrackingStrategy<>();
             switch ((String) simPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
                 case "MRV": bSolver.set(CspHeuristics.mrv()); break;
                 case "DEG": bSolver.set(CspHeuristics.deg()); break;
@@ -105,12 +105,12 @@ public class CspNQueensApp extends IntegrableApplication {
                 case "LCV": bSolver.set(CspHeuristics.lcv()); break;
             }
             switch ((String) simPaneCtrl.getParamValue(PARAM_INFERENCE)) {
-                case "FC": bSolver.set(new ForwardCheckingStrategy()); break;
-                case "AC3": bSolver.set(new AC3Strategy()); break;
+                case "FC": bSolver.set(new ForwardCheckingStrategy<>()); break;
+                case "AC3": bSolver.set(new AC3Strategy<>()); break;
             }
             solver = bSolver;
         } else if (strategy.equals("Min-Conflicts")) {
-            solver = new MinConflictsStrategy(1000);
+            solver = new MinConflictsStrategy<>(1000);
 
         }
         solver.addCSPStateListener(progressAnalyzer);
@@ -128,7 +128,7 @@ public class CspNQueensApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void simulate() {
-        Assignment solution = solver.solve(csp);
+        Assignment<Variable, Integer> solution = solver.solve(csp);
         if (solution != null) {
             NQueensBoard board = getBoard(solution);
             stateViewCtrl.update(board);
@@ -136,11 +136,11 @@ public class CspNQueensApp extends IntegrableApplication {
         simPaneCtrl.setStatus(progressAnalyzer.getResults().toString());
     }
 
-    private NQueensBoard getBoard(Assignment assignment) {
+    private NQueensBoard getBoard(Assignment<Variable, Integer> assignment) {
         NQueensBoard board = new NQueensBoard(csp.getVariables().size());
         for (Variable var : assignment.getVariables()) {
             int col = Integer.parseInt(var.getName().substring(1)) - 1;
-            int row = ((int) assignment.getValue(var)) - 1;
+            int row = assignment.getValue(var) - 1;
             board.addQueenAt(new XYLocation(col, row));
         }
         return board;
@@ -155,18 +155,18 @@ public class CspNQueensApp extends IntegrableApplication {
         simPaneCtrl.waitAfterStep();
     }
 
-    protected class ProgressAnalyzer implements CspListener {
+    protected class ProgressAnalyzer implements CspListener<Variable, Integer> {
         private int assignmentCount = 0;
         private int domainCount = 0;
 
         @Override
-        public void stateChanged(Assignment assignment, CSP csp) {
+        public void stateChanged(Assignment<Variable, Integer> assignment, CSP<Variable, Integer> csp) {
             updateStateView(getBoard(assignment));
             ++assignmentCount;
         }
 
         @Override
-        public void stateChanged(CSP csp) {
+        public void stateChanged(CSP<Variable, Integer> csp) {
             ++domainCount;
         }
 

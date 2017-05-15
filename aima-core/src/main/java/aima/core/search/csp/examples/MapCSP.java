@@ -14,7 +14,7 @@ import aima.core.search.csp.Variable;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class MapCSP extends CSP {
+public class MapCSP extends CSP<Variable, String> {
 	public static final Variable NSW = new Variable("NSW");
 	public static final Variable NT = new Variable("NT");
 	public static final Variable Q = new Variable("Q");
@@ -39,19 +39,19 @@ public class MapCSP extends CSP {
 		addVariable(V);
 		addVariable(T);
 
-		Domain colors = new Domain(RED, GREEN, BLUE);
+		Domain<String> colors = new Domain<>(RED, GREEN, BLUE);
 
 		for (Variable var : getVariables())
 			setDomain(var, colors);
 
-		addConstraint(new NotEqualConstraint(WA, NT));
-		addConstraint(new NotEqualConstraint(WA, SA));
-		addConstraint(new NotEqualConstraint(NT, SA));
-		addConstraint(new NotEqualConstraint(NT, Q));
-		addConstraint(new NotEqualConstraint(SA, Q));
-		addConstraint(new NotEqualConstraint(SA, NSW));
-		addConstraint(new NotEqualConstraint(SA, V));
-		addConstraint(new NotEqualConstraint(Q, NSW));
-		addConstraint(new NotEqualConstraint(NSW, V));
+		addConstraint(new NotEqualConstraint<>(WA, NT));
+		addConstraint(new NotEqualConstraint<>(WA, SA));
+		addConstraint(new NotEqualConstraint<>(NT, SA));
+		addConstraint(new NotEqualConstraint<>(NT, Q));
+		addConstraint(new NotEqualConstraint<>(SA, Q));
+		addConstraint(new NotEqualConstraint<>(SA, NSW));
+		addConstraint(new NotEqualConstraint<>(SA, V));
+		addConstraint(new NotEqualConstraint<>(Q, NSW));
+		addConstraint(new NotEqualConstraint<>(NSW, V));
 	}
 }

@@ -11,12 +11,12 @@ import java.util.List;
  * Implements forward checking. Constraints which are not binary are ignored here.
  * @author Ruediger Lunde
  */
-public class ForwardCheckingStrategy implements InferenceStrategy {
+public class ForwardCheckingStrategy<VAR extends Variable, VAL> implements InferenceStrategy<VAR, VAL> {
 
     /** The CSP is not changed at the beginning. */
     @Override
     public InferenceLog apply(CSP csp) {
-        return EmptyLog.instance();
+        return new EmptyLog<>();
     }
 
     /**
@@ -24,15 +24,14 @@ public class ForwardCheckingStrategy implements InferenceStrategy {
      * for <code>var</code>.
      */
     @Override
-    public InferenceLog apply(Variable var, Assignment assignment, CSP csp) {
-        DomainLog log = new DomainLog();
-        for (Constraint constraint : csp.getConstraints(var)) {
-            List<Variable> scope = constraint.getScope();
+    public InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+        DomainLog<VAR, VAL> log = new DomainLog<>();
+        for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
+            List<VAR> scope = constraint.getScope();
             if (scope.size() == 2) {
-                for (Variable neighbor : constraint.getScope()) {
+                for (VAR neighbor : constraint.getScope()) {
                     if (!assignment.contains(neighbor)) {
-                        if (revise(neighbor, constraint, assignment, csp,
-                                log)) {
+                        if (revise(neighbor, constraint, assignment, csp, log)) {
                             if (csp.getDomain(neighbor).isEmpty()) {
                                 log.setEmptyDomainFound(true);
                                 return log;
@@ -45,14 +44,14 @@ public class ForwardCheckingStrategy implements InferenceStrategy {
         return log;
     }
 
-    private boolean revise(Variable var, Constraint constraint,
-                           Assignment assignment, CSP csp, DomainLog info) {
+    private boolean revise(VAR var, Constraint<VAR, VAL> constraint,
+                           Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 
         boolean revised = false;
-        for (Object value : csp.getDomain(var)) {
+        for (VAL value : csp.getDomain(var)) {
             assignment.add(var, value);
             if (!constraint.isSatisfiedWith(assignment)) {
-                info.storeDomainFor(var, csp.getDomain(var));
+                log.storeDomainFor(var, csp.getDomain(var));
                 csp.removeValueFromDomain(var, value);
                 revised = true;
             }

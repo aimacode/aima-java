@@ -21,19 +21,19 @@ import java.util.List;
  *
  * @author Ruediger Lunde
  */
-public class CspViewCtrl {
+public class CspViewCtrl<VAR extends Variable, VAL> {
     protected Pane pane;
-    protected CSP csp;
-    protected Assignment assignment;
+    protected CSP<VAR, VAL> csp;
+    protected Assignment<VAR, VAL> assignment;
 
     /**
      * Maintains logical 2D-coordinates for the variables of the CSP.
      */
-    protected Hashtable<Variable, int[]> positionMapping = new Hashtable<Variable, int[]>();
+    protected Hashtable<VAR, int[]> positionMapping = new Hashtable<>();
     /**
      * Maps domain values to colors.
      */
-    protected Hashtable<Object, Color> colorMapping = new Hashtable<Object, Color>();
+    protected Hashtable<VAL, Color> colorMapping = new Hashtable<>();
 
     public CspViewCtrl(StackPane viewRoot) {
         pane = new Pane();
@@ -53,7 +53,7 @@ public class CspViewCtrl {
      * Defines a logical 2D-position for a variable. If no position is given for
      * a certain variable, the viewer selects a position on a grid.
      */
-    public void setPositionMapping(Variable var, int x, int y) {
+    public void setPositionMapping(VAR var, int x, int y) {
         positionMapping.put(var, new int[]{x, y});
     }
 
@@ -65,18 +65,18 @@ public class CspViewCtrl {
      * @param value
      * @param color
      */
-    public void setColorMapping(Object value, Color color) {
+    public void setColorMapping(VAL value, Color color) {
         colorMapping.put(value, color);
     }
 
 
-    public void initialize(CSP csp) {
+    public void initialize(CSP<VAR, VAL> csp) {
         this.csp = csp;
-        this.assignment = new Assignment();
+        this.assignment = new Assignment<>();
         update();
     }
 
-    public void update(CSP csp, Assignment assignment) {
+    public void update(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         if (csp != null)
             this.csp = csp;
         if (assignment != null)
@@ -88,17 +88,15 @@ public class CspViewCtrl {
         adjustTransform();
         pane.getChildren().clear();
         if (csp != null) {
-            for (Constraint cons : csp.getConstraints())
-                visualize(cons);
-            for (Variable var : csp.getVariables())
-                visualize(var);
+            csp.getConstraints().forEach(this::visualize);
+            csp.getVariables().forEach(this::visualize);
         }
     }
 
-    protected void visualize(Variable var) {
+    protected void visualize(VAR var) {
         Point2D pos = getPosition(var);
         String label = var.getName();
-        Object value = null;
+        VAL value = null;
         Color fillColor = null;
         if (assignment != null)
             value = assignment.getValue(var);
@@ -115,8 +113,8 @@ public class CspViewCtrl {
         pane.getChildren().addAll(circle, t1, t2);
     }
 
-    protected void visualize(Constraint constraint) {
-        List<Variable> scope = constraint.getScope();
+    protected void visualize(Constraint<VAR, VAL> constraint) {
+        List<VAR> scope = constraint.getScope();
         if (scope.size() == 2) { // we show only binary constraints...
             Point2D pos0 = getPosition(scope.get(0));
             Point2D pos1 = getPosition(scope.get(1));
@@ -139,7 +137,7 @@ public class CspViewCtrl {
         double yMin = Double.POSITIVE_INFINITY;
         double yMax = Double.NEGATIVE_INFINITY;
         if (csp != null)
-            for (Variable var : csp.getVariables()) {
+            for (VAR var : csp.getVariables()) {
                 Point2D point = getPosition(var);
                 xMin = Math.min(xMin, point.getX());
                 xMax = Math.max(xMax, point.getX());
@@ -159,7 +157,7 @@ public class CspViewCtrl {
     /**
      * Provides a 2D-position for each variable. If no mapping is given, a simple grid position is computed.
      */
-    protected Point2D getPosition(Variable var) {
+    protected Point2D getPosition(VAR var) {
         int[] pos = positionMapping.get(var);
         if (pos != null)
             return new Point2D(pos[0], pos[1]);

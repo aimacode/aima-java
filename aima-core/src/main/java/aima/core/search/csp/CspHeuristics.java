@@ -14,27 +14,29 @@ import java.util.stream.Collectors;
 public class CspHeuristics {
 
 
-    public interface VariableSelection {
-        List<Variable> apply(List<Variable> vars, CSP csp);
+    public interface VariableSelection<VAR extends Variable, VAL> {
+        List<VAR> apply(List<VAR> vars, CSP<VAR, VAL> csp);
     }
 
-    public interface ValueSelection {
-        List<Object> apply(Variable var, Assignment assignment, CSP csp);
+    public interface ValueSelection<VAR extends Variable, VAL> {
+        List<VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
     }
 
-    public static VariableSelection mrv() { return new MrvHeuristic(); }
-    public static VariableSelection deg() { return new DegHeuristic(); }
-    public static VariableSelection mrvDeg() { return (vars, csp) -> deg().apply(mrv().apply(vars, csp), csp); }
-    public static ValueSelection lcv() { return new LcvHeuristic();}
+    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> mrv() { return new MrvHeuristic<>(); }
+    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> deg() { return new DegHeuristic<>(); }
+    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> mrvDeg() {
+        return (vars, csp) -> new DegHeuristic<VAR, VAL>().apply(new MrvHeuristic<VAR, VAL>().apply(vars, csp), csp);
+    }
+    public static <VAR extends Variable, VAL> ValueSelection<VAR, VAL> lcv() { return new LcvHeuristic<>();}
 
     /**
      * Implements the minimum-remaining-values heuristic.
      */
-    private static class MrvHeuristic implements VariableSelection {
-        public List<Variable> apply(List<Variable> vars, CSP csp) {
-            List<Variable> result = new ArrayList<>();
+    public static class MrvHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+        public List<VAR> apply(List<VAR> vars, CSP<VAR, VAL> csp) {
+            List<VAR> result = new ArrayList<>();
             int mrv = Integer.MAX_VALUE;
-            for (Variable var : vars) {
+            for (VAR var : vars) {
                 int rv = csp.getDomain(var).size();
                 if (rv <= mrv) {
                     if (rv < mrv) {
@@ -51,11 +53,11 @@ public class CspHeuristics {
     /**
      * Implements the degree heuristic. Constraints with arbitrary scope size are supported.
      */
-    private static class DegHeuristic implements VariableSelection {
-        public List<Variable> apply(List<Variable> vars, CSP csp) {
-            List<Variable> result = new ArrayList<>();
+    public static class DegHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+        public List<VAR> apply(List<VAR> vars, CSP<VAR, VAL> csp) {
+            List<VAR> result = new ArrayList<>();
             int maxDegree = -1;
-            for (Variable var : vars) {
+            for (VAR var : vars) {
                 int degree = csp.getConstraints(var).size();
                 if (degree >= maxDegree) {
                     if (degree > maxDegree) {
@@ -72,10 +74,10 @@ public class CspHeuristics {
     /**
      * Implements the least constraining value heuristic.
      */
-    public static class LcvHeuristic implements ValueSelection {
-        public List<Object> apply(Variable var, Assignment assignment, CSP csp) {
-            List<Pair<Object, Integer>> pairs = new ArrayList<>();
-            for (Object value : csp.getDomain(var)) {
+    public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueSelection<VAR, VAL> {
+        public List<VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+            List<Pair<VAL, Integer>> pairs = new ArrayList<>();
+            for (VAL value : csp.getDomain(var)) {
                 int num = countLostValues(var, value, assignment, csp);
                 pairs.add(new Pair<>(value, num));
             }
@@ -86,15 +88,15 @@ public class CspHeuristics {
         /**
          * Ignores constraints which are not binary.
          */
-        private int countLostValues(Variable var, Object value, Assignment assignment, CSP csp) {
+        private int countLostValues(VAR var, VAL value, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
             int result = 0;
-            Assignment assign = new Assignment();
+            Assignment<VAR, VAL> assign = new Assignment<>();
             assign.add(var, value);
-            for (Constraint constraint : csp.getConstraints(var)) {
+            for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
                 if (constraint.getScope().size() == 2) {
-                    Variable neighbor = csp.getNeighbor(var, constraint);
+                    VAR neighbor = csp.getNeighbor(var, constraint);
                     if (!assignment.contains(neighbor))
-                        for (Object nValue : csp.getDomain(neighbor)) {
+                        for (VAL nValue : csp.getDomain(neighbor)) {
                             assign.add(neighbor, nValue);
                             if (!constraint.isSatisfiedWith(assign)) {
                                 ++result;

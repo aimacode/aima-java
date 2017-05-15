@@ -34,7 +34,7 @@ import aima.core.util.Util;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class MinConflictsStrategy extends SolutionStrategy {
+public class MinConflictsStrategy<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
 	private int maxSteps;
 
 	/**
@@ -48,16 +48,16 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		this.maxSteps = maxSteps;
 	}
 
-	public Assignment solve(CSP csp) {
-		Assignment assignment = generateRandomAssignment(csp);
+	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
+		Assignment<VAR, VAL> assignment = generateRandomAssignment(csp);
 		fireStateChanged(assignment, csp);
 		for (int i = 0; i < maxSteps && !CancelableThread.currIsCanceled(); i++) {
 			if (assignment.isSolution(csp)) {
 				return assignment;
 			} else {
-				List<Variable> vars = getConflictedVariables(assignment, csp);
-				Variable var = Util.selectRandomlyFromList(vars);
-				Object value = getMinConflictValueFor(var, assignment, csp);
+				List<VAR> vars = getConflictedVariables(assignment, csp);
+				VAR var = Util.selectRandomlyFromList(vars);
+				VAL value = getMinConflictValueFor(var, assignment, csp);
 				assignment.add(var, value);
 				fireStateChanged(assignment, csp);
 			}
@@ -65,34 +65,32 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		return null;
 	}
 
-	private Assignment generateRandomAssignment(CSP csp) {
-		Assignment assignment = new Assignment();
-		for (Variable var : csp.getVariables()) {
-			Object randomValue = Util.selectRandomlyFromList(csp.getDomain(var)
-					.asList());
+	private Assignment<VAR, VAL> generateRandomAssignment(CSP<VAR, VAL> csp) {
+		Assignment<VAR, VAL> assignment = new Assignment<>();
+		for (VAR var : csp.getVariables()) {
+			VAL randomValue = Util.selectRandomlyFromList(csp.getDomain(var).asList());
 			assignment.add(var, randomValue);
 		}
 		return assignment;
 	}
 
-	private List<Variable> getConflictedVariables(Assignment assignment, CSP csp) {
-		List<Variable> result = new ArrayList<>();
-		for (Constraint constraint : csp.getConstraints()) {
+	private List<VAR> getConflictedVariables(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+		List<VAR> result = new ArrayList<>();
+		for (Constraint<VAR, VAL> constraint : csp.getConstraints()) {
 			if (!constraint.isSatisfiedWith(assignment))
-				for (Variable var : constraint.getScope())
+				for (VAR var : constraint.getScope())
 					if (!result.contains(var))
 						result.add(var);
 		}
 		return result;
 	}
 
-	private Object getMinConflictValueFor(Variable var, Assignment assignment,
-			CSP csp) {
-		List<Constraint> constraints = csp.getConstraints(var);
-		Assignment duplicate = assignment.copy();
+	private VAL getMinConflictValueFor(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+		List<Constraint<VAR, VAL>> constraints = csp.getConstraints(var);
+		Assignment<VAR, VAL> duplicate = assignment.copy();
 		int minConflict = Integer.MAX_VALUE;
-		List<Object> resultCandidates = new ArrayList<>();
-		for (Object value : csp.getDomain(var)) {
+		List<VAL> resultCandidates = new ArrayList<>();
+		for (VAL value : csp.getDomain(var)) {
 			duplicate.add(var, value);
 			int currConflict = countConflicts(duplicate, constraints);
 			if (currConflict <= minConflict) {
@@ -109,10 +107,10 @@ public class MinConflictsStrategy extends SolutionStrategy {
 			return null;
 	}
 
-	private int countConflicts(Assignment assignment,
-			List<Constraint> constraints) {
+	private int countConflicts(Assignment<VAR, VAL> assignment,
+			List<Constraint<VAR, VAL>> constraints) {
 		int result = 0;
-		for (Constraint constraint : constraints)
+		for (Constraint<VAR, VAL> constraint : constraints)
 			if (!constraint.isSatisfiedWith(assignment))
 				result++;
 		return result;

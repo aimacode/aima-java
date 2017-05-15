@@ -6,10 +6,10 @@ package aima.core.search.csp;
  * 
  * @author Ruediger Lunde
  */
-public interface CspListener {
+public interface CspListener<VAR extends Variable, VAL> {
 	/** Informs about changed assignments. */
-	void stateChanged(Assignment assignment, CSP csp);
+	void stateChanged(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
 
 	/** Informs about changed domains (inferences). */
-	void stateChanged(CSP csp);
+	void stateChanged(CSP<VAR, VAL> csp);
 }

@@ -34,11 +34,11 @@ public class CspMapColoringApp extends IntegrableApplication {
     public final static String PARAM_MAP = "map";
     public final static String PARAM_STRATEGY = "strategy";
 
-    private CspViewCtrl stateViewCtrl;
+    private CspViewCtrl<Variable, String> stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
 
-    private CSP csp;
-    private SolutionStrategy strategy;
+    private CSP<Variable, String> csp;
+    private SolutionStrategy<Variable, String> strategy;
     private int stepCounter;
 
     public CspMapColoringApp() {
@@ -58,7 +58,7 @@ public class CspMapColoringApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         StackPane stateView = new StackPane();
-        stateViewCtrl = new CspViewCtrl(stateView);
+        stateViewCtrl = new CspViewCtrl<>(stateView);
 
         List<Parameter> params = createParameters();
 
@@ -99,11 +99,11 @@ public class CspMapColoringApp extends IntegrableApplication {
                 break;
             case 1: // three moves
                 csp = new MapCSP();
-                csp.setDomain(MapCSP.NSW, new Domain(new Object[]{MapCSP.BLUE}));
+                csp.setDomain(MapCSP.NSW, new Domain<>(MapCSP.BLUE));
                 break;
             case 2: // three moves
                 csp = new MapCSP();
-                csp.setDomain(MapCSP.WA, new Domain(new Object[]{MapCSP.RED}));
+                csp.setDomain(MapCSP.WA, new Domain<>(MapCSP.RED));
                 break;
         }
 
@@ -123,42 +123,44 @@ public class CspMapColoringApp extends IntegrableApplication {
 
         switch (simPaneCtrl.getParamValueIndex(PARAM_STRATEGY)) {
             case 0:
-                strategy = new BacktrackingStrategy();
+                strategy = new BacktrackingStrategy<>();
                 break;
             case 1: // DEG
-                strategy = new BacktrackingStrategy().set(CspHeuristics.deg());
+                strategy = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.deg());
                 break;
             case 2: // FC
-                strategy = new BacktrackingStrategy().set(new ForwardCheckingStrategy());
+                strategy = new BacktrackingStrategy<Variable, String>().set(new ForwardCheckingStrategy<>());
                 break;
             case 3: // MRV + FC
-                strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(new ForwardCheckingStrategy());
+                strategy = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.mrvDeg())
+                        .set(new ForwardCheckingStrategy<>());
                 break;
             case 4: // LCV + FC
-                strategy = new BacktrackingStrategy().set(CspHeuristics.lcv()).set(new ForwardCheckingStrategy());
+                strategy = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.lcv())
+                        .set(new ForwardCheckingStrategy<>());
                 break;
             case 5: // AC3
-                strategy = new BacktrackingStrategy().set(new AC3Strategy());
+                strategy = new BacktrackingStrategy<Variable, String>().set(new AC3Strategy<>());
                 break;
             case 6: // MRV & DEG + LCV + AC3
-                strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
-                        .set(new AC3Strategy());
+                strategy = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.mrvDeg())
+                        .set(CspHeuristics.lcv()).set(new AC3Strategy<>());
                 break;
             case 7:
-                strategy = new MinConflictsStrategy(50);
+                strategy = new MinConflictsStrategy<>(50);
                 break;
         }
 
-        strategy.addCSPStateListener(new CspListener() {
+        strategy.addCSPStateListener(new CspListener<Variable, String>() {
 
             @Override
-            public void stateChanged(Assignment assignment, CSP csp) {
+            public void stateChanged(Assignment<Variable, String> assignment, CSP<Variable, String> csp) {
                 stepCounter++;
                 updateStateView(csp, assignment);
             }
 
             @Override
-            public void stateChanged(CSP csp) {
+            public void stateChanged(CSP<Variable, String> csp) {
                 stepCounter++;
                 updateStateView(csp, null);
             }
@@ -184,7 +186,7 @@ public class CspMapColoringApp extends IntegrableApplication {
      * Caution: While the background thread should be slowed down, updates of
      * the GUI have to be done in the GUI thread!
      */
-    private void updateStateView(CSP csp, Assignment assignment) {
+    private void updateStateView(CSP<Variable, String> csp, Assignment<Variable, String> assignment) {
         Platform.runLater(() -> updateStateViewLater(csp, assignment));
         simPaneCtrl.waitAfterStep();
     }
@@ -192,7 +194,7 @@ public class CspMapColoringApp extends IntegrableApplication {
     /**
      * Must be called by the GUI thread!
      */
-    private void updateStateViewLater(CSP csp, Assignment assignment) {
+    private void updateStateViewLater(CSP<Variable, String> csp, Assignment<Variable, String> assignment) {
         stateViewCtrl.update(csp, assignment);
         String txt1 = "Step " + stepCounter + ": ";
         String txt2 = "Domain reduced";

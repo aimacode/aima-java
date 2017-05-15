@@ -13,10 +13,10 @@ import java.util.List;
  * 
  * @author Ruediger Lunde
  */
-public interface Constraint {
+public interface Constraint<VAR extends Variable, VAL> {
 	/** Returns a tuple of variables that participate in the constraint. */
-	List<Variable> getScope();
+	List<VAR> getScope();
 
 	/** Constrains the values that the variables can take on. */
-	boolean isSatisfiedWith(Assignment assignment);
+	boolean isSatisfiedWith(Assignment<VAR, VAL> assignment);
 }

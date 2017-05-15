@@ -12,8 +12,8 @@ import java.util.List;
  * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public abstract class SolutionStrategy {
-	private List<CspListener> listeners = new ArrayList<>();
+public abstract class SolutionStrategy<VAR extends Variable, VAL> {
+	private List<CspListener<VAR, VAL>> listeners = new ArrayList<>();
 
 	/**
 	 * Adds a CSP state listener to the solution strategy.
@@ -22,7 +22,7 @@ public abstract class SolutionStrategy {
 	 *            a listener which follows the progress of the solution strategy
 	 *            step-by-step.
 	 */
-	public void addCSPStateListener(CspListener listener) {
+	public void addCSPStateListener(CspListener<VAR, VAL> listener) {
 		listeners.add(listener);
 	}
 
@@ -32,17 +32,17 @@ public abstract class SolutionStrategy {
 	 * @param listener
 	 *            the listener to remove
 	 */
-	public void removeCSPStateListener(CspListener listener) {
+	public void removeCSPStateListener(CspListener<VAR, VAL> listener) {
 		listeners.remove(listener);
 	}
 
-	protected void fireStateChanged(CSP csp) {
-		for (CspListener listener : listeners)
+	protected void fireStateChanged(CSP<VAR, VAL> csp) {
+		for (CspListener<VAR, VAL> listener : listeners)
 			listener.stateChanged(csp.copyDomains());
 	}
 
-	protected void fireStateChanged(Assignment assignment, CSP csp) {
-		for (CspListener listener : listeners)
+	protected void fireStateChanged(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+		for (CspListener<VAR, VAL> listener : listeners)
 			listener.stateChanged(assignment.copy(), csp.copyDomains());
 	}
 
@@ -56,5 +56,5 @@ public abstract class SolutionStrategy {
 	 * @return a solution to the specified CSP, which specifies values for all
 	 *         the variables such that the constraints are satisfied.
 	 */
-	public abstract Assignment solve(CSP csp);
+	public abstract Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp);
 }

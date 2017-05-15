@@ -1,5 +1,6 @@
 package aima.core.search.csp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -15,15 +16,16 @@ import aima.core.util.ArrayIterator;
  * 
  * @author Ruediger Lunde
  */
-public class Domain implements Iterable<Object> {
+public class Domain<VAL> implements Iterable<VAL> {
 
-	private Object[] values;
+	private Object[] values; ArrayList a;
 
-	public Domain(List<?> values) {
+	public Domain(List<VAL> values) {
 		this.values = values.toArray();
 	}
 
-	public Domain(Object... values) {
+	@SafeVarargs
+	public Domain(VAL... values) {
 		this.values = values;
 	}
 
@@ -31,29 +33,32 @@ public class Domain implements Iterable<Object> {
 		return values.length;
 	}
 
-	public Object get(int index) {
-		return values[index];
+	@SuppressWarnings("unchecked")
+	public VAL get(int index) {
+		return (VAL) values[index];
 	}
 
 	public boolean isEmpty() {
 		return values.length == 0;
 	}
 
-	public boolean contains(Object value) {
+	public boolean contains(VAL value) {
 		for (Object v : values)
-			if (v.equals(value))
+			if (value.equals(v))
 				return true;
 		return false;
 	}
 
 	@Override
-	public Iterator<Object> iterator() {
-		return new ArrayIterator<Object>(values);
+	@SuppressWarnings("unchecked")
+	public Iterator<VAL> iterator() {
+		return new ArrayIterator<>((VAL[]) values);
 	}
 
 	/** Not very efficient... */
-	public List<Object> asList() {
-		return Arrays.asList(values);
+	@SuppressWarnings("unchecked")
+	public List<VAL> asList() {
+		return Arrays.asList((VAL[]) values);
 	}
 
 	@Override
