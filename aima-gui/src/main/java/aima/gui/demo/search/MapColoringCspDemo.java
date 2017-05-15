@@ -1,13 +1,8 @@
 package aima.gui.demo.search;
 
-import aima.core.search.csp.Assignment;
-import aima.core.search.csp.BacktrackingStrategy;
-import aima.core.search.csp.CSP;
-import aima.core.search.csp.CSPStateListener;
-import aima.core.search.csp.ImprovedBacktrackingStrategy;
-import aima.core.search.csp.MinConflictsStrategy;
-import aima.core.search.csp.SolutionStrategy;
+import aima.core.search.csp.*;
 import aima.core.search.csp.examples.MapCSP;
+import aima.core.search.csp.inference.AC3Strategy;
 
 /**
  * Demonstrates the performance of different constraint solving strategies.
@@ -29,10 +24,11 @@ public class MapColoringCspDemo {
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new ImprovedBacktrackingStrategy(true, true, true, true);
+		solver = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
+				.set(new AC3Strategy());
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
-		System.out.println("Map Coloring (Backtracking + MRV + DEG + AC3 + LCV)");
+		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
 		
@@ -45,7 +41,7 @@ public class MapColoringCspDemo {
 	}
 	
 	/** Counts assignment and domain changes during CSP solving. */
-	protected static class StepCounter implements CSPStateListener {
+	protected static class StepCounter implements CspListener {
 		private int assignmentCount = 0;
 		private int domainCount = 0;
 		

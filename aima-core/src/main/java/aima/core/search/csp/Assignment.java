@@ -22,32 +22,31 @@ public class Assignment {
     private Hashtable<Variable, Object> variableToValue;
 
     public Assignment() {
-        variables = new ArrayList<Variable>();
-        variableToValue = new Hashtable<Variable, Object>();
+        variables = new ArrayList<>();
+        variableToValue = new Hashtable<>();
     }
 
     public List<Variable> getVariables() {
         return Collections.unmodifiableList(variables);
     }
 
-    public Object getAssignment(Variable var) {
+    public Object getValue(Variable var) {
         return variableToValue.get(var);
     }
 
-    public void setAssignment(Variable var, Object value) {
-        if (!variableToValue.containsKey(var))
+    public void add(Variable var, Object value) {
+        if (variableToValue.put(var, value) == null)
             variables.add(var);
-        variableToValue.put(var, value);
     }
 
-    public void removeAssignment(Variable var) {
-        if (hasAssignmentFor(var)) {
-            variables.remove(var);
+    public void remove(Variable var) {
+        if (contains(var)) {
             variableToValue.remove(var);
+            variables.remove(var);
         }
     }
 
-    public boolean hasAssignmentFor(Variable var) {
+    public boolean contains(Variable var) {
         return variableToValue.get(var) != null;
     }
 
@@ -68,19 +67,7 @@ public class Assignment {
      */
     public boolean isComplete(List<Variable> vars) {
         for (Variable var : vars) {
-            if (!hasAssignmentFor(var))
-                return false;
-        }
-        return true;
-    }
-
-    /**
-     * Returns true if this assignment assigns values to every variable of
-     * <code>vars</code>.
-     */
-    public boolean isComplete(Variable[] vars) {
-        for (Variable var : vars) {
-            if (!hasAssignmentFor(var))
+            if (!contains(var))
                 return false;
         }
         return true;
@@ -98,7 +85,7 @@ public class Assignment {
     public Assignment copy() {
         Assignment copy = new Assignment();
         for (Variable var : variables) {
-            copy.setAssignment(var, variableToValue.get(var));
+            copy.add(var, variableToValue.get(var));
         }
         return copy;
     }

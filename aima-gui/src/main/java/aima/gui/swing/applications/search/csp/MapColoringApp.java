@@ -4,15 +4,10 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import aima.core.search.csp.Assignment;
-import aima.core.search.csp.BacktrackingStrategy;
-import aima.core.search.csp.CSP;
-import aima.core.search.csp.CSPStateListener;
-import aima.core.search.csp.Domain;
-import aima.core.search.csp.ImprovedBacktrackingStrategy;
-import aima.core.search.csp.MinConflictsStrategy;
-import aima.core.search.csp.SolutionStrategy;
+import aima.core.search.csp.*;
 import aima.core.search.csp.examples.MapCSP;
+import aima.core.search.csp.inference.AC3Strategy;
+import aima.core.search.csp.inference.ForwardCheckingStrategy;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -199,52 +194,38 @@ public class MapColoringApp extends SimpleAgentApp {
 		 * necessary.
 		 */
 		protected void prepareActions() {
-			ImprovedBacktrackingStrategy iStrategy = null;
 			if (actions.isEmpty()) {
 				SolutionStrategy strategy = null;
-				switch (frame.getSelection().getIndex(
-						MapColoringFrame.STRATEGY_SEL)) {
+				switch (frame.getSelection().getIndex(MapColoringFrame.STRATEGY_SEL)) {
 				case 0:
 					strategy = new BacktrackingStrategy();
 					break;
 				case 1: // MRV + DEG
-					strategy = new ImprovedBacktrackingStrategy
-					(true, true, false, false);
+					strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg());
 					break;
 				case 2: // FC
-					iStrategy = new ImprovedBacktrackingStrategy();
-					iStrategy.set(ImprovedBacktrackingStrategy
-									.Inference.FORWARD_CHECKING);
+					strategy = new BacktrackingStrategy().set(new ForwardCheckingStrategy());
 					break;
 				case 3: // MRV + FC 
-					iStrategy = new ImprovedBacktrackingStrategy
-					(true, false, false, false);
-					iStrategy.set(ImprovedBacktrackingStrategy
-									.Inference.FORWARD_CHECKING);
+					strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(new ForwardCheckingStrategy());
 					break;
-				case 4: // FC + LCV
-					iStrategy = new ImprovedBacktrackingStrategy
-					(false, false, false, true);
-					iStrategy.set(ImprovedBacktrackingStrategy
-									.Inference.FORWARD_CHECKING);
+				case 4: // LCV + FC
+					strategy = new BacktrackingStrategy().set(CspHeuristics.lcv()).set(new ForwardCheckingStrategy());
 					break;
 				case 5: // AC3
-					strategy = new ImprovedBacktrackingStrategy
-					(false, false, true, false);
+					strategy = new BacktrackingStrategy().set(new AC3Strategy());
 					break;
-				case 6: // MRV + DEG + AC3 + LCV
-					strategy = new ImprovedBacktrackingStrategy
-					(true, true, true, true);
+				case 6: // MRV + DEG + LCV + AC3
+					strategy = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
+							.set(new AC3Strategy());
 					break;
 				case 7:
 					strategy = new MinConflictsStrategy(50);
 					break;
 				}
-				if (iStrategy != null)
-					strategy = iStrategy;
-				
+
 				try {
-					strategy.addCSPStateListener(new CSPStateListener() {
+					strategy.addCSPStateListener(new CspListener() {
 						@Override
 						public void stateChanged(Assignment assignment, CSP csp) {
 							actions.add(new CSPEnvironment.StateChangeAction(

@@ -105,7 +105,7 @@ public class CSPView extends EmptyEnvironmentView {
 		Color fillColor = null;
 		Assignment assignment = ((CSPEnvironment) env).getAssignment();
 		if (assignment != null)
-			value = assignment.getAssignment(var);
+			value = assignment.getValue(var);
 		if (value != null) {
 			label += " = " + value;
 			fillColor = colorMapping.get(value);

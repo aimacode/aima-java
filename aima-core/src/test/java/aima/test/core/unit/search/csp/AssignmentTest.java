@@ -32,20 +32,20 @@ public class AssignmentTest {
 	@Test
 	public void testAssignmentCompletion() {
 		Assert.assertFalse(assignment.isComplete(variables));
-		assignment.setAssignment(X, "Ravi");
+		assignment.add(X, "Ravi");
 		Assert.assertFalse(assignment.isComplete(variables));
-		assignment.setAssignment(Y, "AIMA");
+		assignment.add(Y, "AIMA");
 		Assert.assertTrue(assignment.isComplete(variables));
-		assignment.removeAssignment(X);
+		assignment.remove(X);
 		Assert.assertFalse(assignment.isComplete(variables));
 	}
 
 	// @Test
 	// public void testAssignmentDefaultVariableSelection() {
 	// Assert.assertEquals(X, assignment.selectFirstUnassignedVariable(csp));
-	// assignment.setAssignment(X, "Ravi");
+	// assignment.add(X, "Ravi");
 	// Assert.assertEquals(Y, assignment.selectFirstUnassignedVariable(csp));
-	// assignment.setAssignment(Y, "AIMA");
+	// assignment.add(Y, "AIMA");
 	// Assert.assertEquals(null, assignment.selectFirstUnassignedVariable(csp));
 	// }
 }

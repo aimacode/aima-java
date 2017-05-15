@@ -33,7 +33,7 @@ public class NotEqualConstraint implements Constraint {
 
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
-		Object value1 = assignment.getAssignment(var1);
-		return value1 == null || !value1.equals(assignment.getAssignment(var2));
+		Object value1 = assignment.getValue(var1);
+		return value1 == null || !value1.equals(assignment.getValue(var2));
 	}
 }

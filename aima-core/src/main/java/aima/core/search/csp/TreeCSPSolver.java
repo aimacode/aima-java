@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import aima.core.search.csp.inference.DomainLog;
 import aima.core.util.Util;
 
 /**
@@ -54,7 +55,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 		// Sort the variables in topological order
 		l = topologicalSort(csp, l, root);
 
-		DomainRestoreInfo info = new DomainRestoreInfo();
+		DomainLog info = new DomainLog();
 
 		for (int i = n - 1; i >= 1; i--) {
 			Variable var = l.get(i);
@@ -79,7 +80,7 @@ public class TreeCSPSolver extends SolutionStrategy {
 			Variable var = l.get(i);
 			assignment_consistent = false;
 			for (Object value : csp.getDomain(var)) {
-				assignment.setAssignment(var, value);
+				assignment.add(var, value);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
 					assignment_consistent = true;
 					break;
@@ -136,14 +137,14 @@ public class TreeCSPSolver extends SolutionStrategy {
 	}
 
 	protected boolean makeArcConsistent(Variable xi, Variable xj, Constraint constraint, CSP csp,
-			DomainRestoreInfo info) {
+			DomainLog info) {
 		boolean revised = false;
 		Assignment assignment = new Assignment();
 		for (Object iValue : csp.getDomain(xi)) {
-			assignment.setAssignment(xi, iValue);
+			assignment.add(xi, iValue);
 			boolean consistentExtensionFound = false;
 			for (Object jValue : csp.getDomain(xj)) {
-				assignment.setAssignment(xj, jValue);
+				assignment.add(xj, jValue);
 				if (constraint.isSatisfiedWith(assignment)) {
 					consistentExtensionFound = true;
 					break;

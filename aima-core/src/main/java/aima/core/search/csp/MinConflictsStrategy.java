@@ -58,7 +58,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 				List<Variable> vars = getConflictedVariables(assignment, csp);
 				Variable var = Util.selectRandomlyFromList(vars);
 				Object value = getMinConflictValueFor(var, assignment, csp);
-				assignment.setAssignment(var, value);
+				assignment.add(var, value);
 				fireStateChanged(assignment, csp);
 			}
 		}
@@ -70,7 +70,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		for (Variable var : csp.getVariables()) {
 			Object randomValue = Util.selectRandomlyFromList(csp.getDomain(var)
 					.asList());
-			assignment.setAssignment(var, randomValue);
+			assignment.add(var, randomValue);
 		}
 		return assignment;
 	}
@@ -93,7 +93,7 @@ public class MinConflictsStrategy extends SolutionStrategy {
 		int minConflict = Integer.MAX_VALUE;
 		List<Object> resultCandidates = new ArrayList<>();
 		for (Object value : csp.getDomain(var)) {
-			duplicate.setAssignment(var, value);
+			duplicate.add(var, value);
 			int currConflict = countConflicts(duplicate, constraints);
 			if (currConflict <= minConflict) {
 				if (currConflict < minConflict) {

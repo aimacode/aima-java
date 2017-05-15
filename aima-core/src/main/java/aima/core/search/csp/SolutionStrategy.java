@@ -13,7 +13,7 @@ import java.util.List;
  * @author Mike Stampone
  */
 public abstract class SolutionStrategy {
-	private List<CSPStateListener> listeners = new ArrayList<>();
+	private List<CspListener> listeners = new ArrayList<>();
 
 	/**
 	 * Adds a CSP state listener to the solution strategy.
@@ -22,7 +22,7 @@ public abstract class SolutionStrategy {
 	 *            a listener which follows the progress of the solution strategy
 	 *            step-by-step.
 	 */
-	public void addCSPStateListener(CSPStateListener listener) {
+	public void addCSPStateListener(CspListener listener) {
 		listeners.add(listener);
 	}
 
@@ -32,17 +32,17 @@ public abstract class SolutionStrategy {
 	 * @param listener
 	 *            the listener to remove
 	 */
-	public void removeCSPStateListener(CSPStateListener listener) {
+	public void removeCSPStateListener(CspListener listener) {
 		listeners.remove(listener);
 	}
 
 	protected void fireStateChanged(CSP csp) {
-		for (CSPStateListener listener : listeners)
+		for (CspListener listener : listeners)
 			listener.stateChanged(csp.copyDomains());
 	}
 
 	protected void fireStateChanged(Assignment assignment, CSP csp) {
-		for (CSPStateListener listener : listeners)
+		for (CspListener listener : listeners)
 			listener.stateChanged(assignment.copy(), csp.copyDomains());
 	}
 

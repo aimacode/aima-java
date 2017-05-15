@@ -101,7 +101,7 @@ public class CspViewCtrl {
         Object value = null;
         Color fillColor = null;
         if (assignment != null)
-            value = assignment.getAssignment(var);
+            value = assignment.getValue(var);
         if (value != null) {
             label += " = " + value;
             fillColor = colorMapping.get(value);

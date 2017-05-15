@@ -1,13 +1,8 @@
 package aima.gui.fx.applications.search;
 
-import aima.core.search.csp.Assignment;
-import aima.core.search.csp.BacktrackingStrategy;
-import aima.core.search.csp.CSP;
-import aima.core.search.csp.CSPStateListener;
-import aima.core.search.csp.ImprovedBacktrackingStrategy;
-import aima.core.search.csp.MinConflictsStrategy;
-import aima.core.search.csp.SolutionStrategy;
+import aima.core.search.csp.*;
 import aima.core.search.csp.examples.NQueensCSP;
+import aima.core.search.csp.inference.AC3Strategy;
 import aima.core.search.framework.Metrics;
 
 public class CspNQueensDemo {
@@ -25,8 +20,9 @@ public class CspNQueensDemo {
 		System.out.println((sol.isSolution(csp) ? ":-) " : ":-( ") + sol);
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		System.out.println(size + "-Queens (Backtracking + MRV + DEG + AC3 + LCV)");
-		solver = new ImprovedBacktrackingStrategy(true, true, true, true);
+		System.out.println(size + "-Queens (Backtracking + MRV & DEG + LCV + AC3)");
+		solver = new BacktrackingStrategy().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
+				.set(new AC3Strategy());
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));
@@ -44,7 +40,7 @@ public class CspNQueensDemo {
 	}
 	
 	
-	protected static class StepCounter implements CSPStateListener {
+	protected static class StepCounter implements CspListener {
 		private int assignmentCount = 0;
 		private int domainCount = 0;
 		

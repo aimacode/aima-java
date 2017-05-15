@@ -35,8 +35,8 @@ public class DiffNotEqualConstraint implements Constraint {
 
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
-		Object value1 = assignment.getAssignment(var1);
-		Object value2 = assignment.getAssignment(var2);
+		Object value1 = assignment.getValue(var1);
+		Object value2 = assignment.getValue(var2);
 		return (value1 == null || value2 == null ||
 				value1 instanceof Integer &&
 				value2 instanceof Integer &&
