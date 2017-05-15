@@ -57,8 +57,8 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |5.7|170|Alpha-Beta-Search|[AlphaBetaSearch](/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java)|
 |6|202|CSP|[CSP](/aima-core/src/main/java/aima/core/search/csp/CSP.java)|
 |6.1|204|Map CSP|[MapCSP](/aima-core/src/main/java/aima/core/search/csp/MapCSP.java)|
-|6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/AC3Strategy.java)|
-|6.5|215|Backtracking-Search|[BacktrackingStrategy](/aima-core/src/main/java/aima/core/search/csp/BacktrackingStrategy.java)|
+|6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/inference/AC3Strategy.java)|
+|6.5|215|Backtracking-Search|[BacktrackingStrategy](/aima-core/src/main/java/aima/core/search/csp/AbstractBacktrackingStrategy.java)|
 |6.8|221|Min-Conflicts|[MinConflictsStrategy](/aima-core/src/main/java/aima/core/search/csp/MinConflictsStrategy.java)|
 |6.11|224|Tree-CSP-Solver|[TreeCSPSolver](/aima-core/src/main/java/aima/core/search/csp/TreeCSPSolver.java)|
 |7|235|Knowledge Base|[KnowledgeBase](/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java)|
