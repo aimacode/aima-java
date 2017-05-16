@@ -21,8 +21,7 @@ public class CspNQueensDemo {
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		System.out.println(size + "-Queens (Backtracking + MRV & DEG + LCV + AC3)");
-		solver = new BacktrackingStrategy<Variable, Integer>().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
-				.set(new AC3Strategy<>());
+		solver = new BacktrackingStrategy<Variable, Integer>().setAll();
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));

@@ -24,8 +24,7 @@ public class MapColoringCspDemo {
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv())
-				.set(new AC3Strategy<>());
+		solver = new BacktrackingStrategy<Variable, String>().setAll();
 		solver.addCSPStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");

@@ -43,8 +43,17 @@ public class BacktrackingStrategy<VAR extends Variable, VAL> extends AbstractBac
     }
 
     /**
+     * Selects MRV&DEG for variable selection, LCV for domain ordering and AC3 as inference method.
+     */
+    public BacktrackingStrategy<VAR, VAL> setAll() {
+        set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
+        return this;
+    }
+
+    /**
      * Applies an initial inference step and then calls the super class implementation.
      */
+    @Override
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
         if (inferenceStrategy != null) {
             InferenceLog log = inferenceStrategy.apply(csp);
@@ -94,6 +103,6 @@ public class BacktrackingStrategy<VAR extends Variable, VAL> extends AbstractBac
         if (inferenceStrategy != null)
             return inferenceStrategy.apply(var, assignment, csp);
         else
-            return new EmptyLog<>();
+            return InferenceLog.emptyLog();
     }
 }

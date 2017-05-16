@@ -31,8 +31,8 @@ public class CspMapColoringApp extends IntegrableApplication {
         launch(args);
     }
 
-    public final static String PARAM_MAP = "map";
-    public final static String PARAM_STRATEGY = "strategy";
+    private final static String PARAM_MAP = "map";
+    private final static String PARAM_STRATEGY = "strategy";
 
     private CspViewCtrl<Variable, String> stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
@@ -143,8 +143,7 @@ public class CspMapColoringApp extends IntegrableApplication {
                 strategy = new BacktrackingStrategy<Variable, String>().set(new AC3Strategy<>());
                 break;
             case 6: // MRV & DEG + LCV + AC3
-                strategy = new BacktrackingStrategy<Variable, String>().set(CspHeuristics.mrvDeg())
-                        .set(CspHeuristics.lcv()).set(new AC3Strategy<>());
+                strategy = new BacktrackingStrategy<Variable, String>().setAll();
                 break;
             case 7:
                 strategy = new MinConflictsStrategy<>(50);
