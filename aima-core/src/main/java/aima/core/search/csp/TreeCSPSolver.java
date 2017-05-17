@@ -48,36 +48,26 @@ public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<V
 		VAR root = Util.selectRandomlyFromList(csp.getVariables());
 		// Sort the variables in topological order
 		List<VAR> orderedVars = new ArrayList<>();
-		Map<VAR, VAR> parent = new HashMap<>();
-		topologicalSort(csp, root, orderedVars, parent);
+		Map<VAR, Constraint<VAR, VAL>> parentConstraints = new HashMap<>();
+		topologicalSort(csp, root, orderedVars, parentConstraints);
 		if (orderedVars.size() < csp.getVariables().size())
-			return null; // CSP is not tree-structured or not connected!
+			return null; // CSP is not tree-structured or not connected or has no solution!
 
 		for (int i = orderedVars.size() - 1; i >= 1; i--) {
 			VAR var = orderedVars.get(i);
-			// get constraints to find the parent
-			for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
-				if (constraint.getScope().size() == 2) {
-					// if the neighbour is parent
-					VAR par = parent.get(var);
-					if (par == csp.getNeighbor(var, constraint)) {
-						// make it arc consistent
-						if (makeArcConsistent(par, var, constraint, csp)) {
-							if (csp.getDomain(par).isEmpty()) {
-								return null; // CSP has no solution!
-							}
-						}
-					}
-				}
+			Constraint<VAR, VAL> constraint = parentConstraints.get(var);
+			VAR parent = csp.getNeighbor(var, constraint);
+			if (makeArcConsistent(parent, var, constraint, csp)) {
+				if (csp.getDomain(parent).isEmpty())
+					return null; // CSP has no solution!
 			}
 		}
 		for (int i = 0; i < orderedVars.size(); i++) {
 			VAR var = orderedVars.get(i);
 			for (VAL value : csp.getDomain(var)) {
 				assignment.add(var, value);
-				if (assignment.isConsistent(csp.getConstraints(var))) {
+				if (assignment.isConsistent(csp.getConstraints(var)))
 					break;
-				}
 			}
 		}
 		return assignment;
@@ -91,10 +81,14 @@ public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<V
 	 * @param csp A CSP
 	 * @param root A root variable
 	 * @param vars The computed total order (initially empty)
-	 * @param parent The tree structure (initially empty)
+	 * @param parentConstraints The tree structure, maps a variable to the constraint representing the arc to the parent
+	 *                     variable (initially empty)
 	 */
-	private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> vars, Map<VAR, VAR> parent) {
-		parent.put(root, null);
+	private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> vars,
+								 Map<VAR, Constraint<VAR, VAL>> parentConstraints) {
+		if (csp.getDomain(root).isEmpty())
+			return; // no solution!
+		parentConstraints.put(root, null);
 		vars.add(root);
 		int currParentIdx = -1;
 		while (currParentIdx < vars.size() - 1) {
@@ -105,12 +99,12 @@ public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<V
 				VAR neighbor = csp.getNeighbor(currParent, constraint);
 				if (neighbor == null)
 					return; // this constraint is not binary!
-				if (parent.containsKey(neighbor)) {
+				if (parentConstraints.containsKey(neighbor)) {
 					upReferenceCount++;
 					if (upReferenceCount > 1)
 						return; // CSP is not a tree!
 				} else {
-					parent.put(neighbor, currParent);
+					parentConstraints.put(neighbor, constraint);
 					vars.add(neighbor);
 				}
 			}
