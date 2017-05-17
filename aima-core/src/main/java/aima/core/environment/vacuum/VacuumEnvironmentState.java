@@ -69,7 +69,7 @@ public class VacuumEnvironmentState implements EnvironmentState, FullyObservable
 
 	@Override
 	public boolean equals(Object obj) {
-		if (getClass() == obj.getClass()) {
+		if (obj != null && getClass() == obj.getClass()) {
 			VacuumEnvironmentState s = (VacuumEnvironmentState) obj;
 			return state.equals(s.state) && agentLocations.equals(s.agentLocations);
 		}

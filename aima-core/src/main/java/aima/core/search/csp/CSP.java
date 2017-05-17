@@ -1,5 +1,6 @@
 package aima.core.search.csp;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -18,7 +19,7 @@ import java.util.List;
  * 
  * @author Ruediger Lunde
  */
-public class CSP<VAR extends Variable, VAL> {
+public class CSP<VAR extends Variable, VAL> implements Cloneable {
 
 	private List<VAR> variables;
 	private List<Domain<VAL>> domains;
@@ -126,14 +127,16 @@ public class CSP<VAR extends Variable, VAL> {
 	 * Returns a copy which contains a copy of the domains list and is in all
 	 * other aspects a flat copy of this.
 	 */
+    @SuppressWarnings("unchecked")
 	public CSP<VAR, VAL> copyDomains() {
-		CSP<VAR, VAL> result = new CSP<>();
-		result.variables = variables;
-		result.domains = new ArrayList<>(domains.size());
-		result.domains.addAll(domains);
-		result.constraints = constraints;
-		result.varIndexHash = varIndexHash;
-		result.cnet = cnet;
+        CSP<VAR, VAL> result = null;
+        try {
+            result = (CSP<VAR, VAL>) clone();
+            result.domains = new ArrayList<>(domains.size());
+            result.domains.addAll(domains);
+        } catch (CloneNotSupportedException e) {
+            throw new UnsupportedOperationException("Could not copy domains.");
+        }
 		return result;
 	}
 }

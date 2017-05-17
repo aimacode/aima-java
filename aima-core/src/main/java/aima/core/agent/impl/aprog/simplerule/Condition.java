@@ -13,10 +13,7 @@ public abstract class Condition {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == null || !(o instanceof Condition)) {
-			return super.equals(o);
-		}
-		return (toString().equals(((Condition) o).toString()));
+		return o != null && getClass() == o.getClass() && toString().equals(o.toString());
 	}
 
 	@Override

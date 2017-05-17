@@ -137,21 +137,17 @@ public class EightPuzzleBoard {
 
 	@Override
 	public boolean equals(Object o) {
-
-		if (this == o) {
+		if (this == o)
+			return true;
+		if (o != null && getClass() == o.getClass()) {
+			EightPuzzleBoard aBoard = (EightPuzzleBoard) o;
+			for (int i = 0; i < 8; i++) {
+				if (this.getPositionOf(i) != aBoard.getPositionOf(i))
+					return false;
+			}
 			return true;
 		}
-		if ((o == null) || (this.getClass() != o.getClass())) {
-			return false;
-		}
-		EightPuzzleBoard aBoard = (EightPuzzleBoard) o;
-
-		for (int i = 0; i < 8; i++) {
-			if (this.getPositionOf(i) != aBoard.getPositionOf(i)) {
-				return false;
-			}
-		}
-		return true;
+		return false;
 	}
 
 	@Override

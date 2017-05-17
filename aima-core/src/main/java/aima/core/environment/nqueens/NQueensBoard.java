@@ -26,14 +26,11 @@ public class NQueensBoard {
 	 */
 	int[][] squares;
 
-	int size;
-
 	/**
 	 * Creates a board with <code>size</code> rows and size columns. Column and
 	 * row indices start with 0.
 	 */
 	public NQueensBoard(int size) {
-		this.size = size;
 		squares = new int[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -63,22 +60,22 @@ public class NQueensBoard {
 	}
 
 	public void clear() {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < getSize(); i++) {
+			for (int j = 0; j < getSize(); j++) {
 				squares[i][j] = 0;
 			}
 		}
 	}
 
-	public void setBoard(List<XYLocation> al) {
+	public void setBoard(List<XYLocation> locations) {
 		clear();
-		for (int i = 0; i < al.size(); i++) {
-			addQueenAt(al.get(i));
+		for (XYLocation anAl : locations) {
+			addQueenAt(anAl);
 		}
 	}
 
 	public int getSize() {
-		return size;
+		return squares.length;
 	}
 
 	/** Column and row indices start with 0! */
@@ -101,7 +98,7 @@ public class NQueensBoard {
 	 * @param l
 	 */
 	public void moveQueenTo(XYLocation l) {
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < getSize(); i++)
 			squares[l.getXCoOrdinate()][i] = 0;
 		squares[l.getXCoOrdinate()][l.getYCoOrdinate()] = 1;
 	}
@@ -123,8 +120,8 @@ public class NQueensBoard {
 
 	public int getNumberOfQueensOnBoard() {
 		int count = 0;
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < getSize(); i++) {
+			for (int j = 0; j < getSize(); j++) {
 				if (squares[i][j] == 1)
 					count++;
 			}
@@ -133,9 +130,9 @@ public class NQueensBoard {
 	}
 
 	public List<XYLocation> getQueenPositions() {
-		ArrayList<XYLocation> result = new ArrayList<XYLocation>();
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		ArrayList<XYLocation> result = new ArrayList<>();
+		for (int i = 0; i < getSize(); i++) {
+			for (int j = 0; j < getSize(); j++) {
 				if (queenExistsAt(i, j))
 					result.add(new XYLocation(i, j));
 			}
@@ -179,7 +176,7 @@ public class NQueensBoard {
 
 	private int numberOfHorizontalAttacksOn(int x, int y) {
 		int retVal = 0;
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < getSize(); i++) {
 			if ((queenExistsAt(i, y)))
 				if (i != x)
 					retVal++;
@@ -189,7 +186,7 @@ public class NQueensBoard {
 
 	private int numberOfVerticalAttacksOn(int x, int y) {
 		int retVal = 0;
-		for (int j = 0; j < size; j++) {
+		for (int j = 0; j < getSize(); j++) {
 			if ((queenExistsAt(x, j)))
 				if (j != y)
 					retVal++;
@@ -202,12 +199,12 @@ public class NQueensBoard {
 		int i;
 		int j;
 		// forward up diagonal
-		for (i = (x + 1), j = (y - 1); (i < size && (j > -1)); i++, j--) {
+		for (i = (x + 1), j = (y - 1); (i < getSize() && (j > -1)); i++, j--) {
 			if (queenExistsAt(i, j))
 				retVal++;
 		}
 		// forward down diagonal
-		for (i = (x + 1), j = (y + 1); ((i < size) && (j < size)); i++, j++) {
+		for (i = (x + 1), j = (y + 1); ((i < getSize()) && (j < getSize())); i++, j++) {
 			if (queenExistsAt(i, j))
 				retVal++;
 		}
@@ -218,7 +215,7 @@ public class NQueensBoard {
 		}
 
 		// backward down diagonal
-		for (i = (x - 1), j = (y + 1); ((i > -1) && (j < size)); i--, j++) {
+		for (i = (x - 1), j = (y + 1); ((i > -1) && (j < getSize())); i--, j++) {
 			if (queenExistsAt(i, j))
 				retVal++;
 		}
@@ -240,17 +237,19 @@ public class NQueensBoard {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if ((o == null) || (this.getClass() != o.getClass()))
-			return false;
-		NQueensBoard aBoard = (NQueensBoard) o;
-		boolean retVal = true;
-		List<XYLocation> locs = getQueenPositions();
-
-		for (XYLocation loc : locs) {
-			if (!(aBoard.queenExistsAt(loc)))
-				retVal = false;
+		if (o != null && getClass() == o.getClass()) {
+			NQueensBoard aBoard = (NQueensBoard) o;
+			if (aBoard.getQueenPositions().size() != getQueenPositions().size())
+				return false;
+			for (int i = 0; i < getSize(); i++) {
+				for (int j = 0; j < getSize(); j++) {
+					if (queenExistsAt(i, j) != aBoard.queenExistsAt(i, j))
+						return false;
+				}
+			}
+			return true;
 		}
-		return retVal;
+		return false;
 	}
 
 	public void print() {
@@ -258,31 +257,31 @@ public class NQueensBoard {
 	}
 
 	public String getBoardPic() {
-		StringBuffer buffer = new StringBuffer();
-		for (int row = 0; (row < size); row++) { // row
-			for (int col = 0; (col < size); col++) { // col
+		StringBuilder builder = new StringBuilder();
+		for (int row = 0; (row < getSize()); row++) { // row
+			for (int col = 0; (col < getSize()); col++) { // col
 				if (queenExistsAt(col, row))
-					buffer.append(" Q ");
+					builder.append(" Q ");
 				else
-					buffer.append(" - ");
+					builder.append(" - ");
 			}
-			buffer.append("\n");
+			builder.append("\n");
 		}
-		return buffer.toString();
+		return builder.toString();
 	}
 
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (int row = 0; row < size; row++) { // rows
-			for (int col = 0; col < size; col++) { // columns
+		StringBuilder builder = new StringBuilder();
+		for (int row = 0; row < getSize(); row++) { // rows
+			for (int col = 0; col < getSize(); col++) { // columns
 				if (queenExistsAt(col, row))
-					buf.append('Q');
+					builder.append('Q');
 				else
-					buf.append('-');
+					builder.append('-');
 			}
-			buf.append("\n");
+			builder.append("\n");
 		}
-		return buf.toString();
+		return builder.toString();
 	}
 }

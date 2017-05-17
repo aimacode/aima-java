@@ -72,10 +72,10 @@ public class Cell<C> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Cell<?>) {
-			Cell<?> c = (Cell<?>) o;
-			return x == c.x && y == c.y && content.equals(c.content);
+	public boolean equals(Object obj) {
+		if (obj != null && getClass() == obj.getClass()) {
+			Cell<?> other = (Cell<?>) obj;
+			return x == other.x && y == other.y && content.equals(other.content);
 		}
 		return false;
 	}

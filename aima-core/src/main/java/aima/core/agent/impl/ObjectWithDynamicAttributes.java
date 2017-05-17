@@ -118,10 +118,8 @@ public abstract class ObjectWithDynamicAttributes {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) {
-			return super.equals(o);
-		}
-		return attributes.equals(((ObjectWithDynamicAttributes) o).attributes);
+		return o != null && getClass() == o.getClass()
+			&& attributes.equals(((ObjectWithDynamicAttributes) o).attributes);
 	}
 
 	@Override
@@ -131,11 +129,6 @@ public abstract class ObjectWithDynamicAttributes {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(describeType());
-		sb.append(describeAttributes());
-
-		return sb.toString();
+		return describeType() + describeAttributes();
 	}
 }

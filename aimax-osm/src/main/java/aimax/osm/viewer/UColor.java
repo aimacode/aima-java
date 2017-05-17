@@ -5,6 +5,7 @@ package aimax.osm.viewer;
  * and AWT. Letter U stands for unified.
  * 
  * @author Daniel Wonnenberg
+ * @author Ruediger Lunde
  */
 
 public class UColor {
@@ -53,14 +54,7 @@ public class UColor {
 	}
 
 	private boolean isInRange(int number) {
-
-		boolean res;
-		if (number >= 0 && number <= 255) {
-			res = true;
-		} else {
-			res = false;
-		}
-		return res;
+		return number >= 0 && number <= 255;
 	}
 
 	public UColor brighter() {
@@ -98,21 +92,10 @@ public class UColor {
 
 	@Override
 	public boolean equals(Object otherObject) {
-
-		if (otherObject == null) {
-			return false;
-		}
-		if (this == otherObject) {
-			return true;
-		}
-		if (this.getClass() != otherObject.getClass()) {
-			return false;
-		}
-
-		final UColor other = (UColor) otherObject;
-		if (other.red == red && other.green == green && other.blue == blue
-				&& other.alpha == alpha) {
-			return true;
+		if (otherObject != null && getClass() == otherObject.getClass()) {
+			final UColor other = (UColor) otherObject;
+			return other.red == red && other.green == green && other.blue == blue
+					&& other.alpha == alpha;
 		} else {
 			return false;
 		}
@@ -120,12 +103,11 @@ public class UColor {
 
 	@Override
 	public int hashCode() {
-		return 2 * red + 3 * green + 5 * blue + 7 * alpha;
+		return 3 * red + 11 * green + 23 * blue + 31 * alpha;
 	}
 
 	@Override
 	public String toString() {
-
 		String res = "UColor(";
 		res += red + ",";
 		res += green + ",";

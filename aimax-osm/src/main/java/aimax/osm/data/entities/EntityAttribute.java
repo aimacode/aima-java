@@ -37,11 +37,11 @@ public class EntityAttribute implements Comparable<EntityAttribute> {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof EntityAttribute) {
+		if (obj != null &&  getClass() == obj.getClass()) {
 			EntityAttribute e = (EntityAttribute) obj;
 			return key.equals(e.key) && value.equals(e.value);
-		} else
-			return false;
+		}
+		return false;
 	}
 
 	@Override

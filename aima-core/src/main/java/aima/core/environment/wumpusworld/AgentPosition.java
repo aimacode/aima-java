@@ -62,13 +62,10 @@ public class AgentPosition {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof AgentPosition) {
-			AgentPosition othAgent = (AgentPosition) obj;
-			if ((getX() == othAgent.getX()) && (getY() == othAgent.getY()) && (orientation == othAgent.getOrientation()) ) {
-				return true;
-			} else {
-				return false;
-			}
+		if (obj != null && getClass() == obj.getClass()) {
+			AgentPosition other = (AgentPosition) obj;
+			return (getX() == other.getX()) && (getY() == other.getY())
+					&& (orientation == other.getOrientation());
 		}
 		return false;
 	}

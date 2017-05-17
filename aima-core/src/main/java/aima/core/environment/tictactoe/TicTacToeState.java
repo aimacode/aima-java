@@ -138,9 +138,8 @@ public class TicTacToeState implements Cloneable {
 		if (anObj != null && anObj.getClass() == getClass()) {
 			TicTacToeState anotherState = (TicTacToeState) anObj;
 			for (int i = 0; i < 9; i++) {
-				if (!Objects.equals(board[i], anotherState.board[i])) {
+				if (!Objects.equals(board[i], anotherState.board[i]))
 					return false;
-				}
 			}
 			return true;
 		}

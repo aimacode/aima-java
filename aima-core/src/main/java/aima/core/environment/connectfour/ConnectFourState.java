@@ -226,7 +226,7 @@ public class ConnectFourState implements Cloneable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ConnectFourState) {
+		if (obj != null && getClass() == obj.getClass()) {
 			ConnectFourState s = (ConnectFourState) obj;
 			for (int i = 0; i < board.length; i++)
 				if (board[i] != s.board[i])

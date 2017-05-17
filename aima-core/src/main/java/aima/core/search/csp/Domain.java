@@ -18,7 +18,7 @@ import aima.core.util.ArrayIterator;
  */
 public class Domain<VAL> implements Iterable<VAL> {
 
-	private Object[] values; ArrayList a;
+	private final Object[] values;
 
 	public Domain(List<VAL> values) {
 		this.values = values.toArray();
@@ -63,16 +63,16 @@ public class Domain<VAL> implements Iterable<VAL> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Domain) {
+		if (obj != null && getClass() == obj.getClass()) {
 			Domain d = (Domain) obj;
-			if (d.size() != values.length)
+			if (d.values.length != values.length)
 				return false;
-			else
-				for (int i = 0; i < values.length; i++)
-					if (!values[i].equals(d.values[i]))
-						return false;
+			for (int i = 0; i < values.length; i++)
+				if (!values[i].equals(d.values[i]))
+					return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
