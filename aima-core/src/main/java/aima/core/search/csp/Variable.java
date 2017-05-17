@@ -20,7 +20,7 @@ public class Variable {
         return name;
     }
 
-    /** Variables with same name are equal. */
+    /** Variables with equal names are equal. */
     @Override
     public final boolean equals(Object obj) {
         return obj instanceof Variable && this.name.equals(((Variable) obj).name);

@@ -1,11 +1,7 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
-import aima.core.search.csp.inference.DomainLog;
 import aima.core.util.Util;
 
 /**
@@ -27,7 +23,7 @@ import aima.core.util.Util;
  * 			if it cannot be made consistent then return failure
  * 		for i = 1 to n do
  * 			assignment[Xi] &larr; any consistent value from Di
- * 			if there is no consistent value then return failure
+ * 			if there is no consistent value then return failure (*)
  * 		return assignment
  * </code>
  * 
@@ -35,10 +31,11 @@ import aima.core.util.Util;
  * 
  * Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs.
  * If the CSP has a solution, we will find it in linear time; if not, we will
- * detect a contradiction.
- * 
- * @author Anurag Rai
+ * detect a contradiction. Comment to (*). If no empty domain was found in the
+ * previous loop, this will never happen. (RL)
+ *
  * @author Ruediger Lunde
+ * @author Anurag Rai
  * 
  */
 public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
@@ -47,113 +44,94 @@ public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<V
 	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
 
 		Assignment<VAR, VAL> assignment = new Assignment<>();
-		// Get the list of Variables from CSP to calculate the size
-		List<VAR> l = csp.getVariables();
-		// Calculate the size
-		int n = l.size();
-		// Select a random root from the List of Vaiables
-		VAR root = Util.selectRandomlyFromList(l);
+		// Select a random root from the List of Variables
+		VAR root = Util.selectRandomlyFromList(csp.getVariables());
 		// Sort the variables in topological order
-		l = topologicalSort(csp, l, root);
+		List<VAR> orderedVars = new ArrayList<>();
+		Map<VAR, VAR> parent = new HashMap<>();
+		topologicalSort(csp, root, orderedVars, parent);
+		if (orderedVars.size() < csp.getVariables().size())
+			return null; // CSP is not tree-structured or not connected!
 
-		DomainLog log = new DomainLog();
-
-		for (int i = n - 1; i >= 1; i--) {
-			VAR var = l.get(i);
+		for (int i = orderedVars.size() - 1; i >= 1; i--) {
+			VAR var = orderedVars.get(i);
 			// get constraints to find the parent
 			for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
 				if (constraint.getScope().size() == 2) {
 					// if the neighbour is parent
-					if (csp.getNeighbor(var, constraint) == l.get(parent[i])) {
-						// make it Arc Consistent
-						if (makeArcConsistent(l.get(parent[i]), var, constraint, csp, log)) {
-							if (csp.getDomain(l.get(parent[i])).isEmpty()) {
-								log.setEmptyDomainFound(true);
-								return null;
+					VAR par = parent.get(var);
+					if (par == csp.getNeighbor(var, constraint)) {
+						// make it arc consistent
+						if (makeArcConsistent(par, var, constraint, csp)) {
+							if (csp.getDomain(par).isEmpty()) {
+								return null; // CSP has no solution!
 							}
 						}
 					}
 				}
 			}
 		}
-		boolean assignment_consistent = false;
-		for (int i = 0; i < n; i++) {
-			VAR var = l.get(i);
-			assignment_consistent = false;
+		for (int i = 0; i < orderedVars.size(); i++) {
+			VAR var = orderedVars.get(i);
 			for (VAL value : csp.getDomain(var)) {
 				assignment.add(var, value);
 				if (assignment.isConsistent(csp.getConstraints(var))) {
-					assignment_consistent = true;
 					break;
 				}
-			}
-			if (!assignment_consistent) {
-				return null;
 			}
 		}
 		return assignment;
 	}
 
-	//
-	// Supporting Code
-	protected int[] parent;
-
 	// Since the graph is a tree, topologicalSort is:
 	// Level order traversal of the tree OR BFS on tree OR Pre-oder
-	protected List<VAR> topologicalSort(CSP<VAR, VAL> csp, List<VAR> l, VAR root) {
-		// Track the parents
-		parent = new int[l.size()];
-		
-		List<VAR> result = new ArrayList<>();
-		Queue<VAR> q = new LinkedList<>(); // FIFO-Queue
-
-		int i = 1;
-		int parent_index = 0;
-		int node_count = 0;
-		q.add(root);
-
-		while (!q.isEmpty()) {
-
-			node_count = q.size(); // get number of nodes in the level
-
-			while (node_count > 0) {
-
-				VAR var = q.remove();
-				result.add(var);
-				// for each binary constraint of the Variable
-				for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
-					VAR neighbour = csp.getNeighbor(var, constraint);
-					// check if neighbour is root
-					if (result.contains(neighbour))
-						continue;
-					parent[i] = parent_index;
-					i++;
-					q.add(neighbour);
+	/**
+	 * Computes an explicit representation of the tree structure and a total order which is consistent with the
+	 * parent-child relations.
+	 * @param csp A CSP
+	 * @param root A root variable
+	 * @param vars The computed total order (initially empty)
+	 * @param parent The tree structure (initially empty)
+	 */
+	private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> vars, Map<VAR, VAR> parent) {
+		parent.put(root, null);
+		vars.add(root);
+		int currParentIdx = -1;
+		while (currParentIdx < vars.size() - 1) {
+			currParentIdx++;
+			VAR currParent = vars.get(currParentIdx);
+			int upReferenceCount = 0;
+			for (Constraint<VAR, VAL> constraint : csp.getConstraints(currParent)) {
+				VAR neighbor = csp.getNeighbor(currParent, constraint);
+				if (neighbor == null)
+					return; // this constraint is not binary!
+				if (parent.containsKey(neighbor)) {
+					upReferenceCount++;
+					if (upReferenceCount > 1)
+						return; // CSP is not a tree!
+				} else {
+					parent.put(neighbor, currParent);
+					vars.add(neighbor);
 				}
-				node_count--;
-				parent_index++;
 			}
 		}
-		return result;
 	}
 
-	protected boolean makeArcConsistent(VAR xi, VAR xj, Constraint<VAR, VAL> constraint, CSP<VAR, VAL> csp,
-			DomainLog<VAR, VAL> log) {
+	private boolean makeArcConsistent(VAR xi, VAR xj, Constraint<VAR, VAL> constraint, CSP<VAR, VAL> csp) {
 		boolean revised = false;
 		Assignment<VAR, VAL> assignment = new Assignment<>();
-		for (VAL iValue : csp.getDomain(xi)) {
-			assignment.add(xi, iValue);
+		for (VAL vi : csp.getDomain(xi)) {
+			assignment.add(xi, vi);
 			boolean consistentExtensionFound = false;
-			for (VAL jValue : csp.getDomain(xj)) {
-				assignment.add(xj, jValue);
+			for (VAL vj : csp.getDomain(xj)) {
+				assignment.add(xj, vj);
 				if (constraint.isSatisfiedWith(assignment)) {
 					consistentExtensionFound = true;
 					break;
 				}
 			}
 			if (!consistentExtensionFound) {
-				log.storeDomainFor(xi, csp.getDomain(xi));
-				csp.removeValueFromDomain(xi, iValue);
+				csp.removeValueFromDomain(xi, vi);
 				revised = true;
 			}
 		}

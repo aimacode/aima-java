@@ -22,29 +22,29 @@ public class TreeCSPSolverTest {
 	private static final Variable NSW = new Variable("nsw");
 	private static final Variable V = new Variable("v");
 
-	private static final Constraint C1 = new NotEqualConstraint(WA, NT);
-	private static final Constraint C2 = new NotEqualConstraint(NT, Q);
-	private static final Constraint C3 = new NotEqualConstraint(Q, NSW);
-	private static final Constraint C4 = new NotEqualConstraint(NSW, V);
+	private static final Constraint<Variable, String> C1 = new NotEqualConstraint<>(WA, NT);
+	private static final Constraint<Variable, String> C2 = new NotEqualConstraint<>(NT, Q);
+	private static final Constraint<Variable, String> C3 = new NotEqualConstraint<>(Q, NSW);
+	private static final Constraint<Variable, String> C4 = new NotEqualConstraint<>(NSW, V);
 	
-	private Domain colors;
+	private Domain<String> colors;
 
 	private List<Variable> variables;
 
 	@Before
 	public void setUp() {
-		variables = new ArrayList<Variable>();
+		variables = new ArrayList<>();
 		variables.add(WA);
 		variables.add(NT);
 		variables.add(Q);
 		variables.add(NSW);
 		variables.add(V);
-		colors = new Domain("red", "green", "blue");
+		colors = new Domain<>("red", "green", "blue");
 	}
 
 	@Test
 	public void testConstraintNetwork() {
-		CSP csp = new CSP(variables);
+		CSP<Variable, String> csp = new CSP<>(variables);
 		csp.addConstraint(C1);
 		csp.addConstraint(C2);
 		csp.addConstraint(C3);
@@ -63,10 +63,10 @@ public class TreeCSPSolverTest {
 
 	@Test
 	public void testDomainChanges() {
-		Domain colors2 = new Domain(colors.asList());
+		Domain<String> colors2 = new Domain<>(colors.asList());
 		Assert.assertEquals(colors, colors2);
 
-		CSP csp = new CSP(variables);
+		CSP<Variable, String> csp = new CSP<>(variables);
 		csp.addConstraint(C1);
 		Assert.assertNotNull(csp.getDomain(WA));
 		Assert.assertEquals(0, csp.getDomain(WA).size());
@@ -77,7 +77,7 @@ public class TreeCSPSolverTest {
 		Assert.assertEquals(3, csp.getDomain(WA).size());
 		Assert.assertEquals("red", csp.getDomain(WA).get(0));
 
-		CSP cspCopy = csp.copyDomains();
+		CSP<Variable, String> cspCopy = csp.copyDomains();
 		Assert.assertNotNull(cspCopy.getDomain(WA));
 		Assert.assertEquals(3, cspCopy.getDomain(WA).size());
 		Assert.assertEquals("red", cspCopy.getDomain(WA).get(0));
@@ -96,7 +96,7 @@ public class TreeCSPSolverTest {
 	@Test
 	public void testCSPSolver() {
 		
-		CSP csp = new CSP(variables);
+		CSP<Variable, String> csp = new CSP<>(variables);
 		csp.addConstraint(C1);
 		csp.addConstraint(C2);
 		csp.addConstraint(C3);
@@ -108,8 +108,8 @@ public class TreeCSPSolverTest {
 		csp.setDomain(NSW, colors);
 		csp.setDomain(V, colors);
 		
-		TreeCSPSolver treeCSPSolver = new TreeCSPSolver();
-		Assignment assignment = treeCSPSolver.solve(csp);
+		TreeCSPSolver<Variable, String> treeCSPSolver = new TreeCSPSolver<>();
+		Assignment<Variable, String> assignment = treeCSPSolver.solve(csp);
 		Assert.assertNotNull(assignment);
 		Assert.assertTrue(assignment.isComplete(csp.getVariables()));
 		Assert.assertTrue(assignment.isSolution(csp));

@@ -98,15 +98,19 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 		}
 	}
 
+	/**
+	 * Establishes arc-consistency for (xi, xj).
+	 * @return Value true if the domain of xi was modified.
+	 */
 	private boolean revise(VAR xi, VAR xj, Constraint<VAR, VAL> constraint,
 			CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 		boolean revised = false;
 		Assignment<VAR, VAL> assignment = new Assignment<>();
-		for (VAL iValue : csp.getDomain(xi)) {
-			assignment.add(xi, iValue);
+		for (VAL vi : csp.getDomain(xi)) {
+			assignment.add(xi, vi);
 			boolean consistentExtensionFound = false;
-			for (VAL jValue : csp.getDomain(xj)) {
-				assignment.add(xj, jValue);
+			for (VAL vj : csp.getDomain(xj)) {
+				assignment.add(xj, vj);
 				if (constraint.isSatisfiedWith(assignment)) {
 					consistentExtensionFound = true;
 					break;
@@ -114,7 +118,7 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 			}
 			if (!consistentExtensionFound) {
 				log.storeDomainFor(xi, csp.getDomain(xi));
-				csp.removeValueFromDomain(xi, iValue);
+				csp.removeValueFromDomain(xi, vi);
 				revised = true;
 			}
 		}

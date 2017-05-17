@@ -5,7 +5,7 @@ import aima.core.search.csp.Variable;
 
 /**
  * Provides information about (1) whether changes have been performed, (2) possibly inferred empty domains , and
- * (3) how to restore the domains.
+ * (3) how to restore the CSP.
  *
  * @author Ruediger Lunde
  */
