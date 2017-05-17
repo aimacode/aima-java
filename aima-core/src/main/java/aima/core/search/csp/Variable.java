@@ -20,14 +20,14 @@ public class Variable {
         return name;
     }
 
+    /** Variables with same name are equal. */
     @Override
-    public boolean equals(Object obj) {
-        return obj != null && obj.getClass() == getClass() &&
-                this.name.equals(((Variable) obj).name);
+    public final boolean equals(Object obj) {
+        return obj instanceof Variable && this.name.equals(((Variable) obj).name);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return name.hashCode();
     }
 }

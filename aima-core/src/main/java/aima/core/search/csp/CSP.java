@@ -47,6 +47,7 @@ public class CSP<VAR extends Variable, VAL> {
 		vars.forEach(this::addVariable);
 	}
 
+	/** Adds a new variable only if its name is new. */
 	protected void addVariable(VAR var) {
 		if (!varIndexHash.containsKey(var)) {
 			Domain<VAL> emptyDomain = new Domain<>(Collections.emptyList());
