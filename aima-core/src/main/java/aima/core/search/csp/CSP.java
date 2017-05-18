@@ -76,31 +76,43 @@ public class CSP<VAR extends Variable, VAL> implements Cloneable {
         return varIndexHash.get(var);
     }
 
-    public Domain<VAL> getDomain(Variable var) {
-        return domains.get(varIndexHash.get(var));
-    }
-
     public void setDomain(VAR var, Domain<VAL> domain) {
         domains.set(indexOf(var), domain);
+    }
+
+    public Domain<VAL> getDomain(Variable var) {
+        return domains.get(varIndexHash.get(var));
     }
 
     /**
      * Replaces the domain of the specified variable by new domain, which
      * contains all values of the old domain except the specified value.
      */
-    public void removeValueFromDomain(VAR var, VAL value) {
+    public boolean removeValueFromDomain(VAR var, VAL value) {
         Domain<VAL> currDomain = getDomain(var);
         List<VAL> values = new ArrayList<>(currDomain.size());
         for (VAL v : currDomain)
             if (!v.equals(value))
                 values.add(v);
-        setDomain(var, new Domain<>(values));
+        if (values.size() < currDomain.size()) {
+            setDomain(var, new Domain<>(values));
+            return true;
+        }
+        return false;
     }
 
     public void addConstraint(Constraint<VAR, VAL> constraint) {
         constraints.add(constraint);
         for (VAR var : constraint.getScope())
             cnet.get(var).add(constraint);
+    }
+
+    public boolean removeConstraint(Constraint<VAR, VAL> constraint) {
+        boolean result = constraints.remove(constraint);
+        if (result)
+            for (VAR var : constraint.getScope())
+                cnet.get(var).remove(constraint);
+        return result;
     }
 
     public List<Constraint<VAR, VAL>> getConstraints() {
