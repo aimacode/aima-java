@@ -71,14 +71,14 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	@Override
 	public List<Action> findActions(Problem p) {
 		nodeExpander.useParentLinks(true);
-		Node node = searchNode(p);
+		Node node = findNode(p);
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
 	public Object findState(Problem p) {
 		nodeExpander.useParentLinks(false);
-		Node node = searchNode(p);
+		Node node = findNode(p);
 		return node == null ? null : node.getState();
 	}
 
@@ -96,7 +96,7 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	 *         user.
 	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
-	public Node searchNode(Problem p) {
+	public Node findNode(Problem p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -173,8 +173,8 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	private Node getHighestValuedNodeFrom(List<Node> children, Problem p) {
 		double highestValue = Double.NEGATIVE_INFINITY;
 		Node nodeWithHighestValue = null;
-		for (int i = 0; i < children.size(); i++) {
-			Node child = (Node) children.get(i);
+		for (Node aChild : children) {
+			Node child = (Node) aChild;
 			double value = getValue(child);
 			if (value > highestValue) {
 				highestValue = value;

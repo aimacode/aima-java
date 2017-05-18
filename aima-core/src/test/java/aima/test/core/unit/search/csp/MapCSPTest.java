@@ -21,7 +21,7 @@ public class MapCSPTest {
 
 	@Test
 	public void testBackTrackingSearch() {
-		Assignment results = new BacktrackingStrategy().solve(csp);
+		Assignment results = new BacktrackingSolver().solve(csp);
 		Assert.assertNotNull(results);
 		Assert.assertEquals(MapCSP.GREEN, results.getValue(MapCSP.WA));
 		Assert.assertEquals(MapCSP.RED, results.getValue(MapCSP.NT));
@@ -34,6 +34,6 @@ public class MapCSPTest {
 
 	@Test
 	public void testMCSearch() {
-		new MinConflictsStrategy(100).solve(csp);
+		new MinConflictsSolver(100).solve(csp);
 	}
 }

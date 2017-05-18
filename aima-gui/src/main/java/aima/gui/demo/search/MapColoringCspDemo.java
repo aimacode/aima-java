@@ -2,7 +2,6 @@ package aima.gui.demo.search;
 
 import aima.core.search.csp.*;
 import aima.core.search.csp.examples.MapCSP;
-import aima.core.search.csp.inference.AC3Strategy;
 
 /**
  * Demonstrates the performance of different constraint solving strategies.
@@ -15,24 +14,24 @@ public class MapColoringCspDemo {
 	public static void main(String[] args) {
 		CSP<Variable, String> csp = new MapCSP();
 		StepCounter stepCounter = new StepCounter();
-		SolutionStrategy<Variable, String> solver;
+		CspSolver<Variable, String> solver;
 		
-		solver = new MinConflictsStrategy<>(1000);
-		solver.addCSPStateListener(stepCounter);
+		solver = new MinConflictsSolver<>(1000);
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Minimum Conflicts)");
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new BacktrackingStrategy<Variable, String>().setAll();
-		solver.addCSPStateListener(stepCounter);
+		solver = new BacktrackingSolver<Variable, String>().setAll();
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new BacktrackingStrategy<>();
-		solver.addCSPStateListener(stepCounter);
+		solver = new BacktrackingSolver<>();
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking)");
 		System.out.println(solver.solve(csp.copyDomains()));

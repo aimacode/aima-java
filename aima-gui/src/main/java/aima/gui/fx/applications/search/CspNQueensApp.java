@@ -42,7 +42,7 @@ public class CspNQueensApp extends IntegrableApplication {
     private NQueensViewCtrl stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
     private CSP<Variable, Integer> csp;
-    private SolutionStrategy<Variable, Integer> solver;
+    private CspSolver<Variable, Integer> solver;
     private ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
 
     @Override
@@ -95,7 +95,7 @@ public class CspNQueensApp extends IntegrableApplication {
         csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
         Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
         if (strategy.equals("Backtracking")) {
-            BacktrackingStrategy<Variable, Integer> bSolver = new BacktrackingStrategy<>();
+            BacktrackingSolver<Variable, Integer> bSolver = new BacktrackingSolver<>();
             switch ((String) simPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
                 case "MRV": bSolver.set(CspHeuristics.mrv()); break;
                 case "DEG": bSolver.set(CspHeuristics.deg()); break;
@@ -110,10 +110,10 @@ public class CspNQueensApp extends IntegrableApplication {
             }
             solver = bSolver;
         } else if (strategy.equals("Min-Conflicts")) {
-            solver = new MinConflictsStrategy<>(1000);
+            solver = new MinConflictsSolver<>(1000);
 
         }
-        solver.addCSPStateListener(progressAnalyzer);
+        solver.addCspStateListener(progressAnalyzer);
         progressAnalyzer.reset();
         stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
         simPaneCtrl.setStatus("");

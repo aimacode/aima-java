@@ -2,7 +2,6 @@ package aima.gui.fx.applications.search;
 
 import aima.core.search.csp.*;
 import aima.core.search.csp.examples.NQueensCSP;
-import aima.core.search.csp.inference.AC3Strategy;
 import aima.core.search.framework.Metrics;
 
 public class CspNQueensDemo {
@@ -10,19 +9,19 @@ public class CspNQueensDemo {
 		int size = 64;
 		CSP<Variable, Integer> csp = new NQueensCSP(size);
 		StepCounter stepCounter = new StepCounter();
-		SolutionStrategy<Variable, Integer> solver;
+		CspSolver<Variable, Integer> solver;
 		
 		System.out.println(size + "-Queens (Min-Conflicts)");
-		solver = new MinConflictsStrategy<>(1000);
-		solver.addCSPStateListener(stepCounter);
+		solver = new MinConflictsSolver<>(1000);
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		Assignment<Variable, Integer> sol = solver.solve(csp.copyDomains());
 		System.out.println((sol.isSolution(csp) ? ":-) " : ":-( ") + sol);
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		System.out.println(size + "-Queens (Backtracking + MRV & DEG + LCV + AC3)");
-		solver = new BacktrackingStrategy<Variable, Integer>().setAll();
-		solver.addCSPStateListener(stepCounter);
+		solver = new BacktrackingSolver<Variable, Integer>().setAll();
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");
@@ -31,8 +30,8 @@ public class CspNQueensDemo {
 		size = 16;
 		csp = new NQueensCSP(size);
 		System.out.println(size + "-Queens (Backtracking)");
-		solver = new BacktrackingStrategy<>();
-		solver.addCSPStateListener(stepCounter);
+		solver = new BacktrackingSolver<>();
+		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println(solver.solve(csp.copyDomains()));
 		System.out.println(stepCounter.getResults() + "\n");

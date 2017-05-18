@@ -36,7 +36,7 @@ import aima.core.util.Util;
  * @author Ruediger Lunde
  * @author Anurag Rai
  */
-public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
+public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
 
     @Override
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {

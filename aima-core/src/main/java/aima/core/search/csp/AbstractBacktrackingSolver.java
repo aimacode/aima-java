@@ -41,7 +41,7 @@ import aima.core.util.CancelableThread;
  *
  * @author Ruediger Lunde
  */
-public abstract class AbstractBacktrackingStrategy<VAR extends Variable, VAL> extends SolutionStrategy<VAR, VAL> {
+public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
 
     /** Applies a recursive backtracking search to solve the CSP. */
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
