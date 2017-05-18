@@ -52,6 +52,7 @@ public class TreeCSPSolver<VAR extends Variable, VAL> extends SolutionStrategy<V
             return null; // CSP is not tree-structured or not connected or has no solution!
 
         // Establish arc consistency from top to bottom (starting at the bottom).
+        csp = csp.copyDomains(); // do not change the original CSP!
         for (int i = orderedVars.size() - 1; i >= 1; i--) {
             VAR var = orderedVars.get(i);
             Constraint<VAR, VAL> constraint = parentConstraints.get(var);
