@@ -20,21 +20,21 @@ public class MapColoringCspDemo {
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Minimum Conflicts)");
-		System.out.println(solver.solve(csp.copyDomains()));
+		System.out.println(solver.solve(csp));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new BacktrackingSolver<Variable, String>().setAll();
+		solver = new FlexibleBacktrackingSolver<Variable, String>().setAll();
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");
-		System.out.println(solver.solve(csp.copyDomains()));
+		System.out.println(solver.solve(csp));
 		System.out.println(stepCounter.getResults() + "\n");
 		
-		solver = new BacktrackingSolver<>();
+		solver = new FlexibleBacktrackingSolver<>();
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking)");
-		System.out.println(solver.solve(csp.copyDomains()));
+		System.out.println(solver.solve(csp));
 		System.out.println(stepCounter.getResults() + "\n");
 	}
 	

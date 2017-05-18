@@ -15,25 +15,25 @@ public class CspNQueensDemo {
 		solver = new MinConflictsSolver<>(1000);
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
-		Assignment<Variable, Integer> sol = solver.solve(csp.copyDomains());
+		Assignment<Variable, Integer> sol = solver.solve(csp);
 		System.out.println((sol.isSolution(csp) ? ":-) " : ":-( ") + sol);
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		System.out.println(size + "-Queens (Backtracking + MRV & DEG + LCV + AC3)");
-		solver = new BacktrackingSolver<Variable, Integer>().setAll();
+		solver = new FlexibleBacktrackingSolver<Variable, Integer>().setAll();
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
-		System.out.println(solver.solve(csp.copyDomains()));
+		System.out.println(solver.solve(csp));
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		
 		size = 16;
 		csp = new NQueensCSP(size);
 		System.out.println(size + "-Queens (Backtracking)");
-		solver = new BacktrackingSolver<>();
+		solver = new FlexibleBacktrackingSolver<>();
 		solver.addCspStateListener(stepCounter);
 		stepCounter.reset();
-		System.out.println(solver.solve(csp.copyDomains()));
+		System.out.println(solver.solve(csp));
 		System.out.println(stepCounter.getResults() + "\n");
 	}
 	

@@ -123,27 +123,27 @@ public class CspMapColoringApp extends IntegrableApplication {
 
         switch (simPaneCtrl.getParamValueIndex(PARAM_STRATEGY)) {
             case 0:
-                strategy = new BacktrackingSolver<>();
+                strategy = new FlexibleBacktrackingSolver<>();
                 break;
             case 1: // DEG
-                strategy = new BacktrackingSolver<Variable, String>().set(CspHeuristics.deg());
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.deg());
                 break;
             case 2: // FC
-                strategy = new BacktrackingSolver<Variable, String>().set(new ForwardCheckingStrategy<>());
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(new ForwardCheckingStrategy<>());
                 break;
             case 3: // MRV + FC
-                strategy = new BacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg())
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg())
                         .set(new ForwardCheckingStrategy<>());
                 break;
             case 4: // LCV + FC
-                strategy = new BacktrackingSolver<Variable, String>().set(CspHeuristics.lcv())
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.lcv())
                         .set(new ForwardCheckingStrategy<>());
                 break;
             case 5: // AC3
-                strategy = new BacktrackingSolver<Variable, String>().set(new AC3Strategy<>());
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(new AC3Strategy<>());
                 break;
             case 6: // MRV & DEG + LCV + AC3
-                strategy = new BacktrackingSolver<Variable, String>().setAll();
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().setAll();
                 break;
             case 7:
                 strategy = new MinConflictsSolver<>(50);
@@ -178,7 +178,7 @@ public class CspMapColoringApp extends IntegrableApplication {
      */
     public void simulate() {
         stepCounter = 0;
-        strategy.solve(csp.copyDomains());
+        strategy.solve(csp);
     }
 
     /**

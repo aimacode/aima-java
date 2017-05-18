@@ -11,7 +11,7 @@ import aima.core.search.csp.inference.*;
  *
  * @author Ruediger Lunde
  */
-public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
+public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
 
     private CspHeuristics.VariableSelection<VAR, VAL> varSelectionStrategy;
     private CspHeuristics.ValueSelection<VAR, VAL> valSelectionStrategy;
@@ -21,7 +21,7 @@ public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBackt
     /**
      * Selects the algorithm for SELECT-UNASSIGNED-VARIABLE. Uses the fluent interface design pattern.
      */
-    public BacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelection<VAR, VAL> varStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelection<VAR, VAL> varStrategy) {
         varSelectionStrategy = varStrategy;
         return this;
     }
@@ -29,7 +29,7 @@ public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBackt
     /**
      * Selects the algorithm for ORDER-DOMAIN-VALUES. Uses the fluent interface design pattern.
      */
-    public BacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSelection<VAR, VAL> valStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSelection<VAR, VAL> valStrategy) {
         valSelectionStrategy = valStrategy;
         return this;
     }
@@ -37,7 +37,7 @@ public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBackt
     /**
      * Selects the algorithm for INFERENCE. Uses the fluent interface design pattern.
      */
-    public BacktrackingSolver<VAR, VAL> set(InferenceStrategy<VAR, VAL> iStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(InferenceStrategy<VAR, VAL> iStrategy) {
         inferenceStrategy = iStrategy;
         return this;
     }
@@ -45,7 +45,7 @@ public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBackt
     /**
      * Selects MRV&DEG for variable selection, LCV for domain ordering and AC3 as inference method.
      */
-    public BacktrackingSolver<VAR, VAL> setAll() {
+    public FlexibleBacktrackingSolver<VAR, VAL> setAll() {
         set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
         return this;
     }
@@ -56,6 +56,7 @@ public class BacktrackingSolver<VAR extends Variable, VAL> extends AbstractBackt
     @Override
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
         if (inferenceStrategy != null) {
+            csp = csp.copyDomains(); // do not change the original CSP!
             InferenceLog log = inferenceStrategy.apply(csp);
             if (!log.isEmpty()) {
                 fireStateChanged(csp);

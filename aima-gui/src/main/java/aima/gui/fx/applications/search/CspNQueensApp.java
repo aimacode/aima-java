@@ -95,7 +95,7 @@ public class CspNQueensApp extends IntegrableApplication {
         csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
         Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
         if (strategy.equals("Backtracking")) {
-            BacktrackingSolver<Variable, Integer> bSolver = new BacktrackingSolver<>();
+            FlexibleBacktrackingSolver<Variable, Integer> bSolver = new FlexibleBacktrackingSolver<>();
             switch ((String) simPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
                 case "MRV": bSolver.set(CspHeuristics.mrv()); break;
                 case "DEG": bSolver.set(CspHeuristics.deg()); break;
