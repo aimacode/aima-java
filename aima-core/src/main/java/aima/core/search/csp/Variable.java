@@ -6,13 +6,13 @@ package aima.core.search.csp;
  * @author Ruediger Lunde
  */
 public class Variable {
-    private String name;
+    private final String name;
 
     public Variable(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
