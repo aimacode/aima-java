@@ -60,11 +60,11 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
             VAR var = selectUnassignedVariable(assignment, csp);
             for (VAL value : orderDomainValues(var, assignment, csp)) {
                 assignment.add(var, value);
-                fireStateChanged(assignment, csp);
+                fireStateChanged(csp, assignment);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
                     InferenceLog<VAR, VAL> log = inference(var, assignment, csp);
                     if (!log.isEmpty())
-                        fireStateChanged(csp);
+                        fireStateChanged(csp, null);
                     if (!log.inconsistencyFound()) {
                         result = recursiveBackTrackingSearch(csp, assignment);
                         if (result != null)

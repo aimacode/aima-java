@@ -38,9 +38,9 @@ public class NQueensSearchApp extends IntegrableApplication {
 		launch(args);
 	}
 
-	public final static String PARAM_STRATEGY = "strategy";
-	public final static String PARAM_BOARD_SIZE = "boardSize";
-	public final static String PARAM_INIT_CONFIG = "initConfig";
+	private final static String PARAM_STRATEGY = "strategy";
+	private final static String PARAM_BOARD_SIZE = "boardSize";
+	private final static String PARAM_INIT_CONFIG = "initConfig";
 
 	private NQueensViewCtrl stateViewCtrl;
 	private SimulationPaneCtrl simPaneCtrl;

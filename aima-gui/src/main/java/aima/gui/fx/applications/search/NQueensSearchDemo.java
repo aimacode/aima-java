@@ -32,11 +32,11 @@ import aima.core.search.uninformed.DepthFirstSearch;
  */
 public class NQueensSearchDemo {
 	private int boardSize = 8;
-	public int populationSize = 10;
-	public double mutationProbability = 0.2;
+	private int populationSize = 10;
+	private double mutationProbability = 0.2;
 	public int k = 30;
-	public double lambda = 2.0 / 100;
-	public int maxIterations = 500;
+	private double lambda = 2.0 / 100;
+	private int maxIterations = 500;
 
 	private static Random random = new Random();
 	private GeneticAlgorithm<Integer> genAlgo;

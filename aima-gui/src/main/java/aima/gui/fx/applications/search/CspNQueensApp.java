@@ -8,7 +8,6 @@ import aima.core.search.csp.*;
 import aima.core.search.csp.examples.NQueensCSP;
 import aima.core.search.csp.inference.AC3Strategy;
 import aima.core.search.csp.inference.ForwardCheckingStrategy;
-import aima.core.search.framework.Metrics;
 import aima.core.util.datastructure.XYLocation;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -32,18 +31,18 @@ public class CspNQueensApp extends IntegrableApplication {
         launch(args);
     }
 
-    public final static String PARAM_STRATEGY = "strategy";
-    public final static String PARAM_VAR_SELECT = "varSelect";
-    public final static String PARAM_VAL_SELECT = "valOrder";
-    public final static String PARAM_INFERENCE = "inference";
+    private final static String PARAM_STRATEGY = "strategy";
+    private final static String PARAM_VAR_SELECT = "varSelect";
+    private final static String PARAM_VAL_SELECT = "valOrder";
+    private final static String PARAM_INFERENCE = "inference";
 
-    public final static String PARAM_BOARD_SIZE = "boardSize";
+    private final static String PARAM_BOARD_SIZE = "boardSize";
 
     private NQueensViewCtrl stateViewCtrl;
     private SimulationPaneCtrl simPaneCtrl;
     private CSP<Variable, Integer> csp;
     private CspSolver<Variable, Integer> solver;
-    private ProgressAnalyzer progressAnalyzer = new ProgressAnalyzer();
+    private CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter();
 
     @Override
     public String getTitle() {
@@ -113,8 +112,9 @@ public class CspNQueensApp extends IntegrableApplication {
             solver = new MinConflictsSolver<>(1000);
 
         }
-        solver.addCspStateListener(progressAnalyzer);
-        progressAnalyzer.reset();
+        solver.addCspListener(stepCounter);
+        solver.addCspListener((csp, assign) -> { if (assign != null) updateStateView(getBoard(assign));});
+        stepCounter.reset();
         stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
         simPaneCtrl.setStatus("");
     }
@@ -133,7 +133,6 @@ public class CspNQueensApp extends IntegrableApplication {
             NQueensBoard board = getBoard(solution);
             stateViewCtrl.update(board);
         }
-        simPaneCtrl.setStatus(progressAnalyzer.getResults().toString());
     }
 
     private NQueensBoard getBoard(Assignment<Variable, Integer> assignment) {
@@ -151,36 +150,8 @@ public class CspNQueensApp extends IntegrableApplication {
      * the GUI have to be done in the GUI thread!
      */
     private void updateStateView(NQueensBoard board) {
-        Platform.runLater(() -> stateViewCtrl.update(board));
+        Platform.runLater(() -> {
+            stateViewCtrl.update(board); simPaneCtrl.setStatus(stepCounter.getResults().toString()); });
         simPaneCtrl.waitAfterStep();
-    }
-
-    protected class ProgressAnalyzer implements CspListener<Variable, Integer> {
-        private int assignmentCount = 0;
-        private int domainCount = 0;
-
-        @Override
-        public void stateChanged(Assignment<Variable, Integer> assignment, CSP<Variable, Integer> csp) {
-            updateStateView(getBoard(assignment));
-            ++assignmentCount;
-        }
-
-        @Override
-        public void stateChanged(CSP<Variable, Integer> csp) {
-            ++domainCount;
-        }
-
-        public void reset() {
-            assignmentCount = 0;
-            domainCount = 0;
-        }
-
-        public Metrics getResults() {
-            Metrics result = new Metrics();
-            result.set("assignmentChanges", assignmentCount);
-            if (domainCount != 0)
-                result.set("domainChanges", domainCount);
-            return result;
-        }
     }
 }

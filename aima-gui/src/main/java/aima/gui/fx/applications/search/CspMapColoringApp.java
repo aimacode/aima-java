@@ -150,19 +150,9 @@ public class CspMapColoringApp extends IntegrableApplication {
                 break;
         }
 
-        strategy.addCspStateListener(new CspListener<Variable, String>() {
-
-            @Override
-            public void stateChanged(Assignment<Variable, String> assignment, CSP<Variable, String> csp) {
-                stepCounter++;
-                updateStateView(csp, assignment);
-            }
-
-            @Override
-            public void stateChanged(CSP<Variable, String> csp) {
-                stepCounter++;
-                updateStateView(csp, null);
-            }
+        strategy.addCspListener((csp1, assignment) -> {
+            stepCounter++;
+            updateStateView(csp1, assignment);
         });
 
         stateViewCtrl.initialize(csp);
