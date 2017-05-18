@@ -11,11 +11,11 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
-import aima.core.search.csp.TreeCspSolver;
+import aima.core.search.csp.XTreeCspSolver;
 import aima.core.search.csp.Variable;
 import aima.core.search.csp.examples.NotEqualConstraint;
 
-public class TreeCspSolverTest {
+public class XTreeCspSolverTest {
 	private static final Variable WA = new Variable("wa");
 	private static final Variable NT = new Variable("nt");
 	private static final Variable Q = new Variable("q");
@@ -108,7 +108,7 @@ public class TreeCspSolverTest {
 		csp.setDomain(NSW, colors);
 		csp.setDomain(V, colors);
 		
-		TreeCspSolver<Variable, String> treeCSPSolver = new TreeCspSolver<>();
+		XTreeCspSolver<Variable, String> treeCSPSolver = new XTreeCspSolver<>();
 		Assignment<Variable, String> assignment = treeCSPSolver.solve(csp);
 		Assert.assertNotNull(assignment);
 		Assert.assertTrue(assignment.isComplete(csp.getVariables()));
