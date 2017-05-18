@@ -3,7 +3,7 @@ package aima.test.core.unit.search;
 import aima.test.core.unit.search.csp.AssignmentTest;
 import aima.test.core.unit.search.csp.CSPTest;
 import aima.test.core.unit.search.csp.MapCSPTest;
-import aima.test.core.unit.search.csp.XTreeCspSolverTest;
+import aima.test.core.unit.search.csp.TreeCspSolverTest;
 import aima.test.core.unit.search.framework.MetricsTest;
 import aima.test.core.unit.search.framework.NodeTest;
 import aima.test.core.unit.search.framework.SolutionCheckerTest;
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ AssignmentTest.class, CSPTest.class, MapCSPTest.class, MetricsTest.class, XTreeCspSolverTest.class,
+@Suite.SuiteClasses({ AssignmentTest.class, CSPTest.class, MapCSPTest.class, MetricsTest.class, TreeCspSolverTest.class,
 		AStarSearchTest.class, GreedyBestFirstSearchTest.class, RecursiveBestFirstSearchTest.class,
 		SimulatedAnnealingSearchTest.class, AndOrSearchTest.class, LRTAStarAgentTest.class, OnlineDFSAgentTest.class,
 		BidirectionalSearchTest.class, BreadthFirstSearchTest.class, DepthFirstSearchTest.class,

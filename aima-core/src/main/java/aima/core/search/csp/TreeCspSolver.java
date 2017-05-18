@@ -36,7 +36,7 @@ import aima.core.util.Util;
  * @author Ruediger Lunde
  * @author Anurag Rai
  */
-public class XTreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
+public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
 
     @Override
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
@@ -81,20 +81,20 @@ public class XTreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VA
      *
      * @param csp               A CSP
      * @param root              A root variable
-     * @param vars              The computed total order (initially empty)
+     * @param orderedVars       The computed total order (initially empty)
      * @param parentConstraints The tree structure, maps a variable to the constraint representing the arc to the parent
      *                          variable (initially empty)
      */
-    private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> vars,
+    private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> orderedVars,
                                  Map<VAR, Constraint<VAR, VAL>> parentConstraints) {
         if (csp.getDomain(root).isEmpty())
             return; // no solution!
         parentConstraints.put(root, null);
-        vars.add(root);
+        orderedVars.add(root);
         int currParentIdx = -1;
-        while (currParentIdx < vars.size() - 1) {
+        while (currParentIdx < orderedVars.size() - 1) {
             currParentIdx++;
-            VAR currParent = vars.get(currParentIdx);
+            VAR currParent = orderedVars.get(currParentIdx);
             int arcsPointingUpwards = 0;
             for (Constraint<VAR, VAL> constraint : csp.getConstraints(currParent)) {
                 VAR neighbor = csp.getNeighbor(currParent, constraint);
@@ -106,7 +106,7 @@ public class XTreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VA
                         return; // CSP is not a tree!
                 } else {
                     parentConstraints.put(neighbor, constraint);
-                    vars.add(neighbor);
+                    orderedVars.add(neighbor);
                 }
             }
         }
