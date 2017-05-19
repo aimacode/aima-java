@@ -25,7 +25,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author Ruediger Lunde
  */
-public class CspNQueensApp extends IntegrableApplication {
+public class NQueensCspApp extends IntegrableApplication {
 
     public static void main(String[] args) {
         launch(args);

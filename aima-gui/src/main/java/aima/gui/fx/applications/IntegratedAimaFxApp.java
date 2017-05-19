@@ -14,9 +14,9 @@ import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
-import aima.gui.fx.applications.search.CspMapColoringApp;
-import aima.gui.fx.applications.search.CspNQueensApp;
-import aima.gui.fx.applications.search.CspNQueensDemo;
+import aima.gui.fx.applications.search.MapColoringCspApp;
+import aima.gui.fx.applications.search.NQueensCspApp;
+import aima.gui.fx.applications.search.NQueensCspDemo;
 import aima.gui.fx.applications.search.NQueensSearchApp;
 import aima.gui.fx.applications.search.NQueensSearchDemo;
 import aima.gui.fx.applications.search.games.ConnectFourApp;
@@ -57,8 +57,8 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(VacuumAgentApp.class);
 		builder.registerApp(RouteFindingAgentApp.class);
 
-		builder.registerApp(CspMapColoringApp.class);
-		builder.registerApp(CspNQueensApp.class);
+		builder.registerApp(MapColoringCspApp.class);
+		builder.registerApp(NQueensCspApp.class);
 		builder.registerApp(NQueensSearchApp.class);
 
 		builder.registerApp(EightPuzzleApp.class);
@@ -69,7 +69,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
 
-		builder.registerDemo(CspNQueensDemo.class);
+		builder.registerDemo(NQueensCspDemo.class);
 		builder.registerDemo(GeneticMaximumFinderDemo.class);
 
 		builder.registerDemo(NQueensSearchDemo.class);

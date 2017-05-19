@@ -3,7 +3,7 @@ package aima.gui.fx.applications.search;
 import aima.core.search.csp.*;
 import aima.core.search.csp.examples.NQueensCSP;
 
-public class CspNQueensDemo {
+public class NQueensCspDemo {
 	public static void main(String[] args) {
 		int size = 64;
 		CSP<Variable, Integer> csp = new NQueensCSP(size);

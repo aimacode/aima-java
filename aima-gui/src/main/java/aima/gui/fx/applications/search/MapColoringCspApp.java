@@ -25,7 +25,7 @@ import javafx.scene.paint.Color;
  *
  * @author Ruediger Lunde
  */
-public class CspMapColoringApp extends IntegrableApplication {
+public class MapColoringCspApp extends IntegrableApplication {
 
     public static void main(String[] args) {
         launch(args);
@@ -41,7 +41,7 @@ public class CspMapColoringApp extends IntegrableApplication {
     private CspSolver<Variable, String> strategy;
     private int stepCounter;
 
-    public CspMapColoringApp() {
+    public MapColoringCspApp() {
     }
 
     @Override
