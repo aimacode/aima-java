@@ -1,4 +1,4 @@
-= AIMA-GUI =
+# AIMA-GUI
 
 by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
@@ -13,20 +13,20 @@ integrated application providing access to all integrable demos. The individual 
 in sub-packages. Note that JavaFX and Swing demos are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function.
 
-== Requirements ==
-# Depends on the aima-core project. 
+## Requirements
+Depends on the aima-core project. 
 
-== Current Release: 1.1.1-AIMA-GUI JavaFX GUIs Added ==
+## Current Release: 1.1.1-AIMA-GUI JavaFX GUIs Added
 1.1.1-JavaFX GUIs Added : 18 Dec 2016 :<br>
   * Fixed Jar to launch JavaFX Integrated App by default.
   
-== Running the GUIs and Command Line Demos ==
+## Running the GUIs and Command Line Demos
 Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar,
 ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * java -jar aima-gui.jar
-   + this will run the default IntegratedAimaFxApp. It allows you to run all other JavaFX applications from a central location as well as all of the current command line demos.
+   * this will run the default IntegratedAimaFxApp. It allows you to run all other JavaFX applications from a central location as well as all of the current command line demos.
 * java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp
-   + this will run the Swing version of the integrated AIMA application.
+   * this will run the Swing version of the integrated AIMA application.
 
 JavaFX and Swing demo applications can be started directly.
  
@@ -46,7 +46,7 @@ The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo
  
 
-= Change History (Update in reverse chronological order) =
+## Change History (Update in reverse chronological order)
 1.1.0-JavaFX GUIs Added : 18 Dec 2016 :<br>
   * Java FX based GUIs added.
   * Simulated Annealing, FX based, Application Added.
