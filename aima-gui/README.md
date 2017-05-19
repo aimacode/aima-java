@@ -18,8 +18,8 @@ They use different frameworks (sub-package framework) and also differ in functio
 ### Requirements
 Depends on the aima-core project. 
 
-### Current Release: 1.1.1-AIMA-GUI JavaFX GUIs Added
-#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016 :<br>
+### Current Release:
+#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016
  * Fixed Jar to launch JavaFX Integrated App by default.
   
 ### Running the GUIs and Command Line Demos
