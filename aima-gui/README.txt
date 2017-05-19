@@ -28,19 +28,7 @@ ensure these are on your CLASSPATH, the different GUI programs that can be run u
 * java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp
    + this will run the Swing version of the integrated AIMA application.
 
-JavaFX and Swing demo applications can be started directly. Here, only the Swing versions are listed: 
- * java -classpath aima-gui.jar aima.gui.swing.applications.vacuum.VacuumApp
-   + provides a demo of the different agents described in Chapter 2 for tackling the Vacuum World.
-  * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.EightPuzzleApp
-   + provides a demo of the different search algorithms described in Chapter 3 and 4.
- * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.NQueensApp
-   + provides a demo of the different search algorithms described in Chapter 3 and 4.
- * java -classpath aima-gui.jar aima.gui.swing.applications.search.games.TicTacToeApp
-   + provides a demo of the different search algorithms described in Chapter 5.
- * java -classpath aima-gui.jar aima.gui.swing.applications.search.map.RouteFindingAgentApp
-   + provides a demo of the different agents/search algorithms described in Chapters 3 and 4, for tackling route planning tasks within simplified Map environments.
- * java -classpath aima-gui.jar aima.gui.swing.applications.search.csp.MapColoringApp
-   + provides a demo of the different csp algorithms described in Chapters 6.
+JavaFX and Swing demo applications can be started directly.
  
 The following command line demos can be run as well:
  * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo

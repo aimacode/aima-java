@@ -46,7 +46,7 @@ public class MapColoringCspApp extends IntegrableApplication {
 
     @Override
     public String getTitle() {
-        return "CSP Map Coloring App";
+        return "Map Coloring CSP App";
     }
 
     /**

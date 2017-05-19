@@ -42,11 +42,11 @@ public class NQueensCspApp extends IntegrableApplication {
     private SimulationPaneCtrl simPaneCtrl;
     private CSP<Variable, Integer> csp;
     private CspSolver<Variable, Integer> solver;
-    private CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter();
+    private CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter<>();
 
     @Override
     public String getTitle() {
-        return "CSP N-Queens App";
+        return "N-Queens CSP App";
     }
 
     /**
