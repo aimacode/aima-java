@@ -25,27 +25,27 @@ Depends on the aima-core project.
 ### Running the GUIs and Command Line Demos
 Under the `release` directory you should find two jar files, `aima-core.jar` and `aima-gui.jar`,
 ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
- * java -jar aima-gui.jar
+ * `java -jar aima-gui.jar`
    * this will run the default IntegratedAimaFxApp. It allows you to run all other JavaFX applications from a central location as well as all of the current command line demos.
-* java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp
+* `java -classpath aima-gui.jar aima.gui.swing.applications.IntegratedAimaApp`
    * this will run the Swing version of the integrated AIMA application.
 
 JavaFX and Swing demo applications can be started directly.
  
 The following command line demos can be run as well:
- * java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo
- * java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.DpllDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.FolDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.PlFcEntailsDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.PLResolutionDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.TTEntailsDemo
- * java -classpath aima-gui.jar aima.gui.demo.logic.WalkSatDemo
- * java -classpath aima-gui.jar aima.gui.demo.probability.ProbabilityDemo
- * java -classpath aima-gui.jar aima.gui.demo.search.CSPDemo
- * java -classpath aima-gui.jar aima.gui.demo.search.EightPuzzleDemo
- * java -classpath aima-gui.jar aima.gui.demo.search.NQueensDemo
- * java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo
+ * `java -classpath aima-gui.jar aima.gui.demo.agent.TrivialVacuumDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.learning.LearningDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.DpllDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.FolDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.PlFcEntailsDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.PLResolutionDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.TTEntailsDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.logic.WalkSatDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.probability.ProbabilityDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.search.CSPDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.search.EightPuzzleDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.search.NQueensDemo`
+ * `java -classpath aima-gui.jar aima.gui.demo.search.TicTacToeDemo`
  
 
 ### Change History (Update in reverse chronological order)
