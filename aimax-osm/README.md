@@ -134,7 +134,7 @@ http://creativecommons.org/licenses/by-sa/2.0/
 Under the `release` directory you should find three jar files, `aima-core.jar`, `aima-gui.jar`, and `aimax-osm.jar`. 
 Ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * `java -jar aimax-osm.jar`
-   * this will run the default OsmAimaDemoApp, this allows you to run applications and demos from the aima-gui project as well as some of the applications provided in this project.
+   * this will run the default IntegratedAimaOsmFxApp, this allows you to run JavaFX applications and demos from the aima-gui project as well as some of the JavaFX applications provided in this project.
  * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerApp`
    * just the plain viewer (not dependent on AIMA)
  * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerPlusApp`
