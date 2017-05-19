@@ -57,12 +57,12 @@ In the current version, relation entities are still ignored and the size
 of the map when using the default representation should be limited to about 
 a million nodes to avoid long loading times. For example, detailed maps of
 cities like Berlin can be loaded and displayed without any problem if enough
-heap space is provided (VM argument -Xmx500M).
+heap space is provided (VM argument `-Xmx500M`).
 
 Getting started: Run one of the applications in the
 `aimax.osm.gui.fx.applications` or `aimax.osm.gui.swing.applications` package,
 or use the corresponding integrated applications one package level up. If no map is
-displayed by default, make sure that the main/resource folder is included
+displayed by default, make sure that the `main/resource` folder is included
 in the build path of your project, recompile and start again.
 Then, place the mouse inside the map viewer pane. Try mouse-left, mouse-middle,
 mouse-right, mouse-drag, ctrl-mouse-left, plus button, minus button, shift-plus, shift-minus,
