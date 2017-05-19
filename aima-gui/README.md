@@ -13,6 +13,8 @@ integrated application providing access to all integrable demos. The individual 
 in sub-packages. Note that JavaFX and Swing demos are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function.
 
+![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
+
 ### Requirements
 Depends on the aima-core project. 
 
