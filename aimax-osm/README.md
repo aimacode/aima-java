@@ -1,4 +1,4 @@
-= AIMAX-OSM =
+# AIMAX-OSM
 
 by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
