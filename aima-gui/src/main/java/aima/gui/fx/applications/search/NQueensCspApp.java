@@ -77,7 +77,7 @@ public class NQueensCspApp extends IntegrableApplication {
         Parameter p1 = new Parameter(PARAM_STRATEGY, "Backtracking", "Min-Conflicts");
         Parameter p2 = new Parameter(PARAM_VAR_SELECT, "Default", "MRV", "DEG", "MRV&DEG");
         Parameter p3 = new Parameter(PARAM_VAL_SELECT, "Default", "LCV");
-        Parameter p4 = new Parameter(PARAM_INFERENCE, "None", "FC", "AC3");
+        Parameter p4 = new Parameter(PARAM_INFERENCE, "None", "Forward Checking", "AC3");
         p2.setDependency(PARAM_STRATEGY, "Backtracking");
         p3.setDependency(PARAM_STRATEGY, "Backtracking");
         p4.setDependency(PARAM_STRATEGY, "Backtracking");
@@ -104,7 +104,7 @@ public class NQueensCspApp extends IntegrableApplication {
                 case "LCV": bSolver.set(CspHeuristics.lcv()); break;
             }
             switch ((String) simPaneCtrl.getParamValue(PARAM_INFERENCE)) {
-                case "FC": bSolver.set(new ForwardCheckingStrategy<>()); break;
+                case "Forward Checking": bSolver.set(new ForwardCheckingStrategy<>()); break;
                 case "AC3": bSolver.set(new AC3Strategy<>()); break;
             }
             solver = bSolver;

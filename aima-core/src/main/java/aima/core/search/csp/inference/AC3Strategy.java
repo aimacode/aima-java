@@ -108,15 +108,15 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 		Assignment<VAR, VAL> assignment = new Assignment<>();
 		for (VAL vi : csp.getDomain(xi)) {
 			assignment.add(xi, vi);
-			boolean consistentExtensionFound = false;
+			boolean found = false;
 			for (VAL vj : csp.getDomain(xj)) {
 				assignment.add(xj, vj);
 				if (constraint.isSatisfiedWith(assignment)) {
-					consistentExtensionFound = true;
+					found = true;
 					break;
 				}
 			}
-			if (!consistentExtensionFound) {
+			if (!found) {
 				log.storeDomainFor(xi, csp.getDomain(xi));
 				csp.removeValueFromDomain(xi, vi);
 				revised = true;
