@@ -117,8 +117,9 @@ performed using the free [Osmosis tool](http://wiki.openstreetmap.org/index.php/
 The following lines give you an example how Osmosis could be called within a Windows
 cmd file to extract the region of Ulm from the Geofabrik `germany.osm.bz2` file:
 
-`set JAVACMD_OPTIONS=-Xmx1024M
-osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm`
+`set JAVACMD_OPTIONS=-Xmx1024M`
+
+`osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm`
 
 Open Street Map data is published under the
 Creative Commons Attribution-ShareAlike 2.0 license.
