@@ -9,8 +9,8 @@ with "App" and command line demo class names end with "Demo".
 Simple demo command line applications can be found in package `aima.gui.demo`.
 Graphical demo applications are available based on JavaFX (package `aima.gui.fx.applications`) and
 Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
-integrated application providing access to all integrable demos. The individual demos are placed
-in sub-packages. Note that JavaFX and Swing demos are structured quite differently.
+integrated application providing access to all integrable applications. The individual applications are placed
+in sub-packages. Note that JavaFX and Swing applications are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function.
 
 ![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
