@@ -45,14 +45,14 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 
     /** Applies a recursive backtracking search to solve the CSP. */
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
-        return recursiveBackTrackingSearch(csp, new Assignment<>());
+        return backtrack(new Assignment<>(), csp);
     }
 
     /**
      * Template method, which can be configured by overriding the three
      * primitive operations below.
      */
-    private Assignment<VAR, VAL> recursiveBackTrackingSearch(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
+    private Assignment<VAR, VAL> backtrack(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
         Assignment<VAR, VAL> result = null;
         if (assignment.isComplete(csp.getVariables()) || CancelableThread.currIsCanceled()) {
             result = assignment;
@@ -66,7 +66,7 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
                     if (!log.isEmpty())
                         fireStateChanged(csp, null);
                     if (!log.inconsistencyFound()) {
-                        result = recursiveBackTrackingSearch(csp, assignment);
+                        result = backtrack(assignment, csp);
                         if (result != null)
                             break;
                     }
