@@ -6,9 +6,9 @@ This project contains graphical applications and command line demos, which
 demonstrate the use of some of the aima-core project features. Currently, it
 focuses on search algorithms and agent concepts. Application class names end
 with "App" and command line demo class names end with "Demo".
-Simple demo command line applications can be found in package aima.gui.demo.
-Graphical demo applications are available based on JavaFX (package aima.gui.fx.applications) and
-Swing (package aima.gui.swing.applications). Each platform-specific root package contains an
+Simple demo command line applications can be found in package `aima.gui.demo`.
+Graphical demo applications are available based on JavaFX (package `aima.gui.fx.applications`) and
+Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
 integrated application providing access to all integrable demos. The individual demos are placed
 in sub-packages. Note that JavaFX and Swing demos are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function.
@@ -20,10 +20,10 @@ Depends on the aima-core project.
 
 ### Current Release: 1.1.1-AIMA-GUI JavaFX GUIs Added
 #### 1.1.1-JavaFX GUIs Added : 18 Dec 2016 :<br>
-  * Fixed Jar to launch JavaFX Integrated App by default.
+ * Fixed Jar to launch JavaFX Integrated App by default.
   
 ### Running the GUIs and Command Line Demos
-Under the release/ directory you should find two jar files, aima-core.jar and aima-gui.jar,
+Under the `release` directory you should find two jar files, `aima-core.jar` and `aima-gui.jar`,
 ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
  * java -jar aima-gui.jar
    * this will run the default IntegratedAimaFxApp. It allows you to run all other JavaFX applications from a central location as well as all of the current command line demos.
