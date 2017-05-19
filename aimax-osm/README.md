@@ -115,7 +115,7 @@ Alternatively, data extraction for specific areas such as german cities can be
 performed using the free [Osmosis tool](http://wiki.openstreetmap.org/index.php/Osmosis).
 
 The following lines give you an example how Osmosis could be called within a Windows
-cmd file to extract the region of Ulm from the Geofabrik germany.osm.bz2 file:
+cmd file to extract the region of Ulm from the Geofabrik `germany.osm.bz2` file:
 
 `set JAVACMD_OPTIONS=-Xmx1024M
 osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm`
@@ -210,14 +210,14 @@ program argument `-screensize=xx` (with xx screen size in inch)
    * Offline search now available in OSM search demo application.
 
 #### 0.9.0-AIMAX-OSM Map Style Redesign : 02 Mar 2010
-Major refactorings
+Major refactorings:
  * Responsibility for map entity classification moved from presentation to application layer.
  * Classification mechanism for mapping map entities on style parameters extended
    (now more than one attribute can be checked).
  * kd-tree is now aware of minimal scales of entities.
 Additionally, several code cleanups and documentation updates are included.
  
-New features 
+New features:
  * Performance of the viewer improved for large maps.
  * Default map style improved, especially for alpine maps.
  * Find function for map entity search improved (checks also attribute names and values).
