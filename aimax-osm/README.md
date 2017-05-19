@@ -71,8 +71,8 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-### Current Release: 2.1.1-AIMAX-OSM JavaFX GUIs Added == 
-2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 :<br>
+### Current Release:
+#### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016
   * Fixed Jar to launch JavaFX Integrated App by default.
 
 ### Keywords
@@ -101,7 +101,7 @@ The provided example map has been created based on data published at:
 Smaller maps from servers like geofabrik or cloudmade can be loaded into the viewer
 directly, especially, if enough heap space is provided (e.g. VM argument -Xmx1500M).
 Additionally (Swing GUI only!), parts of larger maps can be loaded into the viewer applications
-by holding <ctrl> while pressing the load map button and specifying a bounding box.
+by holding ctrl while pressing the load map button and specifying a bounding box.
 If two markers are set in the currently visible map, their values are used to define
 the bounding box for the next map to load. The coordinates can also be specified in
 text form. The easiest way to obtain the needed latitude and longitude bounds is to
@@ -109,7 +109,7 @@ select the export tab from page [www.openstreetmap.org](http://www.openstreetmap
 and then navigate to the area which you want to extract. Unfortunately, the XML export
 typically doesn't work, but you find the needed coordinates on the left side. An overview
 map can be generated for large OSM files by pressing load map while holding the
-<shift> button.
+shift button.
 
 Alternatively, data extraction for specific areas such as german cities can be 
 performed using the free [Osmosis tool](http://wiki.openstreetmap.org/index.php/Osmosis).
@@ -117,8 +117,8 @@ performed using the free [Osmosis tool](http://wiki.openstreetmap.org/index.php/
 The following lines give you an example how Osmosis could be called within a Windows
 cmd file to extract the region of Ulm from the Geofabrik germany.osm.bz2 file:
 
-set JAVACMD_OPTIONS=-Xmx1024M
-osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm
+`set JAVACMD_OPTIONS=-Xmx1024M
+osmosis-0.31.1\bin\osmosis --read-xml ..\germany.osm.bz2 --bounding-box left="9.43" top="48.69" right="10.56" bottom="48.19" --write-xml ulm.osm`
 
 Open Street Map data is published under the
 Creative Commons Attribution-ShareAlike 2.0 license.
@@ -130,25 +130,25 @@ http://creativecommons.org/licenses/by-sa/2.0/
 
 
 ### Applications
-Under the release/ directory you should find three jar files, aima-core.jar, aima-gui.jar, and aimax-osm.jar. 
+Under the `release` directory you should find three jar files, `aima-core.jar`, `aima-gui.jar`, and `aimax-osm.jar`. 
 Ensure these are on your CLASSPATH, the different GUI programs that can be run using these are:
- * java -jar aimax-osm.jar
+ * `java -jar aimax-osm.jar`
    * this will run the default OsmAimaDemoApp, this allows you to run applications and demos from the aima-gui project as well as some of the applications provided in this project.
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerApp`
    * just the plain viewer (not dependent on AIMA)
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerPlusApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmViewerPlusApp`
    * demonstrates, how to configure and extend the viewer
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.RoutePlannerApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.RoutePlannerApp`
    * uses aima-core search functionality for routing in OSM maps
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmAgentApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.OsmAgentApp`
    * lets map agents from aima-core act in map environments which are defined by OSM data 
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp`
    * visualizes simulated search space exploration of different search strategies
- * java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.MiniNaviApp
+ * `java -classpath aimax-osm.jar aimax.osm.gui.swing.applications.MiniNaviApp`
    * provides a base for car navigation system development
 
-It is recommended to start the applications with VM argument -Xmx500m (or higher value) and
-program argument -screensize=xx (with xx screen size in inch)
+It is recommended to start the applications with VM argument `-Xmx500m` (or higher value) and
+program argument `-screensize=xx` (with xx screen size in inch)
 
   
 ### Change History (Update in reverse chronological order)
