@@ -1,14 +1,7 @@
 package aima.core.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Ravi Mohan
@@ -18,7 +11,7 @@ public class Util {
 	public static final String NO = "No";
 	public static final String YES = "Yes";
 	//
-	private static Random _r = new Random();
+	private static Random random = new Random();
 
 	private static final double EPSILON = 0.000000000001;
 	
@@ -56,7 +49,7 @@ public class Util {
 	 * @return a map with the passed in keys initialized to value.
 	 */
 	public static <K, V> Map<K, V> create(Collection<K> keys, V value) {
-		Map<K, V> map = new LinkedHashMap<K, V>();
+		Map<K, V> map = new LinkedHashMap<>();
 
 		for (K k : keys) {
 			map.put(k, value);
@@ -73,12 +66,8 @@ public class Util {
 	 */
 	@SafeVarargs
 	public static <V> Set<V> createSet(V... values) {
-		Set<V> set = new LinkedHashSet<V>();
-		
-		for (V v : values) {
-			set.add(v);
-		}
-		
+		Set<V> set = new LinkedHashSet<>();
+		Collections.addAll(set, values);
 		return set;
 	}
 
@@ -93,11 +82,17 @@ public class Util {
 	 * @return a randomly selected element from l.
 	 */
 	public static <T> T selectRandomlyFromList(List<T> l) {
-		return l.get(_r.nextInt(l.size()));
+		return l.get(random.nextInt(l.size()));
+	}
+
+	public static <T> T selectRandomlyFromSet(Set<T> set) {
+		Iterator<T> iterator = set.iterator();
+		for (int i = random.nextInt(set.size()); i > 0; i--) iterator.next();
+		return iterator.next();
 	}
 
 	public static boolean randomBoolean() {
-		int trueOrFalse = _r.nextInt(2);
+		int trueOrFalse = random.nextInt(2);
 		return (!(trueOrFalse == 0));
 	}
 
@@ -120,14 +115,12 @@ public class Util {
 
 	public static List<Double> normalize(List<Double> values) {
 		double[] valuesAsArray = new double[values.size()];
-		for (int i = 0; i < valuesAsArray.length; i++) {
+		for (int i = 0; i < valuesAsArray.length; i++)
 			valuesAsArray[i] = values.get(i);
-		}
 		double[] normalized = normalize(valuesAsArray);
-		List<Double> results = new ArrayList<Double>();
-		for (int i = 0; i < normalized.length; i++) {
-			results.add(normalized[i]);
-		}
+		List<Double> results = new ArrayList<>();
+		for (double aNormalized : normalized)
+			results.add(aNormalized);
 		return results;
 	}
 
@@ -148,10 +141,10 @@ public class Util {
 	}
 
 	public static <T> T mode(List<T> l) {
-		Hashtable<T, Integer> hash = new Hashtable<T, Integer>();
+		Hashtable<T, Integer> hash = new Hashtable<>();
 		for (T obj : l) {
 			if (hash.containsKey(obj)) {
-				hash.put(obj, hash.get(obj).intValue() + 1);
+				hash.put(obj, hash.get(obj) + 1);
 			} else {
 				hash.put(obj, 1);
 			}
@@ -183,7 +176,7 @@ public class Util {
 	}
 
 	public static <T> List<T> removeFrom(List<T> list, T member) {
-		List<T> newList = new ArrayList<T>(list);
+		List<T> newList = new ArrayList<>(list);
 		newList.remove(member);
 		return newList;
 	}
@@ -197,11 +190,11 @@ public class Util {
 	}
 
 	public static String ntimes(String s, int n) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < n; i++) {
-			buf.append(s);
+			builder.append(s);
 		}
-		return buf.toString();
+		return builder.toString();
 	}
 
 	public static void checkForNanOrInfinity(double d) {
@@ -215,13 +208,13 @@ public class Util {
 
 	public static int randomNumberBetween(int i, int j) {
 		/* i,j bothinclusive */
-		return _r.nextInt(j - i + 1) + i;
+		return random.nextInt(j - i + 1) + i;
 	}
 
 	public static double calculateMean(List<Double> lst) {
 		Double sum = 0.0;
 		for (Double d : lst) {
-			sum = sum + d.doubleValue();
+			sum = sum + d;
 		}
 		return sum / lst.size();
 	}
@@ -244,13 +237,8 @@ public class Util {
 		return Math.sqrt(variance);
 	}
 
-	public static List<Double> normalizeFromMeanAndStdev(List<Double> values,
-			double mean, double stdev) {
-		List<Double> normalized = new ArrayList<Double>();
-		for (Double d : values) {
-			normalized.add((d - mean) / stdev);
-		}
-		return normalized;
+	public static List<Double> normalizeFromMeanAndStdev(List<Double> values, double mean, double stdev) {
+		return values.stream().map(d -> (d - mean) / stdev).collect(Collectors.toList());
 	}
 	
 	/**
@@ -260,7 +248,7 @@ public class Util {
 	 * @return a random double bigger or equals {@code lowerLimit} and smaller or equals {@code upperLimit}.
 	 */
 	public static double generateRandomDoubleBetween(double lowerLimit, double upperLimit) {
-		return lowerLimit + ((upperLimit - lowerLimit) * _r.nextDouble());
+		return lowerLimit + ((upperLimit - lowerLimit) * random.nextDouble());
 	}
 
 	/**
@@ -270,7 +258,7 @@ public class Util {
 	 * @return a random float bigger or equals {@code lowerLimit} and smaller or equals {@code upperLimit}.
 	 */
 	public static float generateRandomFloatBetween(float lowerLimit, float upperLimit) {
-		return lowerLimit + ((upperLimit - lowerLimit) * _r.nextFloat());
+		return lowerLimit + ((upperLimit - lowerLimit) * random.nextFloat());
 	}
 	
 	/**

@@ -1,7 +1,6 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import aima.core.util.CancelableThread;
 import aima.core.util.Util;
@@ -55,8 +54,8 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 			if (assignment.isSolution(csp)) {
 				return assignment;
 			} else {
-				List<VAR> vars = getConflictedVariables(assignment, csp);
-				VAR var = Util.selectRandomlyFromList(vars);
+				Set<VAR> vars = getConflictedVariables(assignment, csp);
+				VAR var = Util.selectRandomlyFromSet(vars);
 				VAL value = getMinConflictValueFor(var, assignment, csp);
 				assignment.add(var, value);
 				fireStateChanged(csp, assignment);
@@ -74,14 +73,11 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 		return assignment;
 	}
 
-	private List<VAR> getConflictedVariables(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
-		List<VAR> result = new ArrayList<>();
-		for (Constraint<VAR, VAL> constraint : csp.getConstraints()) {
-			if (!constraint.isSatisfiedWith(assignment))
-				for (VAR var : constraint.getScope())
-					if (!result.contains(var))
-						result.add(var);
-		}
+	private Set<VAR> getConflictedVariables(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+		Set<VAR> result = new LinkedHashSet<>();
+		csp.getConstraints().stream().filter(constraint -> !constraint.isSatisfiedWith(assignment)).
+				forEach(constraint -> constraint.getScope().stream().filter(var -> !result.contains(var)).
+						forEach(result::add));
 		return result;
 	}
 

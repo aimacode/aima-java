@@ -12,6 +12,8 @@ import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javafx.scene.input.MouseButton.SECONDARY;
+
 /**
  * Provides a view for Sudoku puzzles. Digit positions are specified by column and row indices between 1 (top / left)
  * and 9 (bottom / right). Fixed digits are shown in brackets.
@@ -59,6 +61,7 @@ public class SudokuViewCtrl {
             combos.add(combo);
             gridPane.add(combo, i % 9, i / 9);
         }
+        gridPane.setOnMousePressed((ev) -> { if (ev.getButton() == SECONDARY) clear(false); });
     }
 
     public void clear(boolean allDigits) {

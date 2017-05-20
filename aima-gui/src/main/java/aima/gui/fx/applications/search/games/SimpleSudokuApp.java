@@ -13,7 +13,7 @@ import javafx.scene.layout.StackPane;
  */
 public class SimpleSudokuApp extends IntegrableApplication {
 
-    /** Example taken from https://de.wikipedia.org/wiki/Sudoku. */
+    /** Example taken from https://en.wikipedia.org/wiki/Sudoku. */
     public final static String puzzle1 = "" + //
             "53..7...." + //
             "6..195..." + //
@@ -48,7 +48,6 @@ public class SimpleSudokuApp extends IntegrableApplication {
             "...6....5" + //
             "8.2......" + //
             "..42....8";
-
 
     public static void main(String[] args) {
         launch(args);
