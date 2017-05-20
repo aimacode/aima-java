@@ -13,11 +13,48 @@ import javafx.scene.layout.StackPane;
  */
 public class SimpleSudokuApp extends IntegrableApplication {
 
-    SudokuViewCtrl viewCtrl;
+    /** Example taken from https://de.wikipedia.org/wiki/Sudoku. */
+    public final static String puzzle1 = "" + //
+            "53..7...." + //
+            "6..195..." + //
+            ".98....6." + //
+            "8...6...3" + //
+            "4..8.3..1" + //
+            "7...2...6" + //
+            ".6....28." + //
+            "...419..5" + //
+            "....8..79";
+
+    /** Example taken from https://de.wikipedia.org/wiki/Sudoku. */
+    public final static String puzzle2 = "" + //
+            ".3......." + //
+            "...195..." + //
+            "..8....6." + //
+            "8...6...." + //
+            "4..8....1" + //
+            "....2...." + //
+            ".6....28." + //
+            "...419..5" + //
+            ".......7.";
+
+    /** Example taken from http://sudoku.tagesspiegel.de/sudoku-sehr-schwer. */
+    public final static String puzzle3 = "" + //
+            ".....9.7." + //
+            "....82.5." + //
+            "327....4." + //
+            ".16.4...." + //
+            ".5....3.." + //
+            "....9.7.." + //
+            "...6....5" + //
+            "8.2......" + //
+            "..42....8";
+
 
     public static void main(String[] args) {
         launch(args);
     }
+
+    protected SudokuViewCtrl stateViewCtrl;
 
     @Override
     public String getTitle() {
@@ -27,60 +64,25 @@ public class SimpleSudokuApp extends IntegrableApplication {
     @Override
     public Pane createRootPane() {
         StackPane root = new StackPane();
-        viewCtrl = new SudokuViewCtrl(root);
+        stateViewCtrl = new SudokuViewCtrl(root);
         return root;
     }
 
     @Override
     public void initialize() {
-        createPuzzle1(viewCtrl);
+        initView(puzzle1);
     }
 
     @Override
     public void cleanup() {
-
     }
 
-    public static void createPuzzle1 (SudokuViewCtrl viewCtrl) {
-        // taken from https://en.wikipedia.org/wiki/Sudoku.
-        viewCtrl.clear(true);
-        viewCtrl.fixDigit(1, 1, 5);
-        viewCtrl.fixDigit(2, 1, 3);
-        viewCtrl.fixDigit(1, 2, 6);
-        viewCtrl.fixDigit(2, 3, 9);
-        viewCtrl.fixDigit(3, 3, 8);
-
-        viewCtrl.fixDigit(5, 1, 7);
-        viewCtrl.fixDigit(4, 2, 1);
-        viewCtrl.fixDigit(5, 2, 9);
-        viewCtrl.fixDigit(6, 2, 5);
-
-        viewCtrl.fixDigit(8, 3, 6);
-
-        viewCtrl.fixDigit(1, 4, 8);
-        viewCtrl.fixDigit(1, 5, 4);
-        viewCtrl.fixDigit(1, 6, 7);
-
-        viewCtrl.fixDigit(5, 4, 6);
-        viewCtrl.fixDigit(4, 5, 8);
-        viewCtrl.fixDigit(6, 5, 3);
-        viewCtrl.fixDigit(5, 6, 2);
-
-        viewCtrl.fixDigit(9, 4, 3);
-        viewCtrl.fixDigit(9, 5, 1);
-        viewCtrl.fixDigit(9, 6, 6);
-
-        viewCtrl.fixDigit(2, 7, 6);
-
-        viewCtrl.fixDigit(4, 8, 4);
-        viewCtrl.fixDigit(5, 8, 1);
-        viewCtrl.fixDigit(6, 8, 9);
-        viewCtrl.fixDigit(5, 9, 8);
-
-        viewCtrl.fixDigit(7, 7, 2);
-        viewCtrl.fixDigit(8, 7, 8);
-        viewCtrl.fixDigit(9, 8, 5);
-        viewCtrl.fixDigit(8, 9, 7);
-        viewCtrl.fixDigit(9, 9, 9);
+    protected void initView(String puzzle) {
+        stateViewCtrl.clear(true);
+        for (int i = 0; i < puzzle.length(); i++) {
+            char ch = puzzle.charAt(i);
+            if (ch >= '1' && ch <= '9')
+                stateViewCtrl.fixDigit(i % 9 + 1, i / 9 + 1, ch - '0');
+        }
     }
 }
