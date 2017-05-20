@@ -34,8 +34,10 @@ public abstract class QueueSearch {
 	protected boolean earlyGoalTest = false;
 	protected Metrics metrics = new Metrics();
 
+	/** Stores the provided node expander and adds a node listener to it. */
 	protected QueueSearch(NodeExpander nodeExpander) {
 		this.nodeExpander = nodeExpander;
+		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 
 	/**
@@ -65,7 +67,7 @@ public abstract class QueueSearch {
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
 			Node nodeToExpand = removeFromFrontier();
-			// Only need to check the nodeToExpand if have not already
+			// only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
 			if (!earlyGoalTest && SearchUtils.isGoalState(problem, nodeToExpand))
 				// if the node contains a goal state then return the
@@ -121,7 +123,6 @@ public abstract class QueueSearch {
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
-		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 
@@ -129,7 +130,6 @@ public abstract class QueueSearch {
 	 * Sets all metrics to zero.
 	 */
 	public void clearInstrumentation() {
-		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_QUEUE_SIZE, 0);
 		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);

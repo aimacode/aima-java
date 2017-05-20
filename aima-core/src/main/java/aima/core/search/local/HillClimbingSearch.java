@@ -7,6 +7,7 @@ import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page
@@ -61,6 +62,7 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	public HillClimbingSearch(HeuristicFunction hf, NodeExpander nodeExpander) {
 		this.hf = hf;
 		this.nodeExpander = nodeExpander;
+		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 
 	@Override
@@ -101,14 +103,14 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node current = nodeExpander.createRootNode(p.getInitialState());
-		Node neighbor = null;
+		Node neighbor;
 		// loop do
 		while (!CancelableThread.currIsCanceled()) {
 			lastState = current.getState();
 			metrics.set(METRIC_NODE_VALUE, getValue(current));
 			List<Node> children = nodeExpander.expand(current, p);
 			// neighbor <- a highest-valued successor of current
-			neighbor = getHighestValuedNodeFrom(children, p);
+			neighbor = getHighestValuedNodeFrom(children);
 			
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
 			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
@@ -143,17 +145,11 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	public Object getLastSearchState() {
 		return lastState;
 	}
-
-	@Override
-	public NodeExpander getNodeExpander() {
-		return nodeExpander;
-	}
 	
 	/**
 	 * Returns all the search metrics.
 	 */
 	public Metrics getMetrics() {
-		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 	
@@ -161,20 +157,28 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	 * Sets all metrics to zero.
 	 */
 	private void clearInstrumentation() {
-		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);
 	}
-	
+
+	@Override
+	public void addNodeListener(Consumer<Node> listener)  {
+		nodeExpander.addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return nodeExpander.removeNodeListener(listener);
+	}
+
 	//
 	// PRIVATE METHODS
 	//
 
-	private Node getHighestValuedNodeFrom(List<Node> children, Problem p) {
+	private Node getHighestValuedNodeFrom(List<Node> children) {
 		double highestValue = Double.NEGATIVE_INFINITY;
 		Node nodeWithHighestValue = null;
-		for (Node aChild : children) {
-			Node child = (Node) aChild;
+		for (Node child : children) {
 			double value = getValue(child);
 			if (value > highestValue) {
 				highestValue = value;

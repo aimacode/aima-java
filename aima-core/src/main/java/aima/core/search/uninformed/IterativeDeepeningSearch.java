@@ -1,6 +1,7 @@
 package aima.core.search.uninformed;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
@@ -81,11 +82,6 @@ public class IterativeDeepeningSearch implements SearchForActions, SearchForStat
 		}
 		return null;
 	}
-
-	@Override
-	public NodeExpander getNodeExpander() {
-		return nodeExpander;
-	}
 	
 	@Override
 	public Metrics getMetrics() {
@@ -98,6 +94,16 @@ public class IterativeDeepeningSearch implements SearchForActions, SearchForStat
 	private void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
+	}
+
+	@Override
+	public void addNodeListener(Consumer<Node> listener)  {
+		nodeExpander.addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return nodeExpander.removeNodeListener(listener);
 	}
 
 	//

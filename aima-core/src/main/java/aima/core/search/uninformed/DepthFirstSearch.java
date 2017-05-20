@@ -1,11 +1,11 @@
 package aima.core.search.uninformed;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SearchForStates;
@@ -29,7 +29,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  */
 public class DepthFirstSearch implements SearchForActions, SearchForStates {
 
-	QueueSearch implementation;
+	private QueueSearch implementation;
 
 	public DepthFirstSearch(QueueSearch impl) {
 		implementation = impl;
@@ -38,24 +38,29 @@ public class DepthFirstSearch implements SearchForActions, SearchForStates {
 	@Override
 	public List<Action> findActions(Problem p) {
 		implementation.getNodeExpander().useParentLinks(true);
-		Node node = implementation.findNode(p, QueueFactory.<Node>createLifoQueue());
+		Node node = implementation.findNode(p, QueueFactory.createLifoQueue());
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
 	public Object findState(Problem p) {
 		implementation.getNodeExpander().useParentLinks(false);
-		Node node = implementation.findNode(p, QueueFactory.<Node>createLifoQueue());
+		Node node = implementation.findNode(p, QueueFactory.createLifoQueue());
 		return node == null ? null : node.getState();
-	}
-	
-	@Override
-	public NodeExpander getNodeExpander() {
-		return implementation.getNodeExpander();
 	}
 	
 	@Override
 	public Metrics getMetrics() {
 		return implementation.getMetrics();
+	}
+
+	@Override
+	public void addNodeListener(Consumer<Node> listener)  {
+		implementation.getNodeExpander().addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return implementation.getNodeExpander().removeNodeListener(listener);
 	}
 }

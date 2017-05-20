@@ -2,6 +2,7 @@ package aima.core.search.local;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
@@ -89,6 +90,7 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 		this.hf = hf;
 		this.scheduler = scheduler;
 		this.nodeExpander = nodeExpander;
+		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 	
 	@Override
@@ -171,18 +173,12 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	public Object getLastSearchState() {
 		return lastState;
 	}
-
-	@Override
-	public NodeExpander getNodeExpander() {
-		return nodeExpander;
-	}
 	
 	/**
 	 * Returns all the search metrics.
 	 */
 	@Override
 	public Metrics getMetrics() {
-		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 	
@@ -195,10 +191,19 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	 * Sets all metrics to zero.
 	 */
 	private void clearInstrumentation() {
-		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_TEMPERATURE, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);
+	}
+
+	@Override
+	public void addNodeListener(Consumer<Node> listener)  {
+		nodeExpander.addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return nodeExpander.removeNodeListener(listener);
 	}
 	
 	//

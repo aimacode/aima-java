@@ -7,6 +7,7 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page
@@ -56,7 +57,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	private final NodeExpander nodeExpander;
 	
 	// stores the states on the current path if avoidLoops is true.
-	Set<Object> explored = new HashSet<Object>();
+	private Set<Object> explored = new HashSet<>();
 	private Metrics metrics;
 
 	public RecursiveBestFirstSearch(EvaluationFunction ef) {
@@ -72,6 +73,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		evalFunc = ef;
 		this.avoidLoops = avoidLoops;
 		this.nodeExpander = nodeExpander;
+		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 		metrics = new Metrics();
 	}
 
@@ -86,7 +88,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	// failure
 	@Override
 	public List<Action> findActions(Problem p) {
-		List<Action> actions = new ArrayList<Action>();
+		List<Action> actions = new ArrayList<>();
 		explored.clear();
 
 		clearInstrumentation();
@@ -105,17 +107,11 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		return actions;
 	}
 	
-	@Override
-	public NodeExpander getNodeExpander() {
-		return nodeExpander;
-	}
-	
 	/**
 	 * Returns all the search metrics.
 	 */
 	@Override
 	public Metrics getMetrics() {
-		metrics.set(METRIC_NODES_EXPANDED, nodeExpander.getNumOfExpandCalls());
 		return metrics;
 	}
 
@@ -123,10 +119,19 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	 * Sets all metrics to zero.
 	 */
 	private void clearInstrumentation() {
-		nodeExpander.resetCounter();
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_MAX_RECURSIVE_DEPTH, 0);
 		metrics.set(METRIC_PATH_COST, 0.0);
+	}
+
+	@Override
+	public void addNodeListener(Consumer<Node> listener)  {
+		nodeExpander.addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return nodeExpander.removeNodeListener(listener);
 	}
 
 	//

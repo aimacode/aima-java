@@ -89,8 +89,7 @@ public class NQueensSearchDemo {
 
 	public void startExperiment(SearchForActions search) {
 
-		search.getNodeExpander()
-				.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
+		search.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
 
 		Problem problem = null;
 		if (board.getNumberOfQueensOnBoard() == 0)
@@ -111,8 +110,7 @@ public class NQueensSearchDemo {
 		Problem problem = new Problem(board, NQueensFunctionFactory.getCActionsFunction(),
 				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 		search = new HillClimbingSearch(new AttackingPairsHeuristic());
-		search.getNodeExpander()
-				.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
+		search.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
 		board = (NQueensBoard) ((HillClimbingSearch) search).getLastSearchState();
@@ -124,8 +122,7 @@ public class NQueensSearchDemo {
 				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
 		Scheduler scheduler = new Scheduler(k, lambda, maxIterations);
 		search = new SimulatedAnnealingSearch(new AttackingPairsHeuristic(), scheduler);
-		search.getNodeExpander()
-				.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
+		search.addNodeListener(n -> notifyProgressTracers((NQueensBoard) n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
 		board = (NQueensBoard) ((SimulatedAnnealingSearch) search).getLastSearchState();

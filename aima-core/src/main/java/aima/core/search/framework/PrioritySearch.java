@@ -2,6 +2,7 @@ package aima.core.search.framework;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.problem.Problem;
@@ -27,14 +28,14 @@ public class PrioritySearch implements SearchForActions, SearchForStates {
 	@Override
 	public List<Action> findActions(Problem p) {
 		implementation.getNodeExpander().useParentLinks(true);
-		Node node = implementation.findNode(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		Node node = implementation.findNode(p, QueueFactory.createPriorityQueue(comparator));
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 
 	@Override
 	public Object findState(Problem p) {
 		implementation.getNodeExpander().useParentLinks(false);
-		Node node = implementation.findNode(p, QueueFactory.<Node>createPriorityQueue(comparator));
+		Node node = implementation.findNode(p, QueueFactory.createPriorityQueue(comparator));
 		return node == null ? null : node.getState();
 	}
 
@@ -43,12 +44,17 @@ public class PrioritySearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
-	public NodeExpander getNodeExpander() {
-		return implementation.getNodeExpander();
+	public Metrics getMetrics() {
+		return implementation.getMetrics();
 	}
 
 	@Override
-	public Metrics getMetrics() {
-		return implementation.getMetrics();
+	public void addNodeListener(Consumer<Node> listener)  {
+		implementation.getNodeExpander().addNodeListener(listener);
+	}
+
+	@Override
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return implementation.getNodeExpander().removeNodeListener(listener);
 	}
 }

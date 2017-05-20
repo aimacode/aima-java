@@ -7,8 +7,6 @@ import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapFunctionFactory;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander.NodeListener;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -44,7 +42,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	 * search nodes have been expanded during the last search. Quick and dirty
 	 * solution...
 	 */
-	static final HashSet<Object> visitedStates = new HashSet<Object>();
+	private static final HashSet<Object> visitedStates = new HashSet<>();
 
 	/** Creates an <code>OsmAgentView</code>. */
 	@Override
@@ -111,12 +109,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 			heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL), locs[1]);
 			search = SearchFactory.getInstance().createSearch(state.getIndex(MapAgentFrame.SEARCH_SEL),
 					state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
-			search.getNodeExpander().addNodeListener(new NodeListener() {
-				@Override
-				public void onNodeExpanded(Node node) {
-					visitedStates.add(node.getState());
-				}
-			});
+			search.addNodeListener((node) -> visitedStates.add(node.getState()));
 			
 			Agent agent = null;
 			switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {

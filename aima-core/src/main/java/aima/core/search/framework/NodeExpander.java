@@ -2,6 +2,7 @@ package aima.core.search.framework;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.problem.ActionsFunction;
@@ -67,7 +68,7 @@ public class NodeExpander {
 	 *         specified problem.
 	 */
 	public List<Node> expand(Node node, Problem problem) {
-		List<Node> successors = new ArrayList<Node>();
+		List<Node> successors = new ArrayList<>();
 
 		ActionsFunction actionsFunction = problem.getActionsFunction();
 		ResultFunction resultFunction = problem.getResultFunction();
@@ -80,7 +81,6 @@ public class NodeExpander {
 			successors.add(createNode(successorState, node, action, stepCost));
 		}
 		notifyNodeListeners(node);
-		counter++;
 		return successors;
 	}
 
@@ -91,44 +91,25 @@ public class NodeExpander {
 	 * All node listeners added to this list get informed whenever a node is
 	 * expanded.
 	 */
-	private List<NodeListener> nodeListeners = new ArrayList<NodeListener>();
+	private List<Consumer<Node>> nodeListeners = new ArrayList<>();
 
 	/**
 	 * Adds a listener to the list of node listeners. It is informed whenever a
 	 * node is expanded during search.
 	 */
-	public void addNodeListener(NodeListener listener) {
+	public void addNodeListener(Consumer<Node> listener) {
 		nodeListeners.add(listener);
 	}
 
+	/**
+	 * Removes a listener from the list of node listeners.
+	 */
+	public boolean removeNodeListener(Consumer<Node> listener) {
+		return nodeListeners.remove(listener);
+	}
+
 	protected void notifyNodeListeners(Node node) {
-		for (NodeListener listener : nodeListeners)
-			listener.onNodeExpanded(node);
-	}
-
-	/** Interface for progress Tracers */
-	public static interface NodeListener {
-		void onNodeExpanded(Node node);
-	}
-
-	///////////////////////////////////////////////////////////////////////
-	// statistical data
-
-	/** Counts the number of {@link #expand(Node, Problem)} calls. */
-	protected int counter;
-
-	/**
-	 * Resets the counter for {@link #expand(Node, Problem)} calls.
-	 */
-	public void resetCounter() {
-		counter = 0;
-	}
-
-	/**
-	 * Returns the number of {@link #expand(Node, Problem)} calls since the last
-	 * counter reset.
-	 */
-	public int getNumOfExpandCalls() {
-		return counter;
+		for (Consumer<Node> listener : nodeListeners)
+			listener.accept(node);
 	}
 }

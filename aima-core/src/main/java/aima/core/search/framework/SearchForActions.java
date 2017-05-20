@@ -1,6 +1,7 @@
 package aima.core.search.framework;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.problem.Problem;
@@ -36,8 +37,13 @@ public interface SearchForActions {
 	Metrics getMetrics();
 
 	/**
-	 * Returns the node expander used by the search. Useful for progress
-	 * tracing.
+	 * Adds a listener to the list of node listeners. It is informed whenever a
+	 * node is expanded during search.
 	 */
-	NodeExpander getNodeExpander();
+	void addNodeListener(Consumer<Node> listener);
+
+	/**
+	 * Removes a listener from the list of node listeners.
+	 */
+	boolean removeNodeListener(Consumer<Node> listener);
 }

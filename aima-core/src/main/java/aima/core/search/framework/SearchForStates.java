@@ -2,6 +2,8 @@ package aima.core.search.framework;
 
 import aima.core.search.framework.problem.Problem;
 
+import java.util.function.Consumer;
+
 /**
  * Interface for all AIMA3e search algorithms which forget the exploration history and
  * return just a single state which is hopefully a goal state. This search framework expects
@@ -27,9 +29,15 @@ public interface SearchForStates {
 	 * Returns all the metrics of the search.
 	 */
 	Metrics getMetrics();
-	
+
 	/**
-	 * Returns the node expander used by the search. Useful for progress tracing.
+	 * Adds a listener to the list of node listeners. It is informed whenever a
+	 * node is expanded during search.
 	 */
-	NodeExpander getNodeExpander();
+	void addNodeListener(Consumer<Node> listener);
+
+	/**
+	 * Removes a listener from the list of node listeners.
+	 */
+	boolean removeNodeListener(Consumer<Node> listener);
 }
