@@ -59,7 +59,7 @@ public class MapFunctionFactory {
 		}
 
 		public Set<Action> actions(Object state) {
-			Set<Action> actions = new LinkedHashSet<Action>();
+			Set<Action> actions = new LinkedHashSet<>();
 			String location = state.toString();
 
 			List<String> linkedLocations = reverseMode ? map.getPossiblePrevLocations(location)

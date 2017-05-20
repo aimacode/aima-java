@@ -60,10 +60,6 @@ public class UniformCostSearch extends PrioritySearch {
 	}
 
 	private static Comparator<Node> createPathCostComparator() {
-		return new Comparator<Node>() {
-			public int compare(Node node1, Node node2) {
-				return (new Double(node1.getPathCost()).compareTo(new Double(node2.getPathCost())));
-			}
-		};
+		return (node1, node2) -> Double.compare(node1.getPathCost(), node2.getPathCost());
 	}
 }

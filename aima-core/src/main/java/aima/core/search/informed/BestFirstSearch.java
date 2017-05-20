@@ -38,8 +38,8 @@ public class BestFirstSearch extends PrioritySearch implements Informed {
 	 *            describe the desirability (or lack thereof) of expanding a
 	 *            node.
 	 */
-	public BestFirstSearch(QueueSearch impl, EvaluationFunction ef) {
-		super(impl, createComparator(ef));
+	public BestFirstSearch(QueueSearch impl, final EvaluationFunction ef) {
+		super(impl, (node1, node2) -> Double.compare(ef.f(node1), ef.f(node2)));
 		evalFunc = ef;
 	}
 
@@ -48,15 +48,5 @@ public class BestFirstSearch extends PrioritySearch implements Informed {
 	public void setHeuristicFunction(HeuristicFunction hf) {
 		if (evalFunc instanceof HeuristicEvaluationFunction)
 			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
-	}
-	
-	private static Comparator<Node> createComparator(final EvaluationFunction ef) {
-		return new Comparator<Node>() {
-			public int compare(Node n1, Node n2) {
-				double f1 = ef.f(n1);
-				double f2 = ef.f(n2);
-				return Double.compare(f1, f2);
-			}
-		};
 	}
 }
