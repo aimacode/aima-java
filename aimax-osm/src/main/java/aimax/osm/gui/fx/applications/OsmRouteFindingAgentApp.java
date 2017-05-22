@@ -7,7 +7,7 @@ import aima.core.agent.Agent;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunctionFactory;
+import aima.core.search.informed.HeuristicFunctionFactory;
 import aima.gui.util.SearchFactory;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;

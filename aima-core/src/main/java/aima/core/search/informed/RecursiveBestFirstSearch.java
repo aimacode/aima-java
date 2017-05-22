@@ -2,8 +2,6 @@ package aima.core.search.informed;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.*;
-import aima.core.search.framework.evalfunc.EvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.*;
@@ -53,7 +51,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 
 	private static final Double INFINITY = Double.MAX_VALUE;
 
-	private final EvaluationFunction evalFunc;
+	private final Function<Node, Double> evalFunc;
 	private boolean avoidLoops;
 	private final NodeExpander nodeExpander;
 	
@@ -61,16 +59,16 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	private Set<Object> explored = new HashSet<>();
 	private Metrics metrics;
 
-	public RecursiveBestFirstSearch(EvaluationFunction ef) {
+	public RecursiveBestFirstSearch(Function<Node, Double> ef) {
 		this(ef, false);
 	}
 
 	/** Constructor which allows to enable the loop avoidance strategy. */
-	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops) {
+	public RecursiveBestFirstSearch(Function<Node, Double> ef, boolean avoidLoops) {
 		this(ef, avoidLoops, new NodeExpander());
 	}
 	
-	public RecursiveBestFirstSearch(EvaluationFunction ef, boolean avoidLoops, NodeExpander nodeExpander) {
+	public RecursiveBestFirstSearch(Function<Node, Double> ef, boolean avoidLoops, NodeExpander nodeExpander) {
 		evalFunc = ef;
 		this.avoidLoops = avoidLoops;
 		this.nodeExpander = nodeExpander;
@@ -96,7 +94,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
 		Node n = nodeExpander.createRootNode(p.getInitialState());
-		SearchResult sr = rbfs(p, n, evalFunc.f(n), INFINITY, 0);
+		SearchResult sr = rbfs(p, n, evalFunc.apply(n), INFINITY, 0);
 		if (sr.hasSolution()) {
 			Node s = sr.getSolutionNode();
 			actions = SearchUtils.getSequenceOfActions(s);
@@ -162,7 +160,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		int size = successors.size();
 		for (int s = 0; s < size; s++) {
 			// s.f <- max(s.g + s.h, node.f)
-			f[s] = Math.max(evalFunc.f(successors.get(s)), node_f);
+			f[s] = Math.max(evalFunc.apply(successors.get(s)), node_f);
 		}
 
 		// repeat

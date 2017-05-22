@@ -1,4 +1,4 @@
-package aima.core.search.framework.evalfunc;
+package aima.core.search.informed;
 
 import java.util.function.Function;
 

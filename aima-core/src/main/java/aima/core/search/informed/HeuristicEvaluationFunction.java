@@ -1,4 +1,4 @@
-package aima.core.search.framework.evalfunc;
+package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchUtils;
@@ -15,8 +15,8 @@ import java.util.function.Function;
  * @author Ruediger Lunde
  *
  */
-public abstract class HeuristicEvaluationFunction implements EvaluationFunction {
-	protected Function<Object, Double> hf = (state) -> 0.0;
+public abstract class HeuristicEvaluationFunction implements Function<Node, Double> {
+	protected Function<Object, Double> hf = state -> 0.0;
 
 	public Function<Object, Double> getHeuristicFunction() {
 		return hf;

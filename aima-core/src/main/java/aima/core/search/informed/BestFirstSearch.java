@@ -1,9 +1,8 @@
 package aima.core.search.informed;
 
+import aima.core.search.framework.Node;
 import aima.core.search.framework.QueueBasedSearch;
 import aima.core.search.framework.QueueFactory;
-import aima.core.search.framework.evalfunc.EvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.Comparator;
@@ -25,7 +24,7 @@ import java.util.function.Function;
  */
 public class BestFirstSearch extends QueueBasedSearch implements Informed {
 
-	private final EvaluationFunction evalFunc;
+	private final Function<Node, Double> evalFunc;
 	
 	/**
 	 * Constructs a best first search from a specified search problem and
@@ -38,8 +37,8 @@ public class BestFirstSearch extends QueueBasedSearch implements Informed {
 	 *            describe the desirability (or lack thereof) of expanding a
 	 *            node.
 	 */
-	public BestFirstSearch(QueueSearch impl, final EvaluationFunction ef) {
-		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(ef::f)));
+	public BestFirstSearch(QueueSearch impl, final Function<Node, Double> ef) {
+		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(ef::apply)));
 		evalFunc = ef;
 	}
 

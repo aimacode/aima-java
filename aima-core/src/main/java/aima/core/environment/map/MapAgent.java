@@ -9,7 +9,7 @@ import aima.core.agent.impl.DynamicState;
 import aima.core.search.informed.Informed;
 import aima.core.search.framework.ProblemSolvingAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunctionFactory;
+import aima.core.search.informed.HeuristicFunctionFactory;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.ArrayList;

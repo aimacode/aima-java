@@ -1,7 +1,6 @@
 package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.function.Function;
@@ -54,7 +53,7 @@ public class AStarSearch extends BestFirstSearch {
          * @return g(n) + h(n)
          */
         @Override
-        public double f(Node n) {
+        public Double apply(Node n) {
             // f(n) = g(n) + h(n)
             return gf.apply(n) + hf.apply(n.getState());
         }

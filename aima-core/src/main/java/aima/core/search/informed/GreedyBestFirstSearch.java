@@ -1,7 +1,6 @@
 package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.function.Function;
@@ -47,7 +46,7 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 		 * @return h(n)
 		 */
 		@Override
-		public double f(Node n) {
+		public Double apply(Node n) {
 			// f(n) = h(n)
 			return hf.apply(n.getState());
 		}
