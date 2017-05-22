@@ -41,7 +41,7 @@ import aima.core.search.framework.problem.Problem;
  */
 public class GraphSearch extends QueueSearch {
 
-	private Set<Object> explored = new HashSet<Object>();
+	private Set<Object> explored = new HashSet<>();
 
 	public GraphSearch() {
 		this(new NodeExpander());

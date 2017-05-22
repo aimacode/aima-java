@@ -39,8 +39,8 @@ import aima.core.search.framework.problem.Problem;
  */
 public class GraphSearchBFS extends QueueSearch {
 
-	private Set<Object> explored = new HashSet<Object>();
-	private Set<Object> frontierStates = new HashSet<Object>();
+	private Set<Object> explored = new HashSet<>();
+	private Set<Object> frontierStates = new HashSet<>();
 
 	public GraphSearchBFS() {
 		this(new NodeExpander());

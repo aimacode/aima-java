@@ -54,9 +54,9 @@ public class BidirectionalSearch extends QueueSearch {
 
 	public BidirectionalSearch(NodeExpander nodeExpander) {
 		super(nodeExpander);
-		explored = new ArrayList<Map<Object, ExtendedNode>>(2);
-		explored.add(new HashMap<Object, ExtendedNode>());
-		explored.add(new HashMap<Object, ExtendedNode>());
+		explored = new ArrayList<>(2);
+		explored.add(new HashMap<>());
+		explored.add(new HashMap<>());
 	}
 
 	/**
@@ -264,16 +264,16 @@ public class BidirectionalSearch extends QueueSearch {
 	 * @author Ruediger Lunde
 	 *
 	 */
-	static class ExtendedNode extends Node {
+	private static class ExtendedNode extends Node {
 
 		int problemIndex;
 
-		public ExtendedNode(Node node, int problemIndex) {
+		ExtendedNode(Node node, int problemIndex) {
 			super(node.getState(), node.getParent(), node.getAction(), node.getPathCost());
 			this.problemIndex = problemIndex;
 		}
 
-		public int getProblemIndex() {
+		int getProblemIndex() {
 			return problemIndex;
 		}
 

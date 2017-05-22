@@ -48,8 +48,8 @@ import aima.core.search.framework.problem.Problem;
  */
 public class GraphSearchReducedFrontier extends QueueSearch {
 
-	private Set<Object> explored = new HashSet<Object>();
-	private Map<Object, Node> frontierNodeLookup = new HashMap<Object, Node>();
+	private Set<Object> explored = new HashSet<>();
+	private Map<Object, Node> frontierNodeLookup = new HashMap<>();
 	private Comparator<? super Node> nodeComparator = null;
 
 	public GraphSearchReducedFrontier() {
