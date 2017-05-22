@@ -1,5 +1,6 @@
 package aima.test.core.unit.search.nondeterministic;
 
+import aima.core.search.framework.problem.StepCostFunction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,6 @@ import aima.core.environment.vacuum.VacuumEnvironmentState;
 import aima.core.environment.vacuum.VacuumWorldActions;
 import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.search.nondeterministic.Path;
 
@@ -49,7 +49,7 @@ public class AndOrSearchTest {
                 new VacuumWorldActions(),
                 new VacuumWorldResults(this.agent),
                 new VacuumWorldGoalTest(this.agent),
-                new DefaultStepCostFunction());
+                StepCostFunction.createDefault());
         // set the problem and agent
         this.agent.setProblem(this.problem);
         

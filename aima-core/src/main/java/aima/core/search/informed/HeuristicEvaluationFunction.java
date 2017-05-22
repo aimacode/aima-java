@@ -1,7 +1,6 @@
 package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.SearchUtils;
 
 import java.util.function.Function;
 

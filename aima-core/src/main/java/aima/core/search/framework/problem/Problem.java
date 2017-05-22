@@ -54,8 +54,7 @@ public class Problem {
 	 */
 	public Problem(Object initialState, ActionsFunction actionsFunction,
 			ResultFunction resultFunction, GoalTest goalTest) {
-		this(initialState, actionsFunction, resultFunction, goalTest,
-				new DefaultStepCostFunction());
+		this(initialState, actionsFunction, resultFunction, goalTest, StepCostFunction.createDefault());
 	}
 
 	/**

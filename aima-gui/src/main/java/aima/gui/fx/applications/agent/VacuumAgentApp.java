@@ -15,7 +15,7 @@ import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.VacuumWorldActions;
 import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.problem.DefaultStepCostFunction;
+import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -155,6 +155,6 @@ public class VacuumAgentApp extends IntegrableApplication {
 
     private NondeterministicProblem createNondeterministicProblem() {
         return new NondeterministicProblem(env.getCurrentState(), new VacuumWorldActions(),
-                new VacuumWorldResults(agent), new VacuumWorldGoalTest(agent), new DefaultStepCostFunction());
+                new VacuumWorldResults(agent), new VacuumWorldGoalTest(agent), StepCostFunction.createDefault());
     }
 }

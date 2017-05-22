@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.search.framework.SearchUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,7 +15,6 @@ import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SolutionChecker;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
@@ -44,11 +44,11 @@ public class SolutionCheckerTest {
 				agent.getInstrumentation().getProperty("maxQueueSize"));
 	}
 
-	class DualMapGoalTest implements SolutionChecker {
+	class DualMapGoalTest implements SearchUtils.SolutionChecker {
 		public String goalState1 = null;
 		public String goalState2 = null;
 
-		private Set<String> goals = new HashSet<String>();
+		private Set<String> goals = new HashSet<>();
 
 		public DualMapGoalTest(String goalState1, String goalState2) {
 			this.goalState1 = goalState1;

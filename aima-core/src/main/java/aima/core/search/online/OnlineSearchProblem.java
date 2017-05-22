@@ -1,7 +1,6 @@
 package aima.core.search.online;
 
 import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.StepCostFunction;
 
@@ -42,7 +41,7 @@ public class OnlineSearchProblem {
 	 */
 	public OnlineSearchProblem(ActionsFunction actionsFunction,
 			GoalTest goalTest) {
-		this(actionsFunction, goalTest, new DefaultStepCostFunction());
+		this(actionsFunction, goalTest, StepCostFunction.createDefault());
 	}
 
 	/**

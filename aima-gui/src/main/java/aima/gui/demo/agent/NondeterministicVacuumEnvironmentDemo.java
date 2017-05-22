@@ -9,7 +9,7 @@ import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
 import aima.core.environment.vacuum.VacuumWorldActions;
 import aima.core.environment.vacuum.VacuumWorldGoalTest;
 import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.problem.DefaultStepCostFunction;
+import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 
 /**
@@ -41,7 +41,7 @@ public class NondeterministicVacuumEnvironmentDemo {
                 new VacuumWorldActions(),
                 new VacuumWorldResults(agent),
                 new VacuumWorldGoalTest(agent),
-                new DefaultStepCostFunction());
+                StepCostFunction.createDefault());
         // set the problem and agent
         agent.setProblem(problem);
         

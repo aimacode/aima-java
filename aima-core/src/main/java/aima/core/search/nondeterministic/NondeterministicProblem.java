@@ -1,7 +1,6 @@
 package aima.core.search.nondeterministic;
 
 import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.DefaultStepCostFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.ResultFunction;
 import aima.core.search.framework.problem.StepCostFunction;
@@ -33,8 +32,7 @@ public class NondeterministicProblem {
 	public NondeterministicProblem(Object initialState,
 			ActionsFunction actionsFunction, ResultsFunction resultsFunction,
 			GoalTest goalTest) {
-		this(initialState, actionsFunction, resultsFunction, goalTest,
-				new DefaultStepCostFunction());
+		this(initialState, actionsFunction, resultsFunction, goalTest, StepCostFunction.createDefault());
 	}
 
 	/**

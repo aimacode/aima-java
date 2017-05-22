@@ -25,4 +25,9 @@ public interface StepCostFunction {
 	 * @return the cost of taking action a in state s to reach state s'.
 	 */
 	double c(Object s, Action a, Object sDelta);
+
+	/**
+	 * Returns a function which always returns 1.0.
+	 */
+	static StepCostFunction createDefault() { return (s, a, sDelta) -> 1.0; }
 }
