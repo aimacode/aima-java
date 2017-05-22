@@ -8,8 +8,6 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
@@ -53,7 +51,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
 public class LRTAStarAgent extends AbstractAgent {
 
 	private OnlineSearchProblem problem;
-	private PerceptToStateFunction ptsFunction;
+	private Function<Percept, Object> ptsFunction;
 	private Function<Object, Double> hf;
 	// persistent: result, a table, indexed by state and action, initially empty
 	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<>();
@@ -77,8 +75,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	 *            the cheapest path from the state at node <em>n</em> to a goal
 	 *            state.
 	 */
-	public LRTAStarAgent(OnlineSearchProblem problem,
-			PerceptToStateFunction ptsFunction, Function<Object, Double> hf) {
+	public LRTAStarAgent(OnlineSearchProblem problem, Function<Percept, Object> ptsFunction, Function<Object, Double> hf) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 		setHeuristicFunction(hf);
@@ -109,7 +106,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public PerceptToStateFunction getPerceptToStateFunction() {
+	public Function<Percept, Object> getPerceptToStateFunction() {
 		return ptsFunction;
 	}
 
@@ -120,7 +117,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
+	public void setPerceptToStateFunction(Function<Percept, Object> ptsFunction) {
 		this.ptsFunction = ptsFunction;
 	}
 
@@ -147,7 +144,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	// inputs: s', a percept that identifies the current state
 	@Override
 	public Action execute(Percept psDelta) {
-		Object sDelta = ptsFunction.getState(psDelta);
+		Object sDelta = ptsFunction.apply(psDelta);
 		// if GOAL-TEST(s') then return stop
 		if (goalTest(sDelta)) {
 			a = NoOpAction.NO_OP;

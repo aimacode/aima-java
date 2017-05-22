@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
@@ -49,14 +49,14 @@ import aima.core.util.datastructure.TwoKeyHashMap;
 public class OnlineDFSAgent extends AbstractAgent {
 
 	private OnlineSearchProblem problem;
-	private PerceptToStateFunction ptsFunction;
+	private Function<Percept, Object> ptsFunction;
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<Object, Action, Object>();
+	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<>();
 	// untried, a table that lists, for each state, the actions not yet tried
-	private final Map<Object, List<Action>> untried = new HashMap<Object, List<Action>>();
+	private final Map<Object, List<Action>> untried = new HashMap<>();
 	// unbacktracked, a table that lists,
 	// for each state, the backtracks not yet tried
-	private final Map<Object, List<Object>> unbacktracked = new HashMap<Object, List<Object>>();
+	private final Map<Object, List<Object>> unbacktracked = new HashMap<>();
 	// s, a, the previous state and action, initially null
 	private Object s = null;
 	private Action a = null;
@@ -71,8 +71,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public OnlineDFSAgent(OnlineSearchProblem problem,
-			PerceptToStateFunction ptsFunction) {
+	public OnlineDFSAgent(OnlineSearchProblem problem, Function<Percept, Object> ptsFunction) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 	}
@@ -102,7 +101,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public PerceptToStateFunction getPerceptToStateFunction() {
+	public Function<Percept, Object> getPerceptToStateFunction() {
 		return ptsFunction;
 	}
 
@@ -113,7 +112,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
+	public void setPerceptToStateFunction(Function<Percept, Object> ptsFunction) {
 		this.ptsFunction = ptsFunction;
 	}
 
@@ -121,7 +120,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	// inputs: s', a percept that identifies the current state
 	@Override
 	public Action execute(Percept psDelta) {
-		Object sDelta = ptsFunction.getState(psDelta);
+		Object sDelta = ptsFunction.apply(psDelta);
 		// if GOAL-TEST(s') then return stop
 		if (goalTest(sDelta)) {
 			a = NoOpAction.NO_OP;
@@ -144,7 +143,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 
 					// Ensure the unbacktracked always has a list for s'
 					if (!unbacktracked.containsKey(sDelta)) {
-						unbacktracked.put(sDelta, new ArrayList<Object>());
+						unbacktracked.put(sDelta, new ArrayList<>());
 					}
 
 					// add s to the front of the unbacktracked[s']
@@ -204,7 +203,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	}
 
 	private List<Action> actions(Object state) {
-		return new ArrayList<Action>(problem.getActionsFunction()
+		return new ArrayList<>(problem.getActionsFunction()
 				.actions(state));
 	}
 }

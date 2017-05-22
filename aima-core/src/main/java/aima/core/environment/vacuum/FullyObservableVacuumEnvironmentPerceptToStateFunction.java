@@ -1,7 +1,8 @@
 package aima.core.environment.vacuum;
 
 import aima.core.agent.Percept;
-import aima.core.search.framework.PerceptToStateFunction;
+
+import java.util.function.Function;
 
 /**
  * Map fully observable state percepts to their corresponding state
@@ -9,18 +10,16 @@ import aima.core.search.framework.PerceptToStateFunction;
  * 
  * @author Andrew Brown
  */
-public class FullyObservableVacuumEnvironmentPerceptToStateFunction implements
-		PerceptToStateFunction {
+public class FullyObservableVacuumEnvironmentPerceptToStateFunction implements Function<Percept, Object> {
 
 	/**
 	 * Default Constructor.
 	 */
 	public FullyObservableVacuumEnvironmentPerceptToStateFunction() {
-
 	}
 
 	@Override
-	public Object getState(Percept p) {
+	public Object apply(Percept p) {
 		// Note: VacuumEnvironmentState implements
 		// FullyObservableVacuumEnvironmentPercept
 		return (VacuumEnvironmentState) p;

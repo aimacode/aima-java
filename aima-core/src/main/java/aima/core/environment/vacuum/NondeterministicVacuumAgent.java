@@ -1,12 +1,12 @@
 package aima.core.environment.vacuum;
 
 import java.util.LinkedList;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.nondeterministic.AndOrSearch;
 import aima.core.search.nondeterministic.IfStateThenPlan;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -20,11 +20,11 @@ import aima.core.search.nondeterministic.Plan;
  */
 public class NondeterministicVacuumAgent extends AbstractAgent {
 	private NondeterministicProblem problem;
-	private PerceptToStateFunction ptsFunction;
+	private Function<Percept, Object> ptsFunction;
 	private Plan contingencyPlan;
-	private LinkedList<Object> stack = new LinkedList<Object>();
+	private LinkedList<Object> stack = new LinkedList<>();
 
-	public NondeterministicVacuumAgent(PerceptToStateFunction ptsFunction) {
+	public NondeterministicVacuumAgent(Function<Percept, Object> ptsFunction) {
 		setPerceptToStateFunction(ptsFunction);
 	}
 
@@ -53,7 +53,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public PerceptToStateFunction getPerceptToStateFunction() {
+	public Function<Percept, Object> getPerceptToStateFunction() {
 		return ptsFunction;
 	}
 
@@ -64,7 +64,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(PerceptToStateFunction ptsFunction) {
+	public void setPerceptToStateFunction(Function<Percept, Object> ptsFunction) {
 		this.ptsFunction = ptsFunction;
 	}
 
@@ -83,14 +83,14 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	/**
 	 * Execute an action from the contingency plan
 	 * 
-	 * @param percept
+	 * @param percept a percept.
 	 * @return an action from the contingency plan.
 	 */
 	@Override
 	public Action execute(Percept percept) {
 		// check if goal state
 		VacuumEnvironmentState state = (VacuumEnvironmentState) this
-				.getPerceptToStateFunction().getState(percept);
+				.getPerceptToStateFunction().apply(percept);
 		if (state.getLocationState(VacuumEnvironment.LOCATION_A) == VacuumEnvironment.LocationState.Clean
 				&& state.getLocationState(VacuumEnvironment.LOCATION_B) == VacuumEnvironment.LocationState.Clean) {
 			return NoOpAction.NO_OP;

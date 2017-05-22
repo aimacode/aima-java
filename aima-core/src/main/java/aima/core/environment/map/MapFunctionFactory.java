@@ -8,7 +8,6 @@ import java.util.function.Function;
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
-import aima.core.search.framework.PerceptToStateFunction;
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.ResultFunction;
 import aima.core.util.math.geom.shapes.Point2D;
@@ -20,7 +19,7 @@ import aima.core.util.math.geom.shapes.Point2D;
  */
 public class MapFunctionFactory {
 	private static ResultFunction resultFunction;
-	private static PerceptToStateFunction perceptToStateFunction;
+	private static Function<Percept, Object> perceptToStateFunction;
 
 	public static ActionsFunction getActionsFunction(Map map) {
 		return new MapActionsFunction(map, false);
@@ -38,7 +37,7 @@ public class MapFunctionFactory {
 	}
 
 
-	/** Returns an adaptable heuristic based on straight line distance computation. */
+	/** Returns a heuristic function based on straight line distance computation. */
 	public static Function<Object, Double> getSLDHeuristicFunction(Object goal, Map map) {
 		return new StraightLineDistanceHeuristicFunction(goal, map);
 	}
@@ -67,9 +66,9 @@ public class MapFunctionFactory {
 	}
 
 
-	public static PerceptToStateFunction getPerceptToStateFunction() {
+	public static Function<Percept, Object> getPerceptToStateFunction() {
 		if (null == perceptToStateFunction) {
-			perceptToStateFunction = new MapPerceptToStateFunction();
+			perceptToStateFunction = p -> ((DynamicPercept) p).getAttribute(DynAttributeNames.PERCEPT_IN);
 		}
 		return perceptToStateFunction;
 	}
@@ -88,14 +87,6 @@ public class MapFunctionFactory {
 			return s;
 		}
 	}
-
-
-	private static class MapPerceptToStateFunction implements PerceptToStateFunction {
-		public Object getState(Percept p) {
-			return ((DynamicPercept) p).getAttribute(DynAttributeNames.PERCEPT_IN);
-		}
-	}
-
 
 	private static class StraightLineDistanceHeuristicFunction implements Function<Object, Double> {
 		private Object goal;
