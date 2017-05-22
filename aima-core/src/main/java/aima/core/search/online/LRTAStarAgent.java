@@ -2,13 +2,14 @@ package aima.core.search.online;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
 /**
@@ -53,11 +54,11 @@ public class LRTAStarAgent extends AbstractAgent {
 
 	private OnlineSearchProblem problem;
 	private PerceptToStateFunction ptsFunction;
-	private HeuristicFunction hf;
+	private Function<Object, Double> hf;
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<Object, Action, Object>();
+	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<>();
 	// H, a table of cost estimates indexed by state, initially empty
-	private final HashMap<Object, Double> H = new HashMap<Object, Double>();
+	private final HashMap<Object, Double> H = new HashMap<>();
 	// s, a, the previous state and action, initially null
 	private Object s = null;
 	private Action a = null;
@@ -77,7 +78,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	 *            state.
 	 */
 	public LRTAStarAgent(OnlineSearchProblem problem,
-			PerceptToStateFunction ptsFunction, HeuristicFunction hf) {
+			PerceptToStateFunction ptsFunction, Function<Object, Double> hf) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFunction);
 		setHeuristicFunction(hf);
@@ -126,7 +127,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	/**
 	 * Returns the heuristic function of this agent.
 	 */
-	public HeuristicFunction getHeuristicFunction() {
+	public Function<Object, Double> getHeuristicFunction() {
 		return hf;
 	}
 
@@ -138,7 +139,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	 *            the cheapest path from the state at node <em>n</em> to a goal
 	 *            state.
 	 */
-	public void setHeuristicFunction(HeuristicFunction hf) {
+	public void setHeuristicFunction(Function<Object, Double> hf) {
 		this.hf = hf;
 	}
 
@@ -153,7 +154,7 @@ public class LRTAStarAgent extends AbstractAgent {
 		} else {
 			// if s' is a new state (not in H) then H[s'] <- h(s')
 			if (!H.containsKey(sDelta)) {
-				H.put(sDelta, getHeuristicFunction().h(sDelta));
+				H.put(sDelta, getHeuristicFunction().apply(sDelta));
 			}
 			// if s is not null
 			if (null != s) {
@@ -216,7 +217,7 @@ public class LRTAStarAgent extends AbstractAgent {
 	private double lrtaCost(Object s, Action action, Object sDelta) {
 		// if s' is undefined then return h(s)
 		if (null == sDelta) {
-			return getHeuristicFunction().h(s);
+			return getHeuristicFunction().apply(s);
 		}
 		// else return c(s, a, s') + H[s']
 		return getProblem().getStepCostFunction().c(s, action, sDelta)

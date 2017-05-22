@@ -3,6 +3,7 @@ package aimax.osm.gui.swing.viewer.agent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
@@ -10,7 +11,6 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
@@ -36,7 +36,7 @@ public class OsmAgentController extends AgentAppController {
 	/** Search method to be used. */
 	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
-	protected HeuristicFunction heuristic;
+	protected Function<Object, Double> heuristic;
 
 	protected List<String> markedLocations;
 	protected boolean isPrepared;
@@ -90,11 +90,11 @@ public class OsmAgentController extends AgentAppController {
 	 * Returns the trivial zero function or a simple heuristic which is based on
 	 * straight-line distance computation.
 	 */
-	protected HeuristicFunction createHeuristic(int heuIdx, String goal) {
-		HeuristicFunction ahf = null;
+	protected Function<Object, Double> createHeuristic(int heuIdx, String goal) {
+		Function<Object, Double> ahf = null;
 		switch (heuIdx) {
 		case 0:
-			ahf = MapFunctionFactory.getZeroHeuristicFunction();
+			ahf = state -> 0.0;
 			break;
 		default:
 			ahf = MapFunctionFactory.getSLDHeuristicFunction(goal, map);
@@ -176,7 +176,7 @@ public class OsmAgentController extends AgentAppController {
 		} else if (frame.simulationPaused()) {
 			frame.setStatus("Task paused.");
 		} else {
-			StringBuffer statusMsg = new StringBuffer();
+			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
 			List<Agent> agents = env.getAgents();
 			if (agents.size() == 1) {

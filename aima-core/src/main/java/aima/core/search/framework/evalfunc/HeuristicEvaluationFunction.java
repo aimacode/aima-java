@@ -1,8 +1,9 @@
 package aima.core.search.framework.evalfunc;
 
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchUtils;
-import aima.core.search.framework.evalfunc.EvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
+
+import java.util.function.Function;
 
 /**
  * Super class for all evaluation functions which make use of heuristics.
@@ -15,13 +16,13 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  *
  */
 public abstract class HeuristicEvaluationFunction implements EvaluationFunction {
-	protected HeuristicFunction hf = SearchUtils.getZeroHeuristic();
+	protected Function<Object, Double> hf = (state) -> 0.0;
 
-	public HeuristicFunction getHeuristicFunction() {
+	public Function<Object, Double> getHeuristicFunction() {
 		return hf;
 	}
 
-	public void setHeuristicFunction(HeuristicFunction hf) {
+	public void setHeuristicFunction(Function<Object, Double> hf) {
 		this.hf = hf;
 	}
 }

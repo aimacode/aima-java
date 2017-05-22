@@ -2,12 +2,12 @@ package aima.gui.swing.applications.agent.map;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.function.Function;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.Scenario;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimulationThread;
@@ -32,7 +32,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/** Search method to be used. */
 	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
-	protected HeuristicFunction heuristic;
+	protected Function<Object, Double> heuristic;
 	/** Is the scenario up to date? */
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
@@ -152,7 +152,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/**
 	 * Factory method, responsible for creating a heuristic function.
 	 */
-	abstract protected HeuristicFunction createHeuristic(int heuIdx);
+	abstract protected Function<Object, Double> createHeuristic(int heuIdx);
 
 	/**
 	 * Primitive operation, responsible for creating new agents and adding

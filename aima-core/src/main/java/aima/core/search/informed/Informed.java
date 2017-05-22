@@ -1,6 +1,6 @@
 package aima.core.search.informed;
 
-import aima.core.search.framework.evalfunc.HeuristicFunction;
+import java.util.function.Function;
 
 /**
  * Search algorithms which make use of heuristics to guide the search
@@ -8,5 +8,5 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  * @author Ruediger Lunde
  */
 public interface Informed {
-    void setHeuristicFunction(HeuristicFunction hf);
+    void setHeuristicFunction(Function<Object, Double> hf);
 }

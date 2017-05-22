@@ -1,22 +1,25 @@
 package aima.core.environment.eightpuzzle;
 
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.datastructure.XYLocation;
+
+import java.util.function.Function;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
-public class ManhattanHeuristicFunction implements HeuristicFunction {
+public class ManhattanHeuristicFunction implements Function<Object, Double> {
 
-	public double h(Object state) {
+	@Override
+	public Double apply(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
 		int retVal = 0;
 		for (int i = 1; i < 9; i++) {
 			XYLocation loc = board.getLocationOf(i);
 			retVal += evaluateManhattanDistanceOf(i, loc);
 		}
-		return retVal;
+		return (double) retVal;
 
 	}
 

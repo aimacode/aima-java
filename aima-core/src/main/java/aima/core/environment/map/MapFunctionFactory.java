@@ -3,12 +3,12 @@ package aima.core.environment.map;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.framework.PerceptToStateFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.ResultFunction;
 import aima.core.util.math.geom.shapes.Point2D;
@@ -39,13 +39,8 @@ public class MapFunctionFactory {
 
 
 	/** Returns an adaptable heuristic based on straight line distance computation. */
-	public static HeuristicFunction getSLDHeuristicFunction(Object goal, Map map) {
+	public static Function<Object, Double> getSLDHeuristicFunction(Object goal, Map map) {
 		return new StraightLineDistanceHeuristicFunction(goal, map);
-	}
-
-	/** Returns a heuristic which always returns zero. More optimism is not possible. */
-	public static HeuristicFunction getZeroHeuristicFunction() {
-		return new ZeroHeuristicFunction();
 	}
 
 
@@ -102,7 +97,7 @@ public class MapFunctionFactory {
 	}
 
 
-	private static class StraightLineDistanceHeuristicFunction implements HeuristicFunction {
+	private static class StraightLineDistanceHeuristicFunction implements Function<Object, Double> {
 		private Object goal;
 		private Map map;
 
@@ -111,7 +106,8 @@ public class MapFunctionFactory {
 			this.map = map;
 		}
 
-		public double h(Object state) {
+		@Override
+		public Double apply(Object state) {
 			double result = 0.0;
 			Point2D pt1 = map.getPosition((String) state);
 			Point2D pt2 = map.getPosition((String) goal);
@@ -119,13 +115,6 @@ public class MapFunctionFactory {
 				result = pt1.distance(pt2);
 			}
 			return result;
-		}
-	}
-
-	private static class ZeroHeuristicFunction implements HeuristicFunction {
-
-		public double h(Object state) {
-			return 0.0;
 		}
 	}
 }

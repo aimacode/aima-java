@@ -1,6 +1,7 @@
 package aima.gui.swing.applications.agent.map;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
@@ -9,7 +10,6 @@ import aima.core.environment.map.Scenario;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -193,11 +193,11 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 		 * based on straight-line distance computation.
 		 */
 		@Override
-		protected HeuristicFunction createHeuristic(int heuIdx) {
-			HeuristicFunction hf = null;
+		protected Function<Object, Double> createHeuristic(int heuIdx) {
+			Function<Object, Double> hf = null;
 			switch (heuIdx) {
 			case 0:
-				hf = MapFunctionFactory.getZeroHeuristicFunction();
+				hf = (state) -> 0.0;
 				break;
 			default:
 				hf = MapFunctionFactory.getSLDHeuristicFunction(destinations.get(0), scenario

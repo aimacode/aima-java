@@ -1,7 +1,6 @@
 package aima.gui.util;
 
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.GraphSearchBFS;
@@ -15,6 +14,8 @@ import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.search.uninformed.UniformCostSearch;
+
+import java.util.function.Function;
 
 /**
  * Useful factory for configuring search objects. Implemented as a singleton.
@@ -67,7 +68,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all search strategies, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int, HeuristicFunction)}.
+	 * {@link #createSearch(int, int, Function<Object, Double>)}.
 	 */
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
@@ -78,7 +79,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all queue search implementation names, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int, HeuristicFunction)}.
+	 * {@link #createSearch(int, int, Function<Object, Double>)}.
 	 */
 	public String[] getQSearchImplNames() {
 		return new String[] { "Tree Search", "Graph Search", "Graph Search BFS", "Bidirectional Search" };
@@ -93,7 +94,7 @@ public class SearchFactory {
 	 *            queue search implementation: e.g. {@link #TREE_SEARCH}, {@link #GRAPH_SEARCH}
 	 * 
 	 */
-	public SearchForActions createSearch(int strategy, int qSearchImpl, HeuristicFunction hf) {
+	public SearchForActions createSearch(int strategy, int qSearchImpl, Function<Object, Double> hf) {
 		QueueSearch qs = null;
 		SearchForActions result = null;
 		switch (qSearchImpl) {

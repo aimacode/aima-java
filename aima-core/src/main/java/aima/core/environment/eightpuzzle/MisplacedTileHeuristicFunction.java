@@ -1,17 +1,18 @@
 package aima.core.environment.eightpuzzle;
 
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.datastructure.XYLocation;
+
+import java.util.function.Function;
 
 /**
  * @author Ravi Mohan
  * 
  */
-public class MisplacedTilleHeuristicFunction implements HeuristicFunction {
+public class MisplacedTileHeuristicFunction implements Function<Object, Double> {
 
-	public double h(Object state) {
+	public Double apply(Object state) {
 		EightPuzzleBoard board = (EightPuzzleBoard) state;
-		return getNumberOfMisplacedTiles(board);
+		return (double) getNumberOfMisplacedTiles(board);
 	}
 
 	private int getNumberOfMisplacedTiles(EightPuzzleBoard board) {

@@ -3,6 +3,7 @@ package aimax.osm.gui.fx.applications;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import aima.core.agent.*;
 import aima.core.environment.map.MapAgent;
@@ -11,7 +12,6 @@ import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -89,10 +89,10 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	 * parameter settings.
 	 */
 	protected SearchForActions createSearch(List<String> locations) {
-		HeuristicFunction heuristic;
+		Function<Object, Double> heuristic;
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
-			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
+			heuristic = state -> 0.0;
 			break;
 		default:
 			heuristic = MapFunctionFactory.getSLDHeuristicFunction(locations.get(1), map);

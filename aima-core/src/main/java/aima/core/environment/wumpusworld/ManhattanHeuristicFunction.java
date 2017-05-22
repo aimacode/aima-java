@@ -3,8 +3,7 @@ package aima.core.environment.wumpusworld;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import aima.core.search.framework.evalfunc.HeuristicFunction;
+import java.util.function.Function;
 
 /**
  * Heuristic for calculating the Manhattan distance between two rooms within a Wumpus World cave.
@@ -13,16 +12,16 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
  */
-public class ManhattanHeuristicFunction implements HeuristicFunction {
+public class ManhattanHeuristicFunction implements Function<Object, Double> {
 	
-	List<Room> goals = new ArrayList<Room>();
+	List<Room> goals = new ArrayList<>();
 	
 	public ManhattanHeuristicFunction(Set<Room> goals) {
 		this.goals.addAll(goals);
 	}
 	
 	@Override
-	public double h(Object state) {
+	public Double apply(Object state) {
 		AgentPosition pos = (AgentPosition) state;
 		int nearestGoalDist = Integer.MAX_VALUE;
 		for (Room g : goals) {
@@ -33,7 +32,7 @@ public class ManhattanHeuristicFunction implements HeuristicFunction {
 			}
 		}
 		
-		return nearestGoalDist;
+		return (double) nearestGoalDist;
 	}
 
 	//

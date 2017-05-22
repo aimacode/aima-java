@@ -21,7 +21,7 @@ import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -69,11 +69,11 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
+				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
 				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
-				new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
+				new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
 				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search",

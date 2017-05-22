@@ -2,9 +2,9 @@ package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
 import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
-import aima.core.search.framework.evalfunc.PathCostFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
+
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 93.<br>
@@ -33,17 +33,17 @@ public class AStarSearch extends BestFirstSearch {
      *             of the cheapest path from the state at node <em>n</em> to a
      *             goal state.
      */
-    public AStarSearch(QueueSearch impl, HeuristicFunction hf) {
+    public AStarSearch(QueueSearch impl, Function<Object, Double> hf) {
         super(impl, new EvalFunction(hf));
     }
 
 
     public static class EvalFunction extends HeuristicEvaluationFunction {
-        private PathCostFunction gf;
+        private Function<Node, Double> gf;
 
-        public EvalFunction(HeuristicFunction hf) {
+        public EvalFunction(Function<Object, Double> hf) {
             this.hf = hf;
-            this.gf = new PathCostFunction();
+            this.gf = Node::getPathCost;
         }
 
         /**
@@ -56,7 +56,7 @@ public class AStarSearch extends BestFirstSearch {
         @Override
         public double f(Node n) {
             // f(n) = g(n) + h(n)
-            return gf.g(n) + hf.h(n.getState());
+            return gf.apply(n) + hf.apply(n.getState());
         }
     }
 }

@@ -2,10 +2,10 @@ package aimax.osm.routing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
@@ -47,7 +47,7 @@ public class RouteCalculator {
 	 */
 	public List<Position> calculateRoute(List<MapNode> markers, OsmMap map,
 			int taskSelection) {
-		List<Position> result = new ArrayList<Position>();
+		List<Position> result = new ArrayList<>();
 		try {
 			MapWayFilter wayFilter = createMapWayFilter(map, taskSelection);
 			boolean ignoreOneways = (taskSelection == 0);
@@ -57,7 +57,7 @@ public class RouteCalculator {
 					&& !CancelableThread.currIsCanceled(); i++) {
 				Problem problem = createProblem(pNodeList.get(i), map, wayFilter,
 						ignoreOneways, taskSelection);
-				HeuristicFunction hf = createHeuristicFunction(pNodeList.get(i),
+				Function<Object, Double> hf = createHeuristicFunction(pNodeList.get(i),
 						taskSelection);
 				SearchForActions search = createSearch(hf, taskSelection);
 				List<Action> actions = search.findActions(problem);
@@ -100,7 +100,7 @@ public class RouteCalculator {
 	 */
 	protected List<MapNode[]> subdivideProblem(List<MapNode> markers,
 			OsmMap map, MapWayFilter wayFilter) {
-		List<MapNode[]> result = new ArrayList<MapNode[]>();
+		List<MapNode[]> result = new ArrayList<>();
 		MapNode fromNode = map.getNearestWayNode(new Position(markers.get(0)),
 				wayFilter);
 		for (int i = 1; i < markers.size(); i++) {
@@ -120,13 +120,13 @@ public class RouteCalculator {
 	}
 
 	/** Factory method, responsible for heuristic function creation. */
-	protected HeuristicFunction createHeuristicFunction(MapNode[] pNodes,
-			int taskSelection) {
+	protected Function<Object, Double> createHeuristicFunction(MapNode[] pNodes,
+															   int taskSelection) {
 		return new OsmSldHeuristicFunction(pNodes[1]);
 	}
 	
 	/** Factory method, responsible for search creation. */
-	protected SearchForActions createSearch(HeuristicFunction hf, int taskSelection) {
+	protected SearchForActions createSearch(Function<Object, Double> hf, int taskSelection) {
 		return new AStarSearch(new GraphSearch(), hf);
 	}
 }

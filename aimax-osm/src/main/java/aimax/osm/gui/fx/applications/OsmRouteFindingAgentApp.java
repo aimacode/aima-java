@@ -82,7 +82,7 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	@Override
 	protected SearchForActions createSearch(List<String> locations) {
 		SearchForActions result = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
-				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), MapFunctionFactory.getZeroHeuristicFunction());
+				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), state -> 0.0);
 		result.addNodeListener(node -> visitedStates.add(node.getState()));
 		visitedStates.clear();
 		return result;
@@ -96,7 +96,7 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	protected Agent createAgent(SearchForActions search, List<String> locations) {
 		HeuristicFunctionFactory hfFactory;
 		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
-			hfFactory = (goal) -> MapFunctionFactory.getZeroHeuristicFunction();
+			hfFactory = (goal) -> (state -> 0.0);
 		else
 			hfFactory = (goal) -> MapFunctionFactory.getSLDHeuristicFunction(goal, map);
 		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hfFactory);

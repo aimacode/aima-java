@@ -10,9 +10,10 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.util.math.geom.shapes.Point2D;
+
+import java.util.function.Function;
 
 /**
  * @author Ciaran O'Reilly
@@ -33,12 +34,10 @@ public class RecursiveBestFirstSearchTest {
 
 		aMap = new SimplifiedRoadMapOfPartOfRomania();
 
-		HeuristicFunction heuristicFunction = new HeuristicFunction() {
-			public double h(Object state) {
+		Function<Object, Double> heuristicFunction = (state) -> {
 				Point2D pt1 = aMap.getPosition((String) state);
 				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 				return pt1.distance(pt2);
-			}
 		};
 
 		recursiveBestFirstSearch = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(heuristicFunction));

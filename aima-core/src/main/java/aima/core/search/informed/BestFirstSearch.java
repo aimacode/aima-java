@@ -4,10 +4,10 @@ import aima.core.search.framework.QueueBasedSearch;
 import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
 import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.Comparator;
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>
@@ -45,7 +45,7 @@ public class BestFirstSearch extends QueueBasedSearch implements Informed {
 
 	/** Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}. */
 	@Override
-	public void setHeuristicFunction(HeuristicFunction hf) {
+	public void setHeuristicFunction(Function<Object, Double> hf) {
 		if (evalFunc instanceof HeuristicEvaluationFunction)
 			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
 	}

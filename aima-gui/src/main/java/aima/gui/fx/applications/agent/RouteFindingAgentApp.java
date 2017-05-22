@@ -3,6 +3,7 @@ package aima.gui.fx.applications.agent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.ExtendableMap;
@@ -13,7 +14,6 @@ import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfAustralia;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -60,7 +60,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	/** Search method to be used. */
 	protected SearchForActions search;
 	/** Heuristic function to be used when performing informed search. */
-	protected HeuristicFunction heuristic;
+	protected Function<Object, Double> heuristic;
 
 	public RouteFindingAgentApp() {
 	}
@@ -183,7 +183,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
-			heuristic = MapFunctionFactory.getZeroHeuristicFunction();
+			heuristic = (state) -> 0.0;
 			break;
 		default:
 			heuristic = MapFunctionFactory.getSLDHeuristicFunction(destinations.get(0), scenario.getAgentMap());

@@ -2,8 +2,9 @@ package aima.core.search.informed;
 
 import aima.core.search.framework.Node;
 import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
+
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>
@@ -29,13 +30,13 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 	 *            cheapest path from the state at node <em>n</em> to a goal
 	 *            state.
 	 */
-	public GreedyBestFirstSearch(QueueSearch impl, HeuristicFunction hf) {
+	public GreedyBestFirstSearch(QueueSearch impl, Function<Object, Double> hf) {
 		super(impl, new EvalFunction(hf));
 	}
 
 
 	public static class EvalFunction extends HeuristicEvaluationFunction {
-		public EvalFunction(HeuristicFunction hf) {
+		public EvalFunction(Function<Object, Double> hf) {
 			this.hf = hf;
 		}
 
@@ -48,7 +49,7 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 		@Override
 		public double f(Node n) {
 			// f(n) = h(n)
-			return hf.h(n.getState());
+			return hf.apply(n.getState());
 		}
 	}
 }

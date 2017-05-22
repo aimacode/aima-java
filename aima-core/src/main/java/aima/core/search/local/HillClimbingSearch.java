@@ -2,13 +2,13 @@ package aima.core.search.local;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.*;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.Informed;
 import aima.core.util.CancelableThread;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.2, page
@@ -44,7 +44,7 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 
-	private HeuristicFunction hf = null;
+	private Function<Object, Double> hf = null;
 	private final NodeExpander nodeExpander;
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
 	private Object lastState = null;
@@ -56,18 +56,18 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	 * @param hf
 	 *            a heuristic function
 	 */
-	public HillClimbingSearch(HeuristicFunction hf) {
+	public HillClimbingSearch(Function<Object, Double> hf) {
 		this(hf, new NodeExpander());
 	}
 	
-	public HillClimbingSearch(HeuristicFunction hf, NodeExpander nodeExpander) {
+	public HillClimbingSearch(Function<Object, Double> hf, NodeExpander nodeExpander) {
 		this.hf = hf;
 		this.nodeExpander = nodeExpander;
 		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 
 	@Override
-	public void setHeuristicFunction(HeuristicFunction hf) {
+	public void setHeuristicFunction(Function<Object, Double> hf) {
 		this.hf = hf;
 	}
 
@@ -192,6 +192,6 @@ public class HillClimbingSearch implements SearchForActions, SearchForStates, In
 	private double getValue(Node n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
-		return -1 * hf.h(n.getState());
+		return -1 * hf.apply(n.getState());
 	}
 }

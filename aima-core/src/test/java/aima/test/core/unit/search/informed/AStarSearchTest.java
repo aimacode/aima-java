@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.informed;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +18,6 @@ import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.DefaultGoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -147,11 +147,8 @@ public class AStarSearchTest {
 				MapFunctionFactory.getResultFunction(), new DefaultGoalTest(
 						"goal"), new MapStepCostFunction(map));
 
-		HeuristicFunction hf = new HeuristicFunction() {
-			public double h(Object state) {
-				return 0; // Don't have one for this test
-			}
-		};
+		Function<Object, Double> hf = (state) -> 0.0; // Don't have one for this test
+
 		SearchForActions search = new AStarSearch(new GraphSearch(), hf);
 		SearchAgent agent = new SearchAgent(problem, search);
 

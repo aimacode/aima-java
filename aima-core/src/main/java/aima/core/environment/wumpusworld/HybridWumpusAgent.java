@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
@@ -18,7 +19,6 @@ import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -221,7 +221,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		Problem problem = new Problem(current, WumpusFunctionFactory.getActionsFunction(cave),
 				WumpusFunctionFactory.getResultFunction(), goalTest);
 
-		HeuristicFunction hf = new ManhattanHeuristicFunction(goals);
+		Function<Object, Double> hf = new ManhattanHeuristicFunction(goals);
 
 		SearchForActions search = new AStarSearch(new GraphSearch(), hf);
 		SearchAgent agent = null;

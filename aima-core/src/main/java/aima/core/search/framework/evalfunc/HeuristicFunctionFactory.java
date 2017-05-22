@@ -1,5 +1,7 @@
 package aima.core.search.framework.evalfunc;
 
+import java.util.function.Function;
+
 /**
  * A heuristic function factory creates a heuristic function for a given goal.
  * Autonomously acting problem solving agents can profit from this kind of
@@ -9,7 +11,5 @@ package aima.core.search.framework.evalfunc;
  *
  */
 public interface HeuristicFunctionFactory {
-
-	HeuristicFunction createHeuristicFunction(Object goal);
-
+	Function<Object, Double> createHeuristicFunction(Object goal);
 }

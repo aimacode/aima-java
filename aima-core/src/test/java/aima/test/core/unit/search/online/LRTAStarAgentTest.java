@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.online;
 
 import aima.core.agent.*;
+import aima.core.search.framework.Node;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,17 +10,16 @@ import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
-import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.DefaultGoalTest;
 import aima.core.search.online.LRTAStarAgent;
 import aima.core.search.online.OnlineSearchProblem;
 
+import java.util.function.Function;
+
 public class LRTAStarAgentTest {
-	ExtendableMap aMap;
-
-	StringBuffer envChanges;
-
-	HeuristicFunction hf;
+	private ExtendableMap aMap;
+	private StringBuffer envChanges;
+	private Function<Object, Double> hf;
 
 	@Before
 	public void setUp() {
@@ -29,11 +29,7 @@ public class LRTAStarAgentTest {
 		aMap.addBidirectionalLink("C", "D", 4.0);
 		aMap.addBidirectionalLink("D", "E", 4.0);
 		aMap.addBidirectionalLink("E", "F", 4.0);
-		hf = new HeuristicFunction() {
-			public double h(Object state) {
-				return 1;
-			}
-		};
+		hf = (state) -> 1.0;
 
 		envChanges = new StringBuffer();
 	}

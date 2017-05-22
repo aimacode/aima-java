@@ -1,6 +1,6 @@
 package aima.core.environment.nqueens;
 
-import aima.core.search.framework.evalfunc.HeuristicFunction;
+import java.util.function.Function;
 
 /**
  * Estimates the distance to goal by the number of attacking pairs of queens on
@@ -8,10 +8,10 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  * 
  * @author R. Lunde
  */
-public class AttackingPairsHeuristic implements HeuristicFunction {
+public class AttackingPairsHeuristic implements Function<Object, Double> {
 
-	public double h(Object state) {
+	public Double apply(Object state) {
 		NQueensBoard board = (NQueensBoard) state;
-		return board.getNumberOfAttackingPairs();
+		return (double) board.getNumberOfAttackingPairs();
 	}
 }

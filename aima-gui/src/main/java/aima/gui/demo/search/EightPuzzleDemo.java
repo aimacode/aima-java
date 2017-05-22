@@ -8,7 +8,7 @@ import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
 import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -81,7 +81,7 @@ public class EightPuzzleDemo {
 			Problem problem = new Problem(boardWithThreeMoveSolution, EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
 			SearchForActions search = new GreedyBestFirstSearch(new GraphSearch(),
-					new MisplacedTilleHeuristicFunction());
+					new MisplacedTileHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -111,7 +111,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem problem = new Problem(random1, EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction());
+			SearchForActions search = new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());

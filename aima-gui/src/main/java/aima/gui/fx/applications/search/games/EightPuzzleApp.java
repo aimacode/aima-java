@@ -9,7 +9,7 @@ import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
+import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -67,11 +67,11 @@ public class EightPuzzleApp extends IntegrableApplication {
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeuristic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
+				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeuristic)",
 				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeuristic)",
-				new AStarSearch(new GraphSearch(), new MisplacedTilleHeuristicFunction()));
+				new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (ManhattanHeuristic)",
 				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search (ManhattanHeuristic)",
@@ -181,7 +181,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
 			Metrics m = new Metrics();
-			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().h(board));
+			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().apply(board));
 			updateStateView(m);
 			if (CancelableThread.currIsCanceled())
 				break;
