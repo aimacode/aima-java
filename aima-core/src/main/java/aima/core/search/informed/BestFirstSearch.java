@@ -1,13 +1,13 @@
 package aima.core.search.informed;
 
-import java.util.Comparator;
-
-import aima.core.search.framework.Informed;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.PrioritySearch;
+import aima.core.search.framework.QueueBasedSearch;
+import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
+import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
+
+import java.util.Comparator;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>
@@ -23,7 +23,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class BestFirstSearch extends PrioritySearch implements Informed {
+public class BestFirstSearch extends QueueBasedSearch implements Informed {
 
 	private final EvaluationFunction evalFunc;
 	
@@ -39,7 +39,7 @@ public class BestFirstSearch extends PrioritySearch implements Informed {
 	 *            node.
 	 */
 	public BestFirstSearch(QueueSearch impl, final EvaluationFunction ef) {
-		super(impl, (node1, node2) -> Double.compare(ef.f(node1), ef.f(node2)));
+		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(ef::f)));
 		evalFunc = ef;
 	}
 

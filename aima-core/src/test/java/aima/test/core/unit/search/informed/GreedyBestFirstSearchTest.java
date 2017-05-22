@@ -11,7 +11,7 @@ import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctionFactory;
 import aima.core.environment.map.MapStepCostFunction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
-import aima.core.search.framework.PrioritySearch;
+import aima.core.search.framework.QueueBasedSearch;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.DefaultGoalTest;
@@ -61,7 +61,7 @@ public class GreedyBestFirstSearchTest {
 
 			Problem problem = new Problem(board, EightPuzzleFunctionFactory.getActionsFunction(),
 					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			PrioritySearch search = new GreedyBestFirstSearch(new GraphSearchReducedFrontier(),
+			QueueBasedSearch search = new GreedyBestFirstSearch(new GraphSearchReducedFrontier(),
 					new ManhattanHeuristicFunction());
 
 			SearchAgent agent = new SearchAgent(problem, search);

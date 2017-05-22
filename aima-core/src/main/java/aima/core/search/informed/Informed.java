@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.informed;
 
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 
@@ -8,5 +8,5 @@ import aima.core.search.framework.evalfunc.HeuristicFunction;
  * @author Ruediger Lunde
  */
 public interface Informed {
-    public void setHeuristicFunction(HeuristicFunction hf);
+    void setHeuristicFunction(HeuristicFunction hf);
 }

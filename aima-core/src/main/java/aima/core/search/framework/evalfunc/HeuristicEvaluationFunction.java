@@ -1,4 +1,4 @@
-package aima.core.search.informed;
+package aima.core.search.framework.evalfunc;
 
 import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.evalfunc.EvaluationFunction;

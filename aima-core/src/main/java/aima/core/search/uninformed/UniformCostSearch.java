@@ -3,7 +3,8 @@ package aima.core.search.uninformed;
 import java.util.Comparator;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.PrioritySearch;
+import aima.core.search.framework.QueueBasedSearch;
+import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
 
@@ -44,7 +45,7 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ruediger Lunde
  * 
  */
-public class UniformCostSearch extends PrioritySearch {
+public class UniformCostSearch extends QueueBasedSearch {
 
 	/** Creates a UniformCostSearch instance using GraphSearch */
 	public UniformCostSearch() {
@@ -56,10 +57,6 @@ public class UniformCostSearch extends PrioritySearch {
 	 * search space exploration strategy.
 	 */
 	public UniformCostSearch(QueueSearch impl) {
-		super(impl, createPathCostComparator());
-	}
-
-	private static Comparator<Node> createPathCostComparator() {
-		return (node1, node2) -> Double.compare(node1.getPathCost(), node2.getPathCost());
+		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(Node::getPathCost)));
 	}
 }

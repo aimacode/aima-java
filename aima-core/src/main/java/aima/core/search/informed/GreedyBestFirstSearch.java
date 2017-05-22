@@ -1,5 +1,7 @@
 package aima.core.search.informed;
 
+import aima.core.search.framework.Node;
+import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.qsearch.QueueSearch;
 
@@ -28,6 +30,25 @@ public class GreedyBestFirstSearch extends BestFirstSearch {
 	 *            state.
 	 */
 	public GreedyBestFirstSearch(QueueSearch impl, HeuristicFunction hf) {
-		super(impl, new GreedyBestFirstEvaluationFunction(hf));
+		super(impl, new EvalFunction(hf));
+	}
+
+
+	public static class EvalFunction extends HeuristicEvaluationFunction {
+		public EvalFunction(HeuristicFunction hf) {
+			this.hf = hf;
+		}
+
+		/**
+		 * Returns the heuristic cost <em>h(n)</em> to get from the specified node to the goal.
+		 *
+		 * @param n a node
+		 * @return h(n)
+		 */
+		@Override
+		public double f(Node n) {
+			// f(n) = h(n)
+			return hf.h(n.getState());
+		}
 	}
 }

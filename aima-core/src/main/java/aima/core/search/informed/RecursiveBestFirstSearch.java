@@ -3,6 +3,7 @@ package aima.core.search.informed;
 import aima.core.agent.Action;
 import aima.core.search.framework.*;
 import aima.core.search.framework.evalfunc.EvaluationFunction;
+import aima.core.search.framework.evalfunc.HeuristicEvaluationFunction;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
 

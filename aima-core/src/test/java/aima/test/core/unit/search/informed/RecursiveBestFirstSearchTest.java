@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.informed;
 
 import aima.core.agent.*;
+import aima.core.search.informed.AStarSearch;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,6 @@ import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
-import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.util.math.geom.shapes.Point2D;
 
@@ -20,12 +20,12 @@ import aima.core.util.math.geom.shapes.Point2D;
  */
 public class RecursiveBestFirstSearchTest {
 
-	StringBuffer envChanges;
+	private StringBuffer envChanges;
 
-	Map aMap;
+	private Map aMap;
 
-	RecursiveBestFirstSearch recursiveBestFirstSearch;
-	RecursiveBestFirstSearch recursiveBestFirstSearchAvoidingLoops;
+	private RecursiveBestFirstSearch recursiveBestFirstSearch;
+	private RecursiveBestFirstSearch recursiveBestFirstSearchAvoidingLoops;
 
 	@Before
 	public void setUp() {
@@ -41,9 +41,9 @@ public class RecursiveBestFirstSearchTest {
 			}
 		};
 
-		recursiveBestFirstSearch = new RecursiveBestFirstSearch(new AStarEvaluationFunction(heuristicFunction));
+		recursiveBestFirstSearch = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(heuristicFunction));
 		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch(
-				new AStarEvaluationFunction(heuristicFunction), true);
+				new AStarSearch.EvalFunction(heuristicFunction), true);
 	}
 
 	@Test

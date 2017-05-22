@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.search.framework.*;
 import aima.core.search.framework.evalfunc.HeuristicFunction;
 import aima.core.search.framework.problem.Problem;
+import aima.core.search.informed.Informed;
 import aima.core.util.CancelableThread;
 
 import java.util.List;

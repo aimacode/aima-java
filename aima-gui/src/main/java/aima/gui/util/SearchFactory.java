@@ -7,7 +7,6 @@ import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.GraphSearchBFS;
 import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
-import aima.core.search.informed.AStarEvaluationFunction;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
 import aima.core.search.informed.RecursiveBestFirstSearch;
@@ -130,12 +129,10 @@ public class SearchFactory {
 			result = new AStarSearch(qs, hf);
 			break;
 		case RBF_SEARCH:
-			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(
-					hf));
+			result = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(hf));
 			break;
 		case RBF_AL_SEARCH:
-			result = new RecursiveBestFirstSearch(new AStarEvaluationFunction(
-					hf), true);
+			result = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(hf), true);
 			break;
 		case HILL_SEARCH:
 			result = new HillClimbingSearch(hf);
