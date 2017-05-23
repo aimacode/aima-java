@@ -50,7 +50,7 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 	 *         undo the operation.
 	 */
 	public InferenceLog<VAR, VAL> apply(CSP<VAR, VAL> csp) {
-		Queue<VAR> queue = QueueFactory.createLifoQueue();
+		Queue<VAR> queue = QueueFactory.createFifoQueueNoDuplicates();
 		queue.addAll(csp.getVariables());
 		DomainLog<VAR, VAL> log = new DomainLog<>();
 		reduceDomains(queue, csp, log);
@@ -59,7 +59,7 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 
 	/**
 	 * Reduces the domain of the specified variable to the specified value and
-	 * reestablishes arc-consistency. It is assumed that the provided CSP is
+	 * reestablishes arc-consistency. It is assumed that the provided CSP was
 	 * arc-consistent before the call.
 	 * 
 	 * @return An object which indicates success/failure and contains data to
@@ -80,19 +80,21 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 		return log.compactify();
 	}
 
+	/**
+	 * Ignores constraints which are not binary. The queue manages updated variables vj
+	 * instead of neighbor arcs (vi, vj) in the original AC3 for efficiency reasons.
+	 */
 	private void reduceDomains(Queue<VAR> queue, CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 		while (!queue.isEmpty()) {
 			VAR var = queue.remove();
 			for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
-				if (constraint.getScope().size() == 2) {
-					VAR neighbor = csp.getNeighbor(var, constraint);
-					if (revise(neighbor, var, constraint, csp, log)) {
-						if (csp.getDomain(neighbor).isEmpty()) {
-							log.setEmptyDomainFound(true);
-							return;
-						}
-						queue.add(neighbor);
+				VAR neighbor = csp.getNeighbor(var, constraint);
+				if (neighbor != null && revise(neighbor, var, constraint, csp, log)) {
+					if (csp.getDomain(neighbor).isEmpty()) {
+						log.setEmptyDomainFound(true);
+						return;
 					}
+					queue.add(neighbor);
 				}
 			}
 		}

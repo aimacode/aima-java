@@ -53,7 +53,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
 
         // Establish arc consistency from top to bottom (starting at the bottom).
         csp = csp.copyDomains(); // do not change the original CSP!
-        for (int i = orderedVars.size() - 1; i >= 1; i--) {
+        for (int i = orderedVars.size() - 1; i > 0; i--) {
             VAR var = orderedVars.get(i);
             Constraint<VAR, VAL> constraint = parentConstraints.get(var);
             VAR parent = csp.getNeighbor(var, constraint);
@@ -112,6 +112,10 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
         }
     }
 
+    /**
+     * Removes all values from the domain of <code>xi</code> for which no consistent value in
+     * the domain <code>xj</code> exists. Does nothing if <code>constraint</code> is not binary.
+     */
     private boolean makeArcConsistent(VAR xi, VAR xj, Constraint<VAR, VAL> constraint, CSP<VAR, VAL> csp) {
         boolean revised = false;
         Assignment<VAR, VAL> assignment = new Assignment<>();

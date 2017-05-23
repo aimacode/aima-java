@@ -13,7 +13,17 @@ import java.util.List;
  * @author Mike Stampone
  */
 public abstract class CspSolver<VAR extends Variable, VAL> {
+
     private List<CspListener<VAR, VAL>> listeners = new ArrayList<>();
+
+    /**
+     * Computes a solution to the specified CSP, which specifies values for all
+     * variables of the given CSP such that all constraints are satisfied.
+     *
+     * @param csp a CSP to be solved.
+     * @return the computed solution or null if no solution was found.
+     */
+    public abstract Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp);
 
     /**
      * Adds a CSP listener to the solution strategy.
@@ -40,13 +50,4 @@ public abstract class CspSolver<VAR extends Variable, VAL> {
         for (CspListener<VAR, VAL> listener : listeners)
             listener.stateChanged(csp.copyDomains(), assignment != null ? assignment.copy() : null);
     }
-
-    /**
-     * Computes a solution to the specified CSP, which specifies values for all
-     * variables of the given CSP such that all constraints are satisfied.
-     *
-     * @param csp a CSP to be solved.
-     * @return the computed solution or null if no solution was found.
-     */
-    public abstract Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp);
 }

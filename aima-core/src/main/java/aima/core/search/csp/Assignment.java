@@ -66,10 +66,9 @@ public class Assignment<VAR extends Variable, VAL> {
      * <code>vars</code>.
      */
     public boolean isComplete(List<VAR> vars) {
-        for (VAR var : vars) {
+        for (VAR var : vars)
             if (!contains(var))
                 return false;
-        }
         return true;
     }
 
@@ -78,15 +77,12 @@ public class Assignment<VAR extends Variable, VAL> {
      * respect to the given CSP.
      */
     public boolean isSolution(CSP<VAR, VAL> csp) {
-        return isConsistent(csp.getConstraints())
-                && isComplete(csp.getVariables());
+        return isConsistent(csp.getConstraints()) && isComplete(csp.getVariables());
     }
 
     public Assignment<VAR, VAL> copy() {
         Assignment<VAR, VAL> copy = new Assignment<>();
-        for (VAR var : variables) {
-            copy.add(var, variableToValue.get(var));
-        }
+        for (VAR var : variables) copy.add(var, variableToValue.get(var));
         return copy;
     }
 
