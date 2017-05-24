@@ -112,7 +112,7 @@ public class SimulationPaneBuilder {
 	 */
 	protected Parameter createSimSpeedParam() {
 		Parameter result = new Parameter(SimulationPaneCtrl.PARAM_SIM_SPEED, 20, 100, 400, 800, Integer.MAX_VALUE);
-		result.setValueNames("VeryFast", "Fast", "Medium", "Slow", "Pause");
+		result.setValueNames("VeryFast", "Fast", "Medium", "Slow", "StepMode");
 		result.setDefaultValueIndex(2);
 		return result;
 	}
