@@ -1,5 +1,7 @@
 package aima.core.search.csp.inference;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 import aima.core.search.csp.*;
@@ -71,7 +73,7 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 		assert domain.contains(value);
 		DomainLog<VAR, VAL> log = new DomainLog<>();
 		if (domain.size() > 1) {
-			Queue<VAR> queue = QueueFactory.createLifoQueue();
+			Queue<VAR> queue = QueueFactory.createFifoQueue();
 			queue.add(var);
 			log.storeDomainFor(var, domain);
 			csp.setDomain(var, new Domain<>(value));
@@ -81,8 +83,8 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 	}
 
 	/**
-	 * Ignores constraints which are not binary. The queue manages updated variables vj
-	 * instead of neighbor arcs (vi, vj) in the original AC3 for efficiency reasons.
+	 * For efficiency reasons the queue manages updated variables vj whereas the original AC3
+	 * manages neighbor arcs (vi, vj). Constraints which are not binary are ignored.
 	 */
 	private void reduceDomains(Queue<VAR> queue, CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 		while (!queue.isEmpty()) {
@@ -102,28 +104,28 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 
 	/**
 	 * Establishes arc-consistency for (xi, xj).
-	 * @return Value true if the domain of xi was modified.
+	 * @return value true if the domain of xi was reduced.
 	 */
 	private boolean revise(VAR xi, VAR xj, Constraint<VAR, VAL> constraint,
 			CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
-		boolean revised = false;
+		Domain<VAL> currDomain = csp.getDomain(xi);
+		List<VAL> newValues = new ArrayList<>(currDomain.size());
 		Assignment<VAR, VAL> assignment = new Assignment<>();
-		for (VAL vi : csp.getDomain(xi)) {
+		for (VAL vi : currDomain) {
 			assignment.add(xi, vi);
-			boolean found = false;
 			for (VAL vj : csp.getDomain(xj)) {
 				assignment.add(xj, vj);
 				if (constraint.isSatisfiedWith(assignment)) {
-					found = true;
+					newValues.add(vi);
 					break;
 				}
 			}
-			if (!found) {
-				log.storeDomainFor(xi, csp.getDomain(xi));
-				csp.removeValueFromDomain(xi, vi);
-				revised = true;
-			}
 		}
-		return revised;
+		if (newValues.size() < currDomain.size()) {
+			log.storeDomainFor(xi, csp.getDomain(xi));
+			csp.setDomain(xi, new Domain<>(newValues));
+			return true;
+		}
+		return false;
 	}
 }

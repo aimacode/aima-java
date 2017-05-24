@@ -31,7 +31,7 @@ import aima.core.util.Util;
  * Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs.
  * If the CSP has a solution, we will find it in linear time; if not, we will
  * detect a contradiction. Comment to (*) (RL): If no empty domain was found in the
- * previous loop, this will never happen.
+ * previous loop, this will only happen if n == 1.
  *
  * @author Ruediger Lunde
  * @author Anurag Rai
@@ -48,8 +48,8 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
         List<VAR> orderedVars = new ArrayList<>();
         Map<VAR, Constraint<VAR, VAL>> parentConstraints = new HashMap<>();
         topologicalSort(csp, root, orderedVars, parentConstraints);
-        if (orderedVars.size() < csp.getVariables().size())
-            return null; // CSP is not tree-structured or not connected or has no solution!
+        if (csp.getDomain(root).isEmpty())
+            return null; // CSP has no solution! (needed if orderedVars.size() == 1)
 
         // Establish arc consistency from top to bottom (starting at the bottom).
         csp = csp.copyDomains(); // do not change the original CSP!
@@ -77,7 +77,8 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
 
     /**
      * Computes an explicit representation of the tree structure and a total order which is consistent with the
-     * parent-child relations.
+     * parent-child relations. If the provided CSP has not the required properties (CSP contains only binary
+     * constraints, constraint graph is tree-structured and connected), an exception is thrown.
      *
      * @param csp               A CSP
      * @param root              A root variable
@@ -87,10 +88,8 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
      */
     private void topologicalSort(CSP<VAR, VAL> csp, VAR root, List<VAR> orderedVars,
                                  Map<VAR, Constraint<VAR, VAL>> parentConstraints) {
-        if (csp.getDomain(root).isEmpty())
-            return; // no solution!
-        parentConstraints.put(root, null);
         orderedVars.add(root);
+        parentConstraints.put(root, null);
         int currParentIdx = -1;
         while (currParentIdx < orderedVars.size() - 1) {
             currParentIdx++;
@@ -99,41 +98,43 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             for (Constraint<VAR, VAL> constraint : csp.getConstraints(currParent)) {
                 VAR neighbor = csp.getNeighbor(currParent, constraint);
                 if (neighbor == null)
-                    return; // this constraint is not binary!
-                if (parentConstraints.containsKey(neighbor)) {
+                    throw new IllegalArgumentException("Constraint " + constraint + " is not binary.");
+                if (parentConstraints.containsKey(neighbor)) { // faster than orderedVars.contains(neighbor)!
                     arcsPointingUpwards++;
                     if (arcsPointingUpwards > 1)
-                        return; // CSP is not a tree!
+                        throw new IllegalArgumentException("CSP is not tree-structured.");
                 } else {
-                    parentConstraints.put(neighbor, constraint);
                     orderedVars.add(neighbor);
+                    parentConstraints.put(neighbor, constraint);
                 }
             }
         }
+        if (orderedVars.size() < csp.getVariables().size())
+            throw new IllegalArgumentException("Constraint graph is not connected.");
     }
 
     /**
-     * Removes all values from the domain of <code>xi</code> for which no consistent value in
-     * the domain <code>xj</code> exists. Does nothing if <code>constraint</code> is not binary.
+     * Establishes arc-consistency for (xi, xj).
+     * @return value true if the domain of xi was reduced.
      */
     private boolean makeArcConsistent(VAR xi, VAR xj, Constraint<VAR, VAL> constraint, CSP<VAR, VAL> csp) {
-        boolean revised = false;
+        Domain<VAL> currDomain = csp.getDomain(xi);
+        List<VAL> newValues = new ArrayList<>(currDomain.size());
         Assignment<VAR, VAL> assignment = new Assignment<>();
-        for (VAL vi : csp.getDomain(xi)) {
+        for (VAL vi : currDomain) {
             assignment.add(xi, vi);
-            boolean found = false;
             for (VAL vj : csp.getDomain(xj)) {
                 assignment.add(xj, vj);
                 if (constraint.isSatisfiedWith(assignment)) {
-                    found = true;
+                    newValues.add(vi);
                     break;
                 }
             }
-            if (!found) {
-                csp.removeValueFromDomain(xi, vi);
-                revised = true;
-            }
         }
-        return revised;
+        if (newValues.size() < currDomain.size()) {
+            csp.setDomain(xi, new Domain<>(newValues));
+            return true;
+        }
+        return false;
     }
 }
