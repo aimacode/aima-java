@@ -38,12 +38,19 @@ import aima.core.util.Util;
  */
 public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
 
+    private boolean useRandom;
+
+    public TreeCspSolver<VAR, VAL> useRandom(boolean s) {
+        useRandom = s;
+        return this;
+    }
+
     @Override
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
 
         Assignment<VAR, VAL> assignment = new Assignment<>();
-        // Select a random root from the List of Variables
-        VAR root = Util.selectRandomlyFromList(csp.getVariables());
+        // Select a root from the List of Variables
+        VAR root = useRandom ? Util.selectRandomlyFromList(csp.getVariables()) : csp.getVariables().get(0);
         // Sort the variables in topological order
         List<VAR> orderedVars = new ArrayList<>();
         Map<VAR, Constraint<VAR, VAL>> parentConstraints = new HashMap<>();
@@ -58,6 +65,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             Constraint<VAR, VAL> constraint = parentConstraints.get(var);
             VAR parent = csp.getNeighbor(var, constraint);
             if (makeArcConsistent(parent, var, constraint, csp)) {
+                fireStateChanged(csp, null);
                 if (csp.getDomain(parent).isEmpty())
                     return null; // CSP has no solution!
             }
@@ -68,8 +76,10 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             VAR var = orderedVars.get(i);
             for (VAL value : csp.getDomain(var)) {
                 assignment.add(var, value);
-                if (assignment.isConsistent(csp.getConstraints(var)))
+                if (assignment.isConsistent(csp.getConstraints(var))) {
+                    fireStateChanged(csp, assignment);
                     break;
+                }
             }
         }
         return assignment;
