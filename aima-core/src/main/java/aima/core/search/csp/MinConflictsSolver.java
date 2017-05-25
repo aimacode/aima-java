@@ -49,7 +49,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 
 	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
 		Assignment<VAR, VAL> assignment = generateRandomAssignment(csp);
-		fireStateChanged(csp, assignment);
+		fireStateChanged(csp, null, assignment);
 		for (int i = 0; i < maxSteps && !CancelableThread.currIsCanceled(); i++) {
 			if (assignment.isSolution(csp)) {
 				return assignment;
@@ -58,7 +58,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 				VAR var = Util.selectRandomlyFromSet(vars);
 				VAL value = getMinConflictValueFor(var, assignment, csp);
 				assignment.add(var, value);
-				fireStateChanged(csp, assignment);
+				fireStateChanged(csp, var, assignment);
 			}
 		}
 		return null;

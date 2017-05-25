@@ -65,7 +65,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             Constraint<VAR, VAL> constraint = parentConstraints.get(var);
             VAR parent = csp.getNeighbor(var, constraint);
             if (makeArcConsistent(parent, var, constraint, csp)) {
-                fireStateChanged(csp, null);
+                fireStateChanged(csp, parent, null);
                 if (csp.getDomain(parent).isEmpty())
                     return null; // CSP has no solution!
             }
@@ -77,7 +77,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             for (VAL value : csp.getDomain(var)) {
                 assignment.add(var, value);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
-                    fireStateChanged(csp, assignment);
+                    fireStateChanged(csp, var, assignment);
                     break;
                 }
             }

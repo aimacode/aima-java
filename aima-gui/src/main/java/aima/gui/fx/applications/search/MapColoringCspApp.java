@@ -151,9 +151,9 @@ public class MapColoringCspApp extends IntegrableApplication {
                 break;
         }
 
-        strategy.addCspListener((csp1, assignment) -> {
+        strategy.addCspListener((csp1, var, assignment) -> {
             stepCounter++;
-            updateStateView(csp1, assignment);
+            updateStateView(csp1, var, assignment);
         });
 
         stateViewCtrl.initialize(csp);
@@ -168,28 +168,40 @@ public class MapColoringCspApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void simulate() {
-        stepCounter = 0;
-        strategy.solve(csp);
+        try {
+            stepCounter = 0;
+            strategy.solve(csp);
+        } catch (RuntimeException ex) { // If TreeCspSolver is applied to non-tree-structured CSP
+            simPaneCtrl.setStatus(ex.getClass().getSimpleName() + ": " + ex.getMessage());
+        }
     }
 
     /**
      * Caution: While the background thread should be slowed down, updates of
      * the GUI have to be done in the GUI thread!
      */
-    private void updateStateView(CSP<Variable, String> csp, Assignment<Variable, String> assignment) {
-        Platform.runLater(() -> updateStateViewLater(csp, assignment));
+    private void updateStateView(CSP<Variable, String> csp, Variable var, Assignment<Variable, String> assignment) {
+        Platform.runLater(() -> updateStateViewLater(csp, var, assignment));
         simPaneCtrl.waitAfterStep();
     }
 
     /**
      * Must be called by the GUI thread!
      */
-    private void updateStateViewLater(CSP<Variable, String> csp, Assignment<Variable, String> assignment) {
+    private void updateStateViewLater(CSP<Variable, String> csp, Variable var, Assignment<Variable, String> assignment) {
         stateViewCtrl.update(csp, assignment);
         String txt1 = "Step " + stepCounter + ": ";
         String txt2 = "Domain reduced";
-        if (assignment != null)
-            txt2 = assignment.toString() + (assignment.isSolution(csp) ? " (Solution)" : "");
+        if (assignment != null) {
+            if (var != null)
+                txt2 = "Assignment changed: " + var + "=" + assignment.getValue(var);
+            else
+                txt2 = "Assignment changed: " + assignment.toString();
+            if (assignment.isSolution(csp))
+                txt2 += " (Solution)";
+        } else {
+            txt2 = "Domain reduced" + (var != null ? " at " + var : "");
+        }
         simPaneCtrl.setStatus(txt1 + txt2);
     }
 
