@@ -42,21 +42,21 @@ To solve a problem with (non CSP) Search you need to write five classes:
   Let us, for the rest of these instruction, assume you are going to solve
   the NQueens problem. So in this step you need to write something like
   `aima.core.environment.nqueens.NQueensBoard`.
-* an implementation of the `aima.core.search.framework.GoalTest` interface.
+* an implementation of the `aima.core.search.framework.problem.GoalTest` interface.
   This implements only a single function — `boolean isGoalState(Object state);`
   The parameter state is an instance of the class you created in  step 1-a
   above. For the NQueensProblem you would need to write something like
   `aima.core.environment.nqueens.NQueensGoalTest`.
-* an implementation of the `aima.core.search.framework.ActionsFunction`
+* an implementation of the `aima.core.search.framework.problem.ActionsFunction`
   interface. This generates the allowable actions from a particular state.
   An example is
-  `aima.core.environment.nqueens.NQueensFunctionFactory.NQActionsFunction`.
-* an implementation of the `aima.core.search.framework.ResultFunction`
+  `aima.core.environment.nqueens.NQueensFunctionFactory.NQIActionsFunction`.
+* an implementation of the `aima.core.search.framework.problem.ResultFunction`
   interface. This generates the state that results from doing action a in a
   state. An example is
   `aima.core.environment.nqueens.NQueensFunctionFactory.NQResultFunction`.
-* if you need to do an informed search, you should create a fourth class
-  which implements the `aima.core.search.framework.HeuristicFunction`.
+* if you need to do an informed search, you should create a heuristic function
+  which implements the `Function<Object, Double>` interface.
   For the NQueens problem, you need to write something like
   `aima.core.environment.nqueens.QueensToBePlacedHeuristic`.
 
