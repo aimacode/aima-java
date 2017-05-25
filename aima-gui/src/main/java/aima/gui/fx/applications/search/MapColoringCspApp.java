@@ -75,10 +75,7 @@ public class MapColoringCspApp extends IntegrableApplication {
     }
 
     protected List<Parameter> createParameters() {
-        Parameter p1 = new Parameter(PARAM_MAP, "Map of Australia",
-                "Map of Australia NSW=BLUE (for LCV)",
-                "Map of Australia WA=RED (for LCV)",
-                "Tree-Structured Map");
+        Parameter p1 = new Parameter(PARAM_MAP, "Map of Australia", "Tree-Structured Map");
         Parameter p2 = new Parameter(PARAM_STRATEGY, "Backtracking",
                 "Backtracking + DEG",
                 "Backtracking + Forward Checking",
@@ -103,14 +100,6 @@ public class MapColoringCspApp extends IntegrableApplication {
                 initMapOfAustraliaCsp();
                 break;
             case 1:
-                initMapOfAustraliaCsp();
-                csp.setDomain(MapCSP.NSW, new Domain<>(MapCSP.BLUE));
-                break;
-            case 2:
-                initMapOfAustraliaCsp();
-                csp.setDomain(MapCSP.WA, new Domain<>(MapCSP.RED));
-                break;
-            case 3:
                 initTreeCsp();
                 break;
         }
@@ -194,13 +183,13 @@ public class MapColoringCspApp extends IntegrableApplication {
         String txt2 = "Domain reduced";
         if (assignment != null) {
             if (var != null)
-                txt2 = "Assignment changed: " + var + "=" + assignment.getValue(var);
+                txt2 = "Assignment changed, " + var + " = " + assignment.getValue(var);
             else
-                txt2 = "Assignment changed: " + assignment.toString();
+                txt2 = "Assignment changed, " + assignment.toString();
             if (assignment.isSolution(csp))
                 txt2 += " (Solution)";
         } else {
-            txt2 = "Domain reduced" + (var != null ? " at " + var : "");
+            txt2 = "Domain reduced" + (var != null ? ", Dom(" + var + ") = " + csp.getDomain(var) + ")": "");
         }
         simPaneCtrl.setStatus(txt1 + txt2);
     }
@@ -236,7 +225,7 @@ public class MapColoringCspApp extends IntegrableApplication {
         csp.setDomain(vars.get(4), new Domain<>(MapCSP.GREEN));
         csp.setDomain(vars.get(5), new Domain<>(MapCSP.RED, MapCSP.GREEN, MapCSP.BLUE));
         csp.setDomain(vars.get(6), new Domain<>(MapCSP.RED));
-        csp.setDomain(vars.get(7), new Domain<>(MapCSP.BLUE));
+        csp.setDomain(vars.get(7), new Domain<>(MapCSP.GREEN));
 
         csp.addConstraint(new NotEqualConstraint<>(vars.get(0), vars.get(1)));
         csp.addConstraint(new NotEqualConstraint<>(vars.get(1), vars.get(2)));
