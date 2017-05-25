@@ -57,8 +57,6 @@ To solve a problem with (non CSP) Search you need to write five classes:
   `aima.core.environment.nqueens.NQueensFunctionFactory.NQResultFunction`.
 * if you need to do an informed search, you should create a heuristic function
   which implements the `Function<Object, Double>` interface.
-  For the NQueens problem, you need to write something like
-  `aima.core.environment.nqueens.QueensToBePlacedHeuristic`.
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 

@@ -63,8 +63,8 @@ public class IntegratedAimaFxApp extends Application {
 
 		builder.registerApp(EightPuzzleApp.class);
 		builder.registerApp(TicTacToeApp.class);
-		builder.registerApp(SimpleSudokuApp.class);
 		builder.registerApp(ConnectFourApp.class);
+		builder.registerApp(SimpleSudokuApp.class);
 
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);

@@ -4,6 +4,8 @@ import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 
+import java.util.Arrays;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.1, Page 204.<br>
  * <br>
@@ -22,6 +24,7 @@ public class MapCSP extends CSP<Variable, String> {
 	public static final Variable T = new Variable("T");
 	public static final Variable V = new Variable("V");
 	public static final Variable WA = new Variable("WA");
+
 	public static final String RED = "RED";
 	public static final String GREEN = "GREEN";
 	public static final String BLUE = "BLUE";
@@ -31,16 +34,9 @@ public class MapCSP extends CSP<Variable, String> {
 	 * Australia, with the colors Red, Green, and Blue.
 	 */
 	public MapCSP() {
-		addVariable(NSW);
-		addVariable(WA);
-		addVariable(NT);
-		addVariable(Q);
-		addVariable(SA);
-		addVariable(V);
-		addVariable(T);
+		super(Arrays.asList(NSW, WA, NT, Q, SA, V, T));
 
 		Domain<String> colors = new Domain<>(RED, GREEN, BLUE);
-
 		for (Variable var : getVariables())
 			setDomain(var, colors);
 

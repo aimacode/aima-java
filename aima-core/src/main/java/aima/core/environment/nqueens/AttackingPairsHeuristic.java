@@ -6,7 +6,7 @@ import java.util.function.Function;
  * Estimates the distance to goal by the number of attacking pairs of queens on
  * the board.
  * 
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class AttackingPairsHeuristic implements Function<Object, Double> {
 
