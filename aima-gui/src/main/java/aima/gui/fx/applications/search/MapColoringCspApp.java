@@ -77,12 +77,13 @@ public class MapColoringCspApp extends IntegrableApplication {
     protected List<Parameter> createParameters() {
         Parameter p1 = new Parameter(PARAM_MAP, "Map of Australia", "Tree-Structured Map");
         Parameter p2 = new Parameter(PARAM_STRATEGY, "Backtracking",
+                "Backtracking + MRV",
                 "Backtracking + DEG",
+                "Backtracking + LCV",
                 "Backtracking + Forward Checking",
-                "Backtracking + Forward Checking + MRV",
-                "Backtracking + Forward Checking + LCV",
+                "Backtracking + Forward Checking + MRV&DEG",
                 "Backtracking + AC3",
-                "Backtracking + AC3 + MRV & DEG + LCV",
+                "Backtracking + AC3 + MRV&DEG + LCV",
                 "Min-Conflicts (50)",
                 "Tree-CSP-Solver",
                 "Tree-CSP-Solver with Random Root");
@@ -109,33 +110,35 @@ public class MapColoringCspApp extends IntegrableApplication {
             case 0:
                 strategy = new FlexibleBacktrackingSolver<>();
                 break;
-            case 1: // DEG
+            case 1: // MRV
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.mrv());
+                break;
+            case 2: // DEG
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.deg());
                 break;
-            case 2: // FC
+            case 3: // LCV
+                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.lcv());
+                break;
+            case 4: // FC
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().set(new ForwardCheckingStrategy<>());
                 break;
-            case 3: // MRV + FC
+            case 5: // FC + MRV&DEG
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg())
                         .set(new ForwardCheckingStrategy<>());
                 break;
-            case 4: // LCV + FC
-                strategy = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.lcv())
-                        .set(new ForwardCheckingStrategy<>());
-                break;
-            case 5: // AC3
+            case 6: // AC3
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().set(new AC3Strategy<>());
                 break;
-            case 6: // MRV & DEG + LCV + AC3
+            case 7: // AC3 + MRV&DEG + LCV
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().setAll();
                 break;
-            case 7:
+            case 8:
                 strategy = new MinConflictsSolver<>(50);
                 break;
-            case 8:
+            case 9:
                 strategy = new TreeCspSolver<>();
                 break;
-            case 9:
+            case 10:
                 strategy = new TreeCspSolver<Variable, String>().useRandom(true);
                 break;
         }
