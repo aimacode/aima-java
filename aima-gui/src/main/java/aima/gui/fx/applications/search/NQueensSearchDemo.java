@@ -151,14 +151,14 @@ public class NQueensSearchDemo {
 		genAlgo.addProgressTracer((it, pop) -> notifyProgressTracers(pop, fitnessFn));
 
 		List<Individual<Integer>> population = new ArrayList<>();
-		List<Integer> rep = new ArrayList<Integer>();
+		List<Integer> rep = new ArrayList<>();
 		for (int i = 0; i < boardSize; i++)
 			rep.add(0);
 		for (int i = 0; i < populationSize; i++)
 			if (randomConfig)
 				population.add(NQueensGenAlgoUtil.generateRandomIndividual(boardSize));
 			else
-				population.add(new Individual<Integer>(rep));
+				population.add(new Individual<>(rep));
 
 		Individual<Integer> result = genAlgo.geneticAlgorithm(population, fitnessFn, maxIterations);
 

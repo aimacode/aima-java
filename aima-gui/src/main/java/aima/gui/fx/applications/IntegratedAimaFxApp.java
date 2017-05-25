@@ -62,9 +62,9 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(NQueensSearchApp.class);
 
 		builder.registerApp(EightPuzzleApp.class);
-		builder.registerApp(ConnectFourApp.class);
 		builder.registerApp(TicTacToeApp.class);
 		builder.registerApp(SimpleSudokuApp.class);
+		builder.registerApp(ConnectFourApp.class);
 
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
@@ -72,13 +72,13 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerDemo(NQueensCspDemo.class);
 		builder.registerDemo(GeneticMaximumFinderDemo.class);
 
-		builder.registerDemo(NQueensSearchDemo.class);
 		builder.registerDemo(TrivialVacuumDemo.class);
+		builder.registerDemo(NondeterministicVacuumEnvironmentDemo.class);
+		builder.registerDemo(NQueensSearchDemo.class);
 		builder.registerDemo(EightPuzzleDemo.class);
 		builder.registerDemo(TicTacToeDemo.class);
 		builder.registerDemo(NQueensDemo.class);
 		builder.registerDemo(MapColoringCspDemo.class);
-		builder.registerDemo(NondeterministicVacuumEnvironmentDemo.class);
 
 		builder.registerDemo(TTEntailsDemo.class);
 		builder.registerDemo(PlFcEntailsDemo.class);

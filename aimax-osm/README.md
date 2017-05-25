@@ -71,7 +71,7 @@ for navigation, mark setting, and track definition. For routing, at least two
 markers must be set.
 
 
-### Current Release:
+### Current Release
 #### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016
   * Fixed Jar to launch JavaFX Integrated App by default.
 
