@@ -46,8 +46,8 @@ public abstract class CspSolver<VAR extends Variable, VAL> {
 
 
     /** Informs all registered listeners about a state change. */
-    protected void fireStateChanged(CSP<VAR, VAL> csp, VAR variable, Assignment<VAR, VAL> assignment) {
+    protected void fireStateChanged(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR variable) {
         for (CspListener<VAR, VAL> listener : listeners)
-            listener.stateChanged(csp.copyDomains(), variable, assignment != null ? assignment.copy() : null);
+            listener.stateChanged(csp.copyDomains(), assignment != null ? assignment.copy() : null, variable);
     }
 }

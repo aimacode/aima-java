@@ -19,7 +19,7 @@ public class CspHeuristics {
     }
 
     public interface ValueSelection<VAR extends Variable, VAL> {
-        List<VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
+        List<VAL> apply(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment);
     }
 
     public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> mrv() { return new MrvHeuristic<>(); }
@@ -33,6 +33,8 @@ public class CspHeuristics {
      * Implements the minimum-remaining-values heuristic.
      */
     public static class MrvHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+
+        /** Returns variables from <code>vars</code> which are the best with respect to MRV. */
         public List<VAR> apply(List<VAR> vars, CSP<VAR, VAL> csp) {
             List<VAR> result = new ArrayList<>();
             int mrv = Integer.MAX_VALUE;
@@ -54,6 +56,8 @@ public class CspHeuristics {
      * Implements the degree heuristic. Constraints with arbitrary scope size are supported.
      */
     public static class DegHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+
+        /** Returns variables from <code>vars</code> which are the best with respect to DEG. */
         public List<VAR> apply(List<VAR> vars, CSP<VAR, VAL> csp) {
             List<VAR> result = new ArrayList<>();
             int maxDegree = -1;
@@ -75,10 +79,12 @@ public class CspHeuristics {
      * Implements the least constraining value heuristic.
      */
     public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueSelection<VAR, VAL> {
-        public List<VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+
+        /** Returns the values of Dom(var) in a special order. The least constraining value comes first. */
+        public List<VAL> apply(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
             List<Pair<VAL, Integer>> pairs = new ArrayList<>();
             for (VAL value : csp.getDomain(var)) {
-                int num = countLostValues(var, value, assignment, csp);
+                int num = countLostValues(var, value, csp, assignment);
                 pairs.add(new Pair<>(value, num));
             }
             return pairs.stream().sorted(Comparator.comparing(Pair::getSecond)).map(Pair::getFirst)
@@ -88,7 +94,7 @@ public class CspHeuristics {
         /**
          * Ignores constraints which are not binary.
          */
-        private int countLostValues(VAR var, VAL value, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+        private int countLostValues(VAR var, VAL value, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
             int result = 0;
             Assignment<VAR, VAL> assign = new Assignment<>();
             assign.add(var, value);

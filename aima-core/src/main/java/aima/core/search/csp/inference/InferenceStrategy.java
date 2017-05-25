@@ -21,5 +21,5 @@ public interface InferenceStrategy<VAR extends Variable, VAL> {
      * Inference method which is called after the assignment has (recursively) been extended by a value assignment
      * for <code>var</code>.
      */
-    InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
+    InferenceLog<VAR, VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
 }

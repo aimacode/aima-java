@@ -13,10 +13,10 @@ public interface CspListener<VAR extends Variable, VAL> {
      * Informs about changed assignments and inference steps.
      *
      * @param csp        a CSP, possibly changed by an inference step.
-     * @param variable   a variable, whose domain or assignment value has been changed (may be null).
      * @param assignment a new assignment or null if the last processing step was an inference step.
+     * @param variable   a variable, whose domain or assignment value has been changed (may be null).
      */
-    void stateChanged(CSP<VAR, VAL> csp, VAR variable, Assignment<VAR, VAL> assignment);
+    void stateChanged(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR variable);
 
     /**
      * A simple CSP listener implementation which counts assignment changes and changes caused by
@@ -28,7 +28,7 @@ public interface CspListener<VAR extends Variable, VAL> {
         private int inferenceCount = 0;
 
         @Override
-        public void stateChanged(CSP<VAR, VAL> csp, VAR variable, Assignment<VAR, VAL> assignment) {
+        public void stateChanged(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR variable) {
             if (assignment != null)
                 ++assignmentCount;
             else

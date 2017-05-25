@@ -45,28 +45,28 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 
     /** Applies a recursive backtracking search to solve the CSP. */
     public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
-        return backtrack(new Assignment<>(), csp);
+        return backtrack(csp, new Assignment<>());
     }
 
     /**
      * Template method, which can be configured by overriding the three
      * primitive operations below.
      */
-    private Assignment<VAR, VAL> backtrack(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+    private Assignment<VAR, VAL> backtrack(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         Assignment<VAR, VAL> result = null;
         if (assignment.isComplete(csp.getVariables()) || CancelableThread.currIsCanceled()) {
             result = assignment;
         } else {
-            VAR var = selectUnassignedVariable(assignment, csp);
-            for (VAL value : orderDomainValues(var, assignment, csp)) {
+            VAR var = selectUnassignedVariable(csp, assignment);
+            for (VAL value : orderDomainValues(var, csp, assignment)) {
                 assignment.add(var, value);
-                fireStateChanged(csp, var, assignment);
+                fireStateChanged(csp, assignment, var);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
-                    InferenceLog<VAR, VAL> log = inference(var, assignment, csp);
+                    InferenceLog<VAR, VAL> log = inference(csp, assignment, var);
                     if (!log.isEmpty())
                         fireStateChanged(csp, null, null);
                     if (!log.inconsistencyFound()) {
-                        result = backtrack(assignment, csp);
+                        result = backtrack(csp, assignment);
                         if (result != null)
                             break;
                     }
@@ -81,15 +81,15 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
     /**
      * Primitive operation, selecting a not yet assigned variable.
      */
-    protected abstract VAR selectUnassignedVariable(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
+    protected abstract VAR selectUnassignedVariable(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment);
 
     /**
      * Primitive operation, ordering the domain values of the specified variable.
      */
-    protected abstract Iterable<VAL> orderDomainValues(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
+    protected abstract Iterable<VAL> orderDomainValues(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment);
 
     /**
      * Primitive operation, which tries to optimize the CSP representation with respect to a new assignment.
      */
-    protected abstract InferenceLog<VAR, VAL> inference(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp);
+    protected abstract InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
 }

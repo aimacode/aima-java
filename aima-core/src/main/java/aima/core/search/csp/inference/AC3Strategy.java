@@ -67,7 +67,7 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 	 * @return An object which indicates success/failure and contains data to
 	 *         undo the operation.
 	 */
-	public InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+	public InferenceLog<VAR, VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
 		Domain<VAL> domain = csp.getDomain(var);
 		VAL value = assignment.getValue(var);
 		assert domain.contains(value);

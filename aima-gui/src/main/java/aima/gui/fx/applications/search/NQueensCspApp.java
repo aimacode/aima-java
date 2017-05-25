@@ -113,7 +113,7 @@ public class NQueensCspApp extends IntegrableApplication {
 
         }
         solver.addCspListener(stepCounter);
-        solver.addCspListener((csp, var, assign) -> { if (assign != null) updateStateView(getBoard(assign));});
+        solver.addCspListener((csp, assign, var) -> { if (assign != null) updateStateView(getBoard(assign));});
         stepCounter.reset();
         stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
         simPaneCtrl.setStatus("");

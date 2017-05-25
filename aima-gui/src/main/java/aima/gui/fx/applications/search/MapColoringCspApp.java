@@ -143,9 +143,9 @@ public class MapColoringCspApp extends IntegrableApplication {
                 break;
         }
 
-        strategy.addCspListener((csp1, var, assignment) -> {
+        strategy.addCspListener((csp1, assignment, var) -> {
             stepCounter++;
-            updateStateView(csp1, var, assignment);
+            updateStateView(csp1, assignment, var);
         });
 
         stateViewCtrl.initialize(csp);
@@ -172,15 +172,15 @@ public class MapColoringCspApp extends IntegrableApplication {
      * Caution: While the background thread should be slowed down, updates of
      * the GUI have to be done in the GUI thread!
      */
-    private void updateStateView(CSP<Variable, String> csp, Variable var, Assignment<Variable, String> assignment) {
-        Platform.runLater(() -> updateStateViewLater(csp, var, assignment));
+    private void updateStateView(CSP<Variable, String> csp, Assignment<Variable, String> assignment, Variable var) {
+        Platform.runLater(() -> updateStateViewLater(csp, assignment, var));
         simPaneCtrl.waitAfterStep();
     }
 
     /**
      * Must be called by the GUI thread!
      */
-    private void updateStateViewLater(CSP<Variable, String> csp, Variable var, Assignment<Variable, String> assignment) {
+    private void updateStateViewLater(CSP<Variable, String> csp, Assignment<Variable, String> assignment, Variable var) {
         stateViewCtrl.update(csp, assignment);
         String txt1 = "Step " + stepCounter + ": ";
         String txt2 = "Domain reduced";

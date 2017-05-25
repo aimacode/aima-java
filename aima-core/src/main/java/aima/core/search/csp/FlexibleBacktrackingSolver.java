@@ -71,7 +71,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Primitive operation, selecting a not yet assigned variable.
      */
     @Override
-    protected VAR selectUnassignedVariable(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+    protected VAR selectUnassignedVariable(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         List<VAR> vars = csp.getVariables().stream()
                 .filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
         if (varSelectionStrategy != null)
@@ -83,9 +83,9 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Primitive operation, ordering the domain values of the specified variable.
      */
     @Override
-    protected Iterable<VAL> orderDomainValues(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+    protected Iterable<VAL> orderDomainValues(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         if (valSelectionStrategy != null) {
-            return valSelectionStrategy.apply(var, assignment, csp);
+            return valSelectionStrategy.apply(var, csp, assignment);
         } else {
             return csp.getDomain(var);
         }
@@ -99,10 +99,9 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * (3) how to restore the domains.
      */
     @Override
-    protected InferenceLog<VAR, VAL> inference(VAR var, Assignment<VAR, VAL> assignment,
-                                  CSP<VAR, VAL> csp) {
+    protected InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
         if (inferenceStrategy != null)
-            return inferenceStrategy.apply(var, assignment, csp);
+            return inferenceStrategy.apply(csp, assignment, var);
         else
             return InferenceLog.emptyLog();
     }

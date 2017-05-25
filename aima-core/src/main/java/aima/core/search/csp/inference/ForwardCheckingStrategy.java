@@ -24,7 +24,7 @@ public class ForwardCheckingStrategy<VAR extends Variable, VAL> implements Infer
      * assignment for <code>var</code>.
      */
     @Override
-    public InferenceLog<VAR, VAL> apply(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
+    public InferenceLog<VAR, VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
         DomainLog<VAR, VAL> log = new DomainLog<>();
         for (Constraint<VAR, VAL> constraint : csp.getConstraints(var)) {
             VAR neighbor = csp.getNeighbor(var, constraint);
@@ -45,8 +45,8 @@ public class ForwardCheckingStrategy<VAR extends Variable, VAL> implements Infer
      * <code>constraint</code> and <code>assignment</code>. Modifies the domain log accordingly so
      * that all changes can be undone later on.
      */
-    private boolean revise(VAR var, Constraint<VAR, VAL> constraint,
-                           Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
+    private boolean revise(VAR var, Constraint<VAR, VAL> constraint, Assignment<VAR, VAL> assignment,
+                           CSP<VAR, VAL> csp, DomainLog<VAR, VAL> log) {
 
         boolean revised = false;
         for (VAL value : csp.getDomain(var)) {
