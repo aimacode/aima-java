@@ -48,29 +48,29 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 	}
 
 	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
-		Assignment<VAR, VAL> assignment = generateRandomAssignment(csp);
-		fireStateChanged(csp, assignment, null);
+		Assignment<VAR, VAL> current = generateRandomAssignment(csp);
+		fireStateChanged(csp, current, null);
 		for (int i = 0; i < maxSteps && !CancelableThread.currIsCanceled(); i++) {
-			if (assignment.isSolution(csp)) {
-				return assignment;
+			if (current.isSolution(csp)) {
+				return current;
 			} else {
-				Set<VAR> vars = getConflictedVariables(assignment, csp);
+				Set<VAR> vars = getConflictedVariables(current, csp);
 				VAR var = Util.selectRandomlyFromSet(vars);
-				VAL value = getMinConflictValueFor(var, assignment, csp);
-				assignment.add(var, value);
-				fireStateChanged(csp, assignment, var);
+				VAL value = getMinConflictValueFor(var, current, csp);
+				current.add(var, value);
+				fireStateChanged(csp, current, var);
 			}
 		}
 		return null;
 	}
 
 	private Assignment<VAR, VAL> generateRandomAssignment(CSP<VAR, VAL> csp) {
-		Assignment<VAR, VAL> assignment = new Assignment<>();
+		Assignment<VAR, VAL> result = new Assignment<>();
 		for (VAR var : csp.getVariables()) {
 			VAL randomValue = Util.selectRandomlyFromList(csp.getDomain(var).asList());
-			assignment.add(var, randomValue);
+			result.add(var, randomValue);
 		}
-		return assignment;
+		return result;
 	}
 
 	private Set<VAR> getConflictedVariables(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
@@ -83,12 +83,12 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 
 	private VAL getMinConflictValueFor(VAR var, Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
 		List<Constraint<VAR, VAL>> constraints = csp.getConstraints(var);
-		Assignment<VAR, VAL> duplicate = assignment.copy();
+		Assignment<VAR, VAL> testAssignment = assignment.clone();
 		int minConflict = Integer.MAX_VALUE;
 		List<VAL> resultCandidates = new ArrayList<>();
 		for (VAL value : csp.getDomain(var)) {
-			duplicate.add(var, value);
-			int currConflict = countConflicts(duplicate, constraints);
+			testAssignment.add(var, value);
+			int currConflict = countConflicts(testAssignment, constraints);
 			if (currConflict <= minConflict) {
 				if (currConflict < minConflict) {
 					resultCandidates.clear();
@@ -97,10 +97,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 				resultCandidates.add(value);
 			}
 		}
-		if (!resultCandidates.isEmpty())
-			return Util.selectRandomlyFromList(resultCandidates);
-		else
-			return null;
+		 return (!resultCandidates.isEmpty()) ? Util.selectRandomlyFromList(resultCandidates) : null;
 	}
 
 	private int countConflicts(Assignment<VAR, VAL> assignment,

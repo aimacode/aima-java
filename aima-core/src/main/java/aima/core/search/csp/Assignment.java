@@ -1,53 +1,38 @@
 package aima.core.search.csp;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * An assignment assigns values to some or all variables of a CSP.
  *
  * @author Ruediger Lunde
  */
-public class Assignment<VAR extends Variable, VAL> {
-    /**
-     * Contains all assigned variables. Positions reflect the the order in which
-     * the variables were assigned to values.
-     */
-    private List<VAR> variables;
+public class Assignment<VAR extends Variable, VAL> implements Cloneable {
     /**
      * Maps variables to their assigned values.
      */
-    private Hashtable<VAR, VAL> variableToValue;
-
-    public Assignment() {
-        variables = new ArrayList<>();
-        variableToValue = new Hashtable<>();
-    }
+    private LinkedHashMap<VAR, VAL> variableToValueMap = new LinkedHashMap<>();
 
     public List<VAR> getVariables() {
-        return Collections.unmodifiableList(variables);
+        return variableToValueMap.keySet().stream().collect(Collectors.toList());
     }
 
     public VAL getValue(VAR var) {
-        return variableToValue.get(var);
+        return variableToValueMap.get(var);
     }
 
-    public void add(VAR var, VAL value) {
-        if (variableToValue.put(var, value) == null)
-            variables.add(var);
+    public VAL add(VAR var, VAL value) {
+        assert value != null;
+        return variableToValueMap.put(var, value);
     }
 
-    public void remove(VAR var) {
-        if (contains(var)) {
-            variableToValue.remove(var);
-            variables.remove(var);
-        }
+    public VAL remove(VAR var) {
+        return variableToValueMap.remove(var);
     }
 
     public boolean contains(VAR var) {
-        return variableToValue.get(var) != null;
+        return variableToValueMap.containsKey(var);
     }
 
     /**
@@ -80,20 +65,27 @@ public class Assignment<VAR extends Variable, VAL> {
         return isConsistent(csp.getConstraints()) && isComplete(csp.getVariables());
     }
 
-    public Assignment<VAR, VAL> copy() {
-        Assignment<VAR, VAL> copy = new Assignment<>();
-        for (VAR var : variables) copy.add(var, variableToValue.get(var));
-        return copy;
+    @SuppressWarnings("unchecked")
+    @Override
+    public Assignment<VAR, VAL> clone() {
+        Assignment<VAR, VAL> result;
+        try {
+            result = (Assignment<VAR, VAL>) super.clone();
+            result.variableToValueMap = new LinkedHashMap<>(variableToValueMap);
+        } catch (CloneNotSupportedException e) {
+            throw new UnsupportedOperationException("Could not clone assignment."); // should never happen!
+        }
+        return result;
     }
 
     @Override
     public String toString() {
         boolean comma = false;
         StringBuilder result = new StringBuilder("{");
-        for (VAR var : variables) {
+        for (Map.Entry<VAR, VAL> entry : variableToValueMap.entrySet()) {
             if (comma)
                 result.append(", ");
-            result.append(var).append("=").append(variableToValue.get(var));
+            result.append(entry.getKey()).append("=").append(entry.getValue());
             comma = true;
         }
         result.append("}");
