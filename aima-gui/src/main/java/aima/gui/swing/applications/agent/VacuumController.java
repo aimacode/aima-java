@@ -1,17 +1,8 @@
 package aima.gui.swing.applications.agent;
 
+import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
-import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
-import aima.core.environment.vacuum.ReflexVacuumAgent;
-import aima.core.environment.vacuum.SimpleReflexVacuumAgent;
-import aima.core.environment.vacuum.TableDrivenVacuumAgent;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.VacuumWorldActions;
-import aima.core.environment.vacuum.VacuumWorldGoalTest;
-import aima.core.environment.vacuum.VacuumWorldResults;
+import aima.core.environment.vacuum.*;
 import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.gui.swing.framework.AgentAppController;
@@ -128,22 +119,18 @@ public class VacuumController extends AgentAppController {
 	// PRIVATE METHODS
 	//
 	private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
-		NondeterministicVacuumAgent agent = new NondeterministicVacuumAgent(
+		return new NondeterministicVacuumAgent(
         		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
-        
-        return agent;
 	}
 	
-	private NondeterministicProblem createNondeterministicProblem() {
+	private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {
 		// create problem
-        NondeterministicProblem problem = new NondeterministicProblem(
-                env.getCurrentState(),
-                new VacuumWorldActions(),
+        return new NondeterministicProblem<>(
+				(VacuumEnvironmentState) env.getCurrentState(),
+                VacuumWorldFunctions::getActions,
                 new VacuumWorldResults(agent),
-                new VacuumWorldGoalTest(agent),
-				StepCostFunction.createDefault());
-        
-        return problem;
+				VacuumWorldFunctions::testGoal,
+				(s, a, sPrimed) -> 1.0);
 	}
 }
 

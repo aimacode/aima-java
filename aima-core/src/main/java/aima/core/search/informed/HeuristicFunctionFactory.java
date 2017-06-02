@@ -1,6 +1,8 @@
 package aima.core.search.informed;
 
-import java.util.function.Function;
+import aima.core.search.framework.Node;
+
+import java.util.function.ToDoubleFunction;
 
 /**
  * A heuristic function factory creates a heuristic function for a given goal.
@@ -10,6 +12,7 @@ import java.util.function.Function;
  * @author Ruediger Lunde
  *
  */
-public interface HeuristicFunctionFactory {
-	Function<Object, Double> createHeuristicFunction(Object goal);
+@FunctionalInterface
+public interface HeuristicFunctionFactory<S, A> {
+	ToDoubleFunction<Node<S, A>> createHeuristicFunction(S goal);
 }

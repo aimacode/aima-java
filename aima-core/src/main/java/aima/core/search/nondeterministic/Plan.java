@@ -2,8 +2,6 @@ package aima.core.search.nondeterministic;
 
 import java.util.LinkedList;
 
-import aima.core.agent.Action;
-
 /**
  * Represents a solution plan for an AND-OR search; according to page 135
  * AIMA3e, the plan must be "a subtree that (1) has a goal node at every leaf,
@@ -20,11 +18,6 @@ public class Plan extends LinkedList<Object> {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Each step is either an IfStateThenPlan, a Plan, or an Action.
-	 */
-	LinkedList<Object> steps = new LinkedList<Object>();
-
-	/**
 	 * Empty constructor
 	 */
 	public Plan() {
@@ -33,13 +26,10 @@ public class Plan extends LinkedList<Object> {
 	/**
 	 * Construct a plan based on a sequence of steps (IfStateThenPlan or a
 	 * Plan).
-	 * 
-	 * @param steps
 	 */
 	public Plan(Object... steps) {
-		for (int i = 0; i < steps.length; i++) {
-			add(steps[i]);
-		}
+		for (Object step : steps)
+			add(step);
 	}
 
 	/**
@@ -49,8 +39,8 @@ public class Plan extends LinkedList<Object> {
 	 *            the action to be prepended to this plan.
 	 * @return this plan with action prepended to it.
 	 */
-	public Plan prepend(Action action) {
-		this.offerFirst(action);
+	public Plan prepend(Object action) {
+		offerFirst(action);
 		return this;
 	}
 

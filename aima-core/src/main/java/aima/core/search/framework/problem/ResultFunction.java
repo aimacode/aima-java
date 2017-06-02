@@ -1,6 +1,6 @@
 package aima.core.search.framework.problem;
 
-import aima.core.agent.Action;
+import java.util.function.BiFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 67.<br>
@@ -9,19 +9,10 @@ import aima.core.agent.Action;
  * transition model, specified by a function RESULT(s, a) that returns the state
  * that results from doing action a in state s. We also use the term successor
  * to refer to any state reachable from a given state by a single action.
- * 
- * @author Ravi Mohan
- * @author Ciaran O'Reilly
+ *
+ * @param <S> the type used to represent states
+ * @param <A> the type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  */
-public interface ResultFunction {
-	/**
-	 * Returns the state that results from doing action a in state s
-	 * 
-	 * @param s
-	 *            a particular state.
-	 * @param a
-	 *            an action to be performed in state s.
-	 * @return the state that results from doing action a in state s.
-	 */
-	Object result(Object s, Action a);
-}
+public interface ResultFunction<S, A> extends BiFunction<S, A, S> {}

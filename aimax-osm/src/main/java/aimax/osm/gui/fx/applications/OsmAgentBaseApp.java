@@ -3,14 +3,15 @@ package aimax.osm.gui.fx.applications;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.*;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
@@ -85,27 +86,20 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	}
 
 	/**
-	 * Factory method which creates a search strategy based on the current
-	 * parameter settings.
-	 */
-	protected SearchForActions createSearch(List<String> locations) {
-		Function<Object, Double> heuristic;
-		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
-		case 0:
-			heuristic = state -> 0.0;
-			break;
-		default:
-			heuristic = MapFunctionFactory.getSLDHeuristicFunction(locations.get(1), map);
-		}
-		return SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
-				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
-	}
-
-	/**
 	 * Factory method which creates a new agent based on the current parameter
 	 * settings.
 	 */
-	protected Agent createAgent(SearchForActions search, List<String> locations) {
+	protected Agent createAgent(List<String> locations) {
+		ToDoubleFunction<Node<String, MoveToAction>> heuristic;
+		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
+			heuristic = node -> 0.0;
+		else
+			heuristic = MapFunctions.createSLDHeuristicFunction(locations.get(1), map);
+
+		SearchForActions<String, MoveToAction> search = SearchFactory.getInstance().createSearch
+				(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
+
 		return new MapAgent(map, search, locations.get(1), envViewCtrl::notify);
 	}
 
@@ -180,8 +174,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
-			SearchForActions search = createSearch(locations);
-			Agent agent = createAgent(search, locations);
+			Agent agent = createAgent(locations);
 			env = createEnvironment();
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));

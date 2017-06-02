@@ -22,9 +22,9 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ruediger Lunde
  * 
  */
-public class DepthFirstSearch extends QueueBasedSearch {
+public class DepthFirstSearch<S, A> extends QueueBasedSearch<S, A> {
 
-	public DepthFirstSearch(QueueSearch impl) {
+	public DepthFirstSearch(QueueSearch<S, A> impl) {
 		super(impl, QueueFactory.createLifoQueue());
 	}
 }

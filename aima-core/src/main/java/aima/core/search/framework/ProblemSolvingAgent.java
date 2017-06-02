@@ -1,14 +1,14 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.Problem;
-import aima.core.util.Util;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Modified copy of class
@@ -45,13 +45,11 @@ import aima.core.util.Util;
  * @author Ruediger Lunde
  * 
  */
-public abstract class ProblemSolvingAgent extends AbstractAgent {
+public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
 
 	/** Plan, an action sequence, initially empty. */
-	protected List<Action> plan = new ArrayList<>();
+	protected Queue<A> plan = new LinkedList<>();
 
-	public ProblemSolvingAgent() {
-	}
 
 	/**
 	 * Template method, which corresponds to pseudo code function
@@ -60,7 +58,7 @@ public abstract class ProblemSolvingAgent extends AbstractAgent {
 	 * @return an action
 	 */
 	public Action execute(Percept p) {
-		Action action;
+		Action action = null;
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if plan is empty then do
@@ -69,26 +67,26 @@ public abstract class ProblemSolvingAgent extends AbstractAgent {
 			Object goal = formulateGoal();
 			if (goal != null) {
 				// problem <- FORMULATE-PROBLEM(state, goal)
-				Problem problem = formulateProblem(goal);
+				Problem<S, A> problem = formulateProblem(goal);
 				// state.plan <- SEARCH(problem)
 				plan.addAll(search(problem));
 				if (plan.isEmpty() && !tryWithAnotherGoal()) {
 					// unable to identify a path
-					plan.add(NoOpAction.NO_OP);
 					setAlive(false);
+					break;
 				}
 			} else {
 				// no further goal to achieve
-				plan.add(NoOpAction.NO_OP);
 				setAlive(false);
+				break;
 			}
 		}
-		// action <- FIRST(plan)
-		action = Util.first(plan);
-		// plan <- REST(plan)
-		plan = Util.rest(plan);
-
-		return action;
+		if (!plan.isEmpty()) {
+			// action <- FIRST(plan)
+			// plan <- REST(plan)
+			action = plan.remove();
+		}
+		return action != null ? action : NoOpAction.NO_OP;
 	}
 
 	/**
@@ -114,7 +112,7 @@ public abstract class ProblemSolvingAgent extends AbstractAgent {
 	 * the model of the world proved to be wrong, implementations could update
 	 * the model and also clear the plan.
 	 */
-	protected abstract Object updateState(Percept p);
+	protected abstract void updateState(Percept p);
 
 	/**
 	 * Primitive operation, responsible for goal generation. In this version,
@@ -128,11 +126,11 @@ public abstract class ProblemSolvingAgent extends AbstractAgent {
 	/**
 	 * Primitive operation, responsible for search problem generation.
 	 */
-	protected abstract Problem formulateProblem(Object goal);
+	protected abstract Problem<S, A> formulateProblem(Object goal);
 
 	/**
 	 * Primitive operation, responsible for the generation of an action list
 	 * (plan) for the given search problem.
 	 */
-	protected abstract List<Action> search(Problem problem);
+	protected abstract List<A> search(Problem<S, A> problem);
 }

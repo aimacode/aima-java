@@ -23,11 +23,9 @@ public class Scheduler {
 	}
 
 	public double getTemp(int t) {
-		if (t < limit) {
-			double res = k * Math.exp((-1) * lam * t);
-			return res;
-		} else {
+		if (t < limit)
+			return k * Math.exp((-1) * lam * t);
+		else
 			return 0.0;
-		}
 	}
 }

@@ -1,9 +1,5 @@
 package aimax.osm.routing;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import aima.core.environment.map.Map;
 import aima.core.util.Util;
 import aima.core.util.math.geom.shapes.Point2D;
@@ -14,8 +10,12 @@ import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.WayRef;
-import aimax.osm.routing.OsmActionsFunction.OneWayMode;
-import aimax.osm.routing.PointLatLon;
+import aimax.osm.routing.OsmFunctions.OneWayMode;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 
 /**
  * Adapter class which provides an aima-core <code>Map</code> interface for
@@ -29,17 +29,17 @@ import aimax.osm.routing.PointLatLon;
 public class MapAdapter implements Map {
 
 	/** A map which is generated from OSM data. */
-	OsmMap osmMap;
+	private OsmMap osmMap;
 	/**
 	 * A filter, which hides some of the ways (e.g. foot ways are irrelevant
 	 * when traveling by car.).
 	 */
-	MapWayFilter filter;
+	private MapWayFilter filter;
 	/**
 	 * Controls whether a way which is marked as one-way can be traveled in both
 	 * directions.
 	 */
-	boolean ignoreOneWayRoads;
+	private boolean ignoreOneWayRoads;
 
 	public MapAdapter(OsmMap map) {
 		this.osmMap = map;
@@ -70,8 +70,8 @@ public class MapAdapter implements Map {
 	/** {@inheritDoc} Very expensive for large maps! */
 	@Override
 	public List<String> getLocations() {
-		List<String> result = new ArrayList<String>();
-		HashSet<MapNode> nodeHash = new HashSet<MapNode>();
+		List<String> result = new ArrayList<>();
+		HashSet<MapNode> nodeHash = new HashSet<>();
 		for (MapWay way : osmMap.getWays(new BoundingBox(-90, -180, 90, 180))) {
 			if (filter == null || filter.isAccepted(way)) {
 				for (MapNode node : way.getNodes())
@@ -95,7 +95,7 @@ public class MapAdapter implements Map {
 	}
 
 	private List<String> getReachableLocations(String location, OneWayMode oneWayMode) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		MapNode node = getWayNode(location);
 		if (node != null) {
 			for (WayRef wref : node.getWayRefs()) {

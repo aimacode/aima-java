@@ -6,7 +6,7 @@ import aima.core.search.framework.problem.Problem;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.26, page
@@ -43,7 +43,7 @@ import java.util.function.Function;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class RecursiveBestFirstSearch implements SearchForActions, Informed {
+public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, Informed<S, A> {
 
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_MAX_RECURSIVE_DEPTH = "maxRecursiveDepth";
@@ -51,25 +51,26 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 
 	private static final Double INFINITY = Double.MAX_VALUE;
 
-	private final Function<Node, Double> evalFunc;
+	private final ToDoubleFunction<Node<S, A>> evalFn;
 	private boolean avoidLoops;
-	private final NodeExpander nodeExpander;
+	private final NodeExpander<S, A> nodeExpander;
 	
 	// stores the states on the current path if avoidLoops is true.
-	private Set<Object> explored = new HashSet<>();
+	private Set<S> explored = new HashSet<>();
 	private Metrics metrics;
 
-	public RecursiveBestFirstSearch(Function<Node, Double> ef) {
-		this(ef, false);
+	public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn) {
+		this(evalFn, false);
 	}
 
 	/** Constructor which allows to enable the loop avoidance strategy. */
-	public RecursiveBestFirstSearch(Function<Node, Double> ef, boolean avoidLoops) {
-		this(ef, avoidLoops, new NodeExpander());
+	public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops) {
+		this(evalFn, avoidLoops, new NodeExpander<>());
 	}
 	
-	public RecursiveBestFirstSearch(Function<Node, Double> ef, boolean avoidLoops, NodeExpander nodeExpander) {
-		evalFunc = ef;
+	public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops,
+                                    NodeExpander<S, A> nodeExpander) {
+		this.evalFn = evalFn;
 		this.avoidLoops = avoidLoops;
 		this.nodeExpander = nodeExpander;
 		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
@@ -78,25 +79,25 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 
 	/** Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}. */
 	@Override
-	public void setHeuristicFunction(Function<Object, Double> hf) {
-		if (evalFunc instanceof HeuristicEvaluationFunction)
-			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
+	public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
+		if (evalFn instanceof HeuristicEvaluationFunction)
+			((HeuristicEvaluationFunction<S, A>) evalFn).setHeuristicFunction(h);
 	}
 
 	// function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
-	public List<Action> findActions(Problem p) {
-		List<Action> actions = new ArrayList<>();
+	public List<A> findActions(Problem<S, A> p) {
+		List<A> actions = new ArrayList<>();
 		explored.clear();
 
 		clearInstrumentation();
 
 		// RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
-		Node n = nodeExpander.createRootNode(p.getInitialState());
-		SearchResult sr = rbfs(p, n, evalFunc.apply(n), INFINITY, 0);
+		Node<S, A> n = nodeExpander.createRootNode(p.getInitialState());
+		SearchResult<S, A> sr = rbfs(p, n, evalFn.applyAsDouble(n), INFINITY, 0);
 		if (sr.hasSolution()) {
-			Node s = sr.getSolutionNode();
+			Node<S, A> s = sr.getSolutionNode();
 			actions = SearchUtils.getSequenceOfActions(s);
 			metrics.set(METRIC_PATH_COST, s.getPathCost());
 		}
@@ -124,12 +125,12 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	}
 
 	@Override
-	public void addNodeListener(Consumer<Node> listener)  {
+	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
 	}
 
 	@Override
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeExpander.removeNodeListener(listener);
 	}
 
@@ -138,17 +139,17 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 	//
 	// function RBFS(problem, node, f_limit) returns a solution, or failure and
 	// a new f-cost limit
-	private SearchResult rbfs(Problem p, Node node, double node_f, double fLimit, int recursiveDepth) {
+	private SearchResult<S, A> rbfs(Problem<S, A> p, Node<S, A> node, double node_f, double fLimit, int recursiveDepth) {
 		updateMetrics(recursiveDepth);
 
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (SearchUtils.isGoalState(p, node))
+		if (p.testSolution(node))
 			return getResult(null, node, fLimit);
 
 		// successors <- []
 		// for each action in problem.ACTION(node.STATE) do
 		// add CHILD-NODE(problem, node, action) into successors
-		List<Node> successors = expandNode(node, p);
+		List<Node<S, A>> successors = expandNode(node, p);
 
 		// if successors is empty then return failure, infinity
 		if (successors.isEmpty())
@@ -160,7 +161,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		int size = successors.size();
 		for (int s = 0; s < size; s++) {
 			// s.f <- max(s.g + s.h, node.f)
-			f[s] = Math.max(evalFunc.apply(successors.get(s)), node_f);
+			f[s] = Math.max(evalFn.applyAsDouble(successors.get(s)), node_f);
 		}
 
 		// repeat
@@ -174,7 +175,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 			// if best.f > f_limit then return failure, best.f
 			int altIndex = getNextBestFValueIndex(f, bestIndex);
 			// result, best.f <- RBFS(problem, best, min(f_limit, alternative))
-			SearchResult sr = rbfs(p, successors.get(bestIndex), f[bestIndex], Math.min(fLimit, f[altIndex]),
+			SearchResult<S, A> sr = rbfs(p, successors.get(bestIndex), f[bestIndex], Math.min(fLimit, f[altIndex]),
 					recursiveDepth + 1);
 			f[bestIndex] = sr.getFCostLimit();
 			// if result != failure then return result
@@ -216,11 +217,11 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		return lidx;
 	}
 
-	private List<Node> expandNode(Node node, Problem problem) {
-		List<Node> result = nodeExpander.expand(node, problem);
+	private List<Node<S, A>> expandNode(Node<S, A> node, Problem<S, A> problem) {
+		List<Node<S, A>> result = nodeExpander.expand(node, problem);
 		if (avoidLoops) {
 			explored.add(node.getState());
-			for (Iterator<Node> ni = result.iterator(); ni.hasNext();)
+			for (Iterator<Node<S, A>> ni = result.iterator(); ni.hasNext();)
 				if (explored.contains(ni.next().getState())) {
 					ni.remove();
 				}
@@ -228,10 +229,10 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		return result;
 	}
 
-	private SearchResult getResult(Node currNode, Node solutionNode, double fCostLimit) {
+	private SearchResult<S, A> getResult(Node<S, A> currNode, Node<S, A> solutionNode, double fCostLimit) {
 		if (avoidLoops && currNode != null)
 			explored.remove(currNode.getState());
-		return new SearchResult(solutionNode, fCostLimit);
+		return new SearchResult<>(solutionNode, fCostLimit);
 	}
 
 	/**
@@ -248,12 +249,12 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 		}
 	}
 
-	static class SearchResult {
+	private static class SearchResult<S, A> {
 
-		private Node solNode;
+		private Node<S, A> solNode;
 		private final double fCostLimit;
 
-		public SearchResult(Node solutionNode, double fCostLimit) {
+		public SearchResult(Node<S, A> solutionNode, double fCostLimit) {
 			this.solNode = solutionNode;
 			this.fCostLimit = fCostLimit;
 		}
@@ -262,7 +263,7 @@ public class RecursiveBestFirstSearch implements SearchForActions, Informed {
 			return solNode != null;
 		}
 
-		public Node getSolutionNode() {
+		public Node<S, A> getSolutionNode() {
 			return solNode;
 		}
 

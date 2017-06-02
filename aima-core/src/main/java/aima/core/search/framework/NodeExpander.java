@@ -1,24 +1,20 @@
 package aima.core.search.framework;
 
+import aima.core.search.framework.problem.Problem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import aima.core.agent.Action;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.framework.problem.ResultFunction;
-import aima.core.search.framework.problem.StepCostFunction;
-
 /**
  * Instances of this class are responsible for node creation and expansion. They
- * compute path costs, support progress tracing, and count the number of
+ * compute path costs, support progress tracking, and count the number of
  * {@link #expand(Node, Problem)} calls.
  * 
  * @author Ruediger Lunde
  *
  */
-public class NodeExpander {
+public class NodeExpander<S, A> {
 
 	protected boolean useParentLinks = true;
 
@@ -26,11 +22,9 @@ public class NodeExpander {
 	 * Modifies {@link #useParentLinks} and returns this node expander. When
 	 * using local search to search for states, parent links are not needed and
 	 * lead to unnecessary memory consumption.
-	 * 
-	 * @return
 	 */
-	public NodeExpander useParentLinks(boolean state) {
-		useParentLinks = state;
+	public NodeExpander useParentLinks(boolean s) {
+		useParentLinks = s;
 		return this;
 	}
 
@@ -40,8 +34,8 @@ public class NodeExpander {
 	/**
 	 * Factory method, which creates a root node for the specified state.
 	 */
-	public Node createRootNode(Object state) {
-		return new Node(state);
+	public Node<S, A> createRootNode(S state) {
+		return new Node<>(state);
 	}
 
 	/**
@@ -50,9 +44,9 @@ public class NodeExpander {
 	 * specified state, adds it as child of the provided parent (if
 	 * {@link #useParentLinks} is true), and returns it.
 	 */
-	public Node createNode(Object state, Node parent, Action action, double stepCost) {
-		Node p = useParentLinks ? parent : null;
-		return new Node(state, p, action, parent.getPathCost() + stepCost);
+	public Node<S, A> createNode(S state, Node<S, A> parent, A action, double stepCost) {
+		Node<S, A> p = useParentLinks ? parent : null;
+		return new Node<>(state, p, action, parent.getPathCost() + stepCost);
 	}
 
 	/**
@@ -67,17 +61,13 @@ public class NodeExpander {
 	 * @return the children obtained from expanding the specified node in the
 	 *         specified problem.
 	 */
-	public List<Node> expand(Node node, Problem problem) {
-		List<Node> successors = new ArrayList<>();
+	public List<Node<S, A>> expand(Node<S, A> node, Problem<S, A> problem) {
+		List<Node<S, A>> successors = new ArrayList<>();
 
-		ActionsFunction actionsFunction = problem.getActionsFunction();
-		ResultFunction resultFunction = problem.getResultFunction();
-		StepCostFunction stepCostFunction = problem.getStepCostFunction();
+		for (A action : problem.getActions(node.getState())) {
+			S successorState = problem.getResult(node.getState(), action);
 
-		for (Action action : actionsFunction.actions(node.getState())) {
-			Object successorState = resultFunction.result(node.getState(), action);
-
-			double stepCost = stepCostFunction.c(node.getState(), action, successorState);
+			double stepCost = problem.getStepCosts(node.getState(), action, successorState);
 			successors.add(createNode(successorState, node, action, stepCost));
 		}
 		notifyNodeListeners(node);
@@ -85,31 +75,31 @@ public class NodeExpander {
 	}
 
 	///////////////////////////////////////////////////////////////////////
-	// progress tracing
+	// progress tracking
 
 	/**
 	 * All node listeners added to this list get informed whenever a node is
 	 * expanded.
 	 */
-	private List<Consumer<Node>> nodeListeners = new ArrayList<>();
+	private List<Consumer<Node<S, A>>> nodeListeners = new ArrayList<>();
 
 	/**
 	 * Adds a listener to the list of node listeners. It is informed whenever a
 	 * node is expanded during search.
 	 */
-	public void addNodeListener(Consumer<Node> listener) {
+	public void addNodeListener(Consumer<Node<S, A>> listener) {
 		nodeListeners.add(listener);
 	}
 
 	/**
 	 * Removes a listener from the list of node listeners.
 	 */
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeListeners.remove(listener);
 	}
 
-	protected void notifyNodeListeners(Node node) {
-		for (Consumer<Node> listener : nodeListeners)
+	protected void notifyNodeListeners(Node<S, A> node) {
+		for (Consumer<Node<S, A>> listener : nodeListeners)
 			listener.accept(node);
 	}
 }

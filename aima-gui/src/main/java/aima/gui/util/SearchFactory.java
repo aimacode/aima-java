@@ -1,11 +1,8 @@
 package aima.gui.util;
 
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.qsearch.BidirectionalSearch;
-import aima.core.search.framework.qsearch.GraphSearch;
-import aima.core.search.framework.qsearch.GraphSearchBFS;
-import aima.core.search.framework.qsearch.QueueSearch;
-import aima.core.search.framework.qsearch.TreeSearch;
+import aima.core.search.framework.qsearch.*;
 import aima.core.search.informed.AStarSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
 import aima.core.search.informed.RecursiveBestFirstSearch;
@@ -15,7 +12,7 @@ import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.search.uninformed.UniformCostSearch;
 
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Useful factory for configuring search objects. Implemented as a singleton.
@@ -59,7 +56,7 @@ public class SearchFactory {
 	};
 
 	/** Provides access to the factory. Implemented with lazy instantiation. */
-	public static SearchFactory getInstance() {
+	public static <S, A> SearchFactory getInstance() {
 		if (instance == null)
 			instance = new SearchFactory();
 		return instance;
@@ -68,7 +65,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all search strategies, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int, Function<Object, Double>)}.
+	 * {@link #createSearch(int, int, ToDoubleFunction)}.
 	 */
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
@@ -79,7 +76,7 @@ public class SearchFactory {
 	/**
 	 * Returns the names of all queue search implementation names, which are supported by this
 	 * factory. The indices correspond to the parameter values of method
-	 * {@link #createSearch(int, int, Function<Object, Double>)}.
+	 * {@link #createSearch(int, int, ToDoubleFunction)}.
 	 */
 	public String[] getQSearchImplNames() {
 		return new String[] { "Tree Search", "Graph Search", "Graph Search BFS", "Bidirectional Search" };
@@ -94,49 +91,49 @@ public class SearchFactory {
 	 *            queue search implementation: e.g. {@link #TREE_SEARCH}, {@link #GRAPH_SEARCH}
 	 * 
 	 */
-	public SearchForActions createSearch(int strategy, int qSearchImpl, Function<Object, Double> hf) {
-		QueueSearch qs = null;
-		SearchForActions result = null;
+	public <S, A> SearchForActions<S, A> createSearch(int strategy, int qSearchImpl, ToDoubleFunction<Node<S, A>> h) {
+		QueueSearch<S, A> qs = null;
+		SearchForActions<S, A> result = null;
 		switch (qSearchImpl) {
 		case TREE_SEARCH:
-			qs = new TreeSearch();
+			qs = new TreeSearch<>();
 			break;
 		case GRAPH_SEARCH:
-			qs = new GraphSearch();
+			qs = new GraphSearch<>();
 			break;
 		case GRAPH_SEARCH_BFS:
-			qs = new GraphSearchBFS();
+			qs = new GraphSearchBFS<>();
 			break;
 		case BIDIRECTIONAL_SEARCH:
-			qs = new BidirectionalSearch();
+			qs = new BidirectionalSearch<>();
 		}
 		switch (strategy) {
 		case DF_SEARCH:
-			result = new DepthFirstSearch(qs);
+			result = new DepthFirstSearch<>(qs);
 			break;
 		case BF_SEARCH:
-			result = new BreadthFirstSearch(qs);
+			result = new BreadthFirstSearch<>(qs);
 			break;
 		case ID_SEARCH:
-			result = new IterativeDeepeningSearch();
+			result = new IterativeDeepeningSearch<>();
 			break;
 		case UC_SEARCH:
-			result = new UniformCostSearch(qs);
+			result = new UniformCostSearch<>(qs);
 			break;
 		case GBF_SEARCH:
-			result = new GreedyBestFirstSearch(qs, hf);
+			result = new GreedyBestFirstSearch<>(qs, h);
 			break;
 		case ASTAR_SEARCH:
-			result = new AStarSearch(qs, hf);
+			result = new AStarSearch<>(qs, h);
 			break;
 		case RBF_SEARCH:
-			result = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(hf));
+			result = new RecursiveBestFirstSearch<>(new AStarSearch.EvalFunction<>(h));
 			break;
 		case RBF_AL_SEARCH:
-			result = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(hf), true);
+			result = new RecursiveBestFirstSearch<>(new AStarSearch.EvalFunction<>(h), true);
 			break;
 		case HILL_SEARCH:
-			result = new HillClimbingSearch(hf);
+			result = new HillClimbingSearch<>(h);
 			break;
 		}
 		return result;

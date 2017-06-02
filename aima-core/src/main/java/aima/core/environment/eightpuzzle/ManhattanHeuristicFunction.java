@@ -1,25 +1,28 @@
 package aima.core.environment.eightpuzzle;
 
+import aima.core.agent.Action;
+import aima.core.search.framework.Node;
 import aima.core.util.datastructure.XYLocation;
 
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * @author Ravi Mohan
  * @author Ruediger Lunde
  * 
  */
-public class ManhattanHeuristicFunction implements Function<Object, Double> {
+public class ManhattanHeuristicFunction implements ToDoubleFunction<Node<EightPuzzleBoard, Action>> {
 
 	@Override
-	public Double apply(Object state) {
-		EightPuzzleBoard board = (EightPuzzleBoard) state;
+	public double applyAsDouble(Node<EightPuzzleBoard, Action> node) {
+		EightPuzzleBoard board = node.getState();
 		int retVal = 0;
 		for (int i = 1; i < 9; i++) {
 			XYLocation loc = board.getLocationOf(i);
 			retVal += evaluateManhattanDistanceOf(i, loc);
 		}
-		return (double) retVal;
+		return retVal;
 
 	}
 

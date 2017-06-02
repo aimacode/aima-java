@@ -45,18 +45,18 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ruediger Lunde
  * 
  */
-public class UniformCostSearch extends QueueBasedSearch {
+public class UniformCostSearch<S, A> extends QueueBasedSearch<S, A> {
 
 	/** Creates a UniformCostSearch instance using GraphSearch */
 	public UniformCostSearch() {
-		this(new GraphSearch());
+		this(new GraphSearch<>());
 	}
 
 	/**
 	 * Combines UniformCostSearch queue definition with the specified
 	 * search space exploration strategy.
 	 */
-	public UniformCostSearch(QueueSearch impl) {
+	public UniformCostSearch(QueueSearch<S, A> impl) {
 		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(Node::getPathCost)));
 	}
 }

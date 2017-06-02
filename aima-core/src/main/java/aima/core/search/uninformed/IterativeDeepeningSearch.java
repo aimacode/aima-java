@@ -34,18 +34,18 @@ import aima.core.util.CancelableThread;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class IterativeDeepeningSearch implements SearchForActions, SearchForStates {
+public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	private final NodeExpander nodeExpander;
+	private final NodeExpander<S, A> nodeExpander;
 	private final Metrics metrics;
 
 	public IterativeDeepeningSearch() {
-		this(new NodeExpander());
+		this(new NodeExpander<>());
 	}
 	
-	public IterativeDeepeningSearch(NodeExpander nodeExpander) {
+	public IterativeDeepeningSearch(NodeExpander<S, A> nodeExpander) {
 		this.nodeExpander = nodeExpander;
 		this.metrics = new Metrics();
 	}
@@ -54,30 +54,30 @@ public class IterativeDeepeningSearch implements SearchForActions, SearchForStat
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
-	public List<Action> findActions(Problem p) {
+	public List<A> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node node = findNode(p);
+		Node<S, A> node = findNode(p);
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 
 	@Override
-	public Object findState(Problem p) {
+	public S findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node node = findNode(p);
+		Node<S, A> node = findNode(p);
 		return node == null ? null : node.getState();
 	}
 	
 	// Java 8: Use Optional<Node> as return value...
-	private Node findNode(Problem p) {
+	private Node<S, A> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		// for depth = 0 to infinity do
 		for (int i = 0; !CancelableThread.currIsCanceled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
-			DepthLimitedSearch dls = new DepthLimitedSearch(i, nodeExpander);
-			Node result = dls.findNode(p);
+			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeExpander);
+			Node<S, A> result = dls.findNode(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
-			if (result != DepthLimitedSearch.CUTOFF_NODE)
+			if (!dls.isCutoffNode(result))
 				return result;
 		}
 		return null;
@@ -97,12 +97,12 @@ public class IterativeDeepeningSearch implements SearchForActions, SearchForStat
 	}
 
 	@Override
-	public void addNodeListener(Consumer<Node> listener)  {
+	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
 	}
 
 	@Override
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeExpander.removeNodeListener(listener);
 	}
 

@@ -5,12 +5,12 @@ import java.util.Properties;
 
 import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
-import aima.core.environment.eightpuzzle.EightPuzzleFunctionFactory;
-import aima.core.environment.eightpuzzle.EightPuzzleGoalTest;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
@@ -32,8 +32,8 @@ public class EightPuzzleDemo {
 	private static EightPuzzleBoard random1 =
 			new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
 
-	private static EightPuzzleBoard extreme =
-			new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
+//	private static EightPuzzleBoard extreme =
+//			new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
 
 	public static void main(String[] args) {
 		eightPuzzleDLSDemo();
@@ -48,10 +48,11 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleDLSDemo() {
 		System.out.println("\nEightPuzzleDemo recursive DLS (9) -->");
 		try {
-			Problem problem = new Problem(boardWithThreeMoveSolution, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new DepthLimitedSearch(9);
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new DepthLimitedSearch<>(9);
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -63,10 +64,11 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleIDLSDemo() {
 		System.out.println("\nEightPuzzleDemo Iterative DLS -->");
 		try {
-			Problem problem = new Problem(random1, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new IterativeDeepeningSearch();
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new IterativeDeepeningSearch<>();
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -78,11 +80,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleGreedyBestFirstDemo() {
 		System.out.println("\nEightPuzzleDemo Greedy Best First Search (MisplacedTileHeursitic)-->");
 		try {
-			Problem problem = new Problem(boardWithThreeMoveSolution, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new GreedyBestFirstSearch(new GraphSearch(),
-					new MisplacedTileHeuristicFunction());
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
+					(new GraphSearch<>(), new MisplacedTileHeuristicFunction());
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -94,10 +97,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleGreedyBestFirstManhattanDemo() {
 		System.out.println("\nEightPuzzleDemo Greedy Best First Search (ManhattanHeursitic)-->");
 		try {
-			Problem problem = new Problem(boardWithThreeMoveSolution, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction());
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
+					(new GraphSearch<>(), new ManhattanHeuristicFunction());
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -109,10 +114,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleAStarDemo() {
 		System.out.println("\nEightPuzzleDemo AStar Search (MisplacedTileHeursitic)-->");
 		try {
-			Problem problem = new Problem(random1, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction());
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
+					(new GraphSearch<>(), new MisplacedTileHeuristicFunction());
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -124,10 +131,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleSimulatedAnnealingDemo() {
 		System.out.println("\nEightPuzzleDemo Simulated Annealing  Search -->");
 		try {
-			Problem problem = new Problem(random1, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(new ManhattanHeuristicFunction());
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
+					(new ManhattanHeuristicFunction());
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Search Outcome=" + search.getOutcome());
 			System.out.println("Final State=\n" + search.getLastSearchState());
@@ -140,10 +149,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleAStarManhattanDemo() {
 		System.out.println("\nEightPuzzleDemo AStar Search (ManhattanHeursitic)-->");
 		try {
-			Problem problem = new Problem(random1, EightPuzzleFunctionFactory.getActionsFunction(),
-					EightPuzzleFunctionFactory.getResultFunction(), new EightPuzzleGoalTest());
-			SearchForActions search = new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction());
-			SearchAgent agent = new SearchAgent(problem, search);
+			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
+					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
+					EightPuzzleFunctions::testGoal);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
+					(new GraphSearch<>(), new ManhattanHeuristicFunction());
+			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {

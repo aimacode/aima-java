@@ -1,40 +1,39 @@
 package aima.test.core.unit.search.uninformed;
 
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.environment.nqueens.NQueensGoalTest;
+import aima.core.environment.nqueens.NQueensFunctions;
+import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.List;
 
 public class BreadthFirstSearchTest {
 
 	@Test
 	public void testBreadthFirstSuccesfulSearch() throws Exception {
-		Problem problem = new Problem(new NQueensBoard(8), NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-		SearchForActions search = new BreadthFirstSearch(new TreeSearch());
-		SearchAgent agent = new SearchAgent(problem, search);
-		List<Action> actions = agent.getActions();
+		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
+				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+		SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
+		List<QueenAction> actions = search.findActions(problem);
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("1665", agent.getInstrumentation().getProperty("nodesExpanded"));
-		Assert.assertEquals("8.0", agent.getInstrumentation().getProperty("pathCost"));
+		Assert.assertEquals("1665", search.getMetrics().get("nodesExpanded"));
+		Assert.assertEquals("8.0", search.getMetrics().get("pathCost"));
 	}
 
 	@Test
 	public void testBreadthFirstUnSuccesfulSearch() throws Exception {
-		Problem problem = new Problem(new NQueensBoard(3), NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-		SearchForActions search = new BreadthFirstSearch(new TreeSearch());
-		SearchAgent agent = new SearchAgent(problem, search);
+		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(3),
+				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+		SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
+		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 		List<Action> actions = agent.getActions();
 		Assert.assertEquals(0, actions.size());
 		Assert.assertEquals("6", agent.getInstrumentation().getProperty("nodesExpanded"));
@@ -44,7 +43,7 @@ public class BreadthFirstSearchTest {
 	//
 	// PRIVATE METHODS
 	//
-	private void assertCorrectPlacement(List<Action> actions) {
+	private void assertCorrectPlacement(List<QueenAction> actions) {
 		Assert.assertEquals(8, actions.size());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 0 , 0 ) ]", actions.get(0).toString());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 1 , 4 ) ]", actions.get(1).toString());

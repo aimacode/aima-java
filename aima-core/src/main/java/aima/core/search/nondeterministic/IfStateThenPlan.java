@@ -13,9 +13,6 @@ public class IfStateThenPlan {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param state
-	 * @param plan
 	 */
 	public IfStateThenPlan(Object state, Plan plan) {
 		this.state = state;
@@ -24,8 +21,7 @@ public class IfStateThenPlan {
 
 	/**
 	 * Uses this if-state-then-plan return a result based on the given state
-	 * 
-	 * @param state
+	 *
 	 * @return the plan if the given state matches, null otherwise.
 	 */
 	public Plan ifStateMatches(Object state) {
@@ -43,11 +39,6 @@ public class IfStateThenPlan {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("if ");
-		s.append(this.state);
-		s.append(" then ");
-		s.append(this.plan);
-		return s.toString();
+		return "if " + state + " then " + plan;
 	}
 }

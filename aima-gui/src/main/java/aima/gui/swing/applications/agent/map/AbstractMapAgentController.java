@@ -1,17 +1,19 @@
 package aima.gui.swing.applications.agent.map;
 
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.function.Function;
-
 import aima.core.agent.Agent;
 import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.Scenario;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.MessageLogger;
 import aima.gui.swing.framework.SimulationThread;
 import aima.gui.util.SearchFactory;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Provides a useful base class for agent application controller implementations
@@ -30,13 +32,13 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	 */
 	protected List<String> destinations;
 	/** Search method to be used. */
-	protected SearchForActions search;
+	protected SearchForActions<String, MoveToAction> search;
 	/** Heuristic function to be used when performing informed search. */
-	protected Function<Object, Double> heuristic;
+	protected ToDoubleFunction<Node<String, MoveToAction>> heuristic;
 	/** Is the scenario up to date? */
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
-	protected long sleepTime = 500l;
+	protected long sleepTime = 500;
 
 	/** Clears all tracks and prepares simulation if necessary. */
 	@Override
@@ -59,7 +61,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 				.getIndex(MapAgentFrame.DESTINATION_SEL));
 		prepareView();
 		heuristic = createHeuristic(state.getIndex(MapAgentFrame.HEURISTIC_SEL));
-		search = SearchFactory.getInstance().createSearch(
+		search = SearchFactory.<String, MoveToAction>getInstance().createSearch(
 				state.getIndex(MapAgentFrame.SEARCH_SEL),
 				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 		isPrepared = true;
@@ -117,7 +119,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		} else if (frame.simulationPaused()){
 			frame.setStatus("Task paused.");
 		} else {
-			StringBuffer statusMsg = new StringBuffer();
+			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
 			List<Agent> agents = scenario.getEnv().getAgents();
 			if (agents.size() == 1) {
@@ -125,8 +127,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 						agents.get(0));
 				if (travelDistance != null) {
 					DecimalFormat f = new DecimalFormat("#0.0");
-					statusMsg.append("; travel distance: "
-							+ f.format(travelDistance));
+					statusMsg.append("; travel distance: ").append(f.format(travelDistance));
 				}
 			}
 			statusMsg.append(".");
@@ -152,7 +153,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 	/**
 	 * Factory method, responsible for creating a heuristic function.
 	 */
-	abstract protected Function<Object, Double> createHeuristic(int heuIdx);
+	abstract protected ToDoubleFunction<Node<String, MoveToAction>> createHeuristic(int heuIdx);
 
 	/**
 	 * Primitive operation, responsible for creating new agents and adding

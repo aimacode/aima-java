@@ -44,8 +44,9 @@ import java.util.Set;
  * Actions to perform, whereas a nondeterministic search must return a Plan.
  * 
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
-public class AndOrSearch {
+public class AndOrSearch<S, A> {
 
 	protected int expandedNodes;
 
@@ -63,14 +64,13 @@ public class AndOrSearch {
 	 *   OR-SEARCH(problem.INITIAL-STATE, problem, [])
 	 * </code>
 	 * </pre>
-	 * 
-	 * @param problem
+	 *
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan search(NondeterministicProblem problem) {
-		this.expandedNodes = 0;
+	public Plan search(NondeterministicProblem<S, A> problem) {
+		expandedNodes = 0;
 		// OR-SEARCH(problem.INITIAL-STATE, problem, [])
-		return this.orSearch(problem.getInitialState(), problem, new Path());
+		return orSearch(problem.getInitialState(), problem, new Path());
 	}
 
 	/**
@@ -94,12 +94,12 @@ public class AndOrSearch {
 	 * @param path
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan orSearch(Object state, NondeterministicProblem problem,
+	public Plan orSearch(S state, NondeterministicProblem<S, A> problem,
 			Path path) {
 		// do metrics
 		this.expandedNodes++;
 		// if problem.GOAL-TEST(state) then return the empty plan
-		if (problem.isGoalState(state)) {
+		if (problem.testGoal(state)) {
 			return new Plan();
 		}
 		// if state is on path then return failure
@@ -107,10 +107,10 @@ public class AndOrSearch {
 			return null;
 		}
 		// for each action in problem.ACTIONS(state) do
-		for (Action action : problem.getActionsFunction().actions(state)) {
+		for (A action : problem.getActionsFn().apply(state)) {
 			// plan <- AND-SEARCH(RESULTS(state, action), problem, [state|path])
-			Plan plan = this.andSearch(
-					problem.getResultsFunction().results(state, action),
+			Plan plan = andSearch(
+					problem.getResultsFn().results(state, action),
 					problem, path.prepend(state));
 			// if plan != failure then return [action|plan]
 			if (plan != null) {
@@ -140,7 +140,7 @@ public class AndOrSearch {
 	 * @param path
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan andSearch(Set<Object> states, NondeterministicProblem problem,
+	public Plan andSearch(Set<S> states, NondeterministicProblem<S, A> problem,
 			Path path) {
 		// do metrics, setup
 		this.expandedNodes++;
@@ -149,7 +149,7 @@ public class AndOrSearch {
 		// for each s_i in states do
 		for (int i = 0; i < _states.length; i++) {
 			// plan_i <- OR-SEARCH(s_i, problem, path)
-			plans[i] = this.orSearch(_states[i], problem, path);
+			plans[i] = this.orSearch((S) _states[i], problem, path);
 			// if plan_i = failure then return failure
 			if (plans[i] == null) {
 				return null;

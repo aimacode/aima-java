@@ -1,5 +1,6 @@
 package aima.core.search.framework;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -12,28 +13,31 @@ import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
-public class SearchAgent extends AbstractAgent {
+public class SearchAgent<S, A extends Action> extends AbstractAgent {
 	protected List<Action> actionList;
 
 	private Iterator<Action> actionIterator;
 
 	private Metrics searchMetrics;
 
-	public SearchAgent(Problem p, SearchForActions search) throws Exception {
-		actionList = search.findActions(p);
+	public SearchAgent(Problem<S, A> p, SearchForActions<S, A> search) throws Exception {
+		actionList = new ArrayList<>();
+		actionList.addAll(search.findActions(p));
+		if (actionList.size() == 1 && actionList.get(0) == null)
+			actionList.set(0, NoOpAction.NO_OP); // search uses null to represent the stop command.
+
 		actionIterator = actionList.iterator();
 		searchMetrics = search.getMetrics();
 	}
 
 	@Override
 	public Action execute(Percept p) {
-		if (actionIterator.hasNext()) {
+		if (actionIterator.hasNext())
 			return actionIterator.next();
-		} else {
-			return NoOpAction.NO_OP;
-		}
+		return NoOpAction.NO_OP; // no success
 	}
 
 	public boolean isDone() {
@@ -46,9 +50,7 @@ public class SearchAgent extends AbstractAgent {
 
 	public Properties getInstrumentation() {
 		Properties retVal = new Properties();
-		Iterator<String> iter = searchMetrics.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
+		for (String key : searchMetrics.keySet()) {
 			String value = searchMetrics.get(key);
 			retVal.setProperty(key, value);
 		}

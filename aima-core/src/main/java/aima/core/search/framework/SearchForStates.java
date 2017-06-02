@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * @author Ruediger Lunde
  *
  */
-public interface SearchForStates {
+public interface SearchForStates<S, A> {
 	/**
 	 * Returns a state which is might be but not necessary is a goal state of
 	 * the problem.
@@ -23,7 +23,7 @@ public interface SearchForStates {
 	 * 
 	 * @return a state.
 	 */
-	Object findState(Problem p);
+	S findState(Problem<S, A> p);
 	
 	/**
 	 * Returns all the metrics of the search.
@@ -34,10 +34,10 @@ public interface SearchForStates {
 	 * Adds a listener to the list of node listeners. It is informed whenever a
 	 * node is expanded during search.
 	 */
-	void addNodeListener(Consumer<Node> listener);
+	void addNodeListener(Consumer<Node<S, A>> listener);
 
 	/**
 	 * Removes a listener from the list of node listeners.
 	 */
-	boolean removeNodeListener(Consumer<Node> listener);
+	boolean removeNodeListener(Consumer<Node<S, A>> listener);
 }

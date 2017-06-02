@@ -5,7 +5,8 @@ import java.util.List;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.MapAgent;
-import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapFunctions;
+import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.informed.HeuristicFunctionFactory;
 import aima.gui.util.SearchFactory;
@@ -74,31 +75,22 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	}
 
 	/**
-	 * Factory method which creates a search strategy based on the current
-	 * parameter settings. Here, a listener is added to the node expander to
-	 * visualize progress during search. A dummy heuristic function is used
-	 * because the agent will replace it anyway.
-	 */
-	@Override
-	protected SearchForActions createSearch(List<String> locations) {
-		SearchForActions result = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
-				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), state -> 0.0);
-		result.addNodeListener(node -> visitedStates.add(node.getState()));
-		visitedStates.clear();
-		return result;
-	}
-
-	/**
 	 * Factory method which creates a new agent based on the current parameter
 	 * settings. The agent is provided with a heuristic function factory to
-	 * adapt to different goals.
+	 * adapt to different goals. A node listener is used to visualize search space exploration.
 	 */
-	protected Agent createAgent(SearchForActions search, List<String> locations) {
-		HeuristicFunctionFactory hfFactory;
+	protected Agent createAgent(List<String> locations) {
+		SearchForActions<String, MoveToAction> search = SearchFactory.getInstance().createSearch
+				(simPaneCtrl.getParamValueIndex(PARAM_SEARCH), simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL),
+						state -> 0.0);
+		search.addNodeListener(node -> visitedStates.add(node.getState()));
+		visitedStates.clear();
+
+		HeuristicFunctionFactory<String, MoveToAction> hfFactory;
 		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
-			hfFactory = (goal) -> (state -> 0.0);
+			hfFactory = goal -> (node -> 0.0);
 		else
-			hfFactory = (goal) -> MapFunctionFactory.getSLDHeuristicFunction(goal, map);
+			hfFactory = goal -> MapFunctions.createSLDHeuristicFunction(goal, map);
 		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hfFactory);
 	}
 

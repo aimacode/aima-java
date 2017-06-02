@@ -3,17 +3,19 @@ package aimax.osm.gui.fx.applications;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.*;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.MapFunctionFactory;
+import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
+import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -77,18 +79,16 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	 * settings.
 	 */
 	protected Agent createAgent(List<String> locations) {
-		Function<Object, Double> heuristic;
-		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
-		case 0:
+		ToDoubleFunction<String> heuristic;
+		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
 			heuristic = state -> 0.0;
-			break;
-		default:
-			heuristic = MapFunctionFactory.getSLDHeuristicFunction(locations.get(1), map);
-		}
-		Problem p = new BidirectionalMapProblem(map, null, locations.get(1));
-		OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
-				p.getStepCostFunction());
-		return new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+		else
+			heuristic = state -> MapFunctions.getSLD(state, locations.get(1), map);
+
+		Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locations.get(1));
+		OnlineSearchProblem<String, MoveToAction> osp = new GeneralProblem<>
+				(null, p::getActions, null, p::testGoal, p::getStepCosts);
+		return new LRTAStarAgent<>(osp, MapFunctions.createPerceptToStateFunction(), heuristic);
 	}
 	
 	/**
@@ -179,7 +179,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 
 	// helper classes...
 
-	class TrackUpdater implements EnvironmentView {
+	private class TrackUpdater implements EnvironmentView {
 		int actionCounter = 0;
 
 		@Override

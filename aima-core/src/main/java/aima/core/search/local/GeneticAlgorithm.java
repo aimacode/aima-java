@@ -64,7 +64,7 @@ public class GeneticAlgorithm<A> {
 	protected double mutationProbability;
 	
 	protected Random random;
-	private List<ProgressTracer<A>> progressTracers = new ArrayList<ProgressTracer<A>>();
+	private List<ProgressTracker<A>> progressTrackers = new ArrayList<ProgressTracker<A>>();
 
 	public GeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability) {
 		this(individualLength, finiteAlphabet, mutationProbability, new Random());
@@ -81,8 +81,8 @@ public class GeneticAlgorithm<A> {
 	}
 
 	/** Progress tracers can be used to display progress information. */
-	public void addProgressTracer(ProgressTracer<A> pTracer) {
-		progressTracers.add(pTracer);
+	public void addProgressTracer(ProgressTracker<A> pTracer) {
+		progressTrackers.add(pTracer);
 	}
 	
 	/**
@@ -91,11 +91,7 @@ public class GeneticAlgorithm<A> {
 	 */
 	public Individual<A> geneticAlgorithm(Collection<Individual<A>> initPopulation,
 			FitnessFunction<A> fitnessFn, final int maxIterations) {
-		GoalTest goalTest = new GoalTest() {
-			@Override
-			public boolean isGoalState(Object state) {
-				return getIterations() >= maxIterations;
-			}};
+		GoalTest<Individual<A>> goalTest = state -> getIterations() >= maxIterations;
 		return geneticAlgorithm(initPopulation, fitnessFn, goalTest, 0L);
 	}
 	
@@ -104,7 +100,7 @@ public class GeneticAlgorithm<A> {
 	 * specified population, according to the specified FITNESS-FN and goal
 	 * test.
 	 * 
-	 * @param population
+	 * @param initPopulation
 	 *            a set of individuals
 	 * @param fitnessFn
 	 *            a function that measures the fitness of an individual
@@ -122,7 +118,7 @@ public class GeneticAlgorithm<A> {
 	// inputs: population, a set of individuals
 	// FITNESS-FN, a function that measures the fitness of an individual
 	public Individual<A> geneticAlgorithm(Collection<Individual<A>> initPopulation, FitnessFunction<A> fitnessFn,
-			GoalTest goalTest, long maxTimeMilliseconds) {
+			GoalTest<Individual<A>> goalTest, long maxTimeMilliseconds) {
 		Individual<A> bestIndividual = null;
 
 		// Create a local copy of the population to work with
@@ -146,9 +142,9 @@ public class GeneticAlgorithm<A> {
 				break;
 			if (CancelableThread.currIsCanceled())
 				break;
-		} while (!goalTest.isGoalState(bestIndividual));
+		} while (!goalTest.test(bestIndividual));
 
-		notifyProgressTracers(itCount, population);
+		notifyProgressTrackers(itCount, population);
 		// return the best individual in population, according to FITNESS-FN
 		return bestIndividual;
 	}
@@ -252,7 +248,7 @@ public class GeneticAlgorithm<A> {
 			// add child to new_population
 			newPopulation.add(child);
 		}
-		notifyProgressTracers(getIterations(), population);
+		notifyProgressTrackers(getIterations(), population);
 		return newPopulation;
 	}
 
@@ -297,8 +293,7 @@ public class GeneticAlgorithm<A> {
 		childRepresentation.addAll(x.getRepresentation().subList(0, c));
 		childRepresentation.addAll(y.getRepresentation().subList(c, individualLength));
 
-		Individual<A> child = new Individual<A>(childRepresentation);
-		return child;
+		return new Individual<A>(childRepresentation);
 	}
 
 	protected Individual<A> mutate(Individual<A> child) {
@@ -309,10 +304,8 @@ public class GeneticAlgorithm<A> {
 
 		mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
 
-		Individual<A> mutatedChild = new Individual<A>(mutatedRepresentation);
-
-		return mutatedChild;
-	}
+		return new Individual<A>(mutatedRepresentation);
+}
 
 	protected int randomOffset(int length) {
 		return random.nextInt(length);
@@ -334,9 +327,9 @@ public class GeneticAlgorithm<A> {
 		}
 	}
 	
-	private void notifyProgressTracers(int itCount, Collection<Individual<A>> generation) {
-		for (ProgressTracer<A> tracer : progressTracers)
-			tracer.traceProgress(getIterations(), generation);
+	private void notifyProgressTrackers(int itCount, Collection<Individual<A>> generation) {
+		for (ProgressTracker<A> tracer : progressTrackers)
+			tracer.trackProgress(getIterations(), generation);
 	}
 	
 	/**
@@ -344,7 +337,7 @@ public class GeneticAlgorithm<A> {
 	 * 
 	 * @author Ruediger Lunde
 	 */
-	public interface ProgressTracer<A> {
-		void traceProgress(int itCount, Collection<Individual<A>> population);
+	public interface ProgressTracker<A> {
+		void trackProgress(int itCount, Collection<Individual<A>> population);
 	}
 }

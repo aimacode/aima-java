@@ -1,31 +1,30 @@
 package aima.test.core.unit.search.uninformed;
 
-import java.util.List;
-
+import aima.core.agent.Action;
+import aima.core.environment.nqueens.NQueensBoard;
+import aima.core.environment.nqueens.NQueensFunctions;
+import aima.core.environment.nqueens.QueenAction;
+import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
+import aima.core.search.framework.problem.Problem;
+import aima.core.search.uninformed.IterativeDeepeningSearch;
 import org.junit.Assert;
 import org.junit.Test;
 
-import aima.core.agent.Action;
-import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.uninformed.IterativeDeepeningSearch;
+import java.util.List;
 
 public class IterativeDeepeningSearchTest {
 
 	@Test
 	public void testIterativeDeepeningSearch() {
 		try {
-			Problem problem = new Problem(new NQueensBoard(8), NQueensFunctionFactory.getIActionsFunction(),
-					NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-			SearchForActions search = new IterativeDeepeningSearch();
-			SearchAgent agent = new SearchAgent(problem, search);
-			List<Action> actions = agent.getActions();
+			Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
+					NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+			SearchForActions<NQueensBoard, QueenAction> search = new IterativeDeepeningSearch<>();
+			List<QueenAction> actions = search.findActions(problem);
 			assertCorrectPlacement(actions);
-			Assert.assertEquals("3656", agent.getInstrumentation().getProperty("nodesExpanded"));
+			Assert.assertEquals("3656", search.getMetrics().get("nodesExpanded"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,7 +32,7 @@ public class IterativeDeepeningSearchTest {
 		}
 	}
 
-	private void assertCorrectPlacement(List<Action> actions) {
+	private void assertCorrectPlacement(List<QueenAction> actions) {
 		Assert.assertEquals(8, actions.size());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 0 , 0 ) ]", actions.get(0).toString());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 1 , 4 ) ]", actions.get(1).toString());

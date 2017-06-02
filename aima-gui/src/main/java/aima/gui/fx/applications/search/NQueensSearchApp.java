@@ -48,7 +48,7 @@ public class NQueensSearchApp extends IntegrableApplication {
 
 	public NQueensSearchApp() {
 		experiment = new NQueensSearchDemo();
-		experiment.addProgressTracer(this::updateStateView);
+		experiment.addProgressTracker(this::updateStateView);
 	}
 
 	@Override

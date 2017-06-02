@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
@@ -17,8 +17,10 @@ import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -78,6 +80,7 @@ import aima.core.util.SetOps;
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class HybridWumpusAgent extends AbstractAgent {
 
@@ -87,7 +90,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 	// plan, an action sequence, initially empty
-	private Queue<Action> plan = new LinkedList<Action>(); // FIFOQueue
+	private Queue<Action> plan = new LinkedList<>(); // FIFOQueue
 
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
@@ -113,7 +116,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		// if ASK(KB, Glitter<sup>t</sup>) = true then
 		if (kb.askGlitter(t)) {
 			// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
-			Set<Room> goals = new LinkedHashSet<Room>();
+			Set<Room> goals = new LinkedHashSet<>();
 			goals.add(new Room(1, 1));
 
 			plan.add(new Grab());
@@ -150,7 +153,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		// if plan is empty then
 		if (plan.isEmpty()) {
 			// plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
-			Set<Room> start = new LinkedHashSet<Room>();
+			Set<Room> start = new LinkedHashSet<>();
 			start.add(new Room(1, 1));
 			plan.addAll(planRoute(current, start, safe));
 			plan.add(new Climb());
@@ -183,7 +186,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		// Every square represent 4 possible positions for the agent, it could
 		// be in different orientations. For every square in allowed and goals
 		// sets we add 4 squares.
-		Set<AgentPosition> allowedPositions = new LinkedHashSet<AgentPosition>();
+		Set<AgentPosition> allowedPositions = new LinkedHashSet<>();
 		for (Room allowedRoom : allowed) {
 			int x = allowedRoom.getX();
 			int y = allowedRoom.getY();
@@ -193,7 +196,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_NORTH));
 			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_SOUTH));
 		}
-		final Set<AgentPosition> goalPositions = new LinkedHashSet<AgentPosition>();
+		final Set<AgentPosition> goalPositions = new LinkedHashSet<>();
 		for (Room goalRoom : goals) {
 			int x = goalRoom.getX();
 			int y = goalRoom.getY();
@@ -206,34 +209,25 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedPositions);
 
-		GoalTest goalTest = new GoalTest() {
+		GoalTest<AgentPosition> goalTest = goalPositions::contains;
 
-			@Override
-			public boolean isGoalState(Object state) {
-				if (goalPositions.contains(state)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		};
+		Problem<AgentPosition, Action> problem = new GeneralProblem<>(current,
+				WumpusFunctionFunctions.createActionsFunction(cave),
+				WumpusFunctionFunctions.createResultFunction(), goalTest);
 
-		Problem problem = new Problem(current, WumpusFunctionFactory.getActionsFunction(cave),
-				WumpusFunctionFactory.getResultFunction(), goalTest);
+		ToDoubleFunction<Node<AgentPosition, Action>> h = new ManhattanHeuristicFunction(goals);
 
-		Function<Object, Double> hf = new ManhattanHeuristicFunction(goals);
-
-		SearchForActions search = new AStarSearch(new GraphSearch(), hf);
-		SearchAgent agent = null;
+		SearchForActions<AgentPosition, Action> search = new AStarSearch<>(new GraphSearch<>(), h);
+		SearchAgent<AgentPosition, Action> agent;
 		List<Action> actions = null;
 		try {
-			agent = new SearchAgent(problem, search);
+			agent = new SearchAgent<>(problem, search);
 			actions = agent.getActions();
 			// Search agent can return a NoOp if already at goal,
 			// in the context of this agent we will just return
 			// no actions.
 			if (actions.size() == 1 && actions.get(0).isNoOp()) {
-				actions = new ArrayList<Action>();
+				actions = new ArrayList<>();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -257,7 +251,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 */
 	public List<Action> planShot(AgentPosition current, Set<Room> possibleWumpus, Set<Room> allowed) {
 
-		Set<AgentPosition> shootingPositions = new LinkedHashSet<AgentPosition>();
+		Set<AgentPosition> shootingPositions = new LinkedHashSet<>();
 
 		for (Room p : possibleWumpus) {
 			int x = p.getX();
@@ -288,7 +282,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		}
 
 		Iterator<AgentPosition> it = shootingPositions.iterator();
-		Set<Room> shootingPositionsArray = new LinkedHashSet<Room>();
+		Set<Room> shootingPositionsArray = new LinkedHashSet<>();
 		while (it.hasNext()) {
 			AgentPosition tmp = it.next();
 			shootingPositionsArray.add(new Room(tmp.getX(), tmp.getY()));

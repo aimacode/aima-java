@@ -1,5 +1,9 @@
 package aima.core.search.framework.problem;
 
+import aima.core.search.framework.Node;
+
+import java.util.List;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 66.<br>
  * <br>
@@ -19,131 +23,53 @@ package aima.core.search.framework.problem;
  * performance measure. The <b>step cost</b> of taking action a in state s to
  * reach state s' is denoted by c(s,a,s')</li>
  * </ul>
- * 
- * @author Ravi Mohan
- * @author Ciaran O'Reilly
+ *
+ * This implementation provides an additional solution test. It can be used to
+ * compute more than one solution or to formulate acceptance criteria for the
+ * sequence of actions.
+ *
+ * @param <S> the type used to represent states
+ * @param <A> the type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  * @author Mike Stampone
  */
-public class Problem {
+public interface Problem<S, A> extends OnlineSearchProblem<S, A> {
 
-	protected Object initialState;
+    /**
+     * Returns the initial state of the agent.
+     */
+    S getInitialState();
 
-	protected ActionsFunction actionsFunction;
+    /**
+     * Returns the description of the possible actions available to the agent.
+     */
+    List<A> getActions(S state);
 
-	protected ResultFunction resultFunction;
+    /**
+     * Returns the description of what each action does.
+     */
+    S getResult(S state, A action);
 
-	protected GoalTest goalTest;
+    /**
+     * Determines whether a given state is a goal state.
+     */
+    boolean testGoal(S state);
 
-	protected StepCostFunction stepCostFunction;
+    /**
+     * Returns the <b>step cost</b> of taking action <code>action</code> in state <code>state</code> to reach state
+     * <code>stateDelta</code> denoted by c(s, a, s').
+     */
+    double getStepCosts(S state, A action, S stateDelta);
 
-	/**
-	 * Constructs a problem with the specified components, and a default step
-	 * cost function (i.e. 1 per step).
-	 * 
-	 * @param initialState
-	 *            the initial state that the agent starts in.
-	 * @param actionsFunction
-	 *            a description of the possible actions available to the agent.
-	 * @param resultFunction
-	 *            a description of what each action does; the formal name for
-	 *            this is the transition model, specified by a function
-	 *            RESULT(s, a) that returns the state that results from doing
-	 *            action a in state s.
-	 * @param goalTest
-	 *            test determines whether a given state is a goal state.
-	 */
-	public Problem(Object initialState, ActionsFunction actionsFunction,
-			ResultFunction resultFunction, GoalTest goalTest) {
-		this(initialState, actionsFunction, resultFunction, goalTest, StepCostFunction.createDefault());
-	}
-
-	/**
-	 * Constructs a problem with the specified components, which includes a step
-	 * cost function.
-	 * 
-	 * @param initialState
-	 *            the initial state of the agent.
-	 * @param actionsFunction
-	 *            a description of the possible actions available to the agent.
-	 * @param resultFunction
-	 *            a description of what each action does; the formal name for
-	 *            this is the transition model, specified by a function
-	 *            RESULT(s, a) that returns the state that results from doing
-	 *            action a in state s.
-	 * @param goalTest
-	 *            test determines whether a given state is a goal state.
-	 * @param stepCostFunction
-	 *            a path cost function that assigns a numeric cost to each path.
-	 *            The problem-solving-agent chooses a cost function that
-	 *            reflects its own performance measure.
-	 */
-	public Problem(Object initialState, ActionsFunction actionsFunction,
-			ResultFunction resultFunction, GoalTest goalTest,
-			StepCostFunction stepCostFunction) {
-		this.initialState = initialState;
-		this.actionsFunction = actionsFunction;
-		this.resultFunction = resultFunction;
-		this.goalTest = goalTest;
-		this.stepCostFunction = stepCostFunction;
-	}
-
-	/**
-	 * Returns the initial state of the agent.
-	 * 
-	 * @return the initial state of the agent.
-	 */
-	public Object getInitialState() {
-		return initialState;
-	}
-
-	/**
-	 * Returns <code>true</code> if the given state is a goal state.
-	 * 
-	 * @return <code>true</code> if the given state is a goal state.
-	 */
-	public boolean isGoalState(Object state) {
-		return goalTest.isGoalState(state);
-	}
-
-	/**
-	 * Returns the goal test.
-	 * 
-	 * @return the goal test.
-	 */
-	public GoalTest getGoalTest() {
-		return goalTest;
-	}
-
-	/**
-	 * Returns the description of the possible actions available to the agent.
-	 * 
-	 * @return the description of the possible actions available to the agent.
-	 */
-	public ActionsFunction getActionsFunction() {
-		return actionsFunction;
-	}
-
-	/**
-	 * Returns the description of what each action does.
-	 * 
-	 * @return the description of what each action does.
-	 */
-	public ResultFunction getResultFunction() {
-		return resultFunction;
-	}
-
-	/**
-	 * Returns the path cost function.
-	 * 
-	 * @return the path cost function.
-	 */
-	public StepCostFunction getStepCostFunction() {
-		return stepCostFunction;
-	}
-
-	//
-	// PROTECTED METHODS
-	//
-	protected Problem() {
-	}
+    /**
+     * Tests whether a node represents an acceptable solution. The default implementation
+     * delegates the check to the goal test. Other implementations could make use of the additional
+     * information given by the node (e.g. the sequence of actions leading to the node). A
+     * solution tester implementation could for example always return false and internally collect
+     * the paths of all nodes whose state passes the goal test.
+     */
+    default boolean testSolution(Node<S, A> node) {
+        return testGoal(node.getState());
+    }
 }

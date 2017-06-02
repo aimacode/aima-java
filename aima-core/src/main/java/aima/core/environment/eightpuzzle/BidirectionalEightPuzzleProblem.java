@@ -1,32 +1,34 @@
 package aima.core.environment.eightpuzzle;
 
+import aima.core.agent.Action;
 import aima.core.search.framework.problem.BidirectionalProblem;
-import aima.core.search.framework.problem.DefaultGoalTest;
+import aima.core.search.framework.problem.GeneralProblem;
+import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 
 /**
  * @author Ruediger Lunde
  * 
  */
-public class BidirectionalEightPuzzleProblem extends Problem implements BidirectionalProblem {
+public class BidirectionalEightPuzzleProblem extends GeneralProblem<EightPuzzleBoard, Action>
+		implements BidirectionalProblem<EightPuzzleBoard, Action> {
 
-	Problem reverseProblem;
+	private Problem<EightPuzzleBoard, Action> reverseProblem;
 
 	public BidirectionalEightPuzzleProblem(EightPuzzleBoard initialState) {
-		super(initialState, EightPuzzleFunctionFactory.getActionsFunction(),
-				EightPuzzleFunctionFactory.getResultFunction(),
-				new DefaultGoalTest(new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 })));
+		super(initialState, EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
+				GoalTest.isEqual(new EightPuzzleBoard(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8})));
 
-		reverseProblem = new Problem(new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 }),
-				EightPuzzleFunctionFactory.getActionsFunction(), EightPuzzleFunctionFactory.getResultFunction(),
-				new DefaultGoalTest(initialState));
+		reverseProblem = new GeneralProblem<>(new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 }),
+				EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
+				GoalTest.isEqual(initialState));
 	}
 
-	public Problem getOriginalProblem() {
+	public Problem<EightPuzzleBoard, Action> getOriginalProblem() {
 		return this;
 	}
 
-	public Problem getReverseProblem() {
+	public Problem<EightPuzzleBoard, Action> getReverseProblem() {
 		return reverseProblem;
 	}
 }

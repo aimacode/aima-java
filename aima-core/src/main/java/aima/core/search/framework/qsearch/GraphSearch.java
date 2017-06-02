@@ -39,15 +39,15 @@ import aima.core.search.framework.problem.Problem;
  * 
  * @author Ruediger Lunde
  */
-public class GraphSearch extends QueueSearch {
+public class GraphSearch<S, A> extends QueueSearch<S, A> {
 
-	private Set<Object> explored = new HashSet<>();
+	private Set<S> explored = new HashSet<>();
 
 	public GraphSearch() {
-		this(new NodeExpander());
+		this(new NodeExpander<>());
 	}
 
-	public GraphSearch(NodeExpander nodeExpander) {
+	public GraphSearch(NodeExpander<S, A> nodeExpander) {
 		super(nodeExpander);
 	}
 
@@ -56,7 +56,7 @@ public class GraphSearch extends QueueSearch {
 	 * {@link QueueSearch}.
 	 */
 	@Override
-	public Node findNode(Problem problem, Queue<Node> frontier) {
+	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
 		return super.findNode(problem, frontier);
@@ -67,7 +67,7 @@ public class GraphSearch extends QueueSearch {
 	 * was not yet explored.
 	 */
 	@Override
-	protected void addToFrontier(Node node) {
+	protected void addToFrontier(Node<S, A> node) {
 		if (!explored.contains(node.getState())) {
 			frontier.add(node);
 			updateMetrics(frontier.size());
@@ -83,10 +83,10 @@ public class GraphSearch extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node removeFromFrontier() {
+	protected Node<S, A> removeFromFrontier() {
 		cleanUpFrontier(); // not really necessary because isFrontierEmpty
 							// should be called before...
-		Node result = frontier.remove();
+		Node<S, A> result = frontier.remove();
 		explored.add(result.getState());
 		updateMetrics(frontier.size());
 		return result;

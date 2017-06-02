@@ -1,15 +1,11 @@
 package aima.gui.fx.applications.search.local;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicAction;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
@@ -48,7 +44,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	private SimulationPaneCtrl simPaneCtrl;
 
 	private Random random = new Random();
-	private SimulatedAnnealingSearch search;
+	private SimulatedAnnealingSearch<Double, Action> search;
 
 	@Override
 	public String getTitle() {
@@ -109,13 +105,13 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	@SuppressWarnings("unchecked")
 	public void simulate() {
 
-		Set<Action> actions = new HashSet<>();
+		List<Action> actions = new ArrayList<>(1);
 		actions.add(new DynamicAction("Move"));
-		Problem problem = new Problem(getRandomState(), s -> actions, (s, a) -> getSuccessor(s), s -> false);
+		Problem<Double, Action> problem = new GeneralProblem<>(getRandomState(), s -> actions, (s, a) -> getSuccessor(s), s -> false);
 		Function<Double, Double> func = (Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT);
 		Scheduler scheduler = new Scheduler(simPaneCtrl.getParamAsInt(PARAM_K),
 				simPaneCtrl.getParamAsDouble(PARAM_LAMBDA), simPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
-		search = new SimulatedAnnealingSearch(s -> 1 - func.apply((Double) s), scheduler);
+		search = new SimulatedAnnealingSearch<>(n -> 1 - func.apply(n.getState()), scheduler);
 		search.addNodeListener(n -> updateStateView(n.getState()));
 		search.findActions(problem);
 		updateStateView(search.getLastSearchState());
@@ -131,8 +127,8 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	 * presented which corresponds to one mutation step in the genetic algorithm
 	 * for numbers.
 	 */
-	protected Double getSuccessor(Object state) {
-		double result = (Double) state;
+	protected Double getSuccessor(Double state) {
+		double result =  state;
 		double r = random.nextDouble() - 0.5;
 		result += r * r * r * (Functions.maxX - Functions.minX) / 2;
 		if (result < Functions.minX)

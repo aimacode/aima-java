@@ -6,7 +6,7 @@ import aima.test.core.unit.search.csp.MapCSPTest;
 import aima.test.core.unit.search.csp.TreeCspSolverTest;
 import aima.test.core.unit.search.framework.MetricsTest;
 import aima.test.core.unit.search.framework.NodeTest;
-import aima.test.core.unit.search.framework.SolutionCheckerTest;
+import aima.test.core.unit.search.framework.SolutionTesterTest;
 import aima.test.core.unit.search.informed.AStarSearchTest;
 import aima.test.core.unit.search.informed.GreedyBestFirstSearchTest;
 import aima.test.core.unit.search.informed.RecursiveBestFirstSearchTest;
@@ -24,6 +24,6 @@ import org.junit.runners.Suite;
 		SimulatedAnnealingSearchTest.class, AndOrSearchTest.class, LRTAStarAgentTest.class, OnlineDFSAgentTest.class,
 		BidirectionalSearchTest.class, BreadthFirstSearchTest.class, DepthFirstSearchTest.class,
 		DepthLimitedSearchTest.class, IterativeDeepeningSearchTest.class, UniformCostSearchTest.class, NodeTest.class,
-		SolutionCheckerTest.class })
+		SolutionTesterTest.class })
 public class SearchTestSuite {
 }

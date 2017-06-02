@@ -18,7 +18,7 @@ import java.util.List;
  *            terms of how a problem can be encoded).
  */
 public class Individual<A> {
-	private List<A> representation = new ArrayList<A>();
+	private List<A> representation = new ArrayList<>();
 	private int descendants; // for debugging!
 
 	/**

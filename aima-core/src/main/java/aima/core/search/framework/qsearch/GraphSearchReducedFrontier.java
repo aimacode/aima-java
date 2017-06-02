@@ -33,7 +33,7 @@ import aima.core.search.framework.problem.Problem;
  * 
  * <br>
  * This implementation is based on the template method
- * {@link QueueSearch#findNode(Problem, Queue)} of the superclass and provides
+ * {@link #findNode(Problem, Queue)} of the superclass and provides
  * implementations for the needed primitive operations. It implements a special
  * version of graph search which keeps the frontier short by focusing on the
  * best node for each state only. It should only be used in combination with
@@ -46,17 +46,17 @@ import aima.core.search.framework.problem.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphSearchReducedFrontier extends QueueSearch {
+public class GraphSearchReducedFrontier<S, A> extends QueueSearch<S, A> {
 
-	private Set<Object> explored = new HashSet<>();
-	private Map<Object, Node> frontierNodeLookup = new HashMap<>();
-	private Comparator<? super Node> nodeComparator = null;
+	private Set<S> explored = new HashSet<>();
+	private Map<S, Node<S, A>> frontierNodeLookup = new HashMap<>();
+	private Comparator<? super Node<S, A>> nodeComparator = null;
 
 	public GraphSearchReducedFrontier() {
-		this(new NodeExpander());
+		this(new NodeExpander<>());
 	}
 
-	public GraphSearchReducedFrontier(NodeExpander nodeExpander) {
+	public GraphSearchReducedFrontier(NodeExpander<S, A> nodeExpander) {
 		super(nodeExpander);
 	}
 
@@ -65,16 +65,16 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * state map and calls the inherited version of search.
 	 */
 	@Override
-	public Node findNode(Problem problem, Queue<Node> frontier) {
+	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		// initialize the explored set to be empty
 		if (frontier instanceof PriorityQueue<?>)
-			nodeComparator = ((PriorityQueue<Node>) frontier).comparator();
+			nodeComparator = ((PriorityQueue<Node<S, A>>) frontier).comparator();
 		explored.clear();
 		frontierNodeLookup.clear();
 		return super.findNode(problem, frontier);
 	}
 
-	public Comparator<? super Node> getNodeComparator() {
+	public Comparator<? super Node<S, A>> getNodeComparator() {
 		return nodeComparator;
 	}
 
@@ -86,9 +86,9 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * node is replaced or the new node is dropped.
 	 */
 	@Override
-	protected void addToFrontier(Node node) {
+	protected void addToFrontier(Node<S, A> node) {
 		if (!explored.contains(node.getState())) {
-			Node frontierNode = frontierNodeLookup.get(node.getState());
+			Node<S, A> frontierNode = frontierNodeLookup.get(node.getState());
 			if (frontierNode == null) {
 				// child.STATE is not in frontier and not yet explored
 				frontier.add(node);
@@ -112,8 +112,8 @@ public class GraphSearchReducedFrontier extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node removeFromFrontier() {
-		Node result = frontier.remove();
+	protected Node<S, A> removeFromFrontier() {
+		Node<S, A> result = frontier.remove();
 		frontierNodeLookup.remove(result.getState());
 		// add the node to the explored set
 		explored.add(result.getState());

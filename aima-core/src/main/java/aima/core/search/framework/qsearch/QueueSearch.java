@@ -1,13 +1,10 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.Queue;
-
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchUtils;
+import aima.core.search.framework.*;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
+
+import java.util.Queue;
 
 /**
  * Base class for queue-based search implementations, especially for
@@ -23,19 +20,19 @@ import aima.core.util.CancelableThread;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public abstract class QueueSearch {
+public abstract class QueueSearch<S, A> {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_QUEUE_SIZE = "queueSize";
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	final protected NodeExpander nodeExpander;
-	protected Queue<Node> frontier;
+	final protected NodeExpander<S, A> nodeExpander;
+	protected Queue<Node<S, A>> frontier;
 	protected boolean earlyGoalTest = false;
 	protected Metrics metrics = new Metrics();
 
 	/** Stores the provided node expander and adds a node listener to it. */
-	protected QueueSearch(NodeExpander nodeExpander) {
+	protected QueueSearch(NodeExpander<S, A> nodeExpander) {
 		this.nodeExpander = nodeExpander;
 		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
@@ -55,30 +52,30 @@ public abstract class QueueSearch {
 	 * 
 	 * @return a node referencing a goal state, if the goal was found, otherwise null;
 	 */
-	public Node findNode(Problem problem, Queue<Node> frontier) {
+	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
-		Node root = nodeExpander.createRootNode(problem.getInitialState());
+		Node<S, A> root = nodeExpander.createRootNode(problem.getInitialState());
 		addToFrontier(root);
-		if (earlyGoalTest && SearchUtils.isGoalState(problem, root))
+		if (earlyGoalTest && problem.testSolution(root))
 			return getSolution(root);
 
 		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
 			// choose a leaf node and remove it from the frontier
-			Node nodeToExpand = removeFromFrontier();
+			Node<S, A> nodeToExpand = removeFromFrontier();
 			// only need to check the nodeToExpand if have not already
 			// checked before adding to the frontier
-			if (!earlyGoalTest && SearchUtils.isGoalState(problem, nodeToExpand))
+			if (!earlyGoalTest && problem.testSolution(nodeToExpand))
 				// if the node contains a goal state then return the
 				// corresponding solution
 				return getSolution(nodeToExpand);
 
 			// expand the chosen node, adding the resulting nodes to the
 			// frontier
-			for (Node successor : nodeExpander.expand(nodeToExpand, problem)) {
+			for (Node<S, A> successor : nodeExpander.expand(nodeToExpand, problem)) {
 				addToFrontier(successor);
-				if (earlyGoalTest && SearchUtils.isGoalState(problem, successor))
+				if (earlyGoalTest && problem.testSolution(successor))
 					return getSolution(successor);
 			}
 		}
@@ -89,7 +86,7 @@ public abstract class QueueSearch {
 	/**
 	 * Primitive operation which inserts the node at the tail of the frontier.
 	 */
-	protected abstract void addToFrontier(Node node);
+	protected abstract void addToFrontier(Node<S, A> node);
 
 	/**
 	 * Primitive operation which removes and returns the node at the head of the
@@ -97,7 +94,7 @@ public abstract class QueueSearch {
 	 * 
 	 * @return the node at the head of the frontier.
 	 */
-	protected abstract Node removeFromFrontier();
+	protected abstract Node<S, A> removeFromFrontier();
 
 	/**
 	 * Primitive operation which checks whether the frontier contains not yet
@@ -108,14 +105,12 @@ public abstract class QueueSearch {
 	/**
 	 * Enables optimization for FIFO queue based search, especially breadth
 	 * first search.
-	 * 
-	 * @param state
 	 */
-	public void setEarlyGoalTest(boolean state) {
-		earlyGoalTest = state;
+	public void setEarlyGoalTest(boolean b) {
+		earlyGoalTest = b;
 	}
 
-	public NodeExpander getNodeExpander() {
+	public NodeExpander<S, A> getNodeExpander() {
 		return nodeExpander;
 	}
 
@@ -129,7 +124,7 @@ public abstract class QueueSearch {
 	/**
 	 * Sets all metrics to zero.
 	 */
-	public void clearInstrumentation() {
+	protected void clearInstrumentation() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_QUEUE_SIZE, 0);
 		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);
@@ -144,7 +139,7 @@ public abstract class QueueSearch {
 		}
 	}
 
-	private Node getSolution(Node node) {
+	private Node<S, A> getSolution(Node<S, A> node) {
 		metrics.set(METRIC_PATH_COST, node.getPathCost());
 		return node;
 	}

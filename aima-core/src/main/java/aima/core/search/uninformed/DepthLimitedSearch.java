@@ -42,21 +42,21 @@ import aima.core.util.CancelableThread;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class DepthLimitedSearch implements SearchForActions, SearchForStates {
+public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
-	public static final Node CUTOFF_NODE = new Node(null);
 
+	public final Node<S, A> cutoffNode = new Node<>(null);
 	private final int limit;
-	private final NodeExpander nodeExpander;
+	private final NodeExpander<S, A> nodeExpander;
 	private Metrics metrics = new Metrics();
 
 	public DepthLimitedSearch(int limit) {
-		this(limit, new NodeExpander());
+		this(limit, new NodeExpander<>());
 	}
 
-	public DepthLimitedSearch(int limit, NodeExpander nodeExpander) {
+	public DepthLimitedSearch(int limit, NodeExpander<S, A> nodeExpander) {
 		this.limit = limit;
 		this.nodeExpander = nodeExpander;
 	}
@@ -74,20 +74,20 @@ public class DepthLimitedSearch implements SearchForActions, SearchForStates {
 	 *         that the search failed.
 	 */
 	@Override
-	public List<Action> findActions(Problem p) {
+	public List<A> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node node = findNode(p);
-		return (node == null || node == CUTOFF_NODE) ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Node<S, A> node = findNode(p);
+		return (node == null || isCutoffNode(node)) ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 
 	@Override
-	public Object findState(Problem p) {
+	public S findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node node = findNode(p);
-		return (node == null || node == CUTOFF_NODE) ? null : node.getState();
+		Node<S, A> node = findNode(p);
+		return (node == null || isCutoffNode(node)) ? null : node.getState();
 	}
 	
-	public Node findNode(Problem p) {
+	public Node<S, A> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
@@ -99,28 +99,28 @@ public class DepthLimitedSearch implements SearchForActions, SearchForStates {
 	
 	// In Java 8 the result type should be Optional<Node>!
 	/**
-	 * Returns a solution node, the {@link #CUTOFF_NODE}, or null (failure).
+	 * Returns a solution node, the {@link #cutoffNode}, or null (failure).
 	 */
-	private Node recursiveDLS(Node node, Problem problem, int limit) {
+	private Node<S, A> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-		if (SearchUtils.isGoalState(problem, node)) {
+		if (problem.testSolution(node)) {
 			metrics.set(METRIC_PATH_COST, node.getPathCost());
 			return node;
 		} else if (0 == limit || CancelableThread.currIsCanceled()) {
 			// else if limit = 0 then return cutoff
-			return CUTOFF_NODE;
+			return cutoffNode;
 		} else {
 			// else
 			// cutoff_occurred? <- false
 			boolean cutoff_occurred = false;
 			// for each action in problem.ACTIONS(node.STATE) do
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node child : nodeExpander.expand(node, problem)) {
+			for (Node<S, A> child : nodeExpander.expand(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
-				Node result = recursiveDLS(child, problem, limit - 1);
+				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
-				if (result == CUTOFF_NODE) {
+				if (isCutoffNode(result)) {
 					cutoff_occurred = true;
 				} else if (result != null) {
 					// else if result != failure then return result
@@ -130,11 +130,15 @@ public class DepthLimitedSearch implements SearchForActions, SearchForStates {
 
 			// if cutoff_occurred? then return cutoff else return failure
 			if (cutoff_occurred) {
-				return CUTOFF_NODE;
+				return cutoffNode;
 			} else {
 				return null;
 			}
 		}
+	}
+
+	public boolean isCutoffNode(Node<S, A> node) {
+		return node == cutoffNode;
 	}
 
 	/**
@@ -154,12 +158,12 @@ public class DepthLimitedSearch implements SearchForActions, SearchForStates {
 	}
 
 	@Override
-	public void addNodeListener(Consumer<Node> listener)  {
+	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
 	}
 
 	@Override
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeExpander.removeNodeListener(listener);
 	}
 }

@@ -1,18 +1,20 @@
 package aima.core.environment.eightpuzzle;
 
+import aima.core.agent.Action;
+import aima.core.search.framework.Node;
 import aima.core.util.datastructure.XYLocation;
 
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * @author Ravi Mohan
- * 
+ * @author Ruediger Lunde
  */
-public class MisplacedTileHeuristicFunction implements Function<Object, Double> {
+public class MisplacedTileHeuristicFunction implements ToDoubleFunction<Node<EightPuzzleBoard, Action>> {
 
-	public Double apply(Object state) {
-		EightPuzzleBoard board = (EightPuzzleBoard) state;
-		return (double) getNumberOfMisplacedTiles(board);
+	public double applyAsDouble(Node<EightPuzzleBoard, Action> node) {
+		EightPuzzleBoard board = (EightPuzzleBoard) node.getState();
+		return getNumberOfMisplacedTiles(board);
 	}
 
 	private int getNumberOfMisplacedTiles(EightPuzzleBoard board) {

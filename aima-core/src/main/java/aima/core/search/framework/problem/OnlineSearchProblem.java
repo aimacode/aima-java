@@ -1,0 +1,56 @@
+package aima.core.search.framework.problem;
+
+import aima.core.search.framework.Node;
+
+import java.util.List;
+
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page 147.<br>
+ * <br>
+ * An online search problem must be solved by an agent executing actions, rather
+ * than by pure computation. We assume a deterministic and fully observable
+ * environment (Chapter 17 relaxes these assumptions), but we stipulate that the
+ * agent knows only the following: <br>
+ * <ul>
+ * <li>ACTIONS(s), which returns a list of actions allowed in state s;</li>
+ * <li>The step-cost function c(s, a, s') - note that this cannot be used until
+ * the agent knows that s' is the outcome; and</li>
+ * <li>GOAL-TEST(s).</li>
+ * </ul>
+ * 
+ * @author Ruediger Lunde
+ */
+public interface OnlineSearchProblem<S, A> {
+
+	/**
+	 * Returns the initial state of the agent.
+	 */
+	S getInitialState();
+
+	/**
+	 * Returns the description of the possible actions available to the agent.
+	 */
+	List<A> getActions(S state);
+
+	/**
+	 * Determines whether a given state is a goal state.
+	 */
+	boolean testGoal(S state);
+
+	/**
+	 * Returns the <b>step cost</b> of taking action <code>action</code> in state <code>state</code> to reach state
+	 * <code>stateDelta</code> denoted by c(s, a, s').
+	 */
+	double getStepCosts(S state, A action, S stateDelta);
+
+	/**
+	 * Tests whether a node represents an acceptable solution. The default implementation
+	 * delegates the check to the goal test. Other implementations could make use of the additional
+	 * information given by the node (e.g. the sequence of actions leading to the node). A
+	 * solution tester implementation could for example always return false and internally collect
+	 * the paths of all nodes whose state passes the goal test.
+	 */
+	default boolean testSolution(Node<S, A> node) {
+		return testGoal(node.getState());
+	}
+}

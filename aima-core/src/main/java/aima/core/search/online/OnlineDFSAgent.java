@@ -10,6 +10,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
@@ -44,22 +45,23 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * "undone" by some other action.<br>
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
-public class OnlineDFSAgent extends AbstractAgent {
+public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
 
-	private OnlineSearchProblem problem;
-	private Function<Percept, Object> ptsFunction;
+	private OnlineSearchProblem<S, A> problem;
+	private Function<Percept, S> ptsFn;
 	// persistent: result, a table, indexed by state and action, initially empty
-	private final TwoKeyHashMap<Object, Action, Object> result = new TwoKeyHashMap<>();
+	private final TwoKeyHashMap<S, A, S> result = new TwoKeyHashMap<>();
 	// untried, a table that lists, for each state, the actions not yet tried
-	private final Map<Object, List<Action>> untried = new HashMap<>();
+	private final Map<S, List<A>> untried = new HashMap<>();
 	// unbacktracked, a table that lists,
 	// for each state, the backtracks not yet tried
-	private final Map<Object, List<Object>> unbacktracked = new HashMap<>();
+	private final Map<S, List<S>> unbacktracked = new HashMap<>();
 	// s, a, the previous state and action, initially null
-	private Object s = null;
-	private Action a = null;
+	private S s = null;
+	private A a = null;
 
 	/**
 	 * Constructs an online DFS agent with the specified search problem and
@@ -67,13 +69,13 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 * 
 	 * @param problem
 	 *            an online search problem for this agent to solve
-	 * @param ptsFunction
+	 * @param ptsFn
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public OnlineDFSAgent(OnlineSearchProblem problem, Function<Percept, Object> ptsFunction) {
+	public OnlineDFSAgent(OnlineSearchProblem<S, A> problem, Function<Percept, S> ptsFn) {
 		setProblem(problem);
-		setPerceptToStateFunction(ptsFunction);
+		setPerceptToStateFunction(ptsFn);
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 * 
 	 * @return the search problem for this agent.
 	 */
-	public OnlineSearchProblem getProblem() {
+	public OnlineSearchProblem<S, A> getProblem() {
 		return problem;
 	}
 
@@ -91,7 +93,7 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 * @param problem
 	 *            the search problem for this agent to solve.
 	 */
-	public void setProblem(OnlineSearchProblem problem) {
+	public void setProblem(OnlineSearchProblem<S, A> problem) {
 		this.problem = problem;
 		init();
 	}
@@ -101,34 +103,34 @@ public class OnlineDFSAgent extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public Function<Percept, Object> getPerceptToStateFunction() {
-		return ptsFunction;
+	public Function<Percept, S> getPerceptToStateFunction() {
+		return ptsFn;
 	}
 
 	/**
 	 * Sets the percept to state functino of this agent.
 	 * 
-	 * @param ptsFunction
+	 * @param ptsFn
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(Function<Percept, Object> ptsFunction) {
-		this.ptsFunction = ptsFunction;
+	public void setPerceptToStateFunction(Function<Percept, S> ptsFn) {
+		this.ptsFn = ptsFn;
 	}
 
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept psDelta) {
-		Object sDelta = ptsFunction.apply(psDelta);
+	public Action execute(Percept psPrimed) {
+		S sPrimed = ptsFn.apply(psPrimed);
 		// if GOAL-TEST(s') then return stop
-		if (goalTest(sDelta)) {
-			a = NoOpAction.NO_OP;
+		if (problem.testGoal(sPrimed)) {
+			a = null;
 		} else {
 			// if s' is a new state (not in untried) then untried[s'] <-
 			// ACTIONS(s')
-			if (!untried.containsKey(sDelta)) {
-				untried.put(sDelta, actions(sDelta));
+			if (!untried.containsKey(sPrimed)) {
+				untried.put(sPrimed, problem.getActions(sPrimed));
 			}
 
 			// if s is not null then do
@@ -137,31 +139,30 @@ public class OnlineDFSAgent extends AbstractAgent {
 				// [s, a] then don't put it back on the unbacktracked
 				// list otherwise you can keep oscillating
 				// between the same states endlessly.
-				if (!(sDelta.equals(result.get(s, a)))) {
+				if (!(sPrimed.equals(result.get(s, a)))) {
 					// result[s, a] <- s'
-					result.put(s, a, sDelta);
+					result.put(s, a, sPrimed);
 
 					// Ensure the unbacktracked always has a list for s'
-					if (!unbacktracked.containsKey(sDelta)) {
-						unbacktracked.put(sDelta, new ArrayList<>());
+					if (!unbacktracked.containsKey(sPrimed)) {
+						unbacktracked.put(sPrimed, new ArrayList<>());
 					}
 
 					// add s to the front of the unbacktracked[s']
-					unbacktracked.get(sDelta).add(0, s);
+					unbacktracked.get(sPrimed).add(0, s);
 				}
 			}
 			// if untried[s'] is empty then
-			if (untried.get(sDelta).isEmpty()) {
+			if (untried.get(sPrimed).isEmpty()) {
 				// if unbacktracked[s'] is empty then return stop
-				if (unbacktracked.get(sDelta).isEmpty()) {
-					a = NoOpAction.NO_OP;
+				if (unbacktracked.get(sPrimed).isEmpty()) {
+					a = null;
 				} else {
 					// else a <- an action b such that result[s', b] =
 					// POP(unbacktracked[s'])
-					Object popped = unbacktracked.get(sDelta).remove(0);
-					for (Pair<Object, Action> sa : result.keySet()) {
-						if (sa.getFirst().equals(sDelta)
-								&& result.get(sa).equals(popped)) {
+					S popped = unbacktracked.get(sPrimed).remove(0);
+					for (Pair<S, A> sa : result.keySet()) {
+						if (sa.getFirst().equals(sPrimed) && result.get(sa).equals(popped)) {
 							a = sa.getSecond();
 							break;
 						}
@@ -169,20 +170,20 @@ public class OnlineDFSAgent extends AbstractAgent {
 				}
 			} else {
 				// else a <- POP(untried[s'])
-				a = untried.get(sDelta).remove(0);
+				a = untried.get(sPrimed).remove(0);
 			}
 		}
 
-		if (a.isNoOp()) {
+		if (a == null) {
 			// I'm either at the Goal or can't get to it,
 			// which in either case I'm finished so just die.
 			setAlive(false);
 		}
 
 		// s <- s'
-		s = sDelta;
+		s = sPrimed;
 		// return a
-		return a;
+		return a != null ? a : NoOpAction.NO_OP;
 	}
 
 	//
@@ -196,14 +197,5 @@ public class OnlineDFSAgent extends AbstractAgent {
 		unbacktracked.clear();
 		s = null;
 		a = null;
-	}
-
-	private boolean goalTest(Object state) {
-		return getProblem().isGoalState(state);
-	}
-
-	private List<Action> actions(Object state) {
-		return new ArrayList<>(problem.getActionsFunction()
-				.actions(state));
 	}
 }

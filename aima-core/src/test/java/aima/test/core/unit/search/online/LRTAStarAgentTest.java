@@ -1,25 +1,24 @@
 package aima.test.core.unit.search.online;
 
 import aima.core.agent.*;
-import aima.core.search.framework.Node;
+import aima.core.environment.map.ExtendableMap;
+import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MapFunctions;
+import aima.core.environment.map.MoveToAction;
+import aima.core.search.framework.problem.GeneralProblem;
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.search.framework.problem.OnlineSearchProblem;
+import aima.core.search.online.LRTAStarAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.map.ExtendableMap;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.MapFunctionFactory;
-import aima.core.environment.map.MapStepCostFunction;
-import aima.core.search.framework.problem.DefaultGoalTest;
-import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
-
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 public class LRTAStarAgentTest {
 	private ExtendableMap aMap;
 	private StringBuffer envChanges;
-	private Function<Object, Double> hf;
+	private ToDoubleFunction<String> h;
 
 	@Before
 	public void setUp() {
@@ -29,7 +28,7 @@ public class LRTAStarAgentTest {
 		aMap.addBidirectionalLink("C", "D", 4.0);
 		aMap.addBidirectionalLink("D", "E", 4.0);
 		aMap.addBidirectionalLink("E", "F", 4.0);
-		hf = (state) -> 1.0;
+		h = (state) -> 1.0;
 
 		envChanges = new StringBuffer();
 	}
@@ -37,9 +36,12 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
-				new DefaultGoalTest("A"), new MapStepCostFunction(aMap)),
-				MapFunctionFactory.getPerceptToStateFunction(), hf);
+		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("A"),
+				MapFunctions.createDistanceStepCostFunction(aMap));
+		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+				(problem, MapFunctions.createPerceptToStateFunction(), h);
+
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -50,9 +52,12 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
-				new DefaultGoalTest("F"), new MapStepCostFunction(aMap)),
-				MapFunctionFactory.getPerceptToStateFunction(), hf);
+		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("F"),
+				MapFunctions.createDistanceStepCostFunction(aMap));
+		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+				(problem, MapFunctions.createPerceptToStateFunction(), h);
+
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
@@ -65,9 +70,12 @@ public class LRTAStarAgentTest {
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		LRTAStarAgent agent = new LRTAStarAgent(new OnlineSearchProblem(MapFunctionFactory.getActionsFunction(aMap),
-				new DefaultGoalTest("G"), new MapStepCostFunction(aMap)),
-				MapFunctionFactory.getPerceptToStateFunction(), hf);
+		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("G"),
+				MapFunctions.createDistanceStepCostFunction(aMap));
+		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+				(problem, MapFunctions.createPerceptToStateFunction(), h);
+
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		// Note: Will search forever if no path is possible,

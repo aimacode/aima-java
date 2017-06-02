@@ -1,10 +1,6 @@
 package aimax.osm.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import aima.core.agent.Action;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -15,6 +11,10 @@ import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.MapNode;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Implements a search engine for shortest path calculations. Modified versions
@@ -55,12 +55,12 @@ public class RouteCalculator {
 			MapNode prevNode = null;
 			for (int i = 0; i < pNodeList.size()
 					&& !CancelableThread.currIsCanceled(); i++) {
-				Problem problem = createProblem(pNodeList.get(i), map, wayFilter,
+				Problem<MapNode, OsmMoveAction> problem = createProblem(pNodeList.get(i), map, wayFilter,
 						ignoreOneways, taskSelection);
-				Function<Object, Double> hf = createHeuristicFunction(pNodeList.get(i),
+				ToDoubleFunction<Node<MapNode, OsmMoveAction>> h = createHeuristicFunction(pNodeList.get(i),
 						taskSelection);
-				SearchForActions search = createSearch(hf, taskSelection);
-				List<Action> actions = search.findActions(problem);
+				SearchForActions<MapNode, OsmMoveAction> search = createSearch(h, taskSelection);
+				List<OsmMoveAction> actions = search.findActions(problem);
 				if (actions.isEmpty())
 					break;
 				for (Object action : actions) {
@@ -113,20 +113,21 @@ public class RouteCalculator {
 	}
 
 	/** Factory method, responsible for problem creation. */
-	protected Problem createProblem(MapNode[] pNodes, OsmMap map,
+	protected Problem<MapNode, OsmMoveAction> createProblem(MapNode[] pNodes, OsmMap map,
 			MapWayFilter wayFilter, boolean ignoreOneways, int taskSelection) {
 		return new RouteFindingProblem(pNodes[0], pNodes[1], wayFilter,
 				ignoreOneways);
 	}
 
 	/** Factory method, responsible for heuristic function creation. */
-	protected Function<Object, Double> createHeuristicFunction(MapNode[] pNodes,
+	protected ToDoubleFunction<Node<MapNode, OsmMoveAction>> createHeuristicFunction(MapNode[] pNodes,
 															   int taskSelection) {
 		return new OsmSldHeuristicFunction(pNodes[1]);
 	}
 	
 	/** Factory method, responsible for search creation. */
-	protected SearchForActions createSearch(Function<Object, Double> hf, int taskSelection) {
-		return new AStarSearch(new GraphSearch(), hf);
+	protected SearchForActions<MapNode, OsmMoveAction> createSearch
+	(ToDoubleFunction<Node<MapNode, OsmMoveAction>> h, int taskSelection) {
+		return new AStarSearch<>(new GraphSearch<>(), h);
 	}
 }

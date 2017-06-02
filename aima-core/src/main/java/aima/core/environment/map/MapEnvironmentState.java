@@ -11,7 +11,7 @@ import aima.core.util.datastructure.Pair;
  * 
  */
 public class MapEnvironmentState implements EnvironmentState {
-	private java.util.Map<Agent, Pair<String, Double>> agentLocationAndTravelDistance = new HashMap<Agent, Pair<String, Double>>();
+	private java.util.Map<Agent, Pair<String, Double>> agentLocationAndTravelDistance = new HashMap<>();
 
 	public MapEnvironmentState() {
 

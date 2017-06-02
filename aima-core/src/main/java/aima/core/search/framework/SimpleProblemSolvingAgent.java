@@ -1,7 +1,9 @@
 package aima.core.search.framework;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
@@ -41,10 +43,10 @@ import aima.core.util.Util;
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
-public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
+public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
 
 	// seq, an action sequence, initially empty
-	private List<Action> seq = new ArrayList<Action>();
+	private Queue<A> seq = new LinkedList<>();
 
 	//
 	private boolean formulateGoalsIndefinitely = true;
@@ -81,7 +83,7 @@ public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if seq is empty then do
-		if (0 == seq.size()) {
+		if (seq.isEmpty()) {
 			if (formulateGoalsIndefinitely
 					|| goalsFormulated < maxGoalsToFormulate) {
 				if (goalsFormulated > 0) {
@@ -91,12 +93,12 @@ public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 				Object goal = formulateGoal();
 				goalsFormulated++;
 				// problem <- FORMULATE-PROBLEM(state, goal)
-				Problem problem = formulateProblem(goal);
+				Problem<S, A> problem = formulateProblem(goal);
 				// seq <- SEARCH(problem)
 				seq.addAll(search(problem));
 				if (0 == seq.size()) {
 					// Unable to identify a path
-					seq.add(NoOpAction.NO_OP);
+					seq.add(null);
 				}
 			} else {
 				// Agent no longer wishes to
@@ -108,24 +110,23 @@ public abstract class SimpleProblemSolvingAgent extends AbstractAgent {
 
 		if (seq.size() > 0) {
 			// action <- FIRST(seq)
-			action = Util.first(seq);
 			// seq <- REST(seq)
-			seq = Util.rest(seq);
+			action = seq.remove();
 		}
 
-		return action;
+		return action != null ? action : NoOpAction.NO_OP;
 	}
 
 	//
 	// PROTECTED METHODS
 	//
-	protected abstract State updateState(Percept p);
+	protected abstract void updateState(Percept p);
 
 	protected abstract Object formulateGoal();
 
-	protected abstract Problem formulateProblem(Object goal);
+	protected abstract Problem<S, A> formulateProblem(Object goal);
 
-	protected abstract List<Action> search(Problem problem);
+	protected abstract List<A> search(Problem<S, A> problem);
 
 	protected abstract void notifyViewOfMetrics();
 }

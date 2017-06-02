@@ -11,6 +11,7 @@ import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
 import aima.core.search.framework.Metrics;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.BidirectionalSearch;
@@ -181,7 +182,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
 			Metrics m = new Metrics();
-			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().apply(board));
+			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().applyAsDouble(new Node(board)));
 			updateStateView(m);
 			if (CancelableThread.currIsCanceled())
 				break;

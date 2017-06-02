@@ -4,6 +4,7 @@ import aima.core.search.framework.Node;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 93.<br>
@@ -21,28 +22,28 @@ import java.util.function.Function;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class AStarSearch extends BestFirstSearch {
+public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
 
     /**
      * Constructs an A* search from a specified search space exploration
      * strategy and a heuristic function.
      *
      * @param impl a search space exploration strategy (e.g. TreeSearch, GraphSearch).
-     * @param hf   a heuristic function <em>h(n)</em>, which estimates the cost
+     * @param h   a heuristic function <em>h(n)</em>, which estimates the cost
      *             of the cheapest path from the state at node <em>n</em> to a
      *             goal state.
      */
-    public AStarSearch(QueueSearch impl, Function<Object, Double> hf) {
-        super(impl, new EvalFunction(hf));
+    public AStarSearch(QueueSearch<S, A> impl, ToDoubleFunction<Node<S, A>> h) {
+        super(impl, new EvalFunction<>(h));
     }
 
 
-    public static class EvalFunction extends HeuristicEvaluationFunction {
-        private Function<Node, Double> gf;
+    public static class EvalFunction<S, A> extends HeuristicEvaluationFunction<S, A> {
+        private ToDoubleFunction<Node> g;
 
-        public EvalFunction(Function<Object, Double> hf) {
-            this.hf = hf;
-            this.gf = Node::getPathCost;
+        public EvalFunction(ToDoubleFunction<Node<S, A>> h) {
+            this.h = h;
+            this.g = Node::getPathCost;
         }
 
         /**
@@ -53,9 +54,9 @@ public class AStarSearch extends BestFirstSearch {
          * @return g(n) + h(n)
          */
         @Override
-        public Double apply(Node n) {
+        public double applyAsDouble(Node n) {
             // f(n) = g(n) + h(n)
-            return gf.apply(n) + hf.apply(n.getState());
+            return g.applyAsDouble(n) + h.applyAsDouble(n);
         }
     }
 }

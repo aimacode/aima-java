@@ -37,16 +37,16 @@ import aima.core.search.framework.problem.Problem;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class GraphSearchBFS extends QueueSearch {
+public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
 
-	private Set<Object> explored = new HashSet<>();
-	private Set<Object> frontierStates = new HashSet<>();
+	private Set<S> explored = new HashSet<>();
+	private Set<S> frontierStates = new HashSet<>();
 
 	public GraphSearchBFS() {
-		this(new NodeExpander());
+		this(new NodeExpander<>());
 	}
 
-	public GraphSearchBFS(NodeExpander nodeExpander) {
+	public GraphSearchBFS(NodeExpander<S, A> nodeExpander) {
 		super(nodeExpander);
 	}
 	
@@ -56,7 +56,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 * <code>QueSearch</code>
 	 */
 	@Override
-	public Node findNode(Problem problem, Queue<Node> frontier) {
+	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		// Initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();
@@ -68,7 +68,7 @@ public class GraphSearchBFS extends QueueSearch {
 	 * is not already a frontier state and was not yet explored.
 	 */
 	@Override
-	protected void addToFrontier(Node node) {
+	protected void addToFrontier(Node<S, A> node) {
 		if (!explored.contains(node.getState()) && !frontierStates.contains(node.getState())) {
 			frontier.add(node);
 			frontierStates.add(node.getState());
@@ -83,8 +83,8 @@ public class GraphSearchBFS extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node removeFromFrontier() {
-		Node result = frontier.remove();
+	protected Node<S, A> removeFromFrontier() {
+		Node<S, A> result = frontier.remove();
 		explored.add(result.getState());
 		frontierStates.remove(result.getState());
 		updateMetrics(frontier.size());

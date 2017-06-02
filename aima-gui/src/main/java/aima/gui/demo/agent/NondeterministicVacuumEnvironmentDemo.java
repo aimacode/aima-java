@@ -1,15 +1,7 @@
 package aima.gui.demo.agent;
 
-import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
-import aima.core.environment.vacuum.NondeterministicVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.VacuumEnvironmentState;
-import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
-import aima.core.environment.vacuum.VacuumWorldActions;
-import aima.core.environment.vacuum.VacuumWorldGoalTest;
-import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.problem.StepCostFunction;
+import aima.core.agent.Action;
+import aima.core.environment.vacuum.*;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 
 /**
@@ -36,12 +28,12 @@ public class NondeterministicVacuumEnvironmentDemo {
         state.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
         state.setAgentLocation(agent, VacuumEnvironment.LOCATION_A);
         // create problem
-        NondeterministicProblem problem = new NondeterministicProblem(
+        NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
                 state,
-                new VacuumWorldActions(),
+                VacuumWorldFunctions::getActions,
                 new VacuumWorldResults(agent),
-                new VacuumWorldGoalTest(agent),
-                StepCostFunction.createDefault());
+                VacuumWorldFunctions::testGoal,
+                (s, a, sPrimed) -> 1.0);
         // set the problem and agent
         agent.setProblem(problem);
         

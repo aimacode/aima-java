@@ -5,11 +5,14 @@ import java.util.List;
 
 import aima.core.agent.Agent;
 import aima.core.environment.map.BidirectionalMapProblem;
+import aima.core.environment.map.MapFunctions;
+import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.SimpleMapAgent;
-import aima.core.environment.map.MapFunctionFactory;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
+import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.swing.applications.agent.map.MapAgentFrame;
 import aima.gui.swing.framework.AgentAppController;
@@ -117,10 +120,11 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 				agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
 				break;
 			case 1:
-				Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-				OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
-						p.getStepCostFunction());
-				agent = new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+				Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locs[1]);
+				OnlineSearchProblem<String, MoveToAction> osp = new GeneralProblem<>
+						(null, p::getActions, null, p::testGoal, p::getStepCosts);
+				agent = new LRTAStarAgent<>(osp, MapFunctions.createPerceptToStateFunction(),
+						s -> heuristic.applyAsDouble(new Node<>(s)));
 				break;
 			}
 			env.addAgent(agent, locs[0]);

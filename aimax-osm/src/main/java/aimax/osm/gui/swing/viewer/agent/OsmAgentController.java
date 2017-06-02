@@ -3,17 +3,16 @@ package aimax.osm.gui.swing.viewer.agent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.Agent;
-import aima.core.environment.map.BidirectionalMapProblem;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.MapFunctionFactory;
-import aima.core.environment.map.SimpleMapAgent;
+import aima.core.environment.map.*;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.online.OnlineSearchProblem;
+import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.swing.applications.agent.map.MapAgentFrame;
 import aima.gui.swing.framework.AgentAppController;
@@ -34,18 +33,18 @@ public class OsmAgentController extends AgentAppController {
 	protected MapAdapter map;
 	protected MapEnvironment env;
 	/** Search method to be used. */
-	protected SearchForActions search;
+	protected SearchForActions<String, MoveToAction> search;
 	/** Heuristic function to be used when performing informed search. */
-	protected Function<Object, Double> heuristic;
+	protected ToDoubleFunction<Node<String, MoveToAction>> heuristic;
 
 	protected List<String> markedLocations;
 	protected boolean isPrepared;
 	/** Sleep time between two steps during simulation in msec. */
-	protected long sleepTime = 0l;
+	protected long sleepTime = 0;
 
 	public OsmAgentController(MapAdapter map) {
 		this.map = map;
-		markedLocations = new ArrayList<String>();
+		markedLocations = new ArrayList<>();
 	}
 
 	@Override
@@ -90,16 +89,16 @@ public class OsmAgentController extends AgentAppController {
 	 * Returns the trivial zero function or a simple heuristic which is based on
 	 * straight-line distance computation.
 	 */
-	protected Function<Object, Double> createHeuristic(int heuIdx, String goal) {
-		Function<Object, Double> ahf = null;
+	protected ToDoubleFunction<Node<String, MoveToAction>> createHeuristic(int heuIdx, String goal) {
+		ToDoubleFunction<Node<String, MoveToAction>> h;
 		switch (heuIdx) {
 		case 0:
-			ahf = state -> 0.0;
+			h = state -> 0.0;
 			break;
 		default:
-			ahf = MapFunctionFactory.getSLDHeuristicFunction(goal, map);
+			h = MapFunctions.createSLDHeuristicFunction(goal, map);
 		}
-		return ahf;
+		return h;
 	}
 
 	/**
@@ -119,6 +118,7 @@ public class OsmAgentController extends AgentAppController {
 				env.step();
 			}
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		logger.log("</simulation-protocol>\n");
 	}
@@ -158,10 +158,11 @@ public class OsmAgentController extends AgentAppController {
 			agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
 			break;
 		case 1:
-			Problem p = new BidirectionalMapProblem(map, null, locs[1]);
-			OnlineSearchProblem osp = new OnlineSearchProblem(p.getActionsFunction(), p.getGoalTest(),
-					p.getStepCostFunction());
-			agent = new LRTAStarAgent(osp, MapFunctionFactory.getPerceptToStateFunction(), heuristic);
+			Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locs[1]);
+			OnlineSearchProblem<String, MoveToAction> osp = new GeneralProblem<>
+					(null, p::getActions, null, p::testGoal, p::getStepCosts);
+			agent = new LRTAStarAgent<>(osp, MapFunctions.createPerceptToStateFunction(),
+					s -> heuristic.applyAsDouble(new Node<>(s)));
 			break;
 		}
 		env.addAgent(agent, locs[0]);
@@ -183,7 +184,7 @@ public class OsmAgentController extends AgentAppController {
 				Double travelDistance = env.getAgentTravelDistance(agents.get(0));
 				if (travelDistance != null) {
 					DecimalFormat f = new DecimalFormat("#0.0");
-					statusMsg.append("; travel distance: " + f.format(travelDistance) + "km");
+					statusMsg.append("; travel distance: ").append(f.format(travelDistance)).append("km");
 				}
 			}
 			statusMsg.append(".");

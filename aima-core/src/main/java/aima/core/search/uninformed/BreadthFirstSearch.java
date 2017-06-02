@@ -35,13 +35,13 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class BreadthFirstSearch extends QueueBasedSearch {
+public class BreadthFirstSearch<S, A> extends QueueBasedSearch<S, A> {
 
 	public BreadthFirstSearch() {
-		this(new GraphSearch());
+		this(new GraphSearch<>());
 	}
 
-	public BreadthFirstSearch(QueueSearch impl) {
+	public BreadthFirstSearch(QueueSearch<S, A> impl) {
 		super(impl, QueueFactory.createFifoQueue());
 		// Goal test is to be applied to each node when it is generated
 		// rather than when it is selected for expansion.

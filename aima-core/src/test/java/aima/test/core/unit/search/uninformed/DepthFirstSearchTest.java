@@ -1,39 +1,38 @@
 package aima.test.core.unit.search.uninformed;
 
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.environment.nqueens.NQueensGoalTest;
+import aima.core.environment.nqueens.NQueensFunctions;
+import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.List;
 
 public class DepthFirstSearchTest {
 
 	@Test
 	public void testDepthFirstSuccesfulSearch() throws Exception {
-		Problem problem = new Problem(new NQueensBoard(8), NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-		SearchForActions search = new DepthFirstSearch(new GraphSearch());
-		SearchAgent agent = new SearchAgent(problem, search);
-		List<Action> actions = agent.getActions();
+		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
+				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+		SearchForActions<NQueensBoard, QueenAction> search = new DepthFirstSearch<>(new GraphSearch<>());
+		List<QueenAction> actions = search.findActions(problem);
 		assertCorrectPlacement(actions);
-		Assert.assertEquals("113", agent.getInstrumentation().getProperty("nodesExpanded"));
+		Assert.assertEquals("113", search.getMetrics().get("nodesExpanded"));
 	}
 
 	@Test
 	public void testDepthFirstUnSuccessfulSearch() throws Exception {
-		Problem problem = new Problem(new NQueensBoard(3), NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-		SearchForActions search = new DepthFirstSearch(new GraphSearch());
-		SearchAgent agent = new SearchAgent(problem, search);
+		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(3),
+				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+		SearchForActions<NQueensBoard, QueenAction> search = new DepthFirstSearch<>(new GraphSearch<>());
+		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 		List<Action> actions = agent.getActions();
 		Assert.assertEquals(0, actions.size());
 		Assert.assertEquals("6", agent.getInstrumentation().getProperty("nodesExpanded"));
@@ -42,7 +41,7 @@ public class DepthFirstSearchTest {
 	//
 	// PRIVATE METHODS
 	//
-	private void assertCorrectPlacement(List<Action> actions) {
+	private void assertCorrectPlacement(List<QueenAction> actions) {
 		Assert.assertEquals(8, actions.size());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 0 , 7 ) ]", actions.get(0).toString());
 		Assert.assertEquals("Action[name==placeQueenAt, location== ( 1 , 3 ) ]", actions.get(1).toString());

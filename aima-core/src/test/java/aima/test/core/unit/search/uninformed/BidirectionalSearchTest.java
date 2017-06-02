@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.uninformed;
 
 import aima.core.agent.*;
+import aima.core.environment.map.MoveToAction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +19,16 @@ import aima.core.search.uninformed.BreadthFirstSearch;
  */
 public class BidirectionalSearchTest {
 
-	StringBuffer envChanges;
-
-	BidirectionalSearch bidirectionalSearch;
-	SearchForActions search;
+	private StringBuffer envChanges;
+	private SearchForActions<String, MoveToAction> search;
 
 	@Before
 	public void setUp() {
 
 		envChanges = new StringBuffer();
 
-		bidirectionalSearch = new BidirectionalSearch();
-		search = new BreadthFirstSearch(bidirectionalSearch);
+		BidirectionalSearch<String, MoveToAction> bidirectionalSearch = new BidirectionalSearch<>();
+		search = new BreadthFirstSearch<>(bidirectionalSearch);
 	}
 
 	//
@@ -330,7 +329,7 @@ public class BidirectionalSearchTest {
 				envChanges.toString());
 	}
 
-	class BDSEnvironmentView implements EnvironmentView {
+	private class BDSEnvironmentView implements EnvironmentView {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

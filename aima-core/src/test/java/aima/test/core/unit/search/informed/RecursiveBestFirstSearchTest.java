@@ -1,22 +1,21 @@
 package aima.test.core.unit.search.informed;
 
 import aima.core.agent.*;
+import aima.core.environment.map.*;
+import aima.core.search.framework.Node;
 import aima.core.search.informed.AStarSearch;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.map.Map;
-import aima.core.environment.map.SimpleMapAgent;
-import aima.core.environment.map.MapEnvironment;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.util.math.geom.shapes.Point2D;
 
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
 public class RecursiveBestFirstSearchTest {
@@ -25,24 +24,23 @@ public class RecursiveBestFirstSearchTest {
 
 	private Map aMap;
 
-	private RecursiveBestFirstSearch recursiveBestFirstSearch;
-	private RecursiveBestFirstSearch recursiveBestFirstSearchAvoidingLoops;
+	private RecursiveBestFirstSearch<String, MoveToAction> recursiveBestFirstSearch;
+	private RecursiveBestFirstSearch<String, MoveToAction> recursiveBestFirstSearchAvoidingLoops;
 
 	@Before
 	public void setUp() {
 		envChanges = new StringBuffer();
-
 		aMap = new SimplifiedRoadMapOfPartOfRomania();
 
-		Function<Object, Double> heuristicFunction = (state) -> {
-				Point2D pt1 = aMap.getPosition((String) state);
+		ToDoubleFunction<Node<String, MoveToAction>> heuristicFunction = (node) -> {
+				Point2D pt1 = aMap.getPosition((String) node.getState());
 				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 				return pt1.distance(pt2);
 		};
 
-		recursiveBestFirstSearch = new RecursiveBestFirstSearch(new AStarSearch.EvalFunction(heuristicFunction));
-		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch(
-				new AStarSearch.EvalFunction(heuristicFunction), true);
+		recursiveBestFirstSearch = new RecursiveBestFirstSearch<>(new AStarSearch.EvalFunction<>(heuristicFunction));
+		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch<>(
+				new AStarSearch.EvalFunction<>(heuristicFunction), true);
 	}
 
 	@Test

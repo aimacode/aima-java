@@ -1,10 +1,9 @@
 package aima.core.search.framework;
 
+import aima.core.search.framework.problem.Problem;
+
 import java.util.List;
 import java.util.function.Consumer;
-
-import aima.core.agent.Action;
-import aima.core.search.framework.problem.Problem;
 
 /**
  * Interface for all AIMA3e search algorithms which store at least a part of the
@@ -16,7 +15,7 @@ import aima.core.search.framework.problem.Problem;
  * @author Ruediger Lunde
  *
  */
-public interface SearchForActions {
+public interface SearchForActions<S, A> {
 	/**
 	 * Returns a list of actions to the goal if the goal was found, a list
 	 * containing a single NoOp Action if already at the goal, or an empty list
@@ -29,7 +28,7 @@ public interface SearchForActions {
 	 *         containing a single NoOp Action if already at the goal, or an
 	 *         empty list if the goal could not be found.
 	 */
-	List<Action> findActions(Problem p);
+	List<A> findActions(Problem<S, A> p);
 
 	/**
 	 * Returns all the metrics of the search.
@@ -40,10 +39,10 @@ public interface SearchForActions {
 	 * Adds a listener to the list of node listeners. It is informed whenever a
 	 * node is expanded during search.
 	 */
-	void addNodeListener(Consumer<Node> listener);
+	void addNodeListener(Consumer<Node<S, A>> listener);
 
 	/**
 	 * Removes a listener from the list of node listeners.
 	 */
-	boolean removeNodeListener(Consumer<Node> listener);
+	boolean removeNodeListener(Consumer<Node<S, A>> listener);
 }

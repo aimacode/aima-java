@@ -1,5 +1,6 @@
 package aima.core.search.nondeterministic;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -24,9 +25,7 @@ public class Path extends LinkedList<Object> {
 	public Path append(Object... states) {
 		Path appendedPath = new Path();
 		appendedPath.addAll(this);
-		for (int i = 0; i < states.length; i++) {
-			appendedPath.add(states[i]);
-		}
+		Collections.addAll(appendedPath, states);
 		return appendedPath;
 	}
 

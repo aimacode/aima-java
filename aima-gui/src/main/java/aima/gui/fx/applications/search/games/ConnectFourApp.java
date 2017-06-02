@@ -164,7 +164,7 @@ public class ConnectFourApp extends IntegrableApplication {
 
 		String statusText;
 		if (!model.isGameOver()) {
-			String toMove = (String) model.getPlayerForNextMove();
+			String toMove = model.getPlayerForNextMove();
 			statusText = "Next move: " + toMove;
 			statusBar.setTextFill(toMove.equals("red") ? Color.RED : Color.YELLOW);
 		} else {

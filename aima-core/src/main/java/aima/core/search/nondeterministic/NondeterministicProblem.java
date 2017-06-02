@@ -2,7 +2,6 @@ package aima.core.search.nondeterministic;
 
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.GoalTest;
-import aima.core.search.framework.problem.ResultFunction;
 import aima.core.search.framework.problem.StepCostFunction;
 
 /**
@@ -11,47 +10,36 @@ import aima.core.search.framework.problem.StepCostFunction;
  * ResultFunction (one result) with ResultsFunction (a set of results).
  * 
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
-public class NondeterministicProblem {
+public class NondeterministicProblem<S, A> {
 
-	protected Object initialState;
-	protected ActionsFunction actionsFunction;
-	protected ResultFunction resultFunction;
-	protected GoalTest goalTest;
-	protected StepCostFunction stepCostFunction;
-	protected ResultsFunction resultsFunction;
+	protected S initialState;
+	protected ActionsFunction<S, A> actionsFn;
+	protected GoalTest<S> goalTest;
+	protected StepCostFunction<S, A> stepCostFn;
+	protected ResultsFunction<S, A> resultsFn;
 
 	/**
 	 * Constructor
-	 * 
-	 * @param initialState
-	 * @param actionsFunction
-	 * @param resultsFunction
-	 * @param goalTest
 	 */
-	public NondeterministicProblem(Object initialState,
-			ActionsFunction actionsFunction, ResultsFunction resultsFunction,
-			GoalTest goalTest) {
-		this(initialState, actionsFunction, resultsFunction, goalTest, StepCostFunction.createDefault());
+	public NondeterministicProblem(S initialState,
+			ActionsFunction<S, A> actionsFn, ResultsFunction<S, A> resultsFn,
+			GoalTest<S> goalTest) {
+		this(initialState, actionsFn, resultsFn, goalTest, (s, a, sPrimed) -> 1.0);
 	}
 
 	/**
 	 * Constructor
-	 * 
-	 * @param initialState
-	 * @param actionsFunction
-	 * @param resultsFunction
-	 * @param goalTest
-	 * @param stepCostFunction
 	 */
-	public NondeterministicProblem(Object initialState,
-			ActionsFunction actionsFunction, ResultsFunction resultsFunction,
-			GoalTest goalTest, StepCostFunction stepCostFunction) {
+	public NondeterministicProblem(S initialState,
+			ActionsFunction<S, A> actionsFn, ResultsFunction<S, A> resultsFn,
+			GoalTest<S> goalTest, StepCostFunction<S, A> stepCostFn) {
 		this.initialState = initialState;
-		this.actionsFunction = actionsFunction;
-		this.resultsFunction = resultsFunction;
+		this.actionsFn = actionsFn;
+		this.resultsFn = resultsFn;
 		this.goalTest = goalTest;
-		this.stepCostFunction = stepCostFunction;
+		this.stepCostFn = stepCostFn;
 	}
 
 	/**
@@ -59,7 +47,7 @@ public class NondeterministicProblem {
 	 * 
 	 * @return the initial state of the agent.
 	 */
-	public Object getInitialState() {
+	public S getInitialState() {
 		return initialState;
 	}
 
@@ -68,8 +56,8 @@ public class NondeterministicProblem {
 	 * 
 	 * @return <code>true</code> if the given state is a goal state.
 	 */
-	public boolean isGoalState(Object state) {
-		return goalTest.isGoalState(state);
+	public boolean testGoal(S state) {
+		return goalTest.test(state);
 	}
 
 	/**
@@ -77,7 +65,7 @@ public class NondeterministicProblem {
 	 * 
 	 * @return the goal test.
 	 */
-	public GoalTest getGoalTest() {
+	public GoalTest<S> getGoalTest() {
 		return goalTest;
 	}
 
@@ -86,8 +74,8 @@ public class NondeterministicProblem {
 	 * 
 	 * @return the description of the possible actions available to the agent.
 	 */
-	public ActionsFunction getActionsFunction() {
-		return actionsFunction;
+	public ActionsFunction<S, A> getActionsFn() {
+		return actionsFn;
 	}
 
 	/**
@@ -95,8 +83,8 @@ public class NondeterministicProblem {
 	 * 
 	 * @return the description of what each action does.
 	 */
-	public ResultsFunction getResultsFunction() {
-		return this.resultsFunction;
+	public ResultsFunction<S, A> getResultsFn() {
+		return this.resultsFn;
 	}
 
 	/**
@@ -104,7 +92,7 @@ public class NondeterministicProblem {
 	 * 
 	 * @return the path cost function.
 	 */
-	public StepCostFunction getStepCostFunction() {
-		return stepCostFunction;
+	public StepCostFunction<S, A> getStepCostFn() {
+		return stepCostFn;
 	}
 }

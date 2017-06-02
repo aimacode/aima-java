@@ -1,9 +1,7 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-import aima.core.agent.Action;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.10, page
@@ -24,21 +22,25 @@ import aima.core.agent.Action;
  * <li>n.PATH-COST: the cost, traditionally denoted by g(n), of the path from
  * the initial state to the node, as indicated by the parent pointers.</li>
  * </ul>
- * 
+ *
+ * @param <S> the type used to represent states
+ * @param <A> the type of the actions to be used to navigate in the state space
+ *
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class Node {
+public class Node<S, A> {
 
 	// n.STATE: the state in the state space to which the node corresponds;
-	private Object state;
+	private S state;
 
 	// n.PARENT: the node in the search tree that generated this node;
-	private Node parent;
+	private Node<S, A> parent;
 
 	// n.ACTION: the action that was applied to the parent to generate the node;
-	private Action action;
+	private A action;
 
 	// n.PATH-COST: the cost, traditionally denoted by g(n), of the path from
 	// the initial state to the node, as indicated by the parent pointers.
@@ -50,7 +52,7 @@ public class Node {
 	 * @param state
 	 *            the state in the state space to which the node corresponds.
 	 */
-	public Node(Object state) {
+	public Node(S state) {
 		this.state = state;
 		pathCost = 0.0;
 	}
@@ -71,7 +73,7 @@ public class Node {
 	 *            the root's path costs plus the step costs for executing
 	 *            the the specified action.
 	 */
-	public Node(Object state, Node parent, Action action, double pathCost) {
+	public Node(S state, Node<S, A> parent, A action, double pathCost) {
 		this(state);
 		this.parent = parent;
 		this.action = action;
@@ -83,7 +85,7 @@ public class Node {
 	 * 
 	 * @return the state in the state space to which the node corresponds.
 	 */
-	public Object getState() {
+	public S getState() {
 		return state;
 	}
 
@@ -92,7 +94,7 @@ public class Node {
 	 * 
 	 * @return the node's parenet node, from which this node was generated.
 	 */
-	public Node getParent() {
+	public Node<S, A> getParent() {
 		return parent;
 	}
 
@@ -101,7 +103,7 @@ public class Node {
 	 * 
 	 * @return the action that was applied to the parent to generate the node.
 	 */
-	public Action getAction() {
+	public A getAction() {
 		return action;
 	}
 
@@ -130,9 +132,9 @@ public class Node {
 	 * 
 	 * @return the path from the root node to this node.
 	 */
-	public List<Node> getPathFromRoot() {
-		List<Node> path = new ArrayList<Node>();
-		Node current = this;
+	public List<Node<S, A>> getPathFromRoot() {
+		List<Node<S, A>> path = new LinkedList<>();
+		Node<S, A> current = this;
 		while (!current.isRootNode()) {
 			path.add(0, current);
 			current = current.getParent();

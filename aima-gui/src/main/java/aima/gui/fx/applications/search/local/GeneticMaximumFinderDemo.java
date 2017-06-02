@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import aima.core.search.local.FitnessFunction;
-import aima.core.search.local.GeneticAlgorithm.ProgressTracer;
+import aima.core.search.local.GeneticAlgorithm.ProgressTracker;
 import aima.core.search.local.GeneticAlgorithmForNumbers;
 import aima.core.search.local.Individual;
 
@@ -52,7 +52,7 @@ public class GeneticMaximumFinderDemo {
 		this.maxIterations = maxIterations;
 	}
 
-	public void startExperiment(ProgressTracer<Double> pTracer) {
+	public void startExperiment(ProgressTracker<Double> pTracer) {
 		GeneticAlgorithmForNumbers genAlgo = new GeneticAlgorithmForNumbers(1, Functions.minX, Functions.maxX, mutProb);
 		genAlgo.addProgressTracer(pTracer);
 		fitnessFn = ind -> func.apply(ind.getRepresentation().get(0));

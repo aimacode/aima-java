@@ -3,6 +3,7 @@ package aima.core.search.informed;
 import aima.core.search.framework.Node;
 
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Super class for all evaluation functions which make use of heuristics.
@@ -14,14 +15,14 @@ import java.util.function.Function;
  * @author Ruediger Lunde
  *
  */
-public abstract class HeuristicEvaluationFunction implements Function<Node, Double> {
-	protected Function<Object, Double> hf = state -> 0.0;
+public abstract class HeuristicEvaluationFunction<S, A> implements ToDoubleFunction<Node<S, A>> {
+	protected ToDoubleFunction<Node<S, A>> h = node -> 0.0;
 
-	public Function<Object, Double> getHeuristicFunction() {
-		return hf;
+	public ToDoubleFunction<Node<S, A>> getHeuristicFunction() {
+		return h;
 	}
 
-	public void setHeuristicFunction(Function<Object, Double> hf) {
-		this.hf = hf;
+	public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
+		this.h = h;
 	}
 }

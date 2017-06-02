@@ -31,13 +31,13 @@ import aima.core.search.framework.problem.Problem;
  * @author Ruediger Lunde
  * 
  */
-public class TreeSearch extends QueueSearch {
+public class TreeSearch<S, A> extends QueueSearch<S, A> {
 
 	public TreeSearch() {
-		this(new NodeExpander());
+		this(new NodeExpander<>());
 	}
 
-	public TreeSearch(NodeExpander nodeExpander) {
+	public TreeSearch(NodeExpander<S, A> nodeExpander) {
 		super(nodeExpander);
 	}
 	
@@ -45,7 +45,7 @@ public class TreeSearch extends QueueSearch {
 	 * Inserts the node at the tail of the frontier.
 	 */
 	@Override
-	protected void addToFrontier(Node node) {
+	protected void addToFrontier(Node<S, A> node) {
 		frontier.add(node);
 		updateMetrics(frontier.size());
 	}
@@ -56,8 +56,8 @@ public class TreeSearch extends QueueSearch {
 	 * @return the node at the head of the frontier.
 	 */
 	@Override
-	protected Node removeFromFrontier() {
-		Node result = frontier.remove();
+	protected Node<S, A> removeFromFrontier() {
+		Node<S, A> result = frontier.remove();
 		updateMetrics(frontier.size());
 		return result;
 	}

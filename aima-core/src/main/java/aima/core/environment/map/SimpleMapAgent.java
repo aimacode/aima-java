@@ -1,18 +1,16 @@
 package aima.core.environment.map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
-import aima.core.agent.State;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Note: This implementation should be used with one predefined goal only or
@@ -24,36 +22,38 @@ import aima.core.search.framework.problem.Problem;
  * @author Ruediger Lunde
  * 
  */
-public class SimpleMapAgent extends SimpleProblemSolvingAgent {
+public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToAction> {
 
 	protected Map map = null;
 	protected DynamicState state = new DynamicState();
 
 	// possibly null...
 	private EnvironmentViewNotifier notifier = null;
-	private SearchForActions search = null;
+	private SearchForActions<String, MoveToAction> search = null;
 	private String[] goals = null;
 	private int goalTestPos = 0;
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions<String, MoveToAction> search) {
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search, int maxGoalsToFormulate) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions<String, MoveToAction> search,
+						  int maxGoalsToFormulate) {
 		super(maxGoalsToFormulate);
 		this.map = map;
 		this.notifier = notifier;
 		this.search = search;
 	}
 
-	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions search, String[] goals) {
+	public SimpleMapAgent(Map map, EnvironmentViewNotifier notifier, SearchForActions<String, MoveToAction> search,
+						  String[] goals) {
 		this(map, search, goals);
 		this.notifier = notifier;
 	}
 
-	public SimpleMapAgent(Map map, SearchForActions search, String[] goals) {
+	public SimpleMapAgent(Map map, SearchForActions<String, MoveToAction> search, String[] goals) {
 		super(goals.length);
 		this.map = map;
 		this.search = search;
@@ -65,18 +65,15 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent {
 	// PROTECTED METHODS
 	//
 	@Override
-	protected State updateState(Percept p) {
+	protected void updateState(Percept p) {
 		DynamicPercept dp = (DynamicPercept) p;
-
 		state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
-
-		return state;
 	}
 
 	@Override
 	protected Object formulateGoal() {
-		Object goal = null;
-		if (null == goals) {
+		Object goal;
+		if (goals == null) {
 			goal = map.randomlyGenerateDestination();
 		} else {
 			goal = goals[goalTestPos];
@@ -90,14 +87,14 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent {
 	}
 
 	@Override
-	protected Problem formulateProblem(Object goal) {
+	protected Problem<String, MoveToAction> formulateProblem(Object goal) {
 		return new BidirectionalMapProblem(map, (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
 				(String) goal);
 	}
 
 	@Override
-	protected List<Action> search(Problem problem) {
-		List<Action> result = new ArrayList<Action>();
+	protected List<MoveToAction> search(Problem<String, MoveToAction> problem) {
+		List<MoveToAction> result = new ArrayList<>();
 		try {
 			result.addAll(search.findActions(problem));
 		} catch (Exception ex) {

@@ -1,20 +1,16 @@
 package aima.test.core.unit.search.nondeterministic;
 
+import aima.core.agent.Action;
+import aima.core.environment.vacuum.*;
 import aima.core.search.framework.problem.StepCostFunction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
-import aima.core.environment.vacuum.NondeterministicVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.VacuumEnvironmentState;
-import aima.core.environment.vacuum.VacuumWorldActions;
-import aima.core.environment.vacuum.VacuumWorldGoalTest;
-import aima.core.environment.vacuum.VacuumWorldResults;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.search.nondeterministic.Path;
+
+import static aima.core.environment.vacuum.VacuumEnvironment.*;
 
 /**
  * Tests the AND-OR search algorithm using the erratic vacuum world of page 133,
@@ -40,22 +36,21 @@ public class AndOrSearchTest {
         		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
         // create state: both rooms are dirty and the vacuum is in room A
         VacuumEnvironmentState state = new VacuumEnvironmentState();
-        state.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        state.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        state.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        state.setLocationState(LOCATION_A, LocationState.Dirty);
+        state.setLocationState(LOCATION_B, LocationState.Dirty);
+        state.setAgentLocation(this.agent, LOCATION_A);
         // create problem
-        this.problem = new NondeterministicProblem(
-                state,
-                new VacuumWorldActions(),
+        this.problem = new NondeterministicProblem<>(
+                state, VacuumWorldFunctions::getActions,
                 new VacuumWorldResults(this.agent),
-                new VacuumWorldGoalTest(this.agent),
-                StepCostFunction.createDefault());
+                VacuumWorldFunctions::testGoal,
+                (s, a, sPrimed) -> 1.0);
         // set the problem and agent
         this.agent.setProblem(this.problem);
         
         // create world
-        this.world = new NondeterministicVacuumEnvironment(VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
-        this.world.addAgent(this.agent, VacuumEnvironment.LOCATION_A);
+        this.world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);
+        this.world.addAgent(this.agent, LOCATION_A);
     }
 
     /**
@@ -65,18 +60,17 @@ public class AndOrSearchTest {
     public void testStateEquality() {
         // create state 1
         VacuumEnvironmentState s1 = new VacuumEnvironmentState();
-        s1.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s1.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        s1.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        s1.setLocationState(LOCATION_A, LocationState.Dirty);
+        s1.setLocationState(LOCATION_B, LocationState.Dirty);
+        s1.setAgentLocation(this.agent, LOCATION_A);
         // create state 2
         VacuumEnvironmentState s2 = new VacuumEnvironmentState();
-        s2.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s2.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        s2.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        s2.setLocationState(LOCATION_A, LocationState.Dirty);
+        s2.setLocationState(LOCATION_B, LocationState.Dirty);
+        s2.setAgentLocation(this.agent, LOCATION_A);
         // test
-        boolean expected = true;
         boolean actual = s1.equals(s2);
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(true, actual);
     }
 
     /**
@@ -87,34 +81,34 @@ public class AndOrSearchTest {
     public void testPathContains() {
         // create state 1
         VacuumEnvironmentState s1 = new VacuumEnvironmentState();
-        s1.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s1.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        s1.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        s1.setLocationState(LOCATION_A, LocationState.Dirty);
+        s1.setLocationState(LOCATION_B, LocationState.Dirty);
+        s1.setAgentLocation(this.agent, LOCATION_A);
         // create state 2
         VacuumEnvironmentState s2 = new VacuumEnvironmentState();
-        s2.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s2.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        s2.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
+        s2.setLocationState(LOCATION_A, LocationState.Dirty);
+        s2.setLocationState(LOCATION_B, LocationState.Dirty);
+        s2.setAgentLocation(this.agent, LOCATION_B);
         // create state 3
         VacuumEnvironmentState s3 = new VacuumEnvironmentState();
-        s3.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s3.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Clean);
-        s3.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        s3.setLocationState(LOCATION_A, LocationState.Dirty);
+        s3.setLocationState(LOCATION_B, LocationState.Clean);
+        s3.setAgentLocation(this.agent, LOCATION_A);
         // create state 4
         VacuumEnvironmentState s4 = new VacuumEnvironmentState();
-        s4.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        s4.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Clean);
-        s4.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
+        s4.setLocationState(LOCATION_A, LocationState.Dirty);
+        s4.setLocationState(LOCATION_B, LocationState.Clean);
+        s4.setAgentLocation(this.agent, LOCATION_B);
         // create test state 1
         VacuumEnvironmentState test1 = new VacuumEnvironmentState();
-        test1.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        test1.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Clean);
-        test1.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
+        test1.setLocationState(LOCATION_A, LocationState.Dirty);
+        test1.setLocationState(LOCATION_B, LocationState.Clean);
+        test1.setAgentLocation(this.agent, LOCATION_A);
         // create test state 2
         VacuumEnvironmentState test2 = new VacuumEnvironmentState();
-        test2.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Clean);
-        test2.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Clean);
-        test2.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
+        test2.setLocationState(LOCATION_A, LocationState.Clean);
+        test2.setLocationState(LOCATION_B, LocationState.Clean);
+        test2.setAgentLocation(this.agent, LOCATION_B);
         // add to path
         Path path = new Path();
         path = path.append(s1, s2, s3, s4);
@@ -133,9 +127,9 @@ public class AndOrSearchTest {
         this.world.stepUntilDone();
         // test
         VacuumEnvironmentState endState = (VacuumEnvironmentState) this.world.getCurrentState();
-        VacuumEnvironment.LocationState a = endState.getLocationState(VacuumEnvironment.LOCATION_A);
-        VacuumEnvironment.LocationState b = endState.getLocationState(VacuumEnvironment.LOCATION_B);
-        Assert.assertEquals(VacuumEnvironment.LocationState.Clean, a);
-        Assert.assertEquals(VacuumEnvironment.LocationState.Clean, b);
+        LocationState a = endState.getLocationState(LOCATION_A);
+        LocationState b = endState.getLocationState(LOCATION_B);
+        Assert.assertEquals(LocationState.Clean, a);
+        Assert.assertEquals(LocationState.Clean, b);
     }
 }

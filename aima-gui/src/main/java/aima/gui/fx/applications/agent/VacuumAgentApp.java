@@ -1,21 +1,8 @@
 package aima.gui.fx.applications.agent;
 
-import java.util.Arrays;
-import java.util.List;
-
+import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.environment.vacuum.FullyObservableVacuumEnvironmentPerceptToStateFunction;
-import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumAgent;
-import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
-import aima.core.environment.vacuum.ReflexVacuumAgent;
-import aima.core.environment.vacuum.SimpleReflexVacuumAgent;
-import aima.core.environment.vacuum.TableDrivenVacuumAgent;
-import aima.core.environment.vacuum.VacuumEnvironment;
-import aima.core.environment.vacuum.VacuumWorldActions;
-import aima.core.environment.vacuum.VacuumWorldGoalTest;
-import aima.core.environment.vacuum.VacuumWorldResults;
-import aima.core.search.framework.problem.StepCostFunction;
+import aima.core.environment.vacuum.*;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -27,6 +14,9 @@ import aima.gui.fx.views.VacuumEnvironmentViewCtrl;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Integrable application which demonstrates how different kinds of vacuum
@@ -153,8 +143,9 @@ public class VacuumAgentApp extends IntegrableApplication {
                 new FullyObservableVacuumEnvironmentPerceptToStateFunction());
     }
 
-    private NondeterministicProblem createNondeterministicProblem() {
-        return new NondeterministicProblem(env.getCurrentState(), new VacuumWorldActions(),
-                new VacuumWorldResults(agent), new VacuumWorldGoalTest(agent), StepCostFunction.createDefault());
+    private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {
+        VacuumEnvironmentState state = (VacuumEnvironmentState) env.getCurrentState();
+        return new NondeterministicProblem<>(state, VacuumWorldFunctions::getActions,
+                new VacuumWorldResults(agent), VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
     }
 }

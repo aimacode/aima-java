@@ -57,7 +57,7 @@ public class OsmRoutePlannerApp extends IntegrableApplication {
         clearBtn = new Button("Clear");
         clearBtn.setOnAction(ev -> initialize());
 
-        taskCombo = new ComboBox<String>();
+        taskCombo = new ComboBox<>();
         taskCombo.getItems().addAll(routeCalculator.getTaskSelectionOptions());
         taskCombo.getSelectionModel().select(0);
 

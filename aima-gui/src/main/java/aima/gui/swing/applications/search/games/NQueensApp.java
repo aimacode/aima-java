@@ -6,10 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import javax.swing.JButton;
 
@@ -20,12 +17,12 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.environment.nqueens.NQueensGoalTest;
+import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.ActionsFunction;
+import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
@@ -56,30 +53,30 @@ import aima.gui.swing.framework.SimulationThread;
 public class NQueensApp extends SimpleAgentApp {
 
 	/** List of supported search algorithm names. */
-	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
+	protected static List<String> SEARCH_NAMES = new ArrayList<>();
 	/** List of supported search algorithms. */
-	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<SearchForActions>();
+	protected static List<SearchForActions<NQueensBoard, QueenAction>> SEARCH_ALGOS = new ArrayList<>();
 
 	/** Adds a new item to the list of supported search algorithms. */
-	public static void addSearchAlgorithm(String name, SearchForActions algo) {
+	public static void addSearchAlgorithm(String name, SearchForActions<NQueensBoard, QueenAction> algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
 
 	static {
 		addSearchAlgorithm("Depth First Search (Graph Search)",
-				new DepthFirstSearch(new GraphSearch()));
+				new DepthFirstSearch<>(new GraphSearch<>()));
 		addSearchAlgorithm("Breadth First Search (Tree Search)",
-				new BreadthFirstSearch(new TreeSearch()));
+				new BreadthFirstSearch<>(new TreeSearch<>()));
 		addSearchAlgorithm("Breadth First Search (Graph Search)",
-				new BreadthFirstSearch(new GraphSearch()));
-		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch(8));
-		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
+				new BreadthFirstSearch<>(new GraphSearch<>()));
+		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch<>(8));
+		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
-				new AStarSearch(new GraphSearch(), new AttackingPairsHeuristic()));
-		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch(new AttackingPairsHeuristic()));
+				new AStarSearch<>(new GraphSearch<>(), new AttackingPairsHeuristic()));
+		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch<>(new AttackingPairsHeuristic()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new AttackingPairsHeuristic(), new Scheduler(20, 0.045, 1000)));
+				new SimulatedAnnealingSearch<>(new AttackingPairsHeuristic(), new Scheduler(20, 0.045, 1000)));
 	}
 
 	/** Returns a <code>NQueensView</code> instance. */
@@ -268,15 +265,15 @@ public class NQueensApp extends SimpleAgentApp {
 			if (agent == null) {
 				int pSel = frame.getSelection().getIndex(NQueensFrame.PROBLEM_SEL);
 				int sSel = frame.getSelection().getIndex(NQueensFrame.SEARCH_SEL);
-				ActionsFunction af;
+				ActionsFunction<NQueensBoard, QueenAction> actionsFn;
 				if (pSel == 0)
-					af = NQueensFunctionFactory.getIActionsFunction();
+					actionsFn = NQueensFunctions::getIFActions;
 				else
-					af = NQueensFunctionFactory.getCActionsFunction();
-				Problem problem = new Problem(env.getBoard(), af, NQueensFunctionFactory.getResultFunction(),
-						new NQueensGoalTest());
-				SearchForActions search = SEARCH_ALGOS.get(sSel);
-				agent = new SearchAgent(problem, search);
+					actionsFn = NQueensFunctions::getCSFActions;
+				Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(env.getBoard(),
+						actionsFn, NQueensFunctions::getResult, NQueensFunctions::testGoal);
+				SearchForActions<NQueensBoard, QueenAction> search = SEARCH_ALGOS.get(sSel);
+				agent = new SearchAgent<>(problem, search);
 				env.addAgent(agent);
 			}
 		}
@@ -332,13 +329,12 @@ public class NQueensApp extends SimpleAgentApp {
 
 		/** Provides a text with statistical information about the last run. */
 		private String getStatistics() {
-			StringBuffer result = new StringBuffer();
+			StringBuilder result = new StringBuilder();
 			Properties properties = agent.getInstrumentation();
-			Iterator<Object> keys = properties.keySet().iterator();
-			while (keys.hasNext()) {
-				String key = (String) keys.next();
+			for (Object o : properties.keySet()) {
+				String key = (String) o;
 				String property = properties.getProperty(key);
-				result.append("\n" + key + " : " + property);
+				result.append("\n").append(key).append(" : ").append(property);
 			}
 			return result.toString();
 		}

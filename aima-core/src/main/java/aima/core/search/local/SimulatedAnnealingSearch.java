@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
@@ -44,7 +45,7 @@ import aima.core.util.Util;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class SimulatedAnnealingSearch implements SearchForActions, SearchForStates {
+public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
 	public enum SearchOutcome {
 		FAILURE, SOLUTION_FOUND
@@ -54,66 +55,66 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	public static final String METRIC_TEMPERATURE = "temp";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 	
-	private final Function<Object, Double> hf;
+	private final ToDoubleFunction<Node<S, A>> h;
 	private final Scheduler scheduler;
-	private final NodeExpander nodeExpander;
+	private final NodeExpander<S, A> nodeExpander;
 	
 	private SearchOutcome outcome = SearchOutcome.FAILURE;
-	private Object lastState = null;
+	private S lastState;
 	private Metrics metrics = new Metrics();
 
 	/**
 	 * Constructs a simulated annealing search from the specified heuristic
 	 * function and a default scheduler.
 	 * 
-	 * @param hf
+	 * @param h
 	 *            a heuristic function
 	 */
-	public SimulatedAnnealingSearch(Function<Object, Double> hf) {
-		this(hf, new Scheduler());
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h) {
+		this(h, new Scheduler());
 	}
 
 	/**
 	 * Constructs a simulated annealing search from the specified heuristic
 	 * function and scheduler.
 	 * 
-	 * @param hf
+	 * @param h
 	 *            a heuristic function
 	 * @param scheduler
 	 *            a mapping from time to "temperature"
 	 */
-	public SimulatedAnnealingSearch(Function<Object, Double> hf, Scheduler scheduler) {
-		this(hf, scheduler, new NodeExpander());
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler) {
+		this(h, scheduler, new NodeExpander<>());
 	}
 	
-	public SimulatedAnnealingSearch(Function<Object, Double> hf, Scheduler scheduler, NodeExpander nodeExpander) {
-		this.hf = hf;
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler, NodeExpander<S, A> nodeExpander) {
+		this.h = h;
 		this.scheduler = scheduler;
 		this.nodeExpander = nodeExpander;
 		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 	
 	@Override
-	public List<Action> findActions(Problem p) {
+	public List<A> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node node = findNode(p);
+		Node<S, A> node = findNode(p);
 		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
 	}
 	
 	@Override
-	public Object findState(Problem p) {
+	public S findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node node = findNode(p);
+		Node<S, A> node = findNode(p);
 		return node == null ? null : node.getState();
 	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
-	public Node findNode(Problem p) {
+	public Node<S, A> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node current = nodeExpander.createRootNode(p.getInitialState());
+		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (!CancelableThread.currIsCanceled()) {
@@ -123,16 +124,16 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 			lastState = current.getState();
 			// if temperature = 0 then return current
 			if (temperature == 0.0) {
-				if (SearchUtils.isGoalState(p, current))
+				if (p.testSolution(current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
 				return current;
 			}
 
 			updateMetrics(temperature, getValue(current));
-			List<Node> children = nodeExpander.expand(current, p);
+			List<Node<S, A>> children = nodeExpander.expand(current, p);
 			if (children.size() > 0) {
 				// next <- a randomly selected successor of current
-				Node next = Util.selectRandomlyFromList(children);
+				Node<S, A> next = Util.selectRandomlyFromList(children);
 				// /\E <- next.VALUE - current.value
 				double deltaE = getValue(next) - getValue(current);
 
@@ -196,12 +197,12 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	}
 
 	@Override
-	public void addNodeListener(Consumer<Node> listener)  {
+	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
 	}
 
 	@Override
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeExpander.removeNodeListener(listener);
 	}
 	
@@ -213,14 +214,13 @@ public class SimulatedAnnealingSearch implements SearchForActions, SearchForStat
 	// else current <- next only with probability e^(/\E/T)
 	private boolean shouldAccept(double temperature, double deltaE) {
 		return (deltaE > 0.0)
-				|| (new Random().nextDouble() <= probabilityOfAcceptance(
-						temperature, deltaE));
+				|| (new Random().nextDouble() <= probabilityOfAcceptance(temperature, deltaE));
 	}
 
-	private double getValue(Node n) {
+	private double getValue(Node<S, A> n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
 		// SA deals with gardient DESCENT
-		return -1 * hf.apply(n.getState());
+		return -1 * h.applyAsDouble(n);
 	}
 }

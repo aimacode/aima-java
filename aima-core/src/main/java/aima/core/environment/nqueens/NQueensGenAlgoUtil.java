@@ -27,22 +27,21 @@ public class NQueensGenAlgoUtil {
 		return new NQueensFitnessFunction();
 	}
 	
-	public static GoalTest getGoalTest() {
+	public static GoalTest<Individual<Integer>> getGoalTest() {
 		return new NQueensGenAlgoGoalTest();
 	}
 	
 
 	public static Individual<Integer> generateRandomIndividual(int boardSize) {
-		List<Integer> individualRepresentation = new ArrayList<Integer>();
+		List<Integer> individualRepresentation = new ArrayList<>();
 		for (int i = 0; i < boardSize; i++) {
 			individualRepresentation.add(new Random().nextInt(boardSize));
 		}
-		Individual<Integer> individual = new Individual<Integer>(individualRepresentation);
-		return individual;
+		return new Individual<>(individualRepresentation);
 	}
 
 	public static Collection<Integer> getFiniteAlphabetForBoardOfSize(int size) {
-		Collection<Integer> fab = new ArrayList<Integer>();
+		Collection<Integer> fab = new ArrayList<>();
 
 		for (int i = 0; i < size; i++) {
 			fab.add(i);
@@ -97,12 +96,12 @@ public class NQueensGenAlgoUtil {
 		}
 	}
 
-	public static class NQueensGenAlgoGoalTest implements GoalTest {
-		private final NQueensGoalTest goalTest = new NQueensGoalTest();
+	public static class NQueensGenAlgoGoalTest implements GoalTest<Individual<Integer>> {
+		private final GoalTest<NQueensBoard> goalTest = NQueensFunctions::testGoal;
 
-		@SuppressWarnings("unchecked")
-		public boolean isGoalState(Object state) {
-			return goalTest.isGoalState(getBoardForIndividual((Individual<Integer>) state));
+		@Override
+		public boolean test(Individual<Integer> state) {
+			return goalTest.test(getBoardForIndividual(state));
 		}
 	}
 
@@ -113,7 +112,6 @@ public class NQueensGenAlgoUtil {
 			int pos = individual.getRepresentation().get(i);
 			board.addQueenAt(new XYLocation(i, pos));
 		}
-
 		return board;
 	}
 }

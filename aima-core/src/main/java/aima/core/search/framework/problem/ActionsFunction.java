@@ -1,26 +1,17 @@
 package aima.core.search.framework.problem;
 
-import java.util.Set;
-
-import aima.core.agent.Action;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 67.<br>
  * <br>
  * Given a particular state s, ACTIONS(s) returns the set of actions that can be
  * executed in s. We say that each of these actions is <b>applicable</b> in s.
- * 
- * @author Ciaran O'Reilly
- * 
+ *
+ * @param <S> the type used to represent states
+ * @param <A> the type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  */
-public interface ActionsFunction {
-	/**
-	 * Given a particular state s, returns the set of actions that can be
-	 * executed in s.
-	 * 
-	 * @param s
-	 *            a particular state.
-	 * @return the set of actions that can be executed in s.
-	 */
-	Set<Action> actions(Object s);
-}
+public interface ActionsFunction<S, A> extends Function<S, List<A>> {}

@@ -1,12 +1,11 @@
 package aima.core.search.framework;
 
+import aima.core.search.framework.problem.Problem;
+import aima.core.search.framework.qsearch.QueueSearch;
+
 import java.util.List;
 import java.util.Queue;
 import java.util.function.Consumer;
-
-import aima.core.agent.Action;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.framework.qsearch.QueueSearch;
 
 /**
  * Base class for all search algorithms which use a queue to manage not yet
@@ -17,17 +16,17 @@ import aima.core.search.framework.qsearch.QueueSearch;
  *
  * @author Ruediger Lunde
  */
-public abstract class QueueBasedSearch implements SearchForActions, SearchForStates {
-	protected final QueueSearch impl;
-	private final Queue<Node> frontier;
+public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
+	protected final QueueSearch<S, A> impl;
+	private final Queue<Node<S, A>> frontier;
 
-	protected QueueBasedSearch(QueueSearch impl, Queue<Node> queue) {
+	protected QueueBasedSearch(QueueSearch<S, A> impl, Queue<Node<S, A>> queue) {
 		this.impl = impl;
 		this.frontier = queue;
 	}
 
 	@Override
-	public List<Action> findActions(Problem p) {
+	public List<A> findActions(Problem<S, A> p) {
 		impl.getNodeExpander().useParentLinks(true);
 		frontier.clear();
 		Node node = impl.findNode(p, frontier);
@@ -35,10 +34,10 @@ public abstract class QueueBasedSearch implements SearchForActions, SearchForSta
 	}
 
 	@Override
-	public Object findState(Problem p) {
+	public S findState(Problem<S, A> p) {
 		impl.getNodeExpander().useParentLinks(false);
 		frontier.clear();
-		Node node = impl.findNode(p, frontier);
+		Node<S, A> node = impl.findNode(p, frontier);
 		return node == null ? null : node.getState();
 	}
 
@@ -48,12 +47,12 @@ public abstract class QueueBasedSearch implements SearchForActions, SearchForSta
 	}
 
 	@Override
-	public void addNodeListener(Consumer<Node> listener)  {
+	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		impl.getNodeExpander().addNodeListener(listener);
 	}
 
 	@Override
-	public boolean removeNodeListener(Consumer<Node> listener) {
+	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return impl.getNodeExpander().removeNodeListener(listener);
 	}
 }

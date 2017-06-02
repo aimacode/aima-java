@@ -6,7 +6,7 @@ import aima.core.search.framework.QueueFactory;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.Comparator;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 92.<br>
@@ -22,9 +22,9 @@ import java.util.function.Function;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class BestFirstSearch extends QueueBasedSearch implements Informed {
+public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Informed<S, A> {
 
-	private final Function<Node, Double> evalFunc;
+	private final ToDoubleFunction<Node<S, A>> evalFn;
 	
 	/**
 	 * Constructs a best first search from a specified search problem and
@@ -32,20 +32,20 @@ public class BestFirstSearch extends QueueBasedSearch implements Informed {
 	 * 
 	 * @param impl
 	 *            a search space exploration strategy.
-	 * @param ef
+	 * @param evalFn
 	 *            an evaluation function, which returns a number purporting to
 	 *            describe the desirability (or lack thereof) of expanding a
 	 *            node.
 	 */
-	public BestFirstSearch(QueueSearch impl, final Function<Node, Double> ef) {
-		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(ef::apply)));
-		evalFunc = ef;
+	public BestFirstSearch(QueueSearch<S, A> impl, final ToDoubleFunction<Node<S, A>> evalFn) {
+		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(evalFn::applyAsDouble)));
+		this.evalFn = evalFn;
 	}
 
 	/** Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}. */
 	@Override
-	public void setHeuristicFunction(Function<Object, Double> hf) {
-		if (evalFunc instanceof HeuristicEvaluationFunction)
-			((HeuristicEvaluationFunction) evalFunc).setHeuristicFunction(hf);
+	public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
+		if (evalFn instanceof HeuristicEvaluationFunction)
+			((HeuristicEvaluationFunction<S, A>) evalFn).setHeuristicFunction(h);
 	}
 }

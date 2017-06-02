@@ -12,7 +12,7 @@ import aima.core.search.nondeterministic.ResultsFunction;
  * 
  * @author Andrew Brown
  */
-public class VacuumWorldResults implements ResultsFunction {
+public class VacuumWorldResults implements ResultsFunction<VacuumEnvironmentState, Action> {
 
 	private Agent agent;
 
@@ -33,12 +33,10 @@ public class VacuumWorldResults implements ResultsFunction {
 	 * @return a list of possible results for a given state and action.
 	 */
 	@Override
-	public Set<Object> results(Object state, Action action) {
-		// setup
-		VacuumEnvironmentState vacEnvState = (VacuumEnvironmentState) state;
+	public Set<VacuumEnvironmentState> results(VacuumEnvironmentState state, Action action) {
 		// Ensure order is consistent across platforms.
-		Set<Object> results = new LinkedHashSet<Object>();
-		String currentLocation = vacEnvState.getAgentLocation(agent);
+		Set<VacuumEnvironmentState> results = new LinkedHashSet<>();
+		String currentLocation = state.getAgentLocation(agent);
 		String adjacentLocation = (currentLocation
 				.equals(VacuumEnvironment.LOCATION_A)) ? VacuumEnvironment.LOCATION_B
 				: VacuumEnvironment.LOCATION_A;
@@ -46,31 +44,31 @@ public class VacuumWorldResults implements ResultsFunction {
 		if (VacuumEnvironment.ACTION_MOVE_RIGHT == action) {
 			VacuumEnvironmentState s = new VacuumEnvironmentState();
 			s.setLocationState(currentLocation,
-					vacEnvState.getLocationState(currentLocation));
+					state.getLocationState(currentLocation));
 			s.setLocationState(adjacentLocation,
-					vacEnvState.getLocationState(adjacentLocation));
+					state.getLocationState(adjacentLocation));
 			s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
 			results.add(s);
 		} // case: move left
 		else if (VacuumEnvironment.ACTION_MOVE_LEFT == action) {
 			VacuumEnvironmentState s = new VacuumEnvironmentState();
 			s.setLocationState(currentLocation,
-					vacEnvState.getLocationState(currentLocation));
+					state.getLocationState(currentLocation));
 			s.setLocationState(adjacentLocation,
-					vacEnvState.getLocationState(adjacentLocation));
+					state.getLocationState(adjacentLocation));
 			s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
 			results.add(s);
 		} // case: suck
 		else if (VacuumEnvironment.ACTION_SUCK == action) {
 			// case: square is dirty
-			if (VacuumEnvironment.LocationState.Dirty == vacEnvState
-					.getLocationState(vacEnvState.getAgentLocation(this.agent))) {
+			if (VacuumEnvironment.LocationState.Dirty == state
+					.getLocationState(state.getAgentLocation(this.agent))) {
 				// always clean current
 				VacuumEnvironmentState s1 = new VacuumEnvironmentState();
 				s1.setLocationState(currentLocation,
 						VacuumEnvironment.LocationState.Clean);
 				s1.setLocationState(adjacentLocation,
-						vacEnvState.getLocationState(adjacentLocation));
+						state.getLocationState(adjacentLocation));
 				s1.setAgentLocation(this.agent, currentLocation);
 				results.add(s1);
 				// sometimes clean adjacent as well
@@ -86,9 +84,9 @@ public class VacuumWorldResults implements ResultsFunction {
 				// sometimes do nothing
 				VacuumEnvironmentState s1 = new VacuumEnvironmentState();
 				s1.setLocationState(currentLocation,
-						vacEnvState.getLocationState(currentLocation));
+						state.getLocationState(currentLocation));
 				s1.setLocationState(adjacentLocation,
-						vacEnvState.getLocationState(adjacentLocation));
+						state.getLocationState(adjacentLocation));
 				s1.setAgentLocation(this.agent, currentLocation);
 				results.add(s1);
 				// sometimes deposit dirt
@@ -96,12 +94,10 @@ public class VacuumWorldResults implements ResultsFunction {
 				s2.setLocationState(currentLocation,
 						VacuumEnvironment.LocationState.Dirty);
 				s2.setLocationState(adjacentLocation,
-						vacEnvState.getLocationState(adjacentLocation));
+						state.getLocationState(adjacentLocation));
 				s2.setAgentLocation(this.agent, currentLocation);
 				results.add(s2);
 			}
-		} else if (action.isNoOp()) {
-			// do nothing
 		}
 		return results;
 	}
