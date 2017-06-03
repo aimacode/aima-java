@@ -75,17 +75,17 @@ To actually search you need to:
 A good example (from the NQueens Demo) is:
 ```java
 private static void nQueensWithBreadthFirstSearch() {
-	try {
-		System.out.println("\nNQueensDemo BFS -->");
+    try {
+	System.out.println("\nNQueensDemo BFS -->");
         Problem<NQueensBoard, QueenAction> problem =
                 NQueensFunctions.createIncrementalFormulationProblem(boardSize);
         SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
         SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+    } catch (Exception e) {
+	e.printStackTrace();
+    }
 }
 ```
 
