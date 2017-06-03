@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * <br>
  * The goal test, which determines whether a given state is a goal state.
  *
- * @param <S> the type used to represent states
+ * @param <S> The type used to represent states
  *
  * @author Ruediger Lunde
  */

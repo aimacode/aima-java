@@ -13,13 +13,13 @@ import aima.core.search.framework.problem.Problem;
 public class BidirectionalEightPuzzleProblem extends GeneralProblem<EightPuzzleBoard, Action>
 		implements BidirectionalProblem<EightPuzzleBoard, Action> {
 
-	private Problem<EightPuzzleBoard, Action> reverseProblem;
+	private final Problem<EightPuzzleBoard, Action> reverseProblem;
 
 	public BidirectionalEightPuzzleProblem(EightPuzzleBoard initialState) {
 		super(initialState, EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
-				GoalTest.isEqual(new EightPuzzleBoard(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8})));
+				GoalTest.isEqual(EightPuzzleFunctions.GOAL_STATE));
 
-		reverseProblem = new GeneralProblem<>(new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 }),
+		reverseProblem = new GeneralProblem<>(EightPuzzleFunctions.GOAL_STATE,
 				EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
 				GoalTest.isEqual(initialState));
 	}

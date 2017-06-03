@@ -2,6 +2,8 @@ package aima.core.search.nondeterministic;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -140,8 +142,7 @@ public class AndOrSearch<S, A> {
 	 * @param path
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan andSearch(Set<S> states, NondeterministicProblem<S, A> problem,
-			Path path) {
+	public Plan andSearch(List<S> states, NondeterministicProblem<S, A> problem, Path path) {
 		// do metrics, setup
 		this.expandedNodes++;
 		Object[] _states = states.toArray();

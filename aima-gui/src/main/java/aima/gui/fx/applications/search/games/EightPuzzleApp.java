@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import aima.core.agent.Action;
-import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
-import aima.core.environment.eightpuzzle.EightPuzzleBoard;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
+import aima.core.environment.eightpuzzle.*;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -51,32 +48,35 @@ public class EightPuzzleApp extends IntegrableApplication {
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<>();
 	/** List of supported search algorithms. */
-	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<>();
+	protected static List<SearchForActions<EightPuzzleBoard, Action>> SEARCH_ALGOS = new ArrayList<>();
 
 	private EightPuzzleBoard board;
 
 	/** Adds a new item to the list of supported search algorithms. */
-	public static void addSearchAlgorithm(String name, SearchForActions algo) {
+	public static void addSearchAlgorithm(String name, SearchForActions<EightPuzzleBoard, Action> algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
 
 	static {
-		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch(new GraphSearch()));
+		addSearchAlgorithm("Breadth First Search (Graph Search)", new BreadthFirstSearch<>(new GraphSearch<>()));
 		addSearchAlgorithm("Breadth First Search (Bidirectional Search)",
-				new BreadthFirstSearch(new BidirectionalSearch()));
-		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
-		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
+				new BreadthFirstSearch<>(new BidirectionalSearch<>()));
+		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch<>(9));
+		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeuristic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
+				new GreedyBestFirstSearch<>(new GraphSearch<>(),
+						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeuristic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
+				new GreedyBestFirstSearch<>(new GraphSearch<>(),
+						EightPuzzleFunctions.createManhattanHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeuristic)",
-				new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (ManhattanHeuristic)",
-				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search (ManhattanHeuristic)",
-				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction(), new Scheduler(20, 0.05, 200)));
+				new SimulatedAnnealingSearch<>(EightPuzzleFunctions.createManhattanHeuristicFunction(),
+						new Scheduler(20, 0.05, 200)));
 	}
 
 
@@ -169,8 +169,8 @@ public class EightPuzzleApp extends IntegrableApplication {
 	public void simulate() {
 		int strategyIdx = simPaneCtrl.getParamValueIndex(PARAM_STRATEGY);
 
-		Problem problem = new BidirectionalEightPuzzleProblem(board);
-		SearchForActions search = SEARCH_ALGOS.get(strategyIdx);
+		Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
+		SearchForActions<EightPuzzleBoard, Action> search = SEARCH_ALGOS.get(strategyIdx);
 		List<Action> actions = search.findActions(problem);
 		for (Action action : actions) {
 			if (action == EightPuzzleBoard.UP)
@@ -182,7 +182,8 @@ public class EightPuzzleApp extends IntegrableApplication {
 			else if (action == EightPuzzleBoard.RIGHT)
 				board.moveGapRight();
 			Metrics m = new Metrics();
-			m.set("manhattanHeuristic", new ManhattanHeuristicFunction().applyAsDouble(new Node(board)));
+			m.set("manhattanHeuristic", EightPuzzleFunctions.createManhattanHeuristicFunction().applyAsDouble
+					(new Node<>(board)));
 			updateStateView(m);
 			if (CancelableThread.currIsCanceled())
 				break;

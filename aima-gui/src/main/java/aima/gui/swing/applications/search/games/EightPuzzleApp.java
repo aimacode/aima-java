@@ -18,10 +18,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
-import aima.core.environment.eightpuzzle.EightPuzzleBoard;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
+import aima.core.environment.eightpuzzle.*;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -51,33 +48,35 @@ import aima.gui.swing.framework.SimulationThread;
 public class EightPuzzleApp extends SimpleAgentApp {
 
 	/** List of supported search algorithm names. */
-	protected static List<String> SEARCH_NAMES = new ArrayList<String>();
+	protected static List<String> SEARCH_NAMES = new ArrayList<>();
 	/** List of supported search algorithms. */
-	protected static List<SearchForActions> SEARCH_ALGOS = new ArrayList<SearchForActions>();
+	protected static List<SearchForActions<EightPuzzleBoard, Action>> SEARCH_ALGOS = new ArrayList<>();
 
 	/** Adds a new item to the list of supported search algorithms. */
-	public static void addSearchAlgorithm(String name, SearchForActions algo) {
+	public static void addSearchAlgorithm(String name, SearchForActions<EightPuzzleBoard, Action> algo) {
 		SEARCH_NAMES.add(name);
 		SEARCH_ALGOS.add(algo);
 	}
 
 	static {
 		addSearchAlgorithm("Breadth First Search (Graph Search)",
-				new BreadthFirstSearch(new GraphSearch()));
+				new BreadthFirstSearch<>(new GraphSearch<>()));
 		addSearchAlgorithm("Breadth First Search (Bidirectional Search)",
-				new BreadthFirstSearch(new BidirectionalSearch()));
+				new BreadthFirstSearch<>(new BidirectionalSearch<>()));
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
+				new GreedyBestFirstSearch<>(new GraphSearch<>(),
+						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
-				new GreedyBestFirstSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
+				new GreedyBestFirstSearch<>(new GraphSearch<>(),
+						EightPuzzleFunctions.createManhattanHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
-				new AStarSearch(new GraphSearch(), new MisplacedTileHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
 		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
-				new AStarSearch(new GraphSearch(), new ManhattanHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch(new ManhattanHeuristicFunction()));
+				new SimulatedAnnealingSearch<>(EightPuzzleFunctions.createManhattanHeuristicFunction()));
 	}
 
 	/** Returns an <code>EightPuzzleView</code> instance. */
@@ -273,9 +272,9 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		protected void addAgent() throws Exception {
 			if (agent == null) {
 				int pSel = frame.getSelection().getIndex(EightPuzzleFrame.SEARCH_SEL);
-				Problem problem = new BidirectionalEightPuzzleProblem(env.getBoard());
-				SearchForActions search = SEARCH_ALGOS.get(pSel);
-				agent = new SearchAgent(problem, search);
+				Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(env.getBoard());
+				SearchForActions<EightPuzzleBoard, Action> search = SEARCH_ALGOS.get(pSel);
+				agent = new SearchAgent<>(problem, search);
 				env.addAgent(agent);
 			}
 		}
@@ -329,11 +328,10 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Provides a text with statistical information about the last run. */
 		private String getStatistics() {
-			StringBuffer result = new StringBuffer();
+			StringBuilder result = new StringBuilder();
 			Properties properties = agent.getInstrumentation();
-			Iterator<Object> keys = properties.keySet().iterator();
-			while (keys.hasNext()) {
-				String key = (String) keys.next();
+			for (Object o : properties.keySet()) {
+				String key = (String) o;
 				String property = properties.getProperty(key);
 				result.append("\n" + key + " : " + property);
 			}

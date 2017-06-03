@@ -10,8 +10,8 @@ import java.util.function.BiFunction;
  * that results from doing action a in state s. We also use the term successor
  * to refer to any state reachable from a given state by a single action.
  *
- * @param <S> the type used to represent states
- * @param <A> the type of the actions to be used to navigate in the state space
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
  *
  * @author Ruediger Lunde
  */

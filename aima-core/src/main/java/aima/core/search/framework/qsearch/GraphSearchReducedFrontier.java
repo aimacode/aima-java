@@ -41,10 +41,13 @@ import aima.core.search.framework.problem.Problem;
  * implementation checks whether another node for the same state already exists
  * and decides whether to replace it or ignore the new node depending on the
  * node's costs (comparator of priority queue is used, if available).
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
- * @author Ruediger Lunde
  */
 public class GraphSearchReducedFrontier<S, A> extends QueueSearch<S, A> {
 

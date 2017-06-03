@@ -1,9 +1,9 @@
 package aima.test.core.unit.search.informed;
 
 import aima.core.agent.Action;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchAgent;
@@ -35,12 +35,9 @@ public class AStarSearchTest {
 			EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 7, 1, 8,
 					0, 4, 6, 2, 3, 5 });
 
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(board,
-					EightPuzzleFunctions::getActions,
-					EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(),
-					new ManhattanHeuristicFunction());
+					EightPuzzleFunctions.createManhattanHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("1133", // "926" GraphSearchReduced Frontier

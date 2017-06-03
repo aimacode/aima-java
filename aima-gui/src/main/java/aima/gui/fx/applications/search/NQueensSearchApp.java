@@ -1,8 +1,8 @@
 package aima.gui.fx.applications.search;
 
-import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
+import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
@@ -122,15 +122,17 @@ public class NQueensSearchApp extends IntegrableApplication {
 	public void simulate() {
 		Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
 		if (strategy.equals("Depth-First Search (incremental)"))
-			experiment.startExperiment(new DepthFirstSearch(new TreeSearch()));
+			experiment.startExperiment(new DepthFirstSearch<>(new TreeSearch<>()));
 		else if (strategy.equals("Breadth-First Search (incremental)"))
-			experiment.startExperiment(new BreadthFirstSearch(new TreeSearch()));
+			experiment.startExperiment(new BreadthFirstSearch<>(new TreeSearch<>()));
 		else if (strategy.equals("Iterative Deepening Search"))
-			experiment.startExperiment(new IterativeDeepeningSearch());
+			experiment.startExperiment(new IterativeDeepeningSearch<>());
 		else if (strategy.equals("Greedy Best-First Search (attacking pair heuristic)"))
-			experiment.startExperiment(new GreedyBestFirstSearch(new GraphSearch(), new AttackingPairsHeuristic()));
+			experiment.startExperiment(new GreedyBestFirstSearch<>(new GraphSearch<>(),
+					NQueensFunctions.createAttackingPairsHeuristicFunction()));
         else if (strategy.equals("A* search (attacking pair heuristic)"))
-            experiment.startExperiment(new AStarSearch(new GraphSearch(), new AttackingPairsHeuristic()));
+            experiment.startExperiment(new AStarSearch<>(new GraphSearch<>(),
+					NQueensFunctions.createAttackingPairsHeuristicFunction()));
 		else if (strategy.equals("Hill Climbing"))
 			experiment.startHillClimbingExperiment();
 		else if (strategy.equals("Simulated Annealing"))

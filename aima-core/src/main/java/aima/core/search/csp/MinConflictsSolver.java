@@ -29,7 +29,10 @@ import aima.core.util.Util;
  * chooses a minimal-conflict value for each variable in turn. The CONFLICTS
  * function counts the number of constraints violated by a particular value,
  * given the rest of the current assignment.
- * 
+ *
+ * @param <VAR> Type which is used to represent variables
+ * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  * @author Mike Stampone
  */

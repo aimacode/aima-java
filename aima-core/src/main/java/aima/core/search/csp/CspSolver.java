@@ -9,6 +9,9 @@ import java.util.List;
  * abstract class provides the central interface method and additionally an
  * implementation of an observer mechanism.
  *
+ * @param <VAR> Type which is used to represent variables
+ * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  * @author Mike Stampone
  */

@@ -1,8 +1,11 @@
 package aima.gui.demo.search;
 
 import aima.core.agent.Action;
-import aima.core.environment.nqueens.*;
+import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
+import aima.core.environment.nqueens.NQueensFunctions;
+import aima.core.environment.nqueens.NQueensGenAlgoUtil;
+import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GoalTest;
@@ -113,7 +116,7 @@ public class NQueensDemo {
 					NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
 
 			SimulatedAnnealingSearch<NQueensBoard, QueenAction> search =
-					new SimulatedAnnealingSearch<>(new AttackingPairsHeuristic(),
+					new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(),
 					new Scheduler(20, 0.045, 100));
 			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
@@ -132,7 +135,8 @@ public class NQueensDemo {
 		try {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
-			HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>(new AttackingPairsHeuristic());
+			HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>
+					(NQueensFunctions.createAttackingPairsHeuristicFunction());
 			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
 			System.out.println();

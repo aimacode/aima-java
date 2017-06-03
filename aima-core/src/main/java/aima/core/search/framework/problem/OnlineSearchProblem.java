@@ -17,7 +17,10 @@ import java.util.List;
  * the agent knows that s' is the outcome; and</li>
  * <li>GOAL-TEST(s).</li>
  * </ul>
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ruediger Lunde
  */
 public interface OnlineSearchProblem<S, A> {

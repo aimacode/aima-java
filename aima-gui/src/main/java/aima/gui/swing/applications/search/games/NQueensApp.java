@@ -1,21 +1,10 @@
 package aima.gui.swing.applications.search.games;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
-
-import javax.swing.JButton;
-
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.environment.nqueens.AttackingPairsHeuristic;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
@@ -35,12 +24,15 @@ import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
-import aima.gui.swing.framework.AgentAppController;
-import aima.gui.swing.framework.AgentAppEnvironmentView;
-import aima.gui.swing.framework.AgentAppFrame;
-import aima.gui.swing.framework.MessageLogger;
-import aima.gui.swing.framework.SimpleAgentApp;
-import aima.gui.swing.framework.SimulationThread;
+import aima.gui.swing.framework.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Graphical n-queens game application. It demonstrates the performance of
@@ -73,10 +65,12 @@ public class NQueensApp extends SimpleAgentApp {
 		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch<>(8));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
-				new AStarSearch<>(new GraphSearch<>(), new AttackingPairsHeuristic()));
-		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch<>(new AttackingPairsHeuristic()));
+				new AStarSearch<>(new GraphSearch<>(), NQueensFunctions.createAttackingPairsHeuristicFunction()));
+		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch<>
+				(NQueensFunctions.createAttackingPairsHeuristicFunction()));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch<>(new AttackingPairsHeuristic(), new Scheduler(20, 0.045, 1000)));
+				new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(),
+						new Scheduler(20, 0.045, 1000)));
 	}
 
 	/** Returns a <code>NQueensView</code> instance. */

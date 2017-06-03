@@ -14,6 +14,9 @@ import java.util.function.Consumer;
  * Search space exploration control is always delegated to some
  * <code>QueueSearch</code> implementation.
  *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ruediger Lunde
  */
 public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {

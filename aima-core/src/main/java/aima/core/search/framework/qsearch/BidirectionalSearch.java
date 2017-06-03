@@ -27,7 +27,10 @@ import aima.core.util.CancelableThread;
  * the same queue search interface as known from other search implementations.
  * This implementation can be combined with many abstractions of search, e.g.
  * BreadthFirstSearch, UniformCostSearch, or even AStarSearch.
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ruediger Lunde
  */
 public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {

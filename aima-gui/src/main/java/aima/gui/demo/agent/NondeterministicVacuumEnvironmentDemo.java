@@ -31,7 +31,7 @@ public class NondeterministicVacuumEnvironmentDemo {
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
                 state,
                 VacuumWorldFunctions::getActions,
-                new VacuumWorldResults(agent),
+                VacuumWorldFunctions.createResultsFunction(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         // set the problem and agent

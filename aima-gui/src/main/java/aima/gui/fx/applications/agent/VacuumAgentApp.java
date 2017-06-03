@@ -146,6 +146,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {
         VacuumEnvironmentState state = (VacuumEnvironmentState) env.getCurrentState();
         return new NondeterministicProblem<>(state, VacuumWorldFunctions::getActions,
-                new VacuumWorldResults(agent), VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
+                VacuumWorldFunctions.createResultsFunction(agent),
+                VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
     }
 }

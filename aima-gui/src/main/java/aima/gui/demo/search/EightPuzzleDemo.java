@@ -1,16 +1,9 @@
 package aima.gui.demo.search;
 
-import java.util.List;
-import java.util.Properties;
-
 import aima.core.agent.Action;
-import aima.core.environment.eightpuzzle.EightPuzzleBoard;
-import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
-import aima.core.environment.eightpuzzle.MisplacedTileHeuristicFunction;
+import aima.core.environment.eightpuzzle.*;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
@@ -18,6 +11,9 @@ import aima.core.search.informed.GreedyBestFirstSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
+
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Ravi Mohan
@@ -48,9 +44,7 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleDLSDemo() {
 		System.out.println("\nEightPuzzleDemo recursive DLS (9) -->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new DepthLimitedSearch<>(9);
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
@@ -64,9 +58,7 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleIDLSDemo() {
 		System.out.println("\nEightPuzzleDemo Iterative DLS -->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new IterativeDeepeningSearch<>();
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
@@ -80,11 +72,9 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleGreedyBestFirstDemo() {
 		System.out.println("\nEightPuzzleDemo Greedy Best First Search (MisplacedTileHeursitic)-->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), new MisplacedTileHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -97,11 +87,9 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleGreedyBestFirstManhattanDemo() {
 		System.out.println("\nEightPuzzleDemo Greedy Best First Search (ManhattanHeursitic)-->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(boardWithThreeMoveSolution,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), new ManhattanHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -114,11 +102,9 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleAStarDemo() {
 		System.out.println("\nEightPuzzleDemo AStar Search (MisplacedTileHeursitic)-->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), new MisplacedTileHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -131,11 +117,9 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleSimulatedAnnealingDemo() {
 		System.out.println("\nEightPuzzleDemo Simulated Annealing  Search -->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
-					(new ManhattanHeuristicFunction());
+					(EightPuzzleFunctions.createManhattanHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Search Outcome=" + search.getOutcome());
@@ -149,11 +133,9 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleAStarManhattanDemo() {
 		System.out.println("\nEightPuzzleDemo AStar Search (ManhattanHeursitic)-->");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(random1,
-					EightPuzzleFunctions::getActions,  EightPuzzleFunctions::getResult,
-					EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), new ManhattanHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -173,7 +155,6 @@ public class EightPuzzleDemo {
 	}
 
 	private static void printActions(List<Action> actions) {
-		for (Action action : actions)
-			System.out.println(action.toString());
+		actions.forEach(System.out::println);
 	}
 }

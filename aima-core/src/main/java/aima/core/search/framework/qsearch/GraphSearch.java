@@ -36,7 +36,10 @@ import aima.core.search.framework.problem.Problem;
  * This implementation avoids linear costs for frontier node removal (compared
  * to {@link GraphSearchReducedFrontier}) and gets by without node comparator
  * knowledge.
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ruediger Lunde
  */
 public class GraphSearch<S, A> extends QueueSearch<S, A> {

@@ -23,8 +23,8 @@ import java.util.List;
  * the initial state to the node, as indicated by the parent pointers.</li>
  * </ul>
  *
- * @param <S> the type used to represent states
- * @param <A> the type of the actions to be used to navigate in the state space
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
  *
  * @author Ravi Mohan
  * @author Ciaran O'Reilly

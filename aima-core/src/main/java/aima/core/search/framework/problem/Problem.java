@@ -28,8 +28,8 @@ import java.util.List;
  * compute more than one solution or to formulate acceptance criteria for the
  * sequence of actions.
  *
- * @param <S> the type used to represent states
- * @param <A> the type of the actions to be used to navigate in the state space
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
  *
  * @author Ruediger Lunde
  * @author Mike Stampone

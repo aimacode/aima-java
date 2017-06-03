@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.informed;
 
 import aima.core.agent.Action;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.GeneralProblem;
@@ -10,7 +11,6 @@ import org.junit.Test;
 
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
-import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.QueueBasedSearch;
@@ -33,10 +33,9 @@ public class GreedyBestFirstSearchTest {
 			// {0,8,7,6,5,4,3,2,1});
 			EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 7, 1, 8, 0, 4, 6, 2, 3, 5 });
 
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(board, EightPuzzleFunctions::getActions,
-					EightPuzzleFunctions::getResult, EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), new ManhattanHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 
 			Assert.assertEquals(49, agent.getActions().size()); // GraphSearchReducedFrontier: "49"
@@ -61,10 +60,9 @@ public class GreedyBestFirstSearchTest {
 			// {0,8,7,6,5,4,3,2,1});
 			EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 7, 1, 8, 0, 4, 6, 2, 3, 5 });
 
-			Problem<EightPuzzleBoard, Action> problem = new GeneralProblem<>(board, EightPuzzleFunctions::getActions,
-					EightPuzzleFunctions::getResult, EightPuzzleFunctions::testGoal);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			QueueBasedSearch<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearchReducedFrontier<>(), new ManhattanHeuristicFunction());
+					(new GraphSearchReducedFrontier<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
 
 			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());

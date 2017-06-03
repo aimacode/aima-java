@@ -39,6 +39,9 @@ import aima.core.util.CancelableThread;
  * (including those made by INFERENCE) are removed from the current assignment
  * and a new value is tried.
  *
+ * @param <VAR> Type which is used to represent variables
+ * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  */
 public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {

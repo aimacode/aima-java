@@ -16,6 +16,9 @@ import java.util.List;
  * <li>C is a set of constraints that specify allowable combinations of values.</li>
  * </ul>
  *
+ * @param <VAR> Type which is used to represent variables
+ * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  */
 public class CSP<VAR extends Variable, VAL> implements Cloneable {

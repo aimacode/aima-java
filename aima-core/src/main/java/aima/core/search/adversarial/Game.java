@@ -27,29 +27,25 @@ import java.util.List;
  * better term, but zero-sum is traditional and makes sense if you imagine each
  * player is charged an entry fee of 1/2.</li>
  * </ul>
- * 
+ *
+ * @param <S>  Type which is used for states in the game.
+ * @param <A> Type which is used for actions in the game.
+ * @param <P> Type which is used for players in the game.
  * @author Ruediger Lunde
- * 
- * @param <STATE>
- *            Type which is used for states in the game.
- * @param <ACTION>
- *            Type which is used for actions in the game.
- * @param <PLAYER>
- *            Type which is used for players in the game.
  */
-public interface Game<STATE, ACTION, PLAYER> {
+public interface Game<S, A, P> {
 
-	STATE getInitialState();
+    S getInitialState();
 
-	PLAYER[] getPlayers();
+    P[] getPlayers();
 
-	PLAYER getPlayer(STATE state);
+    P getPlayer(S state);
 
-	List<ACTION> getActions(STATE state);
+    List<A> getActions(S state);
 
-	STATE getResult(STATE state, ACTION action);
+    S getResult(S state, A action);
 
-	boolean isTerminal(STATE state);
+    boolean isTerminal(S state);
 
-	double getUtility(STATE state, PLAYER player);
+    double getUtility(S state, P player);
 }

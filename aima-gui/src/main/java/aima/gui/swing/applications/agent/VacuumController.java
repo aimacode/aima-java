@@ -3,7 +3,6 @@ package aima.gui.swing.applications.agent;
 import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.*;
-import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -128,7 +127,7 @@ public class VacuumController extends AgentAppController {
         return new NondeterministicProblem<>(
 				(VacuumEnvironmentState) env.getCurrentState(),
                 VacuumWorldFunctions::getActions,
-                new VacuumWorldResults(agent),
+                VacuumWorldFunctions.createResultsFunction(agent),
 				VacuumWorldFunctions::testGoal,
 				(s, a, sPrimed) -> 1.0);
 	}

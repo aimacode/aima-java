@@ -1,17 +1,14 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
-import aima.core.agent.State;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.Problem;
-import aima.core.util.Util;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.<br>
@@ -39,9 +36,13 @@ import aima.core.util.Util;
  * problem, searches for a sequence of actions that would solve the problem, and
  * then executes the actions one at a time. When this is complete, it formulates
  * another goal and starts over.<br>
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
 

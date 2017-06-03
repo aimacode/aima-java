@@ -1,24 +1,22 @@
 package aima.gui.fx.applications.search;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-
-import aima.core.environment.nqueens.*;
+import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensBoard.Config;
+import aima.core.environment.nqueens.NQueensFunctions;
+import aima.core.environment.nqueens.NQueensGenAlgoUtil;
+import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.TreeSearch;
-import aima.core.search.local.FitnessFunction;
-import aima.core.search.local.GeneticAlgorithm;
-import aima.core.search.local.HillClimbingSearch;
-import aima.core.search.local.Individual;
-import aima.core.search.local.Scheduler;
-import aima.core.search.local.SimulatedAnnealingSearch;
+import aima.core.search.local.*;
 import aima.core.search.uninformed.DepthFirstSearch;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Command line demo which demonstrates how different search algorithms
@@ -105,7 +103,7 @@ public class NQueensSearchDemo {
 		// board = new NQueensBoard(boardSize, Config.QUEEN_IN_EVERY_COL);
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
-		search = new HillClimbingSearch<>(new AttackingPairsHeuristic());
+		search = new HillClimbingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction());
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
@@ -117,7 +115,7 @@ public class NQueensSearchDemo {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		Scheduler scheduler = new Scheduler(k, lambda, maxIterations);
-		search = new SimulatedAnnealingSearch<>(new AttackingPairsHeuristic(), scheduler);
+		search = new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(), scheduler);
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 

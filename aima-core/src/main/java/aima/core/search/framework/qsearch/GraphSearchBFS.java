@@ -32,10 +32,13 @@ import aima.core.search.framework.problem.Problem;
  * provides implementations for the needed primitive operations. It is the most
  * efficient variant of graph search for breadth first search. But don't expect
  * shortest paths in combination with priority queue frontiers.
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
- * @author Ruediger Lunde
  */
 public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
 

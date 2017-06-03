@@ -1,7 +1,6 @@
 package aima.core.search.nondeterministic;
 
-import aima.core.agent.Action;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 136.<br>
@@ -25,5 +24,5 @@ public interface ResultsFunction<S, A> {
 	 *            an action to be performed in state s.
 	 * @return the states that result from doing action a in state s.
 	 */
-	Set<S> results(S state, A action);
+	List<S> results(S state, A action);
 }

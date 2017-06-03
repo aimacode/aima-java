@@ -10,9 +10,11 @@ import java.util.function.Consumer;
  * Instances of this class are responsible for node creation and expansion. They
  * compute path costs, support progress tracking, and count the number of
  * {@link #expand(Node, Problem)} calls.
- * 
- * @author Ruediger Lunde
  *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  */
 public class NodeExpander<S, A> {
 

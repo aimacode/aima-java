@@ -12,9 +12,12 @@ import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.Problem;
 
 /**
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ravi Mohan
  * @author Ruediger Lunde
- * 
  */
 public class SearchAgent<S, A extends Action> extends AbstractAgent {
 	protected List<Action> actionList;

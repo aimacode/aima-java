@@ -9,7 +9,7 @@ import aima.core.util.datastructure.XYLocation;
 
 /**
  * @author Ravi Mohan
- * @author R. Lunde
+ * @author Ruediger Lunde
  */
 public class EightPuzzleBoard {
 
@@ -101,7 +101,7 @@ public class EightPuzzleBoard {
 	}
 
 	public List<XYLocation> getPositions() {
-		ArrayList<XYLocation> retVal = new ArrayList<XYLocation>();
+		ArrayList<XYLocation> retVal = new ArrayList<>();
 		for (int i = 0; i < 9; i++) {
 			int absPos = getPositionOf(i);
 			XYLocation loc = new XYLocation(getXCoord(absPos),

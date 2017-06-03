@@ -43,20 +43,21 @@ public class SearchFactory {
 	public final static int TREE_SEARCH = 0;
 	/** Queue search implementation: graph search. */
 	public final static int GRAPH_SEARCH = 1;
+	/** Queue search implementation: graph search with reduced frontier. */
+	public final static int GRAPH_SEARCH_RED_FRONTIER = 2;
 	/** Queue search implementation: graph search for breadth first search. */
-	public final static int GRAPH_SEARCH_BFS = 2;
+	public final static int GRAPH_SEARCH_BFS = 3;
 	/** Queue search implementation: bidirectional search. */
-	public final static int BIDIRECTIONAL_SEARCH = 3;
+	public final static int BIDIRECTIONAL_SEARCH = 4;
 
 	/** Contains the only existing instance. */
 	private static SearchFactory instance;
 
 	/** Invisible constructor. */
-	private SearchFactory() {
-	};
+	private SearchFactory() {}
 
 	/** Provides access to the factory. Implemented with lazy instantiation. */
-	public static <S, A> SearchFactory getInstance() {
+	public static SearchFactory getInstance() {
 		if (instance == null)
 			instance = new SearchFactory();
 		return instance;
@@ -79,7 +80,8 @@ public class SearchFactory {
 	 * {@link #createSearch(int, int, ToDoubleFunction)}.
 	 */
 	public String[] getQSearchImplNames() {
-		return new String[] { "Tree Search", "Graph Search", "Graph Search BFS", "Bidirectional Search" };
+		return new String[] { "Tree Search", "Graph Search", "Graph Search red Fr.",
+				"Graph Search BFS", "Bidirectional Search" };
 	}
 
 	/**
@@ -100,6 +102,9 @@ public class SearchFactory {
 			break;
 		case GRAPH_SEARCH:
 			qs = new GraphSearch<>();
+			break;
+		case GRAPH_SEARCH_RED_FRONTIER:
+			qs = new GraphSearchReducedFrontier<>();
 			break;
 		case GRAPH_SEARCH_BFS:
 			qs = new GraphSearchBFS<>();

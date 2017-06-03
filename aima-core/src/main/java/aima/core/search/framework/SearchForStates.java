@@ -9,9 +9,11 @@ import java.util.function.Consumer;
  * return just a single state which is hopefully a goal state. This search framework expects
  * all search algorithms to provide some metrics and to actually explore the search space
  * by expanding nodes.
- * 
- * @author Ruediger Lunde
  *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  */
 public interface SearchForStates<S, A> {
 	/**

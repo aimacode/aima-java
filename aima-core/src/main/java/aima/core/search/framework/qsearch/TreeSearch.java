@@ -26,10 +26,12 @@ import aima.core.search.framework.problem.Problem;
  * This implementation is based on the template method
  * {@link #findNode(Problem, Queue)} from superclass {@link QueueSearch} and
  * provides implementations for the needed primitive operations.
- * 
- * @author Ravi Mohan
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
  * @author Ruediger Lunde
- * 
+ * @author Ravi Mohan
  */
 public class TreeSearch<S, A> extends QueueSearch<S, A> {
 

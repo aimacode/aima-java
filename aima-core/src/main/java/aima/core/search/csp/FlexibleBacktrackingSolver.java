@@ -9,6 +9,9 @@ import aima.core.search.csp.inference.*;
  * value ordering, and inference. These strategies are represented by objects implementing standard interfaces.
  * The design supports experiments with user-defined strategies of all kinds.
  *
+ * @param <VAR> Type which is used to represent variables
+ * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  */
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {

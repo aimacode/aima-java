@@ -5,9 +5,8 @@ import java.util.*;
 /**
  * Factory class for queues. Changes made here will affect all queue based
  * search algorithms of this library.
- * 
- * @author Ruediger Lunde
  *
+ * @author Ruediger Lunde
  */
 public class QueueFactory {
 

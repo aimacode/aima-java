@@ -14,11 +14,14 @@ import java.util.Queue;
  * will implement frontier access straight-forward. Graph search implementations
  * will add node filtering mechanisms to avoid that nodes of already explored
  * states are selected for expansion.
- * 
+ *
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate in the state space
+ *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
- * @author Ruediger Lunde
  */
 public abstract class QueueSearch<S, A> {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";

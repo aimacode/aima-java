@@ -1,5 +1,6 @@
 package aima.core.environment.nqueens;
 
+import aima.core.search.framework.Node;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.datastructure.XYLocation;
@@ -7,6 +8,7 @@ import aima.core.util.datastructure.XYLocation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Provides useful functions for two versions of the n-queens problem. The
@@ -93,5 +95,14 @@ public class NQueensFunctions {
      */
     public static Boolean testGoal(NQueensBoard state) {
         return state.getNumberOfQueensOnBoard() == state.getSize() && state.getNumberOfAttackingPairs() == 0;
+    }
+
+
+    /**
+     * Estimates the distance to goal by the number of attacking pairs of queens on
+     * the board.
+     */
+    public static ToDoubleFunction<Node<NQueensBoard, QueenAction>> createAttackingPairsHeuristicFunction() {
+        return node -> node.getState().getNumberOfAttackingPairs();
     }
 }
