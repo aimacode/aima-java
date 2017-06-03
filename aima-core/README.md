@@ -36,7 +36,7 @@ For examples of how to use the various algorithms and supporting classes, look a
 
 ### Notes on Search
 
-To solve a problem with (non CSP) Search you can follow this steps:
+To define a problem for (non CSP) search you can follow this steps:
 * Choose or implement a class to represent states and another to represent
   actions for navigation through the state space. Often, `String`/ `Integer`
   and `DynamicAction` will do. For the N-Queens-Problem,
@@ -55,7 +55,7 @@ To solve a problem with (non CSP) Search you can follow this steps:
   ```
   If you need to do an informed search, you should create a heuristic function
   which implements the `ToDoubleFunction<Node<S, A>>` interface.
-* Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
+* Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the previous step
   or use/extend `aima.core.search.framework.problem.GeneralProblem` to create an instance of the problem to be solved.
   `GeneralProblem` accepts an initial state, an actions function, a result function, a goal test, and a
   step-cost function in its constructor.
@@ -70,7 +70,7 @@ that is all you need to do (unless you plan to write a different search than is 
 
 To actually search you need to:
 * Configure a problem instance (see above).
-* Select a search. Configure this with some `QueueSearch` (e.g. `TreeSearch` or `GraphSearch`) if applicable.
+* Select a search strategy. Configure this with some `QueueSearch` (e.g. `TreeSearch` or `GraphSearch`) if applicable.
 * Call methods `findActions` or `findState` directly or instantiate a `SearchAgent`.
 * Print any actions and metrics.
 
