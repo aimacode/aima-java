@@ -60,11 +60,11 @@ To solve a problem with (non CSP) Search you can follow this steps:
   `GeneralProblem` accepts an initial state, an actions function, a result function, a goal test, and a
   step-cost function in its constructor.
   ```java
-    public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
-            return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
-                    NQueensFunctions::getResult, NQueensFunctions::testGoal, (s, a, sPrimed) -> 1.0);
-    }
-    ```
+  public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
+      return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
+          NQueensFunctions::getResult, NQueensFunctions::testGoal, (s, a, sPrimed) -> 1.0);
+  }
+  ```
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 
