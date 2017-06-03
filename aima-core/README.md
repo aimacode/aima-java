@@ -56,8 +56,8 @@ To solve a problem with (non CSP) Search you can follow this steps:
   which implements the `ToDoubleFunction<Node<S, A>>` interface.
 * Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
   or use/extend `aima.core.search.framework.problem.GeneralProblem` to create the problem instance to be solved.
-  `GeneralProblem` accepts an initial state, an actions function, a result function, and a goal test in its
-  constructor.
+  `GeneralProblem` accepts an initial state, an actions function, a result function, a goal test, and a
+  step-cost function in its constructor.
   ```java
     public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
             return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
