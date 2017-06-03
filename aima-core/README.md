@@ -51,7 +51,8 @@ To solve a problem with (non CSP) Search you can follow this steps:
   ```java
   public static boolean testGoal(NQueensBoard state) {
      return state.getNumberOfQueensOnBoard() == state.getSize() && state.getNumberOfAttackingPairs() == 0;
-  }```
+  }
+  ```
 * If you need to do an informed search, you should create a heuristic function
   which implements the `ToDoubleFunction<Node<S, A>>` interface.
 * Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
@@ -62,7 +63,8 @@ To solve a problem with (non CSP) Search you can follow this steps:
     public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
             return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
                     NQueensFunctions::getResult, NQueensFunctions::testGoal, (s, a, sPrimed) -> 1.0);
-    }```
+    }
+    ```
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 
