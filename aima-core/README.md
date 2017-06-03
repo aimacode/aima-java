@@ -53,7 +53,7 @@ To solve a problem with (non CSP) Search you can follow this steps:
      return state.getNumberOfQueensOnBoard() == state.getSize() && state.getNumberOfAttackingPairs() == 0;
   }
   ```
-* If you need to do an informed search, you should create a heuristic function
+  If you need to do an informed search, you should create a heuristic function
   which implements the `ToDoubleFunction<Node<S, A>>` interface.
 * Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
   or use/extend `aima.core.search.framework.problem.GeneralProblem` to create the problem instance to be solved.
