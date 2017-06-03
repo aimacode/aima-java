@@ -58,7 +58,7 @@ To define a problem for (non CSP) search you can follow this steps:
 * Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the previous step
   or use/extend `aima.core.search.framework.problem.GeneralProblem` to create an instance of the problem to be solved.
   `GeneralProblem` accepts an initial state, an actions function, a result function, a goal test, and a
-  step-cost function in its constructor.
+  step-cost function as constructor arguments.
   ```java
   public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
       return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
@@ -79,7 +79,7 @@ private static void nQueensWithBreadthFirstSearch() {
     try {
 	System.out.println("\nNQueensDemo BFS -->");
         Problem<NQueensBoard, QueenAction> problem =
-                NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+            NQueensFunctions.createIncrementalFormulationProblem(boardSize);
         SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
         SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
         printActions(agent.getActions());
