@@ -38,7 +38,7 @@ For examples of how to use the various algorithms and supporting classes, look a
 
 To solve a problem with (non CSP) Search you can follow this steps:
 * Choose or implement a class to represent states and another to represent
-  actions for navigation within the state space. Often, `String`/ `Integer`
+  actions for navigation through the state space. Often, `String`/ `Integer`
   and `DynamicAction` will do. For the N-Queens-Problem,
   `aima.core.environment.nqueens.NQueensBoard` and
   `aima.core.environment.nqueens.QueenAction` are suitable. Most of the framework
