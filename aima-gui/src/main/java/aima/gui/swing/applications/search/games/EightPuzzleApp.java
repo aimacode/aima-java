@@ -63,8 +63,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				new BreadthFirstSearch<>(new GraphSearch<>()));
 		addSearchAlgorithm("Breadth First Search (Bidirectional Search)",
 				new BreadthFirstSearch<>(new BidirectionalSearch<>()));
-		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch(9));
-		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch());
+		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch<>(9));
+		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
 						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
@@ -333,7 +333,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 			for (Object o : properties.keySet()) {
 				String key = (String) o;
 				String property = properties.getProperty(key);
-				result.append("\n" + key + " : " + property);
+				result.append("\n").append(key).append(" : ").append(property);
 			}
 			return result.toString();
 		}

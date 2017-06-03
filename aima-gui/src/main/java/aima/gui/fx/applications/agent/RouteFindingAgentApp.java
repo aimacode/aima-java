@@ -53,7 +53,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	 */
 	protected List<String> destinations;
 	/** Search method to be used. */
-	protected SearchForActions search;
+	protected SearchForActions<String, MoveToAction> search;
 	/** Heuristic function to be used when performing informed search. */
 	protected ToDoubleFunction<Node<String, MoveToAction>> heuristic;
 
@@ -184,7 +184,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 			heuristic = MapFunctions.createSLDHeuristicFunction(destinations.get(0), scenario.getAgentMap());
 		}
 
-		search = SearchFactory.<String, MoveToAction>getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+		search = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
 				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		String goal = destinations.get(0);

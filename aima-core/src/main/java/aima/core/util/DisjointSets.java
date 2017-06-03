@@ -1,12 +1,6 @@
 package aima.core.util;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A basic implementation of a disjoint-set data structure for maintaining a
@@ -36,8 +30,8 @@ import java.util.Set;
  */
 public class DisjointSets<E> {
 
-	private Map<E, Set<E>> elementToSet = new LinkedHashMap<E, Set<E>>();
-	private Set<Set<E>>    disjointSets = new LinkedHashSet<Set<E>>();
+	private Map<E, Set<E>> elementToSet = new LinkedHashMap<>();
+	private Set<Set<E>> disjointSets = new LinkedHashSet<>();
 
 	/**
 	 * Default Constructor.
@@ -62,7 +56,7 @@ public class DisjointSets<E> {
 	/**
 	 * Constructor.
 	 * 
-	 * @param initialElements
+	 * @param elements
 	 *            a collection of elements, each of which will be assigned to
 	 *            their own disjoint set via makeSet().
 	 */
@@ -99,9 +93,7 @@ public class DisjointSets<E> {
 	/**
 	 * Union two disjoint sets together if the arguments currently belong to two
 	 * different sets.
-	 * 
-	 * @param element1
-	 * @param element2
+	 *
 	 * @throws IllegalArgumentException
 	 *             if element1 or element 2 is not already associated with a
 	 *             disjoint set (i.e. makeSet() was not called for the argument
@@ -149,7 +141,7 @@ public class DisjointSets<E> {
 		// is not exposed outside of this class.
 		// This also ensures the internal logic cannot
 		// be corrupted externally due to changing sets.
-		return new LinkedHashSet<E>(elementToSet.get(element));
+		return new LinkedHashSet<>(elementToSet.get(element));
 	}
 
 	/**
@@ -162,7 +154,7 @@ public class DisjointSets<E> {
 		// is not exposed outside of this class.
 		// This also ensures the internal logic cannot
 		// be corrupted externally due to changing sets.
-		Map<E, Set<E>> result = new LinkedHashMap<E, Set<E>>();
+		Map<E, Set<E>> result = new LinkedHashMap<>();
 		for (Map.Entry<E, Set<E>> entry : elementToSet.entrySet()) {
 			result.put(entry.getKey(), new LinkedHashSet<E>(entry.getValue()));
 		}
@@ -178,11 +170,9 @@ public class DisjointSets<E> {
 		// is not exposed outside of this class.
 		// This also ensures the internal logic cannot
 		// be corrupted externally due to changing sets.
-		Set<Set<E>> result = new LinkedHashSet<Set<E>>();
-		Iterator<Set<E>> it = disjointSets.iterator();
-		while (it.hasNext()) {
-			result.add(new LinkedHashSet<E>(it.next()));
-		}
+		Set<Set<E>> result = new LinkedHashSet<>();
+		for (Set<E> disjointSet : disjointSets)
+			result.add(new LinkedHashSet<>(disjointSet));
 		return result;
 	}
 
