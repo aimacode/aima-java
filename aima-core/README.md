@@ -70,7 +70,7 @@ that is all you need to do (unless you plan to write a different search than is 
 
 To actually search you need to:
 * Configure a problem instance (see above).
-* Select a search. Configure this with TreeSearch or GraphSearch if applicable.
+* Select a search. Configure this with some `QueueSearch` (e.g. `TreeSearch` or `GraphSearch`) if applicable.
 * Call methods `findActions` or `findState` directly or instantiate a `SearchAgent`.
 * Print any actions and metrics.
 
