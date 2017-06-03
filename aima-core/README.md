@@ -36,34 +36,36 @@ For examples of how to use the various algorithms and supporting classes, look a
 
 ### Notes on Search
 
-To solve a problem with (non CSP) Search you need to write five classes:
-* a class that represents the Problem state. This class is independent of
-  the framework and does NOT need to subclass anything.
-  Let us, for the rest of these instruction, assume you are going to solve
-  the NQueens problem. So in this step you need to write something like
-  `aima.core.environment.nqueens.NQueensBoard`.
-* an implementation of the `aima.core.search.framework.problem.GoalTest` interface.
-  This implements only a single function — `boolean isGoalState(Object state);`
-  The parameter state is an instance of the class you created in  step 1-a
-  above. For the NQueensProblem you would need to write something like
-  `aima.core.environment.nqueens.NQueensGoalTest`.
-* an implementation of the `aima.core.search.framework.problem.ActionsFunction`
-  interface. This generates the allowable actions from a particular state.
-  An example is
-  `aima.core.environment.nqueens.NQueensFunctionFactory.NQIActionsFunction`.
-* an implementation of the `aima.core.search.framework.problem.ResultFunction`
-  interface. This generates the state that results from doing action a in a
-  state. An example is
-  `aima.core.environment.nqueens.NQueensFunctionFactory.NQResultFunction`.
-* if you need to do an informed search, you should create a heuristic function
-  which implements the `Function<Object, Double>` interface.
+To solve a problem with (non CSP) Search you can follow this steps:
+* Choose or implement a class to represent states and another to represent
+  actions for navigation within the state space. Often, String/Integer
+  and `DynamicAction` will do. For the NQueens problem,
+  `aima.core.environment.nqueens.NQueensBoard` and
+  `aima.core.environment.nqueens.QueenAction` are suitable.
+* Provide the functions needed to define a problem. Methods can be used as well
+  as nested classes or lambda expressions.
+  Class `aima.core.environment.nqueens.NQueensFunctions` contains some example
+  implementations, e.g.
+  ```java
+  public static boolean testGoal(NQueensBoard state) {
+     return state.getNumberOfQueensOnBoard() == state.getSize() && state.getNumberOfAttackingPairs() == 0;
+  }```
+* If you need to do an informed search, you should create a heuristic function
+  which implements the `ToDoubleFunction<Node<S, A>` interface.
+* Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
+  or use/extend `aima.core.search.framework.problem.GeneralProblem` to create the problem instance to be solved:
+  ```java
+    public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
+            return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
+                    NQueensFunctions::getResult, NQueensFunctions::testGoal);
+    }```
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 
 To actually search you need to
 * configure a problem instance
-* select a search. Configure this with Tree Search or GraphSearch if applicable.
-* instantiate a SearchAgent and 
+* select a search. Configure this with TreeSearch or GraphSearch if applicable
+* call methods `findActions` or `findState` directly or instantiate a SearchAgent
 * print any actions and metrics 
 
 A good example (from the NQueens Demo) is:
@@ -71,12 +73,12 @@ A good example (from the NQueens Demo) is:
 private static void nQueensWithBreadthFirstSearch() {
 	try {
 		System.out.println("\nNQueensDemo BFS -->");
-		Problem problem = new Problem(new NQueensBoard(boardSize), NQueensFunctionFactory.getIActionsFunction(),
-				NQueensFunctionFactory.getResultFunction(), new NQueensGoalTest());
-		SearchForActions search = new BreadthFirstSearch(new TreeSearch());
-		SearchAgent agent = new SearchAgent(problem, search);
-		printActions(agent.getActions());
-		printInstrumentation(agent.getInstrumentation());
+        Problem<NQueensBoard, QueenAction> problem =
+                NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+        SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
+        SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+        printActions(agent.getActions());
+        printInstrumentation(agent.getInstrumentation());
 	} catch (Exception e) {
 		e.printStackTrace();
 	}

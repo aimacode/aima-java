@@ -93,7 +93,7 @@ public class NQueensFunctions {
     /**
      * Implements a GOAL-TEST for the n-queens problem.
      */
-    public static Boolean testGoal(NQueensBoard state) {
+    public static boolean testGoal(NQueensBoard state) {
         return state.getNumberOfQueensOnBoard() == state.getSize() && state.getNumberOfAttackingPairs() == 0;
     }
 
