@@ -27,8 +27,8 @@ public interface SearchForActions<S, A> {
 	 *            the search problem
 	 * 
 	 * @return a list of actions to the goal if the goal was found, a list
-	 *         containing a single NoOp Action if already at the goal, or an
-	 *         empty list if the goal could not be found.
+	 *         containing a single null reference (representing NoOp) if already
+	 *         at the goal, or an empty list if the goal could not be found.
 	 */
 	List<A> findActions(Problem<S, A> p);
 

@@ -6,15 +6,15 @@ import java.util.List;
 
 /**
  * Provides several useful static methods for implementing search.
- * 
- * @author Ravi Mohan
+ *
  * @author Ruediger Lunde
- * 
+ * @author Ravi Mohan
  */
 public class SearchUtils {
 	/**
 	 * Returns the list of actions corresponding to the complete path to the
-	 * given node or NoOp if path length is one.
+	 * given node or a list with just one null reference representing NoOp
+	 * if the node is the root node of the search tree.
 	 */
 	public static <S, A> List<A> getSequenceOfActions(Node<S, A> node) {
 		List<Node<S, A>> nodes = node.getPathFromRoot();
