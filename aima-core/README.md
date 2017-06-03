@@ -42,7 +42,7 @@ To solve a problem with (non CSP) Search you can follow this steps:
   and `DynamicAction` will do. For the N-Queens-Problem,
   `aima.core.environment.nqueens.NQueensBoard` and
   `aima.core.environment.nqueens.QueenAction` are suitable. Most of the framework
-  classes are generic. Their type parameters S and A should always be bound to
+  classes are generic. Their type parameters `S` and `A` should always be bound to
   the classes chosen in this step.
 * Provide the functions needed to define the problem. Methods can be used as well
   as nested classes or lambda expressions.
@@ -61,13 +61,13 @@ To solve a problem with (non CSP) Search you can follow this steps:
   ```java
     public static Problem<NQueensBoard, QueenAction> createIncrementalFormulationProblem(int boardSize) {
             return new GeneralProblem<>(new NQueensBoard(boardSize), NQueensFunctions::getIFActions,
-                    NQueensFunctions::getResult, NQueensFunctions::testGoal);
+                    NQueensFunctions::getResult, NQueensFunctions::testGoal, (s, a, sPrimed) -> 1.0);
     }```
 
 that is all you need to do (unless you plan to write a different search than is available in the code base).
 
 To actually search you need to:
-* Configure a problem instance.
+* Configure a problem instance (see above).
 * Select a search. Configure this with TreeSearch or GraphSearch if applicable.
 * Call methods `findActions` or `findState` directly or instantiate a `SearchAgent`.
 * Print any actions and metrics.
