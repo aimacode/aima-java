@@ -37,13 +37,13 @@ public class MapFunctions {
         return new DistanceStepCostFunction(map);
     }
 
-    /** Returns a heuristic function based on straight line distance computation. */
-    public static ToDoubleFunction<Node<String, MoveToAction>> createSLDHeuristicFunction(String goal, Map map) {
-        return new StraightLineDistanceHeuristicFunction(goal, map);
-    }
-
     public static Function<Percept, String> createPerceptToStateFunction() {
         return  p -> (String) ((DynamicPercept) p).getAttribute(DynAttributeNames.PERCEPT_IN);
+    }
+
+    /** Returns a heuristic function based on straight line distance computation. */
+    public static ToDoubleFunction<Node<String, MoveToAction>> createSLDHeuristicFunction(String goal, Map map) {
+        return node -> getSLD(node.getState(), goal, map);
     }
 
     public static double getSLD(String loc1, String loc2, Map map) {
@@ -106,26 +106,6 @@ public class MapFunctions {
             if (distance == null || distance <= 0)
                 return constantCost;
             return distance;
-        }
-    }
-
-    private static class StraightLineDistanceHeuristicFunction implements ToDoubleFunction<Node<String, MoveToAction>> {
-        private String goal;
-        private Map map;
-
-        private StraightLineDistanceHeuristicFunction(String goal, Map map) {
-            this.goal = goal;
-            this.map = map;
-        }
-
-        @Override
-        public double applyAsDouble(Node<String, MoveToAction> node) {
-            double result = 0.0;
-            Point2D pt1 = map.getPosition(node.getState());
-            Point2D pt2 = map.getPosition(goal);
-            if (pt1 != null && pt2 != null)
-                result = pt1.distance(pt2);
-            return result;
         }
     }
 }

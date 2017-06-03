@@ -162,10 +162,9 @@ public class EightPuzzleBoard {
 
 	@Override
 	public String toString() {
-		String retVal = state[0] + " " + state[1] + " " + state[2] + "\n"
+		return state[0] + " " + state[1] + " " + state[2] + "\n"
 				+ state[3] + " " + state[4] + " " + state[5] + " " + "\n"
 				+ state[6] + " " + state[7] + " " + state[8];
-		return retVal;
 	}
 
 	//
