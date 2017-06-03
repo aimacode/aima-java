@@ -56,7 +56,7 @@ To solve a problem with (non CSP) Search you can follow this steps:
   If you need to do an informed search, you should create a heuristic function
   which implements the `ToDoubleFunction<Node<S, A>>` interface.
 * Implement `aima.core.search.framework.problem.Problem` directly using the functional material from the last step
-  or use/extend `aima.core.search.framework.problem.GeneralProblem` to create the problem instance to be solved.
+  or use/extend `aima.core.search.framework.problem.GeneralProblem` to create an instance of the problem to be solved.
   `GeneralProblem` accepts an initial state, an actions function, a result function, a goal test, and a
   step-cost function in its constructor.
   ```java
