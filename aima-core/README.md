@@ -65,8 +65,7 @@ To define a problem for (non CSP) search you can follow this steps:
           NQueensFunctions::getResult, NQueensFunctions::testGoal, (s, a, sPrimed) -> 1.0);
   }
   ```
-
-that is all you need to do (unless you plan to write a different search than is available in the code base).
+That is all you need to do (unless you plan to write a different search than is available in the code base).
 
 To actually search you need to:
 * Configure a problem instance (see above).
