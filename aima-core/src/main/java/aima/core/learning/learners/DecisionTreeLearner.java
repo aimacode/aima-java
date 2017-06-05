@@ -1,7 +1,10 @@
 package aima.core.learning.learners;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import aima.core.learning.framework.DataSet;
 import aima.core.learning.framework.Example;
@@ -43,7 +46,7 @@ public class DecisionTreeLearner implements Learner {
 	public void train(DataSet ds) {
 		List<String> attributes = ds.getNonTargetAttributes();
 		this.tree = decisionTreeLearning(ds, attributes,
-				new ConstantDecisonTree(defaultValue));
+										 new ConstantDecisonTree(defaultValue));
 	}
 
 	@Override
@@ -55,13 +58,14 @@ public class DecisionTreeLearner implements Learner {
 	public int[] test(DataSet ds) {
 		int[] results = new int[] { 0, 0 };
 
-		for (Example e : ds.examples) {
-			if (e.targetValue().equals(tree.predict(e))) {
+		ds.examples.stream().forEach(example -> {
+			if (example.targetValue().equals(tree.predict(example))) {
 				results[0] = results[0] + 1;
 			} else {
 				results[1] = results[1] + 1;
 			}
-		}
+		});
+
 		return results;
 	}
 
@@ -98,14 +102,13 @@ public class DecisionTreeLearner implements Learner {
 		ConstantDecisonTree m = majorityValue(ds);
 
 		List<String> values = ds.getPossibleAttributeValues(chosenAttribute);
-		for (String v : values) {
-			DataSet filtered = ds.matchingDataSet(chosenAttribute, v);
-			List<String> newAttribs = Util.removeFrom(attributeNames,
-					chosenAttribute);
-			DecisionTree subTree = decisionTreeLearning(filtered, newAttribs, m);
-			tree.addNode(v, subTree);
 
-		}
+		values.stream().forEach(value -> {
+			DataSet filtered = ds.matchingDataSet(chosenAttribute, value);
+			List<String> newAttribs = Util.removeFrom(attributeNames, chosenAttribute);
+			DecisionTree subTree = decisionTreeLearning(filtered, newAttribs, m);
+			tree.addNode(value, subTree);
+		});
 
 		return tree;
 	}
@@ -117,29 +120,25 @@ public class DecisionTreeLearner implements Learner {
 	}
 
 	private String chooseAttribute(DataSet ds, List<String> attributeNames) {
-		double greatestGain = 0.0;
-		String attributeWithGreatestGain = attributeNames.get(0);
-		for (String attr : attributeNames) {
-			double gain = ds.calculateGainFor(attr);
-			if (gain > greatestGain) {
-				greatestGain = gain;
-				attributeWithGreatestGain = attr;
-			}
-		}
+		/* Use stream over List and use maxBy with a Comparator */
+		Optional optAttributeWithGreatestGain = attributeNames.stream()
+				.collect(Collectors.maxBy(new Comparator<String>() {
+					public int compare(String str1, String str2) {
+						return Double.compare(ds.calculateGainFor(str1), ds.calculateGainFor(str2));
+					}
+				}));
+
+        /* Check value is available in Optional */
+		String attributeWithGreatestGain = optAttributeWithGreatestGain.isPresent() ?
+											(String)optAttributeWithGreatestGain.get() :
+											"No String found";
 
 		return attributeWithGreatestGain;
 	}
 
 	private boolean allExamplesHaveSameClassification(DataSet ds) {
 		String classification = ds.getExample(0).targetValue();
-		Iterator<Example> iter = ds.iterator();
-		while (iter.hasNext()) {
-			Example element = iter.next();
-			if (!(element.targetValue().equals(classification))) {
-				return false;
-			}
-
-		}
-		return true;
+		return !ds.examples.stream()
+						   .anyMatch(example -> !(example.targetValue().equals(classification)));
 	}
 }
