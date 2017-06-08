@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import com.google.common.base.Joiner;
 
 /**
  * @author Ravi Mohan
@@ -33,24 +34,7 @@ public abstract class ObjectWithDynamicAttributes {
 	 * @return a string representation of the object's current attributes
 	 */
 	public String describeAttributes() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("[");
-		boolean first = true;
-		for (Object key : attributes.keySet()) {
-			if (first) {
-				first = false;
-			} else {
-				sb.append(", ");
-			}
-
-			sb.append(key);
-			sb.append("==");
-			sb.append(attributes.get(key));
-		}
-		sb.append("]");
-
-		return sb.toString();
+		return "[" + Joiner.on(", ").withKeyValueSeparator("==").join(attributes) + "]";
 	}
 
 	/**
