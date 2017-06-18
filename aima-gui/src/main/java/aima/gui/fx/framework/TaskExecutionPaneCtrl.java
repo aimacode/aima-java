@@ -204,7 +204,7 @@ public class TaskExecutionPaneCtrl {
 		if (state.get() == State.FINISHED) {
 			onParamChanged();
 		} else if (backgroundThread == null || !backgroundThread.isAlive()) {
-			backgroundThread = Tasks.runInBackground(this::runTask);
+			backgroundThread = Tasks.executeInBackground(this::runTask);
 		} else if (state.get() == State.PAUSED) {
 			backgroundThread.interrupt();
 			setState(State.RUNNING);

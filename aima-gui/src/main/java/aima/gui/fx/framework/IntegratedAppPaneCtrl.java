@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import aima.core.util.CancellableThread;
 import aima.core.util.Tasks;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -83,7 +82,7 @@ public class IntegratedAppPaneCtrl {
 		PrintStream pStream = messagePaneCtrl.getPrintStream();
 		System.setOut(pStream);
 		// System.setErr(messagePaneCtrl.getPrintStream());
-		currDemoThread = Tasks.runInBackground(() -> {
+		currDemoThread = Tasks.executeInBackground(() -> {
 			startMain(demoClass);
 			pStream.flush();
 		});

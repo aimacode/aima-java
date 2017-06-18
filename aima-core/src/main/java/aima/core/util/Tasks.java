@@ -12,15 +12,10 @@ import java.util.function.Supplier;
 public class Tasks {
 
     // simple API to execute cancellable tasks in background - functionality is provided by three functional
-    // attributes.
-
-    /** Tests whether the current task has been cancelled. */
-    public static boolean currIsCancelled() {
-        return isCancelledFn.get();
-    }
+    // attributes
 
     /** Executes a given task in background. */
-    public static Thread runInBackground(Runnable task) {
+    public static Thread executeInBackground(Runnable task) {
         return startThreadFn.apply(task);
     }
 
@@ -29,10 +24,13 @@ public class Tasks {
         cancelFn.accept(thread);
     }
 
+    /** Tests whether the current task has been cancelled. */
+    public static boolean currIsCancelled() {
+        return isCancelledFn.get();
+    }
+
 
     // the default implementation uses CancellableThread
-
-    private static Supplier<Boolean> isCancelledFn = CancellableThread::currIsCancelled;
 
     private static Function<Runnable, Thread> startThreadFn =
             task -> {
@@ -45,12 +43,10 @@ public class Tasks {
     private static Consumer<Thread> cancelFn =
             thread -> {if (thread instanceof CancellableThread) ((CancellableThread) thread).cancel();};
 
+    private static Supplier<Boolean> isCancelledFn = CancellableThread::currIsCancelled;
+
 
     // functionality can be changed at runtime
-
-    public static void setIsCancelledFn(Supplier<Boolean> isCancelledFn) {
-        Tasks.isCancelledFn = isCancelledFn;
-    }
 
     public static void setStartThreadFn(Function<Runnable, Thread> startThreadFn) {
         Tasks.startThreadFn = startThreadFn;
@@ -58,5 +54,9 @@ public class Tasks {
 
     public static void setCancelFn(Consumer<Thread> cancelFn) {
         Tasks.cancelFn = cancelFn;
+    }
+
+    public static void setIsCancelledFn(Supplier<Boolean> isCancelledFn) {
+        Tasks.isCancelledFn = isCancelledFn;
     }
 }
