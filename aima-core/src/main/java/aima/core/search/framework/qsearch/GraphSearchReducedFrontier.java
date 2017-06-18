@@ -1,12 +1,6 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
@@ -68,7 +62,7 @@ public class GraphSearchReducedFrontier<S, A> extends QueueSearch<S, A> {
 	 * state map and calls the inherited version of search.
 	 */
 	@Override
-	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		// initialize the explored set to be empty
 		if (frontier instanceof PriorityQueue<?>)
 			nodeComparator = ((PriorityQueue<Node<S, A>>) frontier).comparator();

@@ -4,6 +4,7 @@ import aima.core.search.framework.*;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.CancelableThread;
 
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -53,9 +54,9 @@ public abstract class QueueSearch<S, A> {
 	 * @param frontier
 	 *            the data structure for nodes that are waiting to be expanded
 	 * 
-	 * @return a node referencing a goal state, if the goal was found, otherwise null;
+	 * @return a node referencing a goal state, if the goal was found, otherwise empty;
 	 */
-	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
 		clearInstrumentation();
 		// initialize the frontier using the initial state of the problem
@@ -83,7 +84,7 @@ public abstract class QueueSearch<S, A> {
 			}
 		}
 		// if the frontier is empty then return failure
-		return null;
+		return Optional.empty();
 	}
 
 	/**
@@ -142,8 +143,8 @@ public abstract class QueueSearch<S, A> {
 		}
 	}
 
-	private Node<S, A> getSolution(Node<S, A> node) {
+	private Optional<Node<S, A>> getSolution(Node<S, A> node) {
 		metrics.set(METRIC_PATH_COST, node.getPathCost());
-		return node;
+		return Optional.of(node);
 	}
 }

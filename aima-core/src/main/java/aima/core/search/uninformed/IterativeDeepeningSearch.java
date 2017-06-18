@@ -1,6 +1,8 @@
 package aima.core.search.uninformed;
 
+import java.security.cert.PKIXRevocationChecker;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import aima.core.agent.Action;
@@ -54,33 +56,32 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
-	public List<A> findActions(Problem<S, A> p) {
+	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node<S, A> node = findNode(p);
-		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toActions(node);
 	}
 
 	@Override
-	public S findState(Problem<S, A> p) {
+	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node<S, A> node = findNode(p);
-		return node == null ? null : node.getState();
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toState(node);
 	}
-	
-	// Java 8: Use Optional<Node> as return value...
-	private Node<S, A> findNode(Problem<S, A> p) {
+
+	private Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		// for depth = 0 to infinity do
 		for (int i = 0; !CancelableThread.currIsCanceled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
 			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeExpander);
-			Node<S, A> result = dls.findNode(p);
+			Optional<Node<S, A>> result = dls.findNode(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
-			if (!dls.isCutoffNode(result))
+			if (!dls.isCutoffResult(result))
 				return result;
 		}
-		return null;
+		return Optional.empty();
 	}
 	
 	@Override

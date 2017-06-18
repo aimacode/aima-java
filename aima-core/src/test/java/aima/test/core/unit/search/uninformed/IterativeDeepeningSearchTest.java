@@ -1,10 +1,8 @@
 package aima.test.core.unit.search.uninformed;
 
-import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
-import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
@@ -13,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 public class IterativeDeepeningSearchTest {
 
@@ -22,8 +21,9 @@ public class IterativeDeepeningSearchTest {
 			Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
 					NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 			SearchForActions<NQueensBoard, QueenAction> search = new IterativeDeepeningSearch<>();
-			List<QueenAction> actions = search.findActions(problem);
-			assertCorrectPlacement(actions);
+			Optional<List<QueenAction>> actions = search.findActions(problem);
+			Assert.assertTrue(actions.isPresent());
+			assertCorrectPlacement(actions.get());
 			Assert.assertEquals("3656", search.getMetrics().get("nodesExpanded"));
 
 		} catch (Exception e) {

@@ -1,44 +1,53 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Provides several useful static methods for implementing search.
  *
  * @author Ruediger Lunde
- * @author Ravi Mohan
  */
 public class SearchUtils {
+
 	/**
-	 * Returns the list of actions corresponding to the complete path to the
-	 * given node or a list with just one null reference representing NoOp
-	 * if the node is the root node of the search tree.
+	 * Returns the path from the root node to this node.
+	 *
+	 * @return the path from the root node to this node.
+	 */
+	public static <S, A> List<Node<S, A>> getPathFromRoot(Node<S, A> node) {
+		List<Node<S, A>> path = new LinkedList<>();
+		while (!node.isRootNode()) {
+			path.add(0, node);
+			node = node.getParent();
+		}
+		// ensure the root node is added
+		path.add(0, node);
+		return path;
+	}
+
+	/**
+	 * Returns the list of actions which corresponds to the complete path to the
+	 * given node. The list is empty, if the node is the root node of the search
+	 * tree.
 	 */
 	public static <S, A> List<A> getSequenceOfActions(Node<S, A> node) {
-		List<Node<S, A>> nodes = node.getPathFromRoot();
-		List<A> actions = new ArrayList<>();
-		if (nodes.size() == 1) {
-			// I'm at the root node, this indicates I started at the
-			// Goal node, therefore just return a NoOp
-			actions.add(null);
-		} else {
-			// ignore the root node this has no action
-			// hence index starts from 1 not zero
-			for (int i = 1; i < nodes.size(); i++)
-				actions.add(nodes.get(i).getAction());
+		List<A> actions = new LinkedList<>();
+		while (!node.isRootNode()) {
+			actions.add(0, node.getAction());
+			node = node.getParent();
 		}
 		return actions;
 	}
 
-	/** Returns an empty action list. */
-	public static <A> List<A> failure() {
-		return Collections.emptyList();
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	public static <S, A> Optional<List<A>> toActions(Optional<Node<S, A>> node) {
+		return node.isPresent() ? Optional.of(SearchUtils.getSequenceOfActions(node.get())) : Optional.empty();
 	}
-	
-	/** Checks whether a list of actions is empty. */
-	public static <A> boolean isFailure(List<A> actions) {
-		return actions.isEmpty();
+
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	public static <S, A> Optional<S> toState(Optional<Node<S, A>> node) {
+		return node.isPresent() ? Optional.of(node.get().getState()) : Optional.empty();
 	}
 }

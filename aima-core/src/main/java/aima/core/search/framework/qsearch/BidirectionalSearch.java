@@ -1,10 +1,6 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
@@ -82,7 +78,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 *         empty list if the goal could not be found.
 	 */
 	@SuppressWarnings("unchecked")
-	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		assert (problem instanceof BidirectionalProblem);
 
 		nodeExpander.useParentLinks(true); // bidirectional search needs parents!
@@ -130,7 +126,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 			}
 		}
 		// if the frontier is empty then return failure
-		return null;
+		return Optional.empty();
 	}
 
 	/**
@@ -200,7 +196,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * both nodes must be linked to the same state. Success is not guaranteed if
 	 * some actions cannot be reversed.
 	 */
-	private Node<S, A> getSolution(Problem<S, A> orgP, ExtendedNode<S, A> node1, ExtendedNode<S, A> node2) {
+	private Optional<Node<S, A>> getSolution(Problem<S, A> orgP, ExtendedNode<S, A> node1, ExtendedNode<S, A> node2) {
 		assert node1.getState().equals(node2.getState());
 		
 		Node<S, A> orgNode = node1.getProblemIndex() == ORG_P_IDX ? node1 : node2;
@@ -214,11 +210,11 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 				orgNode = nodeExpander.createNode(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else {
-				return null;
+				return Optional.empty();
 			}
 		}
 		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());
-		return orgNode;
+		return Optional.of(orgNode);
 	}
 
 	/**

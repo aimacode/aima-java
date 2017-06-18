@@ -31,7 +31,7 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
+		ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
 				new String[] { "A" });
 	}
 
@@ -57,9 +57,9 @@ public class MapEnvironmentTest {
 
 	@Test
 	public void testTwoAgentsSupported() {
-		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
+		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
 				new String[] { "A" });
-		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch(),
+		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
 				new String[] { "A" });
 
 		me.addAgent(ma1, "A");

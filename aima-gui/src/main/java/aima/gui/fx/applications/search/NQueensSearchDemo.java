@@ -13,10 +13,7 @@ import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.local.*;
 import aima.core.search.uninformed.DepthFirstSearch;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Command line demo which demonstrates how different search algorithms
@@ -92,9 +89,10 @@ public class NQueensSearchDemo {
 		else
 			problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 					NQueensFunctions::getResult, NQueensFunctions::testGoal);
-		List<QueenAction> actions = search.findActions(problem);
-		for (QueenAction action : actions)
-			board = NQueensFunctions.getResult(board, action);
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+		if (actions.isPresent())
+			for (QueenAction action : actions.get())
+				board = NQueensFunctions.getResult(board, action);
 
 		notifyProgressTrackers(board, search.getMetrics());
 	}

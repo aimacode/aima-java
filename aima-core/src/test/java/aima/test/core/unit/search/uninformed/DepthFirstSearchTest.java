@@ -14,6 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DepthFirstSearchTest {
 
@@ -22,8 +23,9 @@ public class DepthFirstSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		SearchForActions<NQueensBoard, QueenAction> search = new DepthFirstSearch<>(new GraphSearch<>());
-		List<QueenAction> actions = search.findActions(problem);
-		assertCorrectPlacement(actions);
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+		Assert.assertTrue(actions.isPresent());
+		assertCorrectPlacement(actions.get());
 		Assert.assertEquals("113", search.getMetrics().get("nodesExpanded"));
 	}
 

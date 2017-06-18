@@ -1,13 +1,10 @@
 package aima.test.core.unit.search.uninformed;
 
-import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SearchUtils;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.uninformed.DepthLimitedSearch;
@@ -15,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tests depth-limited search.
@@ -27,8 +25,9 @@ public class DepthLimitedSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		SearchForActions<NQueensBoard, QueenAction> search = new DepthLimitedSearch<>(8);
-		List<QueenAction> actions = search.findActions(problem);
-		assertCorrectPlacement(actions);
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+		Assert.assertTrue(actions.isPresent());
+		assertCorrectPlacement(actions.get());
 		Assert.assertEquals("113", search.getMetrics().get("nodesExpanded"));
 	}
 
@@ -37,8 +36,8 @@ public class DepthLimitedSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		DepthLimitedSearch<NQueensBoard, QueenAction> search = new DepthLimitedSearch<>(1);
-		Node<NQueensBoard, QueenAction> result = search.findNode(problem);
-		Assert.assertEquals(true, search.isCutoffNode(result));
+		Optional<Node<NQueensBoard, QueenAction>> result = search.findNode(problem);
+		Assert.assertEquals(true, search.isCutoffResult(result));
 	}
 
 	@Test
@@ -46,9 +45,8 @@ public class DepthLimitedSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(3),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		DepthLimitedSearch<NQueensBoard, QueenAction> search = new DepthLimitedSearch<>(5);
-		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
-		List<Action> actions = agent.getActions();
-		Assert.assertEquals(true, SearchUtils.isFailure(actions));
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+		Assert.assertFalse(actions.isPresent()); // failure
 	}
 
 	//

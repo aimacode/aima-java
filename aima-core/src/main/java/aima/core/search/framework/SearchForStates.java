@@ -2,6 +2,7 @@ package aima.core.search.framework;
 
 import aima.core.search.framework.problem.Problem;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -18,14 +19,14 @@ import java.util.function.Consumer;
 public interface SearchForStates<S, A> {
 	/**
 	 * Returns a state which is might be but not necessary is a goal state of
-	 * the problem.
+	 * the problem or empty.
 	 * 
 	 * @param p
 	 *            the search problem
 	 * 
-	 * @return a state.
+	 * @return a state or empty.
 	 */
-	S findState(Problem<S, A> p);
+	Optional<S> findState(Problem<S, A> p);
 	
 	/**
 	 * Returns all the metrics of the search.

@@ -17,10 +17,10 @@ import java.util.function.ToDoubleFunction;
  * the node with the lowest evaluation is expanded first. The implementation of
  * best-first graph search is identical to that for uniform-cost search (Figure
  * 3.14), except for the use of f instead of g to order the priority queue.
- * 
+ *
+ * @author Ruediger Lunde
  * @author Ciaran O'Reilly
  * @author Mike Stampone
- * @author Ruediger Lunde
  */
 public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Informed<S, A> {
 

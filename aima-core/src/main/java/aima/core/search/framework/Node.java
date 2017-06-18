@@ -127,23 +127,6 @@ public class Node<S, A> {
 		return parent == null;
 	}
 
-	/**
-	 * Returns the path from the root node to this node.
-	 * 
-	 * @return the path from the root node to this node.
-	 */
-	public List<Node<S, A>> getPathFromRoot() {
-		List<Node<S, A>> path = new LinkedList<>();
-		Node<S, A> current = this;
-		while (!current.isRootNode()) {
-			path.add(0, current);
-			current = current.getParent();
-		}
-		// ensure the root node is added
-		path.add(0, current);
-		return path;
-	}
-
 	@Override
 	public String toString() {
 		return "[parent=" + parent + ", action=" + action + ", state=" + getState() + ", pathCost=" + pathCost + "]";

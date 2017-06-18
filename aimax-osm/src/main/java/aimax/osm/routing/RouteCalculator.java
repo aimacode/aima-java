@@ -14,6 +14,7 @@ import aimax.osm.data.entities.MapNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -60,10 +61,10 @@ public class RouteCalculator {
 				ToDoubleFunction<Node<MapNode, OsmMoveAction>> h = createHeuristicFunction(pNodeList.get(i),
 						taskSelection);
 				SearchForActions<MapNode, OsmMoveAction> search = createSearch(h, taskSelection);
-				List<OsmMoveAction> actions = search.findActions(problem);
-				if (actions.isEmpty())
+				Optional<List<OsmMoveAction>> actions = search.findActions(problem);
+				if (!actions.isPresent())
 					break;
-				for (Object action : actions) {
+				for (Object action : actions.get()) {
 					if (action instanceof OsmMoveAction) {
 						OsmMoveAction a = (OsmMoveAction) action;
 						for (MapNode node : a.getNodes()) {

@@ -8,6 +8,7 @@ import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -60,19 +61,21 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 	 * @return an action
 	 */
 	public Action execute(Percept p) {
-		Action action = null;
+		Action action = NoOpAction.NO_OP;
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if plan is empty then do
 		while (plan.isEmpty()) {
 			// state.goal <- FORMULATE-GOAL(state)
-			Object goal = formulateGoal();
-			if (goal != null) {
+			Optional<Object> goal = formulateGoal();
+			if (goal.isPresent()) {
 				// problem <- FORMULATE-PROBLEM(state, goal)
-				Problem<S, A> problem = formulateProblem(goal);
+				Problem<S, A> problem = formulateProblem(goal.get());
 				// state.plan <- SEARCH(problem)
-				plan.addAll(search(problem));
-				if (plan.isEmpty() && !tryWithAnotherGoal()) {
+				Optional<List<A>> actions = search(problem);
+				if (actions.isPresent())
+					plan.addAll(actions.get());
+				else if (!tryWithAnotherGoal()) {
 					// unable to identify a path
 					setAlive(false);
 					break;
@@ -88,7 +91,7 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 			// plan <- REST(plan)
 			action = plan.remove();
 		}
-		return action != null ? action : NoOpAction.NO_OP;
+		return action;
 	}
 
 	/**
@@ -118,12 +121,12 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 
 	/**
 	 * Primitive operation, responsible for goal generation. In this version,
-	 * implementations are allowed to return null to indicate that the agent has
+	 * implementations are allowed to return empty to indicate that the agent has
 	 * finished the job an should die. Implementations can access the current
 	 * goal (which is a possibly modified version of the last formulated goal).
 	 * This might be useful in situations in which plan execution has failed.
 	 */
-	protected abstract Object formulateGoal();
+	protected abstract Optional<Object> formulateGoal();
 
 	/**
 	 * Primitive operation, responsible for search problem generation.
@@ -134,5 +137,5 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 	 * Primitive operation, responsible for the generation of an action list
 	 * (plan) for the given search problem.
 	 */
-	protected abstract List<A> search(Problem<S, A> problem);
+	protected abstract Optional<List<A>> search(Problem<S, A> problem);
 }

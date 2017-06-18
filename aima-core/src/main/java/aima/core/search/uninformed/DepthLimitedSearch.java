@@ -1,6 +1,7 @@
 package aima.core.search.uninformed;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import aima.core.agent.Action;
@@ -64,30 +65,26 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
 	// failure/cutoff
 	/**
-	 * Returns a list of actions to the goal if the goal was found, a list
-	 * containing a single NoOp Action if already at the goal, an empty list if
-	 * the goal could not be found.
+	 * Returns a list of actions to the goal if the goal was found, or empty.
+	 * The list itself can be empty if already at the goal!
 	 * 
-	 * @return if goal found, the list of actions to the Goal. If already at the
-	 *         goal you will receive a List with a single NoOp Action in it. If
-	 *         fail to find the Goal, an empty list will be returned to indicate
-	 *         that the search failed.
+	 * @return if goal found, the list of actions to the Goal, empty otherwise.
 	 */
 	@Override
-	public List<A> findActions(Problem<S, A> p) {
+	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node<S, A> node = findNode(p);
-		return (node == null || isCutoffNode(node)) ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Optional<Node<S, A>> node = findNode(p);
+		return !isCutoffResult(node) ? SearchUtils.toActions(node) : Optional.empty();
 	}
 
 	@Override
-	public S findState(Problem<S, A> p) {
+	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node<S, A> node = findNode(p);
-		return (node == null || isCutoffNode(node)) ? null : node.getState();
+		Optional<Node<S, A>> node = findNode(p);
+		return !isCutoffResult(node) ? SearchUtils.toState(node) : Optional.empty();
 	}
 	
-	public Node<S, A> findNode(Problem<S, A> p) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
@@ -96,19 +93,18 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
 	// failure/cutoff
-	
-	// In Java 8 the result type should be Optional<Node>!
+
 	/**
 	 * Returns a solution node, the {@link #cutoffNode}, or null (failure).
 	 */
-	private Node<S, A> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
+	private Optional<Node<S, A>> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 		if (problem.testSolution(node)) {
 			metrics.set(METRIC_PATH_COST, node.getPathCost());
-			return node;
+			return Optional.of(node);
 		} else if (0 == limit || CancelableThread.currIsCanceled()) {
 			// else if limit = 0 then return cutoff
-			return cutoffNode;
+			return Optional.of(cutoffNode);
 		} else {
 			// else
 			// cutoff_occurred? <- false
@@ -118,11 +114,11 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 			for (Node<S, A> child : nodeExpander.expand(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
-				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
+				Optional<Node<S, A>> result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
-				if (isCutoffNode(result)) {
+				if (isCutoffResult(result)) {
 					cutoff_occurred = true;
-				} else if (result != null) {
+				} else if (result.isPresent()) {
 					// else if result != failure then return result
 					return result;
 				}
@@ -130,15 +126,16 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 
 			// if cutoff_occurred? then return cutoff else return failure
 			if (cutoff_occurred) {
-				return cutoffNode;
+				return Optional.of(cutoffNode);
 			} else {
-				return null;
+				return Optional.empty();
 			}
 		}
 	}
 
-	public boolean isCutoffNode(Node<S, A> node) {
-		return node == cutoffNode;
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	public boolean isCutoffResult(Optional<Node<S, A>> node) {
+		return node.isPresent() && node.get() == cutoffNode;
 	}
 
 	/**

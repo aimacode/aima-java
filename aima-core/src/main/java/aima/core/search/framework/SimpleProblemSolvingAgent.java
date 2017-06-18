@@ -8,6 +8,7 @@ import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -79,14 +80,13 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	@Override
 	public Action execute(Percept p) {
-		Action action = NoOpAction.NO_OP;
+		Action action = NoOpAction.NO_OP; // return value if at goal or goal not found
 
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if seq is empty then do
 		if (seq.isEmpty()) {
-			if (formulateGoalsIndefinitely
-					|| goalsFormulated < maxGoalsToFormulate) {
+			if (formulateGoalsIndefinitely || goalsFormulated < maxGoalsToFormulate) {
 				if (goalsFormulated > 0) {
 					notifyViewOfMetrics();
 				}
@@ -96,11 +96,9 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 				// problem <- FORMULATE-PROBLEM(state, goal)
 				Problem<S, A> problem = formulateProblem(goal);
 				// seq <- SEARCH(problem)
-				seq.addAll(search(problem));
-				if (0 == seq.size()) {
-					// Unable to identify a path
-					seq.add(null);
-				}
+				Optional<List<A>> actions = search(problem);
+				if (actions.isPresent())
+					seq.addAll(actions.get());
 			} else {
 				// Agent no longer wishes to
 				// achieve any more goals
@@ -115,7 +113,7 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 			action = seq.remove();
 		}
 
-		return action != null ? action : NoOpAction.NO_OP;
+		return action;
 	}
 
 	//
@@ -127,7 +125,7 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 
 	protected abstract Problem<S, A> formulateProblem(Object goal);
 
-	protected abstract List<A> search(Problem<S, A> problem);
+	protected abstract Optional<List<A>> search(Problem<S, A> problem);
 
 	protected abstract void notifyViewOfMetrics();
 }

@@ -1,6 +1,7 @@
 package aima.core.search.framework.qsearch;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public class GraphSearch<S, A> extends QueueSearch<S, A> {
 	 * {@link QueueSearch}.
 	 */
 	@Override
-	public Node<S, A> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		// initialize the explored set to be empty
 		explored.clear();
 		return super.findNode(problem, frontier);

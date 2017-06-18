@@ -3,7 +3,6 @@ package aima.core.search.informed;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.qsearch.QueueSearch;
 
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -18,9 +17,9 @@ import java.util.function.ToDoubleFunction;
  * estimated cost of the cheapest path from n to the goal, we have<br>
  * f(n) = estimated cost of the cheapest solution through n.
  *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Mike Stampone
- * @author Ruediger Lunde
  */
 public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
 
@@ -54,7 +53,7 @@ public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
          * @return g(n) + h(n)
          */
         @Override
-        public double applyAsDouble(Node n) {
+        public double applyAsDouble(Node<S, A> n) {
             // f(n) = g(n) + h(n)
             return g.applyAsDouble(n) + h.applyAsDouble(n);
         }

@@ -8,8 +8,8 @@ import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -93,14 +93,8 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToActi
 	}
 
 	@Override
-	protected List<MoveToAction> search(Problem<String, MoveToAction> problem) {
-		List<MoveToAction> result = new ArrayList<>();
-		try {
-			result.addAll(search.findActions(problem));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return result;
+	protected Optional<List<MoveToAction>> search(Problem<String, MoveToAction> problem) {
+		return search.findActions(problem);
 	}
 
 	@Override

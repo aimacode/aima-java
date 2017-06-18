@@ -3,6 +3,7 @@ package aima.core.search.framework;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -19,18 +20,16 @@ import java.util.function.Consumer;
  */
 public interface SearchForActions<S, A> {
 	/**
-	 * Returns a list of actions to the goal if the goal was found, a list
-	 * containing a single NoOp Action if already at the goal, or an empty list
-	 * if the goal could not be found.
+	 * Returns a list of actions leading to a goal state if a goal was found,
+	 * otherwise empty. Note that the list can be empty which means that the
+	 * initial state is a goal state.
 	 * 
 	 * @param p
 	 *            the search problem
 	 * 
-	 * @return a list of actions to the goal if the goal was found, a list
-	 *         containing a single null reference (representing NoOp) if already
-	 *         at the goal, or an empty list if the goal could not be found.
+	 * @return a (possibly empty) list of actions or empty
 	 */
-	List<A> findActions(Problem<S, A> p);
+	Optional<List<A>> findActions(Problem<S, A> p);
 
 	/**
 	 * Returns all the metrics of the search.

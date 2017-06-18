@@ -31,9 +31,9 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * <b>Note:</b> Supports TreeSearch, GraphSearch, and BidirectionalSearch. Just
  * provide an instance of the desired QueueSearch implementation to the
  * constructor!
- * 
- * @author Ciaran O'Reilly
+ *
  * @author Ruediger Lunde
+ * @author Ciaran O'Reilly
  */
 public class BreadthFirstSearch<S, A> extends QueueBasedSearch<S, A> {
 

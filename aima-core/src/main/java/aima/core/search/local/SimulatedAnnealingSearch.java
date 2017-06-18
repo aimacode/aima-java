@@ -1,6 +1,7 @@
 package aima.core.search.local;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -95,21 +96,21 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	}
 	
 	@Override
-	public List<A> findActions(Problem<S, A> p) {
+	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node<S, A> node = findNode(p);
-		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toActions(node);
 	}
 	
 	@Override
-	public S findState(Problem<S, A> p) {
+	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node<S, A> node = findNode(p);
-		return node == null ? null : node.getState();
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toState(node);
 	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
-	public Node<S, A> findNode(Problem<S, A> p) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
@@ -126,7 +127,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 			if (temperature == 0.0) {
 				if (p.testSolution(current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				return current;
+				return Optional.of(current);
 			}
 
 			updateMetrics(temperature, getValue(current));
@@ -142,7 +143,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 				}
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	/**

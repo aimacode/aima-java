@@ -1,9 +1,6 @@
 package aima.gui.fx.applications.search.games;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.*;
@@ -171,26 +168,27 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 		Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 		SearchForActions<EightPuzzleBoard, Action> search = SEARCH_ALGOS.get(strategyIdx);
-		List<Action> actions = search.findActions(problem);
-		for (Action action : actions) {
-			if (action == EightPuzzleBoard.UP)
-				board.moveGapUp();
-			else if (action == EightPuzzleBoard.DOWN)
-				board.moveGapDown();
-			else if (action == EightPuzzleBoard.LEFT)
-				board.moveGapLeft();
-			else if (action == EightPuzzleBoard.RIGHT)
-				board.moveGapRight();
-			Metrics m = new Metrics();
-			m.set("manhattanHeuristic", EightPuzzleFunctions.createManhattanHeuristicFunction().applyAsDouble
-					(new Node<>(board)));
-			updateStateView(m);
-			if (CancelableThread.currIsCanceled())
-				break;
-			simPaneCtrl.waitAfterStep();
+		Optional<List<Action>> actions = search.findActions(problem);
+		if (actions.isPresent()) {
+			for (Action action : actions.get()) {
+				if (action == EightPuzzleBoard.UP)
+					board.moveGapUp();
+				else if (action == EightPuzzleBoard.DOWN)
+					board.moveGapDown();
+				else if (action == EightPuzzleBoard.LEFT)
+					board.moveGapLeft();
+				else if (action == EightPuzzleBoard.RIGHT)
+					board.moveGapRight();
+				Metrics m = new Metrics();
+				m.set("manhattanHeuristic", EightPuzzleFunctions.createManhattanHeuristicFunction().applyAsDouble
+						(new Node<>(board)));
+				updateStateView(m);
+				if (CancelableThread.currIsCanceled())
+					break;
+				simPaneCtrl.waitAfterStep();
+			}
 		}
 		updateStateView(search.getMetrics());
-
 	}
 
 	/**

@@ -4,6 +4,7 @@ import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Consumer;
 
@@ -29,19 +30,19 @@ public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, 
 	}
 
 	@Override
-	public List<A> findActions(Problem<S, A> p) {
+	public Optional<List<A>> findActions(Problem<S, A> p) {
 		impl.getNodeExpander().useParentLinks(true);
 		frontier.clear();
-		Node node = impl.findNode(p, frontier);
-		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Optional<Node<S, A>> node = impl.findNode(p, frontier);
+		return SearchUtils.toActions(node);
 	}
 
 	@Override
-	public S findState(Problem<S, A> p) {
+	public Optional<S> findState(Problem<S, A> p) {
 		impl.getNodeExpander().useParentLinks(false);
 		frontier.clear();
-		Node<S, A> node = impl.findNode(p, frontier);
-		return node == null ? null : node.getState();
+		Optional<Node<S, A>> node = impl.findNode(p, frontier);
+		return SearchUtils.toState(node);
 	}
 
 	@Override

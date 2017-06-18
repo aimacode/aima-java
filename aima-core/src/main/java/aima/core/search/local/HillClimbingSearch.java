@@ -6,6 +6,7 @@ import aima.core.search.informed.Informed;
 import aima.core.util.CancelableThread;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.ToDoubleFunction;
 
@@ -71,17 +72,17 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 	}
 
 	@Override
-	public List<A> findActions(Problem<S, A> p) {
+	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Node<S, A> node = findNode(p);
-		return node == null ? SearchUtils.failure() : SearchUtils.getSequenceOfActions(node);
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toActions(node);
 	}
 	
 	@Override
-	public S findState(Problem<S, A> p) {
+	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Node<S, A> node = findNode(p);
-		return node == null ? null : node.getState();
+		Optional<Node<S, A>> node = findNode(p);
+		return SearchUtils.toState(node);
 	}
 
 	/**
@@ -98,7 +99,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 	 *         user.
 	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
-	public Node<S, A> findNode(Problem<S, A> p) {
+	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearInstrumentation();
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -113,15 +114,15 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 			neighbor = getHighestValuedNodeFrom(children);
 			
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
-			if ((neighbor == null) || (getValue(neighbor) <= getValue(current))) {
+			if (neighbor == null || getValue(neighbor) <= getValue(current)) {
 				if (p.testSolution(current))
 					outcome = SearchOutcome.SOLUTION_FOUND;
-				return current;
+				return Optional.of(current);
 			}
 			// current <- neighbor
 			current = neighbor;
 		}
-		return null;
+		return Optional.empty();
 	}
 	
 	/**

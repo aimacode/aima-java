@@ -1,9 +1,6 @@
 package aima.core.search.framework;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
@@ -20,17 +17,17 @@ import aima.core.search.framework.problem.Problem;
  * @author Ruediger Lunde
  */
 public class SearchAgent<S, A extends Action> extends AbstractAgent {
-	protected List<Action> actionList;
+	private List<Action> actionList;
 
 	private Iterator<Action> actionIterator;
 
 	private Metrics searchMetrics;
 
 	public SearchAgent(Problem<S, A> p, SearchForActions<S, A> search) throws Exception {
+		Optional<List<A>> actions = search.findActions(p);
 		actionList = new ArrayList<>();
-		actionList.addAll(search.findActions(p));
-		if (actionList.size() == 1 && actionList.get(0) == null)
-			actionList.set(0, NoOpAction.NO_OP); // search uses null to represent the stop command.
+		if (actions.isPresent())
+			actionList.addAll(actions.get());
 
 		actionIterator = actionList.iterator();
 		searchMetrics = search.getMetrics();
@@ -40,7 +37,7 @@ public class SearchAgent<S, A extends Action> extends AbstractAgent {
 	public Action execute(Percept p) {
 		if (actionIterator.hasNext())
 			return actionIterator.next();
-		return NoOpAction.NO_OP; // no success
+		return NoOpAction.NO_OP; // no success or at goal
 	}
 
 	public boolean isDone() {
@@ -52,11 +49,11 @@ public class SearchAgent<S, A extends Action> extends AbstractAgent {
 	}
 
 	public Properties getInstrumentation() {
-		Properties retVal = new Properties();
+		Properties result = new Properties();
 		for (String key : searchMetrics.keySet()) {
 			String value = searchMetrics.get(key);
-			retVal.setProperty(key, value);
+			result.setProperty(key, value);
 		}
-		return retVal;
+		return result;
 	}
 }
