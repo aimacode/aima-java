@@ -22,8 +22,9 @@ public class Parameter {
 	private String dependsOnParam;
 	private List<String> dependsOnValues;
 
-	public static Optional<Parameter> find(List<Parameter> params, String paramName) {
-		return params.stream().filter(p -> p.getName().equals(paramName)).findFirst();
+	public static Parameter find(List<Parameter> params, String paramName) {
+		Optional<Parameter> result = params.stream().filter(p -> p.getName().equals(paramName)).findFirst();
+		return result.isPresent() ? result.get() : null;
 	}
 
 	public static int indexOf(List<Parameter> params, String paramName) {

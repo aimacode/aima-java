@@ -20,8 +20,8 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.EightPuzzleViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
@@ -81,7 +81,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 	public final static String PARAM_STRATEGY = "strategy";
 
 	private EightPuzzleViewCtrl stateViewCtrl;
-	private SimulationPaneCtrl simPaneCtrl;
+	private TaskExecutionPaneCtrl simPaneCtrl;
 
 	public EightPuzzleApp() {
 	}
@@ -104,11 +104,11 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 		List<Parameter> params = createParameters();
 
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(stateView);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
+		builder.defineTaskMethod(this::startExperiment);
 		simPaneCtrl = builder.getResultFor(root);
 
 		return root;
@@ -159,11 +159,11 @@ public class EightPuzzleApp extends IntegrableApplication {
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		simPaneCtrl.cancelExecution();
 	}
 
 	/** Starts the experiment. */
-	public void simulate() {
+	public void startExperiment() {
 		int strategyIdx = simPaneCtrl.getParamValueIndex(PARAM_STRATEGY);
 
 		Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);

@@ -11,7 +11,6 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
@@ -20,8 +19,8 @@ import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.Position;
@@ -52,7 +51,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	public static String TRACK_NAME = "Track";
 
 	protected MapPaneCtrl mapPaneCtrl;
-	protected SimulationPaneCtrl simPaneCtrl;
+	protected TaskExecutionPaneCtrl simPaneCtrl;
 
 	protected MapAdapter map;
 	protected MapEnvironment env;
@@ -104,13 +103,13 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 		StackPane mapPane = new StackPane();
 		mapPaneCtrl = new MapPaneCtrl(mapPane);
 		loadMap();
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(mapPane);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
+		builder.defineTaskMethod(this::startExperiment);
 		simPaneCtrl = builder.getResultFor(root);
-		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 0);
+		simPaneCtrl.setParam(TaskExecutionPaneCtrl.PARAM_EXEC_SPEED, 0);
 
 		return root;
 	}
@@ -141,7 +140,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 	}
 
 	/** Starts the experiment. */
-	public void simulate() {
+	public void startExperiment() {
 		List<MapNode> markers = map.getOsmMap().getMarkers();
 		if (markers.size() < 2) {
 			simPaneCtrl.setStatus("Error: Please set two markers with mouse-left.");
@@ -164,7 +163,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		simPaneCtrl.cancelExecution();
 	}
 
 	/** Visualizes agent positions. Call from simulation thread. */

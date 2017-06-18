@@ -17,19 +17,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 /**
- * Builder class for simulation applications. To create a simulation
- * application, just create a builder, call the define methods to specify what
- * you need, and then get the result with {@link #getResultFor}.
+ * Builder class for task execution panes. To add suitable graphical elements
+ * to a given pane and obtain a corresponding controller class, just create a builder,
+ * call the define methods to specify what you need, and then get the result with
+ * {@link #getResultFor}.
  * 
  * @author Ruediger Lunde
  */
-public class SimulationPaneBuilder {
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+public class TaskExecutionPaneBuilder {
 
-	protected List<Parameter> parameters = new ArrayList<Parameter>();
+	protected List<Parameter> parameters = new ArrayList<>();
 	protected Optional<Node> stateView = Optional.empty();
 	/** Should return true if initialization was successful. */
 	protected Optional<Runnable> initMethod = Optional.empty();
-	protected Optional<Runnable> simMethod = Optional.empty();
+	protected Optional<Runnable> taskMethod = Optional.empty();
 
 	public final void defineParameters(List<Parameter> params) {
 		parameters.clear();
@@ -44,8 +46,8 @@ public class SimulationPaneBuilder {
 		this.initMethod = Optional.of(initMethod);
 	}
 
-	public final void defineSimMethod(Runnable simMethod) {
-		this.simMethod = Optional.of(simMethod);
+	public final void defineTaskMethod(Runnable taksMethod) {
+		this.taskMethod = Optional.of(taksMethod);
 	}
 
 	/**
@@ -54,9 +56,9 @@ public class SimulationPaneBuilder {
 	 * and buttons for simulation control. The controller class instance handles user events and provides
 	 * access to user settings (parameter settings, simulation speed, status text, ...).
 	 */
-	public SimulationPaneCtrl getResultFor(BorderPane pane) {
+	public TaskExecutionPaneCtrl getResultFor(BorderPane pane) {
 		List<ComboBox<String>> combos = new ArrayList<>();
-		parameters.add(createSimSpeedParam());
+		parameters.add(createExecutionSpeedParam());
 		for (Parameter param : parameters) {
 			ComboBox<String> combo = new ComboBox<>();
 			combo.setId(param.getName());
@@ -65,14 +67,14 @@ public class SimulationPaneBuilder {
 			combos.add(combo);
 		}
 
-		Button simBtn = new Button();
+		Button executeBtn = new Button();
 
 		Node[] tools = new Node[combos.size() + 2];
 		for (int i = 0; i < combos.size() - 1; i++)
 			tools[i] = combos.get(i);
 		tools[combos.size() - 1] = new Separator();
 		tools[combos.size() + 0] = combos.get(combos.size() - 1);
-		tools[combos.size() + 1] = simBtn;
+		tools[combos.size() + 1] = executeBtn;
 		ToolBar toolBar = new ToolBar(tools);
 
 		Label statusLabel = new Label();
@@ -99,19 +101,20 @@ public class SimulationPaneBuilder {
 
 		if (!initMethod.isPresent())
 			throw new IllegalStateException("No initialization method defined.");
-		if (!simMethod.isPresent())
-			throw new IllegalStateException("No simulation method defined.");
+		if (!taskMethod.isPresent())
+			throw new IllegalStateException("No task method defined.");
 
-		return new SimulationPaneCtrl(parameters, combos, initMethod.get(), simMethod.get(),
-				simBtn, statusLabel);
+		return new TaskExecutionPaneCtrl(parameters, combos, initMethod.get(), taskMethod.get(),
+				executeBtn, statusLabel);
 	}
 
 	/**
 	 * Factory method defining the simulation speed options. Value
 	 * <code>Integer.MAX_VALUE</code> is used for pause.
 	 */
-	protected Parameter createSimSpeedParam() {
-		Parameter result = new Parameter(SimulationPaneCtrl.PARAM_SIM_SPEED, 20, 100, 400, 800, Integer.MAX_VALUE);
+	protected Parameter createExecutionSpeedParam() {
+		Parameter result = new Parameter
+				(TaskExecutionPaneCtrl.PARAM_EXEC_SPEED, 20, 100, 400, 800, Integer.MAX_VALUE);
 		result.setValueNames("VeryFast", "Fast", "Medium", "Slow", "StepMode");
 		result.setDefaultValueIndex(2);
 		return result;

@@ -151,7 +151,7 @@ public class MiniNaviApp implements ActionListener {
 					} else { // Establishing connection to GPS failed
 						gpsCombo.setSelectedIndex(0);
 					}
-				} else if (gpsFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) { // simulate
+				} else if (gpsFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) { // startExperiment
 					// GPS
 					locator.openFileConnection(gpsFileChooser.getSelectedFile());
 				}

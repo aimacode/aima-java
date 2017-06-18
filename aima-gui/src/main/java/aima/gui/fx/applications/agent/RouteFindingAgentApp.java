@@ -12,8 +12,8 @@ import aima.core.search.framework.SearchForActions;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.MapEnvironmentViewCtrl;
 import aima.gui.util.SearchFactory;
 import javafx.scene.layout.BorderPane;
@@ -40,7 +40,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	public static String PARAM_Q_SEARCH_IMPL = "qsearch";
 	public static String PARAM_HEURISTIC = "heuristic";
 
-	private SimulationPaneCtrl simPaneCtrl;
+	private TaskExecutionPaneCtrl taskPaneCtrl;
 	private MapEnvironmentViewCtrl envViewCtrl;
 	protected MapEnvironment env = null;
 	protected Agent agent = null;
@@ -78,12 +78,12 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 		List<Parameter> params = createParameters();
 
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(envView);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
+		builder.defineTaskMethod(this::startExperiment);
+		taskPaneCtrl = builder.getResultFor(root);
 
 		return root;
 	}
@@ -119,7 +119,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		ExtendableMap map = new ExtendableMap();
 		env = new MapEnvironment(map);
 		String agentLoc = null;
-		switch (simPaneCtrl.getParamValueIndex(PARAM_SCENARIO)) {
+		switch (taskPaneCtrl.getParamValueIndex(PARAM_SCENARIO)) {
 		case 0:
 			SimplifiedRoadMapOfPartOfRomania.initMap(map);
 			agentLoc = SimplifiedRoadMapOfPartOfRomania.ARAD;
@@ -144,8 +144,8 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		scenario = new Scenario(env, map, agentLoc);
 
 		destinations = new ArrayList<>();
-		if (simPaneCtrl.isParamVisible(PARAM_DESTINATION_R)) {
-			switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION_R)) {
+		if (taskPaneCtrl.isParamVisible(PARAM_DESTINATION_R)) {
+			switch (taskPaneCtrl.getParamValueIndex(PARAM_DESTINATION_R)) {
 			case 0:
 				destinations.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 				break;
@@ -159,8 +159,8 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 				destinations.add(map.randomlyGenerateDestination());
 				break;
 			}
-		} else if (simPaneCtrl.isParamVisible(PARAM_DESTINATION_A)) {
-			switch (simPaneCtrl.getParamValueIndex(PARAM_DESTINATION_A)) {
+		} else if (taskPaneCtrl.isParamVisible(PARAM_DESTINATION_A)) {
+			switch (taskPaneCtrl.getParamValueIndex(PARAM_DESTINATION_A)) {
 			case 0:
 				destinations.add(SimplifiedRoadMapOfAustralia.PORT_HEDLAND);
 				break;
@@ -176,7 +176,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 			}
 		}
 
-		switch (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
+		switch (taskPaneCtrl.getParamValueIndex(PARAM_HEURISTIC)) {
 		case 0:
 			heuristic = (node) -> 0.0;
 			break;
@@ -184,8 +184,8 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 			heuristic = MapFunctions.createSLDHeuristicFunction(destinations.get(0), scenario.getAgentMap());
 		}
 
-		search = SearchFactory.getInstance().createSearch(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
-				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
+		search = SearchFactory.getInstance().createSearch(taskPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+				taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		String goal = destinations.get(0);
 		agent = new SimpleMapAgent(env.getMap(), search, new String[] { goal });
@@ -196,17 +196,17 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	}
 
 	/** Starts the experiment. */
-	public void simulate() {
+	public void startExperiment() {
 		while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 			env.step();
-			simPaneCtrl.waitAfterStep();
+			taskPaneCtrl.waitAfterStep();
 		}
-		simPaneCtrl.setStatus(search.getMetrics().toString());
+		taskPaneCtrl.setStatus(search.getMetrics().toString());
 		envViewCtrl.notify("pathCost=" + search.getMetrics().get("pathCost"));
 	}
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		taskPaneCtrl.cancelExecution();
 	}
 }

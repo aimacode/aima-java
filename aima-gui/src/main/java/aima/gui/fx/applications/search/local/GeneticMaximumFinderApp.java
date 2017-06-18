@@ -9,8 +9,8 @@ import java.util.function.Function;
 import aima.core.search.local.Individual;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.FunctionPlotterCtrl;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
@@ -39,7 +39,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	public final static String PARAM_MAX_ITER = "maxIter";
 	
 	protected FunctionPlotterCtrl funcPlotterCtrl;
-	private SimulationPaneCtrl simPaneCtrl;
+	private TaskExecutionPaneCtrl taskPaneCtrl;
 	private GeneticMaximumFinderDemo experiment;
 
 	@Override
@@ -60,12 +60,12 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 		funcPlotterCtrl.setLimits(Functions.minX, Functions.maxX, Functions.minY, Functions.maxY);
 		List<Parameter> params = createParameters();
 		
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(canvas);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
+		builder.defineTaskMethod(this::startExperiment);
+		taskPaneCtrl = builder.getResultFor(root);
 		
 		return root;
 	}
@@ -87,22 +87,22 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize() {
-		funcPlotterCtrl.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
+		funcPlotterCtrl.setFunction((Function<Double, Double>) taskPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
 	}
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		taskPaneCtrl.cancelExecution();
 	}
 
 	/** Starts the experiment. */
 	@SuppressWarnings("unchecked")
-	public void simulate() {
+	public void startExperiment() {
 		experiment = new GeneticMaximumFinderDemo();
-		experiment.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
-		experiment.setMutationProb(simPaneCtrl.getParamAsDouble(PARAM_MUT_PROB));
-		experiment.setPopulationSize(simPaneCtrl.getParamAsInt(PARAM_POPULATION));
-		experiment.setMaxIterations(simPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
+		experiment.setFunction((Function<Double, Double>) taskPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
+		experiment.setMutationProb(taskPaneCtrl.getParamAsDouble(PARAM_MUT_PROB));
+		experiment.setPopulationSize(taskPaneCtrl.getParamAsInt(PARAM_POPULATION));
+		experiment.setMaxIterations(taskPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
 		experiment.startExperiment(this::updateStateView);
 	}
 
@@ -112,7 +112,7 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 	 */
 	private void updateStateView(int itCount, Collection<Individual<Double>> gen) {
 		Platform.runLater(() -> updateStateViewLater(itCount, gen));
-		simPaneCtrl.waitAfterStep();
+		taskPaneCtrl.waitAfterStep();
 	}
 
 	/**
@@ -130,9 +130,9 @@ public class GeneticMaximumFinderApp extends IntegrableApplication {
 				double x = ind.getRepresentation().get(0);
 				funcPlotterCtrl.setMarker(x, fill);
 			}
-			simPaneCtrl.setStatus(experiment.getIterationInfo(itCount, gen));
+			taskPaneCtrl.setStatus(experiment.getIterationInfo(itCount, gen));
 		} else {
-			simPaneCtrl.setStatus("");
+			taskPaneCtrl.setStatus("");
 		}
 	}
 }

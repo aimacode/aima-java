@@ -11,8 +11,8 @@ import aima.core.search.csp.inference.ForwardCheckingStrategy;
 import aima.core.util.datastructure.XYLocation;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.NQueensViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
@@ -39,7 +39,7 @@ public class NQueensCspApp extends IntegrableApplication {
     private final static String PARAM_BOARD_SIZE = "boardSize";
 
     private NQueensViewCtrl stateViewCtrl;
-    private SimulationPaneCtrl simPaneCtrl;
+    private TaskExecutionPaneCtrl taskPaneCtrl;
     private CSP<Variable, Integer> csp;
     private CspSolver<Variable, Integer> solver;
     private CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter<>();
@@ -62,13 +62,13 @@ public class NQueensCspApp extends IntegrableApplication {
 
         List<Parameter> params = createParameters();
 
-        SimulationPaneBuilder builder = new SimulationPaneBuilder();
+        TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
         builder.defineParameters(params);
         builder.defineStateView(stateView);
         builder.defineInitMethod(this::initialize);
-        builder.defineSimMethod(this::simulate);
-        simPaneCtrl = builder.getResultFor(root);
-        simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 0);
+        builder.defineTaskMethod(this::startExperiment);
+        taskPaneCtrl = builder.getResultFor(root);
+        taskPaneCtrl.setParam(TaskExecutionPaneCtrl.PARAM_EXEC_SPEED, 0);
 
         return root;
     }
@@ -91,19 +91,19 @@ public class NQueensCspApp extends IntegrableApplication {
      */
     @Override
     public void initialize() {
-        csp = new NQueensCSP(simPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
-        Object strategy = simPaneCtrl.getParamValue(PARAM_STRATEGY);
+        csp = new NQueensCSP(taskPaneCtrl.getParamAsInt(PARAM_BOARD_SIZE));
+        Object strategy = taskPaneCtrl.getParamValue(PARAM_STRATEGY);
         if (strategy.equals("Backtracking")) {
             FlexibleBacktrackingSolver<Variable, Integer> bSolver = new FlexibleBacktrackingSolver<>();
-            switch ((String) simPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
+            switch ((String) taskPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
                 case "MRV": bSolver.set(CspHeuristics.mrv()); break;
                 case "DEG": bSolver.set(CspHeuristics.deg()); break;
                 case "MRV&DEG": bSolver.set(CspHeuristics.mrvDeg()); break;
             }
-            switch ((String) simPaneCtrl.getParamValue(PARAM_VAL_SELECT)) {
+            switch ((String) taskPaneCtrl.getParamValue(PARAM_VAL_SELECT)) {
                 case "LCV": bSolver.set(CspHeuristics.lcv()); break;
             }
-            switch ((String) simPaneCtrl.getParamValue(PARAM_INFERENCE)) {
+            switch ((String) taskPaneCtrl.getParamValue(PARAM_INFERENCE)) {
                 case "Forward Checking": bSolver.set(new ForwardCheckingStrategy<>()); break;
                 case "AC3": bSolver.set(new AC3Strategy<>()); break;
             }
@@ -116,18 +116,18 @@ public class NQueensCspApp extends IntegrableApplication {
         solver.addCspListener((csp, assign, var) -> { if (assign != null) updateStateView(getBoard(assign));});
         stepCounter.reset();
         stateViewCtrl.update(new NQueensBoard(csp.getVariables().size()));
-        simPaneCtrl.setStatus("");
+        taskPaneCtrl.setStatus("");
     }
 
     @Override
     public void cleanup() {
-        simPaneCtrl.cancelSimulation();
+        taskPaneCtrl.cancelExecution();
     }
 
     /**
      * Starts the experiment.
      */
-    public void simulate() {
+    public void startExperiment() {
         Assignment<Variable, Integer> solution = solver.solve(csp);
         if (solution != null) {
             NQueensBoard board = getBoard(solution);
@@ -151,7 +151,7 @@ public class NQueensCspApp extends IntegrableApplication {
      */
     private void updateStateView(NQueensBoard board) {
         Platform.runLater(() -> {
-            stateViewCtrl.update(board); simPaneCtrl.setStatus(stepCounter.getResults().toString()); });
-        simPaneCtrl.waitAfterStep();
+            stateViewCtrl.update(board); taskPaneCtrl.setStatus(stepCounter.getResults().toString()); });
+        taskPaneCtrl.waitAfterStep();
     }
 }

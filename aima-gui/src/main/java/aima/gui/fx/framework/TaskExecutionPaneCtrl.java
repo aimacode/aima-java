@@ -1,8 +1,5 @@
 package aima.gui.fx.framework;
 
-import java.util.List;
-import java.util.Optional;
-
 import aima.core.util.CancelableThread;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -13,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 
+import java.util.List;
+
 /**
  * Controller class for simulation panes. It is responsible for maintaining the
  * current parameter settings, the simulation state, the current simulation
@@ -22,15 +21,15 @@ import javafx.scene.input.MouseButton;
  * 
  * @author Ruediger Lunde
  */
-public class SimulationPaneCtrl {
+public class TaskExecutionPaneCtrl {
 
 	public enum State {
 		READY, RUNNING, FINISHED, PAUSED, CANCELED
 	}
 
-	public final static String PARAM_SIM_SPEED = "simSpeed";
+	public final static String PARAM_EXEC_SPEED = "executionSpeed";
 
-	private Button simBtn;
+	private Button executeBtn;
 	private Label statusLabel;
 
 	private List<Parameter> params;
@@ -39,34 +38,34 @@ public class SimulationPaneCtrl {
 	private Runnable simMethod;
 
 	private ObjectProperty<State> state = new SimpleObjectProperty<>();
-	private Optional<CancelableThread> simThread = Optional.empty();
+	private CancelableThread backgroundThread;
 
 	/** Should only be called by the SimulationPaneBuilder. */
-	public SimulationPaneCtrl(List<Parameter> params, List<ComboBox<String>> paramCombos, Runnable initMethod,
-			Runnable simMethod, Button simBtn, Label statusLabel) {
+	public TaskExecutionPaneCtrl(List<Parameter> params, List<ComboBox<String>> paramCombos, Runnable initMethod,
+                                 Runnable simMethod, Button simBtn, Label statusLabel) {
 		this.params = params;
 		this.paramCombos = paramCombos;
 		this.initMethod = initMethod;
 		this.simMethod = simMethod;
-		this.simBtn = simBtn;
+		this.executeBtn = simBtn;
 		this.statusLabel = statusLabel;
 		ChangeListener<String> listener = (obs, o, n) -> onParamChanged();
 		for (ComboBox<String> combo : paramCombos)
 			// allow simSpeed adjustments during simulation (without
 			// re-initialization)
-			if (!combo.getId().equals(PARAM_SIM_SPEED))
+			if (!combo.getId().equals(PARAM_EXEC_SPEED))
 				combo.getSelectionModel().selectedItemProperty().addListener(listener);
 		simBtn.setOnAction(ev -> onSimButtonAction());
 		simBtn.setOnMouseClicked(ev -> {
 			if (ev.getButton() == MouseButton.SECONDARY)
-				setParamValue(PARAM_SIM_SPEED, Integer.MAX_VALUE);
+				setParamValue(PARAM_EXEC_SPEED, Integer.MAX_VALUE);
 		});
 		updateParamVisibility();
 		state.addListener((obs, o, n) -> onStateChanged());
 		setState(State.READY);
 	}
 
-	public Optional<Parameter> getParam(String paramName) {
+	public Parameter getParam(String paramName) {
 		return Parameter.find(params, paramName);
 	}
 	
@@ -82,7 +81,7 @@ public class SimulationPaneCtrl {
 
 	public Object getParamValue(String paramName) {
 		int valIdx = getParamValueIndex(paramName);
-		return Parameter.find(params, paramName).get().getValues().get(valIdx);
+		return Parameter.find(params, paramName).getValues().get(valIdx);
 	}
 
 	public int getParamAsInt(String paramName) {
@@ -140,7 +139,7 @@ public class SimulationPaneCtrl {
 	 */
 	public void waitAfterStep() {
 		try {
-			int msec = getParamAsInt(PARAM_SIM_SPEED);
+			int msec = getParamAsInt(PARAM_EXEC_SPEED);
 			if (msec == Integer.MAX_VALUE)
 				setState(State.PAUSED);
 			Thread.sleep(msec);
@@ -150,16 +149,15 @@ public class SimulationPaneCtrl {
 	}
 
 	/**
-	 * Tries to stop simulation. This will only have an effect, if all loops in
-	 * the running simulation method check {@link CancelableThread#isCanceled()}
-	 * in every time-consuming loop.
+	 * Tries to stop task execution. This will only have an effect, if all loops in
+	 * the running task check {@link CancelableThread#isCanceled()} in every time-consuming loop.
 	 */
-	public void cancelSimulation() {
-		if (simThread.isPresent() && simThread.get().isAlive()) {
-			simThread.get().cancel();
+	public void cancelExecution() {
+		if (backgroundThread != null && backgroundThread.isAlive()) {
+			backgroundThread.cancel();
 			setState(State.CANCELED);
 			if (state.get() == State.PAUSED)
-				simThread.get().interrupt();
+				backgroundThread.interrupt();
 		}
 	}
 
@@ -172,7 +170,7 @@ public class SimulationPaneCtrl {
 	}
 
 	private void onParamChanged() {
-		cancelSimulation();
+		cancelExecution();
 		setStatus("");
 		updateParamVisibility();
 		initMethod.run();
@@ -181,38 +179,37 @@ public class SimulationPaneCtrl {
 
 	private void onStateChanged() {
 		if (state.get() == State.READY)
-			simBtn.setText("Start");
+			executeBtn.setText("Start");
 		else if (state.get() == State.RUNNING)
-			simBtn.setText("Cancel");
+			executeBtn.setText("Cancel");
 		else if (state.get() == State.PAUSED)
-			simBtn.setText("Continue");
+			executeBtn.setText("Continue");
 		else if (state.get() == State.CANCELED)
-			simBtn.setText("Stop");
+			executeBtn.setText("Stop");
 		else if (state.get() == State.FINISHED)
-			simBtn.setText("Init");
+			executeBtn.setText("Init");
 
 		boolean disable = state.get() != State.READY && state.get() != State.FINISHED;
-		for (ComboBox<String> combo : paramCombos)
-			if (!combo.getId().equals(PARAM_SIM_SPEED))
-				combo.setDisable(disable);
+		paramCombos.stream().filter(combo -> !combo.getId().equals(PARAM_EXEC_SPEED)).forEach
+				(combo -> combo.setDisable(disable));
 	}
 
 	@SuppressWarnings("deprecation")
 	private void onSimButtonAction() {
 		if (state.get() == State.FINISHED) {
 			onParamChanged();
-		} else if (!simThread.isPresent() || !simThread.get().isAlive()) {
-			simThread = Optional.of(new CancelableThread(this::runSimulation));
-			simThread.get().setDaemon(true);
-			simThread.get().start();
+		} else if (backgroundThread == null || !backgroundThread.isAlive()) {
+			backgroundThread = new CancelableThread(this::runSimulation);
+			backgroundThread.setDaemon(true);
+			backgroundThread.start();
 		} else if (state.get() == State.PAUSED) {
-			simThread.get().interrupt();
+			backgroundThread.interrupt();
 			setState(State.RUNNING);
-		} else if (simThread.get().isCanceled()) {
-			simThread.get().stop();
+		} else if (backgroundThread.isCanceled()) {
+			backgroundThread.stop();
 			setState(State.READY);
 		} else {
-			cancelSimulation();
+			cancelExecution();
 		}
 	}
 

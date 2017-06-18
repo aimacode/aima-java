@@ -11,8 +11,8 @@ import aima.core.search.csp.inference.AC3Strategy;
 import aima.core.search.csp.inference.ForwardCheckingStrategy;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.CspViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
@@ -37,7 +37,7 @@ public class MapColoringCspApp extends IntegrableApplication {
     private final static String PARAM_STRATEGY = "strategy";
 
     private CspViewCtrl<Variable, String> stateViewCtrl;
-    private SimulationPaneCtrl simPaneCtrl;
+    private TaskExecutionPaneCtrl taskPaneCtrl;
 
     private CSP<Variable, String> csp;
     private CspSolver<Variable, String> strategy;
@@ -64,12 +64,12 @@ public class MapColoringCspApp extends IntegrableApplication {
 
         List<Parameter> params = createParameters();
 
-        SimulationPaneBuilder builder = new SimulationPaneBuilder();
+        TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
         builder.defineParameters(params);
         builder.defineStateView(stateView);
         builder.defineInitMethod(this::initialize);
-        builder.defineSimMethod(this::simulate);
-        simPaneCtrl = builder.getResultFor(root);
+        builder.defineTaskMethod(this::startExperiment);
+        taskPaneCtrl = builder.getResultFor(root);
 
         return root;
     }
@@ -96,7 +96,7 @@ public class MapColoringCspApp extends IntegrableApplication {
     @Override
     public void initialize() {
         csp = null;
-        switch (simPaneCtrl.getParamValueIndex(PARAM_MAP)) {
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_MAP)) {
             case 0:
                 initMapOfAustraliaCsp();
                 break;
@@ -106,7 +106,7 @@ public class MapColoringCspApp extends IntegrableApplication {
         }
 
 
-        switch (simPaneCtrl.getParamValueIndex(PARAM_STRATEGY)) {
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_STRATEGY)) {
             case 0:
                 strategy = new FlexibleBacktrackingSolver<>();
                 break;
@@ -153,18 +153,18 @@ public class MapColoringCspApp extends IntegrableApplication {
 
     @Override
     public void cleanup() {
-        simPaneCtrl.cancelSimulation();
+        taskPaneCtrl.cancelExecution();
     }
 
     /**
      * Starts the experiment.
      */
-    public void simulate() {
+    public void startExperiment() {
         try {
             stepCounter = 0;
             strategy.solve(csp);
         } catch (RuntimeException ex) { // If TreeCspSolver is applied to non-tree-structured CSP
-            simPaneCtrl.setStatus(ex.getClass().getSimpleName() + ": " + ex.getMessage());
+            taskPaneCtrl.setStatus(ex.getClass().getSimpleName() + ": " + ex.getMessage());
         }
     }
 
@@ -174,7 +174,7 @@ public class MapColoringCspApp extends IntegrableApplication {
      */
     private void updateStateView(CSP<Variable, String> csp, Assignment<Variable, String> assignment, Variable var) {
         Platform.runLater(() -> updateStateViewLater(csp, assignment, var));
-        simPaneCtrl.waitAfterStep();
+        taskPaneCtrl.waitAfterStep();
     }
 
     /**
@@ -194,7 +194,7 @@ public class MapColoringCspApp extends IntegrableApplication {
         } else {
             txt2 = "Domain reduced" + (var != null ? ", Dom(" + var + ") = " + csp.getDomain(var) + ")": "");
         }
-        simPaneCtrl.setStatus(txt1 + txt2);
+        taskPaneCtrl.setStatus(txt1 + txt2);
     }
 
 

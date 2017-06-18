@@ -11,8 +11,8 @@ import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.FunctionPlotterCtrl;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
@@ -41,7 +41,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	public final static String PARAM_MAX_ITER = "maxIter";
 
 	protected FunctionPlotterCtrl funcPlotterCtrl;
-	private SimulationPaneCtrl simPaneCtrl;
+	private TaskExecutionPaneCtrl taskPaneCtrl;
 
 	private Random random = new Random();
 	private SimulatedAnnealingSearch<Double, Action> search;
@@ -64,13 +64,13 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		funcPlotterCtrl.setLimits(Functions.minX, Functions.maxX, Functions.minY, Functions.maxY);
 		List<Parameter> params = createParameters();
 		
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(canvas);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
-		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 1);
+		builder.defineTaskMethod(this::startExperiment);
+		taskPaneCtrl = builder.getResultFor(root);
+		taskPaneCtrl.setParam(TaskExecutionPaneCtrl.PARAM_EXEC_SPEED, 1);
 		return root;
 	}
 
@@ -93,24 +93,24 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize() {
-		funcPlotterCtrl.setFunction((Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
+		funcPlotterCtrl.setFunction((Function<Double, Double>) taskPaneCtrl.getParamValue(PARAM_FUNC_SELECT));
 	}
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		taskPaneCtrl.cancelExecution();
 	}
 
 	/** Starts the experiment. */
 	@SuppressWarnings("unchecked")
-	public void simulate() {
+	public void startExperiment() {
 
 		List<Action> actions = new ArrayList<>(1);
 		actions.add(new DynamicAction("Move"));
 		Problem<Double, Action> problem = new GeneralProblem<>(getRandomState(), s -> actions, (s, a) -> getSuccessor(s), s -> false);
-		Function<Double, Double> func = (Function<Double, Double>) simPaneCtrl.getParamValue(PARAM_FUNC_SELECT);
-		Scheduler scheduler = new Scheduler(simPaneCtrl.getParamAsInt(PARAM_K),
-				simPaneCtrl.getParamAsDouble(PARAM_LAMBDA), simPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
+		Function<Double, Double> func = (Function<Double, Double>) taskPaneCtrl.getParamValue(PARAM_FUNC_SELECT);
+		Scheduler scheduler = new Scheduler(taskPaneCtrl.getParamAsInt(PARAM_K),
+				taskPaneCtrl.getParamAsDouble(PARAM_LAMBDA), taskPaneCtrl.getParamAsInt(PARAM_MAX_ITER));
 		search = new SimulatedAnnealingSearch<>(n -> 1 - func.apply(n.getState()), scheduler);
 		search.addNodeListener(n -> updateStateView(n.getState()));
 		search.findActions(problem);
@@ -145,7 +145,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 	 */
 	private void updateStateView(Object state) {
 		Platform.runLater(() -> updateStateViewLater(state));
-		simPaneCtrl.waitAfterStep();
+		taskPaneCtrl.waitAfterStep();
 	}
 
 	/**
@@ -159,9 +159,9 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 			if (temp < 1)
 				fill = Color.rgb((int) (255 * temp), 0, (int) (255 * (1 - temp)));
 			funcPlotterCtrl.setMarker((Double) state, Optional.of(fill));
-			simPaneCtrl.setStatus(search.getMetrics().toString());
+			taskPaneCtrl.setStatus(search.getMetrics().toString());
 		} else {
-			simPaneCtrl.setStatus("");
+			taskPaneCtrl.setStatus("");
 		}
 	}
 }

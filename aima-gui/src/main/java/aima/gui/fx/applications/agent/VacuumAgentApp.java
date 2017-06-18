@@ -7,8 +7,8 @@ import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.util.CancelableThread;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
 import aima.gui.fx.views.VacuumEnvironmentViewCtrl;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +33,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     public final static String PARAM_ENV = "environment";
     public final static String PARAM_AGENT = "agent";
 
-    private SimulationPaneCtrl simPaneCtrl;
+    private TaskExecutionPaneCtrl taskPaneCtrl;
     private SimpleEnvironmentViewCtrl envViewCtrl;
     protected VacuumEnvironment env = null;
     protected AbstractAgent agent = null;
@@ -60,12 +60,12 @@ public class VacuumAgentApp extends IntegrableApplication {
 
         List<Parameter> params = createParameters();
 
-        SimulationPaneBuilder builder = new SimulationPaneBuilder();
+        TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
         builder.defineParameters(params);
         builder.defineStateView(envView);
         builder.defineInitMethod(this::initialize);
-        builder.defineSimMethod(this::simulate);
-        simPaneCtrl = builder.getResultFor(root);
+        builder.defineTaskMethod(this::startExperiment);
+        taskPaneCtrl = builder.getResultFor(root);
 
         return root;
     }
@@ -82,7 +82,7 @@ public class VacuumAgentApp extends IntegrableApplication {
      */
     @Override
     public void initialize() {
-        switch (simPaneCtrl.getParamValueIndex(PARAM_ENV)) {
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_ENV)) {
             case 0:
                 env = new VacuumEnvironment();
                 break;
@@ -91,7 +91,7 @@ public class VacuumAgentApp extends IntegrableApplication {
                 break;
         }
         agent = null;
-        switch (simPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
             case 0:
                 agent = new TableDrivenVacuumAgent();
                 break;
@@ -122,18 +122,18 @@ public class VacuumAgentApp extends IntegrableApplication {
     /**
      * Starts the experiment.
      */
-    public void simulate() {
+    public void startExperiment() {
         while (!env.isDone() && !CancelableThread.currIsCanceled()) {
             env.step();
-            simPaneCtrl.setStatus("Performance=" + env.getPerformanceMeasure(agent));
-            simPaneCtrl.waitAfterStep();
+            taskPaneCtrl.setStatus("Performance=" + env.getPerformanceMeasure(agent));
+            taskPaneCtrl.waitAfterStep();
         }
         envViewCtrl.notify("Performance=" + env.getPerformanceMeasure(agent));
     }
 
     @Override
     public void cleanup() {
-        simPaneCtrl.cancelSimulation();
+        taskPaneCtrl.cancelExecution();
     }
 
     // helper methods...

@@ -17,8 +17,8 @@ import aima.core.util.CancelableThread;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
-import aima.gui.fx.framework.SimulationPaneBuilder;
-import aima.gui.fx.framework.SimulationPaneCtrl;
+import aima.gui.fx.framework.TaskExecutionPaneBuilder;
+import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
 import aima.gui.util.SearchFactory;
 import aimax.osm.data.DataResource;
@@ -55,7 +55,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 
 	protected MapPaneCtrl mapPaneCtrl;
 	protected SimpleEnvironmentViewCtrl envViewCtrl;
-	protected SimulationPaneCtrl simPaneCtrl;
+	protected TaskExecutionPaneCtrl taskPaneCtrl;
 
 	protected MapAdapter map;
 	protected MapEnvironment env;
@@ -91,14 +91,14 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	 */
 	protected Agent createAgent(List<String> locations) {
 		ToDoubleFunction<Node<String, MoveToAction>> heuristic;
-		if (simPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
+		if (taskPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
 			heuristic = node -> 0.0;
 		else
 			heuristic = MapFunctions.createSLDHeuristicFunction(locations.get(1), map);
 
 		SearchForActions<String, MoveToAction> search = SearchFactory.getInstance().createSearch
-				(simPaneCtrl.getParamValueIndex(PARAM_SEARCH),
-				simPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
+				(taskPaneCtrl.getParamValueIndex(PARAM_SEARCH),
+				taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		return new MapAgent(map, search, locations.get(1), envViewCtrl::notify);
 	}
@@ -127,13 +127,13 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 		StackPane envView = new StackPane();
 		envViewCtrl = new SimpleEnvironmentViewCtrl(envView, mapPane, 0.75);
 
-		SimulationPaneBuilder builder = new SimulationPaneBuilder();
+		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
 		builder.defineStateView(envView);
 		builder.defineInitMethod(this::initialize);
-		builder.defineSimMethod(this::simulate);
-		simPaneCtrl = builder.getResultFor(root);
-		simPaneCtrl.setParam(SimulationPaneCtrl.PARAM_SIM_SPEED, 0);
+		builder.defineTaskMethod(this::startExperiment);
+		taskPaneCtrl = builder.getResultFor(root);
+		taskPaneCtrl.setParam(TaskExecutionPaneCtrl.PARAM_EXEC_SPEED, 0);
 
 		return root;
 	}
@@ -146,7 +146,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	@Override
 	public void initialize() {
 		map = new MapAdapter(mapPaneCtrl.getMap());
-		switch (simPaneCtrl.getParamValueIndex(PARAM_WAY_SELECTION)) {
+		switch (taskPaneCtrl.getParamValueIndex(PARAM_WAY_SELECTION)) {
 		case 0:
 			map.setMapWayFilter(MapWayAttFilter.createAnyWayFilter());
 			map.ignoreOneways(true);
@@ -164,10 +164,10 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 	}
 
 	/** Starts the experiment. */
-	public void simulate() {
+	public void startExperiment() {
 		List<MapNode> markers = map.getOsmMap().getMarkers();
 		if (markers.size() < 2) {
-			simPaneCtrl.setStatus("Error: Please set at least two markers with mouse-left.");
+			taskPaneCtrl.setStatus("Error: Please set at least two markers with mouse-left.");
 		} else {
 			List<String> locations = new ArrayList<>(markers.size());
 			for (MapNode node : markers) {
@@ -178,20 +178,20 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 			env = createEnvironment();
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
-			if (simPaneCtrl.getParam(PARAM_SEARCH).isPresent())
-				env.notifyViews("Using " + simPaneCtrl.getParamValue(PARAM_SEARCH));
+			if (taskPaneCtrl.getParam(PARAM_SEARCH) != null)
+				env.notifyViews("Using " + taskPaneCtrl.getParamValue(PARAM_SEARCH));
 			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
 				env.step();
-				simPaneCtrl.waitAfterStep();
+				taskPaneCtrl.waitAfterStep();
 			}
 			envViewCtrl.notify("");
-			// simPaneCtrl.setStatus(search.getMetrics().toString());
+			// taskPaneCtrl.setStatus(search.getMetrics().toString());
 		}
 	}
 
 	@Override
 	public void cleanup() {
-		simPaneCtrl.cancelSimulation();
+		taskPaneCtrl.cancelExecution();
 	}
 
 	/** Visualizes agent positions. Call from simulation thread. */
@@ -201,7 +201,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 		if (node != null) {
 			Platform.runLater(() -> map.getOsmMap().addToTrack(TRACK_NAME, new Position(node.getLat(), node.getLon())));
 		}
-		simPaneCtrl.setStatus(metrics.toString());
+		taskPaneCtrl.setStatus(metrics.toString());
 	}
 
 	// helper classes...
