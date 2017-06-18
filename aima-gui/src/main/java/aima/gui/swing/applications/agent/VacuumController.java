@@ -104,7 +104,7 @@ public class VacuumController extends AgentAppController {
 
 	/** Updates the status of the frame after simulation has finished. */
 	public void update(SimulationThread simulationThread) {
-		if (simulationThread.isCanceled()) {
+		if (simulationThread.isCancelled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
 		} else if (frame.simulationPaused()){

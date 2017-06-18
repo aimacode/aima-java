@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
-import aima.core.util.CancelableThread;
+import aima.core.util.CancellableThread;
 import aimax.osm.data.DataResource;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.OsmMap;
@@ -210,7 +210,7 @@ public class MiniNaviApp implements ActionListener {
 	// ///////////////////////////////////////////////////////////////
 	// inner classes
 
-	class RoutingThread extends CancelableThread {
+	class RoutingThread extends CancellableThread {
 		List<MapNode> routeMarkers;
 		List<Position> positions;
 

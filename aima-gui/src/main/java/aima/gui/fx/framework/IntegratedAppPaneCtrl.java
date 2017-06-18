@@ -3,9 +3,9 @@ package aima.gui.fx.framework;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Optional;
 
-import aima.core.util.CancelableThread;
+import aima.core.util.CancellableThread;
+import aima.core.util.Tasks;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.ScrollPane;
@@ -37,7 +37,7 @@ public class IntegratedAppPaneCtrl {
 
 	private DoubleProperty scale = new SimpleDoubleProperty();
 	private IntegrableApplication currApp;
-	private CancelableThread currDemoThread;
+	private Thread currDemoThread;
 
 	public IntegratedAppPaneCtrl() {
 		messageArea = new TextArea();
@@ -83,12 +83,10 @@ public class IntegratedAppPaneCtrl {
 		PrintStream pStream = messagePaneCtrl.getPrintStream();
 		System.setOut(pStream);
 		// System.setErr(messagePaneCtrl.getPrintStream());
-		currDemoThread = new CancelableThread(() -> {
+		currDemoThread = Tasks.runInBackground(() -> {
 			startMain(demoClass);
 			pStream.flush();
 		});
-		currDemoThread.setDaemon(true);
-		currDemoThread.start();
 	}
 
 	private void startMain(Class<?> demoClass) {
@@ -107,7 +105,7 @@ public class IntegratedAppPaneCtrl {
 			currApp = null;
 		}
 		if (currDemoThread != null) {
-			currDemoThread.cancel();
+			Tasks.cancel(currDemoThread);
 			currDemoThread = null;
 		}
 	}

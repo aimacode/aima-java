@@ -1,22 +1,15 @@
 package aima.core.search.local;
 
+import aima.core.search.framework.*;
+import aima.core.search.framework.problem.Problem;
+import aima.core.util.Tasks;
+import aima.core.util.Util;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
-
-import aima.core.agent.Action;
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SearchForStates;
-import aima.core.search.framework.SearchUtils;
-import aima.core.search.framework.problem.Problem;
-import aima.core.util.CancelableThread;
-import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.5, page
@@ -118,7 +111,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
 		// for t = 1 to INFINITY do
 		int timeStep = 0;
-		while (!CancelableThread.currIsCanceled()) {
+		while (!Tasks.currIsCancelled()) {
 			// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;

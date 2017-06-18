@@ -4,7 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.*;
 import aima.core.search.nondeterministic.NondeterministicProblem;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.TaskExecutionPaneBuilder;
@@ -123,7 +123,7 @@ public class VacuumAgentApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void startExperiment() {
-        while (!env.isDone() && !CancelableThread.currIsCanceled()) {
+        while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();
             taskPaneCtrl.setStatus("Performance=" + env.getPerformanceMeasure(agent));
             taskPaneCtrl.waitAfterStep();

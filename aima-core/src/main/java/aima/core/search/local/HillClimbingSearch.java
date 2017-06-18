@@ -3,7 +3,7 @@ package aima.core.search.local;
 import aima.core.search.framework.*;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.Informed;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +106,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
 		Node<S, A> neighbor;
 		// loop do
-		while (!CancelableThread.currIsCanceled()) {
+		while (!Tasks.currIsCancelled()) {
 			lastState = current.getState();
 			metrics.set(METRIC_NODE_VALUE, getValue(current));
 			List<Node<S, A>> children = nodeExpander.expand(current, p);

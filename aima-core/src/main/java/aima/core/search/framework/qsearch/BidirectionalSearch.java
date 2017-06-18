@@ -1,12 +1,12 @@
 package aima.core.search.framework.qsearch;
 
-import java.util.*;
-
 import aima.core.search.framework.Node;
 import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.problem.BidirectionalProblem;
 import aima.core.search.framework.problem.Problem;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
+
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 90.<br>
@@ -100,7 +100,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 		addToFrontier(initStateNode);
 		addToFrontier(goalStateNode);
 
-		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
+		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
 			ExtendedNode<S, A> nodeToExpand = (ExtendedNode) removeFromFrontier();
 			ExtendedNode<S, A> nodeFromOtherProblem;

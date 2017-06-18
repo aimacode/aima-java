@@ -1,18 +1,12 @@
 package aima.core.search.uninformed;
 
+import aima.core.search.framework.*;
+import aima.core.search.framework.problem.Problem;
+import aima.core.util.Tasks;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-
-import aima.core.agent.Action;
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SearchForStates;
-import aima.core.search.framework.SearchUtils;
-import aima.core.search.framework.problem.Problem;
-import aima.core.util.CancelableThread;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page
@@ -102,7 +96,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 		if (problem.testSolution(node)) {
 			metrics.set(METRIC_PATH_COST, node.getPathCost());
 			return Optional.of(node);
-		} else if (0 == limit || CancelableThread.currIsCanceled()) {
+		} else if (0 == limit || Tasks.currIsCancelled()) {
 			// else if limit = 0 then return cutoff
 			return Optional.of(cutoffNode);
 		} else {

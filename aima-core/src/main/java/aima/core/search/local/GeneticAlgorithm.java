@@ -1,14 +1,14 @@
 package aima.core.search.local;
 
+import aima.core.search.framework.Metrics;
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.util.Tasks;
+import aima.core.util.Util;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
-import aima.core.search.framework.Metrics;
-import aima.core.search.framework.problem.GoalTest;
-import aima.core.util.CancelableThread;
-import aima.core.util.Util;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page
@@ -140,7 +140,7 @@ public class GeneticAlgorithm<A> {
 			// until some individual is fit enough, or enough time has elapsed
 			if (maxTimeMilliseconds > 0L && (System.currentTimeMillis() - startTime) > maxTimeMilliseconds)
 				break;
-			if (CancelableThread.currIsCanceled())
+			if (Tasks.currIsCancelled())
 				break;
 		} while (!goalTest.test(bestIndividual));
 

@@ -1,6 +1,7 @@
 package aima.gui.fx.framework;
 
-import aima.core.util.CancelableThread;
+import aima.core.util.CancellableThread;
+import aima.core.util.Tasks;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,7 +24,7 @@ import java.util.List;
 public class TaskExecutionPaneCtrl {
 
 	public enum State {
-		READY, RUNNING, FINISHED, PAUSED, CANCELED
+		READY, RUNNING, FINISHED, PAUSED, CANCELLED
 	}
 
 	public final static String PARAM_EXEC_SPEED = "executionSpeed";
@@ -37,7 +38,7 @@ public class TaskExecutionPaneCtrl {
 	private Runnable taskMethod;
 
 	private ObjectProperty<State> state = new SimpleObjectProperty<>();
-	private CancelableThread backgroundThread;
+	private Thread backgroundThread;
 
 	/** Should only be called by the SimulationPaneBuilder. */
 	public TaskExecutionPaneCtrl(List<Parameter> params, List<ComboBox<String>> paramCombos, Runnable initMethod,
@@ -154,12 +155,12 @@ public class TaskExecutionPaneCtrl {
 
 	/**
 	 * Tries to stop task execution. This will only have an effect, if all loops in
-	 * the running task check {@link CancelableThread#isCanceled()} in every time-consuming loop.
+	 * the running task check {@link CancellableThread#isCancelled()} in every time-consuming loop.
 	 */
 	public void cancelExecution() {
 		if (backgroundThread != null && backgroundThread.isAlive()) {
-			backgroundThread.cancel();
-			setState(State.CANCELED);
+			Tasks.cancel(backgroundThread);
+			setState(State.CANCELLED);
 			if (state.get() == State.PAUSED)
 				backgroundThread.interrupt();
 		}
@@ -188,7 +189,7 @@ public class TaskExecutionPaneCtrl {
 			executeBtn.setText("Cancel");
 		else if (state.get() == State.PAUSED)
 			executeBtn.setText("Continue");
-		else if (state.get() == State.CANCELED)
+		else if (state.get() == State.CANCELLED)
 			executeBtn.setText("Stop");
 		else if (state.get() == State.FINISHED)
 			executeBtn.setText("Init");
@@ -203,13 +204,11 @@ public class TaskExecutionPaneCtrl {
 		if (state.get() == State.FINISHED) {
 			onParamChanged();
 		} else if (backgroundThread == null || !backgroundThread.isAlive()) {
-			backgroundThread = new CancelableThread(this::runTask);
-			backgroundThread.setDaemon(true);
-			backgroundThread.start();
+			backgroundThread = Tasks.runInBackground(this::runTask);
 		} else if (state.get() == State.PAUSED) {
 			backgroundThread.interrupt();
 			setState(State.RUNNING);
-		} else if (backgroundThread.isCanceled()) {
+		} else if (state.get() == State.CANCELLED) {
 			backgroundThread.stop();
 			setState(State.READY);
 		} else {

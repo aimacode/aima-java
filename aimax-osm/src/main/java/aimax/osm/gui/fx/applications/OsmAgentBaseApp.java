@@ -1,10 +1,5 @@
 package aimax.osm.gui.fx.applications;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.ToDoubleFunction;
-
 import aima.core.agent.*;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -13,7 +8,7 @@ import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -31,6 +26,11 @@ import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Simple OSM route finding agent application which can be used as base class
@@ -180,7 +180,7 @@ public class OsmAgentBaseApp extends IntegrableApplication {
 			env.addAgent(agent, locations.get(0));
 			if (taskPaneCtrl.getParam(PARAM_SEARCH) != null)
 				env.notifyViews("Using " + taskPaneCtrl.getParamValue(PARAM_SEARCH));
-			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
+			while (!env.isDone() && !Tasks.currIsCancelled()) {
 				env.step();
 				taskPaneCtrl.waitAfterStep();
 			}

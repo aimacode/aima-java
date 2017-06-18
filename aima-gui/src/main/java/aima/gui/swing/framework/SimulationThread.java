@@ -2,14 +2,14 @@ package aima.gui.swing.framework;
 
 import java.awt.EventQueue;
 
-import aima.core.util.CancelableThread;
+import aima.core.util.CancellableThread;
 
 /**
  * Background thread, which is used for simulation.
  * 
  * @author Ruediger Lunde
  */
-public class SimulationThread extends CancelableThread {
+public class SimulationThread extends CancellableThread {
 	private AgentAppFrame frame;
 	private AgentAppController controller;
 	/** Decides whether the controller's run or step method is called. */
@@ -43,7 +43,7 @@ public class SimulationThread extends CancelableThread {
 				controller.step(frame.getMessageLogger());
 		} catch (Exception e) {
 			logger.log
-			("Error: Somthing went wrong running the agent (" + e + ").");
+			("Error: Something went wrong running the agent (" + e + ").");
 			e.printStackTrace(); // for debugging
 		}
 		try {
@@ -55,7 +55,7 @@ public class SimulationThread extends CancelableThread {
 			});
 		} catch(Exception e) {
 			logger.log
-			("Error: Somthing went wrong when updating the GUI (" + e + ").");
+			("Error: Something went wrong when updating the GUI (" + e + ").");
 			e.printStackTrace(); // for debugging
 		}
 	}

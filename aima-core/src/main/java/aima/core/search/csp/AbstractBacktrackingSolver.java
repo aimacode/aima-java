@@ -1,7 +1,7 @@
 package aima.core.search.csp;
 
 import aima.core.search.csp.inference.InferenceLog;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 215.<br>
@@ -57,7 +57,7 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
      */
     private Assignment<VAR, VAL> backtrack(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         Assignment<VAR, VAL> result = null;
-        if (assignment.isComplete(csp.getVariables()) || CancelableThread.currIsCanceled()) {
+        if (assignment.isComplete(csp.getVariables()) || Tasks.currIsCancelled()) {
             result = assignment;
         } else {
             VAR var = selectUnassignedVariable(csp, assignment);

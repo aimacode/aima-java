@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -317,7 +316,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Updates the status of the frame after simulation has finished. */
 		public void update(SimulationThread simulationThread) {
-			if (simulationThread.isCanceled()) {
+			if (simulationThread.isCancelled()) {
 				frame.setStatus("Task canceled.");
 			} else if (frame.simulationPaused()) {
 				frame.setStatus("Task paused.");

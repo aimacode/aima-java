@@ -1,8 +1,10 @@
 package aima.core.search.framework.qsearch;
 
-import aima.core.search.framework.*;
+import aima.core.search.framework.Metrics;
+import aima.core.search.framework.Node;
+import aima.core.search.framework.NodeExpander;
 import aima.core.search.framework.problem.Problem;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 
 import java.util.Optional;
 import java.util.Queue;
@@ -65,7 +67,7 @@ public abstract class QueueSearch<S, A> {
 		if (earlyGoalTest && problem.testSolution(root))
 			return getSolution(root);
 
-		while (!isFrontierEmpty() && !CancelableThread.currIsCanceled()) {
+		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
 			Node<S, A> nodeToExpand = removeFromFrontier();
 			// only need to check the nodeToExpand if have not already

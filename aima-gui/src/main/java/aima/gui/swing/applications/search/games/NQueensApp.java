@@ -312,7 +312,7 @@ public class NQueensApp extends SimpleAgentApp {
 
 		/** Updates the status of the frame after simulation has finished. */
 		public void update(SimulationThread simulationThread) {
-			if (simulationThread.isCanceled()) {
+			if (simulationThread.isCancelled()) {
 				frame.setStatus("Task canceled.");
 			} else if (frame.simulationPaused()) {
 				frame.setStatus("Task paused.");

@@ -1,9 +1,9 @@
 package aima.gui.fx.applications.search.games;
 
-import java.util.*;
-
 import aima.core.agent.Action;
-import aima.core.environment.eightpuzzle.*;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -17,7 +17,7 @@ import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.TaskExecutionPaneBuilder;
@@ -27,6 +27,8 @@ import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.*;
 
 
 /**
@@ -183,7 +185,7 @@ public class EightPuzzleApp extends IntegrableApplication {
 				m.set("manhattanHeuristic", EightPuzzleFunctions.createManhattanHeuristicFunction().applyAsDouble
 						(new Node<>(board)));
 				updateStateView(m);
-				if (CancelableThread.currIsCanceled())
+				if (Tasks.currIsCancelled())
 					break;
 				simPaneCtrl.waitAfterStep();
 			}

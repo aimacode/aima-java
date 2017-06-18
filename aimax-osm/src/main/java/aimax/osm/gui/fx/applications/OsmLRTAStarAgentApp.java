@@ -1,10 +1,5 @@
 package aimax.osm.gui.fx.applications;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.ToDoubleFunction;
-
 import aima.core.agent.*;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
@@ -12,10 +7,10 @@ import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.problem.GeneralProblem;
+import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.online.LRTAStarAgent;
-import aima.core.search.framework.problem.OnlineSearchProblem;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aima.core.util.math.geom.shapes.Point2D;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -31,6 +26,11 @@ import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Integrable application which demonstrates how the Learning Real-Time A*
@@ -154,7 +154,7 @@ public class OsmLRTAStarAgentApp extends IntegrableApplication {
 			env = new MapEnvironment(map);
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
-			while (!env.isDone() && !CancelableThread.currIsCanceled()) {
+			while (!env.isDone() && !Tasks.currIsCancelled()) {
 				env.step();
 				simPaneCtrl.waitAfterStep();
 			}

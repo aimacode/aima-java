@@ -299,7 +299,7 @@ public class AgentAppFrame extends JFrame {
 						err = "when canceling simulation ";
 						SimulationThread at = getSimulationThread();
 						if (at != null) {
-							if (!at.isCanceled()) {
+							if (!at.isCancelled()) {
 								at.interrupt();
 							} else {
 								// agent has ignored the interrupt

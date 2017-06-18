@@ -1,15 +1,10 @@
 package aima.gui.fx.applications.agent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.ToDoubleFunction;
-
 import aima.core.agent.Agent;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.TaskExecutionPaneBuilder;
@@ -19,6 +14,11 @@ import aima.gui.util.SearchFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Integrable application which demonstrates how different kinds of search
@@ -197,7 +197,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 
 	/** Starts the experiment. */
 	public void startExperiment() {
-		while (!env.isDone() && !CancelableThread.currIsCanceled()) {
+		while (!env.isDone() && !Tasks.currIsCancelled()) {
 			env.step();
 			taskPaneCtrl.waitAfterStep();
 		}

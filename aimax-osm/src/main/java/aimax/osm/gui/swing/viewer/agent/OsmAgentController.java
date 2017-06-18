@@ -171,7 +171,7 @@ public class OsmAgentController extends AgentAppController {
 	/** Updates the status of the frame. */
 	@Override
 	public void update(SimulationThread simulationThread) {
-		if (simulationThread.isCanceled()) {
+		if (simulationThread.isCancelled()) {
 			frame.setStatus("Task canceled.");
 			isPrepared = false;
 		} else if (frame.simulationPaused()) {

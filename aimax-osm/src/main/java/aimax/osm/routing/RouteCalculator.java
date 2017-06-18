@@ -5,7 +5,7 @@ import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
-import aima.core.util.CancelableThread;
+import aima.core.util.Tasks;
 import aimax.osm.data.MapWayAttFilter;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.OsmMap;
@@ -55,7 +55,7 @@ public class RouteCalculator {
 			List<MapNode[]> pNodeList = subdivideProblem(markers, map, wayFilter);
 			MapNode prevNode = null;
 			for (int i = 0; i < pNodeList.size()
-					&& !CancelableThread.currIsCanceled(); i++) {
+					&& !Tasks.currIsCancelled(); i++) {
 				Problem<MapNode, OsmMoveAction> problem = createProblem(pNodeList.get(i), map, wayFilter,
 						ignoreOneways, taskSelection);
 				ToDoubleFunction<Node<MapNode, OsmMoveAction>> h = createHeuristicFunction(pNodeList.get(i),
