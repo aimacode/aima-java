@@ -13,11 +13,10 @@ import javafx.scene.input.MouseButton;
 import java.util.List;
 
 /**
- * Controller class for simulation panes. It is responsible for maintaining the
- * current parameter settings, the simulation state, the current simulation
- * thread, and for handling events (parameter change events and simulation
- * button events). If not otherwise stated, methods must be called from the FX
- * Application Thread.
+ * Controller class for task execution panes. It is responsible for maintaining the
+ * current parameter settings, the task execution state, the current execution
+ * thread, and for handling events (parameter change events and execute button events).
+ * If not otherwise stated, methods must be called from the FX Application Thread.
  * 
  * @author Ruediger Lunde
  */
@@ -35,19 +34,19 @@ public class TaskExecutionPaneCtrl {
 	private List<Parameter> params;
 	private List<ComboBox<String>> paramCombos;
 	private Runnable initMethod;
-	private Runnable simMethod;
+	private Runnable taskMethod;
 
 	private ObjectProperty<State> state = new SimpleObjectProperty<>();
 	private CancelableThread backgroundThread;
 
 	/** Should only be called by the SimulationPaneBuilder. */
 	public TaskExecutionPaneCtrl(List<Parameter> params, List<ComboBox<String>> paramCombos, Runnable initMethod,
-                                 Runnable simMethod, Button simBtn, Label statusLabel) {
+                                 Runnable taskMethod, Button executeBtn, Label statusLabel) {
 		this.params = params;
 		this.paramCombos = paramCombos;
 		this.initMethod = initMethod;
-		this.simMethod = simMethod;
-		this.executeBtn = simBtn;
+		this.taskMethod = taskMethod;
+		this.executeBtn = executeBtn;
 		this.statusLabel = statusLabel;
 		ChangeListener<String> listener = (obs, o, n) -> onParamChanged();
 		for (ComboBox<String> combo : paramCombos)
@@ -55,10 +54,15 @@ public class TaskExecutionPaneCtrl {
 			// re-initialization)
 			if (!combo.getId().equals(PARAM_EXEC_SPEED))
 				combo.getSelectionModel().selectedItemProperty().addListener(listener);
-		simBtn.setOnAction(ev -> onSimButtonAction());
-		simBtn.setOnMouseClicked(ev -> {
-			if (ev.getButton() == MouseButton.SECONDARY)
-				setParamValue(PARAM_EXEC_SPEED, Integer.MAX_VALUE);
+		executeBtn.setOnAction(ev -> onExecuteButtonAction());
+		// mouse-left on execute button toggles execution speed between StepMode and VeryFast
+		executeBtn.setOnMouseClicked(ev -> {
+			if (ev.getButton() == MouseButton.SECONDARY) {
+				if (getParamAsInt(PARAM_EXEC_SPEED) == Integer.MAX_VALUE)
+					setParamValue(PARAM_EXEC_SPEED, 20);
+				else
+					setParamValue(PARAM_EXEC_SPEED, Integer.MAX_VALUE);
+			}
 		});
 		updateParamVisibility();
 		state.addListener((obs, o, n) -> onStateChanged());
@@ -195,11 +199,11 @@ public class TaskExecutionPaneCtrl {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void onSimButtonAction() {
+	private void onExecuteButtonAction() {
 		if (state.get() == State.FINISHED) {
 			onParamChanged();
 		} else if (backgroundThread == null || !backgroundThread.isAlive()) {
-			backgroundThread = new CancelableThread(this::runSimulation);
+			backgroundThread = new CancelableThread(this::runTask);
 			backgroundThread.setDaemon(true);
 			backgroundThread.start();
 		} else if (state.get() == State.PAUSED) {
@@ -213,10 +217,10 @@ public class TaskExecutionPaneCtrl {
 		}
 	}
 
-	private void runSimulation() {
+	private void runTask() {
 		try {
 			setState(State.RUNNING);
-			simMethod.run();
+			taskMethod.run();
 		} catch (Exception e) {
 			String msg = e.getMessage();
 			if (msg != null)

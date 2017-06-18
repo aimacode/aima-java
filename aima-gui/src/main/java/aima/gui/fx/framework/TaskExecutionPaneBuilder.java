@@ -53,8 +53,8 @@ public class TaskExecutionPaneBuilder {
 	/**
 	 * Adds a toolbar, a state view, and a status label to the provided pane and returns
 	 * a controller class instance. The toolbar contains combo boxes to control parameter settings
-	 * and buttons for simulation control. The controller class instance handles user events and provides
-	 * access to user settings (parameter settings, simulation speed, status text, ...).
+	 * and buttons for task execution control. The controller class instance handles user events and provides
+	 * access to user settings (parameter settings, execution speed, status text, ...).
 	 */
 	public TaskExecutionPaneCtrl getResultFor(BorderPane pane) {
 		List<ComboBox<String>> combos = new ArrayList<>();
@@ -109,8 +109,8 @@ public class TaskExecutionPaneBuilder {
 	}
 
 	/**
-	 * Factory method defining the simulation speed options. Value
-	 * <code>Integer.MAX_VALUE</code> is used for pause.
+	 * Factory method defining the execution speed options. Value
+	 * <code>Integer.MAX_VALUE</code> is used for step mode.
 	 */
 	protected Parameter createExecutionSpeedParam() {
 		Parameter result = new Parameter

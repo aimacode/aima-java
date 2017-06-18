@@ -43,7 +43,7 @@ public class SearchUtils {
 
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 	public static <S, A> Optional<List<A>> toActions(Optional<Node<S, A>> node) {
-		return node.isPresent() ? Optional.of(SearchUtils.getSequenceOfActions(node.get())) : Optional.empty();
+		return node.isPresent() ? Optional.of(getSequenceOfActions(node.get())) : Optional.empty();
 	}
 
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
