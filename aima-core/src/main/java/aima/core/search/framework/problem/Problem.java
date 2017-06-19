@@ -67,7 +67,8 @@ public interface Problem<S, A> extends OnlineSearchProblem<S, A> {
      * delegates the check to the goal test. Other implementations could make use of the additional
      * information given by the node (e.g. the sequence of actions leading to the node). A
      * solution tester implementation could for example always return false and internally collect
-     * the paths of all nodes whose state passes the goal test.
+     * the paths of all nodes whose state passes the goal test. Search implementations should always
+     * access the goal test via this method to support solution acceptance testing.
      */
     default boolean testSolution(Node<S, A> node) {
         return testGoal(node.getState());
