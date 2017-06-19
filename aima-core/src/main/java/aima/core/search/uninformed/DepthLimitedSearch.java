@@ -82,8 +82,8 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 		clearMetrics();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
-		Node<S, A> solution = recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
-		return solution != null ? Optional.of(solution) : Optional.empty();
+		Node<S, A> node = recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
+		return node != null ? Optional.of(node) : Optional.empty();
 	}
 
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
@@ -111,7 +111,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
 				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
-				if (node == cutoffNode) {
+				if (result == cutoffNode) {
 					cutoffOccurred = true;
 				} else if (result != null) {
 					// else if result != failure then return result
