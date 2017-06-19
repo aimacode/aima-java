@@ -78,7 +78,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
         List<VAR> vars = csp.getVariables().stream()
                 .filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
         if (varSelectionStrategy != null)
-            vars = varSelectionStrategy.apply(vars, csp);
+            vars = varSelectionStrategy.apply(csp, vars);
         return vars.get(0);
     }
 
@@ -88,7 +88,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     @Override
     protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
         if (valSelectionStrategy != null) {
-            return valSelectionStrategy.apply(var, csp, assignment);
+            return valSelectionStrategy.apply(csp, assignment, var);
         } else {
             return csp.getDomain(var);
         }
