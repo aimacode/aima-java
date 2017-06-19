@@ -122,7 +122,7 @@ public class GeneticAlgorithm<A> {
 		Individual<A> bestIndividual = null;
 
 		// Create a local copy of the population to work with
-		List<Individual<A>> population = new ArrayList<Individual<A>>(initPopulation);
+		List<Individual<A>> population = new ArrayList<>(initPopulation);
 		// Validate the population and setup the instrumentation
 		validatePopulation(population);
 		updateMetrics(population, 0, 0L);

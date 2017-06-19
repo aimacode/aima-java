@@ -60,7 +60,7 @@ public abstract class QueueSearch<S, A> {
 	 */
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
-		clearInstrumentation();
+		clearMetrics();
 		// initialize the frontier using the initial state of the problem
 		Node<S, A> root = nodeExpander.createRootNode(problem.getInitialState());
 		addToFrontier(root);
@@ -130,7 +130,7 @@ public abstract class QueueSearch<S, A> {
 	/**
 	 * Sets all metrics to zero.
 	 */
-	protected void clearInstrumentation() {
+	protected void clearMetrics() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_QUEUE_SIZE, 0);
 		metrics.set(METRIC_MAX_QUEUE_SIZE, 0);

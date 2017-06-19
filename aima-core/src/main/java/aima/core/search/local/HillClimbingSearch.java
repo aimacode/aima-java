@@ -98,7 +98,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 	 */
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
-		clearInstrumentation();
+		clearMetrics();
 		outcome = SearchOutcome.FAILURE;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
@@ -155,7 +155,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 	/**
 	 * Sets all metrics to zero.
 	 */
-	private void clearInstrumentation() {
+	private void clearMetrics() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);
 	}

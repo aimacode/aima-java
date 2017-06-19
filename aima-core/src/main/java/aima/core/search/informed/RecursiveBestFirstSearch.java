@@ -96,7 +96,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     @Override
     public Optional<List<A>> findActions(Problem<S, A> p) {
         explored.clear();
-        clearInstrumentation();
+        clearMetrics();
 
         // RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
         Node<S, A> n = nodeExpander.createRootNode(p.getInitialState());
@@ -120,7 +120,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     /**
      * Sets all metrics to zero.
      */
-    private void clearInstrumentation() {
+    private void clearMetrics() {
         metrics.set(METRIC_NODES_EXPANDED, 0);
         metrics.set(METRIC_MAX_RECURSIVE_DEPTH, 0);
         metrics.set(METRIC_PATH_COST, 0.0);

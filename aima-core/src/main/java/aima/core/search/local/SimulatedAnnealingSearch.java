@@ -102,7 +102,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
-		clearInstrumentation();
+		clearMetrics();
 		outcome = SearchOutcome.FAILURE;
 		lastState = null;
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
@@ -182,7 +182,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	/**
 	 * Sets all metrics to zero.
 	 */
-	private void clearInstrumentation() {
+	private void clearMetrics() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_TEMPERATURE, 0);
 		metrics.set(METRIC_NODE_VALUE, 0);

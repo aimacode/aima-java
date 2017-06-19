@@ -61,7 +61,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	}
 
 	private Optional<Node<S, A>> findNode(Problem<S, A> p) {
-		clearInstrumentation();
+		clearMetrics();
 		// for depth = 0 to infinity do
 		for (int i = 0; !Tasks.currIsCancelled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
@@ -98,7 +98,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
-	private void clearInstrumentation() {
+	private void clearMetrics() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
 	}

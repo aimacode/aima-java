@@ -79,7 +79,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	}
 	
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
-		clearInstrumentation();
+		clearMetrics();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
 		return recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
@@ -148,7 +148,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	/**
 	 * Sets the nodes expanded and path cost metrics to zero.
 	 */
-	private void clearInstrumentation() {
+	private void clearMetrics() {
 		metrics.set(METRIC_NODES_EXPANDED, 0);
 		metrics.set(METRIC_PATH_COST, 0);
 	}

@@ -83,7 +83,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
 		nodeExpander.useParentLinks(true); // bidirectional search needs parents!
 		this.frontier = frontier;
-		clearInstrumentation();
+		clearMetrics();
 		explored.get(ORG_P_IDX).clear();
 		explored.get(REV_P_IDX).clear();
 
