@@ -89,7 +89,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	// failure/cutoff
 
 	/**
-	 * Returns a solution node, the {@link #cutoffNode}, or null (failure).
+	 * Returns a solution node, the {@link #cutoffNode}, or empty (failure).
 	 */
 	private Optional<Node<S, A>> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
