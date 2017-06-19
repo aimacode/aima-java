@@ -31,11 +31,11 @@ import java.util.function.Consumer;
  * </pre>
  * 
  * Figure 3.17 A recursive implementation of depth-limited search.
- * 
+ *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
- * @author Ruediger Lunde
  */
 public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
@@ -117,13 +117,8 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 					return result;
 				}
 			}
-
 			// if cutoff_occurred? then return cutoff else return failure
-			if (cutoff_occurred) {
-				return Optional.of(cutoffNode);
-			} else {
-				return Optional.empty();
-			}
+			return cutoff_occurred ? Optional.of(cutoffNode) : Optional.empty();
 		}
 	}
 
@@ -140,14 +135,6 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 		return metrics;
 	}
 
-	/**
-	 * Sets the nodes expanded and path cost metrics to zero.
-	 */
-	private void clearInstrumentation() {
-		metrics.set(METRIC_NODES_EXPANDED, 0);
-		metrics.set(METRIC_PATH_COST, 0);
-	}
-
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
@@ -156,5 +143,13 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeExpander.removeNodeListener(listener);
+	}
+
+	/**
+	 * Sets the nodes expanded and path cost metrics to zero.
+	 */
+	private void clearInstrumentation() {
+		metrics.set(METRIC_NODES_EXPANDED, 0);
+		metrics.set(METRIC_PATH_COST, 0);
 	}
 }

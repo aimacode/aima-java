@@ -24,7 +24,9 @@ public class Tasks {
         cancelFn.accept(thread);
     }
 
-    /** Tests whether the current task has been cancelled. */
+    /**
+     * Tests whether the current task has been cancelled. Calls of this method can be placed anywhere in the code.
+     * They provide safe exits from time-consuming loops if the user is not interested in the result anymore. */
     public static boolean currIsCancelled() {
         return isCancelledFn.get();
     }

@@ -91,15 +91,13 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Optional<Node<S, A>> node = findNode(p);
-		return SearchUtils.toActions(node);
+		return SearchUtils.toActions(findNode(p));
 	}
 	
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Optional<Node<S, A>> node = findNode(p);
-		return SearchUtils.toState(node);
+		return SearchUtils.toState(findNode(p));
 	}
 
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state

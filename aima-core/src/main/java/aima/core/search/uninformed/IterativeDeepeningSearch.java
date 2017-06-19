@@ -24,10 +24,10 @@ import java.util.function.Consumer;
  * applies depth-limited search with increasing limits. It terminates when a
  * solution is found or if the depth- limited search returns failure, meaning
  * that no solution exists.
- * 
+ *
+ * @author Ruediger Lunde
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
- * @author Ruediger Lunde
  */
 public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
@@ -51,15 +51,13 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
 		nodeExpander.useParentLinks(true);
-		Optional<Node<S, A>> node = findNode(p);
-		return SearchUtils.toActions(node);
+		return SearchUtils.toActions(findNode(p));
 	}
 
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
 		nodeExpander.useParentLinks(false);
-		Optional<Node<S, A>> node = findNode(p);
-		return SearchUtils.toState(node);
+		return SearchUtils.toState(findNode(p));
 	}
 
 	private Optional<Node<S, A>> findNode(Problem<S, A> p) {
@@ -82,14 +80,6 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		return metrics;
 	}
 
-	/**
-	 * Sets the nodes expanded and path cost metrics to zero.
-	 */
-	private void clearInstrumentation() {
-		metrics.set(METRIC_NODES_EXPANDED, 0);
-		metrics.set(METRIC_PATH_COST, 0);
-	}
-
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
 		nodeExpander.addNodeListener(listener);
@@ -100,9 +90,18 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		return nodeExpander.removeNodeListener(listener);
 	}
 
+
 	//
 	// PRIVATE METHODS
 	//
+
+	/**
+	 * Sets the nodes expanded and path cost metrics to zero.
+	 */
+	private void clearInstrumentation() {
+		metrics.set(METRIC_NODES_EXPANDED, 0);
+		metrics.set(METRIC_PATH_COST, 0);
+	}
 
 	private void updateMetrics(Metrics dlsMetrics) {
 		metrics.set(METRIC_NODES_EXPANDED,
