@@ -2,6 +2,7 @@ package aima.core.search.csp;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import aima.core.search.csp.inference.*;
 
 /**
@@ -11,7 +12,6 @@ import aima.core.search.csp.inference.*;
  *
  * @param <VAR> Type which is used to represent variables
  * @param <VAL> Type which is used to represent the values in the domains
- *
  * @author Ruediger Lunde
  */
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
@@ -86,7 +86,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Primitive operation, ordering the domain values of the specified variable.
      */
     @Override
-    protected Iterable<VAL> orderDomainValues(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
+    protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
         if (valSelectionStrategy != null) {
             return valSelectionStrategy.apply(var, csp, assignment);
         } else {
@@ -97,9 +97,11 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     /**
      * Primitive operation, which tries to optimize the CSP representation with respect to a new assignment.
      *
-     * @return An object which provides informations about (1) whether changes
-     * have been performed, (2) possibly inferred empty domains , and
-     * (3) how to restore the domains.
+     * @param var The variable which just got a new value in the assignment.
+     * @return An object which provides information about
+     * (1) whether changes have been performed,
+     * (2) possibly inferred empty domains, and
+     * (3) how to restore the original CSP.
      */
     @Override
     protected InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {

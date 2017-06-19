@@ -61,7 +61,7 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
             result = assignment;
         } else {
             VAR var = selectUnassignedVariable(csp, assignment);
-            for (VAL value : orderDomainValues(var, csp, assignment)) {
+            for (VAL value : orderDomainValues(csp, assignment, var)) {
                 assignment.add(var, value);
                 fireStateChanged(csp, assignment, var);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
@@ -89,10 +89,16 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
     /**
      * Primitive operation, ordering the domain values of the specified variable.
      */
-    protected abstract Iterable<VAL> orderDomainValues(VAR var, CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment);
+    protected abstract Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
 
     /**
      * Primitive operation, which tries to optimize the CSP representation with respect to a new assignment.
+     *
+     * @param var The variable which just got a new value in the assignment.
+     * @return An object which provides information about
+     * (1) whether changes have been performed,
+     * (2) possibly inferred empty domains, and
+     * (3) how to restore the original CSP.
      */
     protected abstract InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
 }
