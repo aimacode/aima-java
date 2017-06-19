@@ -212,7 +212,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	private double getValue(Node<S, A> n) {
 		// assumption greater heuristic value =>
 		// HIGHER on hill; 0 == goal state;
-		// SA deals with gardient DESCENT
+		// SA deals with gradient DESCENT
 		return -1 * h.applyAsDouble(n);
 	}
 }
